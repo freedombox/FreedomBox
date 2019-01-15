@@ -5,6 +5,18 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>66</revnumber>
+        <date>2019-01-10 21:46:53</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Include Cockpit manual page</revremark>
+      </revision>
+      <revision>
+        <revnumber>65</revnumber>
+        <date>2019-01-03 04:17:54</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Update link to rpi3b and add link to rpi3b+</revremark>
+      </revision>
+      <revision>
         <revnumber>64</revnumber>
         <date>2018-03-05 12:22:59</date>
         <authorinitials>JosephNuthalapati</authorinitials>
@@ -486,10 +498,10 @@
           <para>Plug one end of your ethernet cord into your FreedomBox's ethernet port, and plug the other end into your router. </para>
         </listitem>
         <listitem>
-          <para>Power on the FreedomBox. </para>
+          <para>Power on the FreedomBox. <emphasis role="strong">Note:</emphasis> On most single board computers, don't expect any output on a monitor connected via HDMI as the support may not exist in the kernel. See below to access and control your FreedomBox via network. </para>
         </listitem>
         <listitem>
-          <para>On first boot, FreedomBox will perform its initial setup (older versions of FreedomBox reboot after this step). This process may take several minutes on some machines. After giving it about 10 minutes, proceed to the next step. </para>
+          <para>On first boot, FreedomBox will perform its initial setup (older versions of FreedomBox reboot after this step). This process may take several minutes on some machines. After giving it about 10 minutes, proceed to the next step. <emphasis role="strong">Note:</emphasis> Currently, due a known bug, you need to restart your FreedomBox after 10m and then proceed to the next step. </para>
         </listitem>
         <listitem>
           <para>After the FreedomBox has finished its initial setup, you can access its web interface (called Plinth) through your web browser. </para>
@@ -1358,6 +1370,14 @@ file = /etc/radicale/rights]]></screen>
       <section>
         <title>Setting up your FreedomBox for Matrix</title>
         <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <ulink url="https://github.com/matrix-org/synapse/blob/master/README.rst">System requirements:</ulink>
+              <emphasis>At least 1GB of free RAM if you want to join large public rooms like #matrix:matrix.org</emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Federating with other Matrix instances</title>
@@ -2470,6 +2490,236 @@ proto udp]]></screen>
             <para><emphasis>Tip:</emphasis> Bookmark the URL of FreedomBox Service (Plinth) before changing the default app to some other app. </para>
           </listitem>
         </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>Cockpit (Server Administration)</title>
+      <para>Cockpit is a server manager that makes it easy to administer GNU/Linux servers via a web browser. On a FreedomBox, controls are available for many advanced functions that are not usually required. A web based terminal for console operations is also available. </para>
+      <para>It can be accessed by any user on your FreedomBox belonging to the admin group. </para>
+      <caution>
+        <para>Use cockpit only if you are an administrator of GNU/Linux systems with advanced skills. FreedomBox tries to coexist with changes to system by system administrators and system administration tools like Cockpit. However, improper changes to the system might causes failures in FreedomBox functions. </para>
+      </caution>
+      <section>
+        <title>Using Cockpit</title>
+        <para>Install Cockpit like any other application on FreedomBox. Make sure that Cockpit is enabled after that. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-enable.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>cockpit-enable.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>Ensure that the user account on FreedomBox that will used for Cockpit is part of the administrators group. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-admin-user.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>cockpit-admin-user.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>Launch the Cockpit web interface. Login using the configured user account. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-login.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>cockpit-login.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>Start using cockpit. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-system.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>cockpit-system.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>Cockpit is usable on mobile interfaces too. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-mobile.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>cockpit-mobile.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
+      <section>
+        <title>Features</title>
+        <para>The following features of Cockpit may be useful for advanced FreedomBox users. </para>
+        <section>
+          <title>System Dashboard</title>
+          <para>Cockpit has a system dashboard that </para>
+          <itemizedlist>
+            <listitem>
+              <para>Shows detailed hardware information </para>
+            </listitem>
+            <listitem>
+              <para>Shows basic performance metrics of a system </para>
+            </listitem>
+            <listitem>
+              <para>Allows changing system time and timezone </para>
+            </listitem>
+            <listitem>
+              <para>Allows changing hostname. Please use FreedomBox UI to do this </para>
+            </listitem>
+            <listitem>
+              <para>Shows SSH server fingerprints </para>
+            </listitem>
+          </itemizedlist>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-system.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-system.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
+        <section>
+          <title>Viewing System Logs</title>
+          <para>Cockpit allows querying system logs and examining them in full detail. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-logs.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-logs.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
+        <section>
+          <title>Managing Storage</title>
+          <para>Cockpit allows following advanced storage functions: </para>
+          <itemizedlist>
+            <listitem>
+              <para>View full disk information </para>
+            </listitem>
+            <listitem>
+              <para>Editing disk partitions </para>
+            </listitem>
+            <listitem>
+              <para>RAID management </para>
+            </listitem>
+          </itemizedlist>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-storage1.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-storage1.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-storage2.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-storage2.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
+        <section>
+          <title>Networking</title>
+          <para>Cockpit and FreedomBox both rely on NetworkManager to configure the network. However, Cockpit offers some advanced configuration not available on FreedomBox: </para>
+          <itemizedlist>
+            <listitem>
+              <para>Route configuration </para>
+            </listitem>
+            <listitem>
+              <para>Configure Bonds, Bridges, VLANs </para>
+            </listitem>
+          </itemizedlist>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-network1.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-network1.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-network2.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-network2.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-network3.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-network3.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
+        <section>
+          <title>Services</title>
+          <para>Cockpit allows management of services and periodic jobs (similar to cron). </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-services1.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-services1.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-services2.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-services2.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
+        <section>
+          <title>Web Terminal</title>
+          <para>Cockpit offers a web based terminal that can be used perform manual system administration tasks. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Cockpit?action=AttachFile&amp;do=get&amp;target=cockpit-terminal.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>cockpit-terminal.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
       </section>
     </section>
     <section>
@@ -5987,6 +6237,71 @@ Password:
               <row rowsep="1">
                 <entry align="center" colsep="1" rowsep="1">
                   <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry2_thumb.jpg" width="235"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>Raspberry Pi 2</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">Raspberry Pi 2</ulink>
+                  </para>
+                </entry>
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="155" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3b_thumb.jpg" width="235"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>Raspberry Pi 3 Model B</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">Raspberry Pi 3 Model B</ulink>
+                  </para>
+                </entry>
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="153" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3bplus_thumb.jpg" width="235"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>Raspberry Pi 3 Model B+</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">Raspberry Pi 3 Model B+</ulink>
+                  </para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>Deprecated Hardware</title>
+        <para>This hardware was supported earlier but is no longer supported.  If you downloaded an earlier image and are running FreedomBox on one of these hardware, you will keep getting software updates.  However, no new images will be provided for these hardware.  It is recommended that you migrate to newer, supported hardware using backup and restore. </para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colname="col_0"/>
+            <colspec colname="col_1"/>
+            <tbody>
+              <row rowsep="1">
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
                     <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/DreamPlug#">
                       <inlinemediaobject>
                         <imageobject>
@@ -6018,48 +6333,6 @@ Password:
                   <para>
                     <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi#">Raspberry Pi</ulink>
                   </para>
-                </entry>
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry2_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Raspberry Pi 2</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">Raspberry Pi 2</ulink>
-                  </para>
-                </entry>
-              </row>
-              <row rowsep="1">
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="155" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Raspberry Pi 3</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3#">Raspberry Pi 3</ulink>
-                  </para>
-                </entry>
-                <entry colsep="1" rowsep="1">
-                  <para>.</para>
-                </entry>
-                <entry colsep="1" rowsep="1">
-                  <para>.</para>
                 </entry>
               </row>
             </tbody>
@@ -6477,7 +6750,7 @@ Password:
             <para>Not visible on local network </para>
           </listitem>
           <listitem>
-            <para>When booting the 'stable' image (made on 2017-06-18) the board does not automatically get an IP address from the router's DHCP server over ethernet. Booting the 'testing' image (2018-06) the board does get an IP address. Tested on MICRO hardware revision J. </para>
+            <para>When booting the 'stable' image (made on 2017-06-18) the board does not automatically get an IP address from the router's DHCP server over ethernet. Booting the 'testing' image (2018-06) the board does get an IP address. Tested on MICRO hardware revision J. see also: <ulink url="https://www.olimex.com/forum/index.php?topic=5839.msg24167#msg24167"/> </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -7388,6 +7661,12 @@ iface lo inet loopback]]></screen>
           </textobject>
         </inlinemediaobject>
       </para>
+      <caution>
+        <para>
+          <emphasis role="strong">Deprecated Hardware</emphasis>
+        </para>
+        <para>This hardware was supported earlier but is no longer supported. If you downloaded an earlier image and are running FreedomBox on this hardware, you will keep getting software updates. You can stay secure and up-to-date. However, no new images will be provided for this hardware. It is recommended that you migrate to newer, supported hardware using backup and restore. </para>
+      </caution>
       <para><ulink url="https://www.globalscaletechnologies.com/t-dreamplugdetails.aspx">DreamPlug</ulink> is the hardware for which FreedomBox has been originally targeted.  FreedomBox images are built and tested for it.  For using this device as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
       <para>You can find more support and discussion for DreamPlug on the <ulink url="http://www.plugcomputer.org/plugforum/">official forum</ulink>. </para>
       <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space.  </para>
@@ -7492,6 +7771,12 @@ iface lo inet loopback]]></screen>
           </textobject>
         </inlinemediaobject>
       </para>
+      <caution>
+        <para>
+          <emphasis role="strong">Deprecated Hardware</emphasis>
+        </para>
+        <para>This hardware was supported earlier but is no longer supported. If you downloaded an earlier image and are running FreedomBox on this hardware, you will keep getting software updates. You can stay secure and up-to-date. However, no new images will be provided for this hardware. It is recommended that you migrate to newer, supported hardware using backup and restore. </para>
+      </caution>
       <para><ulink url="http://www.raspberrypi.org/products/model-b-plus/">Raspberry Pi</ulink> (Model B+) is a popular single board computer developed with the intention of promoting  teaching of basic computer science in schools.  FreedomBox images are built and tested for it.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
       <para><emphasis>Note:</emphasis> The Debian architecture used for this device is <code>armel</code>.  This means floating point computations are done in software and most operations are slower than what Raspberry Pi is capable of.  </para>
       <para><emphasis role="strong">Recommendation:</emphasis> When you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space. </para>
@@ -7581,6 +7866,7 @@ iface lo inet loopback]]></screen>
         </inlinemediaobject>
       </para>
       <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry Pi 2</ulink> (Model B ) is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi Model B+ with much faster processor and more RAM.  FreedomBox images are built and tested for it.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
+      <para>Please do not expect any output on a monitor connected via HDMI to this device as it does not display anything beyond the message 'Starting kernel...'. See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/QuickStart#">Quick Start page</ulink> to access and control your FreedomBox from network. </para>
       <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space.  </para>
       <section>
         <title>Download</title>
@@ -7652,18 +7938,19 @@ iface lo inet loopback]]></screen>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata depth="421" fileref="https://wiki.debian.org/FreedomBox/Hardware/RaspberryPi3?action=AttachFile&amp;do=get&amp;target=raspberrypi3.jpg" width="640"/>
+            <imagedata depth="421" fileref="https://wiki.debian.org/FreedomBox/Hardware/RaspberryPi3B?action=AttachFile&amp;do=get&amp;target=raspberrypi3.jpg" width="640"/>
           </imageobject>
           <textobject>
-            <phrase>Raspberry Pi 3</phrase>
+            <phrase>Raspberry Pi 3 Model B</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
-      <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry Pi 3</ulink> (Model B ) is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 2 Model B with a 64-bit processor and on-board Wi-Fi.  A FreedomBox "testing" image is available for Raspberry Pi 3.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink>, that does not require non-free firmware, is recommended instead of the on-board Wi-Fi. </para>
+      <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry Pi 3 Model B</ulink> is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 2 Model B with a 64-bit processor and on-board Wi-Fi.  A FreedomBox "testing" image is available for Raspberry Pi 3 Model B.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink>, that does not require non-free firmware, is recommended instead of the on-board Wi-Fi. </para>
+      <para>Please do not expect any output on a monitor connected via HDMI to this device as it does not display anything beyond the message 'Starting kernel...'. See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/QuickStart#">Quick Start page</ulink> to access and control your FreedomBox from network. </para>
       <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space.  </para>
       <section>
         <title>Download</title>
-        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available.  Download the "testing" image for Raspberry Pi 3.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available.  Download the "testing" image for Raspberry Pi 3 Model B.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
       </section>
       <section>
         <title>Build Image</title>
@@ -7705,6 +7992,86 @@ iface lo inet loopback]]></screen>
           </listitem>
           <listitem>
             <para>WiFi: 802.11n but requires non-free firmware, instead use a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>SATA: None </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Non-Free Status</title>
+        <itemizedlist>
+          <listitem>
+            <para>Non-free blobs required: boot firmware </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: Requires non-free firmware </para>
+          </listitem>
+          <listitem>
+            <para>Works with stock Debian kernel: Yes </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>Raspberry Pi 3 Model B+</title>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata depth="418" fileref="https://wiki.debian.org/FreedomBox/Hardware/RaspberryPi3B+?action=AttachFile&amp;do=get&amp;target=raspberrypi3bplus.jpg" width="640"/>
+          </imageobject>
+          <textobject>
+            <phrase>Raspberry Pi 3 Model B+</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry Pi 3 Model B+</ulink> is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 3 Model B with better Ethernet and a 5Ghz Wi-Fi.  A FreedomBox "testing" image is available for Raspberry Pi 3 Model B+.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink>, that does not require non-free firmware, is recommended instead of the on-board Wi-Fi. </para>
+      <para>Please do not expect any output on a monitor connected via HDMI to this device as it does not display anything beyond the message 'Starting kernel...'. See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/QuickStart#">Quick Start page</ulink> to access and control your FreedomBox from network. </para>
+      <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space.  </para>
+      <section>
+        <title>Download</title>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available.  Download the "testing" image for Raspberry Pi 3 Model B+.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
+      </section>
+      <section>
+        <title>Build Image</title>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>.  Use the target 'raspberry3-b-plus' with distribution 'testing' to build the image for this board. </para>
+      </section>
+      <section>
+        <title>Availability</title>
+        <itemizedlist>
+          <listitem>
+            <para>Price: 35 USD </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">List of official distributors</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Hardware</title>
+        <itemizedlist>
+          <listitem>
+            <para>Open Hardware: No </para>
+          </listitem>
+          <listitem>
+            <para>CPU: 1.4GHz 64-bit quad-core ARMv8 CPU </para>
+          </listitem>
+          <listitem>
+            <para>RAM: 1 GB </para>
+          </listitem>
+          <listitem>
+            <para>Storage: MicroSD card slot </para>
+          </listitem>
+          <listitem>
+            <para>Architecture: armhf </para>
+          </listitem>
+          <listitem>
+            <para>Ethernet: 10/100/1000, RJ45 </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: 802.11ac but requires non-free firmware, instead use a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> </para>
           </listitem>
           <listitem>
             <para>SATA: None </para>
@@ -7774,6 +8141,54 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.47.0 (2019-01-14)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Show Gujarati in the list of languages. </para>
+          </listitem>
+          <listitem>
+            <para>Replace glyphicons with forkawesome icons. </para>
+          </listitem>
+          <listitem>
+            <para>Snapshots: </para>
+            <itemizedlist>
+              <listitem>
+                <para>Change configuration to avoid filling up disk. </para>
+              </listitem>
+              <listitem>
+                <para>Handle "Config in use" error. </para>
+              </listitem>
+              <listitem>
+                <para>Update descriptions and configuration options. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Firewall: Fix issue with transition from iptables. </para>
+          </listitem>
+          <listitem>
+            <para>Security: Switch to Argon2 password hash. </para>
+          </listitem>
+          <listitem>
+            <para>Cockpit: Add link to manual page and update description. </para>
+          </listitem>
+          <listitem>
+            <para>Radicale: Add initial support for radicale 2.x. </para>
+          </listitem>
+          <listitem>
+            <para>Setup: </para>
+            <itemizedlist>
+              <listitem>
+                <para>Handle showing setup page after app completes installation. </para>
+              </listitem>
+              <listitem>
+                <para>Optimize installation in-progress checks and refresh time. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.46.0 (2018-12-31)</title>
         <itemizedlist>
@@ -9419,21 +9834,24 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
         <para>All text visible to users of FreedomBox needs to be localized to various languages.  This translation work includes: </para>
         <itemizedlist>
           <listitem>
-            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth#">Plinth</ulink> web interface for FreedomBox </para>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth#">Web Interface</ulink> for FreedomBox </para>
           </listitem>
           <listitem>
             <para>FreedomBox documentation </para>
           </listitem>
           <listitem>
-            <para>FreedomBox <ulink url="https://freedomboxfoundation.org">website</ulink> and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> </para>
+            <para>FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink>, <ulink url="https://freedombox.org">website</ulink> and <ulink url="https://freedomboxfoundation.org">foundation website</ulink>. </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://docs.djangoproject.com/en/dev/internals/contributing/localizing/">Django web framework</ulink> that FreedomBox uses. </para>
           </listitem>
           <listitem>
             <para>Individual applications that FreedomBox exposes to users. </para>
           </listitem>
         </itemizedlist>
-        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/ReleaseNotes#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/plinth/locale">Salsa</ulink>. </para>
-        <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
-        <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Translate#">translation landing page</ulink>. </para>
+        <para>You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/plinth/locale">Salsa</ulink>. </para>
+        <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to work with others translating for that language. </para>
+        <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Translate#">translators</ulink> page. </para>
       </section>
       <section>
         <title>Spread the Word</title>
@@ -10182,17 +10600,7 @@ FreedomBox app to configure Tiny Tiny RSS.
         </listitem>
         <listitem>
           <para>
-            <ulink url="https://en.wikipedia.org/wiki/DreamPlug">DreamPlug</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://www.linksprite.com/linksprite-pcduino3/">pcDuino3</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi</ulink>
           </para>
         </listitem>
         <listitem>
@@ -10202,7 +10610,12 @@ FreedomBox app to configure Tiny Tiny RSS.
         </listitem>
         <listitem>
           <para>
-            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi 3</ulink>
+            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi 3 Model B</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi 3 Model B+</ulink>
           </para>
         </listitem>
         <listitem>
