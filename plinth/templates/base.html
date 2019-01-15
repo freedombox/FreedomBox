@@ -99,8 +99,9 @@
           <span class="icon-bar"></span>
         </button>
         {% block mainmenu_left %}
-          <a href="{% url 'index' %}"  class="navbar-brand"
-             title="{{ box_name }}">
+          <a href="{% url 'index' %}"  class="navbar-brand
+                   {% if not submenu.url %} menu_link_active {% else %}
+                   menu_link {% endif %}" title="{{ box_name }}">
             <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
           </a>
         {% endblock %}
