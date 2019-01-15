@@ -27,8 +27,8 @@ class Menu(object):
         """label is the text that is displayed on the menu.
 
         icon is the icon to be displayed next to the label.
-        Choose from the Glyphicon set:
-        http://twitter.github.com/bootstrap/base-css.html#icons
+        Choose from the Fork Awesome set:
+        https://forkawesome.github.io/Fork-Awesome/icons/
 
         url is the url location that will be activated when the menu
         item is selected.

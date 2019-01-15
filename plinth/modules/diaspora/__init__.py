@@ -76,8 +76,7 @@ clients = clients
 def init():
     """Initialize the Diaspora module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'fa-thumbs-o-up', 'diaspora:index',
-                     short_description)
+    menu.add_urlname(name, 'fa-diaspora', 'diaspora:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

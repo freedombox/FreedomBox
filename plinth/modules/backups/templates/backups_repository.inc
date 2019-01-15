@@ -65,7 +65,7 @@
           <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
              role="button" class="repository-remove btn btn-sm btn-default"
              href="{% url 'backups:repository-remove' uuid %}">
-             <span class="fa fa-trash" aria-hidden="true">
+             <span class="fa fa-trash-o" aria-hidden="true">
           </a>
 
         {% endif %}
@@ -91,7 +91,7 @@
             </a>
             <a class="archive-delete btn btn-sm btn-default"
                href="{% url 'backups:delete' uuid archive.name %}">
-              <span class="fa fa-trash" aria-hidden="true">
+              <span class="fa fa-trash-o" aria-hidden="true">
               </span>
             </a>
           </td>
