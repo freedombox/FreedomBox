@@ -284,7 +284,6 @@ footer license-info p {
 }
 
 .card-icon img {
-
   transition: filter 0.3s;
 
   /* --- .installed ---*/
@@ -295,12 +294,9 @@ footer license-info p {
   /* filter: grayscale(1) opacity(0.5); */
   /* --- .uninstalled:hover ---*/
   /* filter: grayscale(1) opacity(1); */
-
 }
 
-  /* #container-wrapper .card-icon img –  is a bad hook! see #1349 */
-.card:hover .card-icon img, #container-wrapper .card-icon img {
-  /* --- .installed:hover ---*/
+.card:hover .card-icon img {
   filter: none;
 }
 
@@ -388,9 +384,9 @@ a.menu_link_active {
     margin: 0;
 }
 
-.background-logo .card-list:before,
-.background-apps .card-list:before,
-.background-system .card-list:before {
+.index-page .card-list:before,
+.apps-page .card-list:before,
+.system-page .card-list:before {
     position: relative;
     width: 40rem;
     height: 40rem;
@@ -400,16 +396,19 @@ a.menu_link_active {
     top: -2rem;
     content: " ";
     background-size: 100%;
-    background-image: url('../img/freedombox-logo-background.svg');
     background-repeat: no-repeat;
     z-index: -1;
 }
 
-.background-apps .card-list:before {
+.index-page .card-list:before {
+    background-image: url('../img/freedombox-logo-background.svg');
+}
+
+.apps-page .card-list:before {
     background-image: url('../img/apps-background.svg');
 }
 
-.background-system .card-list:before {
+.system-page .card-list:before {
     background-image: url('../img/system-background.svg');
 }
 
