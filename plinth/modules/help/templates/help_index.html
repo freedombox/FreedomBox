@@ -22,44 +22,44 @@
 {% load firstboot_extras %}
 {% load static %}
 
-{% block content %}
-<div id="container-wrapper" class="container thumbnail">
-  <h2>{% trans "Help" %}</h2>
+{% block content-container %}
+  <div class="container content-container">
+    <h2>{% trans "Help" %}</h2>
 
-  <p>
-    {% url 'help:manual' as manual_url %}
-    {% blocktrans trimmed %}
-      The <a href="{{ manual_url }}">{{ box_name }} Manual</a> is the
-      best place to start for information regarding {{ box_name }}.
-    {% endblocktrans %}
-  </p>
+    <p>
+      {% url 'help:manual' as manual_url %}
+      {% blocktrans trimmed %}
+        The <a href="{{ manual_url }}">{{ box_name }} Manual</a> is the
+        best place to start for information regarding {{ box_name }}.
+      {% endblocktrans %}
+    </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      <a href="http://wiki.debian.org/FreedomBox" target="_blank">
-        {{ box_name }} project wiki </a> contains further information.
-    {% endblocktrans %}
-  </p>
+    <p>
+      {% blocktrans trimmed %}
+        <a href="http://wiki.debian.org/FreedomBox" target="_blank">
+          {{ box_name }} project wiki </a> contains further information.
+      {% endblocktrans %}
+    </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      To seek help from {{ box_name }} community, queries may be posted on
-      the
-      <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
-      mailing list</a>.  The list archives also contain information
-      about problems faced by other users and possible solutions.
-    {% endblocktrans %}
-  </p>
+    <p>
+      {% blocktrans trimmed %}
+        To seek help from {{ box_name }} community, queries may be posted on
+        the
+        <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
+        mailing list</a>.  The list archives also contain information
+        about problems faced by other users and possible solutions.
+      {% endblocktrans %}
+    </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      Many {{ box_name }} contributors and users are also available on
-      the irc.oftc.net IRC network.  Join and request help on the
-      <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
-      #freedombox</a> channel using the IRC web interface.
-    {% endblocktrans %}
-  </p>
-</div>
+    <p>
+      {% blocktrans trimmed %}
+        Many {{ box_name }} contributors and users are also available on
+        the irc.oftc.net IRC network.  Join and request help on the
+        <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
+        #freedombox</a> channel using the IRC web interface.
+      {% endblocktrans %}
+    </p>
+  </div>
 {% endblock %}
 
 
