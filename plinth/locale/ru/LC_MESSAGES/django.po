@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-31 16:14-0500\n"
+"POT-Creation-Date: 2019-01-14 20:57-0500\n"
 "PO-Revision-Date: 2018-08-28 13:13+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -20,32 +20,32 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.2-dev\n"
 
-#: plinth/action_utils.py:258
+#: plinth/action_utils.py:298
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Слушать на {kind} порт {listen_address}:{port}"
 
-#: plinth/action_utils.py:261
+#: plinth/action_utils.py:301
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Слушать порт {port} на {kind}"
 
-#: plinth/action_utils.py:348
+#: plinth/action_utils.py:388
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Доступ к URL {url} по tcp {kind}"
 
-#: plinth/action_utils.py:352
+#: plinth/action_utils.py:392
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Доступ к URL {url}"
 
-#: plinth/action_utils.py:380
+#: plinth/action_utils.py:420
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Подключение к {host}:{port}"
 
-#: plinth/action_utils.py:383
+#: plinth/action_utils.py:423
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Невозможно подключиться к {host}:{port}"
@@ -82,7 +82,7 @@ msgstr "Язык, используемый для представления д�
 msgid "Use the language preference set in the browser"
 msgstr "Использовать языковые настройки браузера"
 
-#: plinth/middleware.py:73
+#: plinth/middleware.py:73 plinth/templates/setup.html:57
 msgid "Application installed."
 msgstr "Приложение установлено."
 
@@ -514,25 +514,26 @@ msgstr ""
 "на основе консоли управления также доступен."
 
 #: plinth/modules/cockpit/__init__.py:51
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
+#| "\"{users_url}\">any user</a> with a {box_name} login. Sensitive "
+#| "information and system altering abilities are limited to users belonging "
+#| "to admin group."
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
-"\"{users_url}\">any user</a> with a {box_name} login. Sensitive information "
-"and system altering abilities are limited to users belonging to admin group."
+"\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
 "Когда включен, Cockpit доступен на <a href=\"/_cockpit/\">/_cockpit/</a> веб-"
 "сервере. Он может быть доступен <a href=\"{users_url}\">любому пользователю</"
 "a> {box_name}. Конфиденциальная информация и возможности системы доступны "
 "только группе администраторов."
 
-#: plinth/modules/cockpit/__init__.py:57
-msgid "Currently only limited functionality is available."
-msgstr "В настоящее время доступен только ограниченный функционал."
-
 #: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:39
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Настроить"
@@ -613,7 +614,7 @@ msgstr ""
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service-subsubmenu.html:45 plinth/templates/service.html:42
-#: plinth/templates/setup.html:44 plinth/templates/simple_service.html:38
+#: plinth/templates/setup.html:48 plinth/templates/simple_service.html:38
 msgid "Learn more..."
 msgstr "Подробнее..."
 
@@ -3832,15 +3833,15 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:40
+#: plinth/modules/radicale/__init__.py:43
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:42
+#: plinth/modules/radicale/__init__.py:45
 msgid "Calendar and Addressbook"
 msgstr "Календарь и Адресная книга"
 
-#: plinth/modules/radicale/__init__.py:46
+#: plinth/modules/radicale/__init__.py:49
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3879,14 +3880,19 @@ msgstr ""
 "изменения в любой календарь/адресную книгу."
 
 #: plinth/modules/radicale/manifest.py:25
-msgid "DAVDroid"
-msgstr "DAVDroid"
+msgid "DAVx5"
+msgstr ""
 
 #: plinth/modules/radicale/manifest.py:27
+#, fuzzy
+#| msgid ""
+#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
+#| "your user name. DAVdroid will show all existing calendars and address "
+#| "books and you can create new."
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
-"user name. DAVdroid will show all existing calendars and address books and "
-"you can create new."
+"user name. DAVx5 will show all existing calendars and address books and you "
+"can create new."
 msgstr ""
 "Введите URL-адрес сервера Radicale (напр. http://localhost:5232) и ваше имя "
 "пользователя. DAVdroid покажет все существующие календари и адресные книги, "
@@ -4082,15 +4088,15 @@ msgstr ""
 "security/lesssecureapps\" >https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:24
+#: plinth/modules/searx/__init__.py:38 plinth/modules/searx/manifest.py:24
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:42
+#: plinth/modules/searx/__init__.py:40
 msgid "Web Search"
 msgstr "Веб-поиск"
 
-#: plinth/modules/searx/__init__.py:45
+#: plinth/modules/searx/__init__.py:43
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -4098,7 +4104,7 @@ msgstr ""
 "Searx - это конфиденциальная метапоисковая система. Она агрегирует и "
 "показывает результаты с разных поисковых систем."
 
-#: plinth/modules/searx/__init__.py:47
+#: plinth/modules/searx/__init__.py:45
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -4106,7 +4112,7 @@ msgstr ""
 "Searx может быть использован, чтобы избежать отслеживания и профилирования "
 "поисковыми системами. Она не хранит никаких файлов cookie по умолчанию."
 
-#: plinth/modules/searx/__init__.py:51
+#: plinth/modules/searx/__init__.py:49
 msgid "Search the web"
 msgstr "Поиск в интернете"
 
@@ -4354,11 +4360,11 @@ msgstr "Редактировать общий ресурс"
 msgid "Share deleted."
 msgstr "Общий ресурс удалён."
 
-#: plinth/modules/snapshot/__init__.py:35
+#: plinth/modules/snapshot/__init__.py:36
 msgid "Storage Snapshots"
 msgstr "Хранилище снимков"
 
-#: plinth/modules/snapshot/__init__.py:38
+#: plinth/modules/snapshot/__init__.py:39
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -4368,108 +4374,105 @@ msgstr ""
 "btrfs. Они могут использоваться для отката системы к последнему рабочему "
 "состоянию в случае неприемлемых изменений в системе."
 
-#: plinth/modules/snapshot/__init__.py:42
+#: plinth/modules/snapshot/__init__.py:43
 #, no-python-format
 msgid ""
-"Snapshots are taken every hour, day and month (called timeline snapshots). "
-"Snapshots are also taken before and after a software installation. Although "
-"snapshots are efficient and only store the differences, they may be deleted "
-"to reclaim free space.  Individual files from older snapshots can be "
-"accessed by visiting \"/.snapshots\" directory in the filesystem. It is "
-"recommended to enable snapshots only if you have at least 50% free space on "
-"your root partition."
+"Snapshots are taken periodically (called timeline snapshots) and also before "
+"and after a software installation. Older snapshots will be automatically "
+"cleaned up according to the settings below."
 msgstr ""
-"Снимки системы выполняются раз в час, день или месяц (они называются "
-"хронологическими). Снимки также выполняются до и после установки "
-"программного обеспечения. Хоть снимки и являются эффективными и хранят "
-"только различия, их можно удалить для освобождения свободного места. "
-"Отдельные файлы из старых снимков можно найти в каталоге «/.snapshots» в "
-"файловой системе. Рекомендуется разрешать снимки только если у вас на "
-"корневой файловой системе свободно как минимум 50% места."
 
-#: plinth/modules/snapshot/__init__.py:49
+#: plinth/modules/snapshot/__init__.py:46
+#, fuzzy
+#| msgid ""
+#| "Snapshots work on btrfs file systems only and on the root partition only. "
+#| "Snapshots are not a replacement for backups since they are stored on the "
+#| "same partition. "
 msgid ""
-"Snapshots work on btrfs file systems only and on the root partition only. "
-"Snapshots are not a replacement for backups since they are stored on the "
-"same partition. "
+"Snapshots currently work on btrfs file systems only and on the root "
+"partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
+"backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
 "Снимки системы работают только на файловой системе btrfs и только на "
 "корневом разделе. Снимки — не замена бэкапам, так как они хранятся на том же "
 "разделе. "
 
 #: plinth/modules/snapshot/forms.py:27
+msgid "Free Disk Space to Maintain"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:28
+msgid ""
+"Maintain this percentage of free space on the disk. If free space falls "
+"below this value, older snapshots are removed until this much free space is "
+"regained. The default value is 30%."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:35
 msgid "Timeline Snapshots"
 msgstr "Снапшоты по графику"
 
-#: plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:36
 msgid ""
 "Enable or disable timeline snapshots (hourly, daily, monthly and yearly)."
 msgstr ""
 "Включить или отключить снапшоты по графику (ежечасно, ежедневно, ежемесячно "
 "и ежегодно)."
 
-#: plinth/modules/snapshot/forms.py:33
+#: plinth/modules/snapshot/forms.py:41
 msgid "Software Installation Snapshots"
 msgstr "Снапшоты при установке ПО"
 
-#: plinth/modules/snapshot/forms.py:34
+#: plinth/modules/snapshot/forms.py:42
 msgid "Enable or disable snapshots before and after software installation"
 msgstr ""
 "Включить или отключить снапшоты до и после установки программного обеспечения"
 
-#: plinth/modules/snapshot/forms.py:38
+#: plinth/modules/snapshot/forms.py:46
 msgid "Hourly Snapshots Limit"
 msgstr "Часовой лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:39
+#: plinth/modules/snapshot/forms.py:47
 msgid "Keep a maximum of this many hourly snapshots."
 msgstr "Хранить максимум столько ежечасных снапшотов."
 
-#: plinth/modules/snapshot/forms.py:42
+#: plinth/modules/snapshot/forms.py:50
 msgid "Daily Snapshots Limit"
 msgstr "Дневной лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:43
+#: plinth/modules/snapshot/forms.py:51
 msgid "Keep a maximum of this many daily snapshots."
 msgstr "Хранить максимум столько ежедневных снапшотов."
 
-#: plinth/modules/snapshot/forms.py:46
+#: plinth/modules/snapshot/forms.py:54
 msgid "Weekly Snapshots Limit"
 msgstr "Недельный лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:47
+#: plinth/modules/snapshot/forms.py:55
 msgid "Keep a maximum of this many weekly snapshots."
 msgstr "Хранить максимум столько еженедельных снапшотов."
 
-#: plinth/modules/snapshot/forms.py:50
+#: plinth/modules/snapshot/forms.py:58
 msgid "Monthly Snapshots Limit"
 msgstr "Месячный лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:51
+#: plinth/modules/snapshot/forms.py:59
 msgid "Keep a maximum of this many monthly snapshots."
 msgstr "Хранить максимум столько ежемесячных снапшотов."
 
-#: plinth/modules/snapshot/forms.py:54
+#: plinth/modules/snapshot/forms.py:62
 msgid "Yearly Snapshots Limit"
 msgstr "Готовой лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:55
+#: plinth/modules/snapshot/forms.py:63
+#, fuzzy
+#| msgid ""
+#| "Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
 msgid ""
-"Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
+"Keep a maximum of this many yearly snapshots. The default value is 0 "
+"(disabled)."
 msgstr ""
 "Хранить максимум столько ежегодных снапшотов. По умолчанию 0 (отключено)."
-
-#: plinth/modules/snapshot/forms.py:59
-msgid "Delete Software Snapshots older than (days)"
-msgstr "Удалить снимки программного обеспечения старше, чем (дней)"
-
-#: plinth/modules/snapshot/forms.py:61
-msgid ""
-"Software snapshots older than this will be deleted. This does not limit the "
-"number of software snapshots created."
-msgstr ""
-"Снимки программного обеспечения старше будут удаляться. Это не ограничивает "
-"количество создаваемых снимков программного обеспечения."
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:27
 msgid "Delete the following snapshots permanently?"
@@ -4489,7 +4492,7 @@ msgstr "Дата"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:52
 #: plinth/modules/snapshot/templates/snapshot_manage.html:36
-#: plinth/modules/snapshot/views.py:157
+#: plinth/modules/snapshot/views.py:188
 msgid "Delete Snapshots"
 msgstr "Удалить снапшот"
 
@@ -4510,6 +4513,13 @@ msgstr "активен"
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Откат к снимку #%(number)s"
 
+#: plinth/modules/snapshot/templates/snapshot_not_supported.html:26
+#, python-format
+msgid ""
+"Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
+"currently only available on <strong>%(types_supported)s</strong> filesystems."
+msgstr ""
+
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
 msgstr "Откат системы до этого снимка?"
@@ -4528,45 +4538,49 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Откат к снимку %(number)s"
 
-#: plinth/modules/snapshot/views.py:42
+#: plinth/modules/snapshot/views.py:43
 msgid "Manage Snapshots"
 msgstr "Управление снапшотами"
 
-#: plinth/modules/snapshot/views.py:72
+#: plinth/modules/snapshot/views.py:92
 msgid "Created snapshot."
 msgstr "Создан снимок."
 
-#: plinth/modules/snapshot/views.py:128
+#: plinth/modules/snapshot/views.py:149
 msgid "Storage snapshots configuration updated"
 msgstr "Настройки хранения снапшотов обновлены"
 
-#: plinth/modules/snapshot/views.py:131 plinth/modules/tor/views.py:72
+#: plinth/modules/snapshot/views.py:153 plinth/modules/tor/views.py:72
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Ошибка действий: {0}[{1}][{2}]"
 
-#: plinth/modules/snapshot/views.py:145
+#: plinth/modules/snapshot/views.py:167
 #, fuzzy
 #| msgid "Deleted all snapshots."
 msgid "Deleted all snapshots"
 msgstr "Удалить все снапшоты."
 
-#: plinth/modules/snapshot/views.py:149
+#: plinth/modules/snapshot/views.py:171
 #, fuzzy
 #| msgid "Delete all the snapshots"
 msgid "Deleted selected snapshots"
 msgstr "Удалить все снапшоты"
 
-#: plinth/modules/snapshot/views.py:168
+#: plinth/modules/snapshot/views.py:176
+msgid "Snapshot is currently in use. Please try again later."
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:199
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Откат к снимку #{number}."
 
-#: plinth/modules/snapshot/views.py:171
+#: plinth/modules/snapshot/views.py:202
 msgid "The system must be restarted to complete the rollback."
 msgstr "Необходимо перезагрузить систему для завершения отката."
 
-#: plinth/modules/snapshot/views.py:183
+#: plinth/modules/snapshot/views.py:214
 msgid "Rollback to Snapshot"
 msgstr "Откат к снимку"
 
@@ -4594,11 +4608,11 @@ msgstr "Единый вход"
 msgid "Login"
 msgstr "Логин"
 
-#: plinth/modules/storage/__init__.py:36 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
 msgid "Storage"
 msgstr "Storage"
 
-#: plinth/modules/storage/__init__.py:44
+#: plinth/modules/storage/__init__.py:45
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -4606,81 +4620,81 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:191
+#: plinth/modules/storage/__init__.py:201
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} байт"
 
-#: plinth/modules/storage/__init__.py:195
+#: plinth/modules/storage/__init__.py:205
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} КиБ"
 
-#: plinth/modules/storage/__init__.py:199
+#: plinth/modules/storage/__init__.py:209
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} Миб"
 
-#: plinth/modules/storage/__init__.py:203
+#: plinth/modules/storage/__init__.py:213
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} Гиб"
 
-#: plinth/modules/storage/__init__.py:206
+#: plinth/modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} Тиб"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:223
 msgid "The operation failed."
 msgstr "Операция не удалась."
 
-#: plinth/modules/storage/__init__.py:215
+#: plinth/modules/storage/__init__.py:225
 msgid "The operation was cancelled."
 msgstr "Операция была отменена."
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:227
 msgid "The device is already unmounting."
 msgstr "Устройство уже отключается."
 
-#: plinth/modules/storage/__init__.py:219
+#: plinth/modules/storage/__init__.py:229
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Операция не поддерживается из-за отсутствия поддержки драйвера или утилиты."
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:232
 msgid "The operation timed out."
 msgstr "Время операции вышло."
 
-#: plinth/modules/storage/__init__.py:224
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Операция пробудит диск, находящийся в режиме глубокого сна."
 
-#: plinth/modules/storage/__init__.py:227
+#: plinth/modules/storage/__init__.py:237
 msgid "Attempting to unmount a device that is busy."
 msgstr "Попытка отключения устройства, которое используется."
 
-#: plinth/modules/storage/__init__.py:229
+#: plinth/modules/storage/__init__.py:239
 msgid "The operation has already been cancelled."
 msgstr "Операция уже отменена."
 
-#: plinth/modules/storage/__init__.py:235
+#: plinth/modules/storage/__init__.py:245
 msgid "Not authorized to perform the requested operation."
 msgstr "Отсутствует авторизация для выполнения запрошенной операции."
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:247
 msgid "The device is already mounted."
 msgstr "Устройство уже подключено."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:249
 msgid "The device is not mounted."
 msgstr "Устройство не подключено."
 
-#: plinth/modules/storage/__init__.py:242
+#: plinth/modules/storage/__init__.py:252
 msgid "Not permitted to use the requested option."
 msgstr "Использование запрошенной опции не разрешено."
 
-#: plinth/modules/storage/__init__.py:245
+#: plinth/modules/storage/__init__.py:255
 msgid "The device is mounted by another user."
 msgstr "Устройство подключено другим пользователем."
 
@@ -5180,7 +5194,7 @@ msgstr "Чтение и подписка на ленты новостей"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:35 plinth/templates/setup.html:93
+#: plinth/modules/upgrades/__init__.py:35 plinth/templates/setup.html:101
 msgid "Update"
 msgstr "Обновление"
 
@@ -5557,31 +5571,19 @@ msgstr ""
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Базовая функциональность и веб-интерфейс %(box_name)s"
 
-#: plinth/templates/base.html:95
+#: plinth/templates/base.html:96
 msgid "Toggle navigation"
 msgstr "Отображение навигации"
 
-#: plinth/templates/base.html:113
-msgid " Home"
-msgstr " Домой"
-
-#: plinth/templates/base.html:116
+#: plinth/templates/base.html:113 plinth/templates/base.html:116
 msgid "Home"
 msgstr "Домой"
 
-#: plinth/templates/base.html:121
-msgid " Apps"
-msgstr " Приложения"
-
-#: plinth/templates/base.html:125
+#: plinth/templates/base.html:121 plinth/templates/base.html:125
 msgid "Apps"
 msgstr "Приложения"
 
-#: plinth/templates/base.html:130
-msgid " System"
-msgstr " Система"
-
-#: plinth/templates/base.html:134
+#: plinth/templates/base.html:130 plinth/templates/base.html:134
 msgid "System"
 msgstr "Система"
 
@@ -5772,19 +5774,19 @@ msgstr "Выполняется служба <em>%(service_name)s</em>."
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Служба <em>%(service_name)s</em> не запущена."
 
-#: plinth/templates/setup.html:35
+#: plinth/templates/setup.html:39
 msgid "Installation"
 msgstr "Установка"
 
-#: plinth/templates/setup.html:55
+#: plinth/templates/setup.html:63
 msgid "Install this application?"
 msgstr "Установить это приложение?"
 
-#: plinth/templates/setup.html:59
+#: plinth/templates/setup.html:67
 msgid "This application needs an update. Update now?"
 msgstr "Это приложение нуждается в обновлении. Обновить сейчас?"
 
-#: plinth/templates/setup.html:70
+#: plinth/templates/setup.html:78
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
@@ -5792,31 +5794,77 @@ msgstr ""
 "Другая установка или обновление уже запущенны. Пожалуйста, подождите "
 "несколько минут перед повторной попыткой."
 
-#: plinth/templates/setup.html:77
+#: plinth/templates/setup.html:85
 msgid "This application is currently not available in your distribution."
 msgstr "Это приложение в настоящее время недоступно для вашего дистрибутива."
 
-#: plinth/templates/setup.html:91
+#: plinth/templates/setup.html:99
 msgid "Install"
 msgstr "Установка"
 
-#: plinth/templates/setup.html:103
+#: plinth/templates/setup.html:110
 msgid "Performing pre-install operation"
 msgstr "Выполнение операции предварительной установки"
 
-#: plinth/templates/setup.html:107
+#: plinth/templates/setup.html:114
 msgid "Performing post-install operation"
 msgstr "Выполнение операции после установки"
 
-#: plinth/templates/setup.html:112
+#: plinth/templates/setup.html:119
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "Установка %(package_names)s: %(status)s"
 
-#: plinth/templates/setup.html:122
+#: plinth/templates/setup.html:129
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% завершено"
+
+#: plinth/web_framework.py:183
+msgid "Gujarati"
+msgstr ""
+
+#~ msgid "Currently only limited functionality is available."
+#~ msgstr "В настоящее время доступен только ограниченный функционал."
+
+#~ msgid "DAVDroid"
+#~ msgstr "DAVDroid"
+
+#~ msgid ""
+#~ "Snapshots are taken every hour, day and month (called timeline "
+#~ "snapshots). Snapshots are also taken before and after a software "
+#~ "installation. Although snapshots are efficient and only store the "
+#~ "differences, they may be deleted to reclaim free space.  Individual files "
+#~ "from older snapshots can be accessed by visiting \"/.snapshots\" "
+#~ "directory in the filesystem. It is recommended to enable snapshots only "
+#~ "if you have at least 50% free space on your root partition."
+#~ msgstr ""
+#~ "Снимки системы выполняются раз в час, день или месяц (они называются "
+#~ "хронологическими). Снимки также выполняются до и после установки "
+#~ "программного обеспечения. Хоть снимки и являются эффективными и хранят "
+#~ "только различия, их можно удалить для освобождения свободного места. "
+#~ "Отдельные файлы из старых снимков можно найти в каталоге «/.snapshots» в "
+#~ "файловой системе. Рекомендуется разрешать снимки только если у вас на "
+#~ "корневой файловой системе свободно как минимум 50% места."
+
+#~ msgid "Delete Software Snapshots older than (days)"
+#~ msgstr "Удалить снимки программного обеспечения старше, чем (дней)"
+
+#~ msgid ""
+#~ "Software snapshots older than this will be deleted. This does not limit "
+#~ "the number of software snapshots created."
+#~ msgstr ""
+#~ "Снимки программного обеспечения старше будут удаляться. Это не "
+#~ "ограничивает количество создаваемых снимков программного обеспечения."
+
+#~ msgid " Home"
+#~ msgstr " Домой"
+
+#~ msgid " Apps"
+#~ msgstr " Приложения"
+
+#~ msgid " System"
+#~ msgstr " Система"
 
 #~ msgid "Archive name"
 #~ msgstr "Имя архива"
