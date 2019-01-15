@@ -264,6 +264,8 @@ setuptools.setup(
          glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
         ('/usr/share/pam-configs/',
          glob.glob('data/usr/share/pam-configs/*-freedombox')),
+        ('/etc/fail2ban/',
+         ['data/etc/fail2ban/jail.local']),
         ('/etc/plinth/modules-enabled',
          glob.glob(os.path.join(
              'data/etc/plinth/modules-enabled',
