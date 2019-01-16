@@ -144,6 +144,9 @@
               <li>
                 <a href="{% url 'help:index' %}" title="{% trans "Help" %}">
                   <span class="fa fa-question-circle nav-icon"></span>
+                  <span class="nav-text hidden-sm hidden-md hidden-lg">
+                    {% trans "Help" %}
+                  </span>
                 </a>
               </li>
               <li class="dropdown">
@@ -195,7 +198,10 @@
               <li>
                 <a href="{% url 'language-selection' %}?next={{ request.path|iriencode }}"
                    title="{% trans "Select language" %}">
-                  <i class="fa fa-globe-w  nav-icon"></i>
+                  <span class="fa fa-globe-w  nav-icon"></span>
+                  <span class="nav-text hidden-sm hidden-md hidden-lg">
+                    {% trans "Select language" %}
+                  </span>
                 </a>
               </li>
               <li>
