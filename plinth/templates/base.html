@@ -170,21 +170,21 @@
                       {% trans "Change password" %}
                     </a>
                   </li>
-                  <li class="divider"></li>
+                  <li class="divider hidden-xs"></li>
                   {% if user_is_admin %}
-                    <li>
+                    <li class="hidden-xs">
                       <a href="{% url 'power:restart' %}"
                          title="{% trans "Restart"%}">
                         {% trans "Restart" %}
                       </a>
                     </li>
-                    <li>
+                    <li class="hidden-xs">
                       <a href="{% url 'power:shutdown' %}"
                          title="{% trans "Shut down" %}">
                         {% trans "Shut down" %}
                       </a>
                     </li>
-                    <li class="divider"></li>
+                    <li class="divider hidden-xs"></li>
                   {% endif %}
                   <li>
                     <a href="{% url 'users:logout' %}"
