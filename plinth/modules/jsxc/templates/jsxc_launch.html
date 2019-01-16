@@ -37,7 +37,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="/javascript/bootstrap/css/bootstrap.min.css" media="all"
+    <link href="/javascript/bootstrap4/css/bootstrap.min.css" media="all"
           rel="stylesheet" type="text/css" />
     <link href="/javascript/jquery-ui/themes/base/jquery-ui.min.css"
           media="all" rel="stylesheet" type="text/css" />
@@ -50,7 +50,7 @@
     <script src="/javascript/jquery-ui/jquery-ui.min.js"></script>
     <script src="/javascript/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/javascript/jquery-fullscreen/jquery.fullscreen.js"></script>
-    <script src="/javascript/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/javascript/bootstrap4/js/bootstrap.bundle.min.js"></script>
     <script src="/javascript/jsxc/lib/jsxc.dep.js"></script>
     <script src="/javascript/jsxc/jsxc.js"></script>
 
@@ -61,49 +61,49 @@
         data-jsxc-root="{% static 'jsxc/libjs-jsxc' %}">
     <div class="container" id="content" role="main">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
-          <h1 class="page-header text-center">Jabber Chat</h1>
+        <div class="col-lg-6 offset-lg-3">
+          <h1>Jabber Chat</h1>
 
-          <div class="form form-horizontal">
-            <div class="form-group">
-              <label for="xmpp-domain" class="col-xs-4 control-label">
+          <div class="form">
+            <div class="form-group row">
+              <label for="xmpp-domain" class="col-sm-4 col-form-label">
                 Domain:
               </label>
-              <div class="col-xs-8">
+              <div class="col-sm-8">
                 <input type="text" id="xmpp-domain" name="xmpp-domain"
                        class="form-control" />
                 <p id="server-flash"></p>
               </div>
             </div>
 
-            <form id="jsxc-login-form" class="form form-horizontal">
+            <form id="jsxc-login-form" class="form">
               <fieldset>
                 <div class="form-group row">
-                  <label for="jsxc-username" class="col-xs-4 control-label">
+                  <label for="jsxc-username" class="col-sm-4 col-form-label">
                     Username:
                   </label>
-                  <div class="col-xs-8">
+                  <div class="col-sm-8">
                     <input type="text" id="jsxc-username"
                            class="form-control" />
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="jsxc-password" class="col-xs-4 control-label">
+                  <label for="jsxc-password" class="col-sm-4 col-form-label">
                     Password:
                   </label>
-                  <div class="col-xs-8">
+                  <div class="col-sm-8">
                     <input type="password" id="jsxc-password"
                            class="form-control" />
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <div class="col-xs-offset-4 col-xs-8">
+                  <div class="offset-sm-4 col-sm-8">
                     <button type="submit" id="jsxc-submit"
                             class="submit btn btn-primary"
                             data-loading-text="Logging in...">Log in</button>
-                    <button class="logout btn btn-default">Log out</button>
+                    <button class="logout btn btn-secondary">Log out</button>
                   </div>
                 </div>
               </fieldset>
@@ -113,7 +113,7 @@
       </div>
     </div>
 
-    <div class="hidden">
+    <div class="d-none">
       <a href="{% static 'jslicense.html' %}" data-jslicense="1">
         {% trans "JavaScript license information" %}</a>
     </div>

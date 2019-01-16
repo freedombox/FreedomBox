@@ -7,10 +7,10 @@
 {% load i18n %}
 
 {% block configuration %}
-  <form class="form-horizontal" method="post">
+  <form id="snapshot-configure" class="form-horizontal" method="post">
     {% csrf_token %}
     <h3>{% trans "Configuration" %}</h3>
-    {{ form|bootstrap_horizontal:'col-sm-4' }}
+    {{ form|bootstrap_horizontal:'col-md-4' }}
     <input type="submit" class="btn btn-primary" name="update"
            value="{% trans "Update setup" %}"/>
   </form>

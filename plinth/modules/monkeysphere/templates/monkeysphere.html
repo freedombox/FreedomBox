@@ -74,7 +74,7 @@
               {% for domain in key.all_domains %}
                 {% if domain not in key.imported_domains %}
                   <li>
-                    <span class="label label-default"
+                    <span class="badge badge-secondary"
                       ><span class="fa fa-times"
                              aria-hidden="true"></span></span>
                     <span class="monkeysphere-importable-domain"
@@ -82,7 +82,7 @@
                   </li>
                 {% elif domain not in key.available_domains %}
                   <li>
-                    <span class="label label-warning"
+                    <span class="badge badge-warning"
                       ><span class="fa fa-exclamation-triangle"
                              aria-hidden="true"></span></span>
                     <span class="monkeysphere-unavailable-domain"
@@ -90,7 +90,7 @@
                   </li>
                 {% else %}
                   <li>
-                    <span class="label label-success"
+                    <span class="badge badge-success"
                       ><span class="fa fa-check"
                              aria-hidden="true"></span></span>
                     <span class="monkeysphere-imported-domain"

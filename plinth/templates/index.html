@@ -63,7 +63,7 @@
           {% for shortcut in shortcuts %}
             {% if shortcut.is_enabled %}
               {% if user.is_authenticated or not shortcut.login_required %}
-                <div class="card thumbnail">
+                <div class="card">
                   {% if selected_shortcut.component_id == shortcut.component_id %}
                     <a href="{{ shortcut.url }}" class="nav-link active">
                   {% else %}
@@ -122,7 +122,7 @@
   </p>
 
   <div class="row">
-    <div class="col-md-2 col-md-offset-3">
+    <div class="col-lg-2 offset-lg-3">
       <p>
         <a href="https://wiki.debian.org/FreedomBox/Manual">
           {% trans "Manual" context "User guide"%}
@@ -132,7 +132,7 @@
         <a href="https://wiki.debian.org/FreedomBox">{% trans "Wiki" %}</a>
       </p>
     </div>
-    <div class="col-md-2">
+    <div class="col-lg-2">
       <p>
         <a href="https://freedombox.org">{% trans "Homepage" %}</a>
       </p>
@@ -148,7 +148,7 @@
         </a>
       </p>
     </div>
-    <div class="col-md-2">
+    <div class="col-lg-2">
       <p>
         <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
           {%trans "IRC Chatroom" %}

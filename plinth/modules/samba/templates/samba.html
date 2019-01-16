@@ -31,10 +31,10 @@
   {% if is_enabled %}
     <h3>{% trans "Shares" %}</h3>
     <p>
-    {% blocktrans trimmed %}
-      Note: Only specially created directories will be shared on selected disks,
-      not the whole disk.
-    {% endblocktrans %}
+      {% blocktrans trimmed %}
+        Note: Only specially created directories will be shared on selected
+        disks, not the whole disk.
+      {% endblocktrans %}
     </p>
 
     {% for disk in disks %}
@@ -48,11 +48,11 @@
             <div class="progress">
               <div class="progress-bar progress-bar-striped
                 {% if disk.percent_used < 75 %}
-                  progress-bar-success
+                  bg-success
                 {% elif disk.percent_used < 90 %}
-                  progress-bar-warning
+                  bg-warning
                 {% else %}
-                  progress-bar-danger
+                  bg-danger
                 {% endif %}"
                 role="progressbar" aria-valuenow="{{ disk.percent_used }}"
                 aria-valuemin="0" aria-valuemax="100"

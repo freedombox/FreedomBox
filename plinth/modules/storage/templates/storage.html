@@ -19,7 +19,7 @@
 
   <p>{% trans "The following storage devices are in use:" %}</p>
 
-  <table class="table table-bordered table-condensed table-striped">
+  <table class="table table-bordered table-sm table-striped">
     <thead>
       <tr>
         <th>{% trans "Device" %}</th>
@@ -42,11 +42,11 @@
               <div class="progress">
                 <div class="progress-bar progress-bar-striped
                             {% if disk.percent_used < 75 %}
-                              progress-bar-success
+                              bg-success
                             {% elif disk.percent_used < 90 %}
-                              progress-bar-warning
+                              bg-warning
                             {% else %}
-                              progress-bar-danger
+                              bg-danger
                             {% endif %}"
                      role="progressbar" aria-valuenow="disk.percent_used"
                      aria-valuemin="0" aria-valuemax="100"

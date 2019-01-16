@@ -69,12 +69,91 @@
     font-weight: 800;
 }
 
+/*
+ * Bootstrap override
+ */
+/* Heading margins from bootstrap 3 */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.25rem;
+    margin-bottom: 0.625rem;
+}
 
+/* Warning colors from bootstrap 3 */
+.badge-warning,
+.bg-warning,
+.btn-warning {
+    background-color: #f0ad4e !important;
+    color: #fff;
+}
+
+.btn[disabled] {
+    cursor: not-allowed !important;
+    opacity: .65;
+    box-shadow: none;
+}
+
+/* Primary color changed in bootstrap 4 */
+.btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:disabled,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+/* Default style removed in bootstrap 4 */
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+/* Help block removed from bootstrap 4, needs updated django-bootstrap-from */
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373;
+}
+
+/* form-horizontal removed in bootstrap, needs updated django-bootstrap-form */
+.form-horizontal > .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.radio .help-block {
+    padding-left: 1.2rem;
+}
+
+.checkbox .help-block {
+    padding-left: 1.4rem;
+}
+
+/*
+ * Basic styling
+ */
 body {
     padding-top: 6em;
     position: relative;
     font-family: Lato, sans-serif;
-    font-size: 15px;
     background: url('../img/noise.png') var(--background-color);
 }
 
@@ -94,23 +173,33 @@ body {
     list-style-type: none;
 }
 
-.nav .fa {
+.navbar .fa:not(.fa-bars) {
     margin-right: 4px;
 }
 
 .navbar-brand .fa {
     float: left;
-    margin-top: -19px;
+    margin-top: -7px;
     padding: 8px;
 }
 
 .navbar-brand {
     height: 53px;
-    margin-right: -30px;
+    margin-right: -20px;
+}
+
+@media (max-width: 767px) {
+    .navbar-brand {
+        margin-right: auto;
+    }
 }
 
 .nav-tabs {
     margin-bottom: 20px;
+}
+
+.dropdown-toggle::after {
+    vertical-align: middle;
 }
 
 .running-status-parent {
@@ -148,30 +237,13 @@ body {
     }
 }
 
-.form-diagnostics-button {
-    display: block;
-}
-
-.form-diagnostics-button .btn {
-    width: 100%;
-    border-radius: 0;
-    border: none;
-    text-align: left;
-    padding: 3px 20px;
-}
-
-.form-diagnostics-button .btn:hover,
-.form-diagnostics-button .btn:focus {
-    background-color: var(--neutral-light-color)
-}
-
 /* Hide log out button if user dropdown is available */
 .js #logout-nojs {
     display: none;
 }
 
 /* Hide the dropdown icon when javascript is not available */
-.no-js .nav .dropdown .caret {
+.no-js .dropdown-toggle:after {
     display: none;
 }
 
@@ -247,7 +319,7 @@ footer {
 }
 
 #clients .btn {
-    width: 8em;
+    width: 9em;
     margin-right: 1em;
 }
 
@@ -278,42 +350,49 @@ footer {
     text-align: right;
 }
 
-/* applying styles to header - begin */
+/*
+ * Top navigation
+ */
 .main-header {
     background: var(--freedombox-blue-color);
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
     border: none;
 }
 
-.main-header .navbar-nav>li>a {
+.main-header > .container > nav.navbar {
+    padding: 0;
+}
+
+.main-header .navbar-nav > li > a,
+.main-header .navbar-toggler {
     color: #FFF;
 }
 
-.main-header.navbar-default .navbar-nav>li>a:focus,
-.main-header.navbar-default .navbar-nav>li>a:hover,
-.main-header.navbar-default .navbar-nav>.active>a,
-.main-header.navbar-default .navbar-nav>.active>a:hover,
-.main-header.navbar-default .navbar-nav>.active>a:focus,
-.main-header.navbar-default .navbar-nav>.open>a,
-.main-header.navbar-default .navbar-nav>.open>a:hover,
-.main-header.navbar-default .navbar-nav>.open>a:focus {
-    color: #FFF;
-    background: transparent;
+.main-header .nav-item .nav-link {
+    padding: 15px !important;
+    height: 52px;
+}
+
+.main-header .navbar-toggler {
+    border: 1px solid #ddd;
 }
 
 @media screen and (max-width: 767px) {
-    .main-header.navbar-default .navbar-nav>.open .dropdown-menu > li > a,
-    .main-header.navbar-default .navbar-nav>.open .dropdown-menu > li > a:hover {
+    .main-header .navbar-nav .dropdown-menu {
+        background-color: var(--freedombox-blue-color);
+    }
+
+    .main-header .navbar-nav > li > a:focus,
+    .main-header .navbar-nav > li > a:hover,
+    .main-header .navbar-nav .show a,
+    .main-header .navbar-nav .show a:hover,
+    .main-header .navbar-nav .show a:focus {
         color: #FFF;
+        background: transparent;
     }
 }
 
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #FFF;
-}
-
-/* applying styles to header - end */
-
+/* Cards in Apps, System and Help pages */
 .card-list {
   display: flex;
   flex-wrap: wrap;
@@ -325,8 +404,8 @@ footer {
     font-style: italic;
     font-weight: 800;
     font-size: 20px;
-    padding: 0 4.6rem;
-    margin: 2rem 0;
+    padding: 0 2.875rem;
+    margin: 1.25rem 0;
 }
 
 .card-section-title:before, .card-section-title:after {
@@ -334,7 +413,7 @@ footer {
     content: '';
     flex: 1;
     border-bottom: var(--neutral-dark-color) solid 2px;
-    margin: auto 1.8rem;
+    margin: auto 1.125rem;
 }
 
 a.menu_link {
@@ -350,13 +429,16 @@ a.menu_link_active {
 }
 
 .card {
+    display: block;
+    line-height: 1.42857143;
     text-align: center;
     box-shadow: 0 3px 5px 0 rgba(0,0,0,0.12);
-    width: 16rem;
+    width: 10rem;
     padding: 0;
     margin: 0 10px 20px;
     border: none;
     border-radius: 8px;
+    transition: border .2s ease-in-out;
 }
 
 .card:hover {
@@ -374,6 +456,7 @@ a.menu_link_active {
     font-weight: 800;
     font-size: 20px;
     padding: 12px 0;
+    margin-bottom: 0;
 }
 
 .card-description {
@@ -407,7 +490,7 @@ a.menu_link_active {
 /* System page - special card styling */
 .system-page .card {
     text-align: left;
-    width: 23rem;
+    width: 14.375rem;
 }
 
 .system-page .card .nav-link {
@@ -443,7 +526,7 @@ a.menu_link_active {
     grid-row: 2;
     grid-column: 2;
     padding: 0;
-    min-height: 1.8rem;
+    min-height: 1.125rem;
 }
 
 /* Button table - Tables with a list of actions as buttons on top */
@@ -451,25 +534,16 @@ a.menu_link_active {
     margin-top: 10px;
 }
 
-.bg-warning {
-    margin: 10px 0;
-    padding: 15px;
-}
-
-.bg-warning p:last-child {
-    margin: 0;
-}
-
 .index-page .card-list:before,
 .apps-page .card-list:before,
 .system-page .card-list:before {
     position: relative;
-    width: 40rem;
-    height: 40rem;
-    margin-left: -40rem;
-    margin-bottom: -40rem;
-    left: 30rem;
-    top: -2rem;
+    width: 25rem;
+    height: 25rem;
+    margin-left: -25rem;
+    margin-bottom: -25rem;
+    left: 18.75rem;
+    top: -1.25rem;
     content: " ";
     background-size: 100%;
     background-repeat: no-repeat;
@@ -573,9 +647,19 @@ input[type='submit'].running-status-button {
     margin-bottom: 10px;
 }
 
-.btn-toolbar .button-extra-actions,
-.btn-toolbar .button-donate {
-    float: right;
+.btn-toolbar > :not(:last-child):not(.running-status-button-before) {
+    margin-right: 0.5rem;
+}
+
+.btn-toolbar .button-secondary:first-child,
+.btn-toolbar .btn:not(.button-secondary) + .button-secondary,
+.btn-toolbar .btn:not(.button-secondary) + .running-status-button-before {
+    margin-left: auto;
+}
+
+.btn-toolbar > .running-status-button-before {
+    margin-bottom: 0;
+    align-self: center;
 }
 
 /*
@@ -611,9 +695,9 @@ input[type='submit'].running-status-button {
 }
 
 .app-titles h3 {
-    margin-top: -0.5rem;
-    margin-bottom: 1.6rem;
-    font-size: 1.6rem;
+    margin-top: -0.3125rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
     font-weight: normal;
     font-style: italic;
 }
@@ -678,12 +762,12 @@ input[type='submit'].running-status-button {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     margin-top: 0;
+    background-clip: border-box;
 }
 
 /* Style for individual notification */
 .notification {
-    padding: 1rem 1.5rem;
-    font-size: 15px;
+    padding: 0.625rem 0.9375rem;
     border-left: 5px solid;
 }
 
@@ -697,9 +781,9 @@ input[type='submit'].running-status-button {
 
 img.notification-icon {
     display: inline-block;
-    width: 1.4rem;
-    height: 1.4rem;
-    margin-top: -0.4rem;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-top: -0.25rem;
 }
 
 /* Show badge with various colors and overlap it onto icon */
@@ -709,6 +793,7 @@ img.notification-icon {
     color: #fff;
 }
 
+/* TODO: match with or use bootstrap 4 colors */
 .badge-exception, .badge-error {
     background-color: var(--error-color);
 }
@@ -733,19 +818,21 @@ img.notification-icon {
     border-left-color: var(--info-color)
 }
 
-/* Don't collapse notifications on small screens */
-.collapsing .notifications-dropdown,
-.collapse.in .notifications-dropdown {
+/* Two different notifications for each small and one for large screens */
+.notifications-dropdown {
     display: none;
 }
 
-.navbar-header .navbar-nav {
-    float: right;
-    margin: 6px 10px;
+.collapse .notifications-dropdown {
+    display: block;
 }
 
-@media(min-width:768px) {
-    .navbar-header .navbar-nav {
+@media screen and (max-width: 767px) {
+    .notifications-dropdown {
+        display: block;
+    }
+
+    .collapse .notifications-dropdown {
         display: none;
     }
 }

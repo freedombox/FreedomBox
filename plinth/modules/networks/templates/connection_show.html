@@ -21,7 +21,7 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-md-8 offset-md-2">
       <div>
         <a href="{% url 'networks:edit' connection.uuid %}"
            class="btn btn-primary" role="button"
@@ -55,7 +55,7 @@
           <div class="list-group-item">
             {% trans "Primary connection" %}
             <div class="pull-right">
-              <span class="label label-success">{% trans "yes" %}</span>
+              <span class="badge badge-success">{% trans "yes" %}</span>
             </div>
           </div>
         {% endif %}
@@ -106,10 +106,10 @@
             {% trans "Link state" %}
             <div class="pull-right">
               {% if device.ethernet.carrier %}
-                <span class='label label-success'>
+                <span class='badge badge-success'>
                   {% trans "cable is connected" %}</span>
               {% else %}
-                <span class='label label-warning'>
+                <span class='badge badge-warning'>
                   {% trans "please check cable" %}</span>
               {% endif %}
             </div>
@@ -147,7 +147,7 @@
             <div class="list-group-item">
               {% trans "Signal strength" %}
               <div class="pull-right">
-                <span class="btn btn-primary btn-xs">
+                <span class="btn btn-primary btn-sm">
                   {{ access_point.strength }}%
                 </span>
               </div>
@@ -255,7 +255,7 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-success">{{ connection.zone_string }}</span>
+              <span class="badge badge-success">{{ connection.zone_string }}</span>
             </div>
           </div>
         </div>
@@ -275,7 +275,7 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-warning">{{ connection.zone_string }}</span>
+              <span class="badge badge-warning">{{ connection.zone_string }}</span>
             </div>
           </div>
         </div>
@@ -294,7 +294,7 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-warning">{% trans "External" %}</span>
+              <span class="badge badge-danger">{% trans "External" %}</span>
             </div>
           </div>
         </div>

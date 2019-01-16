@@ -38,22 +38,22 @@
                 <center>
                   <button data-toggle="collapse"
                           data-target=".{{component.component_id}}"
-                          class="btn btn-info btn-xs">+</button>
+                          class="btn btn-info btn-sm">+</button>
                 </center>
               </td>
               <td><strong>{{ component.name }}</strong></td>
               <td>
                 {% if component.is_enabled %}
-                  <span class='label label-success'>
+                  <span class='badge badge-success'>
                     {% trans "Enabled" %}</span>
                 {% else %}
-                  <span class='label label-warning'>
+                  <span class='badge badge-warning'>
                     {% trans "Disabled" %}</span>
                 {% endif %}
               </td>
             </tr>
             {% for port in component.ports_details %}
-              <tr class="collapse out {{component.component_id}}"
+              <tr class="collapse {{component.component_id}}"
                   style="background-color: #f9f9f9" >
                 <td></td>
                 <td class='cell-indented'><em>{{ port.name }}</em>:
@@ -63,16 +63,16 @@
                 </td>
                 <td>
                   {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
-                    <span class='label label-success'>
+                    <span class='badge badge-success'>
                       {% trans "Permitted" %}</span>
                   {% elif port.name in internal_enabled_ports %}
-                    <span class='label label-warning'>
+                    <span class='badge badge-warning'>
                       {% trans "Permitted (internal only)" %}</span>
                   {% elif port.name in external_enabled_ports %}
-                    <span class='label label-warning'>
+                    <span class='badge badge-warning'>
                       {% trans "Permitted (external only)" %}</span>
                   {% else %}
-                    <span class='label label-danger'>
+                    <span class='badge badge-danger'>
                       {% trans "Blocked" %}</span>
                   {% endif %}
                 </td>

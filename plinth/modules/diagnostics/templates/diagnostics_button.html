@@ -7,12 +7,7 @@
 <form class="form form-diagnostics-button" method="post"
       action="{% url 'diagnostics:app' app_id %}">
   {% csrf_token %}
-
-  {% if enabled %}
-    <input type="submit" class="btn btn-default no-running-status"
-           value="{% trans "Run Diagnostics" %}"/>
-  {% else %}
-    <input type="submit" class="btn btn-default"
-           value="{% trans "Run Diagnostics" %}" disabled="disabled"/>
-  {% endif %}
+  <input type="submit" class="dropdown-item no-running-status"
+         value="{% trans "Run Diagnostics" %}"
+         {% if not enabled %} disabled="disabled" {% endif %}/>
 </form>

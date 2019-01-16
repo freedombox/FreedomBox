@@ -11,20 +11,17 @@
   <form class="form" method="post">
     <div class="button-table">
 
-      <div class="button-row row">
-          {% csrf_token %}
-          <div class="col-xs-6 text-left">
-            <input type="submit" class="btn btn-primary" name="create"
-                   value="{% trans 'Create Snapshot' %}"/>
-          </div>
-          <div class="col-xs-6 text-right">
-            <input type="submit" class="btn btn-danger" name="delete_selected"
-                   value="{% trans 'Delete Snapshots' %}"
-                   {{ has_deletable_snapshots|yesno:',disabled="disabled"' }}/>
-          </div>
+      <div class="btn-toolbar">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" name="create"
+               value="{% trans 'Create Snapshot' %}"/>
+        <input type="submit" class="btn btn-danger button-secondary"
+               name="delete_selected"
+               value="{% trans 'Delete Snapshots' %}"
+               {{ has_deletable_snapshots|yesno:',disabled="disabled"' }}/>
       </div>
 
-      <table class="table table-bordered table-condensed table-striped">
+      <table class="table table-bordered table-sm table-striped">
         <thead>
           <th>{% trans "Number" %}</th>
           <th>{% trans "Date" %}</th>
@@ -38,12 +35,12 @@
               <td>
                 {{ snapshot.number }}
                 {% if snapshot.is_default %}
-                  <span class="label label-default">
+                  <span class="badge badge-secondary">
                     {% trans "will be used at next boot" %}
                   </span>
                 {% endif %}
                 {% if snapshot.is_active %}
-                  <span class="label label-success">
+                  <span class="badge badge-success">
                     {% trans "in use" %}
                   </span>
                 {% endif %}

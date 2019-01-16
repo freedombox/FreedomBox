@@ -45,19 +45,19 @@
 </style>
 
 <div class="row connection-diagram">
-  <div class="col-sm-2">
+  <div class="col-md-2">
     <img src="{% static 'theme/img/network-internet.svg' %}"
          class="col-image network-entity" alt="{% trans "Internet" %}"/>
   </div>
-  <div class="col-sm-3">
+  <div class="col-md-3">
     <img src="{% static 'theme/img/network-spacing.svg' %}"
-         class="col-image network-spacing hidden-xs"
+         class="col-image network-spacing d-none d-md-block"
          alt="{% trans "Spacing" %}"/>
     <img src="{% static 'theme/img/network-connection.svg' %}"
-         class="col-image network-connection hidden-xs"
+         class="col-image network-connection d-none d-md-block "
          alt="{% trans "Connection" %}"/>
     <img src="{% static 'theme/img/network-connection-vertical.svg' %}"
-         class="network-connection-vertical visible-xs-block"
+         class="network-connection-vertical d-md-none"
          alt="{% trans "Connection" %}"/>
     <div class="connection-list">
       <p class="connection-list-heading">{% trans "External" %}</p>
@@ -77,16 +77,16 @@
       {% endfor %}
     </div>
   </div>
-  <div class="col-sm-2">
+  <div class="col-md-2">
     <img src="{% static 'theme/img/network-freedombox.svg' %}"
          class="col-image network-entity" alt="{{ box_name }}"/>
   </div>
-  <div class="col-sm-3">
+  <div class="col-md-3">
     <img src="{% static 'theme/img/network-spacing.svg' %}"
-         class="col-image network-spacing hidden-xs"
+         class="col-image network-spacing d-none d-md-block"
          alt="{% trans "Spacing" %}"/>
     <img src="{% static 'theme/img/network-connection.svg' %}"
-         class="col-image network-connection hidden-xs"
+         class="col-image network-connection d-none d-md-block"
          alt="{% trans "Connection" %}"/>
     <div class="connection-list">
       <p class="connection-list-heading">{% trans "Internal" %}</p>
@@ -108,10 +108,10 @@
       {% endfor %}
     </div>
     <img src="{% static 'theme/img/network-connection-vertical.svg' %}"
-         class="network-connection-vertical visible-xs-block"
+         class="network-connection-vertical d-md-none"
          alt="{% trans "Connection" %}"/>
   </div>
-  <div class="col-sm-2">
+  <div class="col-md-2">
     <img src="{% static 'theme/img/network-computer.svg' %}"
          class="col-image network-entity" alt="{% trans "Computer" %}"/>
   </div>

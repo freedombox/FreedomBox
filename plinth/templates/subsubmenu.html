@@ -6,9 +6,9 @@
 
 <ul class="nav nav-tabs">
   {% for urlitem in subsubmenu %}
-    <li {% if urlitem.active %} class="active"{% endif %}
-        role="presentation">
-      <a href="{{ urlitem.url }}">{{ urlitem.text }}</a>
+    <li class="nav-item" role="presentation">
+      <a class="{% if urlitem.active %} active {% endif %} nav-link"
+         href="{{ urlitem.url }}">{{ urlitem.text }}</a>
     </li>
   {% endfor %}
 </ul>
