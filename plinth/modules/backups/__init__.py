@@ -20,6 +20,8 @@ from . import api
 
 version = 2
 
+is_essential = True
+
 managed_packages = ['borgbackup', 'sshfs']
 
 depends = ['storage']
