@@ -17,6 +17,7 @@
 
 from time import sleep
 
+import requests
 import splinter
 
 from support import config, interface, site
@@ -32,6 +33,7 @@ app_module = {
 
 app_checkbox_id = {
     'tor': 'id_tor-enabled',
+    'openvpn': 'id_openvpn-enabled',
 }
 
 default_url = config['DEFAULT']['url']
@@ -113,6 +115,16 @@ def disable(browser, app_name):
 def wait_for_config_update(browser, app_name):
     while browser.is_element_present_by_css('.running-status.loading'):
         sleep(0.1)
+
+
+def _download_file(browser, url):
+    """Return file contents after downloading a URL."""
+    cookies = browser.cookies.all()
+    response = requests.get(url, cookies=cookies, verify=False)
+    if response.status_code != 200:
+        raise Exception('URL download failed')
+
+    return response.content
 
 
 def select_domain_name(browser, app_name, domain_name):
@@ -439,3 +451,21 @@ def radicale_set_access_rights(browser, access_rights_type):
     interface.nav_to_module(browser, 'radicale')
     browser.choose('access_rights', access_rights_type)
     interface.submit(browser, form_class='form-configuration')
+
+
+def openvpn_setup(browser):
+    """Setup the OpenVPN application after installation."""
+    interface.nav_to_module(browser, 'openvpn')
+    setup_form = browser.find_by_css('.form-setup')
+    if not setup_form:
+        return
+
+    submit(browser, form_class='form-setup')
+    wait_for_config_update(browser, 'openvpn')
+
+
+def openvpn_download_profile(browser):
+    """Download the current user's profile into a file and return path."""
+    interface.nav_to_module(browser, 'openvpn')
+    url = browser.find_by_css('.form-profile')['action']
+    return _download_file(browser, url)

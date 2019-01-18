@@ -25,7 +25,7 @@ from support import application
 @given(parsers.parse('the {app_name:w} application is installed'))
 def application_is_installed(browser, app_name):
     application.install(browser, app_name)
-    assert(application.is_installed(browser, app_name))
+    assert (application.is_installed(browser, app_name))
 
 
 @given(parsers.parse('the {app_name:w} application is enabled'))
@@ -331,14 +331,19 @@ def tor_assert_download_software_over_tor(browser, enabled):
     application.tor_assert_feature_enabled(browser, 'software', enabled)
 
 
-@then(parsers.parse('{domain:S} should be a tahoe {introducer_type:w} introducer'))
+@then(
+    parsers.parse(
+        '{domain:S} should be a tahoe {introducer_type:w} introducer'))
 def tahoe_assert_introducer(browser, domain, introducer_type):
     assert application.tahoe_get_introducer(browser, domain, introducer_type)
 
 
-@then(parsers.parse('{domain:S} should not be a tahoe {introducer_type:w} introducer'))
+@then(
+    parsers.parse(
+        '{domain:S} should not be a tahoe {introducer_type:w} introducer'))
 def tahoe_assert_not_introducer(browser, domain, introducer_type):
-    assert not application.tahoe_get_introducer(browser, domain, introducer_type)
+    assert not application.tahoe_get_introducer(browser, domain,
+                                                introducer_type)
 
 
 @given(parsers.parse('{domain:S} is not a tahoe introducer'))
@@ -397,3 +402,24 @@ def radicale_check_owner_write(browser):
 @then('the access rights should be "any user can view or make changes"')
 def radicale_check_authenticated(browser):
     assert application.radicale_get_access_rights(browser) == 'authenticated'
+
+
+@given(parsers.parse('the openvpn application is setup'))
+def openvpn_setup(browser):
+    application.openvpn_setup(browser)
+
+
+@given('I download openvpn profile')
+def openvpn_download_profile(browser):
+    return application.openvpn_download_profile(browser)
+
+
+@then('the openvpn profile should be downloadable')
+def openvpn_profile_downloadable(browser):
+    application.openvpn_download_profile(browser)
+
+
+@then('the openvpn profile downloaded should be same as before')
+def openvpn_profile_download_compare(browser, openvpn_download_profile):
+    new_profile = application.openvpn_download_profile(browser)
+    assert openvpn_download_profile == new_profile

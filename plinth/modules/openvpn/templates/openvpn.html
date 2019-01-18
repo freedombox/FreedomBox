@@ -58,7 +58,8 @@
       {% endblocktrans %}
     </p>
 
-    <form class="form" method="post" action="{% url 'openvpn:profile' %}">
+    <form class="form form-profile" method="post"
+          action="{% url 'openvpn:profile' %}">
       {% csrf_token %}
 
       <input type="submit" class="btn btn-primary"
@@ -79,7 +80,8 @@
       {% endblocktrans %}
     </p>
 
-    <form class="form" method="post" action="{% url 'openvpn:setup' %}">
+    <form class="form form-setup" method="post"
+          action="{% url 'openvpn:setup' %}">
       {% csrf_token %}
 
       <input type="submit" class="btn btn-primary"
@@ -118,7 +120,7 @@
 
     <h3>{% trans "Configuration" %}</h3>
 
-    <form class="form" method="post">
+    <form class="form form-configuration" method="post">
       {% csrf_token %}
 
       {{ form|bootstrap }}
