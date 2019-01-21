@@ -20,6 +20,7 @@ Help app for FreedomBox.
 
 import mimetypes
 import os
+import subprocess
 
 from apt.cache import Cache
 from django.core.files.base import File
@@ -37,8 +38,7 @@ def init():
     menu = main_menu.add_urlname(
         ugettext_lazy('Documentation'), 'fa-book', 'help:index')
     menu.add_urlname(
-        ugettext_lazy('Manual'), 'fa-info-circle', 'help:manual',
-        order=10)
+        ugettext_lazy('Manual'), 'fa-info-circle', 'help:manual', order=10)
     menu.add_urlname(
         ugettext_lazy('Download Manual'), 'fa-download',
         'help:download-manual', order=15)
@@ -48,9 +48,8 @@ def init():
 
 def index(request):
     """Serve the index page"""
-    return TemplateResponse(request, 'help_index.html', {
-        'title': _('Documentation and FAQ')
-    })
+    return TemplateResponse(request, 'help_index.html',
+                            {'title': _('Documentation and FAQ')})
 
 
 def about(request):
@@ -107,10 +106,13 @@ def download_manual(request):
 def status_log(request):
     """Serve the last 100 lines of plinth's status log"""
     num_lines = 100
-    with open(cfg.status_log_file, 'r') as log_file:
-        data = log_file.readlines()
+    command = [
+        'journalctl', '--no-pager', '-n',
+        str(num_lines), '-u', 'plinth'
+    ]
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    data = process.stdout.decode()
 
-    data = ''.join(data[-num_lines:])
     context = {'num_lines': num_lines, 'data': data}
     return TemplateResponse(request, 'statuslog.html', context)
 
