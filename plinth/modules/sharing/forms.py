@@ -50,6 +50,7 @@ class AddShareForm(forms.Form):
         """Initialize the form with extra request argument."""
         super().__init__(*args, **kwargs)
         self.fields['groups'].choices = get_group_choices()
+        self.fields['name'].widget.attrs.update({'autofocus': 'autofocus'})
 
     def clean_name(self):
         """Check if the name is valid."""

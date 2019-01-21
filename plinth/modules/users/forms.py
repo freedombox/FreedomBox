@@ -107,6 +107,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         self.request = request
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.fields['groups'].choices = get_group_choices()
+        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
 
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
@@ -176,6 +177,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         self.is_last_admin_user = get_last_admin_user() == self.username
+        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
 
         choices = []
 
@@ -286,6 +288,9 @@ class UserChangePasswordForm(SetPasswordForm):
         """Initialize the form with extra request argument."""
         self.request = request
         super(UserChangePasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].widget.attrs.update({
+            'autofocus': 'autofocus'
+        })
 
     def save(self, commit=True):
         """Save the user model and change LDAP password as well."""
@@ -309,6 +314,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
 
     def save(self, commit=True):
         """Create and log the user in."""

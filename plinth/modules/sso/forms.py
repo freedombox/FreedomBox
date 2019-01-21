@@ -23,4 +23,9 @@ from captcha.fields import CaptchaField
 
 
 class AuthenticationForm(DjangoAuthenticationForm):
+    """Authentication form with an additional Captcha field."""
     captcha = CaptchaField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})

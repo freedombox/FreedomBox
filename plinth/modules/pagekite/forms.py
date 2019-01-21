@@ -279,6 +279,11 @@ class FirstBootForm(forms.Form):
                              widget=SubdomainWidget(domain=DOMAIN_APPENDIX),
                              help_text=_('The subdomain you want to register'))
 
+    def __init__(self, *args, **kwargs):
+        """Initialize the form."""
+        super().__init__(*args, **kwargs)
+        self.fields['code'].widget.attrs.update({'autofocus': 'autofocus'})
+
     def clean_domain(self):
         """Append the domain to the users' subdomain"""
         return self.cleaned_data['domain'] + self.DOMAIN_APPENDIX
