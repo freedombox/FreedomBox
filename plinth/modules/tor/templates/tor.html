@@ -143,37 +143,10 @@
 
 {% block page_js %}
 
-  <script type="text/javascript">
-  // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL v3.0 or later
-    (function($) {
-        $('#id_tor-relay_enabled').change(function() {
-            var bridge = $('#id_tor-bridge_relay_enabled');
-            var disable = ! $('#id_tor-relay_enabled').prop('checked');
-            bridge.prop('disabled', disable);
-            if (disable) {
-                $('#id_tor-bridge_relay_enabled').prop('checked', false);
-            }
-        }).change();
-
-        $('#id_tor-use_upstream_bridges').change(function() {
-            if ($('#id_tor-use_upstream_bridges').prop('checked')) {
-                $('#id_tor-upstream_bridges').parent().parent().show('slow');
-                $('#id_tor-relay_enabled').prop('checked', false)
-                                          .prop('disabled', true);
-                $('#id_tor-bridge_relay_enabled').prop('checked', false)
-                                                 .prop('disabled', true);
-            } else {
-                $('#id_tor-upstream_bridges').parent().parent().hide('slow');
-                $('#id_tor-relay_enabled').prop('disabled', false);
-            }
-        }).change();
-    })(jQuery);
-  // @license-end
-  </script>
+  <script type="text/javascript" src="{% static 'tor/tor.js' %}"></script>
 
   {% if config_running %}
     <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
-    <script type="text/javascript">refresh();</script>
   {% endif %}
 
 {% endblock %}

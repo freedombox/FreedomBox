@@ -143,11 +143,10 @@
 {% block page_js %}
 
   {% if setup_current_operation or setup_state == 'up-to-date' %}
-    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
     {% if setup_state == 'up-to-date' %}
-      <script type="text/javascript">refresh(0);</script>
+      <script type="text/javascript" src="{% static 'theme/js/refresh_immediately.js' %}"></script>
     {% else %}
-      <script type="text/javascript">refresh();</script>
+      <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
     {% endif %}
   {% endif %}
 

@@ -21,14 +21,4 @@
  * in this page.
  */
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Refresh the page once in n seconds
-async function refresh(ms) {
-    await sleep(3000);
-    window.location.reload();
-}
-
-refresh();
+window.location.reload();

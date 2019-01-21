@@ -20,6 +20,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block configuration %}
   <form class="form" method="post">
@@ -43,7 +44,7 @@
           <th>{% trans "Date" %}</th>
           <th>{% trans "Description" %}</th>
           <th>{% trans "Rollback" %}</th>
-          <th><input type="checkbox" name="select_all" onclick="toggle(this)"></th>
+          <th><input type="checkbox" id="select-all"></th>
         </thead>
         <tbody>
           {% for snapshot in snapshots %}
@@ -84,14 +85,6 @@
 {% endblock %}
 
 {% block page_js %}
-<script>
-function toggle(source) {
-   var checkedState = source.checked;
-   checkboxes = document.getElementsByName('snapshot_list');
-   jQuery.each(checkboxes, function(i, checkbox) {
-       checkbox.checked = checkedState;
-   })
-}
-</script>
+  <script type="text/javascript" src="{% static 'snapshot/snapshot.js' %}"></script>
 {% endblock %}
 

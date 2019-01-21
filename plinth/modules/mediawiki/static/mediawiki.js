@@ -21,14 +21,18 @@
  * in this page.
  */
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+(function($) {
+    $('#id_enable_public_registrations').click(function() {
+        var checkedState = $(this).prop("checked");
+        if (checkedState) {
+            $('#id_enable_private_mode').prop('checked', false);
+        }
+    });
 
-// Refresh the page once in n seconds
-async function refresh(ms) {
-    await sleep(3000);
-    window.location.reload();
-}
-
-refresh();
+    $('#id_enable_private_mode').click(function() {
+        var checkedState = $(this).prop("checked");
+        if (checkedState) {
+            $('#id_enable_public_registrations').prop('checked', false);
+        }
+    });
+})(jQuery);

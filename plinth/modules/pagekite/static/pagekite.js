@@ -21,14 +21,14 @@
  * in this page.
  */
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+(function($) {
 
-// Refresh the page once in n seconds
-async function refresh(ms) {
-    await sleep(3000);
-    window.location.reload();
-}
+    $('#id_pagekite-enabled').change(function() {
+        if ($('#id_pagekite-enabled').prop('checked')) {
+            $('#pagekite-post-enabled-form').show('fast');
+        } else {
+            $('#pagekite-post-enabled-form').hide('fast');
+        }
+    }).change();
 
-refresh();
+})(jQuery);

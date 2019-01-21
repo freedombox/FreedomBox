@@ -21,14 +21,7 @@
  * in this page.
  */
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Refresh the page once in n seconds
-async function refresh(ms) {
-    await sleep(3000);
-    window.location.reload();
-}
-
-refresh();
+(function($) {
+    let downloadManualButton = $('a[href="/plinth/help/manual/download/"]');
+    downloadManualButton.attr("data-turbolinks", "false");
+})(jQuery);

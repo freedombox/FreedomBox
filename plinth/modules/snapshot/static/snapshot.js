@@ -21,14 +21,12 @@
  * in this page.
  */
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Refresh the page once in n seconds
-async function refresh(ms) {
-    await sleep(3000);
-    window.location.reload();
-}
-
-refresh();
+(function($) {
+    $("#select-all").click(function() {
+        var checkedState = this.checked;
+        checkboxes = document.getElementsByName('snapshot_list');
+        jQuery.each(checkboxes, function(i, checkbox) {
+            checkbox.checked = checkedState;
+        });
+    });
+})(jQuery);
