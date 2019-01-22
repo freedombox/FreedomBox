@@ -56,7 +56,7 @@ def subcommand_post_install(_):
 
     for listener in config['listeners']:
         if listener['port'] == 8448:
-            listener['bind_addresses'] = ['::1', '0.0.0.0']
+            listener['bind_addresses'] = ['::', '0.0.0.0']
             listener.pop('bind_address', None)
 
     # Setup ldap parameters
@@ -86,9 +86,8 @@ def subcommand_post_install(_):
 def subcommand_setup(arguments):
     """Configure the domain name for matrix-synapse package."""
     domain_name = arguments.domain_name
-    action_utils.dpkg_reconfigure('matrix-synapse', {
-        'server-name': domain_name
-    })
+    action_utils.dpkg_reconfigure('matrix-synapse',
+                                  {'server-name': domain_name})
     subcommand_enable(arguments)
 
 
