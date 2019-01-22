@@ -147,8 +147,7 @@ def transmission_upload_sample_torrent(browser):
 
 @then(
     parsers.parse(
-        'there should be {torrents_number:d} torrents listed in transmission'
-    ))
+        'there should be {torrents_number:d} torrents listed in transmission'))
 def transmission_assert_number_of_torrents(browser, torrents_number):
     assert torrents_number == site.transmission_get_number_of_torrents(browser)
 
@@ -165,8 +164,7 @@ def deluge_upload_sample_torrent(browser):
 
 @then(
     parsers.parse(
-        'there should be {torrents_number:d} torrents listed in deluge'
-    ))
+        'there should be {torrents_number:d} torrents listed in deluge'))
 def deluge_assert_number_of_torrents(browser, torrents_number):
     assert torrents_number == site.deluge_get_number_of_torrents(browser)
 
@@ -189,3 +187,39 @@ def assert_addressbook_is_available(browser):
 @then('the addressbook should not be available')
 def assert_addressbook_is_not_available(browser):
     assert not site.addressbook_is_available(browser)
+
+
+@given(parsers.parse('syncthing folder {folder_name:w} is not present'))
+def syncthing_folder_not_present(browser, folder_name):
+    if site.syncthing_folder_is_present(browser, folder_name):
+        site.syncthing_remove_folder(browser, folder_name)
+
+
+@given(
+    parsers.parse(
+        'folder {folder_path:S} is present as syncthing folder {folder_name:w}'))
+def syncthing_folder_present(browser, folder_name, folder_path):
+    if not site.syncthing_folder_is_present(browser, folder_name):
+        site.syncthing_add_folder(browser, folder_name, folder_path)
+
+
+@when(
+    parsers.parse(
+        'I add a folder {folder_path:S} as syncthing folder {folder_name:w}'))
+def syncthing_add_folder(browser, folder_name, folder_path):
+    site.syncthing_add_folder(browser, folder_name, folder_path)
+
+
+@when(parsers.parse('I remove syncthing folder {folder_name:w}'))
+def syncthing_remove_folder(browser, folder_name):
+    site.syncthing_remove_folder(browser, folder_name)
+
+
+@then(parsers.parse('syncthing folder {folder_name:w} should be present'))
+def syncthing_assert_folder_present(browser, folder_name):
+    assert site.syncthing_folder_is_present(browser, folder_name)
+
+
+@then(parsers.parse('syncthing folder {folder_name:w} should not be present'))
+def syncthing_assert_folder_not_present(browser, folder_name):
+    assert not site.syncthing_folder_is_present(browser, folder_name)

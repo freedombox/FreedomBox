@@ -31,7 +31,8 @@ from support.service import eventually, wait_for_page_update
 site_url = {
     'wiki': '/ikiwiki',
     'jsxc': '/plinth/apps/jsxc/jsxc/',
-    'cockpit': '/_cockpit/'
+    'cockpit': '/_cockpit/',
+    'syncthing': '/syncthing/',
 }
 
 
@@ -432,8 +433,8 @@ def calendar_is_available(browser):
     conf = config['DEFAULT']
     url = conf['url'] + '/.well-known/caldav'
     logging.captureWarnings(True)
-    request = requests.get(
-        url, auth=(conf['username'], conf['password']), verify=False)
+    request = requests.get(url, auth=(conf['username'], conf['password']),
+                           verify=False)
     logging.captureWarnings(False)
     return request.status_code != 404
 
@@ -443,7 +444,103 @@ def addressbook_is_available(browser):
     conf = config['DEFAULT']
     url = conf['url'] + '/.well-known/carddav'
     logging.captureWarnings(True)
-    request = requests.get(
-        url, auth=(conf['username'], conf['password']), verify=False)
+    request = requests.get(url, auth=(conf['username'], conf['password']),
+                           verify=False)
     logging.captureWarnings(False)
     return request.status_code != 404
+
+
+def _syncthing_load_main_interface(browser):
+    """Close the dialog boxes that many popup after visiting the URL."""
+    access_url(browser, 'syncthing')
+
+    def service_is_available():
+        if browser.is_element_present_by_xpath(
+                '//h1[text()="Service Unavailable"]'):
+            access_url(browser, 'syncthing')
+            return False
+
+        return True
+
+    # After a backup restore, service may not be available immediately
+    eventually(service_is_available)
+
+    # Wait for javascript loading process to complete
+    browser.execute_script('''
+        document.is_ui_online = false;
+        var old_console_log = console.log;
+        console.log = function(message) {
+            old_console_log.apply(null, arguments);
+            if (message == 'UIOnline') {
+                document.is_ui_online = true;
+                console.log = old_console_log;
+            }
+        };
+    ''')
+    eventually(lambda: browser.evaluate_script('document.is_ui_online'),
+               timeout=5)
+
+    # Dismiss the Usage Reporting consent dialog
+    usage_reporting = browser.find_by_id('ur').first
+    eventually(lambda: usage_reporting.visible, timeout=2)
+    if usage_reporting.visible:
+        yes_xpath = './/button[contains(@ng-click, "declineUR")]'
+        usage_reporting.find_by_xpath(yes_xpath).first.click()
+        eventually(lambda: not usage_reporting.visible)
+
+
+def syncthing_folder_is_present(browser, folder_name):
+    """Return whether a folder is present in Syncthing."""
+    _syncthing_load_main_interface(browser)
+    folder_names = browser.find_by_css('#folders .panel-title-text span')
+    folder_names = [folder_name.text for folder_name in folder_names]
+    return folder_name in folder_names
+
+
+def syncthing_add_folder(browser, folder_name, folder_path):
+    """Add a new folder to Synthing."""
+    _syncthing_load_main_interface(browser)
+    add_folder_xpath = '//button[contains(@ng-click, "addFolder")]'
+    browser.find_by_xpath(add_folder_xpath).click()
+
+    folder_dialog = browser.find_by_id('editFolder').first
+    eventually(lambda: folder_dialog.visible)
+    browser.find_by_id('folderLabel').fill(folder_name)
+    browser.find_by_id('folderPath').fill(folder_path)
+    save_folder_xpath = './/button[contains(@ng-click, "saveFolder")]'
+    folder_dialog.find_by_xpath(save_folder_xpath).first.click()
+    eventually(lambda: not folder_dialog.visible)
+
+
+def syncthing_remove_folder(browser, folder_name):
+    """Remove a folder from Synthing."""
+    _syncthing_load_main_interface(browser)
+
+    # Find folder
+    folder = None
+    for current_folder in browser.find_by_css('#folders > .panel'):
+        name = current_folder.find_by_css('.panel-title-text span').first.text
+        if name == folder_name:
+            folder = current_folder
+            break
+
+    # Edit folder button
+    folder.find_by_css('button.panel-heading').first.click()
+    eventually(lambda: folder.find_by_css('div.collapse.in'))
+    edit_folder_xpath = './/button[contains(@ng-click, "editFolder")]'
+    edit_folder_button = folder.find_by_xpath(edit_folder_xpath).first
+    edit_folder_button.click()
+
+    # Edit folder dialog
+    folder_dialog = browser.find_by_id('editFolder').first
+    eventually(lambda: folder_dialog.visible)
+    remove_button_xpath = './/button[contains(@data-target, "remove-folder")]'
+    folder_dialog.find_by_xpath(remove_button_xpath).first.click()
+
+    # Remove confirmation dialog
+    remove_folder_dialog = browser.find_by_id('remove-folder-confirmation')
+    eventually(lambda: remove_folder_dialog.visible)
+    remove_button_xpath = './/button[contains(@ng-click, "deleteFolder")]'
+    remove_folder_dialog.find_by_xpath(remove_button_xpath).first.click()
+
+    eventually(lambda: not folder_dialog.visible)
