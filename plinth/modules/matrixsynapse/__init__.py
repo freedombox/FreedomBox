@@ -31,7 +31,7 @@ from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
-version = 2
+version = 3
 
 managed_services = ['matrix-synapse']
 
