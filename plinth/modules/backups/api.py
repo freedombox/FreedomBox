@@ -27,7 +27,7 @@ TODO:
 
 import logging
 
-from plinth import actions, action_utils, module_loader
+from plinth import actions, action_utils, module_loader, setup
 
 logger = logging.getLogger(__name__)
 
@@ -204,6 +204,7 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
         restore_root = subvolume['mount_path']
         subvolume = True
     else:
+        _install_apps_before_restore(apps)
         _lockdown_apps(apps, lockdown=True)
         original_state = _shutdown_services(apps)
         restore_root = '/'
@@ -220,6 +221,16 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
         _lockdown_apps(apps, lockdown=False)
 
 
+def _install_apps_before_restore(apps):
+    """Automatically install any applications from the backup archive
+    if they are not installed yet."""
+    modules_to_setup = []
+    for backup_app in apps:
+        if backup_app.app.setup_helper.get_state() == 'needs-setup':
+            modules_to_setup.append(backup_app.name)
+    setup.run_setup_on_modules(modules_to_setup)
+
+
 class BackupApp:
     """A application that can be backed up and its manifest."""
 
@@ -227,10 +238,6 @@ class BackupApp:
         """Initialize object and load manfiest."""
         self.name = name
         self.app = app
-
-        # Not installed
-        if app.setup_helper.get_state() == 'needs-setup':
-            raise TypeError
 
         # Has no backup related meta data
         try:

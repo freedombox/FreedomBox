@@ -110,7 +110,8 @@ class TestBackupProcesses(unittest.TestCase):
         backup_handler.assert_called_once()
 
     @staticmethod
-    def test_restore_apps():
+    @patch('plinth.modules.backups.api._install_apps_before_restore')
+    def test_restore_apps(mock_install):
         """Test that restore_handler is called."""
         restore_handler = MagicMock()
         api.restore_apps(restore_handler)
