@@ -143,9 +143,11 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         context['title'] = _('Upload and restore a backup file')
         context['subsubmenu'] = subsubmenu
         try:
-            disk_info = storage.get_disk_info('/', self.request)
-        except (PlinthError, PermissionError):
-            logger.error('Error getting information about root partition.')
+            disk_info = storage.get_disk_info('/')
+        except PlinthError as exception:
+            logger.exception(
+                'Error getting information about root partition: %s',
+                exception)
         else:
             # The maximum file size that can be uploaded and restored is at
             # most half of the available disk space:

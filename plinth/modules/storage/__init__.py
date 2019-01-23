@@ -142,14 +142,13 @@ def get_filesystem_type(mount_point='/'):
     raise ValueError('No such mount point')
 
 
-def get_disk_info(mountpoint, request):
+def get_disk_info(mount_point):
     """Get information about the free space of a drive"""
-    if not is_user_admin(request, cached=True):
-        raise PermissionError
     disks = get_disks()
-    list_root = [disk for disk in disks if disk['mountpoint'] == mountpoint]
+    list_root = [disk for disk in disks if disk['mountpoint'] == mount_point]
     if not list_root:
-        raise PlinthError
+        raise PlinthError('Mount point {} not found.'.format(mount_point))
+
     percent_used = list_root[0]['percent_used']
     free_bytes = list_root[0]['free']
     free_gib = free_bytes / (1024**3)

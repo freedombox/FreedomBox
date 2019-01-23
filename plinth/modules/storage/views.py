@@ -32,7 +32,7 @@ from django.views.decorators.http import require_POST
 from plinth import actions
 from plinth.errors import PlinthError
 from plinth.modules import storage
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, is_user_admin
 
 from . import get_disk_info, get_error_message
 
@@ -91,10 +91,14 @@ def expand_partition(request, device):
 
 def warn_about_low_disk_space(request):
     """Warn about insufficient space on root partition."""
+    if not is_user_admin(request, cached=True):
+        return
+
     try:
-        root_info = get_disk_info('/', request)
-    except (PlinthError, PermissionError):
-        logger.error('Error getting information about root partition.')
+        root_info = get_disk_info('/')
+    except PlinthError as exception:
+        logger.exception('Error getting information about root partition: %s',
+                         exception)
         return
 
     message = format_lazy(
