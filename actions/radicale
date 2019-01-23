@@ -60,10 +60,10 @@ def subcommand_setup(_):
     if current_version and current_version < radicale.VERSION_2:
         aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
 
-    aug.set('/files' + CONFIG_FILE + '/server/hosts',
-            '127.0.0.1:5232, [::1]:5232')
     aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
     if current_version and current_version < radicale.VERSION_2:
+        aug.set('/files' + CONFIG_FILE + '/server/hosts',
+                '127.0.0.1:5232, [::1]:5232')
         aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
         aug.set('/files' + CONFIG_FILE + '/well-known/caldav',
                 '/radicale/%(user)s/caldav/')
