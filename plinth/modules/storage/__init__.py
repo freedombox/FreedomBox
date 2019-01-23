@@ -153,9 +153,9 @@ def get_disk_info(mount_point):
     free_bytes = list_root[0]['free']
     free_gib = free_bytes / (1024**3)
     return {
-        "percent_used": percent_used,
-        "free_bytes": free_bytes,
-        "free_gib": free_gib
+        'percent_used': percent_used,
+        'free_bytes': free_bytes,
+        'free_gib': free_gib
     }
 
 

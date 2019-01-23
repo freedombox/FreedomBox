@@ -105,12 +105,12 @@ def warn_about_low_disk_space(request):
         # Translators: xgettext:no-python-format
         _('Warning: Low space on system partition ({percent_used}% used, '
           '{free_space} free).'),
-        percent_used=root_info["percent_used"],
-        free_space=storage.format_bytes(root_info["free_bytes"]))
+        percent_used=root_info['percent_used'],
+        free_space=storage.format_bytes(root_info['free_bytes']))
 
-    if root_info["percent_used"] > 90 or root_info["free_gib"] < 1:
+    if root_info['percent_used'] > 90 or root_info['free_gib'] < 1:
         messages.error(request, message)
-    elif root_info["percent_used"] > 75 or root_info["free_gib"] < 2:
+    elif root_info['percent_used'] > 75 or root_info['free_gib'] < 2:
         messages.warning(request, message)
 
 

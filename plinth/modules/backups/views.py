@@ -157,7 +157,8 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
             # - For restoring it's highly advisable to have at least as much
             #   free disk space as the file size.
             context['max_filesize'] = storage.format_bytes(
-                    disk_info["free_bytes"] / 2)
+                disk_info['free_bytes'] / 2)
+
         return context
 
     def form_valid(self, form):
@@ -242,12 +243,13 @@ class RestoreArchiveView(BaseRestoreView):
 
 class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
+
     def get(self, request, uuid, name):
         repository = get_repository(uuid)
         filename = "%s.tar.gz" % name
 
-        response = StreamingHttpResponse(repository.get_zipstream(name),
-                                         content_type="application/x-gzip")
+        response = StreamingHttpResponse(
+            repository.get_zipstream(name), content_type='application/x-gzip')
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
             filename
         return response
@@ -293,8 +295,9 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         """Delete the archive."""
         repository = SshBorgRepository(uuid, automount=False)
         repository.remove_repository()
-        messages.success(request, _('Repository removed. The remote backup '
-                                    'itself was not deleted.'))
+        messages.success(
+            request,
+            _('Repository removed. The remote backup itself was not deleted.'))
         return redirect('backups:index')
 
 
