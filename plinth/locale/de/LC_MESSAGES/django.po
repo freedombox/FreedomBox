@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-14 20:57-0500\n"
-"PO-Revision-Date: 2018-12-19 21:00+0000\n"
+"PO-Revision-Date: 2019-01-23 21:07+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.4\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -503,22 +503,15 @@ msgstr ""
 "einzugeben."
 
 #: plinth/modules/cockpit/__init__.py:51
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> with a {box_name} login. Sensitive "
-#| "information and system altering abilities are limited to users belonging "
-#| "to admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
-"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
-"Nutzer</a> mit einem {box_name} Nutzerkonto. Vertrauliche Informationen und "
-"Änderungen sind Nutzern in der Administratorgruppe vorbehalten."
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
+">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
+"Benutzer</a> der {box_name} in der Administratorgruppe."
 
 #: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
@@ -3906,21 +3899,16 @@ msgstr ""
 
 #: plinth/modules/radicale/manifest.py:25
 msgid "DAVx5"
-msgstr ""
+msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:27
-#, fuzzy
-#| msgid ""
-#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
-#| "your user name. DAVdroid will show all existing calendars and address "
-#| "books and you can create new."
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVx5 will show all existing calendars and address books and you "
 "can create new."
 msgstr ""
 "Geben Sie dir URL ihres Radicale-Servers an (z.B. http://localhost:5232) und "
-"ihren Nutzernamen. DAVdroid wird all ihre existierenden Kalender und "
+"ihren Nutzernamen. DAVx5 wird all ihre existierenden Kalender und "
 "Adressbücher anzeigen, und Sie können neue anlegen."
 
 #: plinth/modules/radicale/manifest.py:44
@@ -4416,25 +4404,25 @@ msgid ""
 "and after a software installation. Older snapshots will be automatically "
 "cleaned up according to the settings below."
 msgstr ""
+"Schnappschüsse werden in regelmäßigen Zeitabständen angelegt (sog. "
+"Regelmäßige Schnappschüsse) und vor oder nach einer Installation von "
+"Software. Ältere Schnappschüsse werden gemäß den Einstellungen unten "
+"automatisch weggeräumt."
 
 #: plinth/modules/snapshot/__init__.py:46
-#, fuzzy
-#| msgid ""
-#| "Snapshots work on btrfs file systems only and on the root partition only. "
-#| "Snapshots are not a replacement for backups since they are stored on the "
-#| "same partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
-"Schnappschüsse funktionieren ausschließlich auf Btrfs-Dateisystemen und nur "
-"auf der Root-Partition. Schnappschüsse sind kein Ersatz für "
-"Datensicherungen, da sie auf derselben Partition gespeichert werden. "
+"Schnappschüsse funktionieren derzeit ausschließlich auf Btrfs-Dateisystemen "
+"und nur auf der Root-Partition. Schnappschüsse sind kein Ersatz für <a href="
+"\"/plinth/sys/backups\">Datensicherungen</a>, da sie nur auf derselben "
+"Partition gespeichert werden können. "
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Free Disk Space to Maintain"
-msgstr ""
+msgstr "Zu erhaltener freier Speicherplatz"
 
 #: plinth/modules/snapshot/forms.py:28
 msgid ""
@@ -4442,16 +4430,20 @@ msgid ""
 "below this value, older snapshots are removed until this much free space is "
 "regained. The default value is 30%."
 msgstr ""
+"Erhalte diesen Prozentsatz als freien Speicherplatz. Sobald der freie "
+"Speicher diesen Wert unterschreitet, werden ältere Schnappschüsse gelöscht "
+"bis wieder genügend freier Platz gewonnen ist. Die Standardeinstellung ist "
+"30%."
 
 #: plinth/modules/snapshot/forms.py:35
 msgid "Timeline Snapshots"
-msgstr "Zeitleiste der Speicherauszüge"
+msgstr "Zeitleiste der Schnappschüsse"
 
 #: plinth/modules/snapshot/forms.py:36
 msgid ""
 "Enable or disable timeline snapshots (hourly, daily, monthly and yearly)."
 msgstr ""
-"Aktivieren oder Deaktivieren der Speicherauszug-Intervalle (stündlich, "
+"Aktivieren oder Deaktivieren der regelmäßigen Schnappschüsse (stündlich, "
 "täglich, monatlich und jährlich)."
 
 #: plinth/modules/snapshot/forms.py:41
@@ -4500,15 +4492,12 @@ msgid "Yearly Snapshots Limit"
 msgstr "Grenze für jährliche Speicherauszüge"
 
 #: plinth/modules/snapshot/forms.py:63
-#, fuzzy
-#| msgid ""
-#| "Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
 msgid ""
 "Keep a maximum of this many yearly snapshots. The default value is 0 "
 "(disabled)."
 msgstr ""
-"Aufbewahren dieser maximalen Anzahl jährlicher Schnappschüsse. Standard ist "
-"0 (deaktiviert)."
+"Behalte maximal diese Anzahl jährlicher Schnappschüsse. Standardwert ist 0 "
+"(deaktiviert)."
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:27
 msgid "Delete the following snapshots permanently?"
@@ -4555,6 +4544,9 @@ msgid ""
 "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
+"Sie haben ein Dateisystem vom Typ <strong>%(fs_type)s</strong>. "
+"Schnappschüsse sind derzeit nur mit <strong>%(types_supported)s</strong> "
+"Dateisystemen verfügbar."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
@@ -4603,6 +4595,8 @@ msgstr "Ausgewählte Snapshots gelöscht"
 #: plinth/modules/snapshot/views.py:176
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
+"Schnappschüsse ist derzeit im Gebrauch. Bitte versuchen Sie es später noch "
+"einmal."
 
 #: plinth/modules/snapshot/views.py:199
 #, python-brace-format
@@ -5864,7 +5858,7 @@ msgstr "%(percentage)s%% abgeschlossen"
 
 #: plinth/web_framework.py:183
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #~ msgid "Currently only limited functionality is available."
 #~ msgstr "Derzeit ist nur eine eingeschränkte Funktionalität möglich."
