@@ -25,7 +25,7 @@ from plinth.menu import main_menu
 
 from .manifest import backup
 
-version = 4
+version = 5
 
 is_essential = True
 
@@ -52,8 +52,7 @@ def init():
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
-    if not old_version:
-        setup_fail2ban()
+    setup_fail2ban()
 
     if get_restricted_access_enabled():
         set_restricted_access(True)
@@ -62,6 +61,7 @@ def setup(helper, old_version=None):
 def setup_fail2ban():
     actions.superuser_run('service', ['unmask', 'fail2ban'])
     actions.superuser_run('service', ['enable', 'fail2ban'])
+    actions.superuser_run('service', ['reload', 'fail2ban'])
 
 
 def get_restricted_access_enabled():
