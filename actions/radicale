@@ -59,9 +59,6 @@ def subcommand_setup(_):
 
     if current_version and current_version < radicale.VERSION_2:
         aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
-
-    aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
-    if current_version and current_version < radicale.VERSION_2:
         aug.set('/files' + CONFIG_FILE + '/server/hosts',
                 '127.0.0.1:5232, [::1]:5232')
         aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
@@ -70,6 +67,7 @@ def subcommand_setup(_):
         aug.set('/files' + CONFIG_FILE + '/well-known/carddav',
                 '/radicale/%(user)s/carddav/')
         aug.set('/files' + CONFIG_FILE + '/auth/type', 'remote_user')
+        aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
 
     aug.save()
 
@@ -78,6 +76,15 @@ def subcommand_setup(_):
 
 def subcommand_configure(arguments):
     """Sets the radicale rights type to a particular value"""
+    current_version = radicale.get_package_version()
+    if not current_version:
+        print('Warning: Unable to get radicale version.')
+
+    if current_version and current_version >= radicale.VERSION_2:
+        if arguments.rights_type == 'owner_only':
+            # Radicale 2.x default rights file is equivalent to owner_only.
+            arguments.rights_type = 'from_file'
+
     aug = load_augeas()
     aug.set('/files' + CONFIG_FILE + '/rights/type', arguments.rights_type)
     aug.save()

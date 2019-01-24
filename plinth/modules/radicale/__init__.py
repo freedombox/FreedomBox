@@ -177,6 +177,13 @@ def get_rights_value():
     """Returns the current Rights value."""
     aug = load_augeas()
     value = aug.get('/files' + CONFIG_FILE + '/rights/type')
+
+    current_version = get_package_version()
+    if current_version and current_version >= VERSION_2:
+        if value == 'from_file':
+            # Radicale 2.x default rights file is equivalent to owner_only.
+            value = 'owner_only'
+
     return value
 
 
