@@ -126,12 +126,16 @@ class TestCfg(unittest.TestCase):
         self.assertEqual(parser.get('Path', 'actions_dir'), cfg.actions_dir)
         self.assertEqual(parser.get('Path', 'doc_dir'), cfg.doc_dir)
 
-        self.assertEqual(5, len(parser.items('Network')))
+        self.assertEqual(6, len(parser.items('Network')))
         self.assertEqual(parser.get('Network', 'host'), cfg.host)
         self.assertEqual(int(parser.get('Network', 'port')), cfg.port)
         self.assertEqual(
             parser.get('Network', 'secure_proxy_ssl_header'),
             cfg.secure_proxy_ssl_header)
+        self.assertIsInstance(cfg.use_x_forwarded_for, bool)
+        self.assertEqual(
+            parser.get('Network', 'use_x_forwarded_for'),
+            str(cfg.use_x_forwarded_for))
         self.assertIsInstance(cfg.use_x_forwarded_host, bool)
         self.assertEqual(
             parser.get('Network', 'use_x_forwarded_host'),

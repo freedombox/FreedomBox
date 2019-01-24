@@ -32,6 +32,7 @@ actions_dir = None
 doc_dir = None
 host = None
 port = None
+use_x_forwarded_for = False
 use_x_forwarded_host = False
 secure_proxy_ssl_header = None
 develop = False
@@ -98,6 +99,7 @@ def read(config_path=None, root_directory=None):
         ('Network', 'host', 'string'),
         ('Network', 'port', 'int'),
         ('Network', 'secure_proxy_ssl_header', 'string'),
+        ('Network', 'use_x_forwarded_for', 'bool'),
         ('Network', 'use_x_forwarded_host', 'bool'),
         ('Misc', 'box_name', 'string'),
         ('Misc', 'danube_edition', 'bool'),

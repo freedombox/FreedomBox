@@ -22,13 +22,13 @@ import logging
 import os
 import urllib
 
+import axes.utils
+from axes.decorators import axes_form_invalid
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 
-from axes.decorators import axes_form_invalid
-from axes.utils import reset
-from plinth import actions
+from plinth import actions, web_framework
 
 from .forms import AuthenticationForm
 
@@ -66,8 +66,8 @@ class SSOLoginView(LoginView):
         response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
         if request.user.is_authenticated:
             return set_ticket_cookie(request.user, response)
-        else:
-            return response
+
+        return response
 
     @axes_form_invalid
     def form_invalid(self, *args, **kwargs):
@@ -82,24 +82,18 @@ class CaptchaLoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         response = super(CaptchaLoginView, self).dispatch(
             request, *args, **kwargs)
-        if request.POST:
-            if request.user.is_authenticated:
-                ip = get_ip_address_from_request(request)
-                reset(ip=ip)
-                return set_ticket_cookie(request.user, response)
-            else:
-                return response
-        return response
+        if not request.POST:
+            return response
 
+        if not request.user.is_authenticated:
+            return response
 
-def get_ip_address_from_request(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    logger.warning("IP address is " + ip)
-    return ip
+        # Successful authentication
+        ip_address = web_framework.get_ip_address_from_request(request)
+        axes.utils.reset(ip=ip_address)
+        logger.info('Login attempts reset for IP after successful login: %s',
+                    ip_address)
+        return set_ticket_cookie(request.user, response)
 
 
 class SSOLogoutView(LogoutView):
