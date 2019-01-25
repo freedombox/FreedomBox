@@ -20,6 +20,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
   <h2>{{ title }}</h2>
@@ -36,10 +37,17 @@
 
       {{ form|bootstrap }}
 
-      <input type="submit" class="btn btn-primary"
-             value="{% blocktrans trimmed %}
-                      Restore
-                    {% endblocktrans %}"/>
+      <input id="restore_btn" type="submit"
+             class="btn btn-primary"
+             onclick="swapWithLoadingButton();"
+             value="{% trans 'Restore' %}" />
+
+      <button id="loading_btn" class="btn btn-primary sr-only" disabled>
+        <i class="fa fa-spinner fa-pulse fa-fw"></i> {% blocktrans trimmed %}
+          Restoring
+          {% endblocktrans %}
+      </button>
+
       <a title="{% trans 'Abort' %}"
          role="button" class="btn btn-warning"
          href="{% url 'backups:index' %}">
@@ -49,3 +57,8 @@
   </p>
 
 {% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'backups/loading_button.js' %}"></script>
+{% endblock %}
+
