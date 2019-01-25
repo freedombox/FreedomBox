@@ -20,16 +20,15 @@ URLs for the mldonkey module.
 
 from django.conf.urls import url
 
-from plinth.views import ServiceView
 from plinth.modules import mldonkey
+from plinth.views import ServiceView
 
 urlpatterns = [
-    url(r'^apps/mldonkey/$',
-        ServiceView.as_view(
-            service_id=mldonkey.managed_services[0],
-            diagnostics_module_name='mldonkey',
-            description=mldonkey.description,
-            clients=mldonkey.clients,
-            show_status_block=True),
+    url(
+        r'^apps/mldonkey/$',
+        ServiceView.as_view(service_id=mldonkey.managed_services[0],
+                            diagnostics_module_name='mldonkey',
+                            description=mldonkey.description,
+                            clients=mldonkey.clients, show_status_block=True),
         name='index'),
 ]

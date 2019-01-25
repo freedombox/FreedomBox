@@ -25,6 +25,7 @@ import subprocess
 
 from plinth import action_utils
 
+
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
@@ -40,9 +41,9 @@ def parse_arguments():
 
 def subcommand_pre_install(_):
     """Preseed debconf values before packages are installed."""
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'mldonkey-server mldonkey-server/launch_at_startup boolean true')
+    subprocess.check_output([
+        'debconf-set-selections'
+    ], input=b'mldonkey-server mldonkey-server/launch_at_startup boolean true')
 
 
 def subcommand_enable(_):

@@ -26,11 +26,13 @@ Background:
 Scenario: Enable mldonkey application
   Given the mldonkey application is disabled
   When I enable the mldonkey application
+  Then the mldonkey service should be running
   Then the mldonkey site should be available
 
 Scenario: Disable mldonkey application
   Given the mldonkey application is enabled
   When I disable the mldonkey application
+  Then the mldonkey service should not be running
   Then the mldonkey site should not be available
 
 # Scenario: Upload an ed2k file to mldonkey
