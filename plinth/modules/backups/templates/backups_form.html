@@ -20,16 +20,21 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block configuration %}
 
   <form class="form" method="post">
-      {% csrf_token %}
+    {% csrf_token %}
 
-      {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Submit" %}"/>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Submit" %}"/>
   </form>
 
+{% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'backups/select_all.js' %}"></script>
 {% endblock %}

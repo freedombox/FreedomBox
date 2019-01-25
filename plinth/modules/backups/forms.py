@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 def _get_app_choices(apps):
     """Return a list of check box multiple choices from list of apps."""
-    choices = []
+    choices = [('select_all', _("Include all apps"))]
     for app in apps:
         name = app.app.name
         if not app.has_data:
