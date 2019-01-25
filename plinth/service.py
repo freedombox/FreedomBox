@@ -30,7 +30,7 @@ from plinth.utils import format_lazy
 services = {}
 
 
-class Service(object):
+class Service():
     """
     Representation of an application service provided by the machine
     containing information such as current status and ports required
@@ -62,7 +62,7 @@ class Service(object):
         self._is_running = is_running
 
         # Maintain a complete list of services
-        assert(service_id not in services)
+        assert service_id not in services
         services[service_id] = self
 
     def enable(self):
@@ -86,31 +86,35 @@ class Service(object):
         return self._call_or_return(self._is_enabled)
 
     def is_running(self):
+        """Return whether the service is running."""
         if self._is_running is None:
             return action_utils.service_is_running(self.service_id)
-        else:
-            return self._call_or_return(self._is_running)
+
+        return self._call_or_return(self._is_running)
 
     def notify_enabled(self, sender, enabled):
         """Notify observers about change in state of service."""
         service_enabled.send_robust(sender=sender, service_id=self.service_id,
                                     enabled=enabled)
 
-    def _call_or_return(self, obj):
+    @staticmethod
+    def _call_or_return(obj):
         """Calls obj if it's callable, returns it if it's Boolean."""
-        if isinstance(obj, collections.Callable):
+        if isinstance(obj, collections.abc.Callable):
             return obj()
-        elif type(obj) is bool:
+
+        if isinstance(obj, bool):
             return obj
-        else:
-            message = 'obj is expected to be callable or a boolean.'
-            raise ValueError(message)
+
+        message = 'obj is expected to be callable or a boolean.'
+        raise ValueError(message)
 
     def _default_is_enabled(self):
         """Returns is_enabled relying on a correct service_id"""
         return action_utils.service_is_enabled(self.service_id)
 
-    def get_internal_interfaces(self):
+    @staticmethod
+    def get_internal_interfaces():
         """Returns a list of interfaces in a firewall zone."""
         from plinth.modules import firewall
         return firewall.get_interfaces('internal')
