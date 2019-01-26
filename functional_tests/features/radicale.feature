@@ -36,3 +36,24 @@ Scenario: Disable radicale application
   Then the radicale service should not be running
   And the calendar should not be available
   And the addressbook should not be available
+
+Scenario: Owner-only access rights
+  Given the radicale application is enabled
+  And the access rights are set to "any user can view, but only the owner can make changes"
+  When I change the access rights to "only the owner can view or make changes"
+  Then the radicale service should be running
+  And the access rights should be "only the owner can view or make changes"
+
+Scenario: Owner-write access rights
+  Given the radicale application is enabled
+  And the access rights are set to "only the owner can view or make changes"
+  When I change the access rights to "any user can view, but only the owner can make changes"
+  Then the radicale service should be running
+  And the access rights should be "any user can view, but only the owner can make changes"
+
+Scenario: Authenticated access rights
+  Given the radicale application is enabled
+  And the access rights are set to "only the owner can view or make changes"
+  When I change the access rights to "any user can view or make changes"
+  Then the radicale service should be running
+  And the access rights should be "any user can view or make changes"

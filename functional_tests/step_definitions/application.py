@@ -361,3 +361,39 @@ def tahoe_given_add_introducer(browser, domain):
 @when(parsers.parse('I remove {domain:S} as a tahoe introducer'))
 def tahoe_remove_introducer(browser, domain):
     application.tahoe_remove_introducer(browser, domain)
+
+@given('the access rights are set to "only the owner can view or make changes"')
+def radicale_given_owner_only(browser):
+    application.radicale_set_access_rights(browser, 'owner_only')
+
+@given('the access rights are set to "any user can view, but only the owner can make changes"')
+def radicale_given_owner_write(browser):
+    application.radicale_set_access_rights(browser, 'owner_write')
+
+@given('the access rights are set to "any user can view or make changes"')
+def radicale_given_authenticated(browser):
+    application.radicale_set_access_rights(browser, 'authenticated')
+
+@when('I change the access rights to "only the owner can view or make changes"')
+def radicale_set_owner_only(browser):
+    application.radicale_set_access_rights(browser, 'owner_only')
+
+@when('I change the access rights to "any user can view, but only the owner can make changes"')
+def radicale_set_owner_write(browser):
+    application.radicale_set_access_rights(browser, 'owner_write')
+
+@when('I change the access rights to "any user can view or make changes"')
+def radicale_set_authenticated(browser):
+    application.radicale_set_access_rights(browser, 'authenticated')
+
+@then('the access rights should be "only the owner can view or make changes"')
+def radicale_check_owner_only(browser):
+    assert application.radicale_get_access_rights(browser) == 'owner_only'
+
+@then('the access rights should be "any user can view, but only the owner can make changes"')
+def radicale_check_owner_write(browser):
+    assert application.radicale_get_access_rights(browser) == 'owner_write'
+
+@then('the access rights should be "any user can view or make changes"')
+def radicale_check_authenticated(browser):
+    assert application.radicale_get_access_rights(browser) == 'authenticated'

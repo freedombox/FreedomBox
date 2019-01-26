@@ -425,3 +425,17 @@ def tahoe_remove_introducer(browser, domain):
     """Remove an introducer from tahoe-lafs."""
     introducer = tahoe_get_introducer(browser, domain, 'connected')
     submit(browser, element=introducer.find_by_css('.form-remove'))
+
+
+def radicale_get_access_rights(browser):
+    access_rights_types = ['owner_only', 'owner_write', 'authenticated']
+    interface.nav_to_module(browser, 'radicale')
+    for access_rights_type in access_rights_types:
+        if browser.find_by_value(access_rights_type).checked:
+            return access_rights_type
+
+
+def radicale_set_access_rights(browser, access_rights_type):
+    interface.nav_to_module(browser, 'radicale')
+    browser.choose('access_rights', access_rights_type)
+    interface.submit(browser, form_class='form-configuration')
