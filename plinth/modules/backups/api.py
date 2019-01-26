@@ -82,6 +82,7 @@ def _validate_service(service):
 
 class BackupError:
     """Represent an backup/restore operation error."""
+
     def __init__(self, error_type, app, hook=None):
         """Initialize the error object."""
         self.error_type = error_type
@@ -90,9 +91,9 @@ class BackupError:
 
     def __eq__(self, other_error):
         """Compare to error objects."""
-        return (self.error_type == other_error.error_type and
-                self.app == other_error.app and
-                self.hook == other_error.hook)
+        return (self.error_type == other_error.error_type
+                and self.app == other_error.app
+                and self.hook == other_error.hook)
 
 
 class Packet:
@@ -199,12 +200,12 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
     else:
         apps = _get_apps_in_order(app_names)
 
+    _install_apps_before_restore(apps)
+
     if _is_snapshot_available() and create_subvolume:
         subvolume = _create_subvolume(empty=False)
         restore_root = subvolume['mount_path']
-        subvolume = True
     else:
-        _install_apps_before_restore(apps)
         _lockdown_apps(apps, lockdown=True)
         original_state = _shutdown_services(apps)
         restore_root = '/'
@@ -222,12 +223,18 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
 
 
 def _install_apps_before_restore(apps):
-    """Automatically install any applications from the backup archive
-    if they are not installed yet."""
+    """Install/upgrade apps needed before restoring a backup.
+
+    Upgrading apps to latest version before backups reduces the chance of newer
+    data getting backed up into older version of the app.
+
+    """
     modules_to_setup = []
     for backup_app in apps:
-        if backup_app.app.setup_helper.get_state() == 'needs-setup':
+        if backup_app.app.setup_helper.get_state() in ('needs-setup',
+                                                       'needs-update'):
             modules_to_setup.append(backup_app.name)
+
     setup.run_setup_on_modules(modules_to_setup)
 
 
