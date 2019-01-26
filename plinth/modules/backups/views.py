@@ -179,10 +179,7 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
         included_apps = self._get_included_apps()
-        installed_apps = api.get_all_apps_for_backup()
-        kwargs['apps'] = [
-            app for app in installed_apps if app.name in included_apps
-        ]
+        kwargs['apps'] = api.get_apps_in_order(included_apps)
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -202,8 +199,8 @@ class RestoreFromUploadView(BaseRestoreView):
         if not os.path.isfile(path):
             messages.error(self.request, _('No backup file found.'))
             return redirect(reverse_lazy('backups:index'))
-        else:
-            return super().get(*args, **kwargs)
+
+        return super().get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""

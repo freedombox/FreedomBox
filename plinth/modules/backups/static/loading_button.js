@@ -22,6 +22,8 @@
 */
 
 
+// XXX: This is misuse of sr-only class. This is problematic for people using
+// screen readers.
 function swapWithLoadingButton() {
     $("#restore_btn").addClass("sr-only");
     $("#loading_btn").removeClass("sr-only");

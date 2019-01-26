@@ -169,7 +169,7 @@ def backup_apps(backup_handler, path, app_names=None,
     if not app_names:
         apps = get_all_apps_for_backup()
     else:
-        apps = _get_apps_in_order(app_names)
+        apps = get_apps_in_order(app_names)
 
     if _is_snapshot_available():
         snapshot = _take_snapshot()
@@ -198,7 +198,7 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
     if not app_names:
         apps = get_all_apps_for_backup()
     else:
-        apps = _get_apps_in_order(app_names)
+        apps = get_apps_in_order(app_names)
 
     _install_apps_before_restore(apps)
 
@@ -261,6 +261,13 @@ class BackupApp:
             self.manifest == other_app.manifest and \
             self.has_data == other_app.has_data
 
+    def is_installed(self):
+        """Return whether app is installed.
+
+        Return true even if the app needs update.
+        """
+        return self.app.setup_helper.get_state() != 'needs-setup'
+
     def run_hook(self, hook, packet):
         """Run a hook inside an application."""
         if not hasattr(self.app, hook):
@@ -280,14 +287,16 @@ def get_all_apps_for_backup():
     apps = []
     for module_name, module in module_loader.loaded_modules.items():
         try:
-            apps.append(BackupApp(module_name, module))
+            backup_app = BackupApp(module_name, module)
+            if backup_app.is_installed():
+                apps.append(backup_app)
         except TypeError:  # Application not available for backup/restore
             pass
 
     return apps
 
 
-def _get_apps_in_order(app_names):
+def get_apps_in_order(app_names):
     """Return a list of app modules in order of dependency."""
     apps = []
     for module_name, module in module_loader.loaded_modules.items():

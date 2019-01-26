@@ -140,7 +140,7 @@ class TestBackupProcesses(unittest.TestCase):
 
     @staticmethod
     @patch('plinth.module_loader.loaded_modules.items')
-    def test__get_apps_in_order(modules):
+    def test_get_apps_in_order(modules):
         """Test that apps are listed in correct dependency order."""
         apps = [
             ('names', MagicMock(backup=_get_test_manifest('names'))),
@@ -150,7 +150,7 @@ class TestBackupProcesses(unittest.TestCase):
 
         module_loader.load_modules()
         app_names = ['config', 'names']
-        apps = api._get_apps_in_order(app_names)
+        apps = api.get_apps_in_order(app_names)
         assert apps[0].name == 'names'
         assert apps[1].name == 'config'
 
