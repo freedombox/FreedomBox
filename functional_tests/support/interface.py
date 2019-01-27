@@ -150,3 +150,11 @@ def compare_files(file1, file2):
     file2_contents = open(file2, 'rb').read()
 
     assert file1_contents == file2_contents
+
+
+def go_to_status_logs(browser):
+    browser.visit(default_url + '/plinth/help/status-log/')
+
+
+def are_status_logs_shown(browser):
+    return browser.is_text_present('Logs begin')

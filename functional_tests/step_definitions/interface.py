@@ -83,3 +83,13 @@ def new_user_is_not_listed(browser, name):
 def sample_local_file():
     file_path, contents = interface.create_sample_local_file()
     return dict(file_path=file_path, contents=contents)
+
+
+@when('I go to the status logs page')
+def help_go_to_status_logs(browser):
+    interface.go_to_status_logs(browser)
+
+
+@then('status logs should be shown')
+def help_status_logs_are_shown(browser):
+    assert interface.are_status_logs_shown(browser)
