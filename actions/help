@@ -1,0 +1,55 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Actions for help module.
+"""
+
+import argparse
+import subprocess
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('get-logs', help='Get latest FreedomBox logs')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_get_logs(_):
+    """Get latest FreedomBox logs."""
+    command = ['journalctl', '--no-pager', '-n', '100', '-u', 'plinth']
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    data = process.stdout.decode()
+    print(data)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

@@ -20,7 +20,6 @@ Help app for FreedomBox.
 
 import mimetypes
 import os
-import subprocess
 
 from apt.cache import Cache
 from django.core.files.base import File
@@ -29,7 +28,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from plinth import __version__, cfg
+from plinth import __version__, actions, cfg
 from plinth.menu import main_menu
 
 
@@ -105,15 +104,8 @@ def download_manual(request):
 
 def status_log(request):
     """Serve the last 100 lines of plinth's status log"""
-    num_lines = 100
-    command = [
-        'journalctl', '--no-pager', '-n',
-        str(num_lines), '-u', 'plinth'
-    ]
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    data = process.stdout.decode()
-
-    context = {'num_lines': num_lines, 'data': data}
+    output = actions.superuser_run('help', ['get-logs'])
+    context = {'num_lines': 100, 'data': output}
     return TemplateResponse(request, 'statuslog.html', context)
 
 
