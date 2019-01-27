@@ -89,7 +89,10 @@ def subcommand_configure(arguments):
     aug.set('/files' + CONFIG_FILE + '/rights/type', arguments.rights_type)
     aug.save()
 
-    action_utils.service_restart('radicale')
+    if current_version and current_version >= radicale.VERSION_2:
+        action_utils.service_try_restart('uwsgi')
+    else:
+        action_utils.service_try_restart('radicale')
 
 
 def subcommand_enable(_):
