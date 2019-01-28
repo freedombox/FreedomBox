@@ -25,6 +25,7 @@ import os
 import pwd
 import shutil
 import subprocess
+import time
 
 from plinth import action_utils
 
@@ -110,6 +111,19 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def _kill_daemon():
+    """Try to kill the infinoted daemon for upto 5 minutes."""
+    end_time = time.time() + 300
+    while time.time() < end_time:
+        try:
+            subprocess.run(['infinoted', '--kill-daemon'], check=True)
+            break
+        except subprocess.CalledProcessError:
+            pass
+
+        time.sleep(1)
+
+
 def subcommand_setup(_):
     """Configure infinoted after install."""
     if not os.path.isfile(CONF_PATH):
@@ -155,7 +169,7 @@ def subcommand_setup(_):
                 'infinoted', '--create-key', '--create-certificate',
                 '--daemonize'
             ], check=True)
-            subprocess.run(['infinoted', '--kill-daemon'], check=True)
+            _kill_daemon()
         finally:
             os.umask(old_umask)
 
