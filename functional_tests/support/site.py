@@ -230,6 +230,37 @@ def jsxc_has_contact(browser):
     return bool(contact)
 
 
+def _mldonkey_submit_command(browser, command):
+    """Submit a command to mldonkey."""
+    with browser.get_iframe('commands') as commands_frame:
+        commands_frame.find_by_css('.txt2').fill(command)
+        commands_frame.find_by_css('.but2').click()
+
+def mldonkey_remove_all_ed2k_files(browser):
+    """Remove all ed2k files from mldonkey."""
+    browser.visit(config['DEFAULT']['url'] + '/mldonkey')
+    _mldonkey_submit_command(browser, 'cancel all')
+    _mldonkey_submit_command(browser, 'confirm yes')
+
+
+def mldonkey_upload_sample_ed2k_file(browser):
+    """Upload a sample ed2k file into mldonkey."""
+    browser.visit(config['DEFAULT']['url'] + '/mldonkey')
+    dllink_command = 'dllink ed2k://|file|foo.bar|123|0123456789ABCDEF0123456789ABCDEF|/'
+    _mldonkey_submit_command(browser, dllink_command)
+
+
+def mldonkey_get_number_of_ed2k_files(browser):
+    """Return the number of ed2k files currently in mldonkey."""
+    browser.visit(config['DEFAULT']['url'] + '/mldonkey')
+
+    with browser.get_iframe('commands') as commands_frame:
+        commands_frame.find_by_xpath('//tr//td[contains(text(), "Transfers")]').click()
+
+    with browser.get_iframe('output') as output_frame:
+        return len(output_frame.find_by_css('.dl-1')) + len(output_frame.find_by_css('.dl-2'))
+
+
 def transmission_remove_all_torrents(browser):
     """Remove all torrents from transmission."""
     browser.visit(config['DEFAULT']['url'] + '/transmission')

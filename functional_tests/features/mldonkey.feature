@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @mldonkey @sso
+@apps @mldonkey @backups @sso
 Feature: MLDonkey eDonkey Network Client
   Run the eDonkey Network client.
 
@@ -41,12 +41,12 @@ Scenario: Disable mldonkey application
 #   And I upload a sample ed2k file to mldonkey
 #   Then there should be 1 ed2k file listed in mldonkey
 #
-# Scenario: Backup and restore mldonkey
-#   Given the mldonkey application is enabled
-#   When all ed2k files are removed from mldonkey
-#   And I upload a sample ed2k file to mldonkey
-#   And I create a backup of the mldonkey app data
-#   And all ed2k files are removed from mldonkey
-#   And I restore the mldonkey app data backup
-#   Then the mldonkey service should be running
-#   And there should be 1 torrents listed in mldonkey
+Scenario: Backup and restore mldonkey
+  Given the mldonkey application is enabled
+  When all ed2k files are removed from mldonkey
+  And I upload a sample ed2k file to mldonkey
+  And I create a backup of the mldonkey app data
+  And all ed2k files are removed from mldonkey
+  And I restore the mldonkey app data backup
+  Then the mldonkey service should be running
+  And there should be 1 ed2k files listed in mldonkey

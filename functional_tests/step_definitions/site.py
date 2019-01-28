@@ -120,6 +120,23 @@ def mediawiki_verify_text(browser):
     assert site.mediawiki_has_main_page(browser)
 
 
+@when('all ed2k files are removed from mldonkey')
+def mldonkey_remove_all_ed2k_files(browser):
+    site.mldonkey_remove_all_ed2k_files(browser)
+
+
+@when('I upload a sample ed2k file to mldonkey')
+def mldonkey_upload_sample_ed2k_file(browser):
+    site.mldonkey_upload_sample_ed2k_file(browser)
+
+
+@then(
+    parsers.parse(
+        'there should be {ed2k_files_number:d} ed2k files listed in mldonkey'))
+def mldonkey_assert_number_of_ed2k_files(browser, ed2k_files_number):
+    assert ed2k_files_number == site.mldonkey_get_number_of_ed2k_files(browser)
+
+
 @given('repro has been configured')
 def repro_configure(browser):
     site.repro_configure(browser)
