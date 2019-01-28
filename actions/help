@@ -36,10 +36,8 @@ def parse_arguments():
 
 def subcommand_get_logs(_):
     """Get latest FreedomBox logs."""
-    command = ['journalctl', '--no-pager', '-n', '100', '-u', 'plinth']
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    data = process.stdout.decode()
-    print(data)
+    command = ['journalctl', '--no-pager', '--lines=100', '--unit=plinth']
+    subprocess.run(command, check=True)
 
 
 def main():
