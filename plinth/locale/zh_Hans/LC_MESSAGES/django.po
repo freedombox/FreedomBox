@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 20:57-0500\n"
+"POT-Creation-Date: 2019-01-28 18:23-0500\n"
 "PO-Revision-Date: 2018-12-07 18:21+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -310,8 +310,8 @@ msgstr "创建用户"
 
 #: plinth/modules/backups/templates/backups_repository_add.html:46
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
-#: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/templates/backups_restore.html:46
+#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:54
 msgid "Abort"
 msgstr ""
 
@@ -330,21 +330,27 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:289
+#: plinth/modules/backups/views.py:290
 msgid "Remove Repository"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_restore.html:29
+#: plinth/modules/backups/templates/backups_restore.html:30
 #, fuzzy
 #| msgid "Welcome to %(box_name)s!"
 msgid "Restore data from"
 msgstr "欢迎来到 %(box_name)s ！"
 
-#: plinth/modules/backups/templates/backups_restore.html:40
+#: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/views.py:191
 #, fuzzy
 #| msgid "reStore"
 msgid "Restore"
+msgstr "reStore"
+
+#: plinth/modules/backups/templates/backups_restore.html:46
+#, fuzzy
+#| msgid "reStore"
+msgid "Restoring"
 msgstr "reStore"
 
 #: plinth/modules/backups/templates/backups_upload.html:31
@@ -402,7 +408,7 @@ msgstr "{name} 已删除。"
 msgid "Upload and restore a backup file"
 msgstr ""
 
-#: plinth/modules/backups/views.py:176
+#: plinth/modules/backups/views.py:179
 msgid "Restored files from backup."
 msgstr ""
 
@@ -414,23 +420,23 @@ msgstr ""
 msgid "Restore from uploaded file"
 msgstr ""
 
-#: plinth/modules/backups/views.py:263
+#: plinth/modules/backups/views.py:264
 msgid "Added new repository."
 msgstr ""
 
-#: plinth/modules/backups/views.py:268
+#: plinth/modules/backups/views.py:269
 msgid "Create remote backup repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:297
+#: plinth/modules/backups/views.py:300
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr ""
 
-#: plinth/modules/backups/views.py:306
+#: plinth/modules/backups/views.py:308
 msgid "Unmounting failed!"
 msgstr ""
 
-#: plinth/modules/backups/views.py:315 plinth/modules/backups/views.py:319
+#: plinth/modules/backups/views.py:317 plinth/modules/backups/views.py:321
 msgid "Mounting failed"
 msgstr ""
 
@@ -889,7 +895,7 @@ msgstr ""
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
-#: plinth/modules/openvpn/templates/openvpn.html:127
+#: plinth/modules/openvpn/templates/openvpn.html:129
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
@@ -955,14 +961,14 @@ msgstr ""
 msgid "Dynamic DNS Service"
 msgstr "动态 DNS 客户端"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:46
+#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:45
 msgid "About"
 msgstr "关于"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:48
 #: plinth/modules/firewall/templates/firewall.html:45
 #: plinth/modules/networks/templates/connection_show.html:261
-#: plinth/modules/openvpn/templates/openvpn.html:70
+#: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
 #: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
 msgid "Status"
@@ -1269,7 +1275,7 @@ msgstr "启动 web 客户端"
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
-#: plinth/modules/openvpn/templates/openvpn.html:119
+#: plinth/modules/openvpn/templates/openvpn.html:121
 #: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
 #: plinth/modules/tor/templates/tor.html:88 plinth/templates/service.html:79
@@ -1405,8 +1411,9 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
+#: plinth/modules/first_boot/templates/firstboot_navbar.html:26
 #: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:144
+#: plinth/templates/base.html:145 plinth/templates/base.html:148
 msgid "Help"
 msgstr "帮助"
 
@@ -1423,26 +1430,26 @@ msgid "Documentation"
 msgstr "文档"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:136
 msgid "Manual"
 msgstr "手册"
 
-#: plinth/modules/help/help.py:43
+#: plinth/modules/help/help.py:42
 #, fuzzy
 #| msgid "{box_name} Manual"
 msgid "Download Manual"
 msgstr "{box_name} 手册"
 
-#: plinth/modules/help/help.py:52
+#: plinth/modules/help/help.py:51
 msgid "Documentation and FAQ"
 msgstr "文档和 FAQ"
 
-#: plinth/modules/help/help.py:61
+#: plinth/modules/help/help.py:59
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "关于 {box_name}"
 
-#: plinth/modules/help/help.py:82
+#: plinth/modules/help/help.py:80
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} 手册"
@@ -2186,7 +2193,7 @@ msgstr "应用程序已禁用"
 msgid "MediaWiki"
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:146
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:140
 msgid "Wiki"
 msgstr ""
 
@@ -2385,6 +2392,36 @@ msgstr "玩家对战（PVP）配置已更新"
 msgid "Damage configuration updated"
 msgstr "伤害配置已更新"
 
+#: plinth/modules/mldonkey/__init__.py:37
+#: plinth/modules/mldonkey/manifest.py:27
+#, fuzzy
+#| msgid "Monkeysphere"
+msgid "MLDonkey"
+msgstr "Monkeysphere"
+
+#: plinth/modules/mldonkey/__init__.py:39
+#, fuzzy
+#| msgid "Enable Shaarli"
+msgid "Peer-to-peer File Sharing"
+msgstr "启用 Shaarli"
+
+#: plinth/modules/mldonkey/__init__.py:42
+msgid ""
+"MLDonkey is a peer-to-peer file sharing application used to exchange large "
+"files. It can participate in multiple peer-to-peer networks including "
+"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
+msgstr ""
+
+#: plinth/modules/mldonkey/__init__.py:46
+#, python-brace-format
+msgid ""
+"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
+msgstr ""
+
+#: plinth/modules/mldonkey/__init__.py:54
+msgid "Download files using eDonkey applications"
+msgstr ""
+
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:26
@@ -2451,7 +2488,7 @@ msgstr "安全 Shell"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:88
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
-#: plinth/service.py:121
+#: plinth/service.py:125
 msgid "Web Server"
 msgstr "Web 服务器"
 
@@ -2944,7 +2981,7 @@ msgid "Edit connection"
 msgstr "编辑连接"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:159 plinth/templates/base.html:160
+#: plinth/templates/base.html:163 plinth/templates/base.html:164
 msgid "Edit"
 msgstr "編輯"
 
@@ -3178,19 +3215,19 @@ msgstr "激活"
 msgid "Inactive"
 msgstr "未激活"
 
-#: plinth/modules/openvpn/__init__.py:37
+#: plinth/modules/openvpn/__init__.py:39
 #, fuzzy
 #| msgid "Open"
 msgid "OpenVPN"
 msgstr "打开"
 
-#: plinth/modules/openvpn/__init__.py:39
+#: plinth/modules/openvpn/__init__.py:41
 #, fuzzy
 #| msgid "Virtual Private Network (OpenVPN)"
 msgid "Virtual Private Network"
 msgstr "虚拟专用网络（OpenVPN）"
 
-#: plinth/modules/openvpn/__init__.py:43
+#: plinth/modules/openvpn/__init__.py:45
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -3205,7 +3242,7 @@ msgstr ""
 "供的私人/内部服务。您还可以通过 {box_name} 访问互联网的其他部分，以增加安全性"
 "和匿名性。"
 
-#: plinth/modules/openvpn/__init__.py:85
+#: plinth/modules/openvpn/__init__.py:87
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3245,11 +3282,11 @@ msgstr ""
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr "配置文件是特定于每个 %(box_name)s 用户的。请保持其私密。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:65
+#: plinth/modules/openvpn/templates/openvpn.html:66
 msgid "Download my profile"
 msgstr "下载我的配置文件"
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:75
 #, python-format
 msgid ""
 "OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
@@ -3259,15 +3296,15 @@ msgstr ""
 "OpenVPN 尚未安装。 执行安全的安装需要很长的时间。 根据您的 %(box_name)s 运行"
 "速度，它甚至可能需要小时。 如果安装程序中断，您可以重新启动。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:86
+#: plinth/modules/openvpn/templates/openvpn.html:88
 msgid "Start setup"
 msgstr "启动安装程序"
 
-#: plinth/modules/openvpn/templates/openvpn.html:93
+#: plinth/modules/openvpn/templates/openvpn.html:95
 msgid "OpenVPN setup is running"
 msgstr "OpenVPN 安装程序正在运行"
 
-#: plinth/modules/openvpn/templates/openvpn.html:97
+#: plinth/modules/openvpn/templates/openvpn.html:99
 #, python-format
 msgid ""
 "To perform a secure setup, this process takes a very long time.  Depending "
@@ -3277,11 +3314,11 @@ msgstr ""
 "若要执行更安全的安装，此过程需要很长的时间。根据您的 %(box_name)s 运行速度，"
 "它甚至可能需要数小时。如果安装程序中断，您可以重新启动。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:110
+#: plinth/modules/openvpn/templates/openvpn.html:112
 msgid "OpenVPN server is running"
 msgstr "OpenVPN 服务正在运行"
 
-#: plinth/modules/openvpn/templates/openvpn.html:113
+#: plinth/modules/openvpn/templates/openvpn.html:115
 msgid "OpenVPN server is not running"
 msgstr "OpenVPN 服务器未运行"
 
@@ -4570,91 +4607,91 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:201
+#: plinth/modules/storage/__init__.py:200
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} bytes"
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size} bytes"
 
-#: plinth/modules/storage/__init__.py:205
+#: plinth/modules/storage/__init__.py:204
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} KiB"
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size} KiB"
 
-#: plinth/modules/storage/__init__.py:209
+#: plinth/modules/storage/__init__.py:208
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} MiB"
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size} MiB"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} GiB"
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size} GiB"
 
-#: plinth/modules/storage/__init__.py:216
+#: plinth/modules/storage/__init__.py:215
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} TiB"
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size} TiB"
 
-#: plinth/modules/storage/__init__.py:223
+#: plinth/modules/storage/__init__.py:222
 msgid "The operation failed."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 msgid "The operation was cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:227
+#: plinth/modules/storage/__init__.py:226
 #, fuzzy
 #| msgid "repro service is running"
 msgid "The device is already unmounting."
 msgstr "repro 服务正在运行"
 
-#: plinth/modules/storage/__init__.py:229
+#: plinth/modules/storage/__init__.py:228
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:232
+#: plinth/modules/storage/__init__.py:231
 msgid "The operation timed out."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:234
+#: plinth/modules/storage/__init__.py:233
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:236
 msgid "Attempting to unmount a device that is busy."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:238
 msgid "The operation has already been cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:245
+#: plinth/modules/storage/__init__.py:244
 msgid "Not authorized to perform the requested operation."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:247
+#: plinth/modules/storage/__init__.py:246
 #, fuzzy
 #| msgid "This service already exists"
 msgid "The device is already mounted."
 msgstr "此服务已存在"
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 #, fuzzy
 #| msgid "repro service is not running"
 msgid "The device is not mounted."
 msgstr "repro 服务未运行"
 
-#: plinth/modules/storage/__init__.py:252
+#: plinth/modules/storage/__init__.py:251
 msgid "Not permitted to use the requested option."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:255
+#: plinth/modules/storage/__init__.py:254
 msgid "The device is mounted by another user."
 msgstr ""
 
@@ -4715,29 +4752,29 @@ msgstr "扩展分区错误：{exception}"
 msgid "Partition expanded successfully."
 msgstr "已成功扩展分区。"
 
-#: plinth/modules/storage/views.py:102
+#: plinth/modules/storage/views.py:106
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
 msgstr ""
 
-#: plinth/modules/storage/views.py:128
+#: plinth/modules/storage/views.py:132
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr ""
 
-#: plinth/modules/storage/views.py:132
+#: plinth/modules/storage/views.py:136
 msgid "Device can be safely unplugged."
 msgstr ""
 
-#: plinth/modules/storage/views.py:142
+#: plinth/modules/storage/views.py:146
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr ""
 
 #: plinth/modules/syncthing/__init__.py:37
-#: plinth/modules/syncthing/manifest.py:27
+#: plinth/modules/syncthing/manifest.py:28
 msgid "Syncthing"
 msgstr ""
 
@@ -5433,11 +5470,11 @@ msgstr "媒体改变"
 msgid "configuration file: {file}"
 msgstr "配置文件：{file}"
 
-#: plinth/service.py:123
+#: plinth/service.py:127
 msgid "Web Server over Secure Socket Layer"
 msgstr "Web 服务器安全套接字层"
 
-#: plinth/service.py:125
+#: plinth/service.py:129
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web 界面（Plinth）"
@@ -5505,50 +5542,50 @@ msgstr "Plinth %(box_name)s 管理界面"
 msgid "Toggle navigation"
 msgstr "切换导航"
 
-#: plinth/templates/base.html:113 plinth/templates/base.html:116
+#: plinth/templates/base.html:114 plinth/templates/base.html:117
 msgid "Home"
 msgstr ""
 
-#: plinth/templates/base.html:121 plinth/templates/base.html:125
+#: plinth/templates/base.html:122 plinth/templates/base.html:126
 msgid "Apps"
 msgstr "应用程序"
 
-#: plinth/templates/base.html:130 plinth/templates/base.html:134
+#: plinth/templates/base.html:131 plinth/templates/base.html:135
 msgid "System"
 msgstr "系统"
 
-#: plinth/templates/base.html:165 plinth/templates/base.html:166
+#: plinth/templates/base.html:169 plinth/templates/base.html:170
 msgid "Change password"
 msgstr "更改密码"
 
-#: plinth/templates/base.html:173 plinth/templates/base.html:174
+#: plinth/templates/base.html:177 plinth/templates/base.html:178
 #, fuzzy
 #| msgid "Restart Now"
 msgid "Restart"
 msgstr "现在重新启动"
 
-#: plinth/templates/base.html:179 plinth/templates/base.html:180
+#: plinth/templates/base.html:183 plinth/templates/base.html:184
 #, fuzzy
 #| msgid "Shut Down Now"
 msgid "Shut down"
 msgstr "现在关闭"
 
-#: plinth/templates/base.html:187 plinth/templates/base.html:188
-#: plinth/templates/base.html:209 plinth/templates/base.html:211
+#: plinth/templates/base.html:191 plinth/templates/base.html:192
+#: plinth/templates/base.html:216 plinth/templates/base.html:218
 msgid "Log out"
 msgstr "登出"
 
-#: plinth/templates/base.html:196
+#: plinth/templates/base.html:200 plinth/templates/base.html:203
 #, fuzzy
 #| msgid "Language"
 msgid "Select language"
 msgstr "语言"
 
-#: plinth/templates/base.html:201 plinth/templates/base.html:203
+#: plinth/templates/base.html:208 plinth/templates/base.html:210
 msgid "Log in"
 msgstr "登录"
 
-#: plinth/templates/base.html:245 plinth/templates/index.html:182
+#: plinth/templates/base.html:252 plinth/templates/index.html:176
 msgid "JavaScript license information"
 msgstr ""
 
@@ -5635,7 +5672,7 @@ msgid ""
 "your %(box_name)s once it is done."
 msgstr ""
 
-#: plinth/templates/index.html:40
+#: plinth/templates/index.html:37
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -5643,11 +5680,11 @@ msgid ""
 msgstr ""
 "启用一些<a href=\"%(apps_url)s\">应用程序</a>来将其快捷方式放到此页面。"
 
-#: plinth/templates/index.html:64
+#: plinth/templates/index.html:60
 msgid "Configure &raquo;"
 msgstr "配置 &raquo；"
 
-#: plinth/templates/index.html:122
+#: plinth/templates/index.html:116
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5657,7 +5694,7 @@ msgstr ""
 "%(box_name)s 是一个基于 Debian 并完全使用自由软件来自托管部署社交应用的小机"
 "器。它提供在线交流工具以尊重您的隐私和数据所有权。"
 
-#: plinth/templates/index.html:131
+#: plinth/templates/index.html:125
 #, fuzzy, python-format
 #| msgid ""
 #| "This portal is a part of Plinth, the %(box_name)s web interface. Plinth "
@@ -5671,29 +5708,29 @@ msgstr ""
 "此页面是 Plinth 的一部分，%(box_name)s 的 Web 接口。Plinth 是自由软件，以 "
 "GNU Affero 通用许可证第 3 版或更高版发布。"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:145
 msgid "Homepage"
 msgstr ""
 
-#: plinth/templates/index.html:154
+#: plinth/templates/index.html:148
 msgid "Source Code"
 msgstr ""
 
-#: plinth/templates/index.html:157
+#: plinth/templates/index.html:151
 msgid "Donate"
 msgstr ""
 
-#: plinth/templates/index.html:161
+#: plinth/templates/index.html:155
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox"
 
-#: plinth/templates/index.html:168
+#: plinth/templates/index.html:162
 msgid "IRC Chatroom"
 msgstr ""
 
-#: plinth/templates/index.html:173
+#: plinth/templates/index.html:167
 msgid "Mailing list"
 msgstr ""
 
@@ -5770,7 +5807,7 @@ msgstr "正在安装 %(package_names)s：%(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "已完成 %(percentage)s%%"
 
-#: plinth/web_framework.py:183
+#: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
 

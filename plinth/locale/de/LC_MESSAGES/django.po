@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 20:57-0500\n"
+"POT-Creation-Date: 2019-01-28 18:23-0500\n"
 "PO-Revision-Date: 2019-01-23 21:07+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -302,8 +302,8 @@ msgstr "Archiv anlegen"
 
 #: plinth/modules/backups/templates/backups_repository_add.html:46
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
-#: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/templates/backups_restore.html:46
+#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:54
 msgid "Abort"
 msgstr "Abbrechen"
 
@@ -328,17 +328,23 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:289
+#: plinth/modules/backups/views.py:290
 msgid "Remove Repository"
 msgstr "Archiv entfernen"
 
-#: plinth/modules/backups/templates/backups_restore.html:29
+#: plinth/modules/backups/templates/backups_restore.html:30
 msgid "Restore data from"
 msgstr "Wiederherstellen von Daten aus"
 
-#: plinth/modules/backups/templates/backups_restore.html:40
+#: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/views.py:191
 msgid "Restore"
+msgstr "Wiederherstellen"
+
+#: plinth/modules/backups/templates/backups_restore.html:46
+#, fuzzy
+#| msgid "Restore"
+msgid "Restoring"
 msgstr "Wiederherstellen"
 
 #: plinth/modules/backups/templates/backups_upload.html:31
@@ -395,7 +401,7 @@ msgstr "Archiv gelöscht."
 msgid "Upload and restore a backup file"
 msgstr "Hochladen und Wiederherstellen einer Sicherungsdatei"
 
-#: plinth/modules/backups/views.py:176
+#: plinth/modules/backups/views.py:179
 msgid "Restored files from backup."
 msgstr "Dateien aus Backup wiederhergestellt."
 
@@ -407,23 +413,23 @@ msgstr "Keine Sicherungsdatei gefunden."
 msgid "Restore from uploaded file"
 msgstr "Wiederherstellen aus hochgeladener Datei"
 
-#: plinth/modules/backups/views.py:263
+#: plinth/modules/backups/views.py:264
 msgid "Added new repository."
 msgstr "Neues Archiv hinzugefügt."
 
-#: plinth/modules/backups/views.py:268
+#: plinth/modules/backups/views.py:269
 msgid "Create remote backup repository"
 msgstr "Remote Backup-Archiv anlegen"
 
-#: plinth/modules/backups/views.py:297
+#: plinth/modules/backups/views.py:300
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr "Archiv entfernt. Das Remote-Archiv selbst wurde nicht gelöscht."
 
-#: plinth/modules/backups/views.py:306
+#: plinth/modules/backups/views.py:308
 msgid "Unmounting failed!"
 msgstr "Aushängen fehlgeschlagen!"
 
-#: plinth/modules/backups/views.py:315 plinth/modules/backups/views.py:319
+#: plinth/modules/backups/views.py:317 plinth/modules/backups/views.py:321
 msgid "Mounting failed"
 msgstr "Einhängen fehlgeschlagen"
 
@@ -509,8 +515,8 @@ msgid ""
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
-">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
+"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
 "Benutzer</a> der {box_name} in der Administratorgruppe."
 
 #: plinth/modules/config/__init__.py:76
@@ -887,7 +893,7 @@ msgstr ""
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
-#: plinth/modules/openvpn/templates/openvpn.html:127
+#: plinth/modules/openvpn/templates/openvpn.html:129
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
@@ -950,14 +956,14 @@ msgstr ""
 msgid "Dynamic DNS Service"
 msgstr "Dynamischer DNS Service"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:46
+#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:45
 msgid "About"
 msgstr "Über"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:48
 #: plinth/modules/firewall/templates/firewall.html:45
 #: plinth/modules/networks/templates/connection_show.html:261
-#: plinth/modules/openvpn/templates/openvpn.html:70
+#: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
 #: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
 msgid "Status"
@@ -1288,7 +1294,7 @@ msgstr "Starte Web client"
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
-#: plinth/modules/openvpn/templates/openvpn.html:119
+#: plinth/modules/openvpn/templates/openvpn.html:121
 #: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
 #: plinth/modules/tor/templates/tor.html:88 plinth/templates/service.html:79
@@ -1430,8 +1436,9 @@ msgstr ""
 "Einstellungen</a> prüfen und falls nötig anpassen."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
+#: plinth/modules/first_boot/templates/firstboot_navbar.html:26
 #: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:144
+#: plinth/templates/base.html:145 plinth/templates/base.html:148
 msgid "Help"
 msgstr "Hilfe"
 
@@ -1448,24 +1455,24 @@ msgid "Documentation"
 msgstr "Dokumentation"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:136
 msgid "Manual"
 msgstr "Handbuch"
 
-#: plinth/modules/help/help.py:43
+#: plinth/modules/help/help.py:42
 msgid "Download Manual"
 msgstr "Handbuch herunterladen"
 
-#: plinth/modules/help/help.py:52
+#: plinth/modules/help/help.py:51
 msgid "Documentation and FAQ"
 msgstr "Dokumentation und FAQ"
 
-#: plinth/modules/help/help.py:61
+#: plinth/modules/help/help.py:59
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Über {box_name}"
 
-#: plinth/modules/help/help.py:82
+#: plinth/modules/help/help.py:80
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Handbuch"
@@ -2221,7 +2228,7 @@ msgstr "Öffentliche Registrierung deaktiviert"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:146
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:140
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2410,6 +2417,38 @@ msgstr "Spieler-gegen-Spieler Konfiguration aktualisiert"
 msgid "Damage configuration updated"
 msgstr "Schaden Konfiguration aktualisiert"
 
+#: plinth/modules/mldonkey/__init__.py:37
+#: plinth/modules/mldonkey/manifest.py:27
+#, fuzzy
+#| msgid "Monkeysphere"
+msgid "MLDonkey"
+msgstr "Monkeysphere"
+
+#: plinth/modules/mldonkey/__init__.py:39
+#, fuzzy
+#| msgid "File Sharing"
+msgid "Peer-to-peer File Sharing"
+msgstr "Daten Austausch"
+
+#: plinth/modules/mldonkey/__init__.py:42
+msgid ""
+"MLDonkey is a peer-to-peer file sharing application used to exchange large "
+"files. It can participate in multiple peer-to-peer networks including "
+"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
+msgstr ""
+
+#: plinth/modules/mldonkey/__init__.py:46
+#, python-brace-format
+msgid ""
+"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
+msgstr ""
+
+#: plinth/modules/mldonkey/__init__.py:54
+#, fuzzy
+#| msgid "Download files using BitTorrent applications"
+msgid "Download files using eDonkey applications"
+msgstr "Lade Dateien mit BitTorrent herunter"
+
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:26
@@ -2482,7 +2521,7 @@ msgstr "Secure Shell"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:88
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
-#: plinth/service.py:121
+#: plinth/service.py:125
 msgid "Web Server"
 msgstr "Web Server"
 
@@ -2992,7 +3031,7 @@ msgid "Edit connection"
 msgstr "Bearbeite Verbindung"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:159 plinth/templates/base.html:160
+#: plinth/templates/base.html:163 plinth/templates/base.html:164
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -3232,15 +3271,15 @@ msgstr "Aktiv"
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: plinth/modules/openvpn/__init__.py:37
+#: plinth/modules/openvpn/__init__.py:39
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:39
+#: plinth/modules/openvpn/__init__.py:41
 msgid "Virtual Private Network"
 msgstr "Virtuelles Privates Netzwerk"
 
-#: plinth/modules/openvpn/__init__.py:43
+#: plinth/modules/openvpn/__init__.py:45
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -3257,7 +3296,7 @@ msgstr ""
 "{box_name} erlangen. Sie können auch auf das Internet via {box_name} für "
 "zusätzliche Sicherheit und Anonymität zugreifen."
 
-#: plinth/modules/openvpn/__init__.py:85
+#: plinth/modules/openvpn/__init__.py:87
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3295,11 +3334,11 @@ msgstr ""
 "Das Profil ist für jeden Benutzer von %(box_name)s spezifisch. Halten Sie es "
 "geheim."
 
-#: plinth/modules/openvpn/templates/openvpn.html:65
+#: plinth/modules/openvpn/templates/openvpn.html:66
 msgid "Download my profile"
 msgstr "Mein Profil herunterladen"
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:75
 #, python-format
 msgid ""
 "OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
@@ -3311,15 +3350,15 @@ msgstr ""
 "dauern. Wenn das Einrichten unterbrochen wird, können Sie es erneut zu "
 "starten."
 
-#: plinth/modules/openvpn/templates/openvpn.html:86
+#: plinth/modules/openvpn/templates/openvpn.html:88
 msgid "Start setup"
 msgstr "Einrichten beginnen"
 
-#: plinth/modules/openvpn/templates/openvpn.html:93
+#: plinth/modules/openvpn/templates/openvpn.html:95
 msgid "OpenVPN setup is running"
 msgstr "OpenVPN Einrichtung läuft"
 
-#: plinth/modules/openvpn/templates/openvpn.html:97
+#: plinth/modules/openvpn/templates/openvpn.html:99
 #, python-format
 msgid ""
 "To perform a secure setup, this process takes a very long time.  Depending "
@@ -3330,11 +3369,11 @@ msgstr ""
 "%(box_name)s ist, kann es sogar Stunden dauern. Wenn das Einrichten "
 "unterbrochen wird, können Sie es erneut zu starten."
 
-#: plinth/modules/openvpn/templates/openvpn.html:110
+#: plinth/modules/openvpn/templates/openvpn.html:112
 msgid "OpenVPN server is running"
 msgstr "OpenVPN Server läuft"
 
-#: plinth/modules/openvpn/templates/openvpn.html:113
+#: plinth/modules/openvpn/templates/openvpn.html:115
 msgid "OpenVPN server is not running"
 msgstr "OpenVPN Server läuft nicht"
 
@@ -4652,83 +4691,83 @@ msgstr ""
 "Speichermedien einsehen, Wechselmedien einbinden und aushängen, die Root-"
 "Partition erweitern usw."
 
-#: plinth/modules/storage/__init__.py:201
+#: plinth/modules/storage/__init__.py:200
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} Bytes"
 
-#: plinth/modules/storage/__init__.py:205
+#: plinth/modules/storage/__init__.py:204
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:209
+#: plinth/modules/storage/__init__.py:208
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:216
+#: plinth/modules/storage/__init__.py:215
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:223
+#: plinth/modules/storage/__init__.py:222
 msgid "The operation failed."
 msgstr "Der Vorgang schlug fehl."
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 msgid "The operation was cancelled."
 msgstr "Der Vorgang wurde abgebrochen."
 
-#: plinth/modules/storage/__init__.py:227
+#: plinth/modules/storage/__init__.py:226
 msgid "The device is already unmounting."
 msgstr "Das Gerät wird bereits ausgehangen."
 
-#: plinth/modules/storage/__init__.py:229
+#: plinth/modules/storage/__init__.py:228
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Der Vorgang ist wegen fehlender Treiber-/Werkzeugunterstützung nicht möglich."
 
-#: plinth/modules/storage/__init__.py:232
+#: plinth/modules/storage/__init__.py:231
 msgid "The operation timed out."
 msgstr "Der Vorgang beendet wegen Zeitüberschreitung."
 
-#: plinth/modules/storage/__init__.py:234
+#: plinth/modules/storage/__init__.py:233
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "Dieser Vorgang würde ein Gerät aufwecken dass sich in einem Tiefschlaf-"
 "Zustand befindet."
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:236
 msgid "Attempting to unmount a device that is busy."
 msgstr "Versuche ein Gerät auszuhängen, das beschäftigt ist."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:238
 msgid "The operation has already been cancelled."
 msgstr "Dieser Vorgang wurde bereits abgebrochen."
 
-#: plinth/modules/storage/__init__.py:245
+#: plinth/modules/storage/__init__.py:244
 msgid "Not authorized to perform the requested operation."
 msgstr "Nicht autorisiert um den gewünschten Vorgang auszuführen."
 
-#: plinth/modules/storage/__init__.py:247
+#: plinth/modules/storage/__init__.py:246
 msgid "The device is already mounted."
 msgstr "Dieses Gerät ist bereits eingebunden."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 msgid "The device is not mounted."
 msgstr "Das Gerät ist nicht eingebunden."
 
-#: plinth/modules/storage/__init__.py:252
+#: plinth/modules/storage/__init__.py:251
 msgid "Not permitted to use the requested option."
 msgstr "Die gewünschte Option ist nicht gestattet."
 
-#: plinth/modules/storage/__init__.py:255
+#: plinth/modules/storage/__init__.py:254
 msgid "The device is mounted by another user."
 msgstr "Das Gerät ist von einem anderen Benutzer eingebunden."
 
@@ -4790,7 +4829,7 @@ msgstr "Fehler beim Erweitern des Dateisystems: {exception}"
 msgid "Partition expanded successfully."
 msgstr "Partition erfolgreich vergrößert."
 
-#: plinth/modules/storage/views.py:102
+#: plinth/modules/storage/views.py:106
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4799,22 +4838,22 @@ msgstr ""
 "Warnung: Geringer Speicherplatz auf der Systempartition ({percent_used}% "
 "belegt, {free_space} verfügbar)."
 
-#: plinth/modules/storage/views.py:128
+#: plinth/modules/storage/views.py:132
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor} {drive_model} kann sicher entfernt werden."
 
-#: plinth/modules/storage/views.py:132
+#: plinth/modules/storage/views.py:136
 msgid "Device can be safely unplugged."
 msgstr "Gerät kann sicher entfernt werden."
 
-#: plinth/modules/storage/views.py:142
+#: plinth/modules/storage/views.py:146
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Fehler beim Auswerden des Geräts: {error_message}"
 
 #: plinth/modules/syncthing/__init__.py:37
-#: plinth/modules/syncthing/manifest.py:27
+#: plinth/modules/syncthing/manifest.py:28
 msgid "Syncthing"
 msgstr "Syncthing"
 
@@ -5542,11 +5581,11 @@ msgstr "Medienwechsel"
 msgid "configuration file: {file}"
 msgstr "Konfigurationsdatei: {file}"
 
-#: plinth/service.py:123
+#: plinth/service.py:127
 msgid "Web Server over Secure Socket Layer"
 msgstr "Web-Server mit Verschlüsselung"
 
-#: plinth/service.py:125
+#: plinth/service.py:129
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web-Oberfläche (Plinth)"
@@ -5609,44 +5648,44 @@ msgstr "Kernfunktionalität und Webinterface für %(box_name)s"
 msgid "Toggle navigation"
 msgstr "Navigation ein-/ausklappen"
 
-#: plinth/templates/base.html:113 plinth/templates/base.html:116
+#: plinth/templates/base.html:114 plinth/templates/base.html:117
 msgid "Home"
 msgstr "Startseite"
 
-#: plinth/templates/base.html:121 plinth/templates/base.html:125
+#: plinth/templates/base.html:122 plinth/templates/base.html:126
 msgid "Apps"
 msgstr "Apps"
 
-#: plinth/templates/base.html:130 plinth/templates/base.html:134
+#: plinth/templates/base.html:131 plinth/templates/base.html:135
 msgid "System"
 msgstr "System"
 
-#: plinth/templates/base.html:165 plinth/templates/base.html:166
+#: plinth/templates/base.html:169 plinth/templates/base.html:170
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: plinth/templates/base.html:173 plinth/templates/base.html:174
+#: plinth/templates/base.html:177 plinth/templates/base.html:178
 msgid "Restart"
 msgstr "Neustarten"
 
-#: plinth/templates/base.html:179 plinth/templates/base.html:180
+#: plinth/templates/base.html:183 plinth/templates/base.html:184
 msgid "Shut down"
 msgstr "Herunterfahren"
 
-#: plinth/templates/base.html:187 plinth/templates/base.html:188
-#: plinth/templates/base.html:209 plinth/templates/base.html:211
+#: plinth/templates/base.html:191 plinth/templates/base.html:192
+#: plinth/templates/base.html:216 plinth/templates/base.html:218
 msgid "Log out"
 msgstr "Abmelden"
 
-#: plinth/templates/base.html:196
+#: plinth/templates/base.html:200 plinth/templates/base.html:203
 msgid "Select language"
 msgstr "Wählen Sie die Sprache"
 
-#: plinth/templates/base.html:201 plinth/templates/base.html:203
+#: plinth/templates/base.html:208 plinth/templates/base.html:210
 msgid "Log in"
 msgstr "Anmelden"
 
-#: plinth/templates/base.html:245 plinth/templates/index.html:182
+#: plinth/templates/base.html:252 plinth/templates/index.html:176
 msgid "JavaScript license information"
 msgstr "JavaScript Lizenzinformation"
 
@@ -5719,7 +5758,7 @@ msgstr ""
 "Bitte warten Sie, bis %(box_name)s fertig eingerichtet ist. Sie können ihre "
 "%(box_name)s sofort danach benutzen."
 
-#: plinth/templates/index.html:40
+#: plinth/templates/index.html:37
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -5728,11 +5767,11 @@ msgstr ""
 "Aktiviere einige <a href=\"%(apps_url)s\">Anwendungen</a> um Verknüpfungen "
 "zu dieser Seite hinzuzufügen."
 
-#: plinth/templates/index.html:64
+#: plinth/templates/index.html:60
 msgid "Configure &raquo;"
 msgstr "Konfigurieren &raquo;"
 
-#: plinth/templates/index.html:122
+#: plinth/templates/index.html:116
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5746,7 +5785,7 @@ msgstr ""
 "Es bietet Online-Kommunikationswerkzeuge, die Ihre Privatsphäre und Ihr "
 "Eigentum an Ihren Daten respektieren."
 
-#: plinth/templates/index.html:131
+#: plinth/templates/index.html:125
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5757,27 +5796,27 @@ msgstr ""
 "freie Software, die unter der GNU Affero General Public License, Version 3 "
 "oder höher, vertrieben wird."
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:145
 msgid "Homepage"
 msgstr "Homepage"
 
-#: plinth/templates/index.html:154
+#: plinth/templates/index.html:148
 msgid "Source Code"
 msgstr "Quellcode"
 
-#: plinth/templates/index.html:157
+#: plinth/templates/index.html:151
 msgid "Donate"
 msgstr "Spenden"
 
-#: plinth/templates/index.html:161
+#: plinth/templates/index.html:155
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Stiftung"
 
-#: plinth/templates/index.html:168
+#: plinth/templates/index.html:162
 msgid "IRC Chatroom"
 msgstr "IRC Chatraum"
 
-#: plinth/templates/index.html:173
+#: plinth/templates/index.html:167
 msgid "Mailing list"
 msgstr "Email Verteiler"
 
@@ -5856,7 +5895,7 @@ msgstr "Installiere %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% abgeschlossen"
 
-#: plinth/web_framework.py:183
+#: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gujarati"
 
