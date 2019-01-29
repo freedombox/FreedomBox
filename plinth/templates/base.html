@@ -246,13 +246,12 @@
   <footer>
     <div class="container">
       {% block footer_block %}
-        <div class="license-info">
-          <p>
-            <a href="{% static 'jslicense.html' %}" data-jslicense="1">
-              {% trans "JavaScript license information" %}</a>
-          </p>
-        </div>
       {% endblock %}
+    </div>
+
+    <div class="hidden">
+      <a href="{% static 'jslicense.html' %}" data-jslicense="1">
+        {% trans "JavaScript license information" %}</a>
     </div>
   </footer><!--/.footer-->
 </div><!--/#container-->
