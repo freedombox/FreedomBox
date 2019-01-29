@@ -20,7 +20,7 @@ Application manifest for mldonkey.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
+from plinth.clients import store_url, validate
 from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
@@ -28,6 +28,27 @@ clients = validate([{
     'platforms': [{
         'type': 'web',
         'url': '/mldonkey/'
+    }]
+}, {
+    'name':
+        _('KMLDonkey'),
+    'platforms': [{
+        'type': 'download',
+        'os': 'gnu-linux',
+        'url': 'https://www.kde.org/applications/internet/kmldonkey/'
+    }, {
+        'type': 'package',
+        'format': 'deb',
+        'name': 'kmldonkey',
+    }]
+}, {
+    'name':
+        _('AMLDonkey'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'com.devwom.amldonkey'),
     }]
 }])
 
