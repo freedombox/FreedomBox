@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>67</revnumber>
+        <date>2019-01-28 04:35:54</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Include MLDonkey manual page</revremark>
+      </revision>
+      <revision>
         <revnumber>66</revnumber>
         <date>2019-01-10 21:46:53</date>
         <authorinitials>SunilMohanAdapa</authorinitials>
@@ -2447,6 +2453,33 @@ proto udp]]></screen>
             <para>Login as the new admin user using "Login with HTTP auth". </para>
           </listitem>
         </orderedlist>
+      </section>
+    </section>
+    <section>
+      <title>File Sharing (MLDonkey)</title>
+      <section>
+        <title>What is MLDonkey?</title>
+        <para>MLDonkey is an open-source, multi-protocol, peer-to-peer file sharing application that runs as a back-end server application on many platforms. It can be controlled through a user interface provided by one of many separate front-ends, including a Web interface, telnet interface and over a dozen native client programs. </para>
+        <para>Originally a Linux client for the eDonkey protocol, it now runs on many flavors of Unix-like, OS X, Microsoft Windows and MorphOS and supports numerous peer-to-peer protocols including ED2K (and Kademlia and Overnet), BitTorrent, DC++ and more. </para>
+        <para>Read more about MLDonkey at <ulink url="http://mldonkey.sourceforge.net/Main_Page">the MLDonkey Project Wiki</ulink> </para>
+        <para><emphasis role="strong">Available since:</emphasis>  version 0.48.0 </para>
+      </section>
+      <section>
+        <title>Screenshot</title>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MLDonkey?action=AttachFile&amp;do=get&amp;target=mldonkey.jpg" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>MLDonkey Web Interface</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
+      <section>
+        <title>Using MLDonkey</title>
+        <para>After installing MLDonkey, it can be accessed at <code>https://&lt;your freedombox&gt;/mldonkey</code>. </para>
       </section>
     </section>
   </section>
@@ -6642,9 +6675,7 @@ Password:
         <title>Known Issues</title>
         <itemizedlist>
           <listitem>
-            <para>
-              <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues/148">LIME2: Not working properly</ulink>
-            </para>
+            <para>Order hardware revision G2, because the current revision K is <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues/148">not working properly</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -8141,6 +8172,86 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.48.0 (2019-01-28)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Updated translations for Czech, Hungarian, German, and Norwegian Bokmål. </para>
+          </listitem>
+          <listitem>
+            <para>UI improvements: </para>
+            <itemizedlist>
+              <listitem>
+                <para>Fix top margin for content containers. </para>
+              </listitem>
+              <listitem>
+                <para>Fix setting width of card-list at various page sizes. </para>
+              </listitem>
+              <listitem>
+                <para>Show help nav item text when navbar is collapsed. </para>
+              </listitem>
+              <listitem>
+                <para>Hide restart/shutdown items when navbar is collapsed. </para>
+              </listitem>
+              <listitem>
+                <para>Compact pages on extra small screen sizes. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Backups improvements: </para>
+            <itemizedlist>
+              <listitem>
+                <para>Add backup/restore support for syncthing and openvpn. </para>
+              </listitem>
+              <listitem>
+                <para>Upgrade apps before restoring them </para>
+              </listitem>
+              <listitem>
+                <para>Fix showing not-installed apps in create backup page </para>
+              </listitem>
+              <listitem>
+                <para>Automatically install required apps before restore. </para>
+              </listitem>
+              <listitem>
+                <para>Add a loader to the restore button to indicate progress. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Serve default favicon for apps that don't provide one. </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Fix issue with configuration changes not applying. </para>
+          </listitem>
+          <listitem>
+            <para>storage: Fix false error message in log when visiting home page. </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Handle timeout issue when stopping daemon during setup. </para>
+          </listitem>
+          <listitem>
+            <para>matrix-synapse: Fix startup error caused by bind_address setting. </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Avoid changes to conffile for radicale 2.x. </para>
+          </listitem>
+          <listitem>
+            <para>help: Fix showing status logs when an error occurs. </para>
+          </listitem>
+          <listitem>
+            <para>fail2ban: Enable bans for apache auth failures. </para>
+          </listitem>
+          <listitem>
+            <para>mldonkey: Initial work on new module for the eDonkey network. </para>
+            <itemizedlist>
+              <listitem>
+                <para>Not available yet, due to bug in package. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.47.0 (2019-01-14)</title>
         <itemizedlist>
