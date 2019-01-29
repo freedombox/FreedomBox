@@ -29,6 +29,8 @@ urlpatterns = [
         ServiceView.as_view(service_id=mldonkey.managed_services[0],
                             diagnostics_module_name='mldonkey',
                             description=mldonkey.description,
-                            clients=mldonkey.clients, show_status_block=True),
+                            clients=mldonkey.clients,
+                            manual_page=mldonkey.manual_page,
+                            show_status_block=True),
         name='index'),
 ]
