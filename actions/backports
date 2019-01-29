@@ -1,0 +1,116 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Script to check for availability of buster-backports and create an
+apt sources list for backports if available.
+"""
+
+import argparse
+import os
+import requests
+
+from plinth import action_utils
+
+BUSTER_BACKPORTS_RELEASE_FILE_URL = "http://cdn-fastly.deb.debian.org/debian/dists/buster-backports/Release"
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='Enable buster backports check')
+    subparsers.add_parser('disable', help='Disable buster backports check')
+    subparsers.add_parser('check-backports',
+                          help='Check whether buster backports are available')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def add_buster_backports_sources():
+    backports_list = '/etc/apt/sources.list.d/freedombox-backports.list'
+
+    conf = \
+"""deb http://deb.debian.org/debian buster-backports main
+deb-src http://deb.debian.org/debian buster-backports main
+"""
+
+    components = {"main"}
+
+    # Use tor+http if download over tor is enabled in sources.list
+    with open('/etc/apt/sources.list', 'r') as sources_list:
+        sources = sources_list.readlines()
+        for line in sources:
+            if not line.startswith("#") and "tor+http" in line:
+                conf = conf.replace("http", "tor+http")
+                # Check for contrib and nonfree components
+                if "contrib" in line:
+                    components.add("contrib")
+                if "nonfree" in line:
+                    components.add("nonfree")
+                break
+
+    conf = conf.replace("main", " ".join(components))
+
+    if not os.path.exists(backports_list):
+        try:
+            with open(backports_list, 'w') as file_handle:
+                file_handle.write(conf)
+        except PermissionError:
+            print(("Failed adding sources list for buster-backports."
+                   "Try running as a superuser."))
+
+
+def subcommand_check_backports(_):
+    """Check whether buster backports is available.
+    Add a sources file if it's available.
+    """
+    response = requests.get(BUSTER_BACKPORTS_RELEASE_FILE_URL)
+
+    if response.status_code == 404:
+        print("Release file for Buster backports is not available yet.")
+    else:
+        print("Buster backports is now available. Adding to sources...")
+        add_buster_backports_sources()
+
+
+def subcommand_enable(_):
+    """Enable systemd service for the daily job buster-backports-check."""
+    action_utils.service_enable('buster-backports-check.timer')
+    action_utils.service_start('buster-backports-check.timer')
+
+
+def subcommand_disable(_):
+    """Disable systemd service for the daily job buster-backports-check."""
+    action_utils.service_stop('buster-backports-check.timer')
+    action_utils.service_disable('buster-backports-check.timer')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

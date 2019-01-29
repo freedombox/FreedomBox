@@ -84,7 +84,7 @@ class Transaction(object):
                     self.package_names)
             else:
                 self._run_apt_command(['install', self.module_name] +
-                                  self.package_names)
+                                      self.package_names)
         except subprocess.CalledProcessError as exception:
             logger.exception('Error installing package: %s', exception)
             raise

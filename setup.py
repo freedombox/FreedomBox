@@ -238,6 +238,8 @@ setuptools.setup(
          glob.glob('data/etc/apache2/includes/*.conf')),
         ('/etc/apt/apt.conf.d',
          glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
+        ('/etc/apt/preferences.d',
+         glob.glob('data/etc/apt/preferences.d/freedombox.pref')),
         ('/etc/avahi/services/',
          glob.glob('data/etc/avahi/services/*.service')),
         ('/etc/ikiwiki', glob.glob('data/etc/ikiwiki/*.setup')),
@@ -247,6 +249,7 @@ setuptools.setup(
             'data/etc/sudoers.d/plinth'
         ]), ('/lib/systemd/system',
              glob.glob('data/lib/systemd/system/*.service')),
+        ('/lib/systemd/system', glob.glob('data/lib/systemd/system/*.timer')),
         ('/etc/mediawiki',
          glob.glob('data/etc/mediawiki/*.php')), ('/etc/update-motd.d/', [
              'data/etc/update-motd.d/50-freedombox'

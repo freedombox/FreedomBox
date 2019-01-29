@@ -9,6 +9,10 @@ purge)
 
 	# Remove legacy directory too
 	rm -rf /var/log/plinth
+
+  if [ -e '/etc/apt/sources.list.d/freedombox-backports.list' ]; then
+      rm /etc/apt/sources.list.d/freedombox-backports.list
+  fi
 	;;
 esac
 
