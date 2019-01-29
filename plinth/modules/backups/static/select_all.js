@@ -21,30 +21,45 @@
   for the JavaScript code in this page.
 */
 
+function addSelectAll() {
+    let ul = document.getElementById('id_backups-selected_apps');
+    let li = document.createElement('li');
 
-// jQuery selector for the "select all" checkbox
-var select_all = "#id_backups-selected_apps_0";
+    let label = document.createElement('label');
+    label.for = "select_all";
 
-// Initialize the "select all" checkbox to checked
-$(select_all).prop('checked', true);
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.checked = "checked";
+    checkbox.id = "select-all";
+
+    label.appendChild(checkbox);
+    li.appendChild(label);
+
+    ul.insertBefore(li, ul.childNodes[0]);
+};
+
+addSelectAll();
 
 /*
  * When there is a change on the "select all" checkbox,set the
  * checked property of all the checkboxes to the value of the
  * "select all" checkbox
  */
-$(select_all).change(function() {
-    $(":checkbox").prop('checked', $(this).prop("checked"));
+$("#select-all").change(function() {
+    $("[type=checkbox]").prop('checked', $(this).prop("checked"));
 });
 
 
-$(':checkbox').change(function() {
+$('[type=checkbox]').change(function() {
     // If the rest of the checkbox items are checked check the "select all" checkbox as well
-    if ($(':checkbox:checked').length == ($(':checkbox').length-1)) {
-        $(select_all).prop('checked', true);
+    if ($('[type=checkbox]:checked').length == ($('[type=checkbox]').length - 1)) {
+        $("#select-all").prop('checked', true);
     }
     // Uncheck "select all" if one of the listed checkbox item is unchecked
     if (false == $(this).prop("checked")) {
-        $(select_all).prop('checked', false);
+        $("#select-all").prop('checked', false);
     }
 });
+
+

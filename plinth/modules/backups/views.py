@@ -103,7 +103,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
             repository.mount()
 
         name = datetime.now().strftime('%Y-%m-%d:%H:%M')
-        selected_apps = form.cleaned_data['selected_apps'][1:]
+        selected_apps = form.cleaned_data['selected_apps']
         repository.create_archive(name, selected_apps)
         return super().form_valid(form)
 
@@ -225,7 +225,7 @@ class RestoreFromUploadView(BaseRestoreView):
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
         path = self.request.session.get(SESSION_PATH_VARIABLE)
-        selected_apps = form.cleaned_data['selected_apps'][1:]
+        selected_apps = form.cleaned_data['selected_apps']
         backups.restore_from_upload(path, selected_apps)
         return super().form_valid(form)
 
@@ -243,7 +243,7 @@ class RestoreArchiveView(BaseRestoreView):
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
         repository = get_repository(self.kwargs['uuid'])
-        selected_apps = form.cleaned_data['selected_apps'][1:]
+        selected_apps = form.cleaned_data['selected_apps']
         repository.restore_archive(self.kwargs['name'], selected_apps)
         return super().form_valid(form)
 
