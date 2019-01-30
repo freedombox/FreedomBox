@@ -32,10 +32,6 @@ from plinth.modules.backups import MANIFESTS_FOLDER
 TIMEOUT = 5
 
 
-class AlreadyMountedError(Exception):
-    pass
-
-
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
@@ -103,7 +99,7 @@ def subcommand_setup(arguments):
     """Create repository if it does not already exist."""
     try:
         run(['borg', 'info', arguments.path], arguments=arguments, check=True)
-    except:
+    except subprocess.CalledProcessError:
         path = os.path.dirname(arguments.path)
         if not os.path.exists(path):
             os.makedirs(path)

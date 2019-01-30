@@ -83,13 +83,13 @@ class BorgRepository():
         self.credentials = credentials
 
     @staticmethod
-    def _append_encryption_passphrase(arguments, credentials):
-        """Append '--encryption-passphrase' argument to backups call"""
+    def _get_encryption_arguments(credentials):
+        """Return '--encryption-passphrase' argument to backups call."""
         passphrase = credentials.get('encryption_passphrase', None)
         if passphrase:
-            arguments += ['--encryption-passphrase', passphrase]
+            return ['--encryption-passphrase', passphrase]
 
-        return arguments
+        return []
 
     @property
     def repo_path(self):
@@ -125,7 +125,7 @@ class BorgRepository():
         return repository
 
     def delete_archive(self, archive_name):
-        archive_path = self.get_archive_path(archive_name)
+        archive_path = self._get_archive_path(archive_name)
         self.run(['delete-archive', '--path', archive_path])
 
     def remove_repository(self):
@@ -133,7 +133,7 @@ class BorgRepository():
         raise NotImplementedError
 
     def create_archive(self, archive_name, app_names):
-        archive_path = self.get_archive_path(archive_name)
+        archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
         api.backup_apps(_backup_handler, path=archive_path,
                         app_names=app_names, encryption_passphrase=passphrase)
@@ -142,9 +142,8 @@ class BorgRepository():
         self.run(['init', '--path', self.repo_path, '--encryption', 'none'])
 
     def get_zipstream(self, archive_name):
-        archive_path = self.get_archive_path(archive_name)
-        args = ['export-tar', '--path', archive_path]
-        args = self._append_encryption_passphrase(args, self.credentials)
+        args = ['export-tar', '--path', self._get_archive_path(archive_name)]
+        args += self._get_encryption_arguments(self.credentials)
         proc = self._run('backups', args, run_in_background=True)
         return zipstream.ZipStream(proc.stdout, 'readline')
 
@@ -156,19 +155,20 @@ class BorgRepository():
 
     def get_archive_apps(self, archive_name):
         """Get list of apps included in an archive."""
-        archive_path = self.get_archive_path(archive_name)
+        archive_path = self._get_archive_path(archive_name)
         output = self.run(['get-archive-apps', '--path', archive_path])
         return output.splitlines()
 
     def restore_archive(self, archive_name, apps=None):
-        archive_path = self.get_archive_path(archive_name)
+        archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
         api.restore_apps(restore_archive_handler, app_names=apps,
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 
-    def get_archive_path(self, archive_name):
-        return "::".join([self.repo_path, archive_name])
+    def _get_archive_path(self, archive_name):
+        """Return full borg path for an archive."""
+        return '::'.join([self.repo_path, archive_name])
 
     def _run(self, cmd, arguments, superuser=True, **kwargs):
         """Run a backups or sshfs action script command."""
@@ -252,8 +252,9 @@ class SshBorgRepository(BorgRepository):
                            ['is-mounted', '--mountpoint', self.mountpoint])
         return json.loads(output)
 
-    def get_archive_path(self, archive_name):
-        return "::".join([self.mountpoint, archive_name])
+    def _get_archive_path(self, archive_name):
+        """Return full borg path for an SSH archive."""
+        return '::'.join([self.mountpoint, archive_name])
 
     def _load_from_kvstore(self):
         storage = network_storage.get(self.uuid)
@@ -339,8 +340,7 @@ class SshBorgRepository(BorgRepository):
             if key not in self.KNOWN_CREDENTIALS:
                 raise ValueError('Unknown credentials entry: %s' % key)
 
-        arguments = self._append_encryption_passphrase(arguments,
-                                                       self.credentials)
+        arguments += self._get_encryption_arguments(self.credentials)
         return self._run('backups', arguments, superuser=superuser)
 
 
