@@ -239,7 +239,8 @@ class DownloadArchiveView(View):
         filename = '%s.tar.gz' % name
 
         response = StreamingHttpResponse(
-            repository.get_zipstream(name), content_type='application/x-gzip')
+            repository.get_download_stream(name),
+            content_type='application/gzip')
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
             filename
         return response

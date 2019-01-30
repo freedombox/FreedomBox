@@ -29,8 +29,7 @@ from plinth import actions
 from plinth.errors import ActionError
 
 from . import api, network_storage, _backup_handler, ROOT_REPOSITORY_NAME, \
-        ROOT_REPOSITORY_UUID, ROOT_REPOSITORY, restore_archive_handler, \
-        zipstream
+        ROOT_REPOSITORY_UUID, ROOT_REPOSITORY, restore_archive_handler
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
@@ -141,11 +140,11 @@ class BorgRepository():
     def create_repository(self):
         self.run(['init', '--path', self.repo_path, '--encryption', 'none'])
 
-    def get_zipstream(self, archive_name):
+    def get_download_stream(self, archive_name):
         args = ['export-tar', '--path', self._get_archive_path(archive_name)]
         args += self._get_encryption_arguments(self.credentials)
         proc = self._run('backups', args, run_in_background=True)
-        return zipstream.ZipStream(proc.stdout, 'readline')
+        return proc.stdout
 
     def get_archive(self, name):
         for archive in self.list_archives():

@@ -174,7 +174,8 @@ def _extract(archive_path, destination, locations=None, env=None):
 
 def subcommand_export_tar(arguments):
     """Export archive contents as tar stream on stdout."""
-    run(['borg', 'export-tar', arguments.path, '-'], arguments=arguments)
+    run(['borg', 'export-tar', arguments.path, '-', '--tar-filter=gzip'],
+        arguments=arguments)
 
 
 def _read_archive_file(archive, filepath, env=None):
