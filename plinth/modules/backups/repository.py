@@ -18,6 +18,7 @@
 Remote and local Borg backup repositories
 """
 
+import io
 import json
 import logging
 import os
@@ -141,10 +142,32 @@ class BorgRepository():
         self.run(['init', '--path', self.repo_path, '--encryption', 'none'])
 
     def get_download_stream(self, archive_name):
+        """Return an stream of .tar.gz binary data for a backup archive."""
+        class BufferedReader(io.BufferedReader):
+            """Improve performance of buffered binary streaming.
+
+            Django simply returns the iterator as a response for the WSGI app.
+            CherryPy then iterates over this iterator and writes to HTTP
+            response. This calls __next__ over the BufferedReader that is
+            process.stdout. However, this seems to call readline() which looks
+            for \n in binary data which leads to short unpredictably sized
+            chunks which in turn lead to severe performance degradation. So,
+            overwrite this and call read() which is better geared for handling
+            binary data.
+
+            """
+            def __next__(self):
+                """Override to call read() instead of readline()."""
+                chunk = self.read(io.DEFAULT_BUFFER_SIZE)
+                if not chunk:
+                    raise StopIteration
+
+                return chunk
+
         args = ['export-tar', '--path', self._get_archive_path(archive_name)]
         args += self._get_encryption_arguments(self.credentials)
         proc = self._run('backups', args, run_in_background=True)
-        return proc.stdout
+        return BufferedReader(proc.stdout)
 
     def get_archive(self, name):
         for archive in self.list_archives():
