@@ -21,6 +21,7 @@ FreedomBox app for radicale.
 import subprocess
 from distutils.version import LooseVersion as LV
 
+from apt.cache import Cache
 import augeas
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -84,8 +85,31 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'radicale', ['setup'])
+    if old_version == 1:
+        # Check that radicale 2.x is available for install.
+        cache = Cache()
+        candidate = cache['radicale'].candidate
+        if candidate < '2':
+            raise RuntimeError('Radicale 2.x is not available to install.')
+
+        # Try to upgrade radicale 1.x to 2.x.
+        helper.call('pre', actions.superuser_run, 'radicale', ['migrate'])
+        helper.install(managed_packages)
+
+        # Check that radicale 2.x is installed.
+        current_version = get_package_version()
+        if not current_version:
+            raise RuntimeError(
+                'Could not determine installed version of radicale.')
+        elif current_version < VERSION_2:
+            raise RuntimeError('Could not install radicale 2.x.')
+
+        # Enable radicale.
+        helper.call('post', actions.superuser_run, 'radicale', ['setup'])
+    else:
+        helper.install(managed_packages)
+        helper.call('post', actions.superuser_run, 'radicale', ['setup'])
+
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name, ports=[
@@ -162,8 +186,8 @@ def disable():
 
 def load_augeas():
     """Prepares the augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # INI file lens
     aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')

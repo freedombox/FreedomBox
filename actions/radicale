@@ -38,6 +38,7 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup Radicale configuration')
+    subparsers.add_parser('migrate', help='Migrate config to radicale 2.x')
     subparsers.add_parser('enable', help='Enable Radicale service')
     subparsers.add_parser('disable', help='Disable Radicale service')
     configure = subparsers.add_parser('configure',
@@ -72,6 +73,26 @@ def subcommand_setup(_):
     aug.save()
 
     subcommand_enable(None)
+
+
+def subcommand_migrate(_):
+    """Migrate config from radicale 1.x to 2.x."""
+    action_utils.webserver_disable('radicale-plinth')
+
+    aug = load_augeas()
+
+    # Revert the config to package's original.
+    aug.remove('/files' + DEFAULT_FILE + '/ENABLE_RADICALE')
+    aug.remove('/files' + CONFIG_FILE + '/server/hosts')
+    aug.remove('/files' + CONFIG_FILE + '/server/base_prefix')
+    aug.remove('/files' + CONFIG_FILE + '/well-known/caldav')
+    aug.remove('/files' + CONFIG_FILE + '/well-known/carddav')
+    aug.remove('/files' + CONFIG_FILE + '/auth/type')
+    current_version = radicale.get_package_version()
+    if current_version and current_version < radicale.VERSION_2:
+        aug.remove('/files' + CONFIG_FILE + '/rights/type')
+
+    aug.save()
 
 
 def subcommand_configure(arguments):
@@ -122,8 +143,8 @@ def subcommand_disable(_):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
