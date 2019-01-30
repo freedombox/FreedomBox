@@ -183,15 +183,16 @@ class BorgRepository():
     def run(self, arguments):
         return self._run('backups', arguments)
 
-    def reraise_known_error(self, err):
+    @staticmethod
+    def reraise_known_error(err):
         """Look whether the caught error is known and reraise it accordingly"""
         caught_error = str(err)
         for known_error in KNOWN_ERRORS:
             for error in known_error["errors"]:
                 if error in caught_error:
                     raise known_error["raise_as"](known_error["message"])
-        else:
-            raise err
+
+        raise err
 
 
 class SshBorgRepository(BorgRepository):
@@ -319,7 +320,8 @@ class SshBorgRepository(BorgRepository):
         except Exception as err:
             logger.error(err)
 
-    def _append_sshfs_arguments(self, arguments, credentials):
+    @staticmethod
+    def _append_sshfs_arguments(arguments, credentials):
         """Add credentials to a run command and kwargs"""
         kwargs = {}
 
@@ -348,6 +350,7 @@ def get_ssh_repositories():
     for storage in network_storage.get_storages().values():
         repository = SshBorgRepository(automount=False, **storage)
         repositories[storage['uuid']] = repository.get_view_content()
+
     return repositories
 
 

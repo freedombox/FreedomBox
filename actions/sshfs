@@ -30,7 +30,7 @@ TIMEOUT = 5
 
 
 class AlreadyMountedError(Exception):
-    pass
+    """Exception raised when mount point is already mounted."""
 
 
 def parse_arguments():
@@ -112,6 +112,7 @@ def _is_mounted(mountpoint):
 
 
 def subcommand_is_mounted(arguments):
+    """Print whether a path is already mounted."""
     print(json.dumps(_is_mounted(arguments.mountpoint)))
 
 
@@ -119,8 +120,8 @@ def read_password():
     """Read the password from stdin."""
     if sys.stdin.isatty():
         return ''
-    else:
-        return ''.join(sys.stdin)
+
+    return ''.join(sys.stdin)
 
 
 def main():
