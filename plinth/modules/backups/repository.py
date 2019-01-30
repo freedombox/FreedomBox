@@ -40,49 +40,55 @@ SUPPORTED_BORG_ENCRYPTION = ['none', 'repokey']
 # known errors that come up when remotely accessing a borg repository
 # 'errors' are error strings to look for in the stacktrace.
 KNOWN_ERRORS = [{
-        "errors": ["subprocess.TimeoutExpired"],
-        "message": _("Connection refused - make sure you provided correct "
-                     "credentials and the server is running."),
-        "raise_as": BorgError,
-    },
-    {
-        "errors": ["Connection refused"],
-        "message": _("Connection refused"),
-        "raise_as": BorgError,
-    },
-    {
-        "errors": ["not a valid repository", "does not exist"],
-        "message": _("Repository not found"),
-        "raise_as": BorgRepositoryDoesNotExistError,
-    },
-    {
-        "errors": [("passphrase supplied in BORG_PASSPHRASE or by "
-                    "BORG_PASSCOMMAND is incorrect")],
-        "message": _("Incorrect encryption passphrase"),
-        "raise_as": BorgError,
-    },
-    {
-        "errors": [("Connection reset by peer")],
-        "message": _("SSH access denied"),
-        "raise_as": SshfsError,
-    }]
+    'errors': ['subprocess.TimeoutExpired'],
+    'message':
+        _('Connection refused - make sure you provided correct '
+          'credentials and the server is running.'),
+    'raise_as':
+        BorgError,
+}, {
+    'errors': ['Connection refused'],
+    'message': _('Connection refused'),
+    'raise_as': BorgError,
+}, {
+    'errors': ['not a valid repository', 'does not exist'],
+    'message': _('Repository not found'),
+    'raise_as': BorgRepositoryDoesNotExistError,
+}, {
+    'errors': [('passphrase supplied in BORG_PASSPHRASE or by '
+                'BORG_PASSCOMMAND is incorrect')],
+    'message':
+        _('Incorrect encryption passphrase'),
+    'raise_as':
+        BorgError,
+}, {
+    'errors': [('Connection reset by peer')],
+    'message': _('SSH access denied'),
+    'raise_as': SshfsError,
+}]
 
 
-class BorgRepository(object):
-    """Borg repository on the root filesystem"""
+class BorgRepository():
+    """Borg repository on the root filesystem."""
     storage_type = 'root'
     name = ROOT_REPOSITORY_NAME
     is_mounted = True
 
-    def __init__(self, path, credentials={}):
+    def __init__(self, path, credentials=None):
+        """Initialize the repository object."""
+        if credentials is None:
+            credentials = {}
+
         self._path = path
         self.credentials = credentials
 
-    def append_encryption_passphrase(self, arguments, credentials):
+    @staticmethod
+    def _append_encryption_passphrase(arguments, credentials):
         """Append '--encryption-passphrase' argument to backups call"""
         passphrase = credentials.get('encryption_passphrase', None)
         if passphrase:
             arguments += ['--encryption-passphrase', passphrase]
+
         return arguments
 
     @property
@@ -138,7 +144,7 @@ class BorgRepository(object):
     def get_zipstream(self, archive_name):
         archive_path = self.get_archive_path(archive_name)
         args = ['export-tar', '--path', archive_path]
-        args = self.append_encryption_passphrase(args, self.credentials)
+        args = self._append_encryption_passphrase(args, self.credentials)
         proc = self._run('backups', args, run_in_background=True)
         return zipstream.ZipStream(proc.stdout, 'readline')
 
@@ -190,8 +196,9 @@ class BorgRepository(object):
 
 class SshBorgRepository(BorgRepository):
     """Borg repository that is accessed via SSH"""
-    KNOWN_CREDENTIALS = ['ssh_keyfile', 'ssh_password',
-                         'encryption_passphrase']
+    KNOWN_CREDENTIALS = [
+        'ssh_keyfile', 'ssh_password', 'encryption_passphrase'
+    ]
     storage_type = 'ssh'
     uuid = None
 
@@ -240,8 +247,8 @@ class SshBorgRepository(BorgRepository):
 
     @property
     def is_mounted(self):
-        output = self._run('sshfs', ['is-mounted', '--mountpoint',
-                                     self.mountpoint])
+        output = self._run('sshfs',
+                           ['is-mounted', '--mountpoint', self.mountpoint])
         return json.loads(output)
 
     def get_archive_path(self, archive_name):
@@ -271,8 +278,8 @@ class SshBorgRepository(BorgRepository):
         """Initialize / create a borg repository."""
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
-        self.run(['init', '--path', self.repo_path, '--encryption',
-                  encryption])
+        self.run(
+            ['init', '--path', self.repo_path, '--encryption', encryption])
 
     def save(self, store_credentials=True):
         """
@@ -285,15 +292,17 @@ class SshBorgRepository(BorgRepository):
     def mount(self):
         if self.is_mounted:
             return
-        arguments = ['mount', '--mountpoint', self.mountpoint, '--path',
-                     self._path]
-        arguments, kwargs = self._append_sshfs_arguments(arguments,
-                                                         self.credentials)
+        arguments = [
+            'mount', '--mountpoint', self.mountpoint, '--path', self._path
+        ]
+        arguments, kwargs = self._append_sshfs_arguments(
+            arguments, self.credentials)
         self._run('sshfs', arguments, **kwargs)
 
     def umount(self):
         if not self.is_mounted:
             return
+
         self._run('sshfs', ['umount', '--mountpoint', self.mountpoint])
 
     def remove_repository(self):
@@ -327,8 +336,9 @@ class SshBorgRepository(BorgRepository):
         for key in self.credentials.keys():
             if key not in self.KNOWN_CREDENTIALS:
                 raise ValueError('Unknown credentials entry: %s' % key)
-        arguments = self.append_encryption_passphrase(arguments,
-                                                      self.credentials)
+
+        arguments = self._append_encryption_passphrase(arguments,
+                                                       self.credentials)
         return self._run('backups', arguments, superuser=superuser)
 
 
@@ -342,8 +352,8 @@ def get_ssh_repositories():
 
 
 def get_repository(uuid, automount=False):
-    """Get a repository (BorgRepository or SshBorgRepository)"""
+    """Get a local or SSH repository object instance."""
     if uuid == ROOT_REPOSITORY_UUID:
         return BorgRepository(path=ROOT_REPOSITORY)
-    else:
-        return SshBorgRepository(uuid=uuid, automount=automount)
+
+    return SshBorgRepository(uuid=uuid, automount=automount)

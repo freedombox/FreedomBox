@@ -173,10 +173,12 @@ def _run(action, options=None, input=None, run_in_background=False,
         sudo_call = ['sudo', '-n']
     elif become_user:
         sudo_call = ['sudo', '-n', '-u', become_user]
+
     if cfg.develop and sudo_call:
         # Passing 'env' does not work with sudo, so append the PYTHONPATH
         # as part of the command
-        sudo_call += ["PYTHONPATH=%s" % cfg.root]
+        sudo_call += ['PYTHONPATH=%s' % cfg.root]
+
     if sudo_call:
         cmd = sudo_call + cmd
 
@@ -185,10 +187,10 @@ def _run(action, options=None, input=None, run_in_background=False,
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
     kwargs = {
-        "stdin": subprocess.PIPE,
-        "stdout": subprocess.PIPE,
-        "stderr": subprocess.PIPE,
-        "shell": False,
+        'stdin': subprocess.PIPE,
+        'stdout': subprocess.PIPE,
+        'stderr': subprocess.PIPE,
+        'shell': False,
     }
     if cfg.develop:
         # In development mode pass on local pythonpath to access Plinth
@@ -206,5 +208,5 @@ def _run(action, options=None, input=None, run_in_background=False,
             raise ActionError(action, output, error)
 
         return output
-    else:
-        return proc
+
+    return proc

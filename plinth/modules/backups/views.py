@@ -18,11 +18,11 @@
 Views for the backups app.
 """
 
-from datetime import datetime
 import logging
 import mimetypes
 import os
 import tempfile
+from datetime import datetime
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -33,16 +33,16 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-from django.views.generic import View, FormView, TemplateView
+from django.views.generic import FormView, TemplateView, View
 
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
-from . import api, forms, SESSION_PATH_VARIABLE, ROOT_REPOSITORY
-from .repository import BorgRepository, SshBorgRepository, get_repository, \
-        get_ssh_repositories
+from . import ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
+from .repository import (BorgRepository, SshBorgRepository, get_repository,
+                         get_ssh_repositories)
 
 logger = logging.getLogger(__name__)
 
@@ -124,7 +124,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
 
 def _get_file_response(path, filename):
     """Read and return a downloadable file"""
-    (content_type, encoding) = mimetypes.guess_type(filename)
+    (content_type, _) = mimetypes.guess_type(filename)
     response = FileResponse(open(path, 'rb'), content_type=content_type)
     content_disposition = 'attachment; filename="%s"' % filename
     response['Content-Disposition'] = content_disposition
@@ -246,7 +246,7 @@ class DownloadArchiveView(View):
 
     def get(self, request, uuid, name):
         repository = get_repository(uuid)
-        filename = "%s.tar.gz" % name
+        filename = '%s.tar.gz' % name
 
         response = StreamingHttpResponse(
             repository.get_zipstream(name), content_type='application/x-gzip')
