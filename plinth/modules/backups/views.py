@@ -19,7 +19,6 @@ Views for the backups app.
 """
 
 import logging
-import mimetypes
 import os
 import tempfile
 from datetime import datetime
@@ -27,7 +26,7 @@ from urllib.parse import unquote
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404, FileResponse, StreamingHttpResponse
+from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -120,15 +119,6 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         repository.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
         return redirect('backups:index')
-
-
-def _get_file_response(path, filename):
-    """Read and return a downloadable file"""
-    (content_type, _) = mimetypes.guess_type(filename)
-    response = FileResponse(open(path, 'rb'), content_type=content_type)
-    content_disposition = 'attachment; filename="%s"' % filename
-    response['Content-Disposition'] = content_disposition
-    return response
 
 
 class UploadArchiveView(SuccessMessageMixin, FormView):
