@@ -100,38 +100,35 @@ from plinth.errors import ActionError
 LOGGER = logging.getLogger(__name__)
 
 
-def run(action, options=None, input=None, run_in_background=False,
-        bufsize=None):
+def run(action, options=None, input=None, run_in_background=False):
     """Safely run a specific action as the current user.
 
     See actions._run for more information.
     """
-    return _run(action, options, input, run_in_background, False,
-                bufsize=bufsize)
+    return _run(action, options, input, run_in_background, False)
 
 
 def superuser_run(action, options=None, input=None, run_in_background=False,
-                  bufsize=None, log_error=True):
+                  log_error=True):
     """Safely run a specific action as root.
 
     See actions._run for more information.
     """
     return _run(action, options, input, run_in_background, True,
-                bufsize=bufsize, log_error=log_error)
+                log_error=log_error)
 
 
 def run_as_user(action, options=None, input=None, run_in_background=False,
-                bufsize=None, become_user=None):
+                become_user=None):
     """Run a command as a different user.
 
     If become_user is None, run as current user.
     """
-    return _run(action, options, input, run_in_background, False, become_user,
-                bufsize=bufsize)
+    return _run(action, options, input, run_in_background, False, become_user)
 
 
 def _run(action, options=None, input=None, run_in_background=False,
-         run_as_root=False, become_user=None, log_error=True, bufsize=None):
+         run_as_root=False, become_user=None, log_error=True):
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
@@ -196,8 +193,7 @@ def _run(action, options=None, input=None, run_in_background=False,
     if cfg.develop:
         # In development mode pass on local pythonpath to access Plinth
         kwargs['env'] = {'PYTHONPATH': cfg.root}
-    if bufsize is not None:
-        kwargs['bufsize'] = bufsize
+
     proc = subprocess.Popen(cmd, **kwargs)
 
     if not run_in_background:

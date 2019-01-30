@@ -139,9 +139,7 @@ class BorgRepository(object):
         archive_path = self.get_archive_path(archive_name)
         args = ['export-tar', '--path', archive_path]
         args = self.append_encryption_passphrase(args, self.credentials)
-        kwargs = {'run_in_background': True,
-                  'bufsize': 1}
-        proc = self._run('backups', args, kwargs=kwargs)
+        proc = self._run('backups', args, run_in_background=True)
         return zipstream.ZipStream(proc.stdout, 'readline')
 
     def get_archive(self, name):
@@ -166,15 +164,13 @@ class BorgRepository(object):
     def get_archive_path(self, archive_name):
         return "::".join([self.repo_path, archive_name])
 
-    def _run(self, cmd, arguments, superuser=True, kwargs=None):
+    def _run(self, cmd, arguments, superuser=True, **kwargs):
         """Run a backups or sshfs action script command."""
-        if kwargs is None:
-            kwargs = {}
         try:
             if superuser:
                 return actions.superuser_run(cmd, arguments, **kwargs)
-            else:
-                return actions.run(cmd, arguments, **kwargs)
+
+            return actions.run(cmd, arguments, **kwargs)
         except ActionError as err:
             self.reraise_known_error(err)
 
@@ -293,7 +289,7 @@ class SshBorgRepository(BorgRepository):
                      self._path]
         arguments, kwargs = self._append_sshfs_arguments(arguments,
                                                          self.credentials)
-        self._run('sshfs', arguments, kwargs=kwargs)
+        self._run('sshfs', arguments, **kwargs)
 
     def umount(self):
         if not self.is_mounted:
@@ -314,14 +310,16 @@ class SshBorgRepository(BorgRepository):
         except Exception as err:
             logger.error(err)
 
-    def _append_sshfs_arguments(self, arguments, credentials, kwargs=None):
+    def _append_sshfs_arguments(self, arguments, credentials):
         """Add credentials to a run command and kwargs"""
-        if kwargs is None:
-            kwargs = {}
+        kwargs = {}
+
         if 'ssh_password' in credentials and credentials['ssh_password']:
             kwargs['input'] = credentials['ssh_password'].encode()
+
         if 'ssh_keyfile' in credentials and credentials['ssh_keyfile']:
             arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
+
         return (arguments, kwargs)
 
     def run(self, arguments, superuser=True):
