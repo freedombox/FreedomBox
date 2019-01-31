@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "service-subsubmenu.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -42,13 +42,7 @@
   </style>
 {% endblock %}
 
-{% block content %}
-
-  <h2>{{ title }}</h2>
-
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
+{% block configuration %}
 
   <h3>{% trans 'Existing backups' %}</h3>
 
