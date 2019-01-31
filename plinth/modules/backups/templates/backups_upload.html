@@ -33,12 +33,17 @@
       backup file.
     {% endblocktrans %}
   </p>
-  <div class="alert alert-warning" role="alert">
-    {% blocktrans trimmed %}
-      WARNING: You have {{ max_filesize }} available to restore a backup.<br />
-      Exceeding this limit can leave your {{ box_name }} unusable.
-    {% endblocktrans %}
-  </div>
+
+  {% if max_filesize %}
+    <div class="alert alert-warning" role="alert">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="sr-only">{% trans "Caution:" %}</span>
+      {% blocktrans trimmed %}
+        You have {{ max_filesize }} available to restore a backup.
+        Exceeding this limit can leave your {{ box_name }} unusable.
+      {% endblocktrans %}
+    </div>
+  {% endif %}
 
   <form class="form" enctype="multipart/form-data" method="post">
     {% csrf_token %}
