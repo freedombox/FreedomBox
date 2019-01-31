@@ -42,6 +42,8 @@ description = [
 
 service = None
 
+manual_page = 'Backups'
+
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 ROOT_REPOSITORY = '/var/lib/freedombox/borgbackup'
 ROOT_REPOSITORY_NAME = format_lazy(_('{box_name} storage'),

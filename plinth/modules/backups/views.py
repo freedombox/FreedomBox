@@ -67,10 +67,11 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = backups.name
         context['description'] = backups.description
+        context['subsubmenu'] = subsubmenu
+        context['manual_page'] = backups.manual_page
         root_repository = BorgRepository(ROOT_REPOSITORY)
         context['root_repository'] = root_repository.get_view_content()
         context['ssh_repositories'] = get_ssh_repositories()
-        context['subsubmenu'] = subsubmenu
         return context
 
 
@@ -88,6 +89,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['subsubmenu'] = subsubmenu
+        context['manual_page'] = backups.manual_page
         return context
 
     def form_valid(self, form):
@@ -134,6 +136,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['subsubmenu'] = subsubmenu
+        context['manual_page'] = backups.manual_page
         try:
             disk_info = storage.get_disk_info('/')
         except PlinthError as exception:
