@@ -54,11 +54,11 @@ def index(request):
 def about(request):
     """Serve the about page"""
     cache = Cache()
-    plinth = cache['plinth']
+    freedombox = cache['freedombox']
     context = {
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__,
-        'new_version': not plinth.candidate.is_installed,
+        'new_version': not freedombox.candidate.is_installed,
         'os_release': get_os_release()
     }
     return TemplateResponse(request, 'help_about.html', context)
