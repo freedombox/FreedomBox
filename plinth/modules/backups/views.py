@@ -85,7 +85,8 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('New Backup')
+        context['title'] = backups.name
+        context['description'] = backups.description
         context['subsubmenu'] = subsubmenu
         return context
 
@@ -130,7 +131,8 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Upload and restore a backup file')
+        context['title'] = backups.name
+        context['description'] = backups.description
         context['subsubmenu'] = subsubmenu
         try:
             disk_info = storage.get_disk_info('/')
