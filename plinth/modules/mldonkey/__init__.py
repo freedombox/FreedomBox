@@ -42,6 +42,10 @@ description = [
     _('MLDonkey is a peer-to-peer file sharing application used to exchange '
       'large files. It can participate in multiple peer-to-peer networks '
       'including eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect.'),
+    _('Users belonging to admin and ed2k group can control it through the web '
+      'interface. Users in the admin group can also control it through any of '
+      'the separate mobile or desktop front-ends or a telnet interface. See '
+      'manual.'),
     format_lazy(
         _('On {box_name}, downloaded files can be found in /var/lib/mldonkey/ '
           'directory.'), box_name=cfg.box_name)
