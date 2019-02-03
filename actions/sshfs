@@ -44,8 +44,7 @@ def parse_arguments():
                        required=True)
     mount.add_argument('--ssh-keyfile', help='Path of private ssh key',
                        default=None, required=False)
-    umount = subparsers.add_parser('umount',
-                                   help='unmount an ssh filesystem')
+    umount = subparsers.add_parser('umount', help='unmount an ssh filesystem')
     umount.add_argument('--mountpoint', help='Mountpoint to unmount',
                         required=True)
     is_mounted = subparsers.add_parser(
@@ -68,9 +67,10 @@ def subcommand_mount(arguments):
     kwargs = {}
     # the shell would expand ~/ to the local home directory
     remote_path = remote_path.replace('~/', '').replace('~', '')
-    cmd = ['sshfs', remote_path, arguments.mountpoint, '-o',
-           'UserKnownHostsFile=/dev/null', '-o',
-           'StrictHostKeyChecking=no']
+    cmd = [
+        'sshfs', remote_path, arguments.mountpoint, '-o',
+        'UserKnownHostsFile=/dev/null', '-o', 'StrictHostKeyChecking=no'
+    ]
     if arguments.ssh_keyfile:
         cmd += ['-o', 'IdentityFile=' + arguments.ssh_keyfile]
     else:
@@ -79,6 +79,7 @@ def subcommand_mount(arguments):
             raise ValueError('mount requires either a password or ssh_keyfile')
         cmd += ['-o', 'password_stdin']
         kwargs['input'] = password.encode()
+
     subprocess.run(cmd, check=True, timeout=TIMEOUT, **kwargs)
 
 
@@ -91,11 +92,11 @@ def validate_mountpoint(mountpoint):
     """Check that the folder is empty, and create it if it doesn't exist"""
     if os.path.exists(mountpoint):
         if _is_mounted(mountpoint):
-            raise AlreadyMountedError('Mountpoint %s already mounted' %
-                                      mountpoint)
+            raise AlreadyMountedError(
+                'Mountpoint %s already mounted' % mountpoint)
         if os.listdir(mountpoint) or not os.path.isdir(mountpoint):
-            raise ValueError('Mountpoint %s is not an empty directory' %
-                             mountpoint)
+            raise ValueError(
+                'Mountpoint %s is not an empty directory' % mountpoint)
     else:
         os.makedirs(mountpoint)
 
