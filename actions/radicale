@@ -21,11 +21,16 @@ Configuration helper for Radicale.
 
 import argparse
 import os
+import shutil
+import subprocess
+import tempfile
 
 import augeas
 
 from plinth import action_utils
 from plinth.modules import radicale
+
+COLLECTIONS_PATH = '/var/lib/radicale/collections'
 
 CONFIG_FILE = '/etc/radicale/config'
 
@@ -76,7 +81,22 @@ def subcommand_setup(_):
 
 
 def subcommand_migrate(_):
-    """Migrate config from radicale 1.x to 2.x."""
+    """Migrate from radicale 1.x to 2.x."""
+    current_version = radicale.get_package_version()
+
+    # Migrate data from radicale 1.x to radicale 2.x format.
+    if current_version and current_version < radicale.VERSION_2:
+        with tempfile.TemporaryDirectory() as temp_directory:
+            export_location = os.path.join(temp_directory, 'radicale-export')
+            subprocess.run(['radicale', '--export-storage', export_location],
+                           check=True)
+            collection_root = os.path.join(export_location, 'collection-root')
+            shutil.copytree(collection_root,
+                            os.path.join(COLLECTIONS_PATH, 'collection-root'))
+            subprocess.run(
+                ['chown', '-R', 'radicale:radicale', COLLECTIONS_PATH],
+                check=True)
+
     action_utils.webserver_disable('radicale-plinth')
 
     aug = load_augeas()
@@ -88,7 +108,6 @@ def subcommand_migrate(_):
     aug.remove('/files' + CONFIG_FILE + '/well-known/caldav')
     aug.remove('/files' + CONFIG_FILE + '/well-known/carddav')
     aug.remove('/files' + CONFIG_FILE + '/auth/type')
-    current_version = radicale.get_package_version()
     if current_version and current_version < radicale.VERSION_2:
         aug.remove('/files' + CONFIG_FILE + '/rights/type')
 
@@ -120,8 +139,8 @@ def subcommand_enable(_):
     """Start service."""
     if radicale.get_package_version() >= radicale.VERSION_2:
         # Workaround for bug in radicale's uwsgi script (#919339)
-        if not os.path.exists('/var/lib/radicale/collections'):
-            os.makedirs('/var/lib/radicale/collections')
+        if not os.path.exists(COLLECTIONS_PATH):
+            os.makedirs(COLLECTIONS_PATH)
         action_utils.service_disable('radicale')
         action_utils.uwsgi_enable('radicale')
         action_utils.webserver_enable('proxy_uwsgi', kind='module')
