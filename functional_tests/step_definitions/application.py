@@ -107,7 +107,7 @@ def select_domain_name(browser, app_name, domain_name):
 
 @given('the shadowsocks application is configured')
 def configure_shadowsocks(browser):
-    application.configure_shadowsocks(browser, 'some.shadow.tunnel',
+    application.configure_shadowsocks(browser, 'example.com',
                                       'fakepassword')
 
 
