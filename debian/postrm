@@ -4,16 +4,20 @@ set -e
 
 case "$1" in
 purge)
-	deluser --system --quiet plinth || true
-	rm -rf /var/lib/plinth
+    deluser --system --quiet plinth || true
+    rm -rf /var/lib/plinth
 
-	# Remove legacy directory too
-	rm -rf /var/log/plinth
+    # Remove legacy directory too
+    rm -rf /var/log/plinth
 
-  if [ -e '/etc/apt/sources.list.d/freedombox-backports.list' ]; then
-      rm /etc/apt/sources.list.d/freedombox-backports.list
-  fi
-	;;
+    if [ -e '/etc/apt/sources.list.d/freedombox.list' ]; then
+        rm -f /etc/apt/sources.list.d/freedombox.list
+    fi
+
+    if [ -e '/etc/apt/preferences.d/50freedombox.pref' ]; then
+        rm -f /etc/apt/preferences.d/50freedombox.pref
+    fi
+    ;;
 esac
 
 #DEBHELPER#

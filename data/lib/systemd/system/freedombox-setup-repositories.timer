@@ -14,17 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""
-FreedomBox app to manage Debian backports.
-"""
 
-from plinth import actions
+[Unit]
+Description=FreedomBox: Daily check for setting up software repositories
 
-is_essential = True
+[Timer]
+OnCalendar=daily
+AccuracySec=12h
+Persistent=true
 
-version = 1
-
-
-def setup(helper, old_version=None):
-    """Configure the module."""
-    helper.call('post', actions.superuser_run, 'backports', ['enable'])
+[Install]
+WantedBy=multi-user.target

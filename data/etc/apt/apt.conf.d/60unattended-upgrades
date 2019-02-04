@@ -5,3 +5,12 @@ Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 // Do automatic removal of new unused dependencies after the upgrade
 // (equivalent to apt-get autoremove)
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
+
+// Allow upgrading from backports repository. This origin pattern is added to
+// other configured patterns. This only works if the current distribution is a
+// stable release. Also all backuports packages have a priority of 100 which is
+// ignored. Only packages that have higher priority set explicitly will get
+// upgraded. Only selected FreedomBox packages have high priority set on them.
+Unattended-Upgrade::Origins-Pattern {
+        "o=Debian Backports,a=${distro_codename}-backports,l=Debian Backports";
+};

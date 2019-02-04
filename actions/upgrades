@@ -20,12 +20,16 @@ Configures or runs unattended-upgrades
 """
 
 import argparse
+import os
 import re
 import subprocess
 import sys
 
+from plinth import action_utils
+
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
+BUSTER_BACKPORTS_RELEASE_FILE_URL = 'https://deb.debian.org/debian/dists/buster-backports/Release'
 
 
 def parse_arguments():
@@ -39,6 +43,9 @@ def parse_arguments():
     subparsers.add_parser('enable-auto', help='Enable automatic upgrades')
     subparsers.add_parser('disable-auto', help='Disable automatic upgrades.')
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
+
+    subparsers.add_parser('setup-repositories',
+                          help='Setup software repositories for FreedomBox')
 
     subparsers.required = True
     return parser.parse_args()
@@ -100,6 +107,91 @@ def subcommand_get_log(_):
             print(file_handle.read())
     except IOError:
         pass
+
+
+def _get_protocol():
+    """Return the protocol to use for newly added repository sources."""
+    try:
+        from plinth.modules.tor import utils
+        if utils.is_apt_transport_tor_enabled():
+            return 'tor+http'
+    except Exception:
+        pass
+
+    return 'http'
+
+
+def _is_release_file_available(protocol):
+    """Return whether the release for backports is available."""
+    wrapper = None
+    if protocol == 'tor+http':
+        wrapper = 'torsocks'
+
+    result = action_utils.check_url(BUSTER_BACKPORTS_RELEASE_FILE_URL,
+                                    wrapper=wrapper)
+    return result == 'passed'
+
+
+def _add_buster_backports_sources(sources_list, protocol):
+    """Add buster backports sources to freedombox repositories list."""
+    sources = '''# This file is managed by FreedomBox, do not edit.
+# Allow carefully selected updates to 'freedombox' from backports.
+
+deb {protocol}://deb.debian.org/debian buster-backports main
+deb-src {protocol}://deb.debian.org/debian buster-backports main
+'''
+    sources = sources.format(protocol=protocol)
+    with open(sources_list, 'w') as file_handle:
+        file_handle.write(sources)
+
+
+def _check_and_backports_sources():
+    """Add buster backports sources after checking if it is available."""
+    sources_list = '/etc/apt/sources.list.d/freedombox.list'
+    if os.path.exists(sources_list):
+        print('Repositories list up-to-date. Skipping update.')
+        return
+
+    protocol = _get_protocol()
+    if protocol == 'tor+http':
+        print('Package download over Tor is enabled.')
+
+    if not _is_release_file_available(protocol):
+        print('Release file for Buster backports is not available yet.')
+        return
+
+    print('Buster backports is now available. Adding to sources.')
+    _add_buster_backports_sources(sources_list, protocol)
+
+
+def _add_apt_preferences():
+    """Setup APT preferences to upgrade selected packages from backports."""
+    preferences_file = '/etc/apt/preferences.d/50freedombox.pref'
+    if os.path.exists(preferences_file):
+        print('Preferences up-to-date. Skipping update')
+        return
+
+    preferences = '''Explanation: This file is managed by FreedomBox, do not edit.
+Explanation: Allow carefully selected updates to 'freedombox' from backports.
+Package: freedombox
+Pin: release a=buster-backports
+Pin-Priority: 800
+'''
+
+    print('Updating APT preferences.')
+    with open(preferences_file, 'w') as file_handle:
+        file_handle.write(preferences)
+
+
+def subcommand_setup_repositories(_):
+    """Setup software repositories needed for FreedomBox.
+
+    Repositories list for now only contains the backports. If the file exists,
+    assume that it contains backports.
+
+    """
+    _check_and_backports_sources()
+    _add_apt_preferences()
 
 
 def main():
