@@ -31,9 +31,9 @@ version = 1
 
 is_essential = True
 
-managed_services = ['ntp']
+managed_services = ['chrony']
 
-managed_packages = ['ntp']
+managed_packages = ['chrony']
 
 name = _('Date & Time')
 
@@ -55,8 +55,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         ports=['ntp'], is_external=False)
+        service = service_module.Service(
+            managed_services[0], name, is_external=True)
 
 
 def setup(helper, old_version=None):
@@ -64,27 +64,27 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         ports=['ntp'], is_external=False)
+        service = service_module.Service(
+            managed_services[0], name, is_external=True)
     helper.call('post', service.notify_enabled, None, True)
 
 
 def diagnose():
     """Run diagnostics and return the results."""
     results = []
-    results.append(_diagnose_ntp_server_count())
+    results.append(_diagnose_chrony_server_count())
 
     return results
 
 
-def _diagnose_ntp_server_count():
-    """Diagnose minimum NTP server count."""
+def _diagnose_chrony_server_count():
+    """Diagnose minimum chrony server count."""
     result = 'failed'
     try:
-        output = subprocess.check_output(['ntpq', '-n', '-c', 'lpeers'])
+        output = subprocess.check_output(['chronyc', '-c', 'sources'])
         if len(output.decode().splitlines()[2:]):
             result = 'passed'
     except subprocess.CalledProcessError:
         pass
 
-    return [_('NTP client in contact with servers'), result]
+    return [_('chrony client in contact with servers'), result]
