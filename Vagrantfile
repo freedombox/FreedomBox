@@ -27,7 +27,10 @@ Vagrant.configure(2) do |config|
     cd /vagrant/
     ./setup.py install
     apt-get update
+    # In case new dependencies conflict with old dependencies
+    apt-mark hold freedombox
     DEBIAN_FRONTEND=noninteractive apt-get install -y $(plinth --list-dependencies)
+    apt-mark unhold freedombox
     systemctl daemon-reload
   SHELL
   config.vm.provision "shell", run: 'always', inline: <<-SHELL
