@@ -75,7 +75,7 @@ def get_status():
             'hs_ports': hs_info['ports'],
             'hs_services': hs_services,
             'apt_transport_tor_enabled':
-                _is_apt_transport_tor_enabled()
+                is_apt_transport_tor_enabled()
             }
 
 
@@ -133,7 +133,7 @@ def get_augeas():
     return aug
 
 
-def _is_apt_transport_tor_enabled():
+def is_apt_transport_tor_enabled():
     """Return whether APT is set to download packages over Tor."""
     try:
         aug = get_augeas()

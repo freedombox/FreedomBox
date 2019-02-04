@@ -19,12 +19,12 @@
 Tests for Tor module.
 """
 
-from django.core.exceptions import ValidationError
 import os
 import unittest
 
-from plinth.modules.tor import utils
-from plinth.modules.tor import forms
+from django.core.exceptions import ValidationError
+
+from plinth.modules.tor import forms, utils
 
 euid = os.geteuid()
 
@@ -36,7 +36,7 @@ class TestTor(unittest.TestCase):
         """Test that is_apt_transport_tor_enabled does not raise any unhandled
         exceptions.
         """
-        utils._is_apt_transport_tor_enabled()
+        utils.is_apt_transport_tor_enabled()
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_status(self):
