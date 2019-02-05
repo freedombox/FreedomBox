@@ -348,12 +348,9 @@ def _check_port(port, kind='tcp', listen_address=None):
     return False
 
 
-def diagnose_url(url, kind=None, env=None, check_certificate=True,
-                 extra_options=None, wrapper=None, expected_output=None):
-    """Run a diagnostic on whether a URL is accessible.
-
-    Kind can be '4' for IPv4 or '6' for IPv6.
-    """
+def check_url(url, kind=None, env=None, check_certificate=True,
+              extra_options=None, wrapper=None, expected_output=None):
+    """Check whether a URL is accessible."""
     command = ['curl', '-f', '-w', '%{response_code}', url]
 
     if wrapper:
@@ -383,13 +380,25 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     except FileNotFoundError:
         result = 'error'
 
+    return result
+
+
+def diagnose_url(url, kind=None, env=None, check_certificate=True,
+                 extra_options=None, wrapper=None, expected_output=None):
+    """Run a diagnostic on whether a URL is accessible.
+
+    Kind can be '4' for IPv4 or '6' for IPv6.
+    """
+    result = check_url(url, kind, env, check_certificate, extra_options,
+                       wrapper, expected_output)
+
     if kind:
         return [
             _('Access URL {url} on tcp{kind}').format(url=url, kind=kind),
             result
         ]
-    else:
-        return [_('Access URL {url}').format(url=url), result]
+
+    return [_('Access URL {url}').format(url=url), result]
 
 
 def diagnose_url_on_all(url, **kwargs):
