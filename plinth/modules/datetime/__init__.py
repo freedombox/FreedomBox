@@ -82,7 +82,7 @@ def _diagnose_chrony_server_count():
     result = 'failed'
     try:
         output = subprocess.check_output(['chronyc', '-c', 'sources'])
-        if len(output.decode().splitlines()[2:]):
+        if output.decode():
             result = 'passed'
     except subprocess.CalledProcessError:
         pass
