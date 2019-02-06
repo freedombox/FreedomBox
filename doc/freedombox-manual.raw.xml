@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>68</revnumber>
+        <date>2019-01-31 00:46:47</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Add backups links to manual</revremark>
+      </revision>
+      <revision>
         <revnumber>67</revnumber>
         <date>2019-01-28 04:35:54</date>
         <authorinitials>JosephNuthalapati</authorinitials>
@@ -2479,12 +2485,601 @@ proto udp]]></screen>
       </section>
       <section>
         <title>Using MLDonkey</title>
-        <para>After installing MLDonkey, it can be accessed at <code>https://&lt;your freedombox&gt;/mldonkey</code>. </para>
+        <para>After installing MLDonkey, its web interface can be accessed at <code>https://&lt;your freedombox&gt;/mldonkey</code>. To be able to access to the telnet or GUI interface you have to connect via an <ulink url="http://mldonkey.sourceforge.net/SshTunnel">SSH Tunnel</ulink>. </para>
       </section>
     </section>
   </section>
   <section>
     <title>System</title>
+    <section>
+      <title>Backups</title>
+      <para>FreedomBox includes the ability to backup and restore data, preferences, configuration and secrets from most of the applications. The Backups feature is built using Borg backup software. Borg is a deduplicating and compressing backup program. It is designed for efficient and secure backups. This backups feature can be used to selectively backup and restore data on an app-by-app basis. Backed up data can be stored on the FreedomBox machine itself or on a remote server. Any remote server providing SSH access can be used as a backup storage repository for FreedomBox backups. Data stored remotely may be encrypted and in such cases remote server cannot access your decrypted data. </para>
+      <section>
+        <title>Status of Backups Feature</title>
+        <informaltable>
+          <tgroup cols="3">
+            <colspec colname="col_0"/>
+            <colspec colname="col_1"/>
+            <colspec colname="col_2"/>
+            <tbody>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">App/Feature</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">Support in Version</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">Notes</emphasis>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Avahi </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Backups </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Bind </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.41 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Cockpit </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Coquelicot </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes uploaded files </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Datetime </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.41 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Deluge </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.41 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> does not include downloaded/seeding files </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Diagnostics </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Dynamic DNS </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> ejabberd </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes all data and configuration </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Firewall </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> ikiwiki </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes all wikis/blogs and their content </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> infinoted </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes all data and keys </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> JSXC </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Let's Encrypt </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.42 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Matrix Synapse </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes media and uploads </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> MediaWiki </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes wiki pages and uploaded files </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Minetest </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Monkeysphere </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.42 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Mumble </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Names </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Networks </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> No </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> No plans currently to implement backup </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> OpenVPN </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.48 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes all user and server keys </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Pagekite </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Power </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Privoxy </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Quassel </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes users and logs </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Radicale </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes calendar and cards data for all users </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> repro </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.39 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes all users, data and keys </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Roundcube </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> SearX </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Secure Shell (SSH) Server </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.41 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes host keys </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Security </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.41 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Shadowsocks </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> only secrets </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Sharing </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> does not include the data in the shared folders </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Snapshot </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.41 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> only configuration, does not include snapshot data </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Storage </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> - </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> no backup needed </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Syncthing </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.48 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> does not include data in the shared folders </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Tahoe-LAFS </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.42 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes all data and configuration </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Tiny Tiny RSS </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> Pending </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Tor </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.42 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> includes configuration and secrets such as hidden service keys </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Transmission </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.40 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> does not include downloaded/seeding files </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Upgrades </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.42 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para> Users </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> No </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> No plans currently to implement backup </para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
+        <title>How to install and use Backups</title>
+        <para>
+          <emphasis role="strong">Step 1</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step1_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 1</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <emphasis role="strong">Step 2</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step2_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 2</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <emphasis role="strong">Step 3</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step3_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 3</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <emphasis role="strong">Step 4</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step4_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 4</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <emphasis role="strong">Step 5</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step5_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 5</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <emphasis role="strong">Step 6</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step6_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 6</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <emphasis role="strong">Step 7</emphasis>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step7_v49.png" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>Backups: Step 7</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
+    </section>
     <section>
       <title>Configure</title>
       <para>Configure has some general configuration options: </para>
@@ -8172,6 +8767,50 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.49.0 (2019-02-05)</title>
+        <itemizedlist>
+          <listitem>
+            <para>security: Update javascript for Content Security Policy. </para>
+          </listitem>
+          <listitem>
+            <para>help: Use correct package to determine available version. </para>
+          </listitem>
+          <listitem>
+            <para>repro: Disable app due to issues with Debian package. </para>
+          </listitem>
+          <listitem>
+            <para>ui: Fix regression with card icon style in front page. </para>
+          </listitem>
+          <listitem>
+            <para>js: Support full librejs compatibility. </para>
+          </listitem>
+          <listitem>
+            <para>js: Remove javascript license link from footer. </para>
+          </listitem>
+          <listitem>
+            <para>backups: Remove incorrectly set buffer size during download. </para>
+          </listitem>
+          <listitem>
+            <para>backups: Fix incomplete download archives. </para>
+          </listitem>
+          <listitem>
+            <para>backups: Improve performance of backup download. </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Handle migration from 1.x to 2.x. </para>
+          </listitem>
+          <listitem>
+            <para>datetime: Switch from ntp to chrony. </para>
+          </listitem>
+          <listitem>
+            <para>backports: Add buster-backports to apt sources list. </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, Norwegian Bokmål, and Hungarian. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.48.0 (2019-01-28)</title>
         <itemizedlist>
