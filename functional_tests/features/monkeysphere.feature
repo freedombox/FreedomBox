@@ -15,8 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# XXX: Enable tests after Debian Bug #911907 is fixed.
-@apps @monkeysphere @backups @skip
+@apps @monkeysphere @backups
 Feature: Monkeysphere
   Import and publish OpenPGP keys for SSH and HTTPS keys
 
