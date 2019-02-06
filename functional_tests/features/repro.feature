@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @sip @backups @sso
+# XXX: Enable tests when repro module is enabled again.
+@apps @sip @backups @sso @skip
 Feature: Repro SIP Server
   Make audio and video calls.
 
