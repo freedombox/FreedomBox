@@ -55,9 +55,8 @@
         {% include "clients.html" with clients=clients enabled=service.is_enabled %}
 
         {% if user.is_authenticated and user_is_admin and configure_url %}
-          <input type="submit" class="btn btn-primary"
-                 href="{{ configure_url }}"
-                 value="{% trans "Configure &raquo;" %}"/>
+          <a class="btn btn-primary" href="{{ configure_url }}">
+            {% trans "Configure &raquo;" %}</a>
         {% endif %}
       {% endif %}
 
