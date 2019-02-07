@@ -20,11 +20,11 @@ FreedomBox app for Apache server.
 
 from plinth import actions
 
-version = 4
+version = 5
 
 is_essential = True
 
-managed_packages = ['apache2', 'libapache2-mod-gnutls', 'php-fpm']
+managed_packages = ['apache2', 'php-fpm']
 
 
 def setup(helper, old_version=None):

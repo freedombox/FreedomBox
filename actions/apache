@@ -122,9 +122,9 @@ def subcommand_setup(arguments):
         webserver.enable('proxy_fcgi', kind='module')
         webserver.enable('rewrite', kind='module')
 
-        # enable GnuTLS
-        webserver.disable('ssl', kind='module')
-        webserver.enable('gnutls', kind='module')
+        # switch to mod_ssl from mod_gnutls
+        webserver.disable('gnutls', kind='module')
+        webserver.enable('ssl', kind='module')
 
         # enable mod_alias for RedirectMatch
         webserver.enable('alias', kind='module')
@@ -151,8 +151,8 @@ def subcommand_setup(arguments):
 
         # default sites
         webserver.enable('000-default', kind='site')
-        webserver.disable('default-ssl', kind='site')
-        webserver.enable('default-tls', kind='site')
+        webserver.disable('default-tls', kind='site')
+        webserver.enable('default-ssl', kind='site')
         webserver.enable('plinth', kind='site')
         webserver.enable('plinth-ssl', kind='site')
 
