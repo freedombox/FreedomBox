@@ -18,6 +18,7 @@
 FreedomBox app to configure matrix-synapse server.
 """
 
+import json
 import logging
 import os
 
@@ -28,10 +29,11 @@ from ruamel.yaml.util import load_yaml_guess_indent
 from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
+from plinth.utils import YAMLFile
 
 from .manifest import backup, clients
 
-version = 3
+version = 4
 
 managed_services = ['matrix-synapse']
 
@@ -159,3 +161,15 @@ def get_public_registration_status():
     output = actions.superuser_run('matrixsynapse',
                                    ['public-registration', 'status'])
     return output.strip() == 'enabled'
+
+
+def has_valid_certificate():
+    """Return whether the configured domain name has a valid
+    Let's Encrypt certificate."""
+    domain_name = get_configured_domain_name()
+    status = actions.superuser_run('letsencrypt', ['get-status'])
+    status = json.loads(status)
+    if domain_name in status['domains']:
+        return status['domains'][domain_name][
+            'certificate_available'] == "true"
+    return False

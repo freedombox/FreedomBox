@@ -140,7 +140,7 @@
       {% blocktrans trimmed %}
         If you have a Let's Encrypt certificate for your current domain, you may
         let {{ box_name }} manage its renewal process. This also enables other apps
-        to use that certificate, so most users would not prompted with security
+        to use that certificate, so that users would not prompted with security
         warnings when using them.
       {% endblocktrans %}
     </p>
@@ -247,6 +247,67 @@
             {% blocktrans trimmed %}
               To use a Let's Encrypt certificate for
 	      <a href="{{ ejabberd_url }}">ejabberd</a> chat server app, you
+	      must first enable certificate renewal of the current domain.
+            {% endblocktrans %}
+          {% endif %}
+        </p>
+      </form>
+      <form class="form" method="post"
+            action="{% url 'letsencrypt:toggle_module' domain=status.current_domain.name module='matrixsynapse' %}">
+        {% csrf_token %}
+        <div class="checkbox">
+          <label>
+            {% if 'matrixsynapse' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
+              <input type="checkbox" name="matrixsynapse" id="matrixsynapse"
+                     {% if 'matrixsynapse' in status.current_domain.manage_hooks_status %}
+                       checked
+                     {% endif %}
+                     onchange="this.form.submit();">
+              </input>
+              <noscript>
+                <button class="btn btn-sm btn-default" type="submit">
+                  {% trans "Update config" %}</button>
+              </noscript>
+            {% else %}
+              <input type="checkbox" name="matrixsynapse" id="matrixsynapse"
+                     class="disabled"></input>
+              <noscript>
+                <button class="btn btn-sm btn-default disabled" type="submit">
+                  {% trans "Update config" %}</button>
+              </noscript>
+            {% endif %}
+            <span>
+	      {% if 'matrixsynapse' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
+                {% blocktrans trimmed with current_domain=status.current_domain.name %}
+                  Use certificate of {{ current_domain }} for <b>matrixsynapse</b>
+                {% endblocktrans %}
+              {% else %}
+                {% blocktrans trimmed %}
+                  Use certificate of the current domain for <b>matrixsynapse</b>
+                {% endblocktrans %}
+              {% endif %}
+            </span>
+          </label>
+        </div>
+        <p class="help-block">
+          {% url 'matrixsynapse:index' as matrixsynapse_url %}
+          {% if 'matrixsynapse' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
+            {% blocktrans trimmed %}
+              If enabled, the app <a href="{{ matrixsynapse_url }}">Matrix Synapse</a>
+	            will also use the same Let's Encrypt certificate.
+              Other Matrix Synapse instances running version 1.0 or greater expect
+              your server to produce a valid TLS certificate. Federation with other
+              instances will not work without this.
+            {% endblocktrans %}
+          {% elif 'matrixsynapse' not in installed_modules %}
+            {% blocktrans trimmed %}
+              This feature only makes sense if you are using the
+              <a href="{{ matrixsynapse_url }}">Matrix Synapse</a> chat server app.
+            {% endblocktrans %}
+          {% else %}
+            {% blocktrans trimmed %}
+              To use a Let's Encrypt certificate for
+	      <a href="{{ matrixsynapse_url }}">Matrix Synapse</a> chat server app, you
 	      must first enable certificate renewal of the current domain.
             {% endblocktrans %}
           {% endif %}

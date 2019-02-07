@@ -30,7 +30,7 @@ from plinth.modules import matrixsynapse
 from plinth.utils import get_domain_names
 from plinth.views import ServiceView
 
-from . import get_public_registration_status
+from . import get_public_registration_status, has_valid_certificate
 from .forms import MatrixSynapseForm
 
 
@@ -86,7 +86,8 @@ class MatrixSynapseServiceView(ServiceView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'enable_public_registration': get_public_registration_status()
+            'enable_public_registration': get_public_registration_status(),
+            'has_valid_certificate': has_valid_certificate(),
         })
         return initial
 

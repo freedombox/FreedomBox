@@ -402,13 +402,17 @@ def subcommand_run_renew_hooks(arguments):
         action_utils.service_restart('apache2')
 
     for module in arguments.modules:
-        _run_action(module, ['letsencrypt', 'add'])  # OK if only 1 module
-        # TODO: If >1 modules, collect errors and raise just one in the end,
-        #       for certbot to log ALL failed attempts, not just 1st fail.
-        # try:
-        #     _run_action(module, ['letsencrypt', 'add'])
-        # except Exception as err:
-        #     pass
+        # If >1 modules, collect errors and raise just one in the end,
+        # for certbot to log ALL failed attempts, not just 1st fail.
+        error_messages = []
+        try:
+            _run_action(module, ['letsencrypt', 'add'])
+        except Exception as err:
+            error_messages.append(err.message)
+
+        if error_messages:
+            raise ActionError(message="\n".join(error_messages))
+            sys.exit(3)
 
     sys.exit(0)
 
