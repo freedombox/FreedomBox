@@ -105,8 +105,11 @@ def get_https_keys(fingerprint_hash):
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
     aug.set('/augeas/load/Httpd/incl[last() + 1]',
             '/etc/apache2/sites-available/*')
+    aug.set('/augeas/load/Httpd/incl[last() + 1]',
+            '/etc/apache2/conf-available/*')
     aug.load()
 
+    # Read from default-tls.conf and default-ssl.conf
     keys = {}
     path = '/files/etc/apache2/sites-available//VirtualHost'
     for match in aug.match(path):
@@ -122,6 +125,23 @@ def get_https_keys(fingerprint_hash):
             host['ssh_fingerprint'] = get_pem_ssh_fingerprint(
                 host['key_file'], fingerprint_hash)
             keys[host['ssh_fingerprint']] = host
+
+    # Read from FreedomBox configured domains with proper SSL certs.
+    path = "/files/etc/apache2/sites-available//" \
+        "directive[. = 'Use'][arg[1] = 'FreedomBoxTLSSiteMacro']"
+    key_file = "/files/etc/apache2//Macro[arg[1] = 'FreedomBoxTLSSiteMacro']//"\
+        "VirtualHost/directive[. = 'GnuTLSKeyFile']/arg"
+    key_file = aug.get(key_file)
+    for match in aug.match(path):
+        domain = aug.get(match + '/arg[2]')
+        host = {
+            'available_domains': [domain],
+            'service': 'https',
+            'key_file': key_file.replace('$domain', domain)
+        }
+        host['ssh_fingerprint'] = get_pem_ssh_fingerprint(
+            host['key_file'], fingerprint_hash)
+        keys[host['ssh_fingerprint']] = host
 
     return keys
 
