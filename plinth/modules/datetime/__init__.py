@@ -27,13 +27,13 @@ from plinth.menu import main_menu
 
 from .manifest import backup
 
-version = 1
+version = 2
 
 is_essential = True
 
-managed_services = ['chrony']
+managed_services = ['systemd-timesyncd']
 
-managed_packages = ['chrony']
+managed_packages = []
 
 name = _('Date & Time')
 
@@ -55,36 +55,37 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, is_external=True)
+        service = service_module.Service(managed_services[0], name,
+                                         is_external=True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_external=True)
+        service = service_module.Service(managed_services[0], name,
+                                         is_external=True)
+    service.enable()
     helper.call('post', service.notify_enabled, None, True)
 
 
 def diagnose():
     """Run diagnostics and return the results."""
     results = []
-    results.append(_diagnose_chrony_server_count())
+    results.append(_diagnose_time_synchronized())
 
     return results
 
 
-def _diagnose_chrony_server_count():
-    """Diagnose minimum chrony server count."""
+def _diagnose_time_synchronized():
+    """Check whether time is synchronized to NTP server."""
     result = 'failed'
     try:
-        output = subprocess.check_output(['chronyc', '-c', 'sources'])
-        if output.decode():
+        output = subprocess.check_output(
+            ['timedatectl', 'show', '--property=NTPSynchronized', '--value'])
+        if 'yes' in output.decode():
             result = 'passed'
     except subprocess.CalledProcessError:
         pass
 
-    return [_('chrony client in contact with servers'), result]
+    return [_('Time synchronized to NTP server'), result]
