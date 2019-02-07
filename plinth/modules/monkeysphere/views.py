@@ -50,13 +50,12 @@ def index(request):
 @require_POST
 def import_key(request, ssh_fingerprint):
     """Import a key into monkeysphere."""
-    available_domains = [
-        domain for domains in names.domains.values() for domain in domains
-    ]
+    keys = get_keys()
+    available_domains = keys[ssh_fingerprint]['available_domains']
     try:
         actions.superuser_run(
             'monkeysphere',
-            ['host-import-key', ssh_fingerprint] + available_domains)
+            ['host-import-key', ssh_fingerprint] + list(available_domains))
         messages.success(request, _('Imported key.'))
     except actions.ActionError as exception:
         messages.error(request, str(exception))
