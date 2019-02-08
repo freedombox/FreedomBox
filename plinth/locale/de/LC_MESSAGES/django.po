@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-07 20:56-0500\n"
-"PO-Revision-Date: 2019-01-23 21:07+0000\n"
+"PO-Revision-Date: 2019-02-09 18:09+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4\n"
+"X-Generator: Weblate 3.5-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -254,10 +254,8 @@ msgid "Create new repository"
 msgstr "Neues Archiv anlegen"
 
 #: plinth/modules/backups/templates/backups.html:61
-#, fuzzy
-#| msgid "+ Add Remote Repository"
 msgid "Add Remote Repository"
-msgstr "+ Remote-Archiv hinzufügen"
+msgstr "Remote-Archiv hinzufügen"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -347,18 +345,11 @@ msgid "Restore"
 msgstr "Wiederherstellen"
 
 #: plinth/modules/backups/templates/backups_restore.html:47
-#, fuzzy
-#| msgid "Restore"
 msgid "Restoring"
 msgstr "Wiederherstellen"
 
 #: plinth/modules/backups/templates/backups_upload.html:30
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      You can choose the apps you wish to import after uploading a backup "
-#| "file.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
@@ -369,8 +360,11 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      Sie können die Apps auswählen, die Sie nach dem Hochladen einer Backup-"
-"Datei importieren möchten.\n"
+"      Lade eine Backup-Datei hoch von einer anderen %(box_name)s, um deren "
+"Inhalt\n"
+"wiederherzustellen. Sie können die Apps auswählen, die Sie nach dem "
+"Hochladen einer\n"
+"Backup-Datei wiederherstellen möchten.\n"
 "    "
 
 #: plinth/modules/backups/templates/backups_upload.html:40
@@ -379,17 +373,14 @@ msgid "Caution:"
 msgstr "Achtung:"
 
 #: plinth/modules/backups/templates/backups_upload.html:41
-#, fuzzy, python-format
-#| msgid ""
-#| "WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
-#| "Exceeding this limit can leave your %(box_name)s unusable."
+#, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
-"WARNUNG: Sie haben %(max_filesize)s zur Verfügung, um eine Sicherung "
-"wiederherzustellen. <br /> Eine Überschreitung dieser Grenze kann dazu "
-"führen, dass Ihre %(box_name)s unbrauchbar werden."
+"Sie haben %(max_filesize)s zur Verfügung, um ein Backup wiederherzustellen. "
+"Eine Überschreitung dieser Grenze kann dazu führen, dass Ihre %(box_name)s "
+"unbrauchbar wird."
 
 #: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
@@ -529,9 +520,9 @@ msgid ""
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
-"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
-"Benutzer</a> der {box_name} in der Administratorgruppe."
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
+">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
+"Nutzer</a> auf {box_name}, der zur Gruppe der Administratoren gehört."
 
 #: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
@@ -737,7 +728,7 @@ msgstr ""
 
 #: plinth/modules/datetime/__init__.py:91
 msgid "Time synchronized to NTP server"
-msgstr ""
+msgstr "Zeit synchronisiert nach NTP-Server"
 
 #: plinth/modules/datetime/forms.py:36
 msgid "Time Zone"
@@ -2427,16 +2418,12 @@ msgstr "Schaden Konfiguration aktualisiert"
 
 #: plinth/modules/mldonkey/__init__.py:37
 #: plinth/modules/mldonkey/manifest.py:27
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "MLDonkey"
-msgstr "Monkeysphere"
+msgstr "MLDonkey"
 
 #: plinth/modules/mldonkey/__init__.py:39
-#, fuzzy
-#| msgid "File Sharing"
 msgid "Peer-to-peer File Sharing"
-msgstr "Daten Austausch"
+msgstr "Peer-to-Peer Daten-Austausch"
 
 #: plinth/modules/mldonkey/__init__.py:42
 msgid ""
@@ -2444,18 +2431,21 @@ msgid ""
 "files. It can participate in multiple peer-to-peer networks including "
 "eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
 msgstr ""
+"MLDonkey ist eine App für peer-to-peer Dateitauschbörsen, um große Dateien "
+"auszutauschen. Es kann in mehreren peer-to-peer-Netzwerken teilnehmen, unter "
+"anderem eDonkey, Kademlia, Overnet, BitTorrent und DirectConnect."
 
 #: plinth/modules/mldonkey/__init__.py:46
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
 msgstr ""
+"Auf {box_name} können heruntergeladene Dateien im Verzeichnis /var/lib/"
+"mldonkey/ gefunden werden."
 
 #: plinth/modules/mldonkey/__init__.py:54
-#, fuzzy
-#| msgid "Download files using BitTorrent applications"
 msgid "Download files using eDonkey applications"
-msgstr "Lade Dateien mit BitTorrent herunter"
+msgstr "Lade Dateien mit eDonkey herunter"
 
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
