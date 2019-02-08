@@ -189,17 +189,19 @@ def subcommand_add_introducer(arguments):
 
     Param introducer must be a tuple of (pet_name, furl).
     """
-    with YAMLFile(introducers_file, restart_storage_node) as conf:
+    with YAMLFile(introducers_file) as conf:
         pet_name, furl = arguments.introducer.split(",")
         conf['introducers'][pet_name] = {'furl': furl}
+    restart_storage_node()
 
 
 def subcommand_remove_introducer(arguments):
     """Rename the introducer entry in the introducers.yaml file specified
     by the param pet_name
     """
-    with YAMLFile(introducers_file, restart_storage_node) as conf:
+    with YAMLFile(introducers_file) as conf:
         del conf['introducers'][arguments.pet_name]
+    restart_storage_node()
 
 
 def subcommand_get_introducers(_):
