@@ -247,6 +247,8 @@ setuptools.setup(
             'data/etc/sudoers.d/plinth'
         ]), ('/lib/systemd/system',
              glob.glob('data/lib/systemd/system/*.service')),
+        ('/lib/systemd/system/mldonkey-server.service.d',
+         ['data/lib/systemd/system/mldonkey-server.service.d/freedombox.conf']),
         ('/lib/systemd/system', glob.glob('data/lib/systemd/system/*.timer')),
         ('/etc/mediawiki',
          glob.glob('data/etc/mediawiki/*.php')), ('/etc/update-motd.d/', [
