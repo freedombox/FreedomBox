@@ -19,7 +19,6 @@ FreedomBox app to configure XMPP web client/jsxc.
 """
 
 import logging
-import socket
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -88,12 +87,6 @@ def is_enabled():
     """Return whether the module is enabled."""
     setup_helper = globals()['setup_helper']
     return setup_helper.get_state() != 'needs-setup'
-
-
-def get_domainname():
-    """Return the domainname"""
-    fqdn = socket.getfqdn()
-    return '.'.join(fqdn.split('.')[1:])
 
 
 def enable():

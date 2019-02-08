@@ -22,7 +22,7 @@ from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from stronghold.decorators import public
 
-from plinth.modules import jsxc
+from plinth.modules import config, jsxc
 from plinth.views import ServiceView
 
 
@@ -47,5 +47,5 @@ class JsxcView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         """Add domain information to view context."""
         context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = jsxc.get_domainname()
+        context['domainname'] = config.get_domainname()
         return context

@@ -22,7 +22,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 
 from plinth import actions
-from plinth.modules import ejabberd
+from plinth.modules import config, ejabberd
 from plinth.views import ServiceView
 
 from .forms import EjabberdForm
@@ -45,7 +45,7 @@ class EjabberdServiceView(ServiceView):
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = ejabberd.get_domainname()
+        context['domainname'] = config.get_domainname()
         context['clients'] = ejabberd.clients
         return context
 
