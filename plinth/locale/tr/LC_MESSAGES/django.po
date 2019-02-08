@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 22:20-0500\n"
+"POT-Creation-Date: 2019-02-07 20:56-0500\n"
 "PO-Revision-Date: 2018-01-03 17:10+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 #, fuzzy, python-brace-format
 #| msgid "{box_name} Manual"
 msgid "{box_name} storage"
@@ -249,21 +249,23 @@ msgstr ""
 msgid "SSH access denied"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:53
+#: plinth/modules/backups/templates/backups.html:47
 #, fuzzy
 #| msgid "Existing custom services"
 msgid "Existing backups"
 msgstr "Mevcut özel servisler"
 
-#: plinth/modules/backups/templates/backups.html:63
+#: plinth/modules/backups/templates/backups.html:57
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Create new repository"
 msgstr "Anlık Oluştur"
 
-#: plinth/modules/backups/templates/backups.html:66
-msgid "+ Add Remote Repository"
-msgstr ""
+#: plinth/modules/backups/templates/backups.html:61
+#, fuzzy
+#| msgid "Create User"
+msgid "Add Remote Repository"
+msgstr "Kullanıcı Oluştur"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 #, fuzzy
@@ -290,7 +292,7 @@ msgstr "Saat Dilimi"
 msgid "Delete Archive %(name)s"
 msgstr "%(name)s unsurunu sil"
 
-#: plinth/modules/backups/templates/backups_form.html:34
+#: plinth/modules/backups/templates/backups_form.html:32
 #: plinth/modules/config/templates/config.html:45
 #: plinth/modules/security/templates/security.html:32
 #: plinth/modules/sharing/templates/sharing_add_edit.html:34
@@ -311,12 +313,15 @@ msgstr ""
 msgid "Create Repository"
 msgstr "Kullanıcı Oluştur"
 
-#: plinth/modules/backups/templates/backups_repository_add.html:46
+#: plinth/modules/backups/templates/backups_repository_add.html:45
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
-#: plinth/modules/backups/templates/backups_restore.html:51
-#: plinth/modules/backups/templates/backups_restore.html:54
-msgid "Abort"
-msgstr ""
+#: plinth/modules/backups/templates/backups_restore.html:52
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
+#: plinth/modules/networks/templates/connections_delete.html:41
+#: plinth/modules/users/templates/users_delete.html:41
+msgid "Cancel"
+msgstr "İptal"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
@@ -333,7 +338,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:281
+#: plinth/modules/backups/views.py:286
 msgid "Remove Repository"
 msgstr ""
 
@@ -344,34 +349,43 @@ msgid "Restore data from"
 msgstr "%(box_name)s kutusuna hoş geldiniz!"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/views.py:181
+#: plinth/modules/backups/views.py:186
 #, fuzzy
 #| msgid "reStore"
 msgid "Restore"
 msgstr "reStore"
 
-#: plinth/modules/backups/templates/backups_restore.html:46
+#: plinth/modules/backups/templates/backups_restore.html:47
 #, fuzzy
 #| msgid "reStore"
 msgid "Restoring"
 msgstr "reStore"
 
-#: plinth/modules/backups/templates/backups_upload.html:31
+#: plinth/modules/backups/templates/backups_upload.html:30
+#, python-format
 msgid ""
 "\n"
-"      You can choose the apps you wish to import after uploading a backup "
-"file.\n"
+"      Upload a backup file downloaded from another %(box_name)s to restore "
+"is\n"
+"      contents. You can choose the apps you wish to restore after uploading "
+"a\n"
+"      backup file.\n"
 "    "
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_upload.html:36
+#: plinth/modules/backups/templates/backups_upload.html:40
+#: plinth/modules/help/templates/statuslog.html:38
+msgid "Caution:"
+msgstr "Dikkat:"
+
+#: plinth/modules/backups/templates/backups_upload.html:41
 #, python-format
 msgid ""
-"WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
-"Exceeding this limit can leave your %(box_name)s unusable."
+"You have %(max_filesize)s available to restore a backup. Exceeding this "
+"limit can leave your %(box_name)s unusable."
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_upload.html:48
+#: plinth/modules/backups/templates/backups_upload.html:54
 #, fuzzy
 #| msgid "Download my profile"
 msgid "Upload file"
@@ -387,61 +401,53 @@ msgstr "Profilimi indir"
 msgid "Create"
 msgstr "Oluştur"
 
-#: plinth/modules/backups/views.py:83
+#: plinth/modules/backups/views.py:84
 msgid "Archive created."
 msgstr ""
 
-#: plinth/modules/backups/views.py:88
-msgid "New Backup"
-msgstr ""
-
-#: plinth/modules/backups/views.py:108
+#: plinth/modules/backups/views.py:111
 #, fuzzy
 #| msgid "Delete All"
 msgid "Delete Archive"
 msgstr "Tümünü Sil"
 
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:123
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Archive deleted."
 msgstr "{name} silindi."
 
-#: plinth/modules/backups/views.py:133
-msgid "Upload and restore a backup file"
-msgstr ""
-
-#: plinth/modules/backups/views.py:169
+#: plinth/modules/backups/views.py:174
 msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:193
+#: plinth/modules/backups/views.py:198
 msgid "No backup file found."
 msgstr ""
 
-#: plinth/modules/backups/views.py:201
+#: plinth/modules/backups/views.py:206
 msgid "Restore from uploaded file"
 msgstr ""
 
-#: plinth/modules/backups/views.py:255
+#: plinth/modules/backups/views.py:260
 #, fuzzy
 #| msgid "Add new introducer"
 msgid "Added new repository."
 msgstr "Yeni tanıtıcı ekle"
 
-#: plinth/modules/backups/views.py:260
+#: plinth/modules/backups/views.py:265
 msgid "Create remote backup repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:291
+#: plinth/modules/backups/views.py:296
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr ""
 
-#: plinth/modules/backups/views.py:299
+#: plinth/modules/backups/views.py:304
 msgid "Unmounting failed!"
 msgstr ""
 
-#: plinth/modules/backups/views.py:308 plinth/modules/backups/views.py:312
+#: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
 msgid "Mounting failed"
 msgstr ""
 
@@ -744,11 +750,9 @@ msgstr ""
 "Ağ zaman sunucusu, İnternet'teki sunucular ile sistem zamanını eş tutan bir "
 "programdır."
 
-#: plinth/modules/datetime/__init__.py:90
-#, fuzzy
-#| msgid "NTP client in contact with servers"
-msgid "chrony client in contact with servers"
-msgstr "Sunucularla iletişimde NTP istemcisi"
+#: plinth/modules/datetime/__init__.py:91
+msgid "Time synchronized to NTP server"
+msgstr ""
 
 #: plinth/modules/datetime/forms.py:36
 msgid "Time Zone"
@@ -1483,7 +1487,7 @@ msgid "Documentation"
 msgstr "Belgelendirme"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:68
-#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:136
+#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Kullanım Kılavuzu"
 
@@ -1656,10 +1660,6 @@ msgstr ""
 "freedombox/Plinth/issues\">hata izleyicisini</a> kullanınız ve bu durum "
 "kütüğünü ekleyiniz."
 
-#: plinth/modules/help/templates/statuslog.html:38
-msgid "Caution:"
-msgstr "Dikkat:"
-
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
 "Please remove any passwords or other personal information from the log "
@@ -1748,13 +1748,6 @@ msgstr ""
 #, python-format
 msgid "Delete %(name)s"
 msgstr "%(name)s unsurunu sil"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
-#: plinth/modules/networks/templates/connections_delete.html:41
-#: plinth/modules/users/templates/users_delete.html:41
-msgid "Cancel"
-msgstr "İptal"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
 msgid "No wikis or blogs available."
@@ -2015,13 +2008,13 @@ msgstr ""
 "zorunda kalmazlar."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:170
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:210
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:217
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:169
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:209
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:215
 msgid "Update config"
 msgstr "Yapılandırmayı güncelle"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:174
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:173
 #, fuzzy, python-format
 #| msgid ""
 #| "\n"
@@ -2036,7 +2029,7 @@ msgstr ""
 "                için sertifika yenilemesini yönetmesine izin ver\n"
 "              "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:183
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:182
 #, python-format
 msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
@@ -2045,7 +2038,7 @@ msgstr ""
 "Eğer etkinleştirildiyse, %(box_name)s tüm uygulamaların yenilenir yenilenmez "
 "sertifikayı kullanabilmelerini sağlar."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:188
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:187
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
@@ -2053,7 +2046,7 @@ msgstr ""
 "<b>Güncel alan için hiçbir sertifika mevcut değildir.</b> Yönetilmesini "
 "etkinleştirmek için önce bir sertifika edinin."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:222
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:220
 #, fuzzy, python-format
 #| msgid ""
 #| "\n"
@@ -2067,7 +2060,7 @@ msgstr ""
 "kullan\n"
 "                "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:226
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:224
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -2080,7 +2073,7 @@ msgstr ""
 "                  Güncel alanın sertifikasını <b>ejabberd</b> için kullan\n"
 "                "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:236
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:234
 #, python-format
 msgid ""
 "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also use "
@@ -2094,7 +2087,7 @@ msgstr ""
 "İnternet'teki diğer XMPP sunucularla daha geniş çaplı federasyona imkân "
 "sağlayacaktır."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:244
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:242
 #, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
@@ -2103,7 +2096,7 @@ msgstr ""
 "Bu özelliğin sadece <a href=\"%(ejabberd_url)s\">ejabberd</a> sohbet "
 "sunucusu uygulamasını kullanıyorsanız bir anlamı olur."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:249
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:247
 #, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
@@ -2114,7 +2107,7 @@ msgstr ""
 "Let's Encrypt sertifikası kullanmak için önce güncel alanın sertifika "
 "yenilenmesini etkinleştirmeniz gerekir."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:258
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:256
 msgid ""
 "<b>No current domain is configured.</b> First configure a domain to enable "
 "management of its certificates."
@@ -2122,7 +2115,7 @@ msgstr ""
 "<b>Hiçbir güncel alan yapılandırılmamış.</b> Sertifikalarının yönetimini "
 "etkinleştirmek için önce bir alan yapılandırın."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:265
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:263
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -2300,7 +2293,7 @@ msgstr "Herkese açık kayıt devre dışı bırakıldı"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:140
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:139
 msgid "Wiki"
 msgstr "Viki"
 
@@ -5902,11 +5895,11 @@ msgstr ""
 "Bu sayfaya kısayol eklemek için <a href=\"%(apps_url)s\">uygulama</a> "
 "etkinleştiriniz."
 
-#: plinth/templates/index.html:60
+#: plinth/templates/index.html:59
 msgid "Configure &raquo;"
 msgstr "Yapılandır &raquo;"
 
-#: plinth/templates/index.html:116
+#: plinth/templates/index.html:115
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5918,7 +5911,7 @@ msgstr ""
 "sunucusudur. Veri sahipliğinize ve gizliliğinize saygı gösteren çevrimiçi "
 "iletişim araçları sunar."
 
-#: plinth/templates/index.html:125
+#: plinth/templates/index.html:124
 #, fuzzy, python-format
 #| msgid ""
 #| "This portal is a part of Plinth, the %(box_name)s web interface. Plinth "
@@ -5933,27 +5926,27 @@ msgstr ""
 "Plinth özgür yazılımdır ve GNU Affero Genel Kamu Lisansının 3. ya da daha "
 "sonraki sürümleri kapsamında yayınlanmıştır."
 
-#: plinth/templates/index.html:145
+#: plinth/templates/index.html:144
 msgid "Homepage"
 msgstr "Ana sayfa"
 
-#: plinth/templates/index.html:148
+#: plinth/templates/index.html:147
 msgid "Source Code"
 msgstr "Kaynak kod"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:150
 msgid "Donate"
 msgstr "Bağış"
 
-#: plinth/templates/index.html:155
+#: plinth/templates/index.html:154
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Vakfı"
 
-#: plinth/templates/index.html:162
+#: plinth/templates/index.html:161
 msgid "IRC Chatroom"
 msgstr "IRC sohbet odası"
 
-#: plinth/templates/index.html:167
+#: plinth/templates/index.html:166
 msgid "Mailing list"
 msgstr "E-posta listesi"
 
@@ -6033,6 +6026,11 @@ msgstr "%(percentage)s%% tamamlandı"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "NTP client in contact with servers"
+#~ msgid "chrony client in contact with servers"
+#~ msgstr "Sunucularla iletişimde NTP istemcisi"
 
 #~ msgid "Currently only limited functionality is available."
 #~ msgstr "Güncel olarak sadece sınırlı işlevsellik mevcuttur."

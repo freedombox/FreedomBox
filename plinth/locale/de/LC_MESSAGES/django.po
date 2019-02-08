@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 22:20-0500\n"
+"POT-Creation-Date: 2019-02-07 20:56-0500\n"
 "PO-Revision-Date: 2019-01-23 21:07+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -126,7 +126,7 @@ msgstr "Backups"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Backups ermöglicht das Erzeugen und Verwalten von Backup-Archiven."
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} Speichermedien"
@@ -245,16 +245,18 @@ msgstr "Falsche Verschlüsselungs-Passphrase"
 msgid "SSH access denied"
 msgstr "SSH Zugriff verweigert"
 
-#: plinth/modules/backups/templates/backups.html:53
+#: plinth/modules/backups/templates/backups.html:47
 msgid "Existing backups"
 msgstr "Vorhandene Sicherungen"
 
-#: plinth/modules/backups/templates/backups.html:63
+#: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
 msgstr "Neues Archiv anlegen"
 
-#: plinth/modules/backups/templates/backups.html:66
-msgid "+ Add Remote Repository"
+#: plinth/modules/backups/templates/backups.html:61
+#, fuzzy
+#| msgid "+ Add Remote Repository"
+msgid "Add Remote Repository"
 msgstr "+ Remote-Archiv hinzufügen"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
@@ -277,7 +279,7 @@ msgstr "Zeit"
 msgid "Delete Archive %(name)s"
 msgstr "Lösche Archiv %(name)s"
 
-#: plinth/modules/backups/templates/backups_form.html:34
+#: plinth/modules/backups/templates/backups_form.html:32
 #: plinth/modules/config/templates/config.html:45
 #: plinth/modules/security/templates/security.html:32
 #: plinth/modules/sharing/templates/sharing_add_edit.html:34
@@ -300,11 +302,14 @@ msgstr ""
 msgid "Create Repository"
 msgstr "Archiv anlegen"
 
-#: plinth/modules/backups/templates/backups_repository_add.html:46
+#: plinth/modules/backups/templates/backups_repository_add.html:45
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
-#: plinth/modules/backups/templates/backups_restore.html:51
-#: plinth/modules/backups/templates/backups_restore.html:54
-msgid "Abort"
+#: plinth/modules/backups/templates/backups_restore.html:52
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
+#: plinth/modules/networks/templates/connections_delete.html:41
+#: plinth/modules/users/templates/users_delete.html:41
+msgid "Cancel"
 msgstr "Abbrechen"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
@@ -328,7 +333,7 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:281
+#: plinth/modules/backups/views.py:286
 msgid "Remove Repository"
 msgstr "Archiv entfernen"
 
@@ -337,21 +342,30 @@ msgid "Restore data from"
 msgstr "Wiederherstellen von Daten aus"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/views.py:181
+#: plinth/modules/backups/views.py:186
 msgid "Restore"
 msgstr "Wiederherstellen"
 
-#: plinth/modules/backups/templates/backups_restore.html:46
+#: plinth/modules/backups/templates/backups_restore.html:47
 #, fuzzy
 #| msgid "Restore"
 msgid "Restoring"
 msgstr "Wiederherstellen"
 
-#: plinth/modules/backups/templates/backups_upload.html:31
+#: plinth/modules/backups/templates/backups_upload.html:30
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      You can choose the apps you wish to import after uploading a backup "
+#| "file.\n"
+#| "    "
 msgid ""
 "\n"
-"      You can choose the apps you wish to import after uploading a backup "
-"file.\n"
+"      Upload a backup file downloaded from another %(box_name)s to restore "
+"is\n"
+"      contents. You can choose the apps you wish to restore after uploading "
+"a\n"
+"      backup file.\n"
 "    "
 msgstr ""
 "\n"
@@ -359,17 +373,25 @@ msgstr ""
 "Datei importieren möchten.\n"
 "    "
 
-#: plinth/modules/backups/templates/backups_upload.html:36
-#, python-format
+#: plinth/modules/backups/templates/backups_upload.html:40
+#: plinth/modules/help/templates/statuslog.html:38
+msgid "Caution:"
+msgstr "Achtung:"
+
+#: plinth/modules/backups/templates/backups_upload.html:41
+#, fuzzy, python-format
+#| msgid ""
+#| "WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
+#| "Exceeding this limit can leave your %(box_name)s unusable."
 msgid ""
-"WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
-"Exceeding this limit can leave your %(box_name)s unusable."
+"You have %(max_filesize)s available to restore a backup. Exceeding this "
+"limit can leave your %(box_name)s unusable."
 msgstr ""
 "WARNUNG: Sie haben %(max_filesize)s zur Verfügung, um eine Sicherung "
 "wiederherzustellen. <br /> Eine Überschreitung dieser Grenze kann dazu "
 "führen, dass Ihre %(box_name)s unbrauchbar werden."
 
-#: plinth/modules/backups/templates/backups_upload.html:48
+#: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
 msgstr "Datei hochladen"
 
@@ -381,55 +403,47 @@ msgstr "Hochladen"
 msgid "Create"
 msgstr "Anlegen"
 
-#: plinth/modules/backups/views.py:83
+#: plinth/modules/backups/views.py:84
 msgid "Archive created."
 msgstr "Archiv angelegt."
 
-#: plinth/modules/backups/views.py:88
-msgid "New Backup"
-msgstr "neues Backup"
-
-#: plinth/modules/backups/views.py:108
+#: plinth/modules/backups/views.py:111
 msgid "Delete Archive"
 msgstr "Archiv löschen"
 
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:123
 msgid "Archive deleted."
 msgstr "Archiv gelöscht."
 
-#: plinth/modules/backups/views.py:133
-msgid "Upload and restore a backup file"
-msgstr "Hochladen und Wiederherstellen einer Sicherungsdatei"
-
-#: plinth/modules/backups/views.py:169
+#: plinth/modules/backups/views.py:174
 msgid "Restored files from backup."
 msgstr "Dateien aus Backup wiederhergestellt."
 
-#: plinth/modules/backups/views.py:193
+#: plinth/modules/backups/views.py:198
 msgid "No backup file found."
 msgstr "Keine Sicherungsdatei gefunden."
 
-#: plinth/modules/backups/views.py:201
+#: plinth/modules/backups/views.py:206
 msgid "Restore from uploaded file"
 msgstr "Wiederherstellen aus hochgeladener Datei"
 
-#: plinth/modules/backups/views.py:255
+#: plinth/modules/backups/views.py:260
 msgid "Added new repository."
 msgstr "Neues Archiv hinzugefügt."
 
-#: plinth/modules/backups/views.py:260
+#: plinth/modules/backups/views.py:265
 msgid "Create remote backup repository"
 msgstr "Remote Backup-Archiv anlegen"
 
-#: plinth/modules/backups/views.py:291
+#: plinth/modules/backups/views.py:296
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr "Archiv entfernt. Das Remote-Archiv selbst wurde nicht gelöscht."
 
-#: plinth/modules/backups/views.py:299
+#: plinth/modules/backups/views.py:304
 msgid "Unmounting failed!"
 msgstr "Aushängen fehlgeschlagen!"
 
-#: plinth/modules/backups/views.py:308 plinth/modules/backups/views.py:312
+#: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
 msgid "Mounting failed"
 msgstr "Einhängen fehlgeschlagen"
 
@@ -721,11 +735,9 @@ msgstr ""
 "Der Netzwerk-Zeitserver hält Ihre Systemzeit synchron mit Servern im "
 "Internet."
 
-#: plinth/modules/datetime/__init__.py:90
-#, fuzzy
-#| msgid "NTP client in contact with servers"
-msgid "chrony client in contact with servers"
-msgstr "NTP Client ist mit Servern in Kontakt"
+#: plinth/modules/datetime/__init__.py:91
+msgid "Time synchronized to NTP server"
+msgstr ""
 
 #: plinth/modules/datetime/forms.py:36
 msgid "Time Zone"
@@ -1457,7 +1469,7 @@ msgid "Documentation"
 msgstr "Dokumentation"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:68
-#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:136
+#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Handbuch"
 
@@ -1623,10 +1635,6 @@ msgstr ""
 "org/freedombox-team/plinth/issues\">online Fehlerverfolger</a> und fügen "
 "diese Ausgabe hinzu."
 
-#: plinth/modules/help/templates/statuslog.html:38
-msgid "Caution:"
-msgstr "Achtung:"
-
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
 "Please remove any passwords or other personal information from the log "
@@ -1708,13 +1716,6 @@ msgstr ""
 #, python-format
 msgid "Delete %(name)s"
 msgstr "Lösche %(name)s"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
-#: plinth/modules/networks/templates/connections_delete.html:41
-#: plinth/modules/users/templates/users_delete.html:41
-msgid "Cancel"
-msgstr "Abbrechen"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
 msgid "No wikis or blogs available."
@@ -1973,13 +1974,13 @@ msgstr ""
 "Anwendungen keine Sicherheitswarnungen sehen würden."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:170
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:210
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:217
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:169
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:209
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:215
 msgid "Update config"
 msgstr "Konfiguration aktualisieren"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:174
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:173
 #, python-format
 msgid ""
 "Let %(box_name)s manage certificate renewal of <b>%(current_domain)s</b>"
@@ -1987,7 +1988,7 @@ msgstr ""
 "%(box_name)s soll die Zertifikat-Erneurung von <b>%(current_domain)s</b> "
 "verwalten"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:183
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:182
 #, python-format
 msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
@@ -1996,7 +1997,7 @@ msgstr ""
 "Falls aktiviert, kann %(box_name)s sicherstellen dass das Zertifikat von "
 "anderen Anwendungen nutzbar ist, sobald es erneuert wurde."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:188
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:187
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
@@ -2004,16 +2005,16 @@ msgstr ""
 "<b>Es ist kein Zertifikat für die derzeitige Domain vorhanden.</b> Beziehen "
 "Sie zuerst ein Zertifikat um dessen Verwaltung zu aktivieren."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:222
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:220
 #, python-format
 msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
 msgstr "Nutze das Zertifikat von %(current_domain)s für <b>ejabberd</b>"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:226
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:224
 msgid "Use certificate of the current domain for <b>ejabberd</b>"
 msgstr "Nutze das Zertifikat von der derzeitgen Domain für <b>ejabberd</b>"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:236
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:234
 #, python-format
 msgid ""
 "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also use "
@@ -2026,7 +2027,7 @@ msgstr ""
 "über selbstsignierte Zertifikate in Client-Anwendungen reduzieren, und "
 "erlaubt mehr Föderation mit anderen XMPP-Servern im Internet."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:244
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:242
 #, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
@@ -2035,7 +2036,7 @@ msgstr ""
 "Diese Option ist nur sinnvoll, wenn Sie den <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> Chat-Server nutzen."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:249
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:247
 #, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
@@ -2046,7 +2047,7 @@ msgstr ""
 "\">ejabberd</a> Chat-Server nutzen zu können, muss erst die Zertifikat-"
 "Erneurungs-Verwaltung für die derzeitige Domain aktiviert sein."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:258
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:256
 msgid ""
 "<b>No current domain is configured.</b> First configure a domain to enable "
 "management of its certificates."
@@ -2054,7 +2055,7 @@ msgstr ""
 "<b>Es wurden keine Domains konfiguriert.</b> Es muss eine Domain "
 "konfiguriert werden, um Zertifikate zu erstellen."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:265
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:263
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -2235,7 +2236,7 @@ msgstr "Öffentliche Registrierung deaktiviert"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:140
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:139
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -5769,11 +5770,11 @@ msgstr ""
 "Aktiviere einige <a href=\"%(apps_url)s\">Anwendungen</a> um Verknüpfungen "
 "zu dieser Seite hinzuzufügen."
 
-#: plinth/templates/index.html:60
+#: plinth/templates/index.html:59
 msgid "Configure &raquo;"
 msgstr "Konfigurieren &raquo;"
 
-#: plinth/templates/index.html:116
+#: plinth/templates/index.html:115
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5787,7 +5788,7 @@ msgstr ""
 "Es bietet Online-Kommunikationswerkzeuge, die Ihre Privatsphäre und Ihr "
 "Eigentum an Ihren Daten respektieren."
 
-#: plinth/templates/index.html:125
+#: plinth/templates/index.html:124
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5798,27 +5799,27 @@ msgstr ""
 "freie Software, die unter der GNU Affero General Public License, Version 3 "
 "oder höher, vertrieben wird."
 
-#: plinth/templates/index.html:145
+#: plinth/templates/index.html:144
 msgid "Homepage"
 msgstr "Homepage"
 
-#: plinth/templates/index.html:148
+#: plinth/templates/index.html:147
 msgid "Source Code"
 msgstr "Quellcode"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:150
 msgid "Donate"
 msgstr "Spenden"
 
-#: plinth/templates/index.html:155
+#: plinth/templates/index.html:154
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Stiftung"
 
-#: plinth/templates/index.html:162
+#: plinth/templates/index.html:161
 msgid "IRC Chatroom"
 msgstr "IRC Chatraum"
 
-#: plinth/templates/index.html:167
+#: plinth/templates/index.html:166
 msgid "Mailing list"
 msgstr "Email Verteiler"
 
@@ -5900,6 +5901,20 @@ msgstr "%(percentage)s%% abgeschlossen"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Abort"
+#~ msgstr "Abbrechen"
+
+#~ msgid "New Backup"
+#~ msgstr "neues Backup"
+
+#~ msgid "Upload and restore a backup file"
+#~ msgstr "Hochladen und Wiederherstellen einer Sicherungsdatei"
+
+#, fuzzy
+#~| msgid "NTP client in contact with servers"
+#~ msgid "chrony client in contact with servers"
+#~ msgstr "NTP Client ist mit Servern in Kontakt"
 
 #~ msgid "Currently only limited functionality is available."
 #~ msgstr "Derzeit ist nur eine eingeschränkte Funktionalität möglich."

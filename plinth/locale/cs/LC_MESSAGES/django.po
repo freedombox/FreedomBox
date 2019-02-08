@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 22:20-0500\n"
+"POT-Creation-Date: 2019-02-07 20:56-0500\n"
 "PO-Revision-Date: 2019-02-07 14:09+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -123,7 +123,7 @@ msgstr "Zálohy"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Zálohy umožňují vytváření a správu zálohových archivů."
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "Úložiště {box_name}"
@@ -242,16 +242,18 @@ msgstr "Nesprávná šifrovací heslová fráze"
 msgid "SSH access denied"
 msgstr "SSH přístup odepřen"
 
-#: plinth/modules/backups/templates/backups.html:53
+#: plinth/modules/backups/templates/backups.html:47
 msgid "Existing backups"
 msgstr "Existující zálohy"
 
-#: plinth/modules/backups/templates/backups.html:63
+#: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
 msgstr "Vytvořit nový repozitář"
 
-#: plinth/modules/backups/templates/backups.html:66
-msgid "+ Add Remote Repository"
+#: plinth/modules/backups/templates/backups.html:61
+#, fuzzy
+#| msgid "+ Add Remote Repository"
+msgid "Add Remote Repository"
 msgstr "+ Přidat repozitář na protějšku"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
@@ -274,7 +276,7 @@ msgstr "Čas"
 msgid "Delete Archive %(name)s"
 msgstr "Smazat archiv %(name)s"
 
-#: plinth/modules/backups/templates/backups_form.html:34
+#: plinth/modules/backups/templates/backups_form.html:32
 #: plinth/modules/config/templates/config.html:45
 #: plinth/modules/security/templates/security.html:32
 #: plinth/modules/sharing/templates/sharing_add_edit.html:34
@@ -296,12 +298,15 @@ msgstr ""
 msgid "Create Repository"
 msgstr "Vytvořit repozitář"
 
-#: plinth/modules/backups/templates/backups_repository_add.html:46
+#: plinth/modules/backups/templates/backups_repository_add.html:45
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
-#: plinth/modules/backups/templates/backups_restore.html:51
-#: plinth/modules/backups/templates/backups_restore.html:54
-msgid "Abort"
-msgstr "Přerušit"
+#: plinth/modules/backups/templates/backups_restore.html:52
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
+#: plinth/modules/networks/templates/connections_delete.html:41
+#: plinth/modules/users/templates/users_delete.html:41
+msgid "Cancel"
+msgstr "Storno"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
@@ -323,7 +328,7 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:281
+#: plinth/modules/backups/views.py:286
 msgid "Remove Repository"
 msgstr "Odebrat repozitář"
 
@@ -332,19 +337,28 @@ msgid "Restore data from"
 msgstr "Obnovit data z"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/views.py:181
+#: plinth/modules/backups/views.py:186
 msgid "Restore"
 msgstr "Obnovit"
 
-#: plinth/modules/backups/templates/backups_restore.html:46
+#: plinth/modules/backups/templates/backups_restore.html:47
 msgid "Restoring"
 msgstr "Obnovuje se"
 
-#: plinth/modules/backups/templates/backups_upload.html:31
+#: plinth/modules/backups/templates/backups_upload.html:30
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      You can choose the apps you wish to import after uploading a backup "
+#| "file.\n"
+#| "    "
 msgid ""
 "\n"
-"      You can choose the apps you wish to import after uploading a backup "
-"file.\n"
+"      Upload a backup file downloaded from another %(box_name)s to restore "
+"is\n"
+"      contents. You can choose the apps you wish to restore after uploading "
+"a\n"
+"      backup file.\n"
 "    "
 msgstr ""
 "\n"
@@ -352,17 +366,25 @@ msgstr ""
 "importovat.\n"
 "    "
 
-#: plinth/modules/backups/templates/backups_upload.html:36
-#, python-format
+#: plinth/modules/backups/templates/backups_upload.html:40
+#: plinth/modules/help/templates/statuslog.html:38
+msgid "Caution:"
+msgstr "Upozornění:"
+
+#: plinth/modules/backups/templates/backups_upload.html:41
+#, fuzzy, python-format
+#| msgid ""
+#| "WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
+#| "Exceeding this limit can leave your %(box_name)s unusable."
 msgid ""
-"WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
-"Exceeding this limit can leave your %(box_name)s unusable."
+"You have %(max_filesize)s available to restore a backup. Exceeding this "
+"limit can leave your %(box_name)s unusable."
 msgstr ""
 "VAROVÁNÍ: Máte k dispozici %(max_filesize)s pro obnovení zálohy.<br /> "
 "Překročení tohoto limitu může vést k tomu, že váš %(box_name)s nebude "
 "použitelný."
 
-#: plinth/modules/backups/templates/backups_upload.html:48
+#: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
 msgstr "Nahrát soubor"
 
@@ -374,55 +396,47 @@ msgstr "Nahrát"
 msgid "Create"
 msgstr "Vytvořit"
 
-#: plinth/modules/backups/views.py:83
+#: plinth/modules/backups/views.py:84
 msgid "Archive created."
 msgstr "Archiv vytvořen."
 
-#: plinth/modules/backups/views.py:88
-msgid "New Backup"
-msgstr "Nová záloha"
-
-#: plinth/modules/backups/views.py:108
+#: plinth/modules/backups/views.py:111
 msgid "Delete Archive"
 msgstr "Smazat archiv"
 
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:123
 msgid "Archive deleted."
 msgstr "Archiv smazán."
 
-#: plinth/modules/backups/views.py:133
-msgid "Upload and restore a backup file"
-msgstr "Nahrát soubor soubor se zálohou a obnovit z něj"
-
-#: plinth/modules/backups/views.py:169
+#: plinth/modules/backups/views.py:174
 msgid "Restored files from backup."
 msgstr "Soubory obnovené ze zálohy."
 
-#: plinth/modules/backups/views.py:193
+#: plinth/modules/backups/views.py:198
 msgid "No backup file found."
 msgstr "Nebyl nalezen žádný soubor se zálohou."
 
-#: plinth/modules/backups/views.py:201
+#: plinth/modules/backups/views.py:206
 msgid "Restore from uploaded file"
 msgstr "Obnovit z nahraného souboru"
 
-#: plinth/modules/backups/views.py:255
+#: plinth/modules/backups/views.py:260
 msgid "Added new repository."
 msgstr "Přidán nový repozitář."
 
-#: plinth/modules/backups/views.py:260
+#: plinth/modules/backups/views.py:265
 msgid "Create remote backup repository"
 msgstr "Vytvořit repozitář pro zálohy na protějšku"
 
-#: plinth/modules/backups/views.py:291
+#: plinth/modules/backups/views.py:296
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr "Repozitář odebrán. Záloha na protějšku jako taková smazána nebyla."
 
-#: plinth/modules/backups/views.py:299
+#: plinth/modules/backups/views.py:304
 msgid "Unmounting failed!"
 msgstr "Odpojení se nezdařilo!"
 
-#: plinth/modules/backups/views.py:308 plinth/modules/backups/views.py:312
+#: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
 msgid "Mounting failed"
 msgstr "Připojení (mount) se nezdařilo"
 
@@ -715,9 +729,9 @@ msgstr ""
 "Server síťového času je program který udržuje systémový čas synchronní se "
 "servery na Internetu."
 
-#: plinth/modules/datetime/__init__.py:90
-msgid "chrony client in contact with servers"
-msgstr "klient chrony v kontaktu se servery"
+#: plinth/modules/datetime/__init__.py:91
+msgid "Time synchronized to NTP server"
+msgstr ""
 
 #: plinth/modules/datetime/forms.py:36
 msgid "Time Zone"
@@ -1446,7 +1460,7 @@ msgid "Documentation"
 msgstr "Dokumentace"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:68
-#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:136
+#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Příručka"
 
@@ -1609,10 +1623,6 @@ msgstr ""
 "\"https://salsa.debian.org/freedombox-team/plinth/issues\">systém správy "
 "hlášení chyb</a> a tyto řádky připojte k hlášení."
 
-#: plinth/modules/help/templates/statuslog.html:38
-msgid "Caution:"
-msgstr "Upozornění:"
-
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
 "Please remove any passwords or other personal information from the log "
@@ -1693,13 +1703,6 @@ msgstr ""
 #, python-format
 msgid "Delete %(name)s"
 msgstr "Smazat %(name)s"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
-#: plinth/modules/networks/templates/connections_delete.html:41
-#: plinth/modules/users/templates/users_delete.html:41
-msgid "Cancel"
-msgstr "Storno"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
 msgid "No wikis or blogs available."
@@ -1956,13 +1959,13 @@ msgstr ""
 "varování ohledně zabezpečení."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:170
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:210
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:217
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:169
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:209
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:215
 msgid "Update config"
 msgstr "Aktualizovat nastavení"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:174
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:173
 #, python-format
 msgid ""
 "Let %(box_name)s manage certificate renewal of <b>%(current_domain)s</b>"
@@ -1970,7 +1973,7 @@ msgstr ""
 "Nechat správu obnovování certifikátu pro doménu <b>%(current_domain)s</b> na "
 "%(box_name)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:183
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:182
 #, python-format
 msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
@@ -1979,7 +1982,7 @@ msgstr ""
 "Když je zapnuto, %(box_name)s může zajistit že všechny ostatní aplikace "
 "mohou používat certifikát hned po jeho obnovení."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:188
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:187
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
@@ -1987,16 +1990,16 @@ msgstr ""
 "<b>Pro stávající doménu není k dispozici certifikát.</b> Nejprve ho získejte "
 "a pak zapněte jeho správu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:222
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:220
 #, python-format
 msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
 msgstr "Použít certifikát %(current_domain)s pro <b>ejabberd</b>"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:226
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:224
 msgid "Use certificate of the current domain for <b>ejabberd</b>"
 msgstr "Použít certifikát stávající domény pro <b>ejabberd</b>"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:236
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:234
 #, python-format
 msgid ""
 "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also use "
@@ -2009,7 +2012,7 @@ msgstr ""
 "varování ohledně certifikátů, podepsaných sám sebou a umožní širší "
 "spolčování s ostatními XMPP servery na Internetu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:244
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:242
 #, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
@@ -2018,7 +2021,7 @@ msgstr ""
 "Tato funkce dává smysl pouze pokud používáte serverovou chatovací aplikaci "
 "<a href=\"%(ejabberd_url)s\">ejabberd</a>."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:249
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:247
 #, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
@@ -2029,7 +2032,7 @@ msgstr ""
 "\"%(ejabberd_url)s\">ejabberd</a> chat server, je třeba nejprve zapnout "
 "obnovování certifikátu pro stávající doménu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:258
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:256
 msgid ""
 "<b>No current domain is configured.</b> First configure a domain to enable "
 "management of its certificates."
@@ -2037,7 +2040,7 @@ msgstr ""
 "<b>Nyní není nastavena žádná doména.</b> Nejprve nějakou nastavte a až pak "
 "pro ní bude možné spravovat certifikáty."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:265
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:263
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -2216,7 +2219,7 @@ msgstr "Registrace pro veřejnost zavřena"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:140
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:139
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -5683,11 +5686,11 @@ msgstr ""
 "Odkazy na této stránce se objeví až po zapnutí nějakých <a href="
 "\"%(apps_url)s\">aplikací</a>."
 
-#: plinth/templates/index.html:60
+#: plinth/templates/index.html:59
 msgid "Configure &raquo;"
 msgstr "Nastavit &raquo;"
 
-#: plinth/templates/index.html:116
+#: plinth/templates/index.html:115
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5699,7 +5702,7 @@ msgstr ""
 "aplikací na malých strojích. Poskytuje nástroje pro online komunikaci, "
 "respektující vaše soukromí a vlastnictví dat."
 
-#: plinth/templates/index.html:125
+#: plinth/templates/index.html:124
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5710,27 +5713,27 @@ msgstr ""
 "svobodný software, šířený pod licencí GNU Affero General Public License, "
 "verze 3 a novějších."
 
-#: plinth/templates/index.html:145
+#: plinth/templates/index.html:144
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: plinth/templates/index.html:148
+#: plinth/templates/index.html:147
 msgid "Source Code"
 msgstr "Zdrojové kódy"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:150
 msgid "Donate"
 msgstr "Podpořit darem"
 
-#: plinth/templates/index.html:155
+#: plinth/templates/index.html:154
 msgid "FreedomBox Foundation"
 msgstr "Nadace FreedomBox"
 
-#: plinth/templates/index.html:162
+#: plinth/templates/index.html:161
 msgid "IRC Chatroom"
 msgstr "Chatovací místnost na IRC"
 
-#: plinth/templates/index.html:167
+#: plinth/templates/index.html:166
 msgid "Mailing list"
 msgstr "Poštovní konference"
 
@@ -5814,6 +5817,18 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Abort"
+#~ msgstr "Přerušit"
+
+#~ msgid "New Backup"
+#~ msgstr "Nová záloha"
+
+#~ msgid "Upload and restore a backup file"
+#~ msgstr "Nahrát soubor soubor se zálohou a obnovit z něj"
+
+#~ msgid "chrony client in contact with servers"
+#~ msgstr "klient chrony v kontaktu se servery"
 
 #~ msgid "Currently only limited functionality is available."
 #~ msgstr "Zatím je k dispozici pouze omezená funkčnost."
