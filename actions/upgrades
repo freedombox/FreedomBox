@@ -147,7 +147,11 @@ deb-src {protocol}://deb.debian.org/debian buster-backports main
 
 def _check_and_backports_sources():
     """Add buster backports sources after checking if it is available."""
-    sources_list = '/etc/apt/sources.list.d/freedombox.list'
+    old_sources_list = '/etc/apt/sources.list.d/freedombox.list'
+    if os.path.exists(old_sources_list):
+        os.remove(old_sources_list)
+
+    sources_list = '/etc/apt/sources.list.d/freedombox2.list'
     if os.path.exists(sources_list):
         print('Repositories list up-to-date. Skipping update.')
         return
