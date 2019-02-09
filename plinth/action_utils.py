@@ -351,7 +351,7 @@ def _check_port(port, kind='tcp', listen_address=None):
 def check_url(url, kind=None, env=None, check_certificate=True,
               extra_options=None, wrapper=None, expected_output=None):
     """Check whether a URL is accessible."""
-    command = ['curl', '-f', '-w', '%{response_code}', url]
+    command = ['curl', '--location', '-f', '-w', '%{response_code}', url]
 
     if wrapper:
         command.insert(0, wrapper)
