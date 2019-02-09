@@ -18,6 +18,7 @@
 FreedomBox app for radicale.
 """
 
+import logging
 import subprocess
 from distutils.version import LooseVersion as LV
 
@@ -60,6 +61,8 @@ reserved_usernames = ['radicale']
 
 manual_page = 'Radicale'
 
+logger = logging.getLogger(__name__)
+
 CONFIG_FILE = '/etc/radicale/config'
 
 VERSION_2 = LV('2')
@@ -90,7 +93,7 @@ def setup(helper, old_version=None):
         cache = Cache()
         candidate = cache['radicale'].candidate
         if candidate < '2':
-            raise RuntimeError('Radicale 2.x is not available to install.')
+            logger.error('Radicale 2.x is not available to install.')
 
         # Try to upgrade radicale 1.x to 2.x.
         helper.call('pre', actions.superuser_run, 'radicale', ['migrate'])
@@ -99,10 +102,9 @@ def setup(helper, old_version=None):
         # Check that radicale 2.x is installed.
         current_version = get_package_version()
         if not current_version:
-            raise RuntimeError(
-                'Could not determine installed version of radicale.')
+            logger.error('Could not determine installed version of radicale.')
         elif current_version < VERSION_2:
-            raise RuntimeError('Could not install radicale 2.x.')
+            logger.error('Could not install radicale 2.x.')
 
         # Enable radicale.
         helper.call('post', actions.superuser_run, 'radicale', ['setup'])
