@@ -34,7 +34,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup, clients
 
-version = 1
+version = 2
 
 service = None
 
