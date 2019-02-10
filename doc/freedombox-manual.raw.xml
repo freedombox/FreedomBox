@@ -2484,8 +2484,25 @@ proto udp]]></screen>
         </para>
       </section>
       <section>
-        <title>Using MLDonkey</title>
-        <para>After installing MLDonkey, its web interface can be accessed at <code>https://&lt;your freedombox&gt;/mldonkey</code>. To be able to access to the telnet or GUI interfaces you have to connect via an <ulink url="http://mldonkey.sourceforge.net/SshTunnel">SSH Tunnel</ulink>. </para>
+        <title>Using MLDonkey Web Interface</title>
+        <para>After installing MLDonkey, its web interface can be accessed from FreedomBox at <code>https://&lt;your freedombox&gt;/mldonkey</code>. Users belonging to the <emphasis>ed2k</emphasis> and <emphasis>admin</emphasis> groups can access this web interface. </para>
+      </section>
+      <section>
+        <title>Using Desktop/Mobile Interface</title>
+        <para>Many <ulink url="http://mldonkey.sourceforge.net/Gui">desktop and mobile applications</ulink> can be used to control MLDonkey. MLDonkey server will always be running on FreedomBox. It will download files (or upload them) and store them on FreedomBox even when your local machine is not running or connected to MLDonkey on FreedomBox. Only users of <emphasis>admin</emphasis> group can access MLDonkey on FreedomBox using desktop or mobile clients. This is due to restrictions on which group of users have SSH access into FreedomBox. </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Create an admin user or use an existing admin user. </para>
+          </listitem>
+          <listitem>
+            <para>On your desktop machine, open a terminal and run the following command. It is recommended that you configure and use SSH keys instead of passwords for the this step. </para>
+            <screen><![CDATA[$ ssh -L 4001:localhost:4001 -N exampleuser@example.freedombox.rocks]]></screen>
+          </listitem>
+          <listitem>
+            <para>Start the GUI application and then connect it to MLDonkey as if MLDonkey is running on the local desktop machine. After you are done, terminate the SSH command by pressing Control-C. </para>
+          </listitem>
+        </orderedlist>
+        <para>See MLDonkey documentation for <ulink url="http://mldonkey.sourceforge.net/SshTunnel">SSH Tunnel</ulink> for more information. </para>
       </section>
     </section>
   </section>
@@ -8767,6 +8784,49 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.0 (2019-02-09)</title>
+        <itemizedlist>
+          <listitem>
+            <para>mldonkey: Add some more clients to the module page </para>
+          </listitem>
+          <listitem>
+            <para>mldonkey: Add to the description the three available front-ends </para>
+          </listitem>
+          <listitem>
+            <para>monkeysphere: Fix handling of multiple domains and keys </para>
+          </listitem>
+          <listitem>
+            <para>monkeysphere: Fix regression with reading new apache domain config </para>
+          </listitem>
+          <listitem>
+            <para>apache: Switch to mod_ssl from mod_gnutls </para>
+          </listitem>
+          <listitem>
+            <para>mldonkey: Enable app </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Fix priority for buster-backports version </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Fix premature adding of buster-backports sources </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, German, and Spanish </para>
+          </listitem>
+          <listitem>
+            <para>Switched to a new version number scheme: YY.N </para>
+            <itemizedlist>
+              <listitem>
+                <para>YY is the year of release. </para>
+              </listitem>
+              <listitem>
+                <para>N is the release number within that year. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.49.1 (2019-02-07)</title>
         <itemizedlist>
