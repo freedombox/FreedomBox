@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-07 20:56-0500\n"
+"POT-Creation-Date: 2019-02-09 20:13-0500\n"
 "PO-Revision-Date: 2019-02-09 18:09+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -520,8 +520,8 @@ msgid ""
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
-">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
+"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
 "Nutzer</a> auf {box_name}, der zur Gruppe der Administratoren gehört."
 
 #: plinth/modules/config/__init__.py:76
@@ -2435,7 +2435,14 @@ msgstr ""
 "auszutauschen. Es kann in mehreren peer-to-peer-Netzwerken teilnehmen, unter "
 "anderem eDonkey, Kademlia, Overnet, BitTorrent und DirectConnect."
 
-#: plinth/modules/mldonkey/__init__.py:46
+#: plinth/modules/mldonkey/__init__.py:45
+msgid ""
+"Users belonging to admin and ed2k group can control it through the web "
+"interface. Users in the admin group can also control it through any of the "
+"separate mobile or desktop front-ends or a telnet interface. See manual."
+msgstr ""
+
+#: plinth/modules/mldonkey/__init__.py:50
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
@@ -2443,9 +2450,21 @@ msgstr ""
 "Auf {box_name} können heruntergeladene Dateien im Verzeichnis /var/lib/"
 "mldonkey/ gefunden werden."
 
-#: plinth/modules/mldonkey/__init__.py:54
+#: plinth/modules/mldonkey/__init__.py:58
 msgid "Download files using eDonkey applications"
 msgstr "Lade Dateien mit eDonkey herunter"
+
+#: plinth/modules/mldonkey/manifest.py:34
+#, fuzzy
+#| msgid "MLDonkey"
+msgid "KMLDonkey"
+msgstr "MLDonkey"
+
+#: plinth/modules/mldonkey/manifest.py:46
+#, fuzzy
+#| msgid "MLDonkey"
+msgid "AMLDonkey"
+msgstr "MLDonkey"
 
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
@@ -2602,19 +2621,19 @@ msgstr "Schlüssel signieren"
 msgid "Send the key back to the keyservers"
 msgstr "Den Schlüssel zum Server zurücksenden"
 
-#: plinth/modules/monkeysphere/views.py:60
+#: plinth/modules/monkeysphere/views.py:59
 msgid "Imported key."
 msgstr "Schlüssel importiert."
 
-#: plinth/modules/monkeysphere/views.py:96
+#: plinth/modules/monkeysphere/views.py:95
 msgid "Cancelled key publishing."
 msgstr "Schlüssel-Veröffentlichung abgebrochen."
 
-#: plinth/modules/monkeysphere/views.py:150
+#: plinth/modules/monkeysphere/views.py:149
 msgid "Published key to keyserver."
 msgstr "Veröffentlichte Schlüssel auf dem Server."
 
-#: plinth/modules/monkeysphere/views.py:152
+#: plinth/modules/monkeysphere/views.py:151
 msgid "Error occurred while publishing key."
 msgstr "Fehler beim Veröffentlichen des Schlüssels."
 
