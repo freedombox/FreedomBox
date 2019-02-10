@@ -25,7 +25,7 @@ clients = validate([{
         _('DAVx5'),
     'usage':
         _('Enter the URL of the Radicale server (e.g. '
-          'http://localhost:5232) and your user name. DAVx5 will '
+          'https://<your.freedombox.address>) and your user name. DAVx5 will '
           'show all existing calendars and address books and you can '
           'create new.'),
     'platforms': [{
@@ -77,7 +77,7 @@ clients = validate([{
     'usage':
         _('In Evolution add a new calendar and address book '
           'respectively with WebDAV. Enter the URL of the Radicale '
-          'server (e.g. http://localhost:5232) and your user name. '
+          'server (e.g. https://<your.freedombox.address>) and your user name. '
           'Clicking on the search button will list the existing '
           'calendars and address books.'),
     'platforms': [{
