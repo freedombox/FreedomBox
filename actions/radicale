@@ -99,20 +99,6 @@ def subcommand_migrate(_):
 
     action_utils.webserver_disable('radicale-plinth')
 
-    aug = load_augeas()
-
-    # Revert the config to package's original.
-    aug.remove('/files' + DEFAULT_FILE + '/ENABLE_RADICALE')
-    aug.remove('/files' + CONFIG_FILE + '/server/hosts')
-    aug.remove('/files' + CONFIG_FILE + '/server/base_prefix')
-    aug.remove('/files' + CONFIG_FILE + '/well-known/caldav')
-    aug.remove('/files' + CONFIG_FILE + '/well-known/carddav')
-    aug.remove('/files' + CONFIG_FILE + '/auth/type')
-    if current_version and current_version < radicale.VERSION_2:
-        aug.remove('/files' + CONFIG_FILE + '/rights/type')
-
-    aug.save()
-
 
 def subcommand_configure(arguments):
     """Sets the radicale rights type to a particular value"""

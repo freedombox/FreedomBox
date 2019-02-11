@@ -97,7 +97,7 @@ def setup(helper, old_version=None):
 
         # Try to upgrade radicale 1.x to 2.x.
         helper.call('pre', actions.superuser_run, 'radicale', ['migrate'])
-        helper.install(managed_packages)
+        helper.install(managed_packages, force_configuration='new')
 
         # Check that radicale 2.x is installed.
         current_version = get_package_version()
