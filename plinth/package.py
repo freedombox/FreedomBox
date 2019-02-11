@@ -68,23 +68,42 @@ class Transaction(object):
         self.percentage = 0
         self.stderr = None
 
-    def install(self, skip_recommends=False):
+    def install(self, skip_recommends=False, force_configuration=None):
         """Run an apt-get transaction to install given packages.
 
         FreedomBox Service (Plinth) needs to be running as root when calling
         this. Currently, this is meant to be only during first time setup when
         --setup is argument is passed.
 
+        If force_configuration is set to 'new', dpkg options will be enabled to
+        make it force overwrite (without prompts) new configuration in place of
+        old configuration (with a backup). This is useful when writing
+        migration scripts in FreedomBox to handle the upgrades when
+        unattended-upgrades refuse to upgrade a package due to configuration
+        prompts.
+
+        If force_configuration is set to 'old', dpkg options will be enabled to
+        make it keep the old configuration (without prompts). This is useful
+        when the Debian packages introduce new configuration with just
+        cosmetics (such as updates to comments) and keeping the old
+        configuration has same semantics.
+
+        If force_configuration is None, no special options are passed to
+        apt/dpkg for configuration file behavior.
+
         """
         try:
             self._run_apt_command(['update'])
+            extra_arguments = []
             if skip_recommends:
-                self._run_apt_command(
-                    ['install', '--skip-recommends', self.module_name] +
-                    self.package_names)
-            else:
-                self._run_apt_command(['install', self.module_name] +
-                                      self.package_names)
+                extra_arguments.append('--skip-recommends')
+
+            if force_configuration is not None:
+                extra_arguments.append(
+                    '--force-configuration={}'.format(force_configuration))
+
+            self._run_apt_command(['install'] + extra_arguments +
+                                  [self.module_name] + self.package_names)
         except subprocess.CalledProcessError as exception:
             logger.exception('Error installing package: %s', exception)
             raise

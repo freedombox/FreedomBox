@@ -42,6 +42,9 @@ def parse_arguments():
         '--skip-recommends', action='store_true',
         help='whether to skip installing recommended packages')
     subparser.add_argument(
+        '--force-configuration', choices=['new', 'old'],
+        help='force old/new configuration files during install')
+    subparser.add_argument(
         'module', help='name of module for which package is being installed')
     subparser.add_argument('packages', nargs='+',
                            help='list of packages to install')
@@ -85,11 +88,19 @@ def subcommand_install(arguments):
         print('Access check failed:', exception, file=sys.stderr)
         sys.exit(99)
 
+    extra_arguments = []
     if arguments.skip_recommends:
-        _run_apt_command(
-            ['install', '--no-install-recommends'] + arguments.packages)
-    else:
-        _run_apt_command(['install'] + arguments.packages)
+        extra_arguments.append('--no-install-recommends')
+
+    if arguments.force_configuration == 'old':
+        extra_arguments += [
+            '-o', 'Dpkg::Options::=--force-confdef', '-o',
+            'Dpkg::Options::=--force-confold'
+        ]
+    elif arguments.force_configuration == 'new':
+        extra_arguments += ['-o', 'Dpkg::Options::=--force-confnew']
+
+    _run_apt_command(['install'] + extra_arguments + arguments.packages)
 
 
 def _assert_managed_packages(module, packages):
