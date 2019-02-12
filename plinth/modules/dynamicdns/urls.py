@@ -14,15 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the dynamicdns module
 """
 
 from django.conf.urls import url
 
-from . import dynamicdns as views
-
+from . import views
 
 urlpatterns = [
     url(r'^sys/dynamicdns/$', views.index, name='index'),
