@@ -22,8 +22,10 @@ import logging
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import cfg
 from plinth.menu import main_menu
 from plinth.signals import domain_added, domain_removed
+from plinth.utils import format_lazy
 
 from .manifest import backup
 
@@ -45,6 +47,15 @@ domains = {}
 logger = logging.getLogger(__name__)
 
 manual_page = 'NameServices'
+
+description = [
+    format_lazy(
+        _('Name Services provides an overview of the ways {box_name} can be '
+          'reached from the public Internet: domain name, Tor hidden service, '
+          'and Pagekite. For each type of name, it is shown whether the HTTP, '
+          'HTTPS, and SSH services are enabled or disabled for incoming '
+          'connections through the given name.'), box_name=(cfg.box_name))
+]
 
 
 def init():

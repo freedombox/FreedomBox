@@ -31,11 +31,13 @@ def index(request):
     """Serve name services page."""
     status = get_status()
 
-    return TemplateResponse(request, 'names.html', {
-        'title': names.name,
-        'manual_page': names.manual_page,
-        'status': status
-    })
+    return TemplateResponse(
+        request, 'names.html', {
+            'title': names.name,
+            'description': names.description,
+            'manual_page': names.manual_page,
+            'status': status
+        })
 
 
 def get_status():
