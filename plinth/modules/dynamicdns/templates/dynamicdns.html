@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "service-subsubmenu.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block content %}
   {% block pagetitle %}
@@ -37,23 +38,31 @@
     </p>
   {% endif %}
 
-  <p>
-    {% blocktrans trimmed %}
-      If you are looking for a free dynamic DNS account, you may find
-      a free GnuDIP service at <a href='http://gnudip.datasystems24.net'
-      target='_blank'>gnudip.datasystems24.net</a> or you may find
-      free update URL based services at
-      <a href='http://freedns.afraid.org/' target='_blank'>
-      freedns.afraid.org</a>.
-    {% endblocktrans %}
-  </p>
+  {% block subsubmenu %}
+    {% if subsubmenu %}
+      {% show_subsubmenu subsubmenu %}
+    {% endif %}
+  {% endblock %}
 
-  <p>
-    {% blocktrans trimmed %}
-      If your {{ box_name }} is connected behind a NAT router, don't forget
-      to add port forwarding for standard ports, including TCP port 80 (HTTP)
-      and TCP port 443 (HTTPS).
-    {% endblocktrans %}
-  </p>
+  {% block subpage %}
+    <p>
+      {% blocktrans trimmed %}
+        If you are looking for a free dynamic DNS account, you may find
+        a free GnuDIP service at <a href='http://gnudip.datasystems24.net'
+                                    target='_blank'>gnudip.datasystems24.net</a> or you may find
+        free update URL based services at
+        <a href='http://freedns.afraid.org/' target='_blank'>
+          freedns.afraid.org</a>.
+      {% endblocktrans %}
+    </p>
+
+    <p>
+      {% blocktrans trimmed %}
+        If your {{ box_name }} is connected behind a NAT router, don't forget
+        to add port forwarding for standard ports, including TCP port 80 (HTTP)
+        and TCP port 443 (HTTPS).
+      {% endblocktrans %}
+    </p>
+  {% endblock %}
 
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "dynamicdns.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -22,8 +22,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block content %}
-
+{% block subpage %}
   <form class="form" method="post">
     {% csrf_token %}
 
@@ -40,7 +39,6 @@
     <input type="submit" class="btn btn-primary"
            value="{% trans "Update setup" %}"/>
   </form>
-
 {% endblock %}
 
 {% block page_js %}
