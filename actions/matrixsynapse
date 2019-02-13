@@ -20,15 +20,16 @@ Configuration helper for Matrix-Synapse server.
 """
 
 import argparse
-
 import os
 import shutil
 import sys
+
 import yaml
 
 from plinth import action_utils
-from plinth.modules import config, letsencrypt
-from plinth.modules.matrixsynapse import CONFIG_FILE_PATH
+from plinth.modules import letsencrypt
+from plinth.modules.matrixsynapse import (CONFIG_FILE_PATH,
+                                          get_configured_domain_name)
 from plinth.utils import YAMLFile
 
 
@@ -49,25 +50,28 @@ def parse_arguments():
         '--domain-name',
         help='The domain name that will be used by Matrix Synapse')
 
-    help_LE = "Add/drop Let's Encrypt certificate if configured domain matches"
-    letsencrypt = subparsers.add_parser('letsencrypt', help=help_LE)
-    letsencrypt.add_argument('command', choices=('add', 'drop'), help=help_LE)
-    letsencrypt.add_argument('--domain',
-                             help='Domain name to renew certificates for.')
+    help_le = "Add/drop Let's Encrypt certificate if configured domain matches"
+    subparser = subparsers.add_parser('letsencrypt', help=help_le)
+    subparser.add_argument('command', choices=('add', 'drop'),
+                           help='Whether to add or drop the certificate')
+    subparser.add_argument('--domain',
+                           help='Domain name to renew certificates for')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def _update_TLS_certificate():
-    """Update the TLS certificate and private key used by Matrix Synapse for
-    federation with other instances."""
-    if os.path.exists(letsencrypt.LIVE_DIRECTORY):
-        # Copy the latest Let's Encrypt certs into Synapse's directory.
-        with YAMLFile('/etc/matrix-synapse/conf.d/server_name.yaml') as conf:
-            src_dir = os.path.join(letsencrypt.LIVE_DIRECTORY,
-                                   conf['server_name'])
+def _update_tls_certificate():
+    """Update the TLS certificate and private key used by Matrix Synapse.
 
+    A valid certificate is necessary for federation with other instances
+    starting with version 1.0.
+
+    """
+    configured_domain = get_configured_domain_name()
+    if os.path.exists(letsencrypt.LIVE_DIRECTORY) and configured_domain:
+        # Copy the latest Let's Encrypt certs into Synapse's directory.
+        src_dir = os.path.join(letsencrypt.LIVE_DIRECTORY, configured_domain)
         source_certificate_path = os.path.join(src_dir, 'fullchain.pem')
         source_private_key_path = os.path.join(src_dir, 'privkey.pem')
     else:
@@ -125,7 +129,7 @@ def subcommand_post_install(_):
     with open(CONFIG_FILE_PATH, 'w') as config_file:
         yaml.dump(config, config_file)
 
-    _update_TLS_certificate()
+    _update_tls_certificate()
 
     if action_utils.service_is_running('matrix-synapse'):
         action_utils.service_restart('matrix-synapse')
@@ -176,44 +180,33 @@ def subcommand_public_registration(argument):
 
 
 def subcommand_letsencrypt(arguments):
-    """
-    Add/drop usage of Let's Encrypt cert. The command 'add' applies only to
-    current domain, will be called by action 'letsencrypt run_renew_hooks',
-    when certbot renews the cert (if matrix-synapse is selected for cert use).
-    Drop of a cert must be possible for any domain to respond to domain change.
-    """
-    current_domain = config.get_domainname()
+    """Add/drop usage of Let's Encrypt cert.
 
-    with YAMLFile('/etc/matrix-synapse/conf.d/server_name.yaml') as conf:
-        if arguments.domain is not None and \
-           arguments.domain != conf['server_name']:
-            print('Aborted: Current domain "{}"'.format(arguments.domain),
-                  'is not configured for matrix-synapse.')
-            sys.exit(1)
+    The command 'add' applies only to current domain, will be called by action
+    'letsencrypt run_renew_hooks', when certbot renews the cert (if
+    matrix-synapse is selected for cert use). Drop of a cert must be possible
+    for any domain to respond to domain change.
 
-    if arguments.command == 'add' and arguments.domain is not None \
-       and arguments.domain != current_domain:
-        print('Aborted: Only certificate of current domain "%s" can be added.'
-              % current_domain)
+    """
+    if arguments.command != 'add':
+        print('Dropping certificates is not supported for Matrix Synapse.')
+        sys.exit(0)
+
+    configured_domain = get_configured_domain_name()
+    if arguments.domain is not None and \
+       arguments.domain != configured_domain:
+        print('Aborted: Current domain "{}" is not configured.'.format(
+            arguments.domain))
+        sys.exit(1)
+
+    le_folder = os.path.join(letsencrypt.LIVE_DIRECTORY, configured_domain)
+    if not os.path.exists(le_folder):
+        print('Aborted: No certificate directory at %s.' % le_folder)
         sys.exit(2)
 
-    if arguments.domain is None:
-        arguments.domain = current_domain
+    _update_tls_certificate()
 
-    if arguments.command == 'add':
-        le_folder = os.path.join(letsencrypt.LIVE_DIRECTORY, current_domain)
-
-        if not os.path.exists(le_folder):
-            print('Aborted: No certificate directory at %s.' % le_folder)
-            sys.exit(3)
-
-        _update_TLS_certificate()
-
-    else:
-        print("Dropping certificates is not supported for Matrix Synapse.")
-
-    if action_utils.service_is_running('matrix-synapse'):
-        action_utils.service_restart('matrix-synapse')
+    action_utils.service_try_restart('matrix-synapse')
 
 
 def main():
