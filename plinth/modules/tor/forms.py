@@ -64,7 +64,7 @@ def bridges_validator(bridges):
         except IndexError:
             raise validation_error
 
-        match = re.match('\[([a-fA-F0-9:]+)\](?::([0-9]+))?', ip_port_part)
+        match = re.match(r'\[([a-fA-F0-9:]+)\](?::([0-9]+))?', ip_port_part)
         if match:
             ip_address = match.group(1)
             port = match.group(2)
