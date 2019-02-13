@@ -119,6 +119,7 @@ def upgrade(request):
         request, 'upgrades.html', {
             'title': upgrades.name,
             'description': upgrades.description,
+            'manual_page': upgrades.manual_page,
             'subsubmenu': subsubmenu,
             'is_busy': is_busy,
             'log': get_log()
