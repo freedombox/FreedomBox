@@ -80,6 +80,7 @@ class MatrixSynapseServiceView(ServiceView):
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
         context['clients'] = matrixsynapse.clients
         context['manual_page'] = matrixsynapse.manual_page
+        context['has_valid_certificate'] = has_valid_certificate()
         return context
 
     def get_initial(self):
@@ -87,7 +88,6 @@ class MatrixSynapseServiceView(ServiceView):
         initial = super().get_initial()
         initial.update({
             'enable_public_registration': get_public_registration_status(),
-            'has_valid_certificate': has_valid_certificate(),
         })
         return initial
 

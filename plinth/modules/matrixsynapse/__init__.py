@@ -29,7 +29,6 @@ from ruamel.yaml.util import load_yaml_guess_indent
 from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
-from plinth.utils import YAMLFile
 
 from .manifest import backup, clients
 
@@ -164,12 +163,11 @@ def get_public_registration_status():
 
 
 def has_valid_certificate():
-    """Return whether the configured domain name has a valid
-    Let's Encrypt certificate."""
+    """Return whether the configured domain name has a valid certificate."""
     domain_name = get_configured_domain_name()
     status = actions.superuser_run('letsencrypt', ['get-status'])
     status = json.loads(status)
     if domain_name in status['domains']:
-        return status['domains'][domain_name][
-            'certificate_available'] == "true"
+        return status['domains'][domain_name]['certificate_available']
+
     return False
