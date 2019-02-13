@@ -22,9 +22,15 @@
 {% load i18n %}
 
 {% block configuration %}
-  <h3>{% trans "Create Wiki or Blog" %}</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
-  <form class="form" method="post">
+  {% block diagnostics %}
+    {% if diagnostics_module_name %}
+      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=service.is_enabled %}
+    {% endif %}
+  {% endblock %}
+
+  <form class="form form-configuration" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}

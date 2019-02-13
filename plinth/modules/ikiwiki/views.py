@@ -48,12 +48,15 @@ class IkiwikiServiceView(views.ServiceView):
     description = ikiwiki.description
     diagnostics_module_name = "ikiwiki"
     show_status_block = False
+    template_name = "ikiwiki_configure.html"
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
         context = super().get_context_data(**kwargs)
+        context['title'] = ikiwiki.name
         context['subsubmenu'] = subsubmenu
         context['clients'] = ikiwiki.clients
+        context['manual_page'] = ikiwiki.manual_page
         return context
 
 
@@ -64,7 +67,10 @@ def manage(request):
 
     return TemplateResponse(
         request, 'ikiwiki_manage.html', {
-            'title': _('Manage Wikis and Blogs'),
+            'title': ikiwiki.name,
+            'clients': ikiwiki.clients,
+            'description': ikiwiki.description,
+            'manual_page': ikiwiki.manual_page,
             'subsubmenu': subsubmenu,
             'sites': sites
         })
@@ -97,10 +103,12 @@ def create(request):
 
     return TemplateResponse(
         request, 'ikiwiki_create.html', {
-            'title': _('Create Wiki or Blog'),
+            'title': ikiwiki.name,
+            'clients': ikiwiki.clients,
+            'description': ikiwiki.description,
             'form': form,
-            'subsubmenu': subsubmenu,
             'manual_page': ikiwiki.manual_page,
+            'subsubmenu': subsubmenu,
         })
 
 
@@ -142,14 +150,19 @@ def delete(request, name):
             messages.success(request, _('{name} deleted.').format(name=name))
             frontpage.remove_shortcut('ikiwiki_' + name)
         except actions.ActionError as error:
-            messages.error(request,
-                           _('Could not delete {name}: {error}').format(
-                               name=name, error=error))
+            messages.error(
+                request,
+                _('Could not delete {name}: {error}').format(
+                    name=name, error=error))
 
         return redirect(reverse_lazy('ikiwiki:manage'))
 
-    return TemplateResponse(request, 'ikiwiki_delete.html', {
-        'title': _('Delete Wiki or Blog'),
-        'subsubmenu': subsubmenu,
-        'name': name
-    })
+    return TemplateResponse(
+        request, 'ikiwiki_delete.html', {
+            'title': ikiwiki.name,
+            'clients': ikiwiki.clients,
+            'description': ikiwiki.description,
+            'manual_page': ikiwiki.manual_page,
+            'subsubmenu': subsubmenu,
+            'name': name
+        })
