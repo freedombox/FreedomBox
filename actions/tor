@@ -45,7 +45,12 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup', help='Setup Tor configuration')
+    setup_parser = subparsers.add_parser('setup',
+                                         help='Setup Tor configuration')
+    setup_parser.add_argument(
+        '--old-version', type=int, required=True, help=
+        'Version number being upgraded from or None if setting up first time.')
+
     subparsers.add_parser('get-status', help='Get Tor status in JSON format')
 
     configure = subparsers.add_parser('configure', help='Configure Tor')
@@ -72,9 +77,17 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Setup Tor configuration after installing it."""
+    if arguments.old_version and arguments.old_version <= 2:
+        _upgrade_orport_value()
+        return
 
+    _first_time_setup()
+
+
+def _first_time_setup():
+    """Setup Tor configuration for the first time setting defaults."""
     # Disable default tor service. We will use tor@plinth instance
     # instead.
     _disable_apt_transport_tor()
@@ -127,6 +140,37 @@ def subcommand_setup(_):
             return
 
         time.sleep(10)
+
+
+def _upgrade_orport_value():
+    """Change ORPort value from auto to 9001.
+
+    When ORPort is set to 'auto', Tor automatically allocates a port for it.
+    During it's first run, we able to extract the port number and open the
+    firewall port. However, unlike for pluggable transports, Tor does not seem
+    to store this port for future reuse in the state file. It hence opens a new
+    port every time it is started. This leads to a new port being assigned on
+    next Tor startup and leads to relay functionality not being reachable from
+    outside.
+
+    According to the documentation, only possible values for ORPort are a fixed
+    number or 0 (disable) or auto (above behavior). Choose 9001 as this is
+    the commonly used port number for ORPort. The recommended port number of
+    443 is not possible in FreedomBox due it is use for other purposes.
+
+    """
+    aug = augeas_load()
+
+    if _is_relay_enabled(aug):
+        aug.set(TOR_CONFIG + '/ORPort', '9001')
+
+    aug.save()
+
+    action_utils.service_try_restart('tor@plinth')
+
+    # Tor may not be running, don't try to read/update all ports
+    _update_port('orport', 9001)
+    action_utils.service_restart('firewalld')
 
 
 def subcommand_get_status(_):
@@ -359,7 +403,7 @@ def _enable_relay(relay=None, bridge=None, aug=None):
     use_upstream_bridges = _are_upstream_bridges_enabled(aug)
 
     if relay == 'enable' and not use_upstream_bridges:
-        aug.set(TOR_CONFIG + '/ORPort', 'auto')
+        aug.set(TOR_CONFIG + '/ORPort', '9001')
     elif relay == 'disable':
         aug.remove(TOR_CONFIG + '/ORPort')
 
@@ -440,6 +484,21 @@ def _disable_apt_transport_tor():
     aug.save()
 
 
+def _update_port(name, number):
+    """Update firewall service information for single port."""
+    lines = """<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Tor - {0}</short>
+  <port protocol="tcp" port="{1}"/>
+</service>
+"""
+    try:
+        with open(SERVICE_FILE.format(name), 'w') as service_file:
+            service_file.writelines(lines.format(name, number))
+    except FileNotFoundError:
+        return
+
+
 def _update_ports():
     """Update firewall service information."""
     ready = False
@@ -458,18 +517,8 @@ def _update_ports():
 
         time.sleep(10)
 
-    lines = """<?xml version="1.0" encoding="utf-8"?>
-<service>
-  <short>Tor - {0}</short>
-  <port protocol="tcp" port="{1}"/>
-</service>
-"""
     for name, number in ports.items():
-        try:
-            with open(SERVICE_FILE.format(name), 'w') as service_file:
-                service_file.writelines(lines.format(name, number))
-        except FileNotFoundError:
-            return
+        _update_port(name, number)
 
     # XXX: We should ideally do firewalld reload instead.  However,
     # firewalld seems to fail to successfully reload sometimes.

@@ -31,7 +31,7 @@ from plinth.signals import domain_added, domain_removed
 from . import utils
 from .manifest import backup, clients
 
-version = 2
+version = 3
 
 depends = ['names']
 
@@ -106,9 +106,12 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'tor', ['setup'])
-    helper.call('post', actions.superuser_run, 'tor',
-                ['configure', '--apt-transport-tor', 'enable'])
+    helper.call(
+        'post', actions.superuser_run, 'tor',
+        ['setup', '--old-version', str(old_version)])
+    if not old_version:
+        helper.call('post', actions.superuser_run, 'tor',
+                    ['configure', '--apt-transport-tor', 'enable'])
 
     global socks_service
     if socks_service is None:
@@ -116,7 +119,9 @@ def setup(helper, old_version=None):
             'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
             is_external=False, is_enabled=utils.is_enabled,
             is_running=utils.is_running)
-    helper.call('post', socks_service.notify_enabled, None, True)
+
+    if not old_version:
+        helper.call('post', socks_service.notify_enabled, None, True)
 
     global bridge_service
     if bridge_service is None:
@@ -124,7 +129,9 @@ def setup(helper, old_version=None):
             'tor-bridge', _('Tor Bridge Relay'),
             ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'], is_external=True,
             is_enabled=utils.is_enabled, is_running=utils.is_running)
-    helper.call('post', bridge_service.notify_enabled, None, True)
+
+    if not old_version:
+        helper.call('post', bridge_service.notify_enabled, None, True)
 
     helper.call('post', update_hidden_service_domain)
 
