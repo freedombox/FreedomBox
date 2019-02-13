@@ -59,7 +59,7 @@ def subcommand_remove_footer(arguments):
 
     # The footer will always be in the last <section>
     def find_last_section(elem):
-        if elem.getchildren():
+        if len(elem):
             last_element = elem[-1]
             if last_element.tag == 'section':
                 return find_last_section(last_element)
@@ -67,7 +67,7 @@ def subcommand_remove_footer(arguments):
 
     last_section = find_last_section(root)
 
-    if last_section.getchildren():
+    if len(last_section):
         # Remove all elements till <informaltable> is reached
         while last_section[-1].tag != 'informaltable':
             last_section.remove(last_section[-1])
