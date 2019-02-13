@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "pagekite_introduction.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -22,7 +22,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block content %}
+{% block configuration %}
 
   <form class="form" method="post">
     {% csrf_token %}
@@ -45,6 +45,5 @@
 {% endblock %}
 
 {% block page_js %}
-
   <script type="text/javascript" src="{% static 'pagekite/pagekite.js' %}"></script>
 {% endblock %}

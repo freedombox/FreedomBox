@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "service-subsubmenu.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -18,30 +18,16 @@
 #
 {% endcomment %}
 
-{% load i18n %}
-{% load static %}
+{% block description %}
 
-{% block content %}
+  <p>{{ description.0|safe }}</p>
 
-  {% block pagetitle %}
-    <h2>{{ title }}</h2>
-  {% endblock %}
+  <ul>
+    {% for paragraph in description|slice:"1:6" %}
+      <li>{{ paragraph|safe }}</li>
+    {% endfor %}
+  </ul>
 
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
-
-  {% if manual_page %}
-    <p class="manual-page">
-      <a href="{% url 'help:manual-page' manual_page %}">
-        {% trans 'Learn more...' %}
-      </a>
-    </p>
-  {% endif %}
-
-    <p>
-    <a class="btn btn-primary btn-md" href="{% url 'pagekite:configure' %}">
-      {% trans "Configure PageKite" %}</a>
-  </p>
+  <p>{{ description|last|safe }}</p>
 
 {% endblock %}

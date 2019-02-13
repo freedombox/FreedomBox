@@ -17,7 +17,6 @@
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
@@ -34,10 +33,7 @@ from .forms import (AddCustomServiceForm, ConfigurationForm,
 
 subsubmenu = [{
     'url': reverse_lazy('pagekite:index'),
-    'text': _('About PageKite')
-}, {
-    'url': reverse_lazy('pagekite:configure'),
-    'text': _('Configure PageKite')
+    'text': _('Configure')
 }, {
     'url': reverse_lazy('pagekite:standard-services'),
     'text': _('Standard Services')
@@ -45,17 +41,6 @@ subsubmenu = [{
     'url': reverse_lazy('pagekite:custom-services'),
     'text': _('Custom Services')
 }]
-
-
-def index(request):
-    """Serve introduction page"""
-    return TemplateResponse(
-        request, 'pagekite_introduction.html', {
-            'title': pagekite.name,
-            'description': pagekite.description,
-            'manual_page': pagekite.manual_page,
-            'subsubmenu': subsubmenu
-        })
 
 
 class ContextMixin(object):
@@ -67,7 +52,9 @@ class ContextMixin(object):
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
-        context['title'] = getattr(self, 'title', '')
+        context['title'] = pagekite.name
+        context['description'] = pagekite.description
+        context['manual_page'] = pagekite.manual_page
         context['subsubmenu'] = subsubmenu
         return context
 
@@ -119,7 +106,6 @@ class CustomServiceView(ContextMixin, TemplateView):
 
 class StandardServiceView(ContextMixin, FormView):
     template_name = 'pagekite_standard_services.html'
-    title = 'PageKite Standard Services'
     form_class = StandardServiceForm
     success_url = reverse_lazy('pagekite:standard-services')
 
@@ -135,7 +121,7 @@ class ConfigurationView(ContextMixin, FormView):
     template_name = 'pagekite_configure.html'
     form_class = ConfigurationForm
     prefix = 'pagekite'
-    success_url = reverse_lazy('pagekite:configure')
+    success_url = reverse_lazy('pagekite:index')
 
     def get_initial(self):
         return utils.get_pagekite_config()

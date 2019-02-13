@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the PageKite module
 """
@@ -22,12 +21,10 @@ URLs for the PageKite module
 from django.conf.urls import url
 
 from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
-    DeleteServiceView, index, FirstBootView, first_boot_skip
+    DeleteServiceView, FirstBootView, first_boot_skip
 
 urlpatterns = [
-    url(r'^sys/pagekite/$', index, name='index'),
-    url(r'^sys/pagekite/configure/$', ConfigurationView.as_view(),
-        name='configure'),
+    url(r'^sys/pagekite/$', ConfigurationView.as_view(), name='index'),
     url(r'^sys/pagekite/services/standard/$', StandardServiceView.as_view(),
         name='standard-services'),
     url(r'^sys/pagekite/services/custom/$', CustomServiceView.as_view(),

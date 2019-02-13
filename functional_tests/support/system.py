@@ -262,7 +262,7 @@ def download_file_logged_in(browser, url, suffix=''):
 def pagekite_enable(browser, should_enable):
     """Enable/disable pagekite service."""
     nav_to_module(browser, 'pagekite')
-    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    browser.find_link_by_href('/plinth/sys/pagekite/').first.click()
     checkbox = browser.find_by_id('id_pagekite-enabled').first
     if checkbox.checked == should_enable:
         return
@@ -278,14 +278,14 @@ def pagekite_enable(browser, should_enable):
 def pagekite_is_enabled(browser):
     """Return whether pagekite is enabled."""
     nav_to_module(browser, 'pagekite')
-    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    browser.find_link_by_href('/plinth/sys/pagekite/').first.click()
     return browser.find_by_id('id_pagekite-enabled').checked
 
 
 def pagekite_configure(browser, host, port, kite_name, kite_secret):
     """Configure pagekite basic parameters."""
     nav_to_module(browser, 'pagekite')
-    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    browser.find_link_by_href('/plinth/sys/pagekite/').first.click()
     # time.sleep(0.250)  # Wait for 200ms show animation to complete
     browser.fill('pagekite-server_domain', host)
     browser.fill('pagekite-server_port', str(port))
@@ -297,7 +297,7 @@ def pagekite_configure(browser, host, port, kite_name, kite_secret):
 def pagekite_get_configuration(browser):
     """Return pagekite basic parameters."""
     nav_to_module(browser, 'pagekite')
-    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    browser.find_link_by_href('/plinth/sys/pagekite/').first.click()
     return (browser.find_by_name('pagekite-server_domain').value,
             int(browser.find_by_name('pagekite-server_port').value),
             browser.find_by_name('pagekite-kite_name').value,
