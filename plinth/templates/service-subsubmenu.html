@@ -35,9 +35,11 @@
           <h2>{{ title }}</h2>
         {% endblock %}
 
-        {% for paragraph in description %}
-          <p>{{ paragraph|safe }}</p>
-        {% endfor %}
+        {% block description %}
+          {% for paragraph in description %}
+            <p>{{ paragraph|safe }}</p>
+          {% endfor %}
+        {% endblock %}
 
         {% if manual_page %}
           <p class="manual-page">
