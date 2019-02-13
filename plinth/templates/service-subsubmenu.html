@@ -49,6 +49,10 @@
           </p>
         {% endif %}
 
+        {% include "clients.html" with clients=clients enabled=service.is_enabled %}
+
+        <p/>
+
         {% block subsubmenu %}
           {% if subsubmenu %}
             {% show_subsubmenu subsubmenu %}
