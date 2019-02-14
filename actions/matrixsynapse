@@ -141,6 +141,7 @@ def subcommand_setup(arguments):
     domain_name = arguments.domain_name
     action_utils.dpkg_reconfigure('matrix-synapse',
                                   {'server-name': domain_name})
+    _update_tls_certificate()
     subcommand_enable(arguments)
 
 
