@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for the Tor service
 """
@@ -47,8 +46,7 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup Tor configuration')
-    subparsers.add_parser('get-status',
-                          help='Get Tor status in JSON format')
+    subparsers.add_parser('get-status', help='Get Tor status in JSON format')
 
     configure = subparsers.add_parser('configure', help='Configure Tor')
     configure.add_argument('--service', choices=['enable', 'disable'],
@@ -111,12 +109,9 @@ def subcommand_setup(_):
 
     aug.set(TOR_CONFIG + '/HiddenServiceDir',
             '/var/lib/tor-instances/plinth/hidden_service')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[1]',
-            '22 127.0.0.1:22')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[2]',
-            '80 127.0.0.1:80')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[3]',
-            '443 127.0.0.1:443')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[1]', '22 127.0.0.1:22')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
 
     aug.save()
 
@@ -190,12 +185,14 @@ def subcommand_restart(_):
 def get_status():
     """Return dict with Tor status."""
     aug = augeas_load()
-    return {'use_upstream_bridges': _are_upstream_bridges_enabled(aug),
-            'upstream_bridges': _get_upstream_bridges(aug),
-            'relay_enabled': _is_relay_enabled(aug),
-            'bridge_relay_enabled': _is_bridge_relay_enabled(aug),
-            'ports': _get_ports(),
-            'hidden_service': _get_hidden_service(aug)}
+    return {
+        'use_upstream_bridges': _are_upstream_bridges_enabled(aug),
+        'upstream_bridges': _get_upstream_bridges(aug),
+        'relay_enabled': _is_relay_enabled(aug),
+        'bridge_relay_enabled': _is_bridge_relay_enabled(aug),
+        'ports': _get_ports(),
+        'hidden_service': _get_hidden_service(aug)
+    }
 
 
 def _are_upstream_bridges_enabled(aug):
@@ -280,8 +277,7 @@ def _get_hidden_service(aug=None):
 
     for hs_port_path in hs_port_paths:
         port_info = aug.get(hs_port_path).split()
-        hs_ports.append({'virtport': port_info[0],
-                         'target': port_info[1]})
+        hs_ports.append({'virtport': port_info[0], 'target': port_info[1]})
 
     if not hs_dir:
         hs_status = 'Not Configured'
@@ -293,8 +289,12 @@ def _get_hidden_service(aug=None):
         except Exception:
             hs_status = 'Not available (Run Tor at least once)'
 
-    return {'enabled': hs_enabled, 'status': hs_status,
-            'hostname': hs_hostname, 'ports': hs_ports}
+    return {
+        'enabled': hs_enabled,
+        'status': hs_status,
+        'hostname': hs_hostname,
+        'ports': hs_ports
+    }
 
 
 def _enable():
@@ -386,12 +386,9 @@ def _enable_hs(aug=None):
 
     aug.set(TOR_CONFIG + '/HiddenServiceDir',
             '/var/lib/tor-instances/plinth/hidden_service')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[1]',
-            '22 127.0.0.1:22')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[2]',
-            '80 127.0.0.1:80')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[3]',
-            '443 127.0.0.1:443')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[1]', '22 127.0.0.1:22')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
     aug.save()
 
 
