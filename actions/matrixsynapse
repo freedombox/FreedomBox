@@ -86,15 +86,16 @@ def _update_tls_certificate():
     dest_certificate_path = os.path.join(dest_dir, 'homeserver.tls.crt')
     dest_private_key_path = os.path.join(dest_dir, 'homeserver.tls.key')
 
+    # Private key is only accessible to the user "matrix-synapse"
+    # Group access is prohibited since it is "nogroup"
+    old_mask = os.umask(0o133)
     shutil.copyfile(source_certificate_path, dest_certificate_path)
+    os.umask(0o177)
     shutil.copyfile(source_private_key_path, dest_private_key_path)
+    os.umask(old_mask)
 
     shutil.chown(dest_certificate_path, user='matrix-synapse', group='nogroup')
     shutil.chown(dest_private_key_path, user='matrix-synapse', group='nogroup')
-
-    # Private key is only accessible to the user "matrix-synapse"
-    # Group access is prohibited since it is "nogroup"
-    os.chmod(dest_private_key_path, 0o600)
 
 
 def subcommand_post_install(_):
