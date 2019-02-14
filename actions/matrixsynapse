@@ -20,6 +20,7 @@ Configuration helper for Matrix-Synapse server.
 """
 
 import argparse
+import filecmp
 import os
 import shutil
 import sys
@@ -52,13 +53,37 @@ def parse_arguments():
 
     help_le = "Add/drop Let's Encrypt certificate if configured domain matches"
     subparser = subparsers.add_parser('letsencrypt', help=help_le)
-    subparser.add_argument('command', choices=('add', 'drop'),
+    subparser.add_argument('command', choices=('add', 'drop', 'get-status'),
                            help='Whether to add or drop the certificate')
     subparser.add_argument('--domain',
                            help='Domain name to renew certificates for')
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def _get_certificate_status():
+    """Return if the current certificate is an up-to-date LE certificate."""
+    configured_domain = get_configured_domain_name()
+    if not configured_domain:
+        return False
+
+    if not os.path.exists(letsencrypt.LIVE_DIRECTORY):
+        return False
+
+    source_dir = os.path.join(letsencrypt.LIVE_DIRECTORY, configured_domain)
+    source_certificate_path = os.path.join(source_dir, 'fullchain.pem')
+    source_private_key_path = os.path.join(source_dir, 'privkey.pem')
+
+    dest_dir = '/etc/matrix-synapse'
+    dest_certificate_path = os.path.join(dest_dir, 'homeserver.tls.crt')
+    dest_private_key_path = os.path.join(dest_dir, 'homeserver.tls.key')
+
+    if filecmp.cmp(source_certificate_path, dest_certificate_path) and \
+       filecmp.cmp(source_private_key_path, dest_private_key_path):
+        return True
+
+    return False
 
 
 def _update_tls_certificate():
@@ -182,7 +207,7 @@ def subcommand_public_registration(argument):
 
 
 def subcommand_letsencrypt(arguments):
-    """Add/drop usage of Let's Encrypt cert.
+    """Add/drop usage of Let's Encrypt cert or show status.
 
     The command 'add' applies only to current domain, will be called by action
     'letsencrypt run_renew_hooks', when certbot renews the cert (if
@@ -190,9 +215,13 @@ def subcommand_letsencrypt(arguments):
     for any domain to respond to domain change.
 
     """
-    if arguments.command != 'add':
+    if arguments.command == 'drop':
         print('Dropping certificates is not supported for Matrix Synapse.')
-        sys.exit(0)
+        return
+
+    if arguments.command == 'get-status':
+        print('valid' if _get_certificate_status() else 'invalid')
+        return
 
     configured_domain = get_configured_domain_name()
     if arguments.domain is not None and \

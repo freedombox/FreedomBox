@@ -164,10 +164,5 @@ def get_public_registration_status():
 
 def has_valid_certificate():
     """Return whether the configured domain name has a valid certificate."""
-    domain_name = get_configured_domain_name()
-    status = actions.superuser_run('letsencrypt', ['get-status'])
-    status = json.loads(status)
-    if domain_name in status['domains']:
-        return status['domains'][domain_name]['certificate_available']
-
-    return False
+    status = actions.superuser_run('matrixsynapse', ['letsencrypt', 'get-status'])
+    return status.startswith('valid')
