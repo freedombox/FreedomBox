@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-09 20:13-0500\n"
+"POT-Creation-Date: 2019-02-14 05:47-0500\n"
 "PO-Revision-Date: 2019-02-12 12:09+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -903,7 +903,7 @@ msgid "Update setup"
 msgstr "Aktualizovat nastavení"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
-#: plinth/modules/matrixsynapse/views.py:105
+#: plinth/modules/matrixsynapse/views.py:106
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:141 plinth/views.py:150
 msgid "Setting unchanged"
@@ -1184,7 +1184,7 @@ msgid "ejabberd"
 msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:44
-#: plinth/modules/matrixsynapse/__init__.py:42
+#: plinth/modules/matrixsynapse/__init__.py:43
 msgid "Chat Server"
 msgstr "Chat server"
 
@@ -1298,13 +1298,13 @@ msgid "Configuration"
 msgstr "Nastavení"
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:109
+#: plinth/modules/matrixsynapse/views.py:110
 #: plinth/modules/mediawiki/views.py:79 plinth/views.py:154
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
 #: plinth/modules/ejabberd/views.py:70
-#: plinth/modules/matrixsynapse/views.py:112
+#: plinth/modules/matrixsynapse/views.py:113
 #: plinth/modules/mediawiki/views.py:82 plinth/views.py:157
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
@@ -1856,14 +1856,14 @@ msgstr ""
 "(ISRG). Před použitím služby si přečtěte <a href=\"https://letsencrypt.org/"
 "repository/\">Podmínky používání Let's Encrypt</a>."
 
-#: plinth/modules/letsencrypt/__init__.py:112
+#: plinth/modules/letsencrypt/__init__.py:111
 #: plinth/modules/letsencrypt/views.py:93
 #: plinth/modules/letsencrypt/views.py:124
 #, python-brace-format
 msgid "Certificate renewal management enabled for {domain}."
 msgstr "Správa obnovování certifikátu pro doménu {domain} zapnuta."
 
-#: plinth/modules/letsencrypt/__init__.py:116
+#: plinth/modules/letsencrypt/__init__.py:115
 #: plinth/modules/letsencrypt/views.py:98
 #, python-brace-format
 msgid "Failed to enable certificate renewal management for {domain}: {error}"
@@ -1937,11 +1937,16 @@ msgid "Certificate renewal management and use by other modules"
 msgstr "Správa obnovy certifikátu a využití ostatními moduly"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:140
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "If you have a Let's Encrypt certificate for your current domain, you may "
+#| "let %(box_name)s manage its renewal process. This also enables other apps "
+#| "to use that certificate, so most users would not prompted with security "
+#| "warnings when using them."
 msgid ""
 "If you have a Let's Encrypt certificate for your current domain, you may let "
 "%(box_name)s manage its renewal process. This also enables other apps to use "
-"that certificate, so most users would not prompted with security warnings "
+"that certificate, so that users would not prompted with security warnings "
 "when using them."
 msgstr ""
 "Pokud pro svou doménu máte certifikát od Let's Encrypt, je možné přenechat "
@@ -1953,6 +1958,8 @@ msgstr ""
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:169
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:209
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:215
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:269
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:276
 msgid "Update config"
 msgstr "Aktualizovat nastavení"
 
@@ -2023,7 +2030,65 @@ msgstr ""
 "\"%(ejabberd_url)s\">ejabberd</a> chat server, je třeba nejprve zapnout "
 "obnovování certifikátu pro stávající doménu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:256
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:281
+#, fuzzy, python-format
+#| msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
+msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
+msgstr "Použít certifikát %(current_domain)s pro <b>ejabberd</b>"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:285
+#, fuzzy
+#| msgid "Use certificate of the current domain for <b>ejabberd</b>"
+msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
+msgstr "Použít certifikát stávající domény pro <b>ejabberd</b>"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:295
+#, fuzzy, python-format
+#| msgid ""
+#| "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also "
+#| "use the Let's Encrypt certificate. This will reduce warnings about self-"
+#| "signed certificates in client applications, and enable more wide-spread "
+#| "federation with other XMPP servers in the Internet."
+msgid ""
+"If enabled, the app <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a> "
+"will also use the same Let's Encrypt certificate. Other Matrix Synapse "
+"instances running version 1.0 or greater expect your server to produce a "
+"valid TLS certificate. Federation with other instances will not work without "
+"this."
+msgstr ""
+"Pokud je zapnuto, aplikace <a href=\"%(ejabberd_url)s\">ejabberd</a> bude "
+"také používat Let's Encrypt certifikát. Toto v klientských aplikacích omezí "
+"varování ohledně certifikátů, podepsaných sám sebou a umožní širší "
+"spolčování s ostatními XMPP servery na Internetu."
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:303
+#, fuzzy, python-format
+#| msgid ""
+#| "This feature only makes sense if you are using the <a href="
+#| "\"%(ejabberd_url)s\">ejabberd</a> chat server app."
+msgid ""
+"This feature only makes sense if you are using the <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
+msgstr ""
+"Tato funkce dává smysl pouze pokud používáte serverovou chatovací aplikaci "
+"<a href=\"%(ejabberd_url)s\">ejabberd</a>."
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:308
+#, fuzzy, python-format
+#| msgid ""
+#| "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
+#| "\">ejabberd</a> chat server app, you must first enable certificate "
+#| "renewal of the current domain."
+msgid ""
+"To use a Let's Encrypt certificate for <a href=\"%(matrixsynapse_url)s"
+"\">Matrix Synapse</a> chat server app, you must first enable certificate "
+"renewal of the current domain."
+msgstr ""
+"Aby bylo možné použít Let's Encrypt certifikát pro aplikaci <a href="
+"\"%(ejabberd_url)s\">ejabberd</a> chat server, je třeba nejprve zapnout "
+"obnovování certifikátu pro stávající doménu."
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:317
 msgid ""
 "<b>No current domain is configured.</b> First configure a domain to enable "
 "management of its certificates."
@@ -2031,7 +2096,7 @@ msgstr ""
 "<b>Nyní není nastavena žádná doména.</b> Nejprve nějakou nastavte a až pak "
 "pro ní bude možné spravovat certifikáty."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:263
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:324
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -2103,11 +2168,11 @@ msgstr "Certifikát pro doménu {domain} úspěšně smazán"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Nepodařilo se smazat certifikát pro doménu {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:40
+#: plinth/modules/matrixsynapse/__init__.py:41
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/__init__.py:45
+#: plinth/modules/matrixsynapse/__init__.py:46
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -2124,7 +2189,7 @@ msgstr ""
 "čísla. Díky federování mohou uživatelé na daném  Matrix serveru komunikovat "
 "s uživateli všech ostatních Matrix serverů."
 
-#: plinth/modules/matrixsynapse/__init__.py:52
+#: plinth/modules/matrixsynapse/__init__.py:53
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -2197,11 +2262,22 @@ msgstr ""
 "%(domain_name)s</em>. Změna doménového názvu po úvodním nastavení není v "
 "současnosti podporována."
 
-#: plinth/modules/matrixsynapse/views.py:120
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#, python-format
+msgid ""
+"\n"
+"        The configured domain name is using a self-signed certificate.\n"
+"        Federation with other Matrix Synapse instances requires a valid TLS\n"
+"        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
+"        Encrypt</a> to obtain one.\n"
+"      "
+msgstr ""
+
+#: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
 msgstr "Registrace pro veřejnost otevřena"
 
-#: plinth/modules/matrixsynapse/views.py:125
+#: plinth/modules/matrixsynapse/views.py:126
 msgid "Public registration disabled"
 msgstr "Registrace pro veřejnost zavřena"
 
@@ -3861,15 +3937,15 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/__init__.py:45
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:46
+#: plinth/modules/radicale/__init__.py:47
 msgid "Calendar and Addressbook"
 msgstr "Kalendář a adresář kontaktů"
 
-#: plinth/modules/radicale/__init__.py:50
+#: plinth/modules/radicale/__init__.py:51
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3912,10 +3988,15 @@ msgid "DAVx5"
 msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:27
+#, fuzzy
+#| msgid ""
+#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
+#| "your user name. DAVx5 will show all existing calendars and address books "
+#| "and you can create new."
 msgid ""
-"Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
-"user name. DAVx5 will show all existing calendars and address books and you "
-"can create new."
+"Enter the URL of the Radicale server (e.g. https://<your.freedombox."
+"address>) and your user name. DAVx5 will show all existing calendars and "
+"address books and you can create new."
 msgstr ""
 "Zadejte URL adresu Radicale serveru (např. http://localhost:5232) a své "
 "uživatelské jméno. DAVx5 zobrazí všechny existující kalendáře a adresáře "
@@ -3942,11 +4023,17 @@ msgstr ""
 "mail, kalendáře a adresář kontaktů."
 
 #: plinth/modules/radicale/manifest.py:78
+#, fuzzy
+#| msgid ""
+#| "In Evolution add a new calendar and address book respectively with "
+#| "WebDAV. Enter the URL of the Radicale server (e.g. http://localhost:5232) "
+#| "and your user name. Clicking on the search button will list the existing "
+#| "calendars and address books."
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
-"Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
-"user name. Clicking on the search button will list the existing calendars "
-"and address books."
+"Enter the URL of the Radicale server (e.g. https://<your.freedombox."
+"address>) and your user name. Clicking on the search button will list the "
+"existing calendars and address books."
 msgstr ""
 "V Evolution přidejte nový kalendář a adresář kontaktů s WebDAV. Zadejte URL "
 "adresu Radicale serveru (např. http://localhost:5232) a své uživatelské "
@@ -5497,23 +5584,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Obecné"
 
-#: plinth/package.py:119
+#: plinth/package.py:138
 msgid "Error during installation"
 msgstr "Chyba při instalaci"
 
-#: plinth/package.py:141
+#: plinth/package.py:160
 msgid "installing"
 msgstr "Instalace"
 
-#: plinth/package.py:143
+#: plinth/package.py:162
 msgid "downloading"
 msgstr "stahování"
 
-#: plinth/package.py:145
+#: plinth/package.py:164
 msgid "media change"
 msgstr "změna média"
 
-#: plinth/package.py:147
+#: plinth/package.py:166
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "soubor s nastaveními: {file}"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-09 20:13-0500\n"
+"POT-Creation-Date: 2019-02-14 05:47-0500\n"
 "PO-Revision-Date: 2018-02-05 18:37+0000\n"
 "Last-Translator: drashti kaushik <drashtipandya37@gmail.com>\n"
 "Language-Team: Gujarati <https://hosted.weblate.org/projects/freedombox/"
@@ -861,7 +861,7 @@ msgid "Update setup"
 msgstr "સેટઅપ અપડેટ કરો"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
-#: plinth/modules/matrixsynapse/views.py:105
+#: plinth/modules/matrixsynapse/views.py:106
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:141 plinth/views.py:150
 msgid "Setting unchanged"
@@ -1130,7 +1130,7 @@ msgid "ejabberd"
 msgstr "ઈઝબેબર્ડ"
 
 #: plinth/modules/ejabberd/__init__.py:44
-#: plinth/modules/matrixsynapse/__init__.py:42
+#: plinth/modules/matrixsynapse/__init__.py:43
 msgid "Chat Server"
 msgstr "ચેટ સર્વર"
 
@@ -1251,13 +1251,13 @@ msgid "Configuration"
 msgstr "રૂપરેખાંકન"
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:109
+#: plinth/modules/matrixsynapse/views.py:110
 #: plinth/modules/mediawiki/views.py:79 plinth/views.py:154
 msgid "Application enabled"
 msgstr "એપ્લિકેશન સક્ષમ કરો"
 
 #: plinth/modules/ejabberd/views.py:70
-#: plinth/modules/matrixsynapse/views.py:112
+#: plinth/modules/matrixsynapse/views.py:113
 #: plinth/modules/mediawiki/views.py:82 plinth/views.py:157
 msgid "Application disabled"
 msgstr "એપ્લિકેશન અક્ષમ છે"
@@ -1742,14 +1742,14 @@ msgid ""
 "\">Let's Encrypt Subscriber Agreement</a> before using this service."
 msgstr ""
 
-#: plinth/modules/letsencrypt/__init__.py:112
+#: plinth/modules/letsencrypt/__init__.py:111
 #: plinth/modules/letsencrypt/views.py:93
 #: plinth/modules/letsencrypt/views.py:124
 #, python-brace-format
 msgid "Certificate renewal management enabled for {domain}."
 msgstr ""
 
-#: plinth/modules/letsencrypt/__init__.py:116
+#: plinth/modules/letsencrypt/__init__.py:115
 #: plinth/modules/letsencrypt/views.py:98
 #, python-brace-format
 msgid "Failed to enable certificate renewal management for {domain}: {error}"
@@ -1825,7 +1825,7 @@ msgstr ""
 msgid ""
 "If you have a Let's Encrypt certificate for your current domain, you may let "
 "%(box_name)s manage its renewal process. This also enables other apps to use "
-"that certificate, so most users would not prompted with security warnings "
+"that certificate, so that users would not prompted with security warnings "
 "when using them."
 msgstr ""
 
@@ -1833,6 +1833,8 @@ msgstr ""
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:169
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:209
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:215
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:269
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:276
 msgid "Update config"
 msgstr ""
 
@@ -1888,13 +1890,47 @@ msgid ""
 "of the current domain."
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:256
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:281
+#, python-format
+msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:285
+msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:295
+#, python-format
+msgid ""
+"If enabled, the app <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a> "
+"will also use the same Let's Encrypt certificate. Other Matrix Synapse "
+"instances running version 1.0 or greater expect your server to produce a "
+"valid TLS certificate. Federation with other instances will not work without "
+"this."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:303
+#, python-format
+msgid ""
+"This feature only makes sense if you are using the <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:308
+#, python-format
+msgid ""
+"To use a Let's Encrypt certificate for <a href=\"%(matrixsynapse_url)s"
+"\">Matrix Synapse</a> chat server app, you must first enable certificate "
+"renewal of the current domain."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:317
 msgid ""
 "<b>No current domain is configured.</b> First configure a domain to enable "
 "management of its certificates."
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:263
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:324
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -1957,11 +1993,11 @@ msgstr ""
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:40
+#: plinth/modules/matrixsynapse/__init__.py:41
 msgid "Matrix Synapse"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:45
+#: plinth/modules/matrixsynapse/__init__.py:46
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -1971,7 +2007,7 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:52
+#: plinth/modules/matrixsynapse/__init__.py:53
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -2025,11 +2061,22 @@ msgid ""
 "the initial setup is currently not supported."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/views.py:120
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#, python-format
+msgid ""
+"\n"
+"        The configured domain name is using a self-signed certificate.\n"
+"        Federation with other Matrix Synapse instances requires a valid TLS\n"
+"        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
+"        Encrypt</a> to obtain one.\n"
+"      "
+msgstr ""
+
+#: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/views.py:125
+#: plinth/modules/matrixsynapse/views.py:126
 #, fuzzy
 #| msgid "Application installed."
 msgid "Public registration disabled"
@@ -3534,15 +3581,15 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/__init__.py:45
 msgid "Radicale"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:46
+#: plinth/modules/radicale/__init__.py:47
 msgid "Calendar and Addressbook"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:50
+#: plinth/modules/radicale/__init__.py:51
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3575,9 +3622,9 @@ msgstr ""
 
 #: plinth/modules/radicale/manifest.py:27
 msgid ""
-"Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
-"user name. DAVx5 will show all existing calendars and address books and you "
-"can create new."
+"Enter the URL of the Radicale server (e.g. https://<your.freedombox."
+"address>) and your user name. DAVx5 will show all existing calendars and "
+"address books and you can create new."
 msgstr ""
 
 #: plinth/modules/radicale/manifest.py:44
@@ -3601,9 +3648,9 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
-"Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
-"user name. Clicking on the search button will list the existing calendars "
-"and address books."
+"Enter the URL of the Radicale server (e.g. https://<your.freedombox."
+"address>) and your user name. Clicking on the search button will list the "
+"existing calendars and address books."
 msgstr ""
 
 #: plinth/modules/radicale/views.py:55
@@ -4966,23 +5013,23 @@ msgstr ""
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:119
+#: plinth/package.py:138
 msgid "Error during installation"
 msgstr ""
 
-#: plinth/package.py:141
+#: plinth/package.py:160
 msgid "installing"
 msgstr ""
 
-#: plinth/package.py:143
+#: plinth/package.py:162
 msgid "downloading"
 msgstr ""
 
-#: plinth/package.py:145
+#: plinth/package.py:164
 msgid "media change"
 msgstr ""
 
-#: plinth/package.py:147
+#: plinth/package.py:166
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
