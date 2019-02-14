@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>69</revnumber>
+        <date>2019-02-13 23:16:48</date>
+        <authorinitials>MikkelKirkgaardNielsen</authorinitials>
+        <revremark>place dlmonkey after sort order in app. list, add comment about sorting, add draft userdir page</revremark>
+      </revision>
+      <revision>
         <revnumber>68</revnumber>
         <date>2019-01-31 00:46:47</date>
         <authorinitials>SunilMohanAdapa</authorinitials>
@@ -882,6 +888,37 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
   </section>
   <section>
     <title>Apps</title>
+    <para>
+      <remark>Add entries here sorted after the level 2 heading inside the page to keep the list alphabetically sorted</remark>
+    </para>
+    <section>
+      <title>Apache mod_userdir (userdir)</title>
+      <section>
+        <title>What is Apache mod_userdir?</title>
+        <para>Apache mod_userdir is a module of the Apache webserver enabled to allow users defined in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> system to expose a set of static files on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> filesystem as a website to the local network and/or the internet according to the network and firewall setup. </para>
+        <para>Read more about Apache mod_userdir in the <ulink url="https://httpd.apache.org/docs/2.4/mod/mod_userdir.html">Apache documentation</ulink>. </para>
+        <para><emphasis role="strong">Available since:</emphasis>  version 0.9.4 </para>
+      </section>
+      <section>
+        <title>Screenshot</title>
+        <para>
+          <remark>Add when/if an interface is made for Plinth</remark>
+        </para>
+      </section>
+      <section>
+        <title>Using Apache mod_userdir</title>
+        <para>The module is always enabled and offers no configuration from the Plinth web interface. Currently its existence is not even visible in the Plinth web interface. </para>
+        <para>Using the modules capability to serve documents requires just to place the documents in the designated directory in a Plinth user's home directory in the filesystem. </para>
+        <para>This directory is: <emphasis role="strong">public_html</emphasis> </para>
+        <para>Thus the absolute path for the directory of a user named fbx with home directory in /home/fbx will be <emphasis role="strong">/home/fbx/public_html</emphasis>. Apache mod_userdir will serve documents placed in this directory when requests for documents with the URI path "~fbx" are received. For the the example.org domain thus a request for the document example.org/~fbx/index.html will transfer the file in /home/fbx/public_html/index.html. </para>
+      </section>
+      <section>
+        <title>Using SFTP to create public_html and upload documents</title>
+        <para>
+          <remark>To be written</remark>
+        </para>
+      </section>
+    </section>
     <section>
       <title>Anonymity Network (Tor)</title>
       <section>
@@ -1175,20 +1212,20 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
       </section>
       <section>
         <title>Synchronizing with your Android phone</title>
-        <para>There are various Apps that allow integration with the Radicale server. This example uses DAVdroid, which is available e.g. on <ulink url="https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid">F-Droid</ulink>.   If you intend to use ToDo-Lists as well, the compatible app <ulink url="https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks">OpenTasks</ulink> has to be installed first. </para>
+        <para>There are various Apps that allow integration with the Radicale server. This example uses DAVx5, which is available e.g. on <ulink url="https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid">F-Droid</ulink>.   If you intend to use ToDo-Lists as well, the compatible app <ulink url="https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks">OpenTasks</ulink> has to be installed first. </para>
         <para>Follow these steps for setting up your account with the Radicale server running on your FreedomBox. </para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>Install DAVdroid </para>
+            <para>Install DAVx5 </para>
           </listitem>
           <listitem>
-            <para>Create a new account on DAVdroid by clicking on the floating + button. </para>
+            <para>Create a new account on DAVx5 by clicking on the floating + button. </para>
           </listitem>
           <listitem>
-            <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/radicale/&lt;username&gt;/"/></emphasis> (see the first screenshot below). DAVdroid will be able to discover both CalDAV and WebDAV accounts for the user.  </para>
+            <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;"/></emphasis> (see the first screenshot below). DAVx5 will be able to discover both CalDAV and WebDAV accounts for the user.  </para>
           </listitem>
           <listitem>
-            <para>Follow this video from <ulink url="https://www.davdroid.com/faq/existing-contacts-are-not-synced">DAVdroid FAQ</ulink> to learn how to migrate your existing contacts to Radicale. </para>
+            <para>Follow this video from <ulink url="https://www.davdroid.com/faq/existing-contacts-are-not-synced">DAVx5 FAQ</ulink> to learn how to migrate your existing contacts to Radicale. </para>
           </listitem>
         </orderedlist>
         <para>
@@ -1208,7 +1245,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
               <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-setup-account.png" width="288"/>
             </imageobject>
             <textobject>
-              <phrase>DAVdroid account setup</phrase>
+              <phrase>DAVx5 account setup</phrase>
             </textobject>
           </inlinemediaobject>
           <inlinemediaobject>
@@ -1216,7 +1253,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
               <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-refresh.png" width="288"/>
             </imageobject>
             <textobject>
-              <phrase>DAVdroid refresh</phrase>
+              <phrase>DAVx5 refresh</phrase>
             </textobject>
           </inlinemediaobject>
           <inlinemediaobject>
@@ -1224,7 +1261,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
               <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-sync-account.png" width="288"/>
             </imageobject>
             <textobject>
-              <phrase>DAVdroid account sync</phrase>
+              <phrase>DAVx5 account sync</phrase>
             </textobject>
           </inlinemediaobject>
         </para>
@@ -1276,44 +1313,6 @@ file = /etc/radicale/rights]]></screen>
         <section>
           <title>Importing files</title>
           <para>If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf. </para>
-        </section>
-        <section>
-          <title>Installing Radicale on ''testing'' version of Freedombox</title>
-          <para>Radicale is currently not included in the <emphasis>testing</emphasis> version of Freedombox, but can be installed by temporarily using files from the <emphasis>unstable</emphasis> version. Use SSH to connect to your Freedombox: </para>
-          <itemizedlist>
-            <listitem override="none">
-              <screen><![CDATA[ssh username@freedombox.local]]></screen>
-            </listitem>
-          </itemizedlist>
-          <para>Then edit the sources for the Freedombox software repositories: </para>
-          <itemizedlist>
-            <listitem override="none">
-              <screen><![CDATA[sudo apt edit-sources]]></screen>
-            </listitem>
-          </itemizedlist>
-          <para>This will open a command line text editor. Edit the list as seen below. Add one line with the unstable sources and disable the other sources by turning them into comments by adding # in front: </para>
-          <itemizedlist>
-            <listitem override="none">
-              <screen><![CDATA[    deb http://deb.debian.org/debian unstable main
-
-    #deb http://deb.debian.org/debian testing main
-    #deb-src http://deb.debian.org/debian testing main
-
-    #deb http://deb.debian.org/debian testing-updates main
-    #deb-src http://deb.debian.org/debian testing-updates main
-
-    #deb http://security.debian.org/debian-security/ testing/updates main
-    #deb-src http://security.debian.org/debian-security/ testing/updates main ]]></screen>
-            </listitem>
-          </itemizedlist>
-          <para>After saving this file, refresh the sources: </para>
-          <itemizedlist>
-            <listitem override="none">
-              <screen><![CDATA[sudo apt update]]></screen>
-            </listitem>
-          </itemizedlist>
-          <para>Then you may install Radicale from Plinth. </para>
-          <para>Afterwards, reverse the changes to the software sources list so automatic updates may be processed properly - <emphasis role="strong">important for the security of your Freedombox</emphasis>. </para>
         </section>
       </section>
     </section>
@@ -1371,29 +1370,25 @@ file = /etc/radicale/rights]]></screen>
     <section>
       <title>Chat Server (Matrix Synapse)</title>
       <section>
-        <title>What is the Matrix?</title>
-        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end to end encrypted communication and audio/video calls.  Each instance of a Matrix server federates with other instances such that all your contacts need not hold accounts on your server.  <ulink url="https://matrix.org/docs/guides/faq.html">See</ulink> more detailed info about Matrix. </para>
-        <para><emphasis role="strong">Note:</emphasis> The Matrix Synapse is available in FreedomBox starting with Plinth version 0.14. </para>
+        <title>What is Matrix?</title>
+        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end-to-end encrypted communication and audio/video calls.   Matrix Synapse is a federated application where chat rooms can exist on any server and users from any server in the federated network can join them.  <ulink url="https://matrix.org/docs/guides/faq.html">Learn more</ulink> about Matrix. </para>
+        <para><emphasis role="strong">Available since:</emphasis> version 0.14.0 </para>
       </section>
       <section>
-        <title>How to access the Matrix?</title>
-        <para>We recommend the <ulink url="https://riot.im">Riot</ulink> client to access the Matrix server. You can <ulink url="https://riot.im/desktop.html">download</ulink> Riot for desktops.  Mobile applications for Android and iOS are available from app stores. </para>
+        <title>How to access your Matrix Synapse server?</title>
+        <para>We recommend the <ulink url="https://riot.im">Riot</ulink> client to access the Matrix Synapse server. You can <ulink url="https://riot.im/desktop.html">download</ulink> Riot for desktops.  Mobile applications for Android and iOS are available from their respective app stores. </para>
       </section>
       <section>
-        <title>Setting up your FreedomBox for Matrix</title>
+        <title>Setting up Matrix Synapse on your FreedomBox</title>
         <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
-        <itemizedlist>
-          <listitem>
-            <para>
-              <ulink url="https://github.com/matrix-org/synapse/blob/master/README.rst">System requirements:</ulink>
-              <emphasis>At least 1GB of free RAM if you want to join large public rooms like #matrix:matrix.org</emphasis>
-            </para>
-          </listitem>
-        </itemizedlist>
       </section>
       <section>
         <title>Federating with other Matrix instances</title>
         <para>You will be able to interact with any other person running another Matrix instance.  This is done by simply starting a conversation with them using their matrix ID which is of the format <code>@their-username:their-domain</code>.  You can also join rooms which are in another server and have audio/video calls with contacts on other server. </para>
+      </section>
+      <section>
+        <title>Memory usage</title>
+        <para>The Synapse reference server implemented in Python is known to be quite RAM hungry, especially when loading large rooms with thousands of members like #matrix:matrix.org. It is recommended to avoid joining such rooms if your FreedomBox device only has 1 GiB RAM or less. Rooms with up to a hundred members should be safe to join. The Matrix team is working on a new implementation of the Matrix server written in Go called Dendrite which might perform better in low-memory environments. </para>
       </section>
     </section>
     <section>
@@ -1454,6 +1449,50 @@ file = /etc/radicale/rights]]></screen>
           <title>Sharing download links privately</title>
           <para>It is recommended to share your file download links and download passwords over encrypted channels. You can simply avoid all the above problems with instant messenger previews by using instant messengers that support encrypted conversations like Riot with <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/MatrixSynapse#">Matrix Synapse</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/ejabberd#">XMPP</ulink> (ejabberd server on FreedomBox) with clients that support end-to-end encryption. Send the download link and the download password in two separate messages (helps if your messenger supports perfect forward secrecy like XMPP with OTR). You can also share your links over PGP-encrypted email using <ulink url="https://securityinabox.org/en/guide/thunderbird/linux/">Thunderbird</ulink>.  </para>
         </section>
+      </section>
+    </section>
+    <section>
+      <title>File Sharing (MLDonkey)</title>
+      <section>
+        <title>What is MLDonkey?</title>
+        <para>MLDonkey is an open-source, multi-protocol, peer-to-peer file sharing application that runs as a back-end server application on many platforms. It can be controlled through a user interface provided by one of many separate front-ends, including a Web interface, telnet interface and over a dozen native client programs. </para>
+        <para>Originally a Linux client for the eDonkey protocol, it now runs on many flavors of Unix-like, OS X, Microsoft Windows and MorphOS and supports numerous peer-to-peer protocols including ED2K (and Kademlia and Overnet), BitTorrent, DC++ and more. </para>
+        <para>Read more about MLDonkey at <ulink url="http://mldonkey.sourceforge.net/Main_Page">the MLDonkey Project Wiki</ulink> </para>
+        <para><emphasis role="strong">Available since:</emphasis>  version 0.48.0 </para>
+      </section>
+      <section>
+        <title>Screenshot</title>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MLDonkey?action=AttachFile&amp;do=get&amp;target=mldonkey.jpg" width="800"/>
+            </imageobject>
+            <textobject>
+              <phrase>MLDonkey Web Interface</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
+      <section>
+        <title>Using MLDonkey Web Interface</title>
+        <para>After installing MLDonkey, its web interface can be accessed from FreedomBox at <code>https://&lt;your freedombox&gt;/mldonkey</code>. Users belonging to the <emphasis>ed2k</emphasis> and <emphasis>admin</emphasis> groups can access this web interface. </para>
+      </section>
+      <section>
+        <title>Using Desktop/Mobile Interface</title>
+        <para>Many <ulink url="http://mldonkey.sourceforge.net/Gui">desktop and mobile applications</ulink> can be used to control MLDonkey. MLDonkey server will always be running on FreedomBox. It will download files (or upload them) and store them on FreedomBox even when your local machine is not running or connected to MLDonkey on FreedomBox. Only users of <emphasis>admin</emphasis> group can access MLDonkey on FreedomBox using desktop or mobile clients. This is due to restrictions on which group of users have SSH access into FreedomBox. </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Create an admin user or use an existing admin user. </para>
+          </listitem>
+          <listitem>
+            <para>On your desktop machine, open a terminal and run the following command. It is recommended that you configure and use SSH keys instead of passwords for the this step. </para>
+            <screen><![CDATA[$ ssh -L 4001:localhost:4001 -N exampleuser@example.freedombox.rocks]]></screen>
+          </listitem>
+          <listitem>
+            <para>Start the GUI application and then connect it to MLDonkey as if MLDonkey is running on the local desktop machine. After you are done, terminate the SSH command by pressing Control-C. </para>
+          </listitem>
+        </orderedlist>
+        <para>See MLDonkey documentation for <ulink url="http://mldonkey.sourceforge.net/SshTunnel">SSH Tunnel</ulink> for more information. </para>
       </section>
     </section>
     <section>
@@ -2459,50 +2498,6 @@ proto udp]]></screen>
             <para>Login as the new admin user using "Login with HTTP auth". </para>
           </listitem>
         </orderedlist>
-      </section>
-    </section>
-    <section>
-      <title>File Sharing (MLDonkey)</title>
-      <section>
-        <title>What is MLDonkey?</title>
-        <para>MLDonkey is an open-source, multi-protocol, peer-to-peer file sharing application that runs as a back-end server application on many platforms. It can be controlled through a user interface provided by one of many separate front-ends, including a Web interface, telnet interface and over a dozen native client programs. </para>
-        <para>Originally a Linux client for the eDonkey protocol, it now runs on many flavors of Unix-like, OS X, Microsoft Windows and MorphOS and supports numerous peer-to-peer protocols including ED2K (and Kademlia and Overnet), BitTorrent, DC++ and more. </para>
-        <para>Read more about MLDonkey at <ulink url="http://mldonkey.sourceforge.net/Main_Page">the MLDonkey Project Wiki</ulink> </para>
-        <para><emphasis role="strong">Available since:</emphasis>  version 0.48.0 </para>
-      </section>
-      <section>
-        <title>Screenshot</title>
-        <para>
-          <inlinemediaobject>
-            <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MLDonkey?action=AttachFile&amp;do=get&amp;target=mldonkey.jpg" width="800"/>
-            </imageobject>
-            <textobject>
-              <phrase>MLDonkey Web Interface</phrase>
-            </textobject>
-          </inlinemediaobject>
-        </para>
-      </section>
-      <section>
-        <title>Using MLDonkey Web Interface</title>
-        <para>After installing MLDonkey, its web interface can be accessed from FreedomBox at <code>https://&lt;your freedombox&gt;/mldonkey</code>. Users belonging to the <emphasis>ed2k</emphasis> and <emphasis>admin</emphasis> groups can access this web interface. </para>
-      </section>
-      <section>
-        <title>Using Desktop/Mobile Interface</title>
-        <para>Many <ulink url="http://mldonkey.sourceforge.net/Gui">desktop and mobile applications</ulink> can be used to control MLDonkey. MLDonkey server will always be running on FreedomBox. It will download files (or upload them) and store them on FreedomBox even when your local machine is not running or connected to MLDonkey on FreedomBox. Only users of <emphasis>admin</emphasis> group can access MLDonkey on FreedomBox using desktop or mobile clients. This is due to restrictions on which group of users have SSH access into FreedomBox. </para>
-        <orderedlist numeration="arabic">
-          <listitem>
-            <para>Create an admin user or use an existing admin user. </para>
-          </listitem>
-          <listitem>
-            <para>On your desktop machine, open a terminal and run the following command. It is recommended that you configure and use SSH keys instead of passwords for the this step. </para>
-            <screen><![CDATA[$ ssh -L 4001:localhost:4001 -N exampleuser@example.freedombox.rocks]]></screen>
-          </listitem>
-          <listitem>
-            <para>Start the GUI application and then connect it to MLDonkey as if MLDonkey is running on the local desktop machine. After you are done, terminate the SSH command by pressing Control-C. </para>
-          </listitem>
-        </orderedlist>
-        <para>See MLDonkey documentation for <ulink url="http://mldonkey.sourceforge.net/SshTunnel">SSH Tunnel</ulink> for more information. </para>
       </section>
     </section>
   </section>
@@ -8784,6 +8779,32 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.1 (2019-02-14)</title>
+        <itemizedlist>
+          <listitem>
+            <para>radicale: Increment module version to trigger upgrade handling </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Remove obsolete diagnostics </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Fix server URLs in client info </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, Norwegian Bokmål, and Spanish. </para>
+          </listitem>
+          <listitem>
+            <para>setup: Add option to handle configuration prompts during install </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Simplify upgrading to newer packages </para>
+          </listitem>
+          <listitem>
+            <para>matrixsynapse: Use Let's Encrypt certificates </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.0 (2019-02-09)</title>
         <itemizedlist>
