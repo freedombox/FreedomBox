@@ -30,7 +30,7 @@ from plinth.modules import firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
 
-version = 1
+version = 2
 
 is_essential = True
 
@@ -74,6 +74,8 @@ def get_default_app():
         if aug.get(match + "/arg[1]") == '''"^/$"''':
             app_path = aug.get(match + "/arg[2]")
 
+    # match this against the app_id in the entries of frontpage.get_shortcuts()
+    # The underscore is to handle Ikiwiki app_ids
     return app_path.strip('/"').replace('/', '_')
 
 
@@ -100,3 +102,22 @@ def init():
                                  name=domainname,
                                  description=ugettext_lazy('Domain Name'),
                                  services=domainname_services)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    _migrate_default_app_config()
+
+
+def _migrate_default_app_config():
+    """Move the default app configuration to an external file."""
+
+    # Hold the current default app in a variable
+    default_app_path = get_default_app().replace('_', '/')
+
+    # Reset the default app to plinth in freedombox.conf
+    actions.superuser_run('config', ['reset-default-app'])
+
+    # Write the default app setting into the new conf file
+    # This step is run at the end because it reloads the Apache server
+    actions.superuser_run('config', ['set-default-app', default_app_path])
