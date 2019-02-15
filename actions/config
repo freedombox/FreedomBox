@@ -21,12 +21,10 @@ Configuration helper for FreedomBox general configuration.
 """
 
 import argparse
-
-import augeas
+import os
 
 from plinth import action_utils
-
-APACHE_CONFIGURATION = '/etc/apache2/conf-available/freedombox.conf'
+from plinth.modules.config import DEFAULT_APP_CONF_FILE_NAME
 
 
 def parse_arguments():
@@ -44,24 +42,15 @@ def parse_arguments():
 
 def subcommand_set_default_app(arguments):
     """Set the default app for this FreedomBox."""
-    app = arguments.app
+    conf_file_path = os.path.join('/etc/apache2/conf-available',
+                                  DEFAULT_APP_CONF_FILE_NAME)
 
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    aug.set('/augeas/load/Httpd/incl[last() + 1]', APACHE_CONFIGURATION)
-    aug.load()
+    redirect_rule = 'RedirectMatch "^/$" "/{}"\n'.format(arguments.app)
 
-    aug.defvar('conf', '/files' + APACHE_CONFIGURATION)
+    with open(conf_file_path, 'w') as conf_file:
+        conf_file.write(redirect_rule)
 
-    for match in aug.match('/files' + APACHE_CONFIGURATION +
-                           '/directive["RedirectMatch"]'):
-        if aug.get(match + "/arg[1]") == '''"^/$"''':
-            aug.set(match + "/arg[2]", '"/{}/"'.format(app))
-
-    aug.save()
-
-    action_utils.service_reload('apache2')
+    action_utils.webserver_enable('default-app')
 
 
 def main():

@@ -18,6 +18,7 @@
 FreedomBox app for basic system configuration.
 """
 
+import os
 import socket
 
 import augeas
@@ -37,6 +38,13 @@ depends = ['firewall', 'names']
 
 manual_page = 'Configure'
 
+APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
+DEFAULT_APP_CONF_FILE_NAME = 'default-app.conf'
+DEFAULT_APP_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
+                                         DEFAULT_APP_CONF_FILE_NAME)
+FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
+                                        'freedombox.conf')
+
 
 def get_domainname():
     """Return the domainname"""
@@ -51,22 +59,22 @@ def get_hostname():
 
 def get_default_app():
     """Get the default application for the domain."""
-    APACHE_CONFIGURATION = '/etc/apache2/conf-available/freedombox.conf'
-
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    aug.set('/augeas/load/Httpd/incl[last() + 1]', APACHE_CONFIGURATION)
+    conf_file = DEFAULT_APP_APACHE_CONFIG if os.path.exists(
+        DEFAULT_APP_APACHE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
+    aug.set('/augeas/load/Httpd/incl[last() + 1]', conf_file)
     aug.load()
 
-    aug.defvar('conf', '/files' + APACHE_CONFIGURATION)
+    aug.defvar('conf', '/files' + conf_file)
 
-    for match in aug.match('/files' + APACHE_CONFIGURATION +
+    for match in aug.match('/files' + conf_file +
                            '/directive["RedirectMatch"]'):
         if aug.get(match + "/arg[1]") == '''"^/$"''':
             app_path = aug.get(match + "/arg[2]")
 
-    return app_path.strip('"').strip('/')
+    return app_path.strip('/"')
 
 
 def init():
