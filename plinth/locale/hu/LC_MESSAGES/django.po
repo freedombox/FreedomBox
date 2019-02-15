@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-14 05:47-0500\n"
 "PO-Revision-Date: 2019-02-16 17:19+0000\n"
-"Last-Translator: danielwine <danielwine@tutamail.com>\n"
+"Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
 "Language: hu\n"
@@ -252,10 +252,8 @@ msgid "Create new repository"
 msgstr "Új tároló létrehozása"
 
 #: plinth/modules/backups/templates/backups.html:61
-#, fuzzy
-#| msgid "+ Add Remote Repository"
 msgid "Add Remote Repository"
-msgstr "+ Távoli tároló hozzáadása"
+msgstr "Távoli tároló hozzáadása"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -341,21 +339,14 @@ msgstr "Adatok visszaállítása ebből:"
 #: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/views.py:186
 msgid "Restore"
-msgstr "Visszaállítás"
+msgstr "Visszaállít"
 
 #: plinth/modules/backups/templates/backups_restore.html:47
-#, fuzzy
-#| msgid "Restore"
 msgid "Restoring"
 msgstr "Visszaállítás"
 
 #: plinth/modules/backups/templates/backups_upload.html:30
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      You can choose the apps you wish to import after uploading a backup "
-#| "file.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
@@ -366,8 +357,11 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      A biztonsági másolat feltöltése után kiválaszthatod az importálni "
-"kívánt alkalmazásokat.\n"
+"      Töltsd fel a biztonsági másolatot amit egy másik %(box_name)s "
+"eszközről\n"
+"      töltöttél le ahhoz, hogy helyreállítsd a tartalmát.\n"
+"      Miután feltöltötted, kiválaszthatod a visszaállítani kívánt "
+"alkalmazásokat.\n"
 "    "
 
 #: plinth/modules/backups/templates/backups_upload.html:40
@@ -376,17 +370,14 @@ msgid "Caution:"
 msgstr "Vigyázat:"
 
 #: plinth/modules/backups/templates/backups_upload.html:41
-#, fuzzy, python-format
-#| msgid ""
-#| "WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
-#| "Exceeding this limit can leave your %(box_name)s unusable."
+#, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
-"FIGYELMEZTETÉS: %(max_filesize)s szabad tárterület elérhető a biztonsági "
-"mentés helyreállítására.<br /> E korlát meghaladása használhatatlanná teheti "
-"a %(box_name)s eszközöd."
+"%(max_filesize)s szabad tárterület elérhető a biztonsági mentés "
+"helyreállítására. E korlát meghaladása használhatatlanná teheti a %(box_name)"
+"s eszközöd."
 
 #: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
@@ -739,7 +730,7 @@ msgstr ""
 
 #: plinth/modules/datetime/__init__.py:91
 msgid "Time synchronized to NTP server"
-msgstr ""
+msgstr "Az idő szinkronizálva van az NTP kiszolgálóhoz"
 
 #: plinth/modules/datetime/forms.py:36
 msgid "Time Zone"
@@ -1971,12 +1962,7 @@ msgid "Certificate renewal management and use by other modules"
 msgstr "Tanúsítvány megújítási kezelés és más modulok általi használata"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:140
-#, fuzzy, python-format
-#| msgid ""
-#| "If you have a Let's Encrypt certificate for your current domain, you may "
-#| "let %(box_name)s manage its renewal process. This also enables other apps "
-#| "to use that certificate, so most users would not prompted with security "
-#| "warnings when using them."
+#, python-format
 msgid ""
 "If you have a Let's Encrypt certificate for your current domain, you may let "
 "%(box_name)s manage its renewal process. This also enables other apps to use "
@@ -1984,10 +1970,10 @@ msgid ""
 "when using them."
 msgstr ""
 "Ha van Let's Encrypt tanúsítványod a jelenlegi doménedhez, akkor "
-"meghagyhatod a %(box_name)s eszközödnek a megújítás kezelésének folyamatát. "
-"Ez lehetővé teszi más alkalmazások számára is a tanúsítvány használatát, így "
-"a legtöbb felhasználó nem fog biztonsági figyelmeztetéseket kapni amikor "
-"azokat használná."
+"meghagyhatod a %(box_name)s eszközödnek a megújítás kezelését. Ez lehetővé "
+"teszi más alkalmazások számára is a tanúsítvány használatát, így a "
+"felhasználók nem fognak biztonsági figyelmeztetéseket kapni amikor azokat "
+"használnák."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:169
@@ -2068,25 +2054,18 @@ msgstr ""
 "kell a jelenlegi domain tanúsítvány megújítását."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:281
-#, fuzzy, python-format
-#| msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
+#, python-format
 msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
 msgstr ""
-"Tanúsítvány használata %(current_domain)s domain-ben az <b>ejabberd</b>-hez"
+"Tanúsítvány használata %(current_domain)s doménben az "
+"<b>matrixsynapse</b>-hez"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:285
-#, fuzzy
-#| msgid "Use certificate of the current domain for <b>ejabberd</b>"
 msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
-msgstr "Tanúsítvány használata a jelenlegi domain-ben az <b>ejabberd</b>-hez"
+msgstr "Tanúsítvány használata a jelenlegi doménben az <b>matrixsynapse</b>-hez"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:295
-#, fuzzy, python-format
-#| msgid ""
-#| "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also "
-#| "use the Let's Encrypt certificate. This will reduce warnings about self-"
-#| "signed certificates in client applications, and enable more wide-spread "
-#| "federation with other XMPP servers in the Internet."
+#, python-format
 msgid ""
 "If enabled, the app <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a> "
 "will also use the same Let's Encrypt certificate. Other Matrix Synapse "
@@ -2094,38 +2073,32 @@ msgid ""
 "valid TLS certificate. Federation with other instances will not work without "
 "this."
 msgstr ""
-"Ha engedélyezett, az <a href=\"%(ejabberd_url)s\">ejabberd</a> alkalmazás "
-"szintén a Let's Encrypt tanúsítványt fogja használni. Ez csökkenteni fogja a "
-"kliens alkalmazásokban az önaláírt tanúsítványokról szóló "
-"figyelmeztetéseket, valamint lehetővé teszi az interneten található többi "
-"XMPP kiszolgálóval való szélesebb körű együttműködést."
+"Ha engedélyezett, a <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a> "
+"alkalmazás szintén a Let's Encrypt tanúsítványt fogja használni. Más, a "
+"Matrix Synapse 1.0 vagy magasabb verzióját futtató példányok elvárják a "
+"kiszolgálódtól hogy érvényes TLS tanúsítványt adjon. E nélkül a más "
+"példányokkal való szövetség nem fog működni."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
-#, fuzzy, python-format
-#| msgid ""
-#| "This feature only makes sense if you are using the <a href="
-#| "\"%(ejabberd_url)s\">ejabberd</a> chat server app."
+#, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Ennek a funkciónak csak akkor van értelme, ha az <a href=\"%(ejabberd_url)s"
-"\">ejabberd</a> chat kiszolgáló alkalmazást használod."
+"Ennek a funkciónak csak akkor van értelme, ha a <a href=\""
+"%(matrixsynapse_url)s\">Matrix Synapse</a> chat kiszolgáló alkalmazást "
+"használod."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
-#, fuzzy, python-format
-#| msgid ""
-#| "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
-#| "\">ejabberd</a> chat server app, you must first enable certificate "
-#| "renewal of the current domain."
+#, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(matrixsynapse_url)s"
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Ahhoz, hogy a Let's Encrypt tanúsítványt használd az <a href="
-"\"%(ejabberd_url)s\">ejabberd</a> chat kiszolgálóhoz, előbb engedélyezned "
-"kell a jelenlegi domain tanúsítvány megújítását."
+"Ahhoz, hogy a Let's Encrypt tanúsítványt használd a <a href=\""
+"%(matrixsynapse_url)s\">Matrix Synapse</a> chat kiszolgálóhoz, előbb "
+"engedélyezned kell a jelenlegi domén tanúsítvány megújítását."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
 msgid ""
@@ -2312,6 +2285,14 @@ msgid ""
 "        Encrypt</a> to obtain one.\n"
 "      "
 msgstr ""
+"\n"
+"        A beállított doménnév ön-aláírt tanúsítványt használ.\n"
+"        A többi Matrix Synapse példányokkal való szövetséghez egy érvényes "
+"TLS\n"
+"        tanúsítványra lesz szükséged. Kérlek, látogasd meg a <a href=\""
+"%(letsencrypt_url)s\">Let's\n"
+"        Encrypt</a> weboldalát ahhoz, hogy beszerezz egyet.\n"
+"      "
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -2514,16 +2495,12 @@ msgstr "Sérülés beállítás frissítve"
 
 #: plinth/modules/mldonkey/__init__.py:37
 #: plinth/modules/mldonkey/manifest.py:27
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "MLDonkey"
-msgstr "Monkeysphere"
+msgstr "MLDonkey"
 
 #: plinth/modules/mldonkey/__init__.py:39
-#, fuzzy
-#| msgid "File Sharing"
 msgid "Peer-to-peer File Sharing"
-msgstr "Fájlmegosztás"
+msgstr "P2P Fájlmegosztás"
 
 #: plinth/modules/mldonkey/__init__.py:42
 msgid ""
@@ -2531,6 +2508,9 @@ msgid ""
 "files. It can participate in multiple peer-to-peer networks including "
 "eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
 msgstr ""
+"Az MLDonkey egy P2P fájlmegosztó alkalmazás amit nagy méretű fájlok "
+"cseréjéhez használnak. Részt tud venni többféle P2P hálózatban is, beleértve "
+"az eDonkey-t, Kademlia-t, Overnet-et, BitTorrent-et és a DirectConnect-et."
 
 #: plinth/modules/mldonkey/__init__.py:45
 msgid ""
@@ -2538,28 +2518,30 @@ msgid ""
 "interface. Users in the admin group can also control it through any of the "
 "separate mobile or desktop front-ends or a telnet interface. See manual."
 msgstr ""
+"Az admin és az ed2k csoportokba tartozó felhasználók tudják irányítani webes "
+"felületen keresztül. Továbbá az admin csoport felhasználói irányíthatják "
+"bármely, külön mobil vagy asztali kezelőfelületen vagy telnet interfészen "
+"keresztül. További részletek a kézikönyvben."
 
 #: plinth/modules/mldonkey/__init__.py:50
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
 msgstr ""
+"{box_name} eszközön a letöltött fájlok a /var/lib/mldonkey/ könyvtárban "
+"találhatóak meg."
 
 #: plinth/modules/mldonkey/__init__.py:58
 msgid "Download files using eDonkey applications"
 msgstr "Fájlok letöltése eDonkey alkalmazások használatával"
 
 #: plinth/modules/mldonkey/manifest.py:34
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "KMLDonkey"
-msgstr "Monkeysphere"
+msgstr "KMLDonkey"
 
 #: plinth/modules/mldonkey/manifest.py:46
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "AMLDonkey"
-msgstr "Monkeysphere"
+msgstr "AMLDonkey"
 
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
@@ -4050,19 +4032,14 @@ msgid "DAVx5"
 msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:27
-#, fuzzy
-#| msgid ""
-#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
-#| "your user name. DAVx5 will show all existing calendars and address books "
-#| "and you can create new."
 msgid ""
 "Enter the URL of the Radicale server (e.g. https://<your.freedombox."
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Add meg a Radicale kiszolgáló URL címét (pl.: http://localhost:5232) és a "
-"felhasználónevet. A DAVx5 meg fogja mutatni az összes elérhető naptárt és "
-"címjegyzéket, és létre is hozhatsz újakat."
+"Add meg a Radicale kiszolgáló URL címét (pl.: https://<te.freedombox.cimed>) "
+"és a felhasználónevet. A DAVx5 meg fogja mutatni az összes elérhető naptárt "
+"és címjegyzéket, és létre is hozhatsz újakat."
 
 #: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
@@ -4085,12 +4062,6 @@ msgstr ""
 "naptár és címjegyzék funkcionalitással."
 
 #: plinth/modules/radicale/manifest.py:78
-#, fuzzy
-#| msgid ""
-#| "In Evolution add a new calendar and address book respectively with "
-#| "WebDAV. Enter the URL of the Radicale server (e.g. http://localhost:5232) "
-#| "and your user name. Clicking on the search button will list the existing "
-#| "calendars and address books."
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. https://<your.freedombox."
@@ -4098,8 +4069,8 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "Az Evolution-ben adj hozzá egy új naptárt illetve címjegyzéket WebDAV-val. "
-"Add meg a Radicale kiszolgáló URL címét (pl.: http://localhost:5232) és a "
-"felhasználónevet. A keresés gombra kattintva ki lesz listázva az összes "
+"Add meg a Radicale kiszolgáló URL címét (pl.: https://<te.freedombox.cimed>) "
+"és a felhasználónevet. A keresés gombra kattintva ki lesz listázva az összes "
 "elérhető naptár és címjegyzék."
 
 #: plinth/modules/radicale/views.py:55
@@ -4506,31 +4477,31 @@ msgstr "Megosztás hozzáadása"
 
 #: plinth/modules/sharing/templates/sharing.html:51
 msgid "No shares currently configured."
-msgstr ""
+msgstr "Jelenleg nincs beállított megosztás."
 
 #: plinth/modules/sharing/templates/sharing.html:57
 msgid "Disk Path"
-msgstr ""
+msgstr "Lemez elérési útja"
 
 #: plinth/modules/sharing/templates/sharing.html:58
 msgid "Shared Over"
-msgstr ""
+msgstr "Megosztva ezen keresztül"
 
 #: plinth/modules/sharing/templates/sharing.html:59
 msgid "With Groups"
-msgstr ""
+msgstr "Ezekkel a csoportokkal"
 
 #: plinth/modules/sharing/views.py:54
 msgid "Share added."
-msgstr ""
+msgstr "Megosztás hozzáadva."
 
 #: plinth/modules/sharing/views.py:59
 msgid "Add Share"
-msgstr ""
+msgstr "Megosztás hozzáadása"
 
 #: plinth/modules/sharing/views.py:75
 msgid "Share edited."
-msgstr ""
+msgstr "Megosztás szerkesztve."
 
 #: plinth/modules/sharing/views.py:80
 msgid "Edit Share"
@@ -4550,6 +4521,10 @@ msgid ""
 "can be used to roll back the system to a previously known good state in case "
 "of unwanted changes to the system."
 msgstr ""
+"A Pillanatképek lehetővé teszi a btrfs fájlrendszer pillanatképek "
+"létrehozását és kezelését. Ezek felhasználhatók a rendszer egy korábbi, jól "
+"működő állapotába való visszaállítására abban az esetben, ha nem kívánt "
+"változtatások történtek a rendszerben."
 
 #: plinth/modules/snapshot/__init__.py:43
 #, no-python-format
@@ -4558,6 +4533,10 @@ msgid ""
 "and after a software installation. Older snapshots will be automatically "
 "cleaned up according to the settings below."
 msgstr ""
+"Pillanatképek rendszeresen készülnek (ún. ütemterv szerinti pillanatképek), "
+"és a szoftverek telepítése előtt ill. után is létrejönnek.\n"
+"A régebbi pillanatképek automatikusan ki lesznek takarítva az alábbi "
+"beállítások szerint."
 
 #: plinth/modules/snapshot/__init__.py:46
 msgid ""
@@ -4565,10 +4544,14 @@ msgid ""
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
+"A Pillanatképek jelenleg csak btrfs fájlrendszeren működik, és annak is csak "
+"a root partícióján. A Pillanatképek nem helyettesíti a <a href=\"/plinth/sys/"
+"backups\">Biztonsági mentést</a>, mivel a pillanatképek csak ugyanazon a "
+"partíción tárolhatók amikről készülnek. "
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Free Disk Space to Maintain"
-msgstr ""
+msgstr "A fenntartott szabad lemezterület"
 
 #: plinth/modules/snapshot/forms.py:28
 msgid ""
@@ -4576,104 +4559,113 @@ msgid ""
 "below this value, older snapshots are removed until this much free space is "
 "regained. The default value is 30%."
 msgstr ""
+"A fenntartott szabad lemezterület (százalékban). Ha a szabad terület aránya "
+"ezen szint alá esik, akkor annyi régebbi pillanatkép lesz eltávolítva amíg "
+"vissza nem áll a beállított arány. Ez alapértelmezetten 30%."
 
 #: plinth/modules/snapshot/forms.py:35
 msgid "Timeline Snapshots"
-msgstr ""
+msgstr "Ütemterv szerinti pillanatképek"
 
 #: plinth/modules/snapshot/forms.py:36
 msgid ""
 "Enable or disable timeline snapshots (hourly, daily, monthly and yearly)."
 msgstr ""
+"Ütemterv szerinti pillanatképek (óránkénti, napi, havi és évi) engedélyezése "
+"vagy letiltása."
 
 #: plinth/modules/snapshot/forms.py:41
 msgid "Software Installation Snapshots"
-msgstr ""
+msgstr "Szoftver telepítési pillanatképek"
 
 #: plinth/modules/snapshot/forms.py:42
 msgid "Enable or disable snapshots before and after software installation"
 msgstr ""
+"Pillanatképek készítésének engedélyezése vagy letiltása szoftver telepítése "
+"előtt és után."
 
 #: plinth/modules/snapshot/forms.py:46
 msgid "Hourly Snapshots Limit"
-msgstr ""
+msgstr "Óránkénti pillanatképek korlátja"
 
 #: plinth/modules/snapshot/forms.py:47
 msgid "Keep a maximum of this many hourly snapshots."
-msgstr ""
+msgstr "Legfeljebb ennyi óránkénti pillanatkép legyen megtartva."
 
 #: plinth/modules/snapshot/forms.py:50
 msgid "Daily Snapshots Limit"
-msgstr ""
+msgstr "Napi pillanatképek korlátja"
 
 #: plinth/modules/snapshot/forms.py:51
 msgid "Keep a maximum of this many daily snapshots."
-msgstr ""
+msgstr "Legfeljebb ennyi napi pillanatkép legyen megtartva."
 
 #: plinth/modules/snapshot/forms.py:54
 msgid "Weekly Snapshots Limit"
-msgstr ""
+msgstr "Heti pillanatképek korlátja"
 
 #: plinth/modules/snapshot/forms.py:55
 msgid "Keep a maximum of this many weekly snapshots."
-msgstr ""
+msgstr "Legfeljebb ennyi heti pillanatkép legyen megtartva."
 
 #: plinth/modules/snapshot/forms.py:58
 msgid "Monthly Snapshots Limit"
-msgstr ""
+msgstr "Havi pillanatképek korlátja"
 
 #: plinth/modules/snapshot/forms.py:59
 msgid "Keep a maximum of this many monthly snapshots."
-msgstr ""
+msgstr "Legfeljebb ennyi havi pillanatkép legyen megtartva."
 
 #: plinth/modules/snapshot/forms.py:62
 msgid "Yearly Snapshots Limit"
-msgstr ""
+msgstr "Évenkénti pillanatképek korlátja"
 
 #: plinth/modules/snapshot/forms.py:63
 msgid ""
 "Keep a maximum of this many yearly snapshots. The default value is 0 "
 "(disabled)."
 msgstr ""
+"Legfeljebb ennyi évenkénti pillanatkép legyen megtartva. Az alapértelmezett "
+"érték 0 (letiltva)."
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:27
 msgid "Delete the following snapshots permanently?"
-msgstr ""
+msgstr "Véglegesen törlöd az alábbi pillanatképeket?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:31
 #: plinth/modules/snapshot/templates/snapshot_manage.html:43
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:39
 msgid "Number"
-msgstr ""
+msgstr "Sorszám"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:32
 #: plinth/modules/snapshot/templates/snapshot_manage.html:44
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:40
 msgid "Date"
-msgstr ""
+msgstr "Dátum"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:52
 #: plinth/modules/snapshot/templates/snapshot_manage.html:37
 #: plinth/modules/snapshot/views.py:188
 msgid "Delete Snapshots"
-msgstr ""
+msgstr "Pillanatképek törlése"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:33
 msgid "Create Snapshot"
-msgstr ""
+msgstr "Pillanatkép létrehozása"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:46
 msgid "Rollback"
-msgstr ""
+msgstr "Visszaállít"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:57
 msgid "active"
-msgstr ""
+msgstr "aktív"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:66
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
-msgstr ""
+msgstr "Visszaállítás erre a pillanatképre: %(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:26
 #, python-format
@@ -4681,10 +4673,13 @@ msgid ""
 "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
+"Az általad használt fájlrendszer típusa: <strong>%(fs_type)s</strong>. A "
+"Pillanatképek jelenleg csak a következő fájlrendszereken érhető el: "
+"<strong>%(types_supported)s</strong>."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
-msgstr ""
+msgstr "Visszaállítod a rendszert erre a pillanatképre?"
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:30
 msgid ""
@@ -4692,11 +4687,14 @@ msgid ""
 "automatically created. You will be able to undo a rollback by reverting to "
 "the newly created snapshot."
 msgstr ""
+"Egy új pillanatkép lesz automatikusan létrehozva a fájlrendszer jelenlegi "
+"állapotáról. Képes leszel visszavonni egy visszaállítást azáltal hogy "
+"visszatérsz az újonnan létrehozott pillanatképre."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:57
 #, python-format
 msgid "Rollback to Snapshot #%(number)s"
-msgstr ""
+msgstr "Visszaállítás erre a pillanatképre: %(number)s"
 
 #: plinth/modules/snapshot/views.py:43
 msgid "Manage Snapshots"
@@ -4726,6 +4724,7 @@ msgstr "Kiválasztott pillanatképek törölve"
 #: plinth/modules/snapshot/views.py:176
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
+"Pillanatkép jelenleg is használatban van. Kérlek, próbáld meg újra később."
 
 #: plinth/modules/snapshot/views.py:199
 #, python-brace-format
@@ -4751,6 +4750,10 @@ msgid ""
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
+"A Biztonságos Parancsértelmező (SSH) az SSH protokollt használja arra, hogy "
+"kapcsolatokat fogadjon távoli számítógépekről. A hitelesített távoli "
+"számítógép felügyeleti feladatokat hajthat végre, fájlokat másolhat vagy "
+"egyéb szolgáltatásokat futtathat ilyen kapcsolat használatával."
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -4771,6 +4774,10 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
+"Ez a modul lehetővé teszi számodra hogy a Te {box_name} eszközödhöz csatolt "
+"adathordozókat kezeld. Megtekintheted a jelenleg is használt adattárolókat, "
+"fel- és lecsatolhatsz cserélhető adathordozókat, kibővítheted a root "
+"partíciót, stb."
 
 #: plinth/modules/storage/__init__.py:200
 #, python-brace-format
@@ -4870,7 +4877,7 @@ msgstr "Felhasznált"
 
 #: plinth/modules/storage/templates/storage.html:108
 msgid "Partition Expansion"
-msgstr ""
+msgstr "Partíció kibővítése"
 
 #: plinth/modules/storage/templates/storage.html:110
 #, python-format
@@ -4879,12 +4886,15 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"%(expandable_root_size)s nem kiosztott terület elérhető a root partíciót "
+"követően. A root partíció kibővíthető erre a területre. Ez további szabad "
+"területet biztosíthat a fájljaid tárolásához."
 
 #: plinth/modules/storage/templates/storage.html:120
 #: plinth/modules/storage/templates/storage_expand.html:39
 #: plinth/modules/storage/views.py:74
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Root partíció kibővítése"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4893,15 +4903,18 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Készíts biztonsági másolatot az adataidról mielőtt folytatnád. E művelet "
+"után %(expandable_root_size)s további szabad tárterület lesz elérhető a root "
+"partíción."
 
 #: plinth/modules/storage/views.py:86
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
-msgstr ""
+msgstr "Hiba a partíció kibővítése során: {exception}"
 
 #: plinth/modules/storage/views.py:89
 msgid "Partition expanded successfully."
-msgstr ""
+msgstr "A partíció kibővítése sikerült."
 
 #: plinth/modules/storage/views.py:106
 #, no-python-format, python-brace-format
@@ -4982,11 +4995,11 @@ msgstr "A Syncthing alkalmazás beállítása"
 
 #: plinth/modules/tahoe/__init__.py:40
 msgid "Tahoe-LAFS"
-msgstr ""
+msgstr "Tahoe-LAFS"
 
 #: plinth/modules/tahoe/__init__.py:42
 msgid "Distributed File Storage"
-msgstr ""
+msgstr "Elosztott fájltároló"
 
 #: plinth/modules/tahoe/__init__.py:73
 msgid ""
@@ -4995,6 +5008,10 @@ msgid ""
 "nodes. Even if some of the nodes fail, your files can be retrieved from the "
 "remaining nodes."
 msgstr ""
+"A Tahoe-LAFS egy decentralizált biztonságos fájltároló rendszer. Szolgáltató "
+"független biztonságot használ a fájlok tárolásához adattároló csomópontok "
+"elosztott hálózatán keresztül. Még ha néhány csomópont meg is hibásodik, a "
+"fájljaidat le tudod tölteni a fennmaradó csomópontokról."
 
 #: plinth/modules/tahoe/__init__.py:78
 #, python-brace-format
