@@ -20,26 +20,22 @@ Configuration helper for Tahoe-LAFS.
 """
 
 import argparse
-import augeas
 import grp
 import json
+import os
 import pwd
 import shutil
 import subprocess
 
-import os
+import augeas
 import ruamel.yaml
 
 from plinth import action_utils
-from plinth.modules.tahoe import (
-    introducer_name,
-    introducers_file,
-    storage_node_name,
-    tahoe_home,
-    introducer_furl_file)
+from plinth.modules.tahoe import (introducer_furl_file, introducer_name,
+                                  introducers_file, storage_node_name,
+                                  tahoe_home)
 from plinth.modules.tahoe.errors import TahoeConfigurationError
 from plinth.utils import YAMLFile
-
 
 domain_name_file = os.path.join(tahoe_home, 'domain_name')
 
@@ -61,30 +57,31 @@ def parse_arguments():
                           help='Create and start the introducer node')
     subparsers.add_parser('create-storage-node',
                           help='Create and start the storage node')
-    subparsers.add_parser('autostart',
-                          help="Automatically start all introducers and "
-                               "storage nodes on system startup")
+    subparsers.add_parser(
+        'autostart', help='Automatically start all introducers and '
+        'storage nodes on system startup')
     intro_parser_add = subparsers.add_parser(
         'add-introducer', help="Add an introducer to the storage node's list "
-                               "of introducers.")
+        'of introducers.')
     intro_parser_add.add_argument(
         '--introducer', help="Add an introducer to the storage node's list "
-                             "of introducers Param introducer must be a tuple "
-                             "of (pet_name, furl)")
+        'of introducers Param introducer must be a tuple '
+        'of (pet_name, furl)')
     intro_parser_remove = subparsers.add_parser(
-        'remove-introducer', help="Rename the introducer entry in the "
-                                  "introducers.yaml file specified by the "
-                                  "param")
+        'remove-introducer', help='Rename the introducer entry in the '
+        'introducers.yaml file specified by the '
+        'param')
     intro_parser_remove.add_argument(
         '--pet-name', help='The domain name that will be used by '
-                           'Tahoe-LAFS')
-    subparsers.add_parser('get-introducers',
-                          help="Return a dictionary of all introducers and "
-                               "their furls added to the storage node running "
-                               "on this FreedomBox.")
-    subparsers.add_parser('get-local-introducer',
-                          help="Return the name and furl of the introducer "
-                               "created on this FreedomBox")
+        'Tahoe-LAFS')
+    subparsers.add_parser(
+        'get-introducers', help='Return a dictionary of all introducers and '
+        'their furls added to the storage node running '
+        'on this FreedomBox.')
+    subparsers.add_parser(
+        'get-local-introducer',
+        help='Return the name and furl of the introducer '
+        'created on this FreedomBox')
 
     return parser.parse_args()
 
@@ -101,13 +98,11 @@ def subcommand_setup(arguments):
     try:
         pwd.getpwnam('tahoe-lafs')
     except KeyError:
-        subprocess.run(
-            [
-                'adduser', '--system', '--ingroup', 'tahoe-lafs',
-                '--home', '/var/lib/tahoe-lafs',
-                '--gecos', 'Tahoe-LAFS distributed file system', 'tahoe-lafs'
-            ],
-            check=True)
+        subprocess.run([
+            'adduser', '--system', '--ingroup', 'tahoe-lafs', '--home',
+            '/var/lib/tahoe-lafs', '--gecos',
+            'Tahoe-LAFS distributed file system', 'tahoe-lafs'
+        ], check=True)
 
     if not os.path.exists(tahoe_home):
         os.makedirs(tahoe_home, mode=0o755)
@@ -165,21 +160,20 @@ def subcommand_create_storage_node(_):
     if not os.path.exists(os.path.join(tahoe_home, storage_node_name)):
         subprocess.check_call([
             'tahoe', 'create-node', '--nickname=\"storage_node\"',
-            '--webport=1234',
-            '--hostname={}'.format(get_configured_domain_name()),
-            storage_node_name
+            '--webport=1234', '--hostname={}'.format(
+                get_configured_domain_name()), storage_node_name
         ])
         with open(
                 os.path.join(tahoe_home, introducer_name, 'private',
                              introducer_name + '.furl'), 'r') as furl_file:
             furl = furl_file.read().rstrip()
             conf_dict = {'introducers': {introducer_name: {'furl': furl}}}
-            conf_yaml = ruamel.yaml.dump(
-                conf_dict, Dumper=ruamel.yaml.RoundTripDumper)
+            conf_yaml = ruamel.yaml.dump(conf_dict,
+                                         Dumper=ruamel.yaml.RoundTripDumper)
             with open(
                     os.path.join(tahoe_home, storage_node_name, 'private',
-                                 'introducers.yaml'), 'w') as introducers_file:
-                introducers_file.write(conf_yaml)
+                                 'introducers.yaml'), 'w') as file_handle:
+                file_handle.write(conf_yaml)
 
     subprocess.call(['tahoe', 'start', storage_node_name])
 
@@ -190,8 +184,9 @@ def subcommand_add_introducer(arguments):
     Param introducer must be a tuple of (pet_name, furl).
     """
     with YAMLFile(introducers_file) as conf:
-        pet_name, furl = arguments.introducer.split(",")
+        pet_name, furl = arguments.introducer.split(',')
         conf['introducers'][pet_name] = {'furl': furl}
+
     restart_storage_node()
 
 
@@ -201,6 +196,7 @@ def subcommand_remove_introducer(arguments):
     """
     with YAMLFile(introducers_file) as conf:
         del conf['introducers'][arguments.pet_name]
+
     restart_storage_node()
 
 
