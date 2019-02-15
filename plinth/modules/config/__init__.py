@@ -74,14 +74,13 @@ def get_default_app():
         if aug.get(match + "/arg[1]") == '''"^/$"''':
             app_path = aug.get(match + "/arg[2]")
 
-    return app_path.strip('/"')
+    return app_path.strip('/"').replace('/', '_')
 
 
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
-    menu.add_urlname(
-        ugettext_lazy('Configure'), 'fa-cog', 'config:index')
+    menu.add_urlname(ugettext_lazy('Configure'), 'fa-cog', 'config:index')
 
     # Register domain with Name Services module.
     domainname = get_domainname()
