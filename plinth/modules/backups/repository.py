@@ -51,9 +51,13 @@ KNOWN_ERRORS = [{
     'message': _('Connection refused'),
     'raise_as': BorgError,
 }, {
-    'errors': ['not a valid repository', 'does not exist'],
-    'message': _('Repository not found'),
-    'raise_as': BorgRepositoryDoesNotExistError,
+    'errors': [
+        'not a valid repository', 'does not exist', 'FileNotFoundError'
+    ],
+    'message':
+        _('Repository not found'),
+    'raise_as':
+        BorgRepositoryDoesNotExistError,
 }, {
     'errors': [('passphrase supplied in BORG_PASSPHRASE or by '
                 'BORG_PASSCOMMAND is incorrect')],
@@ -143,6 +147,7 @@ class BorgRepository():
 
     def get_download_stream(self, archive_name):
         """Return an stream of .tar.gz binary data for a backup archive."""
+
         class BufferedReader(io.BufferedReader):
             """Improve performance of buffered binary streaming.
 
@@ -156,6 +161,7 @@ class BorgRepository():
             binary data.
 
             """
+
             def __next__(self):
                 """Override to call read() instead of readline()."""
                 chunk = self.read(io.DEFAULT_BUFFER_SIZE)
@@ -210,9 +216,9 @@ class BorgRepository():
         """Look whether the caught error is known and reraise it accordingly"""
         caught_error = str(err)
         for known_error in KNOWN_ERRORS:
-            for error in known_error["errors"]:
+            for error in known_error['errors']:
                 if error in caught_error:
-                    raise known_error["raise_as"](known_error["message"])
+                    raise known_error['raise_as'](known_error['message'])
 
         raise err
 
