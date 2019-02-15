@@ -94,32 +94,32 @@ class TestYAMLFileUtil(TestCase):
         """
         Update an empty YAML file with content.
         """
-        fp = tempfile.NamedTemporaryFile()
+        test_file = tempfile.NamedTemporaryFile()
         conf = {'property1': self.kv_pair}
 
-        with YAMLFile(fp.name) as file_conf:
-            for key in conf.keys():
+        with YAMLFile(test_file.name) as file_conf:
+            for key in conf:
                 file_conf[key] = conf[key]
 
-        with open(fp.name, 'r') as retrieved_conf:
+        with open(test_file.name, 'r') as retrieved_conf:
             assert retrieved_conf.read() == ruamel.yaml.round_trip_dump(conf)
 
     def test_update_non_empty_yaml_file(self):
         """
         Update a non-empty YAML file with modifications
         """
-        fp = tempfile.NamedTemporaryFile()
+        test_file = tempfile.NamedTemporaryFile()
 
-        with open(fp.name, 'w') as conf_file:
+        with open(test_file.name, 'w') as conf_file:
             conf_file.write(
                 ruamel.yaml.round_trip_dump({
                     'property1': self.kv_pair
                 }))
 
-        with YAMLFile(fp.name) as file_conf:
+        with YAMLFile(test_file.name) as file_conf:
             file_conf['property2'] = self.kv_pair
 
-        with open(fp.name, 'r') as retrieved_conf:
+        with open(test_file.name, 'r') as retrieved_conf:
             file_conf = ruamel.yaml.round_trip_load(retrieved_conf)
             assert file_conf == {'property1': self.kv_pair,
                                  'property2': self.kv_pair}
