@@ -123,3 +123,13 @@ class TestYAMLFileUtil(TestCase):
             file_conf = ruamel.yaml.round_trip_load(retrieved_conf)
             assert file_conf == {'property1': self.kv_pair,
                                  'property2': self.kv_pair}
+
+    def test_context_exception(self):
+        """Test that exception during update does not update file."""
+        test_file = tempfile.NamedTemporaryFile()
+        with self.assertRaises(ValueError):
+            with YAMLFile(test_file.name) as yaml_file:
+                yaml_file['property1'] = 'value1'
+                raise ValueError('Test')
+
+        assert open(test_file.name, 'r').read() == ''

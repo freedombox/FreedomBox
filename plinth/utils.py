@@ -108,9 +108,10 @@ class YAMLFile(object):
 
             return self.conf
 
-    def __exit__(self, typ, value, traceback):
-        with open(self.yaml_file, 'w') as intro_conf:
-            ruamel.yaml.round_trip_dump(self.conf, intro_conf)
+    def __exit__(self, type_, value, traceback):
+        if not traceback:
+            with open(self.yaml_file, 'w') as intro_conf:
+                ruamel.yaml.round_trip_dump(self.conf, intro_conf)
 
     def is_file_empty(self):
         return os.stat(self.yaml_file).st_size == 0
