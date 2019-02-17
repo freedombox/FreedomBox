@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ttrss @sso
+@apps @ttrss @sso @backups
 Feature: TT-RSS News Feed Reader
   Run TT-RSS News Feed Reader.
 
@@ -27,6 +27,15 @@ Scenario: Enable ttrss application
   Given the ttrss application is disabled
   When I enable the ttrss application
   Then the ttrss service should be running
+
+Scenario: Backup and restore ttrss
+  Given the ttrss application is enabled
+  And I subscribe to a feed
+  When I create a backup of the ttrss app data
+  And I unsubscribe from the feed
+  And I restore the ttrss app data backup
+  Then the ttrss service should be running
+  And I should be subscribed to the feed
 
 Scenario: Disable ttrss application
   Given the ttrss application is enabled

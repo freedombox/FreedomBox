@@ -22,6 +22,7 @@ Configuration helper for Tiny Tiny RSS.
 
 import argparse
 import augeas
+import os
 import subprocess
 
 from plinth import action_utils
@@ -29,6 +30,7 @@ from plinth import action_utils
 CONFIG_FILE = '/etc/tt-rss/config.php'
 DEFAULT_FILE = '/etc/default/tt-rss'
 DATABASE_FILE = '/etc/tt-rss/database.php'
+DB_BACKUP_FILE = '/var/lib/plinth/backups-data/ttrss-database.sql'
 
 
 def parse_arguments():
@@ -40,6 +42,9 @@ def parse_arguments():
     subparsers.add_parser('setup', help='Setup Tiny Tiny RSS configuration')
     subparsers.add_parser('enable', help='Enable Tiny Tiny RSS site')
     subparsers.add_parser('disable', help='Disable Tiny Tiny RSS site')
+    subparsers.add_parser('dump-database', help='Dump database to file')
+    subparsers.add_parser('restore-database',
+                          help='Restore database from file')
 
     subparsers.required = True
     return parser.parse_args()
@@ -118,6 +123,27 @@ def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('tt-rss-plinth')
     action_utils.service_disable('tt-rss')
+
+
+def subcommand_dump_database(_):
+    """Dump database to file."""
+    os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
+    with open(DB_BACKUP_FILE, 'w') as db_backup_file:
+        _run_as_postgres(['pg_dump', 'ttrss'], stdout=db_backup_file)
+
+
+def subcommand_restore_database(_):
+    """Restore database from file."""
+    _run_as_postgres(['dropdb', 'ttrss'])
+    _run_as_postgres(['createdb', 'ttrss'])
+    with open(DB_BACKUP_FILE, 'r') as db_restore_file:
+        _run_as_postgres(['psql', '--dbname', 'ttrss'], stdin=db_restore_file)
+
+
+def _run_as_postgres(command, stdin=None, stdout=None):
+    """Run a command as postgres user."""
+    command = ['sudo', '--user', 'postgres'] + command
+    subprocess.run(command, stdin=stdin, stdout=stdout, check=True)
 
 
 def load_augeas():

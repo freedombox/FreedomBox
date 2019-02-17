@@ -240,3 +240,18 @@ def syncthing_assert_folder_present(browser, folder_name):
 @then(parsers.parse('syncthing folder {folder_name:w} should not be present'))
 def syncthing_assert_folder_not_present(browser, folder_name):
     assert not site.syncthing_folder_is_present(browser, folder_name)
+
+
+@given('I subscribe to a feed')
+def ttrss_subscribe(browser):
+    site.ttrss_subscribe(browser)
+
+
+@when('I unsubscribe from the feed')
+def ttrss_unsubscribe(browser):
+    site.ttrss_unsubscribe(browser)
+
+
+@then('I should be subscribed to the feed')
+def ttrss_assert_subscribed(browser):
+    assert site.ttrss_is_subscribed(browser)
