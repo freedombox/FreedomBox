@@ -103,10 +103,12 @@ def _apply_changes(request, old_status, new_status):
             messages.success(request, _('Webserver home page set'))
 
 
-def change_default_app(app_id):
+def change_home_page(app_id):
     """Changes the FreedomBox's default app to the app specified by app_id."""
     if app_id == 'plinth':
         url = '/plinth'
+    elif app_id == 'apache-default':
+        url = '/index.html'
     else:
         shortcuts = frontpage.get_shortcuts()
         url = [
