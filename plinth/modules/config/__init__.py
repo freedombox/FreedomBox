@@ -39,9 +39,9 @@ depends = ['firewall', 'names']
 manual_page = 'Configure'
 
 APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
-DEFAULT_APP_CONF_FILE_NAME = 'default-app.conf'
-DEFAULT_APP_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
-                                         DEFAULT_APP_CONF_FILE_NAME)
+APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
+APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
+                                      APACHE_HOMEPAGE_CONF_FILE_NAME)
 FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                         'freedombox.conf')
 
@@ -57,13 +57,13 @@ def get_hostname():
     return socket.gethostname()
 
 
-def get_default_app():
+def get_home_page():
     """Get the default application for the domain."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    conf_file = DEFAULT_APP_APACHE_CONFIG if os.path.exists(
-        DEFAULT_APP_APACHE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
+    conf_file = APACHE_HOMEPAGE_CONFIG if os.path.exists(
+        APACHE_HOMEPAGE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
     aug.set('/augeas/load/Httpd/incl[last() + 1]', conf_file)
     aug.load()
 
@@ -106,18 +106,18 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    _migrate_default_app_config()
+    _migrate_home_page_config()
 
 
-def _migrate_default_app_config():
+def _migrate_home_page_config():
     """Move the default app configuration to an external file."""
 
     # Hold the current default app in a variable
-    default_app_path = get_default_app().replace('_', '/')
+    home_page_path = get_home_page().replace('_', '/')
 
     # Reset the default app to plinth in freedombox.conf
-    actions.superuser_run('config', ['reset-default-app'])
+    actions.superuser_run('config', ['reset-home-page'])
 
     # Write the default app setting into the new conf file
     # This step is run at the end because it reloads the Apache server
-    actions.superuser_run('config', ['set-default-app', default_app_path])
+    actions.superuser_run('config', ['set-home-page', home_page_path])

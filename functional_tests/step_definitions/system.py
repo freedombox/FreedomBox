@@ -45,9 +45,9 @@ def downloaded_file_info():
     return dict()
 
 
-@given(parsers.parse('the default app is {app_name:w}'))
-def set_default_app(browser, app_name):
-    system.set_default_app(browser, app_name)
+@given(parsers.parse('the home page is {app_name:w}'))
+def set_home_page(browser, app_name):
+    system.set_home_page(browser, app_name)
 
 
 @given(parsers.parse('the domain name is set to {domain:S}'))
@@ -65,9 +65,9 @@ def change_domain_name_to(browser, domain):
     system.set_domain_name(browser, domain)
 
 
-@when(parsers.parse('I change the default app to {app_name:w}'))
-def change_default_app_to(browser, app_name):
-    system.set_default_app(browser, app_name)
+@when(parsers.parse('I change the home page to {app_name:w}'))
+def change_home_page_to(browser, app_name):
+    system.set_home_page(browser, app_name)
 
 
 @when('I change the language to <language>')
@@ -157,8 +157,8 @@ def snapshot_assert_configuration(browser, free_space, timeline_enabled,
             yearly) == system.snapshot_get_configuration(browser)
 
 
-@then(parsers.parse('the default app should be {app_name:w}'))
-def default_app_should_be(browser, app_name):
+@then(parsers.parse('the home page should be {app_name:w}'))
+def home_page_should_be(browser, app_name):
     assert system.check_home_page_redirect(browser, app_name)
 
 

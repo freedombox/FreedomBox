@@ -26,7 +26,7 @@ import os
 import augeas
 
 from plinth import action_utils
-from plinth.modules.config import (DEFAULT_APP_CONF_FILE_NAME,
+from plinth.modules.config import (APACHE_HOMEPAGE_CONF_FILE_NAME,
                                    FREEDOMBOX_APACHE_CONFIG)
 
 
@@ -34,19 +34,20 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-    set_default_app = subparsers.add_parser(
-        'set-default-app',
-        help='Set the default app for this FreedomBox instance.')
-    set_default_app.add_argument('app', help='name of the default app')
+    set_home_page = subparsers.add_parser(
+        'set-home-page',
+        help='Set the home page for this FreedomBox instance.')
+    set_home_page.add_argument('homepage',
+                               help='path to the webserver home page')
     subparsers.add_parser(
-        'reset-default-app',
+        'reset-home-page',
         help='Reset the default app configuraton in freedombox.conf')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_reset_default_app(_):
+def subcommand_reset_home_page(_):
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
@@ -63,17 +64,17 @@ def subcommand_reset_default_app(_):
     aug.save()
 
 
-def subcommand_set_default_app(arguments):
+def subcommand_set_home_page(arguments):
     """Set the default app for this FreedomBox."""
     conf_file_path = os.path.join('/etc/apache2/conf-available',
-                                  DEFAULT_APP_CONF_FILE_NAME)
+                                  APACHE_HOMEPAGE_CONF_FILE_NAME)
 
-    redirect_rule = 'RedirectMatch "^/$" "/{}"\n'.format(arguments.app)
+    redirect_rule = 'RedirectMatch "^/$" "/{}"\n'.format(arguments.homepage)
 
     with open(conf_file_path, 'w') as conf_file:
         conf_file.write(redirect_rule)
 
-    action_utils.webserver_enable('default-app')
+    action_utils.webserver_enable('freedombox-apache-homepage')
 
 
 def main():

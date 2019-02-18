@@ -15,9 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from urllib.parse import urlparse
-import requests
 import tempfile
+from urllib.parse import urlparse
+
+import requests
 
 from . import application, config
 from .interface import default_url, nav_to_module, submit
@@ -62,10 +63,10 @@ def set_domain_name(browser, domain_name):
     submit(browser)
 
 
-def set_default_app(browser, app_name):
+def set_home_page(browser, home_page):
     nav_to_module(browser, 'config')
-    drop_down = browser.find_by_id('id_configuration-defaultapp')
-    drop_down.select(app_name)
+    drop_down = browser.find_by_id('id_configuration-homepage')
+    drop_down.select(home_page)
     submit(browser)
 
 

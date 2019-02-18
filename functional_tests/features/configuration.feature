@@ -30,10 +30,10 @@ Scenario: Change domain name
   When I change the domain name to mydomain.example
   Then the domain name should be mydomain.example
 
-Scenario: Change default app
+Scenario: Change webserver home page
   Given the syncthing application is installed
   And the syncthing application is enabled
-  And the default app is syncthing
-  When I change the default app to plinth
-  Then the default app should be plinth
+  And the home page is syncthing
+  When I change the home page to plinth
+  Then the home page should be plinth
 

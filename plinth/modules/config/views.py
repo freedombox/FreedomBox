@@ -63,7 +63,7 @@ def get_status():
     return {
         'hostname': config.get_hostname(),
         'domainname': config.get_domainname(),
-        'defaultapp': config.get_default_app(),
+        'homepage': config.get_home_page(),
     }
 
 
@@ -91,16 +91,16 @@ def _apply_changes(request, old_status, new_status):
         else:
             messages.success(request, _('Domain name set'))
 
-    if old_status['defaultapp'] != new_status['defaultapp']:
+    if old_status['homepage'] != new_status['homepage']:
         try:
-            change_default_app(new_status['defaultapp'])
+            change_home_page(new_status['homepage'])
         except Exception as exception:
             messages.error(
                 request,
-                _('Error setting default app: {exception}')
+                _('Error setting webserver home page: {exception}')
                 .format(exception=exception))
         else:
-            messages.success(request, _('Default app set'))
+            messages.success(request, _('Webserver home page set'))
 
 
 def change_default_app(app_id):
@@ -114,7 +114,7 @@ def change_default_app(app_id):
             if shortcut['id'] == app_id
         ][0]
 
-    actions.superuser_run('config', ['set-default-app', url.strip("/")])
+    actions.superuser_run('config', ['set-home-page', url])
 
 
 def set_hostname(hostname):

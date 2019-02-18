@@ -42,11 +42,13 @@ def domain_label_validator(domainname):
             raise ValidationError(_('Invalid domain name'))
 
 
-def get_default_app_choices():
+def get_homepage_choices():
     shortcuts = frontpage.get_shortcuts(web_apps_only=True, sort_by='name')
     apps = [(shortcut['id'], shortcut['name']) for shortcut in shortcuts
             if shortcut['id']]
-    return [('plinth', 'FreedomBox Service (Plinth)')] + apps
+    apache_default = ('apache-default', _('Apache Default'))
+    plinth = ('plinth', _('FreedomBox Service (Plinth)'))
+    return [apache_default, plinth] + apps
 
 
 class ConfigurationForm(forms.Form):
@@ -85,15 +87,15 @@ class ConfigurationForm(forms.Form):
                 ugettext_lazy('Invalid domain name')), domain_label_validator
         ], strip=True)
 
-    defaultapp = forms.ChoiceField(
-        label=ugettext_lazy('Default App'), help_text=format_lazy(
+    homepage = forms.ChoiceField(
+        label=ugettext_lazy('Webserver Home Page'), help_text=format_lazy(
             ugettext_lazy(
-                'Choose the default web application that must be served when '
+                'Choose the default page that must be served when '
                 'someone visits your {box_name} on the web. A typical use '
-                'case is to set your blog or wiki as the landing page when '
-                'someone visits the domain name. Note that once the default '
-                'app is set to something other than {box_name} Service '
+                'case is to set your blog or wiki as the home page when '
+                'someone visits the domain name. Note that once the home '
+                'page is set to something other than {box_name} Service '
                 '(Plinth), your users must explicitly type /plinth or '
                 '/freedombox to reach {box_name} Service (Plinth).'),
             box_name=ugettext_lazy(cfg.box_name)), required=False,
-        choices=get_default_app_choices)
+        choices=get_homepage_choices)
