@@ -69,6 +69,8 @@ def get_home_page():
 
     aug.defvar('conf', '/files' + conf_file)
 
+    app_path = 'plinth'
+
     for match in aug.match('/files' + conf_file +
                            '/directive["RedirectMatch"]'):
         if aug.get(match + "/arg[1]") == '''"^/$"''':
@@ -114,13 +116,10 @@ def setup(helper, old_version=None):
 
 
 def _migrate_home_page_config():
-    """Move the default app configuration to an external file."""
+    """Move the home page configuration to an external file."""
 
     # Hold the current default app in a variable
     home_page_path = get_home_page().replace('_', '/')
-
-    # Reset the default app to plinth in freedombox.conf
-    actions.superuser_run('config', ['reset-home-page'])
 
     # Write the default app setting into the new conf file
     # This step is run at the end because it reloads the Apache server

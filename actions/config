@@ -23,11 +23,8 @@ Configuration helper for FreedomBox general configuration.
 import argparse
 import os
 
-import augeas
-
 from plinth import action_utils
-from plinth.modules.config import (APACHE_HOMEPAGE_CONF_FILE_NAME,
-                                   FREEDOMBOX_APACHE_CONFIG)
+from plinth.modules.config import APACHE_HOMEPAGE_CONF_FILE_NAME
 
 
 def parse_arguments():
@@ -39,29 +36,9 @@ def parse_arguments():
         help='Set the home page for this FreedomBox instance.')
     set_home_page.add_argument('homepage',
                                help='path to the webserver home page')
-    subparsers.add_parser(
-        'reset-home-page',
-        help='Reset the default app configuraton in freedombox.conf')
 
     subparsers.required = True
     return parser.parse_args()
-
-
-def subcommand_reset_home_page(_):
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    aug.set('/augeas/load/Httpd/incl[last() + 1]', FREEDOMBOX_APACHE_CONFIG)
-    aug.load()
-
-    aug.defvar('conf', '/files' + FREEDOMBOX_APACHE_CONFIG)
-
-    for match in aug.match('/files' + FREEDOMBOX_APACHE_CONFIG +
-                           '/directive["RedirectMatch"]'):
-        if aug.get(match + "/arg[1]") == '''"^/$"''':
-            aug.set(match + "/arg[2]", '"/{}"'.format('plinth'))
-
-    aug.save()
 
 
 def subcommand_set_home_page(arguments):
