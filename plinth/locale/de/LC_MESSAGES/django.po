@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-14 05:47-0500\n"
-"PO-Revision-Date: 2019-02-09 18:09+0000\n"
+"PO-Revision-Date: 2019-02-20 18:17+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
@@ -1952,12 +1952,7 @@ msgid "Certificate renewal management and use by other modules"
 msgstr "Zertifikat Erneuerungs-Verwaltung und Nutzung durch andere Anwendungen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:140
-#, fuzzy, python-format
-#| msgid ""
-#| "If you have a Let's Encrypt certificate for your current domain, you may "
-#| "let %(box_name)s manage its renewal process. This also enables other apps "
-#| "to use that certificate, so most users would not prompted with security "
-#| "warnings when using them."
+#, python-format
 msgid ""
 "If you have a Let's Encrypt certificate for your current domain, you may let "
 "%(box_name)s manage its renewal process. This also enables other apps to use "
@@ -1966,7 +1961,7 @@ msgid ""
 msgstr ""
 "Falls ein Let's Encrypt Zertifikat für die eingestellte Domain bezogen ist, "
 "kann %(box_name)s dessen Erneuerung verwalten. Dies erlaubt es auch weiteren "
-"Anwendungen dieses Zertifikat zu nutzen, sodass die meisten Benutzer dieser "
+"Anwendungen dieses Zertifikat zu nutzen, sodass die Benutzer dieser "
 "Anwendungen keine Sicherheitswarnungen sehen würden."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
@@ -2046,24 +2041,16 @@ msgstr ""
 "Erneurungs-Verwaltung für die derzeitige Domain aktiviert sein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:281
-#, fuzzy, python-format
-#| msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
+#, python-format
 msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
-msgstr "Nutze das Zertifikat von %(current_domain)s für <b>ejabberd</b>"
+msgstr "Nutze das Zertifikat von %(current_domain)s für <b>matrixsynapse</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:285
-#, fuzzy
-#| msgid "Use certificate of the current domain for <b>ejabberd</b>"
 msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
-msgstr "Nutze das Zertifikat von der derzeitgen Domain für <b>ejabberd</b>"
+msgstr "Nutze das Zertifikat von der derzeitgen Domain für <b>matrixsynapse</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:295
-#, fuzzy, python-format
-#| msgid ""
-#| "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also "
-#| "use the Let's Encrypt certificate. This will reduce warnings about self-"
-#| "signed certificates in client applications, and enable more wide-spread "
-#| "federation with other XMPP servers in the Internet."
+#, python-format
 msgid ""
 "If enabled, the app <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a> "
 "will also use the same Let's Encrypt certificate. Other Matrix Synapse "
@@ -2071,36 +2058,30 @@ msgid ""
 "valid TLS certificate. Federation with other instances will not work without "
 "this."
 msgstr ""
-"Falls aktiviert, wird auch die Anwendung <a href=\"%(ejabberd_url)s"
-"\">ejabberd</a> das Let's Encrypt Zertifikat nutzen. Dies wird Warnungen "
-"über selbstsignierte Zertifikate in Client-Anwendungen reduzieren, und "
-"erlaubt mehr Föderation mit anderen XMPP-Servern im Internet."
+"Falls aktiviert, wird auch die Anwendung <a href=\"%(matrixsynapse_url)s\">"
+"Matrix Synapse</a> dasselbe Let's Encrypt Zertifikat nutzen. Andere Matrix "
+"Synapse Instanzen ab Version 1.0 erwarten die Nutzung eines gültigen TLS-"
+"Zertifikats. Föderation mit anderen Instanzen wird ohne dies nicht "
+"funktionieren."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
-#, fuzzy, python-format
-#| msgid ""
-#| "This feature only makes sense if you are using the <a href="
-#| "\"%(ejabberd_url)s\">ejabberd</a> chat server app."
+#, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Diese Option ist nur sinnvoll, wenn Sie den <a href=\"%(ejabberd_url)s"
-"\">ejabberd</a> Chat-Server nutzen."
+"Diese Option ist nur sinnvoll, wenn Sie den <a href=\"%(matrixsynapse_url)s\""
+">Matrix Synapse</a> Chat-Server nutzen."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
-#, fuzzy, python-format
-#| msgid ""
-#| "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
-#| "\">ejabberd</a> chat server app, you must first enable certificate "
-#| "renewal of the current domain."
+#, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(matrixsynapse_url)s"
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Um ein Let's Encrypt Zertifikat für den <a href=\"%(ejabberd_url)s"
-"\">ejabberd</a> Chat-Server nutzen zu können, muss erst die Zertifikat-"
+"Um ein Let's Encrypt Zertifikat für den <a href=\"%(matrixsynapse_url)s\">"
+"Matrix Synapse</a> Chat-Server nutzen zu können, muss erst die Zertifikat-"
 "Erneurungs-Verwaltung für die derzeitige Domain aktiviert sein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
@@ -2289,6 +2270,13 @@ msgid ""
 "        Encrypt</a> to obtain one.\n"
 "      "
 msgstr ""
+"\n"
+"        Der eingestellte Domainname benutzt ein selbst-signiertes Zertifikat."
+"\n"
+"Föderation mit anderen Matrix Synapse Instanzen erfordert ein gültiges TLS-\n"
+"Zertifikat. Bitte gehe auf <a href=\"%(letsencrypt_url)s\">Let's\n"
+"Encrypt</a> um eines zu beziehen.\n"
+"      "
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -2517,6 +2505,10 @@ msgid ""
 "interface. Users in the admin group can also control it through any of the "
 "separate mobile or desktop front-ends or a telnet interface. See manual."
 msgstr ""
+"Benutzer der Admin- und ed2k-Gruppe können dies durch das Web-Oberfläche "
+"kontrollieren. Benutzer in der Admin-Gruppe können es außerdem durch "
+"irgendeines der separaten Handy- oder Desktop-Oberflächen oder per Telnet "
+"kontrollieren. Siehe Benutzerhandbuch."
 
 #: plinth/modules/mldonkey/__init__.py:50
 #, python-brace-format
@@ -2531,16 +2523,12 @@ msgid "Download files using eDonkey applications"
 msgstr "Lade Dateien mit eDonkey herunter"
 
 #: plinth/modules/mldonkey/manifest.py:34
-#, fuzzy
-#| msgid "MLDonkey"
 msgid "KMLDonkey"
-msgstr "MLDonkey"
+msgstr "KMLDonkey"
 
 #: plinth/modules/mldonkey/manifest.py:46
-#, fuzzy
-#| msgid "MLDonkey"
 msgid "AMLDonkey"
-msgstr "MLDonkey"
+msgstr "AMLDonkey"
 
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
@@ -4033,19 +4021,15 @@ msgid "DAVx5"
 msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:27
-#, fuzzy
-#| msgid ""
-#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
-#| "your user name. DAVx5 will show all existing calendars and address books "
-#| "and you can create new."
 msgid ""
 "Enter the URL of the Radicale server (e.g. https://<your.freedombox."
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Geben Sie dir URL ihres Radicale-Servers an (z.B. http://localhost:5232) und "
-"ihren Nutzernamen. DAVx5 wird all ihre existierenden Kalender und "
-"Adressbücher anzeigen, und Sie können neue anlegen."
+"Geben Sie dir URL ihres Radicale-Servers an (z.B. "
+"https://<ihre.freedombox.adresse>) und ihren Nutzernamen. DAVx5 wird all "
+"ihre existierenden Kalender und Adressbücher anzeigen, und Sie können neue "
+"anlegen."
 
 #: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
@@ -4068,12 +4052,6 @@ msgstr ""
 "Funktionen wie Email, Kalender und Adressbuch verbindet."
 
 #: plinth/modules/radicale/manifest.py:78
-#, fuzzy
-#| msgid ""
-#| "In Evolution add a new calendar and address book respectively with "
-#| "WebDAV. Enter the URL of the Radicale server (e.g. http://localhost:5232) "
-#| "and your user name. Clicking on the search button will list the existing "
-#| "calendars and address books."
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. https://<your.freedombox."
@@ -4081,9 +4059,10 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "Fügen Sie in Evolution einen neuen Kalender oder Adressbuch per WebDAV "
-"hinzu. Geben Sie die URL des Radicale-Servers an (z.B. http://"
-"localhost:5232) und ihren Benutzernamen. Wenn Sie auf den Suchen-Knopf "
-"drücken, werden die bestehenden Kalender und Adressbücher aufgelistet."
+"hinzu. Geben Sie die URL des Radicale-Servers an (z.B. "
+"https://<ihre.freedombox.adresse>) und ihren Benutzernamen. Wenn Sie auf den "
+"Suchen-Knopf drücken, werden die bestehenden Kalender und Adressbücher "
+"aufgelistet."
 
 #: plinth/modules/radicale/views.py:55
 msgid "Access rights configuration updated"
