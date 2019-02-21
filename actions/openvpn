@@ -20,7 +20,9 @@ Configuration helper for OpenVPN server.
 """
 
 import argparse
+import glob
 import os
+import shutil
 import subprocess
 
 import augeas
@@ -119,13 +121,13 @@ def parse_arguments():
 
 
 def subcommand_is_setup(_):
-    """Return whether setup is complete."""
+    """Print whether setup is complete."""
     print('true' if utils.is_non_empty_file(DH_KEY) else 'false')
 
 
 def subcommand_setup(_):
     """Setup configuration, CA and certificates."""
-    _create_server_config()
+    _write_server_config()
     _create_certificates()
     _setup_firewall()
     action_utils.service_enable(SERVICE_NAME)
@@ -137,15 +139,56 @@ def subcommand_upgrade(_):
 
     Otherwise do nothing.
     """
+
+    # freedombox.conf is moved to the server directory
     if os.path.exists(OLD_SERVER_CONFIGURATION_PATH):
-        os.rename(OLD_SERVER_CONFIGURATION_PATH, SERVER_CONFIGURATION_PATH)
+        shutil.move(OLD_SERVER_CONFIGURATION_PATH, SERVER_CONFIGURATION_PATH)
+
+    pki_dir = os.path.join(KEYS_DIRECTORY, 'pki')
+
+    if not os.path.exists(pki_dir):
+        os.mkdir(pki_dir)
+
+        # Move all files and directories under freedombox-keys into
+        # freedombox-keys/pki
+        for entry in os.listdir(KEYS_DIRECTORY):
+            entry = os.path.join(KEYS_DIRECTORY, entry)
+            if entry != pki_dir:
+                shutil.move(entry, pki_dir)
+
+        # The dh params file no longer has the key size in its filename
+        shutil.move(os.path.join(pki_dir, 'dh4096.pem'), DH_KEY)
+
+        for dir_name in ['reqs', 'private', 'issued', 'certs_by_serial']:
+            os.mkdir(os.path.join(pki_dir, dir_name))
+
+        def _move_by_file_extension(file_extension, directory, excluded=[]):
+            for fil in glob.glob(r'{}/*.{}'.format(pki_dir, file_extension)):
+                if fil not in excluded:
+                    shutil.move(fil, os.path.join(pki_dir, directory))
+
+        # Move all .req files to pki/reqs directory
+        _move_by_file_extension('req', 'reqs')
+
+        # All keys go into the pki/private directory
+        _move_by_file_extension('key', 'private')
+
+        # Move all certificate files into pki/issued except ca.crt
+        _move_by_file_extension('crt', 'issued',
+                                [os.path.join(pki_dir, 'ca.crt')])
+
+        # Move all pem files into pki/certs_by_serial except dh.pem
+        _move_by_file_extension('pem', 'certs_by_serial',
+                                [os.path.join(pki_dir, 'dh.pem')])
+
+        _write_server_config()
 
     if action_utils.service_is_enabled(OLD_SERVICE_NAME):
         action_utils.service_disable(OLD_SERVICE_NAME)
         action_utils.service_enable(SERVICE_NAME)
 
 
-def _create_server_config():
+def _write_server_config():
     """Write server configuration."""
     with open(SERVER_CONFIGURATION_PATH, 'w') as file_handle:
         file_handle.write(SERVER_CONFIGURATION)
@@ -223,7 +266,7 @@ def _read_file(filename):
 
 
 def _is_non_empty_file(filepath):
-    """Return wheather a file exists and is not zero size."""
+    """Return whether a file exists and is not zero size."""
     return os.path.isfile(filepath) and os.path.getsize(filepath) > 0
 
 
