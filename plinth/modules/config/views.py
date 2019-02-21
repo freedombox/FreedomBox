@@ -116,7 +116,7 @@ def change_home_page(app_id):
             if shortcut['id'] == app_id
         ][0]
 
-    actions.superuser_run('config', ['set-home-page', url])
+    actions.superuser_run('config', ['set-home-page', url.strip('/')])
 
 
 def set_hostname(hostname):

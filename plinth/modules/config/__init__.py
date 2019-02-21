@@ -79,8 +79,10 @@ def get_home_page():
     # match this against the app_id in the entries of frontpage.get_shortcuts()
     # The underscore is to handle Ikiwiki app_ids
     app = app_path.strip('/"').replace('/', '_')
-    if app == "index.html":
-        return "apache-default"
+    if app == 'index.html':
+        return 'apache-default'
+    elif app.endswith('jsxc'):
+        return 'jsxc'
     else:
         return app
 
