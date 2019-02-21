@@ -30,8 +30,8 @@ version = 2
 is_essential = True
 
 managed_packages = [
-    'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nslcd',
-    'slapd'
+    'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nscd',
+    'nslcd', 'slapd'
 ]
 
 first_boot_steps = [
