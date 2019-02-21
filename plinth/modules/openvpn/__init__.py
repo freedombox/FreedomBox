@@ -21,14 +21,14 @@ FreedomBox app to configure OpenVPN server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions, cfg, frontpage
+from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from .manifest import backup
 
-version = 2
+version = 3
 
 service = None
 
@@ -57,8 +57,7 @@ manual_page = 'OpenVPN'
 def init():
     """Initialize the OpenVPN module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'openvpn', 'openvpn:index',
-                     short_description)
+    menu.add_urlname(name, 'openvpn', 'openvpn:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
