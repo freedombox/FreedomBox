@@ -126,6 +126,11 @@ def adapt_config(arguments):
             setattr(cfg, argument_name, argument_value)
 
 
+def on_web_server_stop():
+    """Stop all other threads since web server is trying to exit."""
+    setup.stop()
+
+
 def main():
     """Intialize and start the application"""
     arguments = parse_arguments()
@@ -173,7 +178,7 @@ def main():
     setup.run_setup_in_background()
 
     web_server.init()
-    web_server.run()
+    web_server.run(on_web_server_stop)
 
 
 if __name__ == '__main__':

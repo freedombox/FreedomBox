@@ -23,7 +23,7 @@ import os
 
 import cherrypy
 
-from . import cfg, log, module_loader, setup, web_framework
+from . import cfg, log, module_loader, web_framework
 
 logger = logging.getLogger(__name__)
 
@@ -89,13 +89,8 @@ def init():
     cherrypy.engine.signal_handler.subscribe()
 
 
-def on_server_stop():
-    """Stop all other threads since web server is trying to exit."""
-    setup.stop()
-
-
-def run():
+def run(on_web_server_stop):
     """Start the web server and block it until exit."""
     cherrypy.engine.start()
-    cherrypy.engine.subscribe('stop', on_server_stop)
+    cherrypy.engine.subscribe('stop', on_web_server_stop)
     cherrypy.engine.block()
