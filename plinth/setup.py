@@ -37,6 +37,8 @@ _is_first_setup = False
 is_first_setup_running = False
 _is_shutting_down = False
 
+_force_upgrader = None
+
 
 class Helper(object):
     """Helper routines for modules to show progress."""
@@ -335,3 +337,31 @@ def run_setup_on_modules(module_list, allow_install=True):
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
         raise
+
+
+class ForceUpgrader():
+    """Find and upgrade packages by force when conffile prompt is needed."""
+
+    def on_package_cache_updated(self):
+        """Find an upgrade packages."""
+        packages = self.get_list_of_upgradeable_packages()
+        if packages:
+            logger.info('Packages available for upgrade: %s',
+                        ', '.join([package.name for package in packages]))
+
+        # XXX: Implement force upgrading of selected packages
+
+    @staticmethod
+    def get_list_of_upgradeable_packages():
+        """Return list of packages that can be upgraded."""
+        cache = apt.cache.Cache()
+        return [package for package in cache if package.is_upgradable]
+
+
+def on_package_cache_updated():
+    """Called by D-Bus service when apt package cache is updated."""
+    global _force_upgrader
+    if not _force_upgrader:
+        _force_upgrader = ForceUpgrader()
+
+    _force_upgrader.on_package_cache_updated()

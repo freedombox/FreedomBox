@@ -236,10 +236,11 @@ setuptools.setup(
          glob.glob('data/etc/apache2/sites-available/*.conf')),
         ('/etc/apache2/includes',
          glob.glob('data/etc/apache2/includes/*.conf')),
-        ('/etc/apt/apt.conf.d',
-         glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
-        ('/etc/avahi/services/',
-         glob.glob('data/etc/avahi/services/*.service')),
+        ('/etc/apt/apt.conf.d', [
+            'data/etc/apt/apt.conf.d/60unattended-upgrades',
+            'data/etc/apt/apt.conf.d/20freedombox'
+        ]), ('/etc/avahi/services/',
+             glob.glob('data/etc/avahi/services/*.service')),
         ('/etc/ikiwiki', glob.glob('data/etc/ikiwiki/*.setup')),
         ('/etc/NetworkManager/dispatcher.d/', [
             'data/etc/NetworkManager/dispatcher.d/10-freedombox-batman'
@@ -247,9 +248,10 @@ setuptools.setup(
             'data/etc/sudoers.d/plinth'
         ]), ('/lib/systemd/system',
              glob.glob('data/lib/systemd/system/*.service')),
-        ('/lib/systemd/system/mldonkey-server.service.d',
-         ['data/lib/systemd/system/mldonkey-server.service.d/freedombox.conf']),
-        ('/lib/systemd/system', glob.glob('data/lib/systemd/system/*.timer')),
+        ('/lib/systemd/system/mldonkey-server.service.d', [
+            'data/lib/systemd/system/mldonkey-server.service.d/freedombox.conf'
+        ]), ('/lib/systemd/system',
+             glob.glob('data/lib/systemd/system/*.timer')),
         ('/etc/mediawiki',
          glob.glob('data/etc/mediawiki/*.php')), ('/etc/update-motd.d/', [
              'data/etc/update-motd.d/50-freedombox'
@@ -265,6 +267,8 @@ setuptools.setup(
                             glob.glob('data/usr/share/augeas/lenses/*.aug')),
         ('/usr/share/augeas/lenses/tests',
          glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
+        ('/usr/share/dbus-1/system.d',
+         glob.glob('data/usr/share/dbus-1/system.d/*.conf')),
         ('/usr/share/pam-configs/',
          glob.glob('data/usr/share/pam-configs/*-freedombox')),
         ('/etc/fail2ban/jail.d', glob.glob('data/etc/fail2ban/jail.d/*.conf')),

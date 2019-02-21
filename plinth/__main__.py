@@ -23,7 +23,7 @@ import sys
 
 import axes
 
-from . import (cfg, frontpage, log, menu, module_loader, service, setup,
+from . import (cfg, dbus, frontpage, log, menu, module_loader, service, setup,
                web_framework, web_server)
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
@@ -129,6 +129,7 @@ def adapt_config(arguments):
 def on_web_server_stop():
     """Stop all other threads since web server is trying to exit."""
     setup.stop()
+    dbus.stop()
 
 
 def main():
@@ -176,6 +177,8 @@ def main():
         run_diagnostics_and_exit()
 
     setup.run_setup_in_background()
+
+    dbus.run()
 
     web_server.init()
     web_server.run(on_web_server_stop)
