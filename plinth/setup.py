@@ -184,7 +184,7 @@ class Helper(object):
         if num_files < 2:  # not counting the lock file
             return None
         cache = apt.Cache()
-        managed_pkgs = getattr(self.module, 'managed_packages', [])
+        managed_pkgs = _get_module_managed_packages(self.module)
         unavailable_pkgs = (pkg_name for pkg_name in managed_pkgs
                             if pkg_name not in cache)
         return any(unavailable_pkgs)
@@ -227,7 +227,7 @@ def list_dependencies(module_list=None, essential=False):
            '*' not in module_list:
             continue
 
-        for package_name in getattr(module, 'managed_packages', []):
+        for package_name in _get_module_managed_packages(module):
             print(package_name)
 
 
@@ -302,6 +302,11 @@ def _get_modules_for_regular_setup():
 def _is_module_essential(module):
     """Return if a module is an essential module."""
     return getattr(module, 'is_essential', False)
+
+
+def _get_module_managed_packages(module):
+    """Return list of packages managed by a module."""
+    return getattr(module, 'managed_packages', [])
 
 
 def _module_state_matches(module, state):
