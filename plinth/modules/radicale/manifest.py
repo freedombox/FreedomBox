@@ -85,6 +85,13 @@ clients = validate([{
         'format': 'deb',
         'name': 'evolution'
     }]
+}, {
+    'name':
+        _('Radicale'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/radicale/'
+    }]
 }])
 
 backup = validate_backup({

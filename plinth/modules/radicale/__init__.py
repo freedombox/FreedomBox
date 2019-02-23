@@ -24,7 +24,6 @@ from distutils.version import LooseVersion as LV
 
 from apt.cache import Cache
 import augeas
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions, cfg, frontpage
@@ -53,6 +52,10 @@ description = [
           '<a href="http://radicale.org/clients/">supported client '
           'application</a> is needed. Radicale can be accessed by any user '
           'with a {box_name} login.'), box_name=_(cfg.box_name)),
+
+    _('Radicale provides a basic web interface, which only supports creating '
+      'new calendars and addressbooks. It does not support adding events or '
+      'contacts, which must be done using a separate client.'),
 ]
 
 clients = clients
@@ -124,10 +127,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut(
-        'radicale', name, short_description=short_description,
-        details=description, configure_url=reverse_lazy('radicale:index'),
-        login_required=True)
+    frontpage.add_shortcut('radicale', name,
+                           short_description=short_description,
+                           url='/radicale/', login_required=True)
 
 
 def get_package_version():
