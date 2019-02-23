@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-14 05:47-0500\n"
-"PO-Revision-Date: 2019-02-18 08:18+0000\n"
+"PO-Revision-Date: 2019-02-23 09:05+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -5020,6 +5020,9 @@ msgid ""
 "Additional introducers can be added, which will introduce this node to the "
 "other storage nodes."
 msgstr ""
+"Ezen {box_name} eszköz alapértelmezés szerint egy bevezető és egy adattároló "
+"csomópontnak is otthont ad. További bevezető csomópontok is hozzáadhatók, "
+"melyek majd bemutatják ezt a csomópontot a többi adattároló csomópontnak."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:33
 #, python-format
@@ -5029,32 +5032,37 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
+"A Tahoe-LAFS kiszolgáló domén neve erre lett beállítva: "
+"<b>%(domain_name)s</b>. A FreedomBox domén nevének megváltoztatása magával "
+"vonja a Tahoe-LAFS újratelepítését és emiatt EL FOGOD VESZÍTENI AZ ADATOKAT. "
+"A Tahoe-LAFS-t itt érheted el: <a href=\"https://%(domain_name)s:5678\""
+">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
-msgstr ""
+msgstr "Helyi bevezető"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:75
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:92
 msgid "Pet Name"
-msgstr ""
+msgstr "Becenév"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:72
 msgid "Add new introducer"
-msgstr ""
+msgstr "Új bevezető hozzáadása"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:83
 msgid "Add"
-msgstr ""
+msgstr "Hozzáadás"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:88
 msgid "Connected introducers"
-msgstr ""
+msgstr "Csatlakozott bevezetők"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:105
 msgid "Remove"
-msgstr ""
+msgstr "Eltávolít"
 
 #: plinth/modules/tor/__init__.py:42
 msgid "Tor"
@@ -5084,11 +5092,11 @@ msgstr "Tor Socks proxy"
 
 #: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Tor híd relay"
 
 #: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
 msgid "Tor Hidden Service"
-msgstr ""
+msgstr "Tor rejtett szolgáltatás"
 
 #: plinth/modules/tor/__init__.py:117
 msgid "Tor Anonymity Network"
@@ -5096,15 +5104,15 @@ msgstr "Tor anonim hálózat"
 
 #: plinth/modules/tor/__init__.py:164
 msgid "Tor relay port available"
-msgstr ""
+msgstr "Tor relay port elérhető"
 
 #: plinth/modules/tor/__init__.py:174
 msgid "Obfs3 transport registered"
-msgstr ""
+msgstr "Obfs3 átvitel regisztrálva"
 
 #: plinth/modules/tor/__init__.py:182
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "Obfs4 átvitel regisztrálva"
 
 #: plinth/modules/tor/__init__.py:221
 #, python-brace-format
@@ -5120,6 +5128,8 @@ msgstr "Hagyd jóvá a Tor használatát {url} célcímhez tcp{kind} protokollon
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
 msgstr ""
+"Adj meg egy érvényes hidat ezzel a formátummal: [átvitel_neve] IP_cím:Port "
+"[ujjlenyomat]"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
@@ -5127,7 +5137,7 @@ msgstr "Tor engedélyezése"
 
 #: plinth/modules/tor/forms.py:93
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Használj felmenő hidakat a Tor hálózatra kapcsolódáshoz"
 
 #: plinth/modules/tor/forms.py:96
 msgid ""
@@ -5135,10 +5145,14 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Ha engedélyezett, az alább beállított hidak lesznek használva a Tor "
+"hálózatra kapcsolódáshoz. Akkor használd ezt a beállítást, ha az "
+"internetszolgáltatód blokkolja vagy cenzúrázza a Tor hálózati kapcsolatokat. "
+"Ez le fogja tiltani a relay módokat."
 
 #: plinth/modules/tor/forms.py:102
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Felmenő hidak"
 
 #: plinth/modules/tor/forms.py:105
 msgid ""
@@ -5146,6 +5160,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Beszerezheted néhány híd címét innen: <a href=\"https://bridges.torproject."
+"org/\">https://bridges.torproject.org/</a>, és bemásolhatod a híd "
+"információit ide. A jelenleg támogatott átvitelek: none (nincs), obfs3, "
+"obfs4 és scamblesuit."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
@@ -5158,6 +5176,9 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Ha engedélyezett, a Te {box_name} eszközöd egy Tor relay-t fog futtatni és "
+"sávszélességet fog a Tor hálózathoz hozzáadni. Tedd ezt ha legalább 2 "
+"megabit/másodperc feltöltési és letöltési sávszélességgel rendelkezel."
 
 #: plinth/modules/tor/forms.py:120
 msgid "Enable Tor bridge relay"
@@ -5169,6 +5190,9 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"Ha engedélyezett, a relay információ a Tor híd adatbázisban lesz közzétéve a "
+"nyilvános Tor relay adatbázis helyett, így téve nehezebbé ezen csomópont "
+"cenzúrázását. Ez segít másoknak a cenzúra megkerülésében."
 
 #: plinth/modules/tor/forms.py:128
 msgid "Enable Tor Hidden Service"
@@ -5181,6 +5205,9 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
+"A rejtett szolgáltatás lehetővé teszi a Te {box_name} eszközödnek hogy "
+"kiválasztott szolgáltatásokat nyújthasson (pl. wiki vagy chat) anélkül, hogy "
+"felfedné a helyét. Ezt még ne használd erős anonimitás eléréséhez."
 
 #: plinth/modules/tor/forms.py:136
 msgid "Download software packages over Tor"
@@ -5198,7 +5225,7 @@ msgstr ""
 
 #: plinth/modules/tor/forms.py:151
 msgid "Specify at least one upstream bridge to use upstream bridges."
-msgstr ""
+msgstr "Adj meg legalább egy felmenő hidat azok használatához."
 
 #: plinth/modules/tor/manifest.py:29
 msgid "Tor Browser"
