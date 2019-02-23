@@ -201,6 +201,9 @@ def stop():
     global _is_shutting_down
     _is_shutting_down = True
 
+    if _force_upgrader:
+        _force_upgrader.shutdown()
+
 
 def setup_modules(module_list=None, essential=False, allow_install=True):
     """Run setup on selected or essential modules."""
@@ -345,14 +348,159 @@ def run_setup_on_modules(module_list, allow_install=True):
 
 
 class ForceUpgrader():
-    """Find and upgrade packages by force when conffile prompt is needed."""
+    """Find and upgrade packages by force when conffile prompt is needed.
+
+    Primary duty here is take responsibility of packages that will be rejected
+    by unattended-upgrades for upgrades. Only packages that apps manage are
+    handled as that is only case in which we know how to deal with
+    configuration file changes. Roughly, we will read old configuration file,
+    force upgrade the package with new configuration and then apply the old
+    preferences on it.
+
+    When upgrades packages, many things have to be kept in mind. The following
+    is the understanding on how unattended-upgrades does its upgrades. These
+    precautions need to be taken into account whenever relavent.
+
+    Checks done by unattended upgrades before upgrading:
+    - Check if today is a configured patch day.
+    - Check if running on development release.
+    - Cache does not have broken packages.
+    - Whether system (and hence this process itself) is shutting down.
+    - System is on AC Power (if configured).
+    - Whether system is on a metered connection.
+    - Package system is locked.
+    - Check if dpkg journal is dirty and fix it.
+    - Take care that upgrade process does not terminate/crash self.
+    - Check if cache has broken dependencies.
+    - Remove auto removable packages.
+    - Download all packages before upgrade
+    - Perform conffile prompt checks
+      - Ignore if dpkg options has --force-confold or --force-confnew
+
+    Unattended upgrades checks for configuration file prompts as follows:
+    - Package downloaded successfully.
+    - Package is complete.
+    - File is available.
+    - Package is trusted.
+    - Package is not blacklisted.
+    - Package extension is .deb.
+    - Get conffiles values from control data of .deb.
+    - Read from /var/lib/dpkg/status, Package and Conffiles section.
+    - Read each conffile from system and compute md5sum.
+    - If new package md5sum == dpkg status md5 == file's md5 then no conffile
+      prompt.
+    - If conffiles in new package not found in dpkg status but found on system
+      with different md5sum, conffile prompt is available.
+
+    Filtering of packages to upgrade is done as follows:
+    - Packages is upgradable.
+    - Remove packages from blacklist
+    - Remove packages unless in whitelist or whitelist is empty
+    - Package in allowed origins
+    - Don't consider packages that require restart (if configured).
+    - Package dependencies satisfy origins, blacklist and whitelist.
+    - Order packages alphabetically (order changes when upgrading in minimal
+      steps).
+
+    The upgrade process looks like:
+    - Check for install while shutting down.
+    - Check for dry run.
+    - Mail list of changes.
+    - Upgrade in minimal steps.
+    - Clean downloaded packages.
+
+    """
+
+    _run_lock = threading.Lock()
+    _wait_event = threading.Event()
+
+    UPGRADE_ATTEMPTS = 12
+
+    UPGRADE_ATTEMPT_WAIT_SECONDS = 30 * 60
+
+    class TemporaryFailure(Exception):
+        """Raised when upgrade fails but can be tried again immediately."""
+
+    class PermanentFailure(Exception):
+        """Raised when upgrade fails and there is nothing more we wish to do."""
 
     def on_package_cache_updated(self):
-        """Find an upgrade packages."""
+        """Trigger upgrades when notified about changes to package cache.
+
+        Call the upgrade process guaranteeing that it will not run more than
+        once simultaneously.
+
+        """
+        if not self._run_lock.acquire(blocking=False):
+            logger.info('Package upgrade already in process')
+            return
+
+        try:
+            self._run_upgrade()
+        finally:
+            self._run_lock.release()
+
+    def _run_upgrade(self):
+        """Attempt the upgrade process multiple times.
+
+        This method is guaranteed to not to run more than once simultaneously.
+
+        """
+        for _ in range(self.UPGRADE_ATTEMPTS):
+            logger.info('Waiting for %s seconds before attempting upgrade',
+                        self.UPGRADE_ATTEMPT_WAIT_SECONDS)
+            if self._wait_event.wait(self.UPGRADE_ATTEMPT_WAIT_SECONDS):
+                logger.info('Stopping upgrade attempts due to shutdown')
+                return
+
+            try:
+                logger.info('Attempting to perform upgrade')
+                self._attempt_upgrade()
+                return
+            except self.TemporaryFailure as exception:
+                logger.info('Cannot perform upgrade now: %s', exception)
+            except self.PermanentFailure as exception:
+                logger.error('Upgrade failed: %s', exception)
+                return
+
+        logger.info('Giving up on upgrade after too many retries')
+
+    def shutdown(self):
+        """If we are sleeping for next attempt, cancel it.
+
+        If we are actually upgrading packages, don nothing.
+        """
+        self._wait_event.set()
+
+    def _attempt_upgrade(self):
+        """Attempt to perform an upgrade.
+
+        Raise TemporaryFailure if upgrade can't be performed now.
+
+        Raise PermanentFailure if upgrade can't be performed until something
+        with the system state changes. We don't want to try again until
+        notified of further package cache changes.
+
+        Return nothing otherwise.
+
+        """
+        if _is_shutting_down:
+            raise self.PermanentFailure('Service is shutting down')
+
+        if package.is_package_manager_busy():
+            raise self.TemporaryFailure('Package manager is busy')
+
         packages = self.get_list_of_upgradeable_packages()
-        if packages:
-            logger.info('Packages available for upgrade: %s',
-                        ', '.join([package.name for package in packages]))
+        if not packages:  # No packages to upgrade
+            return
+
+        package_names = [package.name for package in packages]
+        logger.info('Packages available for upgrade: %s',
+                    ', '.join(package_names))
+
+        managed_packages = self.filter_managed_packages(package_names)
+        logger.info('Packages that can be upgraded: %s',
+                    ', '.join(managed_packages))
 
         # XXX: Implement force upgrading of selected packages
 
@@ -361,6 +509,30 @@ class ForceUpgrader():
         """Return list of packages that can be upgraded."""
         cache = apt.cache.Cache()
         return [package for package in cache if package.is_upgradable]
+
+    @staticmethod
+    def filter_managed_packages(packages):
+        """Filter out packages that apps don't force upgrade.
+
+        Return packages in the list that are managed by at least one app that
+        can perform force upgrade.
+
+        """
+        upgradable_packages = set()
+        for module in plinth.module_loader.loaded_modules.values():
+            if not getattr(module, 'force_upgrade', None):
+                # App does not implement force upgrade
+                continue
+
+            if not _module_state_matches(module, 'up-to-date'):
+                # App is not installed.
+                # Or needs an update, let it update first.
+                continue
+
+            managed_packages = _get_module_managed_packages(module)
+            upgradable_packages.update(managed_packages)
+
+        return upgradable_packages.intersection(set(packages))
 
 
 def on_package_cache_updated():
