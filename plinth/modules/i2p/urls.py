@@ -14,18 +14,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
-URLs for the Diagnostics module
+URLs for the I2P module.
 """
 
 from django.conf.urls import url
 
-from . import diagnostics as views
-
+from plinth.modules import i2p
+from plinth.views import ServiceView
 
 urlpatterns = [
-    url(r'^sys/diagnostics/$', views.index, name='index'),
-    url(r'^sys/diagnostics/(?P<module_name>[1-9a-z\-]+)/$', views.module,
-        name='module'),
+    url(r'^apps/i2p/$',
+        ServiceView.as_view(
+            service_id=i2p.managed_services[0],
+            diagnostics_module_name='i2p',
+            description=i2p.description, clients=i2p.clients,
+            manual_page=i2p.manual_page, show_status_block=True),
+        name='index'),
 ]

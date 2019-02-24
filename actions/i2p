@@ -1,0 +1,93 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Wrapper to list and handle system services
+"""
+
+import argparse
+import os
+
+from plinth import action_utils, cfg
+
+cfg.read()
+module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
+
+
+def add_service_action(subparsers, action, help):
+    parser = subparsers.add_parser(action, help=help)
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    add_service_action(subparsers, 'start', 'start i2p service')
+    add_service_action(subparsers, 'stop', 'stop i2p service')
+    add_service_action(subparsers, 'enable', 'enable i2p service')
+    add_service_action(subparsers, 'disable', 'disable i2p service')
+    add_service_action(subparsers, 'restart', 'restart i2p service')
+    add_service_action(subparsers, 'is-running', 'status of a service')
+    add_service_action(subparsers, 'is-enabled', 'status a service')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_start():
+    action_utils.service_start("i2p")
+
+
+def subcommand_stop():
+    action_utils.service_stop("i2p")
+
+
+def subcommand_enable():
+    action_utils.service_enable("i2p")
+    action_utils.webserver_enable("i2p-plinth")
+
+
+def subcommand_disable():
+    action_utils.service_disable("i2p")
+    action_utils.webserver_disable("i2p-plinth")
+
+
+def subcommand_restart():
+    action_utils.service_restart("i2p")
+
+
+def subcommand_is_enabled():
+    print(action_utils.service_is_enabled("i2p"))
+
+
+def subcommand_is_running():
+    print(action_utils.service_is_running("i2p"))
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method()
+
+
+if __name__ == '__main__':
+    main()
