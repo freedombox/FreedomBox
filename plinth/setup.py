@@ -425,6 +425,11 @@ class ForceUpgrader():
     class PermanentFailure(Exception):
         """Raised when upgrade fails and there is nothing more we wish to do."""
 
+    def __init__(self):
+        """Initialize the force upgrader."""
+        if plinth.cfg.develop:
+            self.UPGRADE_ATTEMPT_WAIT_SECONDS = 10
+
     def on_package_cache_updated(self):
         """Trigger upgrades when notified about changes to package cache.
 
