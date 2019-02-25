@@ -22,6 +22,7 @@ import logging
 import os
 import threading
 import time
+from collections import defaultdict
 
 import apt
 
@@ -462,6 +463,9 @@ class ForceUpgrader():
             except self.PermanentFailure as exception:
                 logger.error('Upgrade failed: %s', exception)
                 return
+            except Exception as exception:
+                # Assume all other errors are temporary
+                logger.exception('Unknown exception: %s', exception)
 
         logger.info('Giving up on upgrade after too many retries')
 
@@ -490,34 +494,68 @@ class ForceUpgrader():
         if package.is_package_manager_busy():
             raise self.TemporaryFailure('Package manager is busy')
 
-        packages = self.get_list_of_upgradeable_packages()
+        apps = self._get_list_of_apps_to_force_upgrade()
+        logger.info('Apps needing conffile upgrades: %s',
+                    ', '.join([app.name for app in apps]))
+
+        need_retry = False
+        for app in apps:
+            try:
+                logger.info('Force upgrading app: %s', app.name)
+                # XXX: Try to send information about package versions being
+                # upgraded and the configuration files that have lead to the
+                # force upgrade. This can be picked up from the 'packages
+                # filter-conffile-packages' that does all the relevant work.
+                app.force_upgrade(app.setup_helper)
+                logger.info('Successfully force upgraded app: %s', app.name)
+            except Exception as exception:
+                logger.exception('Error running force upgrade: %s', exception)
+                need_retry = True
+                # Continue trying to upgrade other apps
+
+        if need_retry:
+            raise self.TemporaryFailure('Some apps failed to force upgrade.')
+
+    def _get_list_of_apps_to_force_upgrade(self):
+        """Return a list of app modules on which to run force upgrade."""
+        packages = self._get_list_of_upgradable_packages()
         if not packages:  # No packages to upgrade
-            return
+            return []
 
         package_names = [package.name for package in packages]
         logger.info('Packages available for upgrade: %s',
                     ', '.join(package_names))
 
-        managed_packages = self.filter_managed_packages(package_names)
-        logger.info('Packages that can be upgraded: %s',
-                    ', '.join(managed_packages))
+        managed_packages, package_apps_map = self._filter_managed_packages(
+            package_names)
+        if not managed_packages:
+            return []
 
-        # XXX: Implement force upgrading of selected packages
+        conffile_packages = package.filter_conffile_prompts(managed_packages)
+        logger.info('Packages that need conffile upgrades: %s',
+                    conffile_packages)
+
+        apps = set()
+        for package_name in conffile_packages:
+            apps.update(package_apps_map[package_name])
+
+        return apps
 
     @staticmethod
-    def get_list_of_upgradeable_packages():
+    def _get_list_of_upgradable_packages():
         """Return list of packages that can be upgraded."""
         cache = apt.cache.Cache()
         return [package for package in cache if package.is_upgradable]
 
     @staticmethod
-    def filter_managed_packages(packages):
+    def _filter_managed_packages(packages):
         """Filter out packages that apps don't force upgrade.
 
         Return packages in the list that are managed by at least one app that
         can perform force upgrade.
 
         """
+        package_apps_map = defaultdict(set)
         upgradable_packages = set()
         for module in plinth.module_loader.loaded_modules.values():
             if not getattr(module, 'force_upgrade', None):
@@ -532,7 +570,11 @@ class ForceUpgrader():
             managed_packages = _get_module_managed_packages(module)
             upgradable_packages.update(managed_packages)
 
-        return upgradable_packages.intersection(set(packages))
+            for managed_package in managed_packages:
+                package_apps_map[managed_package].add(module)
+
+        return upgradable_packages.intersection(
+            set(packages)), package_apps_map
 
 
 def on_package_cache_updated():
