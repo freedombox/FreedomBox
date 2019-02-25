@@ -18,6 +18,7 @@
 Framework for installing and updating distribution packages
 """
 
+import json
 import logging
 import subprocess
 import threading
@@ -183,3 +184,11 @@ def refresh_package_lists():
     """To be run in case apt package lists are outdated."""
     transaction = Transaction(None, None)
     transaction.refresh_package_lists()
+
+
+def filter_conffile_prompts(packages):
+    """Return a filtered list of packages that require conffile prompts."""
+    response = actions.superuser_run(
+        'packages',
+        ['filter-conffile-packages', '--packages'] + list(packages))
+    return json.loads(response)
