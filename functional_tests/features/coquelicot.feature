@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @coquelicot @backups
+@apps @coquelicot @backups @skip
 Feature: Coquelicot File Sharing
   Run Coquelicot File Sharing server.
 
