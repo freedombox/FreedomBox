@@ -30,12 +30,12 @@ Scenario: Enable ttrss application
 
 Scenario: Backup and restore ttrss
   Given the ttrss application is enabled
-  And I subscribe to a feed
+  And I subscribe to a feed in ttrss
   When I create a backup of the ttrss app data
-  And I unsubscribe from the feed
+  And I unsubscribe from the feed in ttrss
   And I restore the ttrss app data backup
   Then the ttrss service should be running
-  And I should be subscribed to the feed
+  And I should be subscribed to the feed in ttrss
 
 Scenario: Disable ttrss application
   Given the ttrss application is enabled
