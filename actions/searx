@@ -135,7 +135,6 @@ def subcommand_setup(_):
     """Post installation actions for Searx"""
     _copy_uwsgi_configuration()
     _update_uwsgi_configuration()
-    action_utils.webserver_enable('proxy_uwsgi', kind='module')
 
     if not os.path.exists(SETTINGS_FILE):
         example_settings_file = '/usr/share/doc/searx/examples/settings.yml.gz'

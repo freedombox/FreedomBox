@@ -129,7 +129,6 @@ def subcommand_enable(_):
             os.makedirs(COLLECTIONS_PATH)
         action_utils.service_disable('radicale')
         action_utils.uwsgi_enable('radicale')
-        action_utils.webserver_enable('proxy_uwsgi', kind='module')
     else:
         action_utils.service_enable('radicale')
         action_utils.service_restart('radicale')
