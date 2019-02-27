@@ -139,7 +139,8 @@ def subcommand_setup(arguments):
 
         # enable some critical modules to avoid restart while installing
         # FreedomBox applications.
-        webserver.enable('cgi', kind='module')
+        webserver.disable('cgi', kind='module')  # For process MPMs
+        webserver.enable('cgid', kind='module')  # For threaded MPMs
         webserver.enable('proxy_uwsgi', kind='module')
         webserver.enable('proxy_wstunnel', kind='module')
 
