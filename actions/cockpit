@@ -64,7 +64,6 @@ def subcommand_setup(arguments):
     aug.save()
 
     with action_utils.WebserverChange() as webserver_change:
-        webserver_change.enable('proxy_wstunnel', kind='module')
         webserver_change.enable('cockpit-freedombox')
 
     action_utils.service_restart('cockpit.socket')
