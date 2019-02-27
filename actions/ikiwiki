@@ -140,8 +140,6 @@ def setup():
         os.makedirs(SITE_PATH)
 
     with action_utils.WebserverChange() as webserver_change:
-        webserver_change.enable('cgi', kind='module')
-        webserver_change.enable('authnz_ldap', kind='module')
         webserver_change.enable('ikiwiki-plinth')
 
 

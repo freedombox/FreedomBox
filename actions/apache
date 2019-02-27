@@ -133,10 +133,12 @@ def subcommand_setup(arguments):
         # enable mod_headers for HSTS
         webserver.enable('headers', kind='module')
 
+        # Various modules for authentication/authorization
+        webserver.enable('authnz_ldap', kind='module')
+
         # enable some critical modules to avoid restart while installing
         # FreedomBox applications.
         webserver.enable('cgi', kind='module')
-        webserver.enable('authnz_ldap', kind='module')
         webserver.enable('proxy_uwsgi', kind='module')
         webserver.enable('proxy_wstunnel', kind='module')
 
