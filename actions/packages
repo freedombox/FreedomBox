@@ -172,35 +172,49 @@ def subcommand_filter_conffile_packages(arguments):
     apt_pkg.init()  # Read configuration that will be used later.
     packages = set(arguments.packages)
 
-    status_hashes = _get_conffile_hashes_from_status_file(packages)
+    status_hashes, current_versions = _get_conffile_hashes_from_status_file(
+        packages)
 
     mismatched_hashes = _filter_matching_package_hashes(status_hashes)
 
     downloaded_files = _download_packages(packages)
 
-    new_package_hashes = _get_conffile_hashes_from_downloaded_files(
+    new_package_hashes, new_versions = _get_conffile_hashes_from_downloaded_files(
         packages, downloaded_files, status_hashes, mismatched_hashes)
 
-    conffile_packages = [
-        package for package in packages if _is_conffile_prompt_pending(
+    packages_info = {}
+    for package in packages:
+        modified_conffiles = _get_modified_conffiles(
             status_hashes[package], mismatched_hashes[package],
             new_package_hashes[package])
-    ]
-    print(json.dumps(conffile_packages))
+        if not modified_conffiles:
+            continue
+
+        package_info = {
+            'current_version': current_versions[package],
+            'new_version': new_versions[package],
+            'modified_conffiles': modified_conffiles
+        }
+        packages_info[package] = package_info
+
+    print(json.dumps(packages_info))
 
 
-def _is_conffile_prompt_pending(status_hashes, mismatched_hashes,
-                                new_package_hashes):
-    """Return whether upgrading the package requires a conffile prompt."""
+def _get_modified_conffiles(status_hashes, mismatched_hashes,
+                            new_package_hashes):
+    """Return list of conffiles that will cause prompts for a package."""
+    modified_conffiles = []
     for conffile, hash_value in mismatched_hashes.items():
         if conffile not in new_package_hashes:
             # Modified configuration file not present new package
             continue
 
-        if status_hashes[conffile] != new_package_hashes[conffile]:
+        if status_hashes[conffile] == new_package_hashes[conffile]:
             # Configuration file is same in both versions of package. Conffile
             # prompt is not triggered even if the file is modified on disk.
-            return True
+            continue
+
+        modified_conffiles.append(conffile)
 
     for conffile, hash_value in new_package_hashes.items():
         if conffile in status_hashes:
@@ -218,9 +232,9 @@ def _is_conffile_prompt_pending(status_hashes, mismatched_hashes,
             #
             # If existing file is a directory, unattended-upgrades allows it,
             # we still treat it as a conffile prompt. This should be okay.
-            return True
+            modified_conffiles.append(conffile)
 
-    return False
+    return modified_conffiles
 
 
 def _get_conffile_hashes_from_status_file(packages):
@@ -231,6 +245,7 @@ def _get_conffile_hashes_from_status_file(packages):
 
     """
     package_hashes = defaultdict(dict)
+    package_versions = defaultdict(lambda: None)
 
     status_file = apt_pkg.config.find('Dir::State::status')
     with apt_pkg.TagFile(status_file) as tag_file:
@@ -241,8 +256,9 @@ def _get_conffile_hashes_from_status_file(packages):
 
             hashes = _parse_conffiles_value(section.get('Conffiles', ''))
             package_hashes[package] = hashes
+            package_versions[package] = section.get('Version')
 
-    return package_hashes
+    return package_hashes, package_versions
 
 
 def _parse_conffiles_value(value):
@@ -335,16 +351,19 @@ def _get_conffile_hashes_from_downloaded_files(
         packages, downloaded_files, status_hashes, mismatched_hashes):
     """Retrieve the conffile hashes from downloaded .deb files."""
     new_hashes = defaultdict(dict)
+    new_versions = defaultdict(lambda: None)
     for downloaded_file in downloaded_files:
         try:
-            package_name, hashes = _get_conffile_hashes_from_downloaded_file(
+            package_name, hashes, new_version = \
+                _get_conffile_hashes_from_downloaded_file(
                 packages, downloaded_file, status_hashes, mismatched_hashes)
         except (LookupError, apt_pkg.Error, ValueError):
             continue
 
         new_hashes[package_name] = hashes
+        new_versions[package_name] = new_version
 
-    return new_hashes
+    return new_hashes, new_versions
 
 
 def _get_conffile_hashes_from_downloaded_file(
@@ -358,6 +377,8 @@ def _get_conffile_hashes_from_downloaded_file(
     package_name = section['Package']
     if package_name not in packages:
         raise ValueError
+
+    new_version = section['Version']
 
     conffiles = deb_file.control.extractdata('conffiles')
     conffiles = conffiles.decode().strip().split()
@@ -376,7 +397,7 @@ def _get_conffile_hashes_from_downloaded_file(
         md5sum = apt_pkg.md5sum(conffile_data)
         hashes[conffile] = md5sum
 
-    return package_name, hashes
+    return package_name, hashes, new_version
 
 
 def main():

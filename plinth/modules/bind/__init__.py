@@ -104,7 +104,7 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'bind', ['setup'])
 
 
-def force_upgrade(helper):
+def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
     helper.install(managed_packages, force_configuration='old')
 

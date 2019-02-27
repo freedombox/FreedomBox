@@ -186,8 +186,13 @@ def refresh_package_lists():
     transaction.refresh_package_lists()
 
 
-def filter_conffile_prompts(packages):
-    """Return a filtered list of packages that require conffile prompts."""
+def filter_conffile_prompt_packages(packages):
+    """Return a filtered info on packages that require conffile prompts.
+
+    Information for each package includes: current_version, new_version and
+    list of modified_conffiles.
+
+    """
     response = actions.superuser_run(
         'packages',
         ['filter-conffile-packages', '--packages'] + list(packages))

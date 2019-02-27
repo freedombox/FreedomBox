@@ -501,17 +501,13 @@ class ForceUpgrader():
 
         apps = self._get_list_of_apps_to_force_upgrade()
         logger.info('Apps needing conffile upgrades: %s',
-                    ', '.join([app.name for app in apps]))
+                    ', '.join([str(app.name) for app in apps]))
 
         need_retry = False
-        for app in apps:
+        for app, packages in apps.items():
             try:
                 logger.info('Force upgrading app: %s', app.name)
-                # XXX: Try to send information about package versions being
-                # upgraded and the configuration files that have lead to the
-                # force upgrade. This can be picked up from the 'packages
-                # filter-conffile-packages' that does all the relevant work.
-                app.force_upgrade(app.setup_helper)
+                app.force_upgrade(app.setup_helper, packages)
                 logger.info('Successfully force upgraded app: %s', app.name)
             except Exception as exception:
                 logger.exception('Error running force upgrade: %s', exception)
@@ -525,7 +521,7 @@ class ForceUpgrader():
         """Return a list of app modules on which to run force upgrade."""
         packages = self._get_list_of_upgradable_packages()
         if not packages:  # No packages to upgrade
-            return []
+            return {}
 
         package_names = [package.name for package in packages]
         logger.info('Packages available for upgrade: %s',
@@ -534,15 +530,17 @@ class ForceUpgrader():
         managed_packages, package_apps_map = self._filter_managed_packages(
             package_names)
         if not managed_packages:
-            return []
+            return {}
 
-        conffile_packages = package.filter_conffile_prompts(managed_packages)
+        conffile_packages = package.filter_conffile_prompt_packages(
+            managed_packages)
         logger.info('Packages that need conffile upgrades: %s',
                     conffile_packages)
 
-        apps = set()
+        apps = defaultdict(list)
         for package_name in conffile_packages:
-            apps.update(package_apps_map[package_name])
+            for app in package_apps_map[package_name]:
+                apps[app].append(conffile_packages[package_name])
 
         return apps
 
