@@ -511,7 +511,6 @@ def setup_webserver_config(domain, webserver_change):
     with open(file_name, 'w') as file_handle:
         file_handle.write(APACHE_CONFIGURATION.format(domain=domain))
 
-    webserver_change.enable('macro', kind='module')
     webserver_change.enable('freedombox-tls-site-macro', kind='config')
     webserver_change.enable(domain, kind='site')
 
