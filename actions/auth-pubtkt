@@ -40,8 +40,6 @@ def parse_arguments():
     subparsers.add_parser(
         'create-key-pair', help='create a key pair for the apache server '
         'to sign auth_pubtkt tickets')
-    subparsers.add_parser('enable-mod',
-                          help='enabled the Apache module auth_pubtkt')
     gen_tkt = subparsers.add_parser('generate-ticket',
                                     help='generate auth_pubtkt ticket')
     gen_tkt.add_argument('--uid', help='username of the user')
@@ -52,11 +50,6 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
-
-
-def subcommand_enable_mod(_):
-    """Safety check to make sure auth_pubtkt is enabled"""
-    action_utils.webserver_enable('auth_pubtkt', kind='module')
 
 
 def subcommand_create_key_pair(_):

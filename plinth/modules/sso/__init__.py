@@ -37,5 +37,4 @@ managed_packages = [
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
-    actions.superuser_run('auth-pubtkt', ['enable-mod'])
     actions.superuser_run('auth-pubtkt', ['create-key-pair'])
