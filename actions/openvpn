@@ -31,6 +31,7 @@ from plinth import action_utils, utils
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
+OLD_DH_KEY = '/etc/openvpn/freedombox-keys/dh4096.pem'
 DH_KEY = '/etc/openvpn/freedombox-keys/pki/dh.pem'
 
 OLD_SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
@@ -139,15 +140,20 @@ def subcommand_upgrade(_):
 
     Otherwise do nothing.
     """
-
-    # freedombox.conf is moved to the server directory
+    # Rewrite freedombox.conf due to change in key paths
     if os.path.exists(OLD_SERVER_CONFIGURATION_PATH):
-        shutil.move(OLD_SERVER_CONFIGURATION_PATH, SERVER_CONFIGURATION_PATH)
+        os.remove(OLD_SERVER_CONFIGURATION_PATH)
 
+    # Rewrite to ensure that easy-rsa2 paths are rewritten as easy-rsa3 paths
+    _write_server_config()
+
+    # Move all keys from easy-rsa2 to easy-rsa3 format. Only if the setup is
+    # already completed.
     pki_dir = os.path.join(KEYS_DIRECTORY, 'pki')
+    if not os.path.exists(pki_dir) and os.path.exists(OLD_DH_KEY):
+        subprocess.run(['chmod', '-R', 'go-rwx', KEYS_DIRECTORY], check=True)
 
-    if not os.path.exists(pki_dir):
-        os.mkdir(pki_dir)
+        _init_pki()
 
         # Move all files and directories under freedombox-keys into
         # freedombox-keys/pki
@@ -159,10 +165,18 @@ def subcommand_upgrade(_):
         # The dh params file no longer has the key size in its filename
         shutil.move(os.path.join(pki_dir, 'dh4096.pem'), DH_KEY)
 
-        for dir_name in ['reqs', 'private', 'issued', 'certs_by_serial']:
-            os.mkdir(os.path.join(pki_dir, dir_name))
+        directories_to_create = [
+            'reqs', 'private', 'issued', 'certs_by_serial', 'renewed',
+            'revoked', 'revoked/certs_by_serial', 'revoked/private_by_serial',
+            'revoked/reqs_by_serial', 'renewed/certs_by_serial',
+            'renewed/private_by_serial', 'renewed/reqs_by_serial'
+        ]
+        for dir_name in directories_to_create:
+            os.makedirs(
+                os.path.join(pki_dir, dir_name), mode=0o700, exist_ok=True)
 
-        def _move_by_file_extension(file_extension, directory, excluded=[]):
+        def _move_by_file_extension(file_extension, directory, excluded=None):
+            excluded = excluded or []
             for fil in glob.glob(r'{}/*.{}'.format(pki_dir, file_extension)):
                 if fil not in excluded:
                     shutil.move(fil, os.path.join(pki_dir, directory))
@@ -180,8 +194,6 @@ def subcommand_upgrade(_):
         # Move all pem files into pki/certs_by_serial except dh.pem
         _move_by_file_extension('pem', 'certs_by_serial',
                                 [os.path.join(pki_dir, 'dh.pem')])
-
-        _write_server_config()
 
     if action_utils.service_is_enabled(OLD_SERVICE_NAME):
         action_utils.service_disable(OLD_SERVICE_NAME)
@@ -204,6 +216,12 @@ def _setup_firewall():
     ])
 
 
+def _init_pki():
+    """Initialize easy-rsa PKI directory to create configuration file."""
+    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'init-pki'],
+                          **COMMON_ARGS)
+
+
 def _create_certificates():
     """Generate CA and server certificates."""
     try:
@@ -211,8 +229,7 @@ def _create_certificates():
     except FileExistsError:
         pass
 
-    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'init-pki'],
-                          **COMMON_ARGS)
+    _init_pki()
     subprocess.check_call(
         ['/usr/share/easy-rsa/easyrsa', 'build-ca', 'nopass'], **COMMON_ARGS)
     subprocess.check_call([
@@ -272,8 +289,8 @@ def _is_non_empty_file(filepath):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
