@@ -79,6 +79,9 @@ def setup(helper, old_version=None):
                                          ports=['openvpn'], is_external=True,
                                          enable=enable, disable=disable)
 
+    if service.is_enabled() and is_setup():
+        add_shortcut()
+
 
 def add_shortcut():
     """Add shortcut in frontpage."""
