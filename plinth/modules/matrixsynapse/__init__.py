@@ -26,13 +26,13 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
+from plinth import service as service_module
 from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
-version = 4
+version = 5
 
 managed_services = ['matrix-synapse']
 
@@ -164,5 +164,6 @@ def get_public_registration_status():
 
 def has_valid_certificate():
     """Return whether the configured domain name has a valid certificate."""
-    status = actions.superuser_run('matrixsynapse', ['letsencrypt', 'get-status'])
+    status = actions.superuser_run('matrixsynapse',
+                                   ['letsencrypt', 'get-status'])
     return status.startswith('valid')
