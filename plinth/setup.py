@@ -537,10 +537,10 @@ class ForceUpgrader():
         logger.info('Packages that need conffile upgrades: %s',
                     conffile_packages)
 
-        apps = defaultdict(list)
+        apps = defaultdict(dict)
         for package_name in conffile_packages:
             for app in package_apps_map[package_name]:
-                apps[app].append(conffile_packages[package_name])
+                apps[app][package_name] = conffile_packages[package_name]
 
         return apps
 
