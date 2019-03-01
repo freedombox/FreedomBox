@@ -24,9 +24,12 @@ import os
 import random
 import re
 import string
+from distutils.version import LooseVersion
 
 import ruamel.yaml
 from django.utils.functional import lazy
+
+Version = LooseVersion  # Abstraction over distutils.version.LooseVersion
 
 
 def import_from_gi(library, version):
