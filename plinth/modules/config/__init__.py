@@ -59,8 +59,8 @@ def get_hostname():
 
 def get_home_page():
     """Get the default application for the domain."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
     conf_file = APACHE_HOMEPAGE_CONFIG if os.path.exists(
         APACHE_HOMEPAGE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
@@ -120,9 +120,13 @@ def setup(helper, old_version=None):
 def _migrate_home_page_config():
     """Move the home page configuration to an external file."""
 
-    # Hold the current default app in a variable
+    # Hold the current home page path in a variable
     home_page_path = get_home_page().replace('_', '/')
 
-    # Write the default app setting into the new conf file
+    # Reset the home page to plinth in freedombox.conf
+    actions.superuser_run(
+        'config', ['reset-home-page', '--config', FREEDOMBOX_APACHE_CONFIG])
+
+    # Write the home page setting into the new conf file
     # This step is run at the end because it reloads the Apache server
     actions.superuser_run('config', ['set-home-page', home_page_path])
