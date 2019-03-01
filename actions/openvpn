@@ -121,9 +121,14 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def _is_setup():
+    """Return whether setup is complete."""
+    return utils.is_non_empty_file(DH_KEY)
+
+
 def subcommand_is_setup(_):
     """Print whether setup is complete."""
-    print('true' if utils.is_non_empty_file(DH_KEY) else 'false')
+    print('true' if _is_setup() else 'false')
 
 
 def subcommand_setup(_):
@@ -195,6 +200,10 @@ def subcommand_upgrade(_):
         _move_by_file_extension('pem', 'certs_by_serial',
                                 [os.path.join(pki_dir, 'dh.pem')])
 
+    if _is_setup():
+        # Fix any issues with firewall. This action is idempotent.
+        _setup_firewall()
+
     if action_utils.service_is_enabled(OLD_SERVICE_NAME):
         action_utils.service_disable(OLD_SERVICE_NAME)
         action_utils.service_enable(SERVICE_NAME)
@@ -208,12 +217,41 @@ def _write_server_config():
 
 def _setup_firewall():
     """Add TUN device to internal zone in firewalld."""
-    subprocess.call(
-        ['firewall-cmd', '--zone', 'internal', '--add-interface', 'tun+'])
-    subprocess.call([
-        'firewall-cmd', '--permanent', '--zone', 'internal', '--add-interface',
-        'tun+'
-    ])
+
+    def _configure_interface(interface, operation):
+        """Add or remove an interface into internal zone."""
+        command = [
+            'firewall-cmd', '--zone', 'internal',
+            '--{}-interface'.format(operation), interface
+        ]
+        subprocess.call(command)
+        subprocess.call(command + ['--permanent'])
+
+    def _is_tunplus_enabled():
+        """Return whether tun+ interface is already added."""
+        try:
+            process = subprocess.run(
+                ['firewall-cmd', '--zone', 'internal', '--list-interfaces'],
+                stdout=subprocess.PIPE, check=True)
+            return 'tun+' in process.stdout.decode().strip().split()
+        except subprocess.CalledProcessError:
+            return True  # Safer
+
+
+    # XXX: Due to https://bugs.debian.org/919517 when tun+ interface is added,
+    # firewalld is unable to handle it in nftables backend causing firewalld to
+    # break while applying rules. This makes the entire system unreachable.
+    # Hack around the problem by adding a few tun interfaces into the internal
+    # zone. Hopefully, OpenVPN setting 'dev tun' will end up using one of those
+    # if the tun devices are not used by other services. When the issue is
+    # fixed, use tun+ instead.
+    is_tunplus_set = _is_tunplus_enabled()
+    _configure_interface('tun+', 'remove')
+    for index in range(8):
+        _configure_interface('tun{}'.format(index), 'add')
+
+    if is_tunplus_set:
+        action_utils.service_restart('firewalld')
 
 
 def _init_pki():
