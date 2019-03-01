@@ -44,6 +44,7 @@ description = [
       'and monitoring by third parties such as ISPs. '),
     _('When enabled, I2P\'s web interface will be available from '
       '<a href="/i2p/">/i2p</a>.'),
+    _('The first visit will initiate the configuration process, which can also be skippped')
 ]
 
 clients = clients
