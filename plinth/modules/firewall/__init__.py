@@ -26,7 +26,7 @@ import plinth.service as service_module
 from plinth import actions, cfg
 from plinth.menu import main_menu
 from plinth.signals import service_enabled
-from plinth.utils import format_lazy
+from plinth.utils import Version, format_lazy
 
 from .manifest import backup
 
@@ -62,6 +62,21 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    _run(['setup'], superuser=True)
+
+
+def force_upgrade(helper, packages):
+    """Force upgrade firewalld to resolve conffile prompts."""
+    if 'firewalld' not in packages:
+        return
+
+    # firewalld 0.4.4.6-2 -> 0.6.x
+    package = packages['firewalld']
+    if Version(package['current_version']) >= Version('0.6') or \
+       Version(package['new_version']) < Version('0.6'):
+        return
+
+    helper.install(['firewalld'], force_configuration='new')
     _run(['setup'], superuser=True)
 
 
