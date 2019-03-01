@@ -20,15 +20,15 @@ URLs for the I2P module.
 
 from django.conf.urls import url
 
-from plinth.modules import i2p
-from plinth.views import ServiceView
+from plinth.modules.i2p import views
 
 urlpatterns = [
-    url(r'^apps/i2p/$',
-        ServiceView.as_view(
-            service_id=i2p.managed_services[0],
-            diagnostics_module_name='i2p',
-            description=i2p.description, clients=i2p.clients,
-            manual_page=i2p.manual_page, show_status_block=True),
-        name='index'),
+    url(r'^apps/i2p/$', views.I2PServiceView.as_view(), name='index'),
+    url(r'^apps/i2p/frame/tunnels/?$', views.create_i2p_frame_view(
+        "I2P Proxies and Tunnels", "i2ptunnel"
+    ), name='frame_tunnels'),
+    url(r'^apps/i2p/frame/torrent/?$', views.create_i2p_frame_view(
+        "Anonymous torrents", "i2psnark"
+    ), name='frame_torrent'),
+
 ]
