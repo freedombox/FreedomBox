@@ -124,8 +124,7 @@ def _migrate_home_page_config():
     home_page_path = get_home_page().replace('_', '/')
 
     # Reset the home page to plinth in freedombox.conf
-    actions.superuser_run(
-        'config', ['reset-home-page', '--config', FREEDOMBOX_APACHE_CONFIG])
+    actions.superuser_run('config', ['reset-home-page'])
 
     # Write the home page setting into the new conf file
     # This step is run at the end because it reloads the Apache server

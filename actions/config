@@ -26,7 +26,8 @@ import os
 import augeas
 
 from plinth import action_utils
-from plinth.modules.config import APACHE_HOMEPAGE_CONF_FILE_NAME
+from plinth.modules.config import (APACHE_HOMEPAGE_CONF_FILE_NAME,
+                                   FREEDOMBOX_APACHE_CONFIG)
 
 
 def parse_arguments():
@@ -40,11 +41,8 @@ def parse_arguments():
     set_home_page.add_argument('homepage',
                                help='path to the webserver home page')
 
-    reset_home_page = subparsers.add_parser(
-        'reset-home-page', help='Reset the homepage of the Apache server.')
-    reset_home_page.add_argument(
-        '--config', default=APACHE_HOMEPAGE_CONF_FILE_NAME,
-        help='(optional) path to the Apache config file')
+    subparsers.add_parser('reset-home-page',
+                          help='Reset the homepage of the Apache server.')
 
     subparsers.required = True
     return parser.parse_args()
@@ -63,12 +61,9 @@ def subcommand_set_home_page(arguments):
     action_utils.webserver_enable('freedombox-apache-homepage')
 
 
-def subcommand_reset_home_page(arguments):
-    """Sets the Apache web server's home page to the default - /plinth
-
-    The config file path can be optionally passed as an argument.
-    """
-    config_file = arguments.config
+def subcommand_reset_home_page(_):
+    """Sets the Apache web server's home page to the default - /plinth."""
+    config_file = FREEDOMBOX_APACHE_CONFIG
     default_path = 'plinth'
 
     aug = augeas.Augeas(
