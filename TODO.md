@@ -9,6 +9,7 @@
  - [ ] add TorBrowser with I2P addon in clients
  - [ ] add wiki in description
  - [ ] add more pages to the favorites at setup to router.config
+    - Torrent tracker: http://tracker2.postman.i2p
     - Searx instance: http://ransack.i2p
     - YaCY instance: legwork.i2p
     - another YaCY instance: seeker.i2p
