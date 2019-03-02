@@ -1,10 +1,14 @@
 # I2P
  
- - [ ] TODO functional tests
- - [ ] TODO improve i2p_frames to add a description above the frame
- - [ ] TODO configure HTTP/S proxy from freedombox interface
+ - [ ] functional tests
+ - [ ] improve i2p_frames to add a description above the frame
+ - [ ] configure HTTP/S proxy from freedombox interface
    + disabled
    + local interfaces
    + 0.0.0.0 (with warning)
- - [ ] TODO add TorBrowser with I2P addon in clients
- - [ ] TODO add wiki in description
+ - [ ] add TorBrowser with I2P addon in clients
+ - [ ] add wiki in description
+ - [ ] add more pages to the favorites at setup to router.config
+    - Searx instance: http://ransack.i2p
+    - YaCY instance: legwork.i2p
+    - another YaCY instance: seeker.i2p
