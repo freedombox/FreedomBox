@@ -28,9 +28,7 @@ from plinth import action_utils, cfg
 cfg.read()
 module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
 
-
-def add_service_action(subparsers, action, help):
-    parser = subparsers.add_parser(action, help=help)
+I2P_CONF_DIR = "/var/lib/i2p/i2p-config"
 
 
 def parse_arguments():
@@ -38,46 +36,101 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    add_service_action(subparsers, 'start', 'start i2p service')
-    add_service_action(subparsers, 'stop', 'stop i2p service')
-    add_service_action(subparsers, 'enable', 'enable i2p service')
-    add_service_action(subparsers, 'disable', 'disable i2p service')
-    add_service_action(subparsers, 'restart', 'restart i2p service')
-    add_service_action(subparsers, 'is-running', 'status of a service')
-    add_service_action(subparsers, 'is-enabled', 'status a service')
+    subparsers.add_parser('start', help='start i2p service')
+    subparsers.add_parser('stop', help='stop i2p service')
+    subparsers.add_parser('enable', help='enable i2p service')
+    subparsers.add_parser('disable', help='disable i2p service')
+    subparsers.add_parser('restart', help='restart i2p service')
+    subparsers.add_parser('is-running', help='status of a service')
+    subparsers.add_parser('is-enabled', help='status a service')
+
+    subparser = subparsers.add_parser('add-favorite', help='Add an eepsite to the list of favorites')
+    subparser.add_argument("-n", "--name", help="Name of the entry", required=True)
+    subparser.add_argument("-u", "--url", help="URL of the entry", required=True)
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_start():
+def subcommand_start(arguments):
     action_utils.service_start("i2p")
 
 
-def subcommand_stop():
+def subcommand_stop(arguments):
     action_utils.service_stop("i2p")
 
 
-def subcommand_enable():
+def subcommand_enable(arguments):
     action_utils.service_enable("i2p")
     action_utils.webserver_enable("i2p-plinth")
 
 
-def subcommand_disable():
+def subcommand_disable(arguments):
     action_utils.service_disable("i2p")
     action_utils.webserver_disable("i2p-plinth")
 
 
-def subcommand_restart():
+def subcommand_restart(arguments):
     action_utils.service_restart("i2p")
 
 
-def subcommand_is_enabled():
+def subcommand_is_enabled(arguments):
     print(action_utils.service_is_enabled("i2p"))
 
 
-def subcommand_is_running():
+def subcommand_is_running(arguments):
     print(action_utils.service_is_running("i2p"))
+
+
+def subcommand_add_favorite(arguments):
+    """
+    Adds a favorite to the router.config
+
+    :param arguments:
+    :type arguments:
+    """
+    router_config_path = os.path.join(I2P_CONF_DIR, "router.config")
+    # Read config
+    with open(router_config_path) as config_file:
+        config_lines = config_file.readlines()
+
+    found_favorites = False
+    treated = False
+    url = arguments.url
+    for i in range(len(config_lines)):
+        line = config_lines[i]
+
+        # Find favorites line
+        if line.startswith("routerconsole.favorites"):
+            found_favorites = True
+            if url in line:
+                print("URL already in favorites")
+                exit(0)
+
+            # Append favorite
+            line = "%(line)s%(name)s,%(description)s,%(url)s,%(icon)s,\n" % {
+                'line': line.strip(),
+                'name': arguments.name,
+                'description': "",
+                'url': arguments.url,
+                'icon': "/themes/console/images/eepsite.png"
+            }
+            config_lines[i] = line
+            treated = True
+            break
+
+    if not found_favorites:
+        print("No favorites line found")
+        exit(1)
+    if not treated:
+        print("Nothing to do")
+        exit(0)
+
+    # Update config
+    with open(router_config_path, mode='w') as config_file:
+        config_file.writelines(config_lines)
+
+    print("Added '%s' to favorites" % url)
 
 
 def main():
@@ -86,7 +139,7 @@ def main():
 
     subcommand = arguments.subcommand.replace('-', '_')
     subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method()
+    subcommand_method(arguments)
 
 
 if __name__ == '__main__':

@@ -57,6 +57,13 @@ service = None
 
 manual_page = 'I2P'
 
+additional_favorites = [
+    ("Searx instance", "http://ransack.i2p"),
+    ("Torrent tracker", "http://tracker2.postman.i2p"),
+    ("YaCy Legwork", "http://legwork.i2p"),
+    ("YaCy Seeker", "http://seeker.i2p"),
+]
+
 
 def init():
     """Intialize the module."""
@@ -82,6 +89,14 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
 
     helper.install(managed_packages)
+
+    # Add favorites to the configuration
+    for fav_name, fav_url in additional_favorites:
+        helper.call('post', actions.superuser_run,
+                    "i2p", ["add-favorite",
+                            "--name='%s'" % fav_name,
+                            "--url='%s'" % fav_url,
+                            ])
     helper.call('post', action_utils.webserver_enable, "proxy_html", kind="module")
     global service
     if service is None:
