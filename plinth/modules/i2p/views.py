@@ -49,7 +49,7 @@ class I2PServiceView(ServiceView):
         return context
 
 
-def create_i2p_frame_view(title, rel_path):
+def _create_i2p_frame_view(title, rel_path, description):
     """
     Creates a view with an iframe to the given path
 
@@ -69,7 +69,26 @@ def create_i2p_frame_view(title, rel_path):
             request, 'i2p_frame.html', {
                 'title': _(title),
                 'subsubmenu': subsubmenu,
-                'path': path
+                'path': path,
+                'description': description
             })
 
     return i2p_frame_view
+
+
+i2p_frame_tunnels = _create_i2p_frame_view(
+    "I2P Proxies and Tunnels", "i2ptunnel", [
+        _('I2P has the concept of tunnels. These enter an exit the network and are configured and (de)activated here.'),
+        _('HTTP/S SOCKS5 proxies are entry tunnels, so they are configured here.'),
+        _('In order to allow usage by other members of your network, '
+          'select the proxy then the interface you want your proxies to be bound to and save the settings.'
+          'The interface is in the "Reachable by" dropdown list.'),
+        _('You can find the IP addresses of your interfaces/connections <a href="/plinth/sys/networks/">here</a>'),
+    ]
+)
+i2p_frame_torrent = _create_i2p_frame_view(
+    "Anonymous torrents", "i2psnark", [
+        _('Track the progress of your anonymous torrent downlaods here.'),
+        _('You can find torrents on the <a href="http://tracker.postman.i2p">Postman Tracker</a>'),
+    ]
+)

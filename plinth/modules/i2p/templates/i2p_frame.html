@@ -1,13 +1,27 @@
 {% extends "base.html" %}
 {% block page_head %}
     <style>
-        #i2p-frame {
-            width: 100%;
-            height: 100%;
+        .i2p-main-container {
+            display: flex;
+            flex-direction: column;
             min-height: 500px;
+            height: 100%;
+        }
+
+        .i2p-main-container .i2p-main-container__frame {
+            flex-grow: 1;
         }
     </style>
 {% endblock %}
 {% block content %}
-    <iframe id="i2p-frame" src="{{ path }}" frameborder="0"></iframe>
+    <div class="i2p-main-container">
+        <div class="i2p-main-container__header">
+            {% for line in description %}
+                <p>{{ line|safe }}</p>
+            {% endfor %}
+
+        </div>
+        <iframe class="i2p-main-container__frame" src="{{ path }}" frameborder="0"></iframe>
+
+    </div>
 {% endblock %}

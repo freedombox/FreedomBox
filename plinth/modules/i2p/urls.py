@@ -24,11 +24,7 @@ from plinth.modules.i2p import views
 
 urlpatterns = [
     url(r'^apps/i2p/$', views.I2PServiceView.as_view(), name='index'),
-    url(r'^apps/i2p/frame/tunnels/?$', views.create_i2p_frame_view(
-        "I2P Proxies and Tunnels", "i2ptunnel"
-    ), name='frame_tunnels'),
-    url(r'^apps/i2p/frame/torrent/?$', views.create_i2p_frame_view(
-        "Anonymous torrents", "i2psnark"
-    ), name='frame_torrent'),
+    url(r'^apps/i2p/frame/tunnels/?$', views.i2p_frame_tunnels, name='frame_tunnels'),
+    url(r'^apps/i2p/frame/torrent/?$', views.i2p_frame_torrent, name='frame_torrent'),
 
 ]

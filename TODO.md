@@ -1,7 +1,7 @@
 # I2P
  
  - [ ] functional tests
- - [ ] improve i2p_frames to add a description above the frame
+ - [x] improve i2p_frames to add a description above the frame
  - [ ] configure HTTP/S proxy from freedombox interface
    + disabled
    + local interfaces
