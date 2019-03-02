@@ -7,7 +7,7 @@
    + local interfaces
    + 0.0.0.0 (with warning)
  - [ ] add TorBrowser with I2P addon in clients
- - [ ] add wiki in description
+ - [x] add homepage in description
  - [ ] add more pages to the favorites at setup to router.config
     - Torrent tracker: http://tracker2.postman.i2p
     - Searx instance: http://ransack.i2p

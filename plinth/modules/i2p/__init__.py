@@ -41,10 +41,12 @@ short_description = _('Anonymity Network')
 description = [
     _('I2P is an anonymous overlay network - a network within a network. '
       'It is intended to protect communication from dragnet surveillance '
-      'and monitoring by third parties such as ISPs. '),
+      'and monitoring by third parties such as ISPs.'),
     _('When enabled, I2P\'s web interface will be available from '
       '<a href="/i2p/">/i2p</a>.'),
-    _('The first visit will initiate the configuration process, which can also be skippped')
+    _('The first visit will initiate the configuration process, which can also be skippped'),
+    _('You can find more information about I2P one can peruse their '
+      '<a href="https://geti2p.net" target="_blank">homepage</a>.')
 ]
 
 clients = clients
