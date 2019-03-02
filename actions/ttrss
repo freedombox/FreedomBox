@@ -81,9 +81,7 @@ def subcommand_setup(_):
 
     aug.save()
 
-    action_utils.service_restart('tt-rss')
-    action_utils.webserver_enable('tt-rss-plinth')
-    enable_api_access()
+    action_utils.service_try_restart('tt-rss')
 
 
 def enable_api_access():
@@ -117,6 +115,7 @@ def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('tt-rss')
     action_utils.webserver_enable('tt-rss-plinth')
+    enable_api_access()
 
 
 def subcommand_disable(_):

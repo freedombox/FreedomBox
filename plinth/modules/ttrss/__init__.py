@@ -88,6 +88,7 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
+    helper.call('post', actions.superuser_run, 'ttrss', ['enable'])
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name, ports=[
