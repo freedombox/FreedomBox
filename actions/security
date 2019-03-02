@@ -20,9 +20,10 @@ Helper for security configuration
 """
 
 import argparse
+import os
 
-from plinth.modules.security import (ACCESS_CONF_FILE, ACCESS_CONF_SNIPPET,
-                                     ACCESS_CONF_SNIPPETS)
+from plinth.modules.security import (ACCESS_CONF_FILE, ACCESS_CONF_FILE_OLD,
+                                     ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPETS)
 
 
 def parse_arguments():
@@ -43,33 +44,29 @@ def parse_arguments():
 
 def subcommand_enable_restricted_access(_):
     """Restrict console login to users in admin or sudo group."""
-    with open(ACCESS_CONF_FILE, 'r') as conffile:
-        lines = conffile.readlines()
-
-    is_upgrading = False
+    try:
+        os.mkdir(os.path.dirname(ACCESS_CONF_FILE))
+    except FileExistsError:
+        pass
 
     with open(ACCESS_CONF_FILE, 'w') as conffile:
-        for line in lines:
-            if line.strip() in ACCESS_CONF_SNIPPETS:
-                conffile.write(ACCESS_CONF_SNIPPET + '\n')
-                is_upgrading = True
-            else:
-                conffile.write(line)
-
-    if not is_upgrading:
-        with open(ACCESS_CONF_FILE, 'a') as conffile:
-            conffile.write(ACCESS_CONF_SNIPPET + '\n')
+        conffile.write(ACCESS_CONF_SNIPPET + '\n')
 
 
 def subcommand_disable_restricted_access(_):
     """Don't restrict console login to users in admin or sudo group."""
-    with open(ACCESS_CONF_FILE, 'r') as conffile:
+    with open(ACCESS_CONF_FILE_OLD, 'r') as conffile:
         lines = conffile.readlines()
 
-    with open(ACCESS_CONF_FILE, 'w') as conffile:
+    with open(ACCESS_CONF_FILE_OLD, 'w') as conffile:
         for line in lines:
             if line.strip() not in ACCESS_CONF_SNIPPETS:
                 conffile.write(line)
+
+    try:
+        os.remove(ACCESS_CONF_FILE)
+    except OSError:
+        pass
 
 
 def main():

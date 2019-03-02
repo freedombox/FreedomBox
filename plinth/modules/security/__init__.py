@@ -25,7 +25,7 @@ from plinth.menu import main_menu
 
 from .manifest import backup
 
-version = 5
+version = 6
 
 is_essential = True
 
@@ -37,7 +37,8 @@ managed_services = ['fail2ban']
 
 manual_page = 'Security'
 
-ACCESS_CONF_FILE = '/etc/security/access.conf'
+ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
+ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
 OLD_ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
 ACCESS_CONF_SNIPPETS = [OLD_ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPET]
@@ -54,7 +55,10 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     setup_fail2ban()
 
-    if get_restricted_access_enabled():
+    # Migrate to new config file.
+    enabled = get_restricted_access_enabled()
+    set_restricted_access(False)
+    if enabled:
         set_restricted_access(True)
 
 
@@ -66,9 +70,17 @@ def setup_fail2ban():
 
 def get_restricted_access_enabled():
     """Return whether restricted access is enabled"""
-    with open(ACCESS_CONF_FILE, 'r') as conffile:
-        return any(line.strip() in ACCESS_CONF_SNIPPETS
-                   for line in conffile.readlines())
+    with open(ACCESS_CONF_FILE_OLD, 'r') as conffile:
+        if any(line.strip() in ACCESS_CONF_SNIPPETS
+               for line in conffile.readlines()):
+            return True
+
+    try:
+        with open(ACCESS_CONF_FILE, 'r') as conffile:
+            return any(line.strip() in ACCESS_CONF_SNIPPETS
+                       for line in conffile.readlines())
+    except FileNotFoundError:
+        return False
 
 
 def set_restricted_access(enabled):
