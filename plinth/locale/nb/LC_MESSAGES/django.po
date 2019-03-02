@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2019-02-25 03:30+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -239,15 +239,15 @@ msgstr ""
 msgid "Connection refused"
 msgstr "Oppkobling avvist"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 msgid "Repository not found"
 msgstr "Finner ikke depot"
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr "Feil krypteringspassfrase"
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr "Nektes SSH-tilgang"
 
@@ -526,29 +526,39 @@ msgstr ""
 "a>-banen på nettjeneren. Den kan brukes av <a href=\"{users_url}\">enhver "
 "bruker</a> på {box_name} som er medlem i admin-gruppen."
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Sette opp"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Domenenavn"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Ugyldig domenenavn"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "Forvalg"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "Vertsnavn"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -561,11 +571,11 @@ msgstr ""
 "eller et tall, og inneholde bokstaver tall eller bindrestreker. Lengden må "
 "være 63 tegn eller mindre."
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "Ugyldig vertsnavn"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -581,19 +591,27 @@ msgstr ""
 "bare bokstaver, tall og bindestreker. Lengden på hver merkelapp må være 63 "
 "tegn, eller mindre. Lengden på domenenavnet må være 253 tegn, eller mindre."
 
-#: plinth/modules/config/forms.py:89
-msgid "Default App"
-msgstr "Forvalgt program"
-
 #: plinth/modules/config/forms.py:91
-#, python-brace-format
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "Web-tjener (HTTP)"
+
+#: plinth/modules/config/forms.py:93
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Choose the default web application that must be served when someone "
+#| "visits your {box_name} on the web. A typical use case is to set your blog "
+#| "or wiki as the landing page when someone visits the domain name. Note "
+#| "that once the default app is set to something other than {box_name} "
+#| "Service (Plinth), your users must explicitly type /plinth or /freedombox "
+#| "to reach {box_name} Service (Plinth)."
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 "Velg programmet som presenteres som forvalg når noen besøker din {box_name} "
 "på nettet.  Et typisk bruksområde er å velge bloggen eller wiki-en din som "
@@ -636,13 +654,14 @@ msgid "Domain name set"
 msgstr "Domenenavn satt"
 
 #: plinth/modules/config/views.py:100
-#, python-brace-format
-msgid "Error setting default app: {exception}"
-msgstr "Feil ved endring av forvalgsprogram: {exception}"
+#, fuzzy, python-brace-format
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "Feil ved setting av vertsnavn: {exception}"
 
 #: plinth/modules/config/views.py:103
-msgid "Default app set"
-msgstr "Forvalgsprogram satt"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1803,15 +1822,15 @@ msgstr ""
 "Start Gobby og velge «Koble til tjener», og skriver inn domenenavnet til din "
 "{box_name}."
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 msgid "Chat Client"
 msgstr "Nettpratklient"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -2253,8 +2272,8 @@ msgid ""
 msgstr ""
 "\n"
 "        Oppsatt domene bruker et selv-signert sertifikat.\n"
-"        Samhørighet med andre Matrix Synapse-instanser krever et gyldig TLS-"
-"\n"
+"        Samhørighet med andre Matrix Synapse-instanser krever et gyldig "
+"TLS-\n"
 "        sertifikat. Gå til <a href=\"%(letsencrypt_url)s\">Let's\n"
 "        Encrypt</a> for å skaffe deg det.\n"
 "      "
@@ -3344,7 +3363,7 @@ msgstr ""
 "Du kan også få tilgang til resten av Internettet via {box_name} med utvidet "
 "sikkerhet og anonymitet."
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3931,15 +3950,16 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr "Kalender og adressebok"
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3951,6 +3971,13 @@ msgstr ""
 "deling av kontakt- og planleggingsdata. For å bruke Radicale trengs et <a "
 "href=\"http://radicale.org/clients/\">støttet klientprogram </a>. Radicale "
 "kan nås av alle brukere med {box_name}-innlogging."
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
+msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -3986,9 +4013,9 @@ msgid ""
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Skriv inn nettadressen til Radicale-tjeneren (f.eks. "
-"https://<your.freedombox.address>) og ditt brukernavn. DAVx5 vil vise alle "
-"eksisterende kalendere og adressebøker, og du kan opprette nye."
+"Skriv inn nettadressen til Radicale-tjeneren (f.eks. https://<your."
+"freedombox.address>) og ditt brukernavn. DAVx5 vil vise alle eksisterende "
+"kalendere og adressebøker, og du kan opprette nye."
 
 #: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
@@ -4018,9 +4045,9 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "I Evolution, legg til henholdsvis en ny kalender og adressebok, med WebDAV. "
-"Skriv inn nettadressen til Radicale-tjeneren (f.eks. "
-"https://<your.freedombox.address>) og ditt brukernavn. Å klikke på "
-"søkeknappen vil liste opp eksisterende kalendre og adressebøker."
+"Skriv inn nettadressen til Radicale-tjeneren (f.eks. https://<your."
+"freedombox.address>) og ditt brukernavn. Å klikke på søkeknappen vil liste "
+"opp eksisterende kalendre og adressebøker."
 
 #: plinth/modules/radicale/views.py:55
 msgid "Access rights configuration updated"
@@ -5012,40 +5039,40 @@ msgstr ""
 "\"https://www.torproject.org/download/download-easy.html.en\">Tor Browser</"
 "a>."
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks-mellomtjener"
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "Skjult Tor-tjeneste"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "Tor anonymitetsnettverk"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "Tor relay-port tilgjengelig"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-transport registrert"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-transport registrert"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Adgang til URL {url} på tcp{kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
@@ -5238,7 +5265,7 @@ msgstr ""
 "sikre at den nye katalogen eksisterer og er skrivbar av «debian-"
 "transmission»-brukeren."
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
@@ -5279,7 +5306,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Les og abonner på nyhetsstrømmer"
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (avgreining)"
 
@@ -5564,23 +5591,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Generisk"
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "Feil under installasjon"
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 msgid "installing"
 msgstr "installering"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "laster ned"
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 msgid "media change"
 msgstr "mediaendring"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "oppsettsfil: {file}"
@@ -5894,6 +5921,15 @@ msgstr "%(percentage)s%% fullført"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Default App"
+#~ msgstr "Forvalgt program"
+
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "Feil ved endring av forvalgsprogram: {exception}"
+
+#~ msgid "Default app set"
+#~ msgstr "Forvalgsprogram satt"
 
 #~ msgid "Abort"
 #~ msgstr "Anuller"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2018-12-12 04:08+0000\n"
 "Last-Translator: Herdir <herdir@herdir.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -234,17 +234,17 @@ msgstr ""
 msgid "Connection refused"
 msgstr "Type de Connexion"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 #, fuzzy
 #| msgid "packages not found"
 msgid "Repository not found"
 msgstr "Paquets introuvables"
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr ""
 
@@ -527,29 +527,39 @@ msgstr ""
 "rss\">/tt-rss</a> sur le serveur web. Il peut être consulté par tout <a href="
 "\"/plinth/sys/users\">utilisateur avec un compte {box_name}</a>."
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Configurer"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Nom de Domaine"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Nom de domaine invalide"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "Défaut"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "Nom de Machine"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -563,11 +573,11 @@ msgstr ""
 "la fin seulement des lettres de l'alphabet, des chiffres ou des traits "
 "d’union « - ». Sa longueur maximum est de 63 signes."
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "Nom de machine invalide"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -586,19 +596,20 @@ msgstr ""
 "63 signes. La longueur totale du nom de domaine ne doit pas excéder 253 "
 "signes."
 
-#: plinth/modules/config/forms.py:89
-msgid "Default App"
-msgstr "Défaut"
-
 #: plinth/modules/config/forms.py:91
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "Serveur Web (HTTP)"
+
+#: plinth/modules/config/forms.py:93
 #, python-brace-format
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
@@ -636,15 +647,13 @@ msgstr "Nom de domaine établi"
 
 #: plinth/modules/config/views.py:100
 #, fuzzy, python-brace-format
-#| msgid "Error setting language: {exception}"
-msgid "Error setting default app: {exception}"
-msgstr "Erreur lors de la configuration de la langue : {exception}"
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "Erreur lors de l'établissement du nom de machine : {exception}"
 
 #: plinth/modules/config/views.py:103
-#, fuzzy
-#| msgid "Default"
-msgid "Default app set"
-msgstr "Défaut"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1852,15 +1861,15 @@ msgstr ""
 "Gobby</a> et installez-le.  Ensuite, démarrez-le puis sélectionnez \"Connect "
 "to Server\".  Saisissez le nom de domaine de {box_name}."
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 msgid "Chat Client"
 msgstr "Client de discussion"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3480,7 +3489,7 @@ msgstr ""
 "internes via {box_name}. Vous pouvez aussi accéder à l'Internet via "
 "{box_name} depuis votre réseau pour une sécurité et un anonymat accrus."
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4085,15 +4094,16 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "Quassel"
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr "Agenda et carnet d'adresses"
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -4107,6 +4117,13 @@ msgstr ""
 "nécessaire d'utiliser une <a href=\"http://radicale.org/clients"
 "\">application client compatible</a>. N'importe quel utilisateur disposant "
 "d'un compte {box_name} peut accéder à Radicale."
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
+msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -5207,40 +5224,40 @@ msgstr ""
 "recommande l'utilisation du <a href=\"https://www.torproject.org/download/"
 "download-easy.html.en\">navigateur Tor</a>."
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "Relais pont Tor"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "Service Caché Tor"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "Réseau d'anonymat Tor"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "Port du relais Tor disponible"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "Transport Obfs3 enregistré"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Transport Obfs4 enregistré"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Accédez à l'URL {url} sur tcp{kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Confirmez l'utilisation de Tor pour {url} sur tcp{kind}"
@@ -5433,7 +5450,7 @@ msgstr ""
 "répertoire par défaut, assurez-vous que ce nouveau répertoire existe bien et "
 "qu'il est ouvert en écriture pour l'utilisateur \"debian-transmission\"."
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
@@ -5477,7 +5494,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 #, fuzzy
 #| msgid "Tiny Tiny RSS"
 msgid "Tiny Tiny RSS (Fork)"
@@ -5783,23 +5800,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Générique"
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "Erreur pendant l'installation"
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 msgid "installing"
 msgstr "installation"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "téléchargement"
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 msgid "media change"
 msgstr "Changement de support"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "fichier de configuration : {file}"
@@ -6137,6 +6154,19 @@ msgstr "%(percentage)s%% effectué"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Default App"
+#~ msgstr "Défaut"
+
+#, fuzzy
+#~| msgid "Error setting language: {exception}"
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "Erreur lors de la configuration de la langue : {exception}"
+
+#, fuzzy
+#~| msgid "Default"
+#~ msgid "Default app set"
+#~ msgstr "Défaut"
 
 #~ msgid "Abort"
 #~ msgstr "Annuler"

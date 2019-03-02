@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2019-02-16 17:19+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -230,15 +230,15 @@ msgstr ""
 msgid "Connection refused"
 msgstr "Připojení odmítnuto"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 msgid "Repository not found"
 msgstr "Repozitář nenalezen"
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr "Nesprávná šifrovací heslová fráze"
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr "SSH přístup odepřen"
 
@@ -515,29 +515,39 @@ msgstr ""
 "\"{users_url}\">uživatele s účtem na {box_name}</a>, náležejícím do skupiny "
 "admin."
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Nastavit"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Doménový název"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "Výchozí"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "Název stroje"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -550,11 +560,11 @@ msgstr ""
 "písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
 "Celková délka může být nejvýše 63 znaků."
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "Neplatný název stroje"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -571,19 +581,27 @@ msgstr ""
 "ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
 "nejvýše 253 znaků."
 
-#: plinth/modules/config/forms.py:89
-msgid "Default App"
-msgstr "Výchozí aplikace"
-
 #: plinth/modules/config/forms.py:91
-#, python-brace-format
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "Webový server (HTTP)"
+
+#: plinth/modules/config/forms.py:93
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Choose the default web application that must be served when someone "
+#| "visits your {box_name} on the web. A typical use case is to set your blog "
+#| "or wiki as the landing page when someone visits the domain name. Note "
+#| "that once the default app is set to something other than {box_name} "
+#| "Service (Plinth), your users must explicitly type /plinth or /freedombox "
+#| "to reach {box_name} Service (Plinth)."
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 "Zvolte výchozí webovou aplikaci která je třeba, aby byla poskytována když "
 "někdo navštíví web vašeho {box_name}. Typickým případem použití je nastavení "
@@ -626,13 +644,14 @@ msgid "Domain name set"
 msgstr "Nastavení doménového názvu"
 
 #: plinth/modules/config/views.py:100
-#, python-brace-format
-msgid "Error setting default app: {exception}"
-msgstr "Chyba při nastavování výchozí aplikace: {exception}"
+#, fuzzy, python-brace-format
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "Chyba při nastavování názvu stroje: {exception}"
 
 #: plinth/modules/config/views.py:103
-msgid "Default app set"
-msgstr "Výchozí sada aplikací"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1800,15 +1819,15 @@ msgstr ""
 "Spusťte Goggy a zvolte „Připojit k serveru“ a zadejte doménový název svého "
 "{box_name}."
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 msgid "Chat Client"
 msgstr "Chatovací klient"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -2043,11 +2062,11 @@ msgid ""
 "valid TLS certificate. Federation with other instances will not work without "
 "this."
 msgstr ""
-"Pokud je zapnuto, aplikace <a href=\"%(matrixsynapse_url)s\">Matrix "
-"Synapse</a> bude také používat stejný Let's Encrypt certifikát. Ostatní "
-"instance Matrix Synapse, provozované ve verzi 1.0 a novější očekávají, že "
-"váš server vytváří platný TlS certifkát. Federování s ostatními instancemi "
-"bez toho nebude fungovat."
+"Pokud je zapnuto, aplikace <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</"
+"a> bude také používat stejný Let's Encrypt certifikát. Ostatní instance "
+"Matrix Synapse, provozované ve verzi 1.0 a novější očekávají, že váš server "
+"vytváří platný TlS certifkát. Federování s ostatními instancemi bez toho "
+"nebude fungovat."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
 #, python-format
@@ -2055,8 +2074,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Tato funkce dává smysl pouze pokud používáte serverovou chatovací aplikaci <"
-"a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a>."
+"Tato funkce dává smysl pouze pokud používáte serverovou chatovací aplikaci "
+"<a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a>."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
 #, python-format
@@ -2065,8 +2084,8 @@ msgid ""
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Aby bylo možné použít Let's Encrypt certifikát pro aplikaci <a href=\""
-"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server, je třeba nejprve "
+"Aby bylo možné použít Let's Encrypt certifikát pro aplikaci <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server, je třeba nejprve "
 "zapnout obnovování certifikátu pro stávající doménu."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
@@ -3343,7 +3362,7 @@ msgstr ""
 "zvýšení zabezpečení a anonymity je také možné přistupovat k ostatku "
 "Internetu prostřednictvím {box_name}."
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3925,15 +3944,16 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr "Kalendář a adresář kontaktů"
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3946,6 +3966,13 @@ msgstr ""
 "<a href=\"http://radicale.org/clients/\">podporovaná klientská aplikace </"
 "a>. K Radicale je možné přistupovat pomocí libovolného uživatelského účtu na "
 "{box_name}."
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
+msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -3981,9 +4008,9 @@ msgid ""
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Zadejte URL adresu Radicale serveru (např. https://<your.freedombox.address>)"
-" a své uživatelské jméno. DAVx5 zobrazí všechny existující kalendáře a "
-"adresáře kontaktů a můžete i vytvářet nové."
+"Zadejte URL adresu Radicale serveru (např. https://<your.freedombox."
+"address>) a své uživatelské jméno. DAVx5 zobrazí všechny existující "
+"kalendáře a adresáře kontaktů a můžete i vytvářet nové."
 
 #: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
@@ -5013,40 +5040,40 @@ msgstr ""
 "prohlížeč <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">Tor Browser</a>."
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks proxy"
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "Předávájící Tor most"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "Tor skrytá služba"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "Anonymní síť Tor"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "Port Tor předávání k dispozici"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Přistoupit k URL adrese {url} na tcp{kind} prostřednictvím Tor"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Potvrdit použití Tor na {url} na tcp{kind}"
@@ -5236,7 +5263,7 @@ msgstr ""
 "zajistěte aby existovala a uživatel „debian-transmission“ do ní mohl "
 "zapisovat."
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
@@ -5276,7 +5303,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Číst a přihlásit se k odběru novinek"
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (fork)"
 
@@ -5561,23 +5588,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Obecné"
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "Chyba při instalaci"
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 msgid "installing"
 msgstr "Instalace"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "stahování"
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 msgid "media change"
 msgstr "změna média"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "soubor s nastaveními: {file}"
@@ -5891,6 +5918,15 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Default App"
+#~ msgstr "Výchozí aplikace"
+
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "Chyba při nastavování výchozí aplikace: {exception}"
+
+#~ msgid "Default app set"
+#~ msgstr "Výchozí sada aplikací"
 
 #~ msgid "Abort"
 #~ msgstr "Přerušit"

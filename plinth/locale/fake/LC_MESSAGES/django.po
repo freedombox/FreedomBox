@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -247,17 +247,17 @@ msgstr ""
 msgid "Connection refused"
 msgstr "CONNECTION TYPE"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 #, fuzzy
 #| msgid "packages not found"
 msgid "Repository not found"
 msgstr "PACKAGES NOT FOUND"
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr ""
 
@@ -542,29 +542,39 @@ msgstr ""
 "WHEN ENABLED, THE BLOGS AND WIKIS WILL BE AVAILABLE FROM <a href=\"/ikiwiki"
 "\">/IKIWIKI</a>."
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "CONFIGURE"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "DOMAIN NAME"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "INVALID DOMAIN NAME"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "DEFAULT"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "HOSTNAME"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -577,11 +587,11 @@ msgstr ""
 "AND HAVE AS INTERIOR CHARACTERS ONLY ALPHABETS, DIGITS AND HYPHENS.  TOTAL "
 "LENGTH MUST BE 63 CHARACTERS OR LESS."
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "INVALID HOSTNAME"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -598,21 +608,20 @@ msgstr ""
 "63 CHARACTERS OR LESS.  TOTAL LENGTH OF DOMAIN NAME MUST BE 253 CHARACTERS "
 "OR LESS."
 
-#: plinth/modules/config/forms.py:89
-#, fuzzy
-#| msgid "Default"
-msgid "Default App"
-msgstr "DEFAULT"
-
 #: plinth/modules/config/forms.py:91
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "WEB SERVER (HTTP)"
+
+#: plinth/modules/config/forms.py:93
 #, python-brace-format
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
@@ -652,15 +661,13 @@ msgstr "DOMAIN NAME SET"
 
 #: plinth/modules/config/views.py:100
 #, fuzzy, python-brace-format
-#| msgid "Error setting language: {exception}"
-msgid "Error setting default app: {exception}"
-msgstr "ERROR SETTING LANGUAGE: {exception}"
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "ERROR SETTING HOSTNAME: {exception}"
 
 #: plinth/modules/config/views.py:103
-#, fuzzy
-#| msgid "Default"
-msgid "Default app set"
-msgstr "DEFAULT"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1886,17 +1893,17 @@ msgid ""
 "domain name."
 msgstr ""
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr ""
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 #, fuzzy
 #| msgid "IRC Client (Quassel)"
 msgid "Chat Client"
 msgstr "IRC CLIENT (QUASSEL)"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3476,7 +3483,7 @@ msgstr ""
 "YOU CAN ALSO ACCESS THE REST OF THE INTERNET VIA %(box_name)s FOR ADDED "
 "SECURITY AND ANONYMITY."
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4105,21 +4112,29 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
 "sharing of scheduling and contact data. To use Radicale, a <a href=\"http://"
 "radicale.org/clients/\">supported client application</a> is needed. Radicale "
 "can be accessed by any user with a {box_name} login."
+msgstr ""
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
 msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
@@ -5183,40 +5198,40 @@ msgstr ""
 "THE <a href=\"https://www.torproject.org/download/download-easy.html.en\"> "
 "TOR BROWSER</a>."
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "TOR BRIDGE RELAY"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "TOR HIDDEN SERVICE"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "TOR ANONYMITY NETWORK"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "TOR RELAY PORT AVAILABLE"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "OBFS3 TRANSPORT REGISTERED"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "OBFS4 TRANSPORT REGISTERED"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "ACCESS URL {url} ON TCP{kind} VIA TOR"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "CONFIRM TOR USAGE AT {url} ON TCP{kind}"
@@ -5408,7 +5423,7 @@ msgstr ""
 "ENSURE THAT THE NEW DIRECTORY EXISTS AND IS WRITABLE BY \"DEBIAN-TRANSMISSION"
 "\" USER."
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr ""
 
@@ -5446,7 +5461,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
@@ -5752,27 +5767,27 @@ msgstr "PPPOE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr ""
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 #, fuzzy
 #| msgid "Installation"
 msgid "installing"
 msgstr "INSTALLATION"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr ""
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
 msgstr "SETTING UNCHANGED"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, fuzzy, python-brace-format
 #| msgid "Configuration"
 msgid "configuration file: {file}"
@@ -6101,6 +6116,21 @@ msgstr "%(percentage)s%% COMPLETE"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Default"
+#~ msgid "Default App"
+#~ msgstr "DEFAULT"
+
+#, fuzzy
+#~| msgid "Error setting language: {exception}"
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "ERROR SETTING LANGUAGE: {exception}"
+
+#, fuzzy
+#~| msgid "Default"
+#~ msgid "Default app set"
+#~ msgstr "DEFAULT"
 
 #, fuzzy
 #~| msgid "NTP client in contact with servers"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2018-08-09 20:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -232,15 +232,15 @@ msgstr ""
 msgid "Connection refused"
 msgstr "कनेक्शन टाइप"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 msgid "Repository not found"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr ""
 
@@ -528,29 +528,39 @@ msgstr ""
 "माैजूद होते है. यह <a href=\"{users_url}\"> कोई से </a> एक {box_name} के सात पहुंच "
 "सकते हैं. निजी जानकारी आैर सिस्टम बदलने का योग्यता सिर्फ व्यवस्थापक लोग के पास है."
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "कॉन्फ़िगर करें"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "डोमेन नाम"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "अमान्य डोमेन नाम"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "डिफ़ॉल्ट"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "होस्टनाम"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -562,11 +572,11 @@ msgstr ""
 "मिल सकते हैं । होस्ट नाम आल्फ़बेट या एक संख्या से शुरु और अंत करना पड़ता है आैर इसमे सिर्फ "
 "आल्फ़बेट,संख्या आैर हैफ़ेन होना पड़ता है. कुल अक्षर का लंबाई ६३ या कम होनी पड़ती है।"
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "अमान्य होस्टनाम"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -581,19 +591,27 @@ msgstr ""
 "करना पड़ता है आैर इसमे सिर्फ आल्फ़बेट,संख्या आैर हैफ़ेन होना पड़ता है.हर लेबल का लंबाई ६३ अक्षर "
 "या कम होनी पड़ती है. डोमेन नाम कि कुल लंबाई २५३ अक्षर या कम होनी पड़ती है."
 
-#: plinth/modules/config/forms.py:89
-msgid "Default App"
-msgstr "डिफ़ॉल्ट एेप"
-
 #: plinth/modules/config/forms.py:91
-#, python-brace-format
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "वेब सर्वर (HTTP)"
+
+#: plinth/modules/config/forms.py:93
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Choose the default web application that must be served when someone "
+#| "visits your {box_name} on the web. A typical use case is to set your blog "
+#| "or wiki as the landing page when someone visits the domain name. Note "
+#| "that once the default app is set to something other than {box_name} "
+#| "Service (Plinth), your users must explicitly type /plinth or /freedombox "
+#| "to reach {box_name} Service (Plinth)."
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 "डिफ़ॉल्ट वेब एप्लिकेशन चूनिये जो परोसा जाता पढ़ेगा जब किसी को आपका {box_name} वेब में "
 "दौरा करता है. जब किसी आैर डोमेन नाम पर जाता है तो एक टिपिकल उपयोग मामला है आपके "
@@ -635,13 +653,14 @@ msgid "Domain name set"
 msgstr "डोमेन नाम सेट हो गया है"
 
 #: plinth/modules/config/views.py:100
-#, python-brace-format
-msgid "Error setting default app: {exception}"
-msgstr "{exception}: डिफ़ॉल्ट एेप सेट करने में एरर"
+#, fuzzy, python-brace-format
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "{exception}: होस्ट नाम सेट करने में एरर"
 
 #: plinth/modules/config/views.py:103
-msgid "Default app set"
-msgstr "डिफ़ॉल्ट एेप सेट"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1770,15 +1789,15 @@ msgid ""
 "domain name."
 msgstr "गोबी शुरू करें और \"सर्वर से कनेक्ट\" चुनिये और {box_name} का डोमेन नाम दर्ज करें."
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "जेएसएक्ससि"
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 msgid "Chat Client"
 msgstr "चैट क्लाइंट"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3332,7 +3351,7 @@ msgstr ""
 "आंतरिक सर्विसस उपयोग करने के लिये. आप बाकी सब इंटरनेट {box_name} के जरिए उपयोग कर "
 "सकते हैं अगर अापको और सुरक्षा और गुमनामी चाहिये."
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3911,15 +3930,16 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "क्वासेलड्रोइड"
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr "राडिकैल"
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr "कैलेंडर और पता पुस्तिका"
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3931,6 +3951,13 @@ msgstr ""
 "करना की अनुमति देता है. राडिकैल उपयोग करने के लिये, एक <a href=\"http://radicale."
 "org/clients/\">समर्थित क्लाइंट एप्लिकेशन</a> कि जरुरत है. राडिकैल किसी {box_name} "
 "यूसर पहुंचा जा सकता है एक लॉगिन के साथ."
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
+msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -4974,40 +5001,40 @@ msgstr ""
 "टो प्रोजेक्ट सिफारिश की है कि आप <a href=\"https://www.torproject.org/download/"
 "download-easy.html.en\">टो ब्राउज़र </a> उपयोग करें."
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr "टोर सोक्स प्रॉक्सी"
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "टो ब्रिज रीले"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "टोर हिडन सर्विस"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "टोर गुमनामी नेटवर्क"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "टोर रीले पोर्ट उपलब्ध है"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "यूआरएल एक्सेस करें {url} टीसीपी पर {kind} टोर के माध्यम से"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "टोर उपयोग की पुष्टि करें {url} पर टीसीपी पर {kind}"
@@ -5191,7 +5218,7 @@ msgstr ""
 "जहां डाउनलोडस सहेजे जाते हैं, यह डायरेक्टरी है. अगर आप डिफ़ॉल्ट डायरेक्टरी बदलते हैं, "
 "सुनिश्चित करें कि नया डायरेक्टरी मौजूद है और \"डेबियन-हस्तांतरण\" यूसर से लिखा गया था."
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "टिनी टिनी आरएसएस"
 
@@ -5232,7 +5259,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "समाचार फ़ीड्स पढ़ें और सब्सक्राइब करें"
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "टैनी टैनी आरएसएस (फोर्क)"
 
@@ -5528,23 +5555,23 @@ msgstr "पीपीपीअोइ"
 msgid "Generic"
 msgstr "जेनेरिक"
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "इंस्टालेशन करते समय पर त्रुटि"
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 msgid "installing"
 msgstr "इंस्टॉलिंग"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "डाउनलोडिंग"
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 msgid "media change"
 msgstr "मीडिया बदलाव"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "कॉंफ़िगरेशन फ़ाइल: {file}"
@@ -5851,6 +5878,15 @@ msgstr "%(percentage)s%% पूर्ण"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Default App"
+#~ msgstr "डिफ़ॉल्ट एेप"
+
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "{exception}: डिफ़ॉल्ट एेप सेट करने में एरर"
+
+#~ msgid "Default app set"
+#~ msgstr "डिफ़ॉल्ट एेप सेट"
 
 #, fuzzy
 #~| msgid "Backups"

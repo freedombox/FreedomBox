@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2019-02-23 09:05+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -231,15 +231,15 @@ msgstr ""
 msgid "Connection refused"
 msgstr "Kapcsolat elutasítva"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 msgid "Repository not found"
 msgstr "Tároló nem található"
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr "Helytelen titkosítási jelszó"
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr "SSH hozzáférés megtagadva"
 
@@ -376,8 +376,8 @@ msgid ""
 "limit can leave your %(box_name)s unusable."
 msgstr ""
 "%(max_filesize)s szabad tárterület elérhető a biztonsági mentés "
-"helyreállítására. E korlát meghaladása használhatatlanná teheti a %(box_name)"
-"s eszközöd."
+"helyreállítására. E korlát meghaladása használhatatlanná teheti a "
+"%(box_name)s eszközöd."
 
 #: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
@@ -523,29 +523,39 @@ msgstr ""
 "bármely adminisztrátori csoportba tartozó <a href="
 "\"{users_url}\">felhasználója</a>."
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Beállítások"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Domain név"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Érvénytelen domain név"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "Alapértelmezett"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "Állomásnév"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -558,11 +568,11 @@ msgstr ""
 "végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
 "Teljes hossza nem lehet több 63 karakternél."
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "Érvénytelen állomásnév"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -579,19 +589,27 @@ msgstr ""
 "Minden egyes címkének a hossza nem lehet több 63 karakternél. A domain név "
 "teljes hossza nem lehet több 253 karakternél."
 
-#: plinth/modules/config/forms.py:89
-msgid "Default App"
-msgstr "Alapértelmezett alkalmazás"
-
 #: plinth/modules/config/forms.py:91
-#, python-brace-format
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "Webkiszolgáló (HTTP)"
+
+#: plinth/modules/config/forms.py:93
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Choose the default web application that must be served when someone "
+#| "visits your {box_name} on the web. A typical use case is to set your blog "
+#| "or wiki as the landing page when someone visits the domain name. Note "
+#| "that once the default app is set to something other than {box_name} "
+#| "Service (Plinth), your users must explicitly type /plinth or /freedombox "
+#| "to reach {box_name} Service (Plinth)."
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 "Válaszd ki azt az alkalmazást, amit alapértelmezésképpen láthatnak majd "
 "azok, akik az internetről meglátogatják a te {box_name} eszközöd. Tipikus "
@@ -635,13 +653,14 @@ msgid "Domain name set"
 msgstr "Domain név beállítva"
 
 #: plinth/modules/config/views.py:100
-#, python-brace-format
-msgid "Error setting default app: {exception}"
-msgstr "Az alapértelmezett alkalmazás beállítása sikertelen: {exception}"
+#, fuzzy, python-brace-format
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "Hiba az állomásnév beállítása közben: {exception}"
 
 #: plinth/modules/config/views.py:103
-msgid "Default app set"
-msgstr "Alapértelmezett alkalmazás beállítva"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1822,15 +1841,15 @@ msgstr ""
 "Indítsd el a Gobby-t majd válaszd a \"Csatlakozás a kiszolgálóhoz\"-t "
 "(\"Connect to Server\") és írd be a {box_name} eszközöd domain nevét."
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 msgid "Chat Client"
 msgstr "Chat kliens"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -2057,12 +2076,13 @@ msgstr ""
 #, python-format
 msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
 msgstr ""
-"Tanúsítvány használata %(current_domain)s doménben az "
-"<b>matrixsynapse</b>-hez"
+"Tanúsítvány használata %(current_domain)s doménben az <b>matrixsynapse</b>-"
+"hez"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:285
 msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
-msgstr "Tanúsítvány használata a jelenlegi doménben az <b>matrixsynapse</b>-hez"
+msgstr ""
+"Tanúsítvány használata a jelenlegi doménben az <b>matrixsynapse</b>-hez"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:295
 #, python-format
@@ -2085,8 +2105,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Ennek a funkciónak csak akkor van értelme, ha a <a href=\""
-"%(matrixsynapse_url)s\">Matrix Synapse</a> chat kiszolgáló alkalmazást "
+"Ennek a funkciónak csak akkor van értelme, ha a <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat kiszolgáló alkalmazást "
 "használod."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
@@ -2096,8 +2116,8 @@ msgid ""
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Ahhoz, hogy a Let's Encrypt tanúsítványt használd a <a href=\""
-"%(matrixsynapse_url)s\">Matrix Synapse</a> chat kiszolgálóhoz, előbb "
+"Ahhoz, hogy a Let's Encrypt tanúsítványt használd a <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat kiszolgálóhoz, előbb "
 "engedélyezned kell a jelenlegi domén tanúsítvány megújítását."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
@@ -2289,8 +2309,8 @@ msgstr ""
 "        A beállított doménnév ön-aláírt tanúsítványt használ.\n"
 "        A többi Matrix Synapse példányokkal való szövetséghez egy érvényes "
 "TLS\n"
-"        tanúsítványra lesz szükséged. Kérlek, látogasd meg a <a href=\""
-"%(letsencrypt_url)s\">Let's\n"
+"        tanúsítványra lesz szükséged. Kérlek, látogasd meg a <a href="
+"\"%(letsencrypt_url)s\">Let's\n"
 "        Encrypt</a> weboldalát ahhoz, hogy beszerezz egyet.\n"
 "      "
 
@@ -3390,7 +3410,7 @@ msgstr ""
 "eszközödön keresztül az Internetet is további biztonság és anonimitás "
 "érdekében."
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3982,15 +4002,16 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr "Naptár és címjegyzék"
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -4003,6 +4024,13 @@ msgstr ""
 "Radicale használatához szükség lesz egy <a href=\"http://radicale.org/"
 "clients/\">támogatott kliens alkalmazásra</a> is. A Radicale elérhető "
 "bármely felhasználó számára „{box_name}” felhasználónév használatával."
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
+msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -4674,8 +4702,8 @@ msgid ""
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
 "Az általad használt fájlrendszer típusa: <strong>%(fs_type)s</strong>. A "
-"Pillanatképek jelenleg csak a következő fájlrendszereken érhető el: "
-"<strong>%(types_supported)s</strong>."
+"Pillanatképek jelenleg csak a következő fájlrendszereken érhető el: <strong>"
+"%(types_supported)s</strong>."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
@@ -4985,8 +5013,8 @@ msgid ""
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available</a>."
 msgstr ""
-"Ha engedélyezett, a Syncthing webes felülete a <a href=\"/syncthing/\""
-">/syncthing</a> címről érhető el.  Asztali és mobil kliensek szintén <a href="
+"Ha engedélyezett, a Syncthing webes felülete a <a href=\"/syncthing/\">/"
+"syncthing</a> címről érhető el.  Asztali és mobil kliensek szintén <a href="
 "\"https://syncthing.net/\">hozzáférhetőek</a>."
 
 #: plinth/modules/syncthing/__init__.py:61
@@ -5032,11 +5060,11 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
-"A Tahoe-LAFS kiszolgáló domén neve erre lett beállítva: "
-"<b>%(domain_name)s</b>. A FreedomBox domén nevének megváltoztatása magával "
-"vonja a Tahoe-LAFS újratelepítését és emiatt EL FOGOD VESZÍTENI AZ ADATOKAT. "
-"A Tahoe-LAFS-t itt érheted el: <a href=\"https://%(domain_name)s:5678\""
-">https://%(domain_name)s:5678</a>."
+"A Tahoe-LAFS kiszolgáló domén neve erre lett beállítva: <b>%(domain_name)s</"
+"b>. A FreedomBox domén nevének megváltoztatása magával vonja a Tahoe-LAFS "
+"újratelepítését és emiatt EL FOGOD VESZÍTENI AZ ADATOKAT. A Tahoe-LAFS-t itt "
+"érheted el: <a href=\"https://%(domain_name)s:5678\">https://"
+"%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
@@ -5082,44 +5110,44 @@ msgid ""
 msgstr ""
 "A Tor egy névtelenséget biztosító kommunikációs rendszer. Többet megtudhatsz "
 "róla a <a href=\"https://www.torproject.org/\">Tor Project</a> weboldalon. A "
-"legbiztonságosabb webböngészéshez a Tor Project a <a href=\""
-"https://www.torproject.org/download/download-easy.html.en\">Tor böngésző</a> "
-"használatát javasolja."
+"legbiztonságosabb webböngészéshez a Tor Project a <a href=\"https://www."
+"torproject.org/download/download-easy.html.en\">Tor böngésző</a> használatát "
+"javasolja."
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks proxy"
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "Tor híd relay"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "Tor rejtett szolgáltatás"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "Tor anonim hálózat"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "Tor relay port elérhető"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 átvitel regisztrálva"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 átvitel regisztrálva"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Hozzáférés a {url} URL-hez tcp{kind}-on Tor használatával"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Hagyd jóvá a Tor használatát {url} célcímhez tcp{kind} protokollon"
@@ -5313,7 +5341,7 @@ msgstr ""
 "könyvtárat, akkor biztosítsd, hogy az új könyvtár létezik és írható a "
 "„debian-transmission” felhasználó által."
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
@@ -5356,7 +5384,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Hírcsatornákra való feliratkozás / olvasás"
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
@@ -5645,23 +5673,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Általános"
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "Hiba lépett fel a telepítés során"
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 msgid "installing"
 msgstr "telepítés"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "letöltés"
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 msgid "media change"
 msgstr "adathordozó csere"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurációs fájl: {file}"
@@ -5976,6 +6004,15 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Default App"
+#~ msgstr "Alapértelmezett alkalmazás"
+
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "Az alapértelmezett alkalmazás beállítása sikertelen: {exception}"
+
+#~ msgid "Default app set"
+#~ msgstr "Alapértelmezett alkalmazás beállítva"
 
 #~ msgid "Abort"
 #~ msgstr "Megszakítás"

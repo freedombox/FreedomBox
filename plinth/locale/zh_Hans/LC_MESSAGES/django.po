@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-14 05:47-0500\n"
+"POT-Creation-Date: 2019-03-02 13:23-0500\n"
 "PO-Revision-Date: 2018-12-07 18:21+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -232,17 +232,17 @@ msgstr ""
 msgid "Connection refused"
 msgstr "连接类型"
 
-#: plinth/modules/backups/repository.py:55
+#: plinth/modules/backups/repository.py:58
 #, fuzzy
 #| msgid "packages not found"
 msgid "Repository not found"
 msgstr "找不到软件包"
 
-#: plinth/modules/backups/repository.py:61
+#: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:66
+#: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr ""
 
@@ -536,29 +536,39 @@ msgstr ""
 "启用以后，Tiny Tiny RSS 将可从网页服务器的 <a href=\"/tt-rss\">/tt-rss</a> 路"
 "径访问。"
 
-#: plinth/modules/config/__init__.py:76
+#: plinth/modules/config/__init__.py:93
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "配置"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
-#: plinth/modules/config/views.py:168
+#: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
+#: plinth/modules/config/views.py:170
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "域名"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "无效的域名"
 
-#: plinth/modules/config/forms.py:60
+#: plinth/modules/config/forms.py:49
+#, fuzzy
+#| msgid "Default"
+msgid "Apache Default"
+msgstr "默认"
+
+#: plinth/modules/config/forms.py:50
+msgid "FreedomBox Service (Plinth)"
+msgstr ""
+
+#: plinth/modules/config/forms.py:62
 msgid "Hostname"
 msgstr "主机名"
 
-#: plinth/modules/config/forms.py:62
+#: plinth/modules/config/forms.py:64
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -570,11 +580,11 @@ msgstr ""
 "数字结束和开始作为内部字符只有字母、数字和连字符。总长度必须为 63 个字符或更"
 "少。"
 
-#: plinth/modules/config/forms.py:69
+#: plinth/modules/config/forms.py:71
 msgid "Invalid hostname"
 msgstr "无效的主机名"
 
-#: plinth/modules/config/forms.py:75
+#: plinth/modules/config/forms.py:77
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -589,21 +599,20 @@ msgstr ""
 "为内部字符。每个标签的长度必须为 63 个字符或更少。域名总长度不得超过 253 个字"
 "符。"
 
-#: plinth/modules/config/forms.py:89
-#, fuzzy
-#| msgid "Default"
-msgid "Default App"
-msgstr "默认"
-
 #: plinth/modules/config/forms.py:91
+#, fuzzy
+#| msgid "Web Server (HTTP)"
+msgid "Webserver Home Page"
+msgstr "Web 服务器（HTTP）"
+
+#: plinth/modules/config/forms.py:93
 #, python-brace-format
 msgid ""
-"Choose the default web application that must be served when someone visits "
-"your {box_name} on the web. A typical use case is to set your blog or wiki "
-"as the landing page when someone visits the domain name. Note that once the "
-"default app is set to something other than {box_name} Service (Plinth), your "
-"users must explicitly type /plinth or /freedombox to reach {box_name} "
-"Service (Plinth)."
+"Choose the default page that must be served when someone visits your "
+"{box_name} on the web. A typical use case is to set your blog or wiki as the "
+"home page when someone visits the domain name. Note that once the home page "
+"is set to something other than {box_name} Service (Plinth), your users must "
+"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
@@ -643,15 +652,13 @@ msgstr "域名集"
 
 #: plinth/modules/config/views.py:100
 #, fuzzy, python-brace-format
-#| msgid "Error setting language: {exception}"
-msgid "Error setting default app: {exception}"
-msgstr "设置语言错误：{exception}"
+#| msgid "Error setting hostname: {exception}"
+msgid "Error setting webserver home page: {exception}"
+msgstr "设置主机名错误：{exception}"
 
 #: plinth/modules/config/views.py:103
-#, fuzzy
-#| msgid "Default"
-msgid "Default app set"
-msgstr "默认"
+msgid "Webserver home page set"
+msgstr ""
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1796,11 +1803,11 @@ msgstr ""
 "要使用它， <a href=\\\"https://gobby.github.io/\\\">下载 Gobby</a> 的桌面客户"
 "端并安装。然后启动 Gobby 并选择“连接到服务器”并书入你的 {box_name} 域名即可。"
 
-#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
+#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr ""
 
-#: plinth/modules/jsxc/__init__.py:39
+#: plinth/modules/jsxc/__init__.py:38
 #, fuzzy
 #| msgid ""
 #| "Chat Client \n"
@@ -1810,7 +1817,7 @@ msgstr ""
 "聊天客户端\n"
 "（JSXC）"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:41
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3307,7 +3314,7 @@ msgstr ""
 "供的私人/内部服务。您还可以通过 {box_name} 访问互联网的其他部分，以增加安全性"
 "和匿名性。"
 
-#: plinth/modules/openvpn/__init__.py:87
+#: plinth/modules/openvpn/__init__.py:89
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -3874,11 +3881,12 @@ msgstr ""
 msgid "Quasseldroid"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:44
+#: plinth/modules/radicale/manifest.py:90
 msgid "Radicale"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:46
 #, fuzzy
 #| msgid ""
 #| "Calendar and Addressbook \n"
@@ -3888,7 +3896,7 @@ msgstr ""
 "日历和通讯录\n"
 "（Radicale）"
 
-#: plinth/modules/radicale/__init__.py:51
+#: plinth/modules/radicale/__init__.py:50
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3906,6 +3914,13 @@ msgstr ""
 "共享。要使用 Radicale，需要安装<a href=\"http://radicale.org/"
 "user_documentation/#idcaldav-and-carddav-client\">支持的客户端应用程序</a>。"
 "任何拥有 {box_name} 登录名的用户都可以访问 Radicale。"
+
+#: plinth/modules/radicale/__init__.py:56
+msgid ""
+"Radicale provides a basic web interface, which only supports creating new "
+"calendars and addressbooks. It does not support adding events or contacts, "
+"which must be done using a separate client."
+msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -4965,40 +4980,40 @@ msgstr ""
 "href=\"https://www.torproject.org/download/download-easy.html.en\">Tor浏览器"
 "</a>。"
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
+#: plinth/modules/tor/__init__.py:82 plinth/modules/tor/__init__.py:129
 msgid "Tor Bridge Relay"
 msgstr "Tor 网桥中继"
 
-#: plinth/modules/tor/__init__.py:104 plinth/modules/tor/__init__.py:144
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "隐藏的 Tor 服务"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:119
 msgid "Tor Anonymity Network"
 msgstr "Tor 匿名网络"
 
-#: plinth/modules/tor/__init__.py:164
+#: plinth/modules/tor/__init__.py:170
 msgid "Tor relay port available"
 msgstr "Tor 中继端口可用"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:180
 msgid "Obfs3 transport registered"
 msgstr "已注册 Obfs3 传输"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "已注册 Obfs4 传输"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "在 tcp{kind} 上通过 Tor 访问 {url}"
 
-#: plinth/modules/tor/__init__.py:232
+#: plinth/modules/tor/__init__.py:238
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "确认使用 Tor 通过 tcp{kind} 访问 {url}"
@@ -5175,7 +5190,7 @@ msgstr ""
 "保存下载的目录。 如果您更改默认目录，请确保新目录存在并且允许用户“debian-"
 "transmission”可写。"
 
-#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr ""
 
@@ -5221,7 +5236,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: plinth/modules/ttrss/manifest.py:24
+#: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
@@ -5514,23 +5529,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "通用"
 
-#: plinth/package.py:138
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "安装时错误"
 
-#: plinth/package.py:160
+#: plinth/package.py:161
 msgid "installing"
 msgstr "安装"
 
-#: plinth/package.py:162
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "下载中"
 
-#: plinth/package.py:164
+#: plinth/package.py:165
 msgid "media change"
 msgstr "媒体改变"
 
-#: plinth/package.py:166
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "配置文件：{file}"
@@ -5871,6 +5886,21 @@ msgstr "已完成 %(percentage)s%%"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Default"
+#~ msgid "Default App"
+#~ msgstr "默认"
+
+#, fuzzy
+#~| msgid "Error setting language: {exception}"
+#~ msgid "Error setting default app: {exception}"
+#~ msgstr "设置语言错误：{exception}"
+
+#, fuzzy
+#~| msgid "Default"
+#~ msgid "Default app set"
+#~ msgstr "默认"
 
 #, fuzzy
 #~| msgid "NTP client in contact with servers"
