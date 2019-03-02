@@ -1,3 +1,123 @@
+plinth (19.2) unstable; urgency=medium
+
+  [ Joseph Nuthalapati ]
+  * docs: Fix deprecation warnings in post-processor
+  * tor: Fix deprecation warning W605 for '\' character in regex
+  * utils: Simplify YAMLFile by removing the post_exit argument
+  * config: Consolidate get_domainname() implementation into config
+  * config: Move default-app configuration to a dedicated file
+  * config: Fix Ikiwiki entries not showing up as default apps
+  * config: Migrate default app configuration to new conf file
+  * config: Rename Default App to Webserver Home Page
+  * config: Add option to use Apache's default home page as home page
+  * config: Remove Apache home page configuration from freedombox.conf
+  * config: Fix error when setting JSXC as the home page
+  * users: Add nscd as a dependency
+  * Disable Coquelicot for Buster release
+  * matrix-synapse: Fix LDAP login issue
+  * config: Revert changes in freedombox.conf to avoid conffile prompt
+  * config: Reset home page setting in freedombox.conf during migration
+  * openvpn: Migration from easy-rsa 2 to 3 for existing installations
+  * openvpn: Increment version number for easy-rsa 3 migration
+  * snapshot: Fix failing functional test
+
+  [ Pavel Borecki ]
+  * Translated using Weblate (Czech)
+
+  [ danielwine ]
+  * Translated using Weblate (Hungarian)
+
+  [ Doma Gergő ]
+  * Translated using Weblate (Hungarian)
+
+  [ Allan Nordhøy ]
+  * Translated using Weblate (Norwegian Bokmål)
+
+  [ advocatux ]
+  * Translated using Weblate (Spanish)
+
+  [ Sunil Mohan Adapa ]
+  * tor: Styling changes due to yapf
+  * tor: Use fixed 9001 port for relaying
+  * utils: Handle exceptions in context management for YAMLFile
+  * utils: Fix some flake8 warnings
+  * tahoe: Styling changes
+  * backups: Fix failing test case
+  * web_server: Move shutdown handling to main
+  * dbus: Add new module for D-Bus services
+  * setup: Abstraction for getting managing packages of a module
+  * setup: Filter packages to force upgrade
+  * package: Implement identifying packages that need conffile prompts
+  * package: Helper method to filter packages that need conffile prompt
+  * setup: Trigger force upgrade for app that implement it
+  * bind: Handle conffile prompt during upgrade
+  * setup: Rush force upgrade in development mode
+  * ttrss: Make functional test definitions specific to ttrss
+  * cockpit: Pre-enable necessary apache modules
+  * radicale, searx: Pre-enable necessary apache modules
+  * letsencrypt: Pre-enable necessary apache modules
+  * ikiwiki: Pre-enable necessary apache modules
+  * sso: Pre-enable necessary apache modules
+  * apache: Use cgid module instead of cgi
+  * apache: Increment app version number
+  * setup: Make additional info available for force upgrading
+  * debian/copyright: Minor fixes
+  * debian/copyright: Add full text for AGPL-3+
+  * debian/copyright: Add license text for public-domain
+  * debian/copyright: Add license text for GPL-2 and GPL-3
+  * debian/copyright: Add license text for CC-BY-SA-3.0
+  * debian/copyright: Update copyright for logos
+  * static: Remove unused files
+  * LICENSES: Remove files that are same license as rest of the source
+  * config: Don't pass configuration file argument to action
+  * openvpn: Fix issues with upgrade easy-rsa 2 to 3 migration
+  * openvpn: Make frontpage shortcut appear after an upgrade
+  * openvpn: Work around firewalld bug 919517
+  * setup: Pass better data structure for force upgrade operation
+  * utils: Introduce abstraction over distutils comparison of versions
+  * firewalld: Implement upgrading from 0.4.x to 0.6.x
+  * ttrss: Make setup process reusable
+  * ttrss: Implement upgrade from 17.4 to 18.12
+
+  [ Johannes Keyser ]
+  * Translated using Weblate (German)
+
+  [ Anjali Datla ]
+  * Translated using Weblate (Telugu)
+
+  [ Darkblaze ]
+  * Translated using Weblate (Telugu)
+
+  [ Petter Reinholdtsen ]
+  * Translated using Weblate (Norwegian Bokmål)
+
+  [ Jag ]
+  * vagrant: Use virtualbox linked clones / CoW to reduce startup times
+
+  [ James Valleroy ]
+  * Add 2019 to copyright years
+  * Fix some paths in LICENSES
+  * debian: Add copyright years for debian/*
+  * radicale: Add description of web interface
+  * ttrss: Add backup support
+  * debian: Add copyright info for lato fonts
+  * debian: Add copyright info for individual logo files
+  * LICENSES: Add reference to debian/copyright
+  * debian: Add copyright info for theme images
+  * debian/copyright: Move all license texts to end
+  * debian/copyright: Remove unnecessary fields for native package
+  * debian/copyright: Move some app icons from LICENSES
+  * debian/copyright: Fix typo in year
+  * debian/copyright: Move more app icons from LICENSES
+  * debian/copyright: Include some URLs dropped from LICENSES
+  * debian/copyright: Move some more app icons from LICENSES
+  * debian/copyright: Fix filename for tahoe-lafs logo
+  * security: Migrate access config to new file
+  * users: When ssh used in tests, add users to admin group
+  * locale: Update translations strings
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Sat, 02 Mar 2019 14:45:55 -0500
+
 plinth (19.1) unstable; urgency=medium
 
   [ James Valleroy ]
