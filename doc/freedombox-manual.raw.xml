@@ -5,6 +5,36 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>74</revnumber>
+        <date>2019-02-27 00:28:00</date>
+        <authorinitials>JamesValleroy</authorinitials>
+        <revremark>rename Plinth -&gt; FreedomBox Service (Plinth)</revremark>
+      </revision>
+      <revision>
+        <revnumber>73</revnumber>
+        <date>2019-02-27 00:24:53</date>
+        <authorinitials>JamesValleroy</authorinitials>
+        <revremark>add link to home page</revremark>
+      </revision>
+      <revision>
+        <revnumber>72</revnumber>
+        <date>2019-02-26 23:20:47</date>
+        <authorinitials>JamesValleroy</authorinitials>
+        <revremark>add infinoted page</revremark>
+      </revision>
+      <revision>
+        <revnumber>71</revnumber>
+        <date>2019-02-26 12:50:28</date>
+        <authorinitials>JamesValleroy</authorinitials>
+        <revremark>remove reference to freedombox-setup</revremark>
+      </revision>
+      <revision>
+        <revnumber>70</revnumber>
+        <date>2019-02-26 12:41:20</date>
+        <authorinitials>JamesValleroy</authorinitials>
+        <revremark>add link to Mastodon account</revremark>
+      </revision>
+      <revision>
         <revnumber>69</revnumber>
         <date>2019-02-13 23:16:48</date>
         <authorinitials>MikkelKirkgaardNielsen</authorinitials>
@@ -468,7 +498,7 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Introduction?action=AttachFile&amp;do=get&amp;target=freedombox-frontpage-2018-06-19.png" width="1000"/>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Introduction?action=AttachFile&amp;do=get&amp;target=freedombox-frontpage-2019-03-02.png" width="1000"/>
             </imageobject>
             <textobject>
               <phrase>FreedomBox front page</phrase>
@@ -531,12 +561,12 @@
               <para>If your computer supports mDNS (GNU/Linux, Mac OSX or Windows with mDNS software installed), you can browse to: <ulink url="http://freedombox.local/"/> (or <ulink url="http://the-hostname-you-entered-during-install.local/"/>) </para>
             </listitem>
             <listitem>
-              <para>If you know your way around the router's web interface, you can look up the IP adress of the FreedomBox there, and browse to that address. </para>
+              <para>If you know your way around the router's web interface, you can look up the IP address of the FreedomBox there, and browse to that address. </para>
             </listitem>
             <listitem>
               <para>If none of these methods are available, then you will need to figure out the IP address of your FreedomBox. You can use the "nmap" program from your computer to find its IP address: </para>
               <screen><![CDATA[     nmap -p 80 --open -sV 192.168.0.0/24 (replace the ip/netmask with the one the router uses)]]></screen>
-              <para>In most cases you can look at your current ip adress, and change the last digits with zero to find your home network, like so: XXX.XXX.XXX.0/24 </para>
+              <para>In most cases you can look at your current IP address, and change the last digits with zero to find your home network, like so: XXX.XXX.XXX.0/24 </para>
               <para>Your FreedomBox will show up as an IP address with an open tcp port 80 using Apache httpd service on Debian, such as the example below which would make it accessible at <ulink url="http://192.168.0.165"/>: </para>
               <screen><![CDATA[     Nmap scan report for 192.168.0.165
      Host is up (0.00088s latency).
@@ -549,7 +579,7 @@
      Host is up (0.00027s latency).
      Nmap scan report for 10.42.0.50
      Host is up (0.00044s latency).]]></screen>
-              <para>In this example, the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> is accessible at <ulink url="http://10.42.0.50"/>. (10.42.0.1 is my laptop.) </para>
+              <para>In this example, the FreedomBox is accessible at <ulink url="http://10.42.0.50"/>. (10.42.0.1 is my laptop.) </para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -560,7 +590,7 @@
               <para>
                 <inlinemediaobject>
                   <imageobject>
-                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=plinth_insecure_connection.png" width="600"/>
+                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_insecure_connection.png" width="600"/>
                   </imageobject>
                   <textobject>
                     <phrase>Self-signed certificate warning</phrase>
@@ -572,7 +602,7 @@
               <para>
                 <inlinemediaobject>
                   <imageobject>
-                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=add_security_exception.png" width="400"/>
+                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_add_security_exception.png" width="400"/>
                   </imageobject>
                   <textobject>
                     <phrase>Add Security Exception</phrase>
@@ -589,7 +619,7 @@
               <para>
                 <inlinemediaobject>
                   <imageobject>
-                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=plinth_firstboot_welcome.png" width="500"/>
+                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_firstboot_welcome.png" width="500"/>
                   </imageobject>
                   <textobject>
                     <phrase>Welcome</phrase>
@@ -609,7 +639,7 @@
               <para>
                 <inlinemediaobject>
                   <imageobject>
-                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=plinth_firstboot_account.png" width="500"/>
+                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_firstboot_account.png" width="500"/>
                   </imageobject>
                   <textobject>
                     <phrase>Account</phrase>
@@ -626,7 +656,7 @@
               <para>
                 <inlinemediaobject>
                   <imageobject>
-                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=plinth_firstboot_complete.png" width="500"/>
+                    <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_firstboot_complete.png" width="500"/>
                   </imageobject>
                   <textobject>
                     <phrase>Complete</phrase>
@@ -648,7 +678,17 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=frontpage.png" width="600"/>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_frontpage.png" width="600"/>
+            </imageobject>
+            <textobject>
+              <phrase>Front page</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_frontpage_with_app.png" width="600"/>
             </imageobject>
             <textobject>
               <phrase>Front page</phrase>
@@ -662,7 +702,7 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=apps.png" width="600"/>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_apps.png" width="600"/>
             </imageobject>
             <textobject>
               <phrase>Apps</phrase>
@@ -676,7 +716,7 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=help.png" width="600"/>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_help.png" width="600"/>
             </imageobject>
             <textobject>
               <phrase>Help</phrase>
@@ -690,7 +730,7 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=system.png" width="600"/>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_system.png" width="600"/>
             </imageobject>
             <textobject>
               <phrase>System</phrase>
@@ -704,7 +744,7 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=user.png" width="600"/>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_user_menu.png" width="600"/>
             </imageobject>
             <textobject>
               <phrase>User</phrase>
@@ -892,12 +932,61 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
       <remark>Add entries here sorted after the level 2 heading inside the page to keep the list alphabetically sorted</remark>
     </para>
     <section>
-      <title>Apache mod_userdir (userdir)</title>
+      <title>User websites (userdir)</title>
       <section>
-        <title>What is Apache mod_userdir?</title>
-        <para>Apache mod_userdir is a module of the Apache webserver enabled to allow users defined in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> system to expose a set of static files on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> filesystem as a website to the local network and/or the internet according to the network and firewall setup. </para>
-        <para>Read more about Apache mod_userdir in the <ulink url="https://httpd.apache.org/docs/2.4/mod/mod_userdir.html">Apache documentation</ulink>. </para>
-        <para><emphasis role="strong">Available since:</emphasis>  version 0.9.4 </para>
+        <title>What is User websites?</title>
+        <para>User websites is a module of the Apache webserver enabled to allow users defined in the FreedomBox system to expose a set of static files on the FreedomBox filesystem as a website to the local network and/or the internet according to the network and firewall setup. </para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colname="col_0"/>
+            <colspec colname="col_1"/>
+            <tbody>
+              <row rowsep="1">
+                <entry align="center" colsep="1" nameend="col_1" namest="col_0" rowsep="1">
+                  <para>
+                    <emphasis role="strong">Application basics</emphasis>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Category</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> File sharing </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Available since version </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 0.9.4</para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Upstream project website </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://httpd.apache.org/docs/2.4/mod/mod_userdir.html"/>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Upstream end user documentation </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://httpd.apache.org/docs/2.4/howto/public_html.html"/>
+                  </para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
       </section>
       <section>
         <title>Screenshot</title>
@@ -906,11 +995,11 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
         </para>
       </section>
       <section>
-        <title>Using Apache mod_userdir</title>
+        <title>Using User websites</title>
         <para>The module is always enabled and offers no configuration from the Plinth web interface. Currently its existence is not even visible in the Plinth web interface. </para>
         <para>Using the modules capability to serve documents requires just to place the documents in the designated directory in a Plinth user's home directory in the filesystem. </para>
         <para>This directory is: <emphasis role="strong">public_html</emphasis> </para>
-        <para>Thus the absolute path for the directory of a user named fbx with home directory in /home/fbx will be <emphasis role="strong">/home/fbx/public_html</emphasis>. Apache mod_userdir will serve documents placed in this directory when requests for documents with the URI path "~fbx" are received. For the the example.org domain thus a request for the document example.org/~fbx/index.html will transfer the file in /home/fbx/public_html/index.html. </para>
+        <para>Thus the absolute path for the directory of a user named fbx with home directory in /home/fbx will be <emphasis role="strong">/home/fbx/public_html</emphasis>. User websites will serve documents placed in this directory when requests for documents with the URI path "~fbx" are received. For the the example.org domain thus a request for the document example.org/~fbx/index.html will transfer the file in /home/fbx/public_html/index.html. </para>
       </section>
       <section>
         <title>Using SFTP to create public_html and upload documents</title>
@@ -1111,13 +1200,13 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
         <para>First, the Radicale server needs to be activated on your box.  </para>
         <itemizedlist>
           <listitem>
-            <para>Within Plinth </para>
+            <para>Within FreedomBox Service (Plinth) </para>
             <orderedlist numeration="arabic">
               <listitem>
-                <para>select <emphasis>Applications</emphasis> </para>
+                <para>select <emphasis>Apps</emphasis> </para>
               </listitem>
               <listitem>
-                <para>go to <emphasis>Calendar and Addressbook (Radicale)</emphasis> and  </para>
+                <para>go to <emphasis>Radicale (Calendar and Addressbook)</emphasis> and  </para>
               </listitem>
               <listitem>
                 <para>install the application. After the installation is complete, make sure the application is marked "enabled" in the FreedomBox interface. Enabling the application launches the Radicale CalDAV/CardDAV server.  </para>
@@ -1151,7 +1240,45 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
           </inlinemediaobject>
         </para>
         <para>If you want to share a calendar with only some users, the simplest approach is to create an additional user-name for these users and to share that user-name and password with them. </para>
-        <para>Radicale does not have a user interface. An external <ulink url="http://radicale.org/clients/">supported client application</ulink> is needed.     </para>
+        <para>Radicale provides a basic web interface, which only supports creating new calendars and addressbooks. To add events or contacts, an external <ulink url="http://radicale.org/clients/">supported client application</ulink> is needed. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=radicale_web.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>radicale_web.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>Creating addressbook/calendar using the web interface </para>
+            <itemizedlist>
+              <listitem>
+                <para>Visit <code>https://</code><emphasis>IP-address-or-domain-for-your-server</emphasis><code>/radicale/</code> </para>
+              </listitem>
+              <listitem>
+                <para>Log in with your FreedomBox account </para>
+              </listitem>
+              <listitem>
+                <para>Select "Create new addressbook or calendar" </para>
+              </listitem>
+              <listitem>
+                <para>Provide a title and select the type </para>
+              </listitem>
+              <listitem>
+                <para>Optionally, provide a description or select a color </para>
+              </listitem>
+              <listitem>
+                <para>Click "Create" </para>
+              </listitem>
+              <listitem>
+                <para>The page will show the URL for your newly created addressbook or calendar </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
         <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/clients/">an overview of supported clients</ulink>, but do <emphasis>not</emphasis> use the URLs described there; FreedomBox uses another setup, follow this manual. Below are the steps for two examples: </para>
         <itemizedlist>
           <listitem>
@@ -1315,9 +1442,45 @@ file = /etc/radicale/rights]]></screen>
           <para>If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf. </para>
         </section>
       </section>
+      <section>
+        <title>Migrating from Radicale Version 1.x to Version 2.x</title>
+        <para>During the month of February 2019, radicale in Debian testing was upgraded from version 1.x to version 2.x. Version 2.x is a better version but is incompatible with data and configuration used with 1.x. Automatic upgrade mechanism in FreedomBox, handled by unattended-upgrades does not automatically upgrade radicale to version 2.x due to changes in configuration files. However, FreedomBox version 19.1, which is available on February 23rd, 2019 in testing will perform data and configuration migration to radicale version 2.x. Typical users require no action, this will happen automatically. </para>
+        <para>If for some reason, you need to manually run <code>apt dist-upgrade</code> on your machine, then radicale will be upgraded to 2.x and then FreedomBox will not be able to perform its upgrade (due to upstream project deciding to remove migration tools in radicale 2.x version). To avoid this situation, the following process is recommended if you wish to perform an upgrade. </para>
+        <screen><![CDATA[sudo su -
+apt hold radicale
+apt dist-upgrade
+apt unhold radicale]]></screen>
+        <para>However, if you already happen to perform an upgrade to radicale 2.x without help from FreedomBox, you need to perform data and configuration migration yourself. Follow this procedure: </para>
+        <screen><![CDATA[sudo su -
+tar -cvzf /root/radicale_backup.tgz /var/lib/radicale/ /etc/radicale/ /etc/default/radicale
+apt install -y python-radicale
+python -m radicale --export-storage=/root/radicale-migration
+cp -dpR /root/radicale-migration/collection-root /var/lib/radicale/collections/collection-root/
+(remove this directory if it already exists. Or perhaps merge the contents.)
+chown -R radicale:radicale /var/lib/radicale/collections/collection-root/
+apt remove -y python-radicale
+if [ -f /etc/radicale/config.dpkg-dist ] ; then cp /etc/radicale/config.dpkg-dist /etc/radicale/config ; fi
+if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-dist /etc/default/radicale ; fi
+(After FreedomBox 19.1 is available, goto FreedomBox web interface and set your preference for calendar sharing again, if it is not the default option, as it will have been lost.)]]></screen>
+        <para>Notes: </para>
+        <itemizedlist>
+          <listitem>
+            <para>python-radicale is an old package from radicale 1.x version that is still available in testing. This is a hack to use the <code>--export-storage</code> feature that is responsible for data migration. This feature is not available in radicale 2.x unfortunately. </para>
+          </listitem>
+          <listitem>
+            <para>Files ending with .dpkg-dist will exist only if you have chosen 'Keep your currently-installed version' when prompted for configuration file override during radicale 2.x upgrade. The above process will overwrite the old configuration with new fresh configuration. No changes are necessary to the two configuration files unless you have changed the setting for sharing calendars. </para>
+          </listitem>
+          <listitem>
+            <para>Note that during the migration, your data is safe in /var/lib/radicale/collections directory. New data will be created and used in /var/lib/radicale/collections/collections-root/ directory. </para>
+          </listitem>
+          <listitem>
+            <para>The tar command takes a backup your configuration and data in /root/radicale_backup.tgz in case you do something goes wrong and you want to undo the changes. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
     <section>
-      <title>Chat Server (XMPP)</title>
+      <title>Chat Server (ejabberd)</title>
       <section>
         <title>What is XMPP?</title>
         <para>XMPP is a federated protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server. XMPP can also be used for voice and video calls, if supported by the clients. </para>
@@ -1340,7 +1503,7 @@ file = /etc/radicale/rights]]></screen>
             <para>Note: After changing your Domain Name, the Chat Server (XMPP) page may show that the service is not running. After a minute or so, it should be up and running again. </para>
           </listitem>
         </itemizedlist>
-        <para>Please note that <ulink url="https://wiki.debian.org/FreedomBox/Manual/Pagekite#">Pagekite</ulink> does not support the XMPP protocol at this time. </para>
+        <para>Please note that <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/PageKite#">PageKite</ulink> does not support the XMPP protocol at this time. </para>
       </section>
       <section>
         <title>Registering XMPP users through SSO</title>
@@ -1371,7 +1534,7 @@ file = /etc/radicale/rights]]></screen>
       <title>Chat Server (Matrix Synapse)</title>
       <section>
         <title>What is Matrix?</title>
-        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end-to-end encrypted communication and audio/video calls.   Matrix Synapse is a federated application where chat rooms can exist on any server and users from any server in the federated network can join them.  <ulink url="https://matrix.org/docs/guides/faq.html">Learn more</ulink> about Matrix. </para>
+        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on FreedomBox to host large chat rooms, end-to-end encrypted communication and audio/video calls.   Matrix Synapse is a federated application where chat rooms can exist on any server and users from any server in the federated network can join them.  <ulink url="https://matrix.org/docs/guides/faq.html">Learn more</ulink> about Matrix. </para>
         <para><emphasis role="strong">Available since:</emphasis> version 0.14.0 </para>
       </section>
       <section>
@@ -1380,7 +1543,7 @@ file = /etc/radicale/rights]]></screen>
       </section>
       <section>
         <title>Setting up Matrix Synapse on your FreedomBox</title>
-        <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
+        <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured FreedomBox domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
       </section>
       <section>
         <title>Federating with other Matrix instances</title>
@@ -1389,6 +1552,7 @@ file = /etc/radicale/rights]]></screen>
       <section>
         <title>Memory usage</title>
         <para>The Synapse reference server implemented in Python is known to be quite RAM hungry, especially when loading large rooms with thousands of members like #matrix:matrix.org. It is recommended to avoid joining such rooms if your FreedomBox device only has 1 GiB RAM or less. Rooms with up to a hundred members should be safe to join. The Matrix team is working on a new implementation of the Matrix server written in Go called Dendrite which might perform better in low-memory environments. </para>
+        <para>Some large public rooms in the Matrix network are also available as IRC channels (e.g. #freedombox:matrix.org is also available as #freedombox on irc.debian.org). It is better to use IRC instead of Matrix for such large rooms. You can join the IRC channels using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Quassel#">Quassel</ulink>. </para>
       </section>
     </section>
     <section>
@@ -1516,10 +1680,24 @@ file = /etc/radicale/rights]]></screen>
       <para>To learn more about Syncthing, please visit their <ulink url="https://syncthing.net">official website</ulink> and <ulink url="https://docs.syncthing.net">documentation</ulink>.  </para>
     </section>
     <section>
+      <title>Gobby Server (infinoted)</title>
+      <para>infinoted is a server for Gobby, a collaborative text editor. </para>
+      <para>To use it, <ulink url="https://gobby.github.io/">download Gobby</ulink>, desktop client and install it. Then start Gobby and select "Connect to Server" and enter your FreedomBox's domain name. </para>
+      <section>
+        <title>Port Forwarding</title>
+        <para>If your FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for infinoted: </para>
+        <itemizedlist>
+          <listitem>
+            <para>TCP 6523 </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
       <title>IRC Client (Quassel)</title>
       <para><emphasis>Quassel</emphasis> is an IRC application that is split into two parts, a "core" and a "client". This allows the core to remain connected to IRC servers, and to continue receiving messages, even when the client is disconnected. FreedomBox can run the Quassel core service keeping you always online and one or more Quassel clients from a desktop or a mobile device can be used to connect and disconnect from it. </para>
       <section>
-        <title>Why running Quassel?</title>
+        <title>Why run Quassel?</title>
         <para>Many discussions about FreedomBox are being done on the IRC-Channel <code>irc://irc.debian.org/freedombox</code>. If your FreedomBox is running <emphasis>Quassel</emphasis>, it will collect all discussions while you are away, such as responses to your questions. Remember, the FreedomBox project is a worldwide project with people from nearly every time zone. You use your <emphasis>client</emphasis> to connect to the <emphasis>Quassel</emphasis> core to read and respond whenever you have time and are available. </para>
       </section>
       <section>
@@ -1552,25 +1730,31 @@ file = /etc/radicale/rights]]></screen>
               </listitem>
             </orderedlist>
           </listitem>
-          <listitem>
-            <para>Configure in your router port forwarding for port <code>4242</code> </para>
-            <itemizedlist>
-              <listitem>
-                <para>on my device, this setting can be found in the section <emphasis>Network &gt; NAT &amp; Port rules &gt; Port Forwarding</emphasis> </para>
-                <para>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding.png"/>
-                    </imageobject>
-                    <textobject>
-                      <phrase>Quassel_PortForwarding.png</phrase>
-                    </textobject>
-                  </inlinemediaobject>
-                </para>
-              </listitem>
-            </itemizedlist>
-          </listitem>
         </itemizedlist>
+        <section>
+          <title>Port forwarding</title>
+          <para>If you want to access your Quassel server over the internet, port forwarding on your router might be required (skip this if you already configured your FreedomBox to be in a DMZ). </para>
+          <itemizedlist>
+            <listitem>
+              <para>Configure port forwarding for port <code>4242</code> in your router </para>
+              <itemizedlist>
+                <listitem>
+                  <para>On my device, this setting can be found in the section <emphasis>Network &gt; NAT &amp; Port rules &gt; Port Forwarding</emphasis> </para>
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding.png"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Quassel_PortForwarding.png</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+        </section>
       </section>
       <section>
         <title>Clients</title>
@@ -2019,67 +2203,12 @@ file = /etc/radicale/rights]]></screen>
     </section>
     <section>
       <title>SIP Server (repro)</title>
-      <para>repro is a server for SIP, a standard that enables Voice-over-IP calls. A desktop or mobile SIP client is required to use repro. </para>
-      <section>
-        <title>How to set up the SIP server</title>
-        <orderedlist numeration="arabic">
-          <listitem>
-            <para>Configure the domain at /repro/domains.html on the FreedomBox. </para>
-            <itemizedlist>
-              <listitem override="none">
-                <para>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Repro?action=AttachFile&amp;do=get&amp;target=repro_domains.png" width="800"/>
-                    </imageobject>
-                    <textobject>
-                      <phrase>Repro Domains</phrase>
-                    </textobject>
-                  </inlinemediaobject>
-                </para>
-              </listitem>
-            </itemizedlist>
-          </listitem>
-          <listitem>
-            <para>Add users at /repro/addUser.html. </para>
-            <itemizedlist>
-              <listitem override="none">
-                <para>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Repro?action=AttachFile&amp;do=get&amp;target=repro_users.png" width="800"/>
-                    </imageobject>
-                    <textobject>
-                      <phrase>Repro Users</phrase>
-                    </textobject>
-                  </inlinemediaobject>
-                </para>
-              </listitem>
-            </itemizedlist>
-          </listitem>
-          <listitem>
-            <para>Disable and re-enable the repro application in Plinth. </para>
-          </listitem>
-        </orderedlist>
-      </section>
-      <section>
-        <title>Port Forwarding</title>
-        <para>If your FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for repro: </para>
-        <itemizedlist>
-          <listitem>
-            <para>TCP 5060 </para>
-          </listitem>
-          <listitem>
-            <para>TCP 5061 </para>
-          </listitem>
-          <listitem>
-            <para>UDP 5060 </para>
-          </listitem>
-          <listitem>
-            <para>UDP 5061 </para>
-          </listitem>
-        </itemizedlist>
-      </section>
+      <caution>
+        <para>
+          <emphasis role="strong">App removed</emphasis>
+        </para>
+        <para>repro has been removed from Debian 10 (Buster), and therefore is no longer available in FreedomBox. </para>
+      </caution>
     </section>
     <section>
       <title>SOCKS5 proxy (Shadowsocks)</title>
@@ -2128,10 +2257,10 @@ file = /etc/radicale/rights]]></screen>
             <para>
               <inlinemediaobject>
                 <imageobject>
-                  <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=plinth_openvpn.png"/>
+                  <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=plinth_openvpn.png" width="800"/>
                 </imageobject>
                 <textobject>
-                  <phrase>plinth_openvpn.png</phrase>
+                  <phrase>OpenVPN service page</phrase>
                 </textobject>
               </inlinemediaobject>
             </para>
@@ -2140,13 +2269,16 @@ file = /etc/radicale/rights]]></screen>
             <para>Wait for the setup to finish. This could take a while. </para>
           </listitem>
           <listitem>
-            <para>Once the setup of the OpenVPN server is complete, you can download your profile. This will download a file called &lt;USER&gt;.ovpn, where &lt;USER&gt; is the name of a FreedomBox user. Each FreedomBox user will be able to download a different profile. </para>
+            <para>Once the setup of the OpenVPN server is complete, you can download your profile. This will download a file called &lt;USER&gt;.ovpn, where &lt;USER&gt; is the name of a FreedomBox user. Each FreedomBox user will be able to download a different profile. Users who are not administrators can download the profile from home page after login. </para>
           </listitem>
           <listitem>
             <para>The ovpn file contains all the information a vpn client needs to connect to the server. </para>
           </listitem>
           <listitem>
-            <para>If you are behind a modem, you may have to change the ip address (if not, you can skip this step). Open the ovpn file in any text editor. The second line shows the IP address or hostname the client will try to connect to.  This should be your WAN IP address or your hostname. This line also contains the port number, 1194 being the default. You may have to open this port on your modem and enable port forwarding.  </para>
+            <para>If your FreedomBox is setup behind a home router, then you need to change the router configuration such that incoming traffic on port 1194 is forwarded to FreedomBox's port 1194. </para>
+          </listitem>
+          <listitem>
+            <para>The downloaded profile contains the domain name of the FreedomBox that the client should connect to. This is picked up from the domain configured in 'Config' section of 'System' page. In case your domain is not configured properly, you may need to change this value after downloading the profile. If your OpenVPN client allows it, you can do this after importing the OpenVPN profile. Otherwise, you can edit the .ovpn profile file in a text editor and change the 'remote' line to contain the WAN IP address or hostname of your FreedomBox as follows. </para>
           </listitem>
         </orderedlist>
         <screen><![CDATA[client
@@ -2154,7 +2286,138 @@ remote mybox.sds-ip.de 1194
 proto udp]]></screen>
       </section>
       <section>
+        <title>Browsing Internet after connecting to VPN</title>
+        <para>After connecting to the VPN, the client device will be able to browse the Internet without any further configuration. However, a pre-condition for this to work is that you need to have at least one Internet connected network interface which is part of the 'External' firewall zone. Use the networks configuration page to edit the firewall zone for the device's network interfaces. </para>
+      </section>
+      <section>
         <title>Usage</title>
+        <section>
+          <title>On Android/LineageOS</title>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>Visit FreedomBox home page. Login with your user account. From home page, download the OpenVPN profile. The file will be named <emphasis>username</emphasis>.ovpn. </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_download_profile.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN Download Profile</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>Download an OpenVPN client such as <emphasis>OpenVPN for Android</emphasis>. F-Droid repository is recommended. In the app, select import profile. </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_install_app.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN App</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>In the select profile dialog, choose the <emphasis>username</emphasis>.opvn file you have just downloaded. Provide a name for the connection and save the profile. </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_import_profile.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN import profile</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>Newly created profile will show up. If necessary, edit the profile and set the domain name of your FreedomBox as the server address. </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_profile_created.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN profile created</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_edit_domain_name.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN edit domain name</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>Connect by tapping on the profile. </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_connect.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN connect</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_connected.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN connected</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>When done, disconnect by tapping on the profile. </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=openvpn_disconnect.png" width="324"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>OpenVPN disconnect</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </orderedlist>
+        </section>
         <section>
           <title>On Debian</title>
           <para>Install an OpenVPN client for your system </para>
@@ -2721,6 +2984,15 @@ proto udp]]></screen>
               </row>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
+                  <para> MLDonkey </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> 19.0 </para>
+                </entry>
+                <entry colsep="1" rowsep="1"/>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
                   <para> Monkeysphere </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
@@ -2947,9 +3219,11 @@ proto udp]]></screen>
                   <para> Tiny Tiny RSS </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
-                  <para> Pending </para>
+                  <para> 19.2 </para>
                 </entry>
-                <entry colsep="1" rowsep="1"/>
+                <entry colsep="1" rowsep="1">
+                  <para> includes database containing feeds, stories, etc. </para>
+                </entry>
               </row>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
@@ -3099,7 +3373,7 @@ proto udp]]></screen>
         <title>Hostname</title>
         <itemizedlist>
           <listitem override="none">
-            <para>Hostname is the local name by which other devices on the local network can reach your FreedomBox. Default is <emphasis>freedombox</emphasis>. </para>
+            <para>Hostname is the local name by which other devices on the local network can reach your FreedomBox. The default hostname is <emphasis>freedombox</emphasis>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -3107,27 +3381,24 @@ proto udp]]></screen>
         <title>Domain Name</title>
         <itemizedlist>
           <listitem override="none">
-            <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox. The value set here is used by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/ejabberd#">Chat Server (XMPP)</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/LetsEncrypt#">Certificates (Let's Encrypt)</ulink>, and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Monkeysphere#">Monkeysphere</ulink>. </para>
+            <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox. The value set here is used by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/ejabberd#">Chat Server (XMPP)</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/MatrixSynapse#">Matrix Synapse</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/LetsEncrypt#">Certificates (Let's Encrypt)</ulink>, and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Monkeysphere#">Monkeysphere</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
       <section>
-        <title>Default App</title>
+        <title>Webserver Home Page</title>
         <itemizedlist>
           <listitem override="none">
-            <para>This is an advanced option that allows you to set something other than FreedomBox Service (Plinth) as the default application to be served on the domain name of the FreedomBox. For example, if your FreedomBox's domain name is <ulink url="https://myfreedombox.rocks"/> and you set MediaWiki as the default app, visiting <ulink url="https://myfreedombox.rocks"/> will take you to <ulink url="https://myfreedombox.rocks/mediawiki/"/> instead of the usual <ulink url="https://myfreedombox.rocks/plinth/"/>. Only web applications served from FreedomBox are allowed as choices. </para>
+            <para>This is an advanced option that allows you to set something other than FreedomBox Service (Plinth) as the home page to be served on the domain name of the FreedomBox. For example, if your FreedomBox's domain name is <ulink url="https://myfreedombox.rocks"/> and you set MediaWiki as the home page, visiting <ulink url="https://myfreedombox.rocks"/> will take you to <ulink url="https://myfreedombox.rocks/mediawiki/"/> instead of the usual <ulink url="https://myfreedombox.rocks/plinth/"/>. You can set any web application, Ikiwiki wikis and blogs or Apache's default index.html page as the web server home page. </para>
           </listitem>
         </itemizedlist>
         <caution>
-          <para>
-            <emphasis role="strong">Warning</emphasis>
-          </para>
-          <para>Once some other app is set as the default app, you can only navigate to the FreedomBox Service (Plinth) by typing <ulink url="https://myfreedombox.rocks/plinth/"/> into the browser. </para>
+          <para>Once some other app is set as the home page, you can only navigate to the FreedomBox Service (Plinth) by typing <ulink url="https://myfreedombox.rocks/plinth/"/> into the browser. </para>
           <para><emphasis>/freedombox</emphasis> can also be  used as an alias to <emphasis>/plinth</emphasis> </para>
         </caution>
         <itemizedlist>
           <listitem override="none">
-            <para><emphasis>Tip:</emphasis> Bookmark the URL of FreedomBox Service (Plinth) before changing the default app to some other app. </para>
+            <para><emphasis>Tip:</emphasis> Bookmark the URL of FreedomBox Service (Plinth) before setting the home page to some other app. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -3510,7 +3781,7 @@ proto udp]]></screen>
             <para>Add your GnuDIP password </para>
           </listitem>
           <listitem>
-            <para>Fill the option with <ulink url="http://myip.datasystems24.de"/> (try this url in your browser, you will figure out immediatly) </para>
+            <para>Fill the option with <ulink url="http://myip.datasystems24.de"/> (try this url in your browser, you will figure out immediately) </para>
           </listitem>
         </orderedlist>
       </section>
@@ -5392,7 +5663,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
     </section>
     <section>
       <title>Certificates (Let's Encrypt)</title>
-      <para>A digital certficate allows users of a web service to verify the identity of the service and to securely communicate with it. FreedomBox can automatically obtain and setup digital certificates for each available domain. It does so by proving itself to be the owner of a domain to Let's Encrypt, a certificate authority (CA). </para>
+      <para>A digital certificate allows users of a web service to verify the identity of the service and to securely communicate with it. FreedomBox can automatically obtain and setup digital certificates for each available domain. It does so by proving itself to be the owner of a domain to Let's Encrypt, a certificate authority (CA). </para>
       <para>Let's Encrypt is a free, automated, and open certificate authority, run for the public's benefit by the Internet Security Research Group (ISRG). Please read and agree with the Let's Encrypt Subscriber Agreement before using this service. </para>
       <section>
         <title>Why using Certificates</title>
@@ -5874,6 +6145,7 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
     <section>
       <title>Power</title>
       <para>Power provides an easy way to restart or shut down FreedomBox. After you select "Restart" or "Shut Down", you will be asked to confirm. </para>
+      <para>"Restart" and "Shut Down" options can also be reached from the user dropdown menu on the top right. </para>
     </section>
     <section>
       <title>Public Visibility (PageKite)</title>
@@ -5952,7 +6224,7 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
         </section>
         <section>
           <title>SSH over Tor</title>
-          <para>If in Plinth you have enabled hidden services via Tor, you can access your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> using ssh over Tor. On a GNU/Linux computer, install netcat-openbsd. </para>
+          <para>If in Plinth you have enabled hidden services via Tor, you can access your FreedomBox using ssh over Tor. On a GNU/Linux computer, install netcat-openbsd. </para>
           <screen><![CDATA[$ sudo apt-get install netcat-openbsd]]></screen>
           <para>Edit ~/.ssh/config to enable connections over Tor. </para>
           <screen><![CDATA[$ nano ~/.ssh/config]]></screen>
@@ -5963,9 +6235,9 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
   ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p]]></screen>
           <para>Replace USERNAME with, e.g., an <code>admin</code> username (see above). </para>
           <para>Note that in some cases you may need to replace 9050 with 9150. </para>
-          <para>Now to connect to the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink>, open a terminal and type: </para>
+          <para>Now to connect to the FreedomBox, open a terminal and type: </para>
           <screen><![CDATA[$ ssh USERNAME@ADDRESS.onion]]></screen>
-          <para>Replace USERNAME with, e.g., an <code>admin</code> username, and ADDRESS with the hidden service address for your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink>. </para>
+          <para>Replace USERNAME with, e.g., an <code>admin</code> username, and ADDRESS with the hidden service address for your FreedomBox. </para>
         </section>
       </section>
       <section>
@@ -6989,7 +7261,7 @@ Password:
       </section>
       <section>
         <title>Adding Hardware Support</title>
-        <para>If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink> and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Setup#">FreedomBox Setup</ulink>. If you have access to one of these <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TargetedHardware#">targeted hardware</ulink> devices and would like to work with us to make it run FreedomBox, please contact us!  </para>
+        <para>If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>. If you have access to one of these <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TargetedHardware#">targeted hardware</ulink> devices and would like to work with us to make it run FreedomBox, please contact us!  </para>
       </section>
     </section>
     <section>
@@ -7027,7 +7299,7 @@ Password:
         <para>FreedomBox Danube Edition </para>
         <itemizedlist>
           <listitem>
-            <para>A limited number of units are planned to be shipped along with the release of FreedomBox 1.0.  If you wish to get one, <ulink url="http://projectdanube.org">express your interest</ulink>. </para>
+            <para>A limited number of units are planned to be shipped along with the release of FreedomBox.  If you wish to get one, <ulink url="http://projectdanube.org">express your interest</ulink>. </para>
           </listitem>
         </itemizedlist>
         <para>Cubietruck / Cubieboard3 </para>
@@ -8780,6 +9052,80 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
+        <title>FreedomBox 19.2 (2019-03-02)</title>
+        <itemizedlist>
+          <listitem>
+            <para>config: Fix Ikiwiki entries not showing up as default apps </para>
+          </listitem>
+          <listitem>
+            <para>config: Migrate default app configuration to new conf file </para>
+          </listitem>
+          <listitem>
+            <para>config: Rename Default App to Webserver Home Page </para>
+          </listitem>
+          <listitem>
+            <para>config: Add option to use Apache's default home page as home page </para>
+          </listitem>
+          <listitem>
+            <para>config: Fix error when setting JSXC as the home page </para>
+          </listitem>
+          <listitem>
+            <para>Disable Coquelicot for Buster release </para>
+          </listitem>
+          <listitem>
+            <para>matrix-synapse: Fix LDAP login issue </para>
+          </listitem>
+          <listitem>
+            <para>config: Revert changes in freedombox.conf to avoid conffile prompt </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Migration from easy-rsa 2 to 3 for existing installations </para>
+          </listitem>
+          <listitem>
+            <para>tor: Use fixed 9001 port for relaying </para>
+          </listitem>
+          <listitem>
+            <para>package: Implement identifying packages that need conffile prompts </para>
+          </listitem>
+          <listitem>
+            <para>setup: Trigger force upgrade for app that implement it </para>
+          </listitem>
+          <listitem>
+            <para>bind: Handle conffile prompt during upgrade </para>
+          </listitem>
+          <listitem>
+            <para>apache: Pre-enable necessary apache modules </para>
+          </listitem>
+          <listitem>
+            <para>apache: Use cgid module instead of cgi </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Make frontpage shortcut appear after an upgrade </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Work around firewalld bug 919517 </para>
+          </listitem>
+          <listitem>
+            <para>firewalld: Implement upgrading from 0.4.x to 0.6.x </para>
+          </listitem>
+          <listitem>
+            <para>ttrss: Implement upgrade from 17.4 to 18.12 </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Add description of web interface </para>
+          </listitem>
+          <listitem>
+            <para>ttrss: Add backup support </para>
+          </listitem>
+          <listitem>
+            <para>security: Migrate access config to new file </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, Hungarian, Norwegian Bokmål, Spanish, German, Telugu. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>FreedomBox 19.1 (2019-02-14)</title>
         <itemizedlist>
           <listitem>
@@ -9553,7 +9899,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
             <para>snapshots: Fix for permissions issue when updating configuration </para>
           </listitem>
           <listitem>
-            <para>snapshots: Add option to enable/diable software installation snapshots </para>
+            <para>snapshots: Add option to enable/disable software installation snapshots </para>
           </listitem>
           <listitem>
             <para>Translation updates for Italian, Czech, Russian, Spanish, Dutch, German, Norwegian Bokmål, and Ukrainian </para>
@@ -10591,11 +10937,11 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
   </section>
   <section>
     <title>Contributing</title>
-    <para>From code, design and translation to spreading the world and donation, here is a list of possible contributions to develop FreedomBox. </para>
+    <para>From code, design and translation to spreading the world and donation, here are a number of ways to contribute to FreedomBox. </para>
     <section>
       <title>Quick Links</title>
       <para>
-        <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/ProgressCalls#">Progess calls</ulink>
+        <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/ProgressCalls#">Progress calls</ulink>
       </para>
       <para>
         <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TODO#">TODO page</ulink>
@@ -10606,12 +10952,12 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     </section>
     <section>
       <title>Welcome to newcomers</title>
-      <para>As a newcomer, you are more than welcome to introduce yourself to all users and doers on the "FreedomBox-discuss" <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> web interface.  </para>
+      <para>As a newcomer, you are more than welcome to introduce yourself to all users and doers on the "FreedomBox-discuss" <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the FreedomBox web interface.  </para>
     </section>
     <section>
       <title>Development priorities</title>
-      <para>Upcoming priorities are discussed on an regular basis. You find the progress of the web interface Plinth with its priorities here:<ulink url="https://tree.taiga.io/project/freedombox-freedombox/">Project Progress</ulink>. We want to enjoy soon a version 1.0.</para>
-      <para>Please check next <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/ProgressCalls#">progess calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink>.  </para>
+      <para>Upcoming priorities are discussed on an regular basis. You find the progress of the FreedomBox Service (Plinth) with its priorities here: <ulink url="https://salsa.debian.org/groups/freedombox-team/-/boards">issues board</ulink> and <ulink url="https://salsa.debian.org/groups/freedombox-team/-/milestones">milestones</ulink>.</para>
+      <para>Please check next <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/ProgressCalls#">progress calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for FreedomBox.  </para>
     </section>
     <section>
       <title>Contributions needed</title>
@@ -10621,17 +10967,14 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       </section>
       <section>
         <title>Bugs</title>
-        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Bugs#">List of bugs</ulink> listed on Debian universal system. Also see the <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">Packages overview for FreedomBox packaging team</ulink> for status of various packages that we use. </para>
+        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Bugs#">List of bugs</ulink> listed on Debian universal system. Also see the <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">Packages overview for !FreedomBox packaging team</ulink> for status of various packages that we use. </para>
       </section>
       <section>
         <title>Code</title>
         <para>If you are a developer, you can contribute code to one of the sub-projects of FreedomBox.  Step-by-step process of <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Code#">contributing code</ulink> to FreedomBox is available. </para>
         <itemizedlist>
           <listitem>
-            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Setup#">FreedomBox Setup</ulink>: a Debian package for setting up the FreedomBox. </para>
-          </listitem>
-          <listitem>
-            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth#">Plinth</ulink>: a web interface to administer the functions of FreedomBox. </para>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth#">FreedomBox Service (Plinth)</ulink>: a web interface to administer the functions of FreedomBox. </para>
           </listitem>
           <listitem>
             <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>: a script to build FreedomBox disk images for use on various hardware devices or virtual machines. </para>
@@ -10646,7 +10989,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
           <para>If you are a user experience designer, you can help FreedomBox with the following items: </para>
           <itemizedlist>
             <listitem>
-              <para>UI experience for the Plinth web interface </para>
+              <para>UI experience for the FreedomBox Service (Plinth) web interface </para>
             </listitem>
             <listitem>
               <para>Web design for <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> pages </para>
@@ -10682,7 +11025,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       </section>
       <section>
         <title>Document: User Manual, Website and Wiki</title>
-        <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in Plinth and elsewhere. </para>
+        <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in FreedomBox Service (Plinth) and elsewhere. </para>
         <para>If you wish to contribute to the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> (and consequently the FreedomBox manual), you can create a wiki account and start editing. </para>
         <para>For contributing to the website please start a discussion on the FreedomBox <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
       </section>
@@ -10844,7 +11187,7 @@ urlpatterns = [
 from plinth.menu import main_menu
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     menu = main_menu.get('apps')
     menu.add_urlname(_('Tiny Tiny RSS'), 'glyphicon-bullhorn',
                      'ttrss:index', _('News Feed Reader'))]]></screen>
@@ -11141,7 +11484,7 @@ def index(request):
         <screen><![CDATA[from django.utils.translation import ugettext_lazy as _
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('News Feed Reader (Tiny Tiny RSS)'), 'glyphicon-envelope',
                      'ttrss:index', 600)]]></screen>
@@ -11159,7 +11502,7 @@ FreedomBox app to configure Tiny Tiny RSS.
     </section>
     <section>
       <title>Reference Guide</title>
-      <para>This section describes Plinth API that is most frequently used by application.  Note that since Plinth is under development and has not yet reached 1.0, this API is subject to change.  This is not usually a problem because all the Plinth applications currently reside in Plinth source repository itself and are updated when the API is updated. </para>
+      <para>This section describes Plinth API that is most frequently used by application.  Note that since Plinth is under development and has not yet declared a stable API, this API is subject to change.  This is not usually a problem because all the Plinth applications currently reside in Plinth source repository itself and are updated when the API is updated. </para>
       <section>
         <title>Applications</title>
         <para>These methods are optionally provided by the application and Plinth calls/uses them if they are present. </para>
@@ -11198,14 +11541,14 @@ FreedomBox app to configure Tiny Tiny RSS.
         </section>
         <section>
           <title>plinth.action_utils</title>
-          <para>Several utlities to help with the implementation of actions and diagnotic tests are implemented in this module.  Refer to the module source code for a list of these methods and their documentation. </para>
+          <para>Several utilities to help with the implementation of actions and diagnostic tests are implemented in this module.  Refer to the module source code for a list of these methods and their documentation. </para>
         </section>
       </section>
       <section>
         <title>Menus</title>
         <section>
           <title>plinth.cfg.main_menu</title>
-          <para>This is a reference to the global main menu.  All menu entries in Plinth are decendents of this menu item.  See <code>Menu.add_item()</code> and <code>Menu.add_urlname()</code> for adding items to this menu or its children. </para>
+          <para>This is a reference to the global main menu.  All menu entries in Plinth are descendents of this menu item.  See <code>Menu.add_item()</code> and <code>Menu.add_urlname()</code> for adding items to this menu or its children. </para>
         </section>
         <section>
           <title>plinth.menu.Menu.get(self, urlname, url_args=None, url_kwargs=None)</title>
@@ -11240,36 +11583,33 @@ FreedomBox app to configure Tiny Tiny RSS.
   </section>
   <section>
     <title>Hacking</title>
-    <para>FreedomBox consists of three main projects: </para>
+    <para>FreedomBox consists of two main projects: </para>
     <itemizedlist>
       <listitem>
-        <para>Plinth, the web interface </para>
-      </listitem>
-      <listitem>
-        <para>FreedomBox Setup, the Debian package to perform initial setup and </para>
+        <para>FreedomBox Service (Plinth), the web interface </para>
       </listitem>
       <listitem>
         <para>Freedom Maker, a script to build disk images for various hardware </para>
       </listitem>
     </itemizedlist>
     <section>
-      <title>Plinth</title>
-      <para>Plinth is a web interface to administer the functions of the FreedomBox. </para>
-      <para>Plinth is <ulink url="https://www.gnu.org/philosophy/">Free Software</ulink> under <ulink url="https://www.gnu.org/licenses/agpl.html">GNU Affero General Public License</ulink> version 3 or (at your option) a later version. </para>
+      <title>FreedomBox Service (Plinth)</title>
+      <para>FreedomBox Service (Plinth) is a web interface to administer the functions of the FreedomBox. </para>
+      <para>FreedomBox Service (Plinth) is <ulink url="https://www.gnu.org/philosophy/">Free Software</ulink> under <ulink url="https://www.gnu.org/licenses/agpl.html">GNU Affero General Public License</ulink> version 3 or (at your option) a later version. </para>
       <section>
         <title>Using</title>
         <itemizedlist>
           <listitem>
-            <para>Plinth comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. Then, you can access Plinth by visiting the URL <ulink url="http://freedombox/plinth"/> or <ulink url="https://freedombox.local/plinth"/>. </para>
+            <para>FreedomBox Service (Plinth) comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. Then, you can access FreedomBox Service (Plinth) by visiting the URL <ulink url="http://freedombox/plinth"/> or <ulink url="https://freedombox.local/plinth"/>. </para>
           </listitem>
           <listitem>
-            <para>If you are on a Debian box, you may install Plinth from Debian package archive.  Currently, only Stretch (testing) and Sid (unstable) are supported.  To install Plinth run: </para>
+            <para>If you are on a Debian box, you may install FreedomBox Service (Plinth) from Debian package archive.  Currently, only Stretch (stable), Buster (testing), and Sid (unstable) are supported.  To install FreedomBox Service (Plinth) run: </para>
           </listitem>
         </itemizedlist>
         <screen><![CDATA[$ sudo apt-get install plinth]]></screen>
         <itemizedlist>
           <listitem>
-            <para>You can also get Plinth from its <ulink url="https://salsa.debian.org/freedombox-team/plinth/">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/INSTALL.md">install from source</ulink>. </para>
+            <para>You can also get FreedomBox Service (Plinth) from its <ulink url="https://salsa.debian.org/freedombox-team/plinth/">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/INSTALL.md">install from source</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -11332,11 +11672,16 @@ FreedomBox app to configure Tiny Tiny RSS.
               <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>
             </para>
           </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://matrix.to/#/#freedombox:matrix.org">FreedomBox Matrix channel</ulink>
+            </para>
+          </listitem>
         </itemizedlist>
       </section>
       <section>
         <title>Contributing</title>
-        <para>We are looking for help to improve Plinth.  You can contribute to Plinth by not just by coding but also by translating, documenting, designing, packaging and providing support. </para>
+        <para>We are looking for help to improve FreedomBox Service (Plinth).  You can contribute to FreedomBox Service (Plinth) by not just by coding but also by translating, documenting, designing, packaging and providing support. </para>
         <itemizedlist>
           <listitem>
             <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
@@ -11351,7 +11696,7 @@ FreedomBox app to configure Tiny Tiny RSS.
             <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://salsa.debian.org/freedombox-team/plinth/issues">issue tracker</ulink>. </para>
           </listitem>
           <listitem>
-            <para>Before contributing to Plinth code, you need understand <ulink url="https://www.python.org/">Python</ulink> and <ulink url="https://www.djangoproject.com/">Django</ulink> on top which it is built. </para>
+            <para>Before contributing to FreedomBox Service (Plinth) code, you need understand <ulink url="https://www.python.org/">Python</ulink> and <ulink url="https://www.djangoproject.com/">Django</ulink> on top which it is built. </para>
           </listitem>
           <listitem>
             <para>You can request for development assistance on <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss#">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
@@ -11361,70 +11706,13 @@ FreedomBox app to configure Tiny Tiny RSS.
           <title>Debian Package</title>
           <itemizedlist>
             <listitem>
-              <para>Plinth is <ulink url="https://packages.debian.org/plinth#">packaged</ulink> for Debian. Plinth is a native package and packaging source code is part of the main package source code. </para>
+              <para>FreedomBox Service (Plinth) is <ulink url="https://packages.debian.org/plinth#">packaged</ulink> for Debian. FreedomBox Service (Plinth) is a native package and packaging source code is part of the main package source code. </para>
             </listitem>
             <listitem>
               <para>Issues related to packaging are listed on <ulink url="https://bugs.debian.org/plinth#">Debian BTS</ulink>. </para>
             </listitem>
           </itemizedlist>
         </section>
-      </section>
-    </section>
-    <section>
-      <title>FreedomBox Setup</title>
-      <para>FreedomBox Setup is a Debian package for setting up the FreedomBox. If you <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download and use pre-built images</ulink> you don't have to worry about this package. </para>
-      <para>FreedomBox Setup is responsible for setting up basic networking, web server, user accounts, installing essential packages etc.  It performs first part of the setup during the image build process.  Later, when the image is booted for the first time on actual hardware (or on a virtual machine), it does the remaining setup and then reboots the machine.  It also comes with a diagnostic script to check if the FreedomBox Setup is running as expected. </para>
-      <para>FreedomBox Setup is <ulink url="https://www.gnu.org/philosophy/">Free Software</ulink> licensed under <ulink url="https://www.gnu.org/licenses/gpl.html">GNU General Public License</ulink> version 3 or (at your option) a later version. </para>
-      <section>
-        <title>Using</title>
-        <itemizedlist>
-          <listitem>
-            <para>FreedomBox Setup comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. </para>
-          </listitem>
-          <listitem>
-            <para>If you are on a Debian box, you may install FreedomBox Setup from Debian package archive.  This essentially turns your Debian installation into a FreedomBox!  Currently, only Sid (unstable) is supported.  To install FreedomBox Setup, see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">instructions</ulink> on setting up FreedomBox on a Debian machine. </para>
-          </listitem>
-          <listitem>
-            <para>You can also get FreedomBox Setup from its <ulink url="https://salsa.debian.org/freedombox-team/freedombox-setup">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/freedombox-setup/blob/master/README">build Debian package from source</ulink>. </para>
-          </listitem>
-        </itemizedlist>
-      </section>
-      <section>
-        <title>Support</title>
-        <para>You may ask for support on </para>
-        <itemizedlist>
-          <listitem>
-            <para>
-              <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">The mailing list</ulink>
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>
-            </para>
-          </listitem>
-        </itemizedlist>
-      </section>
-      <section>
-        <title>Contributing</title>
-        <para>We are looking for help to improve FreedomBox Setup. </para>
-        <itemizedlist>
-          <listitem>
-            <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
-          </listitem>
-          <listitem>
-            <para>FreedomBox Setup is part of the <ulink url="https://salsa.debian.org/freedombox-team/freedombox-setup">FreedomBox Salsa Project</ulink>. </para>
-          </listitem>
-          <listitem>
-            <para>List of bugs, TODO items, packages issues and feature requests are available on the <ulink url="https://bugs.debian.org/cgi-bin/pkgreport.cgi?src=freedombox-setup">issue tracker</ulink>. </para>
-          </listitem>
-          <listitem>
-            <para>You can request for development assistance on <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
-          </listitem>
-          <listitem>
-            <para>See <ulink url="https://tracker.debian.org/pkg/freedombox-setup">Debian tracker</ulink> for information on Debian package.  FreedomBox Setup is a Debian native package meaning it is primarily built for Debian and comes with Debian packaging scripts in its repository. </para>
-          </listitem>
-        </itemizedlist>
       </section>
     </section>
     <section>
@@ -11501,7 +11789,7 @@ FreedomBox app to configure Tiny Tiny RSS.
           <para><ulink url="https://en.wikipedia.org/wiki/X86-64#AMD64">AMD64 (x86-64) Machines</ulink>, <ulink url="https://en.wikipedia.org/wiki/X86">X86 Machines</ulink> and other virtual machines (using raw disk images) </para>
         </listitem>
       </itemizedlist>
-      <para>It relies on the <ulink url="http://liw.fi/vmdebootstrap/">vmdebootstrap</ulink> project actually create images.  If a hardware platform is capable of running Debian, it should not be too much effort adopt Freedom Maker to create <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> images for the platform. </para>
+      <para>If a hardware platform is capable of running Debian, it should not be too much effort adopt Freedom Maker to create FreedomBox images for the platform. </para>
       <para>Freedom Maker is <ulink url="https://www.gnu.org/philosophy/">Free Software</ulink> licensed under <ulink url="https://www.gnu.org/licenses/gpl.html">GNU General Public License</ulink> version 3 or (at your option) a later version. </para>
       <section>
         <title>Building FreedomBox Images</title>
@@ -11523,6 +11811,11 @@ FreedomBox app to configure Tiny Tiny RSS.
           <listitem>
             <para>
               <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://matrix.to/#/#freedombox:matrix.org">FreedomBox Matrix channel</ulink>
             </para>
           </listitem>
         </itemizedlist>
@@ -11558,6 +11851,11 @@ FreedomBox app to configure Tiny Tiny RSS.
     <itemizedlist>
       <listitem>
         <para>
+          <ulink url="https://freedombox.org/">FreedomBox</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Press#">FreedomBox in the Press</ulink>
         </para>
       </listitem>
@@ -11584,6 +11882,11 @@ FreedomBox app to configure Tiny Tiny RSS.
       <listitem>
         <para>
           <ulink url="http://twitter.com/#!/FreedomBoxFndn">Twitter</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://mastodon.social/@freedomboxfndn">Mastodon</ulink>
         </para>
       </listitem>
       <listitem>
