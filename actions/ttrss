@@ -81,7 +81,8 @@ def subcommand_setup(_):
 
     aug.save()
 
-    action_utils.service_try_restart('tt-rss')
+    if action_utils.service_is_enabled('tt-rss'):
+        action_utils.service_restart('tt-rss')
 
 
 def enable_api_access():

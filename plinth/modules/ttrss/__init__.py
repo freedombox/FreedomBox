@@ -25,7 +25,7 @@ from plinth import action_utils, actions, cfg, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
-from plinth.utils import format_lazy
+from plinth.utils import Version, format_lazy
 
 from .manifest import backup, clients
 
@@ -97,6 +97,21 @@ def setup(helper, old_version=None):
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+
+
+def force_upgrade(helper, packages):
+    """Force update package to resolve conffile prompts."""
+    if 'tt-rss' not in packages:
+        return
+
+    # tt-rss 17.4 -> 18.12
+    package = packages['tt-rss']
+    if Version(package['current_version']) >= Version('18.12') or \
+       Version(package['new_version']) < Version('18.12'):
+        return
+
+    helper.install(['tt-rss'], force_configuration='new')
+    actions.superuser_run('ttrss', ['setup'])
 
 
 def add_shortcut():
