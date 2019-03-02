@@ -152,7 +152,8 @@ class TestActions(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_create_user(self):
         """Test whether creating a new user works."""
-        username, password = self.create_user(groups=[random_string()])
+        username, password = self.create_user(
+            groups=['admin', random_string()])
         # assert_can_login_to_console(username, password)
         self.assertTrue(try_login_to_ssh(username, password))
         with self.assertRaises(subprocess.CalledProcessError):
@@ -160,7 +161,7 @@ class TestActions(unittest.TestCase):
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_change_user_password(self):
-        username, old_password = self.create_user()
+        username, old_password = self.create_user(groups=['admin'])
         old_password_hash = get_password_hash(username)
         new_password = 'pass $123'
         self.call_action(['set-user-password', username],
@@ -184,7 +185,8 @@ class TestActions(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_rename_user(self):
         """Test whether renaming a user works."""
-        old_username, password = self.create_user(groups=[random_string()])
+        old_username, password = self.create_user(
+            groups=['admin', random_string()])
         old_groups = self.get_user_groups(old_username)
 
         new_username = self.rename_user(old_username)
