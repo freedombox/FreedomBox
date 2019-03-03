@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-02 13:23-0500\n"
-"PO-Revision-Date: 2019-02-16 17:19+0000\n"
+"PO-Revision-Date: 2019-03-05 15:57+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
 "cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 3.5\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -534,14 +534,12 @@ msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
 #: plinth/modules/config/forms.py:49
-#, fuzzy
-#| msgid "Default"
 msgid "Apache Default"
-msgstr "Výchozí"
+msgstr "Výchozí pro Apache"
 
 #: plinth/modules/config/forms.py:50
 msgid "FreedomBox Service (Plinth)"
-msgstr ""
+msgstr "Služba FreedomBox (Plinth)"
 
 #: plinth/modules/config/forms.py:62
 msgid "Hostname"
@@ -582,20 +580,11 @@ msgstr ""
 "nejvýše 253 znaků."
 
 #: plinth/modules/config/forms.py:91
-#, fuzzy
-#| msgid "Web Server (HTTP)"
 msgid "Webserver Home Page"
-msgstr "Webový server (HTTP)"
+msgstr "Domovská stránka domovského serveru"
 
 #: plinth/modules/config/forms.py:93
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default web application that must be served when someone "
-#| "visits your {box_name} on the web. A typical use case is to set your blog "
-#| "or wiki as the landing page when someone visits the domain name. Note "
-#| "that once the default app is set to something other than {box_name} "
-#| "Service (Plinth), your users must explicitly type /plinth or /freedombox "
-#| "to reach {box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -603,12 +592,12 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
-"Zvolte výchozí webovou aplikaci která je třeba, aby byla poskytována když "
-"někdo navštíví web vašeho {box_name}. Typickým případem použití je nastavení "
-"svého blogu nebo wiki jako úvodní stránky když někdo navštíví doménu. Mějte "
-"na paměti, že jakmile je výchozí aplikace nastavená na něco jiného než "
-"službu {box_name} (Plinth), uživatelé budou potřebovat výslovně zadávat /"
-"plinth nebo /freedombox, aby se dostali na službu {box_name} (Plinth)."
+"Zvolte výchozí stránku která je třeba, aby byla poskytována když někdo "
+"navštíví web vašeho {box_name}. Typickým případem použití je nastavení svého "
+"blogu nebo wiki jako domovskou stránku když někdo navštíví doménu. Mějte na "
+"paměti, že jakmile je domovská stránka nastavená na něco jiného než službu "
+"{box_name} (Plinth), uživatelé budou potřebovat výslovně zadávat /plinth "
+"nebo /freedombox, aby se dostali na službu {box_name} (Plinth)."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
@@ -644,14 +633,13 @@ msgid "Domain name set"
 msgstr "Nastavení doménového názvu"
 
 #: plinth/modules/config/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Error setting hostname: {exception}"
+#, python-brace-format
 msgid "Error setting webserver home page: {exception}"
-msgstr "Chyba při nastavování názvu stroje: {exception}"
+msgstr "Chyba při nastavování domovské stránky webového serveru: {exception}"
 
 #: plinth/modules/config/views.py:103
 msgid "Webserver home page set"
-msgstr ""
+msgstr "Nastavení domovské stránky webového serveru"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -3973,6 +3961,9 @@ msgid ""
 "calendars and addressbooks. It does not support adding events or contacts, "
 "which must be done using a separate client."
 msgstr ""
+"Radicale poskytuje základní webové rozhraní, které podporuje pouze vytváření "
+"nových kalendářů a adresářů kontaktů. Nepodporuje přidávání událostí či "
+"kontaktů, to je třeba dělat v tomu určeném klientovi."
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
