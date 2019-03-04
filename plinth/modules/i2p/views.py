@@ -88,7 +88,8 @@ i2p_frame_tunnels = _create_i2p_frame_view(
 )
 i2p_frame_torrent = _create_i2p_frame_view(
     "Anonymous torrents", "i2psnark", [
-        _('Track the progress of your anonymous torrent downlaods here.'),
-        _('You can find torrents on the <a href="http://tracker.postman.i2p">Postman Tracker</a>'),
+        _('Track the progress of your anonymous torrent downloads here.'),
+        _('You can find a list of trackers on the '
+          '<a href="/i2p/i2psnark/configure" target="i2p-frame" >Configuration page</a>'),
     ]
 )
