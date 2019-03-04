@@ -14,5 +14,3 @@
     - Searx instance: http://ransack.i2p
     - YaCY instance: legwork.i2p
     - another YaCY instance: seeker.i2p
- - [ ] (IDEA) Add a browsing iframe to browser eepsites
-       directly from freedombox through apache proxy
