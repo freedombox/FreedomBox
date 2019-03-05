@@ -18,6 +18,7 @@ and requires about 4.5 GB of disk space.
 2.  To download, setup, run, and configure a VM for FreedomBox development using
     Vagrant, simply execute in your FreedomBox Service (Plinth) development
     folder:
+
     ```
     $ vagrant up
     ```
@@ -31,6 +32,7 @@ and requires about 4.5 GB of disk space.
    virtual machine using the following command. This command continuously
    deploys your code changes into the virtual machine providing a quick feedback
    cycle during development.
+
     ```
     $ sudo /vagrant/run --develop
     ```
@@ -38,21 +40,25 @@ and requires about 4.5 GB of disk space.
 Note: This virtual machine has automatic upgrades disabled by default.
 
 
-## Installing Dependencies
-
-Apart from dependencies listing in INSTALL.md file, there may be additional
-dependencies required by apps of FreedomBox. To install these, run:
-
-```
-$ sudo apt install -y $(plinth --list-dependencies)
-```
-
 ## Manually Setting Up for Development
 
 It is recommended that you use Vagrant to setup your development environment.
 However, for some reason, you wish setup manually, the following tips will help:
 
-1.  Instead of running `setup.py install` after every source modification, run
+1.  Install dependencies as follows:
+
+    ```
+    $ sudo apt build-dep .
+    ```
+
+    ```
+    $ sudo apt install -y $(./run --list-dependencies)
+    ```
+
+    Install additional dependencies by picking the list from debian/control file
+    fields Depends: and Recommends: for the package ''freedombox''.
+
+2.  Instead of running `setup.py install` after every source modification, run
     the following command:
 
     ```
