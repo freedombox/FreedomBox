@@ -17,9 +17,10 @@
 
 import configparser
 import os
+import pathlib
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(pathlib.Path(__file__).parent.with_name('config.ini'))
 
 config['DEFAULT']['url'] = os.environ.get('FREEDOMBOX_URL',
                                           config['DEFAULT']['url'])
