@@ -14,21 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+"""
+Dummy file to help pytest-django path detection.
 
-import pytest
-
-try:
-    from pytest_bdd import scenarios
-except ImportError:
-    pytestmark = pytest.mark.skip(reason='pytest_bdd is not installed')
-else:
-    from step_definitions.application import *
-    from step_definitions.interface import *
-    from step_definitions.service import *
-    from step_definitions.site import *
-    from step_definitions.system import *
-
-    # Mark all tests are functional
-    pytestmark = pytest.mark.functional
-
-    scenarios('features')
+pytest-django searches for a folder with manage.py and treats that as parent
+directory for Django project. This folder is then added to Python path managed
+in sys.path. This allows the Django setting module to be discovered as
+plinth.tests.data.django_test_settings. pytest can then be invoked simply as
+'py.test-3' instead of 'python3 -m pytest'.
+"""

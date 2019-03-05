@@ -115,23 +115,32 @@ However, for some reason, you wish setup manually, the following tips will help:
 To run all the tests:
 
 ```bash
-$ python3 setup.py test
+$ py.test-3
 ```
 
-To run a specific test function, test class or test module, use the `-s` option
-with the fully qualified name.
+Another way to run tests (not recommended):
+
+```bash
+$ ./setup.py test
+```
+
+To run a specific test function, test class or test module, use pytest filtering
+options.
 
 **Examples:**
 
 ```bash
-# Run tests of a test module
-$ python3 setup.py test -s plinth.tests.test_actions
+# Run tests in a directory
+$ py.test-3 plinth/tests
+
+# Run tests in a module
+$ py.test-3 plinth/tests/test_actions.py
 
 # Run tests of one class in test module
-$ python3 setup.py test -s plinth.tests.test_actions.TestActions
+$ py.test-3 plinth/tests/test_actions.py::TestActions
 
 # Run one test in a class or module
-$ python3 setup.py test -s plinth.tests.test_actions.TestActions.test_is_package_manager_busy
+$ py.test-3 plinth/tests/test_actions.py::TestActions::test_is_package_manager_busy
 ```
 
 ## Running the Test Coverage Analysis
@@ -139,20 +148,86 @@ $ python3 setup.py test -s plinth.tests.test_actions.TestActions.test_is_package
 To run the coverage tool:
 
 ```
-$ python3 setup.py test_coverage
+$ py.test-3 --cov=plinth
 ```
 
-Invoking this command generates a binary-format `.coverage` data file in
-the top-level project directory which is recreated with each run, and
-writes a set of HTML and other supporting files which comprise the
-browsable coverage report to the `plinth/tests/coverage/report` directory.
-`Index.html` presents the coverage summary, broken down by module.  Data
-columns can be sorted by clicking on the column header or by using mnemonic
-hot-keys specified in the keyboard widget in the upper-right corner of the
-page.  Clicking on the name of a particular source file opens a page that
-displays the contents of that file, with color-coding in the left margin to
-indicate which statements or branches were executed via the tests (green)
-and which statements or branches were not executed (red).
+To collect HTML report:
+
+```
+$ py.test-3 --cov=plinth --cov-report=html
+```
+
+Invoking this command generates a HTML report to the `htmlcov` directory.
+`index.html` presents the coverage summary, broken down by module. Data columns
+can be sorted by clicking on the column header. Clicking on the name of a
+particular source file opens a page that displays the contents of that file,
+with color-coding in the left margin to indicate which statements or branches
+were executed via the tests (green) and which statements or branches were not
+executed (red).
+
+## Running Functional Tests
+
+### Install Dependencies
+
+```
+$ pip3 install splinter
+$ pip3 install pytest-splinter
+$ pip3 install pytest-bdd
+$ sudo apt install xvfb  # optional, to avoid opening browser windows
+$ pip3 install pytest-xvfb  # optional, to avoid opening browser windows
+```
+
+- Install the latest version of geckodriver.
+It's usually a single binary which you can place at /usr/local/bin/geckodriver
+
+- Install the latest version of Mozilla Firefox.
+Download and extract the latest version from the Firefox website and symlink the
+binary named `firefox` to /usr/local/bin.
+
+Geckodriver will then use whatever version of Firefox you symlink as
+/usr/local/bin/firefox.
+
+### Run FreedomBox Service
+
+*Warning*: Functional tests will change the configuration of the system
+ under test, including changing the hostname and users. Therefore you
+ should run the tests using FreedomBox running on a throw-away VM.
+
+The VM should have NAT port-forwarding enabled so that 4430 on the
+host forwards to 443 on the guest. From where the tests are running, the web
+interface of FreedomBox should be accessible at https://localhost:4430/.
+
+### Setup FreedomBox Service for tests
+
+Via Plinth, create a new user as follows:
+
+* Username: tester
+* Password: testingtesting
+
+This step is optional if a fresh install of Plinth is being tested. Functional
+tests will create the required user using FreedomBox's first boot process.
+
+### Run Functional Tests
+
+Run
+
+```
+$ py.test-3 --include-functional
+```
+
+The full test suite can take a long time to run (more than an hour). You can
+also specify which tests to run, by tag or keyword:
+
+```
+$ py.test-3 -k essential --include-functional
+```
+
+If xvfb is installed and you still want to see browser windows, use the
+`--no-xvfb` command-line argument.
+
+```
+$ py.test-3 --no-xvfb -k mediawiki --include-functional
+```
 
 ## Building the Documentation Separately
 

@@ -35,7 +35,6 @@ import setuptools
 from setuptools.command.install import install
 
 from plinth import __version__
-from plinth.tests.coverage import coverage
 
 DIRECTORIES_TO_CREATE = [
     '/var/lib/plinth',
@@ -188,7 +187,6 @@ setuptools.setup(
     packages=find_packages(include=['plinth', 'plinth.*'],
                            exclude=['*.templates']),
     scripts=['bin/plinth'],
-    test_suite='plinth.tests.runtests.run_tests',
     license='COPYING.md',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -205,7 +203,7 @@ setuptools.setup(
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
         'Topic :: System :: Systems Administration',
     ],
-    setup_requires=['setuptools-git'],
+    setup_requires=['pytest-runner', 'setuptools-git'],
     install_requires=[
         'cherrypy >= 3.0',
         'configobj',
@@ -219,7 +217,7 @@ setuptools.setup(
         'requests',
         'ruamel.yaml',
     ],
-    tests_require=['coverage >= 3.7'],
+    tests_require=['pytest', 'pytest-cov', 'pytest-django'],
     include_package_data=True,
     package_data={
         'plinth': [
@@ -286,7 +284,6 @@ setuptools.setup(
         'clean': CustomClean,
         'compile_translations': CompileTranslations,
         'install_data': CustomInstallData,
-        'test_coverage': coverage.CoverageCommand,
         'update_translations': UpdateTranslations,
     },
 )

@@ -19,11 +19,14 @@
 Test module for key/value store.
 """
 
+import pytest
+
 from django.test import TestCase
 
 from plinth import kvstore
 
 
+@pytest.mark.django_db
 class KVStoreTestCase(TestCase):
     """Verify the behavior of the kvstore module."""
 
