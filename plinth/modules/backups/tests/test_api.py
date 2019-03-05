@@ -111,8 +111,10 @@ class TestBackupProcesses(unittest.TestCase):
 
     @staticmethod
     @patch('plinth.modules.backups.api._install_apps_before_restore')
-    def test_restore_apps(mock_install):
+    @patch('plinth.module_loader.loaded_modules.items')
+    def test_restore_apps(mock_install, modules):
         """Test that restore_handler is called."""
+        modules.return_value = [('a', MagicMock())]
         restore_handler = MagicMock()
         api.restore_apps(restore_handler)
         restore_handler.assert_called_once()
@@ -129,7 +131,6 @@ class TestBackupProcesses(unittest.TestCase):
         del apps[3][1].backup
         modules.return_value = apps
 
-        module_loader.load_modules()
         returned_apps = api.get_all_apps_for_backup()
         expected_apps = [
             api.BackupApp('a', apps[0][1]),
@@ -148,7 +149,6 @@ class TestBackupProcesses(unittest.TestCase):
         ]
         modules.return_value = apps
 
-        module_loader.load_modules()
         app_names = ['config', 'names']
         apps = api.get_apps_in_order(app_names)
         assert apps[0].name == 'names'
