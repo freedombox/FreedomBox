@@ -39,17 +39,24 @@ the [FreedomBox Wiki](https://wiki.debian.org/FreedomBox/) and the
 
 # Getting Started
 
-See the INSTALL.md file for additional details and dependencies. To install run:
+To have a running FreedomBox, first install Debian (Buster or higher) on a clean
+machine. Then run:
 
-    $ sudo python3 setup.py install
+    ```
+    $ sudo apt install freedombox
+    ```
 
-Run FreedomBox Service (Plinth) on the local system with:
+Full instructions are available on FreedomBox
+[Manual](https://wiki.debian.org/FreedomBox/Manual/)'s
+[QuickStart](https://wiki.debian.org/FreedomBox/Manual/QuickStart) page.
 
-    $ sudo plinth
+For instructions on running the service on a local machine from source code, see
+INSTALL.md. For instructions on setting up for development purposes, see
+HACKING.md.
 
 # Contributing
 
-See the [HACKING](https://salsa.debian.org/freedombox-team/plinth/blob/master/HACKING.md) file for contributing to FreedomBox Service (Plinth).
+See the [HACKING.md](https://salsa.debian.org/freedombox-team/plinth/blob/master/HACKING.md) file for contributing to FreedomBox Service (Plinth).
 
 # Localization
 
