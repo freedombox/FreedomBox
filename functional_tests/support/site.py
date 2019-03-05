@@ -17,6 +17,7 @@
 
 import logging
 import os
+import pathlib
 import time
 
 import requests
@@ -125,8 +126,9 @@ def upload_image_mediawiki(browser, username, password, image):
 
     # Upload file
     browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:Upload')
-    file_path = os.path.realpath('../static/themes/default/img/' + image)
-    browser.attach_file('wpUploadFile', file_path)
+    file_path = pathlib.Path(__file__).parent
+    file_path /= '../../static/themes/default/img/' + image
+    browser.attach_file('wpUploadFile', str(file_path.resolve()))
     interface.submit(browser, element=browser.find_by_name('wpUpload')[0])
 
 
