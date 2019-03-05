@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import pytest
 from pytest_bdd import scenarios
 
 from step_definitions.application import *
@@ -22,5 +23,8 @@ from step_definitions.interface import *
 from step_definitions.service import *
 from step_definitions.site import *
 from step_definitions.system import *
+
+# Mark all tests are functional
+pytestmark = pytest.mark.functional
 
 scenarios('features')
