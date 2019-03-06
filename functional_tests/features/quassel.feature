@@ -28,14 +28,14 @@ Scenario: Enable quassel application
   When I enable the quassel application
   Then the quassel service should be running
 
-Scenario: Disable quassel application
-  Given the quassel application is enabled
-  When I disable the quassel application
-  Then the quassel service should not be running
-
 # TODO: Improve this to actually check that data configured servers is restored.
 Scenario: Backup and restore quassel
   Given the quassel application is enabled
   When I create a backup of the quassel app data
   And I restore the quassel app data backup
   Then the quassel service should be running
+
+Scenario: Disable quassel application
+  Given the quassel application is enabled
+  When I disable the quassel application
+  Then the quassel service should not be running

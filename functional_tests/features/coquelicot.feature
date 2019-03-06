@@ -28,11 +28,6 @@ Scenario: Enable coquelicot application
   When I enable the coquelicot application
   Then the coquelicot service should be running
 
-Scenario: Disable coquelicot application
-  Given the coquelicot application is enabled
-  When I disable the coquelicot application
-  Then the coquelicot service should not be running
-
 Scenario: Modify maximum upload size
   Given the coquelicot application is enabled
   When I modify the maximum file size of coquelicot to 256
@@ -70,3 +65,8 @@ Scenario: Backup and restore coquelicot
   And I should be able to login to coquelicot with password beforebackup123
   And the maximum file size of coquelicot should be 128
   And contents of downloaded sample file should be same as sample local file
+
+Scenario: Disable coquelicot application
+  Given the coquelicot application is enabled
+  When I disable the coquelicot application
+  Then the coquelicot service should not be running

@@ -28,11 +28,6 @@ Scenario: Enable mediawiki application
   When I enable the mediawiki application
   Then the mediawiki site should be available
 
-Scenario: Disable mediawiki application
-  Given the mediawiki application is enabled
-  When I disable the mediawiki application
-  Then the mediawiki site should not be available
-
 Scenario: Enable public registrations
   Given the mediawiki application is enabled
   When I enable mediawiki public registrations
@@ -91,3 +86,8 @@ Scenario: Backup and restore mediawiki
   And I restore the mediawiki app data backup
   Then the mediawiki main page should be restored
   Then the mediawiki site should allow creating accounts
+
+Scenario: Disable mediawiki application
+  Given the mediawiki application is enabled
+  When I disable the mediawiki application
+  Then the mediawiki site should not be available

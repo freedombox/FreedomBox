@@ -29,11 +29,6 @@ Scenario: Enable shadowsocks application
   When I enable the shadowsocks application
   Then the shadowsocks service should be running
 
-Scenario: Disable shadowsocks application
-  Given the shadowsocks application is enabled
-  When I disable the shadowsocks application
-  Then the shadowsocks service should not be running
-
 Scenario: Backup and restore shadowsocks
   Given the shadowsocks application is enabled
   When I configure shadowsocks with server example.com and password beforebackup123
@@ -42,3 +37,8 @@ Scenario: Backup and restore shadowsocks
   And I restore the shadowsocks app data backup
   Then the shadowsocks service should be running
   And shadowsocks should be configured with server example.com and password beforebackup123
+
+Scenario: Disable shadowsocks application
+  Given the shadowsocks application is enabled
+  When I disable the shadowsocks application
+  Then the shadowsocks service should not be running

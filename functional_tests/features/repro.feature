@@ -29,11 +29,6 @@ Scenario: Enable repro application
   When I enable the repro application
   Then the repro service should be running
 
-Scenario: Disable repro application
-  Given the repro application is enabled
-  When I disable the repro application
-  Then the repro service should not be running
-
 Scenario: Backup and restore repro
   Given the repro application is enabled
   And repro has been configured
@@ -41,3 +36,8 @@ Scenario: Backup and restore repro
   And I delete the repro configuration
   And I restore the repro app data backup
   Then the repro configuration should be restored
+
+Scenario: Disable repro application
+  Given the repro application is enabled
+  When I disable the repro application
+  Then the repro service should not be running

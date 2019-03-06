@@ -28,11 +28,6 @@ Scenario: Enable ejabberd application
   When I enable the ejabberd application
   Then the ejabberd service should be running
 
-Scenario: Disable ejabberd application
-  Given the ejabberd application is enabled
-  When I disable the ejabberd application
-  Then the ejabberd service should not be running
-
 Scenario: Enable message archive management
   Given the ejabberd application is enabled
   When I enable message archive management
@@ -50,3 +45,8 @@ Scenario: Backup and restore ejabberd
   And I delete the contact from my roster
   And I restore the ejabberd app data backup
   Then I should have a contact on my roster
+
+Scenario: Disable ejabberd application
+  Given the ejabberd application is enabled
+  When I disable the ejabberd application
+  Then the ejabberd service should not be running

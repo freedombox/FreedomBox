@@ -30,13 +30,6 @@ Scenario: Enable radicale application
   And the calendar should be available
   And the addressbook should be available
 
-Scenario: Disable radicale application
-  Given the radicale application is enabled
-  When I disable the radicale application
-  Then the radicale service should not be running
-  And the calendar should not be available
-  And the addressbook should not be available
-
 Scenario: Owner-only access rights
   Given the radicale application is enabled
   And the access rights are set to "any user can view, but only the owner can make changes"
@@ -57,3 +50,10 @@ Scenario: Authenticated access rights
   When I change the access rights to "any user can view or make changes"
   Then the radicale service should be running
   And the access rights should be "any user can view or make changes"
+
+Scenario: Disable radicale application
+  Given the radicale application is enabled
+  When I disable the radicale application
+  Then the radicale service should not be running
+  And the calendar should not be available
+  And the addressbook should not be available

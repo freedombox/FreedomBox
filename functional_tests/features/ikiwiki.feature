@@ -28,11 +28,6 @@ Scenario: Enable wiki application
   When I enable the wiki application
   Then the wiki site should be available
 
-Scenario: Disable wiki application
-  Given the wiki application is enabled
-  When I disable the wiki application
-  Then the wiki site should not be available
-
 Scenario: Backup and restore wiki
   Given the wiki application is enabled
   When there is an ikiwiki wiki
@@ -40,3 +35,8 @@ Scenario: Backup and restore wiki
   And I delete the ikiwiki wiki
   And I restore the ikiwiki app data backup
   Then the ikiwiki wiki should be restored
+
+Scenario: Disable wiki application
+  Given the wiki application is enabled
+  When I disable the wiki application
+  Then the wiki site should not be available

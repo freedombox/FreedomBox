@@ -28,13 +28,13 @@ Scenario: Enable searx application
   When I enable the searx application
   Then the searx site should be available
 
-Scenario: Disable searx application
-  Given the searx application is enabled
-  When I disable the searx application
-  Then the searx site should not be available
-
 Scenario: Backup and restore searx
   Given the searx application is enabled
   When I create a backup of the searx app data
   And I restore the searx app data backup
   Then the searx site should be available
+
+Scenario: Disable searx application
+  Given the searx application is enabled
+  When I disable the searx application
+  Then the searx site should not be available

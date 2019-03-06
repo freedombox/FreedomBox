@@ -28,11 +28,6 @@ Scenario: Enable transmission application
   When I enable the transmission application
   Then the transmission site should be available
 
-Scenario: Disable transmission application
-  Given the transmission application is enabled
-  When I disable the transmission application
-  Then the transmission site should not be available
-
 Scenario: Upload a torrent to transmission
   Given the transmission application is enabled
   When all torrents are removed from transmission
@@ -48,3 +43,8 @@ Scenario: Backup and restore transmission
   And I restore the transmission app data backup
   Then the transmission service should be running
   And there should be 1 torrents listed in transmission
+
+Scenario: Disable transmission application
+  Given the transmission application is enabled
+  When I disable the transmission application
+  Then the transmission site should not be available

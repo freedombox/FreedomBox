@@ -28,13 +28,13 @@ Scenario: Enable roundcube application
   When I enable the roundcube application
   Then the roundcube site should be available
 
-Scenario: Disable roundcube application
-  Given the roundcube application is enabled
-  When I disable the roundcube application
-  Then the roundcube site should not be available
-
 Scenario: Backup and restore roundcube
   Given the roundcube application is enabled
   When I create a backup of the roundcube app data
   And I restore the roundcube app data backup
   Then the roundcube site should be available
+
+Scenario: Disable roundcube application
+  Given the roundcube application is enabled
+  When I disable the roundcube application
+  Then the roundcube site should not be available

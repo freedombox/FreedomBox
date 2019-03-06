@@ -28,11 +28,6 @@ Scenario: Enable mumble application
   When I enable the mumble application
   Then the mumble service should be running
 
-Scenario: Disable mumble application
-  Given the mumble application is enabled
-  When I disable the mumble application
-  Then the mumble service should not be running
-
 # TODO: Improve this to actually check that data such as rooms, identity or
 # certificates are restored.
 Scenario: Backup and restore mumble
@@ -40,3 +35,8 @@ Scenario: Backup and restore mumble
   When I create a backup of the mumble app data
   And I restore the mumble app data backup
   Then the mumble service should be running
+
+Scenario: Disable mumble application
+  Given the mumble application is enabled
+  When I disable the mumble application
+  Then the mumble service should not be running

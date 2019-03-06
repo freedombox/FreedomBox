@@ -28,11 +28,6 @@ Scenario: Enable bind application
   When I enable the bind application
   Then the bind service should be running
 
-Scenario: Disable bind application
-  Given the bind application is enabled
-  When I disable the bind application
-  Then the bind service should not be running
-
 Scenario: Set bind forwarders
   Given the bind application is enabled
   And bind forwarders are set to 1.1.1.1
@@ -61,3 +56,8 @@ Scenario: Backup and restore bind
   And I restore the bind app data backup
   Then bind forwarders should be 1.1.1.1
   And bind DNSSEC should be disabled
+
+Scenario: Disable bind application
+  Given the bind application is enabled
+  When I disable the bind application
+  Then the bind service should not be running

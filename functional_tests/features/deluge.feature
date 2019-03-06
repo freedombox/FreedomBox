@@ -28,11 +28,6 @@ Scenario: Enable deluge application
   When I enable the deluge application
   Then the deluge site should be available
 
-Scenario: Disable deluge application
-  Given the deluge application is enabled
-  When I disable the deluge application
-  Then the deluge site should not be available
-
 Scenario: Upload a torrent to deluge
   Given the deluge application is enabled
   When all torrents are removed from deluge
@@ -48,3 +43,8 @@ Scenario: Backup and restore deluge
   And I restore the deluge app data backup
   Then the deluge service should be running
   And there should be 1 torrents listed in deluge
+
+Scenario: Disable deluge application
+  Given the deluge application is enabled
+  When I disable the deluge application
+  Then the deluge site should not be available

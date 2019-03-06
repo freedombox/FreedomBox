@@ -28,11 +28,6 @@ Scenario: Enable pagekite application
   When I enable pagekite
   Then pagekite should be enabled
 
-Scenario: Disable pagekite application
-  Given pagekite is enabled
-  When I disable pagekite
-  Then pagekite should be disabled
-
 Scenario: Configure pagekite application
   Given pagekite is enabled
   When I configure pagekite with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
@@ -46,3 +41,8 @@ Scenario: Backup and restore pagekite
   And I restore the pagekite app data backup
   Then pagekite should be enabled
   And pagekite should be configured with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
+
+Scenario: Disable pagekite application
+  Given pagekite is enabled
+  When I disable pagekite
+  Then pagekite should be disabled
