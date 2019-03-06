@@ -24,22 +24,22 @@ Vagrant.configure(2) do |config|
     vb.memory = 2048
     vb.linked_clone = true
   end
+  config.vm.provision "shell", run: 'always', inline: <<-SHELL
+    # Disable automatic upgrades
+    /vagrant/actions/upgrades disable-auto
+    # Do not run system plinth
+    systemctl stop plinth
+    systemctl disable plinth
+  SHELL
   config.vm.provision "shell", inline: <<-SHELL
     cd /vagrant/
     ./setup.py install
+    systemctl daemon-reload
     apt-get update
     # In case new dependencies conflict with old dependencies
     apt-mark hold freedombox
     DEBIAN_FRONTEND=noninteractive apt-get install -y $(plinth --list-dependencies)
     apt-mark unhold freedombox
-    systemctl daemon-reload
-  SHELL
-  config.vm.provision "shell", run: 'always', inline: <<-SHELL
-    # Do not run system plinth
-    systemctl stop plinth
-    systemctl disable plinth
-    # Disable automatic upgrades
-    /vagrant/actions/upgrades disable-auto
     # Install ncurses-term
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
   SHELL
