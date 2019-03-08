@@ -21,48 +21,25 @@
 {% load i18n %}
 {% load plinth_extras %}
 
-{% block content %}
-  {% block pagetitle %}
-    <h2>{{ title }}</h2>
-  {% endblock %}
+{% block configuration %}
 
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
+  <p>
+    {% blocktrans trimmed %}
+      If you are looking for a free dynamic DNS account, you may find
+      a free GnuDIP service at <a href='http://gnudip.datasystems24.net'
+      target='_blank'>gnudip.datasystems24.net</a> or you may find
+      free update URL based services at
+      <a href='http://freedns.afraid.org/' target='_blank'>
+      freedns.afraid.org</a>.
+    {% endblocktrans %}
+  </p>
 
-  {% if manual_page %}
-    <p class="manual-page">
-      <a href="{% url 'help:manual-page' manual_page %}">
-        {% trans 'Learn more...' %}
-      </a>
-    </p>
-  {% endif %}
-
-  {% block subsubmenu %}
-    {% if subsubmenu %}
-      {% show_subsubmenu subsubmenu %}
-    {% endif %}
-  {% endblock %}
-
-  {% block subpage %}
-    <p>
-      {% blocktrans trimmed %}
-        If you are looking for a free dynamic DNS account, you may find
-        a free GnuDIP service at <a href='http://gnudip.datasystems24.net'
-                                    target='_blank'>gnudip.datasystems24.net</a> or you may find
-        free update URL based services at
-        <a href='http://freedns.afraid.org/' target='_blank'>
-          freedns.afraid.org</a>.
-      {% endblocktrans %}
-    </p>
-
-    <p>
-      {% blocktrans trimmed %}
-        If your {{ box_name }} is connected behind a NAT router, don't forget
-        to add port forwarding for standard ports, including TCP port 80 (HTTP)
-        and TCP port 443 (HTTPS).
-      {% endblocktrans %}
-    </p>
-  {% endblock %}
+  <p>
+    {% blocktrans trimmed %}
+      If your {{ box_name }} is connected behind a NAT router, don't forget
+      to add port forwarding for standard ports, including TCP port 80 (HTTP)
+      and TCP port 443 (HTTPS).
+    {% endblocktrans %}
+  </p>
 
 {% endblock %}
