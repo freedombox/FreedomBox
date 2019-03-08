@@ -160,9 +160,5 @@ def delete(request, name):
     return TemplateResponse(
         request, 'ikiwiki_delete.html', {
             'title': ikiwiki.name,
-            'clients': ikiwiki.clients,
-            'description': ikiwiki.description,
-            'manual_page': ikiwiki.manual_page,
-            'subsubmenu': subsubmenu,
             'name': name
         })
