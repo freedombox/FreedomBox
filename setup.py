@@ -205,6 +205,11 @@ def _gather_data_files():
     """
     data_files = collections.defaultdict(list)
     crawl_directories = ['data']
+    with os.scandir('plinth/modules/') as iterator:
+        for entry in iterator:
+            if entry.is_dir():
+                crawl_directories.append(os.path.join(entry.path, 'data'))
+
     for crawl_directory in crawl_directories:
         crawl_directory = crawl_directory.rstrip('/')
         for path, _, file_names in os.walk(crawl_directory):
