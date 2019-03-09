@@ -19,8 +19,10 @@
 FreedomBox Service setup file.
 """
 
+import collections
 import glob
 import os
+import re
 import shutil
 import subprocess
 from distutils import log
@@ -176,6 +178,47 @@ class CustomInstallData(install_data):
             shutil.copytree(source, target, symlinks=True)
 
 
+def _ignore_data_file(file_name):
+    """Ignore common patterns in data files."""
+    ignore_patterns = [
+        r'\.log$', r'\.pid$', r'\.py.bak$', r'\.pyc$', r'\.pytest_cache$',
+        r'\.sqlite3$', r'\.swp$', r'^#', r'^\.', r'^__pycache__$',
+        r'^sessionid\w*$', r'~$'
+    ]
+    for pattern in ignore_patterns:
+        if re.match(pattern, file_name):
+            return True
+
+    return False
+
+
+def _gather_data_files():
+    """Return a list data files are required by setuptools.setup().
+
+    - Automatically infer the target directory by looking at the relative path
+      of a file.
+
+    - Allow each app to have it's own folder for data files.
+
+    - Ignore common backup files.
+
+    """
+    data_files = collections.defaultdict(list)
+    crawl_directories = ['data']
+    for crawl_directory in crawl_directories:
+        crawl_directory = crawl_directory.rstrip('/')
+        for path, _, file_names in os.walk(crawl_directory):
+            target_directory = path[len(crawl_directory):]
+            for file_name in file_names:
+                if _ignore_data_file(file_name):
+                    continue
+
+                data_files[target_directory].append(
+                    os.path.join(path, file_name))
+
+    return list(data_files.items())
+
+
 find_packages = setuptools.PEP420PackageFinder.find
 setuptools.setup(
     name='Plinth',
@@ -225,59 +268,9 @@ setuptools.setup(
             'locale/*/LC_MESSAGES/*.[pm]o'
         ]
     },
-    data_files=[
-        ('/usr/lib/firewalld/services/',
-         glob.glob('data/usr/lib/firewalld/services/*.xml')),
-        ('/etc/apache2/conf-available',
-         glob.glob('data/etc/apache2/conf-available/*.conf')),
-        ('/etc/apache2/sites-available',
-         glob.glob('data/etc/apache2/sites-available/*.conf')),
-        ('/etc/apache2/includes',
-         glob.glob('data/etc/apache2/includes/*.conf')),
-        ('/etc/apt/apt.conf.d', [
-            'data/etc/apt/apt.conf.d/60unattended-upgrades',
-            'data/etc/apt/apt.conf.d/20freedombox'
-        ]), ('/etc/avahi/services/',
-             glob.glob('data/etc/avahi/services/*.service')),
-        ('/etc/ikiwiki', glob.glob('data/etc/ikiwiki/*.setup')),
-        ('/etc/NetworkManager/dispatcher.d/', [
-            'data/etc/NetworkManager/dispatcher.d/10-freedombox-batman'
-        ]), ('/etc/sudoers.d', [
-            'data/etc/sudoers.d/plinth'
-        ]), ('/lib/systemd/system',
-             glob.glob('data/lib/systemd/system/*.service')),
-        ('/lib/systemd/system/mldonkey-server.service.d', [
-            'data/lib/systemd/system/mldonkey-server.service.d/freedombox.conf'
-        ]), ('/lib/systemd/system',
-             glob.glob('data/lib/systemd/system/*.timer')),
-        ('/etc/mediawiki',
-         glob.glob('data/etc/mediawiki/*.php')), ('/etc/update-motd.d/', [
-             'data/etc/update-motd.d/50-freedombox'
-         ]), ('/usr/share/plinth/actions',
-              glob.glob(os.path.join(
-                  'actions', '*'))), ('/usr/share/polkit-1/rules.d', [
-                      'data/usr/share/polkit-1/rules.d/50-plinth.rules'
-                  ]), ('/usr/share/man/man1',
-                       ['doc/plinth.1']), ('/etc/plinth', [
-                           'data/etc/plinth/plinth.config',
-                           'data/etc/plinth/custom-shortcuts.json'
-                       ]), ('/usr/share/augeas/lenses',
-                            glob.glob('data/usr/share/augeas/lenses/*.aug')),
-        ('/usr/share/augeas/lenses/tests',
-         glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
-        ('/usr/share/dbus-1/system.d',
-         glob.glob('data/usr/share/dbus-1/system.d/*.conf')),
-        ('/usr/share/pam-configs/',
-         glob.glob('data/usr/share/pam-configs/*-freedombox')),
-        ('/etc/fail2ban/jail.d', glob.glob('data/etc/fail2ban/jail.d/*.conf')),
-        ('/etc/plinth/modules-enabled',
-         glob.glob(os.path.join(
-             'data/etc/plinth/modules-enabled',
-             '*'))), ('/var/lib/polkit-1/localauthority/10-vendor.d', [
-                 'data/var/lib/polkit-1/localauthority/10-vendor.d/'
-                 'org.freedombox.NetworkManager.pkla'
-             ])
-    ],
+    data_files=_gather_data_files() +
+    [('/usr/share/plinth/actions', glob.glob(os.path.join('actions', '*'))),
+     ('/usr/share/man/man1', ['doc/plinth.1'])],
     cmdclass={
         'install': CustomInstall,
         'build': CustomBuild,
