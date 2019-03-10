@@ -23,6 +23,7 @@ import django
 import importlib
 import logging
 import os
+import pathlib
 import re
 
 from plinth import cfg
@@ -150,17 +151,23 @@ def get_modules_to_load():
     if _modules_to_load is not None:
         return _modules_to_load
 
-    modules = []
-    module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
+    directory = pathlib.Path(cfg.config_dir) / 'modules-enabled'
+    files = list(directory.glob('*'))
+    if not files:
+        # './setup.py install' has not been executed yet. Pickup files to load
+        # from local module directories.
+        directory = pathlib.Path(__file__).parent
+        files = list(directory.glob('modules/*/data/etc/plinth/modules-enabled/*'))
 
     # Omit hidden files
-    file_names = [file_name
-                  for file_name in os.listdir(module_directory)
-                  if not file_name.startswith('.') and '.dpkg' not in file_name]
+    files = [
+        file_ for file_ in files
+        if not file_.name.startswith('.') and '.dpkg' not in file_.name
+    ]
 
-    for file_name in file_names:
-        full_file_name = os.path.join(module_directory, file_name)
-        with open(full_file_name, 'r') as file_handle:
+    modules = []
+    for file_ in files:
+        with file_.open() as file_handle:
             for line in file_handle:
                 line = re.sub('#.*', '', line)
                 line = line.strip()
