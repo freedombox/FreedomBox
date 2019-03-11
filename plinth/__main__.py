@@ -23,8 +23,8 @@ import sys
 
 import axes
 
-from . import (cfg, dbus, frontpage, log, menu, module_loader, service, setup,
-               web_framework, web_server)
+from . import (__version__, cfg, dbus, frontpage, log, menu, module_loader,
+               service, setup, web_framework, web_server)
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
 precedence_commandline_arguments = ["server_dir", "develop"]
@@ -151,6 +151,7 @@ def main():
 
     web_framework.init()
 
+    logger.info('FreedomBox Service (Plinth) version - %s', __version__)
     logger.info('Configuration loaded from file - %s', cfg.config_file)
     logger.info('Script prefix - %s', cfg.server_dir)
 
