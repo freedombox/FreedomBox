@@ -266,13 +266,13 @@ setuptools.setup(
         'ruamel.yaml',
     ],
     tests_require=['pytest', 'pytest-cov', 'pytest-django'],
-    include_package_data=True,
     package_data={
-        'plinth': [
-            'templates/*', 'modules/*/static/*', 'modules/*/templates/*',
+        '': [
+            'templates/*', 'static/*',
             'locale/*/LC_MESSAGES/*.[pm]o'
         ]
     },
+    exclude_package_data={'': ['*/data/*']},
     data_files=_gather_data_files() +
     [('/usr/share/plinth/actions', glob.glob(os.path.join('actions', '*'))),
      ('/usr/share/man/man1', ['doc/plinth.1'])],
