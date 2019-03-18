@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-02 13:23-0500\n"
+"POT-Creation-Date: 2019-03-18 19:46-0400\n"
 "PO-Revision-Date: 2019-03-05 15:57+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -476,7 +476,7 @@ msgstr "Zapnout DNSSEC"
 msgid "Enable Domain Name System Security Extensions"
 msgstr "Zapnout zabezpečovací rozšíření systému doménových názvů"
 
-#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:382
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/views.py:170
 #: plinth/modules/openvpn/views.py:147 plinth/modules/shadowsocks/views.py:80
 #: plinth/modules/transmission/views.py:74
 msgid "Configuration updated"
@@ -515,21 +515,20 @@ msgstr ""
 "\"{users_url}\">uživatele s účtem na {box_name}</a>, náležejícím do skupiny "
 "admin."
 
-#: plinth/modules/config/__init__.py:93
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
+#: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
+#: plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Nastavit"
 
 #: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
-#: plinth/modules/config/views.py:170
-#: plinth/modules/dynamicdns/dynamicdns.py:145
+#: plinth/modules/config/views.py:170 plinth/modules/dynamicdns/forms.py:111
 msgid "Domain Name"
 msgstr "Doménový název"
 
 #: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
-#: plinth/modules/dynamicdns/dynamicdns.py:148
+#: plinth/modules/dynamicdns/forms.py:114
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
@@ -600,12 +599,10 @@ msgstr ""
 "nebo /freedombox, aby se dostali na službu {box_name} (Plinth)."
 
 #: plinth/modules/config/templates/config.html:34
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:35
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/service-subsubmenu.html:45 plinth/templates/service.html:42
+#: plinth/templates/service-subsubmenu.html:47 plinth/templates/service.html:42
 #: plinth/templates/setup.html:48 plinth/templates/simple_service.html:38
 msgid "Learn more..."
 msgstr "Zjistit více…"
@@ -895,9 +892,10 @@ msgstr ""
 "%(domain_name)s </a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:129
 #: plinth/modules/snapshot/templates/snapshot.html:30
@@ -924,11 +922,11 @@ msgstr "Registrace uživatelů zapnuta"
 msgid "User registrations disabled"
 msgstr "Registrace uživatelů vypnuta"
 
-#: plinth/modules/dynamicdns/__init__.py:35
+#: plinth/modules/dynamicdns/__init__.py:36
 msgid "Dynamic DNS Client"
 msgstr "Klient dynamické DNS"
 
-#: plinth/modules/dynamicdns/__init__.py:39
+#: plinth/modules/dynamicdns/__init__.py:40
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -939,7 +937,7 @@ msgstr ""
 "(např. každých 24h), může pro ostatní být být těžké najít vás na Internetu. "
 "Toto ostatním zabrání nalézt služby, které jsou poskytovány tímto {box_name}."
 
-#: plinth/modules/dynamicdns/__init__.py:43
+#: plinth/modules/dynamicdns/__init__.py:44
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -958,24 +956,11 @@ msgstr ""
 "IP adresou."
 
 #: plinth/modules/dynamicdns/__init__.py:69
-#: plinth/modules/dynamicdns/dynamicdns.py:379
+#: plinth/modules/dynamicdns/views.py:167
 msgid "Dynamic DNS Service"
 msgstr "Služba dynamického DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:45
-msgid "About"
-msgstr "O systému"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:48
-#: plinth/modules/firewall/templates/firewall.html:45
-#: plinth/modules/networks/templates/connection_show.html:261
-#: plinth/modules/openvpn/templates/openvpn.html:71
-#: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
-msgid "Status"
-msgstr "Stav"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:77
+#: plinth/modules/dynamicdns/forms.py:43
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -986,7 +971,7 @@ msgstr ""
 "podrobnosti naleznete v šablonách aktualizačních URL adres některých "
 "poskytovatelů, poskytovaných pro ukázku."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:81
+#: plinth/modules/dynamicdns/forms.py:47
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -996,7 +981,7 @@ msgstr ""
 "Pokud nepodporuje GnuDIP nebo není na seznamu, můžete použít URL adresu, "
 "poskytnutou vaším poskytovatelem."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:86
+#: plinth/modules/dynamicdns/forms.py:52
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1004,20 +989,20 @@ msgstr ""
 "Nezadávejte sem URL adresu (jako třeba „https://example.com/“) ale pouze "
 "doménu, mířící na GnuDIP server (jako například „example.com“)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:90
+#: plinth/modules/dynamicdns/forms.py:56
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Veřejný doménový název který chcete používat pro dosažitelnost svého "
 "{box_name}."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:93
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Tuto předvolbu použijte pokud váš poskytovatel používá samy sebou podepsané "
 "certifikáty."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:96
+#: plinth/modules/dynamicdns/forms.py:62
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1025,11 +1010,11 @@ msgstr ""
 "Pokud je vybrána tato předvolba, pro základní HTTP ověření bude použito vaše "
 "uživatelské jméno a heslo ."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:99
+#: plinth/modules/dynamicdns/forms.py:65
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Pokud chcete zachovat stávající heslo, tuto kolonku nevyplňujte."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:102
+#: plinth/modules/dynamicdns/forms.py:68
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1042,82 +1027,72 @@ msgstr ""
 "skutečné IP adresy. URL adresa by měla jen vrátit IP adresu, ze které "
 "přichází klient (příklad: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:110
+#: plinth/modules/dynamicdns/forms.py:76
 msgid "The username that was used when the account was created."
 msgstr "Uživatelské jméno které bylo použito pro vytvoření účtu."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:119
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Enable Dynamic DNS"
 msgstr "Zapnout dynamické DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:122
+#: plinth/modules/dynamicdns/forms.py:88
 msgid "Service Type"
 msgstr "Typ služby"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:126
+#: plinth/modules/dynamicdns/forms.py:92
 msgid "GnuDIP Server Address"
 msgstr "Adresa GnuDIP serveru"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:129
+#: plinth/modules/dynamicdns/forms.py:95
 msgid "Invalid server name"
 msgstr "Neplatný název serveru"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:133
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "Update URL"
 msgstr "URL adresa aktualizace"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:137
+#: plinth/modules/dynamicdns/forms.py:103
 msgid "Accept all SSL certificates"
 msgstr "Přijímat veškeré SSL certifikáty"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:141
+#: plinth/modules/dynamicdns/forms.py:107
 msgid "Use HTTP basic authentication"
 msgstr "Použít základní HTTP ověřování"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:152
-#: plinth/modules/networks/forms.py:234
+#: plinth/modules/dynamicdns/forms.py:118 plinth/modules/networks/forms.py:234
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:155
-#: plinth/modules/networks/forms.py:235 plinth/modules/shadowsocks/forms.py:70
+#: plinth/modules/dynamicdns/forms.py:121 plinth/modules/networks/forms.py:235
+#: plinth/modules/shadowsocks/forms.py:70
 msgid "Password"
 msgstr "Heslo"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:159
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/dynamicdns/forms.py:125 plinth/modules/networks/forms.py:237
 msgid "Show password"
 msgstr "Zobrazit heslo"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:162
+#: plinth/modules/dynamicdns/forms.py:128
 msgid "URL to look up public IP"
 msgstr "URL adresa na které hledat veřejnou IP adresu"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:186
+#: plinth/modules/dynamicdns/forms.py:152
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Zadejte URL adresu aktualizace nebo GNUDIP serveru"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:191
+#: plinth/modules/dynamicdns/forms.py:157
 msgid "Please provide a GnuDIP username"
 msgstr "Zadejte GnuDIP uživatelské jméno"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:195
+#: plinth/modules/dynamicdns/forms.py:161
 msgid "Please provide a GnuDIP domain name"
 msgstr "Zadejte doménový název GnuDIP"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:200
+#: plinth/modules/dynamicdns/forms.py:166
 msgid "Please provide a password"
 msgstr "Zadejte heslo"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:219
-msgid "Configure Dynamic DNS"
-msgstr "Nastavit dynamický DNS"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:242
-msgid "Dynamic DNS Status"
-msgstr "Stav dynamického DNS"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:27
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
@@ -1131,7 +1106,7 @@ msgstr ""
 "URL založené služby na <a href='http://freedns.afraid.org/' target='_blank'> "
 "freedns.afraid.org</a>."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:38
 #, python-format
 msgid ""
 "If your %(box_name)s is connected behind a NAT router, don't forget to add "
@@ -1142,7 +1117,7 @@ msgstr ""
 "nastavit předávání standardních portů, jako třeba TCP port 80 (HTTP) a TCP "
 "port 443 (HTTPS)."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:31
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
 "You have disabled Javascript. Dynamic form mode is disabled and some helper "
 "functions may not work (but the main functionality should work)."
@@ -1151,11 +1126,11 @@ msgstr ""
 "vypnutý a některé pomocné funkce nemusí fungovat (ale hlavní funkčnost by "
 "měla být zachována)."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:25
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:24
 msgid "NAT type"
 msgstr "Typ NAT"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:29
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:28
 msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
@@ -1163,11 +1138,11 @@ msgstr ""
 "Doposud se nepodařilo zjistit typ NAT překladu. Dokud nezadáte „URL adresu "
 "kontroly IP“, typ NAT překladu nebude možné zjistit."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:34
 msgid "Direct connection to the Internet."
 msgstr "Přímé připojení do Internetu."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:36
 #, python-format
 msgid ""
 "Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
@@ -1182,9 +1157,31 @@ msgstr ""
 "změn WAN IP adresy, může trvat až %(timer)s minut než bude DNS záznam "
 "zaktualizován."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
 msgstr "Minulá aktualizace"
+
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:45
+msgid "About"
+msgstr "O systému"
+
+#: plinth/modules/dynamicdns/views.py:47
+#: plinth/modules/firewall/templates/firewall.html:25
+#: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/networks/templates/connection_show.html:261
+#: plinth/modules/openvpn/templates/openvpn.html:71
+#: plinth/modules/tor/templates/tor.html:40
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
+msgid "Status"
+msgstr "Stav"
+
+#: plinth/modules/dynamicdns/views.py:78
+msgid "Configure Dynamic DNS"
+msgstr "Nastavit dynamický DNS"
+
+#: plinth/modules/dynamicdns/views.py:103
+msgid "Dynamic DNS Status"
+msgstr "Stav dynamického DNS"
 
 #: plinth/modules/ejabberd/__init__.py:42
 msgid "ejabberd"
@@ -1295,6 +1292,7 @@ msgid "Launch web client"
 msgstr "Spustit webového klienta"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:121
@@ -1338,10 +1336,6 @@ msgstr ""
 "Brána firewall je zabezpečovací systém který řídí příchozí a odchozí síťový "
 "provoz na vašem {box_name}. Zapnutá a správně nastavená brána firewall "
 "snižuje riziko bezpečnostních hrozeb z Internetu."
-
-#: plinth/modules/firewall/templates/firewall.html:25
-msgid "Current status:"
-msgstr "Aktuální stav:"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1684,6 +1678,10 @@ msgstr "Název účtu správce"
 msgid "Admin Account Password"
 msgstr "Heslo k účtu správce"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:25
+msgid "Create Wiki or Blog"
+msgstr "Vytvořit wiki nebo blog"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -1702,20 +1700,24 @@ msgstr ""
 msgid "Delete %(name)s"
 msgstr "Smazat %(name)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:37
+msgid "Manage Wikis and Blogs"
+msgstr "Spravovat wiki a blogy"
+
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:42
 msgid "No wikis or blogs available."
 msgstr "Nejsou k dispozici žádné wiki nebo blogy."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:45
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:46
 msgid "Create a Wiki or Blog"
 msgstr "Vytvořit wiki nebo blog"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:55
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:56
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Smazat stránku %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:61
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:62
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Přejít na stránku %(site)s"
@@ -1724,47 +1726,35 @@ msgstr "Přejít na stránku %(site)s"
 msgid "Manage"
 msgstr "Spravovat"
 
-#: plinth/modules/ikiwiki/views.py:67
-msgid "Manage Wikis and Blogs"
-msgstr "Spravovat wiki a blogy"
-
-#: plinth/modules/ikiwiki/views.py:100
-msgid "Create Wiki or Blog"
-msgstr "Vytvořit wiki nebo blog"
-
-#: plinth/modules/ikiwiki/views.py:114
+#: plinth/modules/ikiwiki/views.py:122
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "Wiki {name} vytvořena."
 
-#: plinth/modules/ikiwiki/views.py:117
+#: plinth/modules/ikiwiki/views.py:125
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Wiki se nepodařilo vytvořit: {error}"
 
-#: plinth/modules/ikiwiki/views.py:127
+#: plinth/modules/ikiwiki/views.py:135
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "Blog {name} vytvořen."
 
-#: plinth/modules/ikiwiki/views.py:130
+#: plinth/modules/ikiwiki/views.py:138
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Blog se nepodařilo vytvořit: {error}"
 
-#: plinth/modules/ikiwiki/views.py:142
+#: plinth/modules/ikiwiki/views.py:150
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} smazáno."
 
-#: plinth/modules/ikiwiki/views.py:146
+#: plinth/modules/ikiwiki/views.py:155
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} se nepodařilo smazat: {error}"
-
-#: plinth/modules/ikiwiki/views.py:152
-msgid "Delete Wiki or Blog"
-msgstr "Smazat wiki nebo blog"
 
 #: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
@@ -2715,23 +2705,32 @@ msgstr "Plumble"
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
-#: plinth/modules/names/__init__.py:31
+#: plinth/modules/names/__init__.py:33
 msgid "HTTP"
 msgstr "HTTP"
 
-#: plinth/modules/names/__init__.py:32
+#: plinth/modules/names/__init__.py:34
 msgid "HTTPS"
 msgstr "HTTPS"
 
-#: plinth/modules/names/__init__.py:33
+#: plinth/modules/names/__init__.py:35
 msgid "SSH"
 msgstr "SSH"
 
-#: plinth/modules/names/__init__.py:40
+#: plinth/modules/names/__init__.py:42
 msgid "Name Services"
 msgstr "Jmenné služby"
 
-#: plinth/modules/names/views.py:48
+#: plinth/modules/names/__init__.py:53
+#, python-brace-format
+msgid ""
+"Name Services provides an overview of the ways {box_name} can be reached "
+"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
+"enabled or disabled for incoming connections through the given name."
+msgstr ""
+
+#: plinth/modules/names/views.py:50
 msgid "Not Available"
 msgstr "Není k dispozici"
 
@@ -3718,11 +3717,6 @@ msgstr "Zaregistrovat"
 msgid "Skip Registration"
 msgstr "Přeskočit registraci"
 
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:44
-#: plinth/modules/pagekite/views.py:40
-msgid "Configure PageKite"
-msgstr "Nastavit PageKite"
-
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:40
 msgid "<b>Warning:</b><br/>"
 msgstr "<b>Varování:</b><br/>"
@@ -3771,19 +3765,15 @@ msgstr ""
 msgid "Pagekite"
 msgstr "Pagekite"
 
-#: plinth/modules/pagekite/views.py:37
-msgid "About PageKite"
-msgstr "O PageKite"
-
-#: plinth/modules/pagekite/views.py:43
+#: plinth/modules/pagekite/views.py:39
 msgid "Standard Services"
 msgstr "Standardní služby"
 
-#: plinth/modules/pagekite/views.py:46
+#: plinth/modules/pagekite/views.py:42
 msgid "Custom Services"
 msgstr "Uživatelem určené služby"
 
-#: plinth/modules/pagekite/views.py:170
+#: plinth/modules/pagekite/views.py:156
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr "Nastavení Pagekite dokončeno. Služby HTTP a HTTPS jsou nyní zapnuté."
 
@@ -5909,6 +5899,18 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Current status:"
+#~ msgstr "Aktuální stav:"
+
+#~ msgid "Delete Wiki or Blog"
+#~ msgstr "Smazat wiki nebo blog"
+
+#~ msgid "Configure PageKite"
+#~ msgstr "Nastavit PageKite"
+
+#~ msgid "About PageKite"
+#~ msgstr "O PageKite"
 
 #~ msgid "Default App"
 #~ msgstr "Výchozí aplikace"

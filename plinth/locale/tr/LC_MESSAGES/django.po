@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-02 13:23-0500\n"
+"POT-Creation-Date: 2019-03-18 19:46-0400\n"
 "PO-Revision-Date: 2019-03-13 15:03+0000\n"
 "Last-Translator: Mesut Akcan <makcan@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -495,7 +495,7 @@ msgstr "Dinamik DNSSEC'i Etkinleştir"
 msgid "Enable Domain Name System Security Extensions"
 msgstr "Alan Adı Sistemi Güvenlik Uzantılarını Etkinleştir"
 
-#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:382
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/views.py:170
 #: plinth/modules/openvpn/views.py:147 plinth/modules/shadowsocks/views.py:80
 #: plinth/modules/transmission/views.py:74
 msgid "Configuration updated"
@@ -541,21 +541,20 @@ msgstr ""
 "kullanılabilir. Hassas bilgiler ve sistem değiştirme kabiliyeti, yönetici "
 "(yani admin) grubuna ait kullanıcılar ile sınırlıdır."
 
-#: plinth/modules/config/__init__.py:93
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
+#: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
+#: plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Yapılandır"
 
 #: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
-#: plinth/modules/config/views.py:170
-#: plinth/modules/dynamicdns/dynamicdns.py:145
+#: plinth/modules/config/views.py:170 plinth/modules/dynamicdns/forms.py:111
 msgid "Domain Name"
 msgstr "Alan Adı"
 
 #: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
-#: plinth/modules/dynamicdns/dynamicdns.py:148
+#: plinth/modules/dynamicdns/forms.py:114
 msgid "Invalid domain name"
 msgstr "Geçersiz alan ismi"
 
@@ -624,12 +623,10 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:35
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/service-subsubmenu.html:45 plinth/templates/service.html:42
+#: plinth/templates/service-subsubmenu.html:47 plinth/templates/service.html:42
 #: plinth/templates/setup.html:48 plinth/templates/simple_service.html:38
 #, fuzzy
 #| msgid "Learn more &raquo;"
@@ -923,9 +920,10 @@ msgstr ""
 "%(domain_name)s</a> konumundan erişebilirsiniz"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:129
 #: plinth/modules/snapshot/templates/snapshot.html:30
@@ -952,11 +950,11 @@ msgstr "Kullanıcı kayıtları etkinleştirildi"
 msgid "User registrations disabled"
 msgstr "Kullanıcı kayıtları devre dışı bırakıldı"
 
-#: plinth/modules/dynamicdns/__init__.py:35
+#: plinth/modules/dynamicdns/__init__.py:36
 msgid "Dynamic DNS Client"
 msgstr "Dinamik DNS istemcisi"
 
-#: plinth/modules/dynamicdns/__init__.py:39
+#: plinth/modules/dynamicdns/__init__.py:40
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -968,7 +966,7 @@ msgstr ""
 "zorlanabilir. Ve bu sebeple kimse sizin ownCloud'unuz gibi {box_name} "
 "tarafından sunulan servisleri bulamayabilir."
 
-#: plinth/modules/dynamicdns/__init__.py:43
+#: plinth/modules/dynamicdns/__init__.py:44
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -986,24 +984,11 @@ msgstr ""
 "birisi DNS isminizi sorguladığında güncel IP adresinizi elde edebilecektir."
 
 #: plinth/modules/dynamicdns/__init__.py:69
-#: plinth/modules/dynamicdns/dynamicdns.py:379
+#: plinth/modules/dynamicdns/views.py:167
 msgid "Dynamic DNS Service"
 msgstr "Dinamik DNS Servisi"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:45
-msgid "About"
-msgstr "Hakkında"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:48
-#: plinth/modules/firewall/templates/firewall.html:45
-#: plinth/modules/networks/templates/connection_show.html:261
-#: plinth/modules/openvpn/templates/openvpn.html:71
-#: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
-msgid "Status"
-msgstr "Durum"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:77
+#: plinth/modules/dynamicdns/forms.py:43
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1013,7 +998,7 @@ msgstr ""
 "(bağlantıda) kullanılabilir. Ayrıntılar için örnek sunucuların URL "
 "güncelleme şablonlarına bakınız."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:81
+#: plinth/modules/dynamicdns/forms.py:47
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1023,7 +1008,7 @@ msgstr ""
 "sağlayıcınız GnuDIP protokolünü desteklemiyorsa ya da listelenmemişse "
 "sağlayıcınızın güncelleme bağlantısını (URL) kullanabilirsiniz."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:86
+#: plinth/modules/dynamicdns/forms.py:52
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1031,19 +1016,19 @@ msgstr ""
 "Buraya lütfen \"https://example.com/\" gibi bir URL girmeyin, sadece GnuDIP "
 "sunucusunun makine ismini girin (\"example.com\" gibi)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:90
+#: plinth/modules/dynamicdns/forms.py:56
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "{box_name} kutunuza erişilmesi için kullanmak istediğiniz herkese açık alan "
 "ismi."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:93
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Sağlayıcınız kendi imzaladığı sertifikalar kullanıyorsa bu seçeneği kullanın."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:96
+#: plinth/modules/dynamicdns/forms.py:62
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1051,11 +1036,11 @@ msgstr ""
 "Eğer bu seçenek seçiliyse, kullanıcı isminiz ve parolanız temel HTTP kimlik "
 "doğrulaması için kullanılacaktır."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:99
+#: plinth/modules/dynamicdns/forms.py:65
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Güncel parolanızı tutmak istiyorsanız bu alanı boş bırakın."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:102
+#: plinth/modules/dynamicdns/forms.py:68
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1068,82 +1053,72 @@ msgstr ""
 "belirlemek için kullanılır. URL sadece istemcinin bulunduğu yerin IP'sini "
 "vermelidir (mesela: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:110
+#: plinth/modules/dynamicdns/forms.py:76
 msgid "The username that was used when the account was created."
 msgstr "Hesabın oluşturulduğu zaman kullanılan kullanıcı ismi."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:119
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Enable Dynamic DNS"
 msgstr "Dinamik DNS'i Etkinleştir"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:122
+#: plinth/modules/dynamicdns/forms.py:88
 msgid "Service Type"
 msgstr "Servis Türü"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:126
+#: plinth/modules/dynamicdns/forms.py:92
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP Sunucu Adresi"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:129
+#: plinth/modules/dynamicdns/forms.py:95
 msgid "Invalid server name"
 msgstr "Geçersiz sunucu ismi"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:133
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "Update URL"
 msgstr "Güncelleme URL'i"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:137
+#: plinth/modules/dynamicdns/forms.py:103
 msgid "Accept all SSL certificates"
 msgstr "Tüm SSL sertifikalarını kabul et"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:141
+#: plinth/modules/dynamicdns/forms.py:107
 msgid "Use HTTP basic authentication"
 msgstr "Temel HTTP kimlik doğrulamasını kullan"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:152
-#: plinth/modules/networks/forms.py:234
+#: plinth/modules/dynamicdns/forms.py:118 plinth/modules/networks/forms.py:234
 msgid "Username"
 msgstr "Kullanıcı ismi"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:155
-#: plinth/modules/networks/forms.py:235 plinth/modules/shadowsocks/forms.py:70
+#: plinth/modules/dynamicdns/forms.py:121 plinth/modules/networks/forms.py:235
+#: plinth/modules/shadowsocks/forms.py:70
 msgid "Password"
 msgstr "Parola"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:159
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/dynamicdns/forms.py:125 plinth/modules/networks/forms.py:237
 msgid "Show password"
 msgstr "Parolayı göster"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:162
+#: plinth/modules/dynamicdns/forms.py:128
 msgid "URL to look up public IP"
 msgstr "Genel IP adresini bulmak için URL"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:186
+#: plinth/modules/dynamicdns/forms.py:152
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Lütfen bir güncelleme URL'i ya da GnuDIP sunucu adresi belirtin"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:191
+#: plinth/modules/dynamicdns/forms.py:157
 msgid "Please provide a GnuDIP username"
 msgstr "Lütfen bir GnuDIP kullanıcı ismi belirtin"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:195
+#: plinth/modules/dynamicdns/forms.py:161
 msgid "Please provide a GnuDIP domain name"
 msgstr "Lütfen bir GnuDIP alan ismi belirtin"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:200
+#: plinth/modules/dynamicdns/forms.py:166
 msgid "Please provide a password"
 msgstr "Lütfen bir parola girin"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:219
-msgid "Configure Dynamic DNS"
-msgstr "Dİnamik DNS'i Yapılandır"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:242
-msgid "Dynamic DNS Status"
-msgstr "Dinamik DNS Durumu"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:27
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
@@ -1157,7 +1132,7 @@ msgstr ""
 "servisleri <a href='http://freedns.afraid.org/' target='_blank'> freedns."
 "afraid.org</a> adresinde bulabilirsiniz."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:38
 #, python-format
 msgid ""
 "If your %(box_name)s is connected behind a NAT router, don't forget to add "
@@ -1168,7 +1143,7 @@ msgstr ""
 "portu (HTTP) ve 443 numaralı TCP portu (HTTPS) dahil olmak üzere port "
 "yönlendirme eklemeyi unutmayınız."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:31
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
 "You have disabled Javascript. Dynamic form mode is disabled and some helper "
 "functions may not work (but the main functionality should work)."
@@ -1176,11 +1151,11 @@ msgstr ""
 "Javascript'i devre dışı bırakmışsınız. Dinamik form kipi devre dışıdır ve "
 "bazı yardımcı işlevler çalışmayabilir (fakat ana işlevler çalışmalıdır)."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:25
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:24
 msgid "NAT type"
 msgstr "NAT türü"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:29
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:28
 msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
@@ -1188,11 +1163,11 @@ msgstr ""
 "NAT türü henüz tespit edilmemiştir. Eğer bir \"IP Kontrolü Bağlantısı\" "
 "girmezseniz NAT türü tespit edilmeyecektir."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:34
 msgid "Direct connection to the Internet."
 msgstr "İnternet'e doğrudan bağlantı."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:36
 #, python-format
 msgid ""
 "Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
@@ -1206,9 +1181,31 @@ msgstr ""
 "edilemez). WAN IP değişikliği durumunda DNS girdinizin güncellenmesi "
 "%(timer)s dakika alabilir."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
 msgstr "Son güncelleme"
+
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:45
+msgid "About"
+msgstr "Hakkında"
+
+#: plinth/modules/dynamicdns/views.py:47
+#: plinth/modules/firewall/templates/firewall.html:25
+#: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/networks/templates/connection_show.html:261
+#: plinth/modules/openvpn/templates/openvpn.html:71
+#: plinth/modules/tor/templates/tor.html:40
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
+msgid "Status"
+msgstr "Durum"
+
+#: plinth/modules/dynamicdns/views.py:78
+msgid "Configure Dynamic DNS"
+msgstr "Dİnamik DNS'i Yapılandır"
+
+#: plinth/modules/dynamicdns/views.py:103
+msgid "Dynamic DNS Status"
+msgstr "Dinamik DNS Durumu"
 
 #: plinth/modules/ejabberd/__init__.py:42
 msgid "ejabberd"
@@ -1330,6 +1327,7 @@ msgid "Launch web client"
 msgstr "Ağ istemcisini başlat"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:121
@@ -1374,10 +1372,6 @@ msgstr ""
 "trafiğini kontrol eden bir güvenlik sistemidir. Güvenlik duvarını "
 "etkinleştirip gerektiği gibi yapılandırmak İnternet'ten gelen güvenlik "
 "tehditlerini azaltır."
-
-#: plinth/modules/firewall/templates/firewall.html:25
-msgid "Current status:"
-msgstr "Güncel durum:"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1735,6 +1729,10 @@ msgstr "Yönetici Hesap İsmi"
 msgid "Admin Account Password"
 msgstr "Yönetici Hesap Parolası"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:25
+msgid "Create Wiki or Blog"
+msgstr "Viki ya da Blog oluştur"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -1754,20 +1752,24 @@ msgstr ""
 msgid "Delete %(name)s"
 msgstr "%(name)s unsurunu sil"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:37
+msgid "Manage Wikis and Blogs"
+msgstr "Viki ve Blogları Yönet"
+
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:42
 msgid "No wikis or blogs available."
 msgstr "Hiçbir viki ya da blog mevcut değil."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:45
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:46
 msgid "Create a Wiki or Blog"
 msgstr "Bir Viki ya da Blog oluştur"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:55
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:56
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "%(site)s sitesini sil"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:61
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:62
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "%(site)s sitesine git"
@@ -1776,47 +1778,35 @@ msgstr "%(site)s sitesine git"
 msgid "Manage"
 msgstr "Yönet"
 
-#: plinth/modules/ikiwiki/views.py:67
-msgid "Manage Wikis and Blogs"
-msgstr "Viki ve Blogları Yönet"
-
-#: plinth/modules/ikiwiki/views.py:100
-msgid "Create Wiki or Blog"
-msgstr "Viki ya da Blog oluştur"
-
-#: plinth/modules/ikiwiki/views.py:114
+#: plinth/modules/ikiwiki/views.py:122
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "{name} isimli viki oluşturuldu."
 
-#: plinth/modules/ikiwiki/views.py:117
+#: plinth/modules/ikiwiki/views.py:125
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Viki oluşturulamadı: {error}"
 
-#: plinth/modules/ikiwiki/views.py:127
+#: plinth/modules/ikiwiki/views.py:135
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "{name} isimli blog oluşturuldu."
 
-#: plinth/modules/ikiwiki/views.py:130
+#: plinth/modules/ikiwiki/views.py:138
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Blog oluşturulamadı: {error}"
 
-#: plinth/modules/ikiwiki/views.py:142
+#: plinth/modules/ikiwiki/views.py:150
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} silindi."
 
-#: plinth/modules/ikiwiki/views.py:146
+#: plinth/modules/ikiwiki/views.py:155
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} silinemedi: {error}"
-
-#: plinth/modules/ikiwiki/views.py:152
-msgid "Delete Wiki or Blog"
-msgstr "Viki ya da Blogu Sil"
 
 #: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
@@ -2848,23 +2838,32 @@ msgstr "Plumble"
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
-#: plinth/modules/names/__init__.py:31
+#: plinth/modules/names/__init__.py:33
 msgid "HTTP"
 msgstr "HTTP"
 
-#: plinth/modules/names/__init__.py:32
+#: plinth/modules/names/__init__.py:34
 msgid "HTTPS"
 msgstr "HTTPS"
 
-#: plinth/modules/names/__init__.py:33
+#: plinth/modules/names/__init__.py:35
 msgid "SSH"
 msgstr "SSH"
 
-#: plinth/modules/names/__init__.py:40
+#: plinth/modules/names/__init__.py:42
 msgid "Name Services"
 msgstr "İsim Servisleri"
 
-#: plinth/modules/names/views.py:48
+#: plinth/modules/names/__init__.py:53
+#, python-brace-format
+msgid ""
+"Name Services provides an overview of the ways {box_name} can be reached "
+"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
+"enabled or disabled for incoming connections through the given name."
+msgstr ""
+
+#: plinth/modules/names/views.py:50
 msgid "Not Available"
 msgstr "Mevcut değil"
 
@@ -3867,11 +3866,6 @@ msgstr "Kaydet"
 msgid "Skip Registration"
 msgstr "Kaydı Atla"
 
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:44
-#: plinth/modules/pagekite/views.py:40
-msgid "Configure PageKite"
-msgstr "PageKite'ı Yapılandır"
-
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:40
 msgid "<b>Warning:</b><br/>"
 msgstr "<b>İkaz:</b><br/>"
@@ -3921,19 +3915,15 @@ msgstr ""
 msgid "Pagekite"
 msgstr "Pagekite"
 
-#: plinth/modules/pagekite/views.py:37
-msgid "About PageKite"
-msgstr "PageKite Hakkında"
-
-#: plinth/modules/pagekite/views.py:43
+#: plinth/modules/pagekite/views.py:39
 msgid "Standard Services"
 msgstr "Standart Servisler"
 
-#: plinth/modules/pagekite/views.py:46
+#: plinth/modules/pagekite/views.py:42
 msgid "Custom Services"
 msgstr "Özel Servisler"
 
-#: plinth/modules/pagekite/views.py:170
+#: plinth/modules/pagekite/views.py:156
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr ""
 "Pagekite kurulumu tamamlanmıştır. HTTP ve HTTPS servisleri artık "
@@ -6156,6 +6146,18 @@ msgstr "%(percentage)s%% tamamlandı"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Current status:"
+#~ msgstr "Güncel durum:"
+
+#~ msgid "Delete Wiki or Blog"
+#~ msgstr "Viki ya da Blogu Sil"
+
+#~ msgid "Configure PageKite"
+#~ msgstr "PageKite'ı Yapılandır"
+
+#~ msgid "About PageKite"
+#~ msgstr "PageKite Hakkında"
 
 #, fuzzy
 #~| msgid "Default"

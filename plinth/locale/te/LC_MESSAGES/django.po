@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-02 13:23-0500\n"
+"POT-Creation-Date: 2019-03-18 19:46-0400\n"
 "PO-Revision-Date: 2019-02-22 12:17+0000\n"
 "Last-Translator: Darkblaze <sukakarlapudi@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -488,7 +488,7 @@ msgstr "DNSSEC అమలుచెయ్యి"
 msgid "Enable Domain Name System Security Extensions"
 msgstr "డొమైన్ నేమ్ సిస్టం భద్రతా పొడిగింపు ని ప్రారంభించండి"
 
-#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:382
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/views.py:170
 #: plinth/modules/openvpn/views.py:147 plinth/modules/shadowsocks/views.py:80
 #: plinth/modules/transmission/views.py:74
 msgid "Configuration updated"
@@ -532,21 +532,20 @@ msgstr ""
 "ద్వారా పొందవచ్చు {box_name}.\n"
 "అంగీకార సమాచారం మరియు సిస్టమ్ మార్చడం సామర్ధ్యాలు నిర్వాహక సమూహం చెందిన వినియోగదారులకు పరిమితం."
 
-#: plinth/modules/config/__init__.py:93
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
+#: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
+#: plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
 #: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
-#: plinth/modules/config/views.py:170
-#: plinth/modules/dynamicdns/dynamicdns.py:145
+#: plinth/modules/config/views.py:170 plinth/modules/dynamicdns/forms.py:111
 msgid "Domain Name"
 msgstr "డొమైను పేరు"
 
 #: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
-#: plinth/modules/dynamicdns/dynamicdns.py:148
+#: plinth/modules/dynamicdns/forms.py:114
 msgid "Invalid domain name"
 msgstr "డొమైన్ పేరు చెల్లదు"
 
@@ -613,12 +612,10 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:35
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/service-subsubmenu.html:45 plinth/templates/service.html:42
+#: plinth/templates/service-subsubmenu.html:47 plinth/templates/service.html:42
 #: plinth/templates/setup.html:48 plinth/templates/simple_service.html:38
 msgid "Learn more..."
 msgstr "మరింత తెలుసుకోండి.."
@@ -895,9 +892,10 @@ msgstr ""
 "\"https://diaspora.%(domain_name)s\"> డయాస్పోరా.%(domain_name)s</a> లు  లో డయాస్పోరా *"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:129
 #: plinth/modules/snapshot/templates/snapshot.html:30
@@ -924,11 +922,11 @@ msgstr "వినియోగదారుల నమోదు అనుమతి�
 msgid "User registrations disabled"
 msgstr "కొత్త వినియోగదారుల నమోదు నిలిపివేయబడినది"
 
-#: plinth/modules/dynamicdns/__init__.py:35
+#: plinth/modules/dynamicdns/__init__.py:36
 msgid "Dynamic DNS Client"
 msgstr "గతిక DNS కక్షిదారు"
 
-#: plinth/modules/dynamicdns/__init__.py:39
+#: plinth/modules/dynamicdns/__init__.py:40
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -939,7 +937,7 @@ msgstr ""
 "అప్పుడు ఇతరులు అంతర్జాలంలో మిమల్ని కనుగొనడానికి కష్టం ఆవతుంది. అప్పుడు వారు ఈ {box_name} "
 "అందించే సేవలను కనుగోనలేరు."
 
-#: plinth/modules/dynamicdns/__init__.py:43
+#: plinth/modules/dynamicdns/__init__.py:44
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -956,24 +954,11 @@ msgstr ""
 "DNS పేరు అడుగుతాడు ఉంటే, వారు మీ ప్రస్తుత ఐ.పీ. చిరునామాతో సమాధానం పొందుతారు."
 
 #: plinth/modules/dynamicdns/__init__.py:69
-#: plinth/modules/dynamicdns/dynamicdns.py:379
+#: plinth/modules/dynamicdns/views.py:167
 msgid "Dynamic DNS Service"
 msgstr "గతిక DNS క్లైంట్"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:45
-msgid "About"
-msgstr "గురించి"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:48
-#: plinth/modules/firewall/templates/firewall.html:45
-#: plinth/modules/networks/templates/connection_show.html:261
-#: plinth/modules/openvpn/templates/openvpn.html:71
-#: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
-msgid "Status"
-msgstr "స్థితి"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:77
+#: plinth/modules/dynamicdns/forms.py:43
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -982,7 +967,7 @@ msgstr ""
 "&lt;వాడుకరి&gt;, &lt;పాస్&gt;, &lt;ఎల్.పి&gt;, &lt;డోమైన్&gt; అనే వేరియబల్స్ మీ యూ.ఆర్.ఎల్ తో "
 "వాడవచ్చును. వివరాల కోసం మీ యూ.ఆర్.ఎల్ నవీనికరణ టెంప్లేట్ ను చూడండి."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:81
+#: plinth/modules/dynamicdns/forms.py:47
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -991,7 +976,7 @@ msgstr ""
 "దయ చేసి మీ నవీకరణ ప్రోటొకాల్ ను ఎంచుకోండి. మీ ప్రదాత గ్నూడిప్ ప్రోటొకాల్ కు సహకరించకపోయిన లేదా మీ ప్రదాత "
 "కింద జాబితా లో లేకపోయినా మీ ప్రదాత యొక్క నవీకరణ యూ.ఆర్.ఎల్ ను వాడగలరు."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:86
+#: plinth/modules/dynamicdns/forms.py:52
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -999,16 +984,16 @@ msgstr ""
 "దయ చేసి యూ.ఆర్.ఎల్ (ఉ.దా \"ఏచ్.టి.టి.పి.ఎస్://ఎగ్స్యాంపల్.కామ్\") ను తెలుపవద్దు కానీ కేవలం అతిధ్య "
 "పేరును (ఉ.దా \"ఎగ్స్యాంపల్.కామ్\") మాత్రమే తెలుపండి."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:90
+#: plinth/modules/dynamicdns/forms.py:56
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "మీ {box_name} ను చేరుకోవడానికి మీరు ఉపయోగించాలని కోరుకుంటున్న మీ  పబ్లిక్ డొమైన్ పేరు."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:93
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Use this option if your provider uses self signed certificates."
 msgstr "మీ అంతర్జాల సేవ ప్రదాత ఒకవేళ స్వీయ సంతక సర్టిఫికేట్లు ఉపయోగిస్తుంటే ఈ ఎంపికను ఉపయోగించండి."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:96
+#: plinth/modules/dynamicdns/forms.py:62
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1016,11 +1001,11 @@ msgstr ""
 "ఈ ఎంపికను ఎంపిక చేస్తే, మీ వాడుకరి పేరు మరియు పాస్‌వర్డ్ హెచ్.టి.టి.పి ప్రాథమిక ప్రమాణీకరణ కోసం "
 "ఉపయోగించబడుతుంది."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:99
+#: plinth/modules/dynamicdns/forms.py:65
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "మీరు మీ ప్రస్తుత పాస్‌వర్డ్ ను ఉంచుకోవాలనుకుంటే ఈ ఫీల్డ్ ఖాళీగా వదిలివేయండి."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:102
+#: plinth/modules/dynamicdns/forms.py:68
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1033,82 +1018,72 @@ msgstr ""
 "ఎక్కడ నుండి వస్తుంది అనే ఐపీ మాత్రమే  ఈ  యూ.ఆర్.ఎల్  తిరిగివ్వాలి (ఉ.దా: ఏచ్.టి.టి.పి.://మైఐపి."
 "డాటాసిస్టమ్స్24.దే)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:110
+#: plinth/modules/dynamicdns/forms.py:76
 msgid "The username that was used when the account was created."
 msgstr "మీరు మీ ఖాతాను సృష్టించినప్పుడు వాడిన వాడుకరి పేరు ."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:119
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Enable Dynamic DNS"
 msgstr "చురుకైన DNS అమలుచెయ్యి"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:122
+#: plinth/modules/dynamicdns/forms.py:88
 msgid "Service Type"
 msgstr "సేవా రకం"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:126
+#: plinth/modules/dynamicdns/forms.py:92
 msgid "GnuDIP Server Address"
 msgstr "GnudIP సేవకం చిరునామా"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:129
+#: plinth/modules/dynamicdns/forms.py:95
 msgid "Invalid server name"
 msgstr "సేవిక పేరు చెలదు"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:133
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "Update URL"
 msgstr "URL నవీకరణ"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:137
+#: plinth/modules/dynamicdns/forms.py:103
 msgid "Accept all SSL certificates"
 msgstr "అన్ని ఎస్.ఎస్.ఎల్ సర్టిఫికెట్లు అంగీకరించు"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:141
+#: plinth/modules/dynamicdns/forms.py:107
 msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:152
-#: plinth/modules/networks/forms.py:234
+#: plinth/modules/dynamicdns/forms.py:118 plinth/modules/networks/forms.py:234
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:155
-#: plinth/modules/networks/forms.py:235 plinth/modules/shadowsocks/forms.py:70
+#: plinth/modules/dynamicdns/forms.py:121 plinth/modules/networks/forms.py:235
+#: plinth/modules/shadowsocks/forms.py:70
 msgid "Password"
 msgstr "రహస్యపదం"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:159
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/dynamicdns/forms.py:125 plinth/modules/networks/forms.py:237
 msgid "Show password"
 msgstr "రహస్యపదం కనబర్చు"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:162
+#: plinth/modules/dynamicdns/forms.py:128
 msgid "URL to look up public IP"
 msgstr "పబ్లిక్ IP చూసేందుకు URL"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:186
+#: plinth/modules/dynamicdns/forms.py:152
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "దయచేసి నవీకరణ యూ.ఆర్.ఎల్ ను లేక ఒక GnuDIP సేవిక ఐ.పీ చిరునామాను  అందించండి"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:191
+#: plinth/modules/dynamicdns/forms.py:157
 msgid "Please provide a GnuDIP username"
 msgstr "దయచేసి గ్నూ.డిప్ వాడుకరిపేరుని అందించండి"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:195
+#: plinth/modules/dynamicdns/forms.py:161
 msgid "Please provide a GnuDIP domain name"
 msgstr "గ్నూ.డిప్ డోమైన్ పేరును  దయచేసి అందించండి"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:200
+#: plinth/modules/dynamicdns/forms.py:166
 msgid "Please provide a password"
 msgstr "ఒక రహస్యపదం అందించండి దయచేసి"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:219
-msgid "Configure Dynamic DNS"
-msgstr "చురుకైనDNS ఆకృతీకరించు"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:242
-msgid "Dynamic DNS Status"
-msgstr "చలనశీల డి.ఎన్.ఎస్ స్థితి"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:27
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
@@ -1122,7 +1097,7 @@ msgstr ""
 "target='_blank'> 3 freedns.afraid.org </a> 4 ఉచిత నవీకరణ URL ఆధారిత సేవలు "
 "కనుగొనవచ్చు."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:38
 #, python-format
 msgid ""
 "If your %(box_name)s is connected behind a NAT router, don't forget to add "
@@ -1133,7 +1108,7 @@ msgstr ""
 "పి)  మరియి  టిసి.పి పోర్టు ౪౪౩ (హెచ్.టి.టి.పి.ఎస్) ప్రామాణిక పోర్ట్‌లకు పోర్ట్ ఫార్వర్డింగ్ను జోడించడం "
 "మర్చిపోకండి."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:31
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
 "You have disabled Javascript. Dynamic form mode is disabled and some helper "
 "functions may not work (but the main functionality should work)."
@@ -1141,11 +1116,11 @@ msgstr ""
 "మీరు జావాస్క్రిప్ట్ ను పని చేయకుండా చేశారు. చలనశిల ఫొరము  స్థితి  మరియు కొన్ని సహాయక కార్యక్రమాలు పని "
 "చేయవు (కానీ ప్రధాన కార్యాచరణ పని చేయాలి)."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:25
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:24
 msgid "NAT type"
 msgstr "NAT రకం"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:29
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:28
 msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
@@ -1153,11 +1128,11 @@ msgstr ""
 "ఎన్.ఏ.టి రకము ఇంకా గుర్తింపబడలేదు. మీరు ఐ.పి తనిఖీ యూ.ఆర్.ఎల్ ఇవ్వకపోతే మేము ఎన్.ఏ.టి రకమును "
 "గుర్తింపము."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:34
 msgid "Direct connection to the Internet."
 msgstr "అంతర్జాలానికి నేరు బంధం."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:36
 #, fuzzy, python-format
 msgid ""
 "Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
@@ -1170,9 +1145,31 @@ msgstr ""
 "కాదు) ఎన్నిక చేస్తాము. కేసు పాలిపోయిన ఐపీ మార్పులు, మీ DNS ఎంట్రీ నవీకరించబడింది వరకు% వరకు "
 "ఉండవచ్చు (టైమర్) లు 1 నిమిషాల."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
 msgstr "చివరి నవీకరణ"
+
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:45
+msgid "About"
+msgstr "గురించి"
+
+#: plinth/modules/dynamicdns/views.py:47
+#: plinth/modules/firewall/templates/firewall.html:25
+#: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/networks/templates/connection_show.html:261
+#: plinth/modules/openvpn/templates/openvpn.html:71
+#: plinth/modules/tor/templates/tor.html:40
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
+msgid "Status"
+msgstr "స్థితి"
+
+#: plinth/modules/dynamicdns/views.py:78
+msgid "Configure Dynamic DNS"
+msgstr "చురుకైనDNS ఆకృతీకరించు"
+
+#: plinth/modules/dynamicdns/views.py:103
+msgid "Dynamic DNS Status"
+msgstr "చలనశీల డి.ఎన్.ఎస్ స్థితి"
 
 #: plinth/modules/ejabberd/__init__.py:42
 msgid "ejabberd"
@@ -1283,6 +1280,7 @@ msgid "Launch web client"
 msgstr "వెబ్ క్లయింట్ ని ప్రారంభించండి"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:121
@@ -1325,10 +1323,6 @@ msgid ""
 msgstr ""
 "ఫైర్వాల్ అనేది మీ {box_name}కు జరిగే రవాణా రాకపోకలను నియంత్రించే ఒక భద్రతా వ్యవస్థ. దీనిని అనుమతించి "
 "సరిగా ఆకృతీకరిస్తే అంతర్జాలం నుంచి భద్రతా ముప్పు తగ్గుతుంది."
-
-#: plinth/modules/firewall/templates/firewall.html:25
-msgid "Current status:"
-msgstr "ప్రస్తుత స్థితి:"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1663,6 +1657,10 @@ msgstr "నిర్వాహకుని ఖాతా పేరు"
 msgid "Admin Account Password"
 msgstr "నిర్వాహకుని ఖాతా రహస్యపదం"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:25
+msgid "Create Wiki or Blog"
+msgstr "వికీ లేదా బ్లాగును సృష్టించండి"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -1681,20 +1679,24 @@ msgstr ""
 msgid "Delete %(name)s"
 msgstr "%(name)s తొలగించు"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:37
+msgid "Manage Wikis and Blogs"
+msgstr "వికీ మరియు బ్లాగులను నిర్వహించండి"
+
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:42
 msgid "No wikis or blogs available."
 msgstr "ఏ వికీలు లేదా బ్లాగులు అందుబాటులో లేవు."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:45
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:46
 msgid "Create a Wiki or Blog"
 msgstr "ఒక వికీ లేదా బ్లాగు సృష్టించండి"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:55
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:56
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "ప్రదేశం తొలగించు %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:61
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:62
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
@@ -1703,47 +1705,35 @@ msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
 msgid "Manage"
 msgstr "నిర్వహించండి"
 
-#: plinth/modules/ikiwiki/views.py:67
-msgid "Manage Wikis and Blogs"
-msgstr "వికీ మరియు బ్లాగులను నిర్వహించండి"
-
-#: plinth/modules/ikiwiki/views.py:100
-msgid "Create Wiki or Blog"
-msgstr "వికీ లేదా బ్లాగును సృష్టించండి"
-
-#: plinth/modules/ikiwiki/views.py:114
+#: plinth/modules/ikiwiki/views.py:122
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "{name} వికీ సృష్టించబడింది."
 
-#: plinth/modules/ikiwiki/views.py:117
+#: plinth/modules/ikiwiki/views.py:125
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "వికీని సృష్టించలేము: {error}"
 
-#: plinth/modules/ikiwiki/views.py:127
+#: plinth/modules/ikiwiki/views.py:135
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "{name} బ్లాగు సృష్టించబడింది."
 
-#: plinth/modules/ikiwiki/views.py:130
+#: plinth/modules/ikiwiki/views.py:138
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "బ్లాగు సృష్టించలేము: {error}"
 
-#: plinth/modules/ikiwiki/views.py:142
+#: plinth/modules/ikiwiki/views.py:150
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} తొలగించబడింది."
 
-#: plinth/modules/ikiwiki/views.py:146
+#: plinth/modules/ikiwiki/views.py:155
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} ను తొలగించలేము: {error}"
-
-#: plinth/modules/ikiwiki/views.py:152
-msgid "Delete Wiki or Blog"
-msgstr "వికీ లేదా బ్లాగును తొలగించు"
 
 #: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
@@ -2774,23 +2764,32 @@ msgstr "ప్లంబుల్"
 msgid "Mumblefly"
 msgstr "ముంబుల్ ఫ్లై"
 
-#: plinth/modules/names/__init__.py:31
+#: plinth/modules/names/__init__.py:33
 msgid "HTTP"
 msgstr "హెచ్‌టిటిపి"
 
-#: plinth/modules/names/__init__.py:32
+#: plinth/modules/names/__init__.py:34
 msgid "HTTPS"
 msgstr "హెచ్‌టిటిపియస్"
 
-#: plinth/modules/names/__init__.py:33
+#: plinth/modules/names/__init__.py:35
 msgid "SSH"
 msgstr "ఎస్‌ఎస్‌హెచ్"
 
-#: plinth/modules/names/__init__.py:40
+#: plinth/modules/names/__init__.py:42
 msgid "Name Services"
 msgstr "పేరు సేవలు"
 
-#: plinth/modules/names/views.py:48
+#: plinth/modules/names/__init__.py:53
+#, python-brace-format
+msgid ""
+"Name Services provides an overview of the ways {box_name} can be reached "
+"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
+"enabled or disabled for incoming connections through the given name."
+msgstr ""
+
+#: plinth/modules/names/views.py:50
 msgid "Not Available"
 msgstr "అందుబాటులో లేదు"
 
@@ -3803,11 +3802,6 @@ msgstr "నమోదు చేసుకోండి"
 msgid "Skip Registration"
 msgstr "నమోదు చేసుకొనుట దాటి వేయండి"
 
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:44
-#: plinth/modules/pagekite/views.py:40
-msgid "Configure PageKite"
-msgstr "రూపకరణ పుట"
-
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:40
 msgid "<b>Warning:</b><br/>"
 msgstr "<b>హెచ్చరిక</b><br/>"
@@ -3855,20 +3849,16 @@ msgstr ""
 msgid "Pagekite"
 msgstr "పేజ్ కైట్"
 
-#: plinth/modules/pagekite/views.py:37
-msgid "About PageKite"
-msgstr "పేజ్ కైట్ గురించి"
-
-#: plinth/modules/pagekite/views.py:43
+#: plinth/modules/pagekite/views.py:39
 msgid "Standard Services"
 msgstr "ప్రామాణిక సేవలు"
 
-#: plinth/modules/pagekite/views.py:46
+#: plinth/modules/pagekite/views.py:42
 #, fuzzy
 msgid "Custom Services"
 msgstr "కస్టమ్ సేవలు"
 
-#: plinth/modules/pagekite/views.py:170
+#: plinth/modules/pagekite/views.py:156
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr "పేజెకైట్ ఏర్పాటు పూర్తి అయినది. ఏచ్.టి.టి.పి మరియు ఏచ్.టి.టి.పి.ఎస్ సేవలు క్రియాశీలకంగా చేయబడ్డాయి."
 
@@ -5940,6 +5930,18 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Current status:"
+#~ msgstr "ప్రస్తుత స్థితి:"
+
+#~ msgid "Delete Wiki or Blog"
+#~ msgstr "వికీ లేదా బ్లాగును తొలగించు"
+
+#~ msgid "Configure PageKite"
+#~ msgstr "రూపకరణ పుట"
+
+#~ msgid "About PageKite"
+#~ msgstr "పేజ్ కైట్ గురించి"
 
 #, fuzzy
 #~| msgid "Default"

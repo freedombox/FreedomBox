@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-02 13:23-0500\n"
+"POT-Creation-Date: 2019-03-18 19:46-0400\n"
 "PO-Revision-Date: 2019-03-13 15:03+0000\n"
 "Last-Translator: jonathan göhler <jonathan.goehler@gmx.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -485,7 +485,7 @@ msgstr "DNSSEC einschalten"
 msgid "Enable Domain Name System Security Extensions"
 msgstr "Aktivieren Sie Domain Name System Sicherheits-Erweiterungen (DNSSEC)"
 
-#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:382
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/views.py:170
 #: plinth/modules/openvpn/views.py:147 plinth/modules/shadowsocks/views.py:80
 #: plinth/modules/transmission/views.py:74
 msgid "Configuration updated"
@@ -524,21 +524,20 @@ msgstr ""
 "\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
 "Nutzer</a> auf {box_name}, der zur Gruppe der Administratoren gehört."
 
-#: plinth/modules/config/__init__.py:93
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
+#: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
+#: plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Konfigurieren"
 
 #: plinth/modules/config/__init__.py:111 plinth/modules/config/forms.py:75
-#: plinth/modules/config/views.py:170
-#: plinth/modules/dynamicdns/dynamicdns.py:145
+#: plinth/modules/config/views.py:170 plinth/modules/dynamicdns/forms.py:111
 msgid "Domain Name"
 msgstr "Domain-Name"
 
 #: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:87
-#: plinth/modules/dynamicdns/dynamicdns.py:148
+#: plinth/modules/dynamicdns/forms.py:114
 msgid "Invalid domain name"
 msgstr "Ungültiger Domain-Name"
 
@@ -610,12 +609,10 @@ msgstr ""
 "freedombox eingeben, um den {box_name}-Dienst (Plinth) zu erreichen."
 
 #: plinth/modules/config/templates/config.html:34
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:35
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/service-subsubmenu.html:45 plinth/templates/service.html:42
+#: plinth/templates/service-subsubmenu.html:47 plinth/templates/service.html:42
 #: plinth/templates/setup.html:48 plinth/templates/simple_service.html:38
 msgid "Learn more..."
 msgstr "Erfahre mehr …"
@@ -894,17 +891,18 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
-"Der eingestellte diaspora*-Pod-Domainname ist <b>%(domain_name)s</b>. Nutzer"
-"*innen-IDs werden aussehen wie <i>Nutzer*innen-"
-"Name@diaspora.%(domain_name)s</i><br/>Falls du den FreedomBox-Domain-Name "
-"änderst, sind alle Daten der Nutzer*innen des vorherigen Pod-Namens nicht "
-"mehr erreichbar. <br/>Du erreichst den diaspora*-Pod unter <a href=\""
-"https://diaspora.%(domain_name)s\">diaspora.%(domain_name)s</a>"
+"Der eingestellte diaspora*-Pod-Domainname ist <b>%(domain_name)s</b>. "
+"Nutzer*innen-IDs werden aussehen wie <i>Nutzer*innen-Name@diaspora."
+"%(domain_name)s</i><br/>Falls du den FreedomBox-Domain-Name änderst, sind "
+"alle Daten der Nutzer*innen des vorherigen Pod-Namens nicht mehr erreichbar. "
+"<br/>Du erreichst den diaspora*-Pod unter <a href=\"https://diaspora."
+"%(domain_name)s\">diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:129
 #: plinth/modules/snapshot/templates/snapshot.html:30
@@ -931,23 +929,23 @@ msgstr "Registrierung neuer Nutzer aktiviert"
 msgid "User registrations disabled"
 msgstr "Registrierung neuer Nutzer deaktiviert"
 
-#: plinth/modules/dynamicdns/__init__.py:35
+#: plinth/modules/dynamicdns/__init__.py:36
 msgid "Dynamic DNS Client"
 msgstr "Dynamischer DNS-Client"
 
-#: plinth/modules/dynamicdns/__init__.py:39
+#: plinth/modules/dynamicdns/__init__.py:40
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
 "24h), it may be hard for others to find you on the Internet. This will "
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
-"Wenn dein Internetanbieter die öffentliche IP Adresse regelmäßig erneuert ("
-"z.B. alle 24 Stunden), kann es schwer sein, im Netz gefunden zu werden. "
-"Andere können dann die laufenden Dienste von {box_name}, deiner FreedomBox, "
-"nicht finden."
+"Wenn dein Internetanbieter die öffentliche IP Adresse regelmäßig erneuert (z."
+"B. alle 24 Stunden), kann es schwer sein, im Netz gefunden zu werden. Andere "
+"können dann die laufenden Dienste von {box_name}, deiner FreedomBox, nicht "
+"finden."
 
-#: plinth/modules/dynamicdns/__init__.py:43
+#: plinth/modules/dynamicdns/__init__.py:44
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -959,31 +957,18 @@ msgid ""
 msgstr ""
 "Die Lösung ist, einen DNS-Namen mit der IP-Adresse zu verknüpfen und diesen "
 "DNS-Eintrag jedes mal zu aktualisieren wenn sich die IP-Adresse ändert. "
-"Dynamisches DNS erlaubt es die aktuelle IP-Adresse zu einem  <a "
-"href='http://gnudip2.sourceforge.net/' target='_blank'>GnuDIP</a> Server zu "
-"übertragen. Anschließend wird der Server die aktuelle IP-Adresse mit dem DNS-"
-"Namen verknüpfen und wenn jemand aus dem Internet nach deinem DNS-Namen "
-"sucht, erhält er*sie die aktuelle IP-Adresse."
+"Dynamisches DNS erlaubt es die aktuelle IP-Adresse zu einem  <a href='http://"
+"gnudip2.sourceforge.net/' target='_blank'>GnuDIP</a> Server zu übertragen. "
+"Anschließend wird der Server die aktuelle IP-Adresse mit dem DNS-Namen "
+"verknüpfen und wenn jemand aus dem Internet nach deinem DNS-Namen sucht, "
+"erhält er*sie die aktuelle IP-Adresse."
 
 #: plinth/modules/dynamicdns/__init__.py:69
-#: plinth/modules/dynamicdns/dynamicdns.py:379
+#: plinth/modules/dynamicdns/views.py:167
 msgid "Dynamic DNS Service"
 msgstr "Dynamischer DNS-Service"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:45
-msgid "About"
-msgstr "Über"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:48
-#: plinth/modules/firewall/templates/firewall.html:45
-#: plinth/modules/networks/templates/connection_show.html:261
-#: plinth/modules/openvpn/templates/openvpn.html:71
-#: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
-msgid "Status"
-msgstr "Status"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:77
+#: plinth/modules/dynamicdns/forms.py:43
 #, fuzzy
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
@@ -994,7 +979,7 @@ msgstr ""
 "in der URL verwendet werden. Beispiele sind in den update URLs der "
 "vorkonfigurierten Anbieter zu finden."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:81
+#: plinth/modules/dynamicdns/forms.py:47
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1004,7 +989,7 @@ msgstr ""
 "Anbieter GnuDIP nicht unterstützt oder der Anbieter nicht aufgeführt ist, "
 "kann die Aktualisierungs-URL Ihres Anbieters verwendet werden."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:86
+#: plinth/modules/dynamicdns/forms.py:52
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1012,20 +997,20 @@ msgstr ""
 "Bitte hier keine URL (wie \"https://example.com/\") eingeben, sondern nur "
 "den Hostnamen des GnuDIP Servers (wie \"example.com\")."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:90
+#: plinth/modules/dynamicdns/forms.py:56
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Der öffentliche Domain-Name, den du verwenden möchtest, um {box_name}, deine "
 "FreedomBox, zu erreichen."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:93
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Verwende Sie diese Option, wenn dein Anbieter selbst-signierte Zertifikate "
 "verwendet."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:96
+#: plinth/modules/dynamicdns/forms.py:62
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1033,12 +1018,12 @@ msgstr ""
 "Ist diese Option ausgewählt, werden der Nutzer*innen-Name und das Passwort "
 "des Dynamic-DNS-Kontos auch zur HTTP-Authentifizierung verwendet."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:99
+#: plinth/modules/dynamicdns/forms.py:65
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
 "Lasse dieses Feld leer, wenn Sie das Passwort unverändert lassen möchten."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:102
+#: plinth/modules/dynamicdns/forms.py:68
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1051,82 +1036,72 @@ msgstr ""
 "verwendet, um die wahre IP-Adresse zu bestimmen. Die URL sollte nur die IP-"
 "Adresse des Clients liefern (zum Beispiel: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:110
+#: plinth/modules/dynamicdns/forms.py:76
 msgid "The username that was used when the account was created."
 msgstr "Nutzer*innen-Name, der beim Erstellen des Kontos gewählt wurde."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:119
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Enable Dynamic DNS"
 msgstr "Dynamisches DNS einschalten"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:122
+#: plinth/modules/dynamicdns/forms.py:88
 msgid "Service Type"
 msgstr "Typ des Dienstes"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:126
+#: plinth/modules/dynamicdns/forms.py:92
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP-Server-Adresse"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:129
+#: plinth/modules/dynamicdns/forms.py:95
 msgid "Invalid server name"
 msgstr "Ungültiger Server-Name"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:133
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "Update URL"
 msgstr "URL aktualisieren"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:137
+#: plinth/modules/dynamicdns/forms.py:103
 msgid "Accept all SSL certificates"
 msgstr "Alle SSL-Zertifikate akzeptieren"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:141
+#: plinth/modules/dynamicdns/forms.py:107
 msgid "Use HTTP basic authentication"
 msgstr "HTTP-Basisauthentifizierung verwenden"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:152
-#: plinth/modules/networks/forms.py:234
+#: plinth/modules/dynamicdns/forms.py:118 plinth/modules/networks/forms.py:234
 msgid "Username"
 msgstr "Nutzer*innen-Name"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:155
-#: plinth/modules/networks/forms.py:235 plinth/modules/shadowsocks/forms.py:70
+#: plinth/modules/dynamicdns/forms.py:121 plinth/modules/networks/forms.py:235
+#: plinth/modules/shadowsocks/forms.py:70
 msgid "Password"
 msgstr "Passwort"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:159
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/dynamicdns/forms.py:125 plinth/modules/networks/forms.py:237
 msgid "Show password"
 msgstr "Zeige Passwort"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:162
+#: plinth/modules/dynamicdns/forms.py:128
 msgid "URL to look up public IP"
 msgstr "auf die öffentliche IP-Adresse verweisende URL"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:186
+#: plinth/modules/dynamicdns/forms.py:152
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Bitte eine update URL oder einen GnuDIP Server angeben"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:191
+#: plinth/modules/dynamicdns/forms.py:157
 msgid "Please provide a GnuDIP username"
 msgstr "Bitte einen GnuDIP-Nutzer*innen-Namen angeben"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:195
+#: plinth/modules/dynamicdns/forms.py:161
 msgid "Please provide a GnuDIP domain name"
 msgstr "Bitte einen GnuDIP-Domain-Namen angeben"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:200
+#: plinth/modules/dynamicdns/forms.py:166
 msgid "Please provide a password"
 msgstr "Bitte ein Passwort angeben"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:219
-msgid "Configure Dynamic DNS"
-msgstr "Dynamisches DNS konfigurieren"
-
-#: plinth/modules/dynamicdns/dynamicdns.py:242
-msgid "Dynamic DNS Status"
-msgstr "Status der Dynamischen DNS"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:41
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:27
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
@@ -1140,7 +1115,7 @@ msgstr ""
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a> "
 "können per update URL genutzt werden."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:38
 #, python-format
 msgid ""
 "If your %(box_name)s is connected behind a NAT router, don't forget to add "
@@ -1152,7 +1127,7 @@ msgstr ""
 "einschließlich TCP-Port 80 (HTTP) und TCP-Port 443 (HTTPS) eingerichtet "
 "werden."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:31
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
 "You have disabled Javascript. Dynamic form mode is disabled and some helper "
 "functions may not work (but the main functionality should work)."
@@ -1161,11 +1136,11 @@ msgstr ""
 "möglich und einige Hilfsfunktionen können nicht funktionieren (aber die "
 "Hauptfunktionalität sollte gegeben sein)."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:25
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:24
 msgid "NAT type"
 msgstr "NAT-Typ"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:29
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:28
 msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
@@ -1173,11 +1148,11 @@ msgstr ""
 "Der NAT-Typ konnte noch nicht erkannt werden. Wenn keine \"IP check URL\" "
 "angegeben wurde, kann der NAT-Typ nicht erkannt werden."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:34
 msgid "Direct connection to the Internet."
 msgstr "Direkte Verbindung zum Internet."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:36
 #, python-format
 msgid ""
 "Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
@@ -1186,14 +1161,36 @@ msgid ""
 "changes, it may take up to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
 "Hinter einem NAT. Dies bedeutet, dass der Dynamische DNS-Dienst für "
-"Änderungen die \"URL zum Holen der öffentlichen IP-Adresse\" aufrufen wird ("
-"diese URL ist erforderlich um Änderungen der IP-Adresse zu erkennen). Im "
+"Änderungen die \"URL zum Holen der öffentlichen IP-Adresse\" aufrufen wird "
+"(diese URL ist erforderlich um Änderungen der IP-Adresse zu erkennen). Im "
 "Falle einer Änderung Ihrer WAN-IP-Adresse kann es möglicherweise bis zu "
 "%(timer)s Minuten dauern bis der DNS-Eintrag aktualisiert ist."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
 msgstr "Letztes Update"
+
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:45
+msgid "About"
+msgstr "Über"
+
+#: plinth/modules/dynamicdns/views.py:47
+#: plinth/modules/firewall/templates/firewall.html:25
+#: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/networks/templates/connection_show.html:261
+#: plinth/modules/openvpn/templates/openvpn.html:71
+#: plinth/modules/tor/templates/tor.html:40
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/service.html:51
+msgid "Status"
+msgstr "Status"
+
+#: plinth/modules/dynamicdns/views.py:78
+msgid "Configure Dynamic DNS"
+msgstr "Dynamisches DNS konfigurieren"
+
+#: plinth/modules/dynamicdns/views.py:103
+msgid "Dynamic DNS Status"
+msgstr "Status der Dynamischen DNS"
 
 #: plinth/modules/ejabberd/__init__.py:42
 msgid "ejabberd"
@@ -1223,8 +1220,8 @@ msgstr ""
 "Zur eigentlichen Kommunikation kannst du den <a href=\"{jsxc_url}\">Web "
 "Client</a> oder jeden anderen <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP-Client</a> verwenden. Wenn aktiviert, kann ejabberd von "
-"jeder*jedem <a href=\"{users_url}\">Nutzer*in mit einem "
-"{box_name}-Account</a> genutzt werden."
+"jeder*jedem <a href=\"{users_url}\">Nutzer*in mit einem {box_name}-Account</"
+"a> genutzt werden."
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
@@ -1296,10 +1293,10 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
-"Ihre XMPP-Server-Domain ist auf <b>%(domainname)s</b> eingestellt. Benutzer"
-"*innen-IDs werden aussehen wie <i>username@%(domainname)s</i>. Du kannst "
-"deine Domain auf der Seite <a href=\"%(index_url)s\">Systemeinstellungen</a> "
-"konfigurieren."
+"Ihre XMPP-Server-Domain ist auf <b>%(domainname)s</b> eingestellt. "
+"Benutzer*innen-IDs werden aussehen wie <i>username@%(domainname)s</i>. Du "
+"kannst deine Domain auf der Seite <a href=\"%(index_url)s"
+"\">Systemeinstellungen</a> konfigurieren."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:47
 #: plinth/modules/jsxc/templates/jsxc.html:32
@@ -1307,6 +1304,7 @@ msgid "Launch web client"
 msgstr "Starte Web client"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:121
@@ -1351,10 +1349,6 @@ msgstr ""
 "Verkehr deiner FreedomBox {box_name} kontrolliert. Die Firewall aktiv und "
 "korrekt konfiguriert zu halten, reduziert Sicherheitsrisiken aus dem "
 "Internet."
-
-#: plinth/modules/firewall/templates/firewall.html:25
-msgid "Current status:"
-msgstr "Aktueller Status:"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1550,8 +1544,8 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"Mehr Informationen über das %(box_name)s Projekt findest du im <a href=\""
-"https://wiki.debian.org/de/FreedomBox\">%(box_name)s Wiki</a>."
+"Mehr Informationen über das %(box_name)s Projekt findest du im <a href="
+"\"https://wiki.debian.org/de/FreedomBox\">%(box_name)s Wiki</a>."
 
 #: plinth/modules/help/templates/help_about.html:75
 msgid "Learn more &raquo;"
@@ -1593,8 +1587,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"Das <a href=\"http://wiki.debian.org/de/FreedomBox\" target=\"_blank\""
-">%(box_name)s Projekt-Wiki</a> enthält weitere Informationen."
+"Das <a href=\"http://wiki.debian.org/de/FreedomBox\" target=\"_blank\">"
+"%(box_name)s Projekt-Wiki</a> enthält weitere Informationen."
 
 #: plinth/modules/help/templates/help_index.html:45
 #, python-format
@@ -1618,8 +1612,8 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Viele %(box_name)s Mitwirkende und Benutzer*innen sind auch im irc.oftc.net "
-"IRC-Netzwerk erreichbar. Trete ihm bei und frage um Hilfe im <a href=\""
-"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
+"IRC-Netzwerk erreichbar. Trete ihm bei und frage um Hilfe im <a href="
+"\"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
 "#freedombox</a>-Kanal der IRC-Web-Oberfläche."
 
 #: plinth/modules/help/templates/statuslog.html:25
@@ -1677,9 +1671,9 @@ msgid ""
 msgstr ""
 "Blogs und Wikis können nur von {box_name} Nutzer*innen in der "
 "<b>Administrator*innen</b>-Gruppe <i>erstellt</i> und <i>verwaltet</i> "
-"werden, aber von allen Nutzer*innen in der <b>Wiki</b>-Gruppe <i>editiert</i>"
-". In der <a href=\"{users_url}\">Nutzer*innen-Konfiguration</a> können diese "
-"Rechte geändert oder neue Nutzer*innen angelegt werden."
+"werden, aber von allen Nutzer*innen in der <b>Wiki</b>-Gruppe <i>editiert</"
+"i>. In der <a href=\"{users_url}\">Nutzer*innen-Konfiguration</a> können "
+"diese Rechte geändert oder neue Nutzer*innen angelegt werden."
 
 #: plinth/modules/ikiwiki/__init__.py:62
 msgid "View and edit wiki applications"
@@ -1703,6 +1697,10 @@ msgstr "Admin-Konto-Name"
 msgid "Admin Account Password"
 msgstr "Admin-Konto-Passwort"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:25
+msgid "Create Wiki or Blog"
+msgstr "Wiki oder Blog anlegen"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -1721,20 +1719,24 @@ msgstr ""
 msgid "Delete %(name)s"
 msgstr "Lösche %(name)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:37
+msgid "Manage Wikis and Blogs"
+msgstr "Wikis und Blogs verwalten"
+
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:42
 msgid "No wikis or blogs available."
 msgstr "Keine Wikis oder Blogs verfügbar."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:45
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:46
 msgid "Create a Wiki or Blog"
 msgstr "Ein Wiki oder Blog anlegen"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:55
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:56
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Lösche Seite %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:61
+#: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:62
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Gehe zu Seite %(site)s"
@@ -1743,47 +1745,35 @@ msgstr "Gehe zu Seite %(site)s"
 msgid "Manage"
 msgstr "Verwalten"
 
-#: plinth/modules/ikiwiki/views.py:67
-msgid "Manage Wikis and Blogs"
-msgstr "Wikis und Blogs verwalten"
-
-#: plinth/modules/ikiwiki/views.py:100
-msgid "Create Wiki or Blog"
-msgstr "Wiki oder Blog anlegen"
-
-#: plinth/modules/ikiwiki/views.py:114
+#: plinth/modules/ikiwiki/views.py:122
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "Wiki {name} angelegt."
 
-#: plinth/modules/ikiwiki/views.py:117
+#: plinth/modules/ikiwiki/views.py:125
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Konnte Wiki nicht anlegen: {error}"
 
-#: plinth/modules/ikiwiki/views.py:127
+#: plinth/modules/ikiwiki/views.py:135
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "Blog {name} angelegt."
 
-#: plinth/modules/ikiwiki/views.py:130
+#: plinth/modules/ikiwiki/views.py:138
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Konnte Blog nicht anlegen: {error}"
 
-#: plinth/modules/ikiwiki/views.py:142
+#: plinth/modules/ikiwiki/views.py:150
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} gelöscht."
 
-#: plinth/modules/ikiwiki/views.py:146
+#: plinth/modules/ikiwiki/views.py:155
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Konnte {name} nicht löschen: {error}"
-
-#: plinth/modules/ikiwiki/views.py:152
-msgid "Delete Wiki or Blog"
-msgstr "Lösche Wiki oder Blog"
 
 #: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
@@ -1805,9 +1795,9 @@ msgid ""
 "enter your {box_name}'s domain name."
 msgstr ""
 "Um es zu nutzen, <a href=\"https://gobby.github.io/\">lade Gobby den Desktop-"
-"Client herunter</a> und installiere ihn. Dann starte Gobby und wähle \""
-"Verbinde mit Server\" und gib die Domain von {box_name}, deiner FreedomBox, "
-"an."
+"Client herunter</a> und installiere ihn. Dann starte Gobby und wähle "
+"\"Verbinde mit Server\" und gib die Domain von {box_name}, deiner "
+"FreedomBox, an."
 
 #: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
@@ -2029,10 +2019,10 @@ msgid ""
 "certificates in client applications, and enable more wide-spread federation "
 "with other XMPP servers in the Internet."
 msgstr ""
-"Falls aktiviert, wird auch die Anwendung <a href=\"%(ejabberd_url)s\""
-">ejabberd</a> das Let's-Encrypt-Zertifikat nutzen. Dies wird Warnungen über "
-"selbstsignierte Zertifikate in Client-Anwendungen reduzieren und erlaubt "
-"mehr Verbindungen mit anderen XMPP-Servern im Internet."
+"Falls aktiviert, wird auch die Anwendung <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> das Let's-Encrypt-Zertifikat nutzen. Dies wird Warnungen "
+"über selbstsignierte Zertifikate in Client-Anwendungen reduzieren und "
+"erlaubt mehr Verbindungen mit anderen XMPP-Servern im Internet."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:242
 #, python-format
@@ -2040,8 +2030,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> chat server app."
 msgstr ""
-"Diese Option ist nur sinnvoll, wenn du den <a href=\"%(ejabberd_url)s\""
-">ejabberd</a> Chat-Server nutzt."
+"Diese Option ist nur sinnvoll, wenn du den <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> Chat-Server nutzt."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:247
 #, python-format
@@ -2050,8 +2040,8 @@ msgid ""
 "\">ejabberd</a> chat server app, you must first enable certificate renewal "
 "of the current domain."
 msgstr ""
-"Um ein Let's-Encrypt-Zertifikat für den <a href=\"%(ejabberd_url)s\""
-">ejabberd</a> Chat-Server nutzen zu können, muss erst die Zertifikat-"
+"Um ein Let's-Encrypt-Zertifikat für den <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> Chat-Server nutzen zu können, muss erst die Zertifikat-"
 "Erneurungs-Verwaltung für die derzeitige Domain aktiviert sein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:281
@@ -2073,10 +2063,10 @@ msgid ""
 "valid TLS certificate. Federation with other instances will not work without "
 "this."
 msgstr ""
-"Falls aktiviert, wird auch die Anwendung <a href=\"%(matrixsynapse_url)s\">"
-"Matrix Synapse</a> dasselbe Let's-Encrypt-Zertifikat nutzen. Andere Matrix-"
-"Synapse-Instanzen ab Version 1.0 erwarten die Nutzung eines gültigen TLS-"
-"Zertifikats. Die Verbindung mit anderen Instanzen wird ohne dies nicht "
+"Falls aktiviert, wird auch die Anwendung <a href=\"%(matrixsynapse_url)s"
+"\">Matrix Synapse</a> dasselbe Let's-Encrypt-Zertifikat nutzen. Andere "
+"Matrix-Synapse-Instanzen ab Version 1.0 erwarten die Nutzung eines gültigen "
+"TLS-Zertifikats. Die Verbindung mit anderen Instanzen wird ohne dies nicht "
 "funktionieren."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
@@ -2085,8 +2075,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Diese Option ist nur sinnvoll, wenn du den <a href=\"%(matrixsynapse_url)s\">"
-"Matrix Synapse</a> Chat-Server nutzt."
+"Diese Option ist nur sinnvoll, wenn du den <a href=\"%(matrixsynapse_url)s"
+"\">Matrix Synapse</a> Chat-Server nutzt."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
 #, python-format
@@ -2095,8 +2085,8 @@ msgid ""
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Um ein Let's-Encrypt-Zertifikat für den <a href=\"%(matrixsynapse_url)s\">"
-"Matrix Synapse</a>-Chat-Server nutzen zu können, muss erst die Zertifikat-"
+"Um ein Let's-Encrypt-Zertifikat für den <a href=\"%(matrixsynapse_url)s"
+"\">Matrix Synapse</a>-Chat-Server nutzen zu können, muss erst die Zertifikat-"
 "Erneurungs-Verwaltung für die derzeitige Domain aktiviert sein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
@@ -2750,23 +2740,32 @@ msgstr "Plumble"
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
-#: plinth/modules/names/__init__.py:31
+#: plinth/modules/names/__init__.py:33
 msgid "HTTP"
 msgstr "HTTP"
 
-#: plinth/modules/names/__init__.py:32
+#: plinth/modules/names/__init__.py:34
 msgid "HTTPS"
 msgstr "HTTPS"
 
-#: plinth/modules/names/__init__.py:33
+#: plinth/modules/names/__init__.py:35
 msgid "SSH"
 msgstr "SSH"
 
-#: plinth/modules/names/__init__.py:40
+#: plinth/modules/names/__init__.py:42
 msgid "Name Services"
 msgstr "Namen-Dienste"
 
-#: plinth/modules/names/views.py:48
+#: plinth/modules/names/__init__.py:53
+#, python-brace-format
+msgid ""
+"Name Services provides an overview of the ways {box_name} can be reached "
+"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
+"enabled or disabled for incoming connections through the given name."
+msgstr ""
+
+#: plinth/modules/names/views.py:50
 msgid "Not Available"
 msgstr "Nicht verfügbar"
 
@@ -3764,11 +3763,6 @@ msgstr "Registrieren"
 msgid "Skip Registration"
 msgstr "Registrierung überspringen"
 
-#: plinth/modules/pagekite/templates/pagekite_introduction.html:44
-#: plinth/modules/pagekite/views.py:40
-msgid "Configure PageKite"
-msgstr "Konfiguriere PageKite"
-
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:40
 msgid "<b>Warning:</b><br/>"
 msgstr "<b>Warnung:</b><br/>"
@@ -3820,19 +3814,15 @@ msgstr ""
 msgid "Pagekite"
 msgstr "Pagekite"
 
-#: plinth/modules/pagekite/views.py:37
-msgid "About PageKite"
-msgstr "Über PageKite"
-
-#: plinth/modules/pagekite/views.py:43
+#: plinth/modules/pagekite/views.py:39
 msgid "Standard Services"
 msgstr "Standard Dienste"
 
-#: plinth/modules/pagekite/views.py:46
+#: plinth/modules/pagekite/views.py:42
 msgid "Custom Services"
 msgstr "Spezielle Dienste"
 
-#: plinth/modules/pagekite/views.py:170
+#: plinth/modules/pagekite/views.py:156
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr "Pagekite setup beendet. Die HTTP und HTTPS Dienste sind jetzt aktiv."
 
@@ -6001,6 +5991,18 @@ msgstr "%(percentage)s%% abgeschlossen"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Current status:"
+#~ msgstr "Aktueller Status:"
+
+#~ msgid "Delete Wiki or Blog"
+#~ msgstr "Lösche Wiki oder Blog"
+
+#~ msgid "Configure PageKite"
+#~ msgstr "Konfiguriere PageKite"
+
+#~ msgid "About PageKite"
+#~ msgstr "Über PageKite"
 
 #~ msgid "Default App"
 #~ msgstr "Standard-Anwendung"
