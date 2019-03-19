@@ -43,10 +43,11 @@
             {% if platform.type == 'web' %}
               <td>{{ client.name }}</td>
               <td>
-                <a class="btn btn-success" role="button"
-                {% if not enabled %} disabled="disabled"
-                {% else %} href="{{ platform.url }}"
-                {% endif %}>
+                <a target="_blank" rel="noopener noreferrer"
+                  class="btn btn-success" role="button"
+                  {% if not enabled %} disabled="disabled"
+                  {% else %} href="{{ platform.url }}"
+                  {% endif %}>
                   {% trans "Launch" %}
                   <span class="fa fa-external-link"></span>
                 </a>
