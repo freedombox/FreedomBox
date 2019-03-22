@@ -169,6 +169,9 @@ executed (red).
 
 ### Install Dependencies
 
+**For running tests in the VM** run `vagrant provision --provision-with tests`.
+Otherwise follow the instructions below.
+
 ```
 $ pip3 install splinter
 $ pip3 install pytest-splinter
@@ -209,7 +212,13 @@ tests will create the required user using FreedomBox's first boot process.
 
 ### Run Functional Tests
 
-Run
+**When inside a VM you will need to target the guest VM**
+
+```bash
+export FREEDOMBOX_URL=https://localhost
+```
+
+You will be running `py.test-3`. 
 
 ```
 $ py.test-3 --include-functional

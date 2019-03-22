@@ -44,6 +44,7 @@ Vagrant.configure(2) do |config|
     # Install ncurses-term
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
   SHELL
+  config.vm.provision "tests", run: "never", type: "shell", path: "functional_tests/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. You can run the development version of Plinth using
 the following command.
