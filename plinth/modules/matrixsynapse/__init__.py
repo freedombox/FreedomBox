@@ -138,8 +138,8 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(8008, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8448, 'tcp4'))
     results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/_matrix',
-                                         check_certificate=False))
+        action_utils.diagnose_url_on_all(
+            'https://{host}/_matrix/client/versions', check_certificate=False))
 
     return results
 
