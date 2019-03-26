@@ -31,6 +31,8 @@ from .manifest import backup
 
 version = 1
 
+is_essential = True
+
 managed_packages = ['ez-ipupdate']
 
 name = _('Dynamic DNS Client')
