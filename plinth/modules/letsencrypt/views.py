@@ -156,7 +156,7 @@ def toggle_module(request, domain, module):
     le_arguments = ['manage_hooks', 'enable']
 
     if not enabled_modules == []:
-        le_arguments.extend(['--modules', ' '.join(enabled_modules)])
+        le_arguments.extend(['--modules'] + enabled_modules)
 
     try:
         actions.superuser_run(module, module_args)
