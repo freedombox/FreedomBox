@@ -49,9 +49,9 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        domains = [
-            domain for domains in names.domains.values() for domain in domains
-        ]
+        # Filter out onion addresses and get a unique list of domains
+        domains = set(domain for domains in names.domains.values()
+                      for domain in domains if not domain.endswith('.onion'))
         context['domains'] = domains
         return context
 
