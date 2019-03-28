@@ -88,7 +88,7 @@
                   <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
           </td>
           <td>
-            {% if not disk.is_root_device %}
+            {% if disk.is_removable %}
               <form class="form" method="post"
                     action="{% url 'storage:eject' disk.dev_kname|urlencode:'' %}">
                 {% csrf_token %}

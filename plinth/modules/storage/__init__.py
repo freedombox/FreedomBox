@@ -77,7 +77,7 @@ def get_disks():
                 combined_list.append(disk_from_df)
 
     for disk in combined_list:
-        disk['is_root_device'] = is_root_device(disk)
+        disk['is_removable'] = is_removable_device(disk)
 
     return combined_list
 
@@ -162,14 +162,24 @@ def get_disk_info(mount_point):
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
     for disk in disks:
-        if is_root_device(disk):
+        if is_root_partition(disk):
             return disk['dev_kname']
     return None
 
 
-def is_root_device(disk):
-    """Return whether a given disk is a root device or not."""
+def is_removable_device(disk):
+    """Return whether a given disk is a removable device or not."""
+    return not (is_root_partition(disk) or is_boot_partition(disk))
+
+
+def is_root_partition(disk):
+    """Returns whether this disk is mounted at /."""
     return disk['mountpoint'] == '/' and disk['type'] == 'part'
+
+
+def is_boot_partition(disk):
+    """Returns whether this disk is mounted at /boot."""
+    return disk['mountpoint'] == '/boot' and disk['type'] == 'part'
 
 
 def is_expandable(device):
