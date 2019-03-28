@@ -174,12 +174,12 @@ def is_removable_device(disk):
 
 def is_root_partition(disk):
     """Returns whether this disk is mounted at /."""
-    return disk['mountpoint'] == '/' and disk['type'] == 'part'
+    return disk['mountpoint'] == '/'
 
 
 def is_boot_partition(disk):
     """Returns whether this disk is mounted at /boot."""
-    return disk['mountpoint'] == '/boot' and disk['type'] == 'part'
+    return disk['mountpoint'] == '/boot'
 
 
 def is_expandable(device):
