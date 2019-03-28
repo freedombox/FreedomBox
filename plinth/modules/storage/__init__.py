@@ -188,8 +188,8 @@ def is_expandable(device):
         return False
 
     try:
-        output = actions.superuser_run('storage',
-                                       ['is-partition-expandable', device])
+        output = actions.superuser_run(
+            'storage', ['is-partition-expandable', device], log_error=False)
     except actions.ActionError:
         return False
 
