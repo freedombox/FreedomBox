@@ -64,8 +64,7 @@ manual_page = 'Roundcube'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'roundcube', 'roundcube:index',
-                     short_description)
+    menu.add_urlname(name, 'roundcube', 'roundcube:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -76,6 +75,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('roundcube:index')
 
 
 def setup(helper, old_version=None):
@@ -89,6 +89,8 @@ def setup(helper, old_version=None):
         service = service_module.Service(
             'roundcube', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'roundcube:index')
 
 
 def add_shortcut():
@@ -106,12 +108,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('roundcube:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['disable'])
     frontpage.remove_shortcut('roundcube')
+    menu = main_menu.get('apps')
+    menu.demote_item('roundcube:index')
 
 
 def diagnose():

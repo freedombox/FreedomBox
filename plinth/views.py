@@ -66,6 +66,16 @@ def index(request):
         })
 
 
+class AppsIndexView(TemplateView):
+    """View for apps index"""
+    template_name = 'apps.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['show_secondary'] = True
+        return context
+
+
 def system_index(request):
     """Serve the system index page."""
     disk_views.warn_about_low_disk_space(request)
@@ -186,7 +196,8 @@ class SetupView(TemplateView):
 
         # Perform expensive operation only if needed
         if not context['setup_current_operation']:
-            context['package_manager_is_busy'] = package.is_package_manager_busy()
+            context[
+                'package_manager_is_busy'] = package.is_package_manager_busy()
 
         return context
 

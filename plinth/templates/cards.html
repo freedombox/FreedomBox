@@ -33,26 +33,53 @@
   <div class="container card-container">
     <div class="row">
       <div class="card-list">
-
         {% for item in submenu.sorted_items %}
-          <div class="card thumbnail">
-            <a href="{{ item.url }}" class="nav-link">
-              <div class="card-title">{{ item.name }}</div>
-              <div class="card-icon">
-                {% if 'fa-' in item.icon %}
-                  <span class="fa {{ item.icon }}"></span>
-                {% else %}
-                  <img src="{% static 'theme/icons/' %}{{ item.icon }}.png"/>
-                {% endif %}
-              </div>
-              <div class="card-description">{{ item.short_description}}</div>
-            </a>
-          </div>
+          {% if not show_secondary or not item.secondary %}
+            <div class="card thumbnail">
+              <a href="{{ item.url }}" class="nav-link">
+                <div class="card-title">{{ item.name }}</div>
+                <div class="card-icon">
+                  {% if 'fa-' in item.icon %}
+                    <span class="fa {{ item.icon }}"></span>
+                  {% else %}
+                    <img src="{% static 'theme/icons/' %}{{ item.icon }}.png"/>
+                  {% endif %}
+                </div>
+                <div class="card-description">{{ item.short_description}}</div>
+              </a>
+            </div>
+          {% endif %}
         {% endfor %}
-
       </div>
     </div>
   </div>
+
+  {% if show_secondary %}
+    <div class="container card-container">
+      <div class="card-title text-center">{% trans "Disabled" %}</div>
+      <div class="row">
+        <div class="card-list">
+          {% for item in submenu.sorted_items %}
+            {% if item.secondary %}
+              <div class="card thumbnail">
+                <a href="{{ item.url }}" class="nav-link">
+                  <div class="card-title">{{ item.name }}</div>
+                  <div class="card-icon">
+                    {% if 'fa-' in item.icon %}
+                      <span class="fa {{ item.icon }}"></span>
+                    {% else %}
+                      <img src="{% static 'theme/icons/' %}{{ item.icon }}.png"/>
+                    {% endif %}
+                  </div>
+                  <div class="card-description">{{ item.short_description}}</div>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
 
   {% block content-container %}
   {% endblock %}

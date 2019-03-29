@@ -97,6 +97,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('tahoe:index')
 
 
 def setup(helper, old_version=None):
@@ -124,6 +125,8 @@ def post_setup(configured_domain_name):
                                          is_running=is_running)
     service.notify_enabled(None, True)
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('tahoe:index')
 
 
 def add_shortcut():
@@ -150,12 +153,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('tahoe-lafs', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('tahoe:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('tahoe-lafs', ['disable'])
     frontpage.remove_shortcut('tahoe-lafs')
+    menu = main_menu.get('apps')
+    menu.demote_item('tahoe:index')
 
 
 def diagnose():

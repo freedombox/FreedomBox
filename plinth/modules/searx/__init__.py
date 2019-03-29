@@ -56,8 +56,7 @@ manual_page = 'Searx'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'searx', 'searx:index',
-                     short_description)
+    menu.add_urlname(name, 'searx', 'searx:index', short_description)
     register_group(group)
 
     global service
@@ -70,6 +69,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('searx:index')
 
 
 def setup(helper, old_version=None):
@@ -86,12 +86,15 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'searx:index')
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut('searx', name, short_description=short_description,
-                           url='/searx/', login_required=True, allowed_groups=[group[0]])
+                           url='/searx/', login_required=True,
+                           allowed_groups=[group[0]])
 
 
 def get_safe_search_setting():
@@ -110,12 +113,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('searx', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('searx:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('searx', ['disable'])
     frontpage.remove_shortcut('searx')
+    menu = main_menu.get('apps')
+    menu.demote_item('searx:index')
 
 
 def diagnose():

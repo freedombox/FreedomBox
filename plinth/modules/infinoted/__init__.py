@@ -58,22 +58,17 @@ clients = clients
 def init():
     """Initialize the infinoted module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'infinoted', 'infinoted:index',
-                     short_description)
+    menu.add_urlname(name, 'infinoted', 'infinoted:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['infinoted-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
-
+        service = service_module.Service(managed_services[0], name, ports=[
+            'infinoted-plinth'
+        ], is_external=True, enable=enable, disable=disable)
         if service.is_enabled():
             add_shortcut()
+            menu.promote_item('infinoted:index')
 
 
 class InfinotedServiceView(ServiceView):
@@ -89,26 +84,20 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'infinoted', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['infinoted-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'infinoted-plinth'
+        ], is_external=True, enable=enable, disable=disable)
 
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'infinoted:index')
 
 
 def add_shortcut():
     frontpage.add_shortcut(
-        'infinoted',
-        name,
-        short_description=short_description,
-        url=None,
-        details=description,
-        configure_url=reverse_lazy('infinoted:index'),
+        'infinoted', name, short_description=short_description, url=None,
+        details=description, configure_url=reverse_lazy('infinoted:index'),
         login_required=False)
 
 
@@ -116,12 +105,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('infinoted:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('infinoted')
+    menu = main_menu.get('apps')
+    menu.demote_item('infinoted:index')
 
 
 def diagnose():

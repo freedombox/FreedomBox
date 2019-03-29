@@ -67,8 +67,7 @@ manual_page = 'Quassel'
 def init():
     """Initialize the quassel module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'quassel', 'quassel:index',
-                     short_description)
+    menu.add_urlname(name, 'quassel', 'quassel:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -79,6 +78,7 @@ def init():
 
         if service.is_enabled():
             add_shortcut()
+            menu.promote_item('quassel:index')
 
 
 class QuasselServiceView(ServiceView):
@@ -99,6 +99,8 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'quassel:index')
 
 
 def add_shortcut():
@@ -112,12 +114,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('quassel:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('quassel')
+    menu = main_menu.get('apps')
+    menu.demote_item('quassel:index')
 
 
 def diagnose():

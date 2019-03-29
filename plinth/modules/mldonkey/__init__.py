@@ -79,6 +79,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('mldonkey:index')
 
 
 def setup(helper, old_version=None):
@@ -95,6 +96,8 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'mldonkey:index')
 
 
 def add_shortcut():
@@ -119,12 +122,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('mldonkey', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('mldonkey:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('mldonkey', ['disable'])
     frontpage.remove_shortcut('mldonkey')
+    menu = main_menu.get('apps')
+    menu.demote_item('mldonkey:index')
 
 
 def diagnose():

@@ -67,6 +67,7 @@ def init():
 
         if service.is_enabled() and is_setup():
             add_shortcut()
+            menu.promote_item('openvpn:index')
 
 
 def setup(helper, old_version=None):
@@ -81,6 +82,8 @@ def setup(helper, old_version=None):
 
     if service.is_enabled() and is_setup():
         add_shortcut()
+        menu = main_menu.get('apps')
+        helper.call('post', menu.promote_item, 'openvpn:index')
 
 
 def add_shortcut():
@@ -104,12 +107,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('openvpn:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('openvpn')
+    menu = main_menu.get('apps')
+    menu.demote_item('openvpn:index')
 
 
 def diagnose():

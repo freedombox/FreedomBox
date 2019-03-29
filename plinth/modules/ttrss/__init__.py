@@ -67,8 +67,7 @@ manual_page = 'TinyTinyRSS'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'ttrss', 'ttrss:index',
-                     short_description)
+    menu.add_urlname(name, 'ttrss', 'ttrss:index', short_description)
     register_group(group)
 
     global service
@@ -81,6 +80,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('ttrss:index')
 
 
 def setup(helper, old_version=None):
@@ -97,6 +97,8 @@ def setup(helper, old_version=None):
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'ttrss:index')
 
 
 def force_upgrade(helper, packages):
@@ -131,12 +133,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('ttrss', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('ttrss:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ttrss', ['disable'])
     frontpage.remove_shortcut('ttrss')
+    menu = main_menu.get('apps')
+    menu.demote_item('ttrss:index')
 
 
 def diagnose():

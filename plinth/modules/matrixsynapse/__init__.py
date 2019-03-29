@@ -18,7 +18,6 @@
 FreedomBox app to configure matrix-synapse server.
 """
 
-import json
 import logging
 import os
 
@@ -83,6 +82,7 @@ def init():
                                          disable=disable)
         if is_enabled():
             add_shortcut()
+            menu.promote_item('matrixsynapse:index')
 
 
 def setup(helper, old_version=None):
@@ -99,6 +99,8 @@ def setup(helper, old_version=None):
                 ['post-install'])
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'matrixsynapse:index')
 
 
 def add_shortcut():
@@ -123,12 +125,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('matrixsynapse', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('matrixsynapse:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('matrixsynapse', ['disable'])
     frontpage.remove_shortcut('matrixsynapse')
+    menu = main_menu.get('apps')
+    menu.demote_item('matrixsynapse:index')
 
 
 def diagnose():

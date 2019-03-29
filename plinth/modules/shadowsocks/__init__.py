@@ -48,8 +48,8 @@ description = [
         _('Your {box_name} can run a Shadowsocks client, that can connect to '
           'a Shadowsocks server. It will also run a SOCKS5 proxy. Local '
           'devices can connect to this proxy, and their data will be '
-          'encrypted and proxied through the Shadowsocks server.'), box_name=_(
-              cfg.box_name)),
+          'encrypted and proxied through the Shadowsocks server.'),
+        box_name=_(cfg.box_name)),
     _('To use Shadowsocks after setup, set the SOCKS5 proxy URL in your '
       'device, browser or application to http://freedombox_address:1080/')
 ]
@@ -73,6 +73,7 @@ def init():
 
         if service.is_enabled():
             add_shortcut()
+            menu.promote_item('shadowsocks:index')
 
 
 def setup(helper, old_version=None):
@@ -85,6 +86,9 @@ def setup(helper, old_version=None):
             'shadowsocks-local-plinth'
         ], is_external=False, is_enabled=is_enabled, is_running=is_running,
                                          enable=enable, disable=disable)
+
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'shadowsocks:index')
 
 
 def add_shortcut():
@@ -109,12 +113,16 @@ def enable():
     """Enable service."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('shadowsocks:index')
 
 
 def disable():
     """Disable service."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('shadowsocks')
+    menu = main_menu.get('apps')
+    menu.demote_item('shadowsocks:index')
 
 
 def diagnose():

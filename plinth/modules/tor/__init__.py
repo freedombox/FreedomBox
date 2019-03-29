@@ -71,6 +71,9 @@ def init():
     needs_setup = setup_helper.get_state() == 'needs-setup'
 
     if not needs_setup:
+        if utils.is_enabled():
+            menu.promote_item('tor:index')
+
         global socks_service
         socks_service = service_module.Service(
             'tor-socks', _('Tor Socks Proxy'), ports=['tor-socks'],
@@ -167,8 +170,8 @@ def diagnose():
     ports = json.loads(output)['ports']
 
     results.append([
-        _('Tor relay port available'), 'passed'
-        if 'orport' in ports else 'failed'
+        _('Tor relay port available'),
+        'passed' if 'orport' in ports else 'failed'
     ])
     if 'orport' in ports:
         results.append(
@@ -177,16 +180,16 @@ def diagnose():
             action_utils.diagnose_port_listening(ports['orport'], 'tcp6'))
 
     results.append([
-        _('Obfs3 transport registered'), 'passed'
-        if 'obfs3' in ports else 'failed'
+        _('Obfs3 transport registered'),
+        'passed' if 'obfs3' in ports else 'failed'
     ])
     if 'obfs3' in ports:
         results.append(
             action_utils.diagnose_port_listening(ports['obfs3'], 'tcp4'))
 
     results.append([
-        _('Obfs4 transport registered'), 'passed'
-        if 'obfs4' in ports else 'failed'
+        _('Obfs4 transport registered'),
+        'passed' if 'obfs4' in ports else 'failed'
     ])
     if 'obfs4' in ports:
         results.append(

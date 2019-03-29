@@ -59,8 +59,7 @@ manual_page = 'Deluge'
 def init():
     """Initialize the Deluge module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'deluge', 'deluge:index',
-                     short_description)
+    menu.add_urlname(name, 'deluge', 'deluge:index', short_description)
     register_group(group)
 
     global service
@@ -70,9 +69,9 @@ def init():
             'http', 'https'
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
-
         if is_enabled():
             add_shortcut()
+            menu.promote_item('deluge:index')
 
 
 def setup(helper, old_version=None):
@@ -87,6 +86,8 @@ def setup(helper, old_version=None):
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'deluge:index')
 
 
 def add_shortcut():
@@ -104,12 +105,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('deluge', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('deluge:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('deluge', ['disable'])
     frontpage.remove_shortcut('deluge')
+    menu = main_menu.get('apps')
+    menu.demote_item('deluge:index')
 
 
 def diagnose():

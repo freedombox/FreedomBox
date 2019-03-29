@@ -62,6 +62,7 @@ def init():
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
+            menu.promote_item('jsxc:index')
 
 
 def setup(helper, old_version=None):
@@ -75,6 +76,8 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
 
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'jsxc:index')
 
 
 def add_shortcut():
@@ -91,7 +94,11 @@ def is_enabled():
 
 def enable():
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('jsxc:index')
 
 
 def disable():
     frontpage.remove_shortcut('jsxc')
+    menu = main_menu.get('apps')
+    menu.demote_item('jsxc:index')

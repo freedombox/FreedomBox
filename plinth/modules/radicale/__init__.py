@@ -52,7 +52,6 @@ description = [
           '<a href="http://radicale.org/clients/">supported client '
           'application</a> is needed. Radicale can be accessed by any user '
           'with a {box_name} login.'), box_name=_(cfg.box_name)),
-
     _('Radicale provides a basic web interface, which only supports creating '
       'new calendars and addressbooks. It does not support adding events or '
       'contacts, which must be done using a separate client.'),
@@ -87,6 +86,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('radicale:index')
 
 
 def setup(helper, old_version=None):
@@ -124,6 +124,8 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'radicale:index')
 
 
 def add_shortcut():
@@ -180,12 +182,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('radicale', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('radicale:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('radicale', ['disable'])
     frontpage.remove_shortcut('radicale')
+    menu = main_menu.get('apps')
+    menu.demote_item('radicale:index')
 
 
 def load_augeas():

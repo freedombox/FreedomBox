@@ -67,8 +67,7 @@ manual_page = 'Ikiwiki'
 def init():
     """Initialize the ikiwiki module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'ikiwiki', 'ikiwiki:index',
-                     short_description)
+    menu.add_urlname(name, 'ikiwiki', 'ikiwiki:index', short_description)
     register_group(group)
 
     global service
@@ -77,9 +76,9 @@ def init():
         service = service_module.Service(
             'ikiwiki', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
-
         if is_enabled():
             add_shortcuts()
+            menu.promote_item('ikiwiki:index')
 
 
 def setup(helper, old_version=None):
@@ -93,6 +92,8 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcuts)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'ikiwiki:index')
 
 
 def add_shortcuts():
@@ -113,12 +114,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['enable'])
     add_shortcuts()
+    menu = main_menu.get('apps')
+    menu.promote_item('ikiwiki:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['disable'])
     frontpage.remove_shortcut('ikiwiki*')
+    menu = main_menu.get('apps')
+    menu.demote_item('ikiwiki:index')
 
 
 def diagnose():

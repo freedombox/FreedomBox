@@ -23,7 +23,8 @@ from plinth.utils import format_lazy
 class Menu(object):
     """One menu item."""
 
-    def __init__(self, name="",short_description="", label="", icon="", url="#", order=50):
+    def __init__(self, name="", short_description="", label="", icon="",
+                 url="#", order=50):
         """label is the text that is displayed on the menu.
 
         icon is the icon to be displayed next to the label.
@@ -47,6 +48,7 @@ class Menu(object):
         self.icon = icon
         self.url = url
         self.order = order
+        self.secondary = True
         # TODO: With an ordered dictionary for self.items we could access the
         # items by their URL directly instead of searching for them each time,
         # which we do currently with the 'get' method
@@ -84,8 +86,10 @@ class Menu(object):
         return it.
 
         """
-        item = Menu(name=name, short_description=short_description, label=label, icon=icon, url=url, order=order)
+        item = Menu(name=name, short_description=short_description,
+                    label=label, icon=icon, url=url, order=order)
         self.items.append(item)
+
         return item
 
     def active_item(self, request):
@@ -93,6 +97,32 @@ class Menu(object):
         for item in self.items:
             if request.path.startswith(str(item.url)):
                 return item
+
+    def promote_item(self, urlname, url_args=None, url_kwargs=None):
+        """Promote a secondary item to an item."""
+        found_item = None
+        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
+        for item in self.items:
+            if str(item.url) == url:
+                found_item = item
+
+        if found_item:
+            found_item.secondary = False
+        else:
+            raise KeyError('Menu item not found')
+
+    def demote_item(self, urlname, url_args=None, url_kwargs=None):
+        """Demote an item to a secondary item."""
+        found_item = None
+        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
+        for item in self.items:
+            if str(item.url) == url:
+                found_item = item
+
+        if found_item:
+            found_item.secondary = True
+        else:
+            raise KeyError('Menu item not found')
 
 
 main_menu = Menu()

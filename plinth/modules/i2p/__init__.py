@@ -87,6 +87,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('i2p:index')
 
 
 def setup(helper, old_version=None):
@@ -133,6 +134,8 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', proxies_service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'i2p:index')
 
 
 def add_shortcut():
@@ -157,12 +160,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('i2p', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('i2p:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('i2p', ['disable'])
     frontpage.remove_shortcut('i2p')
+    menu = main_menu.get('apps')
+    menu.demote_item('i2p:index')
 
 
 def diagnose():

@@ -68,8 +68,7 @@ manual_page = 'Syncthing'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'syncthing', 'syncthing:index',
-                     short_description)
+    menu.add_urlname(name, 'syncthing', 'syncthing:index', short_description)
     register_group(group)
 
     global service
@@ -83,6 +82,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('syncthing:index')
 
 
 def setup(helper, old_version=None):
@@ -98,14 +98,15 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'syncthing:index')
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut('syncthing', name,
-                           short_description=short_description,
-                           url='/syncthing/', login_required=True,
-                           allowed_groups=[group[0]])
+    frontpage.add_shortcut(
+        'syncthing', name, short_description=short_description,
+        url='/syncthing/', login_required=True, allowed_groups=[group[0]])
 
 
 def is_running():
@@ -123,12 +124,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('syncthing', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('syncthing:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('syncthing', ['disable'])
     frontpage.remove_shortcut('syncthing')
+    menu = main_menu.get('apps')
+    menu.demote_item('syncthing:index')
 
 
 def diagnose():

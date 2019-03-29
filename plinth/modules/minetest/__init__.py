@@ -83,9 +83,9 @@ def init():
         service = service_module.Service(managed_services[0], name, ports=[
             'minetest-plinth'
         ], is_external=True, enable=enable, disable=disable)
-
         if service.is_enabled():
             add_shortcut()
+            menu.promote_item('minetest:index')
 
 
 def setup(helper, old_version=None):
@@ -98,6 +98,8 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'minetest:index')
 
 
 def add_shortcut():
@@ -111,12 +113,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('minetest:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('minetest')
+    menu = main_menu.get('apps')
+    menu.demote_item('minetest:index')
 
 
 def diagnose():
@@ -130,8 +136,8 @@ def diagnose():
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Php/lens', 'Php.lns')
     aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
     aug.load()

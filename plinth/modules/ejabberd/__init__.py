@@ -50,9 +50,9 @@ description = [
         _('To actually communicate, you can use the <a href="{jsxc_url}">'
           'web client</a> or any other <a href=\'https://xmpp.org/'
           'software/clients\' target=\'_blank\'>XMPP client</a>. '
-          'When enabled, ejabberd can be accessed by any <a href="{users_url}">'
-          'user with a {box_name} login</a>.'), box_name=_(cfg.box_name),
-        users_url=reverse_lazy('users:index'),
+          'When enabled, ejabberd can be accessed by any '
+          '<a href="{users_url}"> user with a {box_name} login</a>.'),
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'),
         jsxc_url=reverse_lazy('jsxc:index'))
 ]
 
@@ -82,6 +82,8 @@ def init():
             enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
+            menu.promote_item('ejabberd:index')
+
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
@@ -105,6 +107,8 @@ def setup(helper, old_version=None):
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'ejabberd:index')
 
 
 def add_shortcut():
@@ -123,12 +127,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('ejabberd', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('ejabberd:index')
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ejabberd', ['disable'])
     frontpage.remove_shortcut('ejabberd')
+    menu = main_menu.get('apps')
+    menu.demote_item('ejabberd:index')
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
