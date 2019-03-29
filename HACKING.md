@@ -34,7 +34,7 @@ and requires about 4.5 GB of disk space.
    cycle during development.
 
     ```
-    $ sudo /vagrant/run --develop
+    $ sudo -u plinth /vagrant/run --develop
     ```
 
 Note: This virtual machine has automatic upgrades disabled by default.

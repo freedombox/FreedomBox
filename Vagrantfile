@@ -19,6 +19,7 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "freedombox/plinth-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
+  config.vm.synced_folder ".", "/vagrant", owner: "plinth", group: "plinth"
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 2
     vb.memory = 2048
@@ -47,15 +48,21 @@ Vagrant.configure(2) do |config|
 for development. You can run the development version of Plinth using
 the following command.
 $ vagrant ssh
-$ sudo /vagrant/run --develop
+$ sudo -u plinth /vagrant/run --develop
 Plinth will be available at https://localhost:4430/plinth (with
 an invalid SSL certificate).
 "
 
+  config.trigger.after [:up, :resume, :reload] do |trigger|
+    trigger.info = "Set plinth user permissions for development environment"
+    trigger.run_remote = {
+      path: "vagrant-scripts/plinth-user-permissions.py"
+    }
+  end
   config.trigger.before :destroy do |trigger|
     trigger.warn = "Performing cleanup steps"
     trigger.run = {
-      path: "post-box-destroy.py"
+      path: "vagrant-scripts/post-box-destroy.py"
     }
   end
   config.vm.boot_timeout=1200
