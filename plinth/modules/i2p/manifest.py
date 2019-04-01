@@ -49,7 +49,7 @@ clients = validate([{
 
 backup = validate_backup({
     'secrets': {
-        'directories': ['/var/lib/i2p/.config']
+        'directories': ['/var/lib/i2p/i2p-config']
     },
     'services': ['i2p']
 })
