@@ -26,25 +26,26 @@ _download_url = 'https://geti2p.net/download'
 clients = validate([{
     'name':
         _('I2P'),
-    'platforms': [
-        {
-            'type': 'package',
-            'format': 'deb',
-            'name': 'i2p',
-        }, {
-            'type': 'download',
-            'os': 'gnu-linux',
-            'url': _download_url,
-        }, {
-            'type': 'download',
-            'os': 'macos',
-            'url': _download_url,
-        }, {
-            'type': 'download',
-            'os': 'windows',
-            'url': _download_url,
-        }
-    ]
+    'platforms': [{
+        'type': 'web',
+        'url': '/i2p/'
+    }, {
+        'type': 'package',
+        'format': 'deb',
+        'name': 'i2p',
+    }, {
+        'type': 'download',
+        'os': 'gnu-linux',
+        'url': _download_url,
+    }, {
+        'type': 'download',
+        'os': 'macos',
+        'url': _download_url,
+    }, {
+        'type': 'download',
+        'os': 'windows',
+        'url': _download_url,
+    }]
 }])
 
 backup = validate_backup({
