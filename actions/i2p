@@ -35,50 +35,28 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('start', help='start i2p service')
-    subparsers.add_parser('stop', help='stop i2p service')
     subparsers.add_parser('enable', help='enable i2p service')
     subparsers.add_parser('disable', help='disable i2p service')
-    subparsers.add_parser('restart', help='restart i2p service')
-    subparsers.add_parser('is-running', help='status of a service')
-    subparsers.add_parser('is-enabled', help='status a service')
 
-    subparser = subparsers.add_parser('add-favorite', help='Add an eepsite to the list of favorites')
-    subparser.add_argument("-n", "--name", help="Name of the entry", required=True)
-    subparser.add_argument("-u", "--url", help="URL of the entry", required=True)
+    subparser = subparsers.add_parser(
+        'add-favorite', help='Add an eepsite to the list of favorites')
+    subparser.add_argument('--name', help='Name of the entry', required=True)
+    subparser.add_argument('--url', help='URL of the entry', required=True)
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_start(arguments):
-    action_utils.service_start("i2p")
+def subcommand_enable(_):
+    """Enable I2P service."""
+    action_utils.service_enable('i2p')
+    action_utils.webserver_enable('i2p-freedombox')
 
 
-def subcommand_stop(arguments):
-    action_utils.service_stop("i2p")
-
-
-def subcommand_enable(arguments):
-    action_utils.service_enable("i2p")
-    action_utils.webserver_enable("i2p-plinth")
-
-
-def subcommand_disable(arguments):
-    action_utils.service_disable("i2p")
-    action_utils.webserver_disable("i2p-plinth")
-
-
-def subcommand_restart(arguments):
-    action_utils.service_restart("i2p")
-
-
-def subcommand_is_enabled(arguments):
-    print(action_utils.service_is_enabled("i2p"))
-
-
-def subcommand_is_running(arguments):
-    print(action_utils.service_is_running("i2p"))
+def subcommand_disable(_):
+    """Disable I2P service."""
+    action_utils.service_disable('i2p')
+    action_utils.webserver_disable('i2p-freedombox')
 
 
 def subcommand_add_favorite(arguments):
@@ -94,8 +72,10 @@ def subcommand_add_favorite(arguments):
         config_lines = config_file.readlines()
 
     found_favorites = False
-    treated = False
     url = arguments.url
+    new_favorite = '{name},{description},{url},{icon},'.format(
+        name=arguments.name, description='', url=arguments.url,
+        icon='/themes/console/images/eepsite.png')
     for i in range(len(config_lines)):
         line = config_lines[i]
 
@@ -107,23 +87,11 @@ def subcommand_add_favorite(arguments):
                 exit(0)
 
             # Append favorite
-            line = "%(line)s%(name)s,%(description)s,%(url)s,%(icon)s,\n" % {
-                'line': line.strip(),
-                'name': arguments.name,
-                'description': "",
-                'url': arguments.url,
-                'icon': "/themes/console/images/eepsite.png"
-            }
-            config_lines[i] = line
-            treated = True
+            config_lines[i] = line.strip() + new_favorite + '\n'
             break
 
     if not found_favorites:
-        print("No favorites line found")
-        exit(1)
-    if not treated:
-        print("Nothing to do")
-        exit(0)
+        config_lines.append('routerconsole.favorites=' + new_favorite + '\n')
 
     # Update config
     with open(router_config_path, mode='w') as config_file:

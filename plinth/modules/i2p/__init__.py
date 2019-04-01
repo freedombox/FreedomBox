@@ -123,7 +123,8 @@ def is_running():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.service_is_enabled("i2p") and action_utils.webserver_is_enabled("i2p-plinth")
+    return action_utils.service_is_enabled('i2p') and \
+        action_utils.webserver_is_enabled('i2p-freedombox')
 
 
 def enable():
