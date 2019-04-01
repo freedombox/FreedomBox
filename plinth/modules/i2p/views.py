@@ -14,10 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.template.response import TemplateResponse
+"""
+Views for I2P application.
+"""
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
+from django.views.generic import TemplateView
 
 import plinth.modules.i2p as i2p
 from plinth.views import ServiceView
@@ -26,70 +30,77 @@ subsubmenu = [{
     'url': reverse_lazy('i2p:index'),
     'text': ugettext_lazy('Configure')
 }, {
-    'url': reverse_lazy('i2p:frame_tunnels'),
+    'url': reverse_lazy('i2p:tunnels'),
     'text': ugettext_lazy('Proxies')
-}, {
-    'url': reverse_lazy('i2p:frame_torrent'),
-    'text': ugettext_lazy('Anonymous torrents')
-}]
+},
+              {
+                  'url': reverse_lazy('i2p:torrents'),
+                  'text': ugettext_lazy('Anonymous torrents')
+              }]
 
 
 class I2PServiceView(ServiceView):
     """Serve configuration page."""
-    service_id = i2p.servicename
+    service_id = i2p.service_name
+    clients = i2p.clients
     description = i2p.description
-    diagnostics_module_name = i2p.servicename
-    show_status_block = False
+    diagnostics_module_name = i2p.service_name
+    show_status_block = True
+    template_name = 'i2p.html'
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
         context = super().get_context_data(**kwargs)
-        context['subsubmenu'] = subsubmenu
+        context['title'] = i2p.name
+        context['description'] = i2p.description
         context['clients'] = i2p.clients
+        context['manual_page'] = i2p.manual_page
+        context['subsubmenu'] = subsubmenu
         return context
 
 
-def _create_i2p_frame_view(title, rel_path, description):
-    """
-    Creates a view with an iframe to the given path
+class ServiceBaseView(TemplateView):
+    """View to describe and launch a service."""
+    service_description = None
+    service_title = None
+    service_path = None
 
-    This is primarily used as a shortcut to pages under /i2p/
-
-    :param title: the page title that will have to be i18n
-    :type title: basestring
-    :param rel_path: the URL path after /i2p/<rel_path>
-    :type rel_path: basestring
-    :return: a django view
-    :rtype: callable
-    """
-    path = "/i2p/" + rel_path
-
-    def i2p_frame_view(request):
-        return TemplateResponse(
-            request, 'i2p_frame.html', {
-                'title': _(title),
-                'subsubmenu': subsubmenu,
-                'path': path,
-                'description': description
-            })
-
-    return i2p_frame_view
+    def get_context_data(self, **kwargs):
+        """Add context data for template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = i2p.name
+        context['description'] = i2p.description
+        context['clients'] = i2p.clients
+        context['manual_page'] = i2p.manual_page
+        context['subsubmenu'] = subsubmenu
+        context['service_title'] = self.service_title
+        context['service_path'] = self.service_path
+        context['service_description'] = self.service_description
+        return context
 
 
-i2p_frame_tunnels = _create_i2p_frame_view(
-    "I2P Proxies and Tunnels", "i2ptunnel", [
-        _('I2P has the concept of tunnels. These enter an exit the network and are configured and (de)activated here.'),
-        _('HTTP/S SOCKS5 proxies are entry tunnels, so they are configured here.'),
-        _('In order to allow usage by other members of your network, '
-          'select the proxy then the interface you want your proxies to be bound to and save the settings.'
-          'The interface is in the "Reachable by" dropdown list.'),
-        _('You can find the IP addresses of your interfaces/connections <a href="/plinth/sys/networks/">here</a>'),
+class TunnelsView(ServiceBaseView):
+    """View to describe and launch tunnel configuration."""
+    template_name = 'i2p_service.html'
+    service_title = _('I2P Proxies and Tunnels')
+    service_path = '/i2p/i2ptunnel/'
+    service_description = [
+        _('I2P lets you browse the Internet and hidden services (eepsites) '
+          'anonymously. For this, your browser, preferably a Tor Browser, '
+          'needs to be configured for a proxy.'),
+        _('By default HTTP, HTTPS and SOCKS5 proxies are available. Additional '
+          'proxies and tunnels may be configured using the tunnel '
+          'configuration interface.'),
     ]
-)
-i2p_frame_torrent = _create_i2p_frame_view(
-    "Anonymous torrents", "i2psnark", [
-        _('Track the progress of your anonymous torrent downloads here.'),
-        _('You can find a list of trackers on the '
-          '<a href="/i2p/i2psnark/configure" target="i2p-frame" >Configuration page</a>'),
+
+
+class TorrentsView(ServiceBaseView):
+    """View to describe and launch I2P torrents application."""
+    template_name = 'i2p_service.html'
+    service_title = _('Anonymous Torrents')
+    service_path = '/i2p/i2psnark/'
+    service_description = [
+        _('I2P provides an application to download files anonymously in a '
+          'peer-to-peer network. Download files by adding torrents or create a '
+          'new torrent to share a file.'),
     ]
-)

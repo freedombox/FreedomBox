@@ -1,0 +1,16 @@
+{% extends "service-subsubmenu.html" %}
+
+{% load i18n %}
+
+{% block configuration %}
+  {% for line in service_description %}
+    <p>{{ line|safe }}</p>
+  {% endfor %}
+
+  <p>
+    <a class="btn btn-primary" target="_blank" role="button"
+       href="{{ service_path }}">
+      {% trans "Launch" %}
+    </a>
+  </p>
+{% endblock %}

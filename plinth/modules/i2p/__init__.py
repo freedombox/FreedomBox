@@ -29,9 +29,9 @@ from .manifest import backup, clients
 
 version = 1
 
-servicename = 'i2p'
+service_name = 'i2p'
 
-managed_services = [servicename]
+managed_services = [service_name]
 
 managed_packages = ['i2p']
 
@@ -40,14 +40,14 @@ name = _('I2P')
 short_description = _('Anonymity Network')
 
 description = [
-    _('I2P is an anonymous overlay network - a network within a network. '
-      'It is intended to protect communication from dragnet surveillance '
-      'and monitoring by third parties such as ISPs.'),
-    _('When enabled, I2P\'s web interface will be available from '
-      '<a href="/i2p/">/i2p</a>.'),
-    _('The first visit will initiate the configuration process, which can also be skippped'),
-    _('You can find more information about I2P one can peruse their '
-      '<a href="https://geti2p.net" target="_blank">homepage</a>.')
+    _('The Invisible Internet Project is an anonymous network layer intended '
+      'to protect communication from censorship and surveillance. I2P '
+      'provides anonymity by sending encrypted traffic through a '
+      'volunteer-run network distributed around the world.'),
+    _('Find more information about I2P on their project '
+      '<a href="https://geti2p.net" target="_blank">homepage</a>.'),
+    _('The first visit to the provided web interface will initiate the '
+      'configuration process.')
 ]
 
 clients = clients
@@ -91,12 +91,14 @@ def setup(helper, old_version=None):
 
     # Add favorites to the configuration
     for fav_name, fav_url in additional_favorites:
-        helper.call('post', actions.superuser_run,
-                    "i2p", ["add-favorite",
-                            "--name='%s'" % fav_name,
-                            "--url='%s'" % fav_url,
-                            ])
-    helper.call('post', action_utils.webserver_enable, "proxy_html", kind="module")
+        helper.call('post', actions.superuser_run, 'i2p', [
+            'add-favorite',
+            '--name',
+            fav_name,
+            '--url',
+            fav_url,
+        ])
+    helper.call('post', enable)
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name, ports=[
