@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Wrapper to list and handle system services
 """
@@ -28,7 +27,7 @@ from plinth import action_utils, cfg
 cfg.read()
 module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
 
-I2P_CONF_DIR = "/var/lib/i2p/i2p-config"
+I2P_CONF_DIR = '/var/lib/i2p/i2p-config'
 
 
 def parse_arguments():
@@ -89,7 +88,7 @@ def subcommand_add_favorite(arguments):
     :param arguments:
     :type arguments:
     """
-    router_config_path = os.path.join(I2P_CONF_DIR, "router.config")
+    router_config_path = os.path.join(I2P_CONF_DIR, 'router.config')
     # Read config
     with open(router_config_path) as config_file:
         config_lines = config_file.readlines()
@@ -101,10 +100,10 @@ def subcommand_add_favorite(arguments):
         line = config_lines[i]
 
         # Find favorites line
-        if line.startswith("routerconsole.favorites"):
+        if line.startswith('routerconsole.favorites'):
             found_favorites = True
             if url in line:
-                print("URL already in favorites")
+                print('URL already in favorites')
                 exit(0)
 
             # Append favorite
@@ -130,7 +129,7 @@ def subcommand_add_favorite(arguments):
     with open(router_config_path, mode='w') as config_file:
         config_file.writelines(config_lines)
 
-    print("Added '%s' to favorites" % url)
+    print('Added {} to favorites'.format(url))
 
 
 def main():

@@ -24,6 +24,7 @@ from plinth import action_utils, actions, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
+
 from .manifest import backup, clients
 
 version = 1
@@ -58,18 +59,17 @@ service = None
 manual_page = 'I2P'
 
 additional_favorites = [
-    ("Searx instance", "http://ransack.i2p"),
-    ("Torrent tracker", "http://tracker2.postman.i2p"),
-    ("YaCy Legwork", "http://legwork.i2p"),
-    ("YaCy Seeker", "http://seeker.i2p"),
+    ('Searx instance', 'http://ransack.i2p'),
+    ('Torrent tracker', 'http://tracker2.postman.i2p'),
+    ('YaCy Legwork', 'http://legwork.i2p'),
+    ('YaCy Seeker', 'http://seeker.i2p'),
 ]
 
 
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'i2p', 'i2p:index',
-                     short_description)
+    menu.add_urlname(name, 'i2p', 'i2p:index', short_description)
     register_group(group)
 
     global service
@@ -87,7 +87,6 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-
     helper.install(managed_packages)
 
     # Add favorites to the configuration
@@ -105,21 +104,21 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable,
                                          is_running=is_running)
+
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut('i2p', name,
-                           short_description=short_description,
+    frontpage.add_shortcut('i2p', name, short_description=short_description,
                            url='/i2p/', login_required=True,
                            allowed_groups=[group[0]])
 
 
 def is_running():
     """Return whether the service is running."""
-    return action_utils.service_is_running("i2p")
+    return action_utils.service_is_running('i2p')
 
 
 def is_enabled():
@@ -129,13 +128,13 @@ def is_enabled():
 
 def enable():
     """Enable the module."""
-    actions.superuser_run("i2p", ["enable"])
+    actions.superuser_run('i2p', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run("i2p", ["disable"])
+    actions.superuser_run('i2p', ['disable'])
     frontpage.remove_shortcut('i2p')
 
 
