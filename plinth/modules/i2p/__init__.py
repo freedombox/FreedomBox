@@ -142,6 +142,7 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
+    results.append(action_utils.diagnose_port_listening(7657, 'tcp6'))
     results.extend(
         action_utils.diagnose_url_on_all('https://{host}/i2p/',
                                          check_certificate=False))
