@@ -15,17 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-URLs for the Diagnostics module
-"""
+@apps @i2p-app
+Feature: I2P Anonymity Network
+  Manage I2P configuration.
 
-from django.conf.urls import url
+Background:
+  Given I'm a logged in user
+  Given the i2p application is installed
 
-from . import diagnostics as views
+Scenario: Enable i2p application
+  Given the i2p application is disabled
+  When I enable the i2p application
+  Then the i2p service should be running
 
-
-urlpatterns = [
-    url(r'^sys/diagnostics/$', views.index, name='index'),
-    url(r'^sys/diagnostics/(?P<module_name>[1-9a-z\-]+)/$', views.module,
-        name='module'),
-]
+Scenario: Disable i2p application
+  Given the i2p application is enabled
+  When I disable the i2p application
+  Then the i2p service should not be running

@@ -1,0 +1,113 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Wrapper to list and handle system services
+"""
+
+import argparse
+import os
+
+from plinth import action_utils, cfg
+
+cfg.read()
+module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
+
+I2P_CONF_DIR = '/var/lib/i2p/i2p-config'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='enable i2p service')
+    subparsers.add_parser('disable', help='disable i2p service')
+
+    subparser = subparsers.add_parser(
+        'add-favorite', help='Add an eepsite to the list of favorites')
+    subparser.add_argument('--name', help='Name of the entry', required=True)
+    subparser.add_argument('--url', help='URL of the entry', required=True)
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_enable(_):
+    """Enable I2P service."""
+    action_utils.service_enable('i2p')
+    action_utils.webserver_enable('i2p-freedombox')
+
+
+def subcommand_disable(_):
+    """Disable I2P service."""
+    action_utils.service_disable('i2p')
+    action_utils.webserver_disable('i2p-freedombox')
+
+
+def subcommand_add_favorite(arguments):
+    """
+    Adds a favorite to the router.config
+
+    :param arguments:
+    :type arguments:
+    """
+    router_config_path = os.path.join(I2P_CONF_DIR, 'router.config')
+    # Read config
+    with open(router_config_path) as config_file:
+        config_lines = config_file.readlines()
+
+    found_favorites = False
+    url = arguments.url
+    new_favorite = '{name},{description},{url},{icon},'.format(
+        name=arguments.name, description='', url=arguments.url,
+        icon='/themes/console/images/eepsite.png')
+    for i in range(len(config_lines)):
+        line = config_lines[i]
+
+        # Find favorites line
+        if line.startswith('routerconsole.favorites'):
+            found_favorites = True
+            if url in line:
+                print('URL already in favorites')
+                exit(0)
+
+            # Append favorite
+            config_lines[i] = line.strip() + new_favorite + '\n'
+            break
+
+    if not found_favorites:
+        config_lines.append('routerconsole.favorites=' + new_favorite + '\n')
+
+    # Update config
+    with open(router_config_path, mode='w') as config_file:
+        config_file.writelines(config_lines)
+
+    print('Added {} to favorites'.format(url))
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
