@@ -759,8 +759,11 @@
     <para>
       <anchor id="gettinghelp"/>
     </para>
-    <para>This document is intended to give you the information you need to get started with your FreedomBox. However, if you have any questions after reading this document, you can get help by: </para>
+    <para>This manual is intended to give you the information you need to get started with your FreedomBox. However, if you have any questions after reading this document, you can get help from community contributors by: </para>
     <itemizedlist>
+      <listitem>
+        <para>Searching/asking on our <ulink url="https://discuss.freedombox.org/">discussion forum</ulink> (recommended). </para>
+      </listitem>
       <listitem>
         <para>Emailing to our mailinglist at <ulink url="mailto:freedombox-discuss@lists.alioth.debian.org">freedombox-discuss@lists.alioth.debian.org</ulink>. You can also <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">sign up</ulink> to receive copies of every discussion that happens on the mailing list or <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">read the archives</ulink>. </para>
       </listitem>
@@ -774,7 +777,7 @@
         <para>Reading the <ulink url="https://freedomboxfoundation.org/">FreedomBox Foundation's website</ulink>. </para>
       </listitem>
       <listitem>
-        <para>Reading the <ulink url="https://alioth.debian.org/projects/freedombox">FreedomBox Project Page</ulink>. </para>
+        <para>Reading the <ulink url="https://salsa.debian.org/freedombox-team/">FreedomBox Project Page</ulink>. </para>
       </listitem>
     </itemizedlist>
   </section>
@@ -1114,6 +1117,20 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
             <para>The initial password is shown in the Plinth configuration form in a hashed format. This prevents it from being read or copied. However, after the password is changed, it is shown directly, without hashing. </para>
           </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Tips</title>
+        <section>
+          <title>Transferring Downloads from the FreedomBox</title>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>Transmission's downloads directory can be added as a shared folder in the "Sharing" app. You can then access your downloads from this shared folder using a web browser. </para>
+            </listitem>
+            <listitem>
+              <para>(Advanced) If you have the ssh access to your FreedomBox, you can use sftp to browse the downloads directory using a suitable file manager or web browser (e.g. dolphin or Konqueror). </para>
+            </listitem>
+          </orderedlist>
+        </section>
       </section>
     </section>
     <section>
@@ -9075,6 +9092,38 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
+        <title>FreedomBox 19.4 (2019-04-01)</title>
+        <itemizedlist>
+          <listitem>
+            <para>clients: Open web app in a new browser tab </para>
+          </listitem>
+          <listitem>
+            <para>matrix-synapse: Change client diagnostics url </para>
+          </listitem>
+          <listitem>
+            <para>minetest: Fix duplicate domain names being displayed in UI </para>
+          </listitem>
+          <listitem>
+            <para>storage: Do not show an eject button on /boot partitions </para>
+          </listitem>
+          <listitem>
+            <para>letsencrypt: Call letsencrypt manage_hooks with correct arguments </para>
+          </listitem>
+          <listitem>
+            <para>dynamicdns: Install module by default </para>
+          </listitem>
+          <listitem>
+            <para>storage: Don't check type of the disk for / and /boot </para>
+          </listitem>
+          <listitem>
+            <para>storage: Don't log error when checking if partition is expandable </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Norwegian Bokmål, Czech, German, Hungarian, Spanish, German, and Russian. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>FreedomBox 19.3 (2019-03-18)</title>
         <itemizedlist>
           <listitem>
@@ -11004,7 +11053,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     </section>
     <section>
       <title>Welcome to newcomers</title>
-      <para>As a newcomer, you are more than welcome to introduce yourself to all users and doers on the "FreedomBox-discuss" <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the FreedomBox web interface.  </para>
+      <para>As a new contributor, you are more than welcome to introduce yourself to others on the FreedomBox <ulink url="https://discuss.freedombox.org/c/development">discussion forum</ulink>, <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the FreedomBox web interface.  </para>
     </section>
     <section>
       <title>Development priorities</title>
@@ -11019,7 +11068,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       </section>
       <section>
         <title>Bugs</title>
-        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Bugs#">List of bugs</ulink> listed on Debian universal system. Also see the <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">Packages overview for !FreedomBox packaging team</ulink> for status of various packages that we use. </para>
+        <para>List of bugs, feature requests and improvements are tracked on the FreedomBox <ulink url="https://salsa.debian.org/freedombox-team/plinth/issues/">issue tracker</ulink>.  In addition to that, see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Bugs#">list of bugs</ulink> to help out the Debian package we depend on. Also see the FreedomBox <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">packaging team's dashboard</ulink> for status of various packages that we use. </para>
       </section>
       <section>
         <title>Code</title>
@@ -11044,7 +11093,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
               <para>UI experience for the FreedomBox Service (Plinth) web interface </para>
             </listitem>
             <listitem>
-              <para>Web design for <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> pages </para>
+              <para>Web design for <ulink url="https://freedombox.org">freedombox.org</ulink>, <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> pages </para>
             </listitem>
             <listitem>
               <para>Logo and branding (we currently have <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/static/themes/default">an identity manual and logos</ulink>) </para>
@@ -11061,14 +11110,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
         </section>
         <section>
           <title>Technical Design</title>
-          <para>FreedomBox is still under development any many components are yet to be worked on.  You can contribute to the discussion on various technical design and implementation aspects of FreedomBox.  See: </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Design#">Design portal</ulink>
-              </para>
-            </listitem>
-          </itemizedlist>
+          <para>FreedomBox needs your technical expertise to devise implementation plans for upcoming features.  You can contribute to the discussion on various technical design and implementation aspects of FreedomBox.  See FreedomBox discussion forum's <ulink url="https://discuss.freedombox.org/c/development">development category</ulink>. </para>
         </section>
       </section>
       <section>
@@ -11079,7 +11121,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
         <title>Document: User Manual, Website and Wiki</title>
         <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in FreedomBox Service (Plinth) and elsewhere. </para>
         <para>If you wish to contribute to the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> (and consequently the FreedomBox manual), you can create a wiki account and start editing. </para>
-        <para>For contributing to the website please start a discussion on the FreedomBox <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
+        <para>For contributing to the website please start a discussion on the FreedomBox discussion forum's <ulink url="https://discuss.freedombox.org/c/development">development category</ulink>. </para>
       </section>
       <section>
         <title>Quality Assurance</title>
@@ -11114,7 +11156,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
           </listitem>
         </itemizedlist>
         <para>You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/plinth/locale">Salsa</ulink>. </para>
-        <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to work with others translating for that language. </para>
+        <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discussion forum's <ulink url="https://discuss.freedombox.org/c/development">development category</ulink> to work with others translating for that language. </para>
         <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Translate#">translators</ulink> page. </para>
       </section>
       <section>
@@ -11716,6 +11758,11 @@ FreedomBox app to configure Tiny Tiny RSS.
         <itemizedlist>
           <listitem>
             <para>
+              <ulink url="https://discuss.freedombox.org/">The discussion forum</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
               <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss#">The mailing list</ulink>
             </para>
           </listitem>
@@ -11751,7 +11798,7 @@ FreedomBox app to configure Tiny Tiny RSS.
             <para>Before contributing to FreedomBox Service (Plinth) code, you need understand <ulink url="https://www.python.org/">Python</ulink> and <ulink url="https://www.djangoproject.com/">Django</ulink> on top which it is built. </para>
           </listitem>
           <listitem>
-            <para>You can request for development assistance on <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss#">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
+            <para>You can request for development assistance on <ulink url="https://discuss.freedombox.org/">the discussion forum</ulink>, <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss#">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
           </listitem>
         </itemizedlist>
         <section>
@@ -11857,6 +11904,11 @@ FreedomBox app to configure Tiny Tiny RSS.
         <itemizedlist>
           <listitem>
             <para>
+              <ulink url="https://discuss.freedombox.org/">The discussion forum</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
               <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">The mailing list</ulink>
             </para>
           </listitem>
@@ -11892,7 +11944,7 @@ FreedomBox app to configure Tiny Tiny RSS.
             <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues">issue tracker</ulink>. </para>
           </listitem>
           <listitem>
-            <para>You can request for development assistance on <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
+            <para>You can request for development assistance on <ulink url="https://discuss.freedombox.org/">the discussion forum</ulink>, <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
