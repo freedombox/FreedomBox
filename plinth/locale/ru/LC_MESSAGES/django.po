@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-01 20:16-0400\n"
-"PO-Revision-Date: 2019-04-02 00:14+0000\n"
+"PO-Revision-Date: 2019-04-04 20:04+0000\n"
 "Last-Translator: wind <nebasvod@icloud.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/ru/>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.6-dev\n"
 
 #: plinth/action_utils.py:298
@@ -155,7 +155,7 @@ msgstr "Сгрузить файл"
 
 #: plinth/modules/backups/forms.py:88
 msgid "Backup files have to be in .tar.gz format"
-msgstr ""
+msgstr "Файлы резервного сохранения должны быть в формате .tar.gz"
 
 #: plinth/modules/backups/forms.py:89
 msgid "Select the backup file you want to upload"
@@ -163,7 +163,7 @@ msgstr "Выберите файл резервного сохранения дл
 
 #: plinth/modules/backups/forms.py:94
 msgid "SSH Repository Path"
-msgstr ""
+msgstr "Путь к репозиторию SSH"
 
 #: plinth/modules/backups/forms.py:95
 msgid ""
@@ -175,7 +175,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:98
 msgid "SSH server password"
-msgstr "Пароль сервера SSH"
+msgstr "Пароль SSH-сервера"
 
 #: plinth/modules/backups/forms.py:99
 msgid ""
@@ -214,7 +214,7 @@ msgstr "Повторите парольную фразу."
 
 #: plinth/modules/backups/forms.py:139
 msgid "The entered encryption passphrases do not match"
-msgstr ""
+msgstr "Введённые парольные фразы шифрования неправильные"
 
 #: plinth/modules/backups/forms.py:151
 #, python-format
@@ -239,27 +239,23 @@ msgstr "Репозиторий не найден"
 
 #: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
-msgstr ""
+msgstr "Неправильная парольная фраза шифрования"
 
 #: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
 msgstr "В доступе по SSH отказано"
 
 #: plinth/modules/backups/templates/backups.html:47
-#, fuzzy
-#| msgid "Existing custom services"
 msgid "Existing backups"
-msgstr "Существующие пользовательские службы"
+msgstr "Существующие резервные копии"
 
 #: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
 msgstr "Создать новый репозиторий"
 
 #: plinth/modules/backups/templates/backups.html:61
-#, fuzzy
-#| msgid "Create User"
 msgid "Add Remote Repository"
-msgstr "Создать пользователя"
+msgstr "Добавить удалённый репозиторий"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -295,6 +291,9 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Данные для входа в этот репозиторий сохранены в вашем %(box_name)s. <br /> "
+"Чтобы провести резервное сохранение на %(box_name)s, вы должны ввести данные "
+"для входа SSH и, если выбрано, парольную фразу шифрования."
 
 #: plinth/modules/backups/templates/backups_repository_add.html:43
 msgid "Create Repository"
@@ -355,6 +354,11 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Загрузка файла резервного сохранения с другого %(box_name)s для "
+"восстановления его содержимого. Вы можете выбрать приложения, которые хотите "
+"восстановить после загрузки файла резервного сохранения.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:40
 #: plinth/modules/help/templates/statuslog.html:38
@@ -414,7 +418,7 @@ msgstr "Добавить новый репозиторий."
 
 #: plinth/modules/backups/views.py:265
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Создать удаленный репозиторий резервного сохранения"
 
 #: plinth/modules/backups/views.py:296
 msgid "Repository removed. The remote backup itself was not deleted."
@@ -544,8 +548,9 @@ msgid "Apache Default"
 msgstr "По умолчанию"
 
 #: plinth/modules/config/forms.py:50
+#, fuzzy
 msgid "FreedomBox Service (Plinth)"
-msgstr ""
+msgstr "FreedomBox Service (Plinth)"
 
 #: plinth/modules/config/forms.py:62
 msgid "Hostname"
@@ -652,7 +657,7 @@ msgstr "Ошибка параметра hostname: {exception}"
 
 #: plinth/modules/config/views.py:103
 msgid "Webserver home page set"
-msgstr ""
+msgstr "Установка домашней страницы веб-сервера"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -3987,6 +3992,9 @@ msgid ""
 "calendars and addressbooks. It does not support adding events or contacts, "
 "which must be done using a separate client."
 msgstr ""
+"Radicale предоставляет базовый веб-интерфейс, который поддерживает только "
+"создание новых календарей и адресных книг. Он не поддерживает добавление "
+"событий или контактов, для этого требуется отдельный клиент."
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -4539,7 +4547,7 @@ msgstr ""
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Free Disk Space to Maintain"
-msgstr ""
+msgstr "Имеющееся свободное дисковое пространство"
 
 #: plinth/modules/snapshot/forms.py:28
 msgid ""
@@ -4659,6 +4667,8 @@ msgid ""
 "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
+"Вы имеете файловую систему типа <strong>%(fs_type)s</strong>. Снимки сейчас "
+"доступны только для файловой системы <strong>%(types_supported)s</strong> ."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
@@ -4709,7 +4719,7 @@ msgstr "Удалить все снапшоты"
 
 #: plinth/modules/snapshot/views.py:176
 msgid "Snapshot is currently in use. Please try again later."
-msgstr ""
+msgstr "Снимок сейчас используется. Попробуйте позже."
 
 #: plinth/modules/snapshot/views.py:199
 #, python-brace-format
@@ -5340,7 +5350,7 @@ msgstr "Обновление"
 
 #: plinth/modules/upgrades/__init__.py:38
 msgid "Check for and apply the latest software and security updates."
-msgstr ""
+msgstr "Проверьте и установите новейшие программы и обновления безопасности."
 
 #: plinth/modules/upgrades/forms.py:28
 #, fuzzy
@@ -5467,7 +5477,7 @@ msgstr "Не удалось добавить нового пользовател
 
 #: plinth/modules/users/forms.py:150
 msgid "Authorized SSH Keys"
-msgstr ""
+msgstr "Авторизованные SSH ключи"
 
 #: plinth/modules/users/forms.py:154
 msgid ""
@@ -5958,8 +5968,9 @@ msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% завершено"
 
 #: plinth/web_framework.py:186
+#, fuzzy
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #~ msgid "Current status:"
 #~ msgstr "Текущий статус:"
