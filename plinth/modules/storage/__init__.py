@@ -17,7 +17,6 @@
 """
 FreedomBox app to manage storage.
 """
-import json
 import logging
 import subprocess
 
@@ -26,11 +25,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions, cfg
 from plinth import service as service_module
+from plinth import utils
 from plinth.errors import PlinthError
 from plinth.menu import main_menu
-from plinth.utils import format_lazy, import_from_gi, is_user_admin
-
-from .manifest import backup
+from plinth.utils import format_lazy, import_from_gi
 
 version = 3
 
@@ -65,36 +63,58 @@ def init():
 
 def get_disks():
     """Returns list of disks by combining information from df and lsblk."""
+    disks = _get_disks_from_udisks()
     disks_from_df = _get_disks_from_df()
-    disks_from_lsblk = _get_disks_from_lsblk()
-    # Combine both sources of info dicts into one dict, based on mount point;
-    # note this discards disks without a (current) mount point.
-    combined_list = []
-    for disk_from_df in disks_from_df:
-        for disk_from_lsblk in disks_from_lsblk:
-            if disk_from_df['mount_point'] == disk_from_lsblk['mountpoint']:
-                disk_from_df.update(disk_from_lsblk)
-                combined_list.append(disk_from_df)
 
-    for disk in combined_list:
-        disk['is_removable'] = is_removable_device(disk)
+    # Add size info from df to the disks from udisks based on mount point.
+    for disk_from_udisks in disks:
+        for disk_from_df in disks_from_df:
+            if disk_from_udisks['mount_point'] == disk_from_df['mount_point']:
+                disk_from_udisks.update(disk_from_df)
 
-    return combined_list
+    return sorted(disks, key=lambda disk: disk['device'])
+
+
+def _get_disks_from_udisks():
+    """List devices that can be ejected."""
+    udisks = utils.import_from_gi('UDisks', '2.0')
+    client = udisks.Client.new_sync()
+    object_manager = client.get_object_manager()
+    devices = []
+
+    for obj in object_manager.get_objects():
+
+        if not obj.get_block():
+            continue
+
+        block = obj.get_block()
+
+        if block.props.id_usage != 'filesystem':
+            continue
+
+        device = {
+            'device': block.props.device,
+            'label': block.props.id_label,
+            'size': format_bytes(block.props.size),
+            'filesystem_type': block.props.id_type,
+            'is_removable': not block.props.hint_system
+        }
+        try:
+            device['mount_point'] = obj.get_filesystem().props.mount_points[0]
+        except Exception:
+            continue
+        devices.append(device)
+
+    return devices
 
 
 def _get_disks_from_df():
     """Return the list of disks and free space available using 'df'."""
-    command = [
-        'df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
-        '--block-size=1', '--output=source,fstype,size,used,avail,pcent,target'
-    ]
     try:
-        process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+        output = actions.superuser_run('storage', ['usage-info'])
     except subprocess.CalledProcessError as exception:
         logger.exception('Error getting disk information: %s', exception)
         return []
-
-    output = process.stdout.decode()
 
     disks = []
     for line in output.splitlines()[1:]:
@@ -114,25 +134,6 @@ def _get_disks_from_df():
     return disks
 
 
-def _get_disks_from_lsblk():
-    """Return the list of disks and other information from 'lsblk'."""
-    command = [
-        'lsblk', '--json', '--output', 'label,kname,pkname,mountpoint,type'
-    ]
-    try:
-        process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    except subprocess.CalledProcessError as exception:
-        logger.exception('Error getting disk information: %s', exception)
-        return []
-
-    output = process.stdout.decode()
-    disks = json.loads(output)['blockdevices']
-    for disk in disks:
-        disk['dev_kname'] = '/dev/{0}'.format(disk['kname'])
-
-    return disks
-
-
 def get_filesystem_type(mount_point='/'):
     """Returns the type of the filesystem mounted at mountpoint."""
     for partition in psutil.disk_partitions():
@@ -145,7 +146,7 @@ def get_filesystem_type(mount_point='/'):
 def get_disk_info(mount_point):
     """Get information about the free space of a drive"""
     disks = get_disks()
-    list_root = [disk for disk in disks if disk['mountpoint'] == mount_point]
+    list_root = [disk for disk in disks if disk['mount_point'] == mount_point]
     if not list_root:
         raise PlinthError('Mount point {} not found.'.format(mount_point))
 
@@ -162,24 +163,9 @@ def get_disk_info(mount_point):
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
     for disk in disks:
-        if is_root_partition(disk):
-            return disk['dev_kname']
+        if disk['mount_point'] == '/':
+            return disk['device']
     return None
-
-
-def is_removable_device(disk):
-    """Return whether a given disk is a removable device or not."""
-    return not (is_root_partition(disk) or is_boot_partition(disk))
-
-
-def is_root_partition(disk):
-    """Returns whether this disk is mounted at /."""
-    return disk['mountpoint'] == '/'
-
-
-def is_boot_partition(disk):
-    """Returns whether this disk is mounted at /boot."""
-    return disk['mountpoint'] == '/boot'
 
 
 def is_expandable(device):

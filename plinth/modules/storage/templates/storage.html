@@ -66,10 +66,10 @@
     <tbody>
       {% for disk in disks %}
         <tr>
-          <td>{{ disk.dev_kname }}</td>
+          <td>{{ disk.device }}</td>
           <td>{{ disk.label|default_if_none:"" }}</td>
           <td>{{ disk.mount_point }}</td>
-          <td>{{ disk.file_system_type }}</td>
+          <td>{{ disk.filesystem_type }}</td>
           <td>
             <div class="progress">
               {% if disk.percent_used < 75 %}
@@ -90,7 +90,7 @@
           <td>
             {% if disk.is_removable %}
               <form class="form" method="post"
-                    action="{% url 'storage:eject' disk.dev_kname|urlencode:'' %}">
+                    action="{% url 'storage:eject' disk.device|urlencode:'' %}">
                 {% csrf_token %}
 
                 <button type="submit"
