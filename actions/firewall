@@ -46,6 +46,12 @@ def parse_arguments():
         '--zone', help='Zone from which the list is to be retrieved',
         required=True)
 
+    # Get service ports
+    get_service_ports = subparsers.add_parser(
+        'get-service-ports', help='Get list of ports for service')
+    get_service_ports.add_argument('--service', help='Name of service',
+                                   required=True)
+
     # Get interface status
     get_interfaces = subparsers.add_parser(
         'get-interfaces', help='Get list of interfaces in a zone')
@@ -105,8 +111,8 @@ def _flush_iptables_rules():
 def set_firewall_backend(backend):
     """Set FirewallBackend attribute to the specified string."""
     conf_file = '/etc/firewalld/firewalld.conf'
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # lens for shell-script config file
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
@@ -148,6 +154,14 @@ def subcommand_get_enabled_services(arguments):
     """Print the status of variours services"""
     subprocess.call(
         ['firewall-cmd', '--zone', arguments.zone, '--list-services'])
+
+
+def subcommand_get_service_ports(arguments):
+    """Print list of ports for service"""
+    subprocess.call([
+        'firewall-cmd', '--permanent', '--service', arguments.service,
+        '--get-ports'
+    ])
 
 
 def subcommand_get_interfaces(arguments):

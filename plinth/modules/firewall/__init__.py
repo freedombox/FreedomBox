@@ -95,6 +95,13 @@ def get_enabled_services(zone):
     return output.split()
 
 
+def get_port_details(service_port):
+    """Return the port types and numbers for a service port"""
+    output = _run(
+        ['get-service-ports', '--service', service_port], superuser=True)
+    return output.split()
+
+
 def get_interfaces(zone):
     """Return the list of interfaces in a zone."""
     output = _run(['get-interfaces', '--zone', zone], superuser=True)
