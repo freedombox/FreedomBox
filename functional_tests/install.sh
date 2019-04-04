@@ -4,7 +4,7 @@ IFS=$'\n\t'
 
 echo "Installing requirements"
 sudo apt-get install -yq --no-install-recommends \
-    python3-pytest \
+    python3-pytest python3-pytest-django \
     python3-pip firefox \
     xvfb
 pip3 install wheel

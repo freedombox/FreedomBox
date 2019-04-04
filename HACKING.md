@@ -218,7 +218,7 @@ tests will create the required user using FreedomBox's first boot process.
 export FREEDOMBOX_URL=https://localhost
 ```
 
-You will be running `py.test-3`. 
+You will be running `py.test-3`.
 
 ```
 $ py.test-3 --include-functional
