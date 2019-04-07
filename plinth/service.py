@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Framework for working with servers and their services.
 """
@@ -44,6 +43,7 @@ class Service():
     - disable (optional): method
     - is_running (optional): Boolean or a method returning Boolean
     """
+
     def __init__(self, service_id, name, ports=None, is_external=False,
                  is_enabled=None, enable=None, disable=None, is_running=None):
         if ports is None:
@@ -64,6 +64,19 @@ class Service():
         # Maintain a complete list of services
         assert service_id not in services
         services[service_id] = self
+
+    @property
+    def ports_details(self):
+        """Retrieve details of ports associated with service."""
+        from plinth.modules import firewall
+        ports_details = []
+        for port in self.ports:
+            ports_details.append({
+                'name': port,
+                'details': firewall.get_port_details(port),
+            })
+
+        return ports_details
 
     def enable(self):
         if self._enable is None:
@@ -126,6 +139,8 @@ def init():
             is_enabled=True)
     Service('https', _('Web Server over Secure Socket Layer'), ports=['https'],
             is_external=True, is_enabled=True)
-    Service('plinth', format_lazy(_('{box_name} Web Interface (Plinth)'),
-                                  box_name=_(cfg.box_name)),
-            ports=['https'], is_external=True, is_enabled=True)
+    Service(
+        'plinth',
+        format_lazy(
+            _('{box_name} Web Interface (Plinth)'), box_name=_(cfg.box_name)),
+        ports=['https'], is_external=True, is_enabled=True)

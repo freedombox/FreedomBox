@@ -67,19 +67,19 @@
                 {% endif %}
               </td>
             </tr>
-            {% for port in service.ports %}
+            {% for port in service.ports_details %}
               <tr class="collapse out {{service.service_id}}"
                   style="background-color: #f9f9f9" >
                 <td></td>
-                <td class='cell-indented'><em>{{ port }}</em></td>
+                <td class='cell-indented'><em>{{ port.name }}</em> ({{ port.details }})</td>
                 <td>
-                  {% if port in internal_enabled_services and port in external_enabled_services %}
+                  {% if port.name in internal_enabled_services and port.name in external_enabled_services %}
                     <span class='label label-success'>
                       {% trans "Permitted" %}</span>
-                  {% elif port in internal_enabled_services %}
+                  {% elif port.name in internal_enabled_services %}
                     <span class='label label-warning'>
                       {% trans "Permitted (internal only)" %}</span>
-                  {% elif port in external_enabled_services %}
+                  {% elif port.name in external_enabled_services %}
                     <span class='label label-warning'>
                       {% trans "Permitted (external only)" %}</span>
                   {% else %}

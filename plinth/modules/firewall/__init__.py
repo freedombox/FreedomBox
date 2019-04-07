@@ -50,6 +50,8 @@ manual_page = 'Firewall'
 
 LOGGER = logging.getLogger(__name__)
 
+_port_details = {}
+
 
 def init():
     """Initailze firewall module"""
@@ -97,9 +99,13 @@ def get_enabled_services(zone):
 
 def get_port_details(service_port):
     """Return the port types and numbers for a service port"""
-    output = _run(
-        ['get-service-ports', '--service', service_port], superuser=True)
-    return output.split()
+    try:
+        return _port_details[service_port]
+    except KeyError:
+        output = _run(['get-service-ports', '--service', service_port],
+                      superuser=True)
+        _port_details[service_port] = output.strip()
+        return _port_details[service_port]
 
 
 def get_interfaces(zone):
