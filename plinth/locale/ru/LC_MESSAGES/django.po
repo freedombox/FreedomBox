@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-01 20:16-0400\n"
-"PO-Revision-Date: 2019-04-04 20:04+0000\n"
+"PO-Revision-Date: 2019-04-09 13:04+0000\n"
 "Last-Translator: wind <nebasvod@icloud.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/ru/>\n"
@@ -139,7 +139,7 @@ msgstr "{app} (Нет данных для резервного сохранен�
 
 #: plinth/modules/backups/forms.py:58
 msgid "Included apps"
-msgstr ""
+msgstr "Включённые приложения"
 
 #: plinth/modules/backups/forms.py:58
 msgid "Apps to include in the backup"
@@ -322,6 +322,13 @@ msgid ""
 "      can add it again later on.\n"
 "    "
 msgstr ""
+"\n"
+"      ......Репозиторий, находящийся на удалённой машине, не может быть "
+"стёрт.\n"
+".....Это только удалит репозиторий из списка на странице резервного "
+"сохранения, ......вы сможете позже снова добавить его. \n"
+"....\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 #: plinth/modules/backups/views.py:286
@@ -338,10 +345,8 @@ msgid "Restore"
 msgstr "Восстановить"
 
 #: plinth/modules/backups/templates/backups_restore.html:47
-#, fuzzy
-#| msgid "Restore"
 msgid "Restoring"
-msgstr "Восстановить"
+msgstr "Восстановление"
 
 #: plinth/modules/backups/templates/backups_upload.html:30
 #, python-format
@@ -371,10 +376,12 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"Вы имеете %(max_filesize)s для резервного сохранения. Превышение этого "
+"лимита может сделать ваш %(box_name)s неработоспособным."
 
 #: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
-msgstr "Скачать файл"
+msgstr "Загрузить файл"
 
 #: plinth/modules/backups/views.py:53
 msgid "Upload"
@@ -397,20 +404,16 @@ msgid "Archive deleted."
 msgstr "Архив удалён."
 
 #: plinth/modules/backups/views.py:174
-#, fuzzy
-#| msgid "Restored data from backup."
 msgid "Restored files from backup."
-msgstr "Данные из резервной копии восстановлены."
+msgstr "Восстановленные файлы из резервного копирования."
 
 #: plinth/modules/backups/views.py:198
 msgid "No backup file found."
 msgstr "Резервных  копий не найдено."
 
 #: plinth/modules/backups/views.py:206
-#, fuzzy
-#| msgid "Restore from backup"
 msgid "Restore from uploaded file"
-msgstr "Восстановить из резервной копии"
+msgstr "Восстановить из загруженного файла"
 
 #: plinth/modules/backups/views.py:260
 msgid "Added new repository."
@@ -423,16 +426,16 @@ msgstr "Создать удаленный репозиторий резервн�
 #: plinth/modules/backups/views.py:296
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr ""
+"Репозиторий удалён. Файлы резервного сохранения на удаленной машине не были "
+"удалены."
 
 #: plinth/modules/backups/views.py:304
 msgid "Unmounting failed!"
-msgstr ""
+msgstr "Размонтирование не удалось!"
 
 #: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
-#, fuzzy
-#| msgid "The operation failed."
 msgid "Mounting failed"
-msgstr "Операция не удалась."
+msgstr "Монтирование не удалась"
 
 #: plinth/modules/bind/__init__.py:36
 msgid "BIND"
@@ -542,13 +545,10 @@ msgid "Invalid domain name"
 msgstr "Недопустимое имя домена"
 
 #: plinth/modules/config/forms.py:49
-#, fuzzy
-#| msgid "Default"
 msgid "Apache Default"
-msgstr "По умолчанию"
+msgstr "Apache по умолчанию"
 
 #: plinth/modules/config/forms.py:50
-#, fuzzy
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox Service (Plinth)"
 
@@ -590,20 +590,11 @@ msgstr ""
 "символов или меньше."
 
 #: plinth/modules/config/forms.py:91
-#, fuzzy
-#| msgid "Web Server (HTTP)"
 msgid "Webserver Home Page"
-msgstr "Веб-сервер (HTTP)"
+msgstr "Домашняя страница веб-сервера"
 
 #: plinth/modules/config/forms.py:93
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default web application that must be served when someone "
-#| "visits your {box_name} on the web. A typical use case is to set your blog "
-#| "or wiki as the landing page when someone visits the domain name. Note "
-#| "that once the default app is set to something other than {box_name} "
-#| "Service (Plinth), your users must explicitly type /plinth or /freedombox "
-#| "to reach {box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -611,12 +602,12 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
-"Выберите веб-приложение по умолчанию, которое должно быть представлено, "
-"когда кто-то посещает ваш {box_name} в сети. Типичный пример – это ваш блог "
-"или вики в качестве стартовой страницы на доменном имени. Имейте в виду, что "
-"когда приложением по умолчанию указано что-то иное, чем сервис {box_name} "
-"(Plinth), ваши пользователи должны явно указывать /plinth или /freedombox "
-"для доступа к сервису {box_name} (Plinth)."
+"Выберите страницу по умолчанию, которая должна быть представлена, когда кто-"
+"то посещает ваш {box_name}. Типичный пример – это ваш блог или вики в "
+"качестве стартовой страницы на доменном имени. Имейте в виду, что когда "
+"приложением по умолчанию указано что-то иное, чем сервис {box_name} (Plinth)"
+", ваши пользователи должны явно указывать /plinth или /freedombox для "
+"доступа к сервису {box_name} (Plinth)."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/power/templates/power_restart.html:42
@@ -650,10 +641,9 @@ msgid "Domain name set"
 msgstr "Смена доменного имени"
 
 #: plinth/modules/config/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Error setting hostname: {exception}"
+#, python-brace-format
 msgid "Error setting webserver home page: {exception}"
-msgstr "Ошибка параметра hostname: {exception}"
+msgstr "Ошибка параметра домашней страницы веб-сервера: {exception}"
 
 #: plinth/modules/config/views.py:103
 msgid "Webserver home page set"
@@ -1946,12 +1936,7 @@ msgid "Certificate renewal management and use by other modules"
 msgstr "Продление сертификата и использование другими модулями"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:140
-#, fuzzy, python-format
-#| msgid ""
-#| "If you have a Let's Encrypt certificate for your current domain, you may "
-#| "let %(box_name)s manage its renewal process. This also enables other apps "
-#| "to use that certificate, so most users would not prompted with security "
-#| "warnings when using them."
+#, python-format
 msgid ""
 "If you have a Let's Encrypt certificate for your current domain, you may let "
 "%(box_name)s manage its renewal process. This also enables other apps to use "
@@ -1959,10 +1944,10 @@ msgid ""
 "when using them."
 msgstr ""
 "Если вы имеете сертификат Let's Encrypt для вашего текущего домена, вы "
-"можете позволить %(box_name)s управлять процессом продления. Это так же "
-"позволяет другим приложениям использовать этот сертификат, поэтому "
-"большинству пользователей будут не отображаться предупреждения системы "
-"безопасности при их использовании."
+"можете позволить %(box_name)s управлять процессом продления сертификата. Это "
+"так же даст возможность другим приложениям использовать этот сертификат, так "
+"что пользователи приложений не будут получать предупреждения системы "
+"безопасности."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:169
@@ -2041,8 +2026,7 @@ msgstr ""
 "для текущего домена."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:281
-#, fuzzy, python-format
-#| msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
+#, python-format
 msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
 msgstr "Использовать сертификат %(current_domain)s для <b>ejabberd</b>"
 
@@ -2279,6 +2263,13 @@ msgid ""
 "        Encrypt</a> to obtain one.\n"
 "      "
 msgstr ""
+"\n"
+"        Выбранное доменное имя использует самоподписанный сертификат.\n"
+"        Федерация с другими инстанциями Matrix Synapse требует действующего "
+"TLS сертификата.\n"
+"        Пожалуйста, посетите <a href=\"%(letsencrypt_url)s\">Let's\n"
+"        Encrypt</a>, чтобы получить его.\n"
+"      "
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -2510,6 +2501,10 @@ msgid ""
 "interface. Users in the admin group can also control it through any of the "
 "separate mobile or desktop front-ends or a telnet interface. See manual."
 msgstr ""
+"Пользователи, входящие в группу админов и группу ed2k, могут контролировать "
+"это через веб-интерфейс. Пользователи из группы админов могут контролировать "
+"это с помощью любого мобильного или десктопного фронтэнда или через telnet. "
+"Смотри руководство."
 
 #: plinth/modules/mldonkey/__init__.py:50
 #, python-brace-format
@@ -4529,6 +4524,9 @@ msgid ""
 "and after a software installation. Older snapshots will be automatically "
 "cleaned up according to the settings below."
 msgstr ""
+"Снимки делаются периодически (так называемые регулярные снимки), а именно: "
+"до и после инсталляции программного обеспечения. Старые снимки автоматически "
+"удаляются в соответствии с установками ниже."
 
 #: plinth/modules/snapshot/__init__.py:46
 #, fuzzy
@@ -4555,6 +4553,10 @@ msgid ""
 "below this value, older snapshots are removed until this much free space is "
 "regained. The default value is 30%."
 msgstr ""
+"Соблюдай это процентное отношение свободного места на диске. Если объём "
+"свободного пространства на диске станет меньше этого значения, старые снимки "
+"будут удалятся до тех пор, пока норма не восстановится. Значение свободного "
+"места по умолчанию 30%."
 
 #: plinth/modules/snapshot/forms.py:35
 msgid "Timeline Snapshots"
@@ -4769,6 +4771,9 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
+"Этот модуль позволяет вам управлять носителями, подключёнными к вашему "
+"{box_name}. Вы можете видеть, какие носители используются, монтировать и "
+"размонтировать подключаемые носители, увеличивать корневой раздел итп."
 
 #: plinth/modules/storage/__init__.py:210
 #, python-brace-format
@@ -5392,7 +5397,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades.html:69
 msgid "Toggle recent update logs"
-msgstr ""
+msgstr "Переключите последние протоколы обновления"
 
 #: plinth/modules/upgrades/views.py:36
 #, fuzzy
