@@ -23,6 +23,7 @@ import argparse
 import os
 
 from plinth import action_utils, cfg
+from plinth.modules.i2p.helpers import TunnelEditor
 
 cfg.read()
 module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
@@ -43,6 +44,12 @@ def parse_arguments():
     subparser.add_argument('--name', help='Name of the entry', required=True)
     subparser.add_argument('--url', help='URL of the entry', required=True)
 
+    subparser = subparsers.add_parser(
+        'set-tunnel-property', help='Modify configuration of a tunnel')
+    subparser.add_argument('--name', help='Name of the tunnel', required=True)
+    subparser.add_argument('--property', help='Property to modify', required=True)
+    subparser.add_argument('--value', help='Value to assign', required=True)
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -57,6 +64,24 @@ def subcommand_disable(_):
     """Disable I2P service."""
     action_utils.service_disable('i2p')
     action_utils.webserver_disable('i2p-freedombox')
+
+
+def subcommand_set_tunnel_property(arguments):
+    """
+    Modifies the configuration for a certain tunnel
+    """
+
+    editor = TunnelEditor()
+    editor \
+        .read_conf() \
+        .set_tunnel_idx(arguments.name) \
+        .set_tunnel_prop(arguments.property, arguments.value) \
+        .write_conf()
+    print('Updated "{property}" of {filename} to {value}'.format(
+        property=editor.calc_prop_path(arguments.property),
+        filename=editor.conf_filename,
+        value=arguments.value
+    ))
 
 
 def subcommand_add_favorite(arguments):

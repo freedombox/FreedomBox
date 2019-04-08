@@ -24,7 +24,6 @@ from plinth import action_utils, actions, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
-
 from .manifest import backup, clients
 
 version = 1
@@ -65,6 +64,12 @@ additional_favorites = [
     ('YaCy Seeker', 'http://seeker.i2p'),
 ]
 
+tunnels_to_manage = [
+    'I2P HTTP Proxy',
+    'I2P HTTPS Proxy',
+    'Irc2P'
+]
+
 
 def init():
     """Intialize the module."""
@@ -97,6 +102,15 @@ def setup(helper, old_version=None):
             fav_name,
             '--url',
             fav_url,
+        ])
+
+    # Tunnels to all interfaces
+    for tunnel in tunnels_to_manage:
+        helper.call('post', actions.superuser_run, 'i2p', [
+            'set-tunnel-property',
+            '--name', tunnel,
+            '--property', 'interface',
+            '--value', '0.0.0.0'
         ])
     helper.call('post', enable)
     global service

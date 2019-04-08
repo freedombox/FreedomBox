@@ -71,7 +71,7 @@ class TunnelEditor(object):
             if match and self.aug.get(prop) == name:
                 self.idx = int(match.group(1))
                 return self
-        raise ValueError('No tunnel with that name')
+        raise ValueError('No tunnel called {}'.format(name))
 
     def calc_prop_path(self, tunnel_prop):
         """
