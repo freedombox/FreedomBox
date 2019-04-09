@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-01 20:16-0400\n"
-"PO-Revision-Date: 2019-04-09 13:04+0000\n"
+"PO-Revision-Date: 2019-04-10 16:04+0000\n"
 "Last-Translator: wind <nebasvod@icloud.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/ru/>\n"
@@ -127,10 +127,9 @@ msgstr ""
 "Резервное копирование позволяет создавать и управлять резервными архивами."
 
 #: plinth/modules/backups/__init__.py:49
-#, fuzzy, python-brace-format
-#| msgid "{box_name} Manual"
+#, python-brace-format
 msgid "{box_name} storage"
-msgstr "Руководство {box_name}"
+msgstr "Сохранение данных {box_name}"
 
 #: plinth/modules/backups/forms.py:38
 #, python-brace-format
@@ -510,22 +509,15 @@ msgstr ""
 "на основе консоли управления также доступен."
 
 #: plinth/modules/cockpit/__init__.py:51
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> with a {box_name} login. Sensitive "
-#| "information and system altering abilities are limited to users belonging "
-#| "to admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Когда включен, Cockpit доступен на <a href=\"/_cockpit/\">/_cockpit/</a> веб-"
-"сервере. Он может быть доступен <a href=\"{users_url}\">любому пользователю</"
-"a> {box_name}. Конфиденциальная информация и возможности системы доступны "
-"только группе администраторов."
+"Когда включен, Cockpit доступен на <a href=\"/_cockpit/\">/_cockpit/</a> на "
+"веб-сервере. Он может быть доступен на <a href=\"{users_url}\">любому "
+"пользователю</a> {box_name}, принадлежащему к группе админов."
 
 #: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
@@ -2031,10 +2023,8 @@ msgid "Use certificate of %(current_domain)s for <b>matrixsynapse</b>"
 msgstr "Использовать сертификат %(current_domain)s для <b>ejabberd</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:285
-#, fuzzy
-#| msgid "Use certificate of the current domain for <b>ejabberd</b>"
 msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
-msgstr "Использовать сертификат текущего домена для <b>ejabberd</b>"
+msgstr "Использовать сертификат текущего домена для <b>matrixsynapse</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:295
 #, fuzzy, python-format
@@ -2056,31 +2046,24 @@ msgstr ""
 "объединятся с другими серверами xmpp в сети."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
-#, fuzzy, python-format
-#| msgid ""
-#| "This feature only makes sense if you are using the <a href="
-#| "\"%(ejabberd_url)s\">ejabberd</a> chat server app."
+#, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Эта функция имеет смысл только если вы используете <a href=\"%(ejabberd_url)s"
-"\"> ejabberd</a> чат-сервер."
+"Эта опция имеет смысл, только если вы используете чат-сервер <a href=\""
+"%(matrixsynapse_url)s\">Matrix Synapse</a> ."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
-#, fuzzy, python-format
-#| msgid ""
-#| "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
-#| "\">ejabberd</a> chat server app, you must first enable certificate "
-#| "renewal of the current domain."
+#, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(matrixsynapse_url)s"
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Чтобы использовать сертификаты Let's Encrypt для сервера <a href="
-"\"%(ejabberd_url)s\">ejabberd</a>, вы должны включить обновление сертификата "
-"для текущего домена."
+"Чтобы использовать сертификат Let's Encrypt для чат-сервера <a href=\""
+"%(matrixsynapse_url)s\">Matrix Synapse</a>, вы должны сначала включить "
+"обновление сертификата для текущего домена."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
 msgid ""
@@ -2473,16 +2456,12 @@ msgstr "Конфигурация урона обновлена"
 
 #: plinth/modules/mldonkey/__init__.py:37
 #: plinth/modules/mldonkey/manifest.py:27
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "MLDonkey"
-msgstr "MonkeySphere"
+msgstr "MLDonkey"
 
 #: plinth/modules/mldonkey/__init__.py:39
-#, fuzzy
-#| msgid "File Sharing"
 msgid "Peer-to-peer File Sharing"
-msgstr "Обмен Файлами"
+msgstr "Файлообмен P2P"
 
 #: plinth/modules/mldonkey/__init__.py:42
 msgid ""
@@ -2515,22 +2494,16 @@ msgstr ""
 "directory."
 
 #: plinth/modules/mldonkey/__init__.py:58
-#, fuzzy
-#| msgid "Download files using BitTorrent applications"
 msgid "Download files using eDonkey applications"
-msgstr "Загружать файлы используя приложения BitTorrent"
+msgstr "Загрузить файлы, используя приложение eDonkey"
 
 #: plinth/modules/mldonkey/manifest.py:34
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "KMLDonkey"
-msgstr "MonkeySphere"
+msgstr "KMLDonkey"
 
 #: plinth/modules/mldonkey/manifest.py:46
-#, fuzzy
-#| msgid "Monkeysphere"
 msgid "AMLDonkey"
-msgstr "MonkeySphere"
+msgstr "AMLDonkey"
 
 #: plinth/modules/monkeysphere/__init__.py:31
 #: plinth/modules/monkeysphere/__init__.py:61
@@ -2757,6 +2730,10 @@ msgid ""
 "each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
+"Службы имён предоставляют перечень способов, какими {box_name} может быть "
+"достигнут из публичного интернета: доменное имя, скрытые сервисы Tor и "
+"PageKite. Для каждого способа указывается, включён или отключён доступ по "
+"HTTP, HTTPS и SSH для входящих соединений на данное имя."
 
 #: plinth/modules/names/views.py:50
 msgid "Not Available"
@@ -3392,14 +3369,7 @@ msgid "Profile"
 msgstr "Профиль"
 
 #: plinth/modules/openvpn/templates/openvpn.html:43
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  See <a href=\"https://wiki."
-#| "debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s Manual - "
-#| "OpenVPN\">documentation</a> on recommended clients and instructions on "
-#| "how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine.  OpenVPN Clients are "
@@ -3407,9 +3377,10 @@ msgid ""
 "\" title=\"%(box_name)s Manual - OpenVPN\">manual page</a> on recommended "
 "clients and instructions on how to configure them."
 msgstr ""
-"Для подключения к VPN %(box_name)s, вам надо скачать профиль и открыть его в "
-"клиенте OpenVPN. Клиенты OpenVPN доступны для большинства платформ. <a href="
-"\"https://wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s "
+"Для подключения к VPN %(box_name)s, вам надо скачать профиль и добавить его "
+"в клиент OpenVPN на вашем мобильном устройстве или настольном компьютере. "
+"Клиенты OpenVPN доступны для большинства платформ. Смотри <a href=\""
+"https://wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s "
 "Manual - OpenVPN\">Документация</a> с рекомендуемыми клиентами и "
 "инструкциями по их настройке."
 
@@ -4016,24 +3987,18 @@ msgstr ""
 "изменения в любой календарь/адресную книгу."
 
 #: plinth/modules/radicale/manifest.py:25
-#, fuzzy
 msgid "DAVx5"
 msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:27
-#, fuzzy
-#| msgid ""
-#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
-#| "your user name. DAVdroid will show all existing calendars and address "
-#| "books and you can create new."
 msgid ""
 "Enter the URL of the Radicale server (e.g. https://<your.freedombox."
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Введите URL-адрес сервера Radicale (напр. http://localhost:5232) и ваше имя "
-"пользователя. DAVdroid покажет все существующие календари и адресные книги, "
-"или создать новый."
+"Введите URL сервера Radicale (e.g. https://<your.freedombox.address>) и ваше "
+"имя пользователя. DAVx5 покажет все существующие календари и адресные книги. "
+"Вы можете создать новые."
 
 #: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
@@ -4106,10 +4071,10 @@ msgid ""
 "\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
 "a> (for Android phones)."
 msgstr ""
-"Чтобы сделать SIP звонки, требуется клиентское приложение. Доступные клиенты "
-"включают в себя <a href=\"https://jitsi.org/\">Jitsi</a> (для компьютеров) и "
-"<a href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple"
-"\">CSipSimple</a> (для телефонов на Android)."
+"Чтобы сделать SIP звонки, требуется клиентское приложение. Доступны клиенты <"
+"a href=\"https://jitsi.org/\">Jitsi</a> (для компьютеров) и <a href=\""
+"https://f-droid.org/repository/browse/?fdid=com.csipsimple\">CSipSimple</a> ("
+"для телефонов на Android)."
 
 #: plinth/modules/repro/__init__.py:52
 msgid ""
