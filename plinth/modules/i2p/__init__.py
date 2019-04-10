@@ -64,11 +64,15 @@ additional_favorites = [
     ('YaCy Seeker', 'http://seeker.i2p'),
 ]
 
-tunnels_to_manage = [
-    'I2P HTTP Proxy',
-    'I2P HTTPS Proxy',
-    'Irc2P'
-]
+tunnels_to_manage = {
+    'I2P HTTP Proxy': 'i2p_socks_http-freedombox',
+    'I2P HTTPS Proxy': 'i2p_socks_https-freedombox',
+    'Irc2P': 'i2p_irc-freedombox'
+}
+
+service_ports = [
+                    'http', 'https'
+                ] + list(tunnels_to_manage.values())
 
 
 def init():
@@ -80,9 +84,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
+        service = service_module.Service(managed_services[0], name, ports=service_ports,
+                                         is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable,
                                          is_running=is_running)
 
@@ -105,19 +108,19 @@ def setup(helper, old_version=None):
         ])
 
     # Tunnels to all interfaces
-    for tunnel in tunnels_to_manage:
+    for tunnel in tunnels_to_manage.keys():
         helper.call('post', actions.superuser_run, 'i2p', [
             'set-tunnel-property',
             '--name', tunnel,
             '--property', 'interface',
             '--value', '0.0.0.0'
         ])
+    helper.call('post', disable)
     helper.call('post', enable)
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
+        service = service_module.Service(managed_services[0], name, ports=service_ports,
+                                         is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable,
                                          is_running=is_running)
 
