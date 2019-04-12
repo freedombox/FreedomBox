@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-01 20:16-0400\n"
 "PO-Revision-Date: 2019-04-14 18:04+0000\n"
-"Last-Translator: Igor <f2404@yandex.ru>\n"
+"Last-Translator: wind <nebasvod@icloud.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/ru/>\n"
 "Language: ru\n"
@@ -150,7 +150,7 @@ msgstr "Выберите приложения, которые вы хотите 
 
 #: plinth/modules/backups/forms.py:85
 msgid "Upload File"
-msgstr "Сгрузить файл"
+msgstr "Скачать файл"
 
 #: plinth/modules/backups/forms.py:88
 msgid "Backup files have to be in .tar.gz format"
@@ -2027,12 +2027,7 @@ msgid "Use certificate of the current domain for <b>matrixsynapse</b>"
 msgstr "Использовать сертификат текущего домена для <b>matrixsynapse</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:295
-#, fuzzy, python-format
-#| msgid ""
-#| "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also "
-#| "use the Let's Encrypt certificate. This will reduce warnings about self-"
-#| "signed certificates in client applications, and enable more wide-spread "
-#| "federation with other XMPP servers in the Internet."
+#, python-format
 msgid ""
 "If enabled, the app <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</a> "
 "will also use the same Let's Encrypt certificate. Other Matrix Synapse "
@@ -2040,10 +2035,11 @@ msgid ""
 "valid TLS certificate. Federation with other instances will not work without "
 "this."
 msgstr ""
-"Если включено, <a href=\"%(ejabberd_url)s\">ejabberd</a> так-же может "
-"использовать сертификат Let's Encrypt. Это может снизить предупреждения о "
-"самоподписаных сертификатов в клиентских приложениях и позволит более широко "
-"объединятся с другими серверами xmpp в сети."
+"Если включено, приложение <a href=\"%(matrixsynapse_url)s\">Matrix "
+"Synapse</a> будет использовать тот же Let's Encrypt сертификат. Другие "
+"инстанции Matrix Synapse версии 1.0 и выше ожидают, что ваш сервер "
+"использует действующий TLS сертификат. Без него не будет действовать "
+"федерация с другими инстанциями."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
 #, python-format
@@ -4488,19 +4484,14 @@ msgstr ""
 "удаляются в соответствии с установками ниже."
 
 #: plinth/modules/snapshot/__init__.py:46
-#, fuzzy
-#| msgid ""
-#| "Snapshots work on btrfs file systems only and on the root partition only. "
-#| "Snapshots are not a replacement for backups since they are stored on the "
-#| "same partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
 "Снимки системы работают только на файловой системе btrfs и только на "
-"корневом разделе. Снимки — не замена бэкапам, так как они хранятся на том же "
-"разделе. "
+"корневом разделе. Снимки — не замена бэкапам <a href=\"/plinth/sys/backups\""
+">backups</a>, так как они хранятся на том же разделе. "
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Free Disk Space to Maintain"
@@ -5325,21 +5316,15 @@ msgid "Updating..."
 msgstr "Обновляется..."
 
 #: plinth/modules/upgrades/templates/upgrades.html:57
-#, fuzzy
-#| msgid ""
-#| "Depending on the number of packages to install, this may take a long time "
-#| "to complete.  While upgrades are in progress, you will not be able to "
-#| "install other packages.  During the upgrade, this web interface may be "
-#| "temporarily unavailable and show an error.  Refresh the page to continue."
 msgid ""
 "<strong>This may take a long time to complete</strong>. During an update, "
 "you can not install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
-"В зависимости от количества пакетов для установки это может занять "
-"продолжительное время до завершения. Во время обновления вы не сможете "
-"установить другие пакеты. Во время обновления это веб-интерфейс может быть "
-"временно недоступен и показывать ошибку. Обновите страницу, чтобы продолжить."
+"<strong>Для завершения может потребоваться много времени</strong>. Во время "
+"обновления вы не можете устанавливать приложения. Веб-интерфейс может быть "
+"временно недоступен и показывать ошибку. В таком случае, чтобы продолжить, "
+"обновите страницу."
 
 #: plinth/modules/upgrades/templates/upgrades.html:69
 msgid "Toggle recent update logs"
@@ -5800,7 +5785,7 @@ msgid ""
 msgstr ""
 "%(box_name)s, чистая смесь Debian, это 100%% свободный само-размещенный веб-"
 "сервер, позволяющий выкладывать социальные приложения на небольших машинах. "
-"Он предоставляет онлайн инструменты онлайн-коммуникации, уважающих вашу "
+"Он предоставляет онлайн инструменты онлайн-коммуникации, уважающие вашу "
 "приватность и владение данными."
 
 #: plinth/templates/index.html:124
