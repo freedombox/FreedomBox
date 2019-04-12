@@ -17,6 +17,7 @@
 Various helpers for the I2P app.
 """
 
+from collections import OrderedDict
 import os
 import re
 
@@ -25,6 +26,7 @@ import augeas
 I2P_CONF_DIR = '/var/lib/i2p/i2p-config'
 FILE_TUNNEL_CONF = os.path.join(I2P_CONF_DIR, 'i2ptunnel.config')
 TUNNEL_IDX_REGEX = re.compile(r'tunnel.(\d+).name$')
+I2P_ROUTER_CONF = os.path.join(I2P_CONF_DIR, 'router.config')
 
 
 class TunnelEditor():
@@ -133,3 +135,93 @@ class TunnelEditor():
 
     def __setitem__(self, tunnel_prop, value):
         self.aug.set(self.calc_prop_path(tunnel_prop), value)
+
+
+class RouterEditor(object):
+    """
+
+    :type aug: augeas.Augeas
+    """
+
+    FAVORITE_PROP = 'routerconsole.favorites'
+    FAVORITE_TUPLE_SIZE = 4
+
+    def __init__(self, filename=None):
+        self.conf_filename = filename or I2P_ROUTER_CONF
+        self.aug = None
+
+    def read_conf(self):
+        self.aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                                       augeas.Augeas.NO_MODL_AUTOLOAD)
+        self.aug.set('/augeas/load/Properties/lens', 'Properties.lns')
+        self.aug.set('/augeas/load/Properties/incl[last() + 1]', self.conf_filename)
+        self.aug.load()
+        return self
+
+    def write_conf(self):
+        self.aug.save()
+        return self
+
+    @property
+    def favorite_property(self):
+        return '/files{filename}/{prop}'.format(filename=self.conf_filename, prop=self.FAVORITE_PROP)
+
+    def add_favorite(self, name, url, description='', icon='/themes/console/images/eepsite.png'):
+        """
+        Adds a favorite to the router.config
+
+        Favorites are in a single string and separated by ','.
+        none of the incoming params can therefore use commas.
+        I2P replaces the commas by dots.
+
+        That's ok for the name and description,
+         but not for the url and icon
+
+        :type name: basestring
+        :type url: basestring
+        :type description: basestring
+        :type icon: basestring
+        """
+        if ',' in url:
+            raise ValueError('URL cannot contain commas')
+        if ',' in icon:
+            raise ValueError('Icon cannot contain commas')
+
+        name = name.replace(',', '.')
+        description = description.replace(',', '.')
+
+        prop = self.favorite_property
+        favorites = self.aug.get(prop) or ''
+        new_favorite = '{name},{description},{url},{icon},'.format(
+            name=name, description=description, url=url,
+            icon=icon
+        )
+        self.aug.set(prop, favorites + new_favorite)
+        return self
+
+    def get_favorites(self):
+        favs_string = self.aug.get(self.favorite_property) or ''
+        favs_split = favs_string.split(',')
+
+        # There's a trailing comma --> 1 extra
+        favs_len = len(favs_split)
+        if favs_len > 0:
+            favs_split = favs_split[:-1]
+            favs_len = len(favs_split)
+
+        if favs_len % self.FAVORITE_TUPLE_SIZE:
+            raise SyntaxError("Invalid number of fields in favorite line")
+
+        favs = OrderedDict()
+        i = 0
+        while i < favs_len:
+            next_idx = i + self.FAVORITE_TUPLE_SIZE
+            t = favs_split[i:next_idx]
+            name, description, url, icon = t
+            favs[url] = {
+                "name": name,
+                "description": description,
+                "icon": icon
+            }
+            i = next_idx
+        return favs

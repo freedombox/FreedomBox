@@ -59,6 +59,10 @@ proxies_service = None
 
 manual_page = 'I2P'
 
+# TODO: Add all default favorites
+# the router.config favorites is empty until a change is made
+# in the front-end, but we currently do not have a method of
+# doing that, so we need to add the favorites ourselves
 additional_favorites = [
     ('Searx instance', 'http://ransack.i2p'),
     ('Torrent tracker', 'http://tracker2.postman.i2p'),

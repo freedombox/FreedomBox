@@ -23,7 +23,7 @@ import argparse
 import os
 
 from plinth import action_utils, cfg
-from plinth.modules.i2p.helpers import TunnelEditor
+from plinth.modules.i2p.helpers import RouterEditor, TunnelEditor
 
 cfg.read()
 module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
@@ -87,36 +87,13 @@ def subcommand_add_favorite(arguments):
     :param arguments:
     :type arguments:
     """
-    router_config_path = os.path.join(I2P_CONF_DIR, 'router.config')
-    # Read config
-    with open(router_config_path) as config_file:
-        config_lines = config_file.readlines()
-
-    found_favorites = False
     url = arguments.url
-    new_favorite = '{name},{description},{url},{icon},'.format(
-        name=arguments.name, description='', url=arguments.url,
-        icon='/themes/console/images/eepsite.png')
-    for i in range(len(config_lines)):
-        line = config_lines[i]
 
-        # Find favorites line
-        if line.startswith('routerconsole.favorites'):
-            found_favorites = True
-            if url in line:
-                print('URL already in favorites')
-                exit(0)
-
-            # Append favorite
-            config_lines[i] = line.strip() + new_favorite + '\n'
-            break
-
-    if not found_favorites:
-        config_lines.append('routerconsole.favorites=' + new_favorite + '\n')
-
-    # Update config
-    with open(router_config_path, mode='w') as config_file:
-        config_file.writelines(config_lines)
+    editor = RouterEditor()
+    editor.read_conf().add_favorite(
+        arguments.name,
+        url
+    ).write_conf()
 
     print('Added {} to favorites'.format(url))
 
