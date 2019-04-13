@@ -166,7 +166,7 @@ class RouterEditor(object):
     def favorite_property(self):
         return '/files{filename}/{prop}'.format(filename=self.conf_filename, prop=self.FAVORITE_PROP)
 
-    def add_favorite(self, name, url, description='', icon='/themes/console/images/eepsite.png'):
+    def add_favorite(self, name, url, description=None, icon=None):
         """
         Adds a favorite to the router.config
 
@@ -182,6 +182,11 @@ class RouterEditor(object):
         :type description: basestring
         :type icon: basestring
         """
+        if not description:
+            description = ''
+        if not icon:
+            icon = '/themes/console/images/eepsite.png'
+
         if ',' in url:
             raise ValueError('URL cannot contain commas')
         if ',' in icon:

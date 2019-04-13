@@ -43,6 +43,8 @@ def parse_arguments():
         'add-favorite', help='Add an eepsite to the list of favorites')
     subparser.add_argument('--name', help='Name of the entry', required=True)
     subparser.add_argument('--url', help='URL of the entry', required=True)
+    subparser.add_argument('--description', help='short description', required=False)
+    subparser.add_argument('--icon', help='URL to icon', required=False)
 
     subparser = subparsers.add_parser('set-tunnel-property',
                                       help='Modify configuration of a tunnel')
@@ -92,7 +94,9 @@ def subcommand_add_favorite(arguments):
     editor = RouterEditor()
     editor.read_conf().add_favorite(
         arguments.name,
-        url
+        url,
+        arguments.description,
+        arguments.icon
     ).write_conf()
 
     print('Added {} to favorites'.format(url))
