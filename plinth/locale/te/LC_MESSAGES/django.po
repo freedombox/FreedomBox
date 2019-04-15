@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 20:16-0400\n"
+"POT-Creation-Date: 2019-04-15 18:31-0400\n"
 "PO-Revision-Date: 2019-02-22 12:17+0000\n"
 "Last-Translator: Darkblaze <sukakarlapudi@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -533,8 +533,8 @@ msgstr ""
 "అంగీకార సమాచారం మరియు సిస్టమ్ మార్చడం సామర్ధ్యాలు నిర్వాహక సమూహం చెందిన వినియోగదారులకు పరిమితం."
 
 #: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
-#: plinth/modules/snapshot/views.py:40
+#: plinth/modules/i2p/views.py:31 plinth/modules/ikiwiki/views.py:35
+#: plinth/modules/pagekite/views.py:36 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
@@ -894,6 +894,7 @@ msgstr ""
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
+#: plinth/modules/i2p/templates/i2p.html:60
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
@@ -1156,6 +1157,7 @@ msgstr "గురించి"
 #: plinth/modules/dynamicdns/views.py:47
 #: plinth/modules/firewall/templates/firewall.html:25
 #: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/i2p/templates/i2p.html:27
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
@@ -1280,6 +1282,7 @@ msgid "Launch web client"
 msgstr "వెబ్ క్లయింట్ ని ప్రారంభించండి"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/i2p/templates/i2p.html:52
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
@@ -1597,6 +1600,101 @@ msgid ""
 msgstr ""
 "బగ్ (తప్పుల) నివేదిక సమర్పించే ముందు దయచేసి లాగ్ నుండి ఏవైనా రహస్యపదాలను లేదా ఇతర వ్యక్తిగత సమాచారాన్ని "
 "తొలగించగలరు."
+
+#: plinth/modules/i2p/__init__.py:38 plinth/modules/i2p/manifest.py:28
+msgid "I2P"
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:40 plinth/modules/tor/__init__.py:44
+#, fuzzy
+#| msgid "Tor Anonymity Network"
+msgid "Anonymity Network"
+msgstr "టోర్ అనామిక నెట్‌వర్క్"
+
+#: plinth/modules/i2p/__init__.py:43
+msgid ""
+"The Invisible Internet Project is an anonymous network layer intended to "
+"protect communication from censorship and surveillance. I2P provides "
+"anonymity by sending encrypted traffic through a volunteer-run network "
+"distributed around the world."
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "For more information about the %(box_name)s project, see the <a href="
+#| "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+msgid ""
+"Find more information about I2P on their project <a href=\"https://geti2p.net"
+"\" target=\"_blank\">homepage</a>."
+msgstr ""
+"%(box_name)s  ప్రాజెక్ట్ కి సంబందించిన మరింత సమాచారం కోసం <a href=\"https://wiki.debian."
+"org/FreedomBox\"> %(box_name)s వికీ </a> ను దర్శించండి."
+
+#: plinth/modules/i2p/__init__.py:49
+msgid ""
+"The first visit to the provided web interface will initiate the "
+"configuration process."
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:55
+#, fuzzy
+#| msgid "Enable application"
+msgid "Manage I2P application"
+msgstr "అనువర్తనాన్ని చేతనించు"
+
+#: plinth/modules/i2p/templates/i2p.html:32 plinth/templates/service.html:56
+#, fuzzy, python-format
+#| msgid "Service discovery server is running"
+msgid "Service <em>%(service_name)s</em> is running."
+msgstr "సేవ ఆవిష్కరణ సేవికను నడుపుతోంది"
+
+#: plinth/modules/i2p/templates/i2p.html:37 plinth/templates/service.html:61
+#, fuzzy, python-format
+#| msgid "Service discovery server is not running"
+msgid "Service <em>%(service_name)s</em> is not running."
+msgstr "సేవ ఆవిష్కరణ సేవికను నడుపటంలేదు"
+
+#: plinth/modules/i2p/templates/i2p_service.html:13
+#: plinth/templates/clients.html:51
+msgid "Launch"
+msgstr "ప్రారంభించు"
+
+#: plinth/modules/i2p/views.py:34
+msgid "Proxies"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:38
+msgid "Anonymous torrents"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:85
+msgid "I2P Proxies and Tunnels"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:88
+msgid ""
+"I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
+"For this, your browser, preferably a Tor Browser, needs to be configured for "
+"a proxy."
+msgstr ""
+
+#: plinth/modules/i2p/views.py:91
+msgid ""
+"By default HTTP, HTTPS and SOCKS5 proxies are available. Additional proxies "
+"and tunnels may be configured using the tunnel configuration interface."
+msgstr ""
+
+#: plinth/modules/i2p/views.py:100
+msgid "Anonymous Torrents"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:103
+msgid ""
+"I2P provides an application to download files anonymously in a peer-to-peer "
+"network. Download files by adding torrents or create a new torrent to share "
+"a file."
+msgstr ""
 
 #: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
@@ -4759,12 +4857,12 @@ msgstr ""
 msgid "Login"
 msgstr "ప్రవేశించు"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:35 plinth/modules/storage/views.py:53
 #, fuzzy
 msgid "Storage"
 msgstr "అన్హొస్టెడ్ స్టోరేజ్  ని (పునరుద్ధరించండి)"
 
-#: plinth/modules/storage/__init__.py:45
+#: plinth/modules/storage/__init__.py:43
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -4772,85 +4870,85 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:210
+#: plinth/modules/storage/__init__.py:196
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} బైట్లు"
 
-#: plinth/modules/storage/__init__.py:214
+#: plinth/modules/storage/__init__.py:200
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} కిలోబైట్లు"
 
-#: plinth/modules/storage/__init__.py:218
+#: plinth/modules/storage/__init__.py:204
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} మెగాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:208
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} గిగాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:211
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f}  టెరాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:232
+#: plinth/modules/storage/__init__.py:218
 msgid "The operation failed."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:234
+#: plinth/modules/storage/__init__.py:220
 msgid "The operation was cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:236
+#: plinth/modules/storage/__init__.py:222
 #, fuzzy
 #| msgid "Mumble server is running"
 msgid "The device is already unmounting."
 msgstr "మంబ్లు సేవిక నడుస్తుంది"
 
-#: plinth/modules/storage/__init__.py:238
+#: plinth/modules/storage/__init__.py:224
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:227
 msgid "The operation timed out."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:229
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:232
 msgid "Attempting to unmount a device that is busy."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation has already been cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:240
 msgid "Not authorized to perform the requested operation."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:242
 #, fuzzy
 msgid "The device is already mounted."
 msgstr "ఈ సేవ ఇప్పటికే ఉంది"
 
-#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:244
 #, fuzzy
 #| msgid "Mumble server is not running"
 msgid "The device is not mounted."
 msgstr "మంబ్లు సేవిక నడవంలేదు"
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:247
 msgid "Not permitted to use the requested option."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:250
 msgid "The device is mounted by another user."
 msgstr ""
 
@@ -5050,12 +5148,6 @@ msgstr "తొలగించు"
 #: plinth/modules/tor/__init__.py:42
 msgid "Tor"
 msgstr "టార్"
-
-#: plinth/modules/tor/__init__.py:44
-#, fuzzy
-#| msgid "Tor Anonymity Network"
-msgid "Anonymity Network"
-msgstr "టోర్ అనామిక నెట్‌వర్క్"
 
 #: plinth/modules/tor/__init__.py:47
 msgid ""
@@ -5735,10 +5827,6 @@ msgstr "ఐ ర్ సి క్లయింట్ (Quassel)"
 msgid "Web"
 msgstr "వెబ్"
 
-#: plinth/templates/clients.html:51
-msgid "Launch"
-msgstr "ప్రారంభించు"
-
 #: plinth/templates/clients.html:65
 #, fuzzy
 msgid "Desktop"
@@ -5870,18 +5958,6 @@ msgid ""
 "Currently the following network interfaces are configured as internal: "
 "%(interface_list)s"
 msgstr ""
-
-#: plinth/templates/service.html:56
-#, fuzzy, python-format
-#| msgid "Service discovery server is running"
-msgid "Service <em>%(service_name)s</em> is running."
-msgstr "సేవ ఆవిష్కరణ సేవికను నడుపుతోంది"
-
-#: plinth/templates/service.html:61
-#, fuzzy, python-format
-#| msgid "Service discovery server is not running"
-msgid "Service <em>%(service_name)s</em> is not running."
-msgstr "సేవ ఆవిష్కరణ సేవికను నడుపటంలేదు"
 
 #: plinth/templates/setup.html:39
 msgid "Installation"

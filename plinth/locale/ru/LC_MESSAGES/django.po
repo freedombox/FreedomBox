@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 20:16-0400\n"
+"POT-Creation-Date: 2019-04-15 18:31-0400\n"
 "PO-Revision-Date: 2019-04-14 18:04+0000\n"
 "Last-Translator: wind <nebasvod@icloud.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.6-dev\n"
 
 #: plinth/action_utils.py:298
@@ -520,8 +520,8 @@ msgstr ""
 "пользователю</a> {box_name}, принадлежащему к группе админов."
 
 #: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
-#: plinth/modules/snapshot/views.py:40
+#: plinth/modules/i2p/views.py:31 plinth/modules/ikiwiki/views.py:35
+#: plinth/modules/pagekite/views.py:36 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Настроить"
@@ -597,9 +597,9 @@ msgstr ""
 "Выберите страницу по умолчанию, которая должна быть представлена, когда кто-"
 "то посещает ваш {box_name}. Типичный пример – это ваш блог или вики в "
 "качестве стартовой страницы на доменном имени. Имейте в виду, что когда "
-"приложением по умолчанию указано что-то иное, чем сервис {box_name} (Plinth)"
-", ваши пользователи должны явно указывать /plinth или /freedombox для "
-"доступа к сервису {box_name} (Plinth)."
+"приложением по умолчанию указано что-то иное, чем сервис {box_name} "
+"(Plinth), ваши пользователи должны явно указывать /plinth или /freedombox "
+"для доступа к сервису {box_name} (Plinth)."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/power/templates/power_restart.html:42
@@ -893,6 +893,7 @@ msgstr ""
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
+#: plinth/modules/i2p/templates/i2p.html:60
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
@@ -1162,6 +1163,7 @@ msgstr "О службе"
 #: plinth/modules/dynamicdns/views.py:47
 #: plinth/modules/firewall/templates/firewall.html:25
 #: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/i2p/templates/i2p.html:27
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
@@ -1285,6 +1287,7 @@ msgid "Launch web client"
 msgstr "Запустить веб-клиент"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/i2p/templates/i2p.html:52
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
@@ -1616,6 +1619,97 @@ msgid ""
 msgstr ""
 "Удалите любые пароли или другую личную информацию из журнала перед отправкой "
 "отчета об ошибке."
+
+#: plinth/modules/i2p/__init__.py:38 plinth/modules/i2p/manifest.py:28
+msgid "I2P"
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:40 plinth/modules/tor/__init__.py:44
+msgid "Anonymity Network"
+msgstr "Anonymity Network"
+
+#: plinth/modules/i2p/__init__.py:43
+msgid ""
+"The Invisible Internet Project is an anonymous network layer intended to "
+"protect communication from censorship and surveillance. I2P provides "
+"anonymity by sending encrypted traffic through a volunteer-run network "
+"distributed around the world."
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "For more information about the %(box_name)s project, see the <a href="
+#| "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+msgid ""
+"Find more information about I2P on their project <a href=\"https://geti2p.net"
+"\" target=\"_blank\">homepage</a>."
+msgstr ""
+"Дополнительные сведения о проекте %(box_name)s смотрите в <a href=\"https://"
+"wiki.debian.org/FreedomBox\"> Wiki </a>."
+
+#: plinth/modules/i2p/__init__.py:49
+msgid ""
+"The first visit to the provided web interface will initiate the "
+"configuration process."
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:55
+#, fuzzy
+#| msgid "Enable application"
+msgid "Manage I2P application"
+msgstr "Включить приложение"
+
+#: plinth/modules/i2p/templates/i2p.html:32 plinth/templates/service.html:56
+#, python-format
+msgid "Service <em>%(service_name)s</em> is running."
+msgstr "Выполняется служба <em>%(service_name)s</em>."
+
+#: plinth/modules/i2p/templates/i2p.html:37 plinth/templates/service.html:61
+#, python-format
+msgid "Service <em>%(service_name)s</em> is not running."
+msgstr "Служба <em>%(service_name)s</em> не запущена."
+
+#: plinth/modules/i2p/templates/i2p_service.html:13
+#: plinth/templates/clients.html:51
+msgid "Launch"
+msgstr "Запуск"
+
+#: plinth/modules/i2p/views.py:34
+msgid "Proxies"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:38
+msgid "Anonymous torrents"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:85
+msgid "I2P Proxies and Tunnels"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:88
+msgid ""
+"I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
+"For this, your browser, preferably a Tor Browser, needs to be configured for "
+"a proxy."
+msgstr ""
+
+#: plinth/modules/i2p/views.py:91
+msgid ""
+"By default HTTP, HTTPS and SOCKS5 proxies are available. Additional proxies "
+"and tunnels may be configured using the tunnel configuration interface."
+msgstr ""
+
+#: plinth/modules/i2p/views.py:100
+msgid "Anonymous Torrents"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:103
+msgid ""
+"I2P provides an application to download files anonymously in a peer-to-peer "
+"network. Download files by adding torrents or create a new torrent to share "
+"a file."
+msgstr ""
 
 #: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
@@ -2035,11 +2129,11 @@ msgid ""
 "valid TLS certificate. Federation with other instances will not work without "
 "this."
 msgstr ""
-"Если включено, приложение <a href=\"%(matrixsynapse_url)s\">Matrix "
-"Synapse</a> будет использовать тот же Let's Encrypt сертификат. Другие "
-"инстанции Matrix Synapse версии 1.0 и выше ожидают, что ваш сервер "
-"использует действующий TLS сертификат. Без него не будет действовать "
-"федерация с другими инстанциями."
+"Если включено, приложение <a href=\"%(matrixsynapse_url)s\">Matrix Synapse</"
+"a> будет использовать тот же Let's Encrypt сертификат. Другие инстанции "
+"Matrix Synapse версии 1.0 и выше ожидают, что ваш сервер использует "
+"действующий TLS сертификат. Без него не будет действовать федерация с "
+"другими инстанциями."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:303
 #, python-format
@@ -2047,8 +2141,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href="
 "\"%(matrixsynapse_url)s\">Matrix Synapse</a> chat server app."
 msgstr ""
-"Эта опция имеет смысл, только если вы используете чат-сервер <a href=\""
-"%(matrixsynapse_url)s\">Matrix Synapse</a> ."
+"Эта опция имеет смысл, только если вы используете чат-сервер <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a> ."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:308
 #, python-format
@@ -2057,8 +2151,8 @@ msgid ""
 "\">Matrix Synapse</a> chat server app, you must first enable certificate "
 "renewal of the current domain."
 msgstr ""
-"Чтобы использовать сертификат Let's Encrypt для чат-сервера <a href=\""
-"%(matrixsynapse_url)s\">Matrix Synapse</a>, вы должны сначала включить "
+"Чтобы использовать сертификат Let's Encrypt для чат-сервера <a href="
+"\"%(matrixsynapse_url)s\">Matrix Synapse</a>, вы должны сначала включить "
 "обновление сертификата для текущего домена."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:317
@@ -3375,10 +3469,10 @@ msgid ""
 msgstr ""
 "Для подключения к VPN %(box_name)s, вам надо скачать профиль и добавить его "
 "в клиент OpenVPN на вашем мобильном устройстве или настольном компьютере. "
-"Клиенты OpenVPN доступны для большинства платформ. Смотри <a href=\""
-"https://wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s "
-"Manual - OpenVPN\">Документация</a> с рекомендуемыми клиентами и "
-"инструкциями по их настройке."
+"Клиенты OpenVPN доступны для большинства платформ. Смотри <a href=\"https://"
+"wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s Manual - "
+"OpenVPN\">Документация</a> с рекомендуемыми клиентами и инструкциями по их "
+"настройке."
 
 #: plinth/modules/openvpn/templates/openvpn.html:55
 #, python-format
@@ -4024,9 +4118,9 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "В Evolution добавления нового календаря и адресной книги, соответственно с "
-"WebDAV. Введите URL-адрес сервера Radicale (напр. "
-"https://<your.freedombox.address>) и ваше имя пользователя. Нажав на кнопку "
-"поиска будет список существующих календарей и адресных книг."
+"WebDAV. Введите URL-адрес сервера Radicale (напр. https://<your.freedombox."
+"address>) и ваше имя пользователя. Нажав на кнопку поиска будет список "
+"существующих календарей и адресных книг."
 
 #: plinth/modules/radicale/views.py:55
 msgid "Access rights configuration updated"
@@ -4061,10 +4155,10 @@ msgid ""
 "\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
 "a> (for Android phones)."
 msgstr ""
-"Чтобы сделать SIP звонки, требуется клиентское приложение. Доступны клиенты <"
-"a href=\"https://jitsi.org/\">Jitsi</a> (для компьютеров) и <a href=\""
-"https://f-droid.org/repository/browse/?fdid=com.csipsimple\">CSipSimple</a> ("
-"для телефонов на Android)."
+"Чтобы сделать SIP звонки, требуется клиентское приложение. Доступны клиенты "
+"<a href=\"https://jitsi.org/\">Jitsi</a> (для компьютеров) и <a href="
+"\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\">CSipSimple</"
+"a> (для телефонов на Android)."
 
 #: plinth/modules/repro/__init__.py:52
 msgid ""
@@ -4490,8 +4584,8 @@ msgid ""
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
 "Снимки системы работают только на файловой системе btrfs и только на "
-"корневом разделе. Снимки — не замена бэкапам <a href=\"/plinth/sys/backups\""
-">backups</a>, так как они хранятся на том же разделе. "
+"корневом разделе. Снимки — не замена бэкапам <a href=\"/plinth/sys/backups"
+"\">backups</a>, так как они хранятся на том же разделе. "
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Free Disk Space to Maintain"
@@ -4703,11 +4797,11 @@ msgstr "Единый вход"
 msgid "Login"
 msgstr "Логин"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:35 plinth/modules/storage/views.py:53
 msgid "Storage"
 msgstr "Storage"
 
-#: plinth/modules/storage/__init__.py:45
+#: plinth/modules/storage/__init__.py:43
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -4718,81 +4812,81 @@ msgstr ""
 "{box_name}. Вы можете видеть, какие носители используются, монтировать и "
 "размонтировать подключаемые носители, увеличивать корневой раздел итп."
 
-#: plinth/modules/storage/__init__.py:210
+#: plinth/modules/storage/__init__.py:196
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} байт"
 
-#: plinth/modules/storage/__init__.py:214
+#: plinth/modules/storage/__init__.py:200
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} КиБ"
 
-#: plinth/modules/storage/__init__.py:218
+#: plinth/modules/storage/__init__.py:204
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} Миб"
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:208
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} Гиб"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:211
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} Тиб"
 
-#: plinth/modules/storage/__init__.py:232
+#: plinth/modules/storage/__init__.py:218
 msgid "The operation failed."
 msgstr "Операция не удалась."
 
-#: plinth/modules/storage/__init__.py:234
+#: plinth/modules/storage/__init__.py:220
 msgid "The operation was cancelled."
 msgstr "Операция была отменена."
 
-#: plinth/modules/storage/__init__.py:236
+#: plinth/modules/storage/__init__.py:222
 msgid "The device is already unmounting."
 msgstr "Устройство уже отключается."
 
-#: plinth/modules/storage/__init__.py:238
+#: plinth/modules/storage/__init__.py:224
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Операция не поддерживается из-за отсутствия поддержки драйвера или утилиты."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:227
 msgid "The operation timed out."
 msgstr "Время операции вышло."
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:229
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Операция пробудит диск, находящийся в режиме глубокого сна."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:232
 msgid "Attempting to unmount a device that is busy."
 msgstr "Попытка отключения устройства, которое используется."
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation has already been cancelled."
 msgstr "Операция уже отменена."
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:240
 msgid "Not authorized to perform the requested operation."
 msgstr "Отсутствует авторизация для выполнения запрошенной операции."
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:242
 msgid "The device is already mounted."
 msgstr "Устройство уже подключено."
 
-#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:244
 msgid "The device is not mounted."
 msgstr "Устройство не подключено."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:247
 msgid "Not permitted to use the requested option."
 msgstr "Использование запрошенной опции не разрешено."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:250
 msgid "The device is mounted by another user."
 msgstr "Устройство подключено другим пользователем."
 
@@ -5003,10 +5097,6 @@ msgstr "Удалить"
 #: plinth/modules/tor/__init__.py:42
 msgid "Tor"
 msgstr "Tor"
-
-#: plinth/modules/tor/__init__.py:44
-msgid "Anonymity Network"
-msgstr "Anonymity Network"
 
 #: plinth/modules/tor/__init__.py:47
 msgid ""
@@ -5702,10 +5792,6 @@ msgstr "Клиентские Приложения"
 msgid "Web"
 msgstr "Веб"
 
-#: plinth/templates/clients.html:51
-msgid "Launch"
-msgstr "Запуск"
-
 #: plinth/templates/clients.html:65
 msgid "Desktop"
 msgstr "Десктоп"
@@ -5841,16 +5927,6 @@ msgid ""
 msgstr ""
 "В настоящее время следующие сетевые интерфейсы сконфигурированы как "
 "внутренние: %(interface_list)s"
-
-#: plinth/templates/service.html:56
-#, python-format
-msgid "Service <em>%(service_name)s</em> is running."
-msgstr "Выполняется служба <em>%(service_name)s</em>."
-
-#: plinth/templates/service.html:61
-#, python-format
-msgid "Service <em>%(service_name)s</em> is not running."
-msgstr "Служба <em>%(service_name)s</em> не запущена."
 
 #: plinth/templates/setup.html:39
 msgid "Installation"

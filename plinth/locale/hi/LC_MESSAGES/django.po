@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 20:16-0400\n"
+"POT-Creation-Date: 2019-04-15 18:31-0400\n"
 "PO-Revision-Date: 2018-08-09 20:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -529,8 +529,8 @@ msgstr ""
 "सकते हैं. निजी जानकारी आैर सिस्टम बदलने का योग्यता सिर्फ व्यवस्थापक लोग के पास है."
 
 #: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/pagekite/views.py:36
-#: plinth/modules/snapshot/views.py:40
+#: plinth/modules/i2p/views.py:31 plinth/modules/ikiwiki/views.py:35
+#: plinth/modules/pagekite/views.py:36 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "कॉन्फ़िगर करें"
@@ -903,6 +903,7 @@ msgstr ""
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ejabberd/templates/ejabberd.html:62
+#: plinth/modules/i2p/templates/i2p.html:60
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
@@ -1165,6 +1166,7 @@ msgstr "के बारे में"
 #: plinth/modules/dynamicdns/views.py:47
 #: plinth/modules/firewall/templates/firewall.html:25
 #: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/i2p/templates/i2p.html:27
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
@@ -1286,6 +1288,7 @@ msgid "Launch web client"
 msgstr "वेब क्लाइंट लॉंच"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/i2p/templates/i2p.html:52
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
@@ -1607,6 +1610,97 @@ msgid ""
 "Please remove any passwords or other personal information from the log "
 "before submitting the bug report."
 msgstr "बग रिपोर्ट सबमिट करने से पहले कोई पासवर्ड या दूसरे व्यक्तिगत जानकारी निकालें."
+
+#: plinth/modules/i2p/__init__.py:38 plinth/modules/i2p/manifest.py:28
+msgid "I2P"
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:40 plinth/modules/tor/__init__.py:44
+msgid "Anonymity Network"
+msgstr "गुमनामी नेटवर्क"
+
+#: plinth/modules/i2p/__init__.py:43
+msgid ""
+"The Invisible Internet Project is an anonymous network layer intended to "
+"protect communication from censorship and surveillance. I2P provides "
+"anonymity by sending encrypted traffic through a volunteer-run network "
+"distributed around the world."
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "For more information about the %(box_name)s project, see the <a href="
+#| "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+msgid ""
+"Find more information about I2P on their project <a href=\"https://geti2p.net"
+"\" target=\"_blank\">homepage</a>."
+msgstr ""
+"%(box_name)s के बारे में और सिखने के लिये यह देखिये <a href=\"https://wiki.debian.org/"
+"FreedomBox\">%(box_name)s Wiki</a>."
+
+#: plinth/modules/i2p/__init__.py:49
+msgid ""
+"The first visit to the provided web interface will initiate the "
+"configuration process."
+msgstr ""
+
+#: plinth/modules/i2p/__init__.py:55
+#, fuzzy
+#| msgid "Enable application"
+msgid "Manage I2P application"
+msgstr "एप्लिकेशन सक्षम करें"
+
+#: plinth/modules/i2p/templates/i2p.html:32 plinth/templates/service.html:56
+#, python-format
+msgid "Service <em>%(service_name)s</em> is running."
+msgstr "सर्विस <em>%(service_name)s</em> चल रहा है."
+
+#: plinth/modules/i2p/templates/i2p.html:37 plinth/templates/service.html:61
+#, python-format
+msgid "Service <em>%(service_name)s</em> is not running."
+msgstr "सर्विस <em>%(service_name)s</em> नहीं चल रहा है."
+
+#: plinth/modules/i2p/templates/i2p_service.html:13
+#: plinth/templates/clients.html:51
+msgid "Launch"
+msgstr "लॉन्च"
+
+#: plinth/modules/i2p/views.py:34
+msgid "Proxies"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:38
+msgid "Anonymous torrents"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:85
+msgid "I2P Proxies and Tunnels"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:88
+msgid ""
+"I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
+"For this, your browser, preferably a Tor Browser, needs to be configured for "
+"a proxy."
+msgstr ""
+
+#: plinth/modules/i2p/views.py:91
+msgid ""
+"By default HTTP, HTTPS and SOCKS5 proxies are available. Additional proxies "
+"and tunnels may be configured using the tunnel configuration interface."
+msgstr ""
+
+#: plinth/modules/i2p/views.py:100
+msgid "Anonymous Torrents"
+msgstr ""
+
+#: plinth/modules/i2p/views.py:103
+msgid ""
+"I2P provides an application to download files anonymously in a peer-to-peer "
+"network. Download files by adding torrents or create a new torrent to share "
+"a file."
+msgstr ""
 
 #: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
@@ -4682,11 +4776,11 @@ msgstr "एकल साइन-ऑन"
 msgid "Login"
 msgstr "लॉगिन"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:35 plinth/modules/storage/views.py:53
 msgid "Storage"
 msgstr "स्टोरेज"
 
-#: plinth/modules/storage/__init__.py:45
+#: plinth/modules/storage/__init__.py:43
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -4694,80 +4788,80 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:210
+#: plinth/modules/storage/__init__.py:196
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} बाइट्स"
 
-#: plinth/modules/storage/__init__.py:214
+#: plinth/modules/storage/__init__.py:200
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} किब"
 
-#: plinth/modules/storage/__init__.py:218
+#: plinth/modules/storage/__init__.py:204
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} मेब"
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:208
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} जिब"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:211
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} टीब"
 
-#: plinth/modules/storage/__init__.py:232
+#: plinth/modules/storage/__init__.py:218
 msgid "The operation failed."
 msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
 
-#: plinth/modules/storage/__init__.py:234
+#: plinth/modules/storage/__init__.py:220
 msgid "The operation was cancelled."
 msgstr "ऑपरेशन रद्द किया गया."
 
-#: plinth/modules/storage/__init__.py:236
+#: plinth/modules/storage/__init__.py:222
 msgid "The device is already unmounting."
 msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
 
-#: plinth/modules/storage/__init__.py:238
+#: plinth/modules/storage/__init__.py:224
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:227
 msgid "The operation timed out."
 msgstr "ऑपरेशन टाइम आउट हो गया."
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:229
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:232
 msgid "Attempting to unmount a device that is busy."
 msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation has already been cancelled."
 msgstr "ऑपरेशन पहले से रद्द किया गया."
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:240
 msgid "Not authorized to perform the requested operation."
 msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:242
 msgid "The device is already mounted."
 msgstr "यह डिवाइस पहले से माउंट किया गया."
 
-#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:244
 msgid "The device is not mounted."
 msgstr "यह डिवाइस नहीं माउंट किया गया."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:247
 msgid "Not permitted to use the requested option."
 msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:250
 msgid "The device is mounted by another user."
 msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
 
@@ -4973,10 +5067,6 @@ msgstr "निकालें"
 #: plinth/modules/tor/__init__.py:42
 msgid "Tor"
 msgstr "टोर"
-
-#: plinth/modules/tor/__init__.py:44
-msgid "Anonymity Network"
-msgstr "गुमनामी नेटवर्क"
 
 #: plinth/modules/tor/__init__.py:47
 msgid ""
@@ -5676,10 +5766,6 @@ msgstr "क्लाइंट ऐप्स"
 msgid "Web"
 msgstr "वेब"
 
-#: plinth/templates/clients.html:51
-msgid "Launch"
-msgstr "लॉन्च"
-
 #: plinth/templates/clients.html:65
 msgid "Desktop"
 msgstr "डेस्कटॉप"
@@ -5809,16 +5895,6 @@ msgid ""
 "Currently the following network interfaces are configured as internal: "
 "%(interface_list)s"
 msgstr "अभी यह नेटवर्क इंटरफ़ेसस आंतरिक के रूप में कॉंफ़िगर किया गया है:%(interface_list)s"
-
-#: plinth/templates/service.html:56
-#, python-format
-msgid "Service <em>%(service_name)s</em> is running."
-msgstr "सर्विस <em>%(service_name)s</em> चल रहा है."
-
-#: plinth/templates/service.html:61
-#, python-format
-msgid "Service <em>%(service_name)s</em> is not running."
-msgstr "सर्विस <em>%(service_name)s</em> नहीं चल रहा है."
 
 #: plinth/templates/setup.html:39
 msgid "Installation"
