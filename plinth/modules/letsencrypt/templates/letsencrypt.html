@@ -321,9 +321,10 @@
     {% endif %}
 
   {% else %}
+    {% url 'config:index' as config_url %}
     {% blocktrans trimmed %}
-      No domains have been configured. Configure domains to be able to
-      obtain certificates for them.
+      No domains have been configured. <a href="{{ config_url }}">Configure
+      domains</a> to be able to obtain certificates for them.
     {% endblocktrans %}
   {% endif %}
 {% endblock %}
