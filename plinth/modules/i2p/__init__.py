@@ -24,6 +24,7 @@ from plinth import action_utils, actions, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
+
 from .manifest import backup, clients
 
 version = 1
@@ -70,9 +71,7 @@ tunnels_to_manage = {
     'Irc2P': 'i2p_irc-freedombox'
 }
 
-service_ports = [
-                    'http', 'https'
-                ] + list(tunnels_to_manage.values())
+service_ports = ['http', 'https'] + list(tunnels_to_manage.values())
 
 
 def init():
@@ -84,10 +83,10 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=service_ports,
-                                         is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
+        service = service_module.Service(
+            managed_services[0], name, ports=service_ports, is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable,
+            is_running=is_running)
 
         if is_enabled():
             add_shortcut()
@@ -108,21 +107,19 @@ def setup(helper, old_version=None):
         ])
 
     # Tunnels to all interfaces
-    for tunnel in tunnels_to_manage.keys():
+    for tunnel in tunnels_to_manage:
         helper.call('post', actions.superuser_run, 'i2p', [
-            'set-tunnel-property',
-            '--name', tunnel,
-            '--property', 'interface',
+            'set-tunnel-property', '--name', tunnel, '--property', 'interface',
             '--value', '0.0.0.0'
         ])
     helper.call('post', disable)
     helper.call('post', enable)
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=service_ports,
-                                         is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
+        service = service_module.Service(
+            managed_services[0], name, ports=service_ports, is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable,
+            is_running=is_running)
 
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)

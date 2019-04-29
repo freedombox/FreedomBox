@@ -44,10 +44,11 @@ def parse_arguments():
     subparser.add_argument('--name', help='Name of the entry', required=True)
     subparser.add_argument('--url', help='URL of the entry', required=True)
 
-    subparser = subparsers.add_parser(
-        'set-tunnel-property', help='Modify configuration of a tunnel')
+    subparser = subparsers.add_parser('set-tunnel-property',
+                                      help='Modify configuration of a tunnel')
     subparser.add_argument('--name', help='Name of the tunnel', required=True)
-    subparser.add_argument('--property', help='Property to modify', required=True)
+    subparser.add_argument('--property', help='Property to modify',
+                           required=True)
     subparser.add_argument('--value', help='Value to assign', required=True)
 
     subparsers.required = True
@@ -67,10 +68,7 @@ def subcommand_disable(_):
 
 
 def subcommand_set_tunnel_property(arguments):
-    """
-    Modifies the configuration for a certain tunnel
-    """
-
+    """Modify the configuration file for a certain tunnel."""
     editor = TunnelEditor()
     editor \
         .read_conf() \
@@ -79,9 +77,7 @@ def subcommand_set_tunnel_property(arguments):
         .write_conf()
     print('Updated "{property}" of {filename} to {value}'.format(
         property=editor.calc_prop_path(arguments.property),
-        filename=editor.conf_filename,
-        value=arguments.value
-    ))
+        filename=editor.conf_filename, value=arguments.value))
 
 
 def subcommand_add_favorite(arguments):

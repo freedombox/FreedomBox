@@ -13,6 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+"""
+Various helpers for the I2P app.
+"""
+
 import os
 import re
 
@@ -23,10 +27,11 @@ FILE_TUNNEL_CONF = os.path.join(I2P_CONF_DIR, 'i2ptunnel.config')
 TUNNEL_IDX_REGEX = re.compile(r'tunnel.(\d+).name$')
 
 
-class TunnelEditor(object):
-    """
+class TunnelEditor():
+    """Helper to edit I2P tunnel configuration file using augeas.
 
     :type aug: augeas.Augeas
+
     """
 
     def __init__(self, conf_filename=None, idx=None):
@@ -36,62 +41,70 @@ class TunnelEditor(object):
 
     @property
     def lines(self):
+        """Return lines from configuration file."""
         if self.aug:
             return self.aug.match('/files{}/*'.format(self.conf_filename))
-        else:
-            return []
+
+        return []
 
     def read_conf(self):
-        """Return an instance of Augeaus for processing APT configuration."""
-        self.aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                                       augeas.Augeas.NO_MODL_AUTOLOAD)
+        """Load an instance of Augeaus for processing APT configuration.
+
+        Chainable method.
+
+        """
+        self.aug = augeas.Augeas(
+            flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
         self.aug.set('/augeas/load/Properties/lens', 'Properties.lns')
-        self.aug.set('/augeas/load/Properties/incl[last() + 1]', self.conf_filename)
+        self.aug.set('/augeas/load/Properties/incl[last() + 1]',
+                     self.conf_filename)
         self.aug.load()
 
         return self
 
     def write_conf(self):
+        """Write changes to the configuration file to disk.
+
+        Chainable method.
+
+        """
         self.aug.save()
         return self
 
     def set_tunnel_idx(self, name):
-
-        """
-        Finds the index of the tunnel with the given name.
+        """Finds the index of the tunnel with the given name.
 
         Chainable method.
 
         :type name: basestring
-        """
 
+        """
         for prop in self.aug.match('/files{}/*'.format(self.conf_filename)):
             match = TUNNEL_IDX_REGEX.search(prop)
-
             if match and self.aug.get(prop) == name:
                 self.idx = int(match.group(1))
                 return self
+
         raise ValueError('No tunnel called {}'.format(name))
 
     def calc_prop_path(self, tunnel_prop):
-        """
-        Calculates the property name as found in the properties files
+        """Calculates the property name as found in the properties files.
+
         :type tunnel_prop: str
         :rtype: basestring
+
         """
         calced_prop_path = '/files{filepath}/tunnel.{idx}.{tunnel_prop}'.format(
-            idx=self.idx, tunnel_prop=tunnel_prop,
-            filepath=self.conf_filename
-        )
+            idx=self.idx, tunnel_prop=tunnel_prop, filepath=self.conf_filename)
         return calced_prop_path
 
     def set_tunnel_prop(self, tunnel_prop, value):
-        """
-        Updates a tunnel's property.
+        """Updates a tunnel's property.
 
-        The idx has to be set and the property has to exist in the config file and belong to the tunnel's properties.
+        The idx has to be set and the property has to exist in the config file
+        and belong to the tunnel's properties.
 
-        see calc_prop_path
+        See calc_prop_path.
 
         Chainable method.
 
@@ -101,9 +114,11 @@ class TunnelEditor(object):
         :type value: basestring | int
         :return:
         :rtype:
+
         """
         if self.idx is None:
-            raise ValueError('Please init the tunnel index before calling this method')
+            raise ValueError(
+                'Please init the tunnel index before calling this method')
 
         calc_prop_path = self.calc_prop_path(tunnel_prop)
         self.aug.set(calc_prop_path, value)
@@ -113,6 +128,7 @@ class TunnelEditor(object):
         ret = self.aug.get(self.calc_prop_path(tunnel_prop))
         if ret is None:
             raise KeyError('Unknown property {}'.format(tunnel_prop))
+
         return ret
 
     def __setitem__(self, tunnel_prop, value):
