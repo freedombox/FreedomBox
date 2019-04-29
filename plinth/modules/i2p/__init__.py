@@ -66,9 +66,9 @@ additional_favorites = [
 ]
 
 tunnels_to_manage = {
-    'I2P HTTP Proxy': 'i2p_socks_http-freedombox',
-    'I2P HTTPS Proxy': 'i2p_socks_https-freedombox',
-    'Irc2P': 'i2p_irc-freedombox'
+    'I2P HTTP Proxy': 'i2p-http-proxy-freedombox',
+    'I2P HTTPS Proxy': 'i2p-https-proxy-freedombox',
+    'Irc2P': 'i2p-irc-freedombox'
 }
 
 service_ports = ['http', 'https'] + list(tunnels_to_manage.values())
