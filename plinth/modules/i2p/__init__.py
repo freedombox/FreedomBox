@@ -96,6 +96,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
 
+    helper.call('post', disable)
     # Add favorites to the configuration
     for fav_name, fav_url in additional_favorites:
         helper.call('post', actions.superuser_run, 'i2p', [
@@ -112,7 +113,6 @@ def setup(helper, old_version=None):
             'set-tunnel-property', '--name', tunnel, '--property', 'interface',
             '--value', '0.0.0.0'
         ])
-    helper.call('post', disable)
     helper.call('post', enable)
     global service
     if service is None:
