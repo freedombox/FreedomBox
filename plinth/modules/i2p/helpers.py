@@ -17,9 +17,9 @@
 Various helpers for the I2P app.
 """
 
-from collections import OrderedDict
 import os
 import re
+from collections import OrderedDict
 
 import augeas
 
@@ -137,10 +137,11 @@ class TunnelEditor():
         self.aug.set(self.calc_prop_path(tunnel_prop), value)
 
 
-class RouterEditor(object):
-    """
+class RouterEditor():
+    """Helper to edit I2P router configuration file using augeas.
 
     :type aug: augeas.Augeas
+
     """
 
     FAVORITE_PROP = 'routerconsole.favorites'
@@ -151,44 +152,58 @@ class RouterEditor(object):
         self.aug = None
 
     def read_conf(self):
-        self.aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                                       augeas.Augeas.NO_MODL_AUTOLOAD)
+        """Load an instance of Augeaus for processing APT configuration.
+
+        Chainable method.
+
+        """
+        self.aug = augeas.Augeas(
+            flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
         self.aug.set('/augeas/load/Properties/lens', 'Properties.lns')
-        self.aug.set('/augeas/load/Properties/incl[last() + 1]', self.conf_filename)
+        self.aug.set('/augeas/load/Properties/incl[last() + 1]',
+                     self.conf_filename)
         self.aug.load()
         return self
 
     def write_conf(self):
+        """Write changes to the configuration file to disk.
+
+        Chainable method.
+
+        """
         self.aug.save()
         return self
 
     @property
     def favorite_property(self):
-        return '/files{filename}/{prop}'.format(filename=self.conf_filename, prop=self.FAVORITE_PROP)
+        """Return the favourites property from configuration file."""
+        return '/files{filename}/{prop}'.format(filename=self.conf_filename,
+                                                prop=self.FAVORITE_PROP)
 
     def add_favorite(self, name, url, description=None, icon=None):
-        """
-        Adds a favorite to the router.config
+        """Add a favorite to the router configuration file.
 
-        Favorites are in a single string and separated by ','.
-        none of the incoming params can therefore use commas.
-        I2P replaces the commas by dots.
+        Favorites are in a single string and separated by ','. none of the
+        incoming params can therefore use commas. I2P replaces the commas by
+        dots.
 
-        That's ok for the name and description,
-         but not for the url and icon
+        That's ok for the name and description, but not for the url and icon.
 
         :type name: basestring
         :type url: basestring
         :type description: basestring
         :type icon: basestring
+
         """
         if not description:
             description = ''
+
         if not icon:
             icon = '/themes/console/images/eepsite.png'
 
         if ',' in url:
             raise ValueError('URL cannot contain commas')
+
         if ',' in icon:
             raise ValueError('Icon cannot contain commas')
 
@@ -198,13 +213,12 @@ class RouterEditor(object):
         prop = self.favorite_property
         favorites = self.aug.get(prop) or ''
         new_favorite = '{name},{description},{url},{icon},'.format(
-            name=name, description=description, url=url,
-            icon=icon
-        )
+            name=name, description=description, url=url, icon=icon)
         self.aug.set(prop, favorites + new_favorite)
         return self
 
     def get_favorites(self):
+        """Return list of favorites."""
         favs_string = self.aug.get(self.favorite_property) or ''
         favs_split = favs_string.split(',')
 
@@ -218,15 +232,13 @@ class RouterEditor(object):
             raise SyntaxError("Invalid number of fields in favorite line")
 
         favs = OrderedDict()
-        i = 0
-        while i < favs_len:
-            next_idx = i + self.FAVORITE_TUPLE_SIZE
-            t = favs_split[i:next_idx]
-            name, description, url, icon = t
+        for index in range(0, favs_len, self.FAVORITE_TUPLE_SIZE):
+            next_index = index + self.FAVORITE_TUPLE_SIZE
+            name, description, url, icon = favs_split[index:next_index]
             favs[url] = {
-                "name": name,
-                "description": description,
-                "icon": icon
+                'name': name,
+                'description': description,
+                'icon': icon
             }
-            i = next_idx
+
         return favs

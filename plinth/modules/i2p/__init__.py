@@ -25,6 +25,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
+
 from .manifest import backup, clients
 
 version = 1
@@ -97,8 +98,10 @@ def setup(helper, old_version=None):
     for fav in FAVORITES:
         args = [
             'add-favorite',
-            '--name', fav.get('name'),
-            '--url', fav.get('url'),
+            '--name',
+            fav.get('name'),
+            '--url',
+            fav.get('url'),
         ]
         if 'icon' in fav:
             args.extend(['--icon', fav.get('icon')])

@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+"""
+Pre-defined list of favorites for I2P and some additional favorites.
+"""
 
 DEFAULT_FAVORITES = [
     {

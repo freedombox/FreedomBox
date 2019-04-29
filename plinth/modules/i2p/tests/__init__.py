@@ -14,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+"""
+Common parts for all I2P tests.
+"""
+
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent / 'data'
