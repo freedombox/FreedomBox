@@ -5,6 +5,18 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>76</revnumber>
+        <date>2019-04-24 03:14:10</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Add link to Pioneer Edition</revremark>
+      </revision>
+      <revision>
+        <revnumber>75</revnumber>
+        <date>2019-04-24 01:39:13</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Include Pine A64+</revremark>
+      </revision>
+      <revision>
         <revnumber>74</revnumber>
         <date>2019-02-27 00:28:00</date>
         <authorinitials>JamesValleroy</authorinitials>
@@ -6410,898 +6422,1118 @@ Password:
   </section>
   <section>
     <title>Hardware</title>
-    <para>FreedomBox is designed to be the software for a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device ourselves, but instead we plan to support/customize existing hardware. </para>
+    <para>FreedomBox is designed to be the software for a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device ourselves, but instead we intend to partner with hardware vendors to build FreedomBox devices and also support existing hardware. </para>
     <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox-setup</code> package.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual#">manual</ulink> for more details. </para>
-    <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space. </para>
+    <section>
+      <title>Recommended Hardware</title>
+      <para>On April 22nd, 2019, the FreedomBox Foundation announced the sales of the Pioneer Edition FreedomBox Home Server Kits. This is the recommended hardware for all users who don't wish to build their own FreedomBox by choosing the right components, downloading the image and preparing an SD card with FreedomBox. </para>
+      <para>The kit includes all the hardware needed for launching a FreedomBox home server on an Olimex A20-OLinuXino-LIME2 board. This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/PioneerEdition#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="257" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pioneer-edition_thumb.jpg" width="320"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Pioneer Edition FreedomBox Home Server Kits</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/PioneerEdition#">Pioneer Edition FreedomBox Home Server Kits</ulink>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
     <section>
       <title>Supported Hardware</title>
+      <para>Use these hardware if you are able to download FreedomBox images and prepare an SD card by following the manual. If you wish for simper setup process, please buy the FreedomBox kits from recommended hardware instead. If you are using a board that uses SD cards, when you flash the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space. </para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colname="col_0"/>
+          <colspec colname="col_1"/>
+          <colspec colname="col_2"/>
+          <tbody>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="159" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-lime2_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>A20 OLinuXino Lime2</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20 OLinuXino Lime2</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-MICRO#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="132" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-micro_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>A20 OLinuXino MICRO</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-MICRO#">A20 OLinuXino MICRO</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/APU#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=apu1d_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>PC Engines APU</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/APU#">PC Engines APU</ulink>
+                </para>
+              </entry>
+            </row>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubietruck#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="206" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=danube_thumb.png" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Cubietruck</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubietruck#">Cubietruck</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubieboard2#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="156" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=cubieboard2_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Cubieboard 2</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubieboard2#">Cubieboard2</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BeagleBone#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=beagleboard_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>BeagleBone Black</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BeagleBone#">BeagleBone Black</ulink>
+                </para>
+              </entry>
+            </row>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/pcDuino3#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="107" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pcduino3s_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>pcDuino3</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/pcDuino3#">pcDuino3</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="201" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=debian_thumb.png" width="156"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Debian</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/VirtualBox#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="154" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=virtualbox_thumb.png" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>VirtualBox</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/VirtualBox#">VirtualBox</ulink>
+                </para>
+              </entry>
+            </row>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/PineA64+#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="213" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pine64-plus_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Pine A64+</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/PineA64+#">Pine A64+</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BananaPro#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=banana-pro_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Banana Pro</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BananaPro#">Banana Pro</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1"/>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <section>
-        <title>Recommended Hardware</title>
+        <title>Hardware Comparision</title>
         <informaltable>
-          <tgroup cols="3">
+          <tgroup cols="9">
             <colspec colname="col_0"/>
             <colspec colname="col_1"/>
             <colspec colname="col_2"/>
+            <colspec colname="col_3"/>
+            <colspec colname="col_4"/>
+            <colspec colname="col_5"/>
+            <colspec colname="col_6"/>
+            <colspec colname="col_7"/>
+            <colspec colname="col_8"/>
             <tbody>
               <row rowsep="1">
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubietruck#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="206" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=danube_thumb.png" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Cubietruck</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubietruck#">Cubietruck</ulink>
+                    <emphasis role="strong">Name</emphasis>
                   </para>
                 </entry>
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubieboard2#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="156" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=cubieboard2_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Cubieboard 2</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Cubieboard2#">Cubieboard2</ulink>
+                    <emphasis role="strong">Speed (GHz)</emphasis>
                   </para>
                 </entry>
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BeagleBone#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=beagleboard_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>BeagleBone Black</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
+                    <emphasis role="strong">Debian arch</emphasis>
                   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BeagleBone#">BeagleBone Black</ulink>
+                    <emphasis role="strong">Ram (GB)</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">disk (GB)</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">battery</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">SATA</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">Ethernet speed</emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">
+                      <ulink url="https://wiki.debian.org/FreedomBox/Manual/OpenSourceHardware#">OSHW</ulink>
+                    </emphasis>
                   </para>
                 </entry>
               </row>
               <row rowsep="1">
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>APU.1D                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>amd64           </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>2</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -    </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="159" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-lime2_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>A20 OLinuXino Lime2</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20 OLinuXino Lime2</ulink>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
                   </para>
                 </entry>
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-MICRO#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="132" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-micro_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>A20 OLinuXino MICRO</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-MICRO#">A20 OLinuXino MICRO</ulink>
-                  </para>
+                <entry colsep="1" rowsep="1">
+                  <para>1000x3</para>
                 </entry>
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/APU#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=apu1d_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>PC Engines APU</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/APU#">PC Engines APU</ulink>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
                   </para>
                 </entry>
               </row>
               <row rowsep="1">
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>APU.1D4                 </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>amd64           </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>4</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -    </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/pcDuino3#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="107" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pcduino3s_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>pcDuino3</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/pcDuino3#">pcDuino3</ulink>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
                   </para>
                 </entry>
-                <entry align="center" colsep="1" rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>1000x3</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="201" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=debian_thumb.png" width="156"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Debian</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
                   </para>
                 </entry>
-                <entry align="center" colsep="1" rowsep="1">
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>BeagleBone Black C     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1    </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/omap      </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>½</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>4</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -    </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -       </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/VirtualBox#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="154" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=virtualbox_thumb.png" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>VirtualBox</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
                   </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Cubieboard2             </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>4</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
                   <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/VirtualBox#">VirtualBox</ulink>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Cubieboard2-Dual        </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Cubieboard3/Cubietruck  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>2</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>8</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1000  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>OLinuXino A20 LIME      </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>½</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>OLinuXino A20 LIME2     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1000  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>OLinuXino A20 MICRO     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>pcDunino3               </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1x2  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>4</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Pine A64+               </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1.2x4</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>arm64/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>½,1,2</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>- </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -       </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1000  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Banana Pro              </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1.2x2</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>1</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>10/100/1000  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
                   </para>
                 </entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
-        <section>
-          <title>Recommended Hardware chart</title>
-          <informaltable>
-            <tgroup cols="9">
-              <colspec colname="col_0"/>
-              <colspec colname="col_1"/>
-              <colspec colname="col_2"/>
-              <colspec colname="col_3"/>
-              <colspec colname="col_4"/>
-              <colspec colname="col_5"/>
-              <colspec colname="col_6"/>
-              <colspec colname="col_7"/>
-              <colspec colname="col_8"/>
-              <tbody>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">Name</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">Speed (GHz)</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">Debian arch</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">Ram (GB)</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">disk (GB)</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">battery</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">SATA</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">Ethernet speed</emphasis>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <emphasis role="strong">
-                        <ulink url="https://wiki.debian.org/FreedomBox/Manual/OpenSourceHardware#">OSHW</ulink>
-                      </emphasis>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>APU.1D                  </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>amd64           </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>-</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para> -    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1000x3</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>{X}</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>APU.1D4                 </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>amd64           </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>4</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>-</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para> -    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1000x3</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>{X}</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>BeagleBone Black C     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1  </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/omap      </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>½</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>4</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para> -    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para> -       </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>100   </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>Cubieboard2             </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>4</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>100   </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>{X}</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>Cubieboard2-Dual        </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>-</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>100   </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>{X}</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>Cubieboard3/Cubietruck  </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>8</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1000  </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>{X}</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>OLinuXino A20 LIME      </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>½</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>-</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>100   </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>OLinuXino A20 LIME2     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>-</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1000  </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>OLinuXino A20 MICRO     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>-</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>100   </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-                <row rowsep="1">
-                  <entry colsep="1" rowsep="1">
-                    <para>pcDunino3               </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1x2</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>armhf/sunxi     </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>1</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>4</para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/checkmark.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>(./)</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>100   </para>
-                  </entry>
-                  <entry colsep="1" rowsep="1">
-                    <para>
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>{X}</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </para>
-                  </entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-        </section>
-      </section>
-      <section>
-        <title>Also Working Hardware</title>
-        <para>This hardware works but is not recommended due to freedom, performance-per-cost, or other concerns: </para>
-        <informaltable>
-          <tgroup cols="3">
-            <colspec colname="col_0"/>
-            <colspec colname="col_1"/>
-            <colspec colname="col_2"/>
-            <tbody>
-              <row rowsep="1">
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry2_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Raspberry Pi 2</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">Raspberry Pi 2</ulink>
-                  </para>
-                </entry>
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="155" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3b_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Raspberry Pi 3 Model B</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">Raspberry Pi 3 Model B</ulink>
-                  </para>
-                </entry>
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="153" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3bplus_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Raspberry Pi 3 Model B+</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">Raspberry Pi 3 Model B+</ulink>
-                  </para>
-                </entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </section>
-      <section>
-        <title>Deprecated Hardware</title>
-        <para>This hardware was supported earlier but is no longer supported.  If you downloaded an earlier image and are running FreedomBox on one of these hardware, you will keep getting software updates.  However, no new images will be provided for these hardware.  It is recommended that you migrate to newer, supported hardware using backup and restore. </para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colname="col_0"/>
-            <colspec colname="col_1"/>
-            <tbody>
-              <row rowsep="1">
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/DreamPlug#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="156" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=dreamplug_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>DreamPlug</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/DreamPlug#">DreamPlug</ulink>
-                  </para>
-                </entry>
-                <entry align="center" colsep="1" rowsep="1">
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi#">
-                      <inlinemediaobject>
-                        <imageobject>
-                          <imagedata depth="158" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry_thumb.jpg" width="235"/>
-                        </imageobject>
-                        <textobject>
-                          <phrase>Raspberry Pi</phrase>
-                        </textobject>
-                      </inlinemediaobject>
-                    </ulink>
-                  </para>
-                  <para>
-                    <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi#">Raspberry Pi</ulink>
-                  </para>
-                </entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis>Note</emphasis>: As FreedomBox is currently in the development stage, <emphasis>Supported Hardware</emphasis> means that FreedomBox images are built for said hardware and at least one developer has reported the basic functions to be working. </para>
       </section>
     </section>
     <section>
-      <title>Targeted Hardware</title>
+      <title>Also Working Hardware</title>
+      <para>This hardware works but is not recommended because the hardware can't run entirely on <ulink url="https://www.gnu.org/philosophy/free-sw.en.html">free software</ulink>: </para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colname="col_0"/>
+          <colspec colname="col_1"/>
+          <colspec colname="col_2"/>
+          <tbody>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry2_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Raspberry Pi 2</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">Raspberry Pi 2</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="155" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3b_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Raspberry Pi 3 Model B</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">Raspberry Pi 3 Model B</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="153" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3bplus_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Raspberry Pi 3 Model B+</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">Raspberry Pi 3 Model B+</ulink>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section>
+      <title>Deprecated Hardware</title>
+      <para>This hardware was supported earlier but is no longer supported.  If you downloaded an earlier image and are running FreedomBox on one of these hardware, you will keep getting software updates.  However, no new images will be provided for these hardware.  It is recommended that you migrate to newer, supported hardware using backup and restore. </para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colname="col_0"/>
+          <colspec colname="col_1"/>
+          <tbody>
+            <row rowsep="1">
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/DreamPlug#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="156" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=dreamplug_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>DreamPlug</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/DreamPlug#">DreamPlug</ulink>
+                </para>
+              </entry>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="158" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Raspberry Pi</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi#">Raspberry Pi</ulink>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis>Note</emphasis>: As FreedomBox is currently in the development stage, <emphasis>Supported Hardware</emphasis> means that FreedomBox images are built for said hardware and at least one developer has reported the basic functions to be working. </para>
+    </section>
+    <section>
+      <title>Adding Hardware Support</title>
+      <para>Although the project may focus on supporting specific devices, we are looking to support as much hardware as possible given that it is suitable for FreedomBox's needs.  Take a look at the list of <ulink url="https://wiki.debian.org/FreedomBox/Manual/CheapServerBoxHardware#">targeted hardware</ulink> for more information. </para>
+      <para>If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>. If you have access to one of these <ulink url="https://wiki.debian.org/FreedomBox/Manual/CheapServerBoxHardware#">targeted hardware</ulink> devices and would like to work with us to make it run FreedomBox, please contact us!  </para>
+    </section>
+    <section>
+      <title>Pioneer Edition FreedomBox Home Server Kit</title>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata depth="513" fileref="https://wiki.debian.org/FreedomBox/Hardware/PioneerEdition?action=AttachFile&amp;do=get&amp;target=pioneer-edition.jpg" width="640"/>
+          </imageobject>
+          <textobject>
+            <phrase>Pioneer Edition FreedomBox Home Server Kit</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para>The <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/">Pioneer Edition FreedomBox Home Server Kit</ulink> includes all the hardware needed for launching a FreedomBox home server on an Olimex <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20-OLinuXino-LIME2</ulink> board. The Pioneer Edition FreedomBox Home Server is the first commercially available version of FreedomBox. This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
+      <para>The kit includes the A20-OlinuXino-LIME2, a custom metal case with a laser-engraved FreedomBox logo, a high-speed 32GB micro SD card with the FreedomBox software pre-installed, a backup battery, a power adapter, and an Ethernet cable. </para>
+      <para><emphasis role="strong">Recommendation</emphasis>: This is the hardware recommended for all users who can't build their own FreedomBox by buying the right components, downloading the image and preparing the SD card. </para>
       <section>
-        <title>List of Targeted Hardware</title>
-        <para>Although the project may focus on supporting specific devices, we are looking to support as much hardware as possible given that it is suitable for FreedomBox's needs.  Take a look at the list of <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TargetedHardware#">targeted hardware</ulink> for more information. </para>
+        <title>Availability</title>
+        <itemizedlist>
+          <listitem>
+            <para>Price: 82 EUR </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/">Olimex Store</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
-        <title>Adding Hardware Support</title>
-        <para>If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>. If you have access to one of these <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/TargetedHardware#">targeted hardware</ulink> devices and would like to work with us to make it run FreedomBox, please contact us!  </para>
+        <title>Hardware Specifications</title>
+        <itemizedlist>
+          <listitem>
+            <para>Open Source Hardware (OSHW): <ulink url="https://github.com/OLIMEX/OLINUXINO/tree/master/HARDWARE">Yes</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>CPU: Allwinner A20, ARM Cortex-A7 @ 1GHz dual-core </para>
+          </listitem>
+          <listitem>
+            <para>RAM: 1 GiB DDR3 </para>
+          </listitem>
+          <listitem>
+            <para>Storage: 32GB class 10+ microSD card pre-loaded with FreedomBox </para>
+          </listitem>
+          <listitem>
+            <para>Battery: 3.3V Li-Po, 1400mAh (4-5 hours of backup without additional devices connected via USB) </para>
+          </listitem>
+          <listitem>
+            <para>Ethernet: 10/100/1000, RJ45 (1 meter cable included) </para>
+          </listitem>
+          <listitem>
+            <para>Power adapter: 110-220 V input, 5V output, EU style (with optional UK or US sockets) </para>
+          </listitem>
+          <listitem>
+            <para>Box: Custom metallic box with FreedomBox decal </para>
+          </listitem>
+        </itemizedlist>
+        <para>The kits run entirely on Free Software. They work with Kernel and u-boot from Debian repositories. Even the boot firmware in ROM called <ulink url="https://linux-sunxi.org/BROM">BROM</ulink> is free software (GPLV2+). </para>
+      </section>
+      <section>
+        <title>Download</title>
+        <para>The kits come with an SD card pre-loaded with FreedomBox. There is no need to download images. However, if you wish to reset your devices to a pristine state, then you can do so with the the image provided. Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot the device. Make sure to download the <ulink url="https://ftp.freedombox.org/pub/freedombox/pioneer/">Pioneer Edition</ulink> images. These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB.  </para>
+        <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn/Allwinner#">install Debian</ulink> on the device and then <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
+      </section>
+      <section>
+        <title>Build Image</title>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>. </para>
+      </section>
+      <section>
+        <title>Known Issues</title>
+        <itemizedlist>
+          <listitem>
+            <para>The image that shipped with the kits uses a <ulink url="https://salsa.debian.org/freedombox-team/u-boot">slightly modified u-boot</ulink> from Debian and not stock Debian like the rest of FreedomBox. So, if you wish to get the source code, please use the FreedomBox team's <ulink url="https://salsa.debian.org/freedombox-team/u-boot">u-boot repository</ulink>. </para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
     <section>
@@ -7594,7 +7826,30 @@ Password:
         <title>Known Issues</title>
         <itemizedlist>
           <listitem>
-            <para>Order hardware revision G2, because the current revision K is <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues/148">not working properly</ulink>. </para>
+            <para>Revision C hardware has <ulink url="https://bugs.debian.org/845128#">poor performance when receiving Ethernet data in Gigabit mode</ulink>. To workaround the problem, you can switch to 100 Mbps mode instead of Gigabit mode. Login to your FreedomBox as root (or plugin the SD card into another computer) and create the file /etc/NetworkManager/dispatcher.d/20-fix-ethernet-problem with the following contents: </para>
+            <screen><![CDATA[set -e  # Exit with code on error
+
+IFACE="$1"
+ACTION="$2"
+
+if [[ "$IFACE" != "eth0" ]]; then
+    exit 0
+fi
+
+case ${ACTION} in
+    up)
+        logger "Setting up $IFACE in 100Mbps mode"
+        mii-tool eth0 -A 100BaseTx-FD
+        ;;
+    *)
+        ;;
+esac]]></screen>
+          </listitem>
+          <listitem>
+            <para>Revision G2 hardware has <ulink url="https://bugs.debian.org/927397#">poor performance when transmitting Ethernet data in Gigabit mode</ulink>. Download and use the <ulink url="https://ftp.freedombox.org/pub/freedombox/pioneer/">Pioneer Edition image</ulink> to fix the issue. It contains a slightly <ulink url="https://salsa.debian.org/freedombox-team/u-boot/commit/2cb18893ef">modified u-boot</ulink>. The above workaround to put the Ethernet into 100 Mbps mode also fixes this issue. </para>
+          </listitem>
+          <listitem>
+            <para>Revision K hardware is <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues/148">not working properly</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -8018,6 +8273,109 @@ Password:
           </listitem>
           <listitem>
             <para>Boot Firmware: <ulink url="https://linux-sunxi.org/BROM">BROM</ulink> (GPLV2+)  </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Known Issues</title>
+        <para>None </para>
+      </section>
+    </section>
+    <section>
+      <title>Pine A64+</title>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata depth="579" fileref="https://wiki.debian.org/FreedomBox/Hardware/PineA64+?action=AttachFile&amp;do=get&amp;target=pine64-plus.jpg" width="640"/>
+          </imageobject>
+          <textobject>
+            <phrase>Pine 64+</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para><ulink url="https://www.pine64.org/?page_id=1194">Pine A64+</ulink> is an affordable single board computer with good performance. </para>
+      <para><emphasis role="strong">Recommendation:</emphasis> Pine A64+ series of boards do not have built-in storage. If installing to a microSD card, it is recommended to choose a microSD card of class 10 or better with at least 8 GB of storage. </para>
+      <section>
+        <title>Similar Hardware</title>
+        <itemizedlist>
+          <listitem>
+            <para>Both 1GB and 2GB versions of Pine A64+ are supported with the same FreedomBox image. </para>
+          </listitem>
+          <listitem>
+            <para>Pine A64-LTS is not supported yet. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Download</title>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available. Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. Pick the image meant for Pine A64+. </para>
+        <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn/Allwinner#">install Debian</ulink> on the device and then <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it.  </para>
+      </section>
+      <section>
+        <title>Build Image</title>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Maker">freedom-maker</ulink>. </para>
+      </section>
+      <section>
+        <title>Availability</title>
+        <itemizedlist>
+          <listitem>
+            <para>Price: 29 USD (for the 2 GB variant), 21 USD (for the 1 GB variant) </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.pine64.org/?product=pine-a64-board-1gb">Pine A64+ with 1 GB RAM at Pine64 Store</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.pine64.org/?product=pine-a64-board-2gb">Pine A64+ with 2 GB RAM at Pine64 Store</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Hardware</title>
+        <itemizedlist>
+          <listitem>
+            <para>Open Source Hardware (OSHW): No </para>
+          </listitem>
+          <listitem>
+            <para>CPU: Allwinner A64, Quad-core ARM Cortex A53 64-bit processor </para>
+          </listitem>
+          <listitem>
+            <para>RAM: 3 variants - 512 MB (not recommended), 1 GB and 2 GB (recommended) </para>
+          </listitem>
+          <listitem>
+            <para>Storage: SD card, eMMC (module sold separately but not tested with FreedomBox) </para>
+          </listitem>
+          <listitem>
+            <para>Architecture: arm64 </para>
+          </listitem>
+          <listitem>
+            <para>Ethernet: Gigabit Ethernet port </para>
+          </listitem>
+          <listitem>
+            <para>Battery: Supports battery backup using a Li-Po battery </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: None, use a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>SATA: None </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Non-Free Status</title>
+        <itemizedlist>
+          <listitem>
+            <para>Non-free blobs required: No </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: Not available </para>
+          </listitem>
+          <listitem>
+            <para>Works with stock Debian kernel: Yes </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -9091,6 +9449,23 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.6 (2019-04-29)</title>
+        <itemizedlist>
+          <listitem>
+            <para>i2p: Enable new application for I2P Anonymity Network. </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, German, Norwegian Bokmål, and Turkish. </para>
+          </listitem>
+          <listitem>
+            <para>letsencrypt: Provide link to configure domain if not configured. </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Show port numbers and types. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.5 (2019-04-15)</title>
         <itemizedlist>
