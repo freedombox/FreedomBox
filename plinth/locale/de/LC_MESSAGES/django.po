@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-15 18:31-0400\n"
+"POT-Creation-Date: 2019-04-29 19:02-0400\n"
 "PO-Revision-Date: 2019-04-17 21:04+0000\n"
 "Last-Translator: nautilusx <mail.ka@mailbox.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -520,8 +520,8 @@ msgid ""
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
-">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
+"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
 "Benutzer</a> auf {box_name}, der zur Gruppe der Administratoren gehört."
 
 #: plinth/modules/config/__init__.py:93 plinth/modules/dynamicdns/views.py:44
@@ -890,11 +890,11 @@ msgid ""
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
 "Der eingestellte diaspora*-Pod-Domainname ist <b>%(domain_name)s</b>. "
-"Benutzer-IDs erscheinen als <i>Benutzername@diaspora.%(domain_name)s</i><br/>"
-"Falls Sie den FreedomBox-Domainnamen ändern, sind alle Daten der Beutzer des "
-"vorherigen Podnamens nicht mehr erreichbar. <br/>Sie erreichen den diaspora*-"
-"Pod unter <a href=\"https://diaspora.%(domain_name)s\""
-">diaspora.%(domain_name)s</a>"
+"Benutzer-IDs erscheinen als <i>Benutzername@diaspora.%(domain_name)s</i><br/"
+">Falls Sie den FreedomBox-Domainnamen ändern, sind alle Daten der Beutzer "
+"des vorherigen Podnamens nicht mehr erreichbar. <br/>Sie erreichen den "
+"diaspora*-Pod unter <a href=\"https://diaspora.%(domain_name)s\">diaspora."
+"%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -1612,8 +1612,8 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Viele %(box_name)s Mitwirkende und Benutzer*innen sind auch im irc.oftc.net "
-"IRC-Netzwerk erreichbar. Treten Sie ihm bei und fragen um Hilfe im <a href=\""
-"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
+"IRC-Netzwerk erreichbar. Treten Sie ihm bei und fragen um Hilfe im <a href="
+"\"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
 "#freedombox</a>-Kanal der IRC-Weboberfläche."
 
 #: plinth/modules/help/templates/statuslog.html:25
@@ -1666,8 +1666,8 @@ msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p.net"
 "\" target=\"_blank\">homepage</a>."
 msgstr ""
-"Mehr Informationen über I2P finden Sie auf deren Projekt-<a href=\""
-"https://geti2p.net\" target=\"_blank\">Webseite</a>."
+"Mehr Informationen über I2P finden Sie auf deren Projekt-<a href=\"https://"
+"geti2p.net\" target=\"_blank\">Webseite</a>."
 
 #: plinth/modules/i2p/__init__.py:49
 msgid ""
@@ -1719,9 +1719,14 @@ msgstr ""
 "konfiguriert sein."
 
 #: plinth/modules/i2p/views.py:91
+#, fuzzy
+#| msgid ""
+#| "By default HTTP, HTTPS and SOCKS5 proxies are available. Additional "
+#| "proxies and tunnels may be configured using the tunnel configuration "
+#| "interface."
 msgid ""
-"By default HTTP, HTTPS and SOCKS5 proxies are available. Additional proxies "
-"and tunnels may be configured using the tunnel configuration interface."
+"By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
+"tunnels may be configured using the tunnel configuration interface."
 msgstr ""
 "Standardmäßig stehen HTTP-, HTTPS und SOCKS5-Proxys zur Verfügung. "
 "Zusätzliche Proxys und Tunnel können über die Tunnelkonfigurationsoberfläche "
@@ -2196,10 +2201,14 @@ msgstr ""
 "<b>Es wurden keine Domains konfiguriert.</b> Es muss eine Domain "
 "konfiguriert werden, um Zertifikate zu erstellen."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:324
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:325
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. Configure domains to be able to obtain "
+#| "certificates for them."
 msgid ""
-"No domains have been configured. Configure domains to be able to obtain "
-"certificates for them."
+"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Es wurden keine Domains konfiguriert. Um Zertifikate zu erstellen, müssen "
 "Domains konfiguriert werden."
@@ -2328,8 +2337,8 @@ msgid ""
 msgstr ""
 "Der Matrix-Dienst benötigt eine Domain für die Konfiguration. Benutzer "
 "anderer Matrix-Server können die Benutzer dieses Servers über diese Domain "
-"erreichen. Matrix-Nutzer-IDs erscheinen als "
-"<em>@Benutzername:Domainname</em>."
+"erreichen. Matrix-Nutzer-IDs erscheinen als <em>@Benutzername:Domainname</"
+"em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 msgid ""
@@ -2705,7 +2714,7 @@ msgstr "Secure Shell"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:88
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
-#: plinth/service.py:125
+#: plinth/service.py:138
 msgid "Web Server"
 msgstr "Webserver"
 
@@ -4289,8 +4298,8 @@ msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
 msgstr ""
-"Sie können Benutzerkonten in der <a href='/restore/'>reStore-"
-"Weboberfläche</a> anlegen und bearbeiten."
+"Sie können Benutzerkonten in der <a href='/restore/'>reStore-Weboberfläche</"
+"a> anlegen und bearbeiten."
 
 #: plinth/modules/roundcube/__init__.py:33
 #: plinth/modules/roundcube/manifest.py:24
@@ -4342,8 +4351,8 @@ msgstr ""
 "Server muss <code>imaps://imap.gmail.com</code> angegeben werden. In den "
 "Google-Kontoeinstellungen muss zudem die Option „Zugriff für weniger sichere "
 "Apps“ aktiviert werden (<a href=\"https://www.google.com/settings/security/"
-"lesssecureapps\" >https://www.google.com/settings/security/"
-"lesssecureapps</a>)."
+"lesssecureapps\" >https://www.google.com/settings/security/lesssecureapps</"
+"a>)."
 
 #: plinth/modules/searx/__init__.py:38 plinth/modules/searx/manifest.py:24
 msgid "Searx"
@@ -4459,8 +4468,8 @@ msgid ""
 "a> path on the web server. Note that Shaarli only supports a single user "
 "account, which you will need to setup on the initial visit."
 msgstr ""
-"Falls aktiviert, wird Shaarli auf dem Webserver unter <a href=\"/shaarli\""
-">/shaarli</a> erreichar sein. Shaarli unterstützt nur ein Benutzerkonto; "
+"Falls aktiviert, wird Shaarli auf dem Webserver unter <a href=\"/shaarli\">/"
+"shaarli</a> erreichar sein. Shaarli unterstützt nur ein Benutzerkonto; "
 "dieses muss beim ersten Besuch der Seite eingerichtet werden."
 
 #: plinth/modules/shadowsocks/__init__.py:33
@@ -4693,7 +4702,8 @@ msgstr "Softwareinstallation-Schnappschüsse"
 
 #: plinth/modules/snapshot/forms.py:42
 msgid "Enable or disable snapshots before and after software installation"
-msgstr "Schnappschüsse vor und nach Softwareinstallationen ein- oder auschalten"
+msgstr ""
+"Schnappschüsse vor und nach Softwareinstallationen ein- oder auschalten"
 
 #: plinth/modules/snapshot/forms.py:46
 msgid "Hourly Snapshots Limit"
@@ -5100,8 +5110,8 @@ msgid ""
 msgstr ""
 "Falls aktiviert, ist die Weboberfläche von Syncthing auf <a href=\"/"
 "syncthing/\">/syncthing</a> erreichbar. Client-Apps für Desktop und "
-"Mobiltelefon sind ebenfalls <a href=\"https://syncthing.net/\""
-">erhältlich</a>."
+"Mobiltelefon sind ebenfalls <a href=\"https://syncthing.net/\">erhältlich</"
+"a>."
 
 #: plinth/modules/syncthing/__init__.py:61
 msgid "Administer Syncthing application"
@@ -5150,8 +5160,8 @@ msgstr ""
 "Die Tahoe-LAFS-Serverdomain ist auf <b>%(domain_name)s%(domain_name)s</b> "
 "eingestellt. Änderungen am FreedomBox-Domainnamen würden eine "
 "Neuinstallation von Tahoe-LAFS erfordern, und SIE WÜRDEN DATEN VERLIEREN. "
-"Sie können Tahoe-LAFS auf <a href=\"https://%(domain_name)s:5678\""
-">https://%(domain_name)s:5678</a> erreichen."
+"Sie können Tahoe-LAFS auf <a href=\"https://%(domain_name)s:5678\">https://"
+"%(domain_name)s:5678</a> erreichen."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
@@ -5271,11 +5281,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
-"Sie können eine Liste von Tor-Bridges auf <a href=\""
-"https://bridges.torproject.org/\">https://bridges.torproject.org/</a> "
-"finden, und die Bridge-Informationen von dort kopieren und hier einfügen. "
-"Derzeitig unterstützte Transports sind „none“, „obfs3“, „obfs4“ und "
-"„scamblesuit“."
+"Sie können eine Liste von Tor-Bridges auf <a href=\"https://bridges."
+"torproject.org/\">https://bridges.torproject.org/</a> finden, und die Bridge-"
+"Informationen von dort kopieren und hier einfügen. Derzeitig unterstützte "
+"Transports sind „none“, „obfs3“, „obfs4“ und „scamblesuit“."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
@@ -5453,8 +5462,8 @@ msgid ""
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Falls aktiviert, steht Tiny Tiny RSS auf dem Webserver unter <a href=\"/tt-"
-"rss\">/tt-rss</a> zur Verfügung. Zugriff hat jeder mit einem <a href=\""
-"{users_url}\">{box_name}-Benutzerkonto</a>."
+"rss\">/tt-rss</a> zur Verfügung. Zugriff hat jeder mit einem <a href="
+"\"{users_url}\">{box_name}-Benutzerkonto</a>."
 
 #: plinth/modules/ttrss/__init__.py:54
 msgid ""
@@ -5779,11 +5788,11 @@ msgstr "Medienwechsel"
 msgid "configuration file: {file}"
 msgstr "Konfigurationsdatei: {file}"
 
-#: plinth/service.py:127
+#: plinth/service.py:140
 msgid "Web Server over Secure Socket Layer"
 msgstr "Webserver mit Verschlüsselung"
 
-#: plinth/service.py:129
+#: plinth/service.py:145
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Weboberfläche (Plinth)"
@@ -5832,10 +5841,10 @@ msgid ""
 "href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Dies ist ein interner Fehler und nicht etwas, das Sie verursacht haben oder "
-"beheben können. Bitte melden Sie den Fehler im <a href=\""
-"https://salsa.debian.org/freedombox-team/plinth/issues\">online "
-"Fehlermelder</a>, so dass wir ihn beheben können. Fügen Sie auch das <a href="
-"\"%(status_log_url)s\">Statusprotokoll</a> dem Fehlerbericht bei."
+"beheben können. Bitte melden Sie den Fehler im <a href=\"https://salsa."
+"debian.org/freedombox-team/plinth/issues\">online Fehlermelder</a>, so dass "
+"wir ihn beheben können. Fügen Sie auch das <a href=\"%(status_log_url)s"
+"\">Statusprotokoll</a> dem Fehlerbericht bei."
 
 #: plinth/templates/base.html:50
 #, python-format
