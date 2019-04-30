@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 19:02-0400\n"
-"PO-Revision-Date: 2017-10-07 23:21+0000\n"
-"Last-Translator: Karol Werner <karol@ppkt.eu>\n"
+"PO-Revision-Date: 2019-04-30 14:37+0000\n"
+"Last-Translator: Radek Pasiok <rpasiok@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/plinth/"
 "pl/>\n"
 "Language: pl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.17-dev\n"
+"X-Generator: Weblate 3.6.1\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -75,14 +75,12 @@ msgid "Language"
 msgstr "Język"
 
 #: plinth/forms.py:63
-#, fuzzy
-#| msgid "Language for this web administration interface"
 msgid "Language to use for presenting this web interface"
-msgstr "Język tego interfejsu administratora"
+msgstr "Język tego interfejsu"
 
 #: plinth/forms.py:70
 msgid "Use the language preference set in the browser"
-msgstr ""
+msgstr "Użyj języka ustawionego w przeglądarce"
 
 #: plinth/middleware.py:73 plinth/templates/setup.html:57
 msgid "Application installed."
@@ -120,11 +118,11 @@ msgstr ""
 
 #: plinth/modules/backups/__init__.py:37 plinth/modules/backups/views.py:50
 msgid "Backups"
-msgstr ""
+msgstr "Kopie zapasowe"
 
 #: plinth/modules/backups/__init__.py:40
 msgid "Backups allows creating and managing backup archives."
-msgstr ""
+msgstr "Tworzenie i zarządzanie archiwami kopii zapasowych."
 
 #: plinth/modules/backups/__init__.py:49
 #, fuzzy, python-brace-format
@@ -135,7 +133,7 @@ msgstr "{box_name} Podręcznik"
 #: plinth/modules/backups/forms.py:38
 #, python-brace-format
 msgid "{app} (No data to backup)"
-msgstr ""
+msgstr "{app} (Brak danych do utworzenia kopii zapasowej)"
 
 #: plinth/modules/backups/forms.py:58
 msgid "Included apps"
@@ -143,121 +141,124 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:58
 msgid "Apps to include in the backup"
-msgstr ""
+msgstr "Aplikacje uwzględniane w kopii zapasowej"
 
 #: plinth/modules/backups/forms.py:72
-#, fuzzy
-#| msgid "The subdomain you want to register"
 msgid "Select the apps you want to restore"
-msgstr "Subdomena którą chcesz zarejstrować"
+msgstr "Zaznacz aplikacje do odtworzenia"
 
 #: plinth/modules/backups/forms.py:85
 msgid "Upload File"
-msgstr ""
+msgstr "Prześlij plik"
 
 #: plinth/modules/backups/forms.py:88
 msgid "Backup files have to be in .tar.gz format"
-msgstr ""
+msgstr "Pliki kopii zapasowej muszą mieć format .tar.gz"
 
 #: plinth/modules/backups/forms.py:89
 msgid "Select the backup file you want to upload"
-msgstr ""
+msgstr "Zaznacz plik kopii zapasowej do przesłania"
 
 #: plinth/modules/backups/forms.py:94
 msgid "SSH Repository Path"
-msgstr ""
+msgstr "Ścieżka repozytorium SSH"
 
 #: plinth/modules/backups/forms.py:95
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
 msgstr ""
+"Ścieżka nowego lub istniejącego repozytorium, np.: <i>user@host:~/sciezka/do/"
+"repo/</i>"
 
 #: plinth/modules/backups/forms.py:98
-#, fuzzy
-#| msgid "Please provide a password"
 msgid "SSH server password"
-msgstr "Hasło"
+msgstr "Hasło do serwera SSH"
 
 #: plinth/modules/backups/forms.py:99
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
+"Hasło do serwera SSH.<br />Autoryzacja z użyciem klucza SSH nie jest jeszcze "
+"możliwa."
 
 #: plinth/modules/backups/forms.py:104
-#, fuzzy
 msgid "Encryption"
-msgstr "Let's Encrypt"
+msgstr "Szyfrowanie"
 
 #: plinth/modules/backups/forms.py:106
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
 msgstr ""
+"\"Klucz w repozytorium\" oznacza, że chroniony hasłem klucz jest "
+"przechowywany w kopii zapasowej."
 
 #: plinth/modules/backups/forms.py:111 plinth/modules/networks/forms.py:304
 msgid "Passphrase"
-msgstr ""
+msgstr "Hasło"
 
 #: plinth/modules/backups/forms.py:112
 msgid "Passphrase; Only needed when using encryption."
-msgstr ""
+msgstr "Hasło; Potrzebne tylko przy szyfrowaniu."
 
 #: plinth/modules/backups/forms.py:117
 msgid "Confirm Passphrase"
-msgstr ""
+msgstr "Potwierdź hasło"
 
 #: plinth/modules/backups/forms.py:118
 msgid "Repeat the passphrase."
-msgstr ""
+msgstr "Powtórz hasło."
 
 #: plinth/modules/backups/forms.py:139
 msgid "The entered encryption passphrases do not match"
-msgstr ""
+msgstr "Wprowadzone hasła nie są identyczne"
 
 #: plinth/modules/backups/forms.py:151
 #, python-format
 msgid "Accessing the remote repository failed. Details: %(err)s"
-msgstr ""
+msgstr "Nie powiodło się połączenie ze zdalnym repozytorium. Szczegóły: %(err)s"
 
 #: plinth/modules/backups/repository.py:45
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
+"Odmowa dostępu - upewnij się, czy wprowadziłeś poprawne dane logowania i czy "
+"serwer działa."
 
 #: plinth/modules/backups/repository.py:51
 msgid "Connection refused"
-msgstr ""
+msgstr "Odmowa dostępu"
 
 #: plinth/modules/backups/repository.py:58
 msgid "Repository not found"
-msgstr ""
+msgstr "Nie odnaleziono repozytorium"
 
 #: plinth/modules/backups/repository.py:65
 msgid "Incorrect encryption passphrase"
-msgstr ""
+msgstr "Niepoprawne hasło szyfrowania"
 
 #: plinth/modules/backups/repository.py:70
 msgid "SSH access denied"
-msgstr ""
+msgstr "Odmowa dostępu SSH"
 
 #: plinth/modules/backups/templates/backups.html:47
 msgid "Existing backups"
-msgstr ""
+msgstr "Istniejące kopie zapasowe"
 
 #: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
-msgstr ""
+msgstr "Utwórz nowe repozytorium"
 
 #: plinth/modules/backups/templates/backups.html:61
 msgid "Add Remote Repository"
-msgstr ""
+msgstr "Dodaj zdalne repozytorium"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
-msgstr ""
+msgstr "Usunąć trwale to archiwum?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/ikiwiki/forms.py:34
@@ -267,16 +268,13 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: plinth/modules/backups/templates/backups_delete.html:34
-#, fuzzy
-#| msgid "Time Zone"
 msgid "Time"
-msgstr "Strefa czasowa"
+msgstr "Czas"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
-#, fuzzy, python-format
-#| msgid "Delete %(name)s"
+#, python-format
 msgid "Delete Archive %(name)s"
-msgstr "Usuń %(name)s"
+msgstr "Usuń archiwum %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:32
 #: plinth/modules/config/templates/config.html:45
@@ -292,10 +290,13 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Dane logowania do tego repozytorium są zapisane na twoim %(box_name)s. <br />"
+" Odtworzenie kopii zapasowej na nowym %(box_name)s wymaga danych logowania "
+"ssh i hasła szyfrowania, jeśli wybrano szyfrowanie."
 
 #: plinth/modules/backups/templates/backups_repository_add.html:43
 msgid "Create Repository"
-msgstr ""
+msgstr "Utwórz repozytorium"
 
 #: plinth/modules/backups/templates/backups_repository_add.html:45
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
@@ -309,7 +310,7 @@ msgstr "Anuluj"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
-msgstr ""
+msgstr "Naprawdę chcesz usunąć to repozytorium?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
 msgid ""
@@ -320,30 +321,30 @@ msgid ""
 "      can add it again later on.\n"
 "    "
 msgstr ""
+"\n"
+"      Zdalne repozytorium nie zostanie usunięte.\n"
+"      Zostanie ono jedynie usunięte z listy na stronie kopii zapasowych. "
+"Możesz\n"
+"      dodać je później z powrotem.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 #: plinth/modules/backups/views.py:286
 msgid "Remove Repository"
-msgstr ""
+msgstr "Usuń repozytorium"
 
 #: plinth/modules/backups/templates/backups_restore.html:30
-#, fuzzy
-#| msgid "Restart"
 msgid "Restore data from"
-msgstr "Uruchom ponownie"
+msgstr "Odtwórz dane z"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/views.py:186
-#, fuzzy
-#| msgid "Restart"
 msgid "Restore"
-msgstr "Uruchom ponownie"
+msgstr "Odtwórz"
 
 #: plinth/modules/backups/templates/backups_restore.html:47
-#, fuzzy
-#| msgid "Restart"
 msgid "Restoring"
-msgstr "Uruchom ponownie"
+msgstr "Odtwarzanie"
 
 #: plinth/modules/backups/templates/backups_upload.html:30
 #, python-format
@@ -356,6 +357,11 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Prześlij plik kopii zapasowej pobrany z innego %(box_name)s aby\n"
+"      odtworzyć jego zawartość. Możesz wybrać aplikacje, które mają być\n"
+"      odtworzone po przesłaniu pliku.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:40
 #: plinth/modules/help/templates/statuslog.html:38
@@ -368,64 +374,67 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"Na odtworzenie kopii zapasowej dostępne jest %(max_filesize)s. Jeśli rozmiar "
+"ten zostanie przekroczony, może skutkować brakiem możliwości korzystania z "
+"%(box_name)s."
 
 #: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
-msgstr ""
+msgstr "Prześlij plik"
 
 #: plinth/modules/backups/views.py:53
 msgid "Upload"
-msgstr ""
+msgstr "Prześlij"
 
 #: plinth/modules/backups/views.py:56 plinth/modules/ikiwiki/views.py:41
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 #: plinth/modules/backups/views.py:84
 msgid "Archive created."
-msgstr ""
+msgstr "Archiwum zostało utworzone."
 
 #: plinth/modules/backups/views.py:111
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Archive"
-msgstr "Usuń"
+msgstr "Usuń archiwum"
 
 #: plinth/modules/backups/views.py:123
 msgid "Archive deleted."
-msgstr ""
+msgstr "Archiwum zostało usunięte."
 
 #: plinth/modules/backups/views.py:174
 msgid "Restored files from backup."
-msgstr ""
+msgstr "Odtworzono dane z kopii zapasowej."
 
 #: plinth/modules/backups/views.py:198
 msgid "No backup file found."
-msgstr ""
+msgstr "Brak kopii zapasowych."
 
 #: plinth/modules/backups/views.py:206
 msgid "Restore from uploaded file"
-msgstr ""
+msgstr "Odtwórz z przesłanego pliku"
 
 #: plinth/modules/backups/views.py:260
 msgid "Added new repository."
-msgstr ""
+msgstr "Dodano nowe archiwum."
 
 #: plinth/modules/backups/views.py:265
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Utwórz zdalne repozytorium kopii zapasowych"
 
 #: plinth/modules/backups/views.py:296
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr ""
+"Usunięto repozytorium. Umieszczona w nim kopia bezpieczeństwa nie została "
+"usunięta."
 
 #: plinth/modules/backups/views.py:304
 msgid "Unmounting failed!"
-msgstr ""
+msgstr "Nie udało się odmontować!"
 
 #: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
 msgid "Mounting failed"
-msgstr ""
+msgstr "Montowanie nie udało się"
 
 #: plinth/modules/bind/__init__.py:36
 msgid "BIND"
@@ -436,18 +445,13 @@ msgid "Domain Name Server"
 msgstr "Serwer nazw domen"
 
 #: plinth/modules/bind/__init__.py:47
-#, fuzzy
-#| msgid ""
-#| "BIND is open source software that enables you to publish your Domain Name "
-#| "System (DNS) information on the Internet, and to resolve DNS queries for "
-#| "your users."
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
-"BIND jest oprogramowaniem o otwartym źródle, które umożliwia opublikowanie w "
-"Internecie informacji o systemie nazw domen (DNS, Domain Name System) i "
-"obsługę zapytań DNS twoich użytkowników."
+"BIND umożliwia opublikowanie w Internecie informacji o systemie nazw domen ("
+"DNS, Domain Name System) i obsługę zapytań DNS urządzeń podłączonych do "
+"twojej sieci."
 
 #: plinth/modules/bind/__init__.py:51
 #, python-brace-format
