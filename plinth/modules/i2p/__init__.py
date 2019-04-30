@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
 
 from .manifest import backup, clients
@@ -59,13 +60,6 @@ proxies_service = None
 
 manual_page = 'I2P'
 
-additional_favorites = [
-    ('Searx instance', 'http://ransack.i2p'),
-    ('Torrent tracker', 'http://tracker2.postman.i2p'),
-    ('YaCy Legwork', 'http://legwork.i2p'),
-    ('YaCy Seeker', 'http://seeker.i2p'),
-]
-
 tunnels_to_manage = {
     'I2P HTTP Proxy': 'i2p-http-proxy-freedombox',
     'I2P HTTPS Proxy': 'i2p-https-proxy-freedombox',
@@ -101,14 +95,22 @@ def setup(helper, old_version=None):
 
     helper.call('post', disable)
     # Add favorites to the configuration
-    for fav_name, fav_url in additional_favorites:
-        helper.call('post', actions.superuser_run, 'i2p', [
+    for fav in FAVORITES:
+        args = [
             'add-favorite',
             '--name',
-            fav_name,
+            fav.get('name'),
             '--url',
-            fav_url,
-        ])
+            fav.get('url'),
+        ]
+        if 'icon' in fav:
+            args.extend(['--icon', fav.get('icon')])
+
+        if 'description' in fav:
+            args.extend(['--description', fav.get('description')])
+
+        helper.call('post', actions.superuser_run, 'i2p', args)
+
 
     # Tunnels to all interfaces
     for tunnel in tunnels_to_manage:
