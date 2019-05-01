@@ -18,6 +18,9 @@
 pytest configuration for all tests.
 """
 
+import os
+import pathlib
+
 import pytest
 
 
@@ -38,3 +41,38 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if 'functional' in item.keywords:
             item.add_marker(skip_functional)
+
+
+@pytest.fixture(name='load_cfg')
+def fixture_load_cfg():
+    """Load test configuration."""
+    from plinth import cfg
+
+    root_dir = pathlib.Path(__file__).resolve().parent
+    test_data_dir = root_dir / 'plinth' / 'tests' / 'data'
+    cfg_file = test_data_dir / 'etc' / 'plinth' / 'plinth.config'
+    cfg.read(str(cfg_file), str(root_dir))
+    yield cfg
+    cfg.read()
+
+
+@pytest.fixture(name='develop_mode')
+def fixture_develop_mode(load_cfg):
+    """Turn on development mode for a test."""
+    load_cfg.develop = True
+    yield
+    load_cfg.develop = False
+
+
+@pytest.fixture(name='needs_root')
+def fixture_needs_root():
+    """Skip test if not running in root mode."""
+    if os.geteuid() != 0:
+        pytest.skip('Needs to be root')
+
+
+@pytest.fixture(name='needs_sudo')
+def fixture_needs_sudo():
+    """Skip test if sudo command is not available."""
+    if not os.path.isfile('/usr/bin/sudo'):
+        pytest.skip('Needs sudo command installed.')
