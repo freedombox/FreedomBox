@@ -20,19 +20,14 @@ Test module to exercise group registration.
 It is recommended to run this module with root privileges in a virtual machine.
 """
 
-import unittest
 from plinth.modules import users
 
 
-class TestGroups(unittest.TestCase):
-    """Test groups behavior."""
-    def test_register_group(self):
-        """Test for multi addition of same group"""
-        users.groups = dict()  # reset groups
-        group = ('TestGroup', 'Group for testing')
-        users.register_group(group)
-        users.register_group(group)
-        self.assertEqual(
-            len(users.groups), 1,
-            'Duplicate entries for same group generated!')
-        return users.groups
+def test_register_group():
+    """Test for multi addition of same group"""
+    users.groups = dict()  # reset groups
+    group = ('TestGroup', 'Group for testing')
+    users.register_group(group)
+    users.register_group(group)
+    assert len(users.groups) == 1
+    return users.groups
