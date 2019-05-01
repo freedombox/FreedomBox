@@ -18,36 +18,41 @@
 Test actions for configuring bind
 """
 
-import tempfile
-import unittest
+import pytest
 
 from plinth.modules import bind
 
 
-class TestBind(unittest.TestCase):
-    """Test actions for configuring bind."""
+@pytest.fixture(name='configuration_file')
+def fixture_configuration_file(tmp_path):
+    """Setup the a bind configuration file temporary directory."""
+    conf_file = tmp_path / 'named.conf.options'
+    conf_file.write_text(bind.DEFAULT_CONFIG)
+    old_config_file = bind.CONFIG_FILE
+    bind.CONFIG_FILE = str(conf_file)
+    yield
+    bind.CONFIG_FILE = old_config_file
 
-    def setUp(self):
-        self.conf_file = tempfile.NamedTemporaryFile()
-        with open(self.conf_file.name, 'w') as conf:
-            conf.write(bind.DEFAULT_CONFIG)
 
-        bind.CONFIG_FILE = self.conf_file.name
+@pytest.mark.usefixtures('configuration_file')
+def test_set_forwarders():
+    """Test that setting forwarders works."""
+    bind.set_forwarders('8.8.8.8 8.8.4.4')
+    conf = bind.get_config()
+    assert conf['forwarders'] == '8.8.8.8 8.8.4.4'
 
-    def test_set_forwarders(self):
-        bind.set_forwarders('8.8.8.8 8.8.4.4')
-        conf = bind.get_config()
-        self.assertEqual(conf['forwarders'], '8.8.8.8 8.8.4.4')
+    bind.set_forwarders('')
+    conf = bind.get_config()
+    assert conf['forwarders'] == ''
 
-        bind.set_forwarders('')
-        conf = bind.get_config()
-        self.assertEqual(conf['forwarders'], '')
 
-    def test_enable_dnssec(self):
-        bind.set_dnssec('enable')
-        conf = bind.get_config()
-        self.assertEqual(conf['enable_dnssec'], True)
+@pytest.mark.usefixtures('configuration_file')
+def test_enable_dnssec():
+    """Test that enabling DNSSEC works."""
+    bind.set_dnssec('enable')
+    conf = bind.get_config()
+    assert conf['enable_dnssec']
 
-        bind.set_dnssec('disable')
-        conf = bind.get_config()
-        self.assertEqual(conf['enable_dnssec'], False)
+    bind.set_dnssec('disable')
+    conf = bind.get_config()
+    assert not conf['enable_dnssec']
