@@ -19,73 +19,74 @@ Test module for utilities.
 """
 
 import tempfile
-from unittest import TestCase
-from unittest.mock import Mock, MagicMock
+from unittest.mock import MagicMock, Mock
 
+import pytest
 import ruamel.yaml
 from django.test.client import RequestFactory
 
-from plinth.utils import YAMLFile
-from plinth.utils import is_user_admin
+from plinth.utils import YAMLFile, is_user_admin
 
 
-class TestIsAdminUser(TestCase):
+class TestIsAdminUser:
     """Test class for is_user_admin utility."""
 
-    def setUp(self):
+    @staticmethod
+    @pytest.fixture(name='web_request')
+    def fixture_web_request():
         """Setup each test case befor execution."""
-        request = RequestFactory().get('/plinth/mockapp')
-        request.user = Mock()
-        request.session = MagicMock()
-        self.request = request
+        web_request = RequestFactory().get('/plinth/mockapp')
+        web_request.user = Mock()
+        web_request.session = MagicMock()
+        return web_request
 
-    def test_is_false_for_anonymous_user(self):
+    @staticmethod
+    def test_is_false_for_anonymous_user(web_request):
         """Test anonymous user is reported as non-admin."""
-        super(TestIsAdminUser, self).setUp()
-        self.request.user = Mock()
-        self.request.user.is_authenticated = False
-        self.assertFalse(is_user_admin(self.request))
-        self.assertFalse(is_user_admin(self.request, cached=True))
+        web_request.user = Mock()
+        web_request.user.is_authenticated = False
+        assert not is_user_admin(web_request)
+        assert not is_user_admin(web_request, cached=True)
 
-    def test_values_for_authenticated_users(self):
+    @staticmethod
+    def test_values_for_authenticated_users(web_request):
         """Test correct return values for authenticated users."""
-        self.request.user.groups.filter().exists = Mock(return_value=False)
-        self.assertFalse(is_user_admin(self.request))
-        self.request.user.groups.filter().exists = Mock(return_value=True)
-        self.assertTrue(is_user_admin(self.request))
+        web_request.user.groups.filter().exists = Mock(return_value=False)
+        assert not is_user_admin(web_request)
+        web_request.user.groups.filter().exists = Mock(return_value=True)
+        assert is_user_admin(web_request)
 
-    def test_caching_of_values(self):
+    @staticmethod
+    def test_caching_of_values(web_request):
         """Test that caching of values for authenticate users."""
         session_mock = MagicMock()
         session_dict = {}
         session_mock.__setitem__.side_effect = session_dict.__setitem__
         session_mock.__getitem__.side_effect = session_dict.__getitem__
         session_mock.__contains__.side_effect = session_dict.__contains__
-        self.request.session = session_mock
+        web_request.session = session_mock
 
         mock = Mock(return_value=False)
-        self.request.user.groups.filter().exists = mock
-        self.assertFalse(is_user_admin(self.request))
+        web_request.user.groups.filter().exists = mock
+        assert not is_user_admin(web_request)
         mock.assert_called_once_with()
         session_mock.__setitem__.assert_called_once_with(
             'cache_user_is_admin', False)
 
         mock = Mock(return_value=False)
-        self.request.user.groups.filter().exists = mock
-        self.assertFalse(is_user_admin(self.request, cached=True))
+        web_request.user.groups.filter().exists = mock
+        assert not is_user_admin(web_request, cached=True)
         mock.assert_not_called()
-        session_mock.__getitem__.assert_called_once_with(
-            'cache_user_is_admin')
+        session_mock.__getitem__.assert_called_once_with('cache_user_is_admin')
 
         mock = Mock(return_value=False)
-        self.request.user.groups.filter().exists = mock
-        self.assertFalse(is_user_admin(self.request, cached=False))
+        web_request.user.groups.filter().exists = mock
+        assert not is_user_admin(web_request, cached=False)
         mock.assert_called_once_with()
-        session_mock.__getitem__.assert_called_once_with(
-            'cache_user_is_admin')
+        session_mock.__getitem__.assert_called_once_with('cache_user_is_admin')
 
 
-class TestYAMLFileUtil(TestCase):
+class TestYAMLFileUtil:
     """Check updating YAML files"""
 
     kv_pair = {'key': 'value'}
@@ -121,13 +122,16 @@ class TestYAMLFileUtil(TestCase):
 
         with open(test_file.name, 'r') as retrieved_conf:
             file_conf = ruamel.yaml.round_trip_load(retrieved_conf)
-            assert file_conf == {'property1': self.kv_pair,
-                                 'property2': self.kv_pair}
+            assert file_conf == {
+                'property1': self.kv_pair,
+                'property2': self.kv_pair
+            }
 
-    def test_context_exception(self):
+    @staticmethod
+    def test_context_exception():
         """Test that exception during update does not update file."""
         test_file = tempfile.NamedTemporaryFile()
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError):
             with YAMLFile(test_file.name) as yaml_file:
                 yaml_file['property1'] = 'value1'
                 raise ValueError('Test')
