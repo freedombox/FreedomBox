@@ -19,18 +19,10 @@ Test module for custom shortcuts.
 """
 
 import json
-import os
 
 import pytest
 
-from plinth import cfg
 from plinth.modules.api.views import get_shortcuts_as_json
-
-TEST_CONFIG_DIR = \
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
-
-CUSTOM_SHORTCUTS_FILE = os.path.join(TEST_CONFIG_DIR,
-                                     'etc/plinth/custom-shortcuts.json')
 
 NEXTCLOUD_SHORTCUT = {
     'name':
@@ -53,72 +45,68 @@ NEXTCLOUD_SHORTCUT = {
 }
 
 
-def setup_module(module):
-    """Load test configuration."""
-    root = os.path.dirname(os.path.realpath(__file__))
-    cfg_file = os.path.join(TEST_CONFIG_DIR, 'etc', 'plinth', 'plinth.config')
-    cfg.read(cfg_file, root)
+@pytest.fixture(name='custom_shortcuts_file')
+def fixture_custom_shortcuts_file(load_cfg, tmp_path):
+    """Fixture to set path for a custom shortcuts file."""
+    load_cfg.config_file = str(tmp_path / 'plinth.conf')
+    return tmp_path / 'custom-shortcuts.json'
 
 
-def teardown_module(module):
-    """Reset configuration."""
-    cfg.read()
-
-
-@pytest.fixture
-def no_custom_shortcuts_file():
+@pytest.fixture(name='no_custom_shortcuts_file')
+def fixture_no_custom_shortcuts_file(custom_shortcuts_file):
     """Delete the custom_shortcuts file."""
-    if os.path.exists(CUSTOM_SHORTCUTS_FILE):
-        os.remove(CUSTOM_SHORTCUTS_FILE)
+    if custom_shortcuts_file.exists():
+        custom_shortcuts_file.unlink()
 
 
-@pytest.fixture
-def blank_custom_shortcuts_file():
+@pytest.fixture(name='blank_custom_shortcuts_file')
+def fixture_blank_custom_shortcuts_file(custom_shortcuts_file):
     """Create a blank shortcuts file."""
-    open(CUSTOM_SHORTCUTS_FILE, 'w').close()
+    custom_shortcuts_file.write_text('')
 
 
-@pytest.fixture
-def empty_custom_shortcuts():
+@pytest.fixture(name='empty_custom_shortcuts')
+def fixture_empty_custom_shortcuts(custom_shortcuts_file):
     """Create a custom_shortcuts file with an empty list of shortcuts."""
-    with open(CUSTOM_SHORTCUTS_FILE, 'w') as shortcuts_file:
-        shortcuts = {'shortcuts': []}
-        json.dump(shortcuts, shortcuts_file)
+    custom_shortcuts_file.write_text(json.dumps({'shortcuts': []}))
 
 
-@pytest.fixture
-def nextcloud_shortcut():
-    with open(CUSTOM_SHORTCUTS_FILE, 'w') as shortcuts_file:
-        shortcuts = {'shortcuts': [NEXTCLOUD_SHORTCUT]}
-        json.dump(shortcuts, shortcuts_file)
+@pytest.fixture(name='nextcloud_shortcut')
+def fixture_nextcloud_shortcut(custom_shortcuts_file):
+    """Create a custom_shortcuts file with NextCloud shortcut."""
+    shortcuts = {'shortcuts': [NEXTCLOUD_SHORTCUT]}
+    custom_shortcuts_file.write_text(json.dumps(shortcuts))
 
 
-def test_shortcuts_api_with_no_custom_shortcuts_file(no_custom_shortcuts_file):
+@pytest.mark.usefixtures('no_custom_shortcuts_file')
+def test_shortcuts_api_with_no_custom_shortcuts_file():
     get_shortcuts_as_json()
 
 
-def test_shortcuts_api_with_blank_custom_shortcuts_file(
-        blank_custom_shortcuts_file):
+@pytest.mark.usefixtures('blank_custom_shortcuts_file')
+def test_shortcuts_api_with_blank_custom_shortcuts_file():
     get_shortcuts_as_json()
 
 
-def test_shortcuts_api_with_empty_custom_shortcuts_list(
-        empty_custom_shortcuts):
+@pytest.mark.usefixtures('empty_custom_shortcuts')
+def test_shortcuts_api_with_empty_custom_shortcuts_list():
     get_shortcuts_as_json()
 
 
-def test_shortcuts_api_with_custom_nextcloud_shortcut(nextcloud_shortcut):
+@pytest.mark.usefixtures('nextcloud_shortcut')
+def test_shortcuts_api_with_custom_nextcloud_shortcut():
     shortcuts = get_shortcuts_as_json()
     assert len(shortcuts['shortcuts']) >= 1
     assert any(
         shortcut['name'] == 'NextCloud' for shortcut in shortcuts['shortcuts'])
 
 
-def test_retrieved_custom_shortcut_from_api_is_correct(nextcloud_shortcut):
+@pytest.mark.usefixtures('nextcloud_shortcut')
+def test_retrieved_custom_shortcut_from_api_is_correct():
     shortcuts = get_shortcuts_as_json()
-    nextcloud_shortcut = [
-        shortcut for shortcut in shortcuts['shortcuts']
-        if shortcut['name'] == 'NextCloud'
+    shortcut = [
+        current_shortcut for current_shortcut in shortcuts['shortcuts']
+        if current_shortcut['name'] == 'NextCloud'
     ]
-    assert nextcloud_shortcut
-    assert nextcloud_shortcut[0] == NEXTCLOUD_SHORTCUT
+    assert shortcut
+    assert shortcut[0] == NEXTCLOUD_SHORTCUT
