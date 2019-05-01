@@ -22,9 +22,8 @@ import os
 import re
 import subprocess
 import tempfile
-import unittest
 
-euid = os.geteuid()
+import pytest
 
 
 def _get_partition_device(device, partition_number):
@@ -119,10 +118,10 @@ class Disk():
         self._remove_disk_file()
 
 
-class TestActions(unittest.TestCase):
+class TestActions:
     """Test all actions related to storage."""
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @pytest.mark.usefixtures('needs_root')
     def test_simple_case(self):
         """Test a simple with no complications"""
         disk_info = [
@@ -141,7 +140,7 @@ class TestActions(unittest.TestCase):
             self.expand_partition(3, success=True)
             self.expand_partition(3, success=False)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @pytest.mark.usefixtures('needs_root')
     def test_extended_partition_free_space(self):
         """Test that free space does not show up when outside extended."""
         disk_info = [
@@ -152,7 +151,7 @@ class TestActions(unittest.TestCase):
             self.assert_free_space(5, space=False)
             self.expand_partition(5, success=False)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @pytest.mark.usefixtures('needs_root')
     def test_gpt_partition_free_space(self):
         """Test that GPT partitions can be expanded."""
         # Specifically check for partition number > 4
@@ -166,7 +165,7 @@ class TestActions(unittest.TestCase):
             self.expand_partition(5, success=True)
             self.expand_partition(5, success=False)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @pytest.mark.usefixtures('needs_root')
     def test_unsupported_file_system(self):
         """Test that free space after unknown file system does not count."""
         disk_info = ['mktable msdos', 'mkpart primary 1 8']
@@ -174,7 +173,7 @@ class TestActions(unittest.TestCase):
             self.assert_free_space(1, space=False)
             self.expand_partition(1, success=False)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @pytest.mark.usefixtures('needs_root')
     def test_btrfs_expansion(self):
         """Test that btrfs file system can be expanded."""
         disk_info = ['mktable msdos', 'mkpart primary btrfs 1 200']
@@ -183,7 +182,7 @@ class TestActions(unittest.TestCase):
             self.expand_partition(1, success=False)
             self.assert_btrfs_file_system_healthy(1)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @pytest.mark.usefixtures('needs_root')
     def test_ext4_expansion(self):
         """Test that ext4 file system can be expanded."""
         disk_info = ['mktable msdos', 'mkpart primary ext4 1 64']
@@ -197,17 +196,18 @@ class TestActions(unittest.TestCase):
         device = _get_partition_device(self.device, partition_number)
         result = self.run_action(
             ['storage', 'is-partition-expandable', device])
-        self.assertEqual(result, space)
+        assert result == space
 
     def expand_partition(self, partition_number, success=True):
         """Expand a partition."""
         self.assert_aligned(partition_number)
         device = _get_partition_device(self.device, partition_number)
         result = self.run_action(['storage', 'expand-partition', device])
-        self.assertEqual(result, success)
+        assert result == success
         self.assert_aligned(partition_number)
 
-    def run_action(self, action_command):
+    @staticmethod
+    def run_action(action_command):
         """Run an action and return success/failure result."""
         current_directory = os.path.dirname(os.path.realpath(__file__))
         action = os.path.join(current_directory, '..', '..', '..', '..',
