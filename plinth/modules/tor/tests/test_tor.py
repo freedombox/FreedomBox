@@ -14,32 +14,30 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Tests for Tor module.
 """
 
-import os
-import unittest
-
+import pytest
 from django.core.exceptions import ValidationError
 
 from plinth.modules.tor import forms, utils
 
-euid = os.geteuid()
 
+class TestTor:
+    """Test cases for testing the Tor module."""
 
-class TestTor(unittest.TestCase):
-    """Test cases for testing the tor module."""
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_is_apt_transport_tor_enabled(self):
+    @staticmethod
+    @pytest.mark.usefixtures('needs_root')
+    def test_is_apt_transport_tor_enabled():
         """Test that is_apt_transport_tor_enabled does not raise any unhandled
         exceptions.
         """
         utils.is_apt_transport_tor_enabled()
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_get_status(self):
+    @staticmethod
+    @pytest.mark.usefixtures('needs_root', 'load_cfg')
+    def test_get_status():
         """Test that get_status does not raise any unhandled exceptions.
 
         This should work regardless of whether tor is installed, or
@@ -48,9 +46,11 @@ class TestTor(unittest.TestCase):
         utils.get_status()
 
 
-class TestTorForm(unittest.TestCase):
+class TestTorForm:
     """Test whether Tor configration form works."""
-    def test_bridge_validator(self):
+
+    @staticmethod
+    def test_bridge_validator():
         """Test upstream bridges' form field validator."""
         validator = forms.bridges_validator
 
@@ -85,12 +85,18 @@ class TestTorForm(unittest.TestCase):
                   '\n')
 
         # Invalid number for parts
-        self.assertRaises(ValidationError, validator, '  ')
+        with pytest.raises(ValidationError):
+            validator('  ')
 
         # Invalid IP address/port
-        self.assertRaises(ValidationError, validator, '73.237.165.384:9001')
-        self.assertRaises(ValidationError, validator, '73.237.165.184:90001')
-        self.assertRaises(ValidationError, validator,
-                          '[a2001:db8:85a3:8d3:1319:8a2e:370:7348]:443')
-        self.assertRaises(ValidationError, validator,
-                          '[2001:db8:85a3:8d3:1319:8a2e:370:7348]:90443')
+        with pytest.raises(ValidationError):
+            validator('73.237.165.384:9001')
+
+        with pytest.raises(ValidationError):
+            validator('73.237.165.184:90001')
+
+        with pytest.raises(ValidationError):
+            validator('[a2001:db8:85a3:8d3:1319:8a2e:370:7348]:443')
+
+        with pytest.raises(ValidationError):
+            validator('[2001:db8:85a3:8d3:1319:8a2e:370:7348]:90443')
