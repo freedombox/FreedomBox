@@ -18,15 +18,14 @@
 Tests for backups module API.
 """
 
-import unittest
 from unittest.mock import MagicMock, call, patch
 
+import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from plinth import cfg, module_loader
 
-from .. import api, forms
-from .. import ROOT_REPOSITORY
+from .. import ROOT_REPOSITORY, api, forms
 
 # pylint: disable=protected-access
 
@@ -58,37 +57,33 @@ def _get_backup_app(name):
     return api.BackupApp(name, MagicMock(backup=_get_test_manifest(name)))
 
 
-class TestBackupApp(unittest.TestCase):
+class TestBackupApp:
     """Test the BackupApp class."""
 
-    def test_run_hook(self):
+    @staticmethod
+    def test_run_hook():
         """Test running a hook on an application."""
         packet = api.Packet('backup', 'apps', '/', [])
         hook = 'testhook_pre'
         app = MagicMock()
         backup_app = api.BackupApp('app_name', app)
         backup_app.run_hook(hook, packet)
+
         app.testhook_pre.assert_has_calls([call(packet)])
         assert not packet.errors
 
         app.testhook_pre.reset_mock()
         app.testhook_pre.side_effect = Exception()
         backup_app.run_hook(hook, packet)
-        self.assertEqual(packet.errors,
-                         [api.BackupError('hook', app, hook=hook)])
+        assert packet.errors == [api.BackupError('hook', app, hook=hook)]
 
         del app.testhook_pre
         backup_app.run_hook(hook, packet)
 
 
-class TestBackupProcesses(unittest.TestCase):
+@pytest.mark.usefixtures('load_cfg')
+class TestBackupProcesses:
     """Test cases for backup processes"""
-
-    @classmethod
-    def setUpClass(cls):
-        """Setup all the test cases."""
-        super().setUpClass()
-        cfg.read()
 
     @staticmethod
     def test_packet_process_manifests():
@@ -119,8 +114,9 @@ class TestBackupProcesses(unittest.TestCase):
         api.restore_apps(restore_handler)
         restore_handler.assert_called_once()
 
+    @staticmethod
     @patch('plinth.module_loader.loaded_modules.items')
-    def test_get_all_apps_for_backup(self, modules):
+    def test_get_all_apps_for_backup(modules):
         """Test listing apps supporting backup and needing backup."""
         apps = [
             ('a', MagicMock(backup=_get_test_manifest('a'))),
@@ -137,7 +133,7 @@ class TestBackupProcesses(unittest.TestCase):
             api.BackupApp('b', apps[1][1]),
             api.BackupApp('c', apps[2][1])
         ]
-        self.assertEqual(returned_apps, expected_apps)
+        assert returned_apps == expected_apps
 
     @staticmethod
     @patch('plinth.module_loader.loaded_modules.items')
@@ -164,11 +160,11 @@ class TestBackupProcesses(unittest.TestCase):
         assert app_a.locked is True
         assert app_b.locked is True
 
+    @staticmethod
     @patch('plinth.action_utils.webserver_is_enabled')
     @patch('plinth.action_utils.service_is_running')
     @patch('plinth.actions.superuser_run')
-    def test__shutdown_services(self, run, service_is_running,
-                                webserver_is_enabled):
+    def test__shutdown_services(run, service_is_running, webserver_is_enabled):
         """Test that services are stopped in correct order."""
         apps = [_get_backup_app('a'), _get_backup_app('b')]
         service_is_running.return_value = True
@@ -184,7 +180,7 @@ class TestBackupProcesses(unittest.TestCase):
                                       apps[1].manifest['services'][0]),
             api.ServiceHandler.create(apps[1], apps[1].manifest['services'][1])
         ]
-        self.assertEqual(state, expected_state)
+        assert state == expected_state
 
         service_is_running.assert_has_calls([call('b'), call('a')])
         webserver_is_enabled.assert_has_calls(
@@ -242,19 +238,20 @@ class TestBackupProcesses(unittest.TestCase):
         packet.apps[1].run_hook.assert_has_calls(calls)
 
 
-class TestBackupModule(unittest.TestCase):
+class TestBackupModule:
     """Tests of the backups django module, like views or forms."""
 
-    def test_file_upload(self):
+    @staticmethod
+    def test_file_upload():
         # posting a video should fail
         video_file = SimpleUploadedFile("video.mp4", b"file_content",
                                         content_type="video/mp4")
         form = forms.UploadForm({}, {'file': video_file})
-        self.assertFalse(form.is_valid())
+        assert not form.is_valid()
 
         # posting an archive file should work
         archive_file = SimpleUploadedFile("backup.tar.gz", b"file_content",
                                           content_type="application/gzip")
         form = forms.UploadForm({}, {'file': archive_file})
         form.is_valid()
-        self.assertTrue(form.is_valid())
+        assert form.is_valid()

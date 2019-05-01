@@ -18,59 +18,64 @@
 Test network storage.
 """
 
-from django.test import TestCase
+import pytest
 
 from plinth.modules.backups import network_storage
 
+pytestmark = pytest.mark.django_db
 
-class TestNetworkStorage(TestCase):
-    """Test handling network storage in kvstore"""
-    storages = [{
-        'path': 'test@nonexistent.org:~/',
-        'storage_type': 'ssh',
-        'added_by_module': 'test'
-    }, {
+_storages = [{
+    'path': 'test@nonexistent.org:~/',
+    'storage_type': 'ssh',
+    'added_by_module': 'test'
+}, {
+    'path': 'test@nonexistent.org:~/tmp/repo/',
+    'storage_type': 'ssh',
+    'added_by_module': 'test'
+}]
+
+
+def test_add():
+    """Add a storage item"""
+    storage = _storages[0]
+    uuid = network_storage.update_or_add(storage)
+    _storage = network_storage.get(uuid)
+    assert _storage['path'] == storage['path']
+
+
+def test_add_invalid():
+    """Add a storage item"""
+    storage_with_missing_type = {
         'path': 'test@nonexistent.org:~/tmp/repo/',
-        'storage_type': 'ssh',
         'added_by_module': 'test'
-    }]
+    }
+    with pytest.raises(ValueError):
+        network_storage.update_or_add(storage_with_missing_type)
 
-    def test_add(self):
-        """Add a storage item"""
-        storage = self.storages[0]
+
+def test_remove():
+    """Add and remove storage items"""
+    storage = _storages[0]
+    uuid = None
+    for storage in _storages:
         uuid = network_storage.update_or_add(storage)
-        _storage = network_storage.get(uuid)
-        self.assertEqual(_storage['path'], storage['path'])
 
-    def test_add_invalid(self):
-        """Add a storage item"""
-        storage_with_missing_type = {
-            'path': 'test@nonexistent.org:~/tmp/repo/',
-            'added_by_module': 'test'
-        }
-        with self.assertRaises(ValueError):
-            network_storage.update_or_add(storage_with_missing_type)
+    storages = network_storage.get_storages()
+    assert len(storages) == 2
+    network_storage.delete(uuid)
+    storages = network_storage.get_storages()
+    assert len(storages) == 1
 
-    def test_remove(self):
-        """Add and remove storage items"""
-        storage = self.storages[0]
-        uuid = None
-        for storage in self.storages:
-            uuid = network_storage.update_or_add(storage)
-        storages = network_storage.get_storages()
-        self.assertEqual(len(storages), 2)
-        network_storage.delete(uuid)
-        storages = network_storage.get_storages()
-        self.assertEqual(len(storages), 1)
 
-    def test_update(self):
-        """Update existing storage items"""
-        uuid = None
-        for storage in self.storages:
-            uuid = network_storage.update_or_add(storage)
-        storage = network_storage.get(uuid)
-        new_path = 'test@nonexistent.org:~/tmp/repo_new/'
-        storage['path'] = new_path
-        network_storage.update_or_add(storage)
-        _storage = network_storage.get(uuid)
-        self.assertEquals(_storage['path'], new_path)
+def test_update():
+    """Update existing storage items"""
+    uuid = None
+    for storage in _storages:
+        uuid = network_storage.update_or_add(storage)
+
+    storage = network_storage.get(uuid)
+    new_path = 'test@nonexistent.org:~/tmp/repo_new/'
+    storage['path'] = new_path
+    network_storage.update_or_add(storage)
+    _storage = network_storage.get(uuid)
+    assert _storage['path'] == new_path
