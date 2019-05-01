@@ -18,30 +18,21 @@
 Tests for letsencrypt module.
 """
 
-import os
-import os.path
-import unittest
+import pytest
 
 from .. import on_domain_added, on_domain_removed
 
-euid = os.geteuid()
-sudo_available = os.path.isfile("/usr/bin/sudo")
+pytestmark = pytest.mark.usefixtures('needs_root', 'needs_sudo')
 
 
-@unittest.skipUnless(sudo_available, 'Requires sudo')
-class TestDomainNameChanges(unittest.TestCase):
-    """Test for automatically obtaining and revoking Let's Encrypt certs"""
+def test_add_onion_domain():
+    assert not on_domain_added('test', 'hiddenservice', 'ddddd.onion')
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_add_onion_domain(self):
-        self.assertFalse(
-            on_domain_added('test', 'hiddenservice', 'ddddd.onion'))
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_add_valid_domain(self):
-        self.assertTrue(
-            on_domain_added('test', 'domainname', 'subdomain.domain.tld'))
+@pytest.mark.usefixtures('load_cfg')
+def test_add_valid_domain():
+    assert on_domain_added('test', 'domainname', 'subdomain.domain.tld')
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_remove_domain(self):
-        self.assertTrue(on_domain_removed('test', '', 'somedomain.tld'))
+
+def test_remove_domain():
+    assert on_domain_removed('test', '', 'somedomain.tld')
