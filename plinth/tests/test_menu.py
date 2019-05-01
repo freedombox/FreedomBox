@@ -14,36 +14,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test module for menus.
 """
 
-from django.http import HttpRequest
-from django.test import TestCase
-from django.urls import reverse
 import random
+
+import pytest
+from django.http import HttpRequest
+from django.urls import reverse
 
 from plinth import menu as menu_module
 from plinth.menu import Menu
 
-
 URL_TEMPLATE = '/a{}/b{}/c{}/'
 
-
 # Test helper methods
+
 
 def build_menu(size=5):
     """Build a menu with the specified number of items."""
     random.seed()
     item_data = []
     for index in range(1, size + 1):
-        item_data.append(['Name' + str(index),
-                          'ShortDescription' + str(index),
-                          'Item' + str(index),
-                          'Icon' + str(index),
-                          URL_TEMPLATE.format(index, index, index),
-                          random.randint(0, 1000)])
+        item_data.append([
+            'Name' + str(index), 'ShortDescription' + str(index),
+            'Item' + str(index), 'Icon' + str(index),
+            URL_TEMPLATE.format(index, index, index),
+            random.randint(0, 1000)
+        ])
 
     menu = Menu()
     for data in item_data:
@@ -62,172 +61,179 @@ def dump_menu(menu):
     print('# # # # # # # # # #')
 
 
-class MenuTestCase(TestCase):
-    """Verify the behavior of the Menu class."""
+def test_init():
+    """Verify that main_menu and essential items are created."""
+    menu_module.init()
+    main_menu = menu_module.main_menu
+    assert isinstance(main_menu, Menu)
 
-    def test_init(self):
-        """Verify that main_menu and essential items are created."""
-        menu_module.init()
-        main_menu = menu_module.main_menu
-        self.assertIsInstance(main_menu, Menu)
+    apps_menu = main_menu.get('apps')
+    assert apps_menu.label == ''
+    assert apps_menu.icon == 'fa-download'
+    assert str(apps_menu.url) == '/apps/'
 
-        apps_menu = main_menu.get('apps')
-        self.assertEqual(apps_menu.label, '')
-        self.assertEqual(apps_menu.icon, 'fa-download')
-        self.assertEqual(str(apps_menu.url), '/apps/')
+    system_menu = main_menu.get('system')
+    assert system_menu.label == ''
+    assert system_menu.icon == 'fa-cog'
+    assert str(system_menu.url) == '/sys/'
 
-        system_menu = main_menu.get('system')
-        self.assertEqual(system_menu.label, '')
-        self.assertEqual(system_menu.icon, 'fa-cog')
-        self.assertEqual(str(system_menu.url), '/sys/')
 
-    def test_menu_creation_without_arguments(self):
-        """Verify the Menu state without initialization parameters."""
-        menu = Menu()
-        self.assertEqual('', menu.label)
-        self.assertEqual('', menu.icon)
-        self.assertEqual('#', menu.url)
-        self.assertEqual(50, menu.order)
-        self.assertEqual(0, len(menu.items))
+def test_menu_creation_without_arguments():
+    """Verify the Menu state without initialization parameters."""
+    menu = Menu()
+    assert menu.label == ''
+    assert menu.icon == ''
+    assert menu.url == '#'
+    assert menu.order == 50
+    assert not menu.items
 
-    def test_menu_creation_with_arguments(self):
-        """Verify the Menu state with initialization parameters."""
-        expected_name = 'Name'
-        expected_short_description = 'ShortDescription'
-        expected_label = 'Label'
-        expected_icon = 'Icon'
-        expected_url = '/aaa/bbb/ccc/'
-        expected_order = 42
-        menu = Menu(expected_name, expected_short_description, expected_label, expected_icon, expected_url,
-                    expected_order)
 
-        self.assertEqual(expected_name, menu.name)
-        self.assertEqual(expected_short_description, menu.short_description)
-        self.assertEqual(expected_label, menu.label)
-        self.assertEqual(expected_icon, menu.icon)
-        self.assertEqual(expected_url, menu.url)
-        self.assertEqual(expected_order, menu.order)
-        self.assertEqual(0, len(menu.items))
+def test_menu_creation_with_arguments():
+    """Verify the Menu state with initialization parameters."""
+    expected_name = 'Name'
+    expected_short_description = 'ShortDescription'
+    expected_label = 'Label'
+    expected_icon = 'Icon'
+    expected_url = '/aaa/bbb/ccc/'
+    expected_order = 42
+    menu = Menu(expected_name, expected_short_description, expected_label,
+                expected_icon, expected_url, expected_order)
 
-    def test_get(self):
-        """Verify that a menu item can be correctly retrieved."""
-        expected_name = 'Name2'
-        expected_short_description = 'ShortDescription2'
-        expected_label = 'Label2'
-        expected_icon = 'Icon2'
-        expected_url = 'index'
-        reversed_url = reverse(expected_url)
-        expected_order = 2
-        menu = Menu()
-        menu.add_item(expected_name, expected_short_description, expected_label, expected_icon, reversed_url,
-                      expected_order)
-        actual_item = menu.get(expected_url)
+    assert expected_name == menu.name
+    assert expected_short_description == menu.short_description
+    assert expected_label == menu.label
+    assert expected_icon == menu.icon
+    assert expected_url == menu.url
+    assert expected_order == menu.order
+    assert not menu.items
 
-        self.assertIsNotNone(actual_item)
-        self.assertEqual(expected_name, actual_item.name)
-        self.assertEqual(expected_short_description, actual_item.short_description)
-        self.assertEqual(expected_label, actual_item.label)
-        self.assertEqual(expected_icon, actual_item.icon)
-        self.assertEqual(reversed_url, actual_item.url)
-        self.assertEqual(expected_order, actual_item.order)
-        self.assertEqual(0, len(actual_item.items))
 
-    def test_get_with_item_not_found(self):
-        """Verify that a KeyError is raised if a menu item is not found."""
-        expected_name = 'Name3'
-        expected_short_description = 'ShortDescription3'
-        expected_label = 'Label3'
-        expected_icon = 'Icon3'
-        expected_url = 'index'
-        expected_order = 3
-        menu = Menu()
-        menu.add_item(expected_name, expected_short_description, expected_label, expected_icon, expected_url,
-                      expected_order)
+def test_get():
+    """Verify that a menu item can be correctly retrieved."""
+    expected_name = 'Name2'
+    expected_short_description = 'ShortDescription2'
+    expected_label = 'Label2'
+    expected_icon = 'Icon2'
+    expected_url = 'index'
+    reversed_url = reverse(expected_url)
+    expected_order = 2
+    menu = Menu()
+    menu.add_item(expected_name, expected_short_description, expected_label,
+                  expected_icon, reversed_url, expected_order)
+    actual_item = menu.get(expected_url)
 
-        self.assertRaises(KeyError, menu.get, expected_url)
+    assert actual_item is not None
+    assert expected_name == actual_item.name
+    assert expected_short_description == actual_item.short_description
+    assert expected_label == actual_item.label
+    assert expected_icon == actual_item.icon
+    assert reversed_url == actual_item.url
+    assert expected_order == actual_item.order
+    assert not actual_item.items
 
-    def test_sort_items(self):
-        """Verify that menu items are sorted correctly."""
-        size = 1000
-        menu = build_menu(size)
 
-        for index in range(0, 200):
-            menu.items[index].order = 100
+def test_get_with_item_not_found():
+    """Verify that a KeyError is raised if a menu item is not found."""
+    expected_name = 'Name3'
+    expected_short_description = 'ShortDescription3'
+    expected_label = 'Label3'
+    expected_icon = 'Icon3'
+    expected_url = 'index'
+    expected_order = 3
+    menu = Menu()
+    menu.add_item(expected_name, expected_short_description, expected_label,
+                  expected_icon, expected_url, expected_order)
 
-        # Verify that the order of every item is equal to or greater
-        # than the order of the item preceding it and if the order is
-        # the same, the labels are considered.
-        items = menu.sorted_items()
-        for index in range(1, size):
-            self.assertGreaterEqual(items[index].order, items[index - 1].order)
-            if items[index].order == items[index - 1].order:
-                self.assertGreaterEqual(items[index].label,
-                                        items[index - 1].label)
+    with pytest.raises(KeyError):
+        menu.get(expected_url)
 
-    def test_add_urlname(self):
-        """Verify that a named URL can be added to a menu correctly."""
-        expected_title = 'Label4'
-        expected_short_description = 'Description4'
-        expected_icon = 'Icon4'
-        expected_url = 'index'
-        reversed_url = reverse(expected_url)
-        expected_order = 4
-        menu = Menu()
-        actual_item = menu.add_urlname(expected_title, expected_icon,
-                                       expected_url, expected_short_description, expected_order)
 
-        self.assertEqual(1, len(menu.items))
-        self.assertIsNotNone(actual_item)
-        self.assertEqual(actual_item, menu.items[0])
-        self.assertEqual('Description4 (Label4)', actual_item.label)
-        self.assertEqual(expected_icon, actual_item.icon)
-        self.assertEqual(reversed_url, actual_item.url)
-        self.assertEqual(expected_order, actual_item.order)
-        self.assertEqual(0, len(actual_item.items))
+def test_sort_items():
+    """Verify that menu items are sorted correctly."""
+    size = 1000
+    menu = build_menu(size)
 
-    def test_add_item(self):
-        """Verify that a menu item can be correctly added."""
-        expected_name = 'Name5'
-        expected_short_description = 'ShortDescription5'
-        expected_label = 'Label5'
-        expected_icon = 'Icon5'
-        expected_url = '/jjj/kkk/lll/'
-        expected_order = 5
-        menu = Menu()
-        actual_item = menu.add_item(expected_name, expected_short_description, expected_label, expected_icon,
-                                    expected_url, expected_order)
+    for index in range(0, 200):
+        menu.items[index].order = 100
 
-        self.assertEqual(1, len(menu.items))
-        self.assertIsNotNone(actual_item)
-        self.assertEqual(actual_item, menu.items[0])
-        self.assertEqual(expected_name, actual_item.name)
-        self.assertEqual(expected_short_description, actual_item.short_description)
-        self.assertEqual(expected_label, actual_item.label)
-        self.assertEqual(expected_icon, actual_item.icon)
-        self.assertEqual(expected_url, actual_item.url)
-        self.assertEqual(expected_order, actual_item.order)
-        self.assertEqual(0, len(actual_item.items))
+    # Verify that the order of every item is equal to or greater
+    # than the order of the item preceding it and if the order is
+    # the same, the labels are considered.
+    items = menu.sorted_items()
+    for index in range(1, size):
+        assert items[index].order >= items[index - 1].order
+        if items[index].order == items[index - 1].order:
+            assert items[index].label >= items[index - 1].label
 
-    def test_active_item(self):
-        """Verify that an active menu item can be correctly retrieved."""
-        menu = build_menu()
 
-        for index in range(1, 8):
-            request = HttpRequest()
-            request.path = URL_TEMPLATE.format(index, index, index)
-            item = menu.active_item(request)
-            if index <= 5:
-                self.assertEqual('Item' + str(index), item.label)
-                self.assertEqual(request.path, item.url)
-            else:
-                self.assertIsNone(item)
+def test_add_urlname():
+    """Verify that a named URL can be added to a menu correctly."""
+    expected_title = 'Label4'
+    expected_short_description = 'Description4'
+    expected_icon = 'Icon4'
+    expected_url = 'index'
+    reversed_url = reverse(expected_url)
+    expected_order = 4
+    menu = Menu()
+    actual_item = menu.add_urlname(expected_title, expected_icon, expected_url,
+                                   expected_short_description, expected_order)
 
-    def test_active_item_when_inside_subpath(self):
-        """Verify that the current URL could be a sub-path of a menu item."""
-        menu = build_menu()
-        expected_url = URL_TEMPLATE.format(1, 1, 1)
+    assert len(menu.items) == 1
+    assert actual_item is not None
+    assert actual_item == menu.items[0]
+    assert actual_item.label == 'Description4 (Label4)'
+    assert expected_icon == actual_item.icon
+    assert reversed_url == actual_item.url
+    assert expected_order == actual_item.order
+    assert not actual_item.items
+
+
+def test_add_item():
+    """Verify that a menu item can be correctly added."""
+    expected_name = 'Name5'
+    expected_short_description = 'ShortDescription5'
+    expected_label = 'Label5'
+    expected_icon = 'Icon5'
+    expected_url = '/jjj/kkk/lll/'
+    expected_order = 5
+    menu = Menu()
+    actual_item = menu.add_item(expected_name, expected_short_description,
+                                expected_label, expected_icon, expected_url,
+                                expected_order)
+
+    assert len(menu.items) == 1
+    assert actual_item is not None
+    assert actual_item == menu.items[0]
+    assert expected_name == actual_item.name
+    assert expected_short_description == actual_item.short_description
+    assert expected_label == actual_item.label
+    assert expected_icon == actual_item.icon
+    assert expected_url == actual_item.url
+    assert expected_order == actual_item.order
+    assert not actual_item.items
+
+
+def test_active_item():
+    """Verify that an active menu item can be correctly retrieved."""
+    menu = build_menu()
+
+    for index in range(1, 8):
         request = HttpRequest()
-        request.path = expected_url + 'd/e/f/'
+        request.path = URL_TEMPLATE.format(index, index, index)
         item = menu.active_item(request)
-        self.assertEqual('Item1', item.label)
-        self.assertEqual(expected_url, item.url)
+        if index <= 5:
+            assert 'Item' + str(index) == item.label
+            assert request.path == item.url
+        else:
+            assert item is None
+
+
+def test_active_item_when_inside_subpath():
+    """Verify that the current URL could be a sub-path of a menu item."""
+    menu = build_menu()
+    expected_url = URL_TEMPLATE.format(1, 1, 1)
+    request = HttpRequest()
+    request.path = expected_url + 'd/e/f/'
+    item = menu.active_item(request)
+    assert item.label == 'Item1'
+    assert expected_url == item.url
