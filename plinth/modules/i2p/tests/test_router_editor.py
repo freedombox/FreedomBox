@@ -26,8 +26,8 @@ from plinth.modules.i2p.tests import DATA_DIR
 ROUTER_CONF_PATH = str(DATA_DIR / 'router.config')
 
 
-@pytest.fixture
-def editor():
+@pytest.fixture(name='editor')
+def fixture_editor():
     """Return editor instance object for each test."""
     return RouterEditor(ROUTER_CONF_PATH)
 

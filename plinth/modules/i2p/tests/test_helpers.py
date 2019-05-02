@@ -29,8 +29,8 @@ TUNNEL_CONF_PATH = DATA_DIR / 'i2ptunnel.config'
 TUNNEL_HTTP_NAME = 'I2P HTTP Proxy'
 
 
-@pytest.fixture
-def editor():
+@pytest.fixture(name='editor')
+def fixture_editor():
     """Setup editor for each test."""
     return TunnelEditor(str(TUNNEL_CONF_PATH))
 
