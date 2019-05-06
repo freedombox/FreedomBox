@@ -286,3 +286,18 @@ discussion lists](https://www.debian.org/MailingLists/subscribe)
 or the Weblate localization platform.
 
 For more information on translations: https://wiki.debian.org/FreedomBox/Translate
+
+## Application Icons
+
+When adding a new App into FreedomBox, an icon is needed to represent the app in
+the application view and for shortcuts in the front page. The following the
+guidelines for creating an app icon:
+
+- Use SVG format.
+- Keep the size and complexity of the SVG minimal. Simplify the graphic if
+  necessary.
+- Units for the entire document should be in pixels.
+- View area should be 512x512 pixels.
+- Background should be transparent.
+- Leave no margins and prefer a square icon. If the icon is wide, leave top and
+  bottom margins. If the icon is tall, leave left and right margins.
