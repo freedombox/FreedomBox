@@ -10,17 +10,6 @@ Foundation](http://www.gnu.org/licenses/agpl.html).
 Licenses for individual files are listed in debian/copyright which is
 a machine readable format.
 
-In addition, the documentation to this software is distributed under a
-Creative Commons Attribution-ShareAlike 3.0 Unported, Version 3
-license.  This CC-By-SA license is available in both
-[full](http://creativecommons.org/licenses/by-sa/3.0/legalcode) and
-[summarized](http://creativecommons.org/licenses/by-sa/3.0/) versions
-from Creative Commons.
-
-The documentation to this software is also distributed under the [GNU
-Free Documentation License](http://www.gnu.org/licenses/fdl.html),
-version 1.3 or later.
-
 ## GNU Affero General Public License, Version 3
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
