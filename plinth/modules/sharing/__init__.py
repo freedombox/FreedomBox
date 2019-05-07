@@ -44,6 +44,7 @@ def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
     menu.add_urlname(name, 'sharing', 'sharing:index')
+    menu.promote_item('sharing:index')
 
 
 def list_shares():
