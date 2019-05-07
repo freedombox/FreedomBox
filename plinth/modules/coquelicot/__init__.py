@@ -70,6 +70,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('coquelicot:index')
 
 
 def setup(helper, old_version=None):
@@ -86,6 +87,8 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'coquelicot:index')
 
 
 def add_shortcut():
@@ -110,12 +113,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('coquelicot', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('coquelicot:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('coquelicot', ['disable'])
     frontpage.remove_shortcut('coquelicot')
+    menu = main_menu.get('apps')
+    menu.demote_item('coquelicot:index')
 
 
 def get_current_max_file_size():

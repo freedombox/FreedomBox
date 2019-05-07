@@ -88,6 +88,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            menu.promote_item('diaspora:index')
 
 
 def setup(helper, old_version=None):
@@ -96,6 +97,8 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('custom_config', actions.superuser_run, 'diaspora',
                 ['disable-ssl'])
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'diaspora:index')
 
 
 def setup_domain_name(domain_name):
@@ -128,12 +131,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('diaspora', ['enable'])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('diaspora:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('diaspora', ['disable'])
     frontpage.remove_shortcut('diaspora')
+    menu = main_menu.get('apps')
+    menu.demote_item('diaspora:index')
 
 
 def is_user_registrations_enabled():

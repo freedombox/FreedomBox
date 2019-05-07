@@ -81,6 +81,7 @@ def init():
 
         if service.is_enabled():
             add_shortcut()
+            menu.promote_item('repro:index')
 
 
 class ReproServiceView(ServiceView):
@@ -102,6 +103,8 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'repro:index')
 
 
 def add_shortcut():
@@ -115,12 +118,16 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
+    menu = main_menu.get('apps')
+    menu.promote_item('repro:index')
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('repro')
+    menu = main_menu.get('apps')
+    menu.demote_item('repro:index')
 
 
 def diagnose():
