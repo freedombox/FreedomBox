@@ -124,6 +124,11 @@ def __apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         arg_value = 'enable' if new_status['enabled'] else 'disable'
         arguments.extend(['--service', arg_value])
+        if new_status['enabled']:
+            tor.enable()
+        else:
+            tor.disable()
+
         config_process = actions.superuser_run(
             'tor', ['configure'] + arguments, run_in_background=True)
         return

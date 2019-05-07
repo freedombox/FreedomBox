@@ -137,6 +137,30 @@ def setup(helper, old_version=None):
         helper.call('post', bridge_service.notify_enabled, None, True)
 
     helper.call('post', update_hidden_service_domain)
+    menu = main_menu.get('apps')
+    helper.call('post', menu.promote_item, 'tor:index')
+
+
+def enable():
+    """Enable the app.
+
+    XXX: Currently performs only partial activities while the rest happens
+    elsewhere.
+
+    """
+    menu = main_menu.get('apps')
+    menu.promote_item('tor:index')
+
+
+def disable():
+    """Enable the app.
+
+    XXX: Currently performs only partial activities while the rest happens
+    elsewhere.
+
+    """
+    menu = main_menu.get('apps')
+    menu.demote_item('tor:index')
 
 
 def update_hidden_service_domain(status=None):
