@@ -74,7 +74,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote('transmission:index')
+            menu.promote_item('transmission:index')
 
 
 def setup(helper, old_version=None):
