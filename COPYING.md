@@ -7,6 +7,9 @@ Affero General Public License, Version 3 or later. A copy of AGPLv3 is
 available [from the Free Software
 Foundation](http://www.gnu.org/licenses/agpl.html).
 
+Licenses for individual files are listed in debian/copyright which is
+a machine readable format.
+
 In addition, the documentation to this software is distributed under a
 Creative Commons Attribution-ShareAlike 3.0 Unported, Version 3
 license.  This CC-By-SA license is available in both
