@@ -288,21 +288,24 @@ footer {
   justify-content: left;
 }
 
-.apps-page .card-icon img {
+/* Enabled app icons */
+.apps-page .card-list-primary .card-icon img {
   transition: filter 0.3s;
-
-  /* --- .installed ---*/
   filter: contrast(0.2) sepia(1) hue-rotate(171deg) contrast(2);
-
-  /* TODO #1309: uninstalled state */
-  /* --- .uninstalled ---*/
-  /* filter: grayscale(1) opacity(0.5); */
-  /* --- .uninstalled:hover ---*/
-  /* filter: grayscale(1) opacity(1); */
 }
 
-.apps-page .card:hover .card-icon img {
+.apps-page .card-list-primary .card:hover .card-icon img {
   filter: none;
+}
+
+/* Disabled app icons */
+.apps-page .card-list-secondary .card-icon img {
+    transition: filter 0.3s;
+    filter: grayscale(1) opacity(0.5);
+}
+
+.apps-page .card-list-secondary .card:hover .card-icon img {
+    filter: grayscale(1) opacity(1);
 }
 
 a.menu_link {
@@ -356,11 +359,20 @@ a.menu_link_active {
     font-size: 12px;
 }
 
-.card-icon {
-	  background: radial-gradient(farthest-side at bottom,#eefff0, white);
-	  background-position: 50% 100%;
-	  background-repeat: no-repeat;
-	  background-size: 150% 25%;
+/* Enable apps - green glow */
+.card-list-primary .card-icon {
+    background: radial-gradient(farthest-side at bottom,#eefff0, white);
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-size: 150% 25%;
+}
+
+/* Disabled apps - grey glow */
+.card-list-secondary .card-icon {
+    background: radial-gradient(farthest-side at bottom,#f0f0f0, white);
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-size: 150% 25%;
 }
 
 .card-icon span {
