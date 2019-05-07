@@ -32,7 +32,7 @@
 
   <div class="container card-container">
     <div class="row">
-      <div class="card-list">
+      <div class="card-list card-list-primary">
         {% for item in submenu.sorted_items %}
           {% if not show_secondary or not item.secondary %}
             <div class="card thumbnail">
@@ -58,7 +58,7 @@
     <div class="container card-container">
       <div class="card-title text-center">{% trans "Disabled" %}</div>
       <div class="row">
-        <div class="card-list">
+        <div class="card-list card-list-secondary">
           {% for item in submenu.sorted_items %}
             {% if item.secondary %}
               <div class="card thumbnail">
