@@ -1,4 +1,3 @@
-{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -15,27 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
+"""
+Django URL patterns for running tests.
+"""
 
-{% load i18n %}
+from django.conf.urls import url
+from django.views.generic import TemplateView
 
-<ul class="nav nav-pills nav-stacked">
-  {% for item in menu.items %}
-
-    {% if item.url in active_menu_urls %}
-      <li class="active">
-        <a href="{{ item.url }}" class="active">
-    {% else %}
-      <li>
-        <a href="{{ item.url }}">
-    {% endif %}
-          <span class="fa {{ item.icon }}"></span>
-          {{ item.label }}
-        </a>
-        {% if item.items %}
-          {% include "menu.html" with menu=item %}
-        {% endif %}
-      </li>
-
-  {% endfor %}
-</ul>
+_test_view = TemplateView.as_view(template_name='index.html')
+urlpatterns = [
+    url(r'^$', _test_view, name='index'),
+    url(r'^apps/$', _test_view, name='apps'),
+    url(r'^sys/$', _test_view, name='system'),
+    url(r'^test/(?P<a>\d+)/(?P<b>\d+)/(?P<c>\d+)/$', _test_view, name='test'),
+]

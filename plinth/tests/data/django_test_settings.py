@@ -48,6 +48,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'plinth.urls'
+ROOT_URLCONF = 'plinth.tests.data.urls'
 
 SECRET_KEY = 'django_tests_secret_key'

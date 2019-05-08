@@ -23,11 +23,11 @@ from plinth.utils import format_lazy
 class Menu(object):
     """One menu item."""
 
-    def __init__(self, name="", short_description="", label="", icon="",
-                 url="#", order=50):
-        """label is the text that is displayed on the menu.
+    def __init__(self, name="", short_description="", icon="", url="#",
+                 order=50):
+        """Initialize a new menu item with basic properties.
 
-        icon is the icon to be displayed next to the label.
+        icon is the icon to be displayed for the menu item.
         Choose from the Fork Awesome set:
         https://forkawesome.github.io/Fork-Awesome/icons/
 
@@ -44,7 +44,6 @@ class Menu(object):
         """
         self.name = name
         self.short_description = short_description
-        self.label = label
         self.icon = icon
         self.url = url
         self.order = order
@@ -74,20 +73,9 @@ class Menu(object):
         url_args and url_kwargs will be passed on to Django reverse().
 
         """
-        if short_description:
-            label = format_lazy('{0} ({1})', short_description, name)
-        else:
-            label = name
         url = reverse_lazy(urlname, args=url_args, kwargs=url_kwargs)
-        return self.add_item(name, short_description, label, icon, url, order)
-
-    def add_item(self, name, short_description, label, icon, url, order=50):
-        """Create a new menu item with given parameters, add it to this menu and
-        return it.
-
-        """
-        item = Menu(name=name, short_description=short_description,
-                    label=label, icon=icon, url=url, order=order)
+        item = Menu(name=name, short_description=short_description, icon=icon,
+                    url=url, order=order)
         self.items.append(item)
 
         return item
