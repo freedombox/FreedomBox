@@ -22,13 +22,14 @@ import logging
 import subprocess
 from distutils.version import LooseVersion as LV
 
-from apt.cache import Cache
 import augeas
+from apt.cache import Cache
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients
@@ -69,11 +70,25 @@ CONFIG_FILE = '/etc/radicale/config'
 
 VERSION_2 = LV('2')
 
+app = None
+
+
+class RadicaleApp(app_module.App):
+    """FreedomBox app for Radicale."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-radicale', name, short_description,
+                              'radicale', 'radicale:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the radicale module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'radicale', 'radicale:index', short_description)
+    global app
+    app = RadicaleApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -86,7 +101,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('radicale:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -124,8 +139,7 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'radicale:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -182,16 +196,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('radicale', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('radicale:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('radicale', ['disable'])
     frontpage.remove_shortcut('radicale')
-    menu = main_menu.get('apps')
-    menu.demote_item('radicale:index')
+    app.disable()
 
 
 def load_augeas():

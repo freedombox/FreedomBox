@@ -22,11 +22,10 @@ import re
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from .manifest import backup
@@ -84,17 +83,32 @@ listen-on-v6 { any; };
 };
 '''
 
+app = None
+
+
+class BindApp(app_module.App):
+    """FreedomBox app for Bind."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-bind', name, short_description,
+                              'fa-globe-w', 'bind:index',
+                              parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the BIND module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-globe-w', 'bind:index', short_description)
+    global app
+    app = BindApp()
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(managed_services[0], name,
                                          ports=['dns'], is_external=False)
+        app.set_enabled(True)  # XXX: Perform better check
 
 
 def setup(helper, old_version=None):
@@ -107,6 +121,7 @@ def setup(helper, old_version=None):
                                          enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', actions.superuser_run, 'bind', ['setup'])
+    helper.call('post', app.enable)
 
 
 def force_upgrade(helper, _packages):
@@ -117,11 +132,13 @@ def force_upgrade(helper, _packages):
 def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
+    app.disable()
 
 
 def diagnose():

@@ -23,7 +23,8 @@ import subprocess
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
 
 version = 2
 
@@ -47,11 +48,25 @@ name = _('Users and Groups')
 # All FreedomBox user groups
 groups = dict()
 
+app = None
+
+
+class UsersApp(app_module.App):
+    """FreedomBox app for users and groups management."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-users', name, None, 'fa-users',
+                              'users:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the user module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-users', 'users:index')
+    global app
+    app = UsersApp()
+    app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

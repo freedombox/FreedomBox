@@ -36,17 +36,25 @@ def build_menu(size=5):
     """Build a menu with the specified number of items."""
     random.seed()
 
-    menu = Menu()
+    menu = Menu('menu-index', url_name='index')
 
     for index in range(1, size + 1):
-        args = [
-            'Name' + str(index), 'Icon' + str(index), 'test',
-            'ShortDescription' + str(index),
-            random.randint(0, 1000)
-        ]
-        kwargs = {'url_kwargs': {'a': index, 'b': index, 'c': index}}
+        kwargs = {
+            'component_id': 'menu-test-' + str(index),
+            'name': 'Name' + str(index),
+            'short_description': 'ShortDescription' + str(index),
+            'icon': 'Icon' + str(index),
+            'url_name': 'test',
+            'url_kwargs': {
+                'a': index,
+                'b': index,
+                'c': index
+            },
+            'parent_url_name': 'index',
+            'order': random.randint(0, 1000),
+        }
 
-        menu.add_urlname(*args, **kwargs)
+        Menu(**kwargs)
 
     return menu
 
@@ -74,9 +82,15 @@ def test_init():
 
 def test_menu_creation_without_arguments():
     """Verify the Menu state without initialization parameters."""
-    menu = Menu()
-    assert menu.icon == ''
-    assert menu.url == '#'
+    with pytest.raises(ValueError):
+        Menu('menu-test')
+
+    menu = Menu('menu-index', url_name='index')
+    assert menu.component_id == 'menu-index'
+    assert menu.name is None
+    assert menu.short_description is None
+    assert menu.icon is None
+    assert menu.url == '/'
     assert menu.order == 50
     assert not menu.items
 
@@ -86,11 +100,17 @@ def test_menu_creation_with_arguments():
     expected_name = 'Name'
     expected_short_description = 'ShortDescription'
     expected_icon = 'Icon'
-    expected_url = '/aaa/bbb/ccc/'
+    url_name = 'test'
+    url_kwargs = {'a': 1, 'b': 2, 'c': 3}
+    expected_url = reverse(url_name, kwargs=url_kwargs)
     expected_order = 42
-    menu = Menu(expected_name, expected_short_description, expected_icon,
-                expected_url, expected_order)
+    parent_menu = Menu('menu-index', url_name='index')
+    menu = Menu('menu-test', expected_name, expected_short_description,
+                expected_icon, url_name, url_kwargs=url_kwargs,
+                parent_url_name='index', order=expected_order)
 
+    assert len(parent_menu.items) == 1
+    assert parent_menu.items[0] == menu
     assert expected_name == menu.name
     assert expected_short_description == menu.short_description
     assert expected_icon == menu.icon
@@ -105,11 +125,11 @@ def test_get():
     expected_short_description = 'ShortDescription2'
     expected_icon = 'Icon2'
     expected_url = 'index'
-    reversed_url = reverse(expected_url)
+    url_name = 'index'
+    reversed_url = reverse(url_name)
     expected_order = 2
-    menu = Menu()
-    menu.add_urlname(expected_name, expected_icon, expected_url,
-                     expected_short_description, expected_order)
+    menu = Menu('menu-test', expected_name, expected_short_description,
+                expected_icon, url_name, order=expected_order)
     actual_item = menu.get(expected_url)
 
     assert actual_item is not None
@@ -126,11 +146,10 @@ def test_get_with_item_not_found():
     expected_name = 'Name3'
     expected_short_description = 'ShortDescription3'
     expected_icon = 'Icon3'
-    expected_url = 'index'
+    url_name = 'index'
     expected_order = 3
-    menu = Menu()
-    menu.add_urlname(expected_name, expected_icon, expected_url,
-                     expected_short_description, expected_order)
+    menu = Menu('menu-test', expected_name, expected_short_description,
+                expected_icon, url_name, order=expected_order)
 
     with pytest.raises(KeyError):
         menu.get('apps')
@@ -146,34 +165,12 @@ def test_sort_items():
 
     # Verify that the order of every item is equal to or greater
     # than the order of the item preceding it and if the order is
-    # the same, the labels are considered.
+    # the same, the names are considered.
     items = menu.sorted_items()
     for index in range(1, size):
         assert items[index].order >= items[index - 1].order
         if items[index].order == items[index - 1].order:
             assert items[index].name >= items[index - 1].name
-
-
-def test_add_urlname():
-    """Verify that a named URL can be added to a menu correctly."""
-    expected_name = 'Name4'
-    expected_short_description = 'Description4'
-    expected_icon = 'Icon4'
-    expected_url = 'index'
-    reversed_url = reverse(expected_url)
-    expected_order = 4
-    menu = Menu()
-    actual_item = menu.add_urlname(expected_name, expected_icon, expected_url,
-                                   expected_short_description, expected_order)
-
-    assert len(menu.items) == 1
-    assert actual_item is not None
-    assert actual_item == menu.items[0]
-    assert expected_name == actual_item.name
-    assert expected_icon == actual_item.icon
-    assert reversed_url == actual_item.url
-    assert expected_order == actual_item.order
-    assert not actual_item.items
 
 
 def test_active_item():

@@ -20,9 +20,10 @@ FreedomBox app for upgrades.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import actions
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
+from plinth import service as service_module
 
 from .manifest import backup
 
@@ -42,11 +43,26 @@ service = None
 
 manual_page = 'Upgrades'
 
+app = None
+
+
+class UpgradesApp(app_module.App):
+    """FreedomBox app for software upgrades."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-upgrades', name, None, 'fa-refresh',
+                              'upgrades:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-refresh', 'upgrades:index')
+    global app
+    app = UpgradesApp()
+    app.set_enabled(True)
+
     global service
     service = service_module.Service('auto-upgrades', name, is_external=False,
                                      is_enabled=is_enabled, enable=enable,

@@ -23,9 +23,10 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from .errors import TahoeConfigurationError
@@ -56,6 +57,20 @@ introducers_file = os.path.join(
     tahoe_home, '{}/private/introducers.yaml'.format(storage_node_name))
 introducer_furl_file = os.path.join(
     tahoe_home, '{0}/private/{0}.furl'.format(introducer_name))
+
+app = None
+
+
+class TahoeApp(app_module.App):
+    """FreedomBox app for Tahoe LAFS."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-tahoe', name, short_description,
+                              'tahoe-lafs', 'tahoe:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
 
 
 def is_setup():
@@ -88,8 +103,8 @@ description = [
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'tahoe-lafs', 'tahoe:index', short_description)
+    global app
+    app = TahoeApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -102,7 +117,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('tahoe:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -130,8 +145,7 @@ def post_setup(configured_domain_name):
                                          is_running=is_running)
     service.notify_enabled(None, True)
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('tahoe:index')
+    app.enable()
 
 
 def add_shortcut():
@@ -158,16 +172,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('tahoe-lafs', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('tahoe:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('tahoe-lafs', ['disable'])
     frontpage.remove_shortcut('tahoe-lafs')
-    menu = main_menu.get('apps')
-    menu.demote_item('tahoe:index')
+    app.disable()
 
 
 def diagnose():

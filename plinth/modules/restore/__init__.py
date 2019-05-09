@@ -20,12 +20,12 @@ FreedomBox app to configure reStore.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from .manifest import clients
 
+from .manifest import clients
 
 version = 1
 
@@ -45,7 +45,6 @@ description = [
           'served from, the data can be stored on an unhosted storage '
           'server of user\'s choice.  With reStore, your {box_name} becomes '
           'your unhosted storage server.'), box_name=_(cfg.box_name)),
-
     _('You can create and edit accounts in the '
       '<a href=\'/restore/\'>reStore web-interface</a>.')
 ]
@@ -56,18 +55,32 @@ reserved_usernames = ['node-restore']
 
 service = None
 
+app = None
+
+
+class RestoreApp(app_module.App):
+    """FreedomBox app for Restore."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-restore', name, short_description,
+                              'fa-hdd-o', 'restore:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the reStore module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'fa-hdd-o', 'restore:index', short_description)
+    global app
+    app = RestoreApp()
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=False)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['http',
+                                                'https'], is_external=False)
 
 
 def setup(helper, old_version=None):
@@ -75,6 +88,6 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=False)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['http',
+                                                'https'], is_external=False)

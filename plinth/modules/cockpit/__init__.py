@@ -21,9 +21,10 @@ FreedomBox app to configure Cockpit.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.modules import names
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
@@ -59,12 +60,25 @@ service = None
 
 manual_page = 'Cockpit'
 
+app = None
+
+
+class CockpitApp(app_module.App):
+    """FreedomBox app for Cockpit."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-cockpit', name, short_description,
+                              'fa-wrench', 'cockpit:index',
+                              parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-wrench', 'cockpit:index',
-                     short_description)
+    global app
+    app = CockpitApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -76,6 +90,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            app.set_enabled(True)
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
@@ -117,12 +132,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('cockpit', ['enable'])
     add_shortcut()
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('cockpit', ['disable'])
     frontpage.remove_shortcut('cockpit')
+    app.disable()
 
 
 def diagnose():

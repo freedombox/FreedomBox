@@ -21,9 +21,10 @@ FreedomBox app to configure Mumble server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
-from plinth.menu import main_menu
 from plinth.views import ServiceView
 
 from .manifest import backup, clients
@@ -59,11 +60,24 @@ port_forwarding_info = [
     ('UDP', 64738),
 ]
 
+app = None
+
+
+class MumbleApp(app_module.App):
+    """FreedomBox app for Mumble."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-mumble', name, short_description, 'mumble',
+                              'mumble:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the Mumble module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'mumble', 'mumble:index', short_description)
+    global app
+    app = MumbleApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -74,7 +88,7 @@ def init():
 
         if service.is_enabled():
             add_shortcut()
-            menu.promote_item('mumble:index')
+            app.set_enabled(True)
 
 
 class MumbleServiceView(ServiceView):
@@ -96,8 +110,7 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'mumble:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -111,16 +124,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('mumble:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('mumble')
-    menu = main_menu.get('apps')
-    menu.demote_item('mumble:index')
+    app.disable()
 
 
 def diagnose():

@@ -20,9 +20,10 @@ FreedomBox app to configure Searx.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
-from plinth.menu import main_menu
 from plinth.modules.users import register_group
 
 from .manifest import backup, clients
@@ -52,11 +53,24 @@ service = None
 
 manual_page = 'Searx'
 
+app = None
+
+
+class SearxApp(app_module.App):
+    """FreedomBox app for Searx."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-searx', name, short_description, 'searx',
+                              'searx:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'searx', 'searx:index', short_description)
+    global app
+    app = SearxApp()
     register_group(group)
 
     global service
@@ -69,7 +83,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('searx:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -86,8 +100,7 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'searx:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -113,16 +126,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('searx', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('searx:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('searx', ['disable'])
     frontpage.remove_shortcut('searx')
-    menu = main_menu.get('apps')
-    menu.demote_item('searx:index')
+    app.disable()
 
 
 def diagnose():

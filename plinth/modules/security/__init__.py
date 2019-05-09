@@ -21,7 +21,8 @@ FreedomBox app for security configuration.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
 
 from .manifest import backup
 
@@ -43,11 +44,25 @@ ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
 OLD_ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
 ACCESS_CONF_SNIPPETS = [OLD_ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPET]
 
+app = None
+
+
+class SecurityApp(app_module.App):
+    """FreedomBox app for security."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-security', name, None, 'fa-lock',
+                              'security:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module"""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-lock', 'security:index')
+    global app
+    app = SecurityApp()
+    app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

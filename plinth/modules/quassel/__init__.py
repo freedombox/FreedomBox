@@ -21,9 +21,10 @@ FreedomBox app for Quassel.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, cfg, frontpage
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
@@ -65,11 +66,25 @@ manual_page = 'Quassel'
 
 port_forwarding_info = [('TCP', 4242)]
 
+app = None
+
+
+class QuasselApp(app_module.App):
+    """FreedomBox app for Quassel."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-quassel', name, short_description,
+                              'quassel', 'quassel:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the quassel module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'quassel', 'quassel:index', short_description)
+    global app
+    app = QuasselApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -80,7 +95,7 @@ def init():
 
         if service.is_enabled():
             add_shortcut()
-            menu.promote_item('quassel:index')
+            app.set_enabled(True)
 
 
 class QuasselServiceView(ServiceView):
@@ -102,8 +117,7 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'quassel:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -117,16 +131,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('quassel:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('quassel')
-    menu = main_menu.get('apps')
-    menu.demote_item('quassel:index')
+    app.disable()
 
 
 def diagnose():

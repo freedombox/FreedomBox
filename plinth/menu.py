@@ -17,68 +17,70 @@
 
 from django.urls import reverse, reverse_lazy
 
-from plinth.utils import format_lazy
+from plinth import app
 
 
-class Menu(object):
-    """One menu item."""
+class Menu(app.FollowerComponent):
+    """Component to manage a single menu item."""
 
-    def __init__(self, name="", short_description="", icon="", url="#",
-                 order=50):
+    _all_menus = {}
+
+    def __init__(self, component_id, name=None, short_description=None,
+                 icon=None, url_name=None, url_args=None, url_kwargs=None,
+                 parent_url_name=None, order=50):
         """Initialize a new menu item with basic properties.
 
-        icon is the icon to be displayed for the menu item.
-        Choose from the Fork Awesome set:
-        https://forkawesome.github.io/Fork-Awesome/icons/
+        name is the label of the menu item.
 
-        url is the url location that will be activated when the menu
-        item is selected.
+        short_description is an optional description shown on the menu item.
 
-        order is the numerical rank of this item within the menu.
-        Lower order items appear closest to the top/left of the menu.
-        By convention, we use the spectrum between 0 and 100 to rank
-        orders, but feel free to disregard that.  If you need more
-        granularity, don't bother renumbering things.  Feel free to
-        use fractional orders.
+        icon is the icon to be displayed for the menu item. Choose from the
+        Fork Awesome set: https://forkawesome.github.io/Fork-Awesome/icons/
+
+        url_name is the name of url location that will be activated when the
+        menu item is selected. This is not optional. url_args and url_kwargs
+        are sent to reverse() when resolving url from url_name.
+
+        parent_url_name optionally specifies the menu item under which this
+        menu item should become a child.
+
+        order is the numerical rank of this item within the menu. Lower order
+        items appear closest to the top/left of the menu. By convention, we use
+        the spectrum between 0 and 100 to rank orders, but feel free to
+        disregard that. If you need more granularity, don't bother renumbering
+        things. Feel free to use fractional orders.
 
         """
+        super().__init__(component_id)
+        if not url_name:
+            raise ValueError('Valid url_name is expected')
+
+        url = reverse_lazy(url_name, args=url_args, kwargs=url_kwargs)
+
         self.name = name
         self.short_description = short_description
         self.icon = icon
         self.url = url
         self.order = order
-        self.secondary = True
-        # TODO: With an ordered dictionary for self.items we could access the
-        # items by their URL directly instead of searching for them each time,
-        # which we do currently with the 'get' method
         self.items = []
 
-    def get(self, urlname, url_args=None, url_kwargs=None):
+        # Add self to parent menu item
+        if parent_url_name:
+            parent_menu = self.get(parent_url_name)
+            parent_menu.items.append(self)
+
+        # Add self to global list of menu items
+        self._all_menus[url] = self
+
+    @classmethod
+    def get(cls, urlname, url_args=None, url_kwargs=None):
         """Return a menu item with given URL name."""
         url = reverse(urlname, args=url_args, kwargs=url_kwargs)
-        for item in self.items:
-            if str(item.url) == url:
-                return item
-
-        raise KeyError('Menu item not found')
+        return cls._all_menus[url]
 
     def sorted_items(self):
         """Return menu items in sorted order according to current locale."""
         return sorted(self.items, key=lambda x: (x.order, x.name.lower()))
-
-    def add_urlname(self, name, icon, urlname, short_description="", order=50,
-                    url_args=None, url_kwargs=None):
-        """Add a named URL to the menu (via add_item).
-
-        url_args and url_kwargs will be passed on to Django reverse().
-
-        """
-        url = reverse_lazy(urlname, args=url_args, kwargs=url_kwargs)
-        item = Menu(name=name, short_description=short_description, icon=icon,
-                    url=url, order=order)
-        self.items.append(item)
-
-        return item
 
     def active_item(self, request):
         """Return the first active item (e.g. submenu) that is found."""
@@ -86,37 +88,17 @@ class Menu(object):
             if request.path.startswith(str(item.url)):
                 return item
 
-    def promote_item(self, urlname, url_args=None, url_kwargs=None):
-        """Promote a secondary item to an item."""
-        found_item = None
-        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
-        for item in self.items:
-            if str(item.url) == url:
-                found_item = item
-
-        if found_item:
-            found_item.secondary = False
-        else:
-            raise KeyError('Menu item not found')
-
-    def demote_item(self, urlname, url_args=None, url_kwargs=None):
-        """Demote an item to a secondary item."""
-        found_item = None
-        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
-        for item in self.items:
-            if str(item.url) == url:
-                found_item = item
-
-        if found_item:
-            found_item.secondary = True
-        else:
-            raise KeyError('Menu item not found')
+        return None
 
 
-main_menu = Menu()
+main_menu = None
 
 
 def init():
     """Create main menu and other essential menus."""
-    main_menu.add_urlname('', 'fa-download', 'apps')
-    main_menu.add_urlname('', 'fa-cog', 'system')
+    global main_menu
+    main_menu = Menu('menu-index', url_name='index')
+    Menu('menu-apps', icon='fa-download', url_name='apps',
+         parent_url_name='index')
+    Menu('menu-system', icon='fa-cog', url_name='system',
+         parent_url_name='index')

@@ -22,8 +22,9 @@ import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import app as app_module
+from plinth import menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 
 from .manifest import backup
 
@@ -46,11 +47,25 @@ manual_page = 'DateTime'
 
 service = None
 
+app = None
+
+
+class DateTimeApp(app_module.App):
+    """FreedomBox app for date and time."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-datetime', name, None, 'fa-clock-o',
+                              'datetime:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the date/time module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-clock-o', 'datetime:index')
+    global app
+    app = DateTimeApp()
+    app.set_enabled(True)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -67,6 +82,7 @@ def setup(helper, old_version=None):
                                          is_external=True)
     service.enable()
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', app.enable)
 
 
 def diagnose():

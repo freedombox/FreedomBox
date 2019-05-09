@@ -20,9 +20,10 @@ FreedomBox app to configure Shaarli.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
-from plinth.menu import main_menu
 
 from .manifest import clients
 
@@ -48,12 +49,25 @@ service = None
 
 manual_page = 'Shaarli'
 
+app = None
+
+
+class ShaarliApp(app_module.App):
+    """FreedomBox app for Shaarli."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-shaarli', name, short_description,
+                              'shaarli', 'shaarli:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'fa-bookmark', 'shaarli:index',
-                     short_description)
+    global app
+    app = ShaarliApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -64,7 +78,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('shaarli:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -77,8 +91,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'shaarli:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -96,13 +109,11 @@ def enable():
     """Enable the module."""
     actions.superuser_run('shaarli', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('shaarli:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('shaarli', ['disable'])
     frontpage.remove_shortcut('shaarli')
-    menu = main_menu.get('apps')
-    menu.demote_item('shaarli:index')
+    app.disable()

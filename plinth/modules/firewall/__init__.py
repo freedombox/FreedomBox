@@ -23,8 +23,9 @@ import logging
 from django.utils.translation import ugettext_lazy as _
 
 import plinth.service as service_module
-from plinth import actions, cfg
-from plinth.menu import main_menu
+from plinth import actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth.signals import service_enabled
 from plinth.utils import Version, format_lazy
 
@@ -52,11 +53,25 @@ LOGGER = logging.getLogger(__name__)
 
 _port_details = {}
 
+app = None
+
+
+class FirewallApp(app_module.App):
+    """FreedomBox app for Firewall."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-firewall', name, None, 'fa-shield',
+                              'firewall:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initailze firewall module"""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-shield', 'firewall:index')
+    global app
+    app = FirewallApp()
+    app.set_enabled(True)
 
     service_enabled.connect(on_service_enabled)
 

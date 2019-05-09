@@ -20,8 +20,9 @@ FreedomBox app to configure ez-ipupdate client.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions, cfg
-from plinth.menu import main_menu
+from plinth import actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth.modules import firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
@@ -57,11 +58,24 @@ reserved_usernames = ['ez-ipupd']
 
 manual_page = 'DynamicDNS'
 
+app = None
+
+
+class DynamicDNSApp(app_module.App):
+    """FreedomBox app for Dynamic DNS."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-dynamicdns', name, None, 'fa-refresh',
+                              'dynamicdns:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-refresh', 'dynamicdns:index')
+    global app
+    app = DynamicDNSApp()
     current_status = get_status()
     if current_status['enabled']:
         services = get_enabled_services(current_status['dynamicdns_domain'])
@@ -69,6 +83,7 @@ def init():
             sender='dynamicdns', domain_type='dynamicdnsservice',
             name=current_status['dynamicdns_domain'],
             description=_('Dynamic DNS Service'), services=services)
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

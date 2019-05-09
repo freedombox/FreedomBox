@@ -22,8 +22,8 @@ import logging
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -57,11 +57,25 @@ description = [
           'connections through the given name.'), box_name=(cfg.box_name))
 ]
 
+app = None
+
+
+class NamesApp(app_module.App):
+    """FreedomBox app for names."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-names', name, None, 'fa-tags',
+                              'names:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the names module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-tags', 'names:index')
+    global app
+    app = NamesApp()
+    app.set_enabled(True)
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)

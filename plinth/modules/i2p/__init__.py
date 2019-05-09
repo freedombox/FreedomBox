@@ -20,9 +20,10 @@ FreedomBox app to configure I2P.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
 
@@ -72,11 +73,24 @@ tunnels_to_manage = {
     'Irc2P': 'i2p-irc-freedombox'
 }
 
+app = None
+
+
+class I2PApp(app_module.App):
+    """FreedomBox app for I2P."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-i2p', name, short_description, 'i2p',
+                              'i2p:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'i2p', 'i2p:index', short_description)
+    global app
+    app = I2PApp()
     register_group(group)
 
     global service, proxies_service
@@ -93,7 +107,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('i2p:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -118,7 +132,6 @@ def setup(helper, old_version=None):
 
         helper.call('post', actions.superuser_run, 'i2p', args)
 
-
     # Tunnels to all interfaces
     for tunnel in tunnels_to_manage:
         helper.call('post', actions.superuser_run, 'i2p', [
@@ -140,8 +153,7 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', proxies_service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'i2p:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -166,16 +178,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('i2p', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('i2p:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('i2p', ['disable'])
     frontpage.remove_shortcut('i2p')
-    menu = main_menu.get('apps')
-    menu.demote_item('i2p:index')
+    app.disable()
 
 
 def diagnose():

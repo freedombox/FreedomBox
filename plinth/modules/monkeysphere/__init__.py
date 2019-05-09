@@ -20,7 +20,8 @@ FreedomBox app for monkeysphere.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
 
 from .manifest import backup
 
@@ -53,12 +54,26 @@ manual_page = "Monkeysphere"
 
 reserved_usernames = ['monkeysphere']
 
+app = None
+
+
+class MonkeysphereApp(app_module.App):
+    """FreedomBox app for Monkeysphere."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-monkeysphere', name, None,
+                              'fa-certificate', 'monkeysphere:index',
+                              parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the monkeysphere module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(
-        _('Monkeysphere'), 'fa-certificate', 'monkeysphere:index')
+    global app
+    app = MonkeysphereApp()
+    app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

@@ -36,7 +36,7 @@
 
 {% block content %}
 
-  <h2>{% trans "Installation" %}: {{ setup_helper.module.short_description }} ({{ setup_helper.module.name }}) </h2>
+  <h2>{% trans "Installation" %}: {{ setup_helper.module.short_description|default:'' }} ({{ setup_helper.module.name }}) </h2>
 
   {% for paragraph in setup_helper.module.description %}
     <p>{{ paragraph|safe }}</p>

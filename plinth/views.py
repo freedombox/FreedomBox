@@ -72,7 +72,7 @@ class AppsIndexView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['show_secondary'] = True
+        context['show_disabled'] = True
         return context
 
 

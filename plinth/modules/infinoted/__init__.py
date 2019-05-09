@@ -21,14 +21,13 @@ FreedomBox app for infinoted.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
+
 from .manifest import backup, clients
 
 version = 1
@@ -56,11 +55,25 @@ clients = clients
 
 port_forwarding_info = [('TCP', 6523)]
 
+app = None
+
+
+class InfinotedApp(app_module.App):
+    """FreedomBox app for infinoted."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-infinoted', name, short_description,
+                              'infinoted', 'infinoted:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the infinoted module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'infinoted', 'infinoted:index', short_description)
+    global app
+    app = InfinotedApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -70,7 +83,7 @@ def init():
         ], is_external=True, enable=enable, disable=disable)
         if service.is_enabled():
             add_shortcut()
-            menu.promote_item('infinoted:index')
+            app.set_enabled(True)
 
 
 class InfinotedServiceView(ServiceView):
@@ -93,8 +106,7 @@ def setup(helper, old_version=None):
 
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'infinoted:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -108,16 +120,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('infinoted:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('infinoted')
-    menu = main_menu.get('apps')
-    menu.demote_item('infinoted:index')
+    app.disable()
 
 
 def diagnose():

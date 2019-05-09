@@ -21,9 +21,10 @@ FreedomBox app to configure OpenVPN server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from .manifest import backup
@@ -55,11 +56,25 @@ manual_page = 'OpenVPN'
 
 port_forwarding_info = [('UDP', 1194)]
 
+app = None
+
+
+class OpenVPNApp(app_module.App):
+    """FreedomBox app for OpenVPN."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-openvpn', name, short_description,
+                              'openvpn', 'openvpn:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the OpenVPN module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'openvpn', 'openvpn:index', short_description)
+    global app
+    app = OpenVPNApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -69,7 +84,7 @@ def init():
 
         if service.is_enabled() and is_setup():
             add_shortcut()
-            menu.promote_item('openvpn:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -84,8 +99,7 @@ def setup(helper, old_version=None):
 
     if service.is_enabled() and is_setup():
         add_shortcut()
-        menu = main_menu.get('apps')
-        helper.call('post', menu.promote_item, 'openvpn:index')
+        helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -109,16 +123,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('openvpn:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('openvpn')
-    menu = main_menu.get('apps')
-    menu.demote_item('openvpn:index')
+    app.disable()
 
 
 def diagnose():

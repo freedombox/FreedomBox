@@ -28,21 +28,43 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from plinth import __version__, actions, cfg
-from plinth.menu import main_menu
+from plinth import __version__, actions
+from plinth import app as app_module
+from plinth import cfg, menu
+
+app = None
+
+
+class HelpApp(app_module.App):
+    """FreedomBox app for showing help."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-help', ugettext_lazy('Documentation'),
+                              None, 'fa-book', 'help:index',
+                              parent_url_name='index')
+        self.add(menu_item)
+        menu_item = menu.Menu('menu-help-manual', ugettext_lazy('Manual'),
+                              None, 'fa-info-circle', 'help:manual',
+                              parent_url_name='help:index', order=10)
+        self.add(menu_item)
+        menu_item = menu.Menu('menu-help-download-manual',
+                              ugettext_lazy('Download Manual'), None,
+                              'fa-download', 'help:download-manual',
+                              parent_url_name='help:index', order=15)
+        self.add(menu_item)
+        menu_item = menu.Menu('menu-help-about', ugettext_lazy('About'), None,
+                              'fa-star', 'help:about',
+                              parent_url_name='help:index', order=100)
+        self.add(menu_item)
 
 
 def init():
     """Initialize the Help module"""
-    menu = main_menu.add_urlname(
-        ugettext_lazy('Documentation'), 'fa-book', 'help:index')
-    menu.add_urlname(
-        ugettext_lazy('Manual'), 'fa-info-circle', 'help:manual', order=10)
-    menu.add_urlname(
-        ugettext_lazy('Download Manual'), 'fa-download',
-        'help:download-manual', order=15)
-    menu.add_urlname(
-        ugettext_lazy('About'), 'fa-star', 'help:about', order=100)
+    global app
+    app = HelpApp()
+    app.set_enabled(True)
 
 
 def index(request):

@@ -20,9 +20,10 @@ Plinth module to configure coquelicot.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
-from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
@@ -52,12 +53,25 @@ service = None
 
 manual_page = 'Coquelicot'
 
+app = None
+
+
+class CoquelicotApp(app_module.App):
+    """FreedomBox app for Coquelicot."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-coquelicot', name, short_description,
+                              'coquelicot', 'coquelicot:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'coquelicot', 'coquelicot:index',
-                     short_description)
+    global app
+    app = CoquelicotApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -70,7 +84,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('coquelicot:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -87,8 +101,7 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'coquelicot:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -113,16 +126,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('coquelicot', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('coquelicot:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('coquelicot', ['disable'])
     frontpage.remove_shortcut('coquelicot')
-    menu = main_menu.get('apps')
-    menu.demote_item('coquelicot:index')
+    app.disable()
 
 
 def get_current_max_file_size():

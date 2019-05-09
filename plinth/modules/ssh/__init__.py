@@ -21,8 +21,9 @@ FreedomBox app for OpenSSH server.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.views import ServiceView
 
 from .manifest import backup
@@ -48,15 +49,29 @@ service = None
 
 port_forwarding_info = [('TCP', 22)]
 
+app = None
+
+
+class SSHApp(app_module.App):
+    """FreedomBox app for SSH."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-ssh', name, None, 'fa-terminal',
+                              'ssh:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the ssh module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-terminal', 'ssh:index')
+    global app
+    app = SSHApp()
+    app.set_enabled(True)
 
     global service
-    service = service_module.Service(
-        managed_services[0], name, ports=['ssh'], is_external=True)
+    service = service_module.Service(managed_services[0], name, ports=['ssh'],
+                                     is_external=True)
 
 
 def setup(helper, old_version=None):

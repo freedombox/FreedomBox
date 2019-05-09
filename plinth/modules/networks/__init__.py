@@ -23,8 +23,9 @@ from logging import Logger
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, network
-from plinth.menu import main_menu
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import menu, network
 
 version = 1
 
@@ -38,17 +39,32 @@ logger = Logger(__name__)
 
 manual_page = 'Networks'
 
+app = None
+
+
+class NetworksApp(app_module.App):
+    """FreedomBox app for Networks."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-networks', name, None, 'fa-signal',
+                              'networks:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the Networks module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-signal', 'networks:index')
+    global app
+    app = NetworksApp()
+    app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     actions.superuser_run('networks')
+    helper.call('post', app.enable)
 
 
 def diagnose():

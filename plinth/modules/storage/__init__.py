@@ -23,11 +23,12 @@ import subprocess
 import psutil
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth import service as service_module
 from plinth import utils
 from plinth.errors import PlinthError
-from plinth.menu import main_menu
 from plinth.utils import format_lazy, import_from_gi
 
 version = 3
@@ -54,11 +55,25 @@ manual_page = 'Storage'
 
 is_essential = True
 
+app = None
+
+
+class StorageApp(app_module.App):
+    """FreedomBox app for storage."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-storage', name, None, 'fa-hdd-o',
+                              'storage:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-hdd-o', 'storage:index')
+    global app
+    app = StorageApp()
+    app.set_enabled(True)
 
 
 def get_disks():
@@ -267,11 +282,13 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('udiskie', ['enable'])
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('udiskie', ['disable'])
+    app.disable()
 
 
 def setup(helper, old_version=None):

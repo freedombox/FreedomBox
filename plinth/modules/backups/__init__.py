@@ -24,8 +24,9 @@ import os
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions, cfg
-from plinth.menu import main_menu
+from plinth import actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth.utils import format_lazy
 
 from . import api
@@ -46,24 +47,43 @@ manual_page = 'Backups'
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 ROOT_REPOSITORY = '/var/lib/freedombox/borgbackup'
-ROOT_REPOSITORY_NAME = format_lazy(_('{box_name} storage'),
-                                   box_name=cfg.box_name)
+ROOT_REPOSITORY_NAME = format_lazy(
+    _('{box_name} storage'), box_name=cfg.box_name)
 ROOT_REPOSITORY_UUID = 'root'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 
+app = None
+
+
+class BackupsApp(app_module.App):
+    """FreedomBox app for backup and restore."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-backups', name, None, 'fa-files-o',
+                              'backups:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-files-o', 'backups:index')
+    global app
+    app = BackupsApp()
+
+    global service
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'backups', ['setup', '--path',
-                                                           ROOT_REPOSITORY])
+    helper.call('post', actions.superuser_run, 'backups',
+                ['setup', '--path', ROOT_REPOSITORY])
+    helper.call('post', app.enable)
 
 
 def _backup_handler(packet, encryption_passphrase=None):
@@ -102,8 +122,8 @@ def _restore_exported_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
-    actions.superuser_run('backups', ['restore-exported-archive', '--path',
-                                      packet.path],
+    actions.superuser_run('backups',
+                          ['restore-exported-archive', '--path', packet.path],
                           input=locations_data.encode())
 
 
@@ -111,8 +131,9 @@ def restore_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
-    arguments = ['restore-archive', '--path', packet.path, '--destination',
-                 '/']
+    arguments = [
+        'restore-archive', '--path', packet.path, '--destination', '/'
+    ]
     if encryption_passphrase:
         arguments += ['--encryption-passphrase', encryption_passphrase]
     actions.superuser_run('backups', arguments, input=locations_data.encode())

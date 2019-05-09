@@ -21,9 +21,10 @@ FreedomBox app for repro.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
-from plinth.menu import main_menu
 from plinth.views import ServiceView
 
 from .manifest import backup, clients
@@ -67,12 +68,24 @@ manual_page = 'Repro'
 
 port_forwarding_info = [('UDP', '1024-65535')]
 
+app = None
+
+
+class ReproApp(app_module.App):
+    """FreedomBox app for Repro."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-repro', name, short_description, 'repro',
+                              'repro:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the repro module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'repro', 'repro:index',
-                     short_description)
+    global app
+    app = ReproApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -83,7 +96,7 @@ def init():
 
         if service.is_enabled():
             add_shortcut()
-            menu.promote_item('repro:index')
+            app.set_enabled(True)
 
 
 class ReproServiceView(ServiceView):
@@ -106,8 +119,7 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'repro:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -121,16 +133,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('repro:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('repro')
-    menu = main_menu.get('apps')
-    menu.demote_item('repro:index')
+    app.disable()
 
 
 def diagnose():

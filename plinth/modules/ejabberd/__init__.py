@@ -23,9 +23,10 @@ import logging
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.modules import config
 from plinth.signals import (domainname_change, post_hostname_change,
                             pre_hostname_change)
@@ -72,11 +73,25 @@ port_forwarding_info = [
 
 logger = logging.getLogger(__name__)
 
+app = None
+
+
+class EjabberdApp(app_module.App):
+    """FreedomBox app for ejabberd."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-ejabberd', name, short_description,
+                              'ejabberd', 'ejabberd:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the ejabberd module"""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'ejabberd', 'ejabberd:index', short_description)
+    global app
+    app = EjabberdApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -88,7 +103,7 @@ def init():
             enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
-            menu.promote_item('ejabberd:index')
+            app.set_enabled(True)
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
@@ -113,8 +128,7 @@ def setup(helper, old_version=None):
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'ejabberd:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -133,16 +147,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('ejabberd', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('ejabberd:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ejabberd', ['disable'])
     frontpage.remove_shortcut('ejabberd')
-    menu = main_menu.get('apps')
-    menu.demote_item('ejabberd:index')
+    app.disable()
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

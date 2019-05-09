@@ -24,7 +24,8 @@ import augeas
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
 from plinth.modules import storage
 
 from .manifest import backup
@@ -57,11 +58,29 @@ DEFAULT_FILE = '/etc/default/snapper'
 
 fs_types_supported = ['btrfs']
 
+app = None
+
+
+class SnapshotApp(app_module.App):
+    """FreedomBox app for snapshots."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-snapshot', name, None, 'fa-film',
+                              'snapshot:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-film', 'snapshot:index')
+    global app
+    app = SnapshotApp()
+
+    global service
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        app.set_enabled(True)  # XXX: Perform better checks
 
 
 def is_supported():
@@ -77,12 +96,13 @@ def setup(helper, old_version=None):
         helper.call('post', actions.superuser_run, 'snapshot',
                     ['setup', '--old-version',
                      str(old_version)])
+        helper.call('post', app.enable)
 
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')

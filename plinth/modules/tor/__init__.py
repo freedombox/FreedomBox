@@ -22,9 +22,10 @@ import json
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
+from plinth import service as service_module
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
@@ -61,18 +62,31 @@ bridge_service = None
 
 manual_page = 'Tor'
 
+app = None
+
+
+class TorApp(app_module.App):
+    """FreedomBox app for Tor."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-tor', name, short_description, 'tor',
+                              'tor:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'tor', 'tor:index', short_description)
+    global app
+    app = TorApp()
 
     setup_helper = globals()['setup_helper']
     needs_setup = setup_helper.get_state() == 'needs-setup'
 
     if not needs_setup:
         if utils.is_enabled():
-            menu.promote_item('tor:index')
+            app.set_enabled(True)
 
         global socks_service
         socks_service = service_module.Service(
@@ -137,8 +151,7 @@ def setup(helper, old_version=None):
         helper.call('post', bridge_service.notify_enabled, None, True)
 
     helper.call('post', update_hidden_service_domain)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'tor:index')
+    helper.call('post', app.enable)
 
 
 def enable():
@@ -148,8 +161,7 @@ def enable():
     elsewhere.
 
     """
-    menu = main_menu.get('apps')
-    menu.promote_item('tor:index')
+    app.enable()
 
 
 def disable():
@@ -159,8 +171,7 @@ def disable():
     elsewhere.
 
     """
-    menu = main_menu.get('apps')
-    menu.demote_item('tor:index')
+    app.disable()
 
 
 def update_hidden_service_domain(status=None):

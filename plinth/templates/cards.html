@@ -34,7 +34,7 @@
     <div class="row">
       <div class="card-list card-list-primary">
         {% for item in submenu.sorted_items %}
-          {% if not show_secondary or not item.secondary %}
+          {% if not show_disabled or item.is_enabled %}
             <div class="card thumbnail">
               <a href="{{ item.url }}" class="nav-link">
                 <div class="card-title">{{ item.name }}</div>
@@ -45,7 +45,7 @@
                     <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
                   {% endif %}
                 </div>
-                <div class="card-description">{{ item.short_description}}</div>
+                <div class="card-description">{{ item.short_description|default:'' }}</div>
               </a>
             </div>
           {% endif %}
@@ -54,13 +54,13 @@
     </div>
   </div>
 
-  {% if show_secondary %}
+  {% if show_disabled %}
     <div class="container card-container">
       <div class="card-section-title text-center">{% trans "Disabled" %}</div>
       <div class="row">
-        <div class="card-list card-list-secondary">
+        <div class="card-list card-list-disabled">
           {% for item in submenu.sorted_items %}
-            {% if item.secondary %}
+            {% if not item.is_enabled %}
               <div class="card thumbnail">
                 <a href="{{ item.url }}" class="nav-link">
                   <div class="card-title">{{ item.name }}</div>
@@ -71,7 +71,7 @@
                       <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
                     {% endif %}
                   </div>
-                  <div class="card-description">{{ item.short_description}}</div>
+                  <div class="card-description">{{ item.short_description|default:'' }}</div>
                 </a>
               </div>
             {% endif %}

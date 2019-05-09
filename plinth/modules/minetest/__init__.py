@@ -22,9 +22,10 @@ import augeas
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, cfg, frontpage
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients
@@ -73,11 +74,25 @@ reserved_usernames = ['Debian-minetest']
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
+app = None
+
+
+class MinetestApp(app_module.App):
+    """FreedomBox app for Minetest."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-minetest', name, short_description,
+                              'minetest', 'minetest:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'minetest', 'minetest:index', short_description)
+    global app
+    app = MinetestApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -87,7 +102,7 @@ def init():
         ], is_external=True, enable=enable, disable=disable)
         if service.is_enabled():
             add_shortcut()
-            menu.promote_item('minetest:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -100,8 +115,7 @@ def setup(helper, old_version=None):
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'minetest:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -115,16 +129,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('minetest:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('minetest')
-    menu = main_menu.get('apps')
-    menu.demote_item('minetest:index')
+    app.disable()
 
 
 def diagnose():

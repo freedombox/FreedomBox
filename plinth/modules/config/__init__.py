@@ -25,7 +25,8 @@ import augeas
 from django.utils.translation import ugettext_lazy
 
 from plinth import actions
-from plinth.menu import main_menu
+from plinth import app as app_module
+from plinth import menu
 from plinth.modules import firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
@@ -44,6 +45,20 @@ APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                       APACHE_HOMEPAGE_CONF_FILE_NAME)
 FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                         'freedombox.conf')
+
+app = None
+
+
+class ConfigApp(app_module.App):
+    """FreedomBox app for basic system configuration."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-config', ugettext_lazy('Configure'), None,
+                              'fa-cog', 'config:index',
+                              parent_url_name='system')
+        self.add(menu_item)
 
 
 def get_domainname():
@@ -89,8 +104,9 @@ def get_home_page():
 
 def init():
     """Initialize the module"""
-    menu = main_menu.get('system')
-    menu.add_urlname(ugettext_lazy('Configure'), 'fa-cog', 'config:index')
+    global app
+    app = ConfigApp()
+    app.set_enabled(True)
 
     # Register domain with Name Services module.
     domainname = get_domainname()

@@ -20,9 +20,10 @@ FreedomBox app to configure Roundcube.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
-from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
@@ -60,11 +61,25 @@ service = None
 
 manual_page = 'Roundcube'
 
+app = None
+
+
+class RoundcubeApp(app_module.App):
+    """FreedomBox app for Roundcube."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-roundcube', name, short_description,
+                              'roundcube', 'roundcube:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'roundcube', 'roundcube:index', short_description)
+    global app
+    app = RoundcubeApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -75,7 +90,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('roundcube:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -89,8 +104,7 @@ def setup(helper, old_version=None):
         service = service_module.Service(
             'roundcube', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'roundcube:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -108,16 +122,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('roundcube:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['disable'])
     frontpage.remove_shortcut('roundcube')
-    menu = main_menu.get('apps')
-    menu.demote_item('roundcube:index')
+    app.disable()
 
 
 def diagnose():

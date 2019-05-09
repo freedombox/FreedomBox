@@ -21,10 +21,17 @@ Test module for custom context processors.
 
 from unittest.mock import MagicMock, Mock
 
+import pytest
 from django.http import HttpRequest
 
 from plinth import cfg
 from plinth import context_processors as cp
+from plinth import menu as menu_module
+
+@pytest.fixture(name='menu', autouse=True)
+def fixture_menu():
+    """Initialized menu module."""
+    menu_module.init()
 
 
 def test_common():

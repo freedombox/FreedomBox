@@ -21,9 +21,10 @@ FreedomBox app to configure ikiwiki.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
@@ -63,11 +64,25 @@ group = ('wiki', _('View and edit wiki applications'))
 
 manual_page = 'Ikiwiki'
 
+app = None
+
+
+class IkiwikiApp(app_module.App):
+    """FreedomBox app for Ikiwiki."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-ikiwiki', name, short_description,
+                              'ikiwiki', 'ikiwiki:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the ikiwiki module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'ikiwiki', 'ikiwiki:index', short_description)
+    global app
+    app = IkiwikiApp()
     register_group(group)
 
     global service
@@ -78,7 +93,7 @@ def init():
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcuts()
-            menu.promote_item('ikiwiki:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -92,8 +107,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcuts)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'ikiwiki:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcuts():
@@ -114,16 +128,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['enable'])
     add_shortcuts()
-    menu = main_menu.get('apps')
-    menu.promote_item('ikiwiki:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['disable'])
     frontpage.remove_shortcut('ikiwiki*')
-    menu = main_menu.get('apps')
-    menu.demote_item('ikiwiki:index')
+    app.disable()
 
 
 def diagnose():

@@ -22,8 +22,9 @@ import json
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions, cfg
-from plinth.menu import main_menu
+from plinth import actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth.utils import format_lazy
 
 from .manifest import backup
@@ -35,16 +36,29 @@ name = _('Sharing')
 description = [
     format_lazy(
         _('Sharing allows you to share files and folders on your {box_name} '
-          'over the web with chosen groups of users.'), box_name=_(
-              cfg.box_name))
+          'over the web with chosen groups of users.'),
+        box_name=_(cfg.box_name))
 ]
+
+app = None
+
+
+class SharingApp(app_module.App):
+    """FreedomBox app for sharing files."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-sharing', name, None, 'sharing',
+                              'sharing:index', parent_url_name='apps')
+        self.add(menu_item)
 
 
 def init():
     """Initialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'sharing', 'sharing:index')
-    menu.promote_item('sharing:index')
+    global app
+    app = SharingApp()
+    app.set_enabled(True)
 
 
 def list_shares():

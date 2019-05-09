@@ -21,9 +21,10 @@ FreedomBox app to configure Tiny Tiny RSS.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.modules.users import register_group
 from plinth.utils import Version, format_lazy
 
@@ -63,11 +64,24 @@ service = None
 
 manual_page = 'TinyTinyRSS'
 
+app = None
+
+
+class TTRSSApp(app_module.App):
+    """FreedomBox app for TT-RSS."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-ttrss', name, short_description, 'ttrss',
+                              'ttrss:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'ttrss', 'ttrss:index', short_description)
+    global app
+    app = TTRSSApp()
     register_group(group)
 
     global service
@@ -80,7 +94,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('ttrss:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -97,8 +111,7 @@ def setup(helper, old_version=None):
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'ttrss:index')
+    helper.call('post', app.enable)
 
 
 def force_upgrade(helper, packages):
@@ -133,16 +146,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('ttrss', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('ttrss:index')
+    app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ttrss', ['disable'])
     frontpage.remove_shortcut('ttrss')
-    menu = main_menu.get('apps')
-    menu.demote_item('ttrss:index')
+    app.disable()
 
 
 def diagnose():

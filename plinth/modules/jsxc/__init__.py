@@ -23,9 +23,9 @@ import logging
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import frontpage
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
@@ -48,11 +48,24 @@ service = None
 
 logger = logging.getLogger(__name__)
 
+app = None
+
+
+class JSXCApp(app_module.App):
+    """FreedomBox app for JSXC."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-jsxc', name, short_description, 'jsxc',
+                              'jsxc:index', parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the JSXC module"""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'jsxc', 'jsxc:index', short_description)
+    global app
+    app = JSXCApp()
 
     global service
     setup_helper = globals()['setup_helper']
@@ -62,7 +75,7 @@ def init():
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
-            menu.promote_item('jsxc:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -76,8 +89,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
 
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'jsxc:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -94,11 +106,9 @@ def is_enabled():
 
 def enable():
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('jsxc:index')
+    app.enable()
 
 
 def disable():
     frontpage.remove_shortcut('jsxc')
-    menu = main_menu.get('apps')
-    menu.demote_item('jsxc:index')
+    app.disable()

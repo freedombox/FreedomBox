@@ -20,9 +20,10 @@ FreedomBox app for mldonkey.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, frontpage
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.menu import main_menu
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
@@ -61,11 +62,25 @@ service = None
 
 manual_page = 'MLDonkey'
 
+app = None
+
+
+class MLDonkeyApp(app_module.App):
+    """FreedomBox app for MLDonkey."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-mldonkey', name, short_description,
+                              'mldonkey', 'mldonkey:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the MLDonkey module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'mldonkey', 'mldonkey:index', short_description)
+    global app
+    app = MLDonkeyApp()
     register_group(group)
 
     global service
@@ -79,7 +94,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('mldonkey:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -96,8 +111,7 @@ def setup(helper, old_version=None):
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'mldonkey:index')
+    helper.call('post', app.enable)
 
 
 def add_shortcut():
@@ -122,16 +136,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('mldonkey', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('mldonkey:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('mldonkey', ['disable'])
     frontpage.remove_shortcut('mldonkey')
-    menu = main_menu.get('apps')
-    menu.demote_item('mldonkey:index')
+    app.disable()
 
 
 def diagnose():

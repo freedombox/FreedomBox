@@ -16,13 +16,14 @@
 
 import os
 
+import augeas
 from django.utils.translation import ugettext_lazy as _
 
-import augeas
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth import action_utils, actions, frontpage
 from plinth.errors import DomainNotRegisteredError
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 domain_name_file = "/etc/diaspora/domain_name"
@@ -72,23 +73,37 @@ description = [
 from .manifest import clients  # isort:skip
 clients = clients
 
+app = None
+
+
+class DiasporaApp(app_module.App):
+    """FreedomBox app for Diaspora."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-diaspora', name, short_description,
+                              'diaspora', 'diaspora:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
 
 def init():
     """Initialize the Diaspora module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(name, 'fa-diaspora', 'diaspora:index', short_description)
+    global app
+    app = DiasporaApp()
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
 
         if is_enabled():
             add_shortcut()
-            menu.promote_item('diaspora:index')
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -97,8 +112,7 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('custom_config', actions.superuser_run, 'diaspora',
                 ['disable-ssl'])
-    menu = main_menu.get('apps')
-    helper.call('post', menu.promote_item, 'diaspora:index')
+    helper.call('post', app.enable)
 
 
 def setup_domain_name(domain_name):
@@ -131,16 +145,14 @@ def enable():
     """Enable the module."""
     actions.superuser_run('diaspora', ['enable'])
     add_shortcut()
-    menu = main_menu.get('apps')
-    menu.promote_item('diaspora:index')
+    app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('diaspora', ['disable'])
     frontpage.remove_shortcut('diaspora')
-    menu = main_menu.get('apps')
-    menu.demote_item('diaspora:index')
+    app.disable()
 
 
 def is_user_registrations_enabled():
@@ -172,8 +184,9 @@ def diagnose():
         action_utils.diagnose_url('http://diaspora.localhost', kind='6',
                                   check_certificate=False))
     results.append(
-        action_utils.diagnose_url('http://diaspora.{}'.format(
-            get_configured_domain_name()), kind='4', check_certificate=False))
+        action_utils.diagnose_url(
+            'http://diaspora.{}'.format(get_configured_domain_name()),
+            kind='4', check_certificate=False))
 
     return results
 

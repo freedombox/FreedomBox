@@ -20,9 +20,10 @@ FreedomBox app for service discovery.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
+from plinth import app as app_module
+from plinth import cfg, menu
 from plinth import service as service_module
-from plinth import actions, cfg
-from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
@@ -55,11 +56,25 @@ service = None
 
 manual_page = 'ServiceDiscovery'
 
+app = None
+
+
+class AvahiApp(app_module.App):
+    """FreedomBox app for Avahi."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-avahi', name, None, 'fa-compass',
+                              'avahi:index', parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the service discovery module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-compass', 'avahi:index')
+    global app
+    app = AvahiApp()
+    app.set_enabled(True)
 
     global service  # pylint: disable=W0603
     service = service_module.Service(managed_services[0], name, ports=['mdns'],

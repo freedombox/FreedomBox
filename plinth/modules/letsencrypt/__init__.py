@@ -23,9 +23,10 @@ import logging
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions, cfg, module_loader
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import cfg, menu, module_loader
 from plinth.errors import ActionError
-from plinth.menu import main_menu
 from plinth.modules import config, names
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
@@ -67,11 +68,27 @@ MODULES_WITH_HOOKS = ['ejabberd', 'matrixsynapse']
 LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 logger = logging.getLogger(__name__)
 
+app = None
+
+
+class LetsEncryptApp(app_module.App):
+    """FreedomBox app for Let's Encrypt."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        menu_item = menu.Menu('menu-letsencrypt', name, short_description,
+                              'fa-lock', 'letsencrypt:index',
+                              parent_url_name='system')
+        self.add(menu_item)
+
 
 def init():
     """Intialize the module."""
-    menu = main_menu.get('system')
-    menu.add_urlname(name, 'fa-lock', 'letsencrypt:index', short_description)
+    global app
+    app = LetsEncryptApp()
+    app.set_enabled(True)
+
     domainname_change.connect(on_domainname_change)
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
@@ -108,8 +125,8 @@ def enable_renewal_management(domain):
         try:
             actions.superuser_run('letsencrypt', ['manage_hooks', 'enable'])
             logger.info(
-                _('Certificate renewal management enabled for {domain}.')
-                .format(domain=domain))
+                _('Certificate renewal management enabled for {domain}.').
+                format(domain=domain))
         except ActionError as exception:
             logger.error(
                 _('Failed to enable certificate renewal management for '
@@ -188,8 +205,8 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
         return True
     except ActionError as exception:
         logger.warn(
-            ('Failed to revoke certificate for domain {domain}: {error}')
-            .format(domain=name, error=exception.args[2]))
+            ('Failed to revoke certificate for domain {domain}: {error}'
+             ).format(domain=name, error=exception.args[2]))
         return False
 
 
