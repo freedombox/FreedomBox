@@ -53,6 +53,8 @@ description = [
 
 manual_page = 'OpenVPN'
 
+port_forwarding_info = [('UDP', 1194)]
+
 
 def init():
     """Initialize the OpenVPN module."""

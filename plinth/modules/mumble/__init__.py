@@ -54,6 +54,11 @@ reserved_usernames = ['mumble-server']
 
 manual_page = 'Mumble'
 
+port_forwarding_info = [
+    ('TCP', 64738),
+    ('UDP', 64738),
+]
+
 
 def init():
     """Intialize the Mumble module."""

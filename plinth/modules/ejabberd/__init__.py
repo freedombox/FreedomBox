@@ -64,6 +64,11 @@ service = None
 
 manual_page = 'ejabberd'
 
+port_forwarding_info = [
+    ('TCP', 5222),
+    ('TCP', 5269),
+]
+
 logger = logging.getLogger(__name__)
 
 

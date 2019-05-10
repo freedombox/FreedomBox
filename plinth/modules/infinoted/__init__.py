@@ -54,6 +54,8 @@ description = [
 
 clients = clients
 
+port_forwarding_info = [('TCP', 6523)]
+
 
 def init():
     """Initialize the infinoted module."""

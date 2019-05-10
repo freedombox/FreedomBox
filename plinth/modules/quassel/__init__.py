@@ -63,6 +63,8 @@ reserved_usernames = ['quasselcore']
 
 manual_page = 'Quassel'
 
+port_forwarding_info = [('TCP', 4242)]
+
 
 def init():
     """Initialize the quassel module."""

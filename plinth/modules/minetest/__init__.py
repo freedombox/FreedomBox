@@ -66,6 +66,8 @@ clients = clients
 
 manual_page = 'Minetest'
 
+port_forwarding_info = [('UDP', 30000)]
+
 reserved_usernames = ['Debian-minetest']
 
 CONFIG_FILE = '/etc/minetest/minetest.conf'
