@@ -62,7 +62,7 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
         old_config = get_configuration()
 
         if old_config['max_players'] != data['max_players'] \
-           and data['max_players'] != None:
+           and data['max_players'] is not None:
             actions.superuser_run(
                 'minetest',
                 ['configure', '--max_players',
