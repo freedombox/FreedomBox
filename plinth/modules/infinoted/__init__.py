@@ -78,6 +78,7 @@ class InfinotedServiceView(ServiceView):
     diagnostics_module_name = "infinoted"
     description = description
     clients = clients
+    port_forwarding_info = port_forwarding_info
 
 
 def setup(helper, old_version=None):

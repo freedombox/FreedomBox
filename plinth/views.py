@@ -122,6 +122,7 @@ class ServiceView(FormView):
     service_id = None
     template_name = 'service.html'
     manual_page = ""
+    port_forwarding_info = None
 
     @property
     def success_url(self):
@@ -177,6 +178,7 @@ class ServiceView(FormView):
         context['description'] = self.description
         context['show_status_block'] = self.show_status_block
         context['manual_page'] = self.manual_page
+        context['port_forwarding_info'] = self.port_forwarding_info
         return context
 
 

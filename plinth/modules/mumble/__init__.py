@@ -83,6 +83,7 @@ class MumbleServiceView(ServiceView):
     description = description
     clients = clients
     manual_page = manual_page
+    port_forwarding_info = port_forwarding_info
 
 
 def setup(helper, old_version=None):

@@ -61,6 +61,7 @@ def index(request):
             'title': openvpn.name,
             'description': openvpn.description,
             'manual_page': openvpn.manual_page,
+            'port_forwarding_info': openvpn.port_forwarding_info,
             'status': status,
             'form': form
         })

@@ -39,6 +39,7 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     form_class = MinetestForm
     clients = minetest.clients
     manual_page = minetest.manual_page
+    port_forwarding_info = minetest.port_forwarding_info
 
     def get_initial(self):
         """Return the values to fill in the form."""

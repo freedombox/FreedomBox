@@ -75,6 +75,26 @@
 
   {% include "internal-zone.html" %}
 
+  {% if port_forwarding_info %}
+    <h3>{% trans "Port Forwarding" %}</h3>
+
+    <p>
+      {% with service_name=service.name %}
+        {% blocktrans trimmed %}
+          If your FreedomBox is behind a router, you will need to set up port
+          forwarding on your router. You should forward the following ports for
+          {{ service_name }}:
+        {% endblocktrans %}
+      {% endwith %}
+    </p>
+
+    <ul>
+      {% for port in port_forwarding_info %}
+        <li>{{ port.0 }} {{ port.1 }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
   {% block configuration %}
     <h3>{% trans "Configuration" %}</h3>
 

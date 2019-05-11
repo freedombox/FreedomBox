@@ -36,6 +36,7 @@ class EjabberdServiceView(ServiceView):
     diagnostics_module_name = 'ejabberd'
     form_class = EjabberdForm
     manual_page = ejabberd.manual_page
+    port_forwarding_info = ejabberd.port_forwarding_info
 
     def get_initial(self):
         initdict = super().get_initial()
