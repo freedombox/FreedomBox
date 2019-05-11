@@ -43,6 +43,11 @@ short_description = _('Distributed File Storage')
 
 service = None
 
+port_forwarding_info = [
+    ('TCP', 3456),
+    ('TCP', 5678),
+]
+
 tahoe_home = '/var/lib/tahoe-lafs'
 introducer_name = 'introducer'
 storage_node_name = 'storage_node'

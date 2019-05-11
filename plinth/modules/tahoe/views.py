@@ -55,6 +55,7 @@ class TahoeServiceView(ServiceView):
     template_name = 'tahoe-post-setup.html'
     description = tahoe.description
     diagnostics_module_name = 'tahoe'
+    port_forwarding_info = tahoe.port_forwarding_info
 
     def dispatch(self, request, *args, **kwargs):
         if not tahoe.is_setup():
