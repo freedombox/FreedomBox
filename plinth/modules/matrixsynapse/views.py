@@ -66,6 +66,7 @@ class MatrixSynapseServiceView(ServiceView):
     description = matrixsynapse.description
     diagnostics_module_name = 'matrixsynapse'
     form_class = MatrixSynapseForm
+    port_forwarding_info = matrixsynapse.port_forwarding_info
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""

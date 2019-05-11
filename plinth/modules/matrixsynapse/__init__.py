@@ -61,6 +61,8 @@ service = None
 
 manual_page = 'MatrixSynapse'
 
+port_forwarding_info = [('TCP', 8448)]
+
 logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
