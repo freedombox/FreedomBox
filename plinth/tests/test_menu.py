@@ -92,6 +92,7 @@ def test_menu_creation_without_arguments():
     assert menu.icon is None
     assert menu.url == '/'
     assert menu.order == 50
+    assert not menu.advanced
     assert not menu.items
 
 
@@ -107,7 +108,7 @@ def test_menu_creation_with_arguments():
     parent_menu = Menu('menu-index', url_name='index')
     menu = Menu('menu-test', expected_name, expected_short_description,
                 expected_icon, url_name, url_kwargs=url_kwargs,
-                parent_url_name='index', order=expected_order)
+                parent_url_name='index', order=expected_order, advanced=True)
 
     assert len(parent_menu.items) == 1
     assert parent_menu.items[0] == menu
@@ -116,6 +117,7 @@ def test_menu_creation_with_arguments():
     assert expected_icon == menu.icon
     assert expected_url == menu.url
     assert expected_order == menu.order
+    assert menu.advanced
     assert not menu.items
 
 
@@ -129,7 +131,7 @@ def test_get():
     reversed_url = reverse(url_name)
     expected_order = 2
     menu = Menu('menu-test', expected_name, expected_short_description,
-                expected_icon, url_name, order=expected_order)
+                expected_icon, url_name, order=expected_order, advanced=True)
     actual_item = menu.get(expected_url)
 
     assert actual_item is not None
@@ -138,6 +140,7 @@ def test_get():
     assert expected_icon == actual_item.icon
     assert reversed_url == actual_item.url
     assert expected_order == actual_item.order
+    assert actual_item.advanced
     assert not actual_item.items
 
 

@@ -27,7 +27,7 @@ class Menu(app.FollowerComponent):
 
     def __init__(self, component_id, name=None, short_description=None,
                  icon=None, url_name=None, url_args=None, url_kwargs=None,
-                 parent_url_name=None, order=50):
+                 parent_url_name=None, order=50, advanced=False):
         """Initialize a new menu item with basic properties.
 
         name is the label of the menu item.
@@ -50,6 +50,8 @@ class Menu(app.FollowerComponent):
         disregard that. If you need more granularity, don't bother renumbering
         things. Feel free to use fractional orders.
 
+        advanced decides whether to show the menu item only in advanced mode.
+
         """
         super().__init__(component_id)
         if not url_name:
@@ -62,6 +64,7 @@ class Menu(app.FollowerComponent):
         self.icon = icon
         self.url = url
         self.order = order
+        self.advanced = advanced
         self.items = []
 
         # Add self to parent menu item

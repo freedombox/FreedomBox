@@ -100,3 +100,8 @@ class ConfigurationForm(forms.Form):
                 '/freedombox to reach {box_name} Service (Plinth).'),
             box_name=ugettext_lazy(cfg.box_name)), required=False,
         choices=get_homepage_choices)
+
+    advanced_mode = forms.BooleanField(
+        label=_('Show advanced apps and features'), required=False,
+        help_text=_('Show apps and features that require more technical '
+                    'knowledge.'))

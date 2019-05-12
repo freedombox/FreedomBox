@@ -64,6 +64,7 @@ def get_status():
         'hostname': config.get_hostname(),
         'domainname': config.get_domainname(),
         'homepage': config.get_home_page(),
+        'advanced_mode': config.get_advanced_mode(),
     }
 
 
@@ -101,6 +102,22 @@ def _apply_changes(request, old_status, new_status):
                     exception=exception))
         else:
             messages.success(request, _('Webserver home page set'))
+
+    if old_status['advanced_mode'] != new_status['advanced_mode']:
+        try:
+            config.set_advanced_mode(new_status['advanced_mode'])
+        except Exception as exception:
+            messages.error(
+                request,
+                _('Error changing advanced mode: {exception}').format(
+                    exception=exception))
+        else:
+            if new_status['advanced_mode']:
+                messages.success(request,
+                                 _('Showing advanced apps and features'))
+            else:
+                messages.success(request,
+                                 _('Hiding advanced apps and features'))
 
 
 def set_hostname(hostname):

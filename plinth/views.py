@@ -32,6 +32,7 @@ from stronghold.decorators import public
 
 import plinth
 from plinth import package
+from plinth.modules.config import get_advanced_mode
 from plinth.modules.storage import views as disk_views
 from plinth.translation import get_language_from_request, set_language
 
@@ -48,9 +49,7 @@ def index(request):
     selected = request.GET.get('selected')
 
     selected_shortcut = [
-        shortcut
-        for shortcut in shortcuts
-        if shortcut.component_id == selected
+        shortcut for shortcut in shortcuts if shortcut.component_id == selected
     ]
     selected_shortcut = selected_shortcut[0] if selected_shortcut else None
 
@@ -71,13 +70,15 @@ class AppsIndexView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['show_disabled'] = True
+        context['advanced_mode'] = get_advanced_mode()
         return context
 
 
 def system_index(request):
     """Serve the system index page."""
     disk_views.warn_about_low_disk_space(request)
-    return TemplateResponse(request, 'system.html')
+    return TemplateResponse(request, 'system.html',
+                            {'advanced_mode': get_advanced_mode()})
 
 
 class LanguageSelectionView(FormView):

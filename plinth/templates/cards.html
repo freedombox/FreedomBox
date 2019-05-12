@@ -35,19 +35,9 @@
       <div class="card-list card-list-primary">
         {% for item in submenu.sorted_items %}
           {% if not show_disabled or item.is_enabled %}
-            <div class="card thumbnail">
-              <a href="{{ item.url }}" class="nav-link">
-                <div class="card-title">{{ item.name }}</div>
-                <div class="card-icon">
-                  {% if 'fa-' in item.icon %}
-                    <span class="fa {{ item.icon }}"></span>
-                  {% else %}
-                    <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
-                  {% endif %}
-                </div>
-                <div class="card-description">{{ item.short_description|default:'' }}</div>
-              </a>
-            </div>
+            {% if advanced_mode or not item.advanced %}
+              {% include "card.html" %}
+            {% endif %}
           {% endif %}
         {% endfor %}
       </div>
@@ -61,19 +51,9 @@
         <div class="card-list card-list-disabled">
           {% for item in submenu.sorted_items %}
             {% if not item.is_enabled %}
-              <div class="card thumbnail">
-                <a href="{{ item.url }}" class="nav-link">
-                  <div class="card-title">{{ item.name }}</div>
-                  <div class="card-icon">
-                    {% if 'fa-' in item.icon %}
-                      <span class="fa {{ item.icon }}"></span>
-                    {% else %}
-                      <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
-                    {% endif %}
-                  </div>
-                  <div class="card-description">{{ item.short_description|default:'' }}</div>
-                </a>
-              </div>
+              {% if advanced_mode or not item.advanced %}
+                {% include "card.html" %}
+              {% endif %}
             {% endif %}
           {% endfor %}
         </div>

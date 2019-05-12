@@ -45,6 +45,7 @@ APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                       APACHE_HOMEPAGE_CONF_FILE_NAME)
 FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                         'freedombox.conf')
+ADVANCED_MODE_KEY = 'advanced_mode'
 
 app = None
 
@@ -124,6 +125,18 @@ def change_home_page(shortcut_id):
 
     # URL may be a reverse_lazy() proxy
     actions.superuser_run('config', ['set-home-page', str(url)])
+
+
+def get_advanced_mode():
+    """Get whether option is enabled."""
+    from plinth import kvstore
+    return kvstore.get_default(ADVANCED_MODE_KEY, False)
+
+
+def set_advanced_mode(advanced_mode):
+    """Turn on/off advanced mode."""
+    from plinth import kvstore
+    kvstore.set(ADVANCED_MODE_KEY, advanced_mode)
 
 
 def init():
