@@ -55,6 +55,11 @@ def set_domain_name(browser, domain):
     system.set_domain_name(browser, domain)
 
 
+@given('advanced mode is on')
+def advanced_mode_is_on(browser):
+    system.set_advanced_mode(browser, True)
+
+
 @when(parsers.parse('I change the hostname to {hostname:w}'))
 def change_hostname_to(browser, hostname):
     system.set_hostname(browser, hostname)

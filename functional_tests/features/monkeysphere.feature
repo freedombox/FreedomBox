@@ -21,6 +21,7 @@ Feature: Monkeysphere
 
 Background:
   Given I'm a logged in user
+  And advanced mode is on
   And the monkeysphere application is installed
   And the domain name is set to mydomain.example
 

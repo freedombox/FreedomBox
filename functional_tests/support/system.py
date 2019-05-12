@@ -70,6 +70,17 @@ def set_home_page(browser, home_page):
     submit(browser)
 
 
+def set_advanced_mode(browser, mode):
+    nav_to_module(browser, 'config')
+    advanced_mode = browser.find_by_name('configuration-advanced_mode')
+    if mode:
+        advanced_mode.check()
+    else:
+        advanced_mode.uncheck()
+
+    submit(browser)
+
+
 def set_language(browser, language_code):
     username = config['DEFAULT']['username']
     browser.visit(config['DEFAULT']['url'] +

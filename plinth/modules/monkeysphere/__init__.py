@@ -65,7 +65,7 @@ class MonkeysphereApp(app_module.App):
         super().__init__()
         menu_item = menu.Menu('menu-monkeysphere', name, None,
                               'fa-certificate', 'monkeysphere:index',
-                              parent_url_name='system')
+                              parent_url_name='system', advanced=True)
         self.add(menu_item)
 
 
