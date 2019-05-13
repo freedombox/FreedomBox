@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>77</revnumber>
+        <date>2019-04-30 00:45:49</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Include I2P application</revremark>
+      </revision>
+      <revision>
         <revnumber>76</revnumber>
         <date>2019-04-24 03:14:10</date>
         <authorinitials>SunilMohanAdapa</authorinitials>
@@ -925,7 +931,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
             <screen><![CDATA[$ cat freedombox-unstable-free_2015-12-13_cubietruck-armhf.img > /dev/sdg ; sync]]></screen>
           </listitem>
         </itemizedlist>
-        <para>On MS Windows you will need a tool like <emphasis>etcher</emphasis>. </para>
+        <para>On MS Windows you will need a tool like <emphasis>etcher</emphasis>. On MacOS (OSX) you can use programs like <emphasis>balenaetcher</emphasis> and <emphasis>rosaimagewriter</emphasis>. </para>
         <itemizedlist>
           <listitem override="none">
             <para>The above command is an example for the <emphasis>cubietruck</emphasis> image built on 2015-12-13.  Your image file name will be different. </para>
@@ -1784,30 +1790,32 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
             </orderedlist>
           </listitem>
         </itemizedlist>
-        <section>
-          <title>Port forwarding</title>
-          <para>If you want to access your Quassel server over the internet, port forwarding on your router might be required (skip this if you already configured your FreedomBox to be in a DMZ). </para>
-          <itemizedlist>
-            <listitem>
-              <para>Configure port forwarding for port <code>4242</code> in your router </para>
-              <itemizedlist>
-                <listitem>
-                  <para>On my device, this setting can be found in the section <emphasis>Network &gt; NAT &amp; Port rules &gt; Port Forwarding</emphasis> </para>
-                  <para>
-                    <inlinemediaobject>
-                      <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding.png"/>
-                      </imageobject>
-                      <textobject>
-                        <phrase>Quassel_PortForwarding.png</phrase>
-                      </textobject>
-                    </inlinemediaobject>
-                  </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-          </itemizedlist>
-        </section>
+      </section>
+      <section>
+        <title>Port Forwarding</title>
+        <para>If your FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for Quassel: </para>
+        <itemizedlist>
+          <listitem>
+            <para>TCP 4242 </para>
+          </listitem>
+          <listitem>
+            <para>Example configuration in router: </para>
+            <itemizedlist>
+              <listitem override="none">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Quassel_PortForwarding.png</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Clients</title>
@@ -2267,29 +2275,29 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
       <title>SOCKS5 proxy (Shadowsocks)</title>
       <section>
         <title>What is Shadowsocks?</title>
-        <para><ulink url="https://shadowsocks.org/en/index.html">Shadowsocks</ulink> is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server. </para>
+        <para><ulink url="https://shadowsocks.org/en/index.html">Shadowsocks</ulink> is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your FreedomBox can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server. </para>
         <para><emphasis role="strong">Note:</emphasis> Shadowsocks is available in FreedomBox starting with Plinth version 0.18. </para>
       </section>
       <section>
         <title>Using the Shadowsocks client?</title>
-        <para>The current implementation of Shadowsocks in <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> only supports configuring <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> as a Shadowsocks client. The current use case for Shadowsocks is as follows: </para>
+        <para>The current implementation of Shadowsocks in FreedomBox only supports configuring FreedomBox as a Shadowsocks client. The current use case for Shadowsocks is as follows: </para>
         <itemizedlist>
           <listitem>
-            <para>Shadowsocks client (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink>) is in a region where some parts of the Internet are blocked or censored. </para>
+            <para>Shadowsocks client (FreedomBox) is in a region where some parts of the Internet are blocked or censored. </para>
           </listitem>
           <listitem>
             <para>Shadowsocks server is in a different region, which doesn't have these blocks. </para>
           </listitem>
           <listitem>
-            <para>The <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection. </para>
+            <para>The FreedomBox provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection. </para>
           </listitem>
         </itemizedlist>
-        <para>At a future date it will be possible to configure <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> as Shadowsocks server. </para>
+        <para>At a future date it will be possible to configure FreedomBox as Shadowsocks server. </para>
       </section>
       <section>
         <title>Configuring your FreedomBox for the Shadowsocks client</title>
         <para>To enable Shadowsocks, first navigate to the Socks5 Proxy (Shadowsocks) page and install it.  </para>
-        <para>Server: the Shadowsocks server is not the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them. </para>
+        <para>Server: the Shadowsocks server is not the FreedomBox IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them. </para>
         <para>To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, browser or application to <ulink url="http://freedombox_address:1080/"/> </para>
       </section>
     </section>
@@ -2298,6 +2306,15 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
       <section>
         <title>What is OpenVPN?</title>
         <para>OpenVPN provides to your FreedomBox a virtual private network service. You can use this software for remote access, site-to-site VPNs and Wi-Fi security. OpenVPN includes support for dynamic IP addresses and NAT. </para>
+      </section>
+      <section>
+        <title>Port Forwarding</title>
+        <para>If your FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for OpenVPN: </para>
+        <itemizedlist>
+          <listitem>
+            <para>UDP 1194 </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Setting up</title>
@@ -2326,9 +2343,6 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
           </listitem>
           <listitem>
             <para>The ovpn file contains all the information a vpn client needs to connect to the server. </para>
-          </listitem>
-          <listitem>
-            <para>If your FreedomBox is setup behind a home router, then you need to change the router configuration such that incoming traffic on port 1194 is forwarded to FreedomBox's port 1194. </para>
           </listitem>
           <listitem>
             <para>The downloaded profile contains the domain name of the FreedomBox that the client should connect to. This is picked up from the domain configured in 'Config' section of 'System' page. In case your domain is not configured properly, you may need to change this value after downloading the profile. If your OpenVPN client allows it, you can do this after importing the OpenVPN profile. Otherwise, you can edit the .ovpn profile file in a text editor and change the 'remote' line to contain the WAN IP address or hostname of your FreedomBox as follows. </para>
@@ -2814,6 +2828,35 @@ proto udp]]></screen>
             <para>Login as the new admin user using "Login with HTTP auth". </para>
           </listitem>
         </orderedlist>
+      </section>
+    </section>
+    <section>
+      <title>Anonymity Network (I2P)</title>
+      <section>
+        <title>About I2P</title>
+        <para>The Invisible Internet Project is an anonymous network layer intended to protect communication from censorship and surveillance. I2P provides anonymity by sending encrypted traffic through a volunteer-run network distributed around the world. </para>
+        <para>Find more information about I2P on their project <ulink url="https://geti2p.net">homepage</ulink>. </para>
+      </section>
+      <section>
+        <title>Services Offered</title>
+        <para>The following services are offered via I2P in FreedomBox by default. Additional services may be available when enabled from I2P router console that can be launched from FreedomBox web interface. </para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="strong">Anonymous Internet browsing</emphasis>: I2P can be used to browse Internet anonymously. For this, configure your browser (preferable a Tor Browser) to connect to I2P proxy. This can be done by setting HTTP proxy and HTTPS proxy to <emphasis>freedombox.local</emphasis> (or your FreedomBox's local IP address) and ports to <emphasis>4444</emphasis> and <emphasis>4445</emphasis> respectively. This service is available only when you are reaching FreedomBox using local network (networks in internal zone) and not available when connecting to FreedomBox from the Internet. One exception to this is when you connect to FreedomBox's VPN service from Internet you can still use this service. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">Reaching eepsites</emphasis>: I2P network can host websites that can remain anonymous. These are called eepsites and end with .i2p in their domain name. For example, <ulink url="http://i2p-projekt.i2p/"/> is the website for I2P project in the I2P network. eepsites are not reachable using a regular browser via regular Internet connection. To browse eepsites, your browser needs to be configured to use HTTP, HTTPS proxies as described above. This service is available only when you are reaching FreedomBox using local network (networks in internal zone) and not available when connecting to FreedomBox from the Internet. One exception to this is when you connect to FreedomBox's VPN service from Internet you can still use this service. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">Anonymous torrent downloads</emphasis>: I2PSnark, an application for anonymously downloading and sharing files over the BitTorrent network is available in I2P and enabled by default in FreedomBox. This application is controlled via a web interface that can be launched from 'Anonymous torrents' section of I2P app in FreedomBox web interface or from the I2P router console interface. Only logged-in users belonging to 'Manage I2P application' group can use this service. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">IRC network</emphasis>: I2P network contains an IRC network called Irc2P. This network hosts the I2P project's official IRC channel among other channels. This service is enabled by default in FreedomBox. To use it, open your favourite IRC client. Then configure it to connect to host <emphasis>freedombox.local</emphasis> (or your FreedomBox's local IP address) with port number <emphasis>6668</emphasis>. This service is available only when you are reaching FreedomBox using local network (networks in internal zone) and not available when connecting to FreedomBox from the Internet. One exception to this is when you connect to FreedomBox's VPN service from Internet you can still use this service. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">I2P router console</emphasis>: This is the central management interface for I2P. It shows the current status of I2P, bandwidth statistics and allows modifying various configuration settings. You can tune your participation in the I2P network and use/edit a list of your favourite I2P sites (eepsites). Only logged-in users belonging to 'Manage I2P application' group can use this service. </para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
   </section>
@@ -7890,10 +7933,10 @@ esac]]></screen>
         <title>Availability</title>
         <itemizedlist>
           <listitem>
-            <para>Price: 55 EUR (A20 OLinuXino MICRO) </para>
+            <para>Price: 50 EUR (A20 OLinuXino MICRO) </para>
           </listitem>
           <listitem>
-            <para>Price: 65 EUR (A20 OLinuXino MICRO 4GB) </para>
+            <para>Price: 63 EUR (A20 OLinuXino MICRO 4GB) </para>
           </listitem>
           <listitem>
             <para>
@@ -9449,6 +9492,26 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.7 (2019-05-13)</title>
+        <itemizedlist>
+          <listitem>
+            <para>i2p: Include default favorites. </para>
+          </listitem>
+          <listitem>
+            <para>Separate enabled and disabled apps. </para>
+          </listitem>
+          <listitem>
+            <para>Display port forwarding info for apps. </para>
+          </listitem>
+          <listitem>
+            <para>Added Slovenian translation. </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Dutch, German, Hungarian, Norwegian Bokmål, Polish, Portuguese, Telugu. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.6 (2019-04-29)</title>
         <itemizedlist>
