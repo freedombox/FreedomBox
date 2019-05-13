@@ -46,6 +46,8 @@ description = [
 
 service = None
 
+port_forwarding_info = [('TCP', 22)]
+
 
 def init():
     """Intialize the ssh module."""
@@ -65,3 +67,4 @@ def setup(helper, old_version=None):
 class SshServiceView(ServiceView):
     service_id = managed_services[0]
     description = description
+    port_forwarding_info = port_forwarding_info
