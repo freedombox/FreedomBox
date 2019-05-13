@@ -60,6 +60,12 @@ proxies_service = None
 
 manual_page = 'I2P'
 
+port_forwarding_info = [
+    ('TCP', 4444),
+    ('TCP', 4445),
+    ('TCP', 6668),
+]
+
 tunnels_to_manage = {
     'I2P HTTP Proxy': 'i2p-http-proxy-freedombox',
     'I2P HTTPS Proxy': 'i2p-https-proxy-freedombox',

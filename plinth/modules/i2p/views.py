@@ -56,6 +56,7 @@ class I2PServiceView(ServiceView):
         context['clients'] = i2p.clients
         context['manual_page'] = i2p.manual_page
         context['subsubmenu'] = subsubmenu
+        context['port_forwarding_info'] = i2p.port_forwarding_info
         return context
 
 
