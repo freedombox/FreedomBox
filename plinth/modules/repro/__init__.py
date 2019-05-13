@@ -65,6 +65,8 @@ service = None
 
 manual_page = 'Repro'
 
+port_forwarding_info = [('UDP', '1024-65535')]
+
 
 def init():
     """Initialize the repro module."""
@@ -90,6 +92,7 @@ class ReproServiceView(ServiceView):
     diagnostics_module_name = "repro"
     service_id = managed_services[0]
     manual_page = manual_page
+    port_forwarding_info = port_forwarding_info
 
 
 def setup(helper, old_version=None):
