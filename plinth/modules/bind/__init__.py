@@ -54,6 +54,11 @@ description = [
         box_name=_(cfg.box_name)),
 ]
 
+port_forwarding_info = [
+    ('TCP', 53),
+    ('UDP', 53),
+]
+
 CONFIG_FILE = '/etc/bind/named.conf.options'
 
 DEFAULT_CONFIG = '''

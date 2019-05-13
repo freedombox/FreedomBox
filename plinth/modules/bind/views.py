@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.views import ServiceView
 
-from . import description, managed_services, get_config
+from . import description, get_config, managed_services, port_forwarding_info
 from .forms import BindForm
 
 
@@ -35,6 +35,7 @@ class BindServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     description = description
     show_status_block = True
     form_class = BindForm
+    port_forwarding_info = port_forwarding_info
 
     def get_initial(self):
         """Return the values to fill in the form."""
