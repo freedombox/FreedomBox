@@ -154,7 +154,12 @@ class AddRepositoryForm(forms.Form):
         path = cleaned_data.get("repository")
         credentials = self.get_credentials()
 
-        # Validate remote
+        # Avoid creation of duplicate ssh remotes
+        for storage in network_storage.get_storages().values():
+            if storage['path'] == path:
+                raise forms.ValidationError(
+                    _('Remote backup repository already exists.'))
+
         user_at_host, dir_path = path.split(':')
         username, hostname = user_at_host.split('@')
         dir_path = dir_path.replace('~', f'/home/{username}')
