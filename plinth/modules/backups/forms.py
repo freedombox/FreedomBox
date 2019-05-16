@@ -19,14 +19,16 @@ Forms for backups module.
 """
 
 import logging
+
 import paramiko
 from django import forms
 from django.core.validators import FileExtensionValidator
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 from plinth.utils import format_lazy
 
-from . import api, network_storage, ROOT_REPOSITORY_NAME
+from . import ROOT_REPOSITORY_NAME, api, network_storage
 from .errors import BorgRepositoryDoesNotExistError
 from .repository import SshBorgRepository
 
@@ -86,11 +88,10 @@ class RestoreForm(forms.Form):
 
 class UploadForm(forms.Form):
     file = forms.FileField(
-        label=_('Upload File'),
-        required=True,
-        validators=[FileExtensionValidator(
-            ['gz'], _('Backup files have to be in .tar.gz format'))],
-        help_text=_('Select the backup file you want to upload'))
+        label=_('Upload File'), required=True, validators=[
+            FileExtensionValidator(
+                ['gz'], _('Backup files have to be in .tar.gz format'))
+        ], help_text=_('Select the backup file you want to upload'))
 
 
 class AddRepositoryForm(forms.Form):
@@ -102,27 +103,19 @@ class AddRepositoryForm(forms.Form):
         label=_('SSH server password'), strip=True,
         help_text=_('Password of the SSH Server.<br />'
                     'SSH key-based authentication is not yet possible.'),
-        widget=forms.PasswordInput(),
-        required=False)
+        widget=forms.PasswordInput(), required=False)
     encryption = forms.ChoiceField(
-        label=_('Encryption'),
-        help_text=format_lazy(
+        label=_('Encryption'), help_text=format_lazy(
             _('"Key in Repository" means that a '
               'password-protected key is stored with the backup.')),
-        choices=[('repokey', 'Key in Repository'), ('none', 'None')]
-        )
+        choices=[('repokey', 'Key in Repository'), ('none', 'None')])
     encryption_passphrase = forms.CharField(
         label=_('Passphrase'),
         help_text=_('Passphrase; Only needed when using encryption.'),
-        widget=forms.PasswordInput(),
-        required=False
-    )
+        widget=forms.PasswordInput(), required=False)
     confirm_encryption_passphrase = forms.CharField(
-        label=_('Confirm Passphrase'),
-        help_text=_('Repeat the passphrase.'),
-        widget=forms.PasswordInput(),
-        required=False
-    )
+        label=_('Confirm Passphrase'), help_text=_('Repeat the passphrase.'),
+        widget=forms.PasswordInput(), required=False)
 
     def get_credentials(self):
         credentials = {}
@@ -148,8 +141,7 @@ class AddRepositoryForm(forms.Form):
 
         if passphrase != confirm_passphrase:
             raise forms.ValidationError(
-                _("The entered encryption passphrases do not match")
-            )
+                _("The entered encryption passphrases do not match"))
 
         path = cleaned_data.get("repository")
         credentials = self.get_credentials()
