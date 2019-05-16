@@ -31,9 +31,9 @@ from plinth.utils import format_lazy
 
 from . import api
 
-version = 2
+version = 3
 
-managed_packages = ['borgbackup', 'sshfs']
+managed_packages = ['borgbackup', 'sshfs', 'python3-paramiko']
 
 name = _('Backups')
 

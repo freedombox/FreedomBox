@@ -18,6 +18,8 @@
 Forms for backups module.
 """
 
+import logging
+import paramiko
 from django import forms
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext, ugettext_lazy as _
@@ -27,6 +29,8 @@ from plinth.utils import format_lazy
 from . import api, network_storage, ROOT_REPOSITORY_NAME
 from .errors import BorgRepositoryDoesNotExistError
 from .repository import SshBorgRepository
+
+logger = logging.getLogger(__name__)
 
 
 def _get_app_choices(apps):
@@ -130,6 +134,14 @@ class AddRepositoryForm(forms.Form):
         return credentials
 
     def clean(self):
+        """
+        Validation of SSH remote
+
+          * Create empty directory if not exists
+          * Check if the directory is empty
+            - if not empty, check if it's an existing backup repository
+            - else throw an error
+        """
         cleaned_data = super(AddRepositoryForm, self).clean()
         passphrase = cleaned_data.get("encryption_passphrase")
         confirm_passphrase = cleaned_data.get("confirm_encryption_passphrase")
@@ -141,12 +153,37 @@ class AddRepositoryForm(forms.Form):
 
         path = cleaned_data.get("repository")
         credentials = self.get_credentials()
+
+        # Validate remote
+        user_at_host, dir_path = path.split(':')
+        username, hostname = user_at_host.split('@')
+        dir_path = dir_path.replace('~', f'/home/{username}')
+        password = credentials['ssh_password']
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
-            self.repository = SshBorgRepository(path=path,
-                                                credentials=credentials)
-            self.repository.get_info()
-        except BorgRepositoryDoesNotExistError:
-            pass
+            ssh_client.connect(hostname, username=username, password=password)
         except Exception as err:
             msg = _('Accessing the remote repository failed. Details: %(err)s')
             raise forms.ValidationError(msg, params={'err': str(err)})
+        else:
+            with ssh_client.open_sftp() as sftp_client:
+                try:
+                    dir_contents = sftp_client.listdir(dir_path)
+                except FileNotFoundError:
+                    logger.info(
+                        _(f"Directory {dir_path} doesn't exist. Creating ..."))
+                    sftp_client.mkdir(dir_path)
+                else:
+                    if dir_contents:
+                        try:
+                            self.repository = SshBorgRepository(
+                                path=path, credentials=credentials)
+                            self.repository.get_info()
+                        except BorgRepositoryDoesNotExistError:
+                            msg = _(f'Directory {path.split(":")[-1]} is '
+                                    'neither empty nor is an existing '
+                                    'backups repository.')
+                            raise forms.ValidationError(msg)
+        finally:
+            ssh_client.close()
