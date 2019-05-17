@@ -77,7 +77,7 @@ def setup(request):
         setup_process = actions.superuser_run('openvpn', ['setup'],
                                               run_in_background=True)
 
-    openvpn.add_shortcut()
+    openvpn.enable()
 
     return redirect('openvpn:index')
 

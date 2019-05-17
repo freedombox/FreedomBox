@@ -87,6 +87,20 @@ class DiasporaApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = Shortcut(
+            'shortcut-diaspora', name, short_description=short_description,
+            icon='diaspora', url=None, clients=clients, login_required=True)
+        self.add(shortcut)
+
+
+class Shortcut(frontpage.Shortcut):
+    """Frontpage shortcut to use configured domain name for URL."""
+
+    def enable(self):
+        """Set the proper shortcut URL when enabled."""
+        super().enable()
+        self.url = 'https://diaspora.{}'.format(get_configured_domain_name())
+
 
 def init():
     """Initialize the Diaspora module."""
@@ -102,7 +116,6 @@ def init():
                                          disable=disable)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -112,7 +125,6 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('custom_config', actions.superuser_run, 'diaspora',
                 ['disable-ssl'])
-    helper.call('post', app.enable)
 
 
 def setup_domain_name(domain_name):
@@ -124,16 +136,7 @@ def setup_domain_name(domain_name):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     service.notify_enabled(None, True)
-    add_shortcut()
-
-
-def add_shortcut():
-    """Add shortcut to diaspora on the homepage."""
-    if is_setup():
-        frontpage.add_shortcut(
-            'diaspora', name, short_description,
-            url='https://diaspora.{}'.format(get_configured_domain_name()),
-            login_required=True)
+    app.enable()
 
 
 def is_enabled():
@@ -144,14 +147,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('diaspora', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('diaspora', ['disable'])
-    frontpage.remove_shortcut('diaspora')
     app.disable()
 
 

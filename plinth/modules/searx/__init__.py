@@ -66,6 +66,12 @@ class SearxApp(app_module.App):
                               'searx:index', parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-searx', name, short_description=short_description,
+            icon='searx', url='/searx/', clients=clients, login_required=True,
+            allowed_groups=[group[0]])
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -82,7 +88,6 @@ def init():
                                          disable=disable)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -99,15 +104,7 @@ def setup(helper, old_version=None):
             'http', 'https'
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut('searx', name, short_description=short_description,
-                           url='/searx/', login_required=True,
-                           allowed_groups=[group[0]])
 
 
 def get_safe_search_setting():
@@ -125,14 +122,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('searx', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('searx', ['disable'])
-    frontpage.remove_shortcut('searx')
     app.disable()
 
 

@@ -72,6 +72,20 @@ class TahoeApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-tahoe', name, short_description=short_description,
+            icon='tahoe-lafs', url=None, login_required=True)
+        self.add(shortcut)
+
+
+class Shortcut(frontpage.Shortcut):
+    """Frontpage shortcut to use configured domain name for URL."""
+
+    def enable(self):
+        """Set the proper shortcut URL when enabled."""
+        super().enable()
+        self.url = 'https://{}:5678'.format(get_configured_domain_name())
+
 
 def is_setup():
     """Check whether Tahoe-LAFS is setup"""
@@ -116,7 +130,6 @@ def init():
                                          is_running=is_running)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -144,17 +157,7 @@ def post_setup(configured_domain_name):
                                          disable=disable,
                                          is_running=is_running)
     service.notify_enabled(None, True)
-    add_shortcut()
     app.enable()
-
-
-def add_shortcut():
-    """Helper method to add a shortcut to the front page."""
-    # BUG: Current logo appears squashed on front page.
-    frontpage.add_shortcut(
-        'tahoe-lafs', name, short_description=short_description,
-        url='https://{}:5678'.format(get_configured_domain_name()),
-        login_required=True)
 
 
 def is_running():
@@ -171,14 +174,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('tahoe-lafs', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('tahoe-lafs', ['disable'])
-    frontpage.remove_shortcut('tahoe-lafs')
     app.disable()
 
 

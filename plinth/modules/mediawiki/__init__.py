@@ -65,10 +65,27 @@ class MediaWikiApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+        self._private_mode = True
+
         menu_item = menu.Menu('menu-mediawiki', name, short_description,
                               'mediawiki', 'mediawiki:index',
                               parent_url_name='apps')
         self.add(menu_item)
+
+        shortcut = Shortcut('shortcut-mediawiki', name,
+                            short_description=short_description,
+                            icon='mediawiki', url='/mediawiki',
+                            clients=clients, login_required=True)
+        self.add(shortcut)
+
+
+class Shortcut(frontpage.Shortcut):
+    """Frontpage shortcut for only logged users when in private mode."""
+
+    def enable(self):
+        """When enabled, check if MediaWiki is in private mode."""
+        super().enable()
+        self.login_required = is_private_mode_enabled()
 
 
 def init():
@@ -83,7 +100,6 @@ def init():
             'mediawiki', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -105,15 +121,7 @@ def setup(helper, old_version=None):
             ports=['http', 'https'],
         )
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut(
-        'mediawiki', name, short_description=short_description,
-        url='/mediawiki', login_required=is_private_mode_enabled())
 
 
 def is_enabled():
@@ -124,14 +132,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('mediawiki', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('mediawiki', ['disable'])
-    frontpage.remove_shortcut('mediawiki')
     app.disable()
 
 

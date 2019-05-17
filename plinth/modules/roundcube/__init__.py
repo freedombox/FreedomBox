@@ -75,6 +75,12 @@ class RoundcubeApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut('shortcut-roundcube', name,
+                                      short_description=short_description,
+                                      icon='roundcube', url='/roundcube/',
+                                      clients=clients, login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -89,7 +95,6 @@ def init():
             is_enabled=is_enabled, enable=enable, disable=disable)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -98,19 +103,12 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
-    helper.call('post', add_shortcut)
     global service
     if service is None:
         service = service_module.Service(
             'roundcube', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut('roundcube', name,
-                           short_description=short_description,
-                           url='/roundcube', login_required=True)
 
 
 def is_enabled():
@@ -121,14 +119,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['disable'])
-    frontpage.remove_shortcut('roundcube')
     app.disable()
 
 

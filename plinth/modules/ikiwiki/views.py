@@ -25,7 +25,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from plinth import actions, frontpage, views
+from plinth import actions, views
 from plinth.modules import ikiwiki
 
 from .forms import IkiwikiCreateForm
@@ -93,9 +93,8 @@ def create(request):
                              form.cleaned_data['admin_password'])
 
             site = form.cleaned_data['name'].replace(' ', '')
-            frontpage.add_shortcut('ikiwiki_' + site, site,
-                                   url='/ikiwiki/' + site,
-                                   login_required=False, icon='ikiwiki')
+            shortcut = ikiwiki.app.add_shortcut(site)
+            shortcut.enable()
 
             return redirect(reverse_lazy('ikiwiki:manage'))
     else:
@@ -147,8 +146,8 @@ def delete(request, name):
     if request.method == 'POST':
         try:
             actions.superuser_run('ikiwiki', ['delete', '--name', name])
+            ikiwiki.app.remove_shortcut(name)
             messages.success(request, _('{name} deleted.').format(name=name))
-            frontpage.remove_shortcut('ikiwiki_' + name)
         except actions.ActionError as error:
             messages.error(
                 request,
@@ -157,8 +156,7 @@ def delete(request, name):
 
         return redirect(reverse_lazy('ikiwiki:manage'))
 
-    return TemplateResponse(
-        request, 'ikiwiki_delete.html', {
-            'title': ikiwiki.name,
-            'name': name
-        })
+    return TemplateResponse(request, 'ikiwiki_delete.html', {
+        'title': ikiwiki.name,
+        'name': name
+    })

@@ -71,6 +71,13 @@ class ShadowsocksApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-shadowsocks', name, short_description=short_description,
+            icon='shadowsocks', description=description,
+            configure_url=reverse_lazy('shadowsocks:index'),
+            login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -86,7 +93,6 @@ def init():
                                          enable=enable, disable=disable)
 
         if service.is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -104,14 +110,6 @@ def setup(helper, old_version=None):
     helper.call('post', app.enable)
 
 
-def add_shortcut():
-    """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut(
-        'shadowsocks', name, short_description=short_description,
-        details=description, configure_url=reverse_lazy('shadowsocks:index'),
-        login_required=False)
-
-
 def is_enabled():
     """Return whether service is enabled."""
     return action_utils.service_is_enabled(managed_services[0])
@@ -125,14 +123,12 @@ def is_running():
 def enable():
     """Enable service."""
     actions.superuser_run('service', ['enable', managed_services[0]])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable service."""
     actions.superuser_run('service', ['disable', managed_services[0]])
-    frontpage.remove_shortcut('shadowsocks')
     app.disable()
 
 

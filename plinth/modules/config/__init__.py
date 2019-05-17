@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import menu
+from plinth import frontpage, menu
 from plinth.modules import firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
@@ -72,7 +72,7 @@ def get_hostname():
     return socket.gethostname()
 
 
-def get_home_page():
+def _get_home_page_url():
     """Get the default application for the domain."""
     aug = augeas.Augeas(
         flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
@@ -84,22 +84,46 @@ def get_home_page():
 
     aug.defvar('conf', '/files' + conf_file)
 
-    app_path = 'plinth'
-
     for match in aug.match('/files' + conf_file +
                            '/directive["RedirectMatch"]'):
         if aug.get(match + "/arg[1]") == '''"^/$"''':
-            app_path = aug.get(match + "/arg[2]")
+            return aug.get(match + "/arg[2]").strip('"')
 
-    # match this against the app_id in the entries of frontpage.get_shortcuts()
-    # The underscore is to handle Ikiwiki app_ids
-    app = app_path.strip('/"').replace('/', '_')
-    if app == 'index.html':
+    return None
+
+
+def get_home_page():
+    """Return the shortcut ID that is set as current home page."""
+    url = _get_home_page_url()
+    if url in ['/plinth/', '/plinth', 'plinth']:
+        return 'plinth'
+
+    if url == '/index.html':
         return 'apache-default'
-    elif app.endswith('jsxc'):
-        return 'jsxc'
+
+    shortcuts = frontpage.Shortcut.list()
+    for shortcut in shortcuts:
+        if shortcut.url == url:
+            return shortcut.component_id
+
+    return None
+
+
+def change_home_page(shortcut_id):
+    """Change the FreedomBox's default redirect to URL of the shortcut specified."""
+    if shortcut_id == 'plinth':
+        url = '/plinth/'
+    elif shortcut_id == 'apache-default':
+        url = '/index.html'
     else:
-        return app
+        shortcuts = frontpage.Shortcut.list()
+        url = [
+            shortcut.url for shortcut in shortcuts
+            if shortcut.component_id == shortcut_id
+        ][0]
+
+    # URL may be a reverse_lazy() proxy
+    actions.superuser_run('config', ['set-home-page', str(url)])
 
 
 def init():

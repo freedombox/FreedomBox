@@ -76,6 +76,12 @@ class MLDonkeyApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcuts = frontpage.Shortcut(
+            'shortcut-mldonkey', name, short_description=short_description,
+            icon='mldonkey', url='/mldonkey/', login_required=True,
+            clients=clients, allowed_groups=[group[0]])
+        self.add(shortcuts)
+
 
 def init():
     """Initialize the MLDonkey module."""
@@ -93,7 +99,6 @@ def init():
                                          is_running=is_running)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -110,15 +115,7 @@ def setup(helper, old_version=None):
                                          disable=disable,
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut(
-        'mldonkey', name, short_description=short_description,
-        url='/mldonkey/', login_required=True, allowed_groups=[group[0]])
 
 
 def is_running():
@@ -135,14 +132,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('mldonkey', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('mldonkey', ['disable'])
-    frontpage.remove_shortcut('mldonkey')
     app.disable()
 
 

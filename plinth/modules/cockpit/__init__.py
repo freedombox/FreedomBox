@@ -74,6 +74,12 @@ class CockpitApp(app_module.App):
                               parent_url_name='system')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut('shortcut-cockpit', name,
+                                      short_description=short_description,
+                                      icon='cockpit', url='/_cockpit/',
+                                      clients=clients, login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -89,7 +95,6 @@ def init():
                                          disable=disable)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
     domain_added.connect(on_domain_added)
@@ -112,14 +117,7 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
-
-
-def add_shortcut():
-    """Add a shortcut the frontpage."""
-    frontpage.add_shortcut('cockpit', name,
-                           short_description=short_description,
-                           url='/_cockpit/', login_required=True)
+    helper.call('post', app.enable)
 
 
 def is_enabled():
@@ -131,14 +129,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('cockpit', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('cockpit', ['disable'])
-    frontpage.remove_shortcut('cockpit')
     app.disable()
 
 

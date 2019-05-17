@@ -77,6 +77,12 @@ class TTRSSApp(app_module.App):
                               'ttrss:index', parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-ttrss', name, short_description=short_description,
+            icon='ttrss', url='/tt-rss', clients=clients, login_required=True,
+            allowed_groups=[group[0]])
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -93,7 +99,6 @@ def init():
                                          disable=disable)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -110,7 +115,6 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
 
 
@@ -129,13 +133,6 @@ def force_upgrade(helper, packages):
     actions.superuser_run('ttrss', ['setup'])
 
 
-def add_shortcut():
-    """Add a shortcut to the front page."""
-    frontpage.add_shortcut('ttrss', name, short_description=short_description,
-                           url='/tt-rss', login_required=True,
-                           allowed_groups=[group[0]])
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('tt-rss')
@@ -145,14 +142,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('ttrss', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ttrss', ['disable'])
-    frontpage.remove_shortcut('ttrss')
     app.disable()
 
 

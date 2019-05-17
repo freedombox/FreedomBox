@@ -71,6 +71,12 @@ class TransmissionApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-transmission', name, short_description=short_description,
+            icon='transmission', url='/transmission', clients=clients,
+            login_required=True, allowed_groups=[group[0]])
+        self.add(shortcut)
+
 
 def init():
     """Initialize the Transmission module."""
@@ -87,7 +93,6 @@ def init():
                                          disable=disable)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -111,14 +116,7 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut(
-        'transmission', name, short_description=short_description,
-        url='/transmission', login_required=True, allowed_groups=[group[0]])
 
 
 def is_enabled():
@@ -130,14 +128,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('transmission', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('transmission', ['disable'])
-    frontpage.remove_shortcut('transmission')
     app.disable()
 
 

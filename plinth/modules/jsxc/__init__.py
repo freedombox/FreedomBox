@@ -61,6 +61,11 @@ class JSXCApp(app_module.App):
                               'jsxc:index', parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-jsxc', name=name, short_description=short_description,
+            icon='jsxc', url=reverse_lazy('jsxc:jsxc'), clients=clients)
+        self.add(shortcut)
+
 
 def init():
     """Initialize the JSXC module"""
@@ -74,7 +79,6 @@ def init():
             'jsxc', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -88,14 +92,7 @@ def setup(helper, old_version=None):
             'jsxc', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut('jsxc', name=name,
-                           short_description=short_description,
-                           url=reverse_lazy('jsxc:jsxc'), login_required=True)
 
 
 def is_enabled():
@@ -105,10 +102,8 @@ def is_enabled():
 
 
 def enable():
-    add_shortcut()
     app.enable()
 
 
 def disable():
-    frontpage.remove_shortcut('jsxc')
     app.disable()

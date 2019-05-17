@@ -80,6 +80,13 @@ class QuasselApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-quassel', name, short_description=short_description,
+            icon='quassel', description=description,
+            configure_url=reverse_lazy('quassel:index'), clients=clients,
+            login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Initialize the quassel module."""
@@ -94,7 +101,6 @@ def init():
         ], is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -116,28 +122,18 @@ def setup(helper, old_version=None):
             'quassel-plinth'
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut(
-        'quassel', name, short_description=short_description,
-        details=description, configure_url=reverse_lazy('quassel:index'),
-        login_required=True)
 
 
 def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
-    frontpage.remove_shortcut('quassel')
     app.disable()
 
 

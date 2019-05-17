@@ -43,12 +43,13 @@ def domain_label_validator(domainname):
 
 
 def get_homepage_choices():
-    shortcuts = frontpage.get_shortcuts(web_apps_only=True, sort_by='name')
-    apps = [(shortcut['id'], shortcut['name']) for shortcut in shortcuts
-            if shortcut['id']]
+    """Return list of drop down choices for home page."""
+    shortcuts = frontpage.Shortcut.list(web_apps_only=True)
+    shortcut_choices = [(shortcut.component_id, shortcut.name)
+                        for shortcut in shortcuts if shortcut.is_enabled()]
     apache_default = ('apache-default', _('Apache Default'))
     plinth = ('plinth', _('FreedomBox Service (Plinth)'))
-    return [apache_default, plinth] + apps
+    return [apache_default, plinth] + shortcut_choices
 
 
 class ConfigurationForm(forms.Form):

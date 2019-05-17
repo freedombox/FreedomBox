@@ -40,6 +40,16 @@ class App:
         self.components[component.component_id] = component
         return self
 
+    def remove(self, component_id):
+        """Remove a component from the app."""
+        component = self.components[component_id]
+        del self.components[component_id]
+        return component
+
+    def get(self, component_id):
+        """Return a component given the component's ID."""
+        return self.components[component_id]
+
     def enable(self):
         """Enable all the components of the app."""
         for component in self.components.values():

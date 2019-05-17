@@ -67,6 +67,12 @@ class CoquelicotApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut('shortcut-coquelicot', name,
+                                      short_description=short_description,
+                                      icon='coquelicot', url='/coquelicot',
+                                      clients=clients, login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -83,7 +89,6 @@ def init():
                                          is_running=is_running)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -100,15 +105,7 @@ def setup(helper, old_version=None):
                                          disable=disable,
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut('coquelicot', name,
-                           short_description=short_description,
-                           url='/coquelicot', login_required=True)
 
 
 def is_running():
@@ -125,14 +122,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('coquelicot', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('coquelicot', ['disable'])
-    frontpage.remove_shortcut('coquelicot')
     app.disable()
 
 

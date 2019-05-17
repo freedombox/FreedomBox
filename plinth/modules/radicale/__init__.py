@@ -84,6 +84,12 @@ class RadicaleApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut('shortcut-radicale', name,
+                                      short_description=short_description,
+                                      icon='radicale', url='/radicale/',
+                                      clients=clients, login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Initialize the radicale module."""
@@ -100,7 +106,6 @@ def init():
                                          is_running=is_running)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -138,14 +143,7 @@ def setup(helper, old_version=None):
                                          disable=disable,
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut('radicale', name,
-                           short_description=short_description,
-                           url='/radicale/', login_required=True)
 
 
 def get_package_version():
@@ -195,14 +193,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('radicale', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('radicale', ['disable'])
-    frontpage.remove_shortcut('radicale')
     app.disable()
 
 

@@ -58,6 +58,23 @@ def test_app_add():
     assert return_value == app
 
 
+def test_app_remove(app_with_components):
+    """Test removing a component from an App."""
+    app = app_with_components
+    component = app.components['test-leader-1']
+    assert app.remove('test-leader-1') == component
+    assert 'test-leader-1' not in app.components
+
+
+def test_get(app_with_components):
+    """Test retrieving a component from an App."""
+    app = app_with_components
+    component = app.components['test-leader-1']
+    assert app.get('test-leader-1') == component
+    with pytest.raises(KeyError):
+        app.get('x-invalid-component')
+
+
 def test_app_enable(app_with_components):
     """Test that enabling an app enables components."""
     app_with_components.disable()

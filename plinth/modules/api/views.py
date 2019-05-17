@@ -25,7 +25,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.templatetags.static import static
 
-from plinth import frontpage, module_loader
+from plinth import frontpage
 from plinth.modules import names
 
 
@@ -52,8 +52,9 @@ def shortcuts(request, **kwargs):
 
 def get_shortcuts_as_json(username=None):
     shortcuts = [
-        _get_shortcut_data(shortcut['id'].split('_')[0], shortcut)
-        for shortcut in frontpage.get_shortcuts(username) if shortcut['id']
+        _get_shortcut_data(shortcut)
+        for shortcut in frontpage.Shortcut.list(username)
+        if shortcut.component_id
     ]
     custom_shortcuts = frontpage.get_custom_shortcuts()
     if custom_shortcuts:
@@ -61,17 +62,17 @@ def get_shortcuts_as_json(username=None):
     return {'shortcuts': shortcuts}
 
 
-def _get_shortcut_data(module_name, shortcut):
+def _get_shortcut_data(shortcut):
     """Return detailed information about a shortcut."""
-    module = module_loader.loaded_modules[module_name]
     shortcut_data = {
-        'name': shortcut['name'],
-        'short_description': shortcut['short_description'],
-        'description': shortcut['details'],
-        'icon_url': _get_icon_url(shortcut['icon']),
-        'clients': copy.deepcopy(getattr(module, 'clients', None))
+        'name': shortcut.name,
+        'short_description': shortcut.short_description,
+        'description': shortcut.description,
+        'icon_url': _get_icon_url(shortcut.icon),
+        'clients': copy.deepcopy(shortcut.clients),
     }
-    if module_name == 'ikiwiki':
+    # XXX: Fix the hardcoding
+    if shortcut.name.startswith('shortcut-ikiwiki-'):
         shortcut_data['clients'][0]['platforms'][0]['url'] += '/{}'.format(
             shortcut['name'])
     return shortcut_data

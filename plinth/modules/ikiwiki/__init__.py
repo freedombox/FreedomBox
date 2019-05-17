@@ -78,6 +78,24 @@ class IkiwikiApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        sites = actions.run('ikiwiki', ['get-sites']).split('\n')
+        sites = [name for name in sites if name != '']
+        for site in sites:
+            self.add_shortcut(site)
+
+    def add_shortcut(self, site):
+        """Add an ikiwiki shortcut to frontpage."""
+        shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, site,
+                                      icon='ikiwiki', url='/ikiwiki/' + site,
+                                      clients=clients)
+        self.add(shortcut)
+        return shortcut
+
+    def remove_shortcut(self, site):
+        """Remove an ikiwiki shortcut from frontpage."""
+        component = self.remove('shortcut-ikiwiki-' + site)
+        component.remove()  # Remove from global list.
+
 
 def init():
     """Initialize the ikiwiki module."""
@@ -92,7 +110,6 @@ def init():
             'ikiwiki', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
-            add_shortcuts()
             app.set_enabled(True)
 
 
@@ -106,17 +123,7 @@ def setup(helper, old_version=None):
             'ikiwiki', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcuts)
     helper.call('post', app.enable)
-
-
-def add_shortcuts():
-    sites = actions.run('ikiwiki', ['get-sites']).split('\n')
-    sites = [name for name in sites if name != '']
-    for site in sites:
-        frontpage.add_shortcut('ikiwiki_' + site, site, url='/ikiwiki/' + site,
-                               login_required=False, icon='ikiwiki',
-                               allowed_groups=[group[0]])
 
 
 def is_enabled():
@@ -127,14 +134,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['enable'])
-    add_shortcuts()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['disable'])
-    frontpage.remove_shortcut('ikiwiki*')
     app.disable()
 
 

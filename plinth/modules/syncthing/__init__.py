@@ -79,6 +79,12 @@ class SyncthingApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-syncthing', name, short_description=short_description,
+            icon='syncthing', url='/syncthing/', clients=clients,
+            login_required=True, allowed_groups=[group[0]])
+        self.add(shortcut)
+
 
 def init():
     """Intialize the module."""
@@ -96,7 +102,6 @@ def init():
                                          is_running=is_running)
 
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -112,15 +117,7 @@ def setup(helper, old_version=None):
                                          disable=disable,
                                          is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut(
-        'syncthing', name, short_description=short_description,
-        url='/syncthing/', login_required=True, allowed_groups=[group[0]])
 
 
 def is_running():
@@ -137,14 +134,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('syncthing', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('syncthing', ['disable'])
-    frontpage.remove_shortcut('syncthing')
     app.disable()
 
 

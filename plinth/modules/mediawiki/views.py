@@ -26,7 +26,7 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.modules import mediawiki
 
-from . import (add_shortcut, is_enabled, is_private_mode_enabled,
+from . import (is_enabled, is_private_mode_enabled,
                is_public_registration_enabled)
 from .forms import MediaWikiForm
 
@@ -110,6 +110,8 @@ class MediaWikiServiceView(views.ServiceView):
             else:
                 actions.superuser_run('mediawiki', ['private-mode', 'disable'])
                 messages.success(self.request, _('Private mode disabled'))
-            if is_enabled():
-                add_shortcut()
+
+            mediawiki.app.get('shortcut-mediawiki').login_required = \
+                new_config['enable_private_mode']
+
         return super().form_valid(form)

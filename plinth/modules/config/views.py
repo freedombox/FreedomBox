@@ -24,7 +24,7 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
-from plinth import actions, frontpage
+from plinth import actions
 from plinth.modules import config, firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import (domain_added, domain_removed, domainname_change,
@@ -75,8 +75,8 @@ def _apply_changes(request, old_status, new_status):
         except Exception as exception:
             messages.error(
                 request,
-                _('Error setting hostname: {exception}')
-                .format(exception=exception))
+                _('Error setting hostname: {exception}').format(
+                    exception=exception))
         else:
             messages.success(request, _('Hostname set'))
 
@@ -86,37 +86,21 @@ def _apply_changes(request, old_status, new_status):
         except Exception as exception:
             messages.error(
                 request,
-                _('Error setting domain name: {exception}')
-                .format(exception=exception))
+                _('Error setting domain name: {exception}').format(
+                    exception=exception))
         else:
             messages.success(request, _('Domain name set'))
 
     if old_status['homepage'] != new_status['homepage']:
         try:
-            change_home_page(new_status['homepage'])
+            config.change_home_page(new_status['homepage'])
         except Exception as exception:
             messages.error(
                 request,
-                _('Error setting webserver home page: {exception}')
-                .format(exception=exception))
+                _('Error setting webserver home page: {exception}').format(
+                    exception=exception))
         else:
             messages.success(request, _('Webserver home page set'))
-
-
-def change_home_page(app_id):
-    """Changes the FreedomBox's default app to the app specified by app_id."""
-    if app_id == 'plinth':
-        url = '/plinth'
-    elif app_id == 'apache-default':
-        url = '/index.html'
-    else:
-        shortcuts = frontpage.get_shortcuts()
-        url = [
-            shortcut['url'] for shortcut in shortcuts
-            if shortcut['id'] == app_id
-        ][0]
-
-    actions.superuser_run('config', ['set-home-page', url.strip('/')])
 
 
 def set_hostname(hostname):

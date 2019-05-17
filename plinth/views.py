@@ -44,14 +44,15 @@ REDIRECT_FIELD_NAME = 'next'
 def index(request):
     """Serve the main index page."""
     username = str(request.user) if request.user.is_authenticated else None
-    shortcuts = frontpage.get_shortcuts(username)
-    selection = request.GET.get('selected')
+    shortcuts = frontpage.Shortcut.list(username)
+    selected = request.GET.get('selected')
 
-    details, details_label, configure_url = None, None, None
-    if selection in frontpage.shortcuts:
-        details = frontpage.shortcuts[selection]['details']
-        details_label = frontpage.shortcuts[selection]['label']
-        configure_url = frontpage.shortcuts[selection]['configure_url']
+    selected_shortcut = [
+        shortcut
+        for shortcut in shortcuts
+        if shortcut.component_id == selected
+    ]
+    selected_shortcut = selected_shortcut[0] if selected_shortcut else None
 
     disk_views.warn_about_low_disk_space(request)
 
@@ -59,10 +60,7 @@ def index(request):
         request, 'index.html', {
             'title': _('FreedomBox'),
             'shortcuts': shortcuts,
-            'selected_id': selection,
-            'details': details,
-            'details_label': details_label,
-            'configure_url': configure_url
+            'selected_shortcut': selected_shortcut,
         })
 
 

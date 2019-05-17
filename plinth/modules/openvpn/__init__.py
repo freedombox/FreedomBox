@@ -70,6 +70,16 @@ class OpenVPNApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        download_profile = \
+            format_lazy(_('<a class="btn btn-primary btn-sm" href="{link}">'
+                          'Download Profile</a>'),
+                        link=reverse_lazy('openvpn:profile'))
+        shortcut = frontpage.Shortcut(
+            'shortcut-openvpn', name, short_description=short_description,
+            icon='openvpn', description=description + [download_profile],
+            configure_url=reverse_lazy('openvpn:index'), login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Initialize the OpenVPN module."""
@@ -83,7 +93,6 @@ def init():
                                          ports=['openvpn'], is_external=True)
 
         if service.is_enabled() and is_setup():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -98,20 +107,7 @@ def setup(helper, old_version=None):
                                          enable=enable, disable=disable)
 
     if service.is_enabled() and is_setup():
-        add_shortcut()
         helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Add shortcut in frontpage."""
-    download_profile = \
-        format_lazy(_('<a class="btn btn-primary btn-sm" href="{link}">'
-                      'Download Profile</a>'),
-                    link=reverse_lazy('openvpn:profile'))
-    frontpage.add_shortcut(
-        'openvpn', name, short_description=short_description,
-        details=description + [download_profile],
-        configure_url=reverse_lazy('openvpn:index'), login_required=True)
 
 
 def is_setup():
@@ -122,14 +118,12 @@ def is_setup():
 def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
-    frontpage.remove_shortcut('openvpn')
     app.disable()
 
 

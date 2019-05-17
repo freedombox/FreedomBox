@@ -73,6 +73,12 @@ class MumbleApp(app_module.App):
                               'mumble:index', parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-mumble', name, short_description=short_description,
+            icon='mumble', description=description,
+            configure_url=reverse_lazy('mumble:index'), clients=clients)
+        self.add(shortcut)
+
 
 def init():
     """Intialize the Mumble module."""
@@ -87,7 +93,6 @@ def init():
         ], is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -109,28 +114,18 @@ def setup(helper, old_version=None):
             'mumble-plinth'
         ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut('mumble', name, short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('mumble:index'),
-                           login_required=False)
 
 
 def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
-    frontpage.remove_shortcut('mumble')
     app.disable()
 
 

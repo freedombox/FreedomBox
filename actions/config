@@ -53,7 +53,7 @@ def subcommand_set_home_page(arguments):
     conf_file_path = os.path.join('/etc/apache2/conf-available',
                                   APACHE_HOMEPAGE_CONF_FILE_NAME)
 
-    redirect_rule = 'RedirectMatch "^/$" "/{}"\n'.format(arguments.homepage)
+    redirect_rule = 'RedirectMatch "^/$" "{}"\n'.format(arguments.homepage)
 
     with open(conf_file_path, 'w') as conf_file:
         conf_file.write(redirect_rule)

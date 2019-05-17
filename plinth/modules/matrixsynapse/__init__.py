@@ -83,6 +83,14 @@ class MatrixSynapseApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-matrixsynapse', name,
+            short_description=short_description, icon='matrixsynapse',
+            description=description,
+            configure_url=reverse_lazy('matrixsynapse:index'), clients=clients,
+            login_required=True)
+        self.add(shortcut)
+
 
 def init():
     """Initialize the matrix-synapse module."""
@@ -97,7 +105,6 @@ def init():
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -114,16 +121,7 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'matrixsynapse',
                 ['post-install'])
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    """Add a shortcut to the frontpage."""
-    frontpage.add_shortcut('matrixsynapse', name, details=description,
-                           short_description=short_description,
-                           configure_url=reverse_lazy('matrixsynapse:index'),
-                           login_required=True)
 
 
 def is_setup():
@@ -139,14 +137,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('matrixsynapse', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('matrixsynapse', ['disable'])
-    frontpage.remove_shortcut('matrixsynapse')
     app.disable()
 
 

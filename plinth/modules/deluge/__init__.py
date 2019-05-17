@@ -69,6 +69,12 @@ class DelugeApp(app_module.App):
                               'deluge:index', parent_url_name='apps')
         self.add(menu_item)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-deluge', name, short_description=short_description,
+            url='/deluge', icon='deluge', clients=clients, login_required=True,
+            allowed_groups=[group[0]])
+        self.add(shortcut)
+
 
 def init():
     """Initialize the Deluge module."""
@@ -84,7 +90,6 @@ def init():
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
         if is_enabled():
-            add_shortcut()
             app.set_enabled(True)
 
 
@@ -99,13 +104,7 @@ def setup(helper, old_version=None):
         ], is_external=True, is_enabled=is_enabled, enable=enable,
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
     helper.call('post', app.enable)
-
-
-def add_shortcut():
-    frontpage.add_shortcut('deluge', name, short_description, url='/deluge',
-                           login_required=True, allowed_groups=[group[0]])
 
 
 def is_enabled():
@@ -117,14 +116,12 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('deluge', ['enable'])
-    add_shortcut()
     app.enable()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('deluge', ['disable'])
-    frontpage.remove_shortcut('deluge')
     app.disable()
 
 
