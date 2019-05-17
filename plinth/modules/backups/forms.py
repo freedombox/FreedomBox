@@ -157,6 +157,7 @@ class AddRepositoryForm(forms.Form):
         dir_path = dir_path.replace('~', f'/home/{username}')
         password = credentials['ssh_password']
         ssh_client = paramiko.SSHClient()
+        # TODO Prompt to accept fingerprint of the server
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
             ssh_client.connect(hostname, username=username, password=password)
@@ -164,23 +165,27 @@ class AddRepositoryForm(forms.Form):
             msg = _('Accessing the remote repository failed. Details: %(err)s')
             raise forms.ValidationError(msg, params={'err': str(err)})
         else:
-            with ssh_client.open_sftp() as sftp_client:
-                try:
-                    dir_contents = sftp_client.listdir(dir_path)
-                except FileNotFoundError:
-                    logger.info(
-                        _(f"Directory {dir_path} doesn't exist. Creating ..."))
-                    sftp_client.mkdir(dir_path)
-                else:
-                    if dir_contents:
-                        try:
-                            self.repository = SshBorgRepository(
-                                path=path, credentials=credentials)
-                            self.repository.get_info()
-                        except BorgRepositoryDoesNotExistError:
-                            msg = _(f'Directory {path.split(":")[-1]} is '
-                                    'neither empty nor is an existing '
-                                    'backups repository.')
-                            raise forms.ValidationError(msg)
+            sftp_client = ssh_client.open_sftp()
+            try:
+                dir_contents = sftp_client.listdir(dir_path)
+            except FileNotFoundError:
+                logger.info(
+                    _(f"Directory {dir_path} doesn't exist. Creating ..."))
+                sftp_client.mkdir(dir_path)
+                self.repository = SshBorgRepository(path=path,
+                                                    credentials=credentials)
+            else:
+                if dir_contents:
+                    try:
+                        self.repository = SshBorgRepository(
+                            path=path, credentials=credentials)
+                        self.repository.get_info()
+                    except BorgRepositoryDoesNotExistError:
+                        msg = _(f'Directory {path.split(":")[-1]} is '
+                                'neither empty nor is an existing '
+                                'backups repository.')
+                        raise forms.ValidationError(msg)
+            finally:
+                sftp_client.close()
         finally:
             ssh_client.close()
