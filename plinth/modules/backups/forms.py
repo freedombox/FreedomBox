@@ -126,7 +126,13 @@ class AddRepositoryForm(forms.Form):
 
         return credentials
 
-    def clean(self):
+    def _check_if_duplicate_remote(self, path):
+        for storage in network_storage.get_storages().values():
+            if storage['path'] == path:
+                raise forms.ValidationError(
+                    _('Remote backup repository already exists.'))
+
+    def _validate_remote_repository(self, path, credentials):
         """
         Validation of SSH remote
 
@@ -135,23 +141,6 @@ class AddRepositoryForm(forms.Form):
             - if not empty, check if it's an existing backup repository
             - else throw an error
         """
-        cleaned_data = super(AddRepositoryForm, self).clean()
-        passphrase = cleaned_data.get("encryption_passphrase")
-        confirm_passphrase = cleaned_data.get("confirm_encryption_passphrase")
-
-        if passphrase != confirm_passphrase:
-            raise forms.ValidationError(
-                _("The entered encryption passphrases do not match"))
-
-        path = cleaned_data.get("repository")
-        credentials = self.get_credentials()
-
-        # Avoid creation of duplicate ssh remotes
-        for storage in network_storage.get_storages().values():
-            if storage['path'] == path:
-                raise forms.ValidationError(
-                    _('Remote backup repository already exists.'))
-
         user_at_host, dir_path = path.split(':')
         username, hostname = user_at_host.split('@')
         dir_path = dir_path.replace('~', f'/home/{username}')
@@ -189,3 +178,20 @@ class AddRepositoryForm(forms.Form):
                 sftp_client.close()
         finally:
             ssh_client.close()
+
+    def clean(self):
+        cleaned_data = super(AddRepositoryForm, self).clean()
+        passphrase = cleaned_data.get("encryption_passphrase")
+        confirm_passphrase = cleaned_data.get("confirm_encryption_passphrase")
+
+        if passphrase != confirm_passphrase:
+            raise forms.ValidationError(
+                _("The entered encryption passphrases do not match"))
+
+        path = cleaned_data.get("repository")
+        credentials = self.get_credentials()
+
+        # Avoid creation of duplicate ssh remotes
+        self._check_if_duplicate_remote(path)
+
+        self._validate_remote_repository(path, credentials)
