@@ -20,11 +20,7 @@ Framework for working with servers and their services.
 
 import collections
 
-from django.utils.translation import ugettext_lazy as _
-
-from plinth import action_utils, actions, cfg
-from plinth.signals import service_enabled
-from plinth.utils import format_lazy
+from plinth import action_utils, actions
 
 services = {}
 
@@ -32,8 +28,7 @@ services = {}
 class Service():
     """
     Representation of an application service provided by the machine
-    containing information such as current status and ports required
-    for operation.
+    containing information such as current status.
 
     - service_id: unique service name. If possible this should be the name of
                   the service's systemd unit file (without the extension).
@@ -44,18 +39,13 @@ class Service():
     - is_running (optional): Boolean or a method returning Boolean
     """
 
-    def __init__(self, service_id, name, ports=None, is_external=False,
-                 is_enabled=None, enable=None, disable=None, is_running=None):
-        if ports is None:
-            ports = []
-
+    def __init__(self, service_id, name, is_enabled=None, enable=None,
+                 disable=None, is_running=None):
         if is_enabled is None:
             is_enabled = self._default_is_enabled
 
         self.service_id = service_id
         self.name = name
-        self.ports = ports
-        self.is_external = is_external
         self._is_enabled = is_enabled
         self._enable = enable
         self._disable = disable
@@ -65,32 +55,17 @@ class Service():
         assert service_id not in services
         services[service_id] = self
 
-    @property
-    def ports_details(self):
-        """Retrieve details of ports associated with service."""
-        from plinth.modules import firewall
-        ports_details = []
-        for port in self.ports:
-            ports_details.append({
-                'name': port,
-                'details': firewall.get_port_details(port),
-            })
-
-        return ports_details
-
     def enable(self):
         if self._enable is None:
             actions.superuser_run('service', ['enable', self.service_id])
         else:
             self._call_or_return(self._enable)
-        self.notify_enabled(None, True)
 
     def disable(self):
         if self._disable is None:
             actions.superuser_run('service', ['disable', self.service_id])
         else:
             self._call_or_return(self._disable)
-        self.notify_enabled(None, False)
 
     def is_enabled(self):
         """Return whether the service is enabled."""
@@ -104,11 +79,6 @@ class Service():
             return action_utils.service_is_running(self.service_id)
 
         return self._call_or_return(self._is_running)
-
-    def notify_enabled(self, sender, enabled):
-        """Notify observers about change in state of service."""
-        service_enabled.send_robust(sender=sender, service_id=self.service_id,
-                                    enabled=enabled)
 
     @staticmethod
     def _call_or_return(obj):
@@ -131,16 +101,3 @@ class Service():
         """Returns a list of interfaces in a firewall zone."""
         from plinth.modules import firewall
         return firewall.get_interfaces('internal')
-
-
-def init():
-    """Register some misc. services that don't fit elsewhere."""
-    Service('http', _('Web Server'), ports=['http'], is_external=True,
-            is_enabled=True)
-    Service('https', _('Web Server over Secure Socket Layer'), ports=['https'],
-            is_external=True, is_enabled=True)
-    Service(
-        'plinth',
-        format_lazy(
-            _('{box_name} Web Interface (Plinth)'), box_name=_(cfg.box_name)),
-        ports=['https'], is_external=True, is_enabled=True)

@@ -18,7 +18,13 @@
 FreedomBox app for Apache server.
 """
 
+from django.utils.translation import ugettext_lazy as _
+
 from plinth import actions
+from plinth import app as app_module
+from plinth import cfg
+from plinth.modules.firewall.components import Firewall
+from plinth.utils import format_lazy
 
 version = 7
 
@@ -26,9 +32,38 @@ is_essential = True
 
 managed_packages = ['apache2', 'php-fpm']
 
+app = None
+
+
+class ApacheApp(app_module.App):
+    """FreedomBox app for Apache web server."""
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+
+        web_server_ports = Firewall('firewall-web', _('Web Server'),
+                                    ports=['http', 'https'], is_external=True)
+        self.add(web_server_ports)
+
+        freedombox_ports = Firewall(
+            'firewall-plinth',
+            format_lazy(
+                _('{box_name} Web Interface (Plinth)'), box_name=_(
+                    cfg.box_name)), ports=['http', 'https'], is_external=True)
+        self.add(freedombox_ports)
+
+
+def init():
+    """Initailze firewall module"""
+    global app
+    app = ApacheApp()
+    app.set_enabled(True)
+
 
 def setup(helper, old_version=None):
     """Configure the module."""
     helper.install(managed_packages)
-    actions.superuser_run('apache',
-                          ['setup', '--old-version', str(old_version)])
+    actions.superuser_run(
+        'apache',
+        ['setup', '--old-version', str(old_version)])

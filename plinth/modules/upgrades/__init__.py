@@ -64,7 +64,7 @@ def init():
     app.set_enabled(True)
 
     global service
-    service = service_module.Service('auto-upgrades', name, is_external=False,
+    service = service_module.Service('auto-upgrades', name,
                                      is_enabled=is_enabled, enable=enable,
                                      disable=disable)
 

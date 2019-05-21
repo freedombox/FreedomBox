@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
@@ -83,6 +84,10 @@ class IkiwikiApp(app_module.App):
         for site in sites:
             self.add_shortcut(site)
 
+        firewall = Firewall('firewall-ikiwiki', name, ports=['http', 'https'],
+                            is_external=True)
+        self.add(firewall)
+
     def add_shortcut(self, site):
         """Add an ikiwiki shortcut to frontpage."""
         shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, site,
@@ -106,9 +111,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'ikiwiki', name, ports=['http', 'https'], is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
+        service = service_module.Service('ikiwiki', name,
+                                         is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
         if is_enabled():
             app.set_enabled(True)
 
@@ -119,10 +124,9 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            'ikiwiki', name, ports=['http', 'https'], is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
+        service = service_module.Service('ikiwiki', name,
+                                         is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', app.enable)
 
 

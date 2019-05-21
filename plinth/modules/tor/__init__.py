@@ -26,6 +26,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
@@ -75,6 +76,15 @@ class TorApp(app_module.App):
                               'tor:index', parent_url_name='apps')
         self.add(menu_item)
 
+        firewall = Firewall('firewall-tor-socks', _('Tor Socks Proxy'),
+                            ports=['tor-socks'], is_external=False)
+        self.add(firewall)
+
+        firewall = Firewall('firewall-tor-relay', _('Tor Bridge Relay'),
+                            ports=['tor-orport', 'tor-obfs3',
+                                   'tor-obfs4'], is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Initialize the module."""
@@ -90,15 +100,14 @@ def init():
 
         global socks_service
         socks_service = service_module.Service(
-            'tor-socks', _('Tor Socks Proxy'), ports=['tor-socks'],
-            is_external=False, is_enabled=utils.is_enabled,
+            'tor-socks', _('Tor Socks Proxy'), is_enabled=utils.is_enabled,
             is_running=utils.is_running)
 
         global bridge_service
-        bridge_service = service_module.Service(
-            'tor-bridge', _('Tor Bridge Relay'),
-            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'], is_external=True,
-            is_enabled=utils.is_enabled, is_running=utils.is_running)
+        bridge_service = service_module.Service('tor-bridge',
+                                                _('Tor Bridge Relay'),
+                                                is_enabled=utils.is_enabled,
+                                                is_running=utils.is_running)
 
         # Register hidden service name with Name Services module.
         status = utils.get_status()
@@ -132,23 +141,17 @@ def setup(helper, old_version=None):
 
     global socks_service
     if socks_service is None:
-        socks_service = service_module.Service(
-            'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
-            is_external=False, is_enabled=utils.is_enabled,
-            is_running=utils.is_running)
-
-    if not old_version:
-        helper.call('post', socks_service.notify_enabled, None, True)
+        socks_service = service_module.Service('tor-socks',
+                                               _('Tor Anonymity Network'),
+                                               is_enabled=utils.is_enabled,
+                                               is_running=utils.is_running)
 
     global bridge_service
     if bridge_service is None:
-        bridge_service = service_module.Service(
-            'tor-bridge', _('Tor Bridge Relay'),
-            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'], is_external=True,
-            is_enabled=utils.is_enabled, is_running=utils.is_running)
-
-    if not old_version:
-        helper.call('post', bridge_service.notify_enabled, None, True)
+        bridge_service = service_module.Service('tor-bridge',
+                                                _('Tor Bridge Relay'),
+                                                is_enabled=utils.is_enabled,
+                                                is_running=utils.is_running)
 
     helper.call('post', update_hidden_service_domain)
     helper.call('post', app.enable)

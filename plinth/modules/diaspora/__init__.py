@@ -24,6 +24,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
 from plinth.errors import DomainNotRegisteredError
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 domain_name_file = "/etc/diaspora/domain_name"
@@ -92,6 +93,10 @@ class DiasporaApp(app_module.App):
             icon='diaspora', url=None, clients=clients, login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-diaspora', name, ports=['http', 'https'],
+                            is_external=True)
+        self.add(firewall)
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -110,9 +115,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
+        service = service_module.Service(managed_services[0], name,
+                                         is_enabled=is_enabled, enable=enable,
                                          disable=disable)
 
         if is_enabled():
@@ -131,11 +135,9 @@ def setup_domain_name(domain_name):
     actions.superuser_run('diaspora', ['setup', '--domain-name', domain_name])
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
+        service = service_module.Service(managed_services[0], name,
+                                         is_enabled=is_enabled, enable=enable,
                                          disable=disable)
-    service.notify_enabled(None, True)
     app.enable()
 
 

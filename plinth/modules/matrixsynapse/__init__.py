@@ -29,6 +29,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients
 
@@ -91,6 +92,10 @@ class MatrixSynapseApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-matrixsynapse', name,
+                            ports=['matrix-synapse-plinth'], is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Initialize the matrix-synapse module."""
@@ -100,9 +105,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('matrix-synapse', name, ports=[
-            'matrix-synapse-plinth'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
+        service = service_module.Service('matrix-synapse', name,
+                                         is_enabled=is_enabled, enable=enable,
                                          disable=disable)
         if is_enabled():
             app.set_enabled(True)
@@ -113,14 +117,12 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service('matrix-synapse', name, ports=[
-            'matrix-synapse-plinth'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
+        service = service_module.Service('matrix-synapse', name,
+                                         is_enabled=is_enabled, enable=enable,
                                          disable=disable)
 
     helper.call('post', actions.superuser_run, 'matrixsynapse',
                 ['post-install'])
-    helper.call('post', service.notify_enabled, None, True)
     helper.call('post', app.enable)
 
 

@@ -22,8 +22,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.views import ServiceView
 
 from .manifest import backup
@@ -62,6 +63,10 @@ class SSHApp(app_module.App):
                               'ssh:index', parent_url_name='system')
         self.add(menu_item)
 
+        firewall = Firewall('firewall-ssh', name, ports=['ssh'],
+                            is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Intialize the ssh module."""
@@ -70,8 +75,7 @@ def init():
     app.set_enabled(True)
 
     global service
-    service = service_module.Service(managed_services[0], name, ports=['ssh'],
-                                     is_external=True)
+    service = service_module.Service(managed_services[0], name)
 
 
 def setup(helper, old_version=None):

@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.views import ServiceView
 
 from .manifest import backup, clients
@@ -79,6 +80,10 @@ class MumbleApp(app_module.App):
             configure_url=reverse_lazy('mumble:index'), clients=clients)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-mumble', name, ports=['mumble-plinth'],
+                            is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Intialize the Mumble module."""
@@ -88,9 +93,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'mumble-plinth'
-        ], is_external=True, enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name,
+                                         enable=enable, disable=disable)
 
         if service.is_enabled():
             app.set_enabled(True)
@@ -110,10 +114,8 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'mumble-plinth'
-        ], is_external=True, enable=enable, disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
+        service = service_module.Service(managed_services[0], name,
+                                         enable=enable, disable=disable)
     helper.call('post', app.enable)
 
 

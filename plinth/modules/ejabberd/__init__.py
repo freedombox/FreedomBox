@@ -28,6 +28,7 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
 from plinth.modules import config
+from plinth.modules.firewall.components import Firewall
 from plinth.signals import (domainname_change, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
@@ -94,6 +95,11 @@ class EjabberdApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-ejabberd', name,
+                            ports=['xmpp-client', 'xmpp-server',
+                                   'xmpp-bosh'], is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Initialize the ejabberd module"""
@@ -103,11 +109,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'ejabberd', name,
-            ports=['xmpp-client', 'xmpp-server',
-                   'xmpp-bosh'], is_external=True, is_enabled=is_enabled,
-            enable=enable, disable=disable)
+        service = service_module.Service('ejabberd', name,
+                                         is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
         if is_enabled():
             app.set_enabled(True)
 
@@ -127,12 +131,9 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            'ejabberd', name,
-            ports=['xmpp-client', 'xmpp-server',
-                   'xmpp-bosh'], is_external=True, is_enabled=is_enabled,
-            enable=enable, disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
+        service = service_module.Service('ejabberd', name,
+                                         is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', app.enable)
 
 

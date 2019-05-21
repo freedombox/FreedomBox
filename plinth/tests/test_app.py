@@ -153,6 +153,15 @@ def test_follower_component_initialization():
     assert component.is_enabled()
 
 
+def test_follower_component_set_enabled():
+    """Test setting internal enabled state a follower component."""
+    component = FollowerComponent('test-follower-1', False)
+    component.set_enabled(True)
+    assert component.is_enabled()
+    component.set_enabled(False)
+    assert not component.is_enabled()
+
+
 def test_follower_component_enable():
     """Test enabling a follower component."""
     component = FollowerComponent('test-follower-1', False)

@@ -23,6 +23,8 @@ from django.template.response import TemplateResponse
 import plinth.service as service_module
 from plinth.modules import firewall
 
+from . import components
+
 
 def index(request):
     """Serve introduction page"""
@@ -34,15 +36,15 @@ def index(request):
                 'firewall_status': 'not_running'
             })
 
-    internal_enabled_services = firewall.get_enabled_services(zone='internal')
-    external_enabled_services = firewall.get_enabled_services(zone='external')
+    internal_enabled_ports = firewall.get_enabled_services(zone='internal')
+    external_enabled_ports = firewall.get_enabled_services(zone='external')
 
     return TemplateResponse(
         request, 'firewall.html', {
             'title': firewall.name,
             'description': firewall.description,
-            'services': list(service_module.services.values()),
+            'components': components.Firewall.list(),
             'manual_page': firewall.manual_page,
-            'internal_enabled_services': internal_enabled_services,
-            'external_enabled_services': external_enabled_services
+            'internal_enabled_ports': internal_enabled_ports,
+            'external_enabled_ports': external_enabled_ports
         })

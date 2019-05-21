@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .manifest import backup
@@ -80,6 +81,10 @@ class OpenVPNApp(app_module.App):
             configure_url=reverse_lazy('openvpn:index'), login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-openvpn', name, ports=['openvpn'],
+                            is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Initialize the OpenVPN module."""
@@ -89,8 +94,7 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         ports=['openvpn'], is_external=True)
+        service = service_module.Service(managed_services[0], name)
 
         if service.is_enabled() and is_setup():
             app.set_enabled(True)
@@ -103,7 +107,6 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name,
-                                         ports=['openvpn'], is_external=True,
                                          enable=enable, disable=disable)
 
     if service.is_enabled() and is_setup():

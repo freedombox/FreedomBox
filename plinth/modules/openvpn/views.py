@@ -70,8 +70,6 @@ def index(request):
 @require_POST
 def setup(request):
     """Start the setup process."""
-    openvpn.service.notify_enabled(None, True)
-
     global setup_process
     if not openvpn.is_setup() and not setup_process:
         setup_process = actions.superuser_run('openvpn', ['setup'],

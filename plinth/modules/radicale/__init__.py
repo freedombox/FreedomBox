@@ -30,6 +30,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients
@@ -90,6 +91,10 @@ class RadicaleApp(app_module.App):
                                       clients=clients, login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-radicale', name,
+                            ports=['http', 'https'], is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Initialize the radicale module."""
@@ -99,11 +104,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
 
         if is_enabled():
             app.set_enabled(True)
@@ -137,12 +140,9 @@ def setup(helper, old_version=None):
 
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
-    helper.call('post', service.notify_enabled, None, True)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
     helper.call('post', app.enable)
 
 

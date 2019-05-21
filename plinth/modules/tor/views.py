@@ -160,8 +160,6 @@ def _collect_config_result(request):
 
     status = tor_utils.get_status()
 
-    tor.socks_service.notify_enabled(None, status['enabled'])
-    tor.bridge_service.notify_enabled(None, status['enabled'])
     tor.update_hidden_service_domain(status)
 
     if not return_code:

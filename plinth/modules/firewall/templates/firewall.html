@@ -46,19 +46,19 @@
       </thead>
 
       <tbody>
-        {% for service in services|dictsort:"name" %}
-          {% if service.ports %}
+        {% for component in components|dictsort:"name" %}
+          {% if component.ports %}
             <tr>
               <td>
                 <center>
                   <button data-toggle="collapse"
-                          data-target=".{{service.service_id}}"
+                          data-target=".{{component.component_id}}"
                           class="btn btn-info btn-xs">+</button>
                 </center>
               </td>
-              <td><strong>{{ service.name }}</strong></td>
+              <td><strong>{{ component.name }}</strong></td>
               <td>
-                {% if service.is_enabled %}
+                {% if component.is_enabled %}
                   <span class='label label-success'>
                     {% trans "Enabled" %}</span>
                 {% else %}
@@ -67,19 +67,19 @@
                 {% endif %}
               </td>
             </tr>
-            {% for port in service.ports_details %}
-              <tr class="collapse out {{service.service_id}}"
+            {% for port in component.ports_details %}
+              <tr class="collapse out {{component.component_id}}"
                   style="background-color: #f9f9f9" >
                 <td></td>
                 <td class='cell-indented'><em>{{ port.name }}</em> ({{ port.details }})</td>
                 <td>
-                  {% if port.name in internal_enabled_services and port.name in external_enabled_services %}
+                  {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
                     <span class='label label-success'>
                       {% trans "Permitted" %}</span>
-                  {% elif port.name in internal_enabled_services %}
+                  {% elif port.name in internal_enabled_ports %}
                     <span class='label label-warning'>
                       {% trans "Permitted (internal only)" %}</span>
-                  {% elif port.name in external_enabled_services %}
+                  {% elif port.name in external_enabled_ports %}
                     <span class='label label-warning'>
                       {% trans "Permitted (external only)" %}</span>
                   {% else %}

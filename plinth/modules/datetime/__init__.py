@@ -70,18 +70,15 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         is_external=True)
+        service = service_module.Service(managed_services[0], name)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         is_external=True)
+        service = service_module.Service(managed_services[0], name)
     service.enable()
-    helper.call('post', service.notify_enabled, None, True)
     helper.call('post', app.enable)
 
 

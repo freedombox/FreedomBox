@@ -18,15 +18,11 @@
 FreedomBox app to configure a firewall.
 """
 
-import logging
-
 from django.utils.translation import ugettext_lazy as _
 
-import plinth.service as service_module
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth.signals import service_enabled
 from plinth.utils import Version, format_lazy
 
 from .manifest import backup
@@ -49,8 +45,6 @@ description = [
 
 manual_page = 'Firewall'
 
-LOGGER = logging.getLogger(__name__)
-
 _port_details = {}
 
 app = None
@@ -72,8 +66,6 @@ def init():
     global app
     app = FirewallApp()
     app.set_enabled(True)
-
-    service_enabled.connect(on_service_enabled)
 
 
 def setup(helper, old_version=None):
@@ -137,51 +129,6 @@ def add_service(port, zone):
 def remove_service(port, zone):
     """Remove a service in firewall"""
     _run(['remove-service', port, '--zone', zone], superuser=True)
-
-
-def on_service_enabled(sender, service_id, enabled, **kwargs):
-    """
-    Enable/disable firewall ports when a service is
-    enabled/disabled.
-    """
-    del sender  # Unused
-    del kwargs  # Unused
-
-    internal_enabled_services = get_enabled_services(zone='internal')
-    external_enabled_services = get_enabled_services(zone='external')
-
-    LOGGER.info('Service enabled - %s, %s', service_id, enabled)
-    service = service_module.services[service_id]
-    for port in service.ports:
-        if enabled:
-            if port not in internal_enabled_services:
-                add_service(port, zone='internal')
-
-            if (service.is_external and port not in external_enabled_services):
-                add_service(port, zone='external')
-            else:
-                # service already configured.
-                pass
-        else:
-            if port in internal_enabled_services:
-                enabled_services_on_port = [
-                    service_.is_enabled()
-                    for service_ in service_module.services.values()
-                    if port in service_.ports
-                    and service_id != service_.service_id
-                ]
-                if not any(enabled_services_on_port):
-                    remove_service(port, zone='internal')
-
-            if port in external_enabled_services:
-                enabled_services_on_port = [
-                    service_.is_enabled()
-                    for service_ in service_module.services.values()
-                    if port in service_.ports and
-                    service_id != service_.service_id and service_.is_external
-                ]
-                if not any(enabled_services_on_port):
-                    remove_service(port, zone='external')
 
 
 def _run(arguments, superuser=False):

@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .manifest import clients
@@ -69,6 +70,10 @@ class RestoreApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        firewall = Firewall('firewall-restore', name, ports=['http', 'https'],
+                            is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Initialize the reStore module."""
@@ -78,9 +83,7 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         ports=['http',
-                                                'https'], is_external=False)
+        service = service_module.Service(managed_services[0], name)
 
 
 def setup(helper, old_version=None):
@@ -88,6 +91,4 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         ports=['http',
-                                                'https'], is_external=False)
+        service = service_module.Service(managed_services[0], name)

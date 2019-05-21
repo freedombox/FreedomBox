@@ -24,6 +24,7 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
@@ -69,6 +70,10 @@ class AvahiApp(app_module.App):
                               'avahi:index', parent_url_name='system')
         self.add(menu_item)
 
+        firewall = Firewall('firewall-avahi', name, ports=['mdns'],
+                            is_external=False)
+        self.add(firewall)
+
 
 def init():
     """Intialize the service discovery module."""
@@ -77,8 +82,7 @@ def init():
     app.set_enabled(True)
 
     global service  # pylint: disable=W0603
-    service = service_module.Service(managed_services[0], name, ports=['mdns'],
-                                     is_external=False)
+    service = service_module.Service(managed_services[0], name)
 
 
 def setup(helper, old_version=None):

@@ -24,6 +24,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
 
@@ -57,7 +58,6 @@ clients = clients
 group = ('i2p', _('Manage I2P application'))
 
 service = None
-proxies_service = None
 
 manual_page = 'I2P'
 
@@ -92,6 +92,15 @@ class I2PApp(app_module.App):
             allowed_groups=[group[0]])
         self.add(shortcut)
 
+        firewall = Firewall('firewall-i2p-web', name, ports=['http', 'https'],
+                            is_external=True)
+        self.add(firewall)
+
+        firewall = Firewall('firewall-i2p-proxies', name,
+                            ports=tunnels_to_manage.values(),
+                            is_external=False)
+        self.add(firewall)
+
 
 def init():
     """Intialize the module."""
@@ -99,18 +108,12 @@ def init():
     app = I2PApp()
     register_group(group)
 
-    global service, proxies_service
+    global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
-        proxies_service = service_module.Service(
-            'i2p-proxies', name, ports=tunnels_to_manage.values(),
-            is_external=False, is_enabled=is_enabled, is_running=is_running)
-
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
         if is_enabled():
             app.set_enabled(True)
 
@@ -144,19 +147,12 @@ def setup(helper, old_version=None):
             '--value', '0.0.0.0'
         ])
     helper.call('post', enable)
-    global service, proxies_service
+    global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
-        proxies_service = service_module.Service(
-            'i2p-proxies', name, ports=tunnels_to_manage.values(),
-            is_external=False, is_enabled=is_enabled, is_running=is_running)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
 
-    helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', proxies_service.notify_enabled, None, True)
     helper.call('post', app.enable)
 
 

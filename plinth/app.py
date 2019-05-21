@@ -74,10 +74,7 @@ class App:
         """
         for component in self.components.values():
             if not component.is_leader:
-                if enabled:
-                    component.enable()
-                else:
-                    component.disable()
+                component.set_enabled(enabled)
 
 
 class Component:
@@ -93,10 +90,10 @@ class Component:
         self.component_id = component_id
 
     def enable(self):
-        """Enable the component."""
+        """Run operations to enable the component."""
 
     def disable(self):
-        """Disable the component."""
+        """Run operations to disable the component."""
 
 
 class FollowerComponent(Component):
@@ -117,12 +114,16 @@ class FollowerComponent(Component):
         """Return whether the component is enabled."""
         return self._is_enabled
 
+    def set_enabled(self, enabled):
+        """Update the internal enabled state of the component."""
+        self._is_enabled = enabled
+
     def enable(self):
-        """Enable the component."""
+        """Run operations to enable the component."""
         self._is_enabled = True
 
     def disable(self):
-        """Disable the component."""
+        """Run operations to disable the component."""
         self._is_enabled = False
 
 

@@ -298,10 +298,8 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], name, ports=[], is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable,
-            is_running=is_running)
-    helper.call('post', service.notify_enabled, None, True)
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
     disks = get_disks()
     root_device = get_root_device(disks)
     if is_expandable(root_device):

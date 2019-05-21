@@ -27,6 +27,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .errors import TahoeConfigurationError
@@ -77,6 +78,10 @@ class TahoeApp(app_module.App):
             icon='tahoe-lafs', url=None, login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-tahoe', name, ports=['tahoe-plinth'],
+                            is_external=True)
+        self.add(firewall)
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -123,11 +128,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and is_setup():
-        service = service_module.Service(managed_services[0], name, ports=[
-            'tahoe-plinth'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
 
         if is_enabled():
             app.set_enabled(True)
@@ -151,12 +154,9 @@ def post_setup(configured_domain_name):
 
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'tahoe-plinth'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
-    service.notify_enabled(None, True)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
     app.enable()
 
 

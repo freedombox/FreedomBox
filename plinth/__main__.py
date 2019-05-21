@@ -147,8 +147,6 @@ def main():
 
     log.init()
 
-    service.init()
-
     web_framework.init()
 
     logger.info('FreedomBox Service (Plinth) version - %s', __version__)

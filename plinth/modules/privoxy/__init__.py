@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
@@ -83,6 +84,10 @@ class PrivoxyApp(app_module.App):
             configure_url=reverse_lazy('privoxy:index'), login_required=True)
         self.add(shortcut)
 
+        firewall = Firewall('firewall-privoxy', name, ports=['privoxy'],
+                            is_external=False)
+        self.add(firewall)
+
 
 def init():
     """Intialize the module."""
@@ -93,7 +98,6 @@ def init():
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(managed_services[0], name,
-                                         ports=['privoxy'], is_external=False,
                                          enable=enable, disable=disable)
 
         if service.is_enabled():
@@ -107,9 +111,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name,
-                                         ports=['privoxy'], is_external=False,
                                          enable=enable, disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
     helper.call('post', app.enable)
 
 

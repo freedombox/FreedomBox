@@ -24,6 +24,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
@@ -85,6 +86,10 @@ class SyncthingApp(app_module.App):
             login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
 
+        firewall = Firewall('firewall-syncthing', name,
+                            ports=['http', 'https'], is_external=True)
+        self.add(firewall)
+
 
 def init():
     """Intialize the module."""
@@ -95,11 +100,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
 
         if is_enabled():
             app.set_enabled(True)
@@ -111,12 +114,9 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'syncthing', ['enable'])
     global service
     if service is None:
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
-    helper.call('post', service.notify_enabled, None, True)
+        service = service_module.Service(
+            managed_services[0], name, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
     helper.call('post', app.enable)
 
 

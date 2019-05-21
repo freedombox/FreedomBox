@@ -20,7 +20,6 @@ Django signals emitted within FreedomBox.
 
 from django.dispatch import Signal
 
-service_enabled = Signal(providing_args=['service_id', 'enabled'])
 pre_module_loading = Signal()
 post_module_loading = Signal()
 post_setup = Signal(providing_args=['module_name'])

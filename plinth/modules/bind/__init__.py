@@ -26,6 +26,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth import service as service_module
+from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .manifest import backup
@@ -97,6 +98,10 @@ class BindApp(app_module.App):
                               parent_url_name='system')
         self.add(menu_item)
 
+        firewall = Firewall('firewall-bind', name, ports=['dns'],
+                            is_external=False)
+        self.add(firewall)
+
 
 def init():
     """Intialize the BIND module."""
@@ -106,8 +111,7 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         ports=['dns'], is_external=False)
+        service = service_module.Service(managed_services[0], name)
         app.set_enabled(True)  # XXX: Perform better check
 
 
@@ -117,9 +121,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name,
-                                         ports=['dns'], is_external=True,
                                          enable=enable, disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
     helper.call('post', actions.superuser_run, 'bind', ['setup'])
     helper.call('post', app.enable)
 
