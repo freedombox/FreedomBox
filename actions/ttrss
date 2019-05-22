@@ -15,15 +15,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for Tiny Tiny RSS.
 """
 
 import argparse
-import augeas
 import os
 import subprocess
+
+import augeas
 
 from plinth import action_utils
 
@@ -52,9 +52,8 @@ def parse_arguments():
 
 def subcommand_pre_setup(_):
     """Preseed debconf values before packages are installed."""
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'tt-rss tt-rss/database-type string pgsql')
+    subprocess.check_output(['debconf-set-selections'],
+                            input=b'tt-rss tt-rss/database-type string pgsql')
 
 
 def subcommand_setup(_):
@@ -101,8 +100,8 @@ def enable_api_access():
     database = get_value('dbname')
     host = get_value('dbserver')
 
-    connection = psycopg2.connect(
-        database=database, user=user, password=password, host=host)
+    connection = psycopg2.connect(database=database, user=user,
+                                  password=password, host=host)
     cursor = connection.cursor()
 
     cursor.execute("UPDATE ttrss_prefs SET def_value=true "
@@ -115,13 +114,11 @@ def enable_api_access():
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('tt-rss')
-    action_utils.webserver_enable('tt-rss-plinth')
     enable_api_access()
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('tt-rss-plinth')
     action_utils.service_disable('tt-rss')
 
 
@@ -148,8 +145,8 @@ def _run_as_postgres(command, stdin=None, stdout=None):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.set('/augeas/load/Phpvars/lens', 'Phpvars.lns')

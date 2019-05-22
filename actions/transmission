@@ -50,12 +50,10 @@ def parse_arguments():
 def subcommand_enable(_):
     """Start Transmission service."""
     action_utils.service_enable('transmission-daemon')
-    action_utils.webserver_enable('transmission-plinth')
 
 
 def subcommand_disable(_):
     """Stop Transmission service."""
-    action_utils.webserver_disable('transmission-plinth')
     action_utils.service_disable('transmission-daemon')
 
 

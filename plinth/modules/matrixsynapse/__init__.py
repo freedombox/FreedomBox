@@ -29,6 +29,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients
@@ -96,6 +97,10 @@ class MatrixSynapseApp(app_module.App):
                             ports=['matrix-synapse-plinth'], is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-matrixsynapse',
+                              'matrix-synapse-plinth')
+        self.add(webserver)
+
 
 def init():
     """Initialize the matrix-synapse module."""
@@ -133,7 +138,8 @@ def is_setup():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('matrix-synapse')
+    return (action_utils.service_is_enabled('matrix-synapse')
+            and app.is_enabled())
 
 
 def enable():

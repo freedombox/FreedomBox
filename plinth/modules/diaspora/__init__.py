@@ -24,6 +24,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
 from plinth.errors import DomainNotRegisteredError
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -97,6 +98,9 @@ class DiasporaApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-diaspora', 'diaspora-plinth')
+        self.add(webserver)
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -143,7 +147,7 @@ def setup_domain_name(domain_name):
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.webserver_is_enabled('diaspora-plinth')
+    return app.is_enabled()
 
 
 def enable():

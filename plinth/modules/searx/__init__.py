@@ -26,6 +26,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
@@ -80,11 +81,31 @@ class SearxApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-searx', 'searx-freedombox')
+        self.add(webserver)
+
+        webserver = SearxWebserverAuth('webserver-searx-auth',
+                                       'searx-freedombox-auth')
+        self.add(webserver)
+
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
         shortcut = self.remove('shortcut-searx')
         shortcut.login_required = login_required
         self.add(shortcut)
+
+
+class SearxWebserverAuth(Webserver):
+    """Component to handle Searx authentication webserver configuration."""
+
+    def is_enabled(self):
+        """Return if configuration is enabled or public access is enabled."""
+        return is_public_access_enabled() or super().is_enabled()
+
+    def enable(self):
+        """Enable apache configuration only if public access is disabled."""
+        if not is_public_access_enabled():
+            super().enable()
 
 
 def init():
@@ -136,8 +157,7 @@ def is_public_access_enabled():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.webserver_is_enabled('searx-freedombox')
-            and action_utils.uwsgi_is_enabled('searx'))
+    return (app.is_enabled() and action_utils.uwsgi_is_enabled('searx'))
 
 
 def enable():
@@ -166,10 +186,12 @@ def diagnose():
 def enable_public_access():
     """Allow Searx app to be accessed by anyone with access."""
     actions.superuser_run('searx', ['enable-public-access'])
+    app.get_component('webserver-searx-auth').disable()
     app.set_shortcut_login_required(False)
 
 
 def disable_public_access():
     """Allow Searx app to be accessed by logged-in users only."""
     actions.superuser_run('searx', ['disable-public-access'])
+    app.get_component('webserver-searx-auth').enable()
     app.set_shortcut_login_required(True)

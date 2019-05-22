@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import Version, format_lazy
@@ -88,6 +89,9 @@ class TTRSSApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-ttrss', 'tt-rss-plinth')
+        self.add(webserver)
+
 
 def init():
     """Intialize the module."""
@@ -137,8 +141,7 @@ def force_upgrade(helper, packages):
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('tt-rss')
-            and action_utils.webserver_is_enabled('tt-rss-plinth'))
+    return (action_utils.service_is_enabled('tt-rss') and app.is_enabled())
 
 
 def enable():

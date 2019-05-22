@@ -133,12 +133,9 @@ def subcommand_enable(_):
         action_utils.service_enable('radicale')
         action_utils.service_restart('radicale')
 
-    action_utils.webserver_enable(radicale.get_web_config())
-
 
 def subcommand_disable(_):
     """Stop service."""
-    action_utils.webserver_disable(radicale.get_web_config())
     if radicale.get_package_version() >= radicale.VERSION_2:
         action_utils.uwsgi_disable('radicale')
     else:

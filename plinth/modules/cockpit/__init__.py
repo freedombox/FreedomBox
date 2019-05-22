@@ -26,6 +26,7 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
 from plinth.modules import names
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
@@ -85,6 +86,9 @@ class CockpitApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-cockpit', 'cockpit-freedombox')
+        self.add(webserver)
+
 
 def init():
     """Intialize the module."""
@@ -124,7 +128,7 @@ def setup(helper, old_version=None):
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.webserver_is_enabled('cockpit-freedombox')
+    return (app.is_enabled()
             and action_utils.service_is_running('cockpit.socket'))
 
 

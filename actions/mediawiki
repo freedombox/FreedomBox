@@ -119,14 +119,10 @@ def subcommand_update(_):
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('mediawiki-jobrunner')
-    action_utils.webserver_enable('mediawiki')
-    action_utils.webserver_enable('mediawiki-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('mediawiki')
-    action_utils.webserver_disable('mediawiki-freedombox')
     action_utils.service_disable('mediawiki-jobrunner')
 
 

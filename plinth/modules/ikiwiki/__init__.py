@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
@@ -88,6 +89,9 @@ class IkiwikiApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-ikiwiki', 'ikiwiki-plinth')
+        self.add(webserver)
+
     def add_shortcut(self, site):
         """Add an ikiwiki shortcut to frontpage."""
         shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, site,
@@ -132,18 +136,16 @@ def setup(helper, old_version=None):
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.webserver_is_enabled('ikiwiki-plinth')
+    return app.is_enabled()
 
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('ikiwiki', ['enable'])
     app.enable()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run('ikiwiki', ['disable'])
     app.disable()
 
 

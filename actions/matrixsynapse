@@ -172,12 +172,10 @@ def subcommand_setup(arguments):
 def subcommand_enable(_):
     """Enable service."""
     action_utils.service_enable('matrix-synapse')
-    action_utils.webserver_enable('matrix-synapse-plinth')
 
 
 def subcommand_disable(_):
     """Disable service."""
-    action_utils.webserver_disable('matrix-synapse-plinth')
     action_utils.service_disable('matrix-synapse')
 
 

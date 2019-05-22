@@ -24,6 +24,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients
@@ -83,6 +84,13 @@ class MediaWikiApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-mediawiki', 'mediawiki')
+        self.add(webserver)
+
+        webserver = Webserver('webserver-mediawiki-freedombox',
+                              'mediawiki-freedombox')
+        self.add(webserver)
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut for only logged users when in private mode."""
@@ -124,7 +132,7 @@ def setup(helper, old_version=None):
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.webserver_is_enabled('mediawiki')
+    return app.is_enabled()
 
 
 def enable():

@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.views import ServiceView
 
@@ -93,6 +94,9 @@ class ReproApp(app_module.App):
                             ports=['sip', 'sips',
                                    'rtp-plinth'], is_external=True)
         self.add(firewall)
+
+        webserver = Webserver('webserver-repro', 'repro-plinth')
+        self.add(webserver)
 
 
 def init():

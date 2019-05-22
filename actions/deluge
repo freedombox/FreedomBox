@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for BitTorrent web client.
 """
@@ -25,7 +24,6 @@ import os
 import subprocess
 
 from plinth import action_utils
-
 
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 SYSTEMD_SERVICE = '''
@@ -65,12 +63,10 @@ def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
     setup()
     action_utils.service_enable('deluge-web')
-    action_utils.webserver_enable('deluge-plinth')
 
 
 def subcommand_disable(_):
     """Disable deluge-web site and stop deluge-web."""
-    action_utils.webserver_disable('deluge-plinth')
     action_utils.service_disable('deluge-web')
 
 

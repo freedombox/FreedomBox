@@ -20,8 +20,9 @@ Configuration helper for diaspora* pod.
 """
 
 import argparse
-import augeas
 import subprocess
+
+import augeas
 
 from plinth import action_utils
 from plinth.modules import diaspora
@@ -46,10 +47,10 @@ def parse_arguments():
     subparsers.add_parser('start-diaspora', help='Start diaspora* service')
     subparsers.add_parser(
         'disable-ssl', help="Disable SSL on the diaspora* application server")
-    setup = subparsers.add_parser(
-        'setup', help='Set Domain name for diaspora*')
-    setup.add_argument(
-        '--domain-name', help='The domain name that will be used by diaspora*')
+    setup = subparsers.add_parser('setup',
+                                  help='Set Domain name for diaspora*')
+    setup.add_argument('--domain-name',
+                       help='The domain name that will be used by diaspora*')
 
     return parser.parse_args()
 
@@ -61,7 +62,6 @@ def subcommand_setup(arguments):
         dnf.write(domain_name)
     set_domain_name(domain_name)
     uncomment_user_registrations()
-    action_utils.webserver_enable('diaspora-plinth')
 
 
 def set_domain_name(domain_name):
@@ -71,8 +71,8 @@ def set_domain_name(domain_name):
     #                               {'url': domain_name})
     # Manually changing the domain name in the conf files.
     conf_file = '/etc/diaspora.conf'
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # lens for shell-script config file
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
@@ -151,12 +151,10 @@ def subcommand_pre_install(_):
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('diaspora')
-    action_utils.webserver_enable('diaspora-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('diaspora-plinth')
     action_utils.service_disable('diaspora')
 
 

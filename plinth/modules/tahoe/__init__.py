@@ -27,6 +27,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -81,6 +82,9 @@ class TahoeApp(app_module.App):
         firewall = Firewall('firewall-tahoe', name, ports=['tahoe-plinth'],
                             is_external=True)
         self.add(firewall)
+
+        webserver = Webserver('webserver-tahoe', 'tahoe-plinth')
+        self.add(webserver)
 
 
 class Shortcut(frontpage.Shortcut):
@@ -168,7 +172,7 @@ def is_running():
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled(managed_services[0])
-            and action_utils.webserver_is_enabled('tahoe-plinth'))
+            and app.is_enabled())
 
 
 def enable():

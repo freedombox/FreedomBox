@@ -24,6 +24,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
@@ -101,6 +102,9 @@ class I2PApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
+        webserver = Webserver('webserver-i2p', 'i2p-freedombox')
+        self.add(webserver)
+
 
 def init():
     """Intialize the module."""
@@ -163,8 +167,7 @@ def is_running():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('i2p') and \
-        action_utils.webserver_is_enabled('i2p-freedombox')
+    return action_utils.service_is_enabled('i2p') and app.is_enabled()
 
 
 def enable():

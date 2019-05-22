@@ -24,6 +24,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
@@ -80,6 +81,9 @@ class DelugeApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-deluge', 'deluge-plinth')
+        self.add(webserver)
+
 
 def init():
     """Initialize the Deluge module."""
@@ -111,8 +115,7 @@ def setup(helper, old_version=None):
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.webserver_is_enabled('deluge-plinth')
-            and action_utils.service_is_enabled('deluge-web'))
+    return (app.is_enabled() and action_utils.service_is_enabled('deluge-web'))
 
 
 def enable():

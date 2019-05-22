@@ -57,7 +57,7 @@ class App:
 
     def disable(self):
         """Enable all the components of the app."""
-        for component in self.components.values():
+        for component in reversed(self.components.values()):
             component.disable()
 
     def is_enabled(self):

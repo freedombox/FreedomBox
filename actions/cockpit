@@ -22,6 +22,7 @@ Configuration helper for Cockpit.
 import argparse
 
 import augeas
+
 from plinth import action_utils
 
 CONFIG_FILE = '/etc/cockpit/cockpit.conf'
@@ -63,21 +64,16 @@ def subcommand_setup(arguments):
     aug.set('/files' + CONFIG_FILE + '/WebService/UrlRoot', '/_cockpit/')
     aug.save()
 
-    with action_utils.WebserverChange() as webserver_change:
-        webserver_change.enable('cockpit-freedombox')
-
     action_utils.service_restart('cockpit.socket')
 
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('cockpit.socket')
-    action_utils.webserver_enable('cockpit-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('cockpit-freedombox')
     action_utils.service_disable('cockpit.socket')
 
 

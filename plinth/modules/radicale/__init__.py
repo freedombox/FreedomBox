@@ -30,6 +30,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -91,9 +92,29 @@ class RadicaleApp(app_module.App):
                                       clients=clients, login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-radicale', name,
-                            ports=['http', 'https'], is_external=True)
+        firewall = Firewall('firewall-radicale', name, ports=['http', 'https'],
+                            is_external=True)
         self.add(firewall)
+
+        webserver = RadicaleWebserver('webserver-radicale', None)
+        self.add(webserver)
+
+
+class RadicaleWebserver(Webserver):
+    """Webserver enable/disable behavior specific for radicale."""
+
+    @property
+    def web_name(self):
+        """Return web configuration name based on radicale version."""
+        current_version = get_package_version()
+        if current_version and current_version < VERSION_2:
+            return 'radicale-plinth'
+
+        return 'radicale2-freedombox'
+
+    @web_name.setter
+    def web_name(self, web_name):
+        """Set the web name"""
 
 
 def init():
@@ -158,17 +179,6 @@ def get_package_version():
     return LV(package_version)
 
 
-def get_web_config(current_version=None):
-    """Return the name of the webserver configuration based on version."""
-    if current_version is None:
-        current_version = get_package_version()
-
-    if current_version and current_version < VERSION_2:
-        return 'radicale-plinth'
-
-    return 'radicale2-freedombox'
-
-
 def is_running():
     """Return whether the service is running."""
     if get_package_version() < VERSION_2:
@@ -186,8 +196,7 @@ def is_enabled():
     else:
         daemon_enabled = action_utils.service_is_enabled('radicale')
 
-    return (action_utils.webserver_is_enabled(get_web_config(package_version))
-            and daemon_enabled)
+    return (app.is_enabled() and daemon_enabled)
 
 
 def enable():

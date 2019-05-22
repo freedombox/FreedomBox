@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for ikiwiki
 """
@@ -27,7 +26,6 @@ import subprocess
 import sys
 
 from plinth import action_utils
-
 
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
 SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'
@@ -42,12 +40,6 @@ def parse_arguments():
 
     # Setup ikiwiki site
     subparsers.add_parser('setup', help='Perform first time setup operations')
-
-    # Enable ikiwiki site
-    subparsers.add_parser('enable', help='Enable ikiwiki site')
-
-    # Disable ikiwiki site
-    subparsers.add_parser('disable', help='Disable ikiwiki site')
 
     # Get wikis and blogs
     subparsers.add_parser('get-sites', help='Get wikis and blogs')
@@ -75,16 +67,6 @@ def subcommand_setup(_):
     setup()
 
 
-def subcommand_enable(_):
-    """Enable ikiwiki site."""
-    action_utils.webserver_enable('ikiwiki-plinth')
-
-
-def subcommand_disable(_):
-    """Disable ikiwiki site."""
-    action_utils.webserver_disable('ikiwiki-plinth')
-
-
 def subcommand_get_sites(_):
     """Get wikis and blogs."""
     try:
@@ -97,10 +79,10 @@ def subcommand_get_sites(_):
 def subcommand_create_wiki(arguments):
     """Create a wiki."""
     pw_bytes = sys.stdin.read().encode()
-    proc = subprocess.Popen(
-        ['ikiwiki', '-setup', SETUP_WIKI,
-         arguments.wiki_name, arguments.admin_name],
-        stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen([
+        'ikiwiki', '-setup', SETUP_WIKI, arguments.wiki_name,
+        arguments.admin_name
+    ], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     outs, errs = proc.communicate(input=pw_bytes + b'\n' + pw_bytes)
     print(outs)
     print(errs)
@@ -109,10 +91,10 @@ def subcommand_create_wiki(arguments):
 def subcommand_create_blog(arguments):
     """Create a blog."""
     pw_bytes = sys.stdin.read().encode()
-    proc = subprocess.Popen(
-        ['ikiwiki', '-setup', SETUP_BLOG,
-         arguments.blog_name, arguments.admin_name],
-        stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen([
+        'ikiwiki', '-setup', SETUP_BLOG, arguments.blog_name,
+        arguments.admin_name
+    ], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     outs, errs = proc.communicate(input=pw_bytes + b'\n' + pw_bytes)
     print(outs)
     print(errs)
@@ -138,9 +120,6 @@ def setup():
     """Write Apache configuration and wiki/blog setup scripts."""
     if not os.path.exists(SITE_PATH):
         os.makedirs(SITE_PATH)
-
-    with action_utils.WebserverChange() as webserver_change:
-        webserver_change.enable('ikiwiki-plinth')
 
 
 def main():

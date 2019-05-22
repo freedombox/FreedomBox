@@ -26,6 +26,7 @@ import os
 import sys
 
 import yaml
+
 from plinth import action_utils
 
 SETTINGS_FILE = '/etc/coquelicot/settings.yml'
@@ -72,12 +73,10 @@ def subcommand_setup(_):
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('coquelicot')
-    action_utils.webserver_enable('coquelicot-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('coquelicot-freedombox')
     action_utils.service_disable('coquelicot')
 
 

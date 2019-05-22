@@ -55,10 +55,11 @@ def setup():
     try:
         pwd.getpwnam('syncthing')
     except KeyError:
-        subprocess.run(['adduser', '--system', '--ingroup', 'syncthing',
-                        '--home', '/var/lib/syncthing',
-                        '--gecos', 'Syncthing file synchronization server',
-                        'syncthing'], check=True)
+        subprocess.run([
+            'adduser', '--system', '--ingroup', 'syncthing', '--home',
+            '/var/lib/syncthing', '--gecos',
+            'Syncthing file synchronization server', 'syncthing'
+        ], check=True)
 
     if not os.path.exists(data_dir):
         os.makedirs(data_dir, mode=0o750)
@@ -69,12 +70,10 @@ def subcommand_enable(_):
     """Enable web configuration and reload."""
     setup()
     action_utils.service_enable('syncthing@syncthing')
-    action_utils.webserver_enable('syncthing-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('syncthing-plinth')
     action_utils.service_disable('syncthing@syncthing')
 
 

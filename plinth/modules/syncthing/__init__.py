@@ -24,6 +24,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
@@ -90,6 +91,9 @@ class SyncthingApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
+        webserver = Webserver('webserver-syncthing', 'syncthing-plinth')
+        self.add(webserver)
+
 
 def init():
     """Intialize the module."""
@@ -128,7 +132,7 @@ def is_running():
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('syncthing@syncthing')
-            and action_utils.webserver_is_enabled('syncthing-plinth'))
+            and app.is_enabled())
 
 
 def enable():

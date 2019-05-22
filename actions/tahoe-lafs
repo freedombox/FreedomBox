@@ -117,8 +117,8 @@ def subcommand_setup(arguments):
 def subcommand_autostart(_):
     """Automatically start all introducers and storage nodes on system startup.
     """
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.load()
@@ -227,12 +227,10 @@ def subcommand_get_local_introducer(_):
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('tahoe-lafs')
-    action_utils.webserver_enable('tahoe-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('tahoe-plinth')
     action_utils.service_disable('tahoe-lafs')
 
 

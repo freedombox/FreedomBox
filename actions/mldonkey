@@ -49,12 +49,10 @@ def subcommand_pre_install(_):
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('mldonkey-server')
-    action_utils.webserver_enable('mldonkey-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('mldonkey-freedombox')
     action_utils.service_disable('mldonkey-server')
 
 
