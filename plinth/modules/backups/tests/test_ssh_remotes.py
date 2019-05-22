@@ -76,6 +76,7 @@ def fixture_ssh_key(temp_home, temp_user, password):
     ])
 
 
+@pytest.mark.skip
 @pytest.mark.usefixtures('has_ssh_key')
 def test_user_setup(temp_home, temp_user):
     assert os.path.isdir(temp_home)
@@ -90,6 +91,7 @@ def test_user_setup(temp_home, temp_user):
 #       - else throw an error
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 @pytest.mark.usefixtures('has_ssh_key')
 def test_add_repository_when_directory_is_missing(temp_home, temp_user,
