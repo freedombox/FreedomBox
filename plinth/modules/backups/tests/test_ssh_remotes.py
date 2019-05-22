@@ -31,7 +31,7 @@ from plinth.utils import generate_password, random_string
 
 from .. import forms
 
-pytestmark = pytest.mark.usefixtures('needs_root', 'needs_sudo')
+pytestmark = pytest.mark.usefixtures('needs_root')
 
 
 @pytest.fixture(name='temp_home', scope='module', autouse=True)
@@ -43,7 +43,7 @@ def fixture_temp_home_directory():
     dir_name = f'/tmp/{random_string()}'
     os.mkdir(dir_name)
     yield dir_name
-    subprocess.check_call(['sudo', 'rm', '-rf', dir_name])
+    subprocess.check_call(['rm', '-rf', dir_name])
 
 
 @pytest.fixture(name='password', scope='module', autouse=True)
@@ -59,20 +59,20 @@ def fixture_create_temp_user(temp_home, password):
     # User account expires tomorrow
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
     subprocess.check_call([
-        'sudo', 'useradd', '-d', temp_home, '-m', '-p', password, username,
-        '-e',
+        'useradd', '-d', temp_home, '-m', '-p', password, username, '-e',
         tomorrow.strftime('%Y-%m-%d')
     ])
-    subprocess.check_call(['sudo', 'chown', username, temp_home])
+    subprocess.check_call(['chown', username, temp_home])
     yield username
-    subprocess.check_call(['sudo', 'userdel', username])
+    subprocess.check_call(['userdel', username])
 
 
+@pytest.mark.usefixtures('needs_sudo')
 @pytest.fixture(name='has_ssh_key', scope='module', autouse=True)
 def fixture_ssh_key(temp_home, temp_user, password):
     subprocess.check_call([
-        'sudo', '-u', temp_user, 'ssh-keygen', '-t', 'rsa', '-b', '1024', '-N',
-        '', '-f', f'{temp_home}/.ssh/id_rsa', '-q'
+        'sudo', '-n', '-u', temp_user, 'ssh-keygen', '-t', 'rsa', '-b', '1024',
+        '-N', '', '-f', f'{temp_home}/.ssh/id_rsa', '-q'
     ])
 
 
