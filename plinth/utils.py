@@ -120,6 +120,13 @@ class YAMLFile(object):
         return os.stat(self.yaml_file).st_size == 0
 
 
+def random_string(size=8):
+    """Generate a random alphanumeric string."""
+    chars = (random.SystemRandom().choice(string.ascii_letters)
+             for _ in range(size))
+    return ''.join(chars)
+
+
 def generate_password(size=32):
     """Generate a random password using ascii alphabet and digits."""
     chars = (random.SystemRandom().choice(string.ascii_letters + string.digits)
