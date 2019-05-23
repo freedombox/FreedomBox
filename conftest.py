@@ -64,7 +64,7 @@ def fixture_develop_mode(load_cfg):
     load_cfg.develop = False
 
 
-@pytest.fixture(name='needs_root')
+@pytest.fixture(name='needs_root', scope='session')
 def fixture_needs_root():
     """Skip test if not running in root mode."""
     if os.geteuid() != 0:
