@@ -22,7 +22,7 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Uwsgi, Webserver
 
 
 def test_webserver_init():
@@ -75,3 +75,80 @@ def test_webserver_disable(superuser_run):
         call('apache',
              ['disable', '--name', 'test-config', '--kind', 'module'])
     ])
+
+
+def test_uwsgi_init():
+    """Test that uWSGI component can be initialized."""
+    with pytest.raises(ValueError):
+        Uwsgi(None, None)
+
+    uwsgi = Uwsgi('test-uwsgi', 'test-config')
+    assert uwsgi.component_id == 'test-uwsgi'
+    assert uwsgi.uwsgi_name == 'test-config'
+
+
+@patch('plinth.action_utils.service_is_enabled')
+@patch('plinth.action_utils.uwsgi_is_enabled')
+def test_uwsgi_is_enabled(uwsgi_is_enabled, service_is_enabled):
+    """Test that checking uwsgi configuration enabled works."""
+    uwsgi = Uwsgi('test-uwsgi', 'test-config')
+
+    uwsgi_is_enabled.return_value = True
+    service_is_enabled.return_value = True
+    assert uwsgi.is_enabled()
+    uwsgi_is_enabled.assert_has_calls([call('test-config')])
+    service_is_enabled.assert_has_calls([call('uwsgi')])
+
+    service_is_enabled.return_value = False
+    assert not uwsgi.is_enabled()
+
+    uwsgi_is_enabled.return_value = False
+    assert not uwsgi.is_enabled()
+
+    service_is_enabled.return_value = False
+    assert not uwsgi.is_enabled()
+
+
+@patch('plinth.actions.superuser_run')
+def test_uwsgi_enable(superuser_run):
+    """Test that enabling uwsgi configuration works."""
+    uwsgi = Uwsgi('test-uwsgi', 'test-config')
+
+    uwsgi.enable()
+    superuser_run.assert_has_calls(
+        [call('apache', ['uwsgi-enable', '--name', 'test-config'])])
+
+
+@patch('plinth.actions.superuser_run')
+def test_uwsgi_disable(superuser_run):
+    """Test that disabling uwsgi configuration works."""
+    uwsgi = Uwsgi('test-uwsgi', 'test-config')
+
+    uwsgi.disable()
+    superuser_run.assert_has_calls(
+        [call('apache', ['uwsgi-disable', '--name', 'test-config'])])
+
+
+@patch('plinth.action_utils.service_is_running')
+@patch('plinth.action_utils.uwsgi_is_enabled')
+def test_uwsgi_is_running(uwsgi_is_enabled, service_is_running):
+    """Test checking whether uwsgi is running with a configuration."""
+    uwsgi = Uwsgi('test-uwsgi', 'test-config')
+
+    uwsgi_is_enabled.return_value = True
+    service_is_running.return_value = True
+    assert uwsgi.is_running()
+    uwsgi_is_enabled.assert_has_calls([call('test-config')])
+    service_is_running.assert_has_calls([call('uwsgi')])
+
+    uwsgi_is_enabled.return_value = False
+    service_is_running.return_value = True
+    assert not uwsgi.is_running()
+
+    uwsgi_is_enabled.return_value = True
+    service_is_running.return_value = False
+    assert not uwsgi.is_running()
+
+    uwsgi_is_enabled.return_value = False
+    service_is_running.return_value = False
+    assert not uwsgi.is_running()

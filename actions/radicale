@@ -128,7 +128,6 @@ def subcommand_enable(_):
         if not os.path.exists(COLLECTIONS_PATH):
             os.makedirs(COLLECTIONS_PATH)
         action_utils.service_disable('radicale')
-        action_utils.uwsgi_enable('radicale')
     else:
         action_utils.service_enable('radicale')
         action_utils.service_restart('radicale')
@@ -136,9 +135,8 @@ def subcommand_enable(_):
 
 def subcommand_disable(_):
     """Stop service."""
-    if radicale.get_package_version() >= radicale.VERSION_2:
-        action_utils.uwsgi_disable('radicale')
-    else:
+    package_version = radicale.get_package_version()
+    if package_version and package_version < radicale.VERSION_2:
         action_utils.service_disable('radicale')
 
 

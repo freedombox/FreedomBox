@@ -30,7 +30,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth import service as service_module
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -99,6 +99,9 @@ class RadicaleApp(app_module.App):
         webserver = RadicaleWebserver('webserver-radicale', None)
         self.add(webserver)
 
+        uwsgi = RadicaleUwsgi('uwsgi-radicale', 'radicale')
+        self.add(uwsgi)
+
 
 class RadicaleWebserver(Webserver):
     """Webserver enable/disable behavior specific for radicale."""
@@ -115,6 +118,30 @@ class RadicaleWebserver(Webserver):
     @web_name.setter
     def web_name(self, web_name):
         """Set the web name"""
+
+
+class RadicaleUwsgi(Uwsgi):
+    """uWSGI enable/disable behavior specific for radicale."""
+
+    def is_enabled(self):
+        """Return whether the uWSGI configuration is enabled if version>=2."""
+        package_version = get_package_version()
+        if package_version and package_version >= VERSION_2:
+            return super().is_enabled()
+
+        return True
+
+    def enable(self):
+        """Enable the uWSGI configuration if version >=2."""
+        package_version = get_package_version()
+        if package_version and package_version >= VERSION_2:
+            super().enable()
+
+    def disable(self):
+        """Disable the uWSGI configuration if version >=2."""
+        package_version = get_package_version()
+        if package_version and package_version >= VERSION_2:
+            super().disable()
 
 
 def init():
@@ -184,19 +211,17 @@ def is_running():
     if get_package_version() < VERSION_2:
         return action_utils.service_is_running('radicale')
 
-    return action_utils.service_is_running('uwsgi') \
-        and action_utils.uwsgi_is_enabled('radicale')
+    return app.is_enabled()
 
 
 def is_enabled():
     """Return whether the module is enabled."""
     package_version = get_package_version()
-    if package_version >= VERSION_2:
-        daemon_enabled = action_utils.uwsgi_is_enabled('radicale')
-    else:
+    daemon_enabled = True
+    if package_version and package_version < VERSION_2:
         daemon_enabled = action_utils.service_is_enabled('radicale')
 
-    return (app.is_enabled() and daemon_enabled)
+    return app.is_enabled() and daemon_enabled
 
 
 def enable():

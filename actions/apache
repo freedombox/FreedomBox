@@ -46,6 +46,14 @@ def parse_arguments():
     subparser.add_argument('--name',
                            help='Name of the site/config/module to disable')
     subparser.add_argument('--kind', choices=['site', 'config', 'module'])
+    subparser = subparsers.add_parser(
+        'uwsgi-enable', help='Enable a site/config/module in UWSGI')
+    subparser.add_argument('--name',
+                           help='Name of the site/config/module to enable')
+    subparser = subparsers.add_parser(
+        'uwsgi-disable', help='Disable a site/config/module in UWSGI')
+    subparser.add_argument('--name',
+                           help='Name of the site/config/module to disable')
 
     subparsers.required = True
     return parser.parse_args()
@@ -175,6 +183,16 @@ def subcommand_enable(arguments):
 def subcommand_disable(arguments):
     """Disable an Apache site/config/module."""
     action_utils.webserver_disable(arguments.name, arguments.kind)
+
+
+def subcommand_uwsgi_enable(arguments):
+    """Enable uWSGI configuration and reload."""
+    action_utils.uwsgi_enable(arguments.name)
+
+
+def subcommand_uwsgi_disable(arguments):
+    """Disable uWSGI configuration and reload."""
+    action_utils.uwsgi_disable(arguments.name)
 
 
 def main():

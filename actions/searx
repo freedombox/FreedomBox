@@ -41,8 +41,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable Searx')
-    subparsers.add_parser('disable', help='Disable Searx')
     subparsers.add_parser(
         'setup', help='Perform post-installation operations for Searx')
 
@@ -155,16 +153,6 @@ def subcommand_setup(_):
     write_settings(settings)
 
     action_utils.service_restart('uwsgi')
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.uwsgi_enable('searx')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.uwsgi_disable('searx')
 
 
 def subcommand_enable_public_access(_):

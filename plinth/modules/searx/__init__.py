@@ -26,7 +26,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth import service as service_module
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
@@ -87,6 +87,9 @@ class SearxApp(app_module.App):
         webserver = SearxWebserverAuth('webserver-searx-auth',
                                        'searx-freedombox-auth')
         self.add(webserver)
+
+        uwsgi = Uwsgi('uwsgi-searx', 'searx')
+        self.add(uwsgi)
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
@@ -157,18 +160,16 @@ def is_public_access_enabled():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (app.is_enabled() and action_utils.uwsgi_is_enabled('searx'))
+    return app.is_enabled()
 
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('searx', ['enable'])
     app.enable()
 
 
 def disable():
     """Disable the module."""
-    actions.superuser_run('searx', ['disable'])
     app.disable()
 
 

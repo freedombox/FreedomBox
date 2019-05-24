@@ -58,3 +58,41 @@ class Webserver(app.LeaderComponent):
         actions.superuser_run(
             'apache',
             ['disable', '--name', self.web_name, '--kind', self.kind])
+
+
+class Uwsgi(app.LeaderComponent):
+    """Component to enable/disable uWSGI configuration."""
+
+    def __init__(self, component_id, uwsgi_name):
+        """Initialize the uWSGI component.
+
+        component_id should be a unique ID across all components of an app and
+        across all components.
+
+        uwsgi_name is the primary part of the configuration file path which must
+        be enabled/disabled by this component.
+
+        """
+        super().__init__(component_id)
+
+        self.uwsgi_name = uwsgi_name
+
+    def is_enabled(self):
+        """Return whether the uWSGI configuration is enabled."""
+        return action_utils.uwsgi_is_enabled(self.uwsgi_name) \
+            and action_utils.service_is_enabled('uwsgi')
+
+    def enable(self):
+        """Enable the uWSGI configuration."""
+        actions.superuser_run('apache',
+                              ['uwsgi-enable', '--name', self.uwsgi_name])
+
+    def disable(self):
+        """Disable the uWSGI configuration."""
+        actions.superuser_run('apache',
+                              ['uwsgi-disable', '--name', self.uwsgi_name])
+
+    def is_running(self):
+        """Return whether the uWSGI daemon is running with configuration."""
+        return action_utils.uwsgi_is_enabled(self.uwsgi_name) \
+            and action_utils.service_is_running('uwsgi')
