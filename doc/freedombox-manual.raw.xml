@@ -1041,7 +1041,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
       </section>
       <section>
         <title>Using Tor Hidden Service to access your FreedomBox</title>
-        <para>Tor Hidden Service provides a way to access your FreedomBox, even if it's behind a router or firewall. </para>
+        <para>Tor Hidden Service provides a way to access your FreedomBox, even if it's behind a router, firewall, or carrier-grade NAT (i.e., your Internet Service Provider does not provide a public IPv4 address for your router). </para>
         <para>To enable Tor Hidden Service, first navigate to the Anonymity Network (Tor) page. (If you don't see it, click on the FreedomBox logo at the top-left of the page, to go to the main Apps page.) On the Anonymity Network (Tor) page, under Configuration, check "Enable Tor Hidden Service", then press the Update setup button. Tor will be reconfigured and restarted. </para>
         <para>After a while, the page will refresh and under Status, you will see a table listing the Hidden Service .onion address. Copy the entire address (ending in .onion) and paste it into the Tor Browser's address field, and you should be able to access your FreedomBox. (You may see a certificate warning because FreedomBox has a self-signed certificate.) </para>
         <para>
@@ -1055,6 +1055,21 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
           </inlinemediaobject>
         </para>
         <para>Currently only HTTP (port 80), HTTPS (port 443), and SSH (port 22) are accessible through the Tor Hidden Service configured on the FreedomBox. </para>
+      </section>
+      <section>
+        <title>Apps accessible via Tor</title>
+        <para>The following apps can be accessed over Tor. Note that this list is not exhaustive. </para>
+        <itemizedlist>
+          <listitem>
+            <para>Calendar and Addressbook (Radicale) </para>
+          </listitem>
+          <listitem>
+            <para>Web Search (Searx) </para>
+          </listitem>
+          <listitem>
+            <para>Wiki and Blog (Ikiwiki) </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Running a Tor relay</title>
@@ -1371,6 +1386,45 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
             </itemizedlist>
           </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Synchronizing over Tor</title>
+        <para>In Plinth, setting up a calendar with Radicale over Tor is the same as over the clear net. Here is a short summary: </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>When logged in to Plinth over Tor, click on Radicale, and at the prompt provide your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user name and password.  </para>
+          </listitem>
+          <listitem>
+            <para>In the Radicale web interface, log in using your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user name and password. </para>
+          </listitem>
+          <listitem>
+            <para>Click on "Create new address book or calendar", provide a title, select a type, and click "Create". </para>
+          </listitem>
+          <listitem>
+            <para>Save the URL, e.g., <code>https://</code><emphasis>ONION-ADDRESS-FOR-YOUR-SERVER</emphasis><code>.onion/radicale/</code><emphasis>USERNAME</emphasis><code>/</code><emphasis>CALENDAR-CODE</emphasis><code>/</code>. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
+          </listitem>
+        </orderedlist>
+        <para>These instructions are for Thunderbird/Lightning. Note that you will need to be connected to Tor with the Tor Browser Bundle.  </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Open Thunderbird, install the Torbirdy add-on, and restart Thunderbird. (This may not be necessary.) </para>
+          </listitem>
+          <listitem>
+            <para>In the Lightning interface, under Calendar/Home in the left panel right click with the mouse and select "New calendar". </para>
+          </listitem>
+          <listitem>
+            <para>Select the location of your calendar as "On the Network". </para>
+          </listitem>
+          <listitem>
+            <para>Select CalDAV and for the location copy the URL, e.g., <code>https://</code><emphasis>ONION-ADDRESS-FOR-YOUR-SERVER</emphasis><code>.onion/radicale/</code><emphasis>USERNAME</emphasis><code>/</code><emphasis>CALENDAR-CODE</emphasis><code>/</code>. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
+          </listitem>
+          <listitem>
+            <para>Provide a name, etc. Click "Next". Your calendar is now syncing with your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> over Tor. </para>
+          </listitem>
+          <listitem>
+            <para>If you have not generated a certificate for your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> with "Let's Encrypt", you may need to select "Confirm Security Exception" when prompted. </para>
+          </listitem>
+        </orderedlist>
       </section>
       <section>
         <title>Synchronizing with your Android phone</title>
@@ -2661,6 +2715,9 @@ proto udp]]></screen>
         <itemizedlist>
           <listitem>
             <para>Searx on FreedomBox uses Single Sign On. This means that you should be logged in into your FreedomBox in the browser that you're using Searx.  </para>
+          </listitem>
+          <listitem>
+            <para>SearX is easily accessible via Tor. </para>
           </listitem>
           <listitem>
             <para>Searx can be added as a search engine to the Firefox browser's search bar. See <ulink url="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">Firefox Help</ulink> on this topic. Once Searx is added, you can also set it as your default search engine. </para>
@@ -9492,6 +9549,17 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.8 (2019-05-27)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Switch to using SVG icons for all apps. </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, Norwegian Bokmål, Hungarian, German, Turkish, and Spanish. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.7 (2019-05-13)</title>
         <itemizedlist>
