@@ -38,3 +38,18 @@ Scenario: Disable searx application
   Given the searx application is enabled
   When I disable the searx application
   Then the searx site should not be available
+
+Scenario: Enable public access
+  Given the searx application is enabled
+  And I enable public access in searx
+  And I'm a logged out user
+  Then searx app should be visible on the front page
+  And the searx site should be available
+
+Scenario: Disable public access
+  Given the searx application is enabled
+  And I disable public access in searx
+  And I'm a logged out user
+  Then searx app should not be visible on the front page
+  And the searx site should not be available
+

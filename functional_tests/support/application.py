@@ -469,3 +469,23 @@ def openvpn_download_profile(browser):
     interface.nav_to_module(browser, 'openvpn')
     url = browser.find_by_css('.form-profile')['action']
     return _download_file(browser, url)
+
+
+def searx_enable_public_access(browser):
+    """Enable Public Access in SearX"""
+    interface.nav_to_module(browser, 'searx')
+    browser.find_by_id('id_public_access').check()
+    interface.submit(browser, form_class='form-configuration')
+
+
+def searx_disable_public_access(browser):
+    """Enable Public Access in SearX"""
+    interface.nav_to_module(browser, 'searx')
+    browser.find_by_id('id_public_access').uncheck()
+    interface.submit(browser, form_class='form-configuration')
+
+
+def find_on_front_page(browser, app_name):
+    browser.visit(default_url)
+    shortcuts = browser.find_link_by_href(f'/{app_name}/')
+    return shortcuts

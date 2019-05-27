@@ -20,11 +20,11 @@ Configuration helper for searx.
 """
 
 import argparse
-import augeas
 import os
 import secrets
 import shutil
 
+import augeas
 import yaml
 
 from plinth import action_utils
@@ -44,6 +44,12 @@ def parse_arguments():
     subparsers.add_parser('disable', help='Disable Searx')
     subparsers.add_parser(
         'setup', help='Perform post-installation operations for Searx')
+
+    subparsers.add_parser('enable-public-access',
+                          help='Enable public access to the Searx application')
+    subparsers.add_parser(
+        'disable-public-access',
+        help='Disable public access to the Searx application')
 
     safe_search = subparsers.add_parser(
         'set-safe-search',
@@ -81,7 +87,8 @@ def _update_uwsgi_configuration():
     aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
     aug.set('/augeas/load/inifile/incl[last() + 1]', UWSGI_FILE)
     aug.load()
-    aug.set('/files/etc/uwsgi/apps-available/searx.ini/uwsgi/autoload', 'false')
+    aug.set('/files/etc/uwsgi/apps-available/searx.ini/uwsgi/autoload',
+            'false')
     aug.save()
 
 
@@ -153,12 +160,24 @@ def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.uwsgi_enable('searx')
     action_utils.webserver_enable('searx-freedombox')
+    action_utils.webserver_enable('searx-freedombox-auth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('searx-freedombox')
+    action_utils.webserver_disable('searx-freedombox-auth')
     action_utils.uwsgi_disable('searx')
+
+
+def subcommand_enable_public_access(_):
+    """Enable public access to the SearX application."""
+    action_utils.webserver_disable('searx-freedombox-auth')
+
+
+def subcommand_disable_public_access(_):
+    """Disable public access to the SearX application."""
+    action_utils.webserver_enable('searx-freedombox-auth')
 
 
 def main():

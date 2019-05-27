@@ -21,7 +21,6 @@ import pathlib
 import time
 
 import requests
-
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
@@ -45,10 +44,14 @@ def get_site_url(site_name):
 
 
 def is_available(browser, site_name):
-    browser.visit(config['DEFAULT']['url'] + get_site_url(site_name))
+    url_to_visit = config['DEFAULT']['url'] + get_site_url(site_name)
+    browser.visit(url_to_visit)
     time.sleep(3)
     browser.reload()
-    return '404' not in browser.title
+    not_404 = '404' not in browser.title
+    # A trailing slash might be appended by Apache redirect rules
+    no_redirect = url_to_visit.strip('/') == browser.url.strip('/')
+    return not_404 and no_redirect
 
 
 def access_url(browser, site_name):

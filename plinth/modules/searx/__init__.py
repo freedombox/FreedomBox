@@ -30,7 +30,7 @@ from .manifest import backup, clients
 
 clients = clients
 
-version = 2
+version = 3
 
 managed_services = ['searx']
 
@@ -68,8 +68,15 @@ class SearxApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-searx', name, short_description=short_description,
-            icon='searx', url='/searx/', clients=clients, login_required=True,
+            icon='searx', url='/searx/', clients=clients,
+            login_required=(not is_public_access_enabled()),
             allowed_groups=[group[0]])
+        self.add(shortcut)
+
+    def set_shortcut_login_required(self, login_required):
+        """Change the login_required property of shortcut."""
+        shortcut = self.remove('shortcut-searx')
+        shortcut.login_required = login_required
         self.add(shortcut)
 
 
@@ -95,8 +102,12 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'searx', ['setup'])
-    if not old_version:
+    if not old_version or old_version < 3:
         helper.call('post', actions.superuser_run, 'searx', ['enable'])
+        helper.call('post', actions.superuser_run, 'searx',
+                    ['disable-public-access'])
+        app.set_shortcut_login_required(True)
+        app.enable()
 
     global service
     if service is None:
@@ -108,9 +119,14 @@ def setup(helper, old_version=None):
 
 
 def get_safe_search_setting():
-    """Get the current value of the safe search setting for Seax."""
+    """Get the current value of the safe search setting for Searx."""
     value = actions.superuser_run('searx', ['get-safe-search'])
     return int(value.strip())
+
+
+def is_public_access_enabled():
+    """Check whether public access is enabled for Searx."""
+    return not action_utils.webserver_is_enabled('searx-freedombox-auth')
 
 
 def is_enabled():

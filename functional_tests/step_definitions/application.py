@@ -423,3 +423,26 @@ def openvpn_profile_downloadable(browser):
 def openvpn_profile_download_compare(browser, openvpn_download_profile):
     new_profile = application.openvpn_download_profile(browser)
     assert openvpn_download_profile == new_profile
+
+
+@given('I enable public access in searx')
+def searx_enable_public_access(browser):
+    application.searx_enable_public_access(browser)
+
+
+@given('I disable public access in searx')
+def searx_disable_public_access(browser):
+    application.searx_disable_public_access(browser)
+
+
+@then(parsers.parse('{app_name:w} app should be visible on the front page'))
+def app_visible_on_front_page(browser, app_name):
+    shortcuts = application.find_on_front_page(browser, app_name)
+    assert len(shortcuts) == 1
+
+
+@then(
+    parsers.parse('{app_name:w} app should not be visible on the front page'))
+def app_visible_on_front_page(browser, app_name):
+    shortcuts = application.find_on_front_page(browser, app_name)
+    assert len(shortcuts) == 0

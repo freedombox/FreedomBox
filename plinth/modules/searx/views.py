@@ -23,8 +23,9 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions, views
 from plinth.errors import ActionError
-from plinth.modules.searx import (clients, description,
-                                  get_safe_search_setting, manual_page)
+from plinth.modules.searx import (add_shortcut, clients, description,
+                                  get_safe_search_setting,
+                                  is_public_access_enabled, manual_page)
 
 from .forms import SearxForm
 
@@ -43,6 +44,7 @@ class SearxServiceView(views.ServiceView):
         """Return the status of the service to fill in the form."""
         initial = super().get_initial()
         initial['safe_search'] = get_safe_search_setting()
+        initial['public_access'] = is_public_access_enabled()
         return initial
 
     def form_valid(self, form):
@@ -54,6 +56,18 @@ class SearxServiceView(views.ServiceView):
             try:
                 actions.superuser_run(
                     'searx', ['set-safe-search', form_data['safe_search']])
+                messages.success(self.request, _('Configuration updated.'))
+            except ActionError as e:
+                messages.error(self.request,
+                               _('An error occurred during configuration.'))
+
+        if old_data['public_access'] != form_data['public_access']:
+            try:
+                if form_data['public_access']:
+                    actions.superuser_run('searx', ['enable-public-access'])
+                else:
+                    actions.superuser_run('searx', ['disable-public-access'])
+                add_shortcut()
                 messages.success(self.request, _('Configuration updated.'))
             except ActionError as e:
                 messages.error(self.request,
