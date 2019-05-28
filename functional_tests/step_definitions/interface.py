@@ -29,6 +29,7 @@ def logged_in_user(browser):
                     config['DEFAULT']['password'])
 
 
+@when("I log out")
 @given("I'm a logged out user")
 def logged_out_user(browser):
     browser.visit(default_url + '/plinth/accounts/logout/')

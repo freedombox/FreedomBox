@@ -28,4 +28,6 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({})
+PUBLIC_ACCESS_SETTING_FILE = '/etc/searx/allow_public_access'
+
+backup = validate_backup({'config': {'files': [PUBLIC_ACCESS_SETTING_FILE]}})

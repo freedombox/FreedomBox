@@ -443,6 +443,6 @@ def app_visible_on_front_page(browser, app_name):
 
 @then(
     parsers.parse('{app_name:w} app should not be visible on the front page'))
-def app_visible_on_front_page(browser, app_name):
+def app_not_visible_on_front_page(browser, app_name):
     shortcuts = application.find_on_front_page(browser, app_name)
     assert len(shortcuts) == 0

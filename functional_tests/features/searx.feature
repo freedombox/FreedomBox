@@ -53,3 +53,12 @@ Scenario: Disable public access
   Then searx app should not be visible on the front page
   And the searx site should not be available
 
+Scenario: Preserve public access setting
+  Given the searx application is enabled
+  And I enable public access in searx
+  When I disable the searx application
+  And I enable the searx application
+  And I log out
+  Then searx app should be visible on the front page
+  And the searx site should be available
+

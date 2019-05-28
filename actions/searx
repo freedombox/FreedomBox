@@ -28,6 +28,8 @@ import augeas
 import yaml
 
 from plinth import action_utils
+from plinth.modules.searx import is_public_access_enabled
+from plinth.modules.searx.manifest import PUBLIC_ACCESS_SETTING_FILE
 from plinth.utils import gunzip
 
 SETTINGS_FILE = '/etc/searx/settings.yml'
@@ -160,7 +162,8 @@ def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.uwsgi_enable('searx')
     action_utils.webserver_enable('searx-freedombox')
-    action_utils.webserver_enable('searx-freedombox-auth')
+    if not is_public_access_enabled():
+        action_utils.webserver_enable('searx-freedombox-auth')
 
 
 def subcommand_disable(_):
@@ -172,11 +175,13 @@ def subcommand_disable(_):
 
 def subcommand_enable_public_access(_):
     """Enable public access to the SearX application."""
+    open(PUBLIC_ACCESS_SETTING_FILE, 'w').close()
     action_utils.webserver_disable('searx-freedombox-auth')
 
 
 def subcommand_disable_public_access(_):
     """Disable public access to the SearX application."""
+    os.remove(PUBLIC_ACCESS_SETTING_FILE)
     action_utils.webserver_enable('searx-freedombox-auth')
 
 

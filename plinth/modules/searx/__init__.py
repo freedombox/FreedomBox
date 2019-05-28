@@ -18,6 +18,8 @@
 FreedomBox app to configure Searx.
 """
 
+import os
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions
@@ -26,7 +28,7 @@ from plinth import frontpage, menu
 from plinth import service as service_module
 from plinth.modules.users import register_group
 
-from .manifest import backup, clients
+from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients
 
 clients = clients
 
@@ -126,7 +128,7 @@ def get_safe_search_setting():
 
 def is_public_access_enabled():
     """Check whether public access is enabled for Searx."""
-    return not action_utils.webserver_is_enabled('searx-freedombox-auth')
+    return os.path.exists(PUBLIC_ACCESS_SETTING_FILE)
 
 
 def is_enabled():
@@ -156,3 +158,15 @@ def diagnose():
                                          check_certificate=False))
 
     return results
+
+
+def enable_public_access():
+    """Allow Searx app to be accessed by anyone with access."""
+    actions.superuser_run('searx', ['enable-public-access'])
+    add_shortcut()
+
+
+def disable_public_access():
+    """Allow Searx app to be accessed by logged-in users only."""
+    actions.superuser_run('searx', ['disable-public-access'])
+    add_shortcut()
