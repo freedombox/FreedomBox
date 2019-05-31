@@ -111,7 +111,7 @@ class MediaWikiServiceView(views.ServiceView):
                 actions.superuser_run('mediawiki', ['private-mode', 'disable'])
                 messages.success(self.request, _('Private mode disabled'))
 
-            mediawiki.app.get('shortcut-mediawiki').login_required = \
-                new_config['enable_private_mode']
+            shortcut = mediawiki.app.get_component('shortcut-mediawiki')
+            shortcut.login_required = new_config['enable_private_mode']
 
         return super().form_valid(form)

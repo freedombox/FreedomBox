@@ -46,7 +46,7 @@ class App:
         del self.components[component_id]
         return component
 
-    def get(self, component_id):
+    def get_component(self, component_id):
         """Return a component given the component's ID."""
         return self.components[component_id]
 
