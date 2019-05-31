@@ -54,6 +54,8 @@ app = None
 class UsersApp(app_module.App):
     """FreedomBox app for users and groups management."""
 
+    app_id = 'users'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

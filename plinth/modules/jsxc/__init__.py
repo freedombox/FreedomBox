@@ -55,6 +55,8 @@ app = None
 class JSXCApp(app_module.App):
     """FreedomBox app for JSXC."""
 
+    app_id = 'jsxc'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

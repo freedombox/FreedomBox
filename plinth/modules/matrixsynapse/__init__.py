@@ -77,6 +77,8 @@ app = None
 class MatrixSynapseApp(app_module.App):
     """FreedomBox app for Matrix Synapse."""
 
+    app_id = 'matrixsynapse'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -53,6 +53,8 @@ app = None
 class DateTimeApp(app_module.App):
     """FreedomBox app for date and time."""
 
+    app_id = 'datetime'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

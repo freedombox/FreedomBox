@@ -82,6 +82,8 @@ app = None
 class PagekiteApp(app_module.App):
     """FreedomBox app for Pagekite."""
 
+    app_id = 'pagekite'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

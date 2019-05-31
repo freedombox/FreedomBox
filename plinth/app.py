@@ -31,9 +31,23 @@ class App:
 
     """
 
+    app_id = None
+    _all_apps = collections.OrderedDict()
+
     def __init__(self):
         """Initialize the app object."""
+        if not self.app_id:
+            raise ValueError('Invalid app ID configured')
+
         self.components = collections.OrderedDict()
+
+        # Add self to global list of apps
+        self._all_apps[self.app_id] = self
+
+    @classmethod
+    def get(cls, app_id):
+        """Return an app with given ID."""
+        return cls._all_apps[app_id]
 
     def add(self, component):
         """Add a component to an app."""

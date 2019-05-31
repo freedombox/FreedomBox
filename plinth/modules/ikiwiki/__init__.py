@@ -72,6 +72,8 @@ app = None
 class IkiwikiApp(app_module.App):
     """FreedomBox app for Ikiwiki."""
 
+    app_id = 'ikiwiki'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

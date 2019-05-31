@@ -64,6 +64,8 @@ app = None
 class DynamicDNSApp(app_module.App):
     """FreedomBox app for Dynamic DNS."""
 
+    app_id = 'dynamicdns'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -66,6 +66,8 @@ app = None
 class TahoeApp(app_module.App):
     """FreedomBox app for Tahoe LAFS."""
 
+    app_id = 'tahoe'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

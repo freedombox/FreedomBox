@@ -46,6 +46,8 @@ app = None
 class SharingApp(app_module.App):
     """FreedomBox app for sharing files."""
 
+    app_id = 'sharing'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

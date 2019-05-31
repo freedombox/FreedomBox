@@ -74,6 +74,8 @@ app = None
 class LetsEncryptApp(app_module.App):
     """FreedomBox app for Let's Encrypt."""
 
+    app_id = 'letsencrypt'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

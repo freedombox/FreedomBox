@@ -80,6 +80,8 @@ app = None
 class I2PApp(app_module.App):
     """FreedomBox app for I2P."""
 
+    app_id = 'i2p'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

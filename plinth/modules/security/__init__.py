@@ -50,6 +50,8 @@ app = None
 class SecurityApp(app_module.App):
     """FreedomBox app for security."""
 
+    app_id = 'security'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

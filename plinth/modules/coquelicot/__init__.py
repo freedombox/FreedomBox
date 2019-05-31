@@ -61,6 +61,8 @@ app = None
 class CoquelicotApp(app_module.App):
     """FreedomBox app for Coquelicot."""
 
+    app_id = 'coquelicot'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

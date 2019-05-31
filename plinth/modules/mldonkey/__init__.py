@@ -70,6 +70,8 @@ app = None
 class MLDonkeyApp(app_module.App):
     """FreedomBox app for MLDonkey."""
 
+    app_id = 'mldonkey'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

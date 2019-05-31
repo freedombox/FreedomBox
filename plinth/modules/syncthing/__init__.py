@@ -73,6 +73,8 @@ app = None
 class SyncthingApp(app_module.App):
     """FreedomBox app for Syncthing."""
 
+    app_id = 'syncthing'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

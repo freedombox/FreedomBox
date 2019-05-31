@@ -38,6 +38,8 @@ app = None
 class ApacheApp(app_module.App):
     """FreedomBox app for Apache web server."""
 
+    app_id = 'apache'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -63,6 +63,8 @@ app = None
 class NamesApp(app_module.App):
     """FreedomBox app for names."""
 
+    app_id = 'names'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

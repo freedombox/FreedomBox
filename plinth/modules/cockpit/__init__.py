@@ -68,6 +68,8 @@ app = None
 class CockpitApp(app_module.App):
     """FreedomBox app for Cockpit."""
 
+    app_id = 'cockpit'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

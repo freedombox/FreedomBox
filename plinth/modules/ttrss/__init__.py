@@ -72,6 +72,8 @@ app = None
 class TTRSSApp(app_module.App):
     """FreedomBox app for TT-RSS."""
 
+    app_id = 'ttrss'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

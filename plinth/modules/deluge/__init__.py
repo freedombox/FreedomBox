@@ -64,6 +64,8 @@ app = None
 class DelugeApp(app_module.App):
     """FreedomBox app for Deluge."""
 
+    app_id = 'deluge'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

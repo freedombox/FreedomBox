@@ -67,6 +67,8 @@ app = None
 class MumbleApp(app_module.App):
     """FreedomBox app for Mumble."""
 
+    app_id = 'mumble'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

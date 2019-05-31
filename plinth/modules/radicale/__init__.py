@@ -78,6 +78,8 @@ app = None
 class RadicaleApp(app_module.App):
     """FreedomBox app for Radicale."""
 
+    app_id = 'radicale'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

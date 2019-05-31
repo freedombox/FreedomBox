@@ -69,6 +69,8 @@ app = None
 class RoundcubeApp(app_module.App):
     """FreedomBox app for Roundcube."""
 
+    app_id = 'roundcube'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

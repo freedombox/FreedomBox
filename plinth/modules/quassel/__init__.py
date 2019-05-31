@@ -73,6 +73,8 @@ app = None
 class QuasselApp(app_module.App):
     """FreedomBox app for Quassel."""
 
+    app_id = 'quassel'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -88,8 +90,8 @@ class QuasselApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-quassel', name,
-                            ports=['quassel-plinth'], is_external=True)
+        firewall = Firewall('firewall-quassel', name, ports=['quassel-plinth'],
+                            is_external=True)
         self.add(firewall)
 
 

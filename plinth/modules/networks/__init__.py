@@ -45,6 +45,8 @@ app = None
 class NetworksApp(app_module.App):
     """FreedomBox app for Networks."""
 
+    app_id = 'networks'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -53,6 +53,8 @@ app = None
 class ConfigApp(app_module.App):
     """FreedomBox app for basic system configuration."""
 
+    app_id = 'config'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

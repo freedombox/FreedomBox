@@ -63,6 +63,8 @@ app = None
 class OpenVPNApp(app_module.App):
     """FreedomBox app for OpenVPN."""
 
+    app_id = 'openvpn'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

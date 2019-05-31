@@ -60,6 +60,8 @@ app = None
 class MonkeysphereApp(app_module.App):
     """FreedomBox app for Monkeysphere."""
 
+    app_id = 'monkeysphere'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

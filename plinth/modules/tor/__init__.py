@@ -69,6 +69,8 @@ app = None
 class TorApp(app_module.App):
     """FreedomBox app for Tor."""
 
+    app_id = 'tor'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

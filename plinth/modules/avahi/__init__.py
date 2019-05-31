@@ -63,6 +63,8 @@ app = None
 class AvahiApp(app_module.App):
     """FreedomBox app for Avahi."""
 
+    app_id = 'avahi'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

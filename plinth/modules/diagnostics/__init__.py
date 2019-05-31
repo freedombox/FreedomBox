@@ -46,6 +46,8 @@ app = None
 class DiagnosticsApp(app_module.App):
     """FreedomBox app for diagnostics."""
 
+    app_id = 'diagnostics'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

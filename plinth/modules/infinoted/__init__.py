@@ -62,6 +62,8 @@ app = None
 class InfinotedApp(app_module.App):
     """FreedomBox app for infinoted."""
 
+    app_id = 'infinoted'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -76,6 +76,8 @@ app = None
 class ReproApp(app_module.App):
     """FreedomBox app for Repro."""
 
+    app_id = 'repro'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

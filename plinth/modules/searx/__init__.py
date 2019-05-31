@@ -63,6 +63,8 @@ app = None
 class SearxApp(app_module.App):
     """FreedomBox app for Searx."""
 
+    app_id = 'searx'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

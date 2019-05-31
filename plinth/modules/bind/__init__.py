@@ -90,6 +90,8 @@ app = None
 class BindApp(app_module.App):
     """FreedomBox app for Bind."""
 
+    app_id = 'bind'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

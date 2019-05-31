@@ -53,6 +53,8 @@ app = None
 class FirewallApp(app_module.App):
     """FreedomBox app for Firewall."""
 
+    app_id = 'firewall'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

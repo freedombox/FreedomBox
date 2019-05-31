@@ -81,6 +81,8 @@ app = None
 class DiasporaApp(app_module.App):
     """FreedomBox app for Diaspora."""
 
+    app_id = 'diaspora'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

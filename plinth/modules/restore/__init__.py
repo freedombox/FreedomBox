@@ -62,6 +62,8 @@ app = None
 class RestoreApp(app_module.App):
     """FreedomBox app for Restore."""
 
+    app_id = 'restore'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -64,6 +64,8 @@ app = None
 class MediaWikiApp(app_module.App):
     """FreedomBox app for MediaWiki."""
 
+    app_id = 'mediawiki'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

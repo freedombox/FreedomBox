@@ -25,6 +25,11 @@ import pytest
 from plinth.app import App, Component, FollowerComponent, LeaderComponent
 
 
+class TestApp(App):
+    """Sample App for testing."""
+    app_id = 'test-app'
+
+
 class LeaderTest(FollowerComponent):
     """Test class for using LeaderComponent in tests."""
     is_leader = True
@@ -33,7 +38,7 @@ class LeaderTest(FollowerComponent):
 @pytest.fixture(name='app_with_components')
 def fixture_app_with_components():
     """Setup an app with some components."""
-    app = App()
+    app = TestApp()
     app.add(FollowerComponent('test-follower-1'))
     app.add(FollowerComponent('test-follower-2'))
     app.add(LeaderTest('test-leader-1'))
@@ -41,16 +46,31 @@ def fixture_app_with_components():
     return app
 
 
+@pytest.fixture(name='empty_apps', autouse=True)
+def fixture_empty_apps():
+    """Remove all apps from global list before starting a test."""
+    App._all_apps = collections.OrderedDict()
+
+
 def test_app_instantiation():
     """Test that App is instantiated properly."""
-    app = App()
+    app = TestApp()
     assert isinstance(app.components, collections.OrderedDict)
     assert not app.components
+    assert app.app_id == 'test-app'
+    assert app._all_apps['test-app'] == app
+    assert len(app._all_apps) == 1
+
+
+def test_get():
+    """Test that an app can be correctly retrieved."""
+    app = TestApp()
+    assert App.get(app.app_id) == app
 
 
 def test_app_add():
     """Test adding a components to an App."""
-    app = App()
+    app = TestApp()
     component = Component('test-component')
     return_value = app.add(component)
     assert len(app.components) == 1

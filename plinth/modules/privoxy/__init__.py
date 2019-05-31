@@ -70,6 +70,8 @@ app = None
 class PrivoxyApp(app_module.App):
     """FreedomBox app for Privoxy."""
 
+    app_id = 'privoxy'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

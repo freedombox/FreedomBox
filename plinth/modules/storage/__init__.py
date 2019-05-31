@@ -61,6 +61,8 @@ app = None
 class StorageApp(app_module.App):
     """FreedomBox app for storage."""
 
+    app_id = 'storage'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

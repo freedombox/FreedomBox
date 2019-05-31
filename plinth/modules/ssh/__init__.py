@@ -56,6 +56,8 @@ app = None
 class SSHApp(app_module.App):
     """FreedomBox app for SSH."""
 
+    app_id = 'ssh'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

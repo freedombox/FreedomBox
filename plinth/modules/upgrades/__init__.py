@@ -49,6 +49,8 @@ app = None
 class UpgradesApp(app_module.App):
     """FreedomBox app for software upgrades."""
 
+    app_id = 'upgrades'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

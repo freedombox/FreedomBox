@@ -38,6 +38,8 @@ app = None
 class HelpApp(app_module.App):
     """FreedomBox app for showing help."""
 
+    app_id = 'help'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

@@ -81,6 +81,8 @@ app = None
 class EjabberdApp(app_module.App):
     """FreedomBox app for ejabberd."""
 
+    app_id = 'ejabberd'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

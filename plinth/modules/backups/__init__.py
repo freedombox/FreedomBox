@@ -59,6 +59,8 @@ app = None
 class BackupsApp(app_module.App):
     """FreedomBox app for backup and restore."""
 
+    app_id = 'backups'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

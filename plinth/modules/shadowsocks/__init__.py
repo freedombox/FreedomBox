@@ -64,6 +64,8 @@ app = None
 class ShadowsocksApp(app_module.App):
     """FreedomBox app for Shadowsocks."""
 
+    app_id = 'shadowsocks'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

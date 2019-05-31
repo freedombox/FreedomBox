@@ -65,6 +65,8 @@ app = None
 class TransmissionApp(app_module.App):
     """FreedomBox app for Transmission."""
 
+    app_id = 'transmission'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
