@@ -19,11 +19,12 @@ FreedomBox app for configuring Tor.
 """
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import tor
+from plinth.modules.firewall.components import Firewall
 
 from . import utils as tor_utils
 from .forms import TorForm
@@ -58,7 +59,7 @@ def index(request):
             'status': status,
             'config_running': bool(config_process),
             'form': form,
-            'socks_service': tor.socks_service
+            'firewall': tor.app.get_components_of_type(Firewall)
         })
 
 
@@ -124,10 +125,11 @@ def __apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         arg_value = 'enable' if new_status['enabled'] else 'disable'
         arguments.extend(['--service', arg_value])
+        # XXX: Perform app enable/disable within the background process
         if new_status['enabled']:
-            tor.enable()
+            tor.app.enable()
         else:
-            tor.disable()
+            tor.app.disable()
 
         config_process = actions.superuser_run(
             'tor', ['configure'] + arguments, run_in_background=True)

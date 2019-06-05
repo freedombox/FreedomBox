@@ -30,8 +30,9 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
-import plinth
 from plinth import package
+from plinth.app import App
+from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.modules.storage import views as disk_views
 from plinth.translation import get_language_from_request, set_language
@@ -106,47 +107,60 @@ class LanguageSelectionView(FormView):
         return reverse('index')
 
 
-class ServiceView(FormView):
-    """A generic view for configuring simple services."""
+class AppView(FormView):
+    """A generic view for configuring simple apps."""
     clients = []
     # Set diagnostics_module_name to the module name to show diagnostics button
     diagnostics_module_name = ""
+    name = None
     # List of paragraphs describing the service
     description = ""
-    form_class = forms.ServiceForm
-    # Display the 'status' block of the service.html template
+    form_class = forms.AppForm
+    # Display the 'status' block of the app.html template
     # This block uses information from service.is_running. This method is
     # optional, so allow not showing this block here.
     show_status_block = True
-    service_id = None
-    template_name = 'service.html'
-    manual_page = ""
+    app_id = None
+    template_name = 'app.html'
+    manual_page = ''
     port_forwarding_info = None
+
+    def __init__(self, *args, **kwargs):
+        """Intialize the view."""
+        super().__init__(*args, **kwargs)
+        self._common_status = None
+
+        if not self.name:
+            raise ImproperlyConfigured('Missing name attribute')
 
     @property
     def success_url(self):
         return self.request.path
 
     @property
-    def service(self):
-        if hasattr(self, '_service'):
-            return self._service
+    def app(self):
+        """Return the app for which this view is configured."""
+        if not self.app_id:
+            raise ImproperlyConfigured('Missing attribute: app_id')
 
-        if not self.service_id:
-            raise ImproperlyConfigured("missing attribute: 'service_id'")
-        service = plinth.service.services.get(self.service_id, None)
-        if service is None:
-            message = "Could not find service %s" % self.service_id
-            raise ImproperlyConfigured(message)
-        self._service = service
-        return service
+        return App.get(self.app_id)
+
+    def _get_common_status(self):
+        """Return the status needed for form and template.
+
+        Avoid multiple queries to expensive operations such as
+        app.is_enabled().
+
+        """
+        if self._common_status:
+            return self._common_status
+
+        self._common_status = {'is_enabled': self.app.is_enabled()}
+        return self._common_status
 
     def get_initial(self):
-        """Return the status of the service to fill in the form."""
-        return {
-            'is_enabled': self.service.is_enabled(),
-            'is_running': self.service.is_running()
-        }
+        """Return the status of the app to fill in the form."""
+        return self._get_common_status()
 
     def form_valid(self, form):
         """Enable/disable a service and set messages."""
@@ -160,10 +174,10 @@ class ServiceView(FormView):
                 messages.info(self.request, _('Setting unchanged'))
         else:
             if new_status['is_enabled']:
-                self.service.enable()
+                self.app.enable()
                 messages.success(self.request, _('Application enabled'))
             else:
-                self.service.disable()
+                self.app.disable()
                 messages.success(self.request, _('Application disabled'))
 
         return super().form_valid(form)
@@ -171,13 +185,20 @@ class ServiceView(FormView):
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        context['service'] = self.service
+        context.update(self._get_common_status())
+        context['app'] = self.app
+        context['is_running'] = app_is_running(self.app)
         context['clients'] = self.clients
         context['diagnostics_module_name'] = self.diagnostics_module_name
+        context['name'] = self.name
         context['description'] = self.description
         context['show_status_block'] = self.show_status_block
         context['manual_page'] = self.manual_page
         context['port_forwarding_info'] = self.port_forwarding_info
+
+        from plinth.modules.firewall.components import Firewall
+        context['firewall'] = self.app.get_components_of_type(Firewall)
+
         return context
 
 

@@ -34,13 +34,15 @@ from .forms import (AddCustomServiceForm, ConfigurationForm,
 subsubmenu = [{
     'url': reverse_lazy('pagekite:index'),
     'text': _('Configure')
-}, {
-    'url': reverse_lazy('pagekite:standard-services'),
-    'text': _('Standard Services')
-}, {
-    'url': reverse_lazy('pagekite:custom-services'),
-    'text': _('Custom Services')
-}]
+},
+              {
+                  'url': reverse_lazy('pagekite:standard-services'),
+                  'text': _('Standard Services')
+              },
+              {
+                  'url': reverse_lazy('pagekite:custom-services'),
+                  'text': _('Custom Services')
+              }]
 
 
 class ContextMixin(object):

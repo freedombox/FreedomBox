@@ -21,12 +21,13 @@ URLs for the Shaarli module.
 from django.conf.urls import url
 
 from plinth.modules import shaarli
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/shaarli/$',
-        ServiceView.as_view(
-            service_id="shaarli", description=shaarli.description,
-            show_status_block=False, manual_page=shaarli.manual_page),
-        name='index'),
+    url(
+        r'^apps/shaarli/$',
+        AppView.as_view(app_id='shaarli', name=shaarli.name,
+                        description=shaarli.description,
+                        show_status_block=False,
+                        manual_page=shaarli.manual_page), name='index'),
 ]

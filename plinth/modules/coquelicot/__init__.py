@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
@@ -50,8 +50,6 @@ description = [
       'upload password in the form that will appear below after installation. '
       'The default upload password is "test".')
 ]
-
-service = None
 
 manual_page = 'Coquelicot'
 
@@ -84,56 +82,25 @@ class CoquelicotApp(app_module.App):
         webserver = Webserver('webserver-coquelicot', 'coquelicot-freedombox')
         self.add(webserver)
 
+        daemon = Daemon('daemon-coquelicot', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the module."""
     global app
     app = CoquelicotApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'coquelicot', ['setup'])
-    helper.call('post', actions.superuser_run, 'coquelicot', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
     helper.call('post', app.enable)
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('coquelicot')
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('coquelicot') and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('coquelicot', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('coquelicot', ['disable'])
-    app.disable()
 
 
 def get_current_max_file_size():

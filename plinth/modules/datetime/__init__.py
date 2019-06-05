@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 
 from .manifest import backup
 
@@ -45,8 +45,6 @@ description = [
 
 manual_page = 'DateTime'
 
-service = None
-
 app = None
 
 
@@ -62,6 +60,9 @@ class DateTimeApp(app_module.App):
                               'datetime:index', parent_url_name='system')
         self.add(menu_item)
 
+        daemon = Daemon('daemon-datetime', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the date/time module."""
@@ -69,18 +70,9 @@ def init():
     app = DateTimeApp()
     app.set_enabled(True)
 
-    global service
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name)
-
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name)
-    service.enable()
     helper.call('post', app.enable)
 
 

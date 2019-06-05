@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
@@ -60,8 +60,6 @@ reserved_usernames = ['mldonkey']
 
 group = ('ed2k', _('Download files using eDonkey applications'))
 
-service = None
-
 manual_page = 'MLDonkey'
 
 app = None
@@ -93,6 +91,9 @@ class MLDonkeyApp(app_module.App):
         webserver = Webserver('webserver-mldonkey', 'mldonkey-freedombox')
         self.add(webserver)
 
+        daemon = Daemon('daemon-mldonkey', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the MLDonkey module."""
@@ -100,51 +101,16 @@ def init():
     app = MLDonkeyApp()
     register_group(group)
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'mldonkey', ['pre-install'])
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'mldonkey', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
     helper.call('post', app.enable)
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('mldonkey-server')
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('mldonkey-server')
-            and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('mldonkey', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('mldonkey', ['disable'])
-    app.disable()
 
 
 def diagnose():

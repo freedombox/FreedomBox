@@ -24,17 +24,19 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.errors import ActionError
 from plinth.modules.coquelicot import (clients, description,
-                                       get_current_max_file_size, manual_page)
+                                       get_current_max_file_size, manual_page,
+                                       name)
 
 from .forms import CoquelicotForm
 
 
-class CoquelicotServiceView(views.ServiceView):
+class CoquelicotAppView(views.AppView):
     """Serve configuration page."""
     clients = clients
+    name = name
     description = description
     diagnostics_module_name = 'coquelicot'
-    service_id = 'coquelicot'
+    app_id = 'coquelicot'
     form_class = CoquelicotForm
     show_status_block = True
     manual_page = manual_page

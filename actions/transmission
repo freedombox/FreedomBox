@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for Transmission daemon.
 """
@@ -26,7 +25,6 @@ import sys
 
 from plinth import action_utils
 
-
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
 
@@ -35,26 +33,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable Transmission service')
-    subparsers.add_parser('disable', help='Disable Transmission service')
-    subparsers.add_parser(
-        'get-configuration', help='Return the current configuration')
+    subparsers.add_parser('get-configuration',
+                          help='Return the current configuration')
     subparsers.add_parser(
         'merge-configuration',
         help='Merge JSON configuration from stdin with existing')
 
     subparsers.required = True
     return parser.parse_args()
-
-
-def subcommand_enable(_):
-    """Start Transmission service."""
-    action_utils.service_enable('transmission-daemon')
-
-
-def subcommand_disable(_):
-    """Stop Transmission service."""
-    action_utils.service_disable('transmission-daemon')
 
 
 def subcommand_get_configuration(_):

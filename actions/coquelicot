@@ -39,8 +39,6 @@ def parse_arguments():
 
     subparsers.add_parser('setup',
                           help='Post-installation operations for coquelicot')
-    subparsers.add_parser('enable', help='Enable coquelicot')
-    subparsers.add_parser('disable', help='Disable coquelicot')
 
     subparsers.add_parser(
         'set-upload-password',
@@ -68,16 +66,6 @@ def subcommand_setup(_):
     settings['max_file_size'] = mebibytes(1024)
     write_settings(settings)
     action_utils.service_restart('coquelicot')
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('coquelicot')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('coquelicot')
 
 
 def subcommand_set_upload_password(arguments):

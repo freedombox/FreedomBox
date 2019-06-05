@@ -23,19 +23,20 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.modules import radicale
-from plinth.views import ServiceView
+from plinth.views import AppView
 
-from . import description, get_rights_value, managed_services
+from . import description, get_rights_value
 from .forms import RadicaleForm
 
 
-class RadicaleServiceView(ServiceView):
+class RadicaleAppView(AppView):
     """A specialized view for configuring radicale service."""
     clients = radicale.clients
+    name = radicale.name
     description = description
     diagnostics_module_name = 'radicale'
     form_class = RadicaleForm
-    service_id = managed_services[0]
+    app_id = 'radicale'
     manual_page = radicale.manual_page
 
     def get_initial(self):

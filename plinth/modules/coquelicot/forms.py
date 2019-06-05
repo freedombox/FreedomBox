@@ -21,10 +21,10 @@ Plinth form for configuring Coquelicot.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import ServiceForm
+from plinth.forms import AppForm
 
 
-class CoquelicotForm(ServiceForm):  # pylint: disable=W0232
+class CoquelicotForm(AppForm):  # pylint: disable=W0232
     """Coquelicot configuration form."""
     upload_password = forms.CharField(
         label=_('Upload Password'),

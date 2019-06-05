@@ -21,12 +21,13 @@ URLs for the Syncthing module.
 from django.conf.urls import url
 
 from plinth.modules import syncthing
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/syncthing/$',
-        ServiceView.as_view(
-            service_id=syncthing.managed_services[0],
+    url(
+        r'^apps/syncthing/$',
+        AppView.as_view(
+            app_id='syncthing', name=syncthing.name,
             diagnostics_module_name='syncthing',
             description=syncthing.description, clients=syncthing.clients,
             manual_page=syncthing.manual_page, show_status_block=True),

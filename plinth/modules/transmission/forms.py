@@ -21,10 +21,10 @@ FreedomBox app for configuring Transmission.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import ServiceForm
+from plinth.forms import AppForm
 
 
-class TransmissionForm(ServiceForm):  # pylint: disable=W0232
+class TransmissionForm(AppForm):  # pylint: disable=W0232
     """Transmission configuration form"""
     download_dir = forms.CharField(
         label=_('Download directory'),

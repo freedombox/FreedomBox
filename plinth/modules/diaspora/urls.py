@@ -14,18 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the diaspora module
 """
 
 from django.conf.urls import url
 
-from .views import DiasporaSetupView, DiasporaServiceView
+from .views import DiasporaAppView, DiasporaSetupView
 
 urlpatterns = [
-    url(r'^apps/diaspora/setup$', DiasporaSetupView.as_view(),
-        name='setup'),
-    url(r'^apps/diaspora/$', DiasporaServiceView.as_view(),
-        name='index')
+    url(r'^apps/diaspora/setup$', DiasporaSetupView.as_view(), name='setup'),
+    url(r'^apps/diaspora/$', DiasporaAppView.as_view(), name='index')
 ]

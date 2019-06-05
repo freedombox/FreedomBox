@@ -24,15 +24,13 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .manifest import backup
 
 version = 3
-
-service = None
 
 managed_services = ['openvpn-server@freedombox']
 
@@ -87,49 +85,32 @@ class OpenVPNApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        daemon = Daemon('daemon-openvpn', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the OpenVPN module."""
     global app
     app = OpenVPNApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name)
-
-        if service.is_enabled() and is_setup():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled() \
+       and is_setup():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'openvpn', ['upgrade'])
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
-
-    if service.is_enabled() and is_setup():
+    if app.is_enabled() and is_setup():
         helper.call('post', app.enable)
 
 
 def is_setup():
     """Return whether the service is running."""
     return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('service', ['enable', managed_services[0]])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('service', ['disable', managed_services[0]])
-    app.disable()
 
 
 def diagnose():

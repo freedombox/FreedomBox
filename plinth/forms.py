@@ -26,15 +26,15 @@ from django.conf import settings
 from django.forms import CheckboxInput
 from django.utils import translation
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language_info
+from django.utils.translation import ugettext_lazy as _
 
 import plinth
 from plinth import utils
 
 
-class ServiceForm(forms.Form):
-    """Generic configuration form for a service."""
+class AppForm(forms.Form):
+    """Generic configuration form for an app."""
     is_enabled = forms.BooleanField(
         label=_('Enable application'), required=False)
 

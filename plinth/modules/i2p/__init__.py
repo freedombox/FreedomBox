@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
@@ -57,8 +57,6 @@ description = [
 clients = clients
 
 group = ('i2p', _('Manage I2P application'))
-
-service = None
 
 manual_page = 'I2P'
 
@@ -107,6 +105,9 @@ class I2PApp(app_module.App):
         webserver = Webserver('webserver-i2p', 'i2p-freedombox')
         self.add(webserver)
 
+        daemon = Daemon('daemon-i2p', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the module."""
@@ -114,21 +115,16 @@ def init():
     app = I2PApp()
     register_group(group)
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
 
-    helper.call('post', disable)
+    helper.call('post', app.disable)
     # Add favorites to the configuration
     for fav in FAVORITES:
         args = [
@@ -152,36 +148,7 @@ def setup(helper, old_version=None):
             'set-tunnel-property', '--name', tunnel, '--property', 'interface',
             '--value', '0.0.0.0'
         ])
-    helper.call('post', enable)
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-
     helper.call('post', app.enable)
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('i2p')
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('i2p') and app.is_enabled()
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('i2p', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('i2p', ['disable'])
-    app.disable()
 
 
 def diagnose():

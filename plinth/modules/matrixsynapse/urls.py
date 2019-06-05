@@ -14,17 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the matrix-synapse module.
 """
 
 from django.conf.urls import url
 
-from .views import SetupView, MatrixSynapseServiceView
+from .views import MatrixSynapseAppView, SetupView
 
 urlpatterns = [
     url(r'^apps/matrixsynapse/setup/$', SetupView.as_view(), name='setup'),
-    url(r'^apps/matrixsynapse/$', MatrixSynapseServiceView.as_view(),
+    url(r'^apps/matrixsynapse/$', MatrixSynapseAppView.as_view(),
         name='index'),
 ]

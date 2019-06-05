@@ -20,19 +20,19 @@ Configuration helper for the Tor service
 """
 
 import argparse
-import augeas
 import codecs
 import json
 import os
 import re
 import socket
-import time
 import subprocess
+import time
+
+import augeas
 
 from plinth import action_utils
-from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
-                                     get_augeas, is_running, is_enabled, \
-                                     APT_TOR_PREFIX
+from plinth.modules.tor.utils import (APT_TOR_PREFIX, get_augeas,
+                                      get_real_apt_uri_path, iter_apt_uris)
 
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
@@ -212,7 +212,8 @@ def subcommand_configure(arguments):
 
 def subcommand_restart(_):
     """Restart Tor."""
-    if is_enabled() and is_running():
+    if (action_utils.service_is_enabled('tor@plinth', strict_check=True)
+            and action_utils.service_is_running('tor@plinth')):
         action_utils.service_restart('tor@plinth')
 
         aug = augeas_load()
@@ -527,8 +528,8 @@ def _update_ports():
 
 def augeas_load():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Tor/lens', 'Tor.lns')
     aug.set('/augeas/load/Tor/incl[last() + 1]',
             '/etc/tor/instances/plinth/torrc')

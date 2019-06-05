@@ -1,4 +1,4 @@
-{% extends "service-subsubmenu.html" %}
+{% extends "app-subsubmenu.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -26,7 +26,7 @@
 
   {% block diagnostics %}
     {% if diagnostics_module_name %}
-      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=service.is_enabled %}
+      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
     {% endif %}
   {% endblock %}
 

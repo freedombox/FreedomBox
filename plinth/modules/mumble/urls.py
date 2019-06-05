@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Mumble module
 """
 
 from django.conf.urls import url
 
-from plinth.modules.mumble import MumbleServiceView
-
+from plinth.modules.mumble import MumbleAppView
 
 urlpatterns = [
-    url(r'^apps/mumble/$', MumbleServiceView.as_view(), name='index'),
+    url(r'^apps/mumble/$', MumbleAppView.as_view(), name='index'),
 ]

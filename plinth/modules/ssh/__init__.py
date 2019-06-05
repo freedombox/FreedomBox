@@ -23,9 +23,9 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .manifest import backup
 
@@ -45,8 +45,6 @@ description = [
       'can perform administration tasks, copy files or run other services '
       'using such connections.')
 ]
-
-service = None
 
 port_forwarding_info = [('TCP', 22)]
 
@@ -69,6 +67,9 @@ class SSHApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        daemon = Daemon('daemon-ssh', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the ssh module."""
@@ -76,16 +77,14 @@ def init():
     app = SSHApp()
     app.set_enabled(True)
 
-    global service
-    service = service_module.Service(managed_services[0], name)
-
 
 def setup(helper, old_version=None):
     """Configure the module."""
     actions.superuser_run('ssh', ['setup'])
 
 
-class SshServiceView(ServiceView):
-    service_id = managed_services[0]
+class SshAppView(AppView):
+    app_id = 'ssh'
+    name = name
     description = description
     port_forwarding_info = port_forwarding_info

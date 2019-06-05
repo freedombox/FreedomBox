@@ -20,8 +20,8 @@ URLs for the Searx module.
 
 from django.conf.urls import url
 
-from .views import SearxServiceView
+from .views import SearxAppView
 
 urlpatterns = [
-    url(r'^apps/searx/$', SearxServiceView.as_view(), name='index'),
+    url(r'^apps/searx/$', SearxAppView.as_view(), name='index'),
 ]

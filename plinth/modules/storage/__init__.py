@@ -25,9 +25,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions
 from plinth import app as app_module
-from plinth import cfg, menu
-from plinth import service as service_module
-from plinth import utils
+from plinth import cfg, menu, utils
+from plinth.daemon import Daemon
 from plinth.errors import PlinthError
 from plinth.utils import format_lazy, import_from_gi
 
@@ -46,8 +45,6 @@ description = [
           'and unmount removable media, expand the root partition etc.'),
         box_name=_(cfg.box_name))
 ]
-
-service = None
 
 logger = logging.getLogger(__name__)
 
@@ -69,6 +66,9 @@ class StorageApp(app_module.App):
         menu_item = menu.Menu('menu-storage', name, None, 'fa-hdd-o',
                               'storage:index', parent_url_name='system')
         self.add(menu_item)
+
+        daemon = Daemon('daemon-udiskie', managed_services[0])
+        self.add(daemon)
 
 
 def init():
@@ -271,37 +271,10 @@ def get_error_message(error):
     return message
 
 
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('freedombox-udiskie')
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('freedombox-udiskie')
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('udiskie', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('udiskie', ['disable'])
-    app.disable()
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages, skip_recommends=True)
-    helper.call('post', actions.superuser_run, 'udiskie', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
+    helper.call('post', app.enable)
     disks = get_disks()
     root_device = get_root_device(disks)
     if is_expandable(root_device):

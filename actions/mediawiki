@@ -25,7 +25,6 @@ import subprocess
 import sys
 import tempfile
 
-from plinth import action_utils
 from plinth.utils import generate_password, grep
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
@@ -38,8 +37,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable MediaWiki')
-    subparsers.add_parser('disable', help='Disable MediaWiki')
     subparsers.add_parser('setup', help='Setup MediaWiki')
     subparsers.add_parser('update', help='Run MediaWiki update script')
 
@@ -114,16 +111,6 @@ def subcommand_update(_):
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
     subprocess.check_call(['php', update_script])
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('mediawiki-jobrunner')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('mediawiki-jobrunner')
 
 
 def subcommand_public_registrations(arguments):

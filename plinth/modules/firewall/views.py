@@ -20,7 +20,6 @@ FreedomBox app to configure a firewall.
 
 from django.template.response import TemplateResponse
 
-import plinth.service as service_module
 from plinth.modules import firewall
 
 from . import components

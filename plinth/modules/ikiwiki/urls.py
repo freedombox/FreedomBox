@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the ikiwiki module
 """
@@ -23,10 +22,8 @@ from django.conf.urls import url
 
 from . import views
 
-
 urlpatterns = [
-    url(r'^apps/ikiwiki/$',
-        views.IkiwikiServiceView.as_view(), name='index'),
+    url(r'^apps/ikiwiki/$', views.IkiwikiAppView.as_view(), name='index'),
     url(r'^apps/ikiwiki/manage/$', views.manage, name='manage'),
     url(r'^apps/ikiwiki/(?P<name>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),

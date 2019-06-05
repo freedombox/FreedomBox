@@ -14,17 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Transmission module.
 """
 
 from django.conf.urls import url
 
-from .views import TransmissionServiceView
-
+from .views import TransmissionAppView
 
 urlpatterns = [
-    url(r'^apps/transmission/$',
-        TransmissionServiceView.as_view(), name='index'),
+    url(r'^apps/transmission/$', TransmissionAppView.as_view(), name='index'),
 ]

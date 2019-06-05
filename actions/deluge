@@ -52,25 +52,13 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable deluge-web site')
-    subparsers.add_parser('disable', help='Disable deluge-web site')
+    subparsers.add_parser('setup', help='Setup deluge')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_enable(_):
-    """Enable deluge-web site and start deluge-web."""
-    setup()
-    action_utils.service_enable('deluge-web')
-
-
-def subcommand_disable(_):
-    """Disable deluge-web site and stop deluge-web."""
-    action_utils.service_disable('deluge-web')
-
-
-def setup():
+def subcommand_setup(_):
     """Perform initial setup for deluge-web."""
     if not os.path.isfile(SYSTEMD_SERVICE_PATH):
         with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:

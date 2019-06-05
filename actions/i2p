@@ -22,7 +22,7 @@ Wrapper to list and handle system services
 import argparse
 import os
 
-from plinth import action_utils, cfg
+from plinth import cfg
 from plinth.modules.i2p.helpers import RouterEditor, TunnelEditor
 
 cfg.read()
@@ -35,9 +35,6 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('enable', help='enable i2p service')
-    subparsers.add_parser('disable', help='disable i2p service')
 
     subparser = subparsers.add_parser(
         'add-favorite', help='Add an eepsite to the list of favorites')
@@ -56,16 +53,6 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
-
-
-def subcommand_enable(_):
-    """Enable I2P service."""
-    action_utils.service_enable('i2p')
-
-
-def subcommand_disable(_):
-    """Disable I2P service."""
-    action_utils.service_disable('i2p')
 
 
 def subcommand_set_tunnel_property(arguments):

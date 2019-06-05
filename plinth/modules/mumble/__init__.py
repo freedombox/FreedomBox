@@ -21,12 +21,12 @@ FreedomBox app to configure Mumble server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .manifest import backup, clients
 
@@ -35,8 +35,6 @@ version = 1
 name = _('Mumble')
 
 short_description = _('Voice Chat')
-
-service = None
 
 managed_services = ['mumble-server']
 
@@ -86,25 +84,24 @@ class MumbleApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        daemon = Daemon('daemon-mumble', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the Mumble module."""
     global app
     app = MumbleApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
-
-        if service.is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
-class MumbleServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = "mumble"
+class MumbleAppView(AppView):
+    app_id = 'mumble'
+    diagnostics_module_name = 'mumble'
+    name = name
     description = description
     clients = clients
     manual_page = manual_page
@@ -114,23 +111,7 @@ class MumbleServiceView(ServiceView):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
     helper.call('post', app.enable)
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('service', ['enable', managed_services[0]])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('service', ['disable', managed_services[0]])
-    app.disable()
 
 
 def diagnose():

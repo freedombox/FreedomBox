@@ -23,7 +23,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import menu
-from plinth import service as service_module
 
 from .manifest import backup
 
@@ -38,8 +37,6 @@ name = _('Update')
 description = [
     _('Check for and apply the latest software and security updates.')
 ]
-
-service = None
 
 manual_page = 'Upgrades'
 
@@ -64,11 +61,6 @@ def init():
     global app
     app = UpgradesApp()
     app.set_enabled(True)
-
-    global service
-    service = service_module.Service('auto-upgrades', name,
-                                     is_enabled=is_enabled, enable=enable,
-                                     disable=disable)
 
 
 def setup(helper, old_version=None):

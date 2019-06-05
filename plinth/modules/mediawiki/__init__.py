@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
@@ -32,6 +32,8 @@ from .manifest import backup, clients
 version = 6
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
+
+managed_services = ['mediawiki-jobrunner']
 
 name = _('MediaWiki')
 
@@ -51,8 +53,6 @@ description = [
     _('Anyone with a link to this wiki can read it. Only users that are '
       'logged in can make changes to the content.')
 ]
-
-service = None
 
 manual_page = 'MediaWiki'
 
@@ -93,6 +93,9 @@ class MediaWikiApp(app_module.App):
                               'mediawiki-freedombox')
         self.add(webserver)
 
+        daemon = Daemon('daemon-mediawiki', managed_services[0])
+        self.add(daemon)
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut for only logged users when in private mode."""
@@ -108,14 +111,9 @@ def init():
     global app
     app = MediaWikiApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('mediawiki', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -123,30 +121,7 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('setup', actions.superuser_run, 'mediawiki', ['setup'])
     helper.call('update', actions.superuser_run, 'mediawiki', ['update'])
-    helper.call('enable', actions.superuser_run, 'mediawiki', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service('mediawiki', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     helper.call('post', app.enable)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return app.is_enabled()
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('mediawiki', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('mediawiki', ['disable'])
-    app.disable()
 
 
 def diagnose():

@@ -24,10 +24,10 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .manifest import backup, clients
 
@@ -64,8 +64,6 @@ clients = clients
 
 reserved_usernames = ['repro']
 
-service = None
-
 manual_page = 'Repro'
 
 port_forwarding_info = [('UDP', '1024-65535')]
@@ -100,27 +98,26 @@ class ReproApp(app_module.App):
         webserver = Webserver('webserver-repro', 'repro-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-repro', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the repro module."""
     global app
     app = ReproApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
-
-        if service.is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
-class ReproServiceView(ServiceView):
+class ReproAppView(AppView):
     clients = clients
+    name = name
     description = description
-    diagnostics_module_name = "repro"
-    service_id = managed_services[0]
+    diagnostics_module_name = 'repro'
+    app_id = 'repro'
     manual_page = manual_page
     port_forwarding_info = port_forwarding_info
 
@@ -129,23 +126,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
     helper.call('post', app.enable)
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('service', ['enable', managed_services[0]])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('service', ['disable', managed_services[0]])
-    app.disable()
 
 
 def diagnose():

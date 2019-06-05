@@ -22,7 +22,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
@@ -45,8 +44,6 @@ description = [
 ]
 
 clients = clients
-
-service = None
 
 manual_page = 'Shaarli'
 
@@ -85,38 +82,12 @@ def init():
     global app
     app = ShaarliApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('shaarli', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    global service
-    if service is None:
-        service = service_module.Service('shaarli', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     helper.call('post', app.enable)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return app.is_enabled()
-
-
-def enable():
-    """Enable the module."""
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    app.disable()

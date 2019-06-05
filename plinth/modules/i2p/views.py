@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy
 from django.views.generic import TemplateView
 
 import plinth.modules.i2p as i2p
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 subsubmenu = [{
     'url': reverse_lazy('i2p:index'),
@@ -39,10 +39,11 @@ subsubmenu = [{
               }]
 
 
-class I2PServiceView(ServiceView):
+class I2PAppView(AppView):
     """Serve configuration page."""
-    service_id = i2p.service_name
+    app_id = 'i2p'
     clients = i2p.clients
+    name = i2p.name
     description = i2p.description
     diagnostics_module_name = i2p.service_name
     show_status_block = True
@@ -74,6 +75,7 @@ class ServiceBaseView(TemplateView):
         context['clients'] = i2p.clients
         context['manual_page'] = i2p.manual_page
         context['subsubmenu'] = subsubmenu
+        context['is_enabled'] = i2p.app.is_enabled()
         context['service_title'] = self.service_title
         context['service_path'] = self.service_path
         context['service_description'] = self.service_description

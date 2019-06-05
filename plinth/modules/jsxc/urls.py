@@ -20,9 +20,9 @@ URLs for the JSXC module
 
 from django.conf.urls import url
 
-from .views import JSXCServiceView, JsxcView
+from .views import JSXCAppView, JsxcView
 
 urlpatterns = [
-    url(r'^apps/jsxc/$', JSXCServiceView.as_view(), name='index'),
+    url(r'^apps/jsxc/$', JSXCAppView.as_view(), name='index'),
     url(r'^apps/jsxc/jsxc/$', JsxcView.as_view(), name='jsxc')
 ]

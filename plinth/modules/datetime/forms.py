@@ -14,23 +14,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for configuring date and time
 """
 
-from django import forms
-from django.utils.translation import ugettext_lazy as _
 import logging
 import subprocess
 
-from plinth.forms import ServiceForm
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
+from plinth.forms import AppForm
 
 logger = logging.getLogger(__name__)
 
 
-class DateTimeForm(ServiceForm):
+class DateTimeForm(AppForm):
     """Date/time configuration form."""
     time_zone = forms.ChoiceField(
         label=_('Time Zone'),
@@ -41,8 +40,7 @@ class DateTimeForm(ServiceForm):
         """Initialize the date/time form."""
         forms.Form.__init__(self, *args, **kwargs)
 
-        time_zone_options = [(zone, zone)
-                             for zone in self.get_time_zones()]
+        time_zone_options = [(zone, zone) for zone in self.get_time_zones()]
         # Show not-set option only when time zone is not set
         current_time_zone = self.initial.get('time_zone')
         if current_time_zone == 'none':

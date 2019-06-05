@@ -24,7 +24,7 @@ import sys
 import axes
 
 from . import (__version__, cfg, dbus, frontpage, log, menu, module_loader,
-               service, setup, web_framework, web_server)
+               setup, web_framework, web_server)
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
 precedence_commandline_arguments = ["server_dir", "develop"]

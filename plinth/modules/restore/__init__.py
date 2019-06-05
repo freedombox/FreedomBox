@@ -22,7 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -54,8 +54,6 @@ clients = clients
 
 reserved_usernames = ['node-restore']
 
-service = None
-
 app = None
 
 
@@ -76,21 +74,21 @@ class RestoreApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        daemon = Daemon('daemon-restore', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the reStore module."""
     global app
     app = RestoreApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.enable()
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name)
+    helper.call('post', app.enable)

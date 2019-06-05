@@ -41,8 +41,6 @@ description = [
     _('Backups allows creating and managing backup archives.'),
 ]
 
-service = None
-
 manual_page = 'Backups'
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
@@ -74,9 +72,8 @@ def init():
     global app
     app = BackupsApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
         app.set_enabled(True)
 
 

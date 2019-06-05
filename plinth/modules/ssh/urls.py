@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Secure Shell Server module.
 """
 
 from django.conf.urls import url
 
-from plinth.modules.ssh import SshServiceView
-
+from plinth.modules.ssh import SshAppView
 
 urlpatterns = [
-    url(r'^sys/ssh/$', SshServiceView.as_view(), name='index'),
+    url(r'^sys/ssh/$', SshAppView.as_view(), name='index'),
 ]

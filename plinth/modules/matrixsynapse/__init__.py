@@ -28,7 +28,7 @@ from ruamel.yaml.util import load_yaml_guess_indent
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
@@ -59,8 +59,6 @@ description = [
 ]
 
 clients = clients
-
-service = None
 
 manual_page = 'MatrixSynapse'
 
@@ -103,31 +101,23 @@ class MatrixSynapseApp(app_module.App):
                               'matrix-synapse-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-matrixsynapse', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the matrix-synapse module."""
     global app
     app = MatrixSynapseApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('matrix-synapse', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    global service
-    if service is None:
-        service = service_module.Service('matrix-synapse', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
     helper.call('post', actions.superuser_run, 'matrixsynapse',
                 ['post-install'])
     helper.call('post', app.enable)
@@ -136,24 +126,6 @@ def setup(helper, old_version=None):
 def is_setup():
     """Return whether the Matrix Synapse server is setup."""
     return os.path.exists(SERVER_NAME_PATH)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('matrix-synapse')
-            and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('matrixsynapse', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('matrixsynapse', ['disable'])
-    app.disable()
 
 
 def diagnose():

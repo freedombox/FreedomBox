@@ -64,6 +64,12 @@ class App:
         """Return a component given the component's ID."""
         return self.components[component_id]
 
+    def get_components_of_type(self, component_type):
+        """Return all components of a given type."""
+        for component in self.components.values():
+            if isinstance(component, component_type):
+                yield component
+
     def enable(self):
         """Enable all the components of the app."""
         for component in self.components.values():
@@ -75,7 +81,10 @@ class App:
             component.disable()
 
     def is_enabled(self):
-        """Return whether all the leader components are enabled."""
+        """Return whether all the leader components are enabled.
+
+        Return True when there are no leader components.
+        """
         return all((component.is_enabled()
                     for component in self.components.values()
                     if component.is_leader))

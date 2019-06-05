@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the quassel module.
 """
 
 from django.conf.urls import url
 
-from plinth.modules.quassel import QuasselServiceView
-
+from plinth.modules.quassel import QuasselAppView
 
 urlpatterns = [
-    url(r'^apps/quassel/$', QuasselServiceView.as_view(), name='index'),
+    url(r'^apps/quassel/$', QuasselAppView.as_view(), name='index'),
 ]

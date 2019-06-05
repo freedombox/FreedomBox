@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Privoxy module.
 """
 
 from django.conf.urls import url
 
-from plinth.modules.privoxy import PrivoxyServiceView
-
+from plinth.modules.privoxy import PrivoxyAppView
 
 urlpatterns = [
-    url(r'^apps/privoxy/$', PrivoxyServiceView.as_view(), name='index'),
+    url(r'^apps/privoxy/$', PrivoxyAppView.as_view(), name='index'),
 ]

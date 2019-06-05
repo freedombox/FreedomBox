@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the date and time module
 """
 
 from django.conf.urls import url
 
-from .views import DateTimeServiceView
-
+from .views import DateTimeAppView
 
 urlpatterns = [
-    url(r'^sys/datetime/$', DateTimeServiceView.as_view(), name='index'),
+    url(r'^sys/datetime/$', DateTimeAppView.as_view(), name='index'),
 ]

@@ -30,30 +30,29 @@ from plinth.modules import shadowsocks
 from .forms import ShadowsocksForm
 
 
-class ShadowsocksServiceView(views.ServiceView):
+class ShadowsocksAppView(views.AppView):
     """Configuration view for Shadowsocks local socks5 proxy."""
-    service_id = 'shadowsocks'
+    app_id = 'shadowsocks'
     diagnostics_module_name = 'shadowsocks'
     form_class = ShadowsocksForm
+    name = shadowsocks.name
     description = shadowsocks.description
     manual_page = shadowsocks.manual_page
 
     def get_initial(self, *args, **kwargs):
         """Get initial values for form."""
+        status = super().get_initial()
         try:
             configuration = actions.superuser_run('shadowsocks',
                                                   ['get-config'])
-            status = json.loads(configuration)
+            status.update(json.loads(configuration))
         except ActionError:
-            status = {
+            status.update({
                 'server': '',
                 'server_port': 8388,
                 'password': '',
                 'method': 'chacha20-ietf-poly1305',
-            }
-
-        status['is_enabled'] = self.service.is_enabled()
-        status['is_running'] = self.service.is_running()
+            })
 
         return status
 

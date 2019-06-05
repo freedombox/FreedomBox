@@ -33,28 +33,28 @@ from .forms import TransmissionForm
 logger = logging.getLogger(__name__)
 
 
-class TransmissionServiceView(views.ServiceView):
+class TransmissionAppView(views.AppView):
     """Serve configuration page."""
     clients = transmission.clients
+    name = transmission.name
     description = transmission.description
     diagnostics_module_name = 'transmission'
     form_class = TransmissionForm
-    service_id = transmission.managed_services[0]
+    app_id = 'transmission'
     manual_page = transmission.manual_page
 
     def get_initial(self):
         """Get the current settings from Transmission server."""
+        status = super().get_initial()
         configuration = actions.superuser_run('transmission',
                                               ['get-configuration'])
-        status = json.loads(configuration)
-        status = {
+        configuration = json.loads(configuration)
+        status.update({
             key.translate(str.maketrans({
                 '-': '_'
             })): value
-            for key, value in status.items()
-        }
-        status['is_enabled'] = self.service.is_enabled()
-        status['is_running'] = self.service.is_running()
+            for key, value in configuration.items()
+        })
         status['hostname'] = socket.gethostname()
 
         return status

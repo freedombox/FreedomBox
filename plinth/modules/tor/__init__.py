@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
@@ -40,6 +40,8 @@ depends = ['names']
 managed_packages = [
     'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
 ]
+
+managed_services = ['tor@plinth']
 
 name = _('Tor')
 
@@ -57,9 +59,6 @@ description = [
 clients = clients
 
 reserved_usernames = ['debian-tor']
-
-socks_service = None
-bridge_service = None
 
 manual_page = 'Tor'
 
@@ -87,6 +86,9 @@ class TorApp(app_module.App):
                                    'tor-obfs4'], is_external=True)
         self.add(firewall)
 
+        daemon = Daemon('daemon-tor', managed_services[0], strict_check=True)
+        self.add(daemon)
+
 
 def init():
     """Initialize the module."""
@@ -97,19 +99,8 @@ def init():
     needs_setup = setup_helper.get_state() == 'needs-setup'
 
     if not needs_setup:
-        if utils.is_enabled():
+        if app.is_enabled():
             app.set_enabled(True)
-
-        global socks_service
-        socks_service = service_module.Service(
-            'tor-socks', _('Tor Socks Proxy'), is_enabled=utils.is_enabled,
-            is_running=utils.is_running)
-
-        global bridge_service
-        bridge_service = service_module.Service('tor-bridge',
-                                                _('Tor Bridge Relay'),
-                                                is_enabled=utils.is_enabled,
-                                                is_running=utils.is_running)
 
         # Register hidden service name with Name Services module.
         status = utils.get_status()
@@ -141,42 +132,8 @@ def setup(helper, old_version=None):
         helper.call('post', actions.superuser_run, 'tor',
                     ['configure', '--apt-transport-tor', 'enable'])
 
-    global socks_service
-    if socks_service is None:
-        socks_service = service_module.Service('tor-socks',
-                                               _('Tor Anonymity Network'),
-                                               is_enabled=utils.is_enabled,
-                                               is_running=utils.is_running)
-
-    global bridge_service
-    if bridge_service is None:
-        bridge_service = service_module.Service('tor-bridge',
-                                                _('Tor Bridge Relay'),
-                                                is_enabled=utils.is_enabled,
-                                                is_running=utils.is_running)
-
     helper.call('post', update_hidden_service_domain)
     helper.call('post', app.enable)
-
-
-def enable():
-    """Enable the app.
-
-    XXX: Currently performs only partial activities while the rest happens
-    elsewhere.
-
-    """
-    app.enable()
-
-
-def disable():
-    """Enable the app.
-
-    XXX: Currently performs only partial activities while the rest happens
-    elsewhere.
-
-    """
-    app.disable()
 
 
 def update_hidden_service_domain(status=None):

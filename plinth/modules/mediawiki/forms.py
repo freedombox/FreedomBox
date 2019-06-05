@@ -21,10 +21,10 @@ FreedomBox app for configuring MediaWiki.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import ServiceForm
+from plinth.forms import AppForm
 
 
-class MediaWikiForm(ServiceForm):  # pylint: disable=W0232
+class MediaWikiForm(AppForm):  # pylint: disable=W0232
     """MediaWiki configuration form."""
     password = forms.CharField(
         label=_('Administrator Password'), help_text=_(

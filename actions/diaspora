@@ -38,8 +38,6 @@ def parse_arguments():
         'pre-install',
         help='Preseed debconf values before packages are installed.')
 
-    subparsers.add_parser('enable', help='Enable diaspora* web server')
-    subparsers.add_parser('disable', help='Disable diaspora* web server')
     subparsers.add_parser('enable-user-registrations', help='Allow users to' \
                           'sign up to this diaspora* pod without an invitation.')
     subparsers.add_parser('disable-user-registrations', help='Allow only, ' \
@@ -146,16 +144,6 @@ def subcommand_pre_install(_):
 
     for preset in presets:
         subprocess.check_output(['debconf-set-selections'], input=preset)
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('diaspora')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('diaspora')
 
 
 def main():

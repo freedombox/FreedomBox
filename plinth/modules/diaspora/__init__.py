@@ -22,7 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.errors import DomainNotRegisteredError
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
@@ -54,8 +54,6 @@ version = 1
 name = _('diaspora*')
 
 short_description = _('Federated Social Network')
-
-service = None
 
 managed_services = ['diaspora']
 
@@ -103,6 +101,9 @@ class DiasporaApp(app_module.App):
         webserver = Webserver('webserver-diaspora', 'diaspora-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-diaspora', managed_services[0])
+        self.add(daemon)
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -118,15 +119,9 @@ def init():
     global app
     app = DiasporaApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -139,29 +134,7 @@ def setup(helper, old_version=None):
 
 def setup_domain_name(domain_name):
     actions.superuser_run('diaspora', ['setup', '--domain-name', domain_name])
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     app.enable()
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return app.is_enabled()
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('diaspora', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('diaspora', ['disable'])
-    app.disable()
 
 
 def is_user_registrations_enabled():

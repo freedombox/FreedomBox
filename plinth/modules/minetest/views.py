@@ -23,16 +23,17 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.modules import minetest, names
-from plinth.views import ServiceView
+from plinth.views import AppView
 
-from . import description, get_configuration, managed_services
+from . import description, get_configuration
 from .forms import MinetestForm
 
 
-class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
+class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
-    service_id = managed_services[0]
-    diagnostics_module_name = "minetest"
+    app_id = 'minetest'
+    diagnostics_module_name = 'minetest'
+    name = minetest.name
     description = description
     show_status_block = True
     template_name = 'minetest.html'

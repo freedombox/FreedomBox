@@ -24,7 +24,7 @@ from django.views.generic import FormView
 from plinth.forms import DomainSelectionForm
 from plinth.modules import tahoe
 from plinth.utils import get_domain_names
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 
 class TahoeSetupView(FormView):
@@ -49,10 +49,11 @@ class TahoeSetupView(FormView):
         return context
 
 
-class TahoeServiceView(ServiceView):
+class TahoeAppView(AppView):
     """Show tahoe-lafs service page."""
-    service_id = tahoe.managed_services[0]
+    app_id = 'tahoe'
     template_name = 'tahoe-post-setup.html'
+    name = tahoe.name
     description = tahoe.description
     diagnostics_module_name = 'tahoe'
     port_forwarding_info = tahoe.port_forwarding_info

@@ -21,12 +21,13 @@ URLs for the Deluge module.
 from django.conf.urls import url
 
 from plinth.modules import deluge
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/deluge/$',
-        ServiceView.as_view(
-            description=deluge.description, diagnostics_module_name="deluge",
-            clients=deluge.clients, service_id=deluge.managed_services[0],
-            manual_page=deluge.manual_page), name='index'),
+    url(
+        r'^apps/deluge/$',
+        AppView.as_view(name=deluge.name, description=deluge.description,
+                        diagnostics_module_name='deluge',
+                        clients=deluge.clients, app_id='deluge',
+                        manual_page=deluge.manual_page), name='index'),
 ]

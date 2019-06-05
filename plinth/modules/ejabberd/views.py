@@ -23,15 +23,16 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.modules import config, ejabberd
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .forms import EjabberdForm
 
 
-class EjabberdServiceView(ServiceView):
+class EjabberdAppView(AppView):
     """Show ejabberd as a service."""
-    service_id = ejabberd.managed_services[0]
+    app_id = 'ejabberd'
     template_name = 'ejabberd.html'
+    name = ejabberd.name
     description = ejabberd.description
     diagnostics_module_name = 'ejabberd'
     form_class = EjabberdForm
@@ -64,11 +65,9 @@ class EjabberdServiceView(ServiceView):
                 messages.info(self.request, _('Setting unchanged'))
         elif not app_same:
             if new_status['is_enabled']:
-                self.service.enable()
-                messages.success(self.request, _('Application enabled'))
+                self.app.enable()
             else:
-                self.service.disable()
-                messages.success(self.request, _('Application disabled'))
+                self.app.disable()
 
         if not mam_same:
             # note ejabberd action "enable" or "disable" restarts, if running
@@ -81,7 +80,7 @@ class EjabberdServiceView(ServiceView):
                 messages.success(self.request,
                                  _('Message Archive Management disabled'))
 
-        return super(ServiceView, self).form_valid(form)
+        return super().form_valid(form)
 
     def is_MAM_enabled(self):
         """Return whether Message Archive Management (MAM) is enabled."""

@@ -39,8 +39,6 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('post-install', help='Perform post install steps')
-    subparsers.add_parser('enable', help='Enable matrix-synapse service')
-    subparsers.add_parser('disable', help='Disable matrix-synapse service')
     help_pubreg = 'Enable/Disable/Status public user registration.'
     pubreg = subparsers.add_parser('public-registration', help=help_pubreg)
     pubreg.add_argument('command', choices=('enable', 'disable', 'status'),
@@ -166,17 +164,6 @@ def subcommand_setup(arguments):
     action_utils.dpkg_reconfigure('matrix-synapse',
                                   {'server-name': domain_name})
     _update_tls_certificate()
-    subcommand_enable(arguments)
-
-
-def subcommand_enable(_):
-    """Enable service."""
-    action_utils.service_enable('matrix-synapse')
-
-
-def subcommand_disable(_):
-    """Disable service."""
-    action_utils.service_disable('matrix-synapse')
 
 
 def subcommand_public_registration(argument):

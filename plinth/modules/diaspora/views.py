@@ -27,9 +27,9 @@ from django.views.generic import FormView
 from plinth.forms import DomainSelectionForm
 from plinth.modules import diaspora
 from plinth.utils import get_domain_names
-from plinth.views import ServiceView
+from plinth.views import AppView
 
-from .forms import DiasporaServiceForm
+from .forms import DiasporaAppForm
 
 
 class DiasporaSetupView(FormView):
@@ -55,12 +55,13 @@ class DiasporaSetupView(FormView):
         return context
 
 
-class DiasporaServiceView(ServiceView):
+class DiasporaAppView(AppView):
     """Show diaspora service page."""
-    form_class = DiasporaServiceForm
-    service_id = diaspora.managed_services[0]
+    form_class = DiasporaAppForm
+    app_id = 'diaspora'
     template_name = 'diaspora-post-setup.html'
     diagnostics_module_name = 'diaspora'
+    name = diaspora.name
 
     def dispatch(self, request, *args, **kwargs):
         if not diaspora.is_setup():
@@ -75,14 +76,10 @@ class DiasporaServiceView(ServiceView):
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
-        return {
-            'is_enabled':
-                self.service.is_enabled(),
-            'is_user_registrations_enabled':
-                diaspora.is_user_registrations_enabled(),
-            'is_running':
-                self.service.is_running()
-        }
+        status = super().get_initial()
+        status['is_user_registrations_enabled'] = \
+            diaspora.is_user_registrations_enabled()
+        return status
 
     def form_valid(self, form):
         """Enable/disable user registrations"""

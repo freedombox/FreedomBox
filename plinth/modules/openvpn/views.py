@@ -27,7 +27,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import actions
+from plinth import actions, daemon
 from plinth.modules import config, openvpn
 
 from .forms import OpenVpnForm
@@ -75,7 +75,7 @@ def setup(request):
         setup_process = actions.superuser_run('openvpn', ['setup'],
                                               run_in_background=True)
 
-    openvpn.enable()
+    openvpn.app.enable()
 
     return redirect('openvpn:index')
 
@@ -105,8 +105,8 @@ def get_status():
     return {
         'is_setup': openvpn.is_setup(),
         'setup_running': bool(setup_process),
-        'enabled': openvpn.service.is_enabled(),
-        'is_running': openvpn.service.is_running()
+        'enabled': openvpn.app.is_enabled(),
+        'is_running': daemon.app_is_running(openvpn.app)
     }
 
 
@@ -136,9 +136,9 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         if new_status['enabled']:
-            openvpn.enable()
+            openvpn.app.enable()
         else:
-            openvpn.disable()
+            openvpn.app.disable()
 
         modified = True
 

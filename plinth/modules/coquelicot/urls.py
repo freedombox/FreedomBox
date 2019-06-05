@@ -20,8 +20,8 @@ URLs for the coquelicot module.
 
 from django.conf.urls import url
 
-from .views import CoquelicotServiceView
+from .views import CoquelicotAppView
 
 urlpatterns = [
-    url(r'^apps/coquelicot/$', CoquelicotServiceView.as_view(), name='index'),
+    url(r'^apps/coquelicot/$', CoquelicotAppView.as_view(), name='index'),
 ]

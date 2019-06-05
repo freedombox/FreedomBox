@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules import config
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
@@ -62,8 +62,6 @@ description = [
 clients = clients
 
 reserved_usernames = ['ejabberd']
-
-service = None
 
 manual_page = 'ejabberd'
 
@@ -106,20 +104,18 @@ class EjabberdApp(app_module.App):
         webserver = Webserver('webserver-ejabberd', 'jwchat-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-ejabberd', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the ejabberd module"""
     global app
     app = EjabberdApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('ejabberd', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
@@ -135,29 +131,7 @@ def setup(helper, old_version=None):
                 ['pre-install', '--domainname', domainname])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
-    global service
-    if service is None:
-        service = service_module.Service('ejabberd', name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     helper.call('post', app.enable)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('ejabberd')
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('ejabberd', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('ejabberd', ['disable'])
-    app.disable()
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

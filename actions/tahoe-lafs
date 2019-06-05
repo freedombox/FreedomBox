@@ -30,7 +30,6 @@ import subprocess
 import augeas
 import ruamel.yaml
 
-from plinth import action_utils
 from plinth.modules.tahoe import (introducer_furl_file, introducer_name,
                                   introducers_file, storage_node_name,
                                   tahoe_home)
@@ -47,8 +46,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable Tahoe-LAFS')
-    subparsers.add_parser('disable', help='Disable Tahoe-LAFS')
     setup = subparsers.add_parser('setup',
                                   help='Set domain name for Tahoe-LAFS')
     setup.add_argument('--domain-name',
@@ -222,16 +219,6 @@ def subcommand_get_local_introducer(_):
         furl = furl_file.read().rstrip()
 
     print(json.dumps((introducer_name, furl)))
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('tahoe-lafs')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('tahoe-lafs')
 
 
 def restart_storage_node():

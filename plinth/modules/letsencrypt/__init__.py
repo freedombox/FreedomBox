@@ -60,8 +60,6 @@ description = [
       'Subscriber Agreement</a> before using this service.')
 ]
 
-service = None
-
 manual_page = 'LetsEncrypt'
 
 MODULES_WITH_HOOKS = ['ejabberd', 'matrixsynapse']

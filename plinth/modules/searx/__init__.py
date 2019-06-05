@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
@@ -35,8 +35,6 @@ from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients
 clients = clients
 
 version = 3
-
-managed_services = ['searx']
 
 managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
 
@@ -52,8 +50,6 @@ description = [
 ]
 
 group = ('web-search', _('Search the web'))
-
-service = None
 
 manual_page = 'Searx'
 
@@ -119,15 +115,9 @@ def init():
     app = SearxApp()
     register_group(group)
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -135,18 +125,10 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'searx', ['setup'])
     if not old_version or old_version < 3:
-        helper.call('post', actions.superuser_run, 'searx', ['enable'])
         helper.call('post', actions.superuser_run, 'searx',
                     ['disable-public-access'])
+        helper.call('post', app.enable)
         app.set_shortcut_login_required(True)
-        app.enable()
-
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-    helper.call('post', app.enable)
 
 
 def get_safe_search_setting():
@@ -158,21 +140,6 @@ def get_safe_search_setting():
 def is_public_access_enabled():
     """Check whether public access is enabled for Searx."""
     return os.path.exists(PUBLIC_ACCESS_SETTING_FILE)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return app.is_enabled()
-
-
-def enable():
-    """Enable the module."""
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    app.disable()
 
 
 def diagnose():

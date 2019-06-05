@@ -20,22 +20,24 @@
 {% load i18n %}
 
 {% block internal_zone_warning %}
-  {% if not service.is_external %}
-    <div class="bg-warning">
-      {% blocktrans trimmed with service_name=service.name %}
-        <em>{{ service_name }}</em> is available only on internal networks.
-      {% endblocktrans %}
-      <p>
-        {% with interfaces=service.get_internal_interfaces %}
-          {% if not interfaces %}
-            {% trans "Currently there are no network interfaces configured as internal." %}
-          {% else %}
-            {% blocktrans trimmed with interface_list=interfaces|join:", " %}
-              Currently the following network interfaces are configured as internal: {{ interface_list }}
-            {% endblocktrans %}
-          {% endif %}
-        {% endwith %}
-      </p>
-    </div>
-  {% endif %}
+  {% for component in firewall %}
+    {% if not component.is_external %}
+      <div class="bg-warning">
+        {% blocktrans trimmed with service_name=component.name %}
+          <em>{{ service_name }}</em> is available only on internal networks.
+        {% endblocktrans %}
+        <p>
+          {% with interfaces=component.get_internal_interfaces %}
+            {% if not interfaces %}
+              {% trans "Currently there are no network interfaces configured as internal." %}
+            {% else %}
+              {% blocktrans trimmed with interface_list=interfaces|join:", " %}
+                Currently the following network interfaces are configured as internal: {{ interface_list }}
+              {% endblocktrans %}
+            {% endif %}
+          {% endwith %}
+        </p>
+      </div>
+    {% endif %}
+  {% endfor %}
 {% endblock %}

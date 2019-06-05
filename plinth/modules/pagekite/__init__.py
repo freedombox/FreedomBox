@@ -92,16 +92,17 @@ class PagekiteApp(app_module.App):
                               parent_url_name='system')
         self.add(menu_item)
 
+        # XXX: Add pagekite daemon component and simplify action script
+
 
 def init():
     """Intialize the PageKite module"""
     global app
     app = PagekiteApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        app.set_enabled(True)  # XXX: Perform more proper check
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
     # Register kite name with Name Services module.
     utils.update_names_module(initial_registration=True)

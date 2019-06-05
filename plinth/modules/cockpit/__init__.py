@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules import names
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
@@ -58,8 +58,6 @@ description = [
         users_url=reverse_lazy('users:index')),
 ]
 
-service = None
-
 manual_page = 'Cockpit'
 
 app = None
@@ -91,21 +89,18 @@ class CockpitApp(app_module.App):
         webserver = Webserver('webserver-cockpit', 'cockpit-freedombox')
         self.add(webserver)
 
+        daemon = Daemon('daemon-cockpit', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the module."""
     global app
     app = CockpitApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
@@ -120,30 +115,7 @@ def setup(helper, old_version=None):
         for domain in domains_of_a_type
     ]
     helper.call('post', actions.superuser_run, 'cockpit', ['setup'] + domains)
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     helper.call('post', app.enable)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (app.is_enabled()
-            and action_utils.service_is_running('cockpit.socket'))
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('cockpit', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('cockpit', ['disable'])
-    app.disable()
 
 
 def diagnose():

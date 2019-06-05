@@ -95,6 +95,25 @@ def test_get_component(app_with_components):
         app.get_component('x-invalid-component')
 
 
+def test_get_components_of_type(app_with_components):
+    """Test retrieving list of components of a given type."""
+    app = app_with_components
+    components = app.get_components_of_type(FollowerComponent)
+    follower_components = [
+        app.components['test-follower-1'],
+        app.components['test-follower-2'],
+        app.components['test-leader-1'],
+        app.components['test-leader-2'],
+    ]
+    assert list(components) == follower_components
+    components = app.get_components_of_type(LeaderTest)
+    leader_components = [
+        app.components['test-leader-1'],
+        app.components['test-leader-2'],
+    ]
+    assert list(components) == leader_components
+
+
 def test_app_enable(app_with_components):
     """Test that enabling an app enables components."""
     app_with_components.disable()
@@ -133,6 +152,12 @@ def test_app_is_enabled(app_with_components):
 
     # Disabling followers has no effect
     app.components['test-follower-1'].disable()
+    assert app.is_enabled()
+
+
+def test_app_is_enabled_with_no_leader_components():
+    """When there are not leader components, app.is_enabled() returns True."""
+    app = TestApp()
     assert app.is_enabled()
 
 

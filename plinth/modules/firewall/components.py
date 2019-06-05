@@ -104,3 +104,8 @@ class Firewall(app.FollowerComponent):
                 ]
                 if not any(enabled_components_on_port):
                     firewall.remove_service(port, zone='external')
+
+    @staticmethod
+    def get_internal_interfaces():
+        """Returns a list of interfaces in a firewall zone."""
+        return firewall.get_interfaces('internal')

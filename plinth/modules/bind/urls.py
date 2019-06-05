@@ -20,6 +20,8 @@ URLs for the BIND module.
 
 from django.conf.urls import url
 
-from plinth.modules.bind.views import BindServiceView
+from plinth.modules.bind.views import BindAppView
 
-urlpatterns = [url(r'^sys/bind/$', BindServiceView.as_view(), name='index'), ]
+urlpatterns = [
+    url(r'^sys/bind/$', BindAppView.as_view(), name='index'),
+]

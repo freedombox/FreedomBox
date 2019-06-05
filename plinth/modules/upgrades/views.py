@@ -34,10 +34,11 @@ from .forms import ConfigureForm
 subsubmenu = [{
     'url': reverse_lazy('upgrades:index'),
     'text': ugettext_lazy('Auto-update')
-}, {
-    'url': reverse_lazy('upgrades:upgrade'),
-    'text': ugettext_lazy('Manual update')
-}]
+},
+              {
+                  'url': reverse_lazy('upgrades:upgrade'),
+                  'text': ugettext_lazy('Manual update')
+              }]
 
 
 class UpgradesConfigurationView(FormView):
@@ -56,7 +57,7 @@ class UpgradesConfigurationView(FormView):
         return context
 
     def get_initial(self):
-        return {'auto_upgrades_enabled': upgrades.service.is_enabled()}
+        return {'auto_upgrades_enabled': upgrades.is_enabled()}
 
     def form_valid(self, form):
         """Apply the form changes."""
@@ -68,15 +69,15 @@ class UpgradesConfigurationView(FormView):
 
             try:
                 if new_status['auto_upgrades_enabled']:
-                    upgrades.service.enable()
+                    upgrades.enable()
                 else:
-                    upgrades.service.disable()
+                    upgrades.disable()
             except ActionError as exception:
                 error = exception.args[2]
                 messages.error(
                     self.request,
-                    _('Error when configuring unattended-upgrades: {error}')
-                    .format(error=error))
+                    _('Error when configuring unattended-upgrades: {error}').
+                    format(error=error))
 
             if new_status['auto_upgrades_enabled']:
                 messages.success(self.request, _('Automatic upgrades enabled'))

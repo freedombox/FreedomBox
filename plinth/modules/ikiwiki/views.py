@@ -42,13 +42,14 @@ subsubmenu = [{
 }]
 
 
-class IkiwikiServiceView(views.ServiceView):
+class IkiwikiAppView(views.AppView):
     """Serve configuration page."""
-    service_id = "ikiwiki"
+    app_id = 'ikiwiki'
+    name = ikiwiki.name
     description = ikiwiki.description
-    diagnostics_module_name = "ikiwiki"
+    diagnostics_module_name = 'ikiwiki'
     show_status_block = False
-    template_name = "ikiwiki_configure.html"
+    template_name = 'ikiwiki_configure.html'
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
@@ -72,7 +73,8 @@ def manage(request):
             'description': ikiwiki.description,
             'manual_page': ikiwiki.manual_page,
             'subsubmenu': subsubmenu,
-            'sites': sites
+            'sites': sites,
+            'is_enabled': ikiwiki.app.is_enabled(),
         })
 
 
@@ -108,6 +110,7 @@ def create(request):
             'form': form,
             'manual_page': ikiwiki.manual_page,
             'subsubmenu': subsubmenu,
+            'is_enabled': ikiwiki.app.is_enabled(),
         })
 
 

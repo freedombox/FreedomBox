@@ -29,7 +29,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
@@ -37,8 +37,6 @@ from plinth.utils import format_lazy
 from .manifest import backup, clients
 
 version = 2
-
-service = None
 
 managed_services = ['radicale']
 
@@ -104,6 +102,9 @@ class RadicaleApp(app_module.App):
         uwsgi = RadicaleUwsgi('uwsgi-radicale', 'radicale')
         self.add(uwsgi)
 
+        daemon = RadicaleDaemon('daemon-radicale', managed_services[0])
+        self.add(daemon)
+
 
 class RadicaleWebserver(Webserver):
     """Webserver enable/disable behavior specific for radicale."""
@@ -137,6 +138,7 @@ class RadicaleUwsgi(Uwsgi):
         """Enable the uWSGI configuration if version >=2."""
         package_version = get_package_version()
         if package_version and package_version >= VERSION_2:
+            actions.superuser_run('radicale', ['fix-collections'])
             super().enable()
 
     def disable(self):
@@ -146,20 +148,50 @@ class RadicaleUwsgi(Uwsgi):
             super().disable()
 
 
+class RadicaleDaemon(Daemon):
+    """Daemon enable/disable behavior specific for radicale."""
+
+    @staticmethod
+    def _is_old_radicale():
+        """Return whether radicale is less than version 2."""
+        package_version = get_package_version()
+        return package_version and package_version < VERSION_2
+
+    def is_enabled(self):
+        """Return whether daemon is enabled if version < 2."""
+        if self._is_old_radicale():
+            return super().is_enabled()
+
+        return True
+
+    def enable(self):
+        """Enable the daemon if version < 2."""
+        if self._is_old_radicale():
+            super().enable()
+        else:
+            super().disable()
+
+    def disable(self):
+        """Disable the daemon if version < 2."""
+        if self._is_old_radicale():
+            super().disable()
+
+    def is_running(self):
+        """Return whether daemon is enabled if version < 2."""
+        if self._is_old_radicale():
+            return super().is_running()
+
+        return True
+
+
 def init():
     """Initialize the radicale module."""
     global app
     app = RadicaleApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -188,11 +220,6 @@ def setup(helper, old_version=None):
         helper.install(managed_packages)
         helper.call('post', actions.superuser_run, 'radicale', ['setup'])
 
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
     helper.call('post', app.enable)
 
 
@@ -206,24 +233,6 @@ def get_package_version():
 
     package_version = str(output.strip())
     return LV(package_version)
-
-
-def is_running():
-    """Return whether the service is running."""
-    if get_package_version() < VERSION_2:
-        return action_utils.service_is_running('radicale')
-
-    return app.is_enabled()
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    package_version = get_package_version()
-    daemon_enabled = True
-    if package_version and package_version < VERSION_2:
-        daemon_enabled = action_utils.service_is_enabled('radicale')
-
-    return app.is_enabled() and daemon_enabled
 
 
 def enable():

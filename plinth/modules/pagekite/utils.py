@@ -15,13 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.utils.translation import ugettext_lazy as _
 import json
 import logging
 import os
 
-from plinth import actions
-from plinth import action_utils
+from django.utils.translation import ugettext_lazy as _
+
+from plinth import action_utils, actions
 from plinth.signals import domain_added, domain_removed
 
 LOGGER = logging.getLogger(__name__)
@@ -36,8 +36,9 @@ KITE_SECRET = '@kitesecret'
 CONF_PATH = '/files/etc/pagekite.d'
 
 # Parameters that get stored in configuration service_on entries
-SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
-                  'secret']
+SERVICE_PARAMS = [
+    'protocol', 'kitename', 'backend_host', 'backend_port', 'secret'
+]
 
 # Predefined services are used to build the PredefinedServiceForm
 #
@@ -45,35 +46,47 @@ SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
 # still recognizes when you try to add a service equal to a predefined one
 PREDEFINED_SERVICES = {
     'http': {
-        'params': {'protocol': 'http',
-                   'kitename': KITE_NAME,
-                   'backend_port': '80',
-                   'backend_host': BACKEND_HOST,
-                   'secret': KITE_SECRET},
-        'label': _('Web Server (HTTP)'),
-        'help_text': _('Site will be available at '
-                       '<a href=\"http://{0}\">http://{0}</a>'),
+        'params': {
+            'protocol': 'http',
+            'kitename': KITE_NAME,
+            'backend_port': '80',
+            'backend_host': BACKEND_HOST,
+            'secret': KITE_SECRET
+        },
+        'label':
+            _('Web Server (HTTP)'),
+        'help_text':
+            _('Site will be available at '
+              '<a href=\"http://{0}\">http://{0}</a>'),
     },
     'https': {
-        'params': {'protocol': 'https',
-                   'kitename': KITE_NAME,
-                   'backend_port': '443',
-                   'backend_host': BACKEND_HOST,
-                   'secret': KITE_SECRET},
-        'label': _('Web Server (HTTPS)'),
-        'help_text': _('Site will be available at '
-                       '<a href=\"https://{0}\">https://{0}</a>'),
+        'params': {
+            'protocol': 'https',
+            'kitename': KITE_NAME,
+            'backend_port': '443',
+            'backend_host': BACKEND_HOST,
+            'secret': KITE_SECRET
+        },
+        'label':
+            _('Web Server (HTTPS)'),
+        'help_text':
+            _('Site will be available at '
+              '<a href=\"https://{0}\">https://{0}</a>'),
     },
     'ssh': {
-        'params': {'protocol': 'raw/22',
-                   'kitename': KITE_NAME,
-                   'backend_port': '22',
-                   'backend_host': BACKEND_HOST,
-                   'secret': KITE_SECRET},
-        'label': _('Secure Shell (SSH)'),
-        'help_text': _('See SSH client setup <a href="'
-                       'https://pagekite.net/wiki/Howto/SshOverPageKite/">'
-                       'instructions</a>')
+        'params': {
+            'protocol': 'raw/22',
+            'kitename': KITE_NAME,
+            'backend_port': '22',
+            'backend_host': BACKEND_HOST,
+            'secret': KITE_SECRET
+        },
+        'label':
+            _('Secure Shell (SSH)'),
+        'help_text':
+            _('See SSH client setup <a href="'
+              'https://pagekite.net/wiki/Howto/SshOverPageKite/">'
+              'instructions</a>')
     },
 }
 
@@ -81,8 +94,7 @@ PREDEFINED_SERVICES = {
 def get_kite_details():
     output = run(['get-kite'])
     kite_details = output.split()
-    return {'kite_name': kite_details[0],
-            'kite_secret': kite_details[1]}
+    return {'kite_name': kite_details[0], 'kite_secret': kite_details[1]}
 
 
 def get_pagekite_config():
@@ -259,8 +271,9 @@ def update_names_module(initial_registration=False, enabled=None,
     if enabled:
         # Get enabled services and kite name
         services = get_pagekite_services()[0]
-        enabled_services = [service for service in services if
-                            services[service]]
+        enabled_services = [
+            service for service in services if services[service]
+        ]
         if kite_name is None:
             try:
                 kite_name = get_kite_details()['kite_name']
@@ -271,9 +284,9 @@ def update_names_module(initial_registration=False, enabled=None,
         kite_name = None
 
     if initial_registration or (enabled and kite_name):
-        domain_added.send_robust(
-            sender='pagekite', domain_type='pagekite', name=kite_name,
-            description=_('Pagekite'), services=enabled_services)
+        domain_added.send_robust(sender='pagekite', domain_type='pagekite',
+                                 name=kite_name, description=_('Pagekite'),
+                                 services=enabled_services)
 
 
 if __name__ == "__main__":

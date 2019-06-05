@@ -24,10 +24,10 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .manifest import backup
 
@@ -60,8 +60,6 @@ description = [
 
 reserved_usernames = ['privoxy']
 
-service = None
-
 manual_page = 'Privoxy'
 
 app = None
@@ -90,48 +88,31 @@ class PrivoxyApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
+        daemon = Daemon('daemon-privoxy', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the module."""
     global app
     app = PrivoxyApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
-
-        if service.is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
     helper.install(managed_packages)
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
     helper.call('post', app.enable)
 
 
-def enable():
-    """Enable the module."""
-    actions.superuser_run('service', ['enable', managed_services[0]])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('service', ['disable', managed_services[0]])
-    app.disable()
-
-
-class PrivoxyServiceView(ServiceView):
-    service_id = managed_services[0]
+class PrivoxyAppView(AppView):
+    app_id = 'privoxy'
     diagnostics_module_name = 'privoxy'
+    name = name
     description = description
     manual_page = manual_page
 

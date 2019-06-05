@@ -14,17 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the service discovery module.
 """
 
 from django.conf.urls import url
 
-from plinth.modules.avahi import AvahiServiceView
-
+from plinth.modules.avahi import AvahiAppView
 
 urlpatterns = [
-    url(r'^sys/avahi/$', AvahiServiceView.as_view(),
-        name='index'),
+    url(r'^sys/avahi/$', AvahiAppView.as_view(), name='index'),
 ]

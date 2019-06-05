@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the infinoted module.
 """
 
 from django.conf.urls import url
 
-from plinth.modules.infinoted import InfinotedServiceView
-
+from plinth.modules.infinoted import InfinotedAppView
 
 urlpatterns = [
-    url(r'^apps/infinoted/$', InfinotedServiceView.as_view(), name='index'),
+    url(r'^apps/infinoted/$', InfinotedAppView.as_view(), name='index'),
 ]

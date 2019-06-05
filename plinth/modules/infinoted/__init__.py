@@ -24,16 +24,14 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .manifest import backup, clients
 
 version = 1
-
-service = None
 
 managed_services = ['infinoted']
 
@@ -83,24 +81,24 @@ class InfinotedApp(app_module.App):
                             ports=['infinoted-plinth'], is_external=True)
         self.add(firewall)
 
+        daemon = Daemon('daemon-infinoted', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the infinoted module."""
     global app
     app = InfinotedApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
-        if service.is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
-class InfinotedServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = "infinoted"
+class InfinotedAppView(AppView):
+    app_id = 'infinoted'
+    diagnostics_module_name = 'infinoted'
+    name = name
     description = description
     clients = clients
     port_forwarding_info = port_forwarding_info
@@ -110,24 +108,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'infinoted', ['setup'])
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
-
     helper.call('post', app.enable)
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('service', ['enable', managed_services[0]])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('service', ['disable', managed_services[0]])
-    app.disable()
 
 
 def diagnose():

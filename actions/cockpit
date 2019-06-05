@@ -37,8 +37,6 @@ def parse_arguments():
                                       help='Setup Cockpit configuration')
     subparser.add_argument('domain_names', nargs='*',
                            help='Domain names to be allowed')
-    subparsers.add_parser('enable', help='Enable Cockpit')
-    subparsers.add_parser('disable', help='Disable Cockpit')
     subparser = subparsers.add_parser(
         'add-domain',
         help='Allow a new domain to be origin for Cockpit\'s WebSocket')
@@ -65,16 +63,6 @@ def subcommand_setup(arguments):
     aug.save()
 
     action_utils.service_restart('cockpit.socket')
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('cockpit.socket')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('cockpit.socket')
 
 
 def _get_origin_domains(aug):

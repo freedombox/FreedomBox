@@ -25,7 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
 from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients
@@ -44,8 +43,6 @@ description = [
 ]
 
 clients = clients
-
-service = None
 
 logger = logging.getLogger(__name__)
 
@@ -79,36 +76,12 @@ def init():
     global app
     app = JSXCApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('jsxc', name, is_enabled=is_enabled,
-                                         enable=enable, disable=disable)
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-
-    global service
-    if not service:
-        service = service_module.Service('jsxc', name, is_enabled=is_enabled,
-                                         enable=enable, disable=disable)
-
     helper.call('post', app.enable)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    setup_helper = globals()['setup_helper']
-    return setup_helper.get_state() != 'needs-setup'
-
-
-def enable():
-    app.enable()
-
-
-def disable():
-    app.disable()

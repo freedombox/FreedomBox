@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the repro module.
 """
 
 from django.conf.urls import url
 
-from plinth.modules.repro import ReproServiceView
-
+from plinth.modules.repro import ReproAppView
 
 urlpatterns = [
-    url(r'^apps/repro/$', ReproServiceView.as_view(), name='index'),
+    url(r'^apps/repro/$', ReproAppView.as_view(), name='index'),
 ]

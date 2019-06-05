@@ -26,19 +26,19 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.modules import mediawiki
 
-from . import (is_enabled, is_private_mode_enabled,
-               is_public_registration_enabled)
+from . import is_private_mode_enabled, is_public_registration_enabled
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
 
 
-class MediaWikiServiceView(views.ServiceView):
-    """Serve configuration page."""
+class MediaWikiAppView(views.AppView):
+    """App configuration page."""
     clients = mediawiki.clients
+    name = mediawiki.name
     description = mediawiki.description
     diagnostics_module_name = 'mediawiki'
-    service_id = 'mediawiki'
+    app_id = 'mediawiki'
     form_class = MediaWikiForm
     manual_page = mediawiki.manual_page
     show_status_block = False
@@ -75,11 +75,9 @@ class MediaWikiServiceView(views.ServiceView):
                 messages.info(self.request, _('Setting unchanged'))
         elif not app_same:
             if new_config['is_enabled']:
-                self.service.enable()
-                messages.success(self.request, _('Application enabled'))
+                self.app.enable()
             else:
-                self.service.disable()
-                messages.success(self.request, _('Application disabled'))
+                self.app.disable()
 
         if not pub_reg_same:
             # note action public-registration restarts, if running now

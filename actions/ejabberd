@@ -58,9 +58,6 @@ def parse_arguments():
     # Setup ejabberd configuration
     subparsers.add_parser('setup', help='Setup ejabberd configuration')
 
-    subparsers.add_parser('enable', help='Enable XMPP service')
-    subparsers.add_parser('disable', help='Disable XMPP service')
-
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname', help='Prepare ejabberd for nodename change')
@@ -160,16 +157,6 @@ def upgrade_config():
     # Write changes back to the file
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
-
-
-def subcommand_enable(_):
-    """Enable XMPP service"""
-    action_utils.service_enable('ejabberd')
-
-
-def subcommand_disable(_):
-    """Disable XMPP service"""
-    action_utils.service_disable('ejabberd')
 
 
 def subcommand_pre_change_hostname(arguments):

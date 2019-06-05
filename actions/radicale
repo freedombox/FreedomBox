@@ -44,8 +44,8 @@ def parse_arguments():
 
     subparsers.add_parser('setup', help='Setup Radicale configuration')
     subparsers.add_parser('migrate', help='Migrate config to radicale 2.x')
-    subparsers.add_parser('enable', help='Enable Radicale service')
-    subparsers.add_parser('disable', help='Disable Radicale service')
+    subparsers.add_parser('fix-collections',
+                          help='Ensure collections path exists')
     configure = subparsers.add_parser('configure',
                                       help='Configure various options')
     configure.add_argument('--rights_type',
@@ -76,8 +76,6 @@ def subcommand_setup(_):
         aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
 
     aug.save()
-
-    subcommand_enable(None)
 
 
 def subcommand_migrate(_):
@@ -121,23 +119,11 @@ def subcommand_configure(arguments):
         action_utils.service_try_restart('radicale')
 
 
-def subcommand_enable(_):
-    """Start service."""
-    if radicale.get_package_version() >= radicale.VERSION_2:
-        # Workaround for bug in radicale's uwsgi script (#919339)
-        if not os.path.exists(COLLECTIONS_PATH):
-            os.makedirs(COLLECTIONS_PATH)
-        action_utils.service_disable('radicale')
-    else:
-        action_utils.service_enable('radicale')
-        action_utils.service_restart('radicale')
-
-
-def subcommand_disable(_):
-    """Stop service."""
-    package_version = radicale.get_package_version()
-    if package_version and package_version < radicale.VERSION_2:
-        action_utils.service_disable('radicale')
+def subcommand_fix_collections(_):
+    """Fix collections path to work around a bug."""
+    # Workaround for bug in radicale's uwsgi script (#919339)
+    if not os.path.exists(COLLECTIONS_PATH):
+        os.makedirs(COLLECTIONS_PATH)
 
 
 def load_augeas():

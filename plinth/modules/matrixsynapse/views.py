@@ -28,7 +28,7 @@ from plinth import actions
 from plinth.forms import DomainSelectionForm
 from plinth.modules import matrixsynapse
 from plinth.utils import get_domain_names
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from . import get_public_registration_status, has_valid_certificate
 from .forms import MatrixSynapseForm
@@ -59,10 +59,11 @@ class SetupView(FormView):
         return context
 
 
-class MatrixSynapseServiceView(ServiceView):
+class MatrixSynapseAppView(AppView):
     """Show matrix-synapse service page."""
-    service_id = matrixsynapse.managed_services[0]
+    app_id = 'matrixsynapse'
     template_name = 'matrix-synapse.html'
+    name = matrixsynapse.name
     description = matrixsynapse.description
     diagnostics_module_name = 'matrixsynapse'
     form_class = MatrixSynapseForm
@@ -107,11 +108,9 @@ class MatrixSynapseServiceView(ServiceView):
                 messages.info(self.request, _('Setting unchanged'))
         elif not app_same:
             if new_config['is_enabled']:
-                self.service.enable()
-                messages.success(self.request, _('Application enabled'))
+                self.app.enable()
             else:
-                self.service.disable()
-                messages.success(self.request, _('Application disabled'))
+                self.app.disable()
 
         if not pubreg_same:
             # note action public-registration restarts, if running now
@@ -126,4 +125,4 @@ class MatrixSynapseServiceView(ServiceView):
                 messages.success(self.request,
                                  _('Public registration disabled'))
 
-        return super(ServiceView, self).form_valid(form)
+        return super().form_valid(form)

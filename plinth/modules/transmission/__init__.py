@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
@@ -54,8 +54,6 @@ clients = clients
 reserved_usernames = ['debian-transmission']
 
 group = ('bit-torrent', _('Download files using BitTorrent applications'))
-
-service = None
 
 manual_page = 'Transmission'
 
@@ -88,6 +86,9 @@ class TransmissionApp(app_module.App):
         webserver = Webserver('webserver-transmission', 'transmission-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-transmission', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Initialize the Transmission module."""
@@ -95,15 +96,9 @@ def init():
     app = TransmissionApp()
     register_group(group)
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -118,31 +113,7 @@ def setup(helper, old_version=None):
                 ['merge-configuration'],
                 input=json.dumps(new_configuration).encode())
 
-    helper.call('post', actions.superuser_run, 'transmission', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     helper.call('post', app.enable)
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('transmission-daemon')
-            and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('transmission', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('transmission', ['disable'])
-    app.disable()
 
 
 def diagnose():

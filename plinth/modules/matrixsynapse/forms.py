@@ -14,21 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for the Matrix Synapse module.
 """
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from plinth.forms import ServiceForm
+
+from plinth.forms import AppForm
 
 
-class MatrixSynapseForm(ServiceForm):
+class MatrixSynapseForm(AppForm):
     enable_public_registration = forms.BooleanField(
-        label=_('Enable Public Registration'),
-        required=False,
-        help_text=_(
+        label=_('Enable Public Registration'), required=False, help_text=_(
             'Enabling public registration means that anyone on the Internet '
             'can register a new account on your Matrix server. Disable this '
             'if you only want existing users to be able to use it.'))

@@ -23,8 +23,6 @@ Configuration helper for mldonkey.
 import argparse
 import subprocess
 
-from plinth import action_utils
-
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -32,8 +30,6 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('pre-install', help='Perform pre-install operations')
-    subparsers.add_parser('enable', help='Enable mldonkey')
-    subparsers.add_parser('disable', help='Disable mldonkey')
 
     subparsers.required = True
     return parser.parse_args()
@@ -44,16 +40,6 @@ def subcommand_pre_install(_):
     subprocess.check_output([
         'debconf-set-selections'
     ], input=b'mldonkey-server mldonkey-server/launch_at_startup boolean true')
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('mldonkey-server')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('mldonkey-server')
 
 
 def main():

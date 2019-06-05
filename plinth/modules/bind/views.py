@@ -22,16 +22,17 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.views import ServiceView
+from plinth.views import AppView
 
-from . import description, get_config, managed_services, port_forwarding_info
+from . import description, get_config, name, port_forwarding_info
 from .forms import BindForm
 
 
-class BindServiceView(ServiceView):  # pylint: disable=too-many-ancestors
+class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring Bind."""
-    service_id = managed_services[0]
-    diagnostics_module_name = "bind"
+    app_id = 'bind'
+    diagnostics_module_name = 'bind'
+    name = name
     description = description
     show_status_block = True
     form_class = BindForm

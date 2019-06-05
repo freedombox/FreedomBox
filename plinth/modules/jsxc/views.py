@@ -18,18 +18,19 @@
 Views for the JSXC module
 """
 
-from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 from stronghold.decorators import public
 
 from plinth.modules import config, jsxc
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 
-class JSXCServiceView(ServiceView):
-    """Show ejabberd as a service."""
-    service_id = 'jsxc'
+class JSXCAppView(AppView):
+    """Show ejabberd as an app."""
+    app_id = 'jsxc'
     template_name = 'jsxc.html'
+    name = jsxc.name
     description = jsxc.description
     show_status_block = False
     clients = jsxc.clients

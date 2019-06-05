@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URL for the Ejabberd module
 """
 
 from django.conf.urls import url
 
-from .views import EjabberdServiceView
-
+from .views import EjabberdAppView
 
 urlpatterns = [
-    url(r'^apps/ejabberd/$', EjabberdServiceView.as_view(), name='index')
+    url(r'^apps/ejabberd/$', EjabberdAppView.as_view(), name='index')
 ]

@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Shadowsocks module.
 """
 
 from django.conf.urls import url
 
-from .views import ShadowsocksServiceView
+from .views import ShadowsocksAppView
 
 urlpatterns = [
-    url(r'^apps/shadowsocks/$', ShadowsocksServiceView.as_view(),
-        name='index'),
+    url(r'^apps/shadowsocks/$', ShadowsocksAppView.as_view(), name='index'),
 ]

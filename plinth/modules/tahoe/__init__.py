@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
@@ -43,8 +43,6 @@ managed_packages = ['tahoe-lafs']
 name = _('Tahoe-LAFS')
 
 short_description = _('Distributed File Storage')
-
-service = None
 
 port_forwarding_info = [
     ('TCP', 3456),
@@ -87,6 +85,9 @@ class TahoeApp(app_module.App):
 
         webserver = Webserver('webserver-tahoe', 'tahoe-plinth')
         self.add(webserver)
+
+        daemon = Daemon('daemon-tahoe', managed_services[0])
+        self.add(daemon)
 
 
 class Shortcut(frontpage.Shortcut):
@@ -131,15 +132,10 @@ def init():
     global app
     app = TahoeApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and is_setup():
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and is_setup() \
+       and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -151,42 +147,12 @@ def post_setup(configured_domain_name):
     """Actions to be performed after installing tahoe-lafs package."""
     actions.superuser_run('tahoe-lafs',
                           ['setup', '--domain-name', configured_domain_name])
-    actions.superuser_run('tahoe-lafs', ['enable'])
     actions.run_as_user('tahoe-lafs', ['create-introducer'],
                         become_user='tahoe-lafs')
     actions.run_as_user('tahoe-lafs', ['create-storage-node'],
                         become_user='tahoe-lafs')
     actions.superuser_run('tahoe-lafs', ['autostart'])
-
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
     app.enable()
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running(managed_services[0])
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled(managed_services[0])
-            and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('tahoe-lafs', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('tahoe-lafs', ['disable'])
-    app.disable()
 
 
 def diagnose():

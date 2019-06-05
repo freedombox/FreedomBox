@@ -23,10 +23,10 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .manifest import backup
 
@@ -53,8 +53,6 @@ description = [
           'hostile local network.'), box_name=_(cfg.box_name))
 ]
 
-service = None
-
 manual_page = 'ServiceDiscovery'
 
 app = None
@@ -76,15 +74,15 @@ class AvahiApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
+        daemon = Daemon('daemon-avahi', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the service discovery module."""
     global app
     app = AvahiApp()
     app.set_enabled(True)
-
-    global service  # pylint: disable=W0603
-    service = service_module.Service(managed_services[0], name)
 
 
 def setup(helper, old_version=None):
@@ -97,7 +95,8 @@ def setup(helper, old_version=None):
                 ['reload', 'avahi-daemon'])
 
 
-class AvahiServiceView(ServiceView):
-    service_id = managed_services[0]
+class AvahiAppView(AppView):
+    app_id = 'avahi'
+    name = name
     description = description
     manual_page = manual_page

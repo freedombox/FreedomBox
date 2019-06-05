@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for minetest module.
 """
@@ -22,34 +21,29 @@ Forms for minetest module.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import ServiceForm
+from plinth.forms import AppForm
 
 
-class MinetestForm(ServiceForm):
+class MinetestForm(AppForm):
     """Minetest configuration form"""
     max_players = forms.IntegerField(
-        label=_('Maximum number of players'),
-        required=True,
-        min_value=1,
-        max_value=100,
-        help_text=_('You can change the maximum number of players playing '
-                    'minetest at a single instance of time.'))
+        label=_('Maximum number of players'), required=True, min_value=1,
+        max_value=100, help_text=_(
+            'You can change the maximum number of players playing '
+            'minetest at a single instance of time.'))
 
     creative_mode = forms.BooleanField(
-        label=_('Enable creative mode'),
-        required=False,
+        label=_('Enable creative mode'), required=False,
         help_text=_('Creative mode changes the rules of the game to make it '
                     'more suitable for creative gameplay, rather than '
                     'challenging "survival" gameplay.'))
 
     enable_pvp = forms.BooleanField(
-        label=_('Enable PVP'),
-        required=False,
+        label=_('Enable PVP'), required=False,
         help_text=_('Enabling Player Vs Player will allow players to damage '
                     'other players.'))
 
     enable_damage = forms.BooleanField(
-        label=_('Enable damage'),
-        required=False,
+        label=_('Enable damage'), required=False,
         help_text=_('When disabled, players cannot die or receive damage of '
                     'any kind.'))

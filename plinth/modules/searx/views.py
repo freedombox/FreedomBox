@@ -23,29 +23,28 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions, views
 from plinth.errors import ActionError
-from plinth.modules.searx import (clients, description, disable_public_access,
-                                  enable_public_access,
-                                  get_safe_search_setting, is_enabled,
-                                  is_public_access_enabled, manual_page)
+from plinth.modules import searx
 
 from .forms import SearxForm
 
 
-class SearxServiceView(views.ServiceView):
+class SearxAppView(views.AppView):
     """Serve configuration page."""
-    clients = clients
-    description = description
+    clients = searx.clients
+    name = searx.name
+    description = searx.description
     diagnostics_module_name = 'searx'
-    service_id = 'searx'
+    app_id = 'searx'
     form_class = SearxForm
     show_status_block = False
-    manual_page = manual_page
+    manual_page = searx.manual_page
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
         initial = super().get_initial()
-        initial['safe_search'] = get_safe_search_setting()
-        initial['public_access'] = is_public_access_enabled() and is_enabled()
+        initial['safe_search'] = searx.get_safe_search_setting()
+        initial['public_access'] = searx.is_public_access_enabled() and \
+            searx.app.is_enabled()
         return initial
 
     def form_valid(self, form):
@@ -65,9 +64,9 @@ class SearxServiceView(views.ServiceView):
         if old_data['public_access'] != form_data['public_access']:
             try:
                 if form_data['public_access']:
-                    enable_public_access()
+                    searx.enable_public_access()
                 else:
-                    disable_public_access()
+                    searx.disable_public_access()
                 messages.success(self.request, _('Configuration updated.'))
             except ActionError:
                 messages.error(self.request,

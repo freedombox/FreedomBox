@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
@@ -63,8 +63,6 @@ clients = clients
 
 group = ('syncthing', _('Administer Syncthing application'))
 
-service = None
-
 manual_page = 'Syncthing'
 
 app = None
@@ -96,6 +94,9 @@ class SyncthingApp(app_module.App):
         webserver = Webserver('webserver-syncthing', 'syncthing-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-syncthing', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the module."""
@@ -103,50 +104,16 @@ def init():
     app = SyncthingApp()
     register_group(group)
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'syncthing', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0], name, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
+    helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
     helper.call('post', app.enable)
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('syncthing@syncthing')
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('syncthing@syncthing')
-            and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('syncthing', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('syncthing', ['disable'])
-    app.disable()
 
 
 def diagnose():

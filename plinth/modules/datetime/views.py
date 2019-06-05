@@ -25,26 +25,25 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.modules import datetime
-from plinth.views import ServiceView
+from plinth.views import AppView
 
 from .forms import DateTimeForm
 
 logger = logging.getLogger(__name__)
 
 
-class DateTimeServiceView(ServiceView):
+class DateTimeAppView(AppView):
+    name = datetime.name
     description = datetime.description
     form_class = DateTimeForm
-    service_id = datetime.managed_services[0]
-    diagnostics_module_name = "datetime"
+    app_id = 'datetime'
+    diagnostics_module_name = 'datetime'
     manual_page = datetime.manual_page
 
     def get_initial(self):
-        return {
-            'is_enabled': self.service.is_enabled(),
-            'is_running': self.service.is_running(),
-            'time_zone': self.get_current_time_zone()
-        }
+        status = super().get_initial()
+        status['time_zone'] = self.get_current_time_zone()
+        return status
 
     def get_current_time_zone(self):
         """Get current time zone."""
@@ -61,9 +60,10 @@ class DateTimeServiceView(ServiceView):
                 actions.superuser_run('timezone-change',
                                       [new_status['time_zone']])
             except Exception as exception:
-                messages.error(self.request,
-                               _('Error setting time zone: {exception}')
-                               .format(exception=exception))
+                messages.error(
+                    self.request,
+                    _('Error setting time zone: {exception}').format(
+                        exception=exception))
             else:
                 messages.success(self.request, _('Time zone set'))
 

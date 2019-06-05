@@ -39,13 +39,15 @@ EMPTYSTRING = 'none'
 subsubmenu = [{
     'url': reverse_lazy('dynamicdns:index'),
     'text': ugettext_lazy('About')
-}, {
-    'url': reverse_lazy('dynamicdns:configure'),
-    'text': ugettext_lazy('Configure')
-}, {
-    'url': reverse_lazy('dynamicdns:statuspage'),
-    'text': ugettext_lazy('Status')
-}]
+},
+              {
+                  'url': reverse_lazy('dynamicdns:configure'),
+                  'text': ugettext_lazy('Configure')
+              },
+              {
+                  'url': reverse_lazy('dynamicdns:statuspage'),
+                  'text': ugettext_lazy('Status')
+              }]
 
 
 def index(request):

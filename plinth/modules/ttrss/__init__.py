@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
@@ -62,8 +62,6 @@ clients = clients
 
 group = ('feed-reader', _('Read and subscribe to news feeds'))
 
-service = None
-
 manual_page = 'TinyTinyRSS'
 
 app = None
@@ -94,6 +92,14 @@ class TTRSSApp(app_module.App):
         webserver = Webserver('webserver-ttrss', 'tt-rss-plinth')
         self.add(webserver)
 
+        daemon = Daemon('daemon-ttrss', managed_services[0])
+        self.add(daemon)
+
+    def enable(self):
+        """Enable components and API access."""
+        super().enable()
+        actions.superuser_run('ttrss', ['enable-api-access'])
+
 
 def init():
     """Intialize the module."""
@@ -101,15 +107,9 @@ def init():
     app = TTRSSApp()
     register_group(group)
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
-
-        if is_enabled():
-            app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -117,12 +117,6 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
-    helper.call('post', actions.superuser_run, 'ttrss', ['enable'])
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
     helper.call('post', app.enable)
 
 
@@ -139,23 +133,6 @@ def force_upgrade(helper, packages):
 
     helper.install(['tt-rss'], force_configuration='new')
     actions.superuser_run('ttrss', ['setup'])
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('tt-rss') and app.is_enabled())
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('ttrss', ['enable'])
-    app.enable()
-
-
-def disable():
-    """Enable the module."""
-    actions.superuser_run('ttrss', ['disable'])
-    app.disable()
 
 
 def diagnose():

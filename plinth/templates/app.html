@@ -18,7 +18,7 @@
 #
 {% endcomment %}
 
-{# Template to display/configure a Service, used by views.ServiceView #}
+{# Template to display/configure an App, used by views.AppView #}
 
 {% load bootstrap %}
 {% load i18n %}
@@ -27,7 +27,7 @@
 {% block content %}
 
   {% block pagetitle %}
-    <h2>{{ service.name }}</h2>
+    <h2>{{ name }}</h2>
   {% endblock %}
 
   {% block description %}
@@ -44,14 +44,14 @@
     </p>
   {% endif %}
 
-  {% include "clients.html" with clients=clients enabled=service.is_enabled %}
+  {% include "clients.html" with clients=clients enabled=is_enabled %}
 
   {% block status %}
     {% if show_status_block %}
       <h3>{% trans "Status" %}</h3>
       <p class="running-status-parent">
-        {% with service_name=service.name %}
-          {% if service.is_running %}
+        {% with service_name=name %}
+          {% if is_running %}
             <span class="running-status active"></span>
             {% blocktrans trimmed %}
               Service <em>{{ service_name }}</em> is running.
@@ -69,13 +69,13 @@
 
   {% block diagnostics %}
     {% if diagnostics_module_name %}
-      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=service.is_enabled %}
+      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
     {% endif %}
   {% endblock %}
 
   {% include "internal-zone.html" %}
 
-  {% include "port-forwarding-info.html" with service_name=service.name %}
+  {% include "port-forwarding-info.html" with service_name=name %}
 
   {% block configuration %}
     <h3>{% trans "Configuration" %}</h3>

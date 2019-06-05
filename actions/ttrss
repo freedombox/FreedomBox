@@ -40,8 +40,7 @@ def parse_arguments():
 
     subparsers.add_parser('pre-setup', help='Perform pre-setup operations')
     subparsers.add_parser('setup', help='Setup Tiny Tiny RSS configuration')
-    subparsers.add_parser('enable', help='Enable Tiny Tiny RSS site')
-    subparsers.add_parser('disable', help='Disable Tiny Tiny RSS site')
+    subparsers.add_parser('enable-api-access', help='Enable Tiny Tiny RSS API')
     subparsers.add_parser('dump-database', help='Dump database to file')
     subparsers.add_parser('restore-database',
                           help='Restore database from file')
@@ -84,7 +83,7 @@ def subcommand_setup(_):
         action_utils.service_restart('tt-rss')
 
 
-def enable_api_access():
+def subcommand_enable_api_access(_):
     """Enable API access so that tt-rss can be accessed through mobile app."""
     import psycopg2  # Only available post installation
 
@@ -109,17 +108,6 @@ def enable_api_access():
 
     connection.commit()
     connection.close()
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.service_enable('tt-rss')
-    enable_api_access()
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.service_disable('tt-rss')
 
 
 def subcommand_dump_database(_):

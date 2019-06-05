@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth import service as service_module
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -36,8 +36,6 @@ version = 1
 name = _('BIND')
 
 short_description = _('Domain Name Server')
-
-service = None
 
 managed_services = ['bind9']
 
@@ -104,26 +102,23 @@ class BindApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
+        daemon = Daemon('daemon-bind', managed_services[0])
+        self.add(daemon)
+
 
 def init():
     """Intialize the BIND module."""
     global app
     app = BindApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name)
-        app.set_enabled(True)  # XXX: Perform better check
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    global service
-    if service is None:
-        service = service_module.Service(managed_services[0], name,
-                                         enable=enable, disable=disable)
     helper.call('post', actions.superuser_run, 'bind', ['setup'])
     helper.call('post', app.enable)
 
@@ -131,18 +126,6 @@ def setup(helper, old_version=None):
 def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
     helper.install(managed_packages, force_configuration='old')
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('service', ['enable', managed_services[0]])
-    app.enable()
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('service', ['disable', managed_services[0]])
-    app.disable()
 
 
 def diagnose():

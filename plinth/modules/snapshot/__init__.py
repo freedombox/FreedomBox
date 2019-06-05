@@ -50,8 +50,6 @@ description = [
       'they can only be stored on the same partition. ')
 ]
 
-service = None
-
 manual_page = 'Snapshots'
 
 DEFAULT_FILE = '/etc/default/snapper'
@@ -79,10 +77,9 @@ def init():
     global app
     app = SnapshotApp()
 
-    global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        app.set_enabled(True)  # XXX: Perform better checks
+    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
+        app.set_enabled(True)
 
 
 def is_supported():

@@ -14,34 +14,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Tor utility functions
 """
 
-import augeas
 import glob
 import itertools
 import json
 
-from plinth import actions
-from plinth import action_utils
-from plinth.modules.names import SERVICES
+import augeas
 
+from plinth import actions
+from plinth.daemon import app_is_running
+from plinth.modules import tor
+from plinth.modules.names import SERVICES
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
 APT_TOR_PREFIX = 'tor+'
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('tor@plinth', strict_check=True)
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('tor@plinth')
 
 
 def get_status():
@@ -57,32 +47,34 @@ def get_status():
             hs_services.append(service_type[0])
 
     # Filter out obfs3/4 ports when bridge relay is disabled
-    ports = {service_type: port
-             for service_type, port in status['ports'].items()
-             if service_type not in ['obfs4', 'obfs3'] or
-             status['bridge_relay_enabled']}
+    ports = {
+        service_type: port
+        for service_type, port in status['ports'].items()
+        if service_type not in ['obfs4', 'obfs3']
+        or status['bridge_relay_enabled']
+    }
 
-    return {'enabled': is_enabled(),
-            'is_running': is_running(),
-            'use_upstream_bridges': status['use_upstream_bridges'],
-            'upstream_bridges': status['upstream_bridges'],
-            'relay_enabled': status['relay_enabled'],
-            'bridge_relay_enabled': status['bridge_relay_enabled'],
-            'ports': ports,
-            'hs_enabled': hs_info['enabled'],
-            'hs_status': hs_info['status'],
-            'hs_hostname': hs_info['hostname'],
-            'hs_ports': hs_info['ports'],
-            'hs_services': hs_services,
-            'apt_transport_tor_enabled':
-                is_apt_transport_tor_enabled()
-            }
+    return {
+        'enabled': tor.app.is_enabled(),
+        'is_running': app_is_running(tor.app),
+        'use_upstream_bridges': status['use_upstream_bridges'],
+        'upstream_bridges': status['upstream_bridges'],
+        'relay_enabled': status['relay_enabled'],
+        'bridge_relay_enabled': status['bridge_relay_enabled'],
+        'ports': ports,
+        'hs_enabled': hs_info['enabled'],
+        'hs_status': hs_info['status'],
+        'hs_hostname': hs_info['hostname'],
+        'hs_ports': hs_info['ports'],
+        'hs_services': hs_services,
+        'apt_transport_tor_enabled': is_apt_transport_tor_enabled()
+    }
 
 
 def iter_apt_uris(aug):
     """Iterate over all the APT source URIs."""
-    return itertools.chain.from_iterable([aug.match(path)
-                                          for path in APT_SOURCES_URI_PATHS])
+    return itertools.chain.from_iterable(
+        [aug.match(path) for path in APT_SOURCES_URI_PATHS])
 
 
 def get_real_apt_uri_path(aug, path):
@@ -109,8 +101,8 @@ def get_real_apt_uri_path(aug, path):
 
 def get_augeas():
     """Return an instance of Augeaus for processing APT configuration."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Aptsources/lens', 'Aptsources.lns')
     aug.set('/augeas/load/Aptsources/incl[last() + 1]',
             '/etc/apt/sources.list')
