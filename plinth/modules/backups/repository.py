@@ -29,8 +29,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.errors import ActionError
 
-from . import api, network_storage, _backup_handler, ROOT_REPOSITORY_NAME, \
-        ROOT_REPOSITORY_UUID, ROOT_REPOSITORY, restore_archive_handler
+from . import (ROOT_REPOSITORY, ROOT_REPOSITORY_NAME, ROOT_REPOSITORY_UUID,
+               _backup_handler, api, network_storage, restore_archive_handler)
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
@@ -46,30 +46,35 @@ KNOWN_ERRORS = [{
           'credentials and the server is running.'),
     'raise_as':
         BorgError,
-}, {
-    'errors': ['Connection refused'],
-    'message': _('Connection refused'),
-    'raise_as': BorgError,
-}, {
-    'errors': [
-        'not a valid repository', 'does not exist', 'FileNotFoundError'
-    ],
-    'message':
-        _('Repository not found'),
-    'raise_as':
-        BorgRepositoryDoesNotExistError,
-}, {
-    'errors': [('passphrase supplied in BORG_PASSPHRASE or by '
-                'BORG_PASSCOMMAND is incorrect')],
-    'message':
-        _('Incorrect encryption passphrase'),
-    'raise_as':
-        BorgError,
-}, {
-    'errors': [('Connection reset by peer')],
-    'message': _('SSH access denied'),
-    'raise_as': SshfsError,
-}]
+},
+                {
+                    'errors': ['Connection refused'],
+                    'message': _('Connection refused'),
+                    'raise_as': BorgError,
+                },
+                {
+                    'errors': [
+                        'not a valid repository', 'does not exist',
+                        'FileNotFoundError'
+                    ],
+                    'message':
+                        _('Repository not found'),
+                    'raise_as':
+                        BorgRepositoryDoesNotExistError,
+                },
+                {
+                    'errors': [('passphrase supplied in BORG_PASSPHRASE or by '
+                                'BORG_PASSCOMMAND is incorrect')],
+                    'message':
+                        _('Incorrect encryption passphrase'),
+                    'raise_as':
+                        BorgError,
+                },
+                {
+                    'errors': [('Connection reset by peer')],
+                    'message': _('SSH access denied'),
+                    'raise_as': SshfsError,
+                }]
 
 
 class BorgRepository():
@@ -292,11 +297,12 @@ class SshBorgRepository(BorgRepository):
             self.credentials = {}
         self._path = storage['path']
 
-    def _get_network_storage_format(self, store_credentials):
+    def _get_network_storage_format(self, store_credentials, verified):
         storage = {
             'path': self._path,
             'storage_type': self.storage_type,
-            'added_by_module': 'backups'
+            'added_by_module': 'backups',
+            'verified': verified
         }
         if self.uuid:
             storage['uuid'] = self.uuid
@@ -311,12 +317,12 @@ class SshBorgRepository(BorgRepository):
         self.run(
             ['init', '--path', self.repo_path, '--encryption', encryption])
 
-    def save(self, store_credentials=True):
+    def save(self, store_credentials=True, verified=True):
         """
         Save the repository in network_storage (kvstore).
         - store_credentials: Boolean whether credentials should be stored.
         """
-        storage = self._get_network_storage_format(store_credentials)
+        storage = self._get_network_storage_format(store_credentials, verified)
         self.uuid = network_storage.update_or_add(storage)
 
     def mount(self):

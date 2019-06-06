@@ -19,8 +19,10 @@ Forms for backups module.
 """
 
 import logging
+import os
+import subprocess
+import tempfile
 
-import paramiko
 from django import forms
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext
@@ -29,8 +31,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.utils import format_lazy
 
 from . import ROOT_REPOSITORY_NAME, api, network_storage
-from .errors import BorgRepositoryDoesNotExistError
-from .repository import SshBorgRepository
 
 logger = logging.getLogger(__name__)
 
@@ -117,81 +117,58 @@ class AddRepositoryForm(forms.Form):
         label=_('Confirm Passphrase'), help_text=_('Repeat the passphrase.'),
         widget=forms.PasswordInput(), required=False)
 
-    def get_credentials(self):
-        credentials = {}
-        for field_name in ["ssh_password", "encryption_passphrase"]:
-            field_value = self.cleaned_data.get(field_name, None)
-            if field_value:
-                credentials[field_name] = field_value
-
-        return credentials
-
-    def _check_if_duplicate_remote(self, path):
-        for storage in network_storage.get_storages().values():
-            if storage['path'] == path:
-                raise forms.ValidationError(
-                    _('Remote backup repository already exists.'))
-
-    def _validate_remote_repository(self, path, credentials):
-        """
-        Validation of SSH remote
-
-          * Create empty directory if not exists
-          * Check if the directory is empty
-            - if not empty, check if it's an existing backup repository
-            - else throw an error
-        """
-        user_at_host, dir_path = path.split(':')
-        username, hostname = user_at_host.split('@')
-        dir_path = dir_path.replace('~', f'/home/{username}')
-        password = credentials['ssh_password']
-        ssh_client = paramiko.SSHClient()
-        # TODO Prompt to accept fingerprint of the server
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        try:
-            ssh_client.connect(hostname, username=username, password=password)
-        except Exception as err:
-            msg = _('Accessing the remote repository failed. Details: %(err)s')
-            raise forms.ValidationError(msg, params={'err': str(err)})
-        else:
-            sftp_client = ssh_client.open_sftp()
-            try:
-                dir_contents = sftp_client.listdir(dir_path)
-            except FileNotFoundError:
-                logger.info(
-                    _(f"Directory {dir_path} doesn't exist. Creating ..."))
-                sftp_client.mkdir(dir_path)
-                self.repository = SshBorgRepository(path=path,
-                                                    credentials=credentials)
-            else:
-                if dir_contents:
-                    try:
-                        self.repository = SshBorgRepository(
-                            path=path, credentials=credentials)
-                        self.repository.get_info()
-                    except BorgRepositoryDoesNotExistError:
-                        msg = _(f'Directory {path.split(":")[-1]} is '
-                                'neither empty nor is an existing '
-                                'backups repository.')
-                        raise forms.ValidationError(msg)
-            finally:
-                sftp_client.close()
-        finally:
-            ssh_client.close()
-
     def clean(self):
-        cleaned_data = super(AddRepositoryForm, self).clean()
-        passphrase = cleaned_data.get("encryption_passphrase")
-        confirm_passphrase = cleaned_data.get("confirm_encryption_passphrase")
+        super(AddRepositoryForm, self).clean()
+        passphrase = self.cleaned_data.get("encryption_passphrase")
+        confirm_passphrase = self.cleaned_data.get(
+            "confirm_encryption_passphrase")
 
         if passphrase != confirm_passphrase:
             raise forms.ValidationError(
                 _("The entered encryption passphrases do not match"))
 
-        path = cleaned_data.get("repository")
-        credentials = self.get_credentials()
+        return self.cleaned_data
 
+    def clean_repository(self):
+        path = self.cleaned_data.get("repository")
         # Avoid creation of duplicate ssh remotes
         self._check_if_duplicate_remote(path)
+        return path
 
-        self._validate_remote_repository(path, credentials)
+    def _check_if_duplicate_remote(self, path):
+        for ns in network_storage.get_storages().values():
+            if ns['path'] == path:
+                raise forms.ValidationError(
+                    _('Remote backup repository already exists.'))
+
+
+class VerifySshHostkeyForm(forms.Form):
+    ssh_public_key = forms.ChoiceField(
+        label=_('Select verified SSH public key'), widget=forms.RadioSelect)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with selectable apps."""
+        hostname = kwargs.pop('hostname')
+        super().__init__(*args, **kwargs)
+        self.fields['ssh_public_key'].choices = self._get_all_public_keys(
+            hostname)
+
+    def _get_all_public_keys(self, hostname):
+        """Use ssh-keyscan to get all the SSH public keys of the
+        given hostname."""
+        # Fetch public keys of ssh remote
+        res1 = subprocess.run(['ssh-keyscan', hostname],
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, check=True)
+
+        with tempfile.NamedTemporaryFile(delete=False) as tmpfil:
+            tmpfil.write(res1.stdout)
+
+        # Generate user-friendly fingerprints of public keys
+        res2 = subprocess.run(['ssh-keygen', '-l', '-f', tmpfil.name],
+                              stdout=subprocess.PIPE)
+        os.remove(tmpfil.name)
+        keys = res2.stdout.decode().splitlines()
+
+        # Create a list of tuples of (algorithm, fingerprint)
+        return [(key.rsplit(' ', 1)[-1].strip('()'), key) for key in keys]

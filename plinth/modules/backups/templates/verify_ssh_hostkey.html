@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+  <h3>{{ title }}</h3>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    <br/>
+
+    <p>
+      The authenticity of host {{ hostname }} cannot be established.<br/>
+      The SSH server advertises the following public keys. Please verify any one of them.
+    </p>
+
+    <div class="accordion">
+      <p>
+        <a class="btn btn-default" data-toggle="collapse" href="#help" aria-expanded="false" aria-controls="footwear">{% trans "How to verify?" %}</a>
+      </p>
+      <div class="collapse" id="help">
+        {% blocktrans trimmed %}
+        <p>Run the following command on the SSH host machine. The output should match one of the provided options. You can also use dsa, ecdsa, ed25519 etc. instead of rsa, by choosing the corresponding file.</p>
+        {% endblocktrans %}
+        <p>
+          <code>sudo ssh-keygen -lf /etc/ssh/ssh_host_rsa_key</code>
+        </p>
+      </div>
+    </div>
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Verify" %}"/>
+    <a class="btn btn-default" role="button" href="{% url 'backups:index' %}">
+      {% trans "Cancel" %}
+    </a>
+  </form>
+
+{% endblock %}
