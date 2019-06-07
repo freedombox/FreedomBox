@@ -75,7 +75,8 @@ def init():
     """Intialize the ssh module."""
     global app
     app = SSHApp()
-    app.set_enabled(True)
+    if app.is_enabled():
+        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
