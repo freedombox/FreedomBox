@@ -31,6 +31,7 @@ from plinth import action_utils
 from plinth.modules import radicale
 
 COLLECTIONS_PATH = '/var/lib/radicale/collections'
+LOG_PATH = '/var/log/radicale'
 
 CONFIG_FILE = '/etc/radicale/config'
 
@@ -124,6 +125,9 @@ def subcommand_fix_collections(_):
     # Workaround for bug in radicale's uwsgi script (#919339)
     if not os.path.exists(COLLECTIONS_PATH):
         os.makedirs(COLLECTIONS_PATH)
+
+    if not os.path.exists(LOG_PATH):
+        os.makedirs(LOG_PATH)
 
 
 def load_augeas():
