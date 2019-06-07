@@ -425,12 +425,17 @@ def openvpn_profile_download_compare(browser, openvpn_download_profile):
     assert openvpn_download_profile == new_profile
 
 
-@given('I enable public access in searx')
+@given('public access is enabled in searx')
+def searx_public_access_enabled(browser):
+    application.searx_enable_public_access(browser)
+
+
+@when('I enable public access in searx')
 def searx_enable_public_access(browser):
     application.searx_enable_public_access(browser)
 
 
-@given('I disable public access in searx')
+@when('I disable public access in searx')
 def searx_disable_public_access(browser):
     application.searx_disable_public_access(browser)
 

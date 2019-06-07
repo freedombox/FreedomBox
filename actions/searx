@@ -181,7 +181,8 @@ def subcommand_enable_public_access(_):
 
 def subcommand_disable_public_access(_):
     """Disable public access to the SearX application."""
-    os.remove(PUBLIC_ACCESS_SETTING_FILE)
+    if os.path.exists(PUBLIC_ACCESS_SETTING_FILE):
+        os.remove(PUBLIC_ACCESS_SETTING_FILE)
     action_utils.webserver_enable('searx-freedombox-auth')
 
 
