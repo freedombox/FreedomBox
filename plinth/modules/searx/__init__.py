@@ -163,10 +163,10 @@ def diagnose():
 def enable_public_access():
     """Allow Searx app to be accessed by anyone with access."""
     actions.superuser_run('searx', ['enable-public-access'])
-    add_shortcut()
+    app.set_shortcut_login_required(False)
 
 
 def disable_public_access():
     """Allow Searx app to be accessed by logged-in users only."""
     actions.superuser_run('searx', ['disable-public-access'])
-    add_shortcut()
+    app.set_shortcut_login_required(True)
