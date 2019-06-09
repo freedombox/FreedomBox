@@ -160,12 +160,12 @@ def setup(helper, old_version=None):
 def _migrate_home_page_config():
     """Move the home page configuration to an external file."""
 
-    # Hold the current home page path in a variable
-    home_page_path = get_home_page().replace('_', '/')
+    # Hold the current home page in a variable
+    home_page = get_home_page()
 
     # Reset the home page to plinth in freedombox.conf
     actions.superuser_run('config', ['reset-home-page'])
 
     # Write the home page setting into the new conf file
     # This step is run at the end because it reloads the Apache server
-    actions.superuser_run('config', ['set-home-page', home_page_path])
+    change_home_page(home_page)
