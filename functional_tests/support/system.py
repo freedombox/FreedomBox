@@ -230,7 +230,7 @@ def backup_create(browser, app_name):
 def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
-    path = "//a[starts-with(@href,'/plinth/sys/backups/restore-archive/root/')]"
+    path = "//a[starts-with(@href,'/plinth/sys/backups/root/restore-archive/')]"
     # assume that want to restore the last (most recently created) backup
     browser.find_by_xpath(path).last.click()
     with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
@@ -252,7 +252,7 @@ def backup_upload_and_restore(browser, app_name, downloaded_file_path):
 
 def download_latest_backup(browser):
     nav_to_module(browser, 'backups')
-    path = "//a[starts-with(@href,'/plinth/sys/backups/download/root')]"
+    path = "//a[starts-with(@href,'/plinth/sys/backups/root/download/')]"
     ele = browser.driver.find_elements_by_xpath(path)[0]
     url = ele.get_attribute('href')
     file_path = download_file_logged_in(browser, url, suffix='.tar.gz')
