@@ -1064,7 +1064,13 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
             <para>Calendar and Addressbook (Radicale) </para>
           </listitem>
           <listitem>
+            <para>File Synchronization (Syncthing) </para>
+          </listitem>
+          <listitem>
             <para>Web Search (Searx) </para>
+          </listitem>
+          <listitem>
+            <para>Wiki (<ulink url="https://wiki.debian.org/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink>) </para>
           </listitem>
           <listitem>
             <para>Wiki and Blog (Ikiwiki) </para>
@@ -1791,6 +1797,13 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
       </para>
       <para>Syncthing has android apps available on the <ulink url="https://f-droid.org/repository/browse/?fdid=com.nutomic.syncthingandroid">F-Droid</ulink> and <ulink url="https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid">Google Play</ulink> app stores. Cross-platform desktop apps are also available. </para>
       <para>To learn more about Syncthing, please visit their <ulink url="https://syncthing.net">official website</ulink> and <ulink url="https://docs.syncthing.net">documentation</ulink>.  </para>
+      <section>
+        <title>Synchronizing over Tor</title>
+        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/SyncThing#">SyncThing</ulink> should automatically sync with your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> even if it is only accessible as a Tor hidden service. </para>
+        <para>If you would like to proxy your Syncthing client over Tor, set the all_proxy environment variable: </para>
+        <para>$ all_proxy=socks5://localhost:9050 syncthing </para>
+        <para>For more information, see the Syncthing documentation on <ulink url="https://docs.syncthing.net/users/proxying.html">using proxies</ulink>. </para>
+      </section>
     </section>
     <section>
       <title>Gobby Server (infinoted)</title>
@@ -9549,6 +9562,29 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.9 (2019-06-10)</title>
+        <itemizedlist>
+          <listitem>
+            <para>config: Add option to show advanced apps, which are hidden by default </para>
+          </listitem>
+          <listitem>
+            <para>monkeysphere: Hide by default </para>
+          </listitem>
+          <listitem>
+            <para>searx: Add option to allow public access to the application </para>
+          </listitem>
+          <listitem>
+            <para>Introduce component architecture for apps, with components for menus and shortcuts </para>
+          </listitem>
+          <listitem>
+            <para>Start new translation for Bulgarian </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for Turkish and Norwegian Bokmål </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.8 (2019-05-27)</title>
         <itemizedlist>
