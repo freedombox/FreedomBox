@@ -31,12 +31,12 @@
 
     <p>
       The authenticity of host {{ hostname }} cannot be established.<br/>
-      The SSH server advertises the following public keys. Please verify any one of them.
+      The SSH host advertises the following public keys. Please verify any one of them.
     </p>
 
-    <div class="accordion">
+    <section>
       <p>
-        <a class="btn btn-default" data-toggle="collapse" href="#help" aria-expanded="false" aria-controls="footwear">{% trans "How to verify?" %}</a>
+        <a class="btn btn-default" data-toggle="collapse" href="#help" aria-expanded="false">{% trans "How to verify?" %}  <i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i></a>
       </p>
       <div class="collapse" id="help">
         {% blocktrans trimmed %}
@@ -46,7 +46,7 @@
           <code>sudo ssh-keygen -lf /etc/ssh/ssh_host_rsa_key</code>
         </p>
       </div>
-    </div>
+    </section>
 
     {{ form|bootstrap }}
 

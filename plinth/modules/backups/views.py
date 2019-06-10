@@ -282,8 +282,11 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             _, hostname, _ = re.split('[@:]', path)
             credentials = _get_credentials(form.cleaned_data)
             if not self._is_ssh_hostkey_verified(hostname):
-                repository = SshBorgRepository(path=path,
-                                               credentials=credentials)
+                # Cannot mount at this point because we cannot connect
+                # and validate the directory.
+                repository = SshBorgRepository(
+                    path=path, credentials=credentials, automount=False)
+                # Save for now, verify in the next view
                 repository.save(verified=False)
                 uuid = repository.uuid
                 url = reverse('backups:verify-ssh-hostkey', args=[uuid])
@@ -296,12 +299,9 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
                     context_data = self.get_context_data()
                     context_data['form'] = form
                     return render(request, self.template_name, context_data)
-                try:
-                    repository.get_info()
-                except BorgRepositoryDoesNotExistError:
-                    repository.create_repository(
-                        form.cleaned_data['encryption'])
-                repository.save()
+
+                _create_borg_repository(repository,
+                                        form.cleaned_data['encryption'])
                 return redirect(self.success_url)
         else:
             context_data = self.get_context_data()
@@ -382,14 +382,21 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
                                                      uuid=uuid)
         except ValidationError as err:
             messages.error(self.request, err.message)
+            # If a ValidationError is thrown, delete the repository
+            # so that the user can have another go at creating it.
             network_storage.delete(uuid)
             return redirect(reverse_lazy('backups:repository-add'))
-        try:
-            repository.get_info()
-        except BorgRepositoryDoesNotExistError:
-            repository.create_repository(repo_data.get('encryption', 'none'))
-        repository.save()
+        _create_borg_repository(repository, repo_data.get(
+            'encryption', 'none'))
         return super().form_valid(form)
+
+
+def _create_borg_repository(repository, encryption='none'):
+    try:
+        repository.get_info()
+    except BorgRepositoryDoesNotExistError:
+        repository.create_repository(encryption)
+    repository.save()
 
 
 def _get_credentials(data):
@@ -421,7 +428,7 @@ def _validate_remote_repository(path, credentials, uuid=None):
     try:
         ssh_client.connect(hostname, username=username, password=password)
     except Exception as err:
-        msg = _('Accessing the remote repository failed. Details: %(err)s')
+        msg = _(f'Accessing the remote repository failed. Details: {err}')
         raise ValidationError(msg, params={'err': str(err)})
     else:
         sftp_client = ssh_client.open_sftp()

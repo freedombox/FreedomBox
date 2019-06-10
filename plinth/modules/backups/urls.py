@@ -26,16 +26,15 @@ from .views import (AddRepositoryView, CreateArchiveView, DeleteArchiveView,
                     UploadArchiveView, VerifySshHostkeyView, mount_repository,
                     umount_repository)
 
-# TODO Refactor path params to be more semantic
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
     url(r'^sys/backups/create/$', CreateArchiveView.as_view(), name='create'),
-    url(r'^sys/backups/download/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
+    url(r'^sys/backups/(?P<uuid>[^/]+)/download/(?P<name>[^/]+)/$',
         DownloadArchiveView.as_view(), name='download'),
-    url(r'^sys/backups/delete/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
+    url(r'^sys/backups/(?P<uuid>[^/]+)/delete/(?P<name>[^/]+)/$',
         DeleteArchiveView.as_view(), name='delete'),
     url(r'^sys/backups/upload/$', UploadArchiveView.as_view(), name='upload'),
-    url(r'^sys/backups/restore-archive/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
+    url(r'^sys/backups/(?P<uuid>[^/]+)/restore-archive/(?P<name>[^/]+)/$',
         RestoreArchiveView.as_view(), name='restore-archive'),
     url(r'^sys/backups/restore-from-upload/$', RestoreFromUploadView.as_view(),
         name='restore-from-upload'),
