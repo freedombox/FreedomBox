@@ -100,6 +100,10 @@ class DBusServer():
         self.package_handler = PackageHandler()
         self.package_handler.register(connection)
 
+        from plinth.modules.letsencrypt.dbus import LetsEncrypt
+        lets_encrypt = LetsEncrypt()
+        lets_encrypt.register(connection)
+
     @staticmethod
     def on_name_acquired(_connection, name):
         """Callback when service name on D-Bus has been acquired."""
