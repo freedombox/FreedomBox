@@ -14,14 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Let's Encrypt module.
 """
 
 from django.conf.urls import url
-from . import views
 
+from . import views
 
 urlpatterns = [
     url(r'^sys/letsencrypt/$', views.index, name='index'),
@@ -31,8 +30,4 @@ urlpatterns = [
         name='obtain'),
     url(r'^sys/letsencrypt/delete/(?P<domain>[^/]+)/$', views.delete,
         name='delete'),
-    url(r'^sys/letsencrypt/toggle_hooks/(?P<domain>[^/]+)/$',
-        views.toggle_hooks, name='toggle_hooks'),
-    url(r'^sys/letsencrypt/toggle_module/(?P<domain>[^/]+)/'
-        '(?P<module>[^/]+)/$', views.toggle_module, name='toggle_module'),
 ]

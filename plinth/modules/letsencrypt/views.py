@@ -29,7 +29,7 @@ from django.views.decorators.http import require_POST
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules import config, letsencrypt
+from plinth.modules import letsencrypt
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,6 @@ def index(request):
             'description': letsencrypt.description,
             'status': status,
             'manual_page': letsencrypt.manual_page,
-            'installed_modules': letsencrypt.get_installed_modules()
         })
 
 
@@ -60,8 +59,8 @@ def revoke(request, domain):
     except ActionError as exception:
         messages.error(
             request,
-            _('Failed to revoke certificate for domain {domain}: {error}')
-            .format(domain=domain, error=exception.args[2]))
+            _('Failed to revoke certificate for domain {domain}: {error}').
+            format(domain=domain, error=exception.args[2]))
 
     return redirect(reverse_lazy('letsencrypt:index'))
 
@@ -75,125 +74,17 @@ def obtain(request, domain):
             request,
             _('Certificate successfully obtained for domain {domain}').format(
                 domain=domain))
-        enable_renewal_management(request, domain)
     except ActionError as exception:
         messages.error(
             request,
-            _('Failed to obtain certificate for domain {domain}: {error}')
-            .format(domain=domain, error=exception.args[2]))
-    return redirect(reverse_lazy('letsencrypt:index'))
-
-
-def enable_renewal_management(request, domain):
-    if domain == config.get_domainname():
-        try:
-            actions.superuser_run('letsencrypt', ['manage_hooks', 'enable'])
-            messages.success(
-                request,
-                _('Certificate renewal management enabled for {domain}.')
-                .format(domain=domain))
-        except ActionError as exception:
-            messages.error(
-                request,
-                _('Failed to enable certificate renewal management for '
-                  '{domain}: {error}').format(domain=domain,
-                                              error=exception.args[2]))
-
-
-@require_POST
-def toggle_hooks(request, domain):
-    """Toggle pointing of certbot's hooks to FreedomBox.
-
-    For the current domain.
-
-    """
-    manage_hooks_status = letsencrypt.get_manage_hooks_status()
-    subcommand = 'disable' if 'enabled' in manage_hooks_status else 'enable'
-
-    try:
-        if subcommand == 'disable':
-            enabled_modules = [
-                module for module in letsencrypt.MODULES_WITH_HOOKS
-                if module in manage_hooks_status
-            ]
-            for module in enabled_modules:
-                actions.superuser_run(module, ['letsencrypt', 'drop'],
-                                      run_in_background=True)
-        actions.superuser_run('letsencrypt', ['manage_hooks', subcommand])
-        if subcommand == 'enable':
-            msg = _('Certificate renewal management enabled for {domain}.')\
-                  .format(domain=domain)
-        else:
-            msg = _('Certificate renewal management disabled for {domain}.')\
-                  .format(domain=domain)
-        messages.success(request, msg)
-    except ActionError as exception:
-        messages.error(
-            request,
-            _('Failed to switch certificate renewal management for {domain}: '
-              '{error}').format(domain=domain, error=exception.args[2]))
-
-    return redirect(reverse_lazy('letsencrypt:index'))
-
-
-@require_POST
-def toggle_module(request, domain, module):
-    """Toggle usage of LE cert for a module name, for the current domain."""
-    manage_hooks_status = letsencrypt.get_manage_hooks_status()
-    enabled_modules = [
-        module for module in letsencrypt.MODULES_WITH_HOOKS
-        if module in manage_hooks_status
-    ]
-
-    if module in enabled_modules:
-        mod_le_arg = 'drop'
-        enabled_modules.remove(module)
-    else:
-        mod_le_arg = 'add'
-        enabled_modules.append(module)
-
-    module_args = ['letsencrypt', mod_le_arg]
-    le_arguments = ['manage_hooks', 'enable']
-
-    if not enabled_modules == []:
-        le_arguments.extend(['--modules'] + enabled_modules)
-
-    try:
-        actions.superuser_run(module, module_args)
-        actions.superuser_run('letsencrypt', le_arguments)
-        messages.success(request,
-                         _('Switched use of certificate for app {module}')
-                         .format(module=module))
-    except ActionError as exception:
-        messages.error(
-            request,
-            _('Failed to switch certificate use for app {module}: {error}')
-            .format(module=module, error=exception.args[2]))
-
+            _('Failed to obtain certificate for domain {domain}: {error}').
+            format(domain=domain, error=exception.args[2]))
     return redirect(reverse_lazy('letsencrypt:index'))
 
 
 @require_POST
 def delete(request, domain):
     """Delete a certificate for a given domain, and cleanup renewal config."""
-    manage_hooks_status = letsencrypt.get_manage_hooks_status()
-    enabled_modules = [
-        module for module in letsencrypt.MODULES_WITH_HOOKS
-        if module in manage_hooks_status
-    ]
-
-    try:
-        for module in enabled_modules:
-            actions.superuser_run(module, ['letsencrypt', 'drop'],
-                                  run_in_background=True)
-        actions.superuser_run('letsencrypt',
-                              ['manage_hooks', 'disable', '--domain', domain])
-    except ActionError as exception:
-        messages.error(
-            request,
-            _('Failed to disable certificate renewal management for {domain}: '
-              '{error}').format(domain=domain, error=exception.args[2]))
-
     try:
         actions.superuser_run('letsencrypt', ['delete', '--domain', domain])
         messages.success(
@@ -203,7 +94,7 @@ def delete(request, domain):
     except ActionError as exception:
         messages.error(
             request,
-            _('Failed to delete certificate for domain {domain}: {error}')
-            .format(domain=domain, error=exception.args[2]))
+            _('Failed to delete certificate for domain {domain}: {error}').
+            format(domain=domain, error=exception.args[2]))
 
     return redirect(reverse_lazy('letsencrypt:index'))

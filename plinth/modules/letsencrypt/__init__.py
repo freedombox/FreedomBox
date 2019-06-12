@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions
 from plinth import app as app_module
-from plinth import cfg, menu, module_loader
+from plinth import cfg, menu
 from plinth.errors import ActionError
 from plinth.modules import config, names
 from plinth.signals import domain_added, domain_removed, domainname_change
@@ -62,7 +62,6 @@ description = [
 
 manual_page = 'LetsEncrypt'
 
-MODULES_WITH_HOOKS = ['ejabberd', 'matrixsynapse']
 LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 logger = logging.getLogger(__name__)
 
@@ -120,55 +119,11 @@ def try_action(domain, action):
     actions.superuser_run('letsencrypt', [action, '--domain', domain])
 
 
-def enable_renewal_management(domain):
-    if domain == config.get_domainname():
-        try:
-            actions.superuser_run('letsencrypt', ['manage_hooks', 'enable'])
-            logger.info(
-                _('Certificate renewal management enabled for {domain}.').
-                format(domain=domain))
-        except ActionError as exception:
-            logger.error(
-                _('Failed to enable certificate renewal management for '
-                  '{domain}: {error}').format(domain=domain,
-                                              error=exception.args[2]))
-
-
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
-    """Disable renewal hook management after a domain name change."""
+    """Drop the certificate after a domain name change."""
     del sender  # Unused
     del new_domainname  # Unused
     del kwargs  # Unused
-
-    for module in MODULES_WITH_HOOKS:
-        actions.superuser_run(
-            module, ['letsencrypt', 'drop', '--domain', old_domainname],
-            run_in_background=True)
-    actions.superuser_run(
-        'letsencrypt', ['manage_hooks', 'disable', '--domain', old_domainname],
-        run_in_background=True)
-
-
-def get_manage_hooks_status():
-    """Return status of hook management for current domain."""
-    try:
-        output = actions.superuser_run('letsencrypt',
-                                       ['manage_hooks', 'status'])
-    except ActionError:
-        return False
-
-    return output.strip()
-
-
-def get_installed_modules():
-    installed_modules = [
-        module_name
-        for module_name, module in module_loader.loaded_modules.items()
-        if module_name in MODULES_WITH_HOOKS
-        and module.setup_helper.get_state() == 'up-to-date'
-    ]
-
-    return installed_modules
 
 
 def on_domain_added(sender, domain_type='', name='', description='',
@@ -189,7 +144,6 @@ def on_domain_added(sender, domain_type='', name='', description='',
         if sender != 'test' and name:
             logger.info("Obtaining a Let\'s Encrypt certificate for " + name)
             try_action(name, 'obtain')
-            enable_renewal_management(name)
         return True
     except ActionError as ex:
         return False
@@ -220,8 +174,6 @@ def get_status():
             curr_dom,
         'has_cert': (curr_dom in status['domains']
                      and status['domains'][curr_dom]['certificate_available']),
-        'manage_hooks_status':
-            get_manage_hooks_status()
     }
     status['current_domain'] = current_domain
 
