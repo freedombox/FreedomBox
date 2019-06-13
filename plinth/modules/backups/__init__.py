@@ -21,6 +21,7 @@ FreedomBox app to manage backup archives.
 import json
 import os
 
+import paramiko
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
 
@@ -142,3 +143,16 @@ def restore_from_upload(path, apps=None):
     """Restore files from an uploaded .tar.gz backup file"""
     api.restore_apps(_restore_exported_archive_handler, app_names=apps,
                      create_subvolume=False, backup_file=path)
+
+
+def is_ssh_hostkey_verified(hostname):
+    """Check whether SSH Hostkey has already been verified.
+    hostname: Domain name or IP address of the host
+    """
+    known_hosts_path = os.path.join(cfg.data_dir, '.ssh', 'known_hosts')
+    if not os.path.exists(known_hosts_path):
+        return False
+
+    known_hosts = paramiko.hostkeys.HostKeys(known_hosts_path)
+    host_keys = known_hosts.lookup(hostname)
+    return host_keys is not None

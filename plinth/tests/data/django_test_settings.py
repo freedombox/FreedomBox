@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Django settings for test modules.
 """
@@ -31,18 +30,18 @@ DATABASES = {
 }
 
 INSTALLED_APPS = [
-        'captcha',
-        'bootstrapform',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.messages',
-        'stronghold',
-        'plinth',
-    ]
+    'captcha',
+    'bootstrapform',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.messages',
+    'stronghold',
+    'plinth',
+]
 
 # These are included here solely to suppress Django warnings
 # during testing setup
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

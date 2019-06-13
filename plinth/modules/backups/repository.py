@@ -26,11 +26,12 @@ from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
+from plinth import actions, cfg
 from plinth.errors import ActionError
 
 from . import (ROOT_REPOSITORY, ROOT_REPOSITORY_NAME, ROOT_REPOSITORY_UUID,
-               _backup_handler, api, network_storage, restore_archive_handler)
+               _backup_handler, api, is_ssh_hostkey_verified, network_storage,
+               restore_archive_handler)
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
@@ -236,7 +237,7 @@ class SshBorgRepository(BorgRepository):
     storage_type = 'ssh'
     uuid = None
 
-    def __init__(self, uuid=None, path=None, credentials=None, automount=True,
+    def __init__(self, uuid=None, path=None, credentials=None, automount=False,
                  **kwargs):
         """
         Instanciate a new repository.
@@ -259,7 +260,8 @@ class SshBorgRepository(BorgRepository):
                 self._load_from_kvstore()
 
         if automount:
-            self.mount()
+            if is_ssh_hostkey_verified(path):
+                self.mount()
 
     @property
     def repo_path(self):
@@ -328,8 +330,10 @@ class SshBorgRepository(BorgRepository):
     def mount(self):
         if self.is_mounted:
             return
+        known_hosts_path = os.path.join(cfg.data_dir, '.ssh', 'known_hosts')
         arguments = [
-            'mount', '--mountpoint', self.mountpoint, '--path', self._path
+            'mount', '--mountpoint', self.mountpoint, '--path', self._path,
+            '--user-known-hosts-file', known_hosts_path
         ]
         arguments, kwargs = self._append_sshfs_arguments(
             arguments, self.credentials)
@@ -382,7 +386,7 @@ def get_ssh_repositories():
     """Get all SSH Repositories including the archive content"""
     repositories = {}
     for storage in network_storage.get_storages().values():
-        repository = SshBorgRepository(automount=False, **storage)
+        repository = SshBorgRepository(**storage)
         repositories[storage['uuid']] = repository.get_view_content()
 
     return repositories

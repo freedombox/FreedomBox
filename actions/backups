@@ -294,7 +294,7 @@ def get_env(arguments, use_credentials=False):
             password = read_password()
             if password:
                 env['SSHPASS'] = password
-                env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=no'
+                env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=yes'
             else:
                 raise ValueError('could not find credentials')
 

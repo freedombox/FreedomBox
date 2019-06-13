@@ -44,6 +44,9 @@ def parse_arguments():
                        required=True)
     mount.add_argument('--ssh-keyfile', help='Path of private ssh key',
                        default=None, required=False)
+    mount.add_argument('--user-known-hosts-file',
+                       help='Path to a custom known_hosts file',
+                       default='/dev/null')
     umount = subparsers.add_parser('umount', help='unmount an ssh filesystem')
     umount.add_argument('--mountpoint', help='Mountpoint to unmount',
                         required=True)
@@ -69,7 +72,8 @@ def subcommand_mount(arguments):
     remote_path = remote_path.replace('~/', '').replace('~', '')
     cmd = [
         'sshfs', remote_path, arguments.mountpoint, '-o',
-        'UserKnownHostsFile=/dev/null', '-o', 'StrictHostKeyChecking=no'
+        f'UserKnownHostsFile={arguments.user_known_hosts_file}', '-o',
+        'StrictHostKeyChecking=yes'
     ]
     if arguments.ssh_keyfile:
         cmd += ['-o', 'IdentityFile=' + arguments.ssh_keyfile]

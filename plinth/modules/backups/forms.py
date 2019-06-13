@@ -54,7 +54,8 @@ def _get_repository_choices():
     choices = [('root', ROOT_REPOSITORY_NAME)]
     storages = network_storage.get_storages()
     for storage in storages.values():
-        choices += [(storage['uuid'], storage['path'])]
+        if storage['verified']:
+            choices += [(storage['uuid'], storage['path'])]
     return choices
 
 
@@ -119,18 +120,18 @@ class AddRepositoryForm(forms.Form):
 
     def clean(self):
         super(AddRepositoryForm, self).clean()
-        passphrase = self.cleaned_data.get("encryption_passphrase")
+        passphrase = self.cleaned_data.get('encryption_passphrase')
         confirm_passphrase = self.cleaned_data.get(
-            "confirm_encryption_passphrase")
+            'confirm_encryption_passphrase')
 
         if passphrase != confirm_passphrase:
             raise forms.ValidationError(
-                _("The entered encryption passphrases do not match"))
+                _('The entered encryption passphrases do not match'))
 
         return self.cleaned_data
 
     def clean_repository(self):
-        path = self.cleaned_data.get("repository")
+        path = self.cleaned_data.get('repository')
         # Avoid creation of duplicate ssh remotes
         self._check_if_duplicate_remote(path)
         return path

@@ -26,10 +26,9 @@ import uuid
 
 import pytest
 
+from plinth import actions
 from plinth.modules import backups
 from plinth.modules.backups.repository import BorgRepository, SshBorgRepository
-from plinth import actions
-
 from plinth.tests import config as test_config
 
 pytestmark = pytest.mark.usefixtures('needs_root', 'needs_borg', 'load_cfg')
@@ -164,8 +163,7 @@ def test_sshfs_mount_password():
     credentials = _get_credentials()
     ssh_path = test_config.backups_ssh_path
 
-    repository = SshBorgRepository(path=ssh_path, credentials=credentials,
-                                   automount=False)
+    repository = SshBorgRepository(path=ssh_path, credentials=credentials)
     repository.mount()
     assert repository.is_mounted
     repository.umount()
@@ -178,8 +176,7 @@ def test_sshfs_mount_keyfile():
     credentials = _get_credentials()
     ssh_path = test_config.backups_ssh_path
 
-    repository = SshBorgRepository(path=ssh_path, credentials=credentials,
-                                   automount=False)
+    repository = SshBorgRepository(path=ssh_path, credentials=credentials)
     repository.mount()
     assert repository.is_mounted
     repository.umount()
@@ -189,8 +186,8 @@ def test_sshfs_mount_keyfile():
 def test_access_nonexisting_url():
     """Test accessing a non-existent URL."""
     repo_url = "user@%s.com.au:~/repo" % str(uuid.uuid1())
-    repository = SshBorgRepository(
-        path=repo_url, credentials=_dummy_credentials, automount=False)
+    repository = SshBorgRepository(path=repo_url,
+                                   credentials=_dummy_credentials)
     with pytest.raises(backups.errors.BorgRepositoryDoesNotExistError):
         repository.get_info()
 
@@ -198,8 +195,8 @@ def test_access_nonexisting_url():
 def test_inaccessible_repo_url():
     """Test accessing an existing URL with wrong credentials."""
     repo_url = 'user@heise.de:~/repo'
-    repository = SshBorgRepository(
-        path=repo_url, credentials=_dummy_credentials, automount=False)
+    repository = SshBorgRepository(path=repo_url,
+                                   credentials=_dummy_credentials)
     with pytest.raises(backups.errors.BorgError):
         repository.get_info()
 
