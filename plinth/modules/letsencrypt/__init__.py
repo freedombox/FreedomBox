@@ -33,7 +33,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup
 
-version = 2
+version = 3
 
 is_essential = True
 
