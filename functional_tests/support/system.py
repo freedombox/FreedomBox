@@ -64,6 +64,9 @@ def set_domain_name(browser, domain_name):
 
 
 def set_home_page(browser, home_page):
+    if 'plinth' not in home_page and 'apache' not in home_page:
+        home_page = 'shortcut-' + home_page
+
     nav_to_module(browser, 'config')
     drop_down = browser.find_by_id('id_configuration-homepage')
     drop_down.select(home_page)
