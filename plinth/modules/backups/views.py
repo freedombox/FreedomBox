@@ -410,7 +410,7 @@ def _validate_remote_repository(path, credentials, uuid=None):
     password = credentials['ssh_password']
     repository = None
     with _ssh_connection(hostname, username, password) as ssh_client:
-        with _sftp_client(ssh_client) as sftp_client:
+        with ssh_client.open_sftp() as sftp_client:
             dir_contents = None
             try:
                 dir_contents = sftp_client.listdir(dir_path)
@@ -452,16 +452,6 @@ def _ssh_connection(hostname, username, password):
         raise ValidationError(msg, params={'err': str(err)})
     finally:
         ssh_client.close()
-
-
-@contextmanager
-def _sftp_client(ssh_client):
-    """Context manager to create and close an SFTP client."""
-    sftp_client = ssh_client.open_sftp()
-    try:
-        yield sftp_client
-    finally:
-        sftp_client.close()
 
 
 class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
