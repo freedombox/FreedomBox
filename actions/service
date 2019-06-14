@@ -15,16 +15,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Wrapper to list and handle system services
 """
 
 import argparse
-from importlib import import_module
-import os
 import json
+import os
 import subprocess
+from importlib import import_module
 
 from plinth import action_utils, cfg
 
@@ -47,6 +46,8 @@ def parse_arguments():
     add_service_action(subparsers, 'enable', 'enable a service')
     add_service_action(subparsers, 'disable', 'disable a service')
     add_service_action(subparsers, 'restart', 'restart a service')
+    add_service_action(subparsers, 'try-restart',
+                       'restart a service if running')
     add_service_action(subparsers, 'reload', 'reload a service')
     add_service_action(subparsers, 'is-running', 'status of a service')
     add_service_action(subparsers, 'is-enabled', 'status a service')
@@ -76,6 +77,10 @@ def subcommand_disable(arguments):
 
 def subcommand_restart(arguments):
     action_utils.service_restart(arguments.service)
+
+
+def subcommand_try_restart(arguments):
+    action_utils.service_try_restart(arguments.service)
 
 
 def subcommand_reload(arguments):
@@ -113,7 +118,7 @@ def subcommand_list(_):
         if unit.endswith(suffix):
             name = unit[:-len(suffix)]
             if name in services:
-                services[name] = {'running': (sub=='running')}
+                services[name] = {'running': (sub == 'running')}
 
     print(json.dumps(services))
 
