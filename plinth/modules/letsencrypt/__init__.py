@@ -158,7 +158,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
             try_action(name, 'revoke')
         return True
     except ActionError as exception:
-        logger.warn(
+        logger.warning(
             ('Failed to revoke certificate for domain {domain}: {error}'
              ).format(domain=name, error=exception.args[2]))
         return False
