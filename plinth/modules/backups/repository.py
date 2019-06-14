@@ -330,10 +330,9 @@ class SshBorgRepository(BorgRepository):
     def mount(self):
         if self.is_mounted:
             return
-        known_hosts_path = os.path.join(cfg.data_dir, '.ssh', 'known_hosts')
         arguments = [
             'mount', '--mountpoint', self.mountpoint, '--path', self._path,
-            '--user-known-hosts-file', known_hosts_path
+            '--user-known-hosts-file', cfg.known_hosts
         ]
         arguments, kwargs = self._append_sshfs_arguments(
             arguments, self.credentials)

@@ -327,7 +327,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     @staticmethod
     def _add_ssh_hostkey(hostname, key_type):
         """Add the given SSH key to known_hosts."""
-        known_hosts_path = os.path.join(cfg.data_dir, '.ssh', 'known_hosts')
+        known_hosts_path = cfg.known_hosts
         if not os.path.exists(known_hosts_path):
             os.makedirs(known_hosts_path.rsplit('/', maxsplit=1)[0])
             open(known_hosts_path, 'w').close()
@@ -440,9 +440,7 @@ def _validate_remote_repository(path, credentials, uuid=None):
 def _ssh_connection(hostname, username, password):
     """Context manager to create and close an SSH connection."""
     ssh_client = paramiko.SSHClient()
-
-    known_hosts_path = os.path.join(cfg.data_dir, '.ssh', 'known_hosts')
-    ssh_client.load_host_keys(known_hosts_path)
+    ssh_client.load_host_keys(cfg.known_hosts)
 
     try:
         ssh_client.connect(hostname, username=username, password=password)

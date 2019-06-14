@@ -149,7 +149,7 @@ def is_ssh_hostkey_verified(hostname):
     """Check whether SSH Hostkey has already been verified.
     hostname: Domain name or IP address of the host
     """
-    known_hosts_path = os.path.join(cfg.data_dir, '.ssh', 'known_hosts')
+    known_hosts_path = cfg.known_hosts
     if not os.path.exists(known_hosts_path):
         return False
 

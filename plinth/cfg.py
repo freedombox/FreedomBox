@@ -38,6 +38,7 @@ secure_proxy_ssl_header = None
 develop = False
 server_dir = '/'
 danube_edition = False
+known_hosts = None
 
 config_file = None
 
@@ -96,6 +97,7 @@ def read(config_path=None, root_directory=None):
         ('Path', 'actions_dir', 'string'),
         ('Path', 'doc_dir', 'string'),
         ('Path', 'server_dir', 'string'),
+        ('Path', 'known_hosts', 'string'),
         ('Network', 'host', 'string'),
         ('Network', 'port', 'int'),
         ('Network', 'secure_proxy_ssl_header', 'string'),
