@@ -21,18 +21,23 @@ Configuration helper for Let's Encrypt.
 
 import argparse
 import glob
+import importlib
 import json
 import os
+import pathlib
 import re
+import shutil
 import subprocess
 import sys
 
 import configobj
 
-from plinth import action_utils
+from plinth import action_utils, cfg
 from plinth.modules import letsencrypt as le
 
 TEST_MODE = False
+LE_DIRECTORY = '/etc/letsencrypt/'
+ETC_SSL_DIRECTORY = '/etc/ssl/'
 RENEWAL_DIRECTORY = '/etc/letsencrypt/renewal/'
 AUTHENTICATOR = 'webroot'
 WEB_ROOT_PATH = '/var/www/html'
@@ -67,6 +72,25 @@ def parse_arguments():
         'delete', help='Delete certificate for a domain and disable website.')
     delete_parser.add_argument('--domain', required=True,
                                help='Domain name to delete certificate of')
+
+    subparser = subparsers.add_parser(
+        'copy-certificate',
+        help='Copy LE certificate to a daemon\'s directory')
+    subparser.add_argument('--managing-app', required=True,
+                           help='App needing the certificate')
+    subparser.add_argument('--user-owner', required=True,
+                           help='User who should own the certificate')
+    subparser.add_argument('--group-owner', required=True,
+                           help='Group that should own the certificate')
+    subparser.add_argument('--source-private-key-path', required=True,
+                           help='Path to the source private key')
+    subparser.add_argument(
+        '--source certificate-path', required=True,
+        help='Path to the source certificate with public key')
+    subparser.add_argument('--private-key-path', required=True,
+                           help='Path to the private key')
+    subparser.add_argument('--certificate-path', required=True,
+                           help='Path to the certificate with public key')
 
     help_hooks = 'Does nothing, kept for compatibility.'
     subparser = subparsers.add_parser('run_pre_hooks', help=help_hooks)
@@ -251,6 +275,67 @@ def _remove_old_hooks_from_file(file_path):
         del config['renewalparams']['post_hook']
 
     config.write()
+
+
+def subcommand_copy_certificate(arguments):
+    """Copy certificate from LE directory to daemon's directory.
+
+    Set ownership and permissions as requested needed by the daemon.
+
+    """
+    source_private_key_path = pathlib.Path(
+        arguments.source_private_key_path).resolve()
+    _assert_source_directory(source_private_key_path)
+    source_certificate_path = pathlib.Path(
+        arguments.source_certificate_path).resolve()
+    _assert_source_directory(source_certificate_path)
+
+    private_key_path = pathlib.Path(arguments.private_key_path).resolve()
+    _assert_managed_path(arguments.managing_app, private_key_path)
+    certificate_path = pathlib.Path(arguments.certificate_path).resolve()
+    _assert_managed_path(arguments.managing_app, certificate_path)
+
+    # Create directories, owned by root
+    private_key_path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
+    certificate_path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
+
+    # Private key is only accessible to the user owner
+    old_mask = os.umask(0o177)
+    shutil.copyfile(source_private_key_path, private_key_path)
+
+    if certificate_path != private_key_path:
+        # Certificate is only writable by the user owner
+        os.umask(0o133)
+        shutil.copyfile(source_certificate_path, certificate_path)
+    else:
+        # If private key and certificate are the same file, append one after
+        # the other.
+        source_certificate = source_certificate_path.read_bytes()
+        with private_key_path.open(mode='a+b') as file_handle:
+            file_handle.write(source_certificate)
+
+    os.umask(old_mask)
+
+    shutil.chown(certificate_path, user=arguments.user_owner,
+                 group=arguments.group_owner)
+    shutil.chown(private_key_path, user=arguments.user_owner,
+                 group=arguments.group_owner)
+
+
+def _assert_source_directory(path):
+    """Assert that a path is a valid source of a certificates."""
+    assert (str(path).startswith(LE_DIRECTORY)
+            or str(path).startswith(ETC_SSL_DIRECTORY))
+
+
+def _assert_managed_path(module, path):
+    """Check that path is in fact managed by module."""
+    cfg.read()
+    module_file = pathlib.Path(cfg.config_dir) / 'modules-enabled' / module
+    module_path = module_file.read_text().strip()
+
+    module = importlib.import_module(module_path)
+    assert set(path.parents).intersection(set(module.managed_paths))
 
 
 def subcommand_run_pre_hooks(_):
