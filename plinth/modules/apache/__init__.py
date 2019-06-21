@@ -23,12 +23,16 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg
+from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.utils import format_lazy
 
 version = 7
 
 is_essential = True
+
+managed_services = ['apache2']
 
 managed_packages = ['apache2', 'php-fpm']
 
@@ -54,6 +58,13 @@ class ApacheApp(app_module.App):
                 _('{box_name} Web Interface (Plinth)'), box_name=_(
                     cfg.box_name)), ports=['http', 'https'], is_external=True)
         self.add(freedombox_ports)
+
+        letsencrypt = LetsEncrypt('letsencrypt-apache', domains='*',
+                                  daemons=[managed_services[0]])
+        self.add(letsencrypt)
+
+        daemon = Daemon('daemon-apache', managed_services[0])
+        self.add(daemon)
 
 
 def init():
