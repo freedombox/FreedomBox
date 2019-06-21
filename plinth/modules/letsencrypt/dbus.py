@@ -76,3 +76,7 @@ class LetsEncrypt:
         """
         logger.info('LE certificate renewed (deployed): %s, %s.',
                     renewed_domains, renewed_lineage)
+
+        from plinth.modules.letsencrypt import components
+        components.on_certificate_event('renewed', renewed_domains,
+                                        renewed_lineage)
