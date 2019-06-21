@@ -20,6 +20,7 @@ FreedomBox app to configure matrix-synapse server.
 
 import logging
 import os
+import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -31,6 +32,7 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 
 from .manifest import backup, clients
 
@@ -39,6 +41,8 @@ version = 5
 managed_services = ['matrix-synapse']
 
 managed_packages = ['matrix-synapse', 'matrix-synapse-ldap3']
+
+managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
 name = _('Matrix Synapse')
 
@@ -101,6 +105,16 @@ class MatrixSynapseApp(app_module.App):
                               'matrix-synapse-plinth')
         self.add(webserver)
 
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-matrixsynapse', domains=get_domains, daemons=[
+                managed_services[0]
+            ], should_copy_certificates=True,
+            private_key_path='/etc/matrix-synapse/homeserver.tls.key',
+            certificate_path='/etc/matrix-synapse/homeserver.tls.crt',
+            user_owner='matrix-synapse', group_owner='nogroup',
+            managing_app='matrixsynapse')
+        self.add(letsencrypt)
+
         daemon = Daemon('daemon-matrixsynapse', managed_services[0])
         self.add(daemon)
 
@@ -121,6 +135,15 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'matrixsynapse',
                 ['post-install'])
     helper.call('post', app.enable)
+    app.get_component('letsencrypt-matrixsynapse').setup_certificates()
+
+
+def setup_domain(domain_name):
+    """Configure a domain name for matrixsynapse."""
+    app.get_component('letsencrypt-matrixsynapse').setup_certificates(
+        [domain_name])
+    actions.superuser_run('matrixsynapse',
+                          ['setup', '--domain-name', domain_name])
 
 
 def is_setup():
@@ -141,6 +164,15 @@ def diagnose():
     return results
 
 
+def get_domains():
+    """Return a list of domains this app is interested in."""
+    domain = get_configured_domain_name()
+    if domain:
+        return [domain]
+
+    return []
+
+
 def get_configured_domain_name():
     """Return the currently configured domain name."""
     if not is_setup():
@@ -159,8 +191,10 @@ def get_public_registration_status():
     return output.strip() == 'enabled'
 
 
-def has_valid_certificate():
-    """Return whether the configured domain name has a valid certificate."""
-    status = actions.superuser_run('matrixsynapse',
-                                   ['letsencrypt', 'get-status'])
-    return status.startswith('valid')
+def get_certificate_status():
+    """Return the status of certificate for the configured domain."""
+    status = app.get_component('letsencrypt-matrixsynapse').get_status()
+    if not status:
+        return 'no-domains'
+
+    return list(status.values())[0]

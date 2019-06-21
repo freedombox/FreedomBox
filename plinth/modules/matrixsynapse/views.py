@@ -30,7 +30,7 @@ from plinth.modules import matrixsynapse
 from plinth.utils import get_domain_names
 from plinth.views import AppView
 
-from . import get_public_registration_status, has_valid_certificate
+from . import get_public_registration_status
 from .forms import MatrixSynapseForm
 
 
@@ -42,10 +42,7 @@ class SetupView(FormView):
 
     def form_valid(self, form):
         """Handle valid form submission."""
-        domain_name = form.cleaned_data['domain_name']
-        actions.superuser_run('matrixsynapse',
-                              ['setup', '--domain-name', domain_name])
-
+        matrixsynapse.setup_domain(form.cleaned_data['domain_name'])
         return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
@@ -82,7 +79,7 @@ class MatrixSynapseAppView(AppView):
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
         context['clients'] = matrixsynapse.clients
         context['manual_page'] = matrixsynapse.manual_page
-        context['has_valid_certificate'] = has_valid_certificate()
+        context['certificate_status'] = matrixsynapse.get_certificate_status()
         return context
 
     def get_initial(self):

@@ -39,7 +39,7 @@
     {% endblocktrans %}
   </p>
 
-  {% if not has_valid_certificate %}
+  {% if certificate_status != "valid" %}
     <div class="alert alert-warning" role="alert">
       {% url 'letsencrypt:index' as letsencrypt_url %}
       {% blocktrans %}

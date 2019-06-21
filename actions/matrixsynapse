@@ -20,10 +20,6 @@ Configuration helper for Matrix-Synapse server.
 """
 
 import argparse
-import filecmp
-import os
-import shutil
-import sys
 
 import yaml
 
@@ -59,67 +55,6 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def _get_certificate_status():
-    """Return if the current certificate is an up-to-date LE certificate."""
-    configured_domain = get_configured_domain_name()
-    if not configured_domain:
-        return False
-
-    if not os.path.exists(letsencrypt.LIVE_DIRECTORY):
-        return False
-
-    source_dir = os.path.join(letsencrypt.LIVE_DIRECTORY, configured_domain)
-    source_certificate_path = os.path.join(source_dir, 'fullchain.pem')
-    source_private_key_path = os.path.join(source_dir, 'privkey.pem')
-
-    dest_dir = '/etc/matrix-synapse'
-    dest_certificate_path = os.path.join(dest_dir, 'homeserver.tls.crt')
-    dest_private_key_path = os.path.join(dest_dir, 'homeserver.tls.key')
-
-    if filecmp.cmp(source_certificate_path, dest_certificate_path) and \
-       filecmp.cmp(source_private_key_path, dest_private_key_path):
-        return True
-
-    return False
-
-
-def _update_tls_certificate():
-    """Update the TLS certificate and private key used by Matrix Synapse.
-
-    A valid certificate is necessary for federation with other instances
-    starting with version 1.0.
-
-    """
-    configured_domain = get_configured_domain_name()
-    if os.path.exists(letsencrypt.LIVE_DIRECTORY) and configured_domain:
-        # Copy the latest Let's Encrypt certs into Synapse's directory.
-        src_dir = os.path.join(letsencrypt.LIVE_DIRECTORY, configured_domain)
-        source_certificate_path = os.path.join(src_dir, 'fullchain.pem')
-        source_private_key_path = os.path.join(src_dir, 'privkey.pem')
-    else:
-        # Copy Apache's snake-oil certificate into Synapse's config directory.
-        # The self-signed certificate doesn't really work (other Matrix
-        # Synapse instances do not accept it). It is merely to prevent the
-        # server from failing to startup because the files are missing.
-        source_certificate_path = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-        source_private_key_path = '/etc/ssl/private/ssl-cert-snakeoil.key'
-
-    dest_dir = '/etc/matrix-synapse'
-    dest_certificate_path = os.path.join(dest_dir, 'homeserver.tls.crt')
-    dest_private_key_path = os.path.join(dest_dir, 'homeserver.tls.key')
-
-    # Private key is only accessible to the user "matrix-synapse"
-    # Group access is prohibited since it is "nogroup"
-    old_mask = os.umask(0o133)
-    shutil.copyfile(source_certificate_path, dest_certificate_path)
-    os.umask(0o177)
-    shutil.copyfile(source_private_key_path, dest_private_key_path)
-    os.umask(old_mask)
-
-    shutil.chown(dest_certificate_path, user='matrix-synapse', group='nogroup')
-    shutil.chown(dest_private_key_path, user='matrix-synapse', group='nogroup')
-
-
 def subcommand_post_install(_):
     """Perform post installation configuration."""
     with open(CONFIG_FILE_PATH) as config_file:
@@ -152,18 +87,12 @@ def subcommand_post_install(_):
     with open(CONFIG_FILE_PATH, 'w') as config_file:
         yaml.dump(config, config_file)
 
-    _update_tls_certificate()
-
-    if action_utils.service_is_running('matrix-synapse'):
-        action_utils.service_restart('matrix-synapse')
-
 
 def subcommand_setup(arguments):
     """Configure the domain name for matrix-synapse package."""
     domain_name = arguments.domain_name
     action_utils.dpkg_reconfigure('matrix-synapse',
                                   {'server-name': domain_name})
-    _update_tls_certificate()
 
 
 def subcommand_public_registration(argument):
@@ -188,40 +117,6 @@ def subcommand_public_registration(argument):
 
     if action_utils.service_is_running('matrix-synapse'):
         action_utils.service_restart('matrix-synapse')
-
-
-def subcommand_letsencrypt(arguments):
-    """Add/drop usage of Let's Encrypt cert or show status.
-
-    The command 'add' applies only to current domain, will be called by action
-    'letsencrypt run_renew_hooks', when certbot renews the cert (if
-    matrix-synapse is selected for cert use). Drop of a cert must be possible
-    for any domain to respond to domain change.
-
-    """
-    if arguments.command == 'drop':
-        print('Dropping certificates is not supported for Matrix Synapse.')
-        return
-
-    if arguments.command == 'get-status':
-        print('valid' if _get_certificate_status() else 'invalid')
-        return
-
-    configured_domain = get_configured_domain_name()
-    if arguments.domain is not None and \
-       arguments.domain != configured_domain:
-        print('Aborted: Current domain "{}" is not configured.'.format(
-            arguments.domain))
-        sys.exit(1)
-
-    le_folder = os.path.join(letsencrypt.LIVE_DIRECTORY, configured_domain)
-    if not os.path.exists(le_folder):
-        print('Aborted: No certificate directory at %s.' % le_folder)
-        sys.exit(2)
-
-    _update_tls_certificate()
-
-    action_utils.service_try_restart('matrix-synapse')
 
 
 def main():
