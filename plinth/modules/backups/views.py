@@ -20,7 +20,6 @@ Views for the backups app.
 
 import logging
 import os
-import re
 import subprocess
 import tempfile
 from contextlib import contextmanager
@@ -44,7 +43,7 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
 from . import (ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms,
-               is_ssh_hostkey_verified, network_storage)
+               is_ssh_hostkey_verified, network_storage, split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
 from .repository import (BorgRepository, SshBorgRepository, get_repository,
@@ -282,7 +281,7 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
         """
         super().form_valid(form)
         path = form.cleaned_data.get('repository')
-        _, hostname, _ = re.split('[@:]', path)
+        _, hostname, _ = split_path(path)
         credentials = _get_credentials(form.cleaned_data)
         repository = SshBorgRepository(path=path, credentials=credentials)
         repository.save(verified=False)
@@ -321,8 +320,12 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         return self.repo_data
 
     def _get_hostname(self):
-        _, hostname, _ = re.split('[@:]', self._get_repo_data()['path'])
-        return hostname
+        """Get the hostname of the repository.
+
+        Network interface information is stripped out.
+        """
+        _, hostname, _ = split_path(self._get_repo_data()['path'])
+        return hostname.split('%')[0]
 
     @staticmethod
     def _add_ssh_hostkey(hostname, key_type):
@@ -405,10 +408,11 @@ def _validate_remote_repository(path, credentials, uuid=None):
         - if not empty, check if it's an existing backup repository
         - else throw an error
     """
-    username, hostname, dir_path = re.split('[@:]', path)
+    username, hostname, dir_path = split_path(path)
     dir_path = dir_path.replace('~', '.')
     password = credentials['ssh_password']
     repository = None
+    # TODO Test with IPv6 connection
     with _ssh_connection(hostname, username, password) as ssh_client:
         with ssh_client.open_sftp() as sftp_client:
             dir_contents = None

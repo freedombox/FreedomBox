@@ -20,6 +20,7 @@ FreedomBox app to manage backup archives.
 
 import json
 import os
+import re
 
 import paramiko
 from django.utils.text import get_valid_filename
@@ -156,3 +157,12 @@ def is_ssh_hostkey_verified(hostname):
     known_hosts = paramiko.hostkeys.HostKeys(known_hosts_path)
     host_keys = known_hosts.lookup(hostname)
     return host_keys is not None
+
+
+def split_path(path):
+    """Splits the given path into username, hostname, directory.
+
+    Network interface information is kept in the hostname if provided.
+    e.g. fe80::2078:6c26:498a:1fa5%wlp1s0
+    """
+    return re.findall(r'(.*)[@].*?(.*)[:](.*)', path)[0]

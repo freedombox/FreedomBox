@@ -20,17 +20,20 @@ Forms for backups module.
 
 import logging
 import os
+import re
 import subprocess
 import tempfile
 
 from django import forms
-from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
+from django.core.validators import (FileExtensionValidator,
+                                    validate_ipv46_address)
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.utils import format_lazy
 
-from . import ROOT_REPOSITORY_NAME, api, network_storage
+from . import ROOT_REPOSITORY_NAME, api, network_storage, split_path
 
 logger = logging.getLogger(__name__)
 
@@ -95,11 +98,41 @@ class UploadForm(forms.Form):
         ], help_text=_('Select the backup file you want to upload'))
 
 
+def repository_validator(path):
+    if not ('@' in path and ':' in path):
+        raise ValidationError(_('Repository path format incorrect.'))
+
+    username, hostname, dir_path = split_path(path)
+    hostname = hostname.split('%')[0]
+
+    # Validate username using Unix username regex
+    if not re.match(r'[a-z_][a-z0-9_-]*$', username):
+        raise ValidationError(_(f'Invalid username: {username}'))
+
+    # The hostname should either be a valid IP address or hostname
+    # Follows RFC1123 (hostnames can start with digits) instead of RFC952
+    hostname_re = (r'^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*'
+                   r'([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$')
+    try:
+        validate_ipv46_address(hostname)
+    except ValidationError:
+        if not re.match(hostname_re, hostname):
+            raise ValidationError(_(f'Invalid hostname: {hostname}'))
+
+    # Validate directory path
+    if not re.match(r'[^\0]+', dir_path):
+        raise ValidationError(_(f'Invalid directory path: {dir_path}'))
+
+    # Just for tests. A validator doesn't have to return anything.
+    return True
+
+
 class AddRepositoryForm(forms.Form):
     repository = forms.CharField(
         label=_('SSH Repository Path'), strip=True,
         help_text=_('Path of a new or existing repository. Example: '
-                    '<i>user@host:~/path/to/repo/</i>'))
+                    '<i>user@host:~/path/to/repo/</i>'),
+        validators=[repository_validator])
     ssh_password = forms.CharField(
         label=_('SSH server password'), strip=True,
         help_text=_('Password of the SSH Server.<br />'
