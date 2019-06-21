@@ -19,6 +19,7 @@ FreedomBox app to configure ejabberd server.
 """
 
 import logging
+import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -30,6 +31,7 @@ from plinth.daemon import Daemon
 from plinth.modules import config
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.signals import (domainname_change, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
@@ -41,6 +43,8 @@ version = 3
 managed_services = ['ejabberd']
 
 managed_packages = ['ejabberd']
+
+managed_paths = [pathlib.Path('/etc/ejabberd/')]
 
 name = _('ejabberd')
 
@@ -104,6 +108,15 @@ class EjabberdApp(app_module.App):
         webserver = Webserver('webserver-ejabberd', 'jwchat-plinth')
         self.add(webserver)
 
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-ejabberd', domains=get_domains, daemons=['ejabberd'],
+            should_copy_certificates=True,
+            private_key_path='/etc/ejabberd/letsencrypt/{domain}/ejabberd.pem',
+            certificate_path='/etc/ejabberd/letsencrypt/{domain}/ejabberd.pem',
+            user_owner='ejabberd', group_owner='ejabberd',
+            managing_app='ejabberd')
+        self.add(letsencrypt)
+
         daemon = Daemon('daemon-ejabberd', managed_services[0])
         self.add(daemon)
 
@@ -129,9 +142,27 @@ def setup(helper, old_version=None):
 
     helper.call('pre', actions.superuser_run, 'ejabberd',
                 ['pre-install', '--domainname', domainname])
+    # XXX: Configure all other domain names
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
+    helper.call('post',
+                app.get_component('letsencrypt-ejabberd').setup_certificates,
+                [domainname])
+    helper.call('post', actions.superuser_run, 'ejabberd',
+                ['setup', '--domainname', domainname])
     helper.call('post', app.enable)
+
+
+def get_domains():
+    """Return the list of domains that ejabberd is interested in.
+
+    XXX: Retrieve the list from ejabberd configuration.
+
+    """
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() == 'needs-setup':
+        return []
+
+    return [config.get_domainname()]
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
@@ -165,8 +196,8 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     del kwargs  # Unused
 
     actions.superuser_run(
-        'ejabberd', ['change-domainname', '--domainname', new_domainname],
-        run_in_background=True)
+        'ejabberd', ['change-domainname', '--domainname', new_domainname])
+    app.get_component('letsencrypt-ejabberd').setup_certificates()
 
 
 def diagnose():

@@ -47,7 +47,7 @@ class EjabberdAppView(AppView):
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = config.get_domainname()
+        context['domainname'] = ejabberd.get_domains()[0]
         context['clients'] = ejabberd.clients
         return context
 
