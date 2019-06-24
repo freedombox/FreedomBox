@@ -20,39 +20,46 @@
 
 {% load bootstrap %}
 {% load i18n %}
+
 {% block content %}
 
-<h3>{{ title }}</h3>
+  <h3>{{ title }}</h3>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  <br/>
-
-  <p>
-    The authenticity of host {{ hostname }} cannot be established.<br/> The SSH host advertises the following public keys. Please verify any one of them.
-  </p>
-
-  <section>
     <p>
-      <a class="btn btn-default collapsed collapsible-button" data-toggle="collapse" href="#help" aria-expanded="false"><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i> {% trans "How to verify?" %}</a>
+      The authenticity of SSH host {{ hostname }} could not be established. The host advertises the following SSH public keys. Please verify any one of them.
     </p>
-    <div class="collapse panel-body" id="help">
-      {% blocktrans trimmed %}
-      <p>Run the following command on the SSH host machine. The output should match one of the provided options. You can also use dsa, ecdsa, ed25519 etc. instead of rsa, by choosing the corresponding file.</p>
-      {% endblocktrans %}
+
+    <section>
       <p>
-        <code>sudo ssh-keygen -lf /etc/ssh/ssh_host_rsa_key</code>
+        <a class="btn btn-default collapsed collapsible-button"
+           data-toggle="collapse" href="#help" aria-expanded="false">
+          <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+          {% trans "How to verify?" %}
+        </a>
       </p>
-    </div>
-  </section>
+      <div class="collapse panel-body" id="help">
+        <p>
+          {% blocktrans trimmed %}
+            Run the following command on the SSH host machine. The output should
+            match one of the provided options. You can also use dsa, ecdsa,
+            ed25519 etc. instead of rsa, by choosing the corresponding file.
+          {% endblocktrans %}
+        </p>
+        <p>
+          <code>sudo ssh-keygen -lf /etc/ssh/ssh_host_rsa_key</code>
+        </p>
+      </div>
+    </section>
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="{% trans " Verify " %}"/>
-  <a class="btn btn-default" role="button" href="{% url 'backups:index' %}">
-    {% trans "Cancel" %}
-  </a>
-</form>
+    <input type="submit" class="btn btn-primary" value="{% trans 'Verify Host' %}"/>
+    <a class="btn btn-default" role="button" href="{% url 'backups:index' %}">
+      {% trans "Cancel" %}
+    </a>
+  </form>
 
 {% endblock %}
