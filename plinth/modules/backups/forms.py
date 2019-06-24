@@ -57,7 +57,7 @@ def _get_repository_choices():
     choices = [('root', ROOT_REPOSITORY_NAME)]
     storages = network_storage.get_storages()
     for storage in storages.values():
-        if storage['verified']:
+        if storage.get('verified'):
             choices += [(storage['uuid'], storage['path'])]
 
     return choices
