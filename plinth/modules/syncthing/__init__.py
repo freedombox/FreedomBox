@@ -31,7 +31,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup, clients
 
-version = 1
+version = 2
 
 managed_services = ['syncthing@syncthing']
 
@@ -87,8 +87,12 @@ class SyncthingApp(app_module.App):
             login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-syncthing', name,
+        firewall = Firewall('firewall-syncthing-web', name,
                             ports=['http', 'https'], is_external=True)
+        self.add(firewall)
+
+        firewall = Firewall('firewall-syncthing-ports', name,
+                            ports=['syncthing'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-syncthing', 'syncthing-plinth')
@@ -113,7 +117,11 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
-    helper.call('post', app.enable)
+    if not old_version:
+        helper.call('post', app.enable)
+
+    if old_version == 1 and app.is_enabled():
+        app.get_component('firewall-syncthing-ports').enable()
 
 
 def diagnose():
