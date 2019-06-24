@@ -237,8 +237,7 @@ class SshBorgRepository(BorgRepository):
     storage_type = 'ssh'
     uuid = None
 
-    def __init__(self, uuid=None, path=None, credentials=None, automount=False,
-                 **kwargs):
+    def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
         """
         Instanciate a new repository.
 
@@ -258,10 +257,6 @@ class SshBorgRepository(BorgRepository):
                 raise ValueError('Invalid arguments.')
             else:
                 self._load_from_kvstore()
-
-        if automount:
-            if is_ssh_hostkey_verified(path):
-                self.mount()
 
     @property
     def repo_path(self):
@@ -391,9 +386,9 @@ def get_ssh_repositories():
     return repositories
 
 
-def get_repository(uuid, automount=False):
+def get_repository(uuid):
     """Get a local or SSH repository object instance."""
     if uuid == ROOT_REPOSITORY_UUID:
         return BorgRepository(path=ROOT_REPOSITORY)
 
-    return SshBorgRepository(uuid=uuid, automount=automount)
+    return SshBorgRepository(uuid=uuid)

@@ -100,8 +100,10 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
-        repository = get_repository(form.cleaned_data['repository'],
-                                    automount=True)
+        repository = get_repository(form.cleaned_data['repository'])
+        if hasattr(repository, 'mount'):
+            repository.mount()
+
         name = datetime.now().strftime('%Y-%m-%d:%H:%M')
         repository.create_archive(name, form.cleaned_data['selected_apps'])
         return super().form_valid(form)
