@@ -161,6 +161,10 @@ class AddRepositoryForm(forms.Form):
             raise forms.ValidationError(
                 _('The entered encryption passphrases do not match'))
 
+        if self.cleaned_data.get('encryption') != 'none' and not passphrase:
+            raise forms.ValidationError(
+                _('Passphrase is needed for encryption.'))
+
         return self.cleaned_data
 
     def clean_repository(self):
