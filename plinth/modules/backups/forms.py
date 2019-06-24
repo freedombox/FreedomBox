@@ -59,6 +59,7 @@ def _get_repository_choices():
     for storage in storages.values():
         if storage['verified']:
             choices += [(storage['uuid'], storage['path'])]
+
     return choices
 
 
@@ -99,6 +100,7 @@ class UploadForm(forms.Form):
 
 
 def repository_validator(path):
+    """Validate an SSH repository path."""
     if not ('@' in path and ':' in path):
         raise ValidationError(_('Repository path format incorrect.'))
 
@@ -125,6 +127,7 @@ def repository_validator(path):
 
 
 class AddRepositoryForm(forms.Form):
+    """Form to add new SSH remote repository."""
     repository = forms.CharField(
         label=_('SSH Repository Path'), strip=True,
         help_text=_('Path of a new or existing repository. Example: '
@@ -161,19 +164,23 @@ class AddRepositoryForm(forms.Form):
         return self.cleaned_data
 
     def clean_repository(self):
+        """Validate repository form field."""
         path = self.cleaned_data.get('repository')
         # Avoid creation of duplicate ssh remotes
         self._check_if_duplicate_remote(path)
         return path
 
-    def _check_if_duplicate_remote(self, path):
-        for ns in network_storage.get_storages().values():
-            if ns['path'] == path:
+    @staticmethod
+    def _check_if_duplicate_remote(path):
+        """Raise validation error if given path is a stored remote."""
+        for storage in network_storage.get_storages().values():
+            if storage['path'] == path:
                 raise forms.ValidationError(
                     _('Remote backup repository already exists.'))
 
 
 class VerifySshHostkeyForm(forms.Form):
+    """Form to verify the SSH public key for a host."""
     ssh_public_key = forms.ChoiceField(
         label=_('Select verified SSH public key'), widget=forms.RadioSelect)
 
@@ -184,9 +191,9 @@ class VerifySshHostkeyForm(forms.Form):
         self.fields['ssh_public_key'].choices = self._get_all_public_keys(
             hostname)
 
-    def _get_all_public_keys(self, hostname):
-        """Use ssh-keyscan to get all the SSH public keys of the
-        given hostname."""
+    @staticmethod
+    def _get_all_public_keys(hostname):
+        """Use ssh-keyscan to get all the SSH public keys of a host."""
         # Fetch public keys of ssh remote
         res1 = subprocess.run(['ssh-keyscan', hostname],
                               stdout=subprocess.PIPE,

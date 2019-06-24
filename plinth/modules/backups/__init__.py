@@ -148,7 +148,9 @@ def restore_from_upload(path, apps=None):
 
 def is_ssh_hostkey_verified(hostname):
     """Check whether SSH Hostkey has already been verified.
+
     hostname: Domain name or IP address of the host
+
     """
     known_hosts_path = cfg.known_hosts
     if not os.path.exists(known_hosts_path):
@@ -164,5 +166,6 @@ def split_path(path):
 
     Network interface information is kept in the hostname if provided.
     e.g. fe80::2078:6c26:498a:1fa5%wlp1s0
+
     """
     return re.findall(r'^(.*)@([^/]*):(.*)$', path)[0]

@@ -311,6 +311,7 @@ class SshBorgRepository(BorgRepository):
         """Initialize / create a borg repository."""
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
+
         self.run(
             ['init', '--path', self.repo_path, '--encryption', encryption])
 

@@ -264,7 +264,7 @@ class DownloadArchiveView(View):
 
 
 class AddRepositoryView(SuccessMessageMixin, FormView):
-    """View to verify the SSH Hostkey of the server and save repository."""
+    """View to create a new remote backup repository."""
     form_class = forms.AddRepositoryForm
     template_name = 'backups_repository_add.html'
     success_url = reverse_lazy('backups:index')
@@ -319,6 +319,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         if not self.repo_data:
             uuid = self.kwargs['uuid']
             self.repo_data = network_storage.get(uuid)
+
         return self.repo_data
 
     def _get_hostname(self):
@@ -346,6 +347,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
             known_hosts_file.write('\n')
 
     def get(self, *args, **kwargs):
+        """Skip this view if host is already verified."""
         if is_ssh_hostkey_verified(self._get_hostname()):
             self._add_remote_repository()
             messages.success(self.request,
@@ -363,6 +365,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
     def _add_remote_repository(self):
+        """On successful verification of host, add repository."""
         repo_data = self._get_repo_data()
         path = repo_data['path']
         credentials = repo_data['credentials']
@@ -476,21 +479,26 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         messages.success(
             request,
             _('Repository removed. The remote backup itself was not deleted.'))
+
         return redirect('backups:index')
 
 
 def umount_repository(request, uuid):
+    """View to unmount a remote SSH repository."""
     repository = SshBorgRepository(uuid=uuid)
     repository.umount()
     if repository.is_mounted:
         messages.error(request, _('Unmounting failed!'))
+
     return redirect('backups:index')
 
 
 def mount_repository(request, uuid):
+    """View to mount a remote SSH repository."""
     # Do not mount unverified ssh repositories. Prompt for verification.
     if not network_storage.get(uuid).get('verified'):
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
+
     repository = SshBorgRepository(uuid=uuid)
     try:
         repository.mount()
@@ -500,4 +508,5 @@ def mount_repository(request, uuid):
     else:
         if not repository.is_mounted:
             messages.error(request, _('Mounting failed'))
+
     return redirect('backups:index')
