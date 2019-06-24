@@ -315,7 +315,7 @@ class SshBorgRepository(BorgRepository):
         self.run(
             ['init', '--path', self.repo_path, '--encryption', encryption])
 
-    def save(self, store_credentials=True, verified=True):
+    def save(self, store_credentials=True, verified=False):
         """
         Save the repository in network_storage (kvstore).
         - store_credentials: Boolean whether credentials should be stored.
