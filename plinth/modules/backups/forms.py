@@ -120,11 +120,8 @@ def repository_validator(path):
             raise ValidationError(_(f'Invalid hostname: {hostname}'))
 
     # Validate directory path
-    if not re.match(r'[^\0]+', dir_path):
+    if not re.match(r'[^\0]*', dir_path):
         raise ValidationError(_(f'Invalid directory path: {dir_path}'))
-
-    # Just for tests. A validator doesn't have to return anything.
-    return True
 
 
 class AddRepositoryForm(forms.Form):

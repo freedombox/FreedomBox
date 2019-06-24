@@ -165,4 +165,4 @@ def split_path(path):
     Network interface information is kept in the hostname if provided.
     e.g. fe80::2078:6c26:498a:1fa5%wlp1s0
     """
-    return re.findall(r'(.*)[@].*?(.*)[:](.*)', path)[0]
+    return re.findall(r'^(.*)@([^/]*):(.*)$', path)[0]
