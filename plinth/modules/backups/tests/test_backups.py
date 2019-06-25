@@ -146,10 +146,7 @@ def _append_borg_arguments(arguments, credentials):
     kwargs = {}
     passphrase = credentials.get('encryption_passphrase', None)
     if passphrase:
-        arguments += ['--encryption-passphrase', passphrase]
-
-    if 'ssh_password' in credentials and credentials['ssh_password']:
-        kwargs['input'] = credentials['ssh_password'].encode()
+        kwargs['input'] = json.dumps({'encryption_passphrase': passphrase})
 
     if 'ssh_keyfile' in credentials and credentials['ssh_keyfile']:
         arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]

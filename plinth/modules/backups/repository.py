@@ -93,13 +93,13 @@ class BorgRepository():
         self.credentials = credentials
 
     @staticmethod
-    def _get_encryption_arguments(credentials):
-        """Return '--encryption-passphrase' argument to backups call."""
+    def _get_encryption_data(credentials):
+        """Return additional dictionary data to send to backups call."""
         passphrase = credentials.get('encryption_passphrase', None)
         if passphrase:
-            return ['--encryption-passphrase', passphrase]
+            return {'encryption_passphrase': passphrase}
 
-        return []
+        return {}
 
     @property
     def repo_path(self):
@@ -177,8 +177,10 @@ class BorgRepository():
                 return chunk
 
         args = ['export-tar', '--path', self._get_archive_path(archive_name)]
-        args += self._get_encryption_arguments(self.credentials)
+        input_data = json.dumps(self._get_encryption_data(self.credentials))
         proc = self._run('backups', args, run_in_background=True)
+        proc.stdin.write(input_data.encode())
+        proc.stdin.close()
         return BufferedReader(proc.stdout)
 
     def get_archive(self, name):
@@ -375,8 +377,9 @@ class SshBorgRepository(BorgRepository):
             if key not in self.KNOWN_CREDENTIALS:
                 raise ValueError('Unknown credentials entry: %s' % key)
 
-        arguments += self._get_encryption_arguments(self.credentials)
-        return self._run('backups', arguments, superuser=superuser)
+        input_data = json.dumps(self._get_encryption_data(self.credentials))
+        return self._run('backups', arguments, superuser=superuser,
+                         input=input_data.encode())
 
 
 def get_ssh_repositories():

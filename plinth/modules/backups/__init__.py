@@ -108,9 +108,13 @@ def _backup_handler(packet, encryption_passphrase=None):
     paths = packet.directories + packet.files
     paths.append(manifest_path)
     arguments = ['create-archive', '--path', packet.path, '--paths'] + paths
+    input_data = ''
     if encryption_passphrase:
-        arguments += ['--encryption-passphrase', encryption_passphrase]
-    actions.superuser_run('backups', arguments)
+        input_data = json.dumps({
+            'encryption_passphrase': encryption_passphrase
+        })
+
+    actions.superuser_run('backups', arguments, input=input_data.encode())
 
 
 def get_exported_archive_apps(path):
@@ -131,13 +135,15 @@ def _restore_exported_archive_handler(packet, encryption_passphrase=None):
 
 def restore_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
-    locations = {'directories': packet.directories, 'files': packet.files}
+    locations = {
+        'directories': packet.directories,
+        'files': packet.files,
+        'encryption_passphrase': encryption_passphrase
+    }
     locations_data = json.dumps(locations)
     arguments = [
         'restore-archive', '--path', packet.path, '--destination', '/'
     ]
-    if encryption_passphrase:
-        arguments += ['--encryption-passphrase', encryption_passphrase]
     actions.superuser_run('backups', arguments, input=locations_data.encode())
 
 
