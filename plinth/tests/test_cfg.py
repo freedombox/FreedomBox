@@ -120,7 +120,7 @@ def compare_configurations(parser):
     """Compare two sets of configuration values."""
     # Note that the count of items within each section includes the number
     # of default items (1, for 'root').
-    assert len(parser.items('Path')) == 10
+    assert len(parser.items('Path')) == 9
     assert parser.get('Path', 'root') == cfg.root
     assert parser.get('Path', 'file_root') == cfg.file_root
     assert parser.get('Path', 'config_dir') == cfg.config_dir

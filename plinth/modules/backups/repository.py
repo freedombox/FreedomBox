@@ -26,11 +26,11 @@ from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions, cfg
+from plinth import actions
 from plinth.errors import ActionError
 
 from . import (ROOT_REPOSITORY, ROOT_REPOSITORY_NAME, ROOT_REPOSITORY_UUID,
-               _backup_handler, api, is_ssh_hostkey_verified, network_storage,
+               _backup_handler, api, get_known_hosts_path, network_storage,
                restore_archive_handler)
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
@@ -326,9 +326,11 @@ class SshBorgRepository(BorgRepository):
     def mount(self):
         if self.is_mounted:
             return
+        known_hosts_path = get_known_hosts_path()
         arguments = [
             'mount', '--mountpoint', self.mountpoint, '--path', self._path,
-            '--user-known-hosts-file', cfg.known_hosts
+            '--user-known-hosts-file',
+            str(known_hosts_path)
         ]
         arguments, kwargs = self._append_sshfs_arguments(
             arguments, self.credentials)

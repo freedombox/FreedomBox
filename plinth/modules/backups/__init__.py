@@ -20,6 +20,7 @@ FreedomBox app to manage backup archives.
 
 import json
 import os
+import pathlib
 import re
 
 import paramiko
@@ -146,17 +147,22 @@ def restore_from_upload(path, apps=None):
                      create_subvolume=False, backup_file=path)
 
 
+def get_known_hosts_path():
+    """Return the path to the known hosts file."""
+    return pathlib.Path(cfg.data_dir) / '.ssh' / 'known_hosts'
+
+
 def is_ssh_hostkey_verified(hostname):
     """Check whether SSH Hostkey has already been verified.
 
     hostname: Domain name or IP address of the host
 
     """
-    known_hosts_path = cfg.known_hosts
-    if not os.path.exists(known_hosts_path):
+    known_hosts_path = get_known_hosts_path()
+    if not known_hosts_path.exists():
         return False
 
-    known_hosts = paramiko.hostkeys.HostKeys(known_hosts_path)
+    known_hosts = paramiko.hostkeys.HostKeys(str(known_hosts_path))
     host_keys = known_hosts.lookup(hostname)
     return host_keys is not None
 

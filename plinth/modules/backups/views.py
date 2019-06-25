@@ -43,7 +43,8 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
 from . import (ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms,
-               is_ssh_hostkey_verified, network_storage, split_path)
+               get_known_hosts_path, is_ssh_hostkey_verified, network_storage,
+               split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
 from .repository import (BorgRepository, SshBorgRepository, get_repository,
@@ -338,7 +339,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     @staticmethod
     def _add_ssh_hostkey(hostname, key_type):
         """Add the given SSH key to known_hosts."""
-        known_hosts_path = pathlib.Path(cfg.known_hosts)
+        known_hosts_path = get_known_hosts_path()
         known_hosts_path.parent.mkdir(parents=True, exist_ok=True)
         known_hosts_path.touch()
 
@@ -449,7 +450,7 @@ def _create_remote_repository(repository, encryption, dir_contents):
 def _ssh_connection(hostname, username, password):
     """Context manager to create and close an SSH connection."""
     ssh_client = paramiko.SSHClient()
-    ssh_client.load_host_keys(cfg.known_hosts)
+    ssh_client.load_host_keys(str(get_known_hosts_path()))
 
     try:
         ssh_client.connect(hostname, username=username, password=password)
