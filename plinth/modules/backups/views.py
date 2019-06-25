@@ -337,19 +337,14 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         return hostname.split('%')[0]  # XXX: Likely incorrect to split
 
     @staticmethod
-    def _add_ssh_hostkey(hostname, key_type):
+    def _add_ssh_hostkey(ssh_public_key):
         """Add the given SSH key to known_hosts."""
         known_hosts_path = get_known_hosts_path()
         known_hosts_path.parent.mkdir(parents=True, exist_ok=True)
         known_hosts_path.touch()
 
         with known_hosts_path.open('a') as known_hosts_file:
-            key_line = subprocess.run(
-                ['ssh-keyscan', '-t', key_type, hostname],
-                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-                check=True).stdout.decode().strip()
-            known_hosts_file.write(key_line)
-            known_hosts_file.write('\n')
+            known_hosts_file.write(ssh_public_key + '\n')
 
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
@@ -361,8 +356,8 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create and store the repository."""
-        key_type = form.cleaned_data['ssh_public_key']
-        self._add_ssh_hostkey(self._get_hostname(), key_type)
+        ssh_public_key = form.cleaned_data['ssh_public_key']
+        self._add_ssh_hostkey(ssh_public_key)
         messages.success(self.request, _('SSH host verified.'))
         return self._add_remote_repository()
 

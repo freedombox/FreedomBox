@@ -199,18 +199,14 @@ class VerifySshHostkeyForm(forms.Form):
     def _get_all_public_keys(hostname):
         """Use ssh-keyscan to get all the SSH public keys of a host."""
         # Fetch public keys of ssh remote
-        res1 = subprocess.run(['ssh-keyscan', hostname],
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.DEVNULL, check=True)
-
-        with tempfile.NamedTemporaryFile(delete=False) as tmpfil:
-            tmpfil.write(res1.stdout)
-
+        keyscan = subprocess.run(['ssh-keyscan', hostname],
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.DEVNULL)
+        keys = keyscan.stdout.decode().splitlines()
         # Generate user-friendly fingerprints of public keys
-        res2 = subprocess.run(['ssh-keygen', '-l', '-f', tmpfil.name],
-                              stdout=subprocess.PIPE)
-        os.remove(tmpfil.name)
-        keys = res2.stdout.decode().splitlines()
+        keygen = subprocess.run(['ssh-keygen', '-l', '-f', '-'],
+                                  input=keyscan.stdout,
+                                  stdout=subprocess.PIPE)
+        fingerprints = keygen.stdout.decode().splitlines()
 
-        # Create a list of tuples of (algorithm, fingerprint)
-        return [(key.rsplit(' ', 1)[-1].strip('()'), key) for key in keys]
+        return zip(keys, fingerprints)
