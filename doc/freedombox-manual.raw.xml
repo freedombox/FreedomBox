@@ -644,6 +644,7 @@
                   </textobject>
                 </inlinemediaobject>
               </para>
+              <para>If you have installed FreedomBox using a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink> package, you will be asked for a secret key. This secret must have been provided during the installation of the Debian package. It can also be read from the file <code>/var/lib/plinth/firstboot-wizard-secret</code>. </para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -5985,6 +5986,16 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
         <section>
           <title>Connect to Internet via Wi-Fi</title>
           <para>By default Wi-Fi devices attached during first boot will be configured as access points.  They can be configured as regular Wi-Fi devices instead to connection to a local network or an existing Wi-Fi router. To do this, click on the Wi-Fi connection to edit it.  Change the mode to <code>Infrastructure</code> instead of <code>Access Point</code> mode and <code>IPv4 Addressing Method</code> to <code>Automatic (DHCP)</code> instead of <code>Shared</code> mode. Then the SSID provided will mean the Wi-Fi network name you wish to connect to and passphrase will be the used to while making the connection. </para>
+          <section>
+            <title>Problems with Privacy Feature</title>
+            <para>NetworkManager used by FreedomBox to connect to the Wi-Fi networks has a privacy feature that uses a different identity when scanning for networks and when actually connecting to the Wi-Fi access point. Unfortunately, this causes <ulink url="https://askubuntu.com/questions/910185/rosewill-rnx-n600ube-connectivity-issue-on-ubuntu-17-04">problems</ulink> with some routers that reject connections from such devices. Your connection won't successfully activate and disconnect after trying to activate. If you have control over the router's behaviour, you could also turn off the feature causing problem. Otherwise, the solution is to connect with a remote shell using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/SecureShell#">SSH</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Cockpit#">Cockpit</ulink>, editing a file <code>/etc/NetworkManager/NetworkManager.conf</code> and adding the line <code>wifi.scan-rand-mac-address=no</code> in the <code>[device]</code> section. This turns off the privacy feature. </para>
+            <para>Edit a file: </para>
+            <screen><![CDATA[$ sudo nano /etc/NetworkManager/NetworkManager.conf]]></screen>
+            <para>Add the following: </para>
+            <screen><![CDATA[[device]
+wifi.scan-rand-mac-address=no]]></screen>
+            <para>Then reboot the machine. </para>
+          </section>
         </section>
         <section>
           <title>Adding a new network device</title>
@@ -6483,6 +6494,7 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
       <title>Software Upgrades</title>
       <para>FreedomBox can automatically install security upgrades.  On the <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section in Plinth you can turn on automatic upgrades. For FreedomBox versions above 0.5, this feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
       <para>Upgrades are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic upgrades happen.  Alternatively, you can perform manual upgrades as described below. </para>
+      <para>Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -6495,7 +6507,6 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
       </para>
       <section>
         <title>Manual Upgrades</title>
-        <para>In the Plinth web interface, you can initiate a manual upgrade process from <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section.  Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
         <para>Under some circumstances, automatic upgrades may fail and require you perform a manual upgrade action.  Even upgrades initiated from Plinth may not finish properly.  This may be because the upgrade process requires you to make a decision.  In these cases, manual upgrade on the terminal may be the only option. </para>
         <para>In addition, while the upgrade task is running any application installations will wait until the upgrade task is finished. Depending on the hardware, the upgrade task may take a little time, therefore, giving the impression that the application installation stalled. </para>
         <para>To perform manual upgrades on the terminal, login into FreedomBox on a terminal or using a remote secure shell (see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/SecureShell#">Secure Shell</ulink> section).  Then run the following commands: </para>
@@ -7585,11 +7596,39 @@ Password:
           </textobject>
         </inlinemediaobject>
       </para>
-      <para>The <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/">Pioneer Edition FreedomBox Home Server Kit</ulink> includes all the hardware needed for launching a FreedomBox home server on an Olimex <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20-OLinuXino-LIME2</ulink> board. The Pioneer Edition FreedomBox Home Server is the first commercially available version of FreedomBox. This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
-      <para>The kit includes the A20-OlinuXino-LIME2, a custom metal case with a laser-engraved FreedomBox logo, a high-speed 32GB micro SD card with the FreedomBox software pre-installed, a backup battery, a power adapter, and an Ethernet cable. </para>
-      <para><emphasis role="strong">Recommendation</emphasis>: This is the hardware recommended for all users who can't build their own FreedomBox by buying the right components, downloading the image and preparing the SD card. </para>
+      <section>
+        <title>Recommended HW</title>
+        <para>This is the hardware recommended for all users who just want a turn-key FreedomBox, and <emphasis role="strong">don't</emphasis> want to <emphasis role="strong">build</emphasis> their own one. </para>
+        <para>(Building your own FreedomBox means some technical stuff like choosing and buying the right components, downloading the image and preparing the SD card). </para>
+      </section>
+      <section>
+        <title>This Kit</title>
+        <para>This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
+        <para>The <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/">Pioneer Edition FreedomBox Home Server Kit</ulink> includes all the hardware needed for launching a FreedomBox home server on an Olimex <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20-OLinuXino-LIME2</ulink> board: </para>
+        <itemizedlist>
+          <listitem>
+            <para>the A20-OlinuXino-LIME2, </para>
+          </listitem>
+          <listitem>
+            <para>a custom metal case with a laser-engraved FreedomBox logo, </para>
+          </listitem>
+          <listitem>
+            <para>a high-speed 32GB micro SD card with the FreedomBox software pre-installed, </para>
+          </listitem>
+          <listitem>
+            <para>a backup battery, </para>
+          </listitem>
+          <listitem>
+            <para>a power adapter, and </para>
+          </listitem>
+          <listitem>
+            <para>an Ethernet cable. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Availability</title>
+        <para>The Pioneer Edition FreedomBox Home Server is the first commercially available version of FreedomBox. </para>
         <itemizedlist>
           <listitem>
             <para>Price: 82 EUR </para>
@@ -7633,7 +7672,8 @@ Password:
       </section>
       <section>
         <title>Download</title>
-        <para>The kits come with an SD card pre-loaded with FreedomBox. There is no need to download images. However, if you wish to reset your devices to a pristine state, then you can do so with the the image provided. Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot the device. Make sure to download the <ulink url="https://ftp.freedombox.org/pub/freedombox/pioneer/">Pioneer Edition</ulink> images. These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB.  </para>
+        <para>The kits come with an SD card pre-loaded with FreedomBox. There's <emphasis role="strong">NO need to download images</emphasis>. </para>
+        <para>However, if you wish to reset your devices to a pristine state, then you can do so with the the image provided. Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot the device. Make sure to download the <ulink url="https://ftp.freedombox.org/pub/freedombox/pioneer/">Pioneer Edition</ulink> images. These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB.  </para>
         <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn/Allwinner#">install Debian</ulink> on the device and then <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
       </section>
       <section>
@@ -8610,7 +8650,7 @@ esac]]></screen>
       </section>
       <section>
         <title>Using</title>
-        <para>See the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Use#">usage</ulink> page for more details.  </para>
+        <para>See the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/QuickStart#">usage</ulink> page for more details.  </para>
         <para>You can log in to the Debian GNU/Linux system as the user created during Plinth first boot on the VirtualBox console or remotely via ssh. </para>
         <para>After logging in, you can become root with the command <code>sudo su</code>. </para>
       </section>
@@ -8999,13 +9039,39 @@ $ sudo umount /tmp/vbox-root1
         <para>Installing FreedomBox changes your Debian system in many important ways.  This includes installing a firewall and regenerating server certificates.  It is hence recommended that you install FreedomBox on a fresh Debian installation instead of an existing setup. </para>
       </caution>
       <section>
-        <title>Installing on Debian</title>
+        <title>Installing on Debian 10.0 (Buster) or newer</title>
+        <para>Check the Troubleshooting section below, for any tips or workarounds that might help during the install. </para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>Check the Troubleshooting section below, for any tips or work-arounds that might help during the install. </para>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn#">Install Debian</ulink> 10.0 (Buster), or Unstable (Sid) on your hardware. </para>
           </listitem>
           <listitem>
-            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn#">Install Debian</ulink> Stable (Stretch), Testing (Buster), or Unstable (Sid) on your hardware. </para>
+            <para>Update your package list. </para>
+            <screen><![CDATA[$ sudo apt-get update]]></screen>
+          </listitem>
+          <listitem>
+            <para>Install <code>freedombox</code> package. </para>
+            <screen><![CDATA[$ sudo DEBIAN_FRONTEND=noninteractive apt-get install freedombox]]></screen>
+            <itemizedlist>
+              <listitem>
+                <para>The "DEBIAN_FRONTEND=noninteractive" will avoid several configuration prompts that would otherwise appear during the install. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>During the installation, you will be provided a secret key that needs to be entered during the initial configuration process. Note this down. The secret can also be read at a later time from the file <code>/var/lib/plinth/firstboot-wizard-secret</code>. </para>
+          </listitem>
+          <listitem>
+            <para>You can start <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/QuickStart#">using</ulink> FreedomBox. During initial wizard, you will need to enter the secret noted above. </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Installing on Debian 9 (Stretch)</title>
+        <para>Check the Troubleshooting section below, for any tips or workarounds that might help during the install. </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn#">Install Debian</ulink> 9 (Stretch) on your hardware. </para>
           </listitem>
           <listitem>
             <para>Update your package list. </para>
@@ -9017,9 +9083,6 @@ $ sudo umount /tmp/vbox-root1
             <itemizedlist>
               <listitem>
                 <para>The "DEBIAN_FRONTEND=noninteractive" will avoid several configuration prompts that would otherwise appear during the install. </para>
-              </listitem>
-              <listitem>
-                <para><emphasis role="strong">Note:</emphasis> If you are using Debian Buster or later, then the steps below (running setup script and rebooting) do not apply. You can jump to <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Use#">using</ulink> FreedomBox. </para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -9036,27 +9099,27 @@ $ sudo umount /tmp/vbox-root1
             <para>After the system boots up, wait for it to reboot again.  The first-run scripts sets up a few things and initiates a reboot. </para>
           </listitem>
           <listitem>
-            <para>After the second reboot you can start <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Use#">using</ulink> FreedomBox. </para>
+            <para>After the second reboot you can start <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/QuickStart#">using</ulink> FreedomBox. </para>
           </listitem>
         </orderedlist>
       </section>
       <section>
-        <title>Troubleshooting</title>
+        <title>Tips and Troubleshooting</title>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>There is a <ulink url="https://bugs.debian.org/797368">bug</ulink> in policykit-1 package that causes errors and hangs during installation of freedombox-setup package.  A workaround is to first install policykit-1 package and then reboot.  After that, follow the above setup procedure. </para>
+            <para>There is a <ulink url="https://bugs.debian.org/797368">bug</ulink> in policykit-1 package that causes errors and hangs during installation of freedombox-setup package.  This bug is only applicable to Debian 9 (Stretch) and older. A workaround is to first install policykit-1 package and then reboot. After that, follow the above setup procedure. </para>
             <screen><![CDATA[$ sudo apt-get update
 $ sudo apt-get install policykit-1
 $ sudo reboot]]></screen>
           </listitem>
           <listitem>
-            <para>Freedombox does not support network device configuration via <code>/etc/network/interfaces</code>, and it will not manage any non-loopback interfaces mentioned there. (See <ulink url="https://bugs.debian.org/797614">bug #797614</ulink>.)  Future versions of freedombox-setup will clear this file automatically; for now, edit it manually and ensure that it contains only the following: </para>
+            <para>FreedomBox uses NetworkManager to manage network configuration. If you have configured your network interfaces using Debian installer or by editing <code>/etc/network/interfaces</code>, FreedomBox will not manage those interfaces. (See <ulink url="https://bugs.debian.org/797614">bug #797614</ulink>.)  To let FreedomBox/NetworkManager manage your network interfaces, edit the <code>/etc/network/interfaces</code> manually and ensure that it contains only the following: </para>
             <screen><![CDATA[auto lo
 iface lo inet loopback]]></screen>
-            <para>If you have already completed the setup process without doing this step, you will need to clear out the <code>/etc/network/interfaces</code> file keeping only the above lines.  Then perform a reboot.  After this network connections configured by the <code>setup</code> step above will configure your network.  Network interfaces will then be in the <code>internal</code> or <code>external</code> firewall zone.  This is essential for the FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the <code>nmtui</code> command if you wish.  </para>
+            <para>If you have already completed the setup process without doing this step, you will need to clear out the <code>/etc/network/interfaces</code> file keeping only the above lines.  Then perform a reboot.  On Debian 9 (Strecth), after this network connections configured by the <code>setup</code> step above will configure your network.  Network interfaces will then be in the <code>internal</code> or <code>external</code> firewall zone.  This is essential for the FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the <code>nmtui</code> command if you wish.  </para>
           </listitem>
           <listitem>
-            <para>Freedombox-setup will not set up a static IP, and if you set one up during your Debian install, it will clobber it. After you have run the setup, you will need to re-configure the network. For ipv4 addresses, use: </para>
+            <para>FreedomBox will use an automatically configured IP address by default. You can assign a static IP address if necessary. Network configuration changes can be done using FreedomBox web interface or by using the <code>nmtui</code> or <code>nmcli</code> commands. <code>nmcli</code> can be used as follows: </para>
             <screen><![CDATA[  nmcli con mod "Ethernet connection 1"  \
   ipv4.addresses A.A.A.A/X  \
   ipv4.gateway G.G.G.G  \
@@ -9064,7 +9127,7 @@ iface lo inet loopback]]></screen>
   ipv4.dns-search somedomain.com  \
   ipv4.method "manual"  \
   ipv4.ignore-auto-dns yes  \
- ipv6.method ignore]]></screen>
+  ipv6.method ignore]]></screen>
           </listitem>
         </orderedlist>
         <para>...with the block capitals and somedomain.com replaced with your actual address, mask description, gateway and dns server details. </para>
@@ -9562,6 +9625,23 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.10 (2019-06-24)</title>
+        <itemizedlist>
+          <listitem>
+            <para>syncthing: Open firewall ports for listening and discovery </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Workaround issue with creating log directory </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for Turkish, German, Czech, Norwegian Bokmål, and Portuguese </para>
+          </listitem>
+          <listitem>
+            <para>Introduce components for firewall, webserver, uwsgi, and daemons </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.9 (2019-06-10)</title>
         <itemizedlist>
