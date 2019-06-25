@@ -179,7 +179,7 @@ class CustomInstallData(install_data):
 
 
 def _ignore_data_file(file_name):
-    """Ignore common patterns in data files."""
+    """Ignore common patterns in data files and directories."""
     ignore_patterns = [
         r'\.log$', r'\.pid$', r'\.py.bak$', r'\.pyc$', r'\.pytest_cache$',
         r'\.sqlite3$', r'\.swp$', r'^#', r'^\.', r'^__pycache__$',
@@ -214,6 +214,9 @@ def _gather_data_files():
         crawl_directory = crawl_directory.rstrip('/')
         for path, _, file_names in os.walk(crawl_directory):
             target_directory = path[len(crawl_directory):]
+            if _ignore_data_file(os.path.basename(path)):
+                continue
+
             for file_name in file_names:
                 if _ignore_data_file(file_name):
                     continue
@@ -267,10 +270,7 @@ setuptools.setup(
     ],
     tests_require=['pytest', 'pytest-cov', 'pytest-django'],
     package_data={
-        '': [
-            'templates/*', 'static/*',
-            'locale/*/LC_MESSAGES/*.[pm]o'
-        ]
+        '': ['templates/*', 'static/*', 'locale/*/LC_MESSAGES/*.[pm]o']
     },
     exclude_package_data={'': ['*/data/*']},
     data_files=_gather_data_files() +
