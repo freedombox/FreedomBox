@@ -20,8 +20,6 @@ Views for the backups app.
 
 import logging
 import os
-import pathlib
-import subprocess
 import tempfile
 from contextlib import contextmanager
 from datetime import datetime
@@ -38,7 +36,6 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import FormView, TemplateView, View
 
-from plinth import cfg
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 

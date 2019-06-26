@@ -128,8 +128,7 @@ class BorgRepository():
             repository['mounted'] = self.is_mounted
             if repository['mounted']:
                 repository['archives'] = self.list_archives()
-        except (BorgError, ActionError) as \
-                err:
+        except (BorgError, ActionError) as err:
             error = str(err)
         repository['error'] = error
         return repository
