@@ -345,6 +345,7 @@ class SshBorgRepository(BorgRepository):
 
     def remove_repository(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
+        self.umount()
         network_storage.delete(self.uuid)
         try:
             if os.path.exists(self.mountpoint):
