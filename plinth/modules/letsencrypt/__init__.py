@@ -27,10 +27,11 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.errors import ActionError
-from plinth.modules import config, names
+from plinth.modules import names
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
 
+from . import components
 from .manifest import backup
 
 version = 3
@@ -115,8 +116,25 @@ def diagnose():
     return results
 
 
-def try_action(domain, action):
-    actions.superuser_run('letsencrypt', [action, '--domain', domain])
+def certificate_obtain(domain):
+    """Obtain a certificate for a domain and notify handlers."""
+    actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
+
+    # Don't trigger an obtained event. Obtaining a certificate freshly also
+    # leads to a renewal (deploy) event from Let's Encrypt. There is no easy
+    # way to distinguish if the event is an initial event or a renewal event.
+
+
+def certificate_revoke(domain):
+    """Revoke a certificate for a domain and notify handlers."""
+    actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+    components.on_certificate_event('revoked', [domain], None)
+
+
+def certificate_delete(domain):
+    """Delete a certificate for a domain and notify handlers."""
+    actions.superuser_run('letsencrypt', ['delete', '--domain', domain])
+    components.on_certificate_event('deleted', [domain], None)
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
@@ -142,10 +160,10 @@ def on_domain_added(sender, domain_type='', name='', description='',
     try:
         # Obtaining certs during tests or empty names isn't expected to succeed
         if sender != 'test' and name:
-            logger.info("Obtaining a Let\'s Encrypt certificate for " + name)
-            try_action(name, 'obtain')
+            logger.info('Obtaining a Let\'s Encrypt certificate for %s', name)
+            certificate_obtain(name)
         return True
-    except ActionError as ex:
+    except ActionError:
         return False
 
 
@@ -155,7 +173,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
         # Revoking certs during tests or empty names isn't expected to succeed
         if sender != 'test' and name:
             logger.info("Revoking the Let\'s Encrypt certificate for " + name)
-            try_action(name, 'revoke')
+            certificate_revoke(name)
         return True
     except ActionError as exception:
         logger.warning(

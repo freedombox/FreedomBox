@@ -50,7 +50,7 @@ def index(request):
 def revoke(request, domain):
     """Revoke a certificate for a given domain."""
     try:
-        letsencrypt.try_action(domain, 'revoke')
+        letsencrypt.certificate_revoke(domain)
         messages.success(
             request,
             _('Certificate successfully revoked for domain {domain}.'
@@ -69,7 +69,7 @@ def revoke(request, domain):
 def obtain(request, domain):
     """Obtain and install a certificate for a given domain."""
     try:
-        letsencrypt.try_action(domain, 'obtain')
+        letsencrypt.certificate_obtain(domain)
         messages.success(
             request,
             _('Certificate successfully obtained for domain {domain}').format(
@@ -86,7 +86,7 @@ def obtain(request, domain):
 def delete(request, domain):
     """Delete a certificate for a given domain, and cleanup renewal config."""
     try:
-        actions.superuser_run('letsencrypt', ['delete', '--domain', domain])
+        letsencrypt.certificate_delete(domain)
         messages.success(
             request,
             _('Certificate successfully deleted for domain {domain}').format(
