@@ -168,14 +168,6 @@ def get_status():
     """Get the current settings."""
     status = actions.superuser_run('letsencrypt', ['get-status'])
     status = json.loads(status)
-    curr_dom = config.get_domainname()
-    current_domain = {
-        'name':
-            curr_dom,
-        'has_cert': (curr_dom in status['domains']
-                     and status['domains'][curr_dom]['certificate_available']),
-    }
-    status['current_domain'] = current_domain
 
     for domain_type, domains in names.domains.items():
         # XXX: Remove when Let's Encrypt supports .onion addresses

@@ -50,13 +50,7 @@
       <tbody>
         {% for domain, domain_status in status.domains.items %}
           <tr>
-            <td>
-              {% if domain == status.current_domain.name %}
-                <b>{{ domain }}</b>
-              {% else %}
-                {{ domain }}
-              {% endif %}
-            </td>
+            <td>{{ domain }}</td>
             <td>
               {% if domain_status.certificate_available and domain_status.validity == "valid" %}
                 <span class="label label-success">
