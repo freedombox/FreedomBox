@@ -134,7 +134,9 @@ def get_status():
             'web_enabled':
                 action_utils.webserver_is_enabled(domain, kind='site'),
             'validity':
-                get_validity_status(domain)
+                get_validity_status(domain),
+            'lineage':
+                str(pathlib.Path(le.LIVE_DIRECTORY) / domain)
         }
     return domain_status
 
