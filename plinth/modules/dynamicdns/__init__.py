@@ -34,6 +34,8 @@ version = 1
 
 is_essential = True
 
+depends = ['names']
+
 managed_packages = ['ez-ipupdate']
 
 name = _('Dynamic DNS Client')
