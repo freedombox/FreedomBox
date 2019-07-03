@@ -20,6 +20,7 @@ Configuration helper for Let's Encrypt.
 """
 
 import argparse
+import filecmp
 import glob
 import importlib
 import json
@@ -85,7 +86,22 @@ def parse_arguments():
     subparser.add_argument('--source-private-key-path', required=True,
                            help='Path to the source private key')
     subparser.add_argument(
-        '--source certificate-path', required=True,
+        '--source-certificate-path', required=True,
+        help='Path to the source certificate with public key')
+    subparser.add_argument('--private-key-path', required=True,
+                           help='Path to the private key')
+    subparser.add_argument('--certificate-path', required=True,
+                           help='Path to the certificate with public key')
+
+    subparser = subparsers.add_parser(
+        'compare-certificate',
+        help='Compare LE certificate to one in daemon\'s directory')
+    subparser.add_argument('--managing-app', required=True,
+                           help='App needing the certificate')
+    subparser.add_argument('--source-private-key-path', required=True,
+                           help='Path to the source private key')
+    subparser.add_argument(
+        '--source-certificate-path', required=True,
         help='Path to the source certificate with public key')
     subparser.add_argument('--private-key-path', required=True,
                            help='Path to the private key')
@@ -320,6 +336,29 @@ def subcommand_copy_certificate(arguments):
                  group=arguments.group_owner)
     shutil.chown(private_key_path, user=arguments.user_owner,
                  group=arguments.group_owner)
+
+
+def subcommand_compare_certificate(arguments):
+    """Compare LE certificate with an app certificate."""
+    source_private_key_path = pathlib.Path(arguments.source_private_key_path)
+    source_certificate_path = pathlib.Path(arguments.source_certificate_path)
+    _assert_source_directory(source_private_key_path)
+    _assert_source_directory(source_certificate_path)
+
+    private_key_path = pathlib.Path(arguments.private_key_path)
+    certificate_path = pathlib.Path(arguments.certificate_path)
+    _assert_managed_path(arguments.managing_app, private_key_path)
+    _assert_managed_path(arguments.managing_app, certificate_path)
+
+    result = False
+    try:
+        if filecmp.cmp(source_certificate_path, certificate_path) and \
+           filecmp.cmp(source_private_key_path, private_key_path):
+            result = True
+    except FileNotFoundError:
+        result = False
+
+    print(json.dumps({'result': result}))
 
 
 def _assert_source_directory(path):
