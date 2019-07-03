@@ -190,7 +190,8 @@ def subcommand_revoke(arguments):
     domain = arguments.domain
 
     command = [
-        'certbot', 'revoke', '--domain', domain, '--cert-path',
+        'certbot', 'revoke', '--non-interactive', '--domain', domain,
+        '--cert-path',
         os.path.join(le.LIVE_DIRECTORY, domain, 'cert.pem')
     ]
     if TEST_MODE:
@@ -211,7 +212,7 @@ def subcommand_obtain(arguments):
     domain = arguments.domain
 
     command = [
-        'certbot', 'certonly', '--text', '--agree-tos',
+        'certbot', 'certonly', '--non-interactive', '--text', '--agree-tos',
         '--register-unsafely-without-email', '--domain', arguments.domain,
         '--authenticator', AUTHENTICATOR, '--webroot-path', WEB_ROOT_PATH,
         '--renew-by-default'
@@ -488,7 +489,7 @@ def subcommand_run_post_hooks(arguments):
 def subcommand_delete(arguments):
     """Disable a domain and delete the certificate."""
     domain = arguments.domain
-    command = ['certbot', 'delete', '--cert-name', domain]
+    command = ['certbot', 'delete', '--non-interactive', '--cert-name', domain]
     process = subprocess.Popen(command, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
     _, stderr = process.communicate()
