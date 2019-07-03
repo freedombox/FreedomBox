@@ -132,15 +132,21 @@ def diagnose():
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Handle addition of a new domain."""
-    actions.superuser_run('cockpit', ['add-domain', name])
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        actions.superuser_run('cockpit', ['add-domain', name])
 
 
 def on_domain_removed(sender, domain_type, name, **kwargs):
     """Handle removal of a domain."""
-    actions.superuser_run('cockpit', ['remove-domain', name])
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        actions.superuser_run('cockpit', ['remove-domain', name])
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     """Handle change of a domain."""
-    actions.superuser_run('cockpit', ['remove-domain', old_domainname])
-    actions.superuser_run('cockpit', ['add-domain', new_domainname])
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        actions.superuser_run('cockpit', ['remove-domain', old_domainname])
+        actions.superuser_run('cockpit', ['add-domain', new_domainname])
