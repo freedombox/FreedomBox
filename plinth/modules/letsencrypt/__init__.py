@@ -119,10 +119,21 @@ def diagnose():
 def certificate_obtain(domain):
     """Obtain a certificate for a domain and notify handlers."""
     actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
+    components.on_certificate_event('obtained', [domain], None)
 
-    # Don't trigger an obtained event. Obtaining a certificate freshly also
-    # leads to a renewal (deploy) event from Let's Encrypt. There is no easy
-    # way to distinguish if the event is an initial event or a renewal event.
+
+def certificate_reobtain(domain):
+    """Re-obtain a certificate for a domain and notify handlers.
+
+    Don't trigger an obtained event. Re-obtaining a certificate also leads to a
+    renewal (deploy) event from Let's Encrypt. Further, this event is not sent
+    when obtaining the certificate for the first time. There is no easy way to
+    distinguish if a renewal event is trigger because of obtain or because of
+    re-obtain. Hence, handle re-obtain differently from obtain and don't
+    trigger obtain event (LE will trigger a renewal event).
+
+    """
+    actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
 
 
 def certificate_revoke(domain):

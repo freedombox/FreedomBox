@@ -83,6 +83,23 @@ def obtain(request, domain):
 
 
 @require_POST
+def reobtain(request, domain):
+    """Re-obtain a certificate for a given domain."""
+    try:
+        letsencrypt.certificate_reobtain(domain)
+        messages.success(
+            request,
+            _('Certificate successfully obtained for domain {domain}').format(
+                domain=domain))
+    except ActionError as exception:
+        messages.error(
+            request,
+            _('Failed to obtain certificate for domain {domain}: {error}').
+            format(domain=domain, error=exception.args[2]))
+    return redirect(reverse_lazy('letsencrypt:index'))
+
+
+@require_POST
 def delete(request, domain):
     """Delete a certificate for a given domain, and cleanup renewal config."""
     try:

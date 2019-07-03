@@ -94,7 +94,7 @@
             <td>
               {% if domain_status.certificate_available %}
                 <form class="form form-inline" method="post"
-                      action="{% url 'letsencrypt:obtain' domain %}">
+                      action="{% url 'letsencrypt:re-obtain' domain %}">
                   {% csrf_token %}
                   <button class="btn btn-sm btn-default" type="submit">
                     {% trans "Re-obtain" %}</button>
