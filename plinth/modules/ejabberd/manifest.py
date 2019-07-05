@@ -130,7 +130,8 @@ backup = validate_backup({
         'directories': ['/var/lib/ejabberd/']
     },
     'secrets': {
-        'files': ['/etc/ejabberd/ejabberd.pem']
+        'files': ['/etc/ejabberd/ejabberd.pem'],
+        'directories': ['/etc/ejabberd/letsencrypt/']
     },
     'services': ['ejabberd']
 })
