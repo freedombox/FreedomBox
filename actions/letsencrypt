@@ -61,6 +61,11 @@ def parse_arguments():
 
     subparsers.add_parser('get-status',
                           help='Return the status of configured domains.')
+    subparser = subparsers.add_parser(
+        'get-modified-time',
+        help='Return the modified time for a certificate.')
+    subparser.add_argument('--domain', required=True,
+                           help='Domain name to get modified time for')
     revoke_parser = subparsers.add_parser(
         'revoke', help='Revoke certificate of a domain and disable website.')
     revoke_parser.add_argument('--domain', required=True,
@@ -133,6 +138,12 @@ def get_certificate_expiry(domain):
     return output.decode().strip().split('=')[1]
 
 
+def get_modified_time(domain):
+    """Return the last modified time of a certificate."""
+    certificate_file = pathlib.Path(le.LIVE_DIRECTORY) / domain / 'cert.pem'
+    return int(certificate_file.stat().st_mtime)
+
+
 def get_validity_status(domain):
     """Return validity status of a certificate, e.g. valid, revoked, expired"""
     output = subprocess.check_output(['certbot', 'certificates', '-d', domain])
@@ -176,7 +187,9 @@ def get_status():
             'validity':
                 get_validity_status(domain),
             'lineage':
-                str(pathlib.Path(le.LIVE_DIRECTORY) / domain)
+                str(pathlib.Path(le.LIVE_DIRECTORY) / domain),
+            'modified_time':
+                get_modified_time(domain)
         }
     return domain_status
 
@@ -203,6 +216,11 @@ def subcommand_get_status(_):
     """Print a JSON dictionary of currently configured domains."""
     domain_status = get_status()
     print(json.dumps({'domains': domain_status}))
+
+
+def subcommand_get_modified_time(arguments):
+    """Print the modified time of a certificate as integer."""
+    print(get_modified_time(arguments.domain))
 
 
 def subcommand_revoke(arguments):

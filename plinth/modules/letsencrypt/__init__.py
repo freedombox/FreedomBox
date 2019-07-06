@@ -20,6 +20,7 @@ FreedomBox app for using Let's Encrypt.
 
 import json
 import logging
+import pathlib
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,7 +29,8 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.errors import ActionError
 from plinth.modules import names
-from plinth.signals import domain_added, domain_removed, domainname_change
+from plinth.signals import (domain_added, domain_removed, domainname_change,
+                            post_module_loading)
 from plinth.utils import format_lazy
 
 from . import components
@@ -64,6 +66,7 @@ description = [
 manual_page = 'LetsEncrypt'
 
 LIVE_DIRECTORY = '/etc/letsencrypt/live/'
+CERTIFICATE_CHECK_DELAY = 120
 logger = logging.getLogger(__name__)
 
 app = None
@@ -92,6 +95,8 @@ def init():
     domainname_change.connect(on_domainname_change)
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
+
+    post_module_loading.connect(_certificate_handle_modified)
 
 
 def setup(helper, old_version=None):
@@ -207,3 +212,65 @@ def get_status():
             status['domains'].setdefault(domain, {})
 
     return status
+
+
+def _certificate_handle_modified(**kwargs):
+    """Generate events for certificates that got modified during downtime.
+
+    This runs as a synchronous method soon after initializing the apps. After
+    this is done, remaining initialization happens.
+
+    This method is a wrapper over the read method to catch and print
+    exceptions.
+
+    """
+    logger.info('Checking if any Let\'s Encrypt certificates got renewed.')
+    try:
+        _certificate_handle_modified_internal()
+    except Exception:
+        logger.exception('Error triggering certificate events.')
+
+
+def _certificate_handle_modified_internal():
+    """Generate events for certificates that got modified during downtime."""
+    status = get_status()
+    for domain, domain_status in status['domains'].items():
+        if not domain_status:
+            continue
+
+        lineage = domain_status['lineage']
+        modified_time = domain_status['modified_time']
+        if certificate_get_last_seen_modified_time(lineage) < modified_time:
+            logger.info('Certificate for %s got renewed offline.', domain)
+            components.on_certificate_event_sync('renewed', domain, lineage)
+        else:
+            logger.info('Certificate for %s is already the latest known.',
+                        domain)
+
+
+def certificate_get_last_seen_modified_time(lineage):
+    """Return the last seen expiry date of a certificate."""
+    from plinth import kvstore
+    info = kvstore.get_default('letsencrypt_certificate_info', '{}')
+    info = json.loads(info)
+    try:
+        return info[str(lineage)]['last_seen_modified_time']
+    except KeyError:
+        return 0
+
+
+def certificate_set_last_seen_modified_time(lineage):
+    """Write to store a certificate's last seen expiry date."""
+    lineage = pathlib.Path(lineage)
+    output = actions.superuser_run(
+        'letsencrypt', ['get-modified-time', '--domain', lineage.name])
+    modified_time = int(output)
+
+    from plinth import kvstore
+    info = kvstore.get_default('letsencrypt_certificate_info', '{}')
+    info = json.loads(info)
+
+    certificate_info = info.setdefault(str(lineage), {})
+    certificate_info['last_seen_modified_time'] = modified_time
+
+    kvstore.set('letsencrypt_certificate_info', json.dumps(info))

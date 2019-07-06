@@ -398,3 +398,7 @@ def on_certificate_event_sync(event, domains, lineage):
             logger.exception(
                 'Error executing certificate hook for %s: %s, %s, %s: %s',
                 component.component_id, event, domains, lineage, exception)
+
+    if event in ('obtained', 'renewed'):
+        from plinth.modules import letsencrypt
+        letsencrypt.certificate_set_last_seen_modified_time(lineage)
