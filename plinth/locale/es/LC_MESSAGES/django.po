@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-24 19:48-0400\n"
+"POT-Creation-Date: 2019-07-08 17:31-0400\n"
 "PO-Revision-Date: 2019-07-02 17:13+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -127,56 +127,79 @@ msgstr ""
 "desactivado para incrementar la seguridad, especialmente cuando se conecta a "
 "redes locales inseguras o de poca confianza."
 
-#: plinth/modules/backups/__init__.py:38 plinth/modules/backups/views.py:50
+#: plinth/modules/backups/__init__.py:41 plinth/modules/backups/views.py:54
 msgid "Backups"
 msgstr "Copias de seguridad"
 
-#: plinth/modules/backups/__init__.py:41
+#: plinth/modules/backups/__init__.py:44
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Copias de seguridad le permite crear y gestionar archivos de copia de "
 "seguridad."
 
-#: plinth/modules/backups/__init__.py:49
+#: plinth/modules/backups/__init__.py:52
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "Almacenamiento de {box_name}"
 
-#: plinth/modules/backups/forms.py:38
+#: plinth/modules/backups/forms.py:47
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app}1 (Sin datos para respaldar)"
 
-#: plinth/modules/backups/forms.py:58
+#: plinth/modules/backups/forms.py:69
 msgid "Included apps"
 msgstr "Aplicaciones incluidas"
 
-#: plinth/modules/backups/forms.py:58
+#: plinth/modules/backups/forms.py:69
 msgid "Apps to include in the backup"
 msgstr "Aplicaciones a incluir en la copia de seguridad"
 
-#: plinth/modules/backups/forms.py:72
+#: plinth/modules/backups/forms.py:83
 msgid "Select the apps you want to restore"
 msgstr "Seleccione las aplicaciones que desea restaurar"
 
-#: plinth/modules/backups/forms.py:85
+#: plinth/modules/backups/forms.py:96
 msgid "Upload File"
 msgstr "Subir Archivo"
 
-#: plinth/modules/backups/forms.py:88
+#: plinth/modules/backups/forms.py:98
 msgid "Backup files have to be in .tar.gz format"
 msgstr ""
 "Los archivos de la copia de seguridad deben de estar en formato .tar.gz"
 
-#: plinth/modules/backups/forms.py:89
+#: plinth/modules/backups/forms.py:99
 msgid "Select the backup file you want to upload"
 msgstr "Seleccione la copia de seguridad que desea subir"
 
-#: plinth/modules/backups/forms.py:94
+#: plinth/modules/backups/forms.py:105
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository path format incorrect."
+msgstr "Repositorio no encontrado"
+
+#: plinth/modules/backups/forms.py:112
+#, fuzzy, python-brace-format
+#| msgid "Invalid server name"
+msgid "Invalid username: {username}"
+msgstr "Nombre de servidor no válido"
+
+#: plinth/modules/backups/forms.py:122
+#, fuzzy, python-brace-format
+#| msgid "Invalid hostname"
+msgid "Invalid hostname: {hostname}"
+msgstr "Nombre de anfitrión no válido"
+
+#: plinth/modules/backups/forms.py:126
+#, python-brace-format
+msgid "Invalid directory path: {dir_path}"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:132
 msgid "SSH Repository Path"
 msgstr "Ruta al repositorio SSH"
 
-#: plinth/modules/backups/forms.py:95
+#: plinth/modules/backups/forms.py:133
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -184,11 +207,11 @@ msgstr ""
 "Ruta al repositorio nuevo o existente. Ejemplo: <i>usuario@host:~/ruta/al/"
 "repo/</i>"
 
-#: plinth/modules/backups/forms.py:98
+#: plinth/modules/backups/forms.py:137
 msgid "SSH server password"
 msgstr "Contraseña del servidor SSH"
 
-#: plinth/modules/backups/forms.py:99
+#: plinth/modules/backups/forms.py:138
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -196,11 +219,11 @@ msgstr ""
 "Contraseña del servidor SSH.<br />La autenticación basada en clave SSH aún "
 "no es posible."
 
-#: plinth/modules/backups/forms.py:104
+#: plinth/modules/backups/forms.py:142
 msgid "Encryption"
 msgstr "Cifrado"
 
-#: plinth/modules/backups/forms.py:106
+#: plinth/modules/backups/forms.py:143
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -208,32 +231,43 @@ msgstr ""
 "\"Clave en el repositorio\" significa que una clave protegida por contraseña "
 "está almacenada con la copia de seguridad."
 
-#: plinth/modules/backups/forms.py:111 plinth/modules/networks/forms.py:304
+#: plinth/modules/backups/forms.py:147 plinth/modules/networks/forms.py:304
 msgid "Passphrase"
 msgstr "Clave de acceso"
 
-#: plinth/modules/backups/forms.py:112
+#: plinth/modules/backups/forms.py:148
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Contraseña; solo necesaria cuando se use cifrado."
 
-#: plinth/modules/backups/forms.py:117
+#: plinth/modules/backups/forms.py:151
 msgid "Confirm Passphrase"
 msgstr "Confirmar contraseña"
 
-#: plinth/modules/backups/forms.py:118
+#: plinth/modules/backups/forms.py:151
 msgid "Repeat the passphrase."
 msgstr "Repetir la contraseña."
 
-#: plinth/modules/backups/forms.py:139
+#: plinth/modules/backups/forms.py:162
 msgid "The entered encryption passphrases do not match"
 msgstr "Las contraseñas de cifrado introducidas no coinciden"
 
-#: plinth/modules/backups/forms.py:151
-#, python-format
-msgid "Accessing the remote repository failed. Details: %(err)s"
-msgstr "No se pudo acceder al repositorio remoto. Detalles: %(err)s"
+#: plinth/modules/backups/forms.py:166
+#, fuzzy
+#| msgid "Passphrase; Only needed when using encryption."
+msgid "Passphrase is needed for encryption."
+msgstr "Contraseña; solo necesaria cuando se use cifrado."
 
-#: plinth/modules/backups/repository.py:45
+#: plinth/modules/backups/forms.py:183
+#, fuzzy
+#| msgid "Create remote backup repository"
+msgid "Remote backup repository already exists."
+msgstr "Crear repositorio de copias de seguridad remotas"
+
+#: plinth/modules/backups/forms.py:189
+msgid "Select verified SSH public key"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:46
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -241,24 +275,26 @@ msgstr ""
 "Conexión rechazada - asegúrese de que proporciona las credenciales correctas "
 "y de que el servidor está funcionando."
 
-#: plinth/modules/backups/repository.py:51
+#: plinth/modules/backups/repository.py:53
 msgid "Connection refused"
 msgstr "Conexión rechazada"
 
-#: plinth/modules/backups/repository.py:58
+#: plinth/modules/backups/repository.py:62
 msgid "Repository not found"
 msgstr "Repositorio no encontrado"
 
-#: plinth/modules/backups/repository.py:65
+#: plinth/modules/backups/repository.py:70
 msgid "Incorrect encryption passphrase"
 msgstr "Contraseña de cifrado incorrecta"
 
-#: plinth/modules/backups/repository.py:70
+#: plinth/modules/backups/repository.py:76
 msgid "SSH access denied"
 msgstr "Denegado acceso SSH"
 
 #: plinth/modules/backups/templates/backups.html:47
-msgid "Existing backups"
+#, fuzzy
+#| msgid "Existing backups"
+msgid "Existing backup locations"
 msgstr "Copias de seguridad existentes"
 
 #: plinth/modules/backups/templates/backups.html:57
@@ -314,6 +350,7 @@ msgstr "Crear repositorio"
 #: plinth/modules/backups/templates/backups_repository_add.html:45
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
 #: plinth/modules/backups/templates/backups_restore.html:52
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:61
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/networks/templates/connections_delete.html:41
@@ -342,7 +379,7 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:286
+#: plinth/modules/backups/views.py:461
 msgid "Remove Repository"
 msgstr "Eliminar repositorio"
 
@@ -351,7 +388,7 @@ msgid "Restore data from"
 msgstr "Restaurar datos de"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/views.py:186
+#: plinth/modules/backups/views.py:192
 msgid "Restore"
 msgstr "Restaurar"
 
@@ -396,55 +433,108 @@ msgstr ""
 msgid "Upload file"
 msgstr "Subir archivo"
 
-#: plinth/modules/backups/views.py:53
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
+msgid "How to verify?"
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+msgid ""
+"Run the following command on the SSH host machine. The output should match "
+"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
+"instead of rsa, by choosing the corresponding file."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
+msgid "Verify Host"
+msgstr ""
+
+#: plinth/modules/backups/views.py:57
 msgid "Upload"
 msgstr "Subir archivo"
 
-#: plinth/modules/backups/views.py:56 plinth/modules/ikiwiki/views.py:41
+#: plinth/modules/backups/views.py:60 plinth/modules/ikiwiki/views.py:41
 msgid "Create"
 msgstr "Crear"
 
-#: plinth/modules/backups/views.py:84
+#: plinth/modules/backups/views.py:88
 msgid "Archive created."
 msgstr "Archivo creado."
 
-#: plinth/modules/backups/views.py:111
+#: plinth/modules/backups/views.py:117
 msgid "Delete Archive"
 msgstr "Borrar archivo"
 
-#: plinth/modules/backups/views.py:123
+#: plinth/modules/backups/views.py:129
 msgid "Archive deleted."
 msgstr "Archivo borrado."
 
-#: plinth/modules/backups/views.py:174
+#: plinth/modules/backups/views.py:180
 msgid "Restored files from backup."
 msgstr "Archivos restaurados desde la copia de seguridad."
 
-#: plinth/modules/backups/views.py:198
+#: plinth/modules/backups/views.py:208
 msgid "No backup file found."
 msgstr "No se encontraron copias de seguridad."
 
-#: plinth/modules/backups/views.py:206
+#: plinth/modules/backups/views.py:216
 msgid "Restore from uploaded file"
 msgstr "Restaurar desde la copia de seguridad subida"
 
-#: plinth/modules/backups/views.py:260
-msgid "Added new repository."
-msgstr "Añadido nuevo repositorio."
-
-#: plinth/modules/backups/views.py:265
+#: plinth/modules/backups/views.py:272
 msgid "Create remote backup repository"
 msgstr "Crear repositorio de copias de seguridad remotas"
 
-#: plinth/modules/backups/views.py:296
+#: plinth/modules/backups/views.py:292
+#, fuzzy
+#| msgid "Added new repository."
+msgid "Added new remote SSH repository."
+msgstr "Añadido nuevo repositorio."
+
+#: plinth/modules/backups/views.py:315
+msgid "Verify SSH hostkey"
+msgstr ""
+
+#: plinth/modules/backups/views.py:349
+msgid "SSH host already verified."
+msgstr ""
+
+#: plinth/modules/backups/views.py:358
+msgid "SSH host verified."
+msgstr ""
+
+#: plinth/modules/backups/views.py:382
+msgid "SSH host public key could not be verified."
+msgstr ""
+
+#: plinth/modules/backups/views.py:384
+msgid "Authentication to remote server failed."
+msgstr ""
+
+#: plinth/modules/backups/views.py:386
+#, fuzzy
+#| msgid "Error installing application: {error}"
+msgid "Error establishing connection to server: {}"
+msgstr "Error al instalar la aplicación: {error}"
+
+#: plinth/modules/backups/views.py:389
+msgid "Repository path is neither empty nor is an existing backups repository."
+msgstr ""
+
+#: plinth/modules/backups/views.py:396
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository removed."
+msgstr "Repositorio no encontrado"
+
+#: plinth/modules/backups/views.py:471
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr "Eliminado repositorio. La copia de seguridad remota no se ha borrado."
 
-#: plinth/modules/backups/views.py:304
+#: plinth/modules/backups/views.py:481
 msgid "Unmounting failed!"
 msgstr "¡No se pudo desmontar!"
 
-#: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
+#: plinth/modules/backups/views.py:496 plinth/modules/backups/views.py:500
 msgid "Mounting failed"
 msgstr "Montaje fallido"
 
@@ -1248,9 +1338,9 @@ msgid ""
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
 "Para comunicarse puede usar el <a href=\"{jsxc_url}\">cliente web</a> o "
-"cualquier otro <a href='https://xmpp.org/software/clients' target='_blank'>"
-"cliente XMPP</a>. Cuando se activa, ejabberd está disponible para cualquier  "
-"<a href=\"{users_url}\">usuario con  acceso a {box_name}</a>."
+"cualquier otro <a href='https://xmpp.org/software/clients' "
+"target='_blank'>cliente XMPP</a>. Cuando se activa, ejabberd está disponible "
+"para cualquier  <a href=\"{users_url}\">usuario con  acceso a {box_name}</a>."
 
 #: plinth/modules/ejabberd/forms.py:32
 msgid "Enable Message Archive Management"
@@ -2374,7 +2464,13 @@ msgstr ""
 "usuaria/o será parecida a <em>@username:%(domain_name)s</em>. Actualmente no "
 "se puede cambiar el nombre de dominio una vez ha sido configurado."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:36
+msgid ""
+"New users can be registered from any client if public registration is "
+"enabled."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 #, python-format
 msgid ""
 "\n"
@@ -5841,7 +5937,7 @@ msgstr "Seleccionar idioma"
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: plinth/templates/clients.html:28
+#: plinth/templates/clients.html:29
 msgid "Client Apps"
 msgstr "Aplicaciones de cliente"
 
@@ -6056,6 +6152,9 @@ msgstr "Aplicación desactivada"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Accessing the remote repository failed. Details: %(err)s"
+#~ msgstr "No se pudo acceder al repositorio remoto. Detalles: %(err)s"
 
 #~ msgid "Tor Anonymity Network"
 #~ msgstr "Red anónima Tor"

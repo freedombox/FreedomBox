@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-24 19:48-0400\n"
+"POT-Creation-Date: 2019-07-08 17:31-0400\n"
 "PO-Revision-Date: 2019-06-22 06:01+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -134,54 +134,77 @@ msgstr ""
 "kan slås av for å bedre sikkerheten, spesielt ved tilkobling til et "
 "fiendtlig/fremmed lokalt nettverk."
 
-#: plinth/modules/backups/__init__.py:38 plinth/modules/backups/views.py:50
+#: plinth/modules/backups/__init__.py:41 plinth/modules/backups/views.py:54
 msgid "Backups"
 msgstr "Sikkerhetskopier"
 
-#: plinth/modules/backups/__init__.py:41
+#: plinth/modules/backups/__init__.py:44
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Sikkerhetskopier tillater opprettelse og behandling av sikkerhetskopiarkiver."
 
-#: plinth/modules/backups/__init__.py:49
+#: plinth/modules/backups/__init__.py:52
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} lager"
 
-#: plinth/modules/backups/forms.py:38
+#: plinth/modules/backups/forms.py:47
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app} (Ingen data å sikkerhetskopiere)"
 
-#: plinth/modules/backups/forms.py:58
+#: plinth/modules/backups/forms.py:69
 msgid "Included apps"
 msgstr "Inkluderte programmer"
 
-#: plinth/modules/backups/forms.py:58
+#: plinth/modules/backups/forms.py:69
 msgid "Apps to include in the backup"
 msgstr "Programmer å ta med i sikkerhetskopien"
 
-#: plinth/modules/backups/forms.py:72
+#: plinth/modules/backups/forms.py:83
 msgid "Select the apps you want to restore"
 msgstr "Velg app-ene du ønsker å tilbakeføre"
 
-#: plinth/modules/backups/forms.py:85
+#: plinth/modules/backups/forms.py:96
 msgid "Upload File"
 msgstr "Last opp fil"
 
-#: plinth/modules/backups/forms.py:88
+#: plinth/modules/backups/forms.py:98
 msgid "Backup files have to be in .tar.gz format"
 msgstr "Sikkerhetskopifiler må ha .tar.gz-format"
 
-#: plinth/modules/backups/forms.py:89
+#: plinth/modules/backups/forms.py:99
 msgid "Select the backup file you want to upload"
 msgstr "Velg sikkerhetskopiarkivet du ønsker å laste opp"
 
-#: plinth/modules/backups/forms.py:94
+#: plinth/modules/backups/forms.py:105
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository path format incorrect."
+msgstr "Finner ikke depot"
+
+#: plinth/modules/backups/forms.py:112
+#, fuzzy, python-brace-format
+#| msgid "Invalid server name"
+msgid "Invalid username: {username}"
+msgstr "Ugyldig tjenernavn"
+
+#: plinth/modules/backups/forms.py:122
+#, fuzzy, python-brace-format
+#| msgid "Invalid hostname"
+msgid "Invalid hostname: {hostname}"
+msgstr "Ugyldig vertsnavn"
+
+#: plinth/modules/backups/forms.py:126
+#, python-brace-format
+msgid "Invalid directory path: {dir_path}"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:132
 msgid "SSH Repository Path"
 msgstr "Sti til SSH-depot"
 
-#: plinth/modules/backups/forms.py:95
+#: plinth/modules/backups/forms.py:133
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -189,11 +212,11 @@ msgstr ""
 "Sti til et nytt eller eksisterende depot. Eksempel: <i>user@vert:~/sti/til/"
 "depot/</i>"
 
-#: plinth/modules/backups/forms.py:98
+#: plinth/modules/backups/forms.py:137
 msgid "SSH server password"
 msgstr "SSH-tjenermaskinpassord"
 
-#: plinth/modules/backups/forms.py:99
+#: plinth/modules/backups/forms.py:138
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -201,11 +224,11 @@ msgstr ""
 "Passord til SSH-tjeneren.<br />Nøkkelbasert SSH-autentisering er så langt "
 "ikke mulig."
 
-#: plinth/modules/backups/forms.py:104
+#: plinth/modules/backups/forms.py:142
 msgid "Encryption"
 msgstr "Kryptering"
 
-#: plinth/modules/backups/forms.py:106
+#: plinth/modules/backups/forms.py:143
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -213,32 +236,43 @@ msgstr ""
 "«Nøkkel i depot» betyr at en passordbeskyttet nøkkel er lagret i "
 "sikkerhetskopien."
 
-#: plinth/modules/backups/forms.py:111 plinth/modules/networks/forms.py:304
+#: plinth/modules/backups/forms.py:147 plinth/modules/networks/forms.py:304
 msgid "Passphrase"
 msgstr "Passfrase"
 
-#: plinth/modules/backups/forms.py:112
+#: plinth/modules/backups/forms.py:148
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Passfrase; Trengs kun når det brukes kryptering."
 
-#: plinth/modules/backups/forms.py:117
+#: plinth/modules/backups/forms.py:151
 msgid "Confirm Passphrase"
 msgstr "Bekreft passfrase"
 
-#: plinth/modules/backups/forms.py:118
+#: plinth/modules/backups/forms.py:151
 msgid "Repeat the passphrase."
 msgstr "Gjenta passfrase."
 
-#: plinth/modules/backups/forms.py:139
+#: plinth/modules/backups/forms.py:162
 msgid "The entered encryption passphrases do not match"
 msgstr "De innskrevne krypteringspassfrasene stemmer ikke overens"
 
-#: plinth/modules/backups/forms.py:151
-#, python-format
-msgid "Accessing the remote repository failed. Details: %(err)s"
-msgstr "Fikk ikke tilgang til fjerndepoet.  Detaljer: %(err)s"
+#: plinth/modules/backups/forms.py:166
+#, fuzzy
+#| msgid "Passphrase; Only needed when using encryption."
+msgid "Passphrase is needed for encryption."
+msgstr "Passfrase; Trengs kun når det brukes kryptering."
 
-#: plinth/modules/backups/repository.py:45
+#: plinth/modules/backups/forms.py:183
+#, fuzzy
+#| msgid "Create remote backup repository"
+msgid "Remote backup repository already exists."
+msgstr "Opprett fjerndepot for sikkerhetskopi"
+
+#: plinth/modules/backups/forms.py:189
+msgid "Select verified SSH public key"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:46
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -246,24 +280,26 @@ msgstr ""
 "Oppkobling avvist - sikre at du oppga korrekte innloggingsinformasjon og at "
 "tjenermaskinen kjører."
 
-#: plinth/modules/backups/repository.py:51
+#: plinth/modules/backups/repository.py:53
 msgid "Connection refused"
 msgstr "Oppkobling avvist"
 
-#: plinth/modules/backups/repository.py:58
+#: plinth/modules/backups/repository.py:62
 msgid "Repository not found"
 msgstr "Finner ikke depot"
 
-#: plinth/modules/backups/repository.py:65
+#: plinth/modules/backups/repository.py:70
 msgid "Incorrect encryption passphrase"
 msgstr "Feil krypteringspassfrase"
 
-#: plinth/modules/backups/repository.py:70
+#: plinth/modules/backups/repository.py:76
 msgid "SSH access denied"
 msgstr "Nektes SSH-tilgang"
 
 #: plinth/modules/backups/templates/backups.html:47
-msgid "Existing backups"
+#, fuzzy
+#| msgid "Existing backups"
+msgid "Existing backup locations"
 msgstr "Eksisterende sikkerhetskopier"
 
 #: plinth/modules/backups/templates/backups.html:57
@@ -319,6 +355,7 @@ msgstr "Opprett depot"
 #: plinth/modules/backups/templates/backups_repository_add.html:45
 #: plinth/modules/backups/templates/backups_repository_remove.html:49
 #: plinth/modules/backups/templates/backups_restore.html:52
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:61
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/networks/templates/connections_delete.html:41
@@ -347,7 +384,7 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#: plinth/modules/backups/views.py:286
+#: plinth/modules/backups/views.py:461
 msgid "Remove Repository"
 msgstr "Fjern depot"
 
@@ -356,7 +393,7 @@ msgid "Restore data from"
 msgstr "Gjenopprett data fra"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/views.py:186
+#: plinth/modules/backups/views.py:192
 msgid "Restore"
 msgstr "Gjenopprett"
 
@@ -400,55 +437,108 @@ msgstr ""
 msgid "Upload file"
 msgstr "Last opp fil"
 
-#: plinth/modules/backups/views.py:53
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
+msgid "How to verify?"
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+msgid ""
+"Run the following command on the SSH host machine. The output should match "
+"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
+"instead of rsa, by choosing the corresponding file."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
+msgid "Verify Host"
+msgstr ""
+
+#: plinth/modules/backups/views.py:57
 msgid "Upload"
 msgstr "Last opp"
 
-#: plinth/modules/backups/views.py:56 plinth/modules/ikiwiki/views.py:41
+#: plinth/modules/backups/views.py:60 plinth/modules/ikiwiki/views.py:41
 msgid "Create"
 msgstr "Opprett"
 
-#: plinth/modules/backups/views.py:84
+#: plinth/modules/backups/views.py:88
 msgid "Archive created."
 msgstr "Arkiv opprettet."
 
-#: plinth/modules/backups/views.py:111
+#: plinth/modules/backups/views.py:117
 msgid "Delete Archive"
 msgstr "Slett arkiv"
 
-#: plinth/modules/backups/views.py:123
+#: plinth/modules/backups/views.py:129
 msgid "Archive deleted."
 msgstr "Arkiv slettet."
 
-#: plinth/modules/backups/views.py:174
+#: plinth/modules/backups/views.py:180
 msgid "Restored files from backup."
 msgstr "Gjenopprettede filer fra sikkerhetskopi."
 
-#: plinth/modules/backups/views.py:198
+#: plinth/modules/backups/views.py:208
 msgid "No backup file found."
 msgstr "Fant ingen sikkerhetskopifiler."
 
-#: plinth/modules/backups/views.py:206
+#: plinth/modules/backups/views.py:216
 msgid "Restore from uploaded file"
 msgstr "Gjenopprett fra opplastet fil"
 
-#: plinth/modules/backups/views.py:260
-msgid "Added new repository."
-msgstr "Legg til nytt depot."
-
-#: plinth/modules/backups/views.py:265
+#: plinth/modules/backups/views.py:272
 msgid "Create remote backup repository"
 msgstr "Opprett fjerndepot for sikkerhetskopi"
 
-#: plinth/modules/backups/views.py:296
+#: plinth/modules/backups/views.py:292
+#, fuzzy
+#| msgid "Added new repository."
+msgid "Added new remote SSH repository."
+msgstr "Legg til nytt depot."
+
+#: plinth/modules/backups/views.py:315
+msgid "Verify SSH hostkey"
+msgstr ""
+
+#: plinth/modules/backups/views.py:349
+msgid "SSH host already verified."
+msgstr ""
+
+#: plinth/modules/backups/views.py:358
+msgid "SSH host verified."
+msgstr ""
+
+#: plinth/modules/backups/views.py:382
+msgid "SSH host public key could not be verified."
+msgstr ""
+
+#: plinth/modules/backups/views.py:384
+msgid "Authentication to remote server failed."
+msgstr ""
+
+#: plinth/modules/backups/views.py:386
+#, fuzzy
+#| msgid "Error installing application: {error}"
+msgid "Error establishing connection to server: {}"
+msgstr "Feil ved programinstallering: {error}"
+
+#: plinth/modules/backups/views.py:389
+msgid "Repository path is neither empty nor is an existing backups repository."
+msgstr ""
+
+#: plinth/modules/backups/views.py:396
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository removed."
+msgstr "Finner ikke depot"
+
+#: plinth/modules/backups/views.py:471
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr "Fjerne depotet.  Fjernlagrede sikkerhetskopier ble ikke slettet."
 
-#: plinth/modules/backups/views.py:304
+#: plinth/modules/backups/views.py:481
 msgid "Unmounting failed!"
 msgstr "Klarte ikke å avmontere!"
 
-#: plinth/modules/backups/views.py:313 plinth/modules/backups/views.py:317
+#: plinth/modules/backups/views.py:496 plinth/modules/backups/views.py:500
 msgid "Mounting failed"
 msgstr "Montering feilet"
 
@@ -2362,7 +2452,13 @@ msgstr ""
 "se slik ut <em>@username:%(domain_name)s</em>. Endring av domenenavnet etter "
 "det første oppsettet støttes ikke for øyeblikket."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:36
+msgid ""
+"New users can be registered from any client if public registration is "
+"enabled."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 #, python-format
 msgid ""
 "\n"
@@ -5808,7 +5904,7 @@ msgstr "Velg språk"
 msgid "Log in"
 msgstr "Logg inn"
 
-#: plinth/templates/clients.html:28
+#: plinth/templates/clients.html:29
 msgid "Client Apps"
 msgstr "Klientprogrammer"
 
@@ -6023,6 +6119,9 @@ msgstr "Programmet er deaktivert"
 #: plinth/web_framework.py:186
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Accessing the remote repository failed. Details: %(err)s"
+#~ msgstr "Fikk ikke tilgang til fjerndepoet.  Detaljer: %(err)s"
 
 #~ msgid "Tor Anonymity Network"
 #~ msgstr "Tor anonymitetsnettverk"
