@@ -153,4 +153,6 @@ def get_enabled_services(domain_type, domain):
 def get_services_status(domain_type, domain):
     """Get list of whether each service is enabled for a domain."""
     enabled = get_enabled_services(domain_type, domain)
-    return [service[0] in enabled for service in SERVICES]
+    return [
+        enabled == '__all__' or service[0] in enabled for service in SERVICES
+    ]

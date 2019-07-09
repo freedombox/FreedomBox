@@ -161,12 +161,10 @@ def _apply_changes(request, old_status, new_status):
             _run(['stop'])
 
         if new_status['enabled']:
-            services = dynamicdns.get_enabled_services(
-                new_status['dynamicdns_domain'])
             domain_added.send_robust(
                 sender='dynamicdns', domain_type='dynamicdnsservice',
                 name=new_status['dynamicdns_domain'],
-                description=_('Dynamic DNS Service'), services=services)
+                description=_('Dynamic DNS Service'), services='__all__')
             _run(['start'])
 
         messages.success(request, _('Configuration updated'))

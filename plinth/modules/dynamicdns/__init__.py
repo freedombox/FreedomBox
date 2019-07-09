@@ -23,12 +23,10 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth.modules import firewall
-from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
 from plinth.utils import format_lazy
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -82,30 +80,16 @@ def init():
     app = DynamicDNSApp()
     current_status = get_status()
     if current_status['enabled']:
-        services = get_enabled_services(current_status['dynamicdns_domain'])
         domain_added.send_robust(
             sender='dynamicdns', domain_type='dynamicdnsservice',
             name=current_status['dynamicdns_domain'],
-            description=_('Dynamic DNS Service'), services=services)
+            description=_('Dynamic DNS Service'), services='__all__')
         app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-
-
-def get_enabled_services(domain_name):
-    """Get enabled services for the domain name."""
-    if domain_name is not None and domain_name != '':
-        try:
-            domainname_services = firewall.get_enabled_services(
-                zone='external')
-        except actions.ActionError:
-            domainname_services = [service[0] for service in SERVICES]
-    else:
-        domainname_services = None
-    return domainname_services
 
 
 def get_status():

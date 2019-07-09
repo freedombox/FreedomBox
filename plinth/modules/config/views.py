@@ -25,8 +25,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
 from plinth import actions
-from plinth.modules import config, firewall
-from plinth.modules.names import SERVICES
+from plinth.modules import config
 from plinth.signals import (domain_added, domain_removed, domainname_change,
                             post_hostname_change, pre_hostname_change)
 
@@ -159,14 +158,6 @@ def set_domainname(domainname):
     # Update domain registered with Name Services module.
     domain_removed.send_robust(sender='config', domain_type='domainname')
     if domainname:
-        try:
-            domainname_services = firewall.get_enabled_services(
-                zone='external')
-        except actions.ActionError:
-            # This happens when firewalld is not installed.
-            # TODO: Are these services actually enabled?
-            domainname_services = [service[0] for service in SERVICES]
-
         domain_added.send_robust(sender='config', domain_type='domainname',
                                  name=domainname, description=_('Domain Name'),
-                                 services=domainname_services)
+                                 services='__all__')
