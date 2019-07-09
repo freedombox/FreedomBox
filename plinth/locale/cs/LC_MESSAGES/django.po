@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-08 17:31-0400\n"
-"PO-Revision-Date: 2019-06-18 22:01+0000\n"
+"PO-Revision-Date: 2019-07-11 08:01+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
 "cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.7\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -169,27 +169,23 @@ msgid "Select the backup file you want to upload"
 msgstr "Vyberte soubor se zálohou který chcete nahrát"
 
 #: plinth/modules/backups/forms.py:105
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository path format incorrect."
-msgstr "Repozitář nenalezen"
+msgstr "Nesprávný formát popisu umístění repozitáře."
 
 #: plinth/modules/backups/forms.py:112
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Neplatný název serveru"
+msgstr "Neplatné uživatelské jméno: {username}"
 
 #: plinth/modules/backups/forms.py:122
-#, fuzzy, python-brace-format
-#| msgid "Invalid hostname"
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Neplatný název stroje"
+msgstr "Neplatný název stroje: {hostname}"
 
 #: plinth/modules/backups/forms.py:126
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "Neplatný popis umístění složky: {dir_path}"
 
 #: plinth/modules/backups/forms.py:132
 msgid "SSH Repository Path"
@@ -248,20 +244,16 @@ msgid "The entered encryption passphrases do not match"
 msgstr "Zadání heslové fráze se neshodují"
 
 #: plinth/modules/backups/forms.py:166
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Passphrase is needed for encryption."
-msgstr "Heslová fráze, potřebná pouze při použití šifrování."
+msgstr "Pro šifrování je potřebná heslová fráze."
 
 #: plinth/modules/backups/forms.py:183
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Remote backup repository already exists."
-msgstr "Vytvořit repozitář pro zálohy na protějšku"
+msgstr "Repozitář se zálohou už na protějšku existuje."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Vyberte ověřený SSH veřejný klíč"
 
 #: plinth/modules/backups/repository.py:46
 msgid ""
@@ -288,10 +280,8 @@ msgid "SSH access denied"
 msgstr "SSH přístup odepřen"
 
 #: plinth/modules/backups/templates/backups.html:47
-#, fuzzy
-#| msgid "Existing backups"
 msgid "Existing backup locations"
-msgstr "Existující zálohy"
+msgstr "Existující umístění záloh"
 
 #: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
@@ -429,7 +419,7 @@ msgstr "Nahrát soubor"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Jak ověřit?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -437,10 +427,13 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Na stroji s SSH spusťte následující příkaz. Výstup by se měl shodovat s "
+"jednou z poskytnutých možností. Zvolením příslušného souboru je také možné "
+"použít dsa , ecdsa, ed25519 atp. namísto rsa."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
-msgstr ""
+msgstr "Ověřit stroj"
 
 #: plinth/modules/backups/views.py:57
 msgid "Upload"
@@ -479,46 +472,42 @@ msgid "Create remote backup repository"
 msgstr "Vytvořit repozitář pro zálohy na protějšku"
 
 #: plinth/modules/backups/views.py:292
-#, fuzzy
-#| msgid "Added new repository."
 msgid "Added new remote SSH repository."
-msgstr "Přidán nový repozitář."
+msgstr "Přidán nový vzdálený SSH repozitář."
 
 #: plinth/modules/backups/views.py:315
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Ověřit SSH klíč stroje"
 
 #: plinth/modules/backups/views.py:349
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH stroj už je ověřen."
 
 #: plinth/modules/backups/views.py:358
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH stroj ověřen."
 
 #: plinth/modules/backups/views.py:382
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "Veřejný klíč SSH stroje se nepodařilo ověřit."
 
 #: plinth/modules/backups/views.py:384
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Ověření vůči vzdálenému serveru se nezdařilo."
 
 #: plinth/modules/backups/views.py:386
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "Chyba při instalaci aplikace: {error}"
+msgstr "Chyba při navazování spojení se serverem: {}"
 
 #: plinth/modules/backups/views.py:389
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Popis umístění repozitáře buď není vyplněný nebo se nejedná o existující "
+"repozitář záloh."
 
 #: plinth/modules/backups/views.py:396
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository removed."
-msgstr "Repozitář nenalezen"
+msgstr "Repozitář odstraněn."
 
 #: plinth/modules/backups/views.py:471
 msgid "Repository removed. The remote backup itself was not deleted."
@@ -2457,6 +2446,8 @@ msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
 msgstr ""
+"Když je zapnutá veřejná registrace, noví uživatelé mohou být registrování z "
+"libovolného klienta."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 #, python-format
