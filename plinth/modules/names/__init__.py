@@ -124,8 +124,8 @@ def get_description(domain_type):
     """Get description of a domain_type, if available."""
     if domain_type in domain_types:
         return domain_types[domain_type]
-    else:
-        return domain_type
+
+    return domain_type
 
 
 def get_domain(domain_type):
@@ -135,10 +135,10 @@ def get_domain(domain_type):
     This function is meant for use with single-domain domain_types. If there is
     more than one domain, any one of the domains may be returned.
     """
-    if domain_type in domains and len(domains[domain_type]) > 0:
+    if domain_type in domains and domains[domain_type]:
         return list(domains[domain_type].keys())[0]
-    else:
-        return None
+
+    return None
 
 
 def get_enabled_services(domain_type, domain):
