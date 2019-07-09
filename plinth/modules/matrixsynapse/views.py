@@ -26,8 +26,7 @@ from django.views.generic import FormView
 
 from plinth import actions
 from plinth.forms import DomainSelectionForm
-from plinth.modules import matrixsynapse
-from plinth.utils import get_domain_names
+from plinth.modules import matrixsynapse, names
 from plinth.views import AppView
 
 from . import get_public_registration_status
@@ -51,7 +50,8 @@ class SetupView(FormView):
 
         context['title'] = matrixsynapse.name
         context['description'] = matrixsynapse.description
-        context['domain_names'] = get_domain_names()
+        context['domain_names'] = names.components.DomainName.list_names(
+            'matrix-synapse-plinth')
 
         return context
 

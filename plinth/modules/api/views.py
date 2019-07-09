@@ -32,9 +32,9 @@ from plinth.modules import names
 def access_info(request, **kwargs):
     """API view to return a list of domains and types."""
     domains = [{
-        'domain': domain,
-        'type': domain_type
-    } for domain_type, domains in names.domains.items() for domain in domains]
+        'domain': domain.name,
+        'type': domain.domain_type.component_id
+    } for domain in names.components.DomainName.list()]
     response = {'domains': domains}
 
     return HttpResponse(json.dumps(response), content_type='application/json')

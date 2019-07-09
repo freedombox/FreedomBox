@@ -109,10 +109,7 @@ def get_keys(fingerprint=None):
                                    ['host-show-keys'] + fingerprint)
     keys = json.loads(output)['keys']
 
-    domains = [
-        domain for domains_of_a_type in names.domains.values()
-        for domain in domains_of_a_type
-    ]
+    domains = names.components.DomainName.list_names()
     for key in keys.values():
         key['imported_domains'] = set(key.get('imported_domains', []))
         key['available_domains'] = set(key.get('available_domains', []))

@@ -74,21 +74,6 @@ def is_user_admin(request, cached=False):
     return user_is_admin
 
 
-def get_domain_names():
-    """Return the domain name(s)"""
-    from plinth.modules import names
-
-    domain_names = []
-
-    for domain_type, domains in names.domains.items():
-        if domain_type == 'hiddenservice':
-            continue
-        for domain in domains:
-            domain_names.append((domain, domain))
-
-    return domain_names
-
-
 class YAMLFile(object):
     """A context management class for updating YAML files"""
 

@@ -30,7 +30,6 @@ from django.utils.translation import get_language_info
 from django.utils.translation import ugettext_lazy as _
 
 import plinth
-from plinth import utils
 
 
 class AppForm(forms.Form):
@@ -46,7 +45,10 @@ class DomainSelectionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['domain_name'].choices = utils.get_domain_names()
+
+        from plinth.modules.names.components import DomainName
+        domains = list(DomainName.list_names())
+        self.fields['domain_name'].choices = zip(domains, domains)
 
     domain_name = forms.ChoiceField(
         label=_('Select a domain name to be used with this application'),

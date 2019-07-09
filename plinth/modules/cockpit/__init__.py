@@ -110,11 +110,9 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    domains = [
-        domain for domains_of_a_type in names.domains.values()
-        for domain in domains_of_a_type
-    ]
-    helper.call('post', actions.superuser_run, 'cockpit', ['setup'] + domains)
+    domains = names.components.DomainName.list_names('https')
+    helper.call('post', actions.superuser_run, 'cockpit',
+                ['setup'] + list(domains))
     helper.call('post', app.enable)
 
 

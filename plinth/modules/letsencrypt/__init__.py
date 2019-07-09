@@ -111,12 +111,9 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    for domain_type, domains in names.domains.items():
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            results.append(action_utils.diagnose_url('https://' + domain))
+    for domain in names.components.DomainName.list():
+        if domain.domain_type.can_have_certificate:
+            results.append(action_utils.diagnose_url('https://' + domain.name))
 
     return results
 
@@ -203,13 +200,9 @@ def get_status():
     status = actions.superuser_run('letsencrypt', ['get-status'])
     status = json.loads(status)
 
-    for domain_type, domains in names.domains.items():
-        # XXX: Remove when Let's Encrypt supports .onion addresses
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            status['domains'].setdefault(domain, {})
+    for domain in names.components.DomainName.list():
+        if domain.domain_type.can_have_certificate:
+            status['domains'].setdefault(domain.name, {})
 
     return status
 

@@ -25,8 +25,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 
 from plinth.forms import DomainSelectionForm
-from plinth.modules import diaspora
-from plinth.utils import get_domain_names
+from plinth.modules import diaspora, names
 from plinth.views import AppView
 
 from .forms import DiasporaAppForm
@@ -50,7 +49,8 @@ class DiasporaSetupView(FormView):
         context = super().get_context_data(**kwargs)
         context['description'] = self.description
         context['title'] = self.title
-        context['domain_names'] = get_domain_names()
+        context['domain_names'] = names.components.DomainName.list_names(
+            'https')
 
         return context
 
