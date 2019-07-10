@@ -31,6 +31,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = [
+        'axes',
         'captcha',
         'bootstrapform',
         'django.contrib.auth',
