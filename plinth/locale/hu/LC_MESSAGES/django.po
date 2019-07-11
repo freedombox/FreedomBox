@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-08 17:31-0400\n"
-"PO-Revision-Date: 2019-06-30 01:00+0000\n"
+"PO-Revision-Date: 2019-07-12 17:01+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -170,27 +170,23 @@ msgid "Select the backup file you want to upload"
 msgstr "Válaszd ki a feltölteni kívánt biztonsági másolatot"
 
 #: plinth/modules/backups/forms.py:105
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository path format incorrect."
-msgstr "Tároló nem található"
+msgstr "Helytelen a tároló elérési útja."
 
 #: plinth/modules/backups/forms.py:112
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Érvénytelen kiszolgálónév"
+msgstr "Érvénytelen felhasználónév: {username}"
 
 #: plinth/modules/backups/forms.py:122
-#, fuzzy, python-brace-format
-#| msgid "Invalid hostname"
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Érvénytelen állomásnév"
+msgstr "Érvénytelen állomásnév: {hostname}"
 
 #: plinth/modules/backups/forms.py:126
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "A könyvtár elérési útja érvénytelen: {dir_path}"
 
 #: plinth/modules/backups/forms.py:132
 msgid "SSH Repository Path"
@@ -249,20 +245,16 @@ msgid "The entered encryption passphrases do not match"
 msgstr "A megadott titkosítási jelszavak nem egyeznek meg"
 
 #: plinth/modules/backups/forms.py:166
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Passphrase is needed for encryption."
-msgstr "Jelszó, csak akkor szükséges ha titkosítást is használsz."
+msgstr "Jelszó szükséges a titkosításhoz."
 
 #: plinth/modules/backups/forms.py:183
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Remote backup repository already exists."
-msgstr "Távoli biztonsági másolat tároló létrehozása"
+msgstr "Távoli biztonsági másolat tároló már létezik."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Válaszd ki az ellenőrzött SSH nyilvános kulcsot"
 
 #: plinth/modules/backups/repository.py:46
 msgid ""
@@ -289,10 +281,8 @@ msgid "SSH access denied"
 msgstr "SSH hozzáférés megtagadva"
 
 #: plinth/modules/backups/templates/backups.html:47
-#, fuzzy
-#| msgid "Existing backups"
 msgid "Existing backup locations"
-msgstr "Meglévő biztonsági másolatok"
+msgstr "Meglévő biztonsági másolat helyek"
 
 #: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
@@ -433,7 +423,7 @@ msgstr "Fájl feltöltése"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Hogyan ellenőrizd?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -441,10 +431,13 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Futtasd a következő parancsot az SSH állomáson. A kimenetnek meg kell "
+"egyeznie a megadott opciók egyikével. Az rsa helyett használható még a dsa, "
+"ecdsa, ed25519, stb. is, a megfelelő fájl kiválasztásával."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
-msgstr ""
+msgstr "Állomás ellenőrzése"
 
 #: plinth/modules/backups/views.py:57
 msgid "Upload"
@@ -483,46 +476,42 @@ msgid "Create remote backup repository"
 msgstr "Távoli biztonsági másolat tároló létrehozása"
 
 #: plinth/modules/backups/views.py:292
-#, fuzzy
-#| msgid "Added new repository."
 msgid "Added new remote SSH repository."
-msgstr "Új tároló hozzáadva."
+msgstr "Új távoli SSH tároló hozzáadva."
 
 #: plinth/modules/backups/views.py:315
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "SSH állomáskulcs ellenőrzése"
 
 #: plinth/modules/backups/views.py:349
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH állomás már le lett ellenőrizve."
 
 #: plinth/modules/backups/views.py:358
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH állomás leellenőrizve."
 
 #: plinth/modules/backups/views.py:382
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "SSH állomás nyilvános kulcsa nem ellenőrizhető le."
 
 #: plinth/modules/backups/views.py:384
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Sikertelen a hitelesítés a távoli kiszolgálóra."
 
 #: plinth/modules/backups/views.py:386
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
+msgstr "Hiba lépett fel a kiszolgálóhoz való kapcsolódás során: {}"
 
 #: plinth/modules/backups/views.py:389
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"A tároló elérési útja nem üres és nem is már meglévő biztonsági másolat "
+"tároló."
 
 #: plinth/modules/backups/views.py:396
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository removed."
-msgstr "Tároló nem található"
+msgstr "Tároló eltávolítva."
 
 #: plinth/modules/backups/views.py:471
 msgid "Repository removed. The remote backup itself was not deleted."
@@ -2491,6 +2480,8 @@ msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
 msgstr ""
+"Ha a szabad regisztráció engedélyezett, bármely kliensről lehet új "
+"felhasználót regisztrálni."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 #, python-format
