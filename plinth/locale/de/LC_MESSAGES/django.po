@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-08 17:31-0400\n"
-"PO-Revision-Date: 2019-06-18 22:01+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2019-07-14 14:01+0000\n"
+"Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -172,27 +172,23 @@ msgid "Select the backup file you want to upload"
 msgstr "Auswählen der Wiederherstellungsdatei zum Hochladen"
 
 #: plinth/modules/backups/forms.py:105
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository path format incorrect."
-msgstr "Archiv nicht gefunden"
+msgstr "Pfad zum Archiv ist nicht korrekt."
 
 #: plinth/modules/backups/forms.py:112
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Ungültiger Servername"
+msgstr "Ungültiger Nutzername: {username}"
 
 #: plinth/modules/backups/forms.py:122
-#, fuzzy, python-brace-format
-#| msgid "Invalid hostname"
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Ungültiger Hostname"
+msgstr "Ungültiger Hostname: {hostname}"
 
 #: plinth/modules/backups/forms.py:126
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "Ungültiger Ordnerpfad: {dir_path}"
 
 #: plinth/modules/backups/forms.py:132
 msgid "SSH Repository Path"
@@ -251,20 +247,16 @@ msgid "The entered encryption passphrases do not match"
 msgstr "Die eingegebenen Verschlüsselungs-Passphrasen stimmen nicht überein"
 
 #: plinth/modules/backups/forms.py:166
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Passphrase is needed for encryption."
-msgstr "Passphrase; Nur notwendig, wenn Verschlüsselung genutzt wird."
+msgstr "Passphrase ist notwendig für Verschlüsselung."
 
 #: plinth/modules/backups/forms.py:183
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Remote backup repository already exists."
-msgstr "Remote-Backup-Archiv anlegen"
+msgstr "Remote-Backup-Archiv existiert bereits."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Wähle verifizierten öffentlichen SSH-Schlüssel"
 
 #: plinth/modules/backups/repository.py:46
 msgid ""
@@ -291,10 +283,8 @@ msgid "SSH access denied"
 msgstr "SSH-Zugriff verweigert"
 
 #: plinth/modules/backups/templates/backups.html:47
-#, fuzzy
-#| msgid "Existing backups"
 msgid "Existing backup locations"
-msgstr "Vorhandene Sicherungen"
+msgstr "Vorhandene Backup-Speicherorte"
 
 #: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
@@ -436,7 +426,7 @@ msgstr "Datei hochladen"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Wie kan ich Verifizieren?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -444,10 +434,13 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Führe das folgende Kommando auf dem SSH-Host-Gerät. Die Ausgabe sollte mit "
+"einer der angegebenen Optionen übereinstimmen. Sie können anstatt RSA auch "
+"DSA, ECDSA, ED25519, usw. auswählen, indem Sie die jeweilige Datei auswählen."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
-msgstr ""
+msgstr "Host verifizieren"
 
 #: plinth/modules/backups/views.py:57
 msgid "Upload"
@@ -486,46 +479,42 @@ msgid "Create remote backup repository"
 msgstr "Remote-Backup-Archiv anlegen"
 
 #: plinth/modules/backups/views.py:292
-#, fuzzy
-#| msgid "Added new repository."
 msgid "Added new remote SSH repository."
-msgstr "Neues Archiv hinzugefügt."
+msgstr "Neue Remote-SSH-Archiv hinzugefügt."
 
 #: plinth/modules/backups/views.py:315
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Verifiziere SSH-Schlüssel des Hosts"
 
 #: plinth/modules/backups/views.py:349
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH-Host bereits verifiziert."
 
 #: plinth/modules/backups/views.py:358
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH-Host verifiziert."
 
 #: plinth/modules/backups/views.py:382
 msgid "SSH host public key could not be verified."
 msgstr ""
+"Der öffentliche SSH-Schlüssel des Hosts konnte nicht verifiziert werden."
 
 #: plinth/modules/backups/views.py:384
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Authentifizierung am Server fehlgeschlagen."
 
 #: plinth/modules/backups/views.py:386
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "Fehler beim Installieren der Anwendung: {error}"
+msgstr "Fehler beim Verbinden mit Server: {}"
 
 #: plinth/modules/backups/views.py:389
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Pfad zum Archiv ist weder leer, noch ist ein existierendes Backup-Archiv."
 
 #: plinth/modules/backups/views.py:396
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository removed."
-msgstr "Archiv nicht gefunden"
+msgstr "Archiv gelöscht."
 
 #: plinth/modules/backups/views.py:471
 msgid "Repository removed. The remote backup itself was not deleted."
@@ -2481,6 +2470,8 @@ msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
 msgstr ""
+"Neue Nutzer können von beliebigen Geräten registriert werden, wenn "
+"öffentliche Registrierung aktiviert ist."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 #, python-format
