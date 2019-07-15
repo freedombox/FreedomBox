@@ -28,7 +28,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 
-from plinth import actions, web_framework
+from plinth import actions, utils, web_framework
 
 from .forms import AuthenticationForm
 
@@ -69,6 +69,8 @@ class SSOLoginView(LoginView):
 
         return response
 
+    # XXX: Use axes middleware and authentication backend instead of
+    # axes_form_invalid when axes >= 5.0.0 becomes available in Debian stable.
     @axes_form_invalid
     def form_invalid(self, *args, **kwargs):
         return super(SSOLoginView, self).form_invalid(*args, **kwargs)
@@ -89,10 +91,13 @@ class CaptchaLoginView(LoginView):
             return response
 
         # Successful authentication
-        ip_address = web_framework.get_ip_address_from_request(request)
-        axes.utils.reset(ip=ip_address)
-        logger.info('Login attempts reset for IP after successful login: %s',
-                    ip_address)
+        if utils.is_axes_old():
+            ip_address = web_framework.get_ip_address_from_request(request)
+            axes.utils.reset(ip=ip_address)
+            logger.info(
+                'Login attempts reset for IP after successful login: %s',
+                ip_address)
+
         return set_ticket_cookie(request.user, response)
 
 

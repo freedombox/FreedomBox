@@ -164,3 +164,14 @@ def gunzip(gzip_file, output_file):
 
 def is_non_empty_file(file_path):
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
+
+
+def is_axes_old():
+    """Return true if using django-axes version strictly less than 5.0.0.
+
+    XXX: Remove this method and allow code that uses it after django-axes >=
+    5.0.0 becomes available in Debian stable.
+
+    """
+    import axes
+    return LooseVersion(axes.get_version()) < LooseVersion('5.0')

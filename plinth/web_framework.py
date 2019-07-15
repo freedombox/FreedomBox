@@ -98,6 +98,7 @@ def init():
             },
         ],
         AXES_LOCKOUT_URL='locked/',
+        AXES_RESET_ON_SUCCESS=True,  # Only used with axes >= 4.4.3
         CACHES={
             'default': {
                 'BACKEND': 'django.core.cache.backends.dummy.DummyCache'

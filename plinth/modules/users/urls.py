@@ -40,6 +40,9 @@ urlpatterns = [
         name='change_password'),
 
     # Authnz is handled by SSO
+
+    # XXX: Use axes authentication backend and middleware instead of
+    # axes_dispatch after axes 5.x becomes available in Debian stable.
     url(r'^accounts/login/$',
         public(axes_dispatch(SSOLoginView.as_view())), name='login'),
     url(r'^accounts/logout/$',

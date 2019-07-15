@@ -22,6 +22,14 @@ import os
 
 TEST_DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
+AXES_ENABLED = False
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -30,6 +38,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = [
+    'axes',
     'captcha',
     'bootstrapform',
     'django.contrib.auth',
