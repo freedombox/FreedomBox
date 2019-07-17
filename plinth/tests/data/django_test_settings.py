@@ -23,6 +23,12 @@ import os
 
 TEST_DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
