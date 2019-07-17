@@ -179,13 +179,15 @@ def get_languages():
     Add additional languages that FreedomBox support but Django doesn't.
 
     """
+
     def gettext_noop(string):
         """Django's actual translation methods need Django to be setup."""
         return string
 
-    return sorted(list(global_settings.LANGUAGES) + [
-        ('gu', gettext_noop('Gujarati')),
-    ])
+    return sorted(
+        list(global_settings.LANGUAGES) + [
+            ('gu', gettext_noop('Gujarati')),
+        ])
 
 
 def get_wsgi_application():
