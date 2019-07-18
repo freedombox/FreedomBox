@@ -47,6 +47,10 @@ INSTALLED_APPS = [
         'plinth',
     ]
 
+# XXX: Workaround problem with django-axes 5.0.7 checking for settings in
+# settings.MIDDLEWARE. This fails on Django version 1.11.
+MIDDLEWARE = ()
+
 # These are included here solely to suppress Django warnings
 # during testing setup
 MIDDLEWARE_CLASSES = (
