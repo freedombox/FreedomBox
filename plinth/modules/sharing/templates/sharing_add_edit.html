@@ -20,18 +20,23 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 
   <h3>{{ title }}</h3>
 
   <form class="form" method="post">
-      {% csrf_token %}
+    {% csrf_token %}
 
-      {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Submit" %}"/>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Submit" %}"/>
   </form>
 
+{% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'sharing/sharing_add_edit.js' %}"></script>
 {% endblock %}
