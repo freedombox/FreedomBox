@@ -232,6 +232,15 @@ def access_share(browser, name):
     assert '/share/{}'.format(name) in browser.title
 
 
+def make_share_public(browser, name):
+    """Make share publicly accessible."""
+    row = get_share(browser, name)
+    with wait_for_page_update(browser):
+        row.find_by_css('.share-edit')[0].click()
+    browser.find_by_id('id_sharing-is_public').check()
+    interface.submit(browser)
+
+
 def verify_nonexistant_share(browser, name):
     """Verify that given URL for a given share name is a 404."""
     url = '{}/share/{}'.format(default_url, name)

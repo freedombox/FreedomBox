@@ -37,6 +37,8 @@ site_url = {
 
 
 def get_site_url(site_name):
+    if site_name.startswith('share'):
+        site_name = site_name.replace('_', '/')
     url = '/' + site_name
     if site_name in site_url:
         url = site_url[site_name]
@@ -601,8 +603,8 @@ def ttrss_subscribe(browser):
     _ttrss_load_main_interface(browser)
     browser.find_by_text('Actions...').click()
     browser.find_by_text('Subscribe to feed...').click()
-    browser.find_by_id(
-        'feedDlg_feedUrl').fill('https://planet.debian.org/atom.xml')
+    browser.find_by_id('feedDlg_feedUrl').fill(
+        'https://planet.debian.org/atom.xml')
     browser.find_by_text('Subscribe').click()
     if browser.is_text_present('You are already subscribed to this feed.'):
         browser.find_by_text('Cancel').click()

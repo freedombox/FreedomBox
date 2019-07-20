@@ -167,6 +167,11 @@ def remove_share2(browser, name):
     application.remove_share(browser, name)
 
 
+@when(parsers.parse('I edit share {name:w} to be public'))
+def edit_share_public_access(browser, name):
+    application.make_share_public(browser, name)
+
+
 @then(
     parsers.parse(
         'the share {name:w} should be listed from path {path} for {group:w}'))

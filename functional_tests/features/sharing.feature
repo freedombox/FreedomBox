@@ -51,6 +51,11 @@ Scenario: Share permissions
   Then the share tmp should be listed from path /tmp for syncthing
   And the share tmp should not be accessible
 
+Scenario: Public share
+  When I edit share tmp to be public
+  And I log out
+  Then the share_tmp site should be available
+
 Scenario: Backup and restore sharing
   Given share tmp is not available
   When I add a share tmp from path /tmp for admin
