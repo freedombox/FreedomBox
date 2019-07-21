@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-08 17:31-0400\n"
-"PO-Revision-Date: 2019-07-08 05:01+0000\n"
-"Last-Translator: Andrey Vostrikov <av.linux.dev@gmail.com>\n"
+"PO-Revision-Date: 2019-07-22 17:06+0000\n"
+"Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.8-dev\n"
 
 #: plinth/action_utils.py:298
@@ -172,27 +172,23 @@ msgid "Select the backup file you want to upload"
 msgstr "Выберите файл резервного сохранения для загрузки на локальную машину"
 
 #: plinth/modules/backups/forms.py:105
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository path format incorrect."
-msgstr "Репозиторий не найден"
+msgstr "Неправильный формат пути репозитория."
 
 #: plinth/modules/backups/forms.py:112
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Недопустимое имя сервера"
+msgstr "Неверное имя пользователя: {username}"
 
 #: plinth/modules/backups/forms.py:122
-#, fuzzy, python-brace-format
-#| msgid "Invalid hostname"
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Недопустимое имя хоста"
+msgstr "Неверное имя хоста: {hostname}"
 
 #: plinth/modules/backups/forms.py:126
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "Неправильный путь к каталогу: {dir_path}"
 
 #: plinth/modules/backups/forms.py:132
 msgid "SSH Repository Path"
@@ -250,20 +246,16 @@ msgid "The entered encryption passphrases do not match"
 msgstr "Введённые парольные фразы шифрования неправильные"
 
 #: plinth/modules/backups/forms.py:166
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Passphrase is needed for encryption."
-msgstr "Парольная фраза; нужна только если используется шифрование."
+msgstr "Парольная фраза необходима для шифрования."
 
 #: plinth/modules/backups/forms.py:183
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Remote backup repository already exists."
-msgstr "Создать удаленный репозиторий резервного сохранения"
+msgstr "Удалённое хранилище резервных копий уже существует."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Выберите проверенный открытый ключ SSH"
 
 #: plinth/modules/backups/repository.py:46
 msgid ""
@@ -290,10 +282,8 @@ msgid "SSH access denied"
 msgstr "В доступе по SSH отказано"
 
 #: plinth/modules/backups/templates/backups.html:47
-#, fuzzy
-#| msgid "Existing backups"
 msgid "Existing backup locations"
-msgstr "Существующие резервные копии"
+msgstr "Существующие резервные хранилища"
 
 #: plinth/modules/backups/templates/backups.html:57
 msgid "Create new repository"
@@ -432,7 +422,7 @@ msgstr "Загрузить файл"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Как проверить?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -440,10 +430,13 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Выполните следующую команду на хост-машине SSH. Вывод должен соответствовать "
+"одному из предложенных вариантов. Вы также можете использовать dsa, ecdsa, "
+"ed25519 и т.д. вместо rsa, выбрав соответствующий файл."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
-msgstr ""
+msgstr "Проверить хост"
 
 #: plinth/modules/backups/views.py:57
 msgid "Upload"
@@ -482,46 +475,42 @@ msgid "Create remote backup repository"
 msgstr "Создать удаленный репозиторий резервного сохранения"
 
 #: plinth/modules/backups/views.py:292
-#, fuzzy
-#| msgid "Added new repository."
 msgid "Added new remote SSH repository."
-msgstr "Добавить новый репозиторий."
+msgstr "Добавлен новый удалённый SSH-репозиторий."
 
 #: plinth/modules/backups/views.py:315
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Проверить ключ SSH хоста"
 
 #: plinth/modules/backups/views.py:349
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH хост уже проверен."
 
 #: plinth/modules/backups/views.py:358
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH хост проверен."
 
 #: plinth/modules/backups/views.py:382
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "Открытый ключ SSH хоста не может быть проверен."
 
 #: plinth/modules/backups/views.py:384
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Аутентификация на удалённый сервер не прошла."
 
 #: plinth/modules/backups/views.py:386
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "Ошибка при установке приложения: {error}"
+msgstr "Ошибка при установке соединения с сервером: {}"
 
 #: plinth/modules/backups/views.py:389
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Путь к хранилищу не пустой и не является существующим репозиторием резервных "
+"копий."
 
 #: plinth/modules/backups/views.py:396
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository removed."
-msgstr "Репозиторий не найден"
+msgstr "Репозиторий удалён."
 
 #: plinth/modules/backups/views.py:471
 msgid "Repository removed. The remote backup itself was not deleted."
