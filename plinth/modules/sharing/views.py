@@ -61,9 +61,7 @@ class AddShareView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Add the share on valid form submission."""
-        data = form.cleaned_data
-        sharing.add_share(data['name'], data['path'], data['groups'],
-                          str(data['is_public']).lower())
+        _add_share(form.cleaned_data)
         return super().form_valid(form)
 
 
@@ -95,11 +93,14 @@ class EditShareView(SuccessMessageMixin, FormView):
         """Add the share on valid form submission."""
         if form.initial != form.cleaned_data:
             sharing.remove_share(form.initial['name'])
-            data = form.cleaned_data
-            sharing.add_share(data['name'], data['path'], data['groups'],
-                              str(data['is_public']).lower())
+            _add_share(form.cleaned_data)
 
         return super().form_valid(form)
+
+
+def _add_share(form_data):
+    sharing.add_share(form_data['name'], form_data['path'],
+                      form_data['groups'], form_data['is_public'])
 
 
 @require_POST

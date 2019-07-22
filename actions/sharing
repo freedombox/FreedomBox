@@ -43,8 +43,9 @@ def parse_arguments():
     add_parser.add_argument('--path', required=True, help='Disk path to share')
     add_parser.add_argument('--groups', nargs='*',
                             help='List of groups that can access the share')
-    add_parser.add_argument('--is-public', default=False, required=False,
-                            help='1 if public share else 0')
+    add_parser.add_argument('--is-public', required=False, default=False,
+                            action="store_true",
+                            help='Allow public access to this share')
 
     remove_parser = subparsers.add_parser('remove',
                                           help='Remove an existing share')
@@ -94,7 +95,7 @@ def subcommand_add(arguments):
     aug.set('$conf/Location[last()]/directive[last()]/arg',
             'includes/freedombox-sharing.conf')
 
-    if is_public != "true":
+    if not is_public:
         aug.set('$conf/Location[last()]/directive[last() + 1]', 'Include')
         aug.set('$conf/Location[last()]/directive[last()]/arg',
                 'includes/freedombox-single-sign-on.conf')

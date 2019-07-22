@@ -71,10 +71,10 @@ def list_shares():
 
 def add_share(name, path, groups, is_public):
     """Add a new share by called the action script."""
-    actions.superuser_run('sharing', [
-        'add', '--name', name, '--path', path, '--is-public', is_public,
-        '--groups'
-    ] + groups)
+    args = ['add', '--name', name, '--path', path, '--groups'] + groups
+    if is_public:
+        args.append('--is-public')
+    actions.superuser_run('sharing', args)
 
 
 def remove_share(name):
