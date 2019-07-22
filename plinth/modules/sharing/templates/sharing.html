@@ -72,7 +72,13 @@
                 {{ share.url }}
               </a>
             </td>
-            <td class="share-groups">{{ share.groups|join:", " }}</td>
+            <td class="share-groups">
+            {% if not share.groups %}
+              <i>{% trans "public access" %}</i>
+            {% else %}
+              {{ share.groups|join:", " }}
+            {% endif %}
+            </td>
             <td class="share-operations">
               <a class="share-edit btn btn-sm btn-default"
                  href="{% url 'sharing:edit' share.name %}">
