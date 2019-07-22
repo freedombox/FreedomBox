@@ -947,6 +947,79 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
         </itemizedlist>
       </section>
     </section>
+    <section>
+      <title>Obtaining Source Code</title>
+      <para>FreedomBox is fully <ulink url="https://www.gnu.org/philosophy/free-sw.html">free software</ulink> and you can obtain the source code to study, modify and distribute improvements. </para>
+      <section>
+        <title>From within FreedomBox</title>
+        <para>FreedomBox is made up of several software programs and you can obtain the source code to any of them. These instructions are similar to obtaining and <ulink url="https://www.debian.org/doc/manuals/maint-guide/build.en.html">building</ulink> <ulink url="https://www.debian.org/doc/manuals/apt-howto/ch-sourcehandling.en.html">source code</ulink> <ulink url="https://wiki.debian.org/BuildingTutorial">for Debian</ulink> since FreedomBox is a pure blend of Debian. Using this process you can obtain the source code to the exact version of the package you are currently using in FreedomBox. </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>To see the list of software packages installed on your FreedomBox, run the following in a terminal: </para>
+            <screen><![CDATA[dpkg -l]]></screen>
+          </listitem>
+          <listitem>
+            <para>To obtain the source code for any of those programs, then run: </para>
+            <screen><![CDATA[apt source <package_name>]]></screen>
+            <para>This requires that the file <ulink url="https://www.debian.org/doc/manuals/apt-howto/ch-basico.en.html">/etc/apt/sources.list</ulink> file contains the information about the source code repositories. These are present by default on all FreedomBox images. If you have installed FreedomBox using a package from Debian, you need to ensure that source repositories are added in the file. </para>
+          </listitem>
+          <listitem>
+            <para>To build the package from source code, first install its dependencies </para>
+            <screen><![CDATA[apt build-dep <package_name>]]></screen>
+            <para>Switch to the source directory created by the <emphasis>apt source</emphasis> command: </para>
+            <screen><![CDATA[cd <source_directory>]]></screen>
+            <para>Then build the package </para>
+            <screen><![CDATA[ dpkg-buildpackage -rfakeroot -uc]]></screen>
+          </listitem>
+          <listitem>
+            <para>Install the package: </para>
+            <screen><![CDATA[ dpkg -i ../<built_package>.deb]]></screen>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Other Ways to Obtain Source Code</title>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Source code for any of the packages can be browsed and searched using the web interface at <ulink url="https://sources.debian.org/">sources.debian.org</ulink>. For example, see the <ulink url="https://sources.debian.org/src/plinth/">plinth</ulink> package. </para>
+          </listitem>
+          <listitem>
+            <para>Source code and pre-built binary package for any version of a package including historic versions can be obtained from <ulink url="https://snapshot.debian.org/">snapshot.debian.org</ulink>. For example, see the <ulink url="https://snapshot.debian.org/package/plinth/">plinth</ulink> package. </para>
+          </listitem>
+          <listitem>
+            <para>You can also obtain the links to upstream project homepage, upstream version control, Debian's version control, changelog, etc. from the Debian tracker page for a project at <ulink url="https://tracker.debian.org/">tracker.debian.org</ulink>. For example, see the tracker page for <ulink url="https://tracker.debian.org/pkg/plinth">plinth</ulink> package. </para>
+          </listitem>
+          <listitem>
+            <para>You can build and install a package from its Debian's version control repository. For example, </para>
+            <screen><![CDATA[ git clone https://salsa.debian.org/freedombox-team/plinth
+ cd plinth
+ apt build-dep .
+ dpkg-buildpackage -rfakeroot -uc
+ dpkg -i ../plinth*.deb]]></screen>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Building Disk Images</title>
+        <para>You can also build FreedomBox disk images for various hardware platforms using the freedom-maker tool. This is also available as a Debian package and source code for it may be obtained using the above methods. <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/README.md">Build instructions</ulink> for creating disk images are available as part of the source code for freedom-maker package. </para>
+        <para>FreedomBox disk images are built and uploaded to official servers using automated Continuous Integration infrastructure. This infrastructure is available as <ulink url="https://salsa.debian.org/freedombox-team/infrastructure">source code</ulink> too and provides accurate information on how FreedomBox images are built. </para>
+        <section>
+          <title>U-boot on Pioneer Edition Images</title>
+          <para>There is one minor exception to the u-boot package present on the hardware sold as FreedomBox Home Server Kits Pioneer Edition. It contains an small but important fix that is not part of Debian sources. The fork of the Debian u-boot source repository along with the minor change done by the FreedomBox is available as a <ulink url="https://salsa.debian.org/freedombox-team/u-boot">separate repository</ulink>. We except this change to be available in upstream u-boot eventually and this repository will not be needed. This package can be built on a Debian armhf machine as follows (cross compiling is also possible, simply follow instructions for cross compiling Debian packages): </para>
+          <screen><![CDATA[apt install git git-buildpackage
+git clone https://salsa.debian.org/freedombox-team/u-boot.git
+cd u-boot
+pbuilder create --distribution=buster
+gbp buildpackage --git-pbuilder]]></screen>
+          <para>The u-boot Debian package will be available in <emphasis>u-boot-sunxi*.deb</emphasis>. This package will contain  </para>
+          <screen><![CDATA[mkdir temp
+dpkg -x u-boot-suxi*.deb temp
+unxz <lime2_image_built_with_freedom_maker>
+dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime2.img> seek=8 bs=1k conv=notrunc]]></screen>
+          <para>The resulting image will have the modified u-boot in it.  </para>
+        </section>
+      </section>
+    </section>
   </section>
   <section>
     <title>Apps</title>
@@ -3573,7 +3646,7 @@ proto udp]]></screen>
     <section>
       <title>Cockpit (Server Administration)</title>
       <para>Cockpit is a server manager that makes it easy to administer GNU/Linux servers via a web browser. On a FreedomBox, controls are available for many advanced functions that are not usually required. A web based terminal for console operations is also available. </para>
-      <para>It can be accessed by any user on your FreedomBox belonging to the admin group. </para>
+      <para>It can be accessed by any user on your FreedomBox belonging to the admin group. Cockpit is only usable when you have proper domain name setup for your FreedomBox and you use that domain name to access Cockpit. See the Troubleshooting section for more information. </para>
       <caution>
         <para>Use cockpit only if you are an administrator of GNU/Linux systems with advanced skills. FreedomBox tries to coexist with changes to system by system administrators and system administration tools like Cockpit. However, improper changes to the system might causes failures in FreedomBox functions. </para>
       </caution>
@@ -3798,6 +3871,16 @@ proto udp]]></screen>
             </inlinemediaobject>
           </para>
         </section>
+      </section>
+      <section>
+        <title>Troubleshooting</title>
+        <para>Cockpit requires a domain name to be properly setup on your FreedomBox and will only work when you access it using a URL with that domain name. Cockpit will not work when using IP address in the URL. Using <emphasis>freedombox.local</emphasis> as the domain name also does not work. For example, the following URLs will not work: </para>
+        <screen><![CDATA[https://192.168.0.10/cockpit/
+https://freedombox.local/cockpit/]]></screen>
+        <para>To properly access Cockpit, use the domain name <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Configure#">configured</ulink> for your FreedomBox.Cockpit will also work well when using a <ulink url="https://wiki.debian.org/FreedomBox/Manual/Tor">Tor Hidden Service</ulink>. The following URLs will work: </para>
+        <screen><![CDATA[https://mybox.freedombox.rocks/cockpit/
+https://exampletorhs.onion/cockpit/]]></screen>
+        <para>The reason for this behaviour is that Cockpit uses WebSockets to connect to the backend server. Cross site requests for WebSockets must be prevented for security reasons. To implement this, Cockpit maintains a list of all domains from which requests are allowed. FreedomBox automatically configures this list whenever you add or remove a domain. However, since we can't rely on IP addresses, they are not added by FreedomBox to this domain list. You can see the current list of allowed domains, as managed by FreedomBox, in <emphasis>/etc/cockpit/cockpit.conf</emphasis>. You may edit this, but do so only if you understand web security consequences of this. </para>
       </section>
     </section>
     <section>
@@ -7585,11 +7668,12 @@ Password:
       <para>If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>. If you have access to one of these <ulink url="https://wiki.debian.org/FreedomBox/Manual/CheapServerBoxHardware#">targeted hardware</ulink> devices and would like to work with us to make it run FreedomBox, please contact us!  </para>
     </section>
     <section>
-      <title>Pioneer Edition FreedomBox Home Server Kit</title>
+      <title>Pioneer Edition FreedomBox</title>
+      <para>Pioneer FreedomBox Home Servers are produced and sold by Olimex, a company which specializes in Open Source Hardware. The kit includes pocket-sized server hardware, an SD card with the operating system pre-installed, and a backup battery which can power the hardware for 4-5 hours in case of outages. It sells for 82 euro. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata depth="513" fileref="https://wiki.debian.org/FreedomBox/Hardware/PioneerEdition?action=AttachFile&amp;do=get&amp;target=pioneer-edition.jpg" width="640"/>
+            <imagedata depth="257" fileref="https://wiki.debian.org/FreedomBox/Hardware/PioneerEdition?action=AttachFile&amp;do=get&amp;target=pioneer-edition.jpg" width="320"/>
           </imageobject>
           <textobject>
             <phrase>Pioneer Edition FreedomBox Home Server Kit</phrase>
@@ -7597,13 +7681,7 @@ Password:
         </inlinemediaobject>
       </para>
       <section>
-        <title>Recommended HW</title>
-        <para>This is the hardware recommended for all users who just want a turn-key FreedomBox, and <emphasis role="strong">don't</emphasis> want to <emphasis role="strong">build</emphasis> their own one. </para>
-        <para>(Building your own FreedomBox means some technical stuff like choosing and buying the right components, downloading the image and preparing the SD card). </para>
-      </section>
-      <section>
-        <title>This Kit</title>
-        <para>This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
+        <title>Product Features</title>
         <para>The <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/">Pioneer Edition FreedomBox Home Server Kit</ulink> includes all the hardware needed for launching a FreedomBox home server on an Olimex <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20-OLinuXino-LIME2</ulink> board: </para>
         <itemizedlist>
           <listitem>
@@ -7625,6 +7703,11 @@ Password:
             <para>an Ethernet cable. </para>
           </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Recommended Hardware</title>
+        <para>This is the hardware recommended for all users who just want a turn-key FreedomBox, and <emphasis role="strong">don't</emphasis> want to <emphasis role="strong">build</emphasis> their own one. </para>
+        <para>(Building your own FreedomBox means some technical stuff like choosing and buying the right components, downloading the image and preparing the SD card). </para>
       </section>
       <section>
         <title>Availability</title>
@@ -7687,6 +7770,80 @@ Password:
             <para>The image that shipped with the kits uses a <ulink url="https://salsa.debian.org/freedombox-team/u-boot">slightly modified u-boot</ulink> from Debian and not stock Debian like the rest of FreedomBox. So, if you wish to get the source code, please use the FreedomBox team's <ulink url="https://salsa.debian.org/freedombox-team/u-boot">u-boot repository</ulink>. </para>
           </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Obtaining Source Code</title>
+        <para>After you purchase and receive your Pioneer Edition <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink>, you may want to obtain the source code of the software running in it. Continue reading this section for instructions. </para>
+        <para>FreedomBox is fully <ulink url="https://www.gnu.org/philosophy/free-sw.html">free software</ulink> and you can obtain the source code to study, modify and distribute improvements. </para>
+        <section>
+          <title>From within FreedomBox</title>
+          <para>FreedomBox is made up of several software programs and you can obtain the source code to any of them. These instructions are similar to obtaining and <ulink url="https://www.debian.org/doc/manuals/maint-guide/build.en.html">building</ulink> <ulink url="https://www.debian.org/doc/manuals/apt-howto/ch-sourcehandling.en.html">source code</ulink> <ulink url="https://wiki.debian.org/BuildingTutorial">for Debian</ulink> since FreedomBox is a pure blend of Debian. Using this process you can obtain the source code to the exact version of the package you are currently using in FreedomBox. </para>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>To see the list of software packages installed on your FreedomBox, run the following in a terminal: </para>
+              <screen><![CDATA[dpkg -l]]></screen>
+            </listitem>
+            <listitem>
+              <para>To obtain the source code for any of those programs, then run: </para>
+              <screen><![CDATA[apt source <package_name>]]></screen>
+              <para>This requires that the file <ulink url="https://www.debian.org/doc/manuals/apt-howto/ch-basico.en.html">/etc/apt/sources.list</ulink> file contains the information about the source code repositories. These are present by default on all FreedomBox images. If you have installed FreedomBox using a package from Debian, you need to ensure that source repositories are added in the file. </para>
+            </listitem>
+            <listitem>
+              <para>To build the package from source code, first install its dependencies </para>
+              <screen><![CDATA[apt build-dep <package_name>]]></screen>
+              <para>Switch to the source directory created by the <emphasis>apt source</emphasis> command: </para>
+              <screen><![CDATA[cd <source_directory>]]></screen>
+              <para>Then build the package </para>
+              <screen><![CDATA[ dpkg-buildpackage -rfakeroot -uc]]></screen>
+            </listitem>
+            <listitem>
+              <para>Install the package: </para>
+              <screen><![CDATA[ dpkg -i ../<built_package>.deb]]></screen>
+            </listitem>
+          </orderedlist>
+        </section>
+        <section>
+          <title>Other Ways to Obtain Source Code</title>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>Source code for any of the packages can be browsed and searched using the web interface at <ulink url="https://sources.debian.org/">sources.debian.org</ulink>. For example, see the <ulink url="https://sources.debian.org/src/plinth/">plinth</ulink> package. </para>
+            </listitem>
+            <listitem>
+              <para>Source code and pre-built binary package for any version of a package including historic versions can be obtained from <ulink url="https://snapshot.debian.org/">snapshot.debian.org</ulink>. For example, see the <ulink url="https://snapshot.debian.org/package/plinth/">plinth</ulink> package. </para>
+            </listitem>
+            <listitem>
+              <para>You can also obtain the links to upstream project homepage, upstream version control, Debian's version control, changelog, etc. from the Debian tracker page for a project at <ulink url="https://tracker.debian.org/">tracker.debian.org</ulink>. For example, see the tracker page for <ulink url="https://tracker.debian.org/pkg/plinth">plinth</ulink> package. </para>
+            </listitem>
+            <listitem>
+              <para>You can build and install a package from its Debian's version control repository. For example, </para>
+              <screen><![CDATA[ git clone https://salsa.debian.org/freedombox-team/plinth
+ cd plinth
+ apt build-dep .
+ dpkg-buildpackage -rfakeroot -uc
+ dpkg -i ../plinth*.deb]]></screen>
+            </listitem>
+          </orderedlist>
+        </section>
+        <section>
+          <title>Building Disk Images</title>
+          <para>You can also build FreedomBox disk images for various hardware platforms using the freedom-maker tool. This is also available as a Debian package and source code for it may be obtained using the above methods. <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/README.md">Build instructions</ulink> for creating disk images are available as part of the source code for freedom-maker package. </para>
+          <para>FreedomBox disk images are built and uploaded to official servers using automated Continuous Integration infrastructure. This infrastructure is available as <ulink url="https://salsa.debian.org/freedombox-team/infrastructure">source code</ulink> too and provides accurate information on how FreedomBox images are built. </para>
+        </section>
+        <section>
+          <title>U-boot on Pioneer Edition Images</title>
+          <para>There is one minor exception to the u-boot package present on the hardware sold as FreedomBox Home Server Kits Pioneer Edition. It contains an small but important fix that is not part of Debian sources. The fork of the Debian u-boot source repository along with the minor change done by the FreedomBox is available as a <ulink url="https://salsa.debian.org/freedombox-team/u-boot">separate repository</ulink>. We except this change to be available in upstream u-boot eventually and this repository will not be needed. This package can be built on a Debian armhf machine as follows (cross compiling is also possible, simply follow instructions for cross compiling Debian packages): </para>
+          <screen><![CDATA[apt install git git-buildpackage
+git clone https://salsa.debian.org/freedombox-team/u-boot.git
+cd u-boot
+pbuilder create --distribution=buster
+gbp buildpackage --git-pbuilder]]></screen>
+          <para>The u-boot Debian package will be available in <emphasis>u-boot-sunxi*.deb</emphasis>. This package will contain  </para>
+          <screen><![CDATA[mkdir temp
+dpkg -x u-boot-suxi*.deb temp
+unxz <lime2_image_built_with_freedom_maker>
+dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime2.img> seek=8 bs=1k conv=notrunc]]></screen>
+          <para>The resulting image will have the modified u-boot in it.  </para>
+        </section>
       </section>
     </section>
     <section>
@@ -9031,7 +9188,7 @@ $ sudo umount /tmp/vbox-root1
     <section>
       <title>Debian</title>
       <para>FreedomBox is a <ulink url="https://wiki.debian.org/FreedomBox/Manual/DebianPureBlends#">pure blend</ulink> of Debian.  This means that all the work on FreedomBox is available in Debian as packages.  It also means that any machine running Debian can be turned into a FreedomBox. </para>
-      <para>This page describes the process of installing FreedomBox on a Debian system. Currently, FreedomBox works in Debian Stable (Stretch), Testing (Buster), and Unstable (Sid). </para>
+      <para>This page describes the process of installing FreedomBox on a Debian system. Currently, FreedomBox works in Debian Stable (Buster), Testing (Bullseye), and Unstable (Sid). </para>
       <caution>
         <para>
           <emphasis role="strong">Use a fresh Debian installation</emphasis>
@@ -9625,6 +9782,51 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.12 (2019-07-22)</title>
+        <itemizedlist>
+          <listitem>
+            <para>sharing: Allow directories to be publicly shared </para>
+          </listitem>
+          <listitem>
+            <para>backups: Add option to select/deselect all apps for backup or restore </para>
+          </listitem>
+          <listitem>
+            <para>dbus: Allow plinth user to own FreedomBox DBus service </para>
+          </listitem>
+          <listitem>
+            <para>letsencrypt: Simplify renewal hooks implementation </para>
+          </listitem>
+          <listitem>
+            <para>cockpit: Don't handle domains if app is not installed </para>
+          </listitem>
+          <listitem>
+            <para>dynamicdns: Send domain added signal properly during init </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Backup and restore TLS certificates </para>
+          </listitem>
+          <listitem>
+            <para>Started new Galician translation on Weblate </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, Norwegian Bokmål, Hungarian, Spanish, Telugu, Chinese (Simplified), German, Turkish, and Russian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 19.2.2 (2019-07-17)</title>
+        <para>This release does not contain any functional changes, but fixes test failures when building the package. </para>
+      </section>
+      <section>
+        <title>FreedomBox 19.2.1 (2019-07-09)</title>
+        <para>This is a bugfix release for 19.2. </para>
+        <itemizedlist>
+          <listitem>
+            <para>dbus: Allow plinth user to own FreedomBox DBus service </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.11 (2019-07-08)</title>
         <itemizedlist>
