@@ -65,7 +65,7 @@ class UsersApp(app_module.App):
 
 
 def init():
-    """Intialize the user module."""
+    """Initialize the user module."""
     global app
     app = UsersApp()
     app.set_enabled(True)

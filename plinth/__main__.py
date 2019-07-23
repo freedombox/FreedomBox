@@ -134,7 +134,7 @@ def on_web_server_stop():
 
 
 def main():
-    """Intialize and start the application"""
+    """Initialize and start the application"""
     arguments = parse_arguments()
 
     if arguments.develop:

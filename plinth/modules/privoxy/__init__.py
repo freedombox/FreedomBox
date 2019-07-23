@@ -93,7 +93,7 @@ class PrivoxyApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = PrivoxyApp()
 

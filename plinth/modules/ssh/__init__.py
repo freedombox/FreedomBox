@@ -72,7 +72,7 @@ class SSHApp(app_module.App):
 
 
 def init():
-    """Intialize the ssh module."""
+    """Initialize the ssh module."""
     global app
     app = SSHApp()
     if app.is_enabled():

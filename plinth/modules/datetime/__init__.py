@@ -65,7 +65,7 @@ class DateTimeApp(app_module.App):
 
 
 def init():
-    """Intialize the date/time module."""
+    """Initialize the date/time module."""
     global app
     app = DateTimeApp()
     if app.is_enabled():

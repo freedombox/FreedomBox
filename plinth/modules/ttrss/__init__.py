@@ -102,7 +102,7 @@ class TTRSSApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = TTRSSApp()
     register_group(group)

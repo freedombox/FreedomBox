@@ -89,7 +89,7 @@ class MumbleApp(app_module.App):
 
 
 def init():
-    """Intialize the Mumble module."""
+    """Initialize the Mumble module."""
     global app
     app = MumbleApp()
 

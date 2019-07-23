@@ -107,7 +107,7 @@ class Shortcut(frontpage.Shortcut):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = MediaWikiApp()
 

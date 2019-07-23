@@ -91,7 +91,7 @@ class RoundcubeApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = RoundcubeApp()
 

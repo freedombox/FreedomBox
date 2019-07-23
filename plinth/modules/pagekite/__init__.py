@@ -96,7 +96,7 @@ class PagekiteApp(app_module.App):
 
 
 def init():
-    """Intialize the PageKite module"""
+    """Initialize the PageKite module"""
     global app
     app = PagekiteApp()
 

@@ -107,7 +107,7 @@ class BindApp(app_module.App):
 
 
 def init():
-    """Intialize the BIND module."""
+    """Initialize the BIND module."""
     global app
     app = BindApp()
 

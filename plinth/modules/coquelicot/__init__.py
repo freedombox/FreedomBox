@@ -87,7 +87,7 @@ class CoquelicotApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = CoquelicotApp()
 

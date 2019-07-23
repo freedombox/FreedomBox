@@ -87,7 +87,7 @@ class LetsEncryptApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = LetsEncryptApp()
     app.set_enabled(True)

@@ -110,7 +110,7 @@ class I2PApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = I2PApp()
     register_group(group)

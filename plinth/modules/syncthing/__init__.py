@@ -103,7 +103,7 @@ class SyncthingApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = SyncthingApp()
     register_group(group)

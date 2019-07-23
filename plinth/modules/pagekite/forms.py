@@ -49,7 +49,7 @@ class SubdomainWidget(forms.widgets.TextInput):
     """Append the domain to the subdomain bootstrap input field"""
 
     def __init__(self, domain, *args, **kwargs):
-        """Intialize the widget by storing the domain value."""
+        """Initialize the widget by storing the domain value."""
         super().__init__(*args, **kwargs)
         self.domain = domain
 

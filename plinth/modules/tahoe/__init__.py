@@ -128,7 +128,7 @@ description = [
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = TahoeApp()
 

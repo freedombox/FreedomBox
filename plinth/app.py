@@ -106,7 +106,7 @@ class Component:
     is_leader = False
 
     def __init__(self, component_id):
-        """Intialize the component."""
+        """Initialize the component."""
         if not component_id:
             raise ValueError('Invalid component ID')
 
@@ -129,7 +129,7 @@ class FollowerComponent(Component):
     is_leader = False
 
     def __init__(self, component_id, is_enabled=False):
-        """Intialize the component."""
+        """Initialize the component."""
         super().__init__(component_id)
         self._is_enabled = is_enabled
 

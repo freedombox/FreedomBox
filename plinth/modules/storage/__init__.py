@@ -72,7 +72,7 @@ class StorageApp(app_module.App):
 
 
 def init():
-    """Intialize the module."""
+    """Initialize the module."""
     global app
     app = StorageApp()
     app.set_enabled(True)

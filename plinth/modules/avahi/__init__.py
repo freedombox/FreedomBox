@@ -79,7 +79,7 @@ class AvahiApp(app_module.App):
 
 
 def init():
-    """Intialize the service discovery module."""
+    """Initialize the service discovery module."""
     global app
     app = AvahiApp()
     if app.is_enabled():

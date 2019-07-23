@@ -126,7 +126,7 @@ class AppView(FormView):
     port_forwarding_info = None
 
     def __init__(self, *args, **kwargs):
-        """Intialize the view."""
+        """Initialize the view."""
         super().__init__(*args, **kwargs)
         self._common_status = None
 
