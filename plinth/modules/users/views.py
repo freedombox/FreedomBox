@@ -104,7 +104,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
-        """Make the requst object available to the form."""
+        """Make the request object available to the form."""
         kwargs = super(UserUpdate, self).get_form_kwargs()
         kwargs['request'] = self.request
         kwargs['username'] = self.object.username

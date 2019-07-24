@@ -27,7 +27,7 @@ import pytest
 
 
 def _get_partition_device(device, partition_number):
-    """Return the device corresponding to a parition in a given device."""
+    """Return the device corresponding to a partition in a given device."""
     if re.match('[0-9]', device[-1]):
         return device + 'p' + str(partition_number)
 
@@ -192,7 +192,7 @@ class TestActions:
             self.assert_ext4_file_system_healthy(1)
 
     def assert_free_space(self, partition_number, space=True):
-        """Verify that free is available/not available after a parition."""
+        """Verify that free is available/not available after a partition."""
         device = _get_partition_device(self.device, partition_number)
         result = self.run_action(
             ['storage', 'is-partition-expandable', device])

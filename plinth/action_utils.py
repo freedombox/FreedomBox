@@ -126,7 +126,7 @@ def service_reload(service_name):
 
 
 def service_action(service_name, action):
-    """Preform the given action on the service_name."""
+    """Perform the given action on the service_name."""
     if is_systemd_running():
         subprocess.run(['systemctl', action, service_name],
                        stdout=subprocess.DEVNULL)
@@ -222,7 +222,7 @@ class WebserverChange(object):
     def __exit__(self, exc_type, exc_value, traceback):
         """Restart or reload the webserver.
 
-        Don't supress exceptions.  If an exception occurs
+        Don't suppress exceptions.  If an exception occurs
         restart/reload the webserver based on enable/disable
         operations done so far.
         """
@@ -435,7 +435,7 @@ def diagnose_netcat(host, port, input='', negate=False):
 
 
 def get_addresses():
-    """Return a list of IP addreses and hostnames."""
+    """Return a list of IP addresses and hostnames."""
     addresses = get_ip_addresses()
 
     hostname = get_hostname()

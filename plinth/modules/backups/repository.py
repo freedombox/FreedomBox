@@ -240,7 +240,7 @@ class SshBorgRepository(BorgRepository):
 
     def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
         """
-        Instanciate a new repository.
+        Instantiate a new repository.
 
         If only a uuid is given, load the values from kvstore.
         """

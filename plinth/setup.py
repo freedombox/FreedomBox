@@ -360,7 +360,7 @@ class ForceUpgrader():
 
     When upgrades packages, many things have to be kept in mind. The following
     is the understanding on how unattended-upgrades does its upgrades. These
-    precautions need to be taken into account whenever relavent.
+    precautions need to be taken into account whenever relevant.
 
     Checks done by unattended upgrades before upgrading:
     - Check if today is a configured patch day.

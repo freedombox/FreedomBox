@@ -399,7 +399,7 @@ class ServiceHandler:
 
 
 class SystemServiceHandler(ServiceHandler):
-    """Handle starting and stoping of system services for backup."""
+    """Handle starting and stopping of system services for backup."""
 
     def __init__(self, backup_app, service):
         """Initialize the object."""
@@ -419,7 +419,7 @@ class SystemServiceHandler(ServiceHandler):
 
 
 class ApacheServiceHandler(ServiceHandler):
-    """Handle starting and stoping of Apache services for backup."""
+    """Handle starting and stopping of Apache services for backup."""
 
     def __init__(self, backup_app, service):
         """Initialize the object."""

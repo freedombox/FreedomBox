@@ -56,7 +56,7 @@ format_lazy = lazy(_format_lazy, str)
 
 
 def non_admin_view(func):
-    """Decorator to mark a view as accesible by non-admin users."""
+    """Decorator to mark a view as accessible by non-admin users."""
     setattr(func, 'IS_NON_ADMIN', True)
     return func
 
