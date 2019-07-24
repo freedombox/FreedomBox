@@ -66,7 +66,7 @@ def run_setup_and_exit(module_list, allow_install=True):
     error_code = 0
     try:
         setup.run_setup_on_modules(module_list, allow_install)
-    except Exception as exception:
+    except Exception:
         error_code = 1
 
     sys.exit(error_code)

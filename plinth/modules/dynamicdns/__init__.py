@@ -97,7 +97,7 @@ def setup(helper, old_version=None):
 
 def get_enabled_services(domain_name):
     """Get enabled services for the domain name."""
-    if domain_name != None and domain_name != '':
+    if domain_name is not None and domain_name != '':
         try:
             domainname_services = firewall.get_enabled_services(
                 zone='external')

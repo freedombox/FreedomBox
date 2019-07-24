@@ -26,4 +26,5 @@ class AppConfig(apps.AppConfig):
 
     def ready(self):
         # Signals must be loaded for axes to get the login_failed signals
+        # flake8: noqa
         from axes import signals  # isort:skip pylint: disable=unused-import

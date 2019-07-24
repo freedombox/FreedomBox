@@ -57,7 +57,7 @@ class CoquelicotAppView(views.AppView):
                     'coquelicot', ['set-upload-password'],
                     input=form_data['upload_password'].encode())
                 messages.success(self.request, _('Upload password updated'))
-            except ActionError as e:
+            except ActionError:
                 messages.error(self.request,
                                _('Failed to update upload password'))
 
@@ -68,7 +68,7 @@ class CoquelicotAppView(views.AppView):
                     'coquelicot', ['set-max-file-size',
                                    str(max_file_size)])
                 messages.success(self.request, _('Maximum file size updated'))
-            except ActionError as e:
+            except ActionError:
                 messages.error(self.request,
                                _('Failed to update maximum file size'))
 

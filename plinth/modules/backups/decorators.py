@@ -28,7 +28,7 @@ def delete_tmp_backup_file(function):
 
     def wrap(request, *args, **kwargs):
         path = request.session.get(SESSION_PATH_VARIABLE, None)
-        if path: 
+        if path:
             if os.path.isfile(path):
                 os.remove(path)
             del request.session[SESSION_PATH_VARIABLE]

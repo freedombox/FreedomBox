@@ -19,10 +19,8 @@ Forms for backups module.
 """
 
 import logging
-import os
 import re
 import subprocess
-import tempfile
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -204,9 +202,10 @@ class VerifySshHostkeyForm(forms.Form):
                                  stderr=subprocess.DEVNULL)
         keys = keyscan.stdout.decode().splitlines()
         # Generate user-friendly fingerprints of public keys
-        keygen = subprocess.run(['ssh-keygen', '-l', '-f', '-'],
-                                  input=keyscan.stdout,
-                                  stdout=subprocess.PIPE)
+        keygen = subprocess.run(
+            ['ssh-keygen', '-l', '-f', '-'],
+            input=keyscan.stdout,
+            stdout=subprocess.PIPE)
         fingerprints = keygen.stdout.decode().splitlines()
 
         return zip(keys, fingerprints)

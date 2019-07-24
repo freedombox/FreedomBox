@@ -38,7 +38,8 @@ urlpatterns = [
     url(r'^sys/networks/add/ethernet/$', views.add_ethernet,
         name='add_ethernet'),
     url(r'^sys/networks/add/pppoe/$', views.add_pppoe, name='add_pppoe'),
-    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/(?P<interface_name>[^/]+)/)?$',
+    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/'
+        r'(?P<interface_name>[^/]+)/)?$',
         views.add_wifi, name='add_wifi'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),

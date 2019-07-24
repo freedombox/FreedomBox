@@ -22,7 +22,6 @@ import collections
 import django
 import importlib
 import logging
-import os
 import pathlib
 import re
 
@@ -157,7 +156,8 @@ def get_modules_to_load():
         # './setup.py install' has not been executed yet. Pickup files to load
         # from local module directories.
         directory = pathlib.Path(__file__).parent
-        files = list(directory.glob('modules/*/data/etc/plinth/modules-enabled/*'))
+        files = list(directory.glob(
+            'modules/*/data/etc/plinth/modules-enabled/*'))
 
     # Omit hidden files
     files = [

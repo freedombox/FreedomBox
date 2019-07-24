@@ -83,6 +83,7 @@ pppoe_settings = {
     },
 }
 
+
 @pytest.fixture(name='network')
 def fixture_network(needs_root):
     """Return the network module. Load it conservatively."""
@@ -116,7 +117,6 @@ def fixture_pppoe_uuid(network):
     yield from _connection(network, pppoe_settings)
 
 
-
 @pytest.mark.usefixtures('ethernet_uuid', 'wifi_uuid', 'pppoe_uuid')
 def test_get_connection_list(network):
     """Check that we can get a list of available connections."""
@@ -125,7 +125,6 @@ def test_get_connection_list(network):
     assert 'plinth_test_eth' in [x['name'] for x in connections]
     assert 'plinth_test_wifi' in [x['name'] for x in connections]
     assert 'plinth_test_pppoe' in [x['name'] for x in connections]
-
 
 
 def test_get_connection(network, ethernet_uuid, wifi_uuid):

@@ -268,7 +268,12 @@ setuptools.setup(
         'requests',
         'ruamel.yaml',
     ],
-    tests_require=['pytest', 'pytest-cov', 'pytest-django'],
+    tests_require=[
+        'pytest',
+        'pytest-cov',
+        'pytest-django',
+        'flake8',
+    ],
     package_data={
         '': ['templates/*', 'static/*', 'locale/*/LC_MESSAGES/*.[pm]o']
     },

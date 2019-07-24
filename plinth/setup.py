@@ -423,7 +423,8 @@ class ForceUpgrader():
         """Raised when upgrade fails but can be tried again immediately."""
 
     class PermanentFailure(Exception):
-        """Raised when upgrade fails and there is nothing more we wish to do."""
+        """Raised when upgrade fails and there is nothing more we wish to do.
+        """
 
     def __init__(self):
         """Initialize the force upgrader."""

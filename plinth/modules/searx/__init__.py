@@ -25,7 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth.daemon import Daemon
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group

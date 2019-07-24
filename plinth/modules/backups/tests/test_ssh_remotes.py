@@ -21,18 +21,14 @@ Tests for SSH remotes for backups.
 import datetime
 import os
 import pwd
-import shutil
 import subprocess
-import tempfile
 
 import pytest
 from django.forms import ValidationError
-from django.urls import reverse
 
-from plinth.modules.backups import network_storage
 from plinth.utils import generate_password, random_string
 
-from .. import forms, views
+from .. import forms
 
 pytestmark = [
     pytest.mark.usefixtures('needs_root', 'load_cfg', 'has_ssh_key'),

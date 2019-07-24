@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import context_processors as cp
 from plinth import menu as menu_module
 
+
 @pytest.fixture(name='menu', autouse=True)
 def fixture_menu():
     """Initialized menu module."""

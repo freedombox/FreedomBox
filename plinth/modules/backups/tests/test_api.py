@@ -23,8 +23,6 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from plinth import cfg, module_loader
-
 from .. import ROOT_REPOSITORY, api, forms
 
 # pylint: disable=protected-access
