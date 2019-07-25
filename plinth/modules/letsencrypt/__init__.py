@@ -34,7 +34,7 @@ from plinth.signals import (domain_added, domain_removed, domainname_change,
 from plinth.utils import format_lazy
 
 from . import components
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 3
 

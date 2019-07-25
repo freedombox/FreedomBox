@@ -28,7 +28,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.modules import storage
 
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 4
 

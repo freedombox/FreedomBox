@@ -22,7 +22,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 
 from plinth import actions
-from plinth.modules import config, ejabberd
+from plinth.modules import ejabberd
 from plinth.views import AppView
 
 from .forms import EjabberdForm

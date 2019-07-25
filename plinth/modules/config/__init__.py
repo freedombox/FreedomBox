@@ -113,7 +113,9 @@ def get_home_page():
 
 
 def change_home_page(shortcut_id):
-    """Change the FreedomBox's default redirect to URL of the shortcut specified."""
+    """Change the FreedomBox's default redirect to URL of the shortcut
+       specified.
+    """
     if shortcut_id == 'plinth':
         url = '/plinth/'
     elif shortcut_id == 'apache-default':

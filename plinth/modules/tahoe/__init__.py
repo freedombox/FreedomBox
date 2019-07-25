@@ -32,7 +32,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
 from .errors import TahoeConfigurationError
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 1
 

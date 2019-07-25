@@ -18,7 +18,9 @@
 Forms for the Single Sign On app of FreedomBox.
 """
 
-from django.contrib.auth.forms import AuthenticationForm as DjangoAuthenticationForm
+from django.contrib.auth.forms import (
+    AuthenticationForm as DjangoAuthenticationForm
+)
 from captcha.fields import CaptchaField
 
 

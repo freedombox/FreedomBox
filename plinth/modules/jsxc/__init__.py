@@ -27,7 +27,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.firewall.components import Firewall
 
-from .manifest import backup, clients
+from .manifest import backup, clients # noqa, pylint: disable=unused-import
 
 version = 1
 

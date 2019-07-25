@@ -29,7 +29,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
 
-from .manifest import backup, clients
+from .manifest import backup, clients # noqa, pylint: disable=unused-import
 
 version = 1
 

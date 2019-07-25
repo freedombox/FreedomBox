@@ -29,7 +29,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
-from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients
+from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients # noqa, pylint: disable=unused-import
 
 clients = clients
 

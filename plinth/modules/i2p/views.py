@@ -104,6 +104,6 @@ class TorrentsView(ServiceBaseView):
     service_path = '/i2p/i2psnark/'
     service_description = [
         _('I2P provides an application to download files anonymously in a '
-          'peer-to-peer network. Download files by adding torrents or create a '
-          'new torrent to share a file.'),
+          'peer-to-peer network. Download files by adding torrents or '
+          'create a new torrent to share a file.'),
     ]

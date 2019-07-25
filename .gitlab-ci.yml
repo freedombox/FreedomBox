@@ -21,6 +21,7 @@ run-unit-tests:
     - echo "tester:password" | chpasswd
     - cp -r . /home/tester/plinth
     - chown -R tester:tester /home/tester/plinth
+    - su -c "cd ~/plinth; python3 -m flake8 plinth" tester
     - su -c "cd ~/plinth; py.test-3 --cov=plinth --cov-report=html --cov-report=term" tester
     - cp -r /home/tester/plinth/htmlcov test-coverage-report
 

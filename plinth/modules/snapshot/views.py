@@ -137,7 +137,8 @@ def update_configuration(request, old_status, new_status):
             ('free_space', 'FREE_LIMIT={}'),
         ]))
 
-    if old_status['enable_software_snapshots'] != new_status['enable_software_snapshots']:
+    if old_status['enable_software_snapshots'] != new_status[
+            'enable_software_snapshots']:
         if new_status['enable_software_snapshots'] == 'yes':
             actions.superuser_run('snapshot', ['disable-apt-snapshot', 'no'])
         else:

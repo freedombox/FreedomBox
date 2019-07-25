@@ -275,7 +275,9 @@ def test_on_certificate_obtained(superuser_run, component):
 
 
 def test_on_certificate_obtained_with_all_domains(superuser_run, component):
-    """Test that certificate obtained event handler works for app with all domains."""
+    """Test that certificate obtained event handler works for app with
+       all domains.
+    """
     component._domains = '*'
     component.on_certificate_obtained(['valid.example'],
                                       '/etc/letsencrypt/live/valid.example/')
@@ -286,7 +288,9 @@ def test_on_certificate_obtained_with_all_domains(superuser_run, component):
 
 
 def test_on_certificate_obtained_irrelevant(superuser_run, component):
-    """Test that certificate obtained event handler works with irrelevant domain."""
+    """Test that certificate obtained event handler works with
+       irrelevant domain.
+    """
     component.on_certificate_obtained(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
     _assert_copy_certificate_called(component, superuser_run, {})
@@ -313,7 +317,9 @@ def test_on_certificate_renewed(superuser_run, component):
 
 
 def test_on_certificate_renewed_irrelevant(superuser_run, component):
-    """Test that certificate renewed event handler works for irrelevant domains."""
+    """Test that certificate renewed event handler works for
+       irrelevant domains.
+"""
     component.on_certificate_renewed(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
     _assert_copy_certificate_called(component, superuser_run, {})
@@ -340,7 +346,9 @@ def test_on_certificate_revoked(superuser_run, component):
 
 
 def test_on_certificate_revoked_irrelevant(superuser_run, component):
-    """Test that certificate revoked event handler works for irrelevant domains."""
+    """Test that certificate revoked event handler works for
+       irrelevant domains.
+    """
     component.on_certificate_revoked(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
     _assert_copy_certificate_called(component, superuser_run, {})
@@ -367,7 +375,9 @@ def test_on_certificate_deleted(superuser_run, component):
 
 
 def test_on_certificate_deleted_irrelevant(superuser_run, component):
-    """Test that certificate deleted event handler works for irrelevant domains."""
+    """Test that certificate deleted event handler works for
+       irrelevant domains.
+    """
     component.on_certificate_deleted(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
     _assert_copy_certificate_called(component, superuser_run, {})

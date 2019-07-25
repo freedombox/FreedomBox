@@ -31,7 +31,7 @@ from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
 from . import utils
-from .manifest import backup, clients
+from .manifest import backup, clients # noqa, pylint: disable=unused-import
 
 version = 3
 

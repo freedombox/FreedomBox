@@ -70,7 +70,7 @@ description = [
         ' federate with other diaspora* pods.')
 ]
 
-from .manifest import clients  # isort:skip
+from .manifest import clients  # noqa pylint:disable=E402 isort:skip
 clients = clients
 
 app = None

@@ -27,7 +27,7 @@ from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.views import AppView
 
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 1
 

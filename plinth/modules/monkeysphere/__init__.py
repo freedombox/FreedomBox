@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import app as app_module
 from plinth import menu
 
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 1
 

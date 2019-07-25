@@ -20,7 +20,7 @@ FreedomBox app for power controls.
 
 from django.utils.translation import ugettext_lazy as _
 
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 1
 

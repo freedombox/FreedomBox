@@ -75,5 +75,5 @@ class AddShareForm(forms.Form):
         groups = self.cleaned_data.get('groups')
         if not is_public and not groups:
             raise forms.ValidationError(
-                _('Shares should be either public or shared with at least one group'
-                  ))
+                _('Shares should be either public or shared with at '
+                  'least one group'))

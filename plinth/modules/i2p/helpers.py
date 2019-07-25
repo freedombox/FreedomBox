@@ -96,8 +96,11 @@ class TunnelEditor():
         :rtype: basestring
 
         """
-        calced_prop_path = '/files{filepath}/tunnel.{idx}.{tunnel_prop}'.format(
-            idx=self.idx, tunnel_prop=tunnel_prop, filepath=self.conf_filename)
+        calced_prop_path = \
+            '/files{filepath}/tunnel.{idx}.{tunnel_prop}'.format(
+                idx=self.idx,
+                tunnel_prop=tunnel_prop,
+                filepath=self.conf_filename)
         return calced_prop_path
 
     def set_tunnel_prop(self, tunnel_prop, value):

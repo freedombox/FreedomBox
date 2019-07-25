@@ -47,6 +47,7 @@ _tests = [
     },
 ]
 
+
 def test_convert_service_to_string():
     """ Test deconstructing parameter dictionaries into strings """
     for test in _tests:

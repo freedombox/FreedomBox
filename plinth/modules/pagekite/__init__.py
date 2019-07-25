@@ -25,7 +25,7 @@ from plinth import cfg, menu
 from plinth.utils import format_lazy
 
 from . import utils
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 1
 

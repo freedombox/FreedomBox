@@ -28,7 +28,7 @@ from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup
+from .manifest import backup # noqa, pylint: disable=unused-import
 
 version = 3
 

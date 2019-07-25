@@ -69,8 +69,8 @@ class Uwsgi(app.LeaderComponent):
         component_id should be a unique ID across all components of an app and
         across all components.
 
-        uwsgi_name is the primary part of the configuration file path which must
-        be enabled/disabled by this component.
+        uwsgi_name is the primary part of the configuration file path
+        which must be enabled/disabled by this component.
 
         """
         super().__init__(component_id)

@@ -27,7 +27,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import letsencrypt
 

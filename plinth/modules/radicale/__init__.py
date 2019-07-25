@@ -34,7 +34,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients
+from .manifest import backup, clients # noqa, pylint: disable=unused-import
 
 version = 2
 
