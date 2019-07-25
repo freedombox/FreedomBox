@@ -63,7 +63,7 @@ def test_getting_nonexistent_props(editor):
     editor.read_conf()
     editor.idx = 0
     with pytest.raises(KeyError):
-        _ = editor['blabla']
+        _ = editor['blabla']  # noqa
 
 
 def test_setting_new_props(editor):

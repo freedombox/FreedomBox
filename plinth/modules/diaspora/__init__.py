@@ -28,6 +28,8 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
+from .manifest import clients
+
 domain_name_file = "/etc/diaspora/domain_name"
 lazy_domain_name = None  # To avoid repeatedly reading from file
 
@@ -70,7 +72,6 @@ description = [
         ' federate with other diaspora* pods.')
 ]
 
-from .manifest import clients  # noqa pylint:disable=E402 isort:skip
 clients = clients
 
 app = None
