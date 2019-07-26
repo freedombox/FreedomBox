@@ -21,10 +21,11 @@
 
 <table class="table table-bordered table-condensed table-striped"
        id="archives-list">
-  <thead>
+  <thead class="collapsible-button" data-toggle="collapse" data-target="#{{ uuid }}">
     <tr>
       <th colspan="2">
         <span style="vertical-align: text-top">
+          <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
         {% if repository.error %}
           <span class="fa fa-exclamation-triangle mount-error"
                 aria-hidden="true" title="{{ repository.error }}">
@@ -63,7 +64,7 @@
 
           {% endif %}
 
-          <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
+          <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
              role="button" class="repository-remove btn btn-sm btn-default"
              href="{% url 'backups:repository-remove' uuid %}">
             <span class="fa fa-trash-o" aria-hidden="true">
@@ -77,7 +78,7 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="collapse in" id="{{ uuid }}">
     {% if repository.mounted %}
 
       {% for archive in repository.archives %}
