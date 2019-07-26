@@ -44,7 +44,21 @@
 
 {% block configuration %}
 
-  <h3>{% trans 'Existing backup locations' %}</h3>
+  <a title="{% trans 'Create a new backup' %}"
+     role="button" class="btn btn-primary"
+     href="{% url 'backups:create' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans 'Create Backup' %}
+  </a>
+
+  <a title="{% trans 'Upload and restore a backup archive' %}"
+     role="button" class="btn btn-default"
+     href="{% url 'backups:upload' %}">
+    <span class="fa fa-upload" aria-hidden="true"></span>
+    {% trans 'Upload and Restore' %}
+  </a>
+
+  <h3>{% trans 'Existing Backups' %}</h3>
 
   {% include "backups_repository.inc" with repository=root_repository uuid='root' editable=False %}
 
@@ -52,13 +66,13 @@
     {% include "backups_repository.inc" with editable=True %}
   {% endfor %}
 
-  <br />
+  <br/>
 
-  <a title="{% trans 'Create new repository' %}"
-     role="button" class="btn btn-primary"
+  <a title="{% trans 'Add a remote backup location' %}"
+     role="button" class="btn btn-default"
      href="{% url 'backups:repository-add' %}">
     <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Add Remote Repository' %}
+    {% trans 'Add Remote Location' %}
   </a>
 
 {% endblock %}

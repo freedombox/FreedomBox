@@ -24,15 +24,16 @@
   <thead>
     <tr>
       <th colspan="2">
-
+        <span style="vertical-align: text-top">
         {% if repository.error %}
-           <span class="fa fa-exclamation-triangle mount-error"
-                 aria-hidden="true" title="{{ repository.error }}">
-           </span>
+          <span class="fa fa-exclamation-triangle mount-error"
+                aria-hidden="true" title="{{ repository.error }}">
+          </span>
         {% endif %}
 
         {{ repository.name }}
 
+        <span class="pull-right">
         {% if editable %}
 
           {% if repository.mounted %}
@@ -65,11 +66,13 @@
           <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
              role="button" class="repository-remove btn btn-sm btn-default"
              href="{% url 'backups:repository-remove' uuid %}">
-             <span class="fa fa-trash-o" aria-hidden="true">
+            <span class="fa fa-trash-o" aria-hidden="true">
           </a>
 
         {% endif %}
+        </span>
 
+        </span>
       </th>
     </tr>
   </thead>

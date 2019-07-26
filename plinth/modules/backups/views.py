@@ -49,17 +49,6 @@ from .repository import (BorgRepository, SshBorgRepository, get_repository,
 
 logger = logging.getLogger(__name__)
 
-subsubmenu = [{
-    'url': reverse_lazy('backups:index'),
-    'text': ugettext_lazy('Backups')
-}, {
-    'url': reverse_lazy('backups:upload'),
-    'text': ugettext_lazy('Upload')
-}, {
-    'url': reverse_lazy('backups:create'),
-    'text': ugettext_lazy('Create')
-}]
-
 
 @method_decorator(delete_tmp_backup_file, name='dispatch')
 class IndexView(TemplateView):
@@ -71,7 +60,6 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = backups.name
         context['description'] = backups.description
-        context['subsubmenu'] = subsubmenu
         context['manual_page'] = backups.manual_page
         root_repository = BorgRepository(ROOT_REPOSITORY)
         context['root_repository'] = root_repository.get_view_content()
@@ -90,10 +78,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = backups.name
-        context['description'] = backups.description
-        context['subsubmenu'] = subsubmenu
-        context['manual_page'] = backups.manual_page
+        context['title'] = _('Create a new backup')
         return context
 
     def form_valid(self, form):
@@ -140,10 +125,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = backups.name
-        context['description'] = backups.description
-        context['subsubmenu'] = subsubmenu
-        context['manual_page'] = backups.manual_page
+        context['title'] = _('Upload and restore a backup')
         try:
             disk_info = storage.get_disk_info('/')
         except PlinthError as exception:
@@ -272,7 +254,6 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Create remote backup repository')
-        context['subsubmenu'] = subsubmenu
         return context
 
     def form_valid(self, form):
@@ -315,7 +296,6 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Verify SSH hostkey')
-        context['subsubmenu'] = subsubmenu
         context['hostname'] = self._get_hostname()
         return context
 
