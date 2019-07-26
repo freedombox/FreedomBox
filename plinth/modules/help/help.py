@@ -20,6 +20,7 @@ Help app for FreedomBox.
 
 import mimetypes
 import os
+import subprocess
 
 from apt.cache import Cache
 from django.core.files.base import File
@@ -83,7 +84,8 @@ def about(request):
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__,
         'new_version': not freedombox.candidate.is_installed,
-        'os_release': get_os_release()
+        'os_release': get_os_release(),
+        'backports_in_use': get_backports_in_use(),
     }
     return TemplateResponse(request, 'help_about.html', context)
 
@@ -143,3 +145,16 @@ def get_os_release():
                 line = line.split('=')
                 output = line[1]
     return output
+
+
+def get_backports_in_use():
+    """Return whether backports packages are installed."""
+    # Only freedombox package is set to be installed from backports currently.
+    output = subprocess.check_output(['apt-cache', 'policy', 'freedombox'])
+    for line in output.decode().split('\n'):
+        if 'Installed:' in line:
+            version = line.strip().split(': ')[1]
+            if 'bpo' in version:
+                return True
+
+    return False

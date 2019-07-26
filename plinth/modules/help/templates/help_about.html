@@ -90,4 +90,16 @@
     {% endif %}
   </p>
 
+  {% if backports_in_use %}
+    <h3>{% trans "Security Notice" %}</h3>
+    <p>
+      {% blocktrans trimmed %}
+        You are using packages from Debian backports. Please note that these
+        packages do not have security support from Debian. However, they are
+        maintained on a best-effort basis by contributors in Debian and
+        FreedomBox community.
+      {% endblocktrans %}
+    </p>
+  {% endif %}
+
 {% endblock %}
