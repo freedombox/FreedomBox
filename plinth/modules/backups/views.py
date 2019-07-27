@@ -33,7 +33,6 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
 from django.views.generic import FormView, TemplateView, View
 
 from plinth.errors import PlinthError
