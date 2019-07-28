@@ -18,13 +18,16 @@
 FreedomBox app for security configuration.
 """
 
+import subprocess
+from collections import defaultdict
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import menu
+from plinth import menu, module_loader
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 6
 
@@ -32,7 +35,7 @@ is_essential = True
 
 name = _('Security')
 
-managed_packages = ['fail2ban']
+managed_packages = ['fail2ban', 'debsecan']
 
 managed_services = ['fail2ban']
 
@@ -107,3 +110,43 @@ def set_restricted_access(enabled):
         action = 'enable-restricted-access'
 
     actions.superuser_run('security', [action])
+
+
+def get_vulnerability_counts():
+    """Return number of security vulnerabilities for each app"""
+    lines = subprocess.check_output(['debsecan']).decode().split('\n')
+    cves = defaultdict(set)
+    for line in lines:
+        if line:
+            (label, package, *_) = line.split()
+            cves[label].add(package)
+
+    apps = {
+        'freedombox': {
+            'name': 'freedombox',
+            'packages': {'freedombox'},
+            'count': 0,
+        }
+    }
+    for module_name, module in module_loader.loaded_modules.items():
+        try:
+            packages = module.managed_packages
+        except AttributeError:
+            continue  # app has no managed packages
+
+        # filter out apps not setup yet
+        if module.setup_helper.get_state() == 'needs-setup':
+            continue
+
+        apps[module_name] = {
+            'name': module_name,
+            'packages': set(packages),
+            'count': 0,
+        }
+
+    for cve_packages in cves.values():
+        for app_ in apps.values():
+            if cve_packages & app_['packages']:
+                app['count'] += 1
+
+    return apps

@@ -1,4 +1,4 @@
-{% extends "simple_app.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -21,15 +21,34 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block configuration %}
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Submit" %}"/>
-  </form>
-
+{% block status %}
+  <h3>{% trans "Status" %}</h3>
+  <p>
+    {% blocktrans trimmed with count=freedombox_vulns.count %}
+      The installed version of FreedomBox has {{ count }} reported security
+      vulnerabilities.
+    {% endblocktrans %}
+  </p>
+  <p>
+    {% blocktrans trimmed %}
+      The following table lists the reported number of security vulnerabilities
+      for each installed app.
+    {% endblocktrans %}
+  </p>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>{% trans "App Name" %}</th>
+        <th>{% trans "Vulnerabilities Reported" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in apps_vulns %}
+        <tr>
+          <td>{{ app.name }}</td>
+          <td>{{ app.count }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

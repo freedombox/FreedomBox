@@ -43,11 +43,21 @@ def index(request):
     else:
         form = SecurityForm(initial=status, prefix='security')
 
-    return TemplateResponse(request, 'security.html', {
-        'title': _('Security'),
-        'manual_page': security.manual_page,
-        'form': form
-    })
+    vulnerability_counts = security.get_vulnerability_counts()
+    return TemplateResponse(
+        request, 'security.html', {
+            'name':
+                _('Security'),
+            'manual_page':
+                security.manual_page,
+            'form':
+                form,
+            'freedombox_vulns':
+                vulnerability_counts.pop('freedombox'),
+            'apps_vulns':
+                sorted(vulnerability_counts.values(),
+                       key=lambda app: app['name']),
+        })
 
 
 def get_status(request):
@@ -64,9 +74,10 @@ def _apply_changes(request, old_status, new_status):
         try:
             security.set_restricted_access(new_status['restricted_access'])
         except Exception as exception:
-            messages.error(request,
-                           _('Error setting restricted access: {exception}')
-                           .format(exception=exception))
+            messages.error(
+                request,
+                _('Error setting restricted access: {exception}').format(
+                    exception=exception))
         else:
             messages.success(request, _('Updated security configuration'))
 
