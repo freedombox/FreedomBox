@@ -40,6 +40,8 @@ managed_packages = ['borgbackup', 'sshfs']
 
 name = _('Backups')
 
+depends = ['storage']
+
 description = [
     _('Backups allows creating and managing backup archives.'),
 ]
@@ -48,8 +50,8 @@ manual_page = 'Backups'
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 ROOT_REPOSITORY = '/var/lib/freedombox/borgbackup'
-ROOT_REPOSITORY_NAME = format_lazy(
-    _('{box_name} storage'), box_name=cfg.box_name)
+ROOT_REPOSITORY_NAME = format_lazy(_('{box_name} storage'),
+                                   box_name=cfg.box_name)
 ROOT_REPOSITORY_UUID = 'root'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
@@ -110,9 +112,8 @@ def _backup_handler(packet, encryption_passphrase=None):
     arguments = ['create-archive', '--path', packet.path, '--paths'] + paths
     input_data = ''
     if encryption_passphrase:
-        input_data = json.dumps({
-            'encryption_passphrase': encryption_passphrase
-        })
+        input_data = json.dumps(
+            {'encryption_passphrase': encryption_passphrase})
 
     actions.superuser_run('backups', arguments, input=input_data.encode())
 

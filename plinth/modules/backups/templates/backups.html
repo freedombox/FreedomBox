@@ -66,13 +66,18 @@
     {% include "backups_repository.inc" with editable=True %}
   {% endfor %}
 
-  <br/>
+  <a title="{% trans 'Add a backup location' %}"
+       role="button" class="btn btn-default"
+       href="{% url 'backups:add-repository' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans 'Add Backup Location' %}
+  </a>
 
   <a title="{% trans 'Add a remote backup location' %}"
      role="button" class="btn btn-default"
-     href="{% url 'backups:repository-add' %}">
+     href="{% url 'backups:add-remote-repository' %}">
     <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Add Remote Location' %}
+    {% trans 'Add Remote Backup Location' %}
   </a>
 
 {% endblock %}

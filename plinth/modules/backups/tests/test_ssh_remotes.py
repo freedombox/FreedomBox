@@ -99,7 +99,7 @@ def test_add_repository_when_directory_is_missing(temp_user, temp_home,
         'encryption': 'none'
     }
     # TODO test the view instead of the form
-    form = forms.AddRepositoryForm(data=data)
+    form = forms.AddRemoteRepositoryForm(data=data)
     form.is_valid()
     assert os.path.isdir(repo_path)  # Directory gets created
 
@@ -115,7 +115,7 @@ def test_add_repository_when_directory_exists_and_empty(
         'encryption': 'none'
     }
     # TODO test the view instead of the form
-    form = forms.AddRepositoryForm(data=data)
+    form = forms.AddRemoteRepositoryForm(data=data)
     form.is_valid()
 
 
@@ -131,6 +131,6 @@ def test_add_repository_when_directory_exists_and_not_empty(
         'ssh_password': password,
         'encryption': 'none'
     }
-    form = forms.AddRepositoryForm(data=data)
+    form = forms.AddRemoteRepositoryForm(data=data)
     with pytest.raises(ValidationError):
         form.is_valid()

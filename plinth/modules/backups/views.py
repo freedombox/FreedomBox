@@ -234,20 +234,40 @@ class DownloadArchiveView(View):
 
     def get(self, request, uuid, name):
         repository = get_repository(uuid)
-        filename = '%s.tar.gz' % name
+        filename = f'{name}.tar.gz'
 
-        response = StreamingHttpResponse(
-            repository.get_download_stream(name),
-            content_type='application/gzip')
+        response = StreamingHttpResponse(repository.get_download_stream(name),
+                                         content_type='application/gzip')
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
             filename
         return response
 
 
 class AddRepositoryView(SuccessMessageMixin, FormView):
-    """View to create a new remote backup repository."""
+    """View to create a new backup repository."""
     form_class = forms.AddRepositoryForm
-    template_name = 'backups_repository_add.html'
+    template_name = 'backups_add_repository.html'
+    success_url = reverse_lazy('backups:index')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Create backup repository')
+        return context
+
+    def form_valid(self, form):
+        """Create and save a Borg repository."""
+        path = pathlib.Path(
+            form.cleaned_data.get('disk')) / 'FreedomBoxBackups'
+        encryption_passphrase = form.cleaned_data.get('encryption_passphrase')
+        if form.cleaned_data.get('encryption') == 'none':
+            encryption_passphrase = None
+
+
+class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
+    """View to create a new remote backup repository."""
+    form_class = forms.AddRemoteRepositoryForm
+    template_name = 'backups_add_remote_repository.html'
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -378,7 +398,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         # Delete the repository so that the user can have another go at
         # creating it.
         network_storage.delete(uuid)
-        return redirect(reverse_lazy('backups:repository-add'))
+        return redirect(reverse_lazy('backups:add-remote-repository'))
 
 
 def _list_remote_directory(path, credentials):

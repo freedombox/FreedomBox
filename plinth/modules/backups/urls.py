@@ -20,11 +20,11 @@ URLs for the backups module.
 
 from django.conf.urls import url
 
-from .views import (AddRepositoryView, CreateArchiveView, DeleteArchiveView,
-                    DownloadArchiveView, IndexView, RemoveRepositoryView,
-                    RestoreArchiveView, RestoreFromUploadView,
-                    UploadArchiveView, VerifySshHostkeyView, mount_repository,
-                    umount_repository)
+from .views import (AddRemoteRepositoryView, AddRepositoryView,
+                    CreateArchiveView, DeleteArchiveView, DownloadArchiveView,
+                    IndexView, RemoveRepositoryView, RestoreArchiveView,
+                    RestoreFromUploadView, UploadArchiveView,
+                    VerifySshHostkeyView, mount_repository, umount_repository)
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -39,7 +39,9 @@ urlpatterns = [
     url(r'^sys/backups/restore-from-upload/$', RestoreFromUploadView.as_view(),
         name='restore-from-upload'),
     url(r'^sys/backups/repositories/add$', AddRepositoryView.as_view(),
-        name='repository-add'),
+        name='add-repository'),
+    url(r'^sys/backups/repositories/add-remote$',
+        AddRemoteRepositoryView.as_view(), name='add-remote-repository'),
     url(r'^sys/backups/repositories/(?P<uuid>[^/]+)/ssh-verify/$',
         VerifySshHostkeyView.as_view(), name='verify-ssh-hostkey'),
     url(r'^sys/backups/repositories/(?P<uuid>[^/]+)/delete/$',
