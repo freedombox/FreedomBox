@@ -147,6 +147,6 @@ def get_vulnerability_counts():
     for cve_packages in cves.values():
         for app_ in apps.values():
             if cve_packages & app_['packages']:
-                app['count'] += 1
+                app_['count'] += 1
 
     return apps
