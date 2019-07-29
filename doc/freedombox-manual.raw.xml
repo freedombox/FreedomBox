@@ -6608,20 +6608,40 @@ Password:
           <para>admin </para>
         </listitem>
         <listitem>
+          <para>bit-torrent </para>
+        </listitem>
+        <listitem>
+          <para>ed2k </para>
+        </listitem>
+        <listitem>
+          <para>feed-reader </para>
+        </listitem>
+        <listitem>
+          <para>syncthing </para>
+        </listitem>
+        <listitem>
+          <para>web-search </para>
+        </listitem>
+        <listitem>
           <para>wiki </para>
         </listitem>
       </itemizedlist>
       <para>are supported.  </para>
       <para>The user will be able to log in to services that support single sign-on through LDAP, if they are in the appropriate group. </para>
       <para>Users in the admin group will be able to log in to all services. They can also log in to the system through SSH and have administrative privileges (sudo). </para>
-      <para>These characteristics can also be changed later-on.  </para>
+      <para>A user's groups can also be changed later-on.  </para>
       <para>It is also possible to set an SSH public key which will allow this user to securely log in to the system without using a password. You may enter multiple keys, one on each line. Blank lines and lines starting with # will be ignored. </para>
       <para>A user's account can be deactivated, which will temporarily disable the account. </para>
       <section>
         <title>Known Issues</title>
         <itemizedlist>
           <listitem>
-            <para>Currently, Plinth does not distinguish between users and administrators. Every user added through Plinth will have full access to the Plinth interface. </para>
+            <para>In Debian Stretch, the FreedomBox web interface does not distinguish between users and administrators. Every user added will have full access to the web interface. </para>
+            <itemizedlist>
+              <listitem>
+                <para>This issue is fixed in Debian Buster and later. </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
         </itemizedlist>
       </section>
@@ -9273,7 +9293,7 @@ $ sudo reboot]]></screen>
             <para>FreedomBox uses NetworkManager to manage network configuration. If you have configured your network interfaces using Debian installer or by editing <code>/etc/network/interfaces</code>, FreedomBox will not manage those interfaces. (See <ulink url="https://bugs.debian.org/797614">bug #797614</ulink>.)  To let FreedomBox/NetworkManager manage your network interfaces, edit the <code>/etc/network/interfaces</code> manually and ensure that it contains only the following: </para>
             <screen><![CDATA[auto lo
 iface lo inet loopback]]></screen>
-            <para>If you have already completed the setup process without doing this step, you will need to clear out the <code>/etc/network/interfaces</code> file keeping only the above lines.  Then perform a reboot.  On Debian 9 (Strecth), after this network connections configured by the <code>setup</code> step above will configure your network.  Network interfaces will then be in the <code>internal</code> or <code>external</code> firewall zone.  This is essential for the FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the <code>nmtui</code> command if you wish.  </para>
+            <para>If you have already completed the setup process without doing this step, you will need to clear out the <code>/etc/network/interfaces</code> file keeping only the above lines.  Then perform a reboot.  On Debian 9 (Stretch), after this network connections configured by the <code>setup</code> step above will configure your network.  Network interfaces will then be in the <code>internal</code> or <code>external</code> firewall zone.  This is essential for the FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the <code>nmtui</code> command if you wish.  </para>
           </listitem>
           <listitem>
             <para>FreedomBox will use an automatically configured IP address by default. You can assign a static IP address if necessary. Network configuration changes can be done using FreedomBox web interface or by using the <code>nmtui</code> or <code>nmcli</code> commands. <code>nmcli</code> can be used as follows: </para>
@@ -9782,6 +9802,26 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.13 (2019-07-29)</title>
+        <itemizedlist>
+          <listitem>
+            <para>backups: Make UI more consistent with other apps </para>
+          </listitem>
+          <listitem>
+            <para>backups: Make backup location tables collapsible </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Chinese (Simplified), German, and Norwegian Bokmål </para>
+          </listitem>
+          <listitem>
+            <para>help: Show security notice when backports are in use </para>
+          </listitem>
+          <listitem>
+            <para>security: Show vulnerability counts </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.12 (2019-07-22)</title>
         <itemizedlist>
