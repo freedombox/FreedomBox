@@ -24,8 +24,7 @@
   <thead class="collapsible-button" data-toggle="collapse" data-target="#{{ uuid }}">
     <tr>
       <th colspan="2">
-        <span style="vertical-align: text-top">
-          <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+        <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
         {% if repository.error %}
           <span class="fa fa-exclamation-triangle mount-error"
                 aria-hidden="true" title="{{ repository.error }}">
@@ -35,44 +34,42 @@
         {{ repository.name }}
 
         <span class="pull-right">
-        {% if editable %}
+          {% if editable %}
 
-          {% if repository.mounted %}
+            {% if repository.mounted %}
 
-            <!-- With GET redirects, the browser URL points to the
-                 redirected page (bad when reloading) - use POST instead.
-            -->
-            <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
-                  class="inline-block" >
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-default"
-                     title="{% trans 'Unmount Location' %}">
-               <span class="fa fa-eject" aria-hidden="true">
-               </button>
-            </form>
+              <!-- With GET redirects, the browser URL points to the
+                   redirected page (bad when reloading) - use POST instead.
+              -->
+              <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
+                    class="inline-block" >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-default"
+                       title="{% trans 'Unmount Location' %}">
+                  <span class="fa fa-eject" aria-hidden="true"></span>
+                </button>
+              </form>
 
-          {% else %}
+            {% else %}
 
-            <form action="{% url 'backups:repository-mount' uuid %}" method="POST"
-                  class="inline-block" >
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-default"
-                     title="{% trans 'Mount Location' %}">
-               <span class="fa fa-eye" aria-hidden="true">
-               </button>
-            </form>
+              <form action="{% url 'backups:repository-mount' uuid %}" method="POST"
+                    class="inline-block" >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-default"
+                        title="{% trans 'Mount Location' %}">
+                  <span class="fa fa-eye" aria-hidden="true"></span>
+                </button>
+              </form>
+
+            {% endif %}
+
+            <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
+               role="button" class="repository-remove btn btn-sm btn-default"
+               href="{% url 'backups:repository-remove' uuid %}">
+              <span class="fa fa-trash-o" aria-hidden="true"></span>
+            </a>
 
           {% endif %}
-
-          <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
-             role="button" class="repository-remove btn btn-sm btn-default"
-             href="{% url 'backups:repository-remove' uuid %}">
-            <span class="fa fa-trash-o" aria-hidden="true">
-          </a>
-
-        {% endif %}
-        </span>
-
         </span>
       </th>
     </tr>
