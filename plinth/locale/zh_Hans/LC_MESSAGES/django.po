@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-29 18:38-0400\n"
-"PO-Revision-Date: 2019-07-29 22:36+0000\n"
-"Last-Translator: Anxin YI <2732146152@qq.com>\n"
+"PO-Revision-Date: 2019-08-02 21:11+0000\n"
+"Last-Translator: ZeroAurora <zeroaurora@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "freedombox/plinth/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -22,12 +22,12 @@ msgstr ""
 #: plinth/action_utils.py:298
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
-msgstr "正在 {kind} 侦听端口 {listen_address}:{port}"
+msgstr "正在侦听 {kind} 端口 {listen_address}:{port}"
 
 #: plinth/action_utils.py:301
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
-msgstr "正在 {kind} 侦听端口 {port}"
+msgstr "正在侦听 {kind} 端口 {port}"
 
 #: plinth/action_utils.py:397
 #, python-brace-format
@@ -42,12 +42,12 @@ msgstr "访问 URL {url}"
 #: plinth/action_utils.py:429
 #, python-brace-format
 msgid "Connect to {host}:{port}"
-msgstr "连接到的主机 {host}:{port}"
+msgstr "连接到主机 {host}:{port}"
 
 #: plinth/action_utils.py:432
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
-msgstr "不能连接到的主机 {host}:{port}"
+msgstr "不能连接到主机 {host}:{port}"
 
 #: plinth/context_processors.py:37 plinth/views.py:61
 msgid "FreedomBox"
@@ -65,7 +65,7 @@ msgstr "选择要与此应用程序一起使用的域名"
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
-msgstr "警告!如果以后更改了域名, 应用程序可能无法正常工作。"
+msgstr "警告！如果以后更改了域名, 应用程序可能无法正常工作。"
 
 #: plinth/forms.py:62
 msgid "Language"
@@ -172,17 +172,17 @@ msgstr "存储库路径格式错误。"
 #: plinth/modules/backups/forms.py:110
 #, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "无效用户名: {username}"
+msgstr "无效用户名：{username}"
 
 #: plinth/modules/backups/forms.py:120
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "无效的主机名: {hostname}"
+msgstr "无效的主机名：{hostname}"
 
 #: plinth/modules/backups/forms.py:124
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr "无效的目录路径: {dir_path}"
+msgstr "无效的目录路径：{dir_path}"
 
 #: plinth/modules/backups/forms.py:130
 msgid "SSH Repository Path"
@@ -236,7 +236,7 @@ msgstr "输入的加密密码不匹配"
 
 #: plinth/modules/backups/forms.py:164
 msgid "Passphrase is needed for encryption."
-msgstr "密码为加密而需要。"
+msgstr "加密需要使用密码。"
 
 #: plinth/modules/backups/forms.py:181
 msgid "Remote backup repository already exists."
@@ -270,10 +270,8 @@ msgstr "SSH 访问被拒绝"
 
 #: plinth/modules/backups/templates/backups.html:47
 #: plinth/modules/backups/views.py:80
-#, fuzzy
-#| msgid "Create Account"
 msgid "Create a new backup"
-msgstr "创建帐户"
+msgstr "创建新备份"
 
 #: plinth/modules/backups/templates/backups.html:51
 #, fuzzy
@@ -283,7 +281,7 @@ msgstr "创建帐户"
 
 #: plinth/modules/backups/templates/backups.html:54
 msgid "Upload and restore a backup archive"
-msgstr ""
+msgstr "上传一个备份文件并从中恢复"
 
 #: plinth/modules/backups/templates/backups.html:58
 #, fuzzy
@@ -298,16 +296,12 @@ msgid "Existing Backups"
 msgstr "现有的备份位置"
 
 #: plinth/modules/backups/templates/backups.html:71
-#, fuzzy
-#| msgid "Existing backup locations"
 msgid "Add a remote backup location"
-msgstr "现有的备份位置"
+msgstr "添加一个远程备份位置"
 
 #: plinth/modules/backups/templates/backups.html:75
-#, fuzzy
-#| msgid "Add Remote Repository"
 msgid "Add Remote Location"
-msgstr "添加远程存储库"
+msgstr "添加远程位置"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -342,12 +336,12 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"这个存储库的凭证存储在您的 %(box_name)s。<br />要在新的 %(box_name)s 中恢复备份，你需要这个 ssh "
+"凭证，如果当时选择了加密，则也需要密码。"
 
 #: plinth/modules/backups/templates/backups_repository_add.html:43
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Create Location"
-msgstr "创建连接"
+msgstr "创建存储位置"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
@@ -368,10 +362,8 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#, fuzzy
-#| msgid "Documentation"
 msgid "Remove Location"
-msgstr "文档"
+msgstr "移除存储位置"
 
 #: plinth/modules/backups/templates/backups_restore.html:30
 msgid "Restore data from"
