@@ -43,7 +43,7 @@ from . import (ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms,
                split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
-from .repository import (BorgRepository, SshBorgRepository, get_repository,
+from .repository import (RootBorgRepository, SshBorgRepository, get_repository,
                          get_ssh_repositories)
 
 logger = logging.getLogger(__name__)
@@ -60,7 +60,7 @@ class IndexView(TemplateView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['manual_page'] = backups.manual_page
-        root_repository = BorgRepository(ROOT_REPOSITORY)
+        root_repository = RootBorgRepository(path=ROOT_REPOSITORY)
         context['root_repository'] = root_repository.get_view_content()
         context['ssh_repositories'] = get_ssh_repositories()
         return context

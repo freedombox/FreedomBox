@@ -22,6 +22,7 @@ import io
 import json
 import logging
 import os
+from abc import ABC
 from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
@@ -36,7 +37,6 @@ from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
 
-SSHFS_MOUNTPOINT = '/media/'
 SUPPORTED_BORG_ENCRYPTION = ['none', 'repokey']
 # known errors that come up when remotely accessing a borg repository
 # 'errors' are error strings to look for in the stacktrace.
@@ -78,19 +78,38 @@ KNOWN_ERRORS = [{
                 }]
 
 
-class BorgRepository():
-    """Borg repository on the root filesystem."""
-    storage_type = 'root'
-    name = ROOT_REPOSITORY_NAME
-    is_mounted = True
+class BaseBorgRepository(ABC):
+    """Base class for all kinds of Borg repositories."""
+    uuid = None
 
-    def __init__(self, path, credentials=None):
-        """Initialize the repository object."""
-        if credentials is None:
-            credentials = {}
+    def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
+        """
+        Instantiate a new repository.
 
-        self._path = path
-        self.credentials = credentials
+        If only a uuid is given, load the values from kvstore.
+        """
+        if not uuid:
+            uuid = str(uuid1())
+        self.uuid = uuid
+
+        if path and credentials:
+            self._path = path
+            self.credentials = credentials
+        else:
+            # Either a uuid, or both a path and credentials must be given
+            if not bool(uuid):
+                raise ValueError('Invalid arguments.')
+            else:
+                self._load_from_kvstore()
+
+    @property
+    def name(self):
+        return self._path
+
+    @property
+    def repo_path(self):
+        """Return the repository that the backups action script should use."""
+        return self._path
 
     @staticmethod
     def _get_encryption_data(credentials):
@@ -101,20 +120,17 @@ class BorgRepository():
 
         return {}
 
-    @property
-    def repo_path(self):
-        """Return the repository that the backups action script should use."""
-        return self._path
+    def _load_from_kvstore(self):
+        storage = network_storage.get(self.uuid)
+        try:
+            self.credentials = storage['credentials']
+        except KeyError:
+            self.credentials = {}
+        self._path = storage['path']
 
     def get_info(self):
         output = self.run(['info', '--path', self.repo_path])
         return json.loads(output)
-
-    def list_archives(self):
-        output = self.run(['list-repo', '--path', self.repo_path])
-        archives = json.loads(output)['archives']
-        return sorted(archives, key=lambda archive: archive['start'],
-                      reverse=True)
 
     def get_view_content(self):
         """Get archives with additional information as needed by the view"""
@@ -133,13 +149,15 @@ class BorgRepository():
         repository['error'] = error
         return repository
 
-    def delete_archive(self, archive_name):
-        archive_path = self._get_archive_path(archive_name)
-        self.run(['delete-archive', '--path', archive_path])
-
     def remove_repository(self):
         """Remove a borg repository"""
-        raise NotImplementedError
+        pass
+
+    def list_archives(self):
+        output = self.run(['list-repo', '--path', self.repo_path])
+        archives = json.loads(output)['archives']
+        return sorted(archives, key=lambda archive: archive['start'],
+                      reverse=True)
 
     def create_archive(self, archive_name, app_names):
         archive_path = self._get_archive_path(archive_name)
@@ -147,8 +165,36 @@ class BorgRepository():
         api.backup_apps(_backup_handler, path=archive_path,
                         app_names=app_names, encryption_passphrase=passphrase)
 
-    def create_repository(self):
-        self.run(['init', '--path', self.repo_path, '--encryption', 'none'])
+    def delete_archive(self, archive_name):
+        archive_path = self._get_archive_path(archive_name)
+        self.run(['delete-archive', '--path', archive_path])
+
+    def create_repository(self, encryption):
+        """Initialize / create a borg repository."""
+        if encryption not in SUPPORTED_BORG_ENCRYPTION:
+            raise ValueError('Unsupported encryption: %s' % encryption)
+        self.run(
+            ['init', '--path', self.repo_path, '--encryption', encryption])
+
+    def _run(self, cmd, arguments, superuser=True, **kwargs):
+        """Run a backups or sshfs action script command."""
+        try:
+            if superuser:
+                return actions.superuser_run(cmd, arguments, **kwargs)
+
+            return actions.run(cmd, arguments, **kwargs)
+        except ActionError as err:
+            self.reraise_known_error(err)
+
+    def run(self, arguments, superuser=True):
+        """Add credentials and run a backups action script command."""
+        for key in self.credentials.keys():
+            if key not in self.KNOWN_CREDENTIALS:
+                raise ValueError('Unknown credentials entry: %s' % key)
+
+        input_data = json.dumps(self._get_encryption_data(self.credentials))
+        return self._run('backups', arguments, superuser=superuser,
+                         input=input_data.encode())
 
     def get_download_stream(self, archive_name):
         """Return an stream of .tar.gz binary data for a backup archive."""
@@ -182,6 +228,21 @@ class BorgRepository():
         proc.stdin.close()
         return BufferedReader(proc.stdout)
 
+    def _get_archive_path(self, archive_name):
+        """Return full borg path for an archive."""
+        return '::'.join([self.repo_path, archive_name])
+
+    @staticmethod
+    def reraise_known_error(err):
+        """Look whether the caught error is known and reraise it accordingly"""
+        caught_error = str(err)
+        for known_error in KNOWN_ERRORS:
+            for error in known_error['errors']:
+                if error in caught_error:
+                    raise known_error['raise_as'](known_error['message'])
+
+        raise err
+
     def get_archive(self, name):
         for archive in self.list_archives():
             if archive['name'] == name:
@@ -201,63 +262,54 @@ class BorgRepository():
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 
-    def _get_archive_path(self, archive_name):
-        """Return full borg path for an archive."""
-        return '::'.join([self.repo_path, archive_name])
 
-    def _run(self, cmd, arguments, superuser=True, **kwargs):
-        """Run a backups or sshfs action script command."""
-        try:
-            if superuser:
-                return actions.superuser_run(cmd, arguments, **kwargs)
+class RootBorgRepository(BaseBorgRepository):
+    """Borg repository on the root filesystem."""
+    storage_type = 'root'
+    name = ROOT_REPOSITORY_NAME
+    repo_path = ROOT_REPOSITORY
+    is_mounted = True
 
-            return actions.run(cmd, arguments, **kwargs)
-        except ActionError as err:
-            self.reraise_known_error(err)
+    def __init__(self, path, credentials=None):
+        """Initialize the repository object."""
+        if credentials is None:
+            credentials = {}
+
+        self._path = path
+        self.credentials = credentials
 
     def run(self, arguments):
         return self._run('backups', arguments)
 
-    @staticmethod
-    def reraise_known_error(err):
-        """Look whether the caught error is known and reraise it accordingly"""
-        caught_error = str(err)
-        for known_error in KNOWN_ERRORS:
-            for error in known_error['errors']:
-                if error in caught_error:
-                    raise known_error['raise_as'](known_error['message'])
 
-        raise err
+class BorgRepository(BaseBorgRepository):
+    """General Borg repository implementation."""
+    KNOWN_CREDENTIALS = ['encryption_passphrase']
+    storage_type = 'disk'
+
+    @property
+    def is_mounted(self):
+        raise NotImplementedError
+
+    @property
+    def name(self):
+        raise NotImplementedError
+
+    @property
+    def repo_path(self):
+        """
+        Return the path to use for backups actions.
+        """
+        raise NotImplementedError
 
 
-class SshBorgRepository(BorgRepository):
+class SshBorgRepository(BaseBorgRepository):
     """Borg repository that is accessed via SSH"""
+    SSHFS_MOUNTPOINT = '/media/'
     KNOWN_CREDENTIALS = [
         'ssh_keyfile', 'ssh_password', 'encryption_passphrase'
     ]
     storage_type = 'ssh'
-    uuid = None
-
-    def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
-        """
-        Instantiate a new repository.
-
-        If only a uuid is given, load the values from kvstore.
-        """
-        is_new_instance = not bool(uuid)
-        if not uuid:
-            uuid = str(uuid1())
-        self.uuid = uuid
-
-        if path and credentials:
-            self._path = path
-            self.credentials = credentials
-        else:
-            if is_new_instance:
-                # Either a uuid, or both a path and credentials must be given
-                raise ValueError('Invalid arguments.')
-            else:
-                self._load_from_kvstore()
 
     @property
     def repo_path(self):
@@ -271,29 +323,13 @@ class SshBorgRepository(BorgRepository):
 
     @property
     def mountpoint(self):
-        return os.path.join(SSHFS_MOUNTPOINT, self.uuid)
-
-    @property
-    def name(self):
-        return self._path
+        return os.path.join(self.SSHFS_MOUNTPOINT, self.uuid)
 
     @property
     def is_mounted(self):
         output = self._run('sshfs',
                            ['is-mounted', '--mountpoint', self.mountpoint])
         return json.loads(output)
-
-    def _get_archive_path(self, archive_name):
-        """Return full borg path for an SSH archive."""
-        return '::'.join([self.mountpoint, archive_name])
-
-    def _load_from_kvstore(self):
-        storage = network_storage.get(self.uuid)
-        try:
-            self.credentials = storage['credentials']
-        except KeyError:
-            self.credentials = {}
-        self._path = storage['path']
 
     def _get_network_storage_format(self, store_credentials, verified):
         storage = {
@@ -307,14 +343,6 @@ class SshBorgRepository(BorgRepository):
         if store_credentials:
             storage['credentials'] = self.credentials
         return storage
-
-    def create_repository(self, encryption):
-        """Initialize / create a borg repository."""
-        if encryption not in SUPPORTED_BORG_ENCRYPTION:
-            raise ValueError('Unsupported encryption: %s' % encryption)
-
-        self.run(
-            ['init', '--path', self.repo_path, '--encryption', encryption])
 
     def save(self, store_credentials=True, verified=False):
         """
@@ -371,16 +399,6 @@ class SshBorgRepository(BorgRepository):
 
         return (arguments, kwargs)
 
-    def run(self, arguments, superuser=True):
-        """Add credentials and run a backups action script command."""
-        for key in self.credentials.keys():
-            if key not in self.KNOWN_CREDENTIALS:
-                raise ValueError('Unknown credentials entry: %s' % key)
-
-        input_data = json.dumps(self._get_encryption_data(self.credentials))
-        return self._run('backups', arguments, superuser=superuser,
-                         input=input_data.encode())
-
 
 def get_ssh_repositories():
     """Get all SSH Repositories including the archive content"""
@@ -395,6 +413,6 @@ def get_ssh_repositories():
 def get_repository(uuid):
     """Get a local or SSH repository object instance."""
     if uuid == ROOT_REPOSITORY_UUID:
-        return BorgRepository(path=ROOT_REPOSITORY)
+        return RootBorgRepository(path=ROOT_REPOSITORY)
 
     return SshBorgRepository(uuid=uuid)
