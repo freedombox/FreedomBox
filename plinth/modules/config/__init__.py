@@ -156,9 +156,9 @@ def init():
     # Register domain with Name Services module.
     domainname = get_domainname()
     if domainname:
-        domain_added.send_robust(
-            sender='config', domain_type='domainname', name=domainname,
-            description=ugettext_lazy('Domain Name'), services='__all__')
+        domain_added.send_robust(sender='config',
+                                 domain_type='domain-type-static',
+                                 name=domainname, services='__all__')
 
 
 def setup(helper, old_version=None):

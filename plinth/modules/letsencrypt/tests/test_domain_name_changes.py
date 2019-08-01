@@ -26,7 +26,7 @@ pytestmark = pytest.mark.usefixtures('needs_root', 'needs_sudo')
 
 
 def test_add_onion_domain():
-    assert not on_domain_added('test', 'hiddenservice', 'ddddd.onion')
+    assert not on_domain_added('test', 'domain-type-tor', 'ddddd.onion')
 
 
 @pytest.mark.usefixtures('load_cfg')

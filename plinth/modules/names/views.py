@@ -19,12 +19,10 @@ FreedomBox app for name services.
 """
 
 from django.template.response import TemplateResponse
-from django.utils.translation import ugettext as _
 
 from plinth.modules import names
 
-from . import (SERVICES, get_description, get_domain, get_domain_types,
-               get_services_status)
+from . import components
 
 
 def index(request):
@@ -42,16 +40,11 @@ def index(request):
 
 def get_status():
     """Get configured services per name."""
-    name_services = []
-    for domain_type in sorted(get_domain_types()):
-        domain = get_domain(domain_type)
-        name_services.append({
-            'type': get_description(domain_type),
-            'name': domain or _('Not Available'),
-            'services_enabled': get_services_status(domain_type, domain),
-        })
+    domains = components.DomainName.list()
+    used_domain_types = {domain.domain_type for domain in domains}
+    unused_domain_types = [
+        domain_type for domain_type in components.DomainType.list().values()
+        if domain_type not in used_domain_types
+    ]
 
-    return {
-        'services': [service[1] for service in SERVICES],
-        'name_services': name_services,
-    }
+    return {'domains': domains, 'unused_domain_types': unused_domain_types}

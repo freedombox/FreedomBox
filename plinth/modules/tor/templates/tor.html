@@ -74,9 +74,7 @@
             <td class="tor-hs-hostname">{{ status.hs_hostname }}</td>
             <td class="tor-hs-status">{{ status.hs_status }}</td>
             <td class="tor-hs-services">
-              {% for service in status.hs_services %}
-                {{ service }}
-              {% endfor %}
+              {{ status.hs_services|join:', ' }}
             </td>
           </tr>
         </tbody>

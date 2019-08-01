@@ -160,7 +160,7 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
 def on_domain_added(sender, domain_type='', name='', description='',
                     services=None, **kwargs):
     """Obtain a certificate for the new domain"""
-    if domain_type == 'hiddenservice':
+    if domain_type == 'domain-type-tor':
         return False
 
     # Check if a cert if already available

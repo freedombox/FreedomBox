@@ -82,7 +82,7 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['domainname'] != new_status['domainname']:
         try:
-            set_domainname(new_status['domainname'])
+            set_domainname(new_status['domainname'], old_status['domainname'])
         except Exception as exception:
             messages.error(
                 request,
@@ -141,7 +141,7 @@ def set_hostname(hostname):
     actions.superuser_run('domainname-change', [domainname])
 
 
-def set_domainname(domainname):
+def set_domainname(domainname, old_domainname):
     """Sets machine domain name to domainname"""
     old_domainname = config.get_domainname()
 
@@ -156,8 +156,12 @@ def set_domainname(domainname):
                                   new_domainname=domainname)
 
     # Update domain registered with Name Services module.
-    domain_removed.send_robust(sender='config', domain_type='domainname')
+    if old_domainname:
+        domain_removed.send_robust(sender='config',
+                                   domain_type='domain-type-static',
+                                   name=old_domainname)
+
     if domainname:
-        domain_added.send_robust(sender='config', domain_type='domainname',
-                                 name=domainname, description=_('Domain Name'),
-                                 services='__all__')
+        domain_added.send_robust(sender='config',
+                                 domain_type='domain-type-static',
+                                 name=domainname, services='__all__')

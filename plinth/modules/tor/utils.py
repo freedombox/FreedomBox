@@ -27,7 +27,7 @@ import augeas
 from plinth import actions
 from plinth.daemon import app_is_running
 from plinth.modules import tor
-from plinth.modules.names import SERVICES
+from plinth.modules.names.components import DomainName
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
@@ -41,10 +41,13 @@ def get_status():
 
     hs_info = status['hidden_service']
     hs_services = []
-    hs_virtports = [port['virtport'] for port in hs_info['ports']]
-    for service_type in SERVICES:
-        if str(service_type[2]) in hs_virtports:
-            hs_services.append(service_type[0])
+    if hs_info['hostname']:
+        try:
+            domain = DomainName.get('domain-tor-' + hs_info['hostname'])
+        except KeyError:
+            pass
+        else:
+            hs_services = domain.get_readable_services()
 
     # Filter out obfs3/4 ports when bridge relay is disabled
     ports = {

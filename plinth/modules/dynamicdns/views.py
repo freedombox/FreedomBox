@@ -156,15 +156,14 @@ def _apply_changes(request, old_status, new_status):
 
         if old_status['enabled']:
             domain_removed.send_robust(sender='dynamicdns',
-                                       domain_type='dynamicdnsservice',
+                                       domain_type='domain-type-dynamic',
                                        name=old_status['dynamicdns_domain'])
             _run(['stop'])
 
         if new_status['enabled']:
             domain_added.send_robust(
-                sender='dynamicdns', domain_type='dynamicdnsservice',
-                name=new_status['dynamicdns_domain'],
-                description=_('Dynamic DNS Service'), services='__all__')
+                sender='dynamicdns', domain_type='domain-type-dynamic',
+                name=new_status['dynamicdns_domain'], services='__all__')
             _run(['start'])
 
         messages.success(request, _('Configuration updated'))

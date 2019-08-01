@@ -260,7 +260,8 @@ def update_names_module(initial_registration=False, enabled=None,
     - enabled: Boolean (optional) whether PageKite is enabled
     - kite_name: String (optional)
     """
-    domain_removed.send_robust(sender='pagekite', domain_type='pagekite')
+    domain_removed.send_robust(sender='pagekite',
+                               domain_type='domain-type-pagekite')
 
     if enabled is None:
         try:
@@ -284,9 +285,9 @@ def update_names_module(initial_registration=False, enabled=None,
         kite_name = None
 
     if initial_registration or (enabled and kite_name):
-        domain_added.send_robust(sender='pagekite', domain_type='pagekite',
-                                 name=kite_name, description=_('Pagekite'),
-                                 services=enabled_services)
+        domain_added.send_robust(sender='pagekite',
+                                 domain_type='domain-type-pagekite',
+                                 name=kite_name, services=enabled_services)
 
 
 if __name__ == "__main__":
