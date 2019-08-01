@@ -28,6 +28,7 @@ from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names import SERVICES
+from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed
 
 from . import utils
@@ -76,6 +77,10 @@ class TorApp(app_module.App):
         menu_item = menu.Menu('menu-tor', name, short_description, 'tor',
                               'tor:index', parent_url_name='apps')
         self.add(menu_item)
+
+        domain_type = DomainType('domain-type-tor', _('Tor Hidden Service'),
+                                 'tor:index', can_have_certificate=False)
+        self.add(domain_type)
 
         firewall = Firewall('firewall-tor-socks', _('Tor Socks Proxy'),
                             ports=['tor-socks'], is_external=False)

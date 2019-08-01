@@ -27,6 +27,7 @@ from django.utils.translation import ugettext_lazy
 from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added
 
 version = 2
@@ -60,6 +61,11 @@ class ConfigApp(app_module.App):
                               'fa-cog', 'config:index',
                               parent_url_name='system')
         self.add(menu_item)
+
+        domain_type = DomainType('domain-type-static',
+                                 ugettext_lazy('Domain Name'), 'config:index',
+                                 can_have_certificate=True)
+        self.add(domain_type)
 
 
 def get_domainname():
