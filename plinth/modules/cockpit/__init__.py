@@ -31,7 +31,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 

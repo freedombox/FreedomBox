@@ -27,7 +27,7 @@ from plinth import cfg, menu
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 SERVICES = (
     ('http', _('HTTP'), 80),
