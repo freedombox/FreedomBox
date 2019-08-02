@@ -26,8 +26,8 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.modules import config
-from plinth.signals import (domain_added, domain_removed, domainname_change,
-                            post_hostname_change, pre_hostname_change)
+from plinth.signals import (domain_added, domain_removed, post_hostname_change,
+                            pre_hostname_change)
 
 from .forms import ConfigurationForm
 
@@ -150,10 +150,6 @@ def set_domainname(domainname, old_domainname):
 
     LOGGER.info('Changing domain name to - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])
-
-    domainname_change.send_robust(sender='config',
-                                  old_domainname=old_domainname,
-                                  new_domainname=domainname)
 
     # Update domain registered with Name Services module.
     if old_domainname:
