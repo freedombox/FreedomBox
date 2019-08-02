@@ -227,20 +227,21 @@ def subcommand_revoke(arguments):
     """Disable a domain and revoke the certificate."""
     domain = arguments.domain
 
-    command = [
-        'certbot', 'revoke', '--non-interactive', '--domain', domain,
-        '--cert-path',
-        os.path.join(le.LIVE_DIRECTORY, domain, 'cert.pem')
-    ]
-    if TEST_MODE:
-        command.append('--staging')
+    cert_path = pathlib.Path(le.LIVE_DIRECTORY) / domain / 'cert.pem'
+    if cert_path.exists():
+        command = [
+            'certbot', 'revoke', '--non-interactive', '--domain', domain,
+            '--cert-path', cert_path
+        ]
+        if TEST_MODE:
+            command.append('--staging')
 
-    process = subprocess.Popen(command, stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    _, stderr = process.communicate()
-    if process.returncode:
-        print(stderr.decode(), file=sys.stderr)
-        sys.exit(1)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+        _, stderr = process.communicate()
+        if process.returncode:
+            print(stderr.decode(), file=sys.stderr)
+            sys.exit(1)
 
     action_utils.webserver_disable(domain, kind='site')
 
