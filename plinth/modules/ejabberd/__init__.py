@@ -32,11 +32,11 @@ from plinth.modules import config
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.signals import (domainname_change, post_hostname_change,
+from plinth.signals import (domain_added, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 3
 
@@ -132,7 +132,7 @@ def init():
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
-    domainname_change.connect(on_domainname_change)
+    domain_added.connect(on_domain_added)
 
 
 def setup(helper, old_version=None):
@@ -189,14 +189,10 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     ], run_in_background=True)
 
 
-def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
+def on_domain_added(sender, domain_type, name, description='', services=None,
+                    **kwargs):
     """Update ejabberd config after domain name change."""
-    del sender  # Unused
-    del old_domainname  # Unused
-    del kwargs  # Unused
-
-    actions.superuser_run(
-        'ejabberd', ['change-domainname', '--domainname', new_domainname])
+    actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
     app.get_component('letsencrypt-ejabberd').setup_certificates()
 
 

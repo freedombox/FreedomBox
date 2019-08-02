@@ -73,10 +73,10 @@ def parse_arguments():
     hostname_change.add_argument('--old-hostname', help='Previous hostname')
     hostname_change.add_argument('--new-hostname', help='New hostname')
 
-    # Update ejabberd with new domainname
-    domainname_change = subparsers.add_parser(
-        'change-domainname', help='Update ejabberd with new domainname')
-    domainname_change.add_argument('--domainname', help='New domainname')
+    # Add a domain name to ejabberd
+    add_domain = subparsers.add_parser('add-domain',
+                                       help='Add a domain name to ejabberd')
+    add_domain.add_argument('--domainname', help='New domain name')
 
     # Switch/check Message Archive Management (MAM) in ejabberd config
     help_MAM = 'Switch or check Message Archive Management (MAM).'
@@ -219,16 +219,13 @@ def subcommand_change_hostname(arguments):
               EJABBERD_BACKUP_NEW)
 
 
-def subcommand_change_domainname(arguments):
+def subcommand_add_domain(arguments):
     """Update ejabberd with new domainname"""
     if not shutil.which('ejabberdctl'):
         print('ejabberdctl not found. Is ejabberd installed?')
         return
 
     domainname = arguments.domainname
-    if not domainname:
-        # If new domainname is blank, use hostname instead.
-        domainname = socket.gethostname()
 
     # Add updated domainname to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r') as file_handle:
