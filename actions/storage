@@ -258,8 +258,7 @@ def eject_drive_of_device(device_path):
 
     if not found_objects:
         raise ValueError(
-            _('No such device - {device_path}').format(
-                device_path=device_path))
+            'No such device - {device_path}'.format(device_path=device_path))
 
     obj = found_objects[0]
 
