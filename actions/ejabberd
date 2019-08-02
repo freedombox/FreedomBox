@@ -237,6 +237,8 @@ def subcommand_change_domainname(arguments):
     conf['hosts'].append(
         ruamel.yaml.scalarstring.DoubleQuotedScalarString(domainname))
 
+    conf['hosts'] = list(set(conf['hosts']))
+
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
 
