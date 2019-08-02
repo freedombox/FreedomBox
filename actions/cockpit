@@ -94,9 +94,13 @@ def subcommand_remove_domain(arguments):
     """Disallow a domain from being origin for Cockpit's WebSocket."""
     aug = load_augeas()
     origins = _get_origin_domains(aug)
-    origins.remove(_get_origin_from_domain(arguments.domain_name))
-    _set_origin_domains(aug, origins)
-    aug.save()
+    try:
+        origins.remove(_get_origin_from_domain(arguments.domain_name))
+    except KeyError:
+        pass
+    else:
+        _set_origin_domains(aug, origins)
+        aug.save()
 
 
 def load_augeas():
