@@ -165,9 +165,9 @@ def on_domain_added(sender, domain_type='', name='', description='',
 
     # Check if a cert if already available
     for domain_name, domain_status in get_status()['domains'].items():
-        if domain_name == name and \
-           domain_status.certificate_available and \
-           domain_status.validity == 'valid':
+        if domain_name == name and domain_status and \
+           domain_status['certificate_available'] and \
+           domain_status['validity'] == 'valid':
             return False
 
     try:
