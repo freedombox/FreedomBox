@@ -43,8 +43,8 @@ from . import (ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms,
                split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
-from .repository import (RootBorgRepository, SshBorgRepository, get_repository,
-                         get_ssh_repositories)
+from .repository import (BorgRepository, RootBorgRepository, SshBorgRepository,
+                         create_repository, get_repositories)
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,8 @@ class IndexView(TemplateView):
         context['manual_page'] = backups.manual_page
         root_repository = RootBorgRepository(path=ROOT_REPOSITORY)
         context['root_repository'] = root_repository.get_view_content()
-        context['ssh_repositories'] = get_ssh_repositories()
+        context['ssh_repositories'] = get_repositories('ssh')
+        context['disk_repositories'] = get_repositories('disk')
         return context
 
 
@@ -82,7 +83,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
-        repository = get_repository(form.cleaned_data['repository'])
+        repository = create_repository(form.cleaned_data['repository'])
         if hasattr(repository, 'mount'):
             repository.mount()
 
@@ -100,7 +101,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Archive')
-        repository = get_repository(self.kwargs['uuid'])
+        repository = create_repository(self.kwargs['uuid'])
         context['archive'] = repository.get_archive(self.kwargs['name'])
         if context['archive'] is None:
             raise Http404
@@ -109,7 +110,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
 
     def post(self, request, uuid, name):
         """Delete the archive."""
-        repository = get_repository(uuid)
+        repository = create_repository(uuid)
         repository.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
         return redirect('backups:index')
@@ -218,12 +219,12 @@ class RestoreArchiveView(BaseRestoreView):
         """Save some data used to instantiate the form."""
         name = unquote(self.kwargs['name'])
         uuid = self.kwargs['uuid']
-        repository = get_repository(uuid)
+        repository = create_repository(uuid)
         return repository.get_archive_apps(name)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        repository = get_repository(self.kwargs['uuid'])
+        repository = create_repository(self.kwargs['uuid'])
         selected_apps = form.cleaned_data['selected_apps']
         repository.restore_archive(self.kwargs['name'], selected_apps)
         return super().form_valid(form)
@@ -233,7 +234,7 @@ class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
 
     def get(self, request, uuid, name):
-        repository = get_repository(uuid)
+        repository = create_repository(uuid)
         filename = f'{name}.tar.gz'
 
         response = StreamingHttpResponse(repository.get_download_stream(name),
@@ -257,11 +258,20 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create and save a Borg repository."""
-        path = pathlib.Path(
-            form.cleaned_data.get('disk')) / 'FreedomBoxBackups'
+        path = os.path.join(form.cleaned_data.get('disk'), 'FreedomBoxBackups')
+        encryption = form.cleaned_data.get('encryption')
         encryption_passphrase = form.cleaned_data.get('encryption_passphrase')
-        if form.cleaned_data.get('encryption') == 'none':
+        if encryption == 'none':
             encryption_passphrase = None
+
+        credentials = {'encryption_passphrase': encryption_passphrase}
+        repository = BorgRepository(path=path, credentials=credentials)
+        try:
+            repository.get_info()
+        except BorgRepositoryDoesNotExistError:
+            repository.create_repository(encryption)
+        repository.save(store_credentials=True, verified=True)
+        return super().form_valid(form)
 
 
 class AddRemoteRepositoryView(SuccessMessageMixin, FormView):

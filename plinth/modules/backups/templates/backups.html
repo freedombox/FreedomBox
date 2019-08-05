@@ -60,10 +60,14 @@
 
   <h3>{% trans 'Existing Backups' %}</h3>
 
-  {% include "backups_repository.inc" with repository=root_repository uuid='root' editable=False %}
+  {% include "backups_repository.inc" with repository=root_repository uuid='root' storage_type='root' editable=False %}
 
   {% for uuid,repository in ssh_repositories.items %}
-    {% include "backups_repository.inc" with editable=True %}
+    {% include "backups_repository.inc" with editable=True storage_type='ssh' %}
+  {% endfor %}
+
+  {% for uuid,repository in disk_repositories.items %}
+    {% include "backups_repository.inc" with editable=True storage_type='disk' %}
   {% endfor %}
 
   <a title="{% trans 'Add a backup location' %}"

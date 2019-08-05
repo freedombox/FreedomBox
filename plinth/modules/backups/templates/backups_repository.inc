@@ -36,6 +36,7 @@
         <span class="pull-right">
           {% if editable %}
 
+            {% if storage_type != 'disk' %}
             {% if repository.mounted %}
 
               <!-- With GET redirects, the browser URL points to the
@@ -62,6 +63,7 @@
               </form>
 
             {% endif %}
+          {% endif %}
 
             <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
                role="button" class="repository-remove btn btn-sm btn-default"

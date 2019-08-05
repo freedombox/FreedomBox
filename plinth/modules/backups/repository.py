@@ -81,6 +81,7 @@ KNOWN_ERRORS = [{
 class BaseBorgRepository(ABC):
     """Base class for all kinds of Borg repositories."""
     uuid = None
+    is_mounted = True
 
     def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
         """
@@ -262,6 +263,27 @@ class BaseBorgRepository(ABC):
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 
+    def _get_network_storage_format(self, store_credentials, verified):
+        storage = {
+            'path': self._path,
+            'storage_type': self.storage_type,
+            'added_by_module': 'backups',
+            'verified': verified
+        }
+        if self.uuid:
+            storage['uuid'] = self.uuid
+        if store_credentials:
+            storage['credentials'] = self.credentials
+        return storage
+
+    def save(self, store_credentials=True, verified=False):
+        """
+        Save the repository in network_storage (kvstore).
+        - store_credentials: Boolean whether credentials should be stored.
+        """
+        storage = self._get_network_storage_format(store_credentials, verified)
+        self.uuid = network_storage.update_or_add(storage)
+
 
 class RootBorgRepository(BaseBorgRepository):
     """Borg repository on the root filesystem."""
@@ -288,19 +310,15 @@ class BorgRepository(BaseBorgRepository):
     storage_type = 'disk'
 
     @property
-    def is_mounted(self):
-        raise NotImplementedError
-
-    @property
     def name(self):
-        raise NotImplementedError
+        # TODO Use disk label as the name
+        # Also, name isn't being used yet
+        return self.repo_path
 
-    @property
-    def repo_path(self):
-        """
-        Return the path to use for backups actions.
-        """
-        raise NotImplementedError
+    def remove_repository(self):
+        """Remove a repository from the kvstore and delete its mountpoint"""
+        self.umount()
+        network_storage.delete(self.uuid)
 
 
 class SshBorgRepository(BaseBorgRepository):
@@ -330,27 +348,6 @@ class SshBorgRepository(BaseBorgRepository):
         output = self._run('sshfs',
                            ['is-mounted', '--mountpoint', self.mountpoint])
         return json.loads(output)
-
-    def _get_network_storage_format(self, store_credentials, verified):
-        storage = {
-            'path': self._path,
-            'storage_type': self.storage_type,
-            'added_by_module': 'backups',
-            'verified': verified
-        }
-        if self.uuid:
-            storage['uuid'] = self.uuid
-        if store_credentials:
-            storage['credentials'] = self.credentials
-        return storage
-
-    def save(self, store_credentials=True, verified=False):
-        """
-        Save the repository in network_storage (kvstore).
-        - store_credentials: Boolean whether credentials should be stored.
-        """
-        storage = self._get_network_storage_format(store_credentials, verified)
-        self.uuid = network_storage.update_or_add(storage)
 
     def mount(self):
         if self.is_mounted:
@@ -400,19 +397,43 @@ class SshBorgRepository(BaseBorgRepository):
         return (arguments, kwargs)
 
 
-def get_ssh_repositories():
+def get_repositories(storage_type):
+    """Get all repositories of a given storage type."""
+    if storage_type == 'disk':
+        return _get_disk_repositories()
+
+    return _get_ssh_repositories()
+
+
+def _get_ssh_repositories():
     """Get all SSH Repositories including the archive content"""
     repositories = {}
     for storage in network_storage.get_storages().values():
-        repository = SshBorgRepository(**storage)
-        repositories[storage['uuid']] = repository.get_view_content()
+        if storage['storage_type'] == 'ssh':
+            repository = SshBorgRepository(**storage)
+            repositories[storage['uuid']] = repository.get_view_content()
 
     return repositories
 
 
-def get_repository(uuid):
-    """Get a local or SSH repository object instance."""
+def _get_disk_repositories():
+    """Get all disk repositories including the archive content"""
+    repositories = {}
+    for storage in network_storage.get_storages().values():
+        if storage['storage_type'] == 'disk':
+            repository = BorgRepository(**storage)
+            repositories[storage['uuid']] = repository.get_view_content()
+
+    return repositories
+
+
+def create_repository(uuid):
+    """Create a local or SSH repository object instance."""
     if uuid == ROOT_REPOSITORY_UUID:
         return RootBorgRepository(path=ROOT_REPOSITORY)
 
-    return SshBorgRepository(uuid=uuid)
+    storage = network_storage.get(uuid)
+    if storage['storage_type'] == 'ssh':
+        return SshBorgRepository(uuid=uuid)
+    else:
+        return BorgRepository(uuid=uuid)
