@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-29 18:38-0400\n"
-"PO-Revision-Date: 2019-04-30 14:37+0000\n"
+"PO-Revision-Date: 2019-08-08 00:23+0000\n"
 "Last-Translator: Radek Pasiok <rpasiok@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/plinth/"
 "pl/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.6.1\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -100,12 +100,12 @@ msgstr "Błąd podczas instalowania aplikacji: {error}"
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:88
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
 msgid "Web Server"
-msgstr ""
+msgstr "Serwer Web"
 
 #: plinth/modules/apache/__init__.py:58
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
-msgstr ""
+msgstr "{box_name} interfejs sieciowy (Plinth)"
 
 #: plinth/modules/avahi/__init__.py:43
 msgid "Service Discovery"
@@ -136,10 +136,9 @@ msgid "Backups allows creating and managing backup archives."
 msgstr "Tworzenie i zarządzanie archiwami kopii zapasowych."
 
 #: plinth/modules/backups/__init__.py:52
-#, fuzzy, python-brace-format
-#| msgid "{box_name} Manual"
+#, python-brace-format
 msgid "{box_name} storage"
-msgstr "{box_name} Podręcznik"
+msgstr "Dysk na {box_name}"
 
 #: plinth/modules/backups/forms.py:45
 #, python-brace-format
@@ -148,7 +147,7 @@ msgstr "{app} (Brak danych do utworzenia kopii zapasowej)"
 
 #: plinth/modules/backups/forms.py:67
 msgid "Included apps"
-msgstr ""
+msgstr "Dostępne aplikacje"
 
 #: plinth/modules/backups/forms.py:67
 msgid "Apps to include in the backup"
@@ -171,27 +170,23 @@ msgid "Select the backup file you want to upload"
 msgstr "Zaznacz plik kopii zapasowej do przesłania"
 
 #: plinth/modules/backups/forms.py:103
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository path format incorrect."
-msgstr "Nie odnaleziono repozytorium"
+msgstr "Ścieżka repozytorium ma niepoprawny format."
 
 #: plinth/modules/backups/forms.py:110
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Niewłaściwa nazwa użytkownika"
+msgstr "Niepoprawna nazwa użytkownika: {username}"
 
 #: plinth/modules/backups/forms.py:120
-#, fuzzy, python-brace-format
-#| msgid "Invalid hostname"
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Niewłaściwa nazwa hosta"
+msgstr "Niepoprawna nazwa hosta: {hostname}"
 
 #: plinth/modules/backups/forms.py:124
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "Niepoprawna ścieżka katalogu: {dir_path}"
 
 #: plinth/modules/backups/forms.py:130
 msgid "SSH Repository Path"
@@ -250,20 +245,16 @@ msgid "The entered encryption passphrases do not match"
 msgstr "Wprowadzone hasła nie są identyczne"
 
 #: plinth/modules/backups/forms.py:164
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Passphrase is needed for encryption."
-msgstr "Hasło; Potrzebne tylko przy szyfrowaniu."
+msgstr "Przy szyfrowaniu wymagane jest hasło."
 
 #: plinth/modules/backups/forms.py:181
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Remote backup repository already exists."
-msgstr "Utwórz zdalne repozytorium kopii zapasowych"
+msgstr "Zdalne repozytorium już istnieje."
 
 #: plinth/modules/backups/forms.py:187
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Wybierz zweryfikowany klucz publiczny SSH"
 
 #: plinth/modules/backups/repository.py:46
 msgid ""
@@ -291,26 +282,20 @@ msgstr "Odmowa dostępu SSH"
 
 #: plinth/modules/backups/templates/backups.html:47
 #: plinth/modules/backups/views.py:80
-#, fuzzy
-#| msgid "Create Account"
 msgid "Create a new backup"
-msgstr "Utwórz konto"
+msgstr "Utwórz nową kopię zapasową"
 
 #: plinth/modules/backups/templates/backups.html:51
-#, fuzzy
-#| msgid "Create Account"
 msgid "Create Backup"
-msgstr "Utwórz konto"
+msgstr "Utwórz kopię zapasową"
 
 #: plinth/modules/backups/templates/backups.html:54
 msgid "Upload and restore a backup archive"
-msgstr ""
+msgstr "Prześlij i odtwórz kopię zapasową"
 
 #: plinth/modules/backups/templates/backups.html:58
-#, fuzzy
-#| msgid "Password"
 msgid "Upload and Restore"
-msgstr "Hasło"
+msgstr "Prześlij i odtwórz"
 
 #: plinth/modules/backups/templates/backups.html:61
 #, fuzzy
@@ -319,16 +304,12 @@ msgid "Existing Backups"
 msgstr "Istniejące kopie zapasowe"
 
 #: plinth/modules/backups/templates/backups.html:71
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Add a remote backup location"
-msgstr "Utwórz zdalne repozytorium kopii zapasowych"
+msgstr "Dodaj lokalizację zdalnego repozytorium kopii zapasowych"
 
 #: plinth/modules/backups/templates/backups.html:75
-#, fuzzy
-#| msgid "Add Remote Repository"
 msgid "Add Remote Location"
-msgstr "Dodaj zdalne repozytorium"
+msgstr "Dodaj zdalną lokalizację"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -368,10 +349,8 @@ msgstr ""
 "ssh i hasła szyfrowania, jeśli wybrano szyfrowanie."
 
 #: plinth/modules/backups/templates/backups_repository_add.html:43
-#, fuzzy
-#| msgid "Documentation"
 msgid "Create Location"
-msgstr "Dokumentacja"
+msgstr "Utwórz lokalizację"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
@@ -394,10 +373,8 @@ msgstr ""
 "    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#, fuzzy
-#| msgid "Documentation"
 msgid "Remove Location"
-msgstr "Dokumentacja"
+msgstr "Usuń lokalizację"
 
 #: plinth/modules/backups/templates/backups_restore.html:30
 msgid "Restore data from"
@@ -450,7 +427,7 @@ msgstr "Prześlij plik"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Jak weryfikować?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -458,10 +435,13 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Uruchom następujące polecenie na hoście SSH. Wynik działania powinien być "
+"zgodny z jedną z podanych opcji. Zamiast rsa można również użyć dsa, ecdsa, "
+"ed25519 itp. wskazując odpowiedni plik."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
-msgstr ""
+msgstr "Zweryfikuj hosta"
 
 #: plinth/modules/backups/views.py:75
 msgid "Archive created."
@@ -477,7 +457,7 @@ msgstr "Archiwum zostało usunięte."
 
 #: plinth/modules/backups/views.py:127
 msgid "Upload and restore a backup"
-msgstr ""
+msgstr "Prześlij i odtwórz kopię zapasową"
 
 #: plinth/modules/backups/views.py:162
 msgid "Restored files from backup."
@@ -496,46 +476,41 @@ msgid "Create remote backup repository"
 msgstr "Utwórz zdalne repozytorium kopii zapasowych"
 
 #: plinth/modules/backups/views.py:274
-#, fuzzy
-#| msgid "Added new repository."
 msgid "Added new remote SSH repository."
-msgstr "Dodano nowe archiwum."
+msgstr "Dodano nowe zdalne repozytorium SSH."
 
 #: plinth/modules/backups/views.py:297
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Zweryfikuj klucz hosta SSH"
 
 #: plinth/modules/backups/views.py:330
 msgid "SSH host already verified."
-msgstr ""
+msgstr "Host SSH został już zweryfikowany."
 
 #: plinth/modules/backups/views.py:339
 msgid "SSH host verified."
-msgstr ""
+msgstr "Zweryfikowano hosta SSH."
 
 #: plinth/modules/backups/views.py:363
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "Nie można zweryfikować klucza publicznego hosta SSH."
 
 #: plinth/modules/backups/views.py:365
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Nie powiodła się autoryzacja na zdalnym serwerze."
 
 #: plinth/modules/backups/views.py:367
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "Błąd podczas instalowania aplikacji: {error}"
+msgstr "Błąd podczas ustanawiania połączenia z serwerem: {error}"
 
 #: plinth/modules/backups/views.py:370
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Ścieżka repozytorium jest pusta lub nie jest repozytorium kopii zapasowych."
 
 #: plinth/modules/backups/views.py:377
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository removed."
-msgstr "Nie odnaleziono repozytorium"
+msgstr "Usunięto repozytorium."
 
 #: plinth/modules/backups/views.py:442
 msgid "Remove Repository"
