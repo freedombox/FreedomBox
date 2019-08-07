@@ -17,12 +17,16 @@
 """
 Manage application shortcuts on front page.
 """
+
 import json
+import logging
 import os
 
 from plinth import app, cfg
 
 from . import actions
+
+logger = logging.getLogger(__name__)
 
 
 class Shortcut(app.FollowerComponent):
@@ -173,6 +177,7 @@ def get_custom_shortcuts():
     cfg_dir = os.path.dirname(cfg.config_file)
     shortcuts_file = os.path.join(cfg_dir, 'custom-shortcuts.json')
     if os.path.isfile(shortcuts_file) and os.stat(shortcuts_file).st_size:
+        logger.info('Loading custom shortcuts from %s', shortcuts_file)
         with open(shortcuts_file) as shortcuts:
             custom_shortcuts = json.load(shortcuts)
             return custom_shortcuts
