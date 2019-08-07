@@ -146,8 +146,12 @@ def add_custom_shortcuts():
         if not web_app_url:
             continue
 
-        Shortcut(None, shortcut['name'], shortcut['short_description'],
-                 icon=shortcut['icon_url'], url=web_app_url)
+        shortcut_id = shortcut.get('id', shortcut['name'])
+        component_id = 'shortcut-custom-' + shortcut_id
+        component = Shortcut(component_id, shortcut['name'],
+                             shortcut['short_description'],
+                             icon=shortcut['icon_url'], url=web_app_url)
+        component.set_enabled(True)
 
 
 def _extract_web_app_url(custom_shortcut):
