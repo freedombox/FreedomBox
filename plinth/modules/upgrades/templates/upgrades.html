@@ -56,7 +56,7 @@
   <p>
     {% blocktrans trimmed %}
       <strong>This may take a long time to complete</strong>. During an update,
-      you can not install apps. Also, this web interface may be temporarily
+      you cannot install apps. Also, this web interface may be temporarily
       unavailable and show an error. In that case, refresh the page to
       continue.
     {% endblocktrans %}
@@ -64,9 +64,11 @@
 
   {% if log %}
   <p>
-    <a class="btn btn-default" role="button" data-toggle="collapse"
-       href="#collapse-log" aria-expanded="false" aria-controls="collapse-log">
-        {% trans "Toggle recent update logs" %}
+    <a class="btn btn-default collapsed collapsible-button" role="button"
+       data-toggle="collapse" href="#collapse-log" aria-expanded="false"
+       aria-controls="collapse-log">
+      <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+      {% trans "Toggle recent update logs" %}
     </a>
 
     <div class="collapse" id="collapse-log">
