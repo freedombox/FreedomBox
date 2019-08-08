@@ -83,8 +83,8 @@ def force_upgrade(helper, packages):
 
     # firewalld 0.4.4.6-2 -> 0.6.x
     package = packages['firewalld']
-    if Version(package['current_version']) >= Version('0.6') or \
-       Version(package['new_version']) < Version('0.6'):
+    if Version(package['current_version']) >= Version('0.7') or \
+       Version(package['new_version']) < Version('0.7'):
         return False
 
     helper.install(['firewalld'], force_configuration='new')
