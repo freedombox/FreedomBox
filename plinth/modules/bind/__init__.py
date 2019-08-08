@@ -126,6 +126,7 @@ def setup(helper, old_version=None):
 def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
     helper.install(managed_packages, force_configuration='old')
+    return True
 
 
 def diagnose():

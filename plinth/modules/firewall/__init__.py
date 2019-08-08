@@ -79,16 +79,17 @@ def setup(helper, old_version=None):
 def force_upgrade(helper, packages):
     """Force upgrade firewalld to resolve conffile prompts."""
     if 'firewalld' not in packages:
-        return
+        return False
 
     # firewalld 0.4.4.6-2 -> 0.6.x
     package = packages['firewalld']
     if Version(package['current_version']) >= Version('0.6') or \
        Version(package['new_version']) < Version('0.6'):
-        return
+        return False
 
     helper.install(['firewalld'], force_configuration='new')
     _run(['setup'], superuser=True)
+    return True
 
 
 def get_enabled_status():

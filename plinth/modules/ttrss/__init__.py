@@ -123,16 +123,17 @@ def setup(helper, old_version=None):
 def force_upgrade(helper, packages):
     """Force update package to resolve conffile prompts."""
     if 'tt-rss' not in packages:
-        return
+        return False
 
     # tt-rss 17.4 -> 18.12
     package = packages['tt-rss']
     if Version(package['current_version']) >= Version('18.12') or \
        Version(package['new_version']) < Version('18.12'):
-        return
+        return False
 
     helper.install(['tt-rss'], force_configuration='new')
     actions.superuser_run('ttrss', ['setup'])
+    return True
 
 
 def diagnose():
