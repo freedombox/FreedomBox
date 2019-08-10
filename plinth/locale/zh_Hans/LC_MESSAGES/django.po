@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-29 18:38-0400\n"
-"PO-Revision-Date: 2019-08-08 00:23+0000\n"
-"Last-Translator: Anxin YI <2732146152@qq.com>\n"
+"PO-Revision-Date: 2019-08-11 14:23+0000\n"
+"Last-Translator: ZeroAurora <zeroaurora@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "freedombox/plinth/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -274,26 +274,20 @@ msgid "Create a new backup"
 msgstr "创建新备份"
 
 #: plinth/modules/backups/templates/backups.html:51
-#, fuzzy
-#| msgid "Create Account"
 msgid "Create Backup"
-msgstr "创建帐户"
+msgstr "创建备份"
 
 #: plinth/modules/backups/templates/backups.html:54
 msgid "Upload and restore a backup archive"
 msgstr "上传一个备份文件并从中恢复"
 
 #: plinth/modules/backups/templates/backups.html:58
-#, fuzzy
-#| msgid "Save Password"
 msgid "Upload and Restore"
-msgstr "保存密码"
+msgstr "上传并恢复"
 
 #: plinth/modules/backups/templates/backups.html:61
-#, fuzzy
-#| msgid "Existing backup locations"
 msgid "Existing Backups"
-msgstr "现有的备份位置"
+msgstr "现有的备份"
 
 #: plinth/modules/backups/templates/backups.html:71
 msgid "Add a remote backup location"
@@ -389,6 +383,10 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      上传一个从其它 %(box_name)s 下载的备份文件来恢复内容。\n"
+"      备份上传完成后，你可以选择你想要恢复的应用。\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:40
 #: plinth/modules/help/templates/statuslog.html:38
@@ -400,7 +398,7 @@ msgstr "注意："
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
-msgstr ""
+msgstr "您有 %(max_filesize)s 的可用空间来恢复备份。超出此大小将会使您的 %(box_name)s 不可用。"
 
 #: plinth/modules/backups/templates/backups_upload.html:54
 msgid "Upload file"
@@ -415,7 +413,7 @@ msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
-msgstr ""
+msgstr "请在 SSH 主机上运行下面的命令。输出应该和提供的选项之一相符。您也可以选择相对应的文件来使用 dsa、ecdsa、ed25519 等。"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
@@ -430,10 +428,8 @@ msgid "Delete Archive"
 msgstr "删除文档"
 
 #: plinth/modules/backups/views.py:114
-#, fuzzy
-#| msgid "{name} deleted."
 msgid "Archive deleted."
-msgstr "{name} 已删除。"
+msgstr "归档已删除。"
 
 #: plinth/modules/backups/views.py:127
 msgid "Upload and restore a backup"
@@ -457,37 +453,35 @@ msgstr "创建远程备份存储库"
 
 #: plinth/modules/backups/views.py:274
 msgid "Added new remote SSH repository."
-msgstr ""
+msgstr "已添加新的远程 SSH 存储库。"
 
 #: plinth/modules/backups/views.py:297
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "验证 SSH hostkey"
 
 #: plinth/modules/backups/views.py:330
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH 主机已经验证过了。"
 
 #: plinth/modules/backups/views.py:339
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH 主机已验证。"
 
 #: plinth/modules/backups/views.py:363
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "SSH 主机的公钥无法被验证。"
 
 #: plinth/modules/backups/views.py:365
 msgid "Authentication to remote server failed."
 msgstr "远程服务器认证失败。"
 
 #: plinth/modules/backups/views.py:367
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "安装应用程序出错：{error}"
+msgstr "启用到服务器的连接时错误：{}"
 
 #: plinth/modules/backups/views.py:370
 msgid "Repository path is neither empty nor is an existing backups repository."
-msgstr ""
+msgstr "存储库的路径为空或已有备份。"
 
 #: plinth/modules/backups/views.py:377
 msgid "Repository removed."
@@ -499,7 +493,7 @@ msgstr "移除存储"
 
 #: plinth/modules/backups/views.py:452
 msgid "Repository removed. The remote backup itself was not deleted."
-msgstr ""
+msgstr "存储库已移除。已有的远程备份未删除。"
 
 #: plinth/modules/backups/views.py:462
 msgid "Unmounting failed!"
@@ -518,17 +512,10 @@ msgid "Domain Name Server"
 msgstr "域名服务器"
 
 #: plinth/modules/bind/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "BIND is open source software that enables you to publish your Domain Name "
-#| "System (DNS) information on the Internet, and to resolve DNS queries for "
-#| "your users."
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
-msgstr ""
-"BIND 是开源软件，使您能够在 Internet 上发布您的域名系统（DNS）信息，并获取您"
-"用户的DNS查询。"
+msgstr "BIND 使您能够在网络上发布您的域名系统（DNS）信息，并解决您网络上用户设备的 DNS 查询。"
 
 #: plinth/modules/bind/__init__.py:49
 #, python-brace-format
@@ -537,6 +524,7 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
+"目前，在 {box_name} 上，BIND 只用于解决本地网络其它机器的 DNS 查询。它也不适用于从 {box_name} 分享来的互联网连接。"
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
@@ -545,7 +533,7 @@ msgstr "转发器"
 #: plinth/modules/bind/forms.py:38
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
-msgstr ""
+msgstr "DNS 服务器列表，请求将会被转发到这里，使用空格分割。"
 
 #: plinth/modules/bind/forms.py:42
 msgid "Enable DNSSEC"
@@ -563,13 +551,11 @@ msgstr "配置已更新"
 
 #: plinth/modules/cockpit/__init__.py:42 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:44
-#, fuzzy
-#| msgid "Server domain"
 msgid "Server Administration"
-msgstr "服务器域"
+msgstr "服务器管理"
 
 #: plinth/modules/cockpit/__init__.py:48
 #, python-brace-format
@@ -579,19 +565,18 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
+"Cockpit 是一个服务器管理器，它使得在浏览器内管理 GNU/Linux 服务器很容易。在一个 {box_name} "
+"上，许多通常不会需要的高级功能也可被控制。您也可以使用基于网页的终端来进行控制台操作。"
 
 #: plinth/modules/cockpit/__init__.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"启用以后，Tiny Tiny RSS 将可从网页服务器的 <a href=\"/tt-rss\">/tt-rss</a> 路"
-"径访问。"
+"启用以后，Cockpit 将可从网页服务器的 <a href=\"/_cockpit/\">/_cockpit/</a> 路径访问。它将能被该 "
+"{box_name} 上任何属于 admin 组的<a href=\"{users_url}\">用户</a>访问。"
 
 #: plinth/modules/config/__init__.py:61 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/ikiwiki/views.py:35
@@ -611,14 +596,12 @@ msgid "Invalid domain name"
 msgstr "无效的域名"
 
 #: plinth/modules/config/forms.py:50
-#, fuzzy
-#| msgid "Default"
 msgid "Apache Default"
-msgstr "默认"
+msgstr "Apache 默认"
 
 #: plinth/modules/config/forms.py:51
 msgid "FreedomBox Service (Plinth)"
-msgstr ""
+msgstr "FreedomBox 服务（Plinth）"
 
 #: plinth/modules/config/forms.py:63
 msgid "Hostname"
@@ -656,10 +639,8 @@ msgstr ""
 "符。"
 
 #: plinth/modules/config/forms.py:94
-#, fuzzy
-#| msgid "Web Server (HTTP)"
 msgid "Webserver Home Page"
-msgstr "Web 服务器（HTTP）"
+msgstr "Web 服务器首页"
 
 #: plinth/modules/config/forms.py:96
 #, python-brace-format
@@ -670,6 +651,9 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
+"选择别人访问您的 {box_name} 时需要看到的默认页面。一个典型用法是，您可以选择您的博客或者 Wiki 来作为别人访问域名时的首页。请注意，"
+"一旦首页设置到了 {box_name} 服务（Plinth）之外的其它地方，您的用户必须明确输入 /plinth 或 /freedombox 来访问 "
+"{box_name} 服务（Plinth）。"
 
 #: plinth/modules/config/forms.py:107
 msgid "Show advanced apps and features"
@@ -711,8 +695,7 @@ msgid "Domain name set"
 msgstr "域名集"
 
 #: plinth/modules/config/views.py:101
-#, fuzzy, python-brace-format
-#| msgid "Error setting hostname: {exception}"
+#, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "设置主机名错误：{exception}"
 
@@ -721,10 +704,9 @@ msgid "Webserver home page set"
 msgstr "网页服务器主页已设置"
 
 #: plinth/modules/config/views.py:112
-#, fuzzy, python-brace-format
-#| msgid "Error setting domain name: {exception}"
+#, python-brace-format
 msgid "Error changing advanced mode: {exception}"
-msgstr "设置域名错误：{exception}"
+msgstr "更改为高级模式时错误：{exception}"
 
 #: plinth/modules/config/views.py:117
 msgid "Showing advanced apps and features"
@@ -736,7 +718,7 @@ msgstr "隐藏先进的应用和特征"
 
 #: plinth/modules/coquelicot/__init__.py:40
 msgid "Coquelicot"
-msgstr ""
+msgstr "Coquelicot"
 
 #: plinth/modules/coquelicot/__init__.py:42
 msgid "File Sharing"
@@ -747,7 +729,7 @@ msgid ""
 "Coquelicot is a “one-click” file sharing web application with a focus on "
 "protecting users’ privacy. It is best used for quickly sharing a single "
 "file. "
-msgstr ""
+msgstr "Coquelicot 是一个“即点即用”的文件分享应用，注重保护用户隐私。适宜快速分享单个文件。 "
 
 #: plinth/modules/coquelicot/__init__.py:48
 msgid ""
@@ -758,8 +740,6 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/coquelicot/forms.py:30
-#, fuzzy
-#| msgid "Save Password"
 msgid "Upload Password"
 msgstr "保存密码"
 
@@ -790,8 +770,6 @@ msgid "Failed to update upload password"
 msgstr "更新上传的密码失败"
 
 #: plinth/modules/coquelicot/views.py:70
-#, fuzzy
-#| msgid "Maximum players configuration updated"
 msgid "Maximum file size updated"
 msgstr "最大玩家配置已更新"
 
@@ -818,10 +796,6 @@ msgid "Time Zone"
 msgstr "时区"
 
 #: plinth/modules/datetime/forms.py:36
-#, fuzzy
-#| msgid ""
-#| "Set your time zone to get accurate timestamps. This will set the "
-#| "systemwide time zone."
 msgid ""
 "Set your time zone to get accurate timestamps. This will set the system-wide "
 "time zone."
@@ -841,17 +815,11 @@ msgid "Time zone set"
 msgstr "时区设置"
 
 #: plinth/modules/deluge/__init__.py:39 plinth/modules/deluge/manifest.py:24
-#, fuzzy
-#| msgid "Enable Deluge"
 msgid "Deluge"
 msgstr "启用 Deluge"
 
 #: plinth/modules/deluge/__init__.py:41
 #: plinth/modules/transmission/__init__.py:43
-#, fuzzy
-#| msgid ""
-#| "BitTorrent Web Client \n"
-#| " (Deluge)"
 msgid "BitTorrent Web Client"
 msgstr ""
 "BitTorrent 网页客户端\n"
