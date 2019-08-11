@@ -1,0 +1,15 @@
+// When release information such as 'Version' and 'Suite' change for a
+// distribution changes, apt requires an explicit confirmation from the user.
+// apt-get(8) specifies the reason for this prompt as ensuring that the user is
+// prepared for the change. On a FreedomBox installation, as the system
+// administration agent of the user, FreedomBox has to make this decision on
+// whether the user is ready for the change. FreedomBox works to keep the system
+// up-to-date and manages configuration changes for packages, data migration
+// etc. Hence, accept all release information changes without a prompt.
+//
+// Without this, when a stable release is made, if the user was using that
+// code-name before the release, then the system stop receiving updates and no
+// new apps can be installed in FreedomBox. This happened in case of Buster
+// release although Debian itself had some part in this. See:
+// https://salsa.debian.org/freedombox-team/plinth/issues/1601
+Acquire::AllowReleaseInfoChange "true";
