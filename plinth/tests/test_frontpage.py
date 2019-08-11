@@ -24,9 +24,6 @@ import pytest
 
 from plinth.frontpage import Shortcut, add_custom_shortcuts
 
-from .test_custom_shortcuts import (fixture_custom_shortcuts_file,
-                                    fixture_nextcloud_shortcut)
-
 # pylint: disable=protected-access
 
 
