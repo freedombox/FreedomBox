@@ -22,12 +22,15 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth.frontpage import Shortcut
+from plinth.frontpage import Shortcut, add_custom_shortcuts
+
+from .test_custom_shortcuts import (fixture_custom_shortcuts_file,
+                                    fixture_nextcloud_shortcut)
 
 # pylint: disable=protected-access
 
 
-@pytest.fixture(name='clean_global_shotcuts', autouse=True)
+@pytest.fixture(name='clean_global_shortcuts', autouse=True)
 def fixture_clean_global_shortcuts():
     """Ensure that global list of shortcuts is clean."""
     Shortcut._all_shortcuts = {}
@@ -81,7 +84,7 @@ def test_shortcut_remove():
 
 
 @pytest.fixture(name='common_shortcuts')
-def fixture_common_shortcuts(clean_global_shotcuts):
+def fixture_common_shortcuts(clean_global_shortcuts):
     """Create some common shortcuts."""
     shortcuts = [
         Shortcut('anon-web-app-component-1', 'name1', 'short4', url='url1'),
@@ -141,3 +144,9 @@ def test_shortcut_list_with_username(superuser_run, common_shortcuts):
     superuser_run.return_value = 'group1\ngroup2'
     return_list = Shortcut.list(username='user2')
     assert return_list == [cuts[0], cuts[1], cuts[2], cuts[3]]
+
+
+@pytest.mark.usefixtures('nextcloud_shortcut')
+def test_add_custom_shortcuts():
+    """Test that adding custom shortcuts succeeds."""
+    add_custom_shortcuts()
