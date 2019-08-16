@@ -170,21 +170,42 @@ def _check_and_backports_sources():
 
 def _add_apt_preferences():
     """Setup APT preferences to upgrade selected packages from backports."""
-    old_preferences_file = '/etc/apt/preferences.d/50freedombox.pref'
-    if os.path.exists(old_preferences_file):
-        os.remove(old_preferences_file)
+    preferences_path = '/etc/apt/preferences.d'
+    old_preferences_files = map(
+        lambda pref_file: os.path.join(preferences_path, pref_file),
+        ['50freedombox.pref', '50freedombox2.pref'])
 
-    preferences_file = '/etc/apt/preferences.d/50freedombox2.pref'
+    for pref_file in old_preferences_files:
+        os.path.exists(pref_file) and os.remove(pref_file)
+
+    preferences_file = '/etc/apt/preferences.d/50freedombox3.pref'
     if os.path.exists(preferences_file):
         print('Preferences up-to-date. Skipping update')
         return
 
-    preferences = '''Explanation: This file is managed by FreedomBox, do not edit.
+    warning = 'Explanation: This file is managed by FreedomBox, do not edit.'
+
+    freedombox_preference = '''
 Explanation: Allow carefully selected updates to 'freedombox' from backports.
 Package: freedombox
 Pin: release a=buster-backports
 Pin-Priority: 500
 '''
+
+    matrix_synapse_preferences = '''
+Explanation: Allow carefully selected updates to 'matrix-synapse' from backports.
+Package: matrix-synapse
+Pin: version 1.2*
+Pin-Priority: 500
+
+Explanation: Allow carefully selected updates to 'python3-service-identity' from backports.
+Package: python3-service-identity
+Pin: version 18.1*
+Pin-Priority: 500
+'''
+
+    preferences = "".join(
+        [warning, freedombox_preference, matrix_synapse_preferences])
 
     print('Updating APT preferences.')
     with open(preferences_file, 'w') as file_handle:
