@@ -51,8 +51,9 @@ def is_available(browser, site_name):
     time.sleep(3)
     browser.reload()
     not_404 = '404' not in browser.title
-    # A trailing slash might be appended by Apache redirect rules
-    no_redirect = url_to_visit.strip('/') == browser.url.strip('/')
+    # The site might have a default path after the sitename,
+    # e.g /mediawiki/Main_Page
+    no_redirect = browser.url.startswith(url_to_visit.strip('/'))
     return not_404 and no_redirect
 
 
