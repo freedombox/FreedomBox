@@ -32,9 +32,9 @@ from plinth.modules import names
 def access_info(request, **kwargs):
     """API view to return a list of domains and types."""
     domains = [{
-        'domain': domain,
-        'type': domain_type
-    } for domain_type, domains in names.domains.items() for domain in domains]
+        'domain': domain.name,
+        'type': domain.domain_type.component_id
+    } for domain in names.components.DomainName.list()]
     response = {'domains': domains}
 
     return HttpResponse(json.dumps(response), content_type='application/json')
@@ -54,7 +54,7 @@ def get_shortcuts_as_json(username=None):
     shortcuts = [
         _get_shortcut_data(shortcut)
         for shortcut in frontpage.Shortcut.list(username)
-        if shortcut.component_id
+        if shortcut.component_id and shortcut.is_enabled()
     ]
     custom_shortcuts = frontpage.get_custom_shortcuts()
     if custom_shortcuts:

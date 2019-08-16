@@ -28,10 +28,10 @@ from plinth.daemon import Daemon
 from plinth.modules import names
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.signals import domain_added, domain_removed, domainname_change
+from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -104,17 +104,14 @@ def init():
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
-    domainname_change.connect(on_domainname_change)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    domains = [
-        domain for domains_of_a_type in names.domains.values()
-        for domain in domains_of_a_type
-    ]
-    helper.call('post', actions.superuser_run, 'cockpit', ['setup'] + domains)
+    domains = names.components.DomainName.list_names('https')
+    helper.call('post', actions.superuser_run, 'cockpit',
+                ['setup'] + list(domains))
     helper.call('post', app.enable)
 
 
@@ -142,11 +139,3 @@ def on_domain_removed(sender, domain_type, name, **kwargs):
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         actions.superuser_run('cockpit', ['remove-domain', name])
-
-
-def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
-    """Handle change of a domain."""
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        actions.superuser_run('cockpit', ['remove-domain', old_domainname])
-        actions.superuser_run('cockpit', ['add-domain', new_domainname])

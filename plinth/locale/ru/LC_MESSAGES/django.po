@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-29 18:38-0400\n"
+"POT-Creation-Date: 2019-08-12 19:14-0400\n"
 "PO-Revision-Date: 2019-07-22 17:06+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -54,15 +54,15 @@ msgstr "Невозможно подключиться к {host}:{port}"
 msgid "FreedomBox"
 msgstr "FrеedomBox"
 
-#: plinth/forms.py:39
+#: plinth/forms.py:38
 msgid "Enable application"
 msgstr "Включить приложение"
 
-#: plinth/forms.py:52
+#: plinth/forms.py:54
 msgid "Select a domain name to be used with this application"
 msgstr "Выберите доменное имя, которое будет использоваться этим приложением"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:56
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -70,15 +70,15 @@ msgstr ""
 "Предупреждение! Приложение может не работать должным образом, если доменное "
 "имя будет изменено."
 
-#: plinth/forms.py:62
+#: plinth/forms.py:64
 msgid "Language"
 msgstr "Язык"
 
-#: plinth/forms.py:63
+#: plinth/forms.py:65
 msgid "Language to use for presenting this web interface"
 msgstr "Язык, используемый для представления данного веб-интерфейса"
 
-#: plinth/forms.py:70
+#: plinth/forms.py:72
 msgid "Use the language preference set in the browser"
 msgstr "Использовать языковые настройки браузера"
 
@@ -595,7 +595,7 @@ msgstr "Включить DNSSEC"
 msgid "Enable Domain Name System Security Extensions"
 msgstr "Включить расширения безопасности системы доменных имен"
 
-#: plinth/modules/bind/views.py:59 plinth/modules/dynamicdns/views.py:172
+#: plinth/modules/bind/views.py:59 plinth/modules/dynamicdns/views.py:169
 #: plinth/modules/openvpn/views.py:146 plinth/modules/shadowsocks/views.py:79
 #: plinth/modules/transmission/views.py:74
 msgid "Configuration updated"
@@ -633,15 +633,17 @@ msgstr ""
 "веб-сервере. Он может быть доступен на <a href=\"{users_url}\">любому "
 "пользователю</a> {box_name}, принадлежащему к группе админов."
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/dynamicdns/views.py:45
+#: plinth/modules/config/__init__.py:60 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/ikiwiki/views.py:35
+#: plinth/modules/names/templates/names.html:44
+#: plinth/modules/names/templates/names.html:58
 #: plinth/modules/pagekite/views.py:36 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Настроить"
 
-#: plinth/modules/config/__init__.py:168 plinth/modules/config/forms.py:77
-#: plinth/modules/config/views.py:171 plinth/modules/dynamicdns/forms.py:111
+#: plinth/modules/config/__init__.py:66 plinth/modules/config/forms.py:77
+#: plinth/modules/dynamicdns/forms.py:111
 msgid "Domain Name"
 msgstr "Доменное имя"
 
@@ -732,48 +734,48 @@ msgstr ""
 msgid "Learn more..."
 msgstr "Подробнее..."
 
-#: plinth/modules/config/views.py:55
+#: plinth/modules/config/views.py:54
 msgid "General Configuration"
 msgstr "Общие настройки"
 
-#: plinth/modules/config/views.py:79
+#: plinth/modules/config/views.py:78
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Ошибка параметра hostname: {exception}"
 
-#: plinth/modules/config/views.py:82
+#: plinth/modules/config/views.py:81
 msgid "Hostname set"
 msgstr "Смена имени хоста"
 
-#: plinth/modules/config/views.py:90
+#: plinth/modules/config/views.py:89
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Ошибка параметра имени домена: {exception}"
 
-#: plinth/modules/config/views.py:93
+#: plinth/modules/config/views.py:92
 msgid "Domain name set"
 msgstr "Смена доменного имени"
 
-#: plinth/modules/config/views.py:101
+#: plinth/modules/config/views.py:100
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Ошибка параметра домашней страницы веб-сервера: {exception}"
 
-#: plinth/modules/config/views.py:104
+#: plinth/modules/config/views.py:103
 msgid "Webserver home page set"
 msgstr "Установка домашней страницы веб-сервера"
 
-#: plinth/modules/config/views.py:112
+#: plinth/modules/config/views.py:111
 #, fuzzy, python-brace-format
 #| msgid "Error setting domain name: {exception}"
 msgid "Error changing advanced mode: {exception}"
 msgstr "Ошибка параметра имени домена: {exception}"
 
-#: plinth/modules/config/views.py:117
+#: plinth/modules/config/views.py:116
 msgid "Showing advanced apps and features"
 msgstr ""
 
-#: plinth/modules/config/views.py:120
+#: plinth/modules/config/views.py:119
 msgid "Hiding advanced apps and features"
 msgstr ""
 
@@ -1037,7 +1039,7 @@ msgstr ""
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
-#: plinth/modules/tor/templates/tor.html:96
+#: plinth/modules/tor/templates/tor.html:94
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #: plinth/templates/app.html:89
 msgid "Update setup"
@@ -1058,11 +1060,11 @@ msgstr "Регистрации пользователя включена"
 msgid "User registrations disabled"
 msgstr "Приложение отключено"
 
-#: plinth/modules/dynamicdns/__init__.py:41
+#: plinth/modules/dynamicdns/__init__.py:40
 msgid "Dynamic DNS Client"
 msgstr "Клиент динамического DNS"
 
-#: plinth/modules/dynamicdns/__init__.py:45
+#: plinth/modules/dynamicdns/__init__.py:44
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1073,7 +1075,7 @@ msgstr ""
 "в 24 часа) это может стать препятствиям, чтобы найти вас в Интернете. Это "
 "так-же может сделать недоступными предоставляемые {box_name} услуги."
 
-#: plinth/modules/dynamicdns/__init__.py:49
+#: plinth/modules/dynamicdns/__init__.py:48
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1090,10 +1092,11 @@ msgstr ""
 "сервер будет назначать DNS-имя на новый IP-адрес, и если кто-то из Интернета "
 "запрашивает DNS-имя, они будут получать ответ ваш текущий IP-адрес."
 
-#: plinth/modules/dynamicdns/__init__.py:89
-#: plinth/modules/dynamicdns/views.py:169
-msgid "Dynamic DNS Service"
-msgstr "Служба динамического DNS"
+#: plinth/modules/dynamicdns/__init__.py:78
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Dynamic Domain Name"
+msgstr "Доменное имя"
 
 #: plinth/modules/dynamicdns/forms.py:43
 msgid ""
@@ -1436,7 +1439,7 @@ msgstr "Запустить веб-клиент"
 #: plinth/modules/openvpn/templates/openvpn.html:123
 #: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
-#: plinth/modules/tor/templates/tor.html:88 plinth/templates/app.html:81
+#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:81
 msgid "Configuration"
 msgstr "Конфигурация"
 
@@ -1488,13 +1491,11 @@ msgstr "Служба/Порт"
 
 #: plinth/modules/firewall/templates/firewall.html:63
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:89
-#: plinth/modules/names/templates/names.html:47
 msgid "Enabled"
 msgstr "Включено"
 
 #: plinth/modules/firewall/templates/firewall.html:66
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
-#: plinth/modules/names/templates/names.html:49
 #: plinth/modules/networks/forms.py:69 plinth/templates/cards.html:49
 msgid "Disabled"
 msgstr "Выключено"
@@ -2061,15 +2062,15 @@ msgstr ""
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
-#: plinth/modules/letsencrypt/__init__.py:47
+#: plinth/modules/letsencrypt/__init__.py:46
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:49
+#: plinth/modules/letsencrypt/__init__.py:48
 msgid "Certificates"
 msgstr "Сертификаты"
 
-#: plinth/modules/letsencrypt/__init__.py:53
+#: plinth/modules/letsencrypt/__init__.py:52
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -2083,7 +2084,7 @@ msgstr ""
 "автоматически получать и устанавливать цифровые сертификаты для каждого "
 "доступного домена."
 
-#: plinth/modules/letsencrypt/__init__.py:59
+#: plinth/modules/letsencrypt/__init__.py:58
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -2503,23 +2504,23 @@ msgid "Address"
 msgstr "Адрес"
 
 #: plinth/modules/minetest/templates/minetest.html:33
-#: plinth/modules/tor/templates/tor.html:114
+#: plinth/modules/tor/templates/tor.html:112
 msgid "Port"
 msgstr "Порт"
 
-#: plinth/modules/minetest/views.py:72
+#: plinth/modules/minetest/views.py:70
 msgid "Maximum players configuration updated"
 msgstr "Максимум игроков обновлен"
 
-#: plinth/modules/minetest/views.py:79
+#: plinth/modules/minetest/views.py:77
 msgid "Creative mode configuration updated"
 msgstr "Конфигурация творческого режима обновлена"
 
-#: plinth/modules/minetest/views.py:85
+#: plinth/modules/minetest/views.py:83
 msgid "PVP configuration updated"
 msgstr "Конфигурация PVP обновлена"
 
-#: plinth/modules/minetest/views.py:91
+#: plinth/modules/minetest/views.py:89
 msgid "Damage configuration updated"
 msgstr "Конфигурация урона обновлена"
 
@@ -2622,7 +2623,7 @@ msgstr "Публикация ключа на сервер ключей..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:75
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:55
-#: plinth/modules/tor/templates/tor.html:113
+#: plinth/modules/tor/templates/tor.html:111
 msgid "Service"
 msgstr "Служба"
 
@@ -2637,6 +2638,7 @@ msgstr "OpenPGP отпечаток"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:86
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:58
+#: plinth/modules/names/components.py:39
 msgid "Secure Shell"
 msgstr "Sеcure Shell"
 
@@ -2726,11 +2728,11 @@ msgstr "Импортированный ключ."
 msgid "Cancelled key publishing."
 msgstr "Отменена публикация ключа."
 
-#: plinth/modules/monkeysphere/views.py:149
+#: plinth/modules/monkeysphere/views.py:146
 msgid "Published key to keyserver."
 msgstr "Опубликованый ключ на сервере ключей."
 
-#: plinth/modules/monkeysphere/views.py:151
+#: plinth/modules/monkeysphere/views.py:148
 msgid "Error occurred while publishing key."
 msgstr "Произошла ошибка при публикации ключа."
 
@@ -2768,23 +2770,11 @@ msgstr "Plumble"
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
-#: plinth/modules/names/__init__.py:33
-msgid "HTTP"
-msgstr "HTTP"
-
-#: plinth/modules/names/__init__.py:34
-msgid "HTTPS"
-msgstr "HTTPS"
-
-#: plinth/modules/names/__init__.py:35
-msgid "SSH"
-msgstr "SSH"
-
-#: plinth/modules/names/__init__.py:42
+#: plinth/modules/names/__init__.py:37
 msgid "Name Services"
 msgstr "Название услуги"
 
-#: plinth/modules/names/__init__.py:53
+#: plinth/modules/names/__init__.py:45
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -2797,9 +2787,13 @@ msgstr ""
 "PageKite. Для каждого способа указывается, включён или отключён доступ по "
 "HTTP, HTTPS и SSH для входящих соединений на данное имя."
 
-#: plinth/modules/names/views.py:50
-msgid "Not Available"
-msgstr "Не доступно"
+#: plinth/modules/names/components.py:27
+msgid "All"
+msgstr ""
+
+#: plinth/modules/names/components.py:31 plinth/modules/names/components.py:35
+msgid "All web apps"
+msgstr ""
 
 #: plinth/modules/networks/__init__.py:36
 msgid "Networks"
@@ -3504,15 +3498,15 @@ msgstr "Установка завершена."
 msgid "Setup failed."
 msgstr "Установка не удалась."
 
-#: plinth/modules/pagekite/__init__.py:46
+#: plinth/modules/pagekite/__init__.py:47
 msgid "PageKite"
 msgstr "PаgeKite"
 
-#: plinth/modules/pagekite/__init__.py:48
+#: plinth/modules/pagekite/__init__.py:49
 msgid "Public Visibility"
 msgstr "Публичная видимость"
 
-#: plinth/modules/pagekite/__init__.py:52
+#: plinth/modules/pagekite/__init__.py:53
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -3525,19 +3519,19 @@ msgstr ""
 "недоступны из остальной части интернета. Это включает в себя следующие "
 "ситуации:"
 
-#: plinth/modules/pagekite/__init__.py:58
+#: plinth/modules/pagekite/__init__.py:59
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} ограничен брандмауэром."
 
-#: plinth/modules/pagekite/__init__.py:61
+#: plinth/modules/pagekite/__init__.py:62
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} подключен к маршрутизатору (беспроводному), который вы не "
 "контролируете."
 
-#: plinth/modules/pagekite/__init__.py:63
+#: plinth/modules/pagekite/__init__.py:64
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -3545,7 +3539,7 @@ msgstr ""
 "Ваш провайдер не предоставляет вам внешний IP-адрес и вместо этого "
 "обеспечивает подключение к Интернету через NAT."
 
-#: plinth/modules/pagekite/__init__.py:65
+#: plinth/modules/pagekite/__init__.py:66
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -3553,11 +3547,11 @@ msgstr ""
 "Ваш провайдер не предоставляет вам статический IP-адрес, и ваш-IP адрес "
 "изменяется каждый раз при подключении к Интернету."
 
-#: plinth/modules/pagekite/__init__.py:67
+#: plinth/modules/pagekite/__init__.py:68
 msgid "Your ISP limits incoming connections."
 msgstr "Ваш провайдер ограничивает входящие соединения."
 
-#: plinth/modules/pagekite/__init__.py:69
+#: plinth/modules/pagekite/__init__.py:70
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP-address limitations by using a "
@@ -3569,6 +3563,12 @@ msgstr ""
 "комбинацию туннелей и обратных прокси. Можно использовать любого поставщика "
 "услуг pagekite, например <a href=\"https://pagekite.net\">pagekite.net</a>. "
 "В будущем, для этого возможно будет использовать {box_name} вашего приятеля."
+
+#: plinth/modules/pagekite/__init__.py:96
+#, fuzzy
+#| msgid "PageKite Account"
+msgid "PageKite Domain"
+msgstr "Учетная запись PageKite"
 
 #: plinth/modules/pagekite/forms.py:69
 msgid "Enable PageKite"
@@ -3827,10 +3827,6 @@ msgid ""
 msgstr ""
 "<a href=\"https://pagekite.net/wiki/Howto/SshOverPageKite/\">Инструкции</a> "
 "по настройке клиента SSH"
-
-#: plinth/modules/pagekite/utils.py:288
-msgid "Pagekite"
-msgstr "Pаgekite"
 
 #: plinth/modules/pagekite/views.py:40
 msgid "Standard Services"
@@ -5141,35 +5137,35 @@ msgstr ""
 "a>."
 
 #: plinth/modules/tor/__init__.py:80
-msgid "Tor Socks Proxy"
-msgstr "Tor Socks прокси"
-
-#: plinth/modules/tor/__init__.py:84
-msgid "Tor Bridge Relay"
-msgstr "Ретранслятор Tor типа мост"
-
-#: plinth/modules/tor/__init__.py:122 plinth/modules/tor/__init__.py:150
 msgid "Tor Hidden Service"
 msgstr "Скрытый сервис Tor"
 
-#: plinth/modules/tor/__init__.py:170
+#: plinth/modules/tor/__init__.py:84
+msgid "Tor Socks Proxy"
+msgstr "Tor Socks прокси"
+
+#: plinth/modules/tor/__init__.py:88
+msgid "Tor Bridge Relay"
+msgstr "Ретранслятор Tor типа мост"
+
+#: plinth/modules/tor/__init__.py:165
 msgid "Tor relay port available"
 msgstr "Доступен порт трансляции Tor"
 
-#: plinth/modules/tor/__init__.py:180
+#: plinth/modules/tor/__init__.py:175
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 транспорт зарегестрирован"
 
-#: plinth/modules/tor/__init__.py:188
+#: plinth/modules/tor/__init__.py:183
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 транспорт зарегистрирован"
 
-#: plinth/modules/tor/__init__.py:227
+#: plinth/modules/tor/__init__.py:222
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Доступ к {url} по tcp{kind} через Tor"
 
-#: plinth/modules/tor/__init__.py:238
+#: plinth/modules/tor/__init__.py:233
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Подтверждение использования Tor в {url} по tcp {kind}"
@@ -5303,11 +5299,11 @@ msgstr "Скрытая Служба"
 msgid "Ports"
 msgstr "Порты"
 
-#: plinth/modules/tor/templates/tor.html:100
+#: plinth/modules/tor/templates/tor.html:98
 msgid "Relay"
 msgstr "Ретранслятор"
 
-#: plinth/modules/tor/templates/tor.html:102
+#: plinth/modules/tor/templates/tor.html:100
 #, python-format
 msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
@@ -5317,11 +5313,11 @@ msgstr ""
 "должны убедиться, что следующие порты являются открытыми и проброшены, если "
 "необходимо:"
 
-#: plinth/modules/tor/templates/tor.html:130
+#: plinth/modules/tor/templates/tor.html:128
 msgid "SOCKS"
 msgstr "SОCKS"
 
-#: plinth/modules/tor/templates/tor.html:133
+#: plinth/modules/tor/templates/tor.html:131
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Порт Tor SOCKS вашего %(box_name)s доступен по порту TCP 9050."
@@ -5430,9 +5426,14 @@ msgid "Updating..."
 msgstr "Обновляется..."
 
 #: plinth/modules/upgrades/templates/upgrades.html:57
+#, fuzzy
+#| msgid ""
+#| "<strong>This may take a long time to complete</strong>. During an update, "
+#| "you can not install apps. Also, this web interface may be temporarily "
+#| "unavailable and show an error. In that case, refresh the page to continue."
 msgid ""
 "<strong>This may take a long time to complete</strong>. During an update, "
-"you can not install apps. Also, this web interface may be temporarily "
+"you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
 "<strong>Для завершения может потребоваться много времени</strong>. Во время "
@@ -5440,7 +5441,7 @@ msgstr ""
 "временно недоступен и показывать ошибку. В таком случае, чтобы продолжить, "
 "обновите страницу."
 
-#: plinth/modules/upgrades/templates/upgrades.html:69
+#: plinth/modules/upgrades/templates/upgrades.html:71
 msgid "Toggle recent update logs"
 msgstr "Переключите последние протоколы обновления"
 
@@ -6014,6 +6015,24 @@ msgstr "Приложение отключено"
 #: plinth/web_framework.py:189
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid "Dynamic DNS Service"
+#~ msgstr "Служба динамического DNS"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "HTTPS"
+#~ msgstr "HTTPS"
+
+#~ msgid "SSH"
+#~ msgstr "SSH"
+
+#~ msgid "Not Available"
+#~ msgstr "Не доступно"
+
+#~ msgid "Pagekite"
+#~ msgstr "Pаgekite"
 
 #~ msgid "Create new repository"
 #~ msgstr "Создать новый репозиторий"

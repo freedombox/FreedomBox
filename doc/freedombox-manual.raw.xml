@@ -1647,6 +1647,10 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
           </listitem>
         </itemizedlist>
       </section>
+      <section>
+        <title>Troubleshooting</title>
+        <para>1. If you are using FreedomBox Pioneer Edition or installing FreedomBox on Debian Buster, then radicale may not be usable immediately after installation. This is due to a bug which has been fixed later. To overcome the problem, upgrade FreedomBox by clicking on 'Manual Update' from 'Updates' app. Otherwise, simply wait a day or two and let FreedomBox upgrade itself. After that install radicale. If radicale is already installed, disable and re-enable it after the update is completed. This will fix the problem and get radicale working properly. </para>
+      </section>
     </section>
     <section>
       <title>Chat Server (ejabberd)</title>
@@ -3907,7 +3911,7 @@ https://exampletorhs.onion/cockpit/]]></screen>
       <title>Dynamic DNS Client</title>
       <section>
         <title>What is Dynamic DNS?</title>
-        <para>In order to reach a server on the Internet, the server needs to have permanent address also know as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server. </para>
+        <para>In order to reach a server on the Internet, the server needs to have permanent address also known as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server. </para>
         <para>Dynamic DNS service providers assist in working around a problem.  First they provide you with a domain name, such as 'myhost.example.org'.  Then they associate your IP address, whenever it changes, with this domain name.  Then anyone intending to reach the server will be to contact the server using the domain name 'myhost.example.org' which always points to the latest IP address of the server. </para>
         <para>For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on FreedomBox, such as ownCloud, to the Internet. </para>
       </section>
@@ -9802,6 +9806,47 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.14 (2019-08-12)</title>
+        <itemizedlist>
+          <listitem>
+            <para>storage: Handle all device paths during eject </para>
+          </listitem>
+          <listitem>
+            <para>storage: Fix incorrect internationalization when throwing an error </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Use collapsible-button style for logs </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Allow automatic upgrade to 0.7.x </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Handle release info change </para>
+          </listitem>
+          <listitem>
+            <para>frontpage: Fix regression with loading custom shortcuts </para>
+          </listitem>
+          <listitem>
+            <para>names: Add dynamic domain name </para>
+          </listitem>
+          <listitem>
+            <para>names: Add button to configure each type of name </para>
+          </listitem>
+          <listitem>
+            <para>names: Update page layout for clearer presentation </para>
+          </listitem>
+          <listitem>
+            <para>names: Introduce new API for domain name handling </para>
+          </listitem>
+          <listitem>
+            <para>api: Fix regression with listing only enabled apps in mobile app </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for Czech, Hungarian, French, Chinese (Simplified), Turkish, Polish, and Norwegian Bokmål </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.13 (2019-07-29)</title>
         <itemizedlist>

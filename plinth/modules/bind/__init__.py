@@ -29,7 +29,7 @@ from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -126,6 +126,7 @@ def setup(helper, old_version=None):
 def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
     helper.install(managed_packages, force_configuration='old')
+    return True
 
 
 def diagnose():

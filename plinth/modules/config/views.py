@@ -25,10 +25,9 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
 from plinth import actions
-from plinth.modules import config, firewall
-from plinth.modules.names import SERVICES
-from plinth.signals import (domain_added, domain_removed, domainname_change,
-                            post_hostname_change, pre_hostname_change)
+from plinth.modules import config
+from plinth.signals import (domain_added, domain_removed, post_hostname_change,
+                            pre_hostname_change)
 
 from .forms import ConfigurationForm
 
@@ -83,7 +82,7 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['domainname'] != new_status['domainname']:
         try:
-            set_domainname(new_status['domainname'])
+            set_domainname(new_status['domainname'], old_status['domainname'])
         except Exception as exception:
             messages.error(
                 request,
@@ -142,7 +141,7 @@ def set_hostname(hostname):
     actions.superuser_run('domainname-change', [domainname])
 
 
-def set_domainname(domainname):
+def set_domainname(domainname, old_domainname):
     """Sets machine domain name to domainname"""
     old_domainname = config.get_domainname()
 
@@ -152,21 +151,13 @@ def set_domainname(domainname):
     LOGGER.info('Changing domain name to - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])
 
-    domainname_change.send_robust(sender='config',
-                                  old_domainname=old_domainname,
-                                  new_domainname=domainname)
-
     # Update domain registered with Name Services module.
-    domain_removed.send_robust(sender='config', domain_type='domainname')
-    if domainname:
-        try:
-            domainname_services = firewall.get_enabled_services(
-                zone='external')
-        except actions.ActionError:
-            # This happens when firewalld is not installed.
-            # TODO: Are these services actually enabled?
-            domainname_services = [service[0] for service in SERVICES]
+    if old_domainname:
+        domain_removed.send_robust(sender='config',
+                                   domain_type='domain-type-static',
+                                   name=old_domainname)
 
-        domain_added.send_robust(sender='config', domain_type='domainname',
-                                 name=domainname, description=_('Domain Name'),
-                                 services=domainname_services)
+    if domainname:
+        domain_added.send_robust(sender='config',
+                                 domain_type='domain-type-static',
+                                 name=domainname, services='__all__')

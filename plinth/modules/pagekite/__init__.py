@@ -22,10 +22,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.modules.names.components import DomainType
 from plinth.utils import format_lazy
 
 from . import utils
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -91,6 +92,10 @@ class PagekiteApp(app_module.App):
                               'fa-flag', 'pagekite:index',
                               parent_url_name='system')
         self.add(menu_item)
+
+        domain_type = DomainType('domain-type-pagekite', _('PageKite Domain'),
+                                 'pagekite:index', can_have_certificate=True)
+        self.add(domain_type)
 
         # XXX: Add pagekite daemon component and simplify action script
 

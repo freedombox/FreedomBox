@@ -205,7 +205,7 @@ def dynamicdns_change_config(browser):
 def backup_delete_root_archives(browser):
     """Delete all archives of the root borg repository"""
     browser.visit(default_url + '/plinth/sys/backups/')
-    path = "//a[starts-with(@href,'/plinth/sys/backups/delete/root/')]"
+    path = "//a[starts-with(@href,'/plinth/sys/backups/root/delete/')]"
     while browser.find_by_xpath(path):
         browser.find_by_xpath(path).first.click()
         with wait_for_page_update(browser,

@@ -27,11 +27,11 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.names import SERVICES
+from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed
 
 from . import utils
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 3
 
@@ -77,6 +77,10 @@ class TorApp(app_module.App):
                               'tor:index', parent_url_name='apps')
         self.add(menu_item)
 
+        domain_type = DomainType('domain-type-tor', _('Tor Hidden Service'),
+                                 'tor:index', can_have_certificate=False)
+        self.add(domain_type)
+
         firewall = Firewall('firewall-tor-socks', _('Tor Socks Proxy'),
                             ports=['tor-socks'], is_external=False)
         self.add(firewall)
@@ -105,21 +109,13 @@ def init():
         # Register hidden service name with Name Services module.
         status = utils.get_status()
         hostname = status['hs_hostname']
-        hs_virtports = [port['virtport'] for port in status['hs_ports']]
+        services = [int(port['virtport']) for port in status['hs_ports']]
 
         if status['enabled'] and status['is_running'] and \
            status['hs_enabled'] and status['hs_hostname']:
-            hs_services = []
-            for service_type in SERVICES:
-                if str(service_type[2]) in hs_virtports:
-                    hs_services.append(service_type[0])
-        else:
-            hostname = None
-            hs_services = None
-
-        domain_added.send_robust(
-            sender='tor', domain_type='hiddenservice', name=hostname,
-            description=_('Tor Hidden Service'), services=hs_services)
+            domain_added.send_robust(sender='tor',
+                                     domain_type='domain-type-tor',
+                                     name=hostname, services=services)
 
 
 def setup(helper, old_version=None):
@@ -141,14 +137,13 @@ def update_hidden_service_domain(status=None):
     if not status:
         status = utils.get_status()
 
-    domain_removed.send_robust(sender='tor', domain_type='hiddenservice')
+    domain_removed.send_robust(sender='tor', domain_type='domain-type-tor')
 
     if status['enabled'] and status['is_running'] and \
        status['hs_enabled'] and status['hs_hostname']:
-        domain_added.send_robust(sender='tor', domain_type='hiddenservice',
-                                 name=status['hs_hostname'],
-                                 description=_('Tor Hidden Service'),
-                                 services=status['hs_services'])
+        services = [int(port['virtport']) for port in status['hs_ports']]
+        domain_added.send_robust(sender='tor', domain_type='domain-type-tor',
+                                 name=status['hs_hostname'], services=services)
 
 
 def diagnose():

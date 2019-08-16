@@ -25,7 +25,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.utils import Version, format_lazy
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 2
 
@@ -79,16 +79,17 @@ def setup(helper, old_version=None):
 def force_upgrade(helper, packages):
     """Force upgrade firewalld to resolve conffile prompts."""
     if 'firewalld' not in packages:
-        return
+        return False
 
     # firewalld 0.4.4.6-2 -> 0.6.x
     package = packages['firewalld']
-    if Version(package['current_version']) >= Version('0.6') or \
-       Version(package['new_version']) < Version('0.6'):
-        return
+    if Version(package['current_version']) >= Version('0.7') or \
+       Version(package['new_version']) < Version('0.7'):
+        return False
 
     helper.install(['firewalld'], force_configuration='new')
     _run(['setup'], superuser=True)
+    return True
 
 
 def get_enabled_status():

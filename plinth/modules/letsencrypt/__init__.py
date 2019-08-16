@@ -29,12 +29,11 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.errors import ActionError
 from plinth.modules import names
-from plinth.signals import (domain_added, domain_removed, domainname_change,
-                            post_module_loading)
+from plinth.signals import domain_added, domain_removed, post_module_loading
 from plinth.utils import format_lazy
 
 from . import components
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 3
 
@@ -92,7 +91,6 @@ def init():
     app = LetsEncryptApp()
     app.set_enabled(True)
 
-    domainname_change.connect(on_domainname_change)
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
 
@@ -111,12 +109,9 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    for domain_type, domains in names.domains.items():
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            results.append(action_utils.diagnose_url('https://' + domain))
+    for domain in names.components.DomainName.list():
+        if domain.domain_type.can_have_certificate:
+            results.append(action_utils.diagnose_url('https://' + domain.name))
 
     return results
 
@@ -153,24 +148,17 @@ def certificate_delete(domain):
     components.on_certificate_event('deleted', [domain], None)
 
 
-def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
-    """Drop the certificate after a domain name change."""
-    del sender  # Unused
-    del new_domainname  # Unused
-    del kwargs  # Unused
-
-
 def on_domain_added(sender, domain_type='', name='', description='',
                     services=None, **kwargs):
     """Obtain a certificate for the new domain"""
-    if domain_type == 'hiddenservice':
+    if domain_type == 'domain-type-tor':
         return False
 
     # Check if a cert if already available
     for domain_name, domain_status in get_status()['domains'].items():
-        if domain_name == name and \
-           domain_status.certificate_available and \
-           domain_status.validity == 'valid':
+        if domain_name == name and domain_status and \
+           domain_status['certificate_available'] and \
+           domain_status['validity'] == 'valid':
             return False
 
     try:
@@ -203,13 +191,9 @@ def get_status():
     status = actions.superuser_run('letsencrypt', ['get-status'])
     status = json.loads(status)
 
-    for domain_type, domains in names.domains.items():
-        # XXX: Remove when Let's Encrypt supports .onion addresses
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            status['domains'].setdefault(domain, {})
+    for domain in names.components.DomainName.list():
+        if domain.domain_type.can_have_certificate:
+            status['domains'].setdefault(domain.name, {})
 
     return status
 

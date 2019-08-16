@@ -78,15 +78,18 @@ def subcommand_expand_partition(arguments):
 
 def _resize_partition(device, requested_partition, free_space):
     """Resize the partition table entry."""
-    command = ['parted', '--align=optimal', '--script', device, 'unit', 'B',
-               'resizepart', requested_partition['number'],
-               str(free_space['end'])]
+    command = [
+        'parted', '--align=optimal', '--script', device, 'unit', 'B',
+        'resizepart', requested_partition['number'],
+        str(free_space['end'])
+    ]
     # XXX: Remove workaround after bug in parted is fixed:
     # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=24215
-    fallback_command = ['parted', '--align=optimal', device,
-                        '---pretend-input-tty', 'unit', 'B', 'resizepart',
-                        requested_partition['number'], 'yes',
-                        str(free_space['end'])]
+    fallback_command = [
+        'parted', '--align=optimal', device, '---pretend-input-tty', 'unit',
+        'B', 'resizepart', requested_partition['number'], 'yes',
+        str(free_space['end'])
+    ]
     try:
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError as exception:
@@ -107,8 +110,8 @@ def _resize_file_system(device, requested_partition, free_space):
 
 def _resize_ext4(device, requested_partition, free_space):
     """Resize an ext4 file system inside a partition."""
-    partition_device = _get_partition_device(
-        device, requested_partition['number'])
+    partition_device = _get_partition_device(device,
+                                             requested_partition['number'])
     try:
         command = ['resize2fs', partition_device]
         subprocess.run(command, stdout=subprocess.DEVNULL,
@@ -191,8 +194,9 @@ def _get_root_device_and_partition_number(device):
 
 def _get_partitions_and_free_spaces(device, partition_number):
     """Run parted and return list of partitions and free spaces."""
-    command = ['parted', '--machine', '--script', device, 'unit', 'B',
-               'print', 'free']
+    command = [
+        'parted', '--machine', '--script', device, 'unit', 'B', 'print', 'free'
+    ]
     process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
 
     requested_partition = None
@@ -258,8 +262,7 @@ def eject_drive_of_device(device_path):
 
     if not found_objects:
         raise ValueError(
-            _('No such device - {device_path}').format(
-                device_path=device_path))
+            'No such device - {device_path}'.format(device_path=device_path))
 
     obj = found_objects[0]
 

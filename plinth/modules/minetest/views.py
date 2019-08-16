@@ -51,10 +51,8 @@ class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        # Filter out onion addresses and get a unique list of domains
-        domains = set(domain for domains in names.domains.values()
-                      for domain in domains if not domain.endswith('.onion'))
-        context['domains'] = domains
+        context['domains'] = names.components.DomainName.list_names(
+            'minetest-plinth')
         return context
 
     def form_valid(self, form):

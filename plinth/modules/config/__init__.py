@@ -27,8 +27,7 @@ from django.utils.translation import ugettext_lazy
 from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth.modules import firewall
-from plinth.modules.names import SERVICES
+from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added
 
 version = 2
@@ -62,6 +61,11 @@ class ConfigApp(app_module.App):
                               'fa-cog', 'config:index',
                               parent_url_name='system')
         self.add(menu_item)
+
+        domain_type = DomainType('domain-type-static',
+                                 ugettext_lazy('Domain Name'), 'config:index',
+                                 can_have_certificate=True)
+        self.add(domain_type)
 
 
 def get_domainname():
@@ -152,21 +156,9 @@ def init():
     # Register domain with Name Services module.
     domainname = get_domainname()
     if domainname:
-        try:
-            domainname_services = firewall.get_enabled_services(
-                zone='external')
-        except actions.ActionError:
-            # This happens when firewalld is not installed.
-            # TODO: Are these services actually enabled?
-            domainname_services = [service[0] for service in SERVICES]
-    else:
-        domainname_services = None
-
-    if domainname:
-        domain_added.send_robust(sender='config', domain_type='domainname',
-                                 name=domainname,
-                                 description=ugettext_lazy('Domain Name'),
-                                 services=domainname_services)
+        domain_added.send_robust(sender='config',
+                                 domain_type='domain-type-static',
+                                 name=domainname, services='__all__')
 
 
 def setup(helper, old_version=None):

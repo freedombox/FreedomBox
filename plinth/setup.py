@@ -508,8 +508,11 @@ class ForceUpgrader():
         for app, packages in apps.items():
             try:
                 logger.info('Force upgrading app: %s', app.name)
-                app.force_upgrade(app.setup_helper, packages)
-                logger.info('Successfully force upgraded app: %s', app.name)
+                if app.force_upgrade(app.setup_helper, packages):
+                    logger.info('Successfully force upgraded app: %s',
+                                app.name)
+                else:
+                    logger.info('Ignored force upgrade for app: %s', app.name)
             except Exception as exception:
                 logger.exception('Error running force upgrade: %s', exception)
                 need_retry = True
