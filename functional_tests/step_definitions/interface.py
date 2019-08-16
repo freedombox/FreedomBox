@@ -34,7 +34,9 @@ def logged_out_user(browser):
     browser.visit(default_url + '/plinth/accounts/logout/')
 
 
-log_out = when("I log out")(logged_out_user)
+@when("I log out")
+def log_out_user(browser):
+    browser.visit(default_url + '/plinth/accounts/logout/')
 
 
 @then(parsers.parse('I should be prompted for login'))
