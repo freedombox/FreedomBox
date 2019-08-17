@@ -35,20 +35,29 @@
       for each installed app.
     {% endblocktrans %}
   </p>
-  <table class="table table-bordered table-condensed table-striped">
-    <thead>
-      <tr>
-        <th>{% trans "App Name" %}</th>
-        <th>{% trans "Vulnerabilities Reported" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for app in apps_vulns %}
+  <a class="btn btn-default collapsed collapsible-button" role="button"
+     data-toggle="collapse" href="#collapse-vulns" aria-expanded="false"
+     aria-controls="collapse-vulns">
+    <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+    {% trans "Show security vulnerabilities" %}
+  </a>
+
+  <div class="collapse" id="collapse-vulns">
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
         <tr>
-          <td>{{ app.name }}</td>
-          <td>{{ app.count }}</td>
+          <th>{% trans "App Name" %}</th>
+          <th>{% trans "Vulnerabilities Reported" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for app in apps_vulns %}
+          <tr>
+            <td>{{ app.name }}</td>
+            <td>{{ app.count }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
