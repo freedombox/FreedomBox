@@ -9,9 +9,11 @@
 The core functionality and web front-end of
 [FreedomBox](https://freedombox.org/).
 
-<img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=aboutfreedombox.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=tor1.png" width="425px" style="margin: 5px">
+<img src="doc/images/freedombox-screenshot-home.png" width="425px" style="margin: 10px"> <img src="doc/images/freedombox-screenshot-apps.png" width="425px" style="margin: 10px">
 
-<img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=emailclient.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=newsfeed.png" width="425px" style="margin: 5px">
+<img src="doc/images/freedombox-screenshot-system.png" width="425px" style="margin: 10px"> <img src="doc/images/freedombox-screenshot-tor.png" width="425px" style="margin: 10px">
+
+<img src="doc/images/freedombox-screenshot-manual.png" width="425px" style="margin: 10px"> <img src="doc/images/freedombox-screenshot-about.png" width="425px" style="margin: 10px">
 
 # Description
 
@@ -42,9 +44,9 @@ the [FreedomBox Wiki](https://wiki.debian.org/FreedomBox/) and the
 To have a running FreedomBox, first install Debian (Buster or higher) on a clean
 machine. Then run:
 
-    ```
-    $ sudo apt install freedombox
-    ```
+```
+$ sudo apt install freedombox
+```
 
 Full instructions are available on FreedomBox
 [Manual](https://wiki.debian.org/FreedomBox/Manual/)'s
