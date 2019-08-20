@@ -355,9 +355,13 @@ def subcommand_remove_user_from_group(arguments):
 
 
 def subcommand_get_group_users(arguments):
-    """ Get the list of users of an LDAP group."""
-    process = _run(['ldapgid', '-P', arguments.groupname],
-                   stdout=subprocess.PIPE)
+    """Get the list of users of an LDAP group."""
+    try:
+        process = _run(['ldapgid', '-P', arguments.groupname],
+                       stdout=subprocess.PIPE)
+    except subprocess.CalledProcessError:
+        return  # Group does not exist, return empty list
+
     output = process.stdout.decode()
     users = output.rsplit(':')[-1]
     if users:
