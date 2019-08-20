@@ -162,7 +162,11 @@ def get_domains():
     if setup_helper.get_state() == 'needs-setup':
         return []
 
-    return [config.get_domainname()]
+    domain_name = config.get_domainname()
+    if domain_name:
+        return [domain_name]
+
+    return []
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
