@@ -24,11 +24,14 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.modules.config import get_hostname
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.names.components import DomainType
+from plinth.signals import domain_added, domain_removed, post_hostname_change
 from plinth.utils import format_lazy
 from plinth.views import AppView
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 # pylint: disable=C0103
 
@@ -70,6 +73,11 @@ class AvahiApp(app_module.App):
                               'avahi:index', parent_url_name='system')
         self.add(menu_item)
 
+        domain_type = DomainType('domain-type-local',
+                                 _('Local Network Domain'), 'config:index',
+                                 can_have_certificate=False)
+        self.add(domain_type)
+
         firewall = Firewall('firewall-avahi', name, ports=['mdns'],
                             is_external=False)
         self.add(firewall)
@@ -83,7 +91,12 @@ def init():
     global app
     app = AvahiApp()
     if app.is_enabled():
+        domain_added.send_robust(
+            sender='avahi', domain_type='domain-type-local',
+            name=get_hostname() + '.local', services='__all__')
         app.set_enabled(True)
+
+    post_hostname_change.connect(on_post_hostname_change)
 
 
 def setup(helper, old_version=None):
@@ -94,6 +107,17 @@ def setup(helper, old_version=None):
     # available and require restart.
     helper.call('post', actions.superuser_run, 'service',
                 ['reload', 'avahi-daemon'])
+
+
+def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
+    """Update .local domain after hostname change."""
+    del sender  # Unused
+    del kwargs  # Unused
+
+    domain_removed.send_robust(sender='avahi', domain_type='domain-type-local',
+                               name=old_hostname + '.local')
+    domain_added.send_robust(sender='avahi', domain_type='domain-type-local',
+                             name=new_hostname + '.local', services='__all__')
 
 
 class AvahiAppView(AppView):
