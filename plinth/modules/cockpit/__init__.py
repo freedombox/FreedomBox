@@ -35,6 +35,8 @@ from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 
+is_essential = True
+
 managed_services = ['cockpit.socket']
 
 managed_packages = ['cockpit']
