@@ -100,9 +100,8 @@ def subcommand_pre_install(arguments):
         # If new domainname is blank, use hostname instead.
         domainname = socket.gethostname()
 
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'ejabberd ejabberd/hostname string ' + domainname.encode())
+    action_utils.debconf_set_selections(
+        ['ejabberd ejabberd/hostname string ' + domainname])
 
 
 def subcommand_setup(arguments):

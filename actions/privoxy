@@ -15,13 +15,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for Privoxy server.
 """
 
 import argparse
-import subprocess
+
+from plinth import action_utils
 
 
 def parse_arguments():
@@ -39,10 +39,8 @@ def parse_arguments():
 
 def subcommand_pre_install(_):
     """Preseed debconf values before packages are installed."""
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'privoxy privoxy/listen-address string [::]:8118',
-        check=True)
+    action_utils.debconf_set_selections(
+        ['privoxy privoxy/listen-address string [::]:8118'])
 
 
 def main():

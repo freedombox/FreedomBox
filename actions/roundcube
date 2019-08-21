@@ -21,7 +21,6 @@ Configuration helper for Roundcube server.
 
 import argparse
 import re
-import subprocess
 
 from plinth import action_utils
 
@@ -44,12 +43,10 @@ def parse_arguments():
 
 def subcommand_pre_install(_):
     """Preseed debconf values before packages are installed."""
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'roundcube-core roundcube/dbconfig-install boolean true')
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'roundcube-core roundcube/database-type string sqlite3')
+    action_utils.debconf_set_selections([
+        'roundcube-core roundcube/dbconfig-install boolean true',
+        'roundcube-core roundcube/database-type string sqlite3'
+    ])
 
 
 def subcommand_setup(_):

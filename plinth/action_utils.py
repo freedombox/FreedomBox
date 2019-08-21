@@ -529,6 +529,12 @@ Owners: {package}
         pass
 
 
+def debconf_set_selections(presets):
+    """Answer debconf questions before installing a package."""
+    presets = '\n'.join(presets)
+    subprocess.check_output(['debconf-set-selections'], input=presets.encode())
+
+
 def is_disk_image():
     """Return whether the current machine is from a disk image.
 
