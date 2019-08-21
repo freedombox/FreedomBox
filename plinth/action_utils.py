@@ -531,6 +531,14 @@ Owners: {package}
 
 def debconf_set_selections(presets):
     """Answer debconf questions before installing a package."""
+    try:
+        # Workaround Debian Bug #487300. In some situations, debconf complains
+        # it can't find the question being answered even though it is supposed
+        # to create a dummy question for it.
+        subprocess.run(['/usr/share/debconf/fix_db.pl'], check=True)
+    except (FileNotFoundError, PermissionError):
+        pass
+
     presets = '\n'.join(presets)
     subprocess.check_output(['debconf-set-selections'], input=presets.encode())
 
