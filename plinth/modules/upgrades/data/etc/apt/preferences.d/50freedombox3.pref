@@ -1,0 +1,16 @@
+Explanation: This file is managed by FreedomBox, do not edit.
+Explanation: Allow carefully selected updates to 'freedombox' from backports.
+Package: freedombox
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse 0.99.5 introduces room version 4. Older version
+Explanation: 0.99.2 in buster won't be able join newly created rooms.
+Package: matrix-synapse
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse >= 1.2 requires python3-service-identity >= 18.1
+Package: python3-service-identity
+Pin: release a=buster-backports
+Pin-Priority: 500
