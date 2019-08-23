@@ -129,7 +129,7 @@ def get_last_admin_user():
     output = actions.superuser_run('users', ['get-group-users', 'admin'])
     admin_users = output.strip().split('\n')
 
-    if len(admin_users) == 1:
+    if len(admin_users) == 1 and admin_users[0]:
         return admin_users[0]
 
     return None

@@ -80,9 +80,7 @@ class UserList(ContextMixin, django.views.generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserList, self).get_context_data(*args, **kwargs)
-        last_admin_user = get_last_admin_user()
-        if last_admin_user is not None:
-            context['last_admin_user'] = last_admin_user
+        context['last_admin_user'] = get_last_admin_user()
         return context
 
 
