@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
     systemctl daemon-reload
     # Stop any ongoing upgrade
     killall -9 unattended-upgr
-    dpkg --reconfigure -a
+    dpkg --configure -a
     apt -f install
     apt-get update
     # In case new dependencies conflict with old dependencies
