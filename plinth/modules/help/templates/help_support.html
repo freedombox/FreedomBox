@@ -1,0 +1,52 @@
+{% extends 'help_base.html' %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+  <h2>{% trans "Get Support" %}</h2>
+
+  <p>
+    {% blocktrans trimmed %}
+      If you need help in getting something done or if you are facing problems
+      using {{ box_name }}, you can ask for help from our community of users
+      and contributors.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      Search for past discussions or post a new query on our
+      <a href="https://discuss.freedombox.org" target="_blank">discussion forum</a>.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      You can also chat with us on our IRC and Matrix channels (bridged):
+      <ul>
+        <li>#freedombox on irc.oftc.net</li>
+        <li>#freedombox:matrix.org</li>
+      </ul>
+      Or send an email to our <a
+      href="mailto:freedombox-discuss@alioth-lists.debian.net">mailing list</a>.
+    {% endblocktrans %}
+  </p>
+{% endblock %}
