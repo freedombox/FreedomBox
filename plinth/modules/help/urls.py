@@ -27,6 +27,7 @@ from . import help as views
 urlpatterns = [
     url(r'^help/$', non_admin_view(views.index), name='index'),
     url(r'^help/about/$', non_admin_view(views.about), name='about'),
+    url(r'^help/feedback/$', non_admin_view(views.feedback), name='feedback'),
     url(r'^help/manual/$', non_admin_view(views.manual), name='manual'),
     url(r'^help/manual/download/$', non_admin_view(views.download_manual),
         name='download-manual'),

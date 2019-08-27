@@ -57,6 +57,11 @@ class HelpApp(app_module.App):
                               'fa-download', 'help:download-manual',
                               parent_url_name='help:index', order=15)
         self.add(menu_item)
+        menu_item = menu.Menu('menu-help-feedback',
+                              ugettext_lazy('Submit Feedback'), None,
+                              'fa-comments', 'help:feedback',
+                              parent_url_name='help:index', order=25)
+        self.add(menu_item)
         menu_item = menu.Menu('menu-help-about', ugettext_lazy('About'), None,
                               'fa-star', 'help:about',
                               parent_url_name='help:index', order=100)
@@ -74,6 +79,12 @@ def index(request):
     """Serve the index page"""
     return TemplateResponse(request, 'help_index.html',
                             {'title': _('Documentation and FAQ')})
+
+
+def feedback(request):
+    """Serve the feedback page"""
+    return TemplateResponse(request, 'help_feedback.html',
+                            {'title': _('Submit Feedback')})
 
 
 def about(request):
