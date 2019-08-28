@@ -110,6 +110,11 @@ class BaseBorgRepository(abc.ABC):
         """Return a display name for the repository."""
         return self._path
 
+    @property
+    def path(self):
+        """Return the path of the repository."""
+        return self._path
+
     @abc.abstractmethod
     def storage_type(self):
         """Return the storage type of repository."""
