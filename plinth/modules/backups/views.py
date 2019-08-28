@@ -470,16 +470,16 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Remove Repository')
-        context['repository'] = SshBorgRepository(uuid=uuid)
+        context['repository'] = create_repository(uuid)
         return context
 
     def post(self, request, uuid):
-        """Delete the archive."""
-        repository = SshBorgRepository(uuid)
+        """Delete the repository on confirmation."""
+        repository = create_repository(uuid)
         repository.remove_repository()
         messages.success(
             request,
-            _('Repository removed. The remote backup itself was not deleted.'))
+            _('Repository removed. Backups were not deleted.'))
 
         return redirect('backups:index')
 
