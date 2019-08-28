@@ -89,7 +89,7 @@ def test_create_unencrypted_repository(backup_directory):
     """Test creating an unencrypted repository."""
     path = backup_directory / 'borgbackup'
     repository = BorgRepository(str(path))
-    repository.create_repository()
+    repository.initialize()
     info = repository.get_info()
     assert 'encryption' in info
 
@@ -106,7 +106,7 @@ def test_create_export_delete_archive(data_directory, backup_directory):
     path = backup_directory / repo_name
 
     repository = BorgRepository(str(path))
-    repository.create_repository()
+    repository.initialize()
     archive_path = "::".join([str(path), archive_name])
     actions.superuser_run('backups', [
         'create-archive', '--path', archive_path, '--paths',

@@ -42,7 +42,7 @@ from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
                is_ssh_hostkey_verified, split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
-from .repository import (BorgRepository, SshBorgRepository, create_repository,
+from .repository import (BorgRepository, SshBorgRepository, get_instance,
                          get_repositories)
 
 logger = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
-        repository = create_repository(form.cleaned_data['repository'])
+        repository = get_instance(form.cleaned_data['repository'])
         if repository.flags.get('mountable'):
             repository.mount()
 
@@ -99,7 +99,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Archive')
-        repository = create_repository(self.kwargs['uuid'])
+        repository = get_instance(self.kwargs['uuid'])
         context['archive'] = repository.get_archive(self.kwargs['name'])
         if context['archive'] is None:
             raise Http404
@@ -108,7 +108,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
 
     def post(self, request, uuid, name):
         """Delete the archive."""
-        repository = create_repository(uuid)
+        repository = get_instance(uuid)
         repository.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
         return redirect('backups:index')
@@ -217,12 +217,12 @@ class RestoreArchiveView(BaseRestoreView):
         """Save some data used to instantiate the form."""
         name = unquote(self.kwargs['name'])
         uuid = self.kwargs['uuid']
-        repository = create_repository(uuid)
+        repository = get_instance(uuid)
         return repository.get_archive_apps(name)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        repository = create_repository(self.kwargs['uuid'])
+        repository = get_instance(self.kwargs['uuid'])
         selected_apps = form.cleaned_data['selected_apps']
         repository.restore_archive(self.kwargs['name'], selected_apps)
         return super().form_valid(form)
@@ -232,7 +232,7 @@ class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
 
     def get(self, request, uuid, name):
-        repository = create_repository(uuid)
+        repository = get_instance(uuid)
         filename = f'{name}.tar.gz'
 
         response = StreamingHttpResponse(
@@ -268,7 +268,7 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
         try:
             repository.get_info()
         except BorgRepositoryDoesNotExistError:
-            repository.create_repository(encryption)
+            repository.initialize(encryption)
         repository.save(store_credentials=True, verified=True)
         return super().form_valid(form)
 
@@ -329,7 +329,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     def _get_repository(self):
         """Fetch the repository data from DB only once."""
         if not self.repository:
-            self.repository = create_repository(self.kwargs['uuid'])
+            self.repository = get_instance(self.kwargs['uuid'])
 
         return self.repository
 
@@ -393,7 +393,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         messages.error(self.request, _('Repository removed.'))
         # Remove the repository so that the user can have another go at
         # creating it.
-        create_repository(uuid).remove()
+        get_instance(uuid).remove()
         return redirect(reverse_lazy('backups:add-remote-repository'))
 
 
@@ -430,7 +430,7 @@ def _create_remote_repository(repository, encryption, dir_contents):
         if dir_contents:
             raise
 
-        repository.create_repository(encryption)
+        repository.initialize(encryption)
 
     return repository
 
@@ -456,12 +456,12 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Remove Repository')
-        context['repository'] = create_repository(uuid)
+        context['repository'] = get_instance(uuid)
         return context
 
     def post(self, request, uuid):
         """Delete the repository on confirmation."""
-        repository = create_repository(uuid)
+        repository = get_instance(uuid)
         repository.remove()
         messages.success(request,
                          _('Repository removed. Backups were not deleted.'))
@@ -482,7 +482,7 @@ def umount_repository(request, uuid):
 def mount_repository(request, uuid):
     """View to mount a remote SSH repository."""
     # Do not mount unverified ssh repositories. Prompt for verification.
-    if not create_repository(uuid).is_usable():
+    if not get_instance(uuid).is_usable():
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
 
     repository = SshBorgRepository(uuid=uuid)

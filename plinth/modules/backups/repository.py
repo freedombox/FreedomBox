@@ -189,7 +189,7 @@ class BaseBorgRepository(abc.ABC):
         archive_path = self._get_archive_path(archive_name)
         self.run(['delete-archive', '--path', archive_path])
 
-    def create_repository(self, encryption):
+    def initialize(self, encryption):
         """Initialize / create a borg repository."""
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
@@ -439,14 +439,14 @@ class SshBorgRepository(BaseBorgRepository):
 
 def get_repositories():
     """Get all repositories of a given storage type."""
-    repositories = [create_repository(ROOT_REPOSITORY_UUID)]
+    repositories = [get_instance(ROOT_REPOSITORY_UUID)]
     for uuid in store.get_storages():
-        repositories.append(create_repository(uuid))
+        repositories.append(get_instance(uuid))
 
     return sorted(repositories, key=lambda x: x.sort_order)
 
 
-def create_repository(uuid):
+def get_instance(uuid):
     """Create a local or SSH repository object instance."""
     if uuid == ROOT_REPOSITORY_UUID:
         return RootBorgRepository(path=ROOT_REPOSITORY)
