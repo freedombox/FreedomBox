@@ -32,7 +32,7 @@ from plinth.errors import ActionError
 
 from . import (ROOT_REPOSITORY, ROOT_REPOSITORY_NAME, ROOT_REPOSITORY_UUID,
                _backup_handler, api, get_known_hosts_path,
-               restore_archive_handler, store)
+               restore_archive_handler, split_path, store)
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
@@ -368,6 +368,12 @@ class SshBorgRepository(BaseBorgRepository):
 
         """
         return self._mountpoint
+
+    @property
+    def hostname(self):
+        """Return hostname from the remote path."""
+        _, hostname, _ = split_path(self._path)
+        return hostname.split('%')[0]  # XXX: Likely incorrect to split
 
     @property
     def _mountpoint(self):

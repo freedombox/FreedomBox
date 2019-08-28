@@ -311,37 +311,27 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     form_class = forms.VerifySshHostkeyForm
     template_name = 'verify_ssh_hostkey.html'
     success_url = reverse_lazy('backups:index')
-    repo_data = {}
+    repository = None
 
     def get_form_kwargs(self):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        hostname = self._get_hostname()
-        kwargs['hostname'] = hostname
+        kwargs['hostname'] = self._get_repository().hostname
         return kwargs
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Verify SSH hostkey')
-        context['hostname'] = self._get_hostname()
+        context['hostname'] = self._get_repository().hostname
         return context
 
-    def _get_repo_data(self):
+    def _get_repository(self):
         """Fetch the repository data from DB only once."""
-        if not self.repo_data:
-            uuid = self.kwargs['uuid']
-            self.repo_data = store.get(uuid)
+        if not self.repository:
+            self.repository = create_repository(self.kwargs['uuid'])
 
-        return self.repo_data
-
-    def _get_hostname(self):
-        """Get the hostname of the repository.
-
-        Network interface information is stripped out.
-        """
-        _, hostname, _ = split_path(self._get_repo_data()['path'])
-        return hostname.split('%')[0]  # XXX: Likely incorrect to split
+        return self.repository
 
     @staticmethod
     def _add_ssh_hostkey(ssh_public_key):
@@ -355,7 +345,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
 
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
-        if is_ssh_hostkey_verified(self._get_hostname()):
+        if is_ssh_hostkey_verified(self._get_repository().hostname):
             messages.success(self.request, _('SSH host already verified.'))
             return self._add_remote_repository()
 
@@ -370,19 +360,16 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
 
     def _add_remote_repository(self):
         """On successful verification of host, add repository."""
-        repo_data = self._get_repo_data()
-        path = repo_data['path']
-        credentials = repo_data['credentials']
+        repository = self._get_repository()
         uuid = self.kwargs['uuid']
         encryption = 'none'
-        if 'encryption_passphrase' in credentials and \
-           credentials['encryption_passphrase']:
+        if 'encryption_passphrase' in repository.credentials and \
+           repository.credentials['encryption_passphrase']:
             encryption = 'repokey'
 
         try:
-            dir_contents = _list_remote_directory(path, credentials)
-            repository = SshBorgRepository(uuid=uuid, path=path,
-                                           credentials=credentials)
+            dir_contents = _list_remote_directory(repository.path,
+                                                  repository.credentials)
             repository.mount()
             repository = _create_remote_repository(repository, encryption,
                                                    dir_contents)
