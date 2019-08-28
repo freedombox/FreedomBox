@@ -23,7 +23,7 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from .. import ROOT_REPOSITORY, api, forms
+from .. import api, forms, repository
 
 # pylint: disable=protected-access
 
@@ -99,7 +99,8 @@ class TestBackupProcesses:
     def test_backup_apps():
         """Test that backup_handler is called."""
         backup_handler = MagicMock()
-        api.backup_apps(backup_handler, path=ROOT_REPOSITORY)
+        api.backup_apps(backup_handler,
+                        path=repository.RootBorgRepository.PATH)
         backup_handler.assert_called_once()
 
     @staticmethod

@@ -264,7 +264,7 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             encryption_passphrase = None
 
         credentials = {'encryption_passphrase': encryption_passphrase}
-        repository = BorgRepository(path=path, credentials=credentials)
+        repository = BorgRepository(path, credentials)
         try:
             repository.get_info()
         except BorgRepositoryDoesNotExistError:
@@ -298,7 +298,7 @@ class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
             'ssh_password': form.cleaned_data.get('ssh_password'),
             'encryption_passphrase': encryption_passphrase
         }
-        repository = SshBorgRepository(path=path, credentials=credentials)
+        repository = SshBorgRepository(path, credentials)
         repository.save(verified=False)
         messages.success(self.request, _('Added new remote SSH repository.'))
 
@@ -471,7 +471,7 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
 
 def umount_repository(request, uuid):
     """View to unmount a remote SSH repository."""
-    repository = SshBorgRepository(uuid=uuid)
+    repository = SshBorgRepository.load(uuid)
     repository.umount()
     if repository.is_mounted:
         messages.error(request, _('Unmounting failed!'))
@@ -485,7 +485,7 @@ def mount_repository(request, uuid):
     if not get_instance(uuid).is_usable():
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
 
-    repository = SshBorgRepository(uuid=uuid)
+    repository = SshBorgRepository.load(uuid)
     try:
         repository.mount()
     except Exception as err:

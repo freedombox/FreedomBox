@@ -27,11 +27,11 @@ from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
+from plinth import actions, cfg
 from plinth.errors import ActionError
+from plinth.utils import format_lazy
 
-from . import (ROOT_REPOSITORY, ROOT_REPOSITORY_NAME, ROOT_REPOSITORY_UUID,
-               _backup_handler, api, get_known_hosts_path,
+from . import (_backup_handler, api, get_known_hosts_path,
                restore_archive_handler, split_path, store)
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
@@ -83,27 +83,27 @@ class BaseBorgRepository(abc.ABC):
     flags = {}
     is_mounted = True
 
-    def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
-        """
-        Instantiate a new repository.
+    def __init__(self, path, credentials=None, uuid=None, **kwargs):
+        """Instantiate a new repository.
 
         If only a uuid is given, load the values from kvstore.
+
         """
+        self._path = path
+        self.credentials = credentials or {}
+        self.uuid = uuid or str(uuid1())
         self.kwargs = kwargs
 
-        if not uuid:
-            uuid = str(uuid1())
-        self.uuid = uuid
+    @classmethod
+    def load(cls, uuid):
+        """Create instance by loading from database."""
+        storage = dict(store.get(uuid))
+        path = storage.pop('path')
+        storage.pop('uuid')
+        credentials = storage.setdefault('credentials', {})
+        storage.pop('credentials')
 
-        if path and credentials:
-            self._path = path
-            self.credentials = credentials
-        else:
-            # Either a uuid, or both a path and credentials must be given
-            if not bool(uuid):
-                raise ValueError('Invalid arguments.')
-            else:
-                self._load_from_kvstore()
+        return cls(path, credentials, uuid, **storage)
 
     @property
     def name(self):
@@ -138,14 +138,6 @@ class BaseBorgRepository(abc.ABC):
             return {'encryption_passphrase': passphrase}
 
         return {}
-
-    def _load_from_kvstore(self):
-        storage = store.get(self.uuid)
-        try:
-            self.credentials = storage['credentials']
-        except KeyError:
-            self.credentials = {}
-        self._path = storage['path']
 
     def get_info(self):
         """Return Borg information about a repository."""
@@ -309,20 +301,18 @@ class BaseBorgRepository(abc.ABC):
 
 class RootBorgRepository(BaseBorgRepository):
     """Borg repository on the root filesystem."""
+    UUID = 'root'
+    PATH = '/var/lib/freedombox/borgbackup'
+
     storage_type = 'root'
-    name = ROOT_REPOSITORY_NAME
-    borg_path = ROOT_REPOSITORY
+    name = format_lazy(_('{box_name} storage'), box_name=cfg.box_name)
+    borg_path = PATH
     sort_order = 10
     is_mounted = True
 
-    def __init__(self, path, credentials=None):
+    def __init__(self, credentials=None):
         """Initialize the repository object."""
-        self.uuid = ROOT_REPOSITORY_UUID
-        if credentials is None:
-            credentials = {}
-
-        self._path = path
-        self.credentials = credentials
+        super().__init__(self.PATH, credentials, self.UUID)
 
     def run(self, arguments):
         return self._run('backups', arguments)
@@ -439,7 +429,7 @@ class SshBorgRepository(BaseBorgRepository):
 
 def get_repositories():
     """Get all repositories of a given storage type."""
-    repositories = [get_instance(ROOT_REPOSITORY_UUID)]
+    repositories = [get_instance(RootBorgRepository.UUID)]
     for uuid in store.get_storages():
         repositories.append(get_instance(uuid))
 
@@ -448,11 +438,11 @@ def get_repositories():
 
 def get_instance(uuid):
     """Create a local or SSH repository object instance."""
-    if uuid == ROOT_REPOSITORY_UUID:
-        return RootBorgRepository(path=ROOT_REPOSITORY)
+    if uuid == RootBorgRepository.UUID:
+        return RootBorgRepository()
 
     storage = store.get(uuid)
     if storage['storage_type'] == 'ssh':
-        return SshBorgRepository(uuid=uuid)
+        return SshBorgRepository.load(uuid)
 
-    return BorgRepository(uuid=uuid)
+    return BorgRepository.load(uuid)
