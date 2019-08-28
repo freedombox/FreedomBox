@@ -339,7 +339,7 @@ class BorgRepository(BaseBorgRepository):
     def name(self):
         # TODO Use disk label as the name
         # Also, name isn't being used yet
-        return self.repo_path
+        return self._path
 
     def remove(self):
         """Remove a repository from the kvstore."""
