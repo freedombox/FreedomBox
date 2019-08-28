@@ -87,8 +87,8 @@ def test_empty_dir(backup_directory):
 
 def test_create_unencrypted_repository(backup_directory):
     """Test creating an unencrypted repository."""
-    repo_path = backup_directory / 'borgbackup'
-    repository = BorgRepository(str(repo_path))
+    path = backup_directory / 'borgbackup'
+    repository = BorgRepository(str(path))
     repository.create_repository()
     info = repository.get_info()
     assert 'encryption' in info
@@ -103,11 +103,11 @@ def test_create_export_delete_archive(data_directory, backup_directory):
     """
     repo_name = 'test_create_and_delete'
     archive_name = 'first_archive'
-    repo_path = backup_directory / repo_name
+    path = backup_directory / repo_name
 
-    repository = BorgRepository(str(repo_path))
+    repository = BorgRepository(str(path))
     repository.create_repository()
-    archive_path = "::".join([str(repo_path), archive_name])
+    archive_path = "::".join([str(path), archive_name])
     actions.superuser_run('backups', [
         'create-archive', '--path', archive_path, '--paths',
         str(data_directory)
@@ -129,12 +129,12 @@ def test_remote_backup_actions():
     This relies on borgbackups being installed on the remote machine.
     """
     credentials = _get_credentials(add_encryption_passphrase=True)
-    repo_path = os.path.join(test_config.backups_ssh_path, str(uuid.uuid1()))
-    arguments = ['init', '--path', repo_path, '--encryption', 'repokey']
+    path = os.path.join(test_config.backups_ssh_path, str(uuid.uuid1()))
+    arguments = ['init', '--path', path, '--encryption', 'repokey']
     arguments, kwargs = _append_borg_arguments(arguments, credentials)
     actions.superuser_run('backups', arguments, **kwargs)
 
-    arguments = ['info', '--path', repo_path]
+    arguments = ['info', '--path', path]
     arguments, kwargs = _append_borg_arguments(arguments, credentials)
     info = actions.superuser_run('backups', arguments, **kwargs)
     info = json.loads(info)

@@ -126,7 +126,7 @@ class BaseBorgRepository(abc.ABC):
         return True
 
     @property
-    def repo_path(self):
+    def borg_path(self):
         """Return the repository that the backups action script should use."""
         return self._path
 
@@ -149,7 +149,7 @@ class BaseBorgRepository(abc.ABC):
 
     def get_info(self):
         """Return Borg information about a repository."""
-        output = self.run(['info', '--path', self.repo_path])
+        output = self.run(['info', '--path', self.borg_path])
         return json.loads(output)
 
     def get_view_content(self):
@@ -174,7 +174,7 @@ class BaseBorgRepository(abc.ABC):
         """Remove a borg repository"""
 
     def list_archives(self):
-        output = self.run(['list-repo', '--path', self.repo_path])
+        output = self.run(['list-repo', '--path', self.borg_path])
         archives = json.loads(output)['archives']
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
@@ -194,7 +194,7 @@ class BaseBorgRepository(abc.ABC):
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
         self.run(
-            ['init', '--path', self.repo_path, '--encryption', encryption])
+            ['init', '--path', self.borg_path, '--encryption', encryption])
 
     def _run(self, cmd, arguments, superuser=True, **kwargs):
         """Run a backups or sshfs action script command."""
@@ -250,7 +250,7 @@ class BaseBorgRepository(abc.ABC):
 
     def _get_archive_path(self, archive_name):
         """Return full borg path for an archive."""
-        return '::'.join([self.repo_path, archive_name])
+        return '::'.join([self.borg_path, archive_name])
 
     @staticmethod
     def reraise_known_error(err):
@@ -311,7 +311,7 @@ class RootBorgRepository(BaseBorgRepository):
     """Borg repository on the root filesystem."""
     storage_type = 'root'
     name = ROOT_REPOSITORY_NAME
-    repo_path = ROOT_REPOSITORY
+    borg_path = ROOT_REPOSITORY
     sort_order = 10
     is_mounted = True
 
@@ -361,14 +361,13 @@ class SshBorgRepository(BaseBorgRepository):
         return self.kwargs.get('verified')
 
     @property
-    def repo_path(self):
-        """
-        Return the path to use for backups actions.
+    def borg_path(self):
+        """Return the path to use for backups actions.
 
-        This could either be the mountpoint or the remote ssh path,
-        depending on whether borg is running on the remote server.
+        This is the mount point for the remote SSH repositories.
+
         """
-        return self.mountpoint
+        return self._mountpoint
 
     @property
     def mountpoint(self):
