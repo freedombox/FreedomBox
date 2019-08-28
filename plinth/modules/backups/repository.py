@@ -166,18 +166,21 @@ class BaseBorgRepository(abc.ABC):
         """Remove a borg repository"""
 
     def list_archives(self):
+        """Return list of archives in this repository."""
         output = self.run(['list-repo', '--path', self.borg_path])
         archives = json.loads(output)['archives']
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
 
     def create_archive(self, archive_name, app_names):
+        """Create a new archive in this repository with given name."""
         archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
         api.backup_apps(_backup_handler, path=archive_path,
                         app_names=app_names, encryption_passphrase=passphrase)
 
     def delete_archive(self, archive_name):
+        """Delete an archive with given name from this repository."""
         archive_path = self._get_archive_path(archive_name)
         self.run(['delete-archive', '--path', archive_path])
 
@@ -256,9 +259,11 @@ class BaseBorgRepository(abc.ABC):
         raise err
 
     def get_archive(self, name):
+        """Return a specific archive from this repository with given name."""
         for archive in self.list_archives():
             if archive['name'] == name:
                 return archive
+
         return None
 
     def get_archive_apps(self, archive_name):
@@ -268,6 +273,7 @@ class BaseBorgRepository(abc.ABC):
         return output.splitlines()
 
     def restore_archive(self, archive_name, apps=None):
+        """Restore an archive from this repository to the system."""
         archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
         api.restore_apps(restore_archive_handler, app_names=apps,
