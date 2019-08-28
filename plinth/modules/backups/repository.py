@@ -80,7 +80,6 @@ KNOWN_ERRORS = [{
 
 class BaseBorgRepository(abc.ABC):
     """Base class for all kinds of Borg repositories."""
-    uuid = None
     flags = {}
     is_mounted = True
 
@@ -142,6 +141,7 @@ class BaseBorgRepository(abc.ABC):
     def get_view_content(self):
         """Get archives with additional information as needed by the view"""
         repository = {
+            'uuid': self.uuid,
             'name': self.name,
             'storage_type': self.storage_type,
             'flags': self.flags,
@@ -296,10 +296,12 @@ class RootBorgRepository(BaseBorgRepository):
     storage_type = 'root'
     name = ROOT_REPOSITORY_NAME
     repo_path = ROOT_REPOSITORY
+    sort_order = 10
     is_mounted = True
 
     def __init__(self, path, credentials=None):
         """Initialize the repository object."""
+        self.uuid = ROOT_REPOSITORY_UUID
         if credentials is None:
             credentials = {}
 
@@ -314,6 +316,7 @@ class BorgRepository(BaseBorgRepository):
     """General Borg repository implementation."""
     KNOWN_CREDENTIALS = ['encryption_passphrase']
     storage_type = 'disk'
+    sort_order = 20
     flags = {'removable': True}
 
     @property
@@ -334,6 +337,7 @@ class SshBorgRepository(BaseBorgRepository):
         'ssh_keyfile', 'ssh_password', 'encryption_passphrase'
     ]
     storage_type = 'ssh'
+    sort_order = 30
     flags = {'removable': True, 'mountable': True}
 
     @property
@@ -404,34 +408,16 @@ class SshBorgRepository(BaseBorgRepository):
         return (arguments, kwargs)
 
 
-def get_repositories(storage_type):
+def get_repositories():
     """Get all repositories of a given storage type."""
-    if storage_type == 'disk':
-        return _get_disk_repositories()
+    repositories = [create_repository(ROOT_REPOSITORY_UUID)]
+    for uuid in network_storage.get_storages():
+        repositories.append(create_repository(uuid))
 
-    return _get_ssh_repositories()
-
-
-def _get_ssh_repositories():
-    """Get all SSH Repositories including the archive content"""
-    repositories = {}
-    for storage in network_storage.get_storages().values():
-        if storage['storage_type'] == 'ssh':
-            repository = SshBorgRepository(**storage)
-            repositories[storage['uuid']] = repository.get_view_content()
-
-    return repositories
-
-
-def _get_disk_repositories():
-    """Get all disk repositories including the archive content"""
-    repositories = {}
-    for storage in network_storage.get_storages().values():
-        if storage['storage_type'] == 'disk':
-            repository = BorgRepository(**storage)
-            repositories[storage['uuid']] = repository.get_view_content()
-
-    return repositories
+    return [
+        repository.get_view_content()
+        for repository in sorted(repositories, key=lambda x: x.sort_order)
+    ]
 
 
 def create_repository(uuid):

@@ -60,14 +60,8 @@
 
   <h3>{% trans 'Existing Backups' %}</h3>
 
-  {% include "backups_repository.inc" with repository=root_repository uuid='root' %}
-
-  {% for uuid,repository in ssh_repositories.items %}
-    {% include "backups_repository.inc" %}
-  {% endfor %}
-
-  {% for uuid,repository in disk_repositories.items %}
-    {% include "backups_repository.inc" %}
+  {% for repository in repositories %}
+    {% include "backups_repository.inc" with uuid=repository.uuid %}
   {% endfor %}
 
   <a title="{% trans 'Add a backup location' %}"

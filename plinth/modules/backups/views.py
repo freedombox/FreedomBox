@@ -38,12 +38,12 @@ from django.views.generic import FormView, TemplateView, View
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
-from . import (ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms,
+from . import (SESSION_PATH_VARIABLE, api, forms,
                get_known_hosts_path, is_ssh_hostkey_verified, network_storage,
                split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
-from .repository import (BorgRepository, RootBorgRepository, SshBorgRepository,
+from .repository import (BorgRepository, SshBorgRepository,
                          create_repository, get_repositories)
 
 logger = logging.getLogger(__name__)
@@ -60,10 +60,7 @@ class IndexView(TemplateView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['manual_page'] = backups.manual_page
-        root_repository = RootBorgRepository(path=ROOT_REPOSITORY)
-        context['root_repository'] = root_repository.get_view_content()
-        context['ssh_repositories'] = get_repositories('ssh')
-        context['disk_repositories'] = get_repositories('disk')
+        context['repositories'] = get_repositories()
         return context
 
 
