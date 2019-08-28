@@ -34,14 +34,10 @@
         {{ repository.name }}
 
         <span class="pull-right">
-          {% if editable %}
+          {% if repository.flags.mountable %}
 
-            {% if storage_type != 'disk' %}
             {% if repository.mounted %}
 
-              <!-- With GET redirects, the browser URL points to the
-                   redirected page (bad when reloading) - use POST instead.
-              -->
               <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
                     class="inline-block" >
                 {% csrf_token %}
@@ -63,7 +59,10 @@
               </form>
 
             {% endif %}
+
           {% endif %}
+
+          {% if repository.flags.removable %}
 
             <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
                role="button" class="repository-remove btn btn-sm btn-default"

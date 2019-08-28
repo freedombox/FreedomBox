@@ -18,11 +18,11 @@
 Remote and local Borg backup repositories
 """
 
+import abc
 import io
 import json
 import logging
 import os
-from abc import ABC
 from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
@@ -78,9 +78,10 @@ KNOWN_ERRORS = [{
                 }]
 
 
-class BaseBorgRepository(ABC):
+class BaseBorgRepository(abc.ABC):
     """Base class for all kinds of Borg repositories."""
     uuid = None
+    flags = {}
     is_mounted = True
 
     def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
@@ -106,6 +107,11 @@ class BaseBorgRepository(ABC):
     @property
     def name(self):
         return self._path
+
+    @abc.abstractmethod
+    def storage_type(self):
+        """Return the storage type of repository."""
+        raise NotImplementedError
 
     @property
     def repo_path(self):
@@ -137,17 +143,17 @@ class BaseBorgRepository(ABC):
         """Get archives with additional information as needed by the view"""
         repository = {
             'name': self.name,
-            'type': self.storage_type,
-            'error': ''
+            'storage_type': self.storage_type,
+            'flags': self.flags,
+            'error': None,
         }
         try:
-            error = ''
             repository['mounted'] = self.is_mounted
             if repository['mounted']:
                 repository['archives'] = self.list_archives()
         except (BorgError, ActionError) as err:
-            error = str(err)
-        repository['error'] = error
+            repository['error'] = str(err)
+
         return repository
 
     def remove_repository(self):
@@ -308,6 +314,7 @@ class BorgRepository(BaseBorgRepository):
     """General Borg repository implementation."""
     KNOWN_CREDENTIALS = ['encryption_passphrase']
     storage_type = 'disk'
+    flags = {'removable': True}
 
     @property
     def name(self):
@@ -327,6 +334,7 @@ class SshBorgRepository(BaseBorgRepository):
         'ssh_keyfile', 'ssh_password', 'encryption_passphrase'
     ]
     storage_type = 'ssh'
+    flags = {'removable': True, 'mountable': True}
 
     @property
     def repo_path(self):
