@@ -370,7 +370,7 @@ class SshBorgRepository(BaseBorgRepository):
         return self._mountpoint
 
     @property
-    def mountpoint(self):
+    def _mountpoint(self):
         """Return the local mount point where repository is to be mounted."""
         return os.path.join(self.SSHFS_MOUNTPOINT, self.uuid)
 
@@ -378,7 +378,7 @@ class SshBorgRepository(BaseBorgRepository):
     def is_mounted(self):
         """Return whether remote path is mounted locally."""
         output = self._run('sshfs',
-                           ['is-mounted', '--mountpoint', self.mountpoint])
+                           ['is-mounted', '--mountpoint', self._mountpoint])
         return json.loads(output)
 
     def mount(self):
@@ -387,7 +387,7 @@ class SshBorgRepository(BaseBorgRepository):
             return
         known_hosts_path = get_known_hosts_path()
         arguments = [
-            'mount', '--mountpoint', self.mountpoint, '--path', self._path,
+            'mount', '--mountpoint', self._mountpoint, '--path', self._path,
             '--user-known-hosts-file',
             str(known_hosts_path)
         ]
@@ -400,20 +400,20 @@ class SshBorgRepository(BaseBorgRepository):
         if not self.is_mounted:
             return
 
-        self._run('sshfs', ['umount', '--mountpoint', self.mountpoint])
+        self._run('sshfs', ['umount', '--mountpoint', self._mountpoint])
 
     def remove(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
         self.umount()
         store.delete(self.uuid)
         try:
-            if os.path.exists(self.mountpoint):
+            if os.path.exists(self._mountpoint):
                 try:
                     self.umount()
                 except ActionError:
                     pass
-                if not os.listdir(self.mountpoint):
-                    os.rmdir(self.mountpoint)
+                if not os.listdir(self._mountpoint):
+                    os.rmdir(self._mountpoint)
         except Exception as err:
             logger.error(err)
 
