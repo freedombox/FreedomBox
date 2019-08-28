@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^help/about/$', non_admin_view(views.about), name='about'),
     url(r'^help/feedback/$', non_admin_view(views.feedback), name='feedback'),
     url(r'^help/support/$', non_admin_view(views.support), name='support'),
+    url(r'^help/contribute/$', non_admin_view(views.contribute),
+        name='contribute'),
     url(r'^help/manual/$', non_admin_view(views.manual), name='manual'),
     url(r'^help/manual/download/$', non_admin_view(views.download_manual),
         name='download-manual'),

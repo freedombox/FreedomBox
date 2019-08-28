@@ -67,6 +67,11 @@ class HelpApp(app_module.App):
                               'fa-comments', 'help:feedback',
                               parent_url_name='help:index', order=25)
         self.add(menu_item)
+        menu_item = menu.Menu('menu-help-contribute',
+                              ugettext_lazy('Contribute'), None, 'fa-wrench',
+                              'help:contribute', parent_url_name='help:index',
+                              order=30)
+        self.add(menu_item)
         menu_item = menu.Menu('menu-help-about', ugettext_lazy('About'), None,
                               'fa-star', 'help:about',
                               parent_url_name='help:index', order=100)
@@ -84,6 +89,12 @@ def index(request):
     """Serve the index page"""
     return TemplateResponse(request, 'help_index.html',
                             {'title': _('Documentation and FAQ')})
+
+
+def contribute(request):
+    """Serve the contribute page"""
+    return TemplateResponse(request, 'help_contribute.html',
+                            {'title': _('Contribute')})
 
 
 def feedback(request):
