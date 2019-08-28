@@ -89,6 +89,8 @@ class BaseBorgRepository(abc.ABC):
 
         If only a uuid is given, load the values from kvstore.
         """
+        self.kwargs = kwargs
+
         if not uuid:
             uuid = str(uuid1())
         self.uuid = uuid
@@ -111,6 +113,11 @@ class BaseBorgRepository(abc.ABC):
     def storage_type(self):
         """Return the storage type of repository."""
         raise NotImplementedError
+
+    @staticmethod
+    def is_usable():
+        """Return whether the repository is ready to be used."""
+        return True
 
     @property
     def repo_path(self):
@@ -340,6 +347,10 @@ class SshBorgRepository(BaseBorgRepository):
     sort_order = 30
     flags = {'removable': True, 'mountable': True}
 
+    def is_usable(self):
+        """Return whether repository is usable."""
+        return self.kwargs.get('verified')
+
     @property
     def repo_path(self):
         """
@@ -414,10 +425,7 @@ def get_repositories():
     for uuid in store.get_storages():
         repositories.append(create_repository(uuid))
 
-    return [
-        repository.get_view_content()
-        for repository in sorted(repositories, key=lambda x: x.sort_order)
-    ]
+    return sorted(repositories, key=lambda x: x.sort_order)
 
 
 def create_repository(uuid):

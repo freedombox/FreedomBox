@@ -32,7 +32,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.modules.storage import get_disks
 from plinth.utils import format_lazy
 
-from . import ROOT_REPOSITORY_NAME, api, split_path, store
+from . import api, split_path, store
+from .repository import get_repositories
 
 logger = logging.getLogger(__name__)
 
@@ -53,11 +54,8 @@ def _get_app_choices(apps):
 
 def _get_repository_choices():
     """Return the list of available repositories."""
-    choices = [('root', ROOT_REPOSITORY_NAME)]
-    storages = store.get_storages()
-    for storage in storages.values():
-        if storage.get('verified'):
-            choices += [(storage['uuid'], storage['path'])]
+    choices = [(repository.uuid, repository.name)
+               for repository in get_repositories() if repository.is_usable()]
 
     return choices
 

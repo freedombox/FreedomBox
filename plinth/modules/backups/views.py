@@ -60,7 +60,9 @@ class IndexView(TemplateView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['manual_page'] = backups.manual_page
-        context['repositories'] = get_repositories()
+        context['repositories'] = [
+            repository.get_view_content() for repository in get_repositories()
+        ]
         return context
 
 
