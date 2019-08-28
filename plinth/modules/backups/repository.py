@@ -31,8 +31,8 @@ from plinth import actions
 from plinth.errors import ActionError
 
 from . import (ROOT_REPOSITORY, ROOT_REPOSITORY_NAME, ROOT_REPOSITORY_UUID,
-               _backup_handler, api, get_known_hosts_path, network_storage,
-               restore_archive_handler)
+               _backup_handler, api, get_known_hosts_path,
+               restore_archive_handler, store)
 from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
@@ -127,7 +127,7 @@ class BaseBorgRepository(abc.ABC):
         return {}
 
     def _load_from_kvstore(self):
-        storage = network_storage.get(self.uuid)
+        storage = store.get(self.uuid)
         try:
             self.credentials = storage['credentials']
         except KeyError:
@@ -269,7 +269,7 @@ class BaseBorgRepository(abc.ABC):
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 
-    def _get_network_storage_format(self, store_credentials, verified):
+    def _get_storage_format(self, store_credentials, verified):
         storage = {
             'path': self._path,
             'storage_type': self.storage_type,
@@ -287,8 +287,8 @@ class BaseBorgRepository(abc.ABC):
         Save the repository in network_storage (kvstore).
         - store_credentials: Boolean whether credentials should be stored.
         """
-        storage = self._get_network_storage_format(store_credentials, verified)
-        self.uuid = network_storage.update_or_add(storage)
+        storage = self._get_storage_format(store_credentials, verified)
+        self.uuid = store.update_or_add(storage)
 
 
 class RootBorgRepository(BaseBorgRepository):
@@ -327,7 +327,7 @@ class BorgRepository(BaseBorgRepository):
 
     def remove_repository(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
-        network_storage.delete(self.uuid)
+        store.delete(self.uuid)
 
 
 class SshBorgRepository(BaseBorgRepository):
@@ -382,7 +382,7 @@ class SshBorgRepository(BaseBorgRepository):
     def remove_repository(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
         self.umount()
-        network_storage.delete(self.uuid)
+        store.delete(self.uuid)
         try:
             if os.path.exists(self.mountpoint):
                 try:
@@ -411,7 +411,7 @@ class SshBorgRepository(BaseBorgRepository):
 def get_repositories():
     """Get all repositories of a given storage type."""
     repositories = [create_repository(ROOT_REPOSITORY_UUID)]
-    for uuid in network_storage.get_storages():
+    for uuid in store.get_storages():
         repositories.append(create_repository(uuid))
 
     return [
@@ -425,8 +425,8 @@ def create_repository(uuid):
     if uuid == ROOT_REPOSITORY_UUID:
         return RootBorgRepository(path=ROOT_REPOSITORY)
 
-    storage = network_storage.get(uuid)
+    storage = store.get(uuid)
     if storage['storage_type'] == 'ssh':
         return SshBorgRepository(uuid=uuid)
-    else:
-        return BorgRepository(uuid=uuid)
+
+    return BorgRepository(uuid=uuid)

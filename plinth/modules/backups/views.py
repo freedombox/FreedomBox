@@ -39,7 +39,7 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
 from . import (SESSION_PATH_VARIABLE, api, forms,
-               get_known_hosts_path, is_ssh_hostkey_verified, network_storage,
+               get_known_hosts_path, is_ssh_hostkey_verified, store,
                split_path)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
@@ -329,7 +329,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         """Fetch the repository data from DB only once."""
         if not self.repo_data:
             uuid = self.kwargs['uuid']
-            self.repo_data = network_storage.get(uuid)
+            self.repo_data = store.get(uuid)
 
         return self.repo_data
 
@@ -404,7 +404,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         messages.error(self.request, _('Repository removed.'))
         # Delete the repository so that the user can have another go at
         # creating it.
-        network_storage.delete(uuid)
+        store.delete(uuid)
         return redirect(reverse_lazy('backups:add-remote-repository'))
 
 
@@ -494,7 +494,7 @@ def umount_repository(request, uuid):
 def mount_repository(request, uuid):
     """View to mount a remote SSH repository."""
     # Do not mount unverified ssh repositories. Prompt for verification.
-    if not network_storage.get(uuid).get('verified'):
+    if not store.get(uuid).get('verified'):
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
 
     repository = SshBorgRepository(uuid=uuid)

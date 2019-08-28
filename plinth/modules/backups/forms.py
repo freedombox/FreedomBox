@@ -32,7 +32,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.modules.storage import get_disks
 from plinth.utils import format_lazy
 
-from . import ROOT_REPOSITORY_NAME, api, network_storage, split_path
+from . import ROOT_REPOSITORY_NAME, api, split_path, store
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ def _get_app_choices(apps):
 def _get_repository_choices():
     """Return the list of available repositories."""
     choices = [('root', ROOT_REPOSITORY_NAME)]
-    storages = network_storage.get_storages()
+    storages = store.get_storages()
     for storage in storages.values():
         if storage.get('verified'):
             choices += [(storage['uuid'], storage['path'])]
@@ -204,7 +204,7 @@ class AddRemoteRepositoryForm(EncryptedBackupsMixin, forms.Form):
     @staticmethod
     def _check_if_duplicate_remote(path):
         """Raise validation error if given path is a stored remote."""
-        for storage in network_storage.get_storages().values():
+        for storage in store.get_storages().values():
             if storage['path'] == path:
                 raise forms.ValidationError(
                     _('Remote backup repository already exists.'))
