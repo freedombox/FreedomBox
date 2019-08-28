@@ -475,7 +475,7 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
     def post(self, request, uuid):
         """Delete the repository on confirmation."""
         repository = create_repository(uuid)
-        repository.remove_repository()
+        repository.remove()
         messages.success(request,
                          _('Repository removed. Backups were not deleted.'))
 

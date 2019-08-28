@@ -170,7 +170,7 @@ class BaseBorgRepository(abc.ABC):
 
         return repository
 
-    def remove_repository(self):
+    def remove(self):
         """Remove a borg repository"""
 
     def list_archives(self):
@@ -341,8 +341,8 @@ class BorgRepository(BaseBorgRepository):
         # Also, name isn't being used yet
         return self.repo_path
 
-    def remove_repository(self):
-        """Remove a repository from the kvstore and delete its mountpoint"""
+    def remove(self):
+        """Remove a repository from the kvstore."""
         store.delete(self.uuid)
 
 
@@ -403,7 +403,7 @@ class SshBorgRepository(BaseBorgRepository):
 
         self._run('sshfs', ['umount', '--mountpoint', self.mountpoint])
 
-    def remove_repository(self):
+    def remove(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
         self.umount()
         store.delete(self.uuid)
