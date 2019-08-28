@@ -38,13 +38,12 @@ from django.views.generic import FormView, TemplateView, View
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
-from . import (SESSION_PATH_VARIABLE, api, forms,
-               get_known_hosts_path, is_ssh_hostkey_verified, store,
-               split_path)
+from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
+               is_ssh_hostkey_verified, split_path, store)
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
-from .repository import (BorgRepository, SshBorgRepository,
-                         create_repository, get_repositories)
+from .repository import (BorgRepository, SshBorgRepository, create_repository,
+                         get_repositories)
 
 logger = logging.getLogger(__name__)
 
@@ -236,8 +235,9 @@ class DownloadArchiveView(View):
         repository = create_repository(uuid)
         filename = f'{name}.tar.gz'
 
-        response = StreamingHttpResponse(repository.get_download_stream(name),
-                                         content_type='application/gzip')
+        response = StreamingHttpResponse(
+            repository.get_download_stream(name),
+            content_type='application/gzip')
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
             filename
         return response
@@ -476,9 +476,8 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         """Delete the repository on confirmation."""
         repository = create_repository(uuid)
         repository.remove_repository()
-        messages.success(
-            request,
-            _('Repository removed. Backups were not deleted.'))
+        messages.success(request,
+                         _('Repository removed. Backups were not deleted.'))
 
         return redirect('backups:index')
 

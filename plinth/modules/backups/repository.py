@@ -107,6 +107,7 @@ class BaseBorgRepository(abc.ABC):
 
     @property
     def name(self):
+        """Return a display name for the repository."""
         return self._path
 
     @abc.abstractmethod
@@ -142,6 +143,7 @@ class BaseBorgRepository(abc.ABC):
         self._path = storage['path']
 
     def get_info(self):
+        """Return Borg information about a repository."""
         output = self.run(['info', '--path', self.repo_path])
         return json.loads(output)
 
@@ -165,7 +167,6 @@ class BaseBorgRepository(abc.ABC):
 
     def remove_repository(self):
         """Remove a borg repository"""
-        pass
 
     def list_archives(self):
         output = self.run(['list-repo', '--path', self.repo_path])
@@ -285,14 +286,17 @@ class BaseBorgRepository(abc.ABC):
         }
         if self.uuid:
             storage['uuid'] = self.uuid
+
         if store_credentials:
             storage['credentials'] = self.credentials
+
         return storage
 
     def save(self, store_credentials=True, verified=False):
-        """
-        Save the repository in network_storage (kvstore).
+        """Save the repository in store (kvstore).
+
         - store_credentials: Boolean whether credentials should be stored.
+
         """
         storage = self._get_storage_format(store_credentials, verified)
         self.uuid = store.update_or_add(storage)
@@ -363,15 +367,18 @@ class SshBorgRepository(BaseBorgRepository):
 
     @property
     def mountpoint(self):
+        """Return the local mount point where repository is to be mounted."""
         return os.path.join(self.SSHFS_MOUNTPOINT, self.uuid)
 
     @property
     def is_mounted(self):
+        """Return whether remote path is mounted locally."""
         output = self._run('sshfs',
                            ['is-mounted', '--mountpoint', self.mountpoint])
         return json.loads(output)
 
     def mount(self):
+        """Mount the remote path locally using sshfs."""
         if self.is_mounted:
             return
         known_hosts_path = get_known_hosts_path()
@@ -385,6 +392,7 @@ class SshBorgRepository(BaseBorgRepository):
         self._run('sshfs', arguments, **kwargs)
 
     def umount(self):
+        """Unmount the remote path that was mounted locally using sshfs."""
         if not self.is_mounted:
             return
 
