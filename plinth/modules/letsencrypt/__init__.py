@@ -29,6 +29,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.errors import ActionError
 from plinth.modules import names
+from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed, post_module_loading
 from plinth.utils import format_lazy
 
@@ -151,7 +152,7 @@ def certificate_delete(domain):
 def on_domain_added(sender, domain_type='', name='', description='',
                     services=None, **kwargs):
     """Obtain a certificate for the new domain"""
-    if domain_type == 'domain-type-tor':
+    if not DomainType.get(domain_type).can_have_certificate:
         return False
 
     # Check if a cert if already available
@@ -173,6 +174,9 @@ def on_domain_added(sender, domain_type='', name='', description='',
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Revoke Let's Encrypt certificate for the removed domain"""
+    if not DomainType.get(domain_type).can_have_certificate:
+        return False
+
     try:
         # Revoking certs during tests or empty names isn't expected to succeed
         if sender != 'test' and name:

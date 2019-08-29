@@ -134,11 +134,11 @@ def set_hostname(hostname):
     LOGGER.info('Changing hostname to - %s', hostname)
     actions.superuser_run('hostname-change', [hostname])
 
-    post_hostname_change.send_robust(
-        sender='config', old_hostname=old_hostname, new_hostname=hostname)
-
     LOGGER.info('Setting domain name after hostname change - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])
+
+    post_hostname_change.send_robust(
+        sender='config', old_hostname=old_hostname, new_hostname=hostname)
 
 
 def set_domainname(domainname, old_domainname):

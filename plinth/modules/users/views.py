@@ -15,30 +15,34 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import django.views.generic
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
-                                       FormView)
-import django.views.generic
-from django.utils.translation import ugettext as _, ugettext_lazy
-
-from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
-    FirstBootForm
-from . import get_last_admin_user
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
+from django.views.generic.edit import (CreateView, DeleteView, FormView,
+                                       UpdateView)
 
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
 from plinth.utils import is_user_admin
 
-subsubmenu = [{'url': reverse_lazy('users:index'),
-               'text': ugettext_lazy('Users')},
-              {'url': reverse_lazy('users:create'),
-               'text': ugettext_lazy('Create User')}]
+from . import get_last_admin_user
+from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
+                    UserUpdateForm)
+
+subsubmenu = [{
+    'url': reverse_lazy('users:index'),
+    'text': ugettext_lazy('Users')
+}, {
+    'url': reverse_lazy('users:create'),
+    'text': ugettext_lazy('Create User')
+}]
 
 
 class ContextMixin(object):
@@ -80,9 +84,7 @@ class UserList(ContextMixin, django.views.generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserList, self).get_context_data(*args, **kwargs)
-        last_admin_user = get_last_admin_user()
-        if last_admin_user is not None:
-            context['last_admin_user'] = last_admin_user
+        context['last_admin_user'] = get_last_admin_user()
         return context
 
 
@@ -159,11 +161,10 @@ class UserDelete(ContextMixin, DeleteView):
         messages.success(self.request, message)
 
         try:
-            actions.superuser_run(
-                'users', ['remove-user', self.kwargs['slug']])
+            actions.superuser_run('users',
+                                  ['remove-user', self.kwargs['slug']])
         except ActionError:
-            messages.error(self.request,
-                           _('Deleting LDAP user failed.'))
+            messages.error(self.request, _('Deleting LDAP user failed.'))
 
         return output
 

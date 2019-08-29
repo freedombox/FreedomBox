@@ -20,12 +20,13 @@ Configuration helper for the LDAP user directory
 """
 
 import argparse
-import augeas
 import os
 import re
 import shutil
 import subprocess
 import sys
+
+import augeas
 
 from plinth import action_utils
 
@@ -122,12 +123,13 @@ def subcommand_setup(_):
 
 def configure_ldap_authentication():
     """Configure LDAP authentication."""
-    action_utils.dpkg_reconfigure('nslcd', {
-        'ldap-uris': 'ldapi:///',
-        'ldap-base': 'dc=thisbox',
-        'ldap-auth-type': 'SASL',
-        'ldap-sasl-mech': 'EXTERNAL'
-    })
+    action_utils.dpkg_reconfigure(
+        'nslcd', {
+            'ldap-uris': 'ldapi:///',
+            'ldap-base': 'dc=thisbox',
+            'ldap-auth-type': 'SASL',
+            'ldap-sasl-mech': 'EXTERNAL'
+        })
     action_utils.dpkg_reconfigure('libnss-ldapd',
                                   {'nsswitch': 'group, passwd, shadow'})
     action_utils.service_restart('nscd')
@@ -165,9 +167,9 @@ dn: ou={unit},dc=thisbox
 objectClass: top
 objectClass: organizationalUnit
 ou: {unit}'''.format(unit=unit)
-        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H',
-                        'ldapi:///'], input=input.encode(),
-                       stdout=subprocess.DEVNULL, check=True)
+        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+                       input=input.encode(), stdout=subprocess.DEVNULL,
+                       check=True)
 
 
 def setup_admin():
@@ -185,8 +187,8 @@ def setup_admin():
 
     if 'olcRootPW' in ldap_object:
         subprocess.run(
-            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H',
-             'ldapi:///'], check=True, stdout=subprocess.DEVNULL, input=b'''
+            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+            check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 delete: olcRootPW''')
@@ -194,8 +196,8 @@ delete: olcRootPW''')
     root_dn = 'gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth'
     if ldap_object['olcRootDN'] != root_dn:
         subprocess.run(
-            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H',
-             'ldapi:///'], check=True, stdout=subprocess.DEVNULL, input=b'''
+            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+            check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 replace: olcRootDN
@@ -353,9 +355,13 @@ def subcommand_remove_user_from_group(arguments):
 
 
 def subcommand_get_group_users(arguments):
-    """ Get the list of users of an LDAP group."""
-    process = _run(['ldapgid', '-P', arguments.groupname],
-                   stdout=subprocess.PIPE)
+    """Get the list of users of an LDAP group."""
+    try:
+        process = _run(['ldapgid', '-P', arguments.groupname],
+                       stdout=subprocess.PIPE)
+    except subprocess.CalledProcessError:
+        return  # Group does not exist, return empty list
+
     output = process.stdout.decode()
     users = output.rsplit(':')[-1]
     if users:

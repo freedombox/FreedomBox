@@ -28,7 +28,8 @@ function sleep(ms) {
 // Refresh the page once in n seconds
 async function refresh(ms) {
     await sleep(3000);
-    window.location.reload();
+    // Refresh the page without resubmitting the POST data.
+    window.location = window.location.href;
 }
 
 refresh();

@@ -30,6 +30,8 @@ from plinth.daemon import Daemon
 from plinth.errors import PlinthError
 from plinth.utils import format_lazy, import_from_gi
 
+from .manifest import backup  # noqa, pylint: disable=unused-import
+
 version = 3
 
 name = _('Storage')

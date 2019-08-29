@@ -125,10 +125,9 @@ def force_upgrade(helper, packages):
     if 'tt-rss' not in packages:
         return False
 
-    # tt-rss 17.4 -> 18.12
+    # Allow tt-rss any lower version to upgrade to 19.8.*
     package = packages['tt-rss']
-    if Version(package['current_version']) >= Version('18.12') or \
-       Version(package['new_version']) < Version('18.12'):
+    if Version(package['new_version']) > Version('19.9~'):
         return False
 
     helper.install(['tt-rss'], force_configuration='new')

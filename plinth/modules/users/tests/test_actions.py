@@ -132,7 +132,8 @@ def _create_user(username=None, groups=None):
     if groups:
         for group in groups:
             _call_action(['add-user-to-group', username, group])
-            _cleanup_groups.add(group)
+            if group != 'admin':
+                _cleanup_groups.add(group)
 
     _cleanup_users.add(username)
     return username, password

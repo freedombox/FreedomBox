@@ -24,7 +24,7 @@ Background:
 
 Scenario: Create user
   Given the user alice doesn't exist
-  When I create a user named alice with password secret123
+  When I create a user named alice with password secret123secret123
   Then alice should be listed as a user
 
 Scenario: Rename user

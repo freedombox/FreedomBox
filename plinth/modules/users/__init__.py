@@ -125,11 +125,11 @@ def register_group(group):
 
 
 def get_last_admin_user():
-    """ Check if there is only one admin user
-        if yes return its name else return None
-    """
-    admin_users = actions.superuser_run(
-        'users', ['get-group-users', 'admin']).strip().split('\n')
-    if len(admin_users) == 1:
+    """If there is only one admin user return its name else return None."""
+    output = actions.superuser_run('users', ['get-group-users', 'admin'])
+    admin_users = output.strip().split('\n')
+
+    if len(admin_users) == 1 and admin_users[0]:
         return admin_users[0]
+
     return None

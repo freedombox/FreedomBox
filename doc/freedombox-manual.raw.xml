@@ -3879,11 +3879,12 @@ proto udp]]></screen>
       <section>
         <title>Troubleshooting</title>
         <para>Cockpit requires a domain name to be properly setup on your FreedomBox and will only work when you access it using a URL with that domain name. Cockpit will not work when using IP address in the URL. Using <emphasis>freedombox.local</emphasis> as the domain name also does not work. For example, the following URLs will not work: </para>
-        <screen><![CDATA[https://192.168.0.10/cockpit/
-https://freedombox.local/cockpit/]]></screen>
+        <screen><![CDATA[https://192.168.0.10/_cockpit/
+https://freedombox.local/_cockpit/]]></screen>
+        <para>Starting with FreedomBox version 19.15, using <emphasis>.local</emphasis> domain works. You can access Cockpit using the URL <ulink url="https://freedombox.local/_cockpit/"/>. The <emphasis>.local</emphasis> domain is based on your hostname. If your hostname is <emphasis>mybox</emphasis>, your <emphasis>.local</emphasis> domain name will be <emphasis>mybox.local</emphasis> and the Cockpit URL will be <ulink url="https://mybox.local/_cockpit/"/>. </para>
         <para>To properly access Cockpit, use the domain name <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Configure#">configured</ulink> for your FreedomBox.Cockpit will also work well when using a <ulink url="https://wiki.debian.org/FreedomBox/Manual/Tor">Tor Hidden Service</ulink>. The following URLs will work: </para>
-        <screen><![CDATA[https://mybox.freedombox.rocks/cockpit/
-https://exampletorhs.onion/cockpit/]]></screen>
+        <screen><![CDATA[https://mybox.freedombox.rocks/_cockpit/
+https://exampletorhs.onion/_cockpit/]]></screen>
         <para>The reason for this behaviour is that Cockpit uses WebSockets to connect to the backend server. Cross site requests for WebSockets must be prevented for security reasons. To implement this, Cockpit maintains a list of all domains from which requests are allowed. FreedomBox automatically configures this list whenever you add or remove a domain. However, since we can't rely on IP addresses, they are not added by FreedomBox to this domain list. You can see the current list of allowed domains, as managed by FreedomBox, in <emphasis>/etc/cockpit/cockpit.conf</emphasis>. You may edit this, but do so only if you understand web security consequences of this. </para>
       </section>
     </section>
@@ -6578,10 +6579,10 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
       </para>
     </section>
     <section>
-      <title>Software Upgrades</title>
-      <para>FreedomBox can automatically install security upgrades.  On the <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section in Plinth you can turn on automatic upgrades. For FreedomBox versions above 0.5, this feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
-      <para>Upgrades are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic upgrades happen.  Alternatively, you can perform manual upgrades as described below. </para>
-      <para>Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
+      <title>Software Updates</title>
+      <para>FreedomBox can automatically install security updates.  On the <emphasis>Update</emphasis> page of the <emphasis>System</emphasis> section in FreedomBox web interface you can turn on automatic updates. This feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
+      <para>Updates are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic updates happen.  Alternatively, you can perform manual updates as described below. </para>
+      <para>Note that once the updates start, it may take a long time to complete. During automatic update process that runs every night or during manual update process, you will not be able to install apps from FreedomBox web interface. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -6593,15 +6594,34 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
         </inlinemediaobject>
       </para>
       <section>
-        <title>Manual Upgrades</title>
-        <para>Under some circumstances, automatic upgrades may fail and require you perform a manual upgrade action.  Even upgrades initiated from Plinth may not finish properly.  This may be because the upgrade process requires you to make a decision.  In these cases, manual upgrade on the terminal may be the only option. </para>
-        <para>In addition, while the upgrade task is running any application installations will wait until the upgrade task is finished. Depending on the hardware, the upgrade task may take a little time, therefore, giving the impression that the application installation stalled. </para>
-        <para>To perform manual upgrades on the terminal, login into FreedomBox on a terminal or using a remote secure shell (see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/SecureShell#">Secure Shell</ulink> section).  Then run the following commands: </para>
+        <title>When Will I Get the Latest Features?</title>
+        <para>Although updates are done every day for security reasons, latest features of FreedomBox will not propagate to all the users. The following information should help you understand how new features become available to users. </para>
+        <para><emphasis role="strong">Stable Users</emphasis>: This category of users include users who bought the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/PioneerEdition#">FreedomBox Pinoeer Edition</ulink>, installed FreedomBox on a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink> stable distribution or users who downloaded the <emphasis>stable</emphasis> images from <ulink url="https://freedombox.org">freedombox.org</ulink>. As a general rule, only security updates to various packages are provided to these users. One exception to this rule is where FreedomBox service itself is updated when a release gains high confidence from developers. This means that latest FreedomBox features may become available to these users although not as quickly or frequently as <emphasis>testing</emphasis> users. If an app is available only in <emphasis>testing</emphasis> distribution but not in <emphasis>stable</emphasis> distribution, then that app will show up in the web interface but will not be installable by <emphasis>stable</emphasis> users. Some apps are also provided an exception to the rule of "security updates only" when the app is severely broken otherwise. Every two years, a major release of Debian stable happens with the latest versions of all the software packages and FreedomBox developers will attempt to upgrade these users to the new release without requiring manual intervention.  </para>
+        <para><emphasis role="strong">Testing Users</emphasis>: This category of users include users who installed FreedomBox on a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink><emphasis>testing</emphasis> distribution or users who downloaded the <emphasis>testing</emphasis> images from <ulink url="https://freedombox.org">freedombox.org</ulink>. Users who use Debian <emphasis>testing</emphasis> are likely to face occasional disruption in the services and may even need manual intervention to fix the issue. As a general rule, these users receive all the latest features and security updates to all the installed packages. Every two weeks, a new version of FreedomBox is released with all the latest features and fixes. These releases will reach <emphasis>testing</emphasis> users approximately 2-3 days after the release. </para>
+        <para><emphasis role="strong">Unstable Users</emphasis>: This category of users include users who installed FreedomBox on a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink><emphasis>unstable</emphasis> distribution or users who downloaded the <emphasis>unstable</emphasis> images from <ulink url="https://freedombox.org">freedombox.org</ulink>. Users who use Debian <emphasis>unstable</emphasis> are likely to face occasional disruption in the services and may even need manual intervention to fix the issue. As a general rule, these users receive all the latest features to all the installed packages. Every two weeks, a new version of FreedomBox is released with all the latest features and fixes. Theses releases will reach <emphasis>unstable</emphasis> users on the day of the release. Only developers, testers and other contributors to the FreedomBox project should use the <emphasis>unstable</emphasis> distribution and end users and advised against using it. </para>
+      </section>
+      <section>
+        <title>Manual Updates from Web Interface</title>
+        <para>To get updates immediately and not wait until the end of the day, you may want to trigger updates manually. You can do this by pressing the <emphasis>Update now</emphasis> button in <emphasis>Manual update</emphasis> tab for <emphasis>Update</emphasis> page in <emphasis>System</emphasis> section. Note that this step is not necessary if you have enabled <emphasis>Auto-updates</emphasis> as every night this operation is performed automatically. </para>
+        <para>When installing apps you may receive an error message such as  </para>
+        <screen><![CDATA[Error installing packages: E: dpkg was interrupted, you must manually run 'dpkg --configure -a' to correct the problem]]></screen>
+        <para>This is typically caused by shutting down FreedomBox while it is installing apps, while performing daily updates or during some other operations. This situation can be rectified immediately by running manual update. </para>
+      </section>
+      <section>
+        <title>Manual Updates from Terminal</title>
+        <para>Some software packages may require manual interaction for updating due to questions related to configuration. In such cases, FreedomBox updates itself and brings in new knowledge necessary to update the package by answering configuration questions. After updating itself, FreedomBox acts on behalf of the user and updates the packages by answering the questions. Until FreedomBox has a chance to update the package, such packages should not be be updated manually. The manual update triggered from the web interface is already mindful of such packages and does not update them. </para>
+        <para>In some rare situations, FreedomBox itself might fail to update or the update mechanism might fall into a situation that might need manual intervention from a terminal. To perform manual upgrades on the terminal, login into FreedomBox on a terminal (if you have monitor and keyboard connected), via a web terminal (using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Cockpit#">FreedomBox/Manual/Cockpit</ulink>) or using a remote secure shell (see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/SecureShell#">Secure Shell</ulink> section).  Then run the following commands: </para>
         <screen><![CDATA[$ sudo su -
-Password:
-# apt-get update
-# apt-get dist-upgrade]]></screen>
-        <para>This will ask you if it is alright to install/upgrade (or remove) some packages and use (or release) some disk space.  Say <emphasis>yes</emphasis> after review.  In some cases, during the upgrades process you will be asked questions about modified configuration files, answering with a default <emphasis>Keep current configuration</emphasis> is usually safe. </para>
+Password: <enter user password here>
+# dpkg --configure -a
+# apt update
+# apt -f install
+# unattended-upgrade --debug
+# apt install freedombox
+# apt update]]></screen>
+        <para>If <code>apt-get update</code> asks for a confirmation to change <emphasis>Codename</emphasis> or other release information, confirm <emphasis>yes</emphasis>. If during update of <emphasis>freedombox</emphasis> package, if a question about overwriting configuration files is asked, answer to install new configuration files from the latest version of the package. This process will upgrade only packages that don't require configuration file questions (except for <emphasis>freedombox</emphasis> package). After this, let FreedomBox handle the upgrade of remaining packages. Be patient while new releases of FreedomBox are made to handle packages that require manual intervention. </para>
+        <para>If you want to go beyond the recommendation to upgrade all the packages on your FreedomBox and if you are really sure about handling the configuration changes for packages yourself, run the following command: </para>
+        <screen><![CDATA[$ apt dist-upgrade]]></screen>
       </section>
     </section>
     <section>
@@ -9807,6 +9827,53 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
+        <title>FreedomBox 19.15 (2019-08-26)</title>
+        <itemizedlist>
+          <listitem>
+            <para>security: Hide vulnerability table by default </para>
+          </listitem>
+          <listitem>
+            <para>names: Perform better layout of domain names table on small screens </para>
+          </listitem>
+          <listitem>
+            <para>cockpit: Apply domain name changes immediately </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Prevent processing empty domain name </para>
+          </listitem>
+          <listitem>
+            <para>config: Send hostname change signal only after fully processing it </para>
+          </listitem>
+          <listitem>
+            <para>letsencrypt: Don't try to obtain certificates for .local domains </para>
+          </listitem>
+          <listitem>
+            <para>avahi: Expose .local domain as a proper domain </para>
+          </listitem>
+          <listitem>
+            <para>cockpit: Make essential and install by default </para>
+          </listitem>
+          <listitem>
+            <para>tt-rss: Force upgrade to 18.12-1.1 and beyond </para>
+          </listitem>
+          <listitem>
+            <para>updates: Allow matrix-synapse 1.3 to be installed for buster users </para>
+          </listitem>
+          <listitem>
+            <para>javascript: Don't resubmit when refreshing the page </para>
+          </listitem>
+          <listitem>
+            <para>storage: Fix regression with restoring backups with storage </para>
+          </listitem>
+          <listitem>
+            <para>matrix-synapse: Use recommended reverse proxy configuration </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for German, Hungarian, and Norwegian Bokmål </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>FreedomBox 19.14 (2019-08-12)</title>
         <itemizedlist>
           <listitem>
@@ -12673,43 +12740,87 @@ FreedomBox app to configure Tiny Tiny RSS.
       <section>
         <title>Screenshots</title>
         <para>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=about.png">
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-home.png">
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=about.png" width="300"/>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-home.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>About Page</phrase>
+                <phrase>Home Page</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=tor.png">
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-apps.png">
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=tor.png" width="300"/>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-apps.png" width="300"/>
+              </imageobject>
+              <textobject>
+                <phrase>Apps Page</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </ulink>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-system.png">
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-system.png" width="300"/>
+              </imageobject>
+              <textobject>
+                <phrase>System Page</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </ulink>
+        </para>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-tor.png">
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-tor.png" width="300"/>
               </imageobject>
               <textobject>
                 <phrase>Enabling Tor Hidden Services</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=emailclient.png">
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-ttrss.png">
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=emailclient.png" width="300"/>
-              </imageobject>
-              <textobject>
-                <phrase>Setting up Email Client</phrase>
-              </textobject>
-            </inlinemediaobject>
-          </ulink>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=newsfeed.png">
-            <inlinemediaobject>
-              <imageobject>
-                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=newsfeed.png" width="300"/>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-ttrss.png" width="300"/>
               </imageobject>
               <textobject>
                 <phrase>Newsfeed from anywhere</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </ulink>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-roundcube.png">
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-roundcube.png" width="300"/>
+              </imageobject>
+              <textobject>
+                <phrase>Email Client</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </ulink>
+        </para>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-manual.png">
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-manual.png" width="300"/>
+              </imageobject>
+              <textobject>
+                <phrase>Manual Pages</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </ulink>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-about.png">
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-about.png" width="300"/>
+              </imageobject>
+              <textobject>
+                <phrase>About Page</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>

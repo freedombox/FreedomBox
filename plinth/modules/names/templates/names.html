@@ -23,11 +23,11 @@
 
 {% block configuration %}
 
-  <table class="table table-bordered table-condensed table-striped">
+  <table class="table table-bordered table-condensed table-striped names-table">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Domain Name</th>
+        <th class="names-domain-column">Domain Name</th>
         <th>Services</th>
         <th></th>
       </tr>
@@ -36,7 +36,7 @@
       {% for domain in status.domains|dictsort:"domain_type.display_name" %}
         <tr>
           <td>{{ domain.domain_type.display_name }}</td>
-          <td>{{ domain.name }}</td>
+          <td class="names-domain-column">{{ domain.name }}</td>
           <td>{{ domain.get_readable_services|join:', ' }}</td>
           <td>
             <a href="{% url domain.domain_type.configuration_url %}"

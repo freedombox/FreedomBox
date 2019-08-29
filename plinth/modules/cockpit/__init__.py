@@ -35,6 +35,8 @@ from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 
+is_essential = True
+
 managed_services = ['cockpit.socket']
 
 managed_packages = ['cockpit']
@@ -132,6 +134,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         actions.superuser_run('cockpit', ['add-domain', name])
+        actions.superuser_run('service', ['try-restart', managed_services[0]])
 
 
 def on_domain_removed(sender, domain_type, name, **kwargs):
@@ -139,3 +142,4 @@ def on_domain_removed(sender, domain_type, name, **kwargs):
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         actions.superuser_run('cockpit', ['remove-domain', name])
+        actions.superuser_run('service', ['try-restart', managed_services[0]])
