@@ -21,7 +21,6 @@ Views for the backups app.
 import logging
 import os
 import tempfile
-from contextlib import contextmanager
 from datetime import datetime
 from urllib.parse import unquote
 
@@ -39,9 +38,8 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
 from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
-               is_ssh_hostkey_verified, split_path)
+               is_ssh_hostkey_verified)
 from .decorators import delete_tmp_backup_file
-from .errors import BorgRepositoryDoesNotExistError
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
                          get_repositories)
 
@@ -265,13 +263,10 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
 
         credentials = {'encryption_passphrase': encryption_passphrase}
         repository = BorgRepository(path, credentials)
-        try:
-            repository.get_info()
-        except BorgRepositoryDoesNotExistError:
-            repository.initialize(encryption)
+        if _save_repository(self.request, repository):
+            return super().form_valid(form)
 
-        repository.save(store_credentials=True, verified=True)
-        return super().form_valid(form)
+        return redirect(reverse_lazy('backups:add-repository'))
 
 
 class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
@@ -346,106 +341,53 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
 
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
-        if is_ssh_hostkey_verified(self._get_repository().hostname):
-            messages.success(self.request, _('SSH host already verified.'))
-            return self._add_remote_repository()
+        if not is_ssh_hostkey_verified(self._get_repository().hostname):
+            return super().get(*args, **kwargs)
 
-        return super().get(*args, **kwargs)
+        messages.success(self.request, _('SSH host already verified.'))
+        if _save_repository(self.request, self._get_repository()):
+            return redirect(reverse_lazy('backups:index'))
+
+        return redirect(reverse_lazy('backups:add-remote-repository'))
 
     def form_valid(self, form):
         """Create and store the repository."""
         ssh_public_key = form.cleaned_data['ssh_public_key']
         self._add_ssh_hostkey(ssh_public_key)
         messages.success(self.request, _('SSH host verified.'))
-        return self._add_remote_repository()
-
-    def _add_remote_repository(self):
-        """On successful verification of host, add repository."""
-        repository = self._get_repository()
-        encryption = 'none'
-        if 'encryption_passphrase' in repository.credentials and \
-           repository.credentials['encryption_passphrase']:
-            encryption = 'repokey'
-
-        try:
-            dir_contents = _list_remote_directory(repository.path,
-                                                  repository.credentials)
-            repository.mount()
-            repository = _create_remote_repository(repository, encryption,
-                                                   dir_contents)
-            repository.save(verified=True)
+        if _save_repository(self.request, self._get_repository()):
             return redirect(reverse_lazy('backups:index'))
-        except paramiko.BadHostKeyException:
-            message = _('SSH host public key could not be verified.')
-        except paramiko.AuthenticationException:
-            message = _('Authentication to remote server failed.')
-        except paramiko.SSHException as exception:
-            message = _('Error establishing connection to server: {}').format(
-                str(exception))
-        except BorgRepositoryDoesNotExistError:
-            message = _('Repository path is neither empty nor '
-                        'is an existing backups repository.')
-        except Exception as exception:
-            message = str(exception)
-            logger.exception('Error adding repository: %s', exception)
 
-        messages.error(self.request, message)
-        messages.error(self.request, _('Repository removed.'))
-        # Remove the repository so that the user can have another go at
-        # creating it.
-        repository.remove()
         return redirect(reverse_lazy('backups:add-remote-repository'))
 
 
-def _list_remote_directory(path, credentials):
-    """List a SSH remote directory. Create if it does not exist. """
-    username, hostname, dir_path = split_path(path)
-    if dir_path == '':
-        dir_path = '.'
-
-    if dir_path[0] == '~':
-        dir_path = '.' + dir_path[1:]
-
-    password = credentials['ssh_password']
-
-    # Ensure remote directory exists, check contents
-    dir_contents = None
-    # TODO Test with IPv6 connection
-    with _ssh_connection(hostname, username, password) as ssh_client:
-        with ssh_client.open_sftp() as sftp_client:
-            try:
-                dir_contents = sftp_client.listdir(dir_path)
-            except FileNotFoundError:
-                logger.info('Directory %s does not exist, creating.', dir_path)
-                sftp_client.mkdir(dir_path)
-
-    return dir_contents
-
-
-def _create_remote_repository(repository, encryption, dir_contents):
-    """Create a Borg repository on remote server if necessary."""
+def _save_repository(request, repository):
+    """Initialize and save a repository. Convert errors to messages."""
     try:
-        repository.get_info()
-    except BorgRepositoryDoesNotExistError:
-        if dir_contents:
-            raise
+        repository.initialize()
+        repository.save(verified=True)
+        return True
+    except paramiko.BadHostKeyException:
+        message = _('SSH host public key could not be verified.')
+    except paramiko.AuthenticationException:
+        message = _('Authentication to remote server failed.')
+    except paramiko.SSHException as exception:
+        message = _('Error establishing connection to server: {}').format(
+            str(exception))
+    except Exception as exception:
+        message = str(exception)
+        logger.exception('Error adding repository: %s', exception)
 
-        repository.initialize(encryption)
-
-    return repository
-
-
-@contextmanager
-def _ssh_connection(hostname, username, password):
-    """Context manager to create and close an SSH connection."""
-    ssh_client = paramiko.SSHClient()
-    ssh_client.load_host_keys(str(get_known_hosts_path()))
-
+    messages.error(request, message)
+    # Remove the repository so that the user can have another go at
+    # creating it.
     try:
-        ssh_client.connect(hostname, username=username, password=password)
-        yield ssh_client
-    finally:
-        ssh_client.close()
+        repository.remove()
+        messages.error(request, _('Repository removed.'))
+    except KeyError:
+        pass
+
+    return False
 
 
 class RemoveRepositoryView(SuccessMessageMixin, TemplateView):

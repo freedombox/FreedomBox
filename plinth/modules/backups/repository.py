@@ -19,6 +19,7 @@ Remote and local Borg backup repositories
 """
 
 import abc
+import contextlib
 import io
 import json
 import logging
@@ -26,54 +27,67 @@ import os
 import re
 from uuid import uuid1
 
+import paramiko
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions, cfg
 from plinth.errors import ActionError
 from plinth.utils import format_lazy
 
-from . import (_backup_handler, api, get_known_hosts_path,
+from . import (_backup_handler, api, errors, get_known_hosts_path,
                restore_archive_handler, split_path, store)
-from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
 
-SUPPORTED_BORG_ENCRYPTION = ['none', 'repokey']
 # known errors that come up when remotely accessing a borg repository
 # 'errors' are error strings to look for in the stacktrace.
-KNOWN_ERRORS = [{
-    'errors': ['subprocess.TimeoutExpired'],
-    'message':
-        _('Connection refused - make sure you provided correct '
-          'credentials and the server is running.'),
-    'raise_as':
-        BorgError,
-},
-                {
-                    'errors': ['Connection refused'],
-                    'message': _('Connection refused'),
-                    'raise_as': BorgError,
-                },
-                {
-                    'errors': [
-                        'not a valid repository', 'does not exist',
-                        'FileNotFoundError'
-                    ],
-                    'message':
-                        _('Repository not found'),
-                    'raise_as':
-                        BorgRepositoryDoesNotExistError,
-                },
-                {
-                    'errors': [('passphrase supplied in .* is incorrect')],
-                    'message': _('Incorrect encryption passphrase'),
-                    'raise_as': BorgError,
-                },
-                {
-                    'errors': [('Connection reset by peer')],
-                    'message': _('SSH access denied'),
-                    'raise_as': SshfsError,
-                }]
+KNOWN_ERRORS = [
+    {
+        'errors': ['subprocess.TimeoutExpired'],
+        'message':
+            _('Connection refused - make sure you provided correct '
+              'credentials and the server is running.'),
+        'raise_as':
+            errors.BorgError,
+    },
+    {
+        'errors': ['Connection refused'],
+        'message': _('Connection refused'),
+        'raise_as': errors.BorgError,
+    },
+    {
+        'errors': [
+            'not a valid repository', 'does not exist', 'FileNotFoundError'
+        ],
+        'message':
+            _('Repository not found'),
+        'raise_as':
+            errors.BorgRepositoryDoesNotExistError,
+    },
+    {
+        'errors': ['passphrase supplied in .* is incorrect'],
+        'message': _('Incorrect encryption passphrase'),
+        'raise_as': errors.BorgError,
+    },
+    {
+        'errors': ['Connection reset by peer'],
+        'message': _('SSH access denied'),
+        'raise_as': errors.SshfsError,
+    },
+    {
+        'errors': ['There is already something at'],
+        'message':
+            _('Repository path is neither empty nor '
+              'is an existing backups repository.'),
+        'raise_as':
+            errors.BorgError,
+    },
+    {
+        'errors': ['A repository already exists at'],
+        'message': None,
+        'raise_as': errors.BorgRepositoryExists,
+    },
+]
 
 
 class BaseBorgRepository(abc.ABC):
@@ -147,7 +161,7 @@ class BaseBorgRepository(abc.ABC):
             repository['mounted'] = self.is_mounted
             if repository['mounted']:
                 repository['archives'] = self.list_archives()
-        except (BorgError, ActionError) as err:
+        except (errors.BorgError, ActionError) as err:
             repository['error'] = str(err)
 
         return repository
@@ -174,13 +188,20 @@ class BaseBorgRepository(abc.ABC):
         archive_path = self._get_archive_path(archive_name)
         self.run(['delete-archive', '--path', archive_path])
 
-    def initialize(self, encryption):
+    def initialize(self):
         """Initialize / create a borg repository."""
-        if encryption not in SUPPORTED_BORG_ENCRYPTION:
-            raise ValueError('Unsupported encryption: %s' % encryption)
+        encryption = 'none'
+        if 'encryption_passphrase' in self.credentials and \
+           self.credentials['encryption_passphrase']:
+            encryption = 'repokey'
 
-        self.run(
-            ['init', '--path', self.borg_path, '--encryption', encryption])
+        try:
+            self.run(
+                ['init', '--path', self.borg_path, '--encryption', encryption])
+        except errors.BorgRepositoryExists:
+            pass
+
+        self.get_info()  # If password is incorrect raise an error early.
 
     @staticmethod
     def _get_encryption_data(credentials):
@@ -380,6 +401,12 @@ class SshBorgRepository(BaseBorgRepository):
                            ['is-mounted', '--mountpoint', self._mountpoint])
         return json.loads(output)
 
+    def initialize(self):
+        """Initialize the repository after mounting the target directory."""
+        self._ensure_remote_directory()
+        self.mount()
+        super().initialize()
+
     def mount(self):
         """Mount the remote path locally using sshfs."""
         if self.is_mounted:
@@ -428,6 +455,41 @@ class SshBorgRepository(BaseBorgRepository):
             arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
 
         return (arguments, kwargs)
+
+    def _ensure_remote_directory(self):
+        """Create remote SSH directory if it does not exist."""
+        username, hostname, dir_path = split_path(self.path)
+        if dir_path == '':
+            dir_path = '.'
+
+        if dir_path[0] == '~':
+            dir_path = '.' + dir_path[1:]
+
+        password = self.credentials['ssh_password']
+
+        # Ensure remote directory exists, check contents
+        # TODO Test with IPv6 connection
+        with _ssh_connection(hostname, username, password) as ssh_client:
+            with ssh_client.open_sftp() as sftp_client:
+                try:
+                    sftp_client.listdir(dir_path)
+                except FileNotFoundError:
+                    logger.info('Directory %s does not exist, creating.',
+                                dir_path)
+                    sftp_client.mkdir(dir_path)
+
+
+@contextlib.contextmanager
+def _ssh_connection(hostname, username, password):
+    """Context manager to create and close an SSH connection."""
+    ssh_client = paramiko.SSHClient()
+    ssh_client.load_host_keys(str(get_known_hosts_path()))
+
+    try:
+        ssh_client.connect(hostname, username=username, password=password)
+        yield ssh_client
+    finally:
+        ssh_client.close()
 
 
 def get_repositories():

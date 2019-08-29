@@ -20,14 +20,15 @@ from plinth.errors import PlinthError
 
 class BorgError(PlinthError):
     """Generic borg errors"""
-    pass
 
 
 class BorgRepositoryDoesNotExistError(BorgError):
     """Borg access to a repository works but the repository does not exist"""
-    pass
 
 
 class SshfsError(PlinthError):
     """Generic sshfs errors"""
-    pass
+
+
+class BorgRepositoryExists(BorgError):
+    """A repository at target location already exists during initialization."""
