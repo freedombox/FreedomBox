@@ -56,15 +56,9 @@
     {% trans 'Upload and Restore' %}
   </a>
 
-  <h3>{% trans 'Existing Backups' %}</h3>
-
-  {% for repository in repositories %}
-    {% include "backups_repository.inc" with uuid=repository.uuid %}
-  {% endfor %}
-
   <a title="{% trans 'Add a backup location' %}"
-       role="button" class="btn btn-default"
-       href="{% url 'backups:add-repository' %}">
+     role="button" class="btn btn-default"
+     href="{% url 'backups:add-repository' %}">
     <span class="fa fa-plus" aria-hidden="true"></span>
     {% trans 'Add Backup Location' %}
   </a>
@@ -75,5 +69,11 @@
     <span class="fa fa-plus" aria-hidden="true"></span>
     {% trans 'Add Remote Backup Location' %}
   </a>
+
+  <h3>{% trans 'Existing Backups' %}</h3>
+
+  {% for repository in repositories %}
+    {% include "backups_repository.inc" with uuid=repository.uuid %}
+  {% endfor %}
 
 {% endblock %}
