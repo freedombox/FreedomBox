@@ -247,6 +247,16 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
     template_name = 'backups_add_repository.html'
     success_url = reverse_lazy('backups:index')
 
+    def get(self, request, *args, **kwargs):
+        """If there are no disks available for adding, throw error."""
+        if not forms.get_disk_choices():
+            messages.error(
+                request,
+                _('No additional disks available to add a repository.'))
+            return redirect(reverse_lazy('backups:index'))
+
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
