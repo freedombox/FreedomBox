@@ -23,6 +23,7 @@ import io
 import json
 import logging
 import os
+import re
 from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
@@ -64,12 +65,9 @@ KNOWN_ERRORS = [{
                         BorgRepositoryDoesNotExistError,
                 },
                 {
-                    'errors': [('passphrase supplied in BORG_PASSPHRASE or by '
-                                'BORG_PASSCOMMAND is incorrect')],
-                    'message':
-                        _('Incorrect encryption passphrase'),
-                    'raise_as':
-                        BorgError,
+                    'errors': [('passphrase supplied in .* is incorrect')],
+                    'message': _('Incorrect encryption passphrase'),
+                    'raise_as': BorgError,
                 },
                 {
                     'errors': [('Connection reset by peer')],
@@ -255,7 +253,7 @@ class BaseBorgRepository(abc.ABC):
         caught_error = str(err)
         for known_error in KNOWN_ERRORS:
             for error in known_error['errors']:
-                if error in caught_error:
+                if re.search(error, caught_error):
                     raise known_error['raise_as'](known_error['message'])
 
         raise err
