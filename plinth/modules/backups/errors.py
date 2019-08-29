@@ -32,3 +32,7 @@ class SshfsError(PlinthError):
 
 class BorgRepositoryExists(BorgError):
     """A repository at target location already exists during initialization."""
+
+
+class BorgUnencryptedRepository(BorgError):
+    """Attempt to provide password on an unencrypted repository."""

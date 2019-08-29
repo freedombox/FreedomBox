@@ -146,7 +146,14 @@ class BaseBorgRepository(abc.ABC):
     def get_info(self):
         """Return Borg information about a repository."""
         output = self.run(['info', '--path', self.borg_path])
-        return json.loads(output)
+        output = json.loads(output)
+        print(output, self._get_encryption_data())
+        if output['encryption']['mode'] == 'none' and \
+           self._get_encryption_data():
+            raise errors.BorgUnencryptedRepository(
+                _('Existing repository is not encrypted.'))
+
+        return output
 
     def get_view_content(self):
         """Get archives with additional information as needed by the view"""
@@ -154,7 +161,7 @@ class BaseBorgRepository(abc.ABC):
             'uuid': self.uuid,
             'name': self.name,
             'storage_type': self.storage_type,
-            'is_encrypted': bool(self._get_encryption_data(self.credentials)),
+            'is_encrypted': bool(self._get_encryption_data()),
             'flags': self.flags,
             'error': None,
         }
@@ -204,10 +211,9 @@ class BaseBorgRepository(abc.ABC):
 
         self.get_info()  # If password is incorrect raise an error early.
 
-    @staticmethod
-    def _get_encryption_data(credentials):
+    def _get_encryption_data(self):
         """Return additional dictionary data to send to backups call."""
-        passphrase = credentials.get('encryption_passphrase', None)
+        passphrase = self.credentials.get('encryption_passphrase', None)
         if passphrase:
             return {'encryption_passphrase': passphrase}
 
@@ -229,7 +235,7 @@ class BaseBorgRepository(abc.ABC):
             if key not in self.known_credentials:
                 raise ValueError('Unknown credentials entry: %s' % key)
 
-        input_data = json.dumps(self._get_encryption_data(self.credentials))
+        input_data = json.dumps(self._get_encryption_data())
         return self._run('backups', arguments, superuser=superuser,
                          input=input_data.encode())
 
@@ -259,7 +265,7 @@ class BaseBorgRepository(abc.ABC):
                 return chunk
 
         args = ['export-tar', '--path', self._get_archive_path(archive_name)]
-        input_data = json.dumps(self._get_encryption_data(self.credentials))
+        input_data = json.dumps(self._get_encryption_data())
         proc = self._run('backups', args, run_in_background=True)
         proc.stdin.write(input_data.encode())
         proc.stdin.close()
