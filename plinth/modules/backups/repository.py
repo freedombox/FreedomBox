@@ -82,6 +82,7 @@ class BaseBorgRepository(abc.ABC):
     """Base class for all kinds of Borg repositories."""
     flags = {}
     is_mounted = True
+    known_credentials = []
 
     def __init__(self, path, credentials=None, uuid=None, **kwargs):
         """Instantiate a new repository.
@@ -129,15 +130,6 @@ class BaseBorgRepository(abc.ABC):
     def borg_path(self):
         """Return the repository that the backups action script should use."""
         return self._path
-
-    @staticmethod
-    def _get_encryption_data(credentials):
-        """Return additional dictionary data to send to backups call."""
-        passphrase = credentials.get('encryption_passphrase', None)
-        if passphrase:
-            return {'encryption_passphrase': passphrase}
-
-        return {}
 
     def get_info(self):
         """Return Borg information about a repository."""
@@ -188,8 +180,18 @@ class BaseBorgRepository(abc.ABC):
         """Initialize / create a borg repository."""
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
+
         self.run(
             ['init', '--path', self.borg_path, '--encryption', encryption])
+
+    @staticmethod
+    def _get_encryption_data(credentials):
+        """Return additional dictionary data to send to backups call."""
+        passphrase = credentials.get('encryption_passphrase', None)
+        if passphrase:
+            return {'encryption_passphrase': passphrase}
+
+        return {}
 
     def _run(self, cmd, arguments, superuser=True, **kwargs):
         """Run a backups or sshfs action script command."""
@@ -204,7 +206,7 @@ class BaseBorgRepository(abc.ABC):
     def run(self, arguments, superuser=True):
         """Add credentials and run a backups action script command."""
         for key in self.credentials.keys():
-            if key not in self.KNOWN_CREDENTIALS:
+            if key not in self.known_credentials:
                 raise ValueError('Unknown credentials entry: %s' % key)
 
         input_data = json.dumps(self._get_encryption_data(self.credentials))
@@ -320,13 +322,10 @@ class RootBorgRepository(BaseBorgRepository):
         """Initialize the repository object."""
         super().__init__(self.PATH, credentials, self.UUID)
 
-    def run(self, arguments):
-        return self._run('backups', arguments)
-
 
 class BorgRepository(BaseBorgRepository):
     """General Borg repository implementation."""
-    KNOWN_CREDENTIALS = ['encryption_passphrase']
+    known_credentials = ['encryption_passphrase']
     storage_type = 'disk'
     sort_order = 20
     flags = {'removable': True}
@@ -345,7 +344,7 @@ class BorgRepository(BaseBorgRepository):
 class SshBorgRepository(BaseBorgRepository):
     """Borg repository that is accessed via SSH"""
     SSHFS_MOUNTPOINT = '/media/'
-    KNOWN_CREDENTIALS = [
+    known_credentials = [
         'ssh_keyfile', 'ssh_password', 'encryption_passphrase'
     ]
     storage_type = 'ssh'
