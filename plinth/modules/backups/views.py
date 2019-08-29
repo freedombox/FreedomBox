@@ -269,6 +269,7 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             repository.get_info()
         except BorgRepositoryDoesNotExistError:
             repository.initialize(encryption)
+
         repository.save(store_credentials=True, verified=True)
         return super().form_valid(form)
 
@@ -361,7 +362,6 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     def _add_remote_repository(self):
         """On successful verification of host, add repository."""
         repository = self._get_repository()
-        uuid = self.kwargs['uuid']
         encryption = 'none'
         if 'encryption_passphrase' in repository.credentials and \
            repository.credentials['encryption_passphrase']:
@@ -393,7 +393,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         messages.error(self.request, _('Repository removed.'))
         # Remove the repository so that the user can have another go at
         # creating it.
-        get_instance(uuid).remove()
+        repository.remove()
         return redirect(reverse_lazy('backups:add-remote-repository'))
 
 
