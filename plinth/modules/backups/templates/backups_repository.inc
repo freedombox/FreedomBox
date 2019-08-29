@@ -100,6 +100,14 @@
         </tr>
       {% endfor %}
 
+      {% if repository.error %}
+        <tr>
+          <td>
+            <p>{{ repository.error }}</p>
+          </td>
+        </tr>
+      {% endif %}
+
       {% if not repository.error and not repository.archives %}
         <tr>
           <td>
