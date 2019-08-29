@@ -29,6 +29,10 @@
           <span class="fa fa-exclamation-triangle mount-error"
                 aria-hidden="true" title="{{ repository.error }}">
           </span>
+        {% elif repository.is_encrypted %}
+          <span class="fa fa-lock encrypted"
+                aria-hidden="true" title="{% trans "This repository is encrypted" %}">
+          </span>
         {% endif %}
 
         {{ repository.name }}

@@ -154,6 +154,7 @@ class BaseBorgRepository(abc.ABC):
             'uuid': self.uuid,
             'name': self.name,
             'storage_type': self.storage_type,
+            'is_encrypted': bool(self._get_encryption_data(self.credentials)),
             'flags': self.flags,
             'error': None,
         }
