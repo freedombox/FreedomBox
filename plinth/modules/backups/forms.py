@@ -19,6 +19,7 @@ Forms for backups module.
 """
 
 import logging
+import os
 import re
 import subprocess
 
@@ -162,9 +163,24 @@ encryption_fields = [
 
 def get_disk_choices():
     """Returns a list of all available partitions except the root partition."""
-    return [(device['mount_point'],
-             device['label'] if device['label'] else device['mount_point'])
-            for device in get_disks() if device['mount_point'] != '/']
+    repositories = get_repositories()
+    existing_paths = [
+        repository.path for repository in repositories
+        if repository.storage_type == 'disk'
+    ]
+    choices = []
+    for device in get_disks():
+        if device['mount_point'] == '/':
+            continue
+
+        path = os.path.join(device['mount_point'], 'FreedomBoxBackups')
+        if path in existing_paths:
+            continue
+
+        name = device['label'] if device['label'] else device['mount_point']
+        choices.append((device['mount_point'], name))
+
+    return choices
 
 
 class AddRepositoryForm(EncryptedBackupsMixin, forms.Form):
