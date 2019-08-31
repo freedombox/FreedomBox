@@ -101,7 +101,8 @@ class LanguageSelectionView(FormView):
         """Return the URL in the next parameter or home page."""
         redirect_to = self.request.GET.get(REDIRECT_FIELD_NAME, '')
         redirect_to = self.request.POST.get(REDIRECT_FIELD_NAME, redirect_to)
-        if is_safe_url(url=redirect_to, host=self.request.get_host()):
+        if is_safe_url(url=redirect_to,
+                       allowed_hosts={self.request.get_host()}):
             return redirect_to
 
         return reverse('index')
