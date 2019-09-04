@@ -20,6 +20,7 @@ Configuration helper for the ejabberd service
 """
 
 import argparse
+import json
 import os
 import pathlib
 import shutil
@@ -45,6 +46,10 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get configuration
+    subparsers.add_parser('get-configuration',
+                          help='Return the current configuration')
 
     # Preseed debconf values before packages are installed.
     pre_install = subparsers.add_parser(
@@ -91,6 +96,14 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def subcommand_get_configuration(_):
+    """Return the current configuration, specifically domains configured."""
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    print(json.dumps({'domains': conf['hosts']}))
 
 
 def subcommand_pre_install(arguments):

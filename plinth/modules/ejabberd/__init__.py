@@ -18,6 +18,7 @@
 FreedomBox app to configure ejabberd server.
 """
 
+import json
 import logging
 import pathlib
 
@@ -196,8 +197,11 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Update ejabberd config after domain name change."""
-    actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
-    app.get_component('letsencrypt-ejabberd').setup_certificates()
+    conf = actions.superuser_run('ejabberd', ['get-configuration'])
+    conf = json.loads(conf)
+    if name not in conf['domains']:
+        actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
+        app.get_component('letsencrypt-ejabberd').setup_certificates()
 
 
 def diagnose():
