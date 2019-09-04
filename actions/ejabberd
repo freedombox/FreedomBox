@@ -150,10 +150,16 @@ def upgrade_config(domain):
        (not current_version or current_version > MOD_IRC_DEPRECATED_VERSION):
         conf['modules'].pop('mod_irc')
 
-    # BOSH port was changed from 5280 to 5443.
-    for listen_port in conf['listen']:
-        if listen_port['port'] == 5280:
-            listen_port['port'] = 5443
+    # Debian has a patch to configuration to change port 5443 to 5280 in
+    # ejabberd package version 18.12. However, 5443 is the correct port to host
+    # BOSH. So, change it back. In 19.x, this behavior has changed to use both
+    # ports 5443 (for BOSH) and 5280 (for web administration).
+    bosh_port = any((True for listen_port in conf['listen']
+                     if listen_port['port'] == 5443))
+    if not bosh_port:
+        for listen_port in conf['listen']:
+            if listen_port['port'] == 5280:
+                listen_port['port'] = 5443
 
     cert_dir = pathlib.Path('/etc/ejabberd/letsencrypt') / domain
     cert_file = str(cert_dir / 'ejabberd.pem')
