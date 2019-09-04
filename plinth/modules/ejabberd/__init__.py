@@ -176,6 +176,9 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """
     del sender  # Unused
     del kwargs  # Unused
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() == 'needs-setup':
+        return
 
     actions.superuser_run('ejabberd', [
         'pre-change-hostname', '--old-hostname', old_hostname,
@@ -187,6 +190,9 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() == 'needs-setup':
+        return
 
     actions.superuser_run('ejabberd', [
         'change-hostname', '--old-hostname', old_hostname, '--new-hostname',
@@ -197,6 +203,10 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Update ejabberd config after domain name change."""
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() == 'needs-setup':
+        return
+
     conf = actions.superuser_run('ejabberd', ['get-configuration'])
     conf = json.loads(conf)
     if name not in conf['domains']:
