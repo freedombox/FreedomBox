@@ -21,11 +21,8 @@ Configuration helper for Cockpit.
 
 import argparse
 
-import augeas
-
 from plinth import action_utils
-
-CONFIG_FILE = '/etc/cockpit/cockpit.conf'
+from plinth.modules.cockpit import utils
 
 
 def parse_arguments():
@@ -53,64 +50,45 @@ def parse_arguments():
 
 def subcommand_setup(arguments):
     """Setup Cockpit configuration."""
-    aug = load_augeas()
+    aug = utils.load_augeas()
     origins = [
-        _get_origin_from_domain(domain) for domain in arguments.domain_names
+        utils.get_origin_from_domain(domain)
+        for domain in arguments.domain_names
     ]
     origins += ['https://localhost', 'https://localhost:4430']
     _set_origin_domains(aug, origins)
-    aug.set('/files' + CONFIG_FILE + '/WebService/UrlRoot', '/_cockpit/')
+    aug.set('/files' + utils.CONFIG_FILE + '/WebService/UrlRoot', '/_cockpit/')
     aug.save()
 
     action_utils.service_restart('cockpit.socket')
 
 
-def _get_origin_domains(aug):
-    """Return the list of allowed origin domains."""
-    origins = aug.get('/files' + CONFIG_FILE + '/WebService/Origins')
-    return set(origins.split()) if origins else set()
-
-
 def _set_origin_domains(aug, origins):
     """Set the list of allowed origin domains."""
-    aug.set('/files' + CONFIG_FILE + '/WebService/Origins', ' '.join(origins))
-
-
-def _get_origin_from_domain(domain):
-    """Return the origin that should be allowed for a domain."""
-    return 'https://{domain}'.format(domain=domain)
+    aug.set('/files' + utils.CONFIG_FILE + '/WebService/Origins',
+            ' '.join(origins))
 
 
 def subcommand_add_domain(arguments):
     """Allow a new domain to be origin for Cockpit's WebSocket."""
-    aug = load_augeas()
-    origins = _get_origin_domains(aug)
-    origins.add(_get_origin_from_domain(arguments.domain_name))
+    aug = utils.load_augeas()
+    origins = utils.get_origin_domains(aug)
+    origins.add(utils.get_origin_from_domain(arguments.domain_name))
     _set_origin_domains(aug, origins)
     aug.save()
 
 
 def subcommand_remove_domain(arguments):
     """Disallow a domain from being origin for Cockpit's WebSocket."""
-    aug = load_augeas()
-    origins = _get_origin_domains(aug)
+    aug = utils.load_augeas()
+    origins = utils.get_origin_domains(aug)
     try:
-        origins.remove(_get_origin_from_domain(arguments.domain_name))
+        origins.remove(utils.get_origin_from_domain(arguments.domain_name))
     except KeyError:
         pass
     else:
         _set_origin_domains(aug, origins)
         aug.save()
-
-
-def load_augeas():
-    """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
-    aug.set('/augeas/load/inifile/incl[last() + 1]', CONFIG_FILE)
-    aug.load()
-    return aug
 
 
 def main():

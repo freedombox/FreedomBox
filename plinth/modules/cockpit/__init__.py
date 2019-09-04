@@ -31,6 +31,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
+from . import utils
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
@@ -133,13 +134,17 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     """Handle addition of a new domain."""
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        actions.superuser_run('cockpit', ['add-domain', name])
-        actions.superuser_run('service', ['try-restart', managed_services[0]])
+        if name not in utils.get_domains():
+            actions.superuser_run('cockpit', ['add-domain', name])
+            actions.superuser_run('service',
+                                  ['try-restart', managed_services[0]])
 
 
 def on_domain_removed(sender, domain_type, name, **kwargs):
     """Handle removal of a domain."""
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        actions.superuser_run('cockpit', ['remove-domain', name])
-        actions.superuser_run('service', ['try-restart', managed_services[0]])
+        if name in utils.get_domains():
+            actions.superuser_run('cockpit', ['remove-domain', name])
+            actions.superuser_run('service',
+                                  ['try-restart', managed_services[0]])
