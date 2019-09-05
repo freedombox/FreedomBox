@@ -30,13 +30,17 @@
     <tr>
       <th>{% trans "Public Key" %}</th>
       <th>{% trans "Last Connected Time" %}</th>
-      <th>{% trans "Edit" %}</th>
+      <th>{% trans "Delete" %}</th>
     </tr>
     {% for client in server_clients %}
       <tr>
 	<td>{{ client.public_key }}</td>
 	<td>{{ client.latest_handshake }}</td>
-	<td>Edit</td>
+	<td><a class="btn btn-sm btn-default"
+	       href="{% url 'wireguard:delete-client' client.public_key %}">
+	  <span class="fa fa-trash-o" aria-hidden="true">
+	  </span>
+	</td>
       </tr>
     {% endfor %}
   </table>

@@ -37,6 +37,10 @@ def parse_arguments():
     add_client = subparsers.add_parser('add-client', help='Add a client')
     add_client.add_argument('publickey', help='Public key for the client')
 
+    remove_client = subparsers.add_parser('remove-client',
+                                          help='Remove a client')
+    remove_client.add_argument('publickey', help='Public key for the client')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -54,7 +58,11 @@ def subcommand_list_clients(_):
     output = subprocess.check_output(
         ['wg', 'show', SERVER_INTERFACE, 'latest-handshakes']).decode().strip()
     for client_info in output.split('\n'):
-        public_key, latest_handshake = client_info.split()
+        try:
+            public_key, latest_handshake = client_info.split()
+        except ValueError:
+            continue
+
         clients.append({
             'public_key': public_key,
             'latest_handshake': latest_handshake,
@@ -67,6 +75,13 @@ def subcommand_add_client(arguments):
     """Add a client."""
     subprocess.run(
         ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey],
+        check=True)
+
+
+def subcommand_remove_client(arguments):
+    """Remove a client."""
+    subprocess.run(
+        ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey, 'remove'],
         check=True)
 
 

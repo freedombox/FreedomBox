@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -14,18 +16,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""
-URLs for the wireguard module.
-"""
+{% endcomment %}
 
-from django.conf.urls import url
+{% load bootstrap %}
+{% load i18n %}
 
-from plinth.modules.wireguard import views
+{% block content %}
 
-urlpatterns = [
-    url(r'^apps/wireguard/$', views.WireguardView.as_view(), name='index'),
-    url(r'^apps/wireguard/client/add/$', views.AddClientView.as_view(),
-        name='add-client'),
-    url(r'^apps/wireguard/client/(?P<public_key>[^/]+)/delete/$',
-        views.DeleteClientView.as_view(), name='delete-client'),
-]
+  <h3>{{ title }}</h3>
+
+  <p>
+    {% trans "Are you sure that you want to delete this client?" %}
+  </p>
+  <p>
+    <b>{{ public_key }}</b>
+  </p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    <input type="submit" class="btn btn-danger"
+           value="{% trans "Delete Client" %}"/>
+  </form>
+
+{% endblock %}

@@ -20,10 +20,12 @@ Views for WireGuard application.
 
 import json
 
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 import plinth.modules.wireguard as wireguard
 from plinth import actions
@@ -67,6 +69,23 @@ class AddClientView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Add the client."""
         public_key = form.cleaned_data.get('public_key')
-        actions.superuser_run(
-            'wireguard', ['add-client', public_key])
+        actions.superuser_run('wireguard', ['add-client', public_key])
         return super().form_valid(form)
+
+
+class DeleteClientView(SuccessMessageMixin, TemplateView):
+    """View to delete a client."""
+    template_name = 'wireguard_delete_client.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context data for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Delete Client')
+        context['public_key'] = self.kwargs['public_key']
+        return context
+
+    def post(self, request, public_key):
+        """Delete the client."""
+        actions.superuser_run('wireguard', ['remove-client', public_key])
+        messages.success(request, _('Client deleted.'))
+        return redirect('wireguard:index')
