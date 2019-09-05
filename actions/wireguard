@@ -20,6 +20,7 @@ Configuration helper for WireGuard.
 """
 
 import argparse
+import json
 import subprocess
 
 SERVER_INTERFACE = 'wg0'
@@ -30,11 +31,36 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    subparsers.add_parser('setup', help='Setup WireGuard')
+    subparsers.add_parser('list-clients', help='List all clients')
+
     add_client = subparsers.add_parser('add-client', help='Add a client')
     add_client.add_argument('publickey', help='Public key for the client')
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup WireGuard."""
+    subprocess.run(
+        ['ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type', 'wireguard'],
+        check=True)
+
+
+def subcommand_list_clients(_):
+    """List all clients."""
+    clients = []
+    output = subprocess.check_output(
+        ['wg', 'show', SERVER_INTERFACE, 'latest-handshakes']).decode().strip()
+    for client_info in output.split('\n'):
+        public_key, latest_handshake = client_info.split()
+        clients.append({
+            'public_key': public_key,
+            'latest_handshake': latest_handshake,
+        })
+
+    print(json.dumps(clients))
 
 
 def subcommand_add_client(arguments):

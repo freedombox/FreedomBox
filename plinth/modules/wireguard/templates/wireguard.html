@@ -23,10 +23,24 @@
 
 {% block configuration %}
   <h3>{% trans "Server" %}</h3>
+
   <p>{% trans "Peers allowed to connect to this server" %}</p>
-  <ul>{% trans "public key" %}</ul>
-  <ul>{% trans "last connected time" %}</ul>
-  <ul>{% trans "edit" %}</ul>
+  <table class="table table-bordered table-condensed table-striped"
+	 id="server-clients-list">
+    <tr>
+      <th>{% trans "Public Key" %}</th>
+      <th>{% trans "Last Connected Time" %}</th>
+      <th>{% trans "Edit" %}</th>
+    </tr>
+    {% for client in server_clients %}
+      <tr>
+	<td>{{ client.public_key }}</td>
+	<td>{{ client.latest_handshake }}</td>
+	<td>Edit</td>
+      </tr>
+    {% endfor %}
+  </table>
+
   <a title="{% trans 'Add a new peer' %}"
      role="button" class="btn btn-default"
      href="{% url 'wireguard:add-client' %}">

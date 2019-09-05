@@ -18,8 +18,10 @@
 Views for WireGuard application.
 """
 
-from django.contrib import messages
+import json
+
 from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 
@@ -41,11 +43,20 @@ class WireguardView(AppView):
     template_name = 'wireguard.html'
     port_forwarding_info = wireguard.port_forwarding_info
 
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        clients_list = actions.superuser_run('wireguard', ['list-clients'])
+        context['server_clients'] = json.loads(clients_list)
+        return context
+
 
 class AddClientView(SuccessMessageMixin, FormView):
     """View to add a client."""
     form_class = forms.AddClientForm
     template_name = 'wireguard_add_client.html'
+    success_url = reverse_lazy('wireguard:index')
+    success_message = _('Added new client.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -58,4 +69,4 @@ class AddClientView(SuccessMessageMixin, FormView):
         public_key = form.cleaned_data.get('public_key')
         actions.superuser_run(
             'wireguard', ['add-client', public_key])
-        messages.success(self.request, _('Added new client.'))
+        return super().form_valid(form)

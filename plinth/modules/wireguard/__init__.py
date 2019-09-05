@@ -21,6 +21,7 @@ FreedomBox app for wireguard.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.firewall.components import Firewall
@@ -95,4 +96,5 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    helper.call('post', actions.superuser_run, 'wireguard', ['setup'])
     helper.call('post', app.enable)
