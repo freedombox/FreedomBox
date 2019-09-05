@@ -15,15 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-URLs for the wireguard module.
+Forms for wireguard module.
 """
 
-from django.conf.urls import url
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.wireguard import views
 
-urlpatterns = [
-    url(r'^apps/wireguard/$', views.WireguardView.as_view(), name='index'),
-    url(r'^apps/wireguard/client/add/$', views.AddClientView.as_view(),
-        name='add-client')
-]
+class AddClientForm(forms.Form):
+    """Form to add client."""
+    public_key = forms.CharField(
+        label=_('Public Key'), strip=True,
+        help_text=_('Public key of the peer.'))

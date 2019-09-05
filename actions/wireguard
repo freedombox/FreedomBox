@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for WireGuard.
+"""
+
+import argparse
+import subprocess
+
+SERVER_INTERFACE = 'wg0'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    add_client = subparsers.add_parser('add-client', help='Add a client')
+    add_client.add_argument('publickey', help='Public key for the client')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_add_client(arguments):
+    """Add a client."""
+    subprocess.run(
+        ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey],
+        check=True)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

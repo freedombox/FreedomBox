@@ -18,8 +18,16 @@
 Views for WireGuard application.
 """
 
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import ugettext as _
+from django.views.generic import FormView
+
 import plinth.modules.wireguard as wireguard
+from plinth import actions
 from plinth.views import AppView
+
+from . import forms
 
 
 class WireguardView(AppView):
@@ -32,3 +40,22 @@ class WireguardView(AppView):
     show_status_block = False
     template_name = 'wireguard.html'
     port_forwarding_info = wireguard.port_forwarding_info
+
+
+class AddClientView(SuccessMessageMixin, FormView):
+    """View to add a client."""
+    form_class = forms.AddClientForm
+    template_name = 'wireguard_add_client.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Add Client')
+        return context
+
+    def form_valid(self, form):
+        """Add the client."""
+        public_key = form.cleaned_data.get('public_key')
+        actions.superuser_run(
+            'wireguard', ['add-client', public_key])
+        messages.success(self.request, _('Added new client.'))

@@ -27,7 +27,12 @@
   <ul>{% trans "public key" %}</ul>
   <ul>{% trans "last connected time" %}</ul>
   <ul>{% trans "edit" %}</ul>
-  <ul>{% trans "Add Client" %}</ul>
+  <a title="{% trans 'Add a new peer' %}"
+     role="button" class="btn btn-default"
+     href="{% url 'wireguard:add-client' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans "Add Client" %}
+  </a>
 
   <h3>{% trans "Client" %}</h3>
   <p>{% trans "Peer servers that FreedomBox will connect to" %}</p>

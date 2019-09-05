@@ -33,7 +33,8 @@ clients = validate([{
         'os':
             'windows',
         'url':
-            'https://download.wireguard.com/windows-client/wireguard-amd64-0.0.23.msi'
+            'https://download.wireguard.com/windows-client/'
+        'wireguard-amd64-0.0.23.msi'
     }, {
         'type':
             'download',

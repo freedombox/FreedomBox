@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -14,16 +16,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""
-URLs for the wireguard module.
-"""
+{% endcomment %}
 
-from django.conf.urls import url
+{% load bootstrap %}
+{% load i18n %}
 
-from plinth.modules.wireguard import views
+{% block content %}
 
-urlpatterns = [
-    url(r'^apps/wireguard/$', views.WireguardView.as_view(), name='index'),
-    url(r'^apps/wireguard/client/add/$', views.AddClientView.as_view(),
-        name='add-client')
-]
+  <h3>{{ title }}</h3>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Add Client" %}"/>
+  </form>
+
+{% endblock %}

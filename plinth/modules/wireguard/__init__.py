@@ -18,6 +18,7 @@
 FreedomBox app for wireguard.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
@@ -71,8 +72,9 @@ class WireguardApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-wireguard', name, short_description=short_description,
-            icon='wireguard', url='/wireguard', clients=clients,
-            login_required=True)
+            icon='wireguard', description=description,
+            configure_url=reverse_lazy('wireguard:index'), login_required=True,
+            clients=clients)
         self.add(shortcut)
 
         firewall = Firewall('firewall-wireguard', name,
