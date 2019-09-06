@@ -18,6 +18,8 @@
 FreedomBox app for wireguard.
 """
 
+import json
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -98,3 +100,9 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'wireguard', ['setup'])
     helper.call('post', app.enable)
+
+
+def get_info():
+    """Get server and clients info."""
+    info = actions.superuser_run('wireguard', ['get-info'])
+    return json.loads(info)

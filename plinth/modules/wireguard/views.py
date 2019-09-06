@@ -18,8 +18,6 @@
 Views for WireGuard application.
 """
 
-import json
-
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
@@ -48,8 +46,8 @@ class WireguardView(AppView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        clients_list = actions.superuser_run('wireguard', ['list-clients'])
-        context['server_clients'] = json.loads(clients_list)
+        info = wireguard.get_info()
+        context['server_clients'] = info['clients']
         return context
 
 
@@ -71,6 +69,23 @@ class AddClientView(SuccessMessageMixin, FormView):
         public_key = form.cleaned_data.get('public_key')
         actions.superuser_run('wireguard', ['add-client', public_key])
         return super().form_valid(form)
+
+
+class ShowClientView(SuccessMessageMixin, TemplateView):
+    """View to show a client's details."""
+    template_name = 'wireguard_show_client.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context data for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Show Client')
+        public_key = self.kwargs['public_key']
+        info = wireguard.get_info()
+        context['server'] = info['server']
+        for client in info['clients']:
+            if client['public_key'] == public_key:
+                context['client'] = client
+        return context
 
 
 class DeleteClientView(SuccessMessageMixin, TemplateView):

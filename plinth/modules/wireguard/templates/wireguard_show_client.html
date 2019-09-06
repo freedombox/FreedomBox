@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -14,20 +16,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""
-URLs for the wireguard module.
-"""
+{% endcomment %}
 
-from django.conf.urls import url
+{% load i18n %}
 
-from plinth.modules.wireguard import views
+{% block content %}
 
-urlpatterns = [
-    url(r'^apps/wireguard/$', views.WireguardView.as_view(), name='index'),
-    url(r'^apps/wireguard/client/add/$', views.AddClientView.as_view(),
-        name='add-client'),
-    url(r'^apps/wireguard/client/(?P<public_key>[^/]+)/show/$',
-        views.ShowClientView.as_view(), name='show-client'),
-    url(r'^apps/wireguard/client/(?P<public_key>[^/]+)/delete/$',
-        views.DeleteClientView.as_view(), name='delete-client'),
-]
+  <h3>{{ title }}</h3>
+
+  <h4>{% trans "Connection Information" %}</h4>
+  <p>{% trans "IP address to use:" %}</p>
+  <p>{% trans "Server endpoints:" %}</p>
+  <p>{% trans "Server's public key:" %} {{ server.public_key }}</p>
+  <p>{% trans "Pre-shared key:" %}</p>
+
+  <h4>{% trans "Status" %}</h4>
+  <p>{% trans "Client Public Key:" %} {{ client.public_key }}</p>
+  <p>{% trans "Data transmitted:" %} {{ client.transfer_tx }}</p>
+  <p>{% trans "Data received:" %} {{ client.transfer_rx }}</p>
+  <p>{% trans "Latest handshake:" %} {{ client.latest_handshake }}</p>
+
+{% endblock %}

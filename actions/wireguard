@@ -23,6 +23,8 @@ import argparse
 import json
 import subprocess
 
+PUBLIC_KEY_HELP = 'Public key for the client'
+
 SERVER_INTERFACE = 'wg0'
 
 
@@ -32,14 +34,14 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup WireGuard')
-    subparsers.add_parser('list-clients', help='List all clients')
+    subparsers.add_parser('get-info', help='Get server and clients info')
 
     add_client = subparsers.add_parser('add-client', help='Add a client')
-    add_client.add_argument('publickey', help='Public key for the client')
+    add_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
 
     remove_client = subparsers.add_parser('remove-client',
                                           help='Remove a client')
-    remove_client.add_argument('publickey', help='Public key for the client')
+    remove_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
 
     subparsers.required = True
     return parser.parse_args()
@@ -52,23 +54,39 @@ def subcommand_setup(_):
         check=True)
 
 
-def subcommand_list_clients(_):
-    """List all clients."""
-    clients = []
+def subcommand_get_info(_):
+    """Get server and clients info."""
     output = subprocess.check_output(
-        ['wg', 'show', SERVER_INTERFACE, 'latest-handshakes']).decode().strip()
-    for client_info in output.split('\n'):
-        try:
-            public_key, latest_handshake = client_info.split()
-        except ValueError:
-            continue
+        ['wg', 'show', SERVER_INTERFACE, 'dump']).decode().strip()
+    lines = output.split('\n')
+    server_data = lines.pop(0).split()
+    server = {
+        'private_key': server_data[0],
+        'public_key': server_data[1],
+        'listen_port': server_data[2],
+        'fwmark': server_data[3],
+    }
 
-        clients.append({
-            'public_key': public_key,
-            'latest_handshake': latest_handshake,
-        })
+    clients = []
+    for client_line in lines:
+        client_data = client_line.split()
+        client_info = {
+            'public_key': client_data[0],
+            'preshared_key': client_data[1],
+            'endpoint': client_data[2],
+            'allowed_ips': client_data[3],
+            'latest_handshake': client_data[4],
+            'transfer_rx': client_data[5],
+            'transfer_tx': client_data[6],
+            'persistent_keepalive': client_data[7],
+        }
+        clients.append(client_info)
 
-    print(json.dumps(clients))
+    info = {
+        'server': server,
+        'clients': clients,
+    }
+    print(json.dumps(info))
 
 
 def subcommand_add_client(arguments):
