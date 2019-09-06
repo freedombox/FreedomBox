@@ -74,7 +74,12 @@
   <ul>{% trans "last connected time" %}</ul>
   <ul>{% trans "edit" %}</ul>
   <p>{% trans "No connections to remove servers are configured yet." %}</p>
-  <ul>{% trans "Add Server" %}</ul>
+  <a title="{% trans 'Add a new server' %}"
+     role="button" class="btn btn-default"
+     href="{% url 'wireguard:add-server' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans "Add Server" %}
+  </a>
 
   {{ block.super }}
 

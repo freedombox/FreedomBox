@@ -43,6 +43,18 @@ def parse_arguments():
                                           help='Remove a client')
     remove_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
 
+    add_server = subparsers.add_parser('add-server', help='Add a server')
+    add_server.add_argument('--endpoint', required=True,
+                            help='Server endpoint')
+    add_server.add_argument('--client-ip', required=True,
+                            help='Client IP address provided by server')
+    add_server.add_argument('--public-key', required=True,
+                            help='Public key of the server')
+    add_server.add_argument('--pre-shared-key', help='Pre-shared key')
+    add_server.add_argument(
+        '--all-outgoing', action='store_true',
+        help='Use this connection to send all outgoing traffic')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -52,6 +64,9 @@ def subcommand_setup(_):
     subprocess.run(
         ['ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type', 'wireguard'],
         check=True)
+    subprocess.run(
+        ['wg', 'set', SERVER_INTERFACE, 'listen-port', '51820'], check=True)
+    # TODO: generate key pair
 
 
 def subcommand_get_info(_):
@@ -82,6 +97,7 @@ def subcommand_get_info(_):
         }
         clients.append(client_info)
 
+    # TODO: Add servers info from other interfaces.
     info = {
         'server': server,
         'clients': clients,
@@ -101,6 +117,31 @@ def subcommand_remove_client(arguments):
     subprocess.run(
         ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey, 'remove'],
         check=True)
+
+
+def subcommand_add_server(arguments):
+    """Add a server."""
+    output = subprocess.check_output(
+        ['wg', 'show', 'interfaces']).decode().strip()
+    interfaces = output.split()
+    interface_num = 1
+    for interface in interfaces:
+        new_interface_name = 'wg' + str(interface_num)
+        if interface == new_interface_name:
+            interface_num += 1
+        else:
+            break
+
+    subprocess.run(
+        ['ip', 'link', 'add', 'dev', new_interface_name, 'type', 'wireguard'],
+        check=True)
+
+    args = ['wg', 'set', interface, 'peer', arguments.public_key]
+    if arguments.pre_shared_key:
+        args += ['preshared-key', arguments.pre_shared_key]
+
+    args += ['endpoint', arguments.endpoint]
+    subprocess.run(args, check=True)
 
 
 def main():

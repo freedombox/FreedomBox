@@ -27,3 +27,28 @@ class AddClientForm(forms.Form):
     public_key = forms.CharField(
         label=_('Public Key'), strip=True,
         help_text=_('Public key of the peer.'))
+
+
+class AddServerForm(forms.Form):
+    """Form to add server."""
+    endpoint = forms.CharField(
+        label=_('Endpoint'), strip=True,
+        help_text=_('Server endpoint with the form "ip:port".'))
+
+    client_ip_address = forms.CharField(
+        label=_('Client IP address provided by server'), strip=True,
+        help_text=_('Client IP address provided by server.'))
+
+    public_key = forms.CharField(
+        label=_('Public key of the server'), strip=True,
+        help_text=_('Public key of the server.'))
+
+    pre_shared_key = forms.CharField(
+        label=_('Pre-shared key'), strip=True, required=False,
+        help_text=_('Optional: a shared secret key provided by the server to '
+                    'add an additional layer of encryption.'))
+
+    all_outgoing_traffic = forms.BooleanField(
+        label=_('Use this connection to send all outgoing traffic'),
+        required=False,
+        help_text=_('Use this connection to send all outgoing traffic.'))

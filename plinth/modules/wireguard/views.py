@@ -104,3 +104,36 @@ class DeleteClientView(SuccessMessageMixin, TemplateView):
         actions.superuser_run('wireguard', ['remove-client', public_key])
         messages.success(request, _('Client deleted.'))
         return redirect('wireguard:index')
+
+
+class AddServerView(SuccessMessageMixin, FormView):
+    """View to add a server."""
+    form_class = forms.AddServerForm
+    template_name = 'wireguard_add_server.html'
+    success_url = reverse_lazy('wireguard:index')
+    success_message = _('Added new server.')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Add Server')
+        return context
+
+    def form_valid(self, form):
+        """Add the server."""
+        endpoint = form.cleaned_data.get('endpoint')
+        client_ip_address = form.cleaned_data.get('client_ip_address')
+        public_key = form.cleaned_data.get('public_key')
+        pre_shared_key = form.cleaned_data.get('pre_shared_key')
+        all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
+        args = ['add-server', '--endpoint', endpoint, '--client-ip',
+                client_ip_address, '--public-key', public_key]
+        if pre_shared_key:
+            # TODO: pass pre-shared key through stdin
+            args += ['--pre-shared-key', pre_shared_key]
+
+        if all_outgoing_traffic:
+            args.append('--all-outgoing')
+
+        actions.superuser_run('wireguard', args)
+        return super().form_valid(form)
