@@ -28,15 +28,16 @@
     }
     .pdf {
         float: right;
-        font-size: 4rem;
+        margin: 2rem 0;
     }
   </style>
 {% endblock %}
 
 {% block content %}
-  <a href="{% url 'help:download-manual' %}"
-     title="{% trans 'Download as PDF' %}">
-    <span class="fa fa-file-pdf-o pdf"></span>
+  <a href="{% url 'help:download-manual' %}" class="btn btn-default pdf"
+     role="button">
+    <span class="fa fa-download fa-fw fa-lg"></span>
+    {% trans 'Download as PDF' %}
   </a>
   {{ content|safe }}
 {% endblock %}
