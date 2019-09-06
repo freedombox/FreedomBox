@@ -52,11 +52,6 @@ class HelpApp(app_module.App):
                               None, 'fa-info-circle', 'help:manual',
                               parent_url_name='help:index', order=10)
         self.add(menu_item)
-        menu_item = menu.Menu('menu-help-download-manual',
-                              ugettext_lazy('Download Manual'), None,
-                              'fa-download', 'help:download-manual',
-                              parent_url_name='help:index', order=15)
-        self.add(menu_item)
         menu_item = menu.Menu('menu-help-support',
                               ugettext_lazy('Get Support'), None,
                               'fa-life-ring', 'help:support',
