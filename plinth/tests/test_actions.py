@@ -26,11 +26,13 @@ import os
 import pathlib
 import shutil
 import tempfile
+from unittest.mock import patch
 
 import pytest
 
 import apt_pkg
 from plinth import cfg
+from plinth.actions import _log_command as log_command
 from plinth.actions import run, superuser_run
 from plinth.errors import ActionError
 
@@ -182,3 +184,27 @@ def test_action_path(monkeypatch):
     su_plinth_path = superuser_run('test_path').strip()
     assert plinth_path.startswith(cfg.root)
     assert plinth_path == su_plinth_path
+
+
+@patch('plinth.actions.logger.info')
+@pytest.mark.parametrize('cmd,message', [
+    [['ls'], '$ ls'],
+    [['/bin/ls'], '$ ls'],
+    [['ls', 'a', 'b', 'c'], '$ ls a b c'],
+    [['ls', 'a b c'], "$ ls 'a b c'"],
+    [['ls', 'a;'], "$ ls 'a;'"],
+    [['sudo', 'ls'], '# ls'],
+    [['sudo', '-n', 'ls'], '# ls'],
+    [['sudo', '-u', 'tester', 'ls'], 'tester$ ls'],
+    [['sudo', 'key1=value1', 'key2=value2', 'ls'], '# ls'],
+    [[
+        'sudo', '-n', 'PYTHONPATH=/vagrant', '/vagrant/actions/ejabberd',
+        'add-domain', '--domainname', 'freedombox.local'
+    ], '# ejabberd add-domain --domainname freedombox.local'],
+])
+def test_log_command(logger, cmd, message):
+    """Test log messages for various action calls."""
+    log_command(cmd)
+    logger.assert_called_once()
+    args = logger.call_args[0]
+    assert message == args[0] % args[1:]
