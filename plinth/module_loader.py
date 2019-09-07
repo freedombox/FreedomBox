@@ -50,7 +50,6 @@ def load_modules():
     pre_module_loading.send_robust(sender="module_loader")
     modules = {}
     for module_import_path in get_modules_to_load():
-        logger.debug('Importing %s', module_import_path)
         module_name = module_import_path.split('.')[-1]
         try:
             modules[module_name] = importlib.import_module(module_import_path)
