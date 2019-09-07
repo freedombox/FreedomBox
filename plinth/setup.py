@@ -502,7 +502,7 @@ class ForceUpgrader():
 
         apps = self._get_list_of_apps_to_force_upgrade()
         logger.info('Apps needing conffile upgrades: %s',
-                    ', '.join([str(app.name) for app in apps]))
+                    ', '.join([str(app.name) for app in apps]) or 'None')
 
         need_retry = False
         for app, packages in apps.items():
