@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 18:36-0400\n"
+"POT-Creation-Date: 2019-09-09 17:49-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -120,20 +120,15 @@ msgstr ""
 msgid "Local Network Domain"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:41
+#: plinth/modules/backups/__init__.py:40
 msgid "Backups"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:44
+#: plinth/modules/backups/__init__.py:45
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:52
-#, python-brace-format
-msgid "{box_name} storage"
-msgstr ""
-
-#: plinth/modules/backups/forms.py:45
+#: plinth/modules/backups/forms.py:48
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr ""
@@ -182,116 +177,161 @@ msgid "Invalid directory path: {dir_path}"
 msgstr ""
 
 #: plinth/modules/backups/forms.py:130
-msgid "SSH Repository Path"
-msgstr ""
-
-#: plinth/modules/backups/forms.py:131
-msgid ""
-"Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
-"i>"
-msgstr ""
-
-#: plinth/modules/backups/forms.py:135
-msgid "SSH server password"
-msgstr ""
-
-#: plinth/modules/backups/forms.py:136
-msgid ""
-"Password of the SSH Server.<br />SSH key-based authentication is not yet "
-"possible."
-msgstr ""
-
-#: plinth/modules/backups/forms.py:140
 msgid "Encryption"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:141
+#: plinth/modules/backups/forms.py:131
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:145 plinth/modules/networks/forms.py:304
+#: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:304
 msgid "Passphrase"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:146
+#: plinth/modules/backups/forms.py:136
 msgid "Passphrase; Only needed when using encryption."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:149
+#: plinth/modules/backups/forms.py:139
 msgid "Confirm Passphrase"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:149
+#: plinth/modules/backups/forms.py:139
 msgid "Repeat the passphrase."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:160
+#: plinth/modules/backups/forms.py:150
 msgid "The entered encryption passphrases do not match"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:164
+#: plinth/modules/backups/forms.py:154
 msgid "Passphrase is needed for encryption."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:181
+#: plinth/modules/backups/forms.py:189
+msgid "Select Disk or Partition"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:190
+msgid "Backups will be stored in the directory FreedomBoxBackups"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:199
+msgid "SSH Repository Path"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:200
+msgid ""
+"Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
+"i>"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:204
+msgid "SSH server password"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:205
+msgid ""
+"Password of the SSH Server.<br />SSH key-based authentication is not yet "
+"possible."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:224
 msgid "Remote backup repository already exists."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:187
+#: plinth/modules/backups/forms.py:230
 msgid "Select verified SSH public key"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:46
+#: plinth/modules/backups/repository.py:48
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
 
-#: plinth/modules/backups/repository.py:53
+#: plinth/modules/backups/repository.py:55
 msgid "Connection refused"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:62
+#: plinth/modules/backups/repository.py:63
 msgid "Repository not found"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:70
+#: plinth/modules/backups/repository.py:69
 msgid "Incorrect encryption passphrase"
 msgstr ""
 
-#: plinth/modules/backups/repository.py:76
+#: plinth/modules/backups/repository.py:74
 msgid "SSH access denied"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:47
-#: plinth/modules/backups/views.py:80
+#: plinth/modules/backups/repository.py:80
+msgid "Repository path is neither empty nor is an existing backups repository."
+msgstr ""
+
+#: plinth/modules/backups/repository.py:154
+msgid "Existing repository is not encrypted."
+msgstr ""
+
+#: plinth/modules/backups/repository.py:342
+#, python-brace-format
+msgid "{box_name} storage"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:45
+#: plinth/modules/backups/views.py:77
 msgid "Create a new backup"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:49
 msgid "Create Backup"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:54
+#: plinth/modules/backups/templates/backups.html:52
 msgid "Upload and restore a backup archive"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:56
 msgid "Upload and Restore"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:61
-msgid "Existing Backups"
+#: plinth/modules/backups/templates/backups.html:59
+msgid "Add a backup location"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:71
+#: plinth/modules/backups/templates/backups.html:63
+msgid "Add Backup Location"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 msgid "Add a remote backup location"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:75
-msgid "Add Remote Location"
+#: plinth/modules/backups/templates/backups.html:70
+msgid "Add Remote Backup Location"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:73
+msgid "Existing Backups"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:34
+#, python-format
+msgid ""
+"The credentials for this repository are stored on your %(box_name)s. <br /> "
+"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"if chosen, the encryption passphrase."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:43
+msgid "Create Location"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_add_repository.html:34
+msgid "Create Repository"
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_delete.html:27
@@ -320,18 +360,6 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_repository_add.html:34
-#, python-format
-msgid ""
-"The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
-"if chosen, the encryption passphrase."
-msgstr ""
-
-#: plinth/modules/backups/templates/backups_repository_add.html:43
-msgid "Create Location"
-msgstr ""
-
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
 msgstr ""
@@ -355,7 +383,7 @@ msgid "Restore data from"
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/views.py:174
+#: plinth/modules/backups/views.py:171
 msgid "Restore"
 msgstr ""
 
@@ -406,87 +434,91 @@ msgstr ""
 msgid "Verify Host"
 msgstr ""
 
-#: plinth/modules/backups/views.py:75
+#: plinth/modules/backups/views.py:72
 msgid "Archive created."
 msgstr ""
 
-#: plinth/modules/backups/views.py:102
+#: plinth/modules/backups/views.py:99
 msgid "Delete Archive"
 msgstr ""
 
-#: plinth/modules/backups/views.py:114
+#: plinth/modules/backups/views.py:111
 msgid "Archive deleted."
 msgstr ""
 
-#: plinth/modules/backups/views.py:127
+#: plinth/modules/backups/views.py:124
 msgid "Upload and restore a backup"
 msgstr ""
 
-#: plinth/modules/backups/views.py:162
+#: plinth/modules/backups/views.py:159
 msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:190
+#: plinth/modules/backups/views.py:187
 msgid "No backup file found."
 msgstr ""
 
-#: plinth/modules/backups/views.py:198
+#: plinth/modules/backups/views.py:195
 msgid "Restore from uploaded file"
 msgstr ""
 
 #: plinth/modules/backups/views.py:255
+msgid "No additional disks available to add a repository."
+msgstr ""
+
+#: plinth/modules/backups/views.py:263
+msgid "Create backup repository"
+msgstr ""
+
+#: plinth/modules/backups/views.py:290
 msgid "Create remote backup repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:274
+#: plinth/modules/backups/views.py:309
 msgid "Added new remote SSH repository."
 msgstr ""
 
-#: plinth/modules/backups/views.py:297
+#: plinth/modules/backups/views.py:331
 msgid "Verify SSH hostkey"
 msgstr ""
 
-#: plinth/modules/backups/views.py:330
+#: plinth/modules/backups/views.py:357
 msgid "SSH host already verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:339
+#: plinth/modules/backups/views.py:367
 msgid "SSH host verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:363
+#: plinth/modules/backups/views.py:381
 msgid "SSH host public key could not be verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:365
+#: plinth/modules/backups/views.py:383
 msgid "Authentication to remote server failed."
 msgstr ""
 
-#: plinth/modules/backups/views.py:367
+#: plinth/modules/backups/views.py:385
 msgid "Error establishing connection to server: {}"
 msgstr ""
 
-#: plinth/modules/backups/views.py:370
-msgid "Repository path is neither empty nor is an existing backups repository."
-msgstr ""
-
-#: plinth/modules/backups/views.py:377
+#: plinth/modules/backups/views.py:396
 msgid "Repository removed."
 msgstr ""
 
-#: plinth/modules/backups/views.py:442
+#: plinth/modules/backups/views.py:410
 msgid "Remove Repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:452
-msgid "Repository removed. The remote backup itself was not deleted."
+#: plinth/modules/backups/views.py:419
+msgid "Repository removed. Backups were not deleted."
 msgstr ""
 
-#: plinth/modules/backups/views.py:462
+#: plinth/modules/backups/views.py:429
 msgid "Unmounting failed!"
 msgstr ""
 
-#: plinth/modules/backups/views.py:477 plinth/modules/backups/views.py:481
+#: plinth/modules/backups/views.py:444 plinth/modules/backups/views.py:448
 msgid "Mounting failed"
 msgstr ""
 
@@ -535,15 +567,15 @@ msgstr ""
 msgid "Configuration updated"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:44 plinth/modules/cockpit/manifest.py:27
+#: plinth/modules/cockpit/__init__.py:45 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:47
 msgid "Server Administration"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:50
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -552,7 +584,7 @@ msgid ""
 "console operations is also available."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:56
+#: plinth/modules/cockpit/__init__.py:57
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -638,6 +670,7 @@ msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
+#: plinth/modules/help/templates/help_contribute.html:57
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
@@ -930,7 +963,7 @@ msgstr ""
 #: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
-#: plinth/modules/tor/views.py:148 plinth/views.py:174
+#: plinth/modules/tor/views.py:148 plinth/views.py:175
 msgid "Setting unchanged"
 msgstr ""
 
@@ -1132,7 +1165,8 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
-#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:60
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
+#: plinth/templates/base.html:183 plinth/templates/base.html:184
 msgid "About"
 msgstr ""
 
@@ -1157,22 +1191,22 @@ msgstr ""
 msgid "Dynamic DNS Status"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:49
+#: plinth/modules/ejabberd/__init__.py:50
 msgid "ejabberd"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:51
+#: plinth/modules/ejabberd/__init__.py:52
 #: plinth/modules/matrixsynapse/__init__.py:49
 msgid "Chat Server"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:54
+#: plinth/modules/ejabberd/__init__.py:55
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:57
+#: plinth/modules/ejabberd/__init__.py:58
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1360,7 +1394,7 @@ msgstr ""
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:26
 #: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:145 plinth/templates/base.html:148
+#: plinth/templates/base.html:145 plinth/templates/base.html:150
 msgid "Help"
 msgstr ""
 
@@ -1377,24 +1411,39 @@ msgid "Documentation"
 msgstr ""
 
 #: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
-#: plinth/modules/networks/forms.py:108 plinth/templates/index.html:135
+#: plinth/modules/networks/forms.py:108 plinth/templates/base.html:157
+#: plinth/templates/base.html:158 plinth/templates/index.html:135
 msgid "Manual"
 msgstr ""
 
-#: plinth/modules/help/help.py:56
-msgid "Download Manual"
+#: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
+#: plinth/modules/help/templates/help_support.html:24
+#: plinth/templates/base.html:164 plinth/templates/base.html:165
+msgid "Get Support"
 msgstr ""
 
-#: plinth/modules/help/help.py:76
+#: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
+#: plinth/modules/help/templates/help_feedback.html:24
+#: plinth/templates/base.html:170 plinth/templates/base.html:171
+msgid "Submit Feedback"
+msgstr ""
+
+#: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
+#: plinth/modules/help/templates/help_contribute.html:24
+#: plinth/templates/base.html:176 plinth/templates/base.html:177
+msgid "Contribute"
+msgstr ""
+
+#: plinth/modules/help/help.py:86
 msgid "Documentation and FAQ"
 msgstr ""
 
-#: plinth/modules/help/help.py:84
+#: plinth/modules/help/help.py:112
 #, python-brace-format
 msgid "About {box_name}"
 msgstr ""
 
-#: plinth/modules/help/help.py:106
+#: plinth/modules/help/help.py:134
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr ""
@@ -1473,6 +1522,55 @@ msgstr ""
 msgid "%(box_name)s Setup"
 msgstr ""
 
+#: plinth/modules/help/templates/help_contribute.html:27
+msgid "The FreedomBox project welcomes contributions of all kinds."
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:33
+msgid ""
+"You can contribute by writing code, testing and reporting bugs, discussing "
+"new use cases and applications, designing logos and artwork, providing "
+"support to your fellow users, translating FreedomBox and its applications "
+"into your language, hosting hackathons or install fests, and by spreading "
+"the word."
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:43
+msgid ""
+"You can also help the project financially by <a href=\"https://"
+"freedomboxfoundation.org/donate/\">donating</a> to the non-profit FreedomBox "
+"Foundation. Founded in 2011, the FreedomBox Foundation is a non-profit "
+"organization with 501(c)(3) status based in New York City that exists to "
+"support FreedomBox. It provides technical infrastructure and legal services "
+"for the project, pursues partnerships, and advocates for FreedomBox "
+"throughout the world. The FreedomBox Foundation would not exist without its "
+"supporters."
+msgstr ""
+
+#: plinth/modules/help/templates/help_feedback.html:27
+#, python-format
+msgid "Your feedback will help us improve %(box_name)s!"
+msgstr ""
+
+#: plinth/modules/help/templates/help_feedback.html:33
+msgid ""
+"Let us know about missing features, your favourite apps and how we can "
+"improve them on our <a href=\"https://discuss.freedombox.org\" target="
+"\"_blank\"> discussion forum</a>."
+msgstr ""
+
+#: plinth/modules/help/templates/help_feedback.html:41
+msgid ""
+"If you find any bugs or issues, please use the <a href=\"https://salsa."
+"debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue tracker</"
+"a> to let our developers know. To report, first check if the issue is "
+"already reported and then use the \"New issue\" button."
+msgstr ""
+
+#: plinth/modules/help/templates/help_feedback.html:51
+msgid "Thank you!"
+msgstr ""
+
 #: plinth/modules/help/templates/help_index.html:31
 #, python-format
 msgid ""
@@ -1503,6 +1601,32 @@ msgid ""
 "net IRC network.  Join and request help on the <a href=\"https://webchat."
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
+msgstr ""
+
+#: plinth/modules/help/templates/help_manual.html:40
+msgid "Download as PDF"
+msgstr ""
+
+#: plinth/modules/help/templates/help_support.html:27
+#, python-format
+msgid ""
+"If you need help in getting something done or if you are facing problems "
+"using %(box_name)s, you can ask for help from our community of users and "
+"contributors."
+msgstr ""
+
+#: plinth/modules/help/templates/help_support.html:35
+msgid ""
+"Search for past discussions or post a new query on our <a href=\"https://"
+"discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
+msgstr ""
+
+#: plinth/modules/help/templates/help_support.html:42
+msgid ""
+"You can also chat with us on our IRC and Matrix channels (bridged): <ul> "
+"<li>#freedombox on irc.oftc.net</li> <li>#freedombox:matrix.org</li> </ul> "
+"Or send an email to our <a href=\"mailto:freedombox-discuss@alioth-lists."
+"debian.net\">mailing list</a>."
 msgstr ""
 
 #: plinth/modules/help/templates/statuslog.html:25
@@ -1791,7 +1915,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:140
-#: plinth/templates/base.html:254
+#: plinth/templates/base.html:291
 msgid "JavaScript license information"
 msgstr ""
 
@@ -2738,7 +2862,7 @@ msgid "Edit connection"
 msgstr ""
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:163 plinth/templates/base.html:164
+#: plinth/templates/base.html:200 plinth/templates/base.html:201
 msgid "Edit"
 msgstr ""
 
@@ -5034,28 +5158,28 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: plinth/templates/base.html:169 plinth/templates/base.html:170
+#: plinth/templates/base.html:206 plinth/templates/base.html:207
 msgid "Change password"
 msgstr ""
 
-#: plinth/templates/base.html:177 plinth/templates/base.html:178
+#: plinth/templates/base.html:214 plinth/templates/base.html:215
 msgid "Restart"
 msgstr ""
 
-#: plinth/templates/base.html:183 plinth/templates/base.html:184
+#: plinth/templates/base.html:220 plinth/templates/base.html:221
 msgid "Shut down"
 msgstr ""
 
-#: plinth/templates/base.html:191 plinth/templates/base.html:192
-#: plinth/templates/base.html:216 plinth/templates/base.html:218
+#: plinth/templates/base.html:228 plinth/templates/base.html:229
+#: plinth/templates/base.html:253 plinth/templates/base.html:255
 msgid "Log out"
 msgstr ""
 
-#: plinth/templates/base.html:200 plinth/templates/base.html:203
+#: plinth/templates/base.html:237 plinth/templates/base.html:240
 msgid "Select language"
 msgstr ""
 
-#: plinth/templates/base.html:208 plinth/templates/base.html:210
+#: plinth/templates/base.html:245 plinth/templates/base.html:247
 msgid "Log in"
 msgstr ""
 
@@ -5245,11 +5369,11 @@ msgstr ""
 msgid "%(percentage)s%% complete"
 msgstr ""
 
-#: plinth/views.py:178
+#: plinth/views.py:179
 msgid "Application enabled"
 msgstr ""
 
-#: plinth/views.py:181
+#: plinth/views.py:182
 msgid "Application disabled"
 msgstr ""
 
