@@ -34,7 +34,8 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup WireGuard')
-    subparsers.add_parser('get-info', help='Get server and clients info')
+    subparsers.add_parser('get-info',
+                          help='Get info for each configured interface')
 
     add_client = subparsers.add_parser('add-client', help='Add a client')
     add_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
@@ -70,39 +71,38 @@ def subcommand_setup(_):
 
 
 def subcommand_get_info(_):
-    """Get server and clients info."""
+    """Get info for each configured interface."""
     output = subprocess.check_output(
-        ['wg', 'show', SERVER_INTERFACE, 'dump']).decode().strip()
+        ['wg', 'show', 'all', 'dump']).decode().strip()
     lines = output.split('\n')
-    server_data = lines.pop(0).split()
-    server = {
-        'private_key': server_data[0],
-        'public_key': server_data[1],
-        'listen_port': server_data[2],
-        'fwmark': server_data[3],
-    }
+    interfaces = {}
+    for line in lines:
+        fields = line.split()
+        interface_name = fields[0]
+        if interface_name in interfaces:
+            peer = {
+                'public_key': fields[1],
+                'preshared_key': fields[2],
+                'endpoint': fields[3],
+                'allowed_ips': fields[4],
+                'latest_handshake': fields[5],
+                'transfer_rx': fields[6],
+                'transfer_tx': fields[7],
+                'persistent_keepalive': fields[8],
+            }
+            interfaces[interface_name]['peers'].append(peer)
 
-    clients = []
-    for client_line in lines:
-        client_data = client_line.split()
-        client_info = {
-            'public_key': client_data[0],
-            'preshared_key': client_data[1],
-            'endpoint': client_data[2],
-            'allowed_ips': client_data[3],
-            'latest_handshake': client_data[4],
-            'transfer_rx': client_data[5],
-            'transfer_tx': client_data[6],
-            'persistent_keepalive': client_data[7],
-        }
-        clients.append(client_info)
+        else:
+            interfaces[interface_name] = {
+                'interface_name': interface_name,
+                'private_key': fields[1],
+                'public_key': fields[2],
+                'listen_port': fields[3],
+                'fwmark': fields[4],
+                'peers': [],
+            }
 
-    # TODO: Add servers info from other interfaces.
-    info = {
-        'server': server,
-        'clients': clients,
-    }
-    print(json.dumps(info))
+    print(json.dumps(interfaces))
 
 
 def subcommand_add_client(arguments):

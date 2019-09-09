@@ -59,6 +59,8 @@ port_forwarding_info = [('UDP', 51820)]
 
 app = None
 
+SERVER_INTERFACE = 'wg0'
+
 
 class WireguardApp(app_module.App):
     """FreedomBox app for wireguard."""
@@ -103,6 +105,18 @@ def setup(helper, old_version=None):
 
 
 def get_info():
-    """Get server and clients info."""
-    info = actions.superuser_run('wireguard', ['get-info'])
-    return json.loads(info)
+    """Return server and clients info."""
+    output = actions.superuser_run('wireguard', ['get-info'])
+    info = json.loads(output)
+    my_server_info = info.pop(SERVER_INTERFACE)
+    my_client_servers = [interface['peers'][0] or {}
+                         for interface in info.values()]
+    return {
+        'my_server': {
+            'public_key': my_server_info['public_key'],
+            'clients': my_server_info['peers'],
+        },
+        'my_client': {
+            'servers': my_client_servers,
+        },
+    }

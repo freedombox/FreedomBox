@@ -26,36 +26,36 @@
 
   <p>{% trans "Peers allowed to connect to this server" %}</p>
   <table class="table table-bordered table-condensed table-striped"
-         id="server-clients-list">
+         id="server-peers-list">
     <tr>
       <th>{% trans "Public Key" %}</th>
       <th>{% trans "Last Connected Time" %}</th>
       <th>{% trans "Delete" %}</th>
     </tr>
-    {% if server_clients %}
-      {% for client in server_clients %}
-	<tr>
+    {% if server_peers %}
+      {% for peer in server_peers %}
+        <tr>
           <td>
-	    <a href="{% url 'wireguard:show-client' client.public_key %}">
-	      {{ client.public_key }}
-	    </a>
-	  </td>
-          <td>{{ client.latest_handshake }}</td>
+            <a href="{% url 'wireguard:show-client' peer.public_key %}">
+              {{ peer.public_key }}
+            </a>
+          </td>
+          <td>{{ peer.latest_handshake }}</td>
           <td><a class="btn btn-sm btn-default"
-		 href="{% url 'wireguard:delete-client' client.public_key %}">
+                 href="{% url 'wireguard:delete-client' peer.public_key %}">
             <span class="fa fa-trash-o" aria-hidden="true">
             </span>
           </td>
-	</tr>
+        </tr>
       {% endfor %}
 
     {% else %}
       <tr>
-	<td>
+        <td>
           {% blocktrans trimmed %}
             No peers configured to connect to this {{ box_name }} yet.
           {% endblocktrans %}
-	</td>
+        </td>
       </tr>
     {% endif %}
   </table>
@@ -69,11 +69,35 @@
 
   <h3>{% trans "Client" %}</h3>
   <p>{% trans "Peer servers that FreedomBox will connect to" %}</p>
-  <ul>{% trans "endpoint" %}</ul>
-  <ul>{% trans "public key" %}</ul>
-  <ul>{% trans "last connected time" %}</ul>
-  <ul>{% trans "edit" %}</ul>
-  <p>{% trans "No connections to remove servers are configured yet." %}</p>
+  <table class="table table-bordered table-condensed table-striped"
+	 id="client-peers-list">
+    <tr>
+      <th>{% trans "Endpoint" %}</th>
+      <th>{% trans "Public Key" %}</th>
+      <th>{% trans "Last Connected Time" %}</th>
+      <th>{% trans "Edit" %}</th>
+    </tr>
+    {% if client_peers %}
+      {% for peer in client_peers %}
+	<tr>
+	  <td>{{ peer.endpoint }}</td>
+	  <td>{{ peer.public_key }}</td>
+	  <td>{{ peer.latest_handshake }}</td>
+	  <td>Edit</td>
+	</tr>
+      {% endfor %}
+
+    {% else %}
+      <tr>
+	<td>
+          {% blocktrans trimmed %}
+            No connections to remote servers are configured yet.
+          {% endblocktrans %}
+	</td>
+      </tr>
+    {% endif %}
+  </table>
+
   <a title="{% trans 'Add a new server' %}"
      role="button" class="btn btn-default"
      href="{% url 'wireguard:add-server' %}">

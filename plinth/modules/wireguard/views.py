@@ -47,7 +47,8 @@ class WireguardView(AppView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         info = wireguard.get_info()
-        context['server_clients'] = info['clients']
+        context['server_peers'] = info['my_server']['clients']
+        context['client_peers'] = info['my_client']['servers']
         return context
 
 
@@ -79,12 +80,14 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Show Client')
+
         public_key = self.kwargs['public_key']
         info = wireguard.get_info()
-        context['server'] = info['server']
-        for client in info['clients']:
+        context.update(info)
+        for client in info['my_server']['clients']:
             if client['public_key'] == public_key:
                 context['client'] = client
+
         return context
 
 
