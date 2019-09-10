@@ -140,3 +140,22 @@ class AddServerView(SuccessMessageMixin, FormView):
 
         actions.superuser_run('wireguard', args)
         return super().form_valid(form)
+
+
+class ShowServerView(SuccessMessageMixin, TemplateView):
+    """View to show a server's details."""
+    template_name = 'wireguard_show_server.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context data for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Show Server')
+
+        public_key = self.kwargs['public_key']
+        info = wireguard.get_info()
+        context.update(info)
+        for server in info['my_client']['servers']:
+            if server['public_key'] == public_key:
+                context['server'] = server
+
+        return context

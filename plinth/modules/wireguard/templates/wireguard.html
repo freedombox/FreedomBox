@@ -51,7 +51,7 @@
 
     {% else %}
       <tr>
-        <td>
+        <td colspan="3">
           {% blocktrans trimmed %}
             No peers configured to connect to this {{ box_name }} yet.
           {% endblocktrans %}
@@ -70,7 +70,7 @@
   <h3>{% trans "Client" %}</h3>
   <p>{% trans "Peer servers that FreedomBox will connect to" %}</p>
   <table class="table table-bordered table-condensed table-striped"
-	 id="client-peers-list">
+         id="client-peers-list">
     <tr>
       <th>{% trans "Endpoint" %}</th>
       <th>{% trans "Public Key" %}</th>
@@ -79,21 +79,25 @@
     </tr>
     {% if client_peers %}
       {% for peer in client_peers %}
-	<tr>
-	  <td>{{ peer.endpoint }}</td>
-	  <td>{{ peer.public_key }}</td>
-	  <td>{{ peer.latest_handshake }}</td>
-	  <td>Edit</td>
-	</tr>
+        <tr>
+          <td>{{ peer.endpoint }}</td>
+          <td>
+            <a href="{% url 'wireguard:show-server' peer.public_key %}">
+              {{ peer.public_key }}
+            </a>
+          </td>
+          <td>{{ peer.latest_handshake }}</td>
+          <td>Edit</td>
+        </tr>
       {% endfor %}
 
     {% else %}
       <tr>
-	<td>
+        <td colspan="4">
           {% blocktrans trimmed %}
             No connections to remote servers are configured yet.
           {% endblocktrans %}
-	</td>
+        </td>
       </tr>
     {% endif %}
   </table>

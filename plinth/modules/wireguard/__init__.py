@@ -109,7 +109,7 @@ def get_info():
     output = actions.superuser_run('wireguard', ['get-info'])
     info = json.loads(output)
     my_server_info = info.pop(SERVER_INTERFACE)
-    my_client_servers = [interface['peers'][0] or {}
+    my_client_servers = [interface['peers'] and interface['peers'][0] or {}
                          for interface in info.values()]
     return {
         'my_server': {

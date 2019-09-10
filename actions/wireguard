@@ -125,18 +125,16 @@ def subcommand_add_server(arguments):
         ['wg', 'show', 'interfaces']).decode().strip()
     interfaces = output.split()
     interface_num = 1
-    for interface in interfaces:
+    new_interface_name = 'wg1'
+    while new_interface_name in interfaces:
+        interface_num += 1
         new_interface_name = 'wg' + str(interface_num)
-        if interface == new_interface_name:
-            interface_num += 1
-        else:
-            break
 
     subprocess.run(
         ['ip', 'link', 'add', 'dev', new_interface_name, 'type', 'wireguard'],
         check=True)
 
-    args = ['wg', 'set', interface, 'peer', arguments.public_key]
+    args = ['wg', 'set', new_interface_name, 'peer', arguments.public_key]
     if arguments.pre_shared_key:
         args += ['preshared-key', arguments.pre_shared_key]
 

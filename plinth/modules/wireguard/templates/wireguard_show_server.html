@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <h3>{{ title }}</h3>
+
+  <h4>{% trans "Server Information" %}</h4>
+  <p>{% trans "Endpoint:" %} {{ server.endpoint }}</p>
+  <p>{% trans "Public Key:" %} {{ server.public_key }}</p>
+  <p>{% trans "Pre-shared key:" %} {{ server.preshared_key }}</p>
+  <p>{% trans "Data transmitted:" %} {{ server.transfer_tx }}</p>
+  <p>{% trans "Data received:" %} {{ server.transfer_rx }}</p>
+  <p>{% trans "Latest handshake:" %} {{ server.latest_handshake }}</p>
+
+{% endblock %}
