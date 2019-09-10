@@ -163,9 +163,8 @@ def on_domain_added(sender, domain_type='', name='', description='',
             return False
 
     try:
-        # Obtaining certs during tests or empty names isn't expected to succeed
-        if sender != 'test' and name:
-            logger.info('Obtaining a Let\'s Encrypt certificate for %s', name)
+        if name:
+            logger.info('Obtaining certificate for %s', name)
             certificate_obtain(name)
         return True
     except ActionError:
@@ -178,15 +177,13 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
         return False
 
     try:
-        # Revoking certs during tests or empty names isn't expected to succeed
-        if sender != 'test' and name:
-            logger.info("Revoking the Let\'s Encrypt certificate for " + name)
+        if name:
+            logger.info('Revoking certificate for %s', name)
             certificate_revoke(name)
         return True
     except ActionError as exception:
-        logger.warning(
-            ('Failed to revoke certificate for domain {domain}: {error}'
-             ).format(domain=name, error=exception.args[2]))
+        logger.warning('Failed to revoke certificate for %s: %s', name,
+                       exception.args[2])
         return False
 
 
