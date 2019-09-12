@@ -21,6 +21,8 @@ Configuration helper for WireGuard.
 
 import argparse
 import json
+import os
+import pathlib
 import subprocess
 
 PUBLIC_KEY_HELP = 'Public key for the client'
@@ -62,12 +64,35 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Setup WireGuard."""
+    key_folder = pathlib.Path('/var/lib/freedombox/wireguard')
+    private_key_path = key_folder / 'privatekey'
+    public_key_path = key_folder / 'publickey'
+
+    # TODO: make idempotent
+
+    # create interface
     subprocess.run(
         ['ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type', 'wireguard'],
         check=True)
+
+    # generate key pair
+    private_key = subprocess.check_output(['wg', 'genkey'])
+    public_key = subprocess.check_output(['wg', 'pubkey'], input=private_key)
+    key_folder.mkdir(parents=True, exist_ok=True)
+    with public_key_path.open(mode='wb') as public_key_file:
+        public_key_file.write(public_key)
+
+    old_umask = os.umask(0o077)
+    try:
+        with private_key_path.open(mode='wb') as private_key_file:
+            private_key_file.write(private_key)
+
+    finally:
+        os.umask(old_umask)
+
     subprocess.run(
-        ['wg', 'set', SERVER_INTERFACE, 'listen-port', '51820'], check=True)
-    # TODO: generate key pair
+        ['wg', 'set', SERVER_INTERFACE, 'listen-port', '51820', 'private-key',
+         str(private_key_path)], check=True)
 
 
 def subcommand_get_info(_):
