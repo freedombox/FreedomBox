@@ -46,6 +46,7 @@ class WireguardView(AppView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
+        context['public_key'] = wireguard.get_public_key()
         info = wireguard.get_info()
         context['server_peers'] = info['my_server']['clients']
         context['client_peers'] = info['my_client']['servers']

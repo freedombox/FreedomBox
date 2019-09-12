@@ -104,6 +104,19 @@ def setup(helper, old_version=None):
     helper.call('post', app.enable)
 
 
+def get_public_key():
+    """Return this box's public key."""
+    public_key_path = '/var/lib/freedombox/wireguard/publickey'
+    try:
+        with open(public_key_path) as public_key_file:
+            public_key = public_key_file.read().strip()
+
+    except FileNotFoundError:
+        public_key = None
+
+    return public_key
+
+
 def get_info():
     """Return server and clients info."""
     output = actions.superuser_run('wireguard', ['get-info'])
