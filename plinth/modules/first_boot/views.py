@@ -21,7 +21,6 @@ from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth import network
 from plinth.modules import first_boot
 
 from .forms import FirstbootWizardSecretForm
@@ -62,7 +61,6 @@ class CompleteView(TemplateView):
     def get_context_data(self, **kwargs):
         """Add network connections to context list."""
         context = super().get_context_data(**kwargs)
-        context['connections'] = network.get_connection_list()
         context['title'] = _('Setup Complete')
         context['firstboot_complete'] = True
         return context
