@@ -17,13 +17,4 @@
 #
 {% endcomment %}
 
-{% load i18n %}
-
-<li>
-  <a href="{% url 'help:index' %}" title="{% trans "Help" %}">
-    <span class="fa fa-question-circle nav-icon"></span>
-    <span class="nav-text hidden-sm hidden-md hidden-lg">
-      {% trans "Help" %}
-    </span>
-  </a>
-</li>
+{% include "help-menu.html" %}
