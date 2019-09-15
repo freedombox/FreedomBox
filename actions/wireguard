@@ -159,6 +159,28 @@ def subcommand_add_server(arguments):
         ['ip', 'link', 'add', 'dev', new_interface_name, 'type', 'wireguard'],
         check=True)
 
+    connection_name = 'WireGuard-' + new_interface_name
+    subprocess.run(['nmcli', 'con', 'add',
+                    'con-name', connection_name,
+                    'ifname', new_interface_name,
+                    'type', 'wireguard'], check=True)
+
+    subprocess.run(['nmcli', 'con', 'modify', connection_name,
+                    'connection.autoconnect', 'TRUE'], check=True)
+
+    subprocess.run(['nmcli', 'con', 'modify', connection_name,
+                    'connection.zone', 'internal'], check=True)
+
+    subprocess.run(['nmcli', 'con', 'modify', connection_name,
+                    'ipv4.method', 'manual',
+                    'ipv4.addresses', arguments.client_ip + '/24'], check=True)
+
+    with open('/var/lib/freedombox/wireguard/privatekey') as private_key_file:
+        private_key = private_key_file.read().strip()
+
+    subprocess.run(['nmcli', 'con', 'modify', connection_name,
+                    'wireguard.private-key', private_key], check=True)
+
     args = ['wg', 'set', new_interface_name, 'peer', arguments.public_key]
     if arguments.pre_shared_key:
         args += ['preshared-key', arguments.pre_shared_key]
