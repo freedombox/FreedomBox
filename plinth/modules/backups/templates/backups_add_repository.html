@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -14,25 +16,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-from plinth.errors import PlinthError
+{% load bootstrap %}
+{% load i18n %}
 
+{% block content %}
 
-class BorgError(PlinthError):
-    """Generic borg errors"""
+  <h3>{{ title }}</h3>
 
+  <form class="form" method="post">
+    {% csrf_token %}
 
-class BorgRepositoryDoesNotExistError(BorgError):
-    """Borg access to a repository works but the repository does not exist"""
+    {{ form|bootstrap }}
 
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Create Repository" %}"/>
+  </form>
 
-class SshfsError(PlinthError):
-    """Generic sshfs errors"""
-
-
-class BorgRepositoryExists(BorgError):
-    """A repository at target location already exists during initialization."""
-
-
-class BorgUnencryptedRepository(BorgError):
-    """Attempt to provide password on an unencrypted repository."""
+{% endblock %}

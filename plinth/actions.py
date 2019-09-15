@@ -92,12 +92,14 @@ Actions run commands with this contract (version 1.1):
 
 import logging
 import os
+import re
+import shlex
 import subprocess
 
 from plinth import cfg
 from plinth.errors import ActionError
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def run(action, options=None, input=None, run_in_background=False):
@@ -182,7 +184,7 @@ def _run(action, options=None, input=None, run_in_background=False,
     if sudo_call:
         cmd = sudo_call + cmd
 
-    LOGGER.info('Executing command - %s', cmd)
+    _log_command(cmd)
 
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
@@ -203,10 +205,44 @@ def _run(action, options=None, input=None, run_in_background=False,
         output, error = output.decode(), error.decode()
         if proc.returncode != 0:
             if log_error:
-                LOGGER.error('Error executing command - %s, %s, %s', cmd,
+                logger.error('Error executing command - %s, %s, %s', cmd,
                              output, error)
             raise ActionError(action, output, error)
 
         return output
 
     return proc
+
+
+def _log_command(cmd):
+    """Log a command with special pretty formatting to catch the eye."""
+    cmd = list(cmd)  # Make a copy of the command not to affect the original
+
+    prompt = '$'
+    user = ''
+    if cmd and cmd[0] == 'sudo':
+        cmd = cmd[1:]
+        prompt = '#'
+
+        # Drop -n argument to sudo
+        if cmd and cmd[0] == '-n':
+            cmd = cmd[1:]
+
+        # Capture username separately
+        if len(cmd) > 1 and cmd[0] == '-u':
+            prompt = '$'
+            user = cmd[1]
+            cmd = cmd[2:]
+
+        # Drop environmental variables set via sudo
+        while cmd and re.match(r'.*=.*', cmd[0]):
+            cmd = cmd[1:]
+
+    # Strip the command's prefix
+    if cmd:
+        cmd[0] = cmd[0].split('/')[-1]
+
+    # Shell escape and join command arguments
+    cmd = ' '.join([shlex.quote(part) for part in cmd])
+
+    logger.info('%s%s %s', user, prompt, cmd)

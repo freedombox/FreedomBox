@@ -87,9 +87,9 @@ def test_empty_dir(backup_directory):
 
 def test_create_unencrypted_repository(backup_directory):
     """Test creating an unencrypted repository."""
-    repo_path = backup_directory / 'borgbackup'
-    repository = BorgRepository(str(repo_path))
-    repository.create_repository()
+    path = backup_directory / 'borgbackup'
+    repository = BorgRepository(str(path))
+    repository.initialize()
     info = repository.get_info()
     assert 'encryption' in info
 
@@ -103,11 +103,11 @@ def test_create_export_delete_archive(data_directory, backup_directory):
     """
     repo_name = 'test_create_and_delete'
     archive_name = 'first_archive'
-    repo_path = backup_directory / repo_name
+    path = backup_directory / repo_name
 
-    repository = BorgRepository(str(repo_path))
-    repository.create_repository()
-    archive_path = "::".join([str(repo_path), archive_name])
+    repository = BorgRepository(str(path))
+    repository.initialize()
+    archive_path = "::".join([str(path), archive_name])
     actions.superuser_run('backups', [
         'create-archive', '--path', archive_path, '--paths',
         str(data_directory)
@@ -129,12 +129,12 @@ def test_remote_backup_actions():
     This relies on borgbackups being installed on the remote machine.
     """
     credentials = _get_credentials(add_encryption_passphrase=True)
-    repo_path = os.path.join(test_config.backups_ssh_path, str(uuid.uuid1()))
-    arguments = ['init', '--path', repo_path, '--encryption', 'repokey']
+    path = os.path.join(test_config.backups_ssh_path, str(uuid.uuid1()))
+    arguments = ['init', '--path', path, '--encryption', 'repokey']
     arguments, kwargs = _append_borg_arguments(arguments, credentials)
     actions.superuser_run('backups', arguments, **kwargs)
 
-    arguments = ['info', '--path', repo_path]
+    arguments = ['info', '--path', path]
     arguments, kwargs = _append_borg_arguments(arguments, credentials)
     info = actions.superuser_run('backups', arguments, **kwargs)
     info = json.loads(info)
@@ -160,7 +160,7 @@ def test_sshfs_mount_password():
     credentials = _get_credentials()
     ssh_path = test_config.backups_ssh_path
 
-    repository = SshBorgRepository(path=ssh_path, credentials=credentials)
+    repository = SshBorgRepository(ssh_path, credentials)
     repository.mount()
     assert repository.is_mounted
     repository.umount()
@@ -173,7 +173,7 @@ def test_sshfs_mount_keyfile():
     credentials = _get_credentials()
     ssh_path = test_config.backups_ssh_path
 
-    repository = SshBorgRepository(path=ssh_path, credentials=credentials)
+    repository = SshBorgRepository(ssh_path, credentials)
     repository.mount()
     assert repository.is_mounted
     repository.umount()
@@ -183,8 +183,7 @@ def test_sshfs_mount_keyfile():
 def test_access_nonexisting_url():
     """Test accessing a non-existent URL."""
     repo_url = "user@%s.com.au:~/repo" % str(uuid.uuid1())
-    repository = SshBorgRepository(path=repo_url,
-                                   credentials=_dummy_credentials)
+    repository = SshBorgRepository(repo_url, _dummy_credentials)
     with pytest.raises(backups.errors.BorgRepositoryDoesNotExistError):
         repository.get_info()
 
@@ -192,8 +191,7 @@ def test_access_nonexisting_url():
 def test_inaccessible_repo_url():
     """Test accessing an existing URL with wrong credentials."""
     repo_url = 'user@heise.de:~/repo'
-    repository = SshBorgRepository(path=repo_url,
-                                   credentials=_dummy_credentials)
+    repository = SshBorgRepository(repo_url, _dummy_credentials)
     with pytest.raises(backups.errors.BorgError):
         repository.get_info()
 

@@ -92,30 +92,30 @@ def test_user_setup(temp_home, temp_user):
 @pytest.mark.skip
 def test_add_repository_when_directory_is_missing(temp_user, temp_home,
                                                   password):
-    repo_path = os.path.join(temp_home, 'non_existent_dir')
+    remote_path = os.path.join(temp_home, 'non_existent_dir')
     data = {
-        'repository': f'{temp_user}@localhost:{repo_path}',
+        'repository': f'{temp_user}@localhost:{remote_path}',
         'ssh_password': password,
         'encryption': 'none'
     }
     # TODO test the view instead of the form
-    form = forms.AddRepositoryForm(data=data)
+    form = forms.AddRemoteRepositoryForm(data=data)
     form.is_valid()
-    assert os.path.isdir(repo_path)  # Directory gets created
+    assert os.path.isdir(remote_path)  # Directory gets created
 
 
 @pytest.mark.skip
 def test_add_repository_when_directory_exists_and_empty(
         temp_user, temp_home, password):
-    repo_path = os.path.join(temp_home, 'empty_dir')
-    os.makedirs(repo_path)
+    remote_path = os.path.join(temp_home, 'empty_dir')
+    os.makedirs(remote_path)
     data = {
-        'repository': f'{temp_user}@localhost:{repo_path}',
+        'repository': f'{temp_user}@localhost:{remote_path}',
         'ssh_password': password,
         'encryption': 'none'
     }
     # TODO test the view instead of the form
-    form = forms.AddRepositoryForm(data=data)
+    form = forms.AddRemoteRepositoryForm(data=data)
     form.is_valid()
 
 
@@ -123,14 +123,14 @@ def test_add_repository_when_directory_exists_and_empty(
 @pytest.mark.skip
 def test_add_repository_when_directory_exists_and_not_empty(
         temp_user, temp_home, password):
-    repo_path = os.path.join(temp_home, 'non_empty_dir')
-    os.makedirs(repo_path)
-    open(os.path.join(repo_path, 'somefile.txt'), 'w').close()
+    remote_path = os.path.join(temp_home, 'non_empty_dir')
+    os.makedirs(remote_path)
+    open(os.path.join(remote_path, 'somefile.txt'), 'w').close()
     data = {
-        'repository': f'{temp_user}@localhost:{repo_path}',
+        'repository': f'{temp_user}@localhost:{remote_path}',
         'ssh_password': password,
         'encryption': 'none'
     }
-    form = forms.AddRepositoryForm(data=data)
+    form = forms.AddRemoteRepositoryForm(data=data)
     with pytest.raises(ValidationError):
         form.is_valid()

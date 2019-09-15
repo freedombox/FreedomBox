@@ -129,21 +129,20 @@ def subcommand_disable_user_registrations(_):
 def subcommand_pre_install(_):
     """Pre installation configuration for diaspora"""
     presets = [
-        b'diaspora-common diaspora-common/url string dummy_domain_name',
-        b'diaspora-common diaspora-common/dbpass note ',
-        b'diaspora-common diaspora-common/enablessl boolean false',
-        b'diaspora-common diaspora-common/useletsencrypt string false',
-        b'diaspora-common diaspora-common/services multiselect ',
-        b'diaspora-common diaspora-common/ssl boolean false',
-        b'diaspora-common diaspora-common/pgsql/authmethod-admin string ident',
-        b'diaspora-common diaspora-common/letsencrypt boolean false',
-        b'diaspora-common diaspora-common/remote/host string localhost',
-        b'diaspora-common diaspora-common/database-type string pgsql',
-        b'diaspora-common diaspora-common/dbconfig-install boolean true'
+        'diaspora-common diaspora-common/url string dummy_domain_name',
+        'diaspora-common diaspora-common/dbpass note ',
+        'diaspora-common diaspora-common/enablessl boolean false',
+        'diaspora-common diaspora-common/useletsencrypt string false',
+        'diaspora-common diaspora-common/services multiselect ',
+        'diaspora-common diaspora-common/ssl boolean false',
+        'diaspora-common diaspora-common/pgsql/authmethod-admin string ident',
+        'diaspora-common diaspora-common/letsencrypt boolean false',
+        'diaspora-common diaspora-common/remote/host string localhost',
+        'diaspora-common diaspora-common/database-type string pgsql',
+        'diaspora-common diaspora-common/dbconfig-install boolean true'
     ]
 
-    for preset in presets:
-        subprocess.check_output(['debconf-set-selections'], input=preset)
+    action_utils.debconf_set_selections(presets)
 
 
 def main():

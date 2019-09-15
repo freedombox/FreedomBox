@@ -38,7 +38,6 @@ def _mount_static_directory(static_dir, static_url):
     }
     app = cherrypy.tree.mount(None, static_url, config)
     log.setup_cherrypy_static_directory(app)
-    logger.debug('Serving static directory %s on %s', static_dir, static_url)
 
 
 def init():

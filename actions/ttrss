@@ -51,8 +51,8 @@ def parse_arguments():
 
 def subcommand_pre_setup(_):
     """Preseed debconf values before packages are installed."""
-    subprocess.check_output(['debconf-set-selections'],
-                            input=b'tt-rss tt-rss/database-type string pgsql')
+    action_utils.debconf_set_selections(
+        ['tt-rss tt-rss/database-type string pgsql'])
 
 
 def subcommand_setup(_):

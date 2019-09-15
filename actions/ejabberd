@@ -20,6 +20,7 @@ Configuration helper for the ejabberd service
 """
 
 import argparse
+import json
 import os
 import pathlib
 import shutil
@@ -45,6 +46,10 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get configuration
+    subparsers.add_parser('get-configuration',
+                          help='Return the current configuration')
 
     # Preseed debconf values before packages are installed.
     pre_install = subparsers.add_parser(
@@ -93,6 +98,14 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def subcommand_get_configuration(_):
+    """Return the current configuration, specifically domains configured."""
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    print(json.dumps({'domains': conf['hosts']}))
+
+
 def subcommand_pre_install(arguments):
     """Preseed debconf values before packages are installed."""
     domainname = arguments.domainname
@@ -100,9 +113,8 @@ def subcommand_pre_install(arguments):
         # If new domainname is blank, use hostname instead.
         domainname = socket.gethostname()
 
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'ejabberd ejabberd/hostname string ' + domainname.encode())
+    action_utils.debconf_set_selections(
+        ['ejabberd ejabberd/hostname string ' + domainname])
 
 
 def subcommand_setup(arguments):
@@ -151,10 +163,16 @@ def upgrade_config(domain):
        (not current_version or current_version > MOD_IRC_DEPRECATED_VERSION):
         conf['modules'].pop('mod_irc')
 
-    # BOSH port was changed from 5280 to 5443.
-    for listen_port in conf['listen']:
-        if listen_port['port'] == 5280:
-            listen_port['port'] = 5443
+    # Debian has a patch to configuration to change port 5443 to 5280 in
+    # ejabberd package version 18.12. However, 5443 is the correct port to host
+    # BOSH. So, change it back. In 19.x, this behavior has changed to use both
+    # ports 5443 (for BOSH) and 5280 (for web administration).
+    bosh_port = any((True for listen_port in conf['listen']
+                     if listen_port['port'] == 5443))
+    if not bosh_port:
+        for listen_port in conf['listen']:
+            if listen_port['port'] == 5280:
+                listen_port['port'] = 5443
 
     cert_dir = pathlib.Path('/etc/ejabberd/letsencrypt') / domain
     cert_file = str(cert_dir / 'ejabberd.pem')

@@ -21,7 +21,6 @@ Views for the backups app.
 import logging
 import os
 import tempfile
-from contextlib import contextmanager
 from datetime import datetime
 from urllib.parse import unquote
 
@@ -38,13 +37,11 @@ from django.views.generic import FormView, TemplateView, View
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
-from . import (ROOT_REPOSITORY, SESSION_PATH_VARIABLE, api, forms,
-               get_known_hosts_path, is_ssh_hostkey_verified, network_storage,
-               split_path)
+from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
+               is_ssh_hostkey_verified)
 from .decorators import delete_tmp_backup_file
-from .errors import BorgRepositoryDoesNotExistError
-from .repository import (BorgRepository, SshBorgRepository, get_repository,
-                         get_ssh_repositories)
+from .repository import (BorgRepository, SshBorgRepository, get_instance,
+                         get_repositories)
 
 logger = logging.getLogger(__name__)
 
@@ -60,9 +57,9 @@ class IndexView(TemplateView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['manual_page'] = backups.manual_page
-        root_repository = BorgRepository(ROOT_REPOSITORY)
-        context['root_repository'] = root_repository.get_view_content()
-        context['ssh_repositories'] = get_ssh_repositories()
+        context['repositories'] = [
+            repository.get_view_content() for repository in get_repositories()
+        ]
         return context
 
 
@@ -82,8 +79,8 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
-        repository = get_repository(form.cleaned_data['repository'])
-        if hasattr(repository, 'mount'):
+        repository = get_instance(form.cleaned_data['repository'])
+        if repository.flags.get('mountable'):
             repository.mount()
 
         name = datetime.now().strftime('%Y-%m-%d:%H:%M')
@@ -100,7 +97,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Archive')
-        repository = get_repository(self.kwargs['uuid'])
+        repository = get_instance(self.kwargs['uuid'])
         context['archive'] = repository.get_archive(self.kwargs['name'])
         if context['archive'] is None:
             raise Http404
@@ -109,7 +106,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
 
     def post(self, request, uuid, name):
         """Delete the archive."""
-        repository = get_repository(uuid)
+        repository = get_instance(uuid)
         repository.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
         return redirect('backups:index')
@@ -218,12 +215,12 @@ class RestoreArchiveView(BaseRestoreView):
         """Save some data used to instantiate the form."""
         name = unquote(self.kwargs['name'])
         uuid = self.kwargs['uuid']
-        repository = get_repository(uuid)
+        repository = get_instance(uuid)
         return repository.get_archive_apps(name)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        repository = get_repository(self.kwargs['uuid'])
+        repository = get_instance(self.kwargs['uuid'])
         selected_apps = form.cleaned_data['selected_apps']
         repository.restore_archive(self.kwargs['name'], selected_apps)
         return super().form_valid(form)
@@ -233,8 +230,8 @@ class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
 
     def get(self, request, uuid, name):
-        repository = get_repository(uuid)
-        filename = '%s.tar.gz' % name
+        repository = get_instance(uuid)
+        filename = f'{name}.tar.gz'
 
         response = StreamingHttpResponse(
             repository.get_download_stream(name),
@@ -245,9 +242,47 @@ class DownloadArchiveView(View):
 
 
 class AddRepositoryView(SuccessMessageMixin, FormView):
-    """View to create a new remote backup repository."""
+    """View to create a new backup repository."""
     form_class = forms.AddRepositoryForm
-    template_name = 'backups_repository_add.html'
+    template_name = 'backups_add_repository.html'
+    success_url = reverse_lazy('backups:index')
+
+    def get(self, request, *args, **kwargs):
+        """If there are no disks available for adding, throw error."""
+        if not forms.get_disk_choices():
+            messages.error(
+                request,
+                _('No additional disks available to add a repository.'))
+            return redirect(reverse_lazy('backups:index'))
+
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Create backup repository')
+        return context
+
+    def form_valid(self, form):
+        """Create and save a Borg repository."""
+        path = os.path.join(form.cleaned_data.get('disk'), 'FreedomBoxBackups')
+        encryption = form.cleaned_data.get('encryption')
+        encryption_passphrase = form.cleaned_data.get('encryption_passphrase')
+        if encryption == 'none':
+            encryption_passphrase = None
+
+        credentials = {'encryption_passphrase': encryption_passphrase}
+        repository = BorgRepository(path, credentials)
+        if _save_repository(self.request, repository):
+            return super().form_valid(form)
+
+        return redirect(reverse_lazy('backups:add-repository'))
+
+
+class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
+    """View to create a new remote backup repository."""
+    form_class = forms.AddRemoteRepositoryForm
+    template_name = 'backups_add_remote_repository.html'
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -269,7 +304,7 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             'ssh_password': form.cleaned_data.get('ssh_password'),
             'encryption_passphrase': encryption_passphrase
         }
-        repository = SshBorgRepository(path=path, credentials=credentials)
+        repository = SshBorgRepository(path, credentials)
         repository.save(verified=False)
         messages.success(self.request, _('Added new remote SSH repository.'))
 
@@ -282,37 +317,27 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     form_class = forms.VerifySshHostkeyForm
     template_name = 'verify_ssh_hostkey.html'
     success_url = reverse_lazy('backups:index')
-    repo_data = {}
+    repository = None
 
     def get_form_kwargs(self):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        hostname = self._get_hostname()
-        kwargs['hostname'] = hostname
+        kwargs['hostname'] = self._get_repository().hostname
         return kwargs
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Verify SSH hostkey')
-        context['hostname'] = self._get_hostname()
+        context['hostname'] = self._get_repository().hostname
         return context
 
-    def _get_repo_data(self):
+    def _get_repository(self):
         """Fetch the repository data from DB only once."""
-        if not self.repo_data:
-            uuid = self.kwargs['uuid']
-            self.repo_data = network_storage.get(uuid)
+        if not self.repository:
+            self.repository = get_instance(self.kwargs['uuid'])
 
-        return self.repo_data
-
-    def _get_hostname(self):
-        """Get the hostname of the repository.
-
-        Network interface information is stripped out.
-        """
-        _, hostname, _ = split_path(self._get_repo_data()['path'])
-        return hostname.split('%')[0]  # XXX: Likely incorrect to split
+        return self.repository
 
     @staticmethod
     def _add_ssh_hostkey(ssh_public_key):
@@ -326,110 +351,53 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
 
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
-        if is_ssh_hostkey_verified(self._get_hostname()):
-            messages.success(self.request, _('SSH host already verified.'))
-            return self._add_remote_repository()
+        if not is_ssh_hostkey_verified(self._get_repository().hostname):
+            return super().get(*args, **kwargs)
 
-        return super().get(*args, **kwargs)
+        messages.success(self.request, _('SSH host already verified.'))
+        if _save_repository(self.request, self._get_repository()):
+            return redirect(reverse_lazy('backups:index'))
+
+        return redirect(reverse_lazy('backups:add-remote-repository'))
 
     def form_valid(self, form):
         """Create and store the repository."""
         ssh_public_key = form.cleaned_data['ssh_public_key']
         self._add_ssh_hostkey(ssh_public_key)
         messages.success(self.request, _('SSH host verified.'))
-        return self._add_remote_repository()
-
-    def _add_remote_repository(self):
-        """On successful verification of host, add repository."""
-        repo_data = self._get_repo_data()
-        path = repo_data['path']
-        credentials = repo_data['credentials']
-        uuid = self.kwargs['uuid']
-        encryption = 'none'
-        if 'encryption_passphrase' in credentials and \
-           credentials['encryption_passphrase']:
-            encryption = 'repokey'
-
-        try:
-            dir_contents = _list_remote_directory(path, credentials)
-            repository = SshBorgRepository(uuid=uuid, path=path,
-                                           credentials=credentials)
-            repository.mount()
-            repository = _create_remote_repository(repository, encryption,
-                                                   dir_contents)
-            repository.save(verified=True)
+        if _save_repository(self.request, self._get_repository()):
             return redirect(reverse_lazy('backups:index'))
-        except paramiko.BadHostKeyException:
-            message = _('SSH host public key could not be verified.')
-        except paramiko.AuthenticationException:
-            message = _('Authentication to remote server failed.')
-        except paramiko.SSHException as exception:
-            message = _('Error establishing connection to server: {}').format(
-                str(exception))
-        except BorgRepositoryDoesNotExistError:
-            message = _('Repository path is neither empty nor '
-                        'is an existing backups repository.')
-        except Exception as exception:
-            message = str(exception)
-            logger.exception('Error adding repository: %s', exception)
 
-        messages.error(self.request, message)
-        messages.error(self.request, _('Repository removed.'))
-        # Delete the repository so that the user can have another go at
-        # creating it.
-        network_storage.delete(uuid)
-        return redirect(reverse_lazy('backups:repository-add'))
+        return redirect(reverse_lazy('backups:add-remote-repository'))
 
 
-def _list_remote_directory(path, credentials):
-    """List a SSH remote directory. Create if it does not exist. """
-    username, hostname, dir_path = split_path(path)
-    if dir_path == '':
-        dir_path = '.'
-
-    if dir_path[0] == '~':
-        dir_path = '.' + dir_path[1:]
-
-    password = credentials['ssh_password']
-
-    # Ensure remote directory exists, check contents
-    dir_contents = None
-    # TODO Test with IPv6 connection
-    with _ssh_connection(hostname, username, password) as ssh_client:
-        with ssh_client.open_sftp() as sftp_client:
-            try:
-                dir_contents = sftp_client.listdir(dir_path)
-            except FileNotFoundError:
-                logger.info('Directory %s does not exist, creating.', dir_path)
-                sftp_client.mkdir(dir_path)
-
-    return dir_contents
-
-
-def _create_remote_repository(repository, encryption, dir_contents):
-    """Create a Borg repository on remote server if necessary."""
+def _save_repository(request, repository):
+    """Initialize and save a repository. Convert errors to messages."""
     try:
-        repository.get_info()
-    except BorgRepositoryDoesNotExistError:
-        if dir_contents:
-            raise
+        repository.initialize()
+        repository.save(verified=True)
+        return True
+    except paramiko.BadHostKeyException:
+        message = _('SSH host public key could not be verified.')
+    except paramiko.AuthenticationException:
+        message = _('Authentication to remote server failed.')
+    except paramiko.SSHException as exception:
+        message = _('Error establishing connection to server: {}').format(
+            str(exception))
+    except Exception as exception:
+        message = str(exception)
+        logger.exception('Error adding repository: %s', exception)
 
-        repository.create_repository(encryption)
-
-    return repository
-
-
-@contextmanager
-def _ssh_connection(hostname, username, password):
-    """Context manager to create and close an SSH connection."""
-    ssh_client = paramiko.SSHClient()
-    ssh_client.load_host_keys(str(get_known_hosts_path()))
-
+    messages.error(request, message)
+    # Remove the repository so that the user can have another go at
+    # creating it.
     try:
-        ssh_client.connect(hostname, username=username, password=password)
-        yield ssh_client
-    finally:
-        ssh_client.close()
+        repository.remove()
+        messages.error(request, _('Repository removed.'))
+    except KeyError:
+        pass
+
+    return False
 
 
 class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
@@ -440,23 +408,22 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Remove Repository')
-        context['repository'] = SshBorgRepository(uuid=uuid)
+        context['repository'] = get_instance(uuid)
         return context
 
     def post(self, request, uuid):
-        """Delete the archive."""
-        repository = SshBorgRepository(uuid)
-        repository.remove_repository()
-        messages.success(
-            request,
-            _('Repository removed. The remote backup itself was not deleted.'))
+        """Delete the repository on confirmation."""
+        repository = get_instance(uuid)
+        repository.remove()
+        messages.success(request,
+                         _('Repository removed. Backups were not deleted.'))
 
         return redirect('backups:index')
 
 
 def umount_repository(request, uuid):
     """View to unmount a remote SSH repository."""
-    repository = SshBorgRepository(uuid=uuid)
+    repository = SshBorgRepository.load(uuid)
     repository.umount()
     if repository.is_mounted:
         messages.error(request, _('Unmounting failed!'))
@@ -467,10 +434,10 @@ def umount_repository(request, uuid):
 def mount_repository(request, uuid):
     """View to mount a remote SSH repository."""
     # Do not mount unverified ssh repositories. Prompt for verification.
-    if not network_storage.get(uuid).get('verified'):
+    if not get_instance(uuid).is_usable():
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
 
-    repository = SshBorgRepository(uuid=uuid)
+    repository = SshBorgRepository.load(uuid)
     try:
         repository.mount()
     except Exception as err:

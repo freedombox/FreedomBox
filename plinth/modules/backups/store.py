@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Manage remote (network) storage storages in plinths' KVStore.
+Manage storage of repository information in KVStore table in database.
 """
 
 import json
@@ -23,32 +23,39 @@ from uuid import uuid1
 
 from plinth import kvstore
 
-# kvstore key for network storage
-NETWORK_STORAGE_KEY = 'network_storage'
+# kvstore key for repository store
+STORAGE_KEY = 'network_storage'
 REQUIRED_FIELDS = ['path', 'storage_type', 'added_by_module']
 
 
 def get_storages(storage_type=None):
-    """Get network storages"""
-    storages = kvstore.get_default(NETWORK_STORAGE_KEY, {})
+    """Get all repositories from store."""
+    storages = kvstore.get_default(STORAGE_KEY, {})
     if storages:
         storages = json.loads(storages)
+
     if storage_type:
-        storages = {uuid: storage for uuid, storage in storages.items() if
-                    storage['storage_type'] == storage_type}
+        storages = {
+            uuid: storage
+            for uuid, storage in storages.items()
+            if storage['storage_type'] == storage_type
+        }
+
     return storages
 
 
 def get(uuid):
+    """Return a repository with given UUID from store."""
     storages = get_storages()
     return storages[uuid]
 
 
 def update_or_add(storage):
-    """Update an existing or create a new network storage"""
+    """Update an existing or create a new repository in store."""
     for field in REQUIRED_FIELDS:
         if field not in storage:
             raise ValueError('missing storage parameter: %s' % field)
+
     existing_storages = get_storages()
     if 'uuid' in storage:
         # Replace the existing storage
@@ -57,12 +64,13 @@ def update_or_add(storage):
         uuid = str(uuid1())
         storage['uuid'] = uuid
         existing_storages[uuid] = storage
-    kvstore.set(NETWORK_STORAGE_KEY, json.dumps(existing_storages))
+
+    kvstore.set(STORAGE_KEY, json.dumps(existing_storages))
     return storage['uuid']
 
 
 def delete(uuid):
-    """Remove a network storage from kvstore"""
+    """Remove a repository from store."""
     storages = get_storages()
     del storages[uuid]
-    kvstore.set(NETWORK_STORAGE_KEY, json.dumps(storages))
+    kvstore.set(STORAGE_KEY, json.dumps(storages))

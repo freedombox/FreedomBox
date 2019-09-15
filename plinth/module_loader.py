@@ -19,15 +19,15 @@ Discover, load and manage FreedomBox applications.
 """
 
 import collections
-import django
 import importlib
 import logging
 import pathlib
 import re
 
-from plinth import cfg
-from plinth import setup
-from plinth.signals import pre_module_loading, post_module_loading
+import django
+
+from plinth import cfg, setup
+from plinth.signals import post_module_loading, pre_module_loading
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,6 @@ def load_modules():
     pre_module_loading.send_robust(sender="module_loader")
     modules = {}
     for module_import_path in get_modules_to_load():
-        logger.debug('Importing %s', module_import_path)
         module_name = module_import_path.split('.')[-1]
         try:
             modules[module_name] = importlib.import_module(module_import_path)
@@ -71,8 +70,7 @@ def load_modules():
             _insert_modules(module_name, module, remaining_modules,
                             ordered_modules)
         except KeyError:
-            logger.error('Unsatified dependency for module - %s',
-                         module_name)
+            logger.error('Unsatified dependency for module - %s', module_name)
 
     logger.info('Module load order - %s', ordered_modules)
 
@@ -117,7 +115,8 @@ def _include_module_urls(module_import_path, module_name):
     try:
         urls.urlpatterns += [
             django.conf.urls.url(
-                r'', django.conf.urls.include((url_module, module_name)))]
+                r'', django.conf.urls.include((url_module, module_name)))
+        ]
     except ImportError:
         logger.debug('No URLs for %s', module_name)
         if cfg.develop:
@@ -138,8 +137,8 @@ def _initialize_module(module_name, module):
     try:
         init()
     except Exception as exception:
-        logger.exception('Exception while running init for %s: %s',
-                         module, exception)
+        logger.exception('Exception while running init for %s: %s', module,
+                         exception)
         if cfg.develop:
             raise
 
@@ -156,8 +155,8 @@ def get_modules_to_load():
         # './setup.py install' has not been executed yet. Pickup files to load
         # from local module directories.
         directory = pathlib.Path(__file__).parent
-        files = list(directory.glob(
-            'modules/*/data/etc/plinth/modules-enabled/*'))
+        files = list(
+            directory.glob('modules/*/data/etc/plinth/modules-enabled/*'))
 
     # Omit hidden files
     files = [

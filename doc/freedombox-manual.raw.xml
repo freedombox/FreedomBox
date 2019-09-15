@@ -469,7 +469,7 @@
     <title>FreedomBox: take your online privacy back</title>
     <para>FreedomBox is a ready made personal server, designed with privacy and data ownership in mind. It is a subset of the <ulink url="https://www.debian.org/">Debian universal operating system</ulink> and includes free software only. You can run it on a small, inexpensive and power-efficient computer box in your home that is dedicated for that use. It can also be installed on any computer running Debian or in a virtual machine.</para>
     <para>In order to replace third-party communication services that are data mining your entire life, you will be able to host services yourself and use them at home or over the Internet through a browser or specialized apps. These services include chat and voice calls, webmail, file sharing and calendar, address book and news feed synchronization. For example, to start using a private chat service, activate the service from the administration interface and add your friends as authorized users of the service. They will be able to connect to the service hosted on your FreedomBox, using XMPP chat clients such as Conversations on Android, Pidgin on Windows and Linux, or Messages on Mac OS, for encrypted communications.</para>
-    <para>FreedomBox can also host a Wi-Fi access point, ad blocking proxy and VPN. More advanced users can replace their router with a FreedomBox. </para>
+    <para>FreedomBox can also host a Wi-Fi access point, ad blocking proxy and a virtual private network (VPN). More advanced users can replace their router with a FreedomBox. </para>
     <para>To set up FreedomBox at home on a specific hardware or on your computer running Debian may require a bit of technical expertise or help from the community. Once installed the interface is easy to use, similar to a smart phone. </para>
     <para>Related documentation: </para>
     <itemizedlist>
@@ -1221,7 +1221,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       </section>
       <section>
         <title>Using Transmission</title>
-        <para>After installing Transmission, it can be accessed at <code>https://&lt;your freedombox&gt;/transmission</code>. When you try to access this page, you will be required to login with a username and password. The default for both is "transmission". You can change the username and password using the configuration form in Plinth. </para>
+        <para>After installing Transmission, it can be accessed at <code>https://&lt;your freedombox&gt;/transmission</code>. When you try to access this page, you will be required to login with a username and password. The default for both is "transmission". You can and should change the username and password using the configuration form in Plinth. </para>
       </section>
       <section>
         <title>Known Issues</title>
@@ -6677,7 +6677,7 @@ Password: <enter user password here>
     <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox-setup</code> package.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual#">manual</ulink> for more details. </para>
     <section>
       <title>Recommended Hardware</title>
-      <para>On April 22nd, 2019, the FreedomBox Foundation announced the sales of the Pioneer Edition FreedomBox Home Server Kits. This is the recommended hardware for all users who don't wish to build their own FreedomBox by choosing the right components, downloading the image and preparing an SD card with FreedomBox. </para>
+      <para>On April 22nd, 2019, the FreedomBox Foundation announced the <ulink url="https://freedomboxfoundation.org/buy/">sales</ulink> of the Pioneer Edition FreedomBox Home Server Kits. This is the recommended pre-installed hardware for all users who don't wish to build their own FreedomBox by choosing the right components, downloading the image and preparing an SD card with FreedomBox. </para>
       <para>The kit includes all the hardware needed for launching a FreedomBox home server on an Olimex A20-OLinuXino-LIME2 board. This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
       <informaltable>
         <tgroup cols="1">
@@ -9827,6 +9827,44 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
+        <title>FreedomBox 19.16 (2019-09-09)</title>
+        <itemizedlist>
+          <listitem>
+            <para>backups: Allow adding backup repositories on multiple disks </para>
+          </listitem>
+          <listitem>
+            <para>help: Add buttons for contribute, support, and feedback </para>
+          </listitem>
+          <listitem>
+            <para>action_utils: Workaround problem with setting debconf answers </para>
+          </listitem>
+          <listitem>
+            <para>views: Fix failure in redirecting from language selection page </para>
+          </listitem>
+          <listitem>
+            <para>manual: Move PDF download link to HTML manual page </para>
+          </listitem>
+          <listitem>
+            <para>help: Convert help icon in the navbar to dropdown </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Fix listen port configuration for ejabberd 19.x </para>
+          </listitem>
+          <listitem>
+            <para>cockpit, ejabberd: Prevent restart on freedombox startup </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Perform host/domain name operations only when installed </para>
+          </listitem>
+          <listitem>
+            <para>logging: Improve formatting and reduce noise </para>
+          </listitem>
+          <listitem>
+            <para>translations: Update Hungarian, German, Italian, French, and Norwegian Bokmål </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>FreedomBox 19.15 (2019-08-26)</title>
         <itemizedlist>
           <listitem>
@@ -12068,7 +12106,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
   </section>
   <section>
     <title>Contributing</title>
-    <para>From code, design and translation to spreading the world and donation, here are a number of ways to contribute to FreedomBox. </para>
+    <para>From code, design and translation to spreading the word and donation, here are a number of ways to contribute to FreedomBox. </para>
     <section>
       <title>Quick Links</title>
       <para>

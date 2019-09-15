@@ -30,7 +30,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth.utils import format_lazy
 
 from . import api
 
@@ -40,6 +39,8 @@ managed_packages = ['borgbackup', 'sshfs']
 
 name = _('Backups')
 
+depends = ['storage']
+
 description = [
     _('Backups allows creating and managing backup archives.'),
 ]
@@ -47,10 +48,6 @@ description = [
 manual_page = 'Backups'
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
-ROOT_REPOSITORY = '/var/lib/freedombox/borgbackup'
-ROOT_REPOSITORY_NAME = format_lazy(
-    _('{box_name} storage'), box_name=cfg.box_name)
-ROOT_REPOSITORY_UUID = 'root'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 
@@ -83,8 +80,9 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    from . import repository
     helper.call('post', actions.superuser_run, 'backups',
-                ['setup', '--path', ROOT_REPOSITORY])
+                ['setup', '--path', repository.RootBorgRepository.PATH])
     helper.call('post', app.enable)
 
 

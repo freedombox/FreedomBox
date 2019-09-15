@@ -19,6 +19,7 @@ Forms for backups module.
 """
 
 import logging
+import os
 import re
 import subprocess
 
@@ -29,9 +30,11 @@ from django.core.validators import (FileExtensionValidator,
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.modules.storage import get_disks
 from plinth.utils import format_lazy
 
-from . import ROOT_REPOSITORY_NAME, api, network_storage, split_path
+from . import api, split_path
+from .repository import get_repositories
 
 logger = logging.getLogger(__name__)
 
@@ -52,11 +55,8 @@ def _get_app_choices(apps):
 
 def _get_repository_choices():
     """Return the list of available repositories."""
-    choices = [('root', ROOT_REPOSITORY_NAME)]
-    storages = network_storage.get_storages()
-    for storage in storages.values():
-        if storage.get('verified'):
-            choices += [(storage['uuid'], storage['path'])]
+    choices = [(repository.uuid, repository.name)
+               for repository in get_repositories() if repository.is_usable()]
 
     return choices
 
@@ -124,18 +124,8 @@ def repository_validator(path):
         raise ValidationError(_(f'Invalid directory path: {dir_path}'))
 
 
-class AddRepositoryForm(forms.Form):
-    """Form to add new SSH remote repository."""
-    repository = forms.CharField(
-        label=_('SSH Repository Path'), strip=True,
-        help_text=_('Path of a new or existing repository. Example: '
-                    '<i>user@host:~/path/to/repo/</i>'),
-        validators=[repository_validator])
-    ssh_password = forms.CharField(
-        label=_('SSH server password'), strip=True,
-        help_text=_('Password of the SSH Server.<br />'
-                    'SSH key-based authentication is not yet possible.'),
-        widget=forms.PasswordInput(), required=False)
+class EncryptedBackupsMixin(forms.Form):
+    """Form to add a new backup repository."""
     encryption = forms.ChoiceField(
         label=_('Encryption'), help_text=format_lazy(
             _('"Key in Repository" means that a '
@@ -150,7 +140,7 @@ class AddRepositoryForm(forms.Form):
         widget=forms.PasswordInput(), required=False)
 
     def clean(self):
-        super(AddRepositoryForm, self).clean()
+        super().clean()
         passphrase = self.cleaned_data.get('encryption_passphrase')
         confirm_passphrase = self.cleaned_data.get(
             'confirm_encryption_passphrase')
@@ -165,6 +155,59 @@ class AddRepositoryForm(forms.Form):
 
         return self.cleaned_data
 
+
+encryption_fields = [
+    'encryption', 'encryption_passphrase', 'confirm_encryption_passphrase'
+]
+
+
+def get_disk_choices():
+    """Returns a list of all available partitions except the root partition."""
+    repositories = get_repositories()
+    existing_paths = [
+        repository.path for repository in repositories
+        if repository.storage_type == 'disk'
+    ]
+    choices = []
+    for device in get_disks():
+        if device['mount_point'] == '/':
+            continue
+
+        path = os.path.join(device['mount_point'], 'FreedomBoxBackups')
+        if path in existing_paths:
+            continue
+
+        name = device['label'] if device['label'] else device['mount_point']
+        choices.append((device['mount_point'], name))
+
+    return choices
+
+
+class AddRepositoryForm(EncryptedBackupsMixin, forms.Form):
+    """Form to create a new backups repository on a disk."""
+    disk = forms.ChoiceField(
+        label=_('Select Disk or Partition'), help_text=format_lazy(
+            _('Backups will be stored in the directory FreedomBoxBackups')),
+        choices=get_disk_choices)
+
+    field_order = ['disk'] + encryption_fields
+
+
+class AddRemoteRepositoryForm(EncryptedBackupsMixin, forms.Form):
+    """Form to add new SSH remote repository."""
+    repository = forms.CharField(
+        label=_('SSH Repository Path'), strip=True,
+        help_text=_('Path of a new or existing repository. Example: '
+                    '<i>user@host:~/path/to/repo/</i>'),
+        validators=[repository_validator])
+    ssh_password = forms.CharField(
+        label=_('SSH server password'), strip=True,
+        help_text=_('Password of the SSH Server.<br />'
+                    'SSH key-based authentication is not yet possible.'),
+        widget=forms.PasswordInput(), required=False)
+
+    field_order = ['repository', 'ssh_password'] + encryption_fields
+
     def clean_repository(self):
         """Validate repository form field."""
         path = self.cleaned_data.get('repository')
@@ -175,8 +218,8 @@ class AddRepositoryForm(forms.Form):
     @staticmethod
     def _check_if_duplicate_remote(path):
         """Raise validation error if given path is a stored remote."""
-        for storage in network_storage.get_storages().values():
-            if storage['path'] == path:
+        for repository in get_repositories():
+            if repository.path == path:
                 raise forms.ValidationError(
                     _('Remote backup repository already exists.'))
 
@@ -202,10 +245,8 @@ class VerifySshHostkeyForm(forms.Form):
                                  stderr=subprocess.DEVNULL)
         keys = keyscan.stdout.decode().splitlines()
         # Generate user-friendly fingerprints of public keys
-        keygen = subprocess.run(
-            ['ssh-keygen', '-l', '-f', '-'],
-            input=keyscan.stdout,
-            stdout=subprocess.PIPE)
+        keygen = subprocess.run(['ssh-keygen', '-l', '-f', '-'],
+                                input=keyscan.stdout, stdout=subprocess.PIPE)
         fingerprints = keygen.stdout.decode().splitlines()
 
         return zip(keys, fingerprints)

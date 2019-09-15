@@ -1,0 +1,60 @@
+{% extends 'help_base.html' %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+  <h2>{% trans "Contribute" %}</h2>
+
+  <p>
+    {% blocktrans trimmed %}
+      The FreedomBox project welcomes contributions of all kinds.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      You can contribute by writing code, testing and reporting bugs, discussing
+      new use cases and applications, designing logos and artwork, providing
+      support to your fellow users, translating FreedomBox and its applications
+      into your language, hosting hackathons or install fests, and by spreading
+      the word.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      You can also help the project financially by
+      <a href="https://freedomboxfoundation.org/donate/">donating</a> to the
+      non-profit FreedomBox Foundation. Founded in 2011, the FreedomBox
+      Foundation is a non-profit organization with 501(c)(3) status based in New
+      York City that exists to support FreedomBox. It provides technical
+      infrastructure and legal services for the project, pursues partnerships,
+      and advocates for FreedomBox throughout the world. The FreedomBox
+      Foundation would not exist without its supporters.
+    {% endblocktrans %}
+  </p>
+
+  <p class="manual-page">
+    <a href="https://wiki.debian.org/FreedomBox/Contribute">
+      {% trans 'Learn more...' %}
+    </a>
+  </p>
+{% endblock %}
