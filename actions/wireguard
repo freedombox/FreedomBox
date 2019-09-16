@@ -29,6 +29,10 @@ PUBLIC_KEY_HELP = 'Public key for the client'
 
 SERVER_INTERFACE = 'wg0'
 
+KEY_FOLDER = pathlib.Path('/var/lib/freedombox/wireguard')
+PRIVATE_KEY_PATH = KEY_FOLDER / 'privatekey'
+PUBLIC_KEY_PATH = KEY_FOLDER / 'publickey'
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -58,16 +62,33 @@ def parse_arguments():
         '--all-outgoing', action='store_true',
         help='Use this connection to send all outgoing traffic')
 
+    remove_server = subparsers.add_parser('remove-server',
+                                          help='Remove a server')
+    remove_server.add_argument('publickey', help=PUBLIC_KEY_HELP)
+
     subparsers.required = True
     return parser.parse_args()
 
 
+def _generate_key_pair():
+    """Generate private/public key pair."""
+    private_key = subprocess.check_output(['wg', 'genkey'])
+    public_key = subprocess.check_output(['wg', 'pubkey'], input=private_key)
+    KEY_FOLDER.mkdir(parents=True, exist_ok=True)
+    with PUBLIC_KEY_PATH.open(mode='wb') as public_key_file:
+        public_key_file.write(public_key)
+
+    old_umask = os.umask(0o077)
+    try:
+        with PRIVATE_KEY_PATH.open(mode='wb') as private_key_file:
+            private_key_file.write(private_key)
+
+    finally:
+        os.umask(old_umask)
+
+
 def subcommand_setup(_):
     """Setup WireGuard."""
-    key_folder = pathlib.Path('/var/lib/freedombox/wireguard')
-    private_key_path = key_folder / 'privatekey'
-    public_key_path = key_folder / 'publickey'
-
     # TODO: make idempotent
 
     # create interface
@@ -75,28 +96,15 @@ def subcommand_setup(_):
         ['ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type', 'wireguard'],
         check=True)
 
-    # generate key pair
-    private_key = subprocess.check_output(['wg', 'genkey'])
-    public_key = subprocess.check_output(['wg', 'pubkey'], input=private_key)
-    key_folder.mkdir(parents=True, exist_ok=True)
-    with public_key_path.open(mode='wb') as public_key_file:
-        public_key_file.write(public_key)
-
-    old_umask = os.umask(0o077)
-    try:
-        with private_key_path.open(mode='wb') as private_key_file:
-            private_key_file.write(private_key)
-
-    finally:
-        os.umask(old_umask)
+    _generate_key_pair()
 
     subprocess.run(
         ['wg', 'set', SERVER_INTERFACE, 'listen-port', '51820', 'private-key',
-         str(private_key_path)], check=True)
+         str(PRIVATE_KEY_PATH)], check=True)
 
 
-def subcommand_get_info(_):
-    """Get info for each configured interface."""
+def _get_info():
+    """Return info for each configured interface."""
     output = subprocess.check_output(
         ['wg', 'show', 'all', 'dump']).decode().strip()
     lines = output.split('\n')
@@ -127,7 +135,12 @@ def subcommand_get_info(_):
                 'peers': [],
             }
 
-    print(json.dumps(interfaces))
+    return interfaces
+
+
+def subcommand_get_info(_):
+    """Print info for each configured interface."""
+    print(json.dumps(_get_info()))
 
 
 def subcommand_add_client(arguments):
@@ -144,8 +157,8 @@ def subcommand_remove_client(arguments):
         check=True)
 
 
-def subcommand_add_server(arguments):
-    """Add a server."""
+def _find_next_interface():
+    """Find next unused wireguard interface name."""
     output = subprocess.check_output(
         ['wg', 'show', 'interfaces']).decode().strip()
     interfaces = output.split()
@@ -155,38 +168,61 @@ def subcommand_add_server(arguments):
         interface_num += 1
         new_interface_name = 'wg' + str(interface_num)
 
+    return new_interface_name
+
+
+def _create_connection(name, interface, client_ip):
+    """Create a NetworkManager connection."""
+    subprocess.run(['nmcli', 'con', 'add',
+                    'con-name', name,
+                    'ifname', interface,
+                    'type', 'wireguard'], check=True)
+
+    subprocess.run(['nmcli', 'con', 'modify', name,
+                    'connection.autoconnect', 'TRUE'], check=True)
+
+    subprocess.run(['nmcli', 'con', 'modify', name,
+                    'connection.zone', 'internal'], check=True)
+
+    subprocess.run(['nmcli', 'con', 'modify', name,
+                    'ipv4.method', 'manual',
+                    'ipv4.addresses', client_ip + '/24'], check=True)
+
+    with PRIVATE_KEY_PATH.open() as private_key_file:
+        private_key = private_key_file.read().strip()
+
+    subprocess.run(['nmcli', 'con', 'modify', name,
+                    'wireguard.private-key', private_key], check=True)
+
+
+def subcommand_add_server(arguments):
+    """Add a server."""
+    new_interface_name = _find_next_interface()
+
     subprocess.run(
         ['ip', 'link', 'add', 'dev', new_interface_name, 'type', 'wireguard'],
         check=True)
 
     connection_name = 'WireGuard-' + new_interface_name
-    subprocess.run(['nmcli', 'con', 'add',
-                    'con-name', connection_name,
-                    'ifname', new_interface_name,
-                    'type', 'wireguard'], check=True)
+    _create_connection(connection_name, new_interface_name,
+                       arguments.client_ip)
 
-    subprocess.run(['nmcli', 'con', 'modify', connection_name,
-                    'connection.autoconnect', 'TRUE'], check=True)
-
-    subprocess.run(['nmcli', 'con', 'modify', connection_name,
-                    'connection.zone', 'internal'], check=True)
-
-    subprocess.run(['nmcli', 'con', 'modify', connection_name,
-                    'ipv4.method', 'manual',
-                    'ipv4.addresses', arguments.client_ip + '/24'], check=True)
-
-    with open('/var/lib/freedombox/wireguard/privatekey') as private_key_file:
-        private_key = private_key_file.read().strip()
-
-    subprocess.run(['nmcli', 'con', 'modify', connection_name,
-                    'wireguard.private-key', private_key], check=True)
-
+    # XXX: Peer is lost after connection is activated.
     args = ['wg', 'set', new_interface_name, 'peer', arguments.public_key]
     if arguments.pre_shared_key:
         args += ['preshared-key', arguments.pre_shared_key]
 
     args += ['endpoint', arguments.endpoint]
     subprocess.run(args, check=True)
+
+
+def subcommand_remove_server(arguments):
+    """Remove a server."""
+    # XXX: fix this
+    subprocess.run(
+        ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey, 'remove'],
+        check=True)
+    # TODO: also delete NM connection
 
 
 def main():
