@@ -18,6 +18,8 @@
 Views for WireGuard application.
 """
 
+import urllib.parse
+
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
@@ -82,7 +84,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = _('Show Client')
 
-        public_key = self.kwargs['public_key']
+        public_key = urllib.parse.unquote(self.kwargs['public_key'])
         info = wireguard.get_info()
         context.update(info)
         for client in info['my_server']['clients']:
@@ -100,11 +102,12 @@ class DeleteClientView(SuccessMessageMixin, TemplateView):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Client')
-        context['public_key'] = self.kwargs['public_key']
+        context['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
         return context
 
     def post(self, request, public_key):
         """Delete the client."""
+        public_key = urllib.parse.unquote(public_key)
         actions.superuser_run('wireguard', ['remove-client', public_key])
         messages.success(request, _('Client deleted.'))
         return redirect('wireguard:index')
@@ -152,7 +155,7 @@ class ShowServerView(SuccessMessageMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = _('Show Server')
 
-        public_key = self.kwargs['public_key']
+        public_key = urllib.parse.unquote(self.kwargs['public_key'])
         info = wireguard.get_info()
         context.update(info)
         for server in info['my_client']['servers']:

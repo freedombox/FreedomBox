@@ -37,13 +37,13 @@
       {% for peer in server_peers %}
         <tr>
           <td>
-            <a href="{% url 'wireguard:show-client' peer.public_key %}">
+            <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
               {{ peer.public_key }}
             </a>
           </td>
           <td>{{ peer.latest_handshake }}</td>
           <td><a class="btn btn-sm btn-default"
-                 href="{% url 'wireguard:delete-client' peer.public_key %}">
+                 href="{% url 'wireguard:delete-client' peer.public_key|urlencode:'' %}">
             <span class="fa fa-trash-o" aria-hidden="true">
             </span>
           </td>
@@ -83,7 +83,7 @@
         <tr>
           <td>{{ peer.endpoint }}</td>
           <td>
-            <a href="{% url 'wireguard:show-server' peer.public_key %}">
+            <a href="{% url 'wireguard:show-server' peer.public_key|urlencode:'' %}">
               {{ peer.public_key }}
             </a>
           </td>
