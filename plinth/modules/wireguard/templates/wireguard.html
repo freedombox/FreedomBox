@@ -31,7 +31,6 @@
     <tr>
       <th>{% trans "Public Key" %}</th>
       <th>{% trans "Last Connected Time" %}</th>
-      <th>{% trans "Delete" %}</th>
     </tr>
     {% if server_peers %}
       {% for peer in server_peers %}
@@ -42,11 +41,6 @@
             </a>
           </td>
           <td>{{ peer.latest_handshake }}</td>
-          <td><a class="btn btn-sm btn-default"
-                 href="{% url 'wireguard:delete-client' peer.public_key|urlencode:'' %}">
-            <span class="fa fa-trash-o" aria-hidden="true">
-            </span>
-          </td>
         </tr>
       {% endfor %}
 
@@ -76,7 +70,6 @@
       <th>{% trans "Endpoint" %}</th>
       <th>{% trans "Public Key" %}</th>
       <th>{% trans "Last Connected Time" %}</th>
-      <th>{% trans "Edit" %}</th>
     </tr>
     {% if client_peers %}
       {% for peer in client_peers %}
@@ -88,7 +81,6 @@
             </a>
           </td>
           <td>{{ peer.latest_handshake }}</td>
-          <td>Edit</td>
         </tr>
       {% endfor %}
 

@@ -34,6 +34,10 @@ PRIVATE_KEY_PATH = KEY_FOLDER / 'privatekey'
 PUBLIC_KEY_PATH = KEY_FOLDER / 'publickey'
 
 
+class InterfaceNotFoundError(Exception):
+    """Exception raised when no matching interface is found."""
+
+
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
@@ -59,6 +63,19 @@ def parse_arguments():
                             help='Public key of the server')
     add_server.add_argument('--pre-shared-key', help='Pre-shared key')
     add_server.add_argument(
+        '--all-outgoing', action='store_true',
+        help='Use this connection to send all outgoing traffic')
+
+    modify_server = subparsers.add_parser('modify-server',
+                                          help='Modify a server')
+    modify_server.add_argument('--endpoint', required=True,
+                               help='Server endpoint')
+    modify_server.add_argument('--client-ip', required=True,
+                               help='Client IP address provided by server')
+    modify_server.add_argument('--public-key', required=True,
+                               help='Public key of the server')
+    modify_server.add_argument('--pre-shared-key', help='Pre-shared key')
+    modify_server.add_argument(
         '--all-outgoing', action='store_true',
         help='Use this connection to send all outgoing traffic')
 
@@ -216,13 +233,57 @@ def subcommand_add_server(arguments):
     subprocess.run(args, check=True)
 
 
+def subcommand_modify_server(arguments):
+    """Modify a server."""
+    interfaces = _get_info()
+    interfaces.pop(SERVER_INTERFACE)
+    interface_to_modify = None
+    for interface in interfaces.values():
+        if interface['peers']:
+            peer = interface['peers'][0]
+            if peer['public_key'] == arguments.public_key:
+                interface_to_modify = interface['interface_name']
+
+    if interface_to_modify:
+        args = ['wg', 'set', interface_to_modify, 'peer', arguments.public_key]
+        if arguments.pre_shared_key:
+            args += ['preshared-key', arguments.pre_shared_key]
+
+        args += ['endpoint', arguments.endpoint]
+        subprocess.run(args, check=True)
+
+        subprocess.run(['nmcli', 'con', 'modify',
+                        'WireGuard-' + interface_to_modify,
+                        'ipv4.method', 'manual',
+                        'ipv4.addresses', arguments.client_ip + '/24'],
+                       check=True)
+
+    else:
+        raise InterfaceNotFoundError(
+            'Interface with peer %s not found' % arguments.publickey)
+
+
 def subcommand_remove_server(arguments):
     """Remove a server."""
-    # XXX: fix this
-    subprocess.run(
-        ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey, 'remove'],
-        check=True)
-    # TODO: also delete NM connection
+    interfaces = _get_info()
+    interfaces.pop(SERVER_INTERFACE)
+    interface_to_remove = None
+    for interface in interfaces.values():
+        if interface['peers']:
+            peer = interface['peers'][0]
+            if peer['public_key'] == arguments.publickey:
+                interface_to_remove = interface['interface_name']
+
+    if interface_to_remove:
+        subprocess.run(
+            ['nmcli', 'con', 'delete', 'WireGuard-' + interface_to_remove],
+            check=True)
+        subprocess.run(['ip', 'link', 'delete', interface_to_remove],
+                       check=True)
+
+    else:
+        raise InterfaceNotFoundError(
+            'Interface with peer %s not found' % arguments.publickey)
 
 
 def main():

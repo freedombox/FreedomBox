@@ -94,6 +94,35 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         return context
 
 
+class EditClientView(SuccessMessageMixin, FormView):
+    """View to modify a client."""
+    form_class = forms.AddClientForm
+    template_name = 'wireguard_edit_client.html'
+    success_url = reverse_lazy('wireguard:index')
+    success_message = _('Updated client.')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Modify Client')
+        return context
+
+    def get_initial(self):
+        """Get initial form data."""
+        initial = super().get_initial()
+        initial['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
+        return initial
+
+    def form_valid(self, form):
+        """Update the client."""
+        old_public_key = form.initial['public_key']
+        actions.superuser_run('wireguard', ['remove-client', old_public_key])
+
+        public_key = form.cleaned_data.get('public_key')
+        actions.superuser_run('wireguard', ['add-client', public_key])
+        return super().form_valid(form)
+
+
 class DeleteClientView(SuccessMessageMixin, TemplateView):
     """View to delete a client."""
     template_name = 'wireguard_delete_client.html'
@@ -163,3 +192,75 @@ class ShowServerView(SuccessMessageMixin, TemplateView):
                 context['server'] = server
 
         return context
+
+
+class EditServerView(SuccessMessageMixin, FormView):
+    """View to modify a server."""
+    form_class = forms.AddServerForm
+    template_name = 'wireguard_edit_server.html'
+    success_url = reverse_lazy('wireguard:index')
+    success_message = _('Updated server.')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Modify Server')
+        return context
+
+    def get_initial(self):
+        """Get initial form data."""
+        initial = super().get_initial()
+        public_key = urllib.parse.unquote(self.kwargs['public_key'])
+        info = wireguard.get_info()
+        for server in info['my_client']['servers']:
+            if server['public_key'] == public_key:
+                initial['endpoint'] = server['endpoint']
+                initial['client_ip_address'] = ''
+                initial['public_key'] = server['public_key']
+                pre_shared_key = server['preshared_key']
+                if pre_shared_key == '(none)':
+                    initial['pre_shared_key'] = ''
+                else:
+                    initial['pre_shared_key'] = server['preshared_key']
+
+                initial['all_outgoing_traffic'] = False
+
+        return initial
+
+    def form_valid(self, form):
+        """Update the server."""
+        endpoint = form.cleaned_data.get('endpoint')
+        client_ip_address = form.cleaned_data.get('client_ip_address')
+        public_key = form.cleaned_data.get('public_key')
+        pre_shared_key = form.cleaned_data.get('pre_shared_key')
+        all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
+        args = ['modify-server', '--endpoint', endpoint, '--client-ip',
+                client_ip_address, '--public-key', public_key]
+        if pre_shared_key:
+            # TODO: pass pre-shared key through stdin
+            args += ['--pre-shared-key', pre_shared_key]
+
+        if all_outgoing_traffic:
+            args.append('--all-outgoing')
+
+        actions.superuser_run('wireguard', args)
+        return super().form_valid(form)
+
+
+class DeleteServerView(SuccessMessageMixin, TemplateView):
+    """View to delete a server."""
+    template_name = 'wireguard_delete_server.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context data for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Delete Server')
+        context['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
+        return context
+
+    def post(self, request, public_key):
+        """Delete the server."""
+        public_key = urllib.parse.unquote(public_key)
+        actions.superuser_run('wireguard', ['remove-server', public_key])
+        messages.success(request, _('Server deleted.'))
+        return redirect('wireguard:index')

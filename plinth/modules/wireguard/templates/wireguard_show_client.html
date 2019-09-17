@@ -36,4 +36,16 @@
   <p>{% trans "Data received:" %} {{ client.transfer_rx }}</p>
   <p>{% trans "Latest handshake:" %} {{ client.latest_handshake }}</p>
 
+  <p>
+    <a class="btn btn-sm btn-default"
+       href="{% url 'wireguard:edit-client' client.public_key|urlencode:'' %}">
+      {% trans "Edit Client" %}
+    </a>
+    <a class="btn btn-sm btn-default"
+       href="{% url 'wireguard:delete-client' client.public_key|urlencode:'' %}">
+      <span class="fa fa-trash-o" aria-hidden="true"></span>
+      {% trans "Delete Client" %}
+    </a>
+  </p>
+
 {% endblock %}

@@ -18,30 +18,20 @@
 #
 {% endcomment %}
 
+{% load bootstrap %}
 {% load i18n %}
 
 {% block content %}
 
   <h3>{{ title }}</h3>
 
-  <h4>{% trans "Server Information" %}</h4>
-  <p>{% trans "Endpoint:" %} {{ server.endpoint }}</p>
-  <p>{% trans "Public Key:" %} {{ server.public_key }}</p>
-  <p>{% trans "Pre-shared key:" %} {{ server.preshared_key }}</p>
-  <p>{% trans "Data transmitted:" %} {{ server.transfer_tx }}</p>
-  <p>{% trans "Data received:" %} {{ server.transfer_rx }}</p>
-  <p>{% trans "Latest handshake:" %} {{ server.latest_handshake }}</p>
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  <p>
-    <a class="btn btn-sm btn-default"
-       href="{% url 'wireguard:edit-server' server.public_key|urlencode:'' %}">
-      {% trans "Edit Server" %}
-    </a>
-    <a class="btn btn-sm btn-default"
-       href="{% url 'wireguard:delete-server' server.public_key|urlencode:'' %}">
-      <span class="fa fa-trash-o" aria-hidden="true"></span>
-      {% trans "Delete Server" %}
-    </a>
-  </p>
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update Client" %}"/>
+  </form>
 
 {% endblock %}
