@@ -18,6 +18,7 @@
 Views for WireGuard application.
 """
 
+import tempfile
 import urllib.parse
 
 from django.contrib import messages
@@ -164,14 +165,19 @@ class AddServerView(SuccessMessageMixin, FormView):
         all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
         args = ['add-server', '--endpoint', endpoint, '--client-ip',
                 client_ip_address, '--public-key', public_key]
+        optional_psk_file = None
         if pre_shared_key:
-            # TODO: pass pre-shared key through stdin
-            args += ['--pre-shared-key', pre_shared_key]
+            optional_psk_file = tempfile.NamedTemporaryFile()
+            optional_psk_file.write(pre_shared_key.encode())
+            args += ['--pre-shared-key', optional_psk_file.name]
 
         if all_outgoing_traffic:
             args.append('--all-outgoing')
 
         actions.superuser_run('wireguard', args)
+        if optional_psk_file:
+            optional_psk_file.close()
+
         return super().form_valid(form)
 
 
@@ -236,14 +242,19 @@ class EditServerView(SuccessMessageMixin, FormView):
         all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
         args = ['modify-server', '--endpoint', endpoint, '--client-ip',
                 client_ip_address, '--public-key', public_key]
+        optional_psk_file = None
         if pre_shared_key:
-            # TODO: pass pre-shared key through stdin
-            args += ['--pre-shared-key', pre_shared_key]
+            optional_psk_file = tempfile.NamedTemporaryFile()
+            optional_psk_file.write(pre_shared_key.encode())
+            args += ['--pre-shared-key', optional_psk_file.name]
 
         if all_outgoing_traffic:
             args.append('--all-outgoing')
 
         actions.superuser_run('wireguard', args)
+        if optional_psk_file:
+            optional_psk_file.close()
+
         return super().form_valid(form)
 
 
