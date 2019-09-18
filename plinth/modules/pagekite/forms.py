@@ -16,16 +16,18 @@
 #
 
 import copy
-from django import forms
-from django.contrib import messages
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _, ugettext_lazy
 import json
 import logging
 
-from . import utils
+from django import forms
+from django.contrib import messages
+from django.core import validators
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
+
 from plinth.errors import ActionError
+
+from . import utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,21 +70,19 @@ class ConfigurationForm(forms.Form):
         label=ugettext_lazy('Server domain'), required=False,
         help_text=ugettext_lazy(
             'Select your pagekite server. Set "pagekite.net" to use '
-            'the default pagekite.net server.'),
-        widget=forms.TextInput())
+            'the default pagekite.net server.'), widget=forms.TextInput())
     server_port = forms.IntegerField(
         label=ugettext_lazy('Server port'), required=False,
         help_text=ugettext_lazy('Port of your pagekite server (default: 80)'))
     kite_name = TrimmedCharField(
         label=ugettext_lazy('Kite name'),
-        help_text=ugettext_lazy('Example: mybox.pagekite.me'),
-        validators=[
+        help_text=ugettext_lazy('Example: mybox.pagekite.me'), validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
-                                      ugettext_lazy('Invalid kite name'))])
+                                      ugettext_lazy('Invalid kite name'))
+        ])
 
     kite_secret = TrimmedCharField(
-        label=ugettext_lazy('Kite secret'),
-        help_text=ugettext_lazy(
+        label=ugettext_lazy('Kite secret'), help_text=ugettext_lazy(
             'A secret associated with the kite or the default secret '
             'for your account if no secret is set on the kite.'))
 
@@ -139,9 +139,8 @@ class StandardServiceForm(forms.Form):
                 help_text = service['help_text'].format(kite['kite_name'])
             else:
                 help_text = service['help_text']
-            self.fields[name] = forms.BooleanField(label=service['label'],
-                                                   help_text=help_text,
-                                                   required=False)
+            self.fields[name] = forms.BooleanField(
+                label=service['label'], help_text=help_text, required=False)
 
     def save(self, request):
         formdata = self.cleaned_data
@@ -151,12 +150,15 @@ class StandardServiceForm(forms.Form):
                 service = json.dumps(service)
                 if formdata[service_name]:
                     utils.run(['add-service', '--service', service])
-                    messages.success(request, _('Service enabled: {name}')
-                                     .format(name=service_name))
+                    messages.success(
+                        request,
+                        _('Service enabled: {name}').format(name=service_name))
                 else:
                     utils.run(['remove-service', '--service', service])
-                    messages.success(request, _('Service disabled: {name}')
-                                     .format(name=service_name))
+                    messages.success(
+                        request,
+                        _('Service disabled: {name}').format(
+                            name=service_name))
 
         # Update kite services registered with Name Services module.
         utils.update_names_module()
@@ -165,8 +167,8 @@ class StandardServiceForm(forms.Form):
 class BaseCustomServiceForm(forms.Form):
     """Basic form functionality to handle a custom service"""
     choices = [('http', 'http'), ('https', 'https'), ('raw', 'raw')]
-    protocol = forms.ChoiceField(
-        choices=choices, label=ugettext_lazy('protocol'))
+    protocol = forms.ChoiceField(choices=choices,
+                                 label=ugettext_lazy('protocol'))
     frontend_port = forms.IntegerField(
         min_value=0, max_value=65535,
         label=ugettext_lazy('external (frontend) port'), required=True)
