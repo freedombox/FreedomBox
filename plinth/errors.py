@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Project specific errors
 """
@@ -27,11 +26,6 @@ class PlinthError(Exception):
 
 class ActionError(PlinthError):
     """Use this error for exceptions when executing an action."""
-    pass
-
-
-class DomainRegistrationError(PlinthError):
-    """Domain registration failed"""
     pass
 
 

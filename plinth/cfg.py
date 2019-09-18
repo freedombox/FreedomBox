@@ -37,7 +37,6 @@ use_x_forwarded_host = False
 secure_proxy_ssl_header = None
 develop = False
 server_dir = '/'
-danube_edition = False
 
 config_file = None
 
@@ -102,7 +101,6 @@ def read(config_path=None, root_directory=None):
         ('Network', 'use_x_forwarded_for', 'bool'),
         ('Network', 'use_x_forwarded_host', 'bool'),
         ('Misc', 'box_name', 'string'),
-        ('Misc', 'danube_edition', 'bool'),
     )
 
     for section, name, datatype in config_items:

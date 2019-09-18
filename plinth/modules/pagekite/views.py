@@ -15,21 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView
 
-from plinth import cfg
-from plinth.errors import DomainRegistrationError
-from plinth.modules import first_boot, pagekite
+from plinth.modules import pagekite
 
 from . import utils
 from .forms import (AddCustomServiceForm, ConfigurationForm,
-                    DeleteCustomServiceForm, FirstBootForm,
-                    StandardServiceForm)
+                    DeleteCustomServiceForm, StandardServiceForm)
 
 subsubmenu = [{
     'url': reverse_lazy('pagekite:index'),
@@ -131,37 +127,3 @@ class ConfigurationView(ContextMixin, FormView):
     def form_valid(self, form):
         form.save(self.request)
         return super(ConfigurationView, self).form_valid(form)
-
-
-class FirstBootView(FormView):
-    """First boot (optional) setup of the Pagekite subdomain."""
-    template_name = 'pagekite_firstboot.html'
-    form_class = FirstBootForm
-
-    def get(self, request, *args, **kwargs):
-        """Skip this first boot step if it is not relevant."""
-        if not cfg.danube_edition:
-            return first_boot_skip(request)
-
-        return super().get(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        """Act on valid form submission."""
-        try:
-            form.register_domain()
-        except DomainRegistrationError as error:
-            messages.error(self.request, error)
-            return self.form_invalid(form)
-
-        form.setup_pagekite()
-        first_boot.mark_step_done('pagekite_firstboot')
-        message = _('Pagekite setup finished. The HTTP and HTTPS services '
-                    'are activated now.')
-        messages.success(self.request, message)
-        return HttpResponseRedirect(reverse(first_boot.next_step()))
-
-
-def first_boot_skip(request):
-    """Skip the first boot step."""
-    first_boot.mark_step_done('pagekite_firstboot')
-    return HttpResponseRedirect(reverse(first_boot.next_step()))
