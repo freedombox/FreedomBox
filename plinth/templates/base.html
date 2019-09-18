@@ -108,34 +108,36 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          {% if user.is_authenticated and user_is_admin %}
-            <li>
-              {% url 'index' as index_url %}
-              <a href="{{ index_url }}" title='{% trans "Home" %}'
-                 class="{% if not submenu.url %}
-                 menu_link_active {% else %} menu_link {% endif %}">
-                {% trans "Home" %}
-              </a>
-            </li>
-            <li>
-              {% url 'apps' as apps_url %}
-              <a href="{{ apps_url }}" title='{% trans "Apps" %}'
-                 class="{% if apps_url == submenu.url %}
-                 menu_link_active {% else %} menu_link {% endif %}">
-                <span class="fa fa-th"></span>
-                {% trans "Apps" %}
-              </a>
-            </li>
-            <li>
-              {% url 'system' as system_url %}
-              <a href="{{ system_url }}" title='{% trans "System" %}'
-                 class="{% if system_url == submenu.url %}
-                 menu_link_active {% else %} menu_link {% endif %}">
-                <span class="fa fa-cog nav-icon"></span>
-                {% trans "System" %}
-              </a>
-            </li>
-          {% endif %}
+          {% block mainmenu_left_collapse %}
+            {% if user.is_authenticated and user_is_admin %}
+              <li>
+                {% url 'index' as index_url %}
+                <a href="{{ index_url }}" title='{% trans "Home" %}'
+                   class="{% if not submenu.url %}
+                   menu_link_active {% else %} menu_link {% endif %}">
+                  {% trans "Home" %}
+                </a>
+              </li>
+              <li>
+                {% url 'apps' as apps_url %}
+                <a href="{{ apps_url }}" title='{% trans "Apps" %}'
+                   class="{% if apps_url == submenu.url %}
+                   menu_link_active {% else %} menu_link {% endif %}">
+                  <span class="fa fa-th"></span>
+                  {% trans "Apps" %}
+                </a>
+              </li>
+              <li>
+                {% url 'system' as system_url %}
+                <a href="{{ system_url }}" title='{% trans "System" %}'
+                   class="{% if system_url == submenu.url %}
+                   menu_link_active {% else %} menu_link {% endif %}">
+                  <span class="fa fa-cog nav-icon"></span>
+                  {% trans "System" %}
+                </a>
+              </li>
+            {% endif %}
+          {% endblock %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% block mainmenu_right %}
