@@ -289,6 +289,18 @@ def get_active_connection(connection_uuid):
         raise ConnectionNotFound(connection_uuid)
 
 
+def get_connection_by_interface_name(interface_name):
+    """Return connection with matching interface.
+
+    Return None if a connection with the interface is not found."""
+    client = get_nm_client()
+    for connection in client.get_connections():
+        if connection.get_interface_name() == interface_name:
+            return connection
+
+    return None
+
+
 def get_device_by_interface_name(interface_name):
     """Return a device by interface name."""
     return get_nm_client().get_device_by_iface(interface_name)
