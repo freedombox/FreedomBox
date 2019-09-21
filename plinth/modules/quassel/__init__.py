@@ -18,16 +18,19 @@
 FreedomBox app for Quassel.
 """
 
+import pathlib
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils
+from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules import names
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.utils import format_lazy
-from plinth.views import AppView
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -36,6 +39,8 @@ version = 1
 managed_services = ['quasselcore']
 
 managed_packages = ['quassel-core']
+
+managed_paths = [pathlib.Path('/var/lib/quassel/')]
 
 name = _('Quassel')
 
@@ -92,6 +97,15 @@ class QuasselApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-quassel', domains=get_domains,
+            daemons=managed_services, should_copy_certificates=True,
+            private_key_path='/var/lib/quassel/quasselCert.pem',
+            certificate_path='/var/lib/quassel/quasselCert.pem',
+            user_owner='quasselcore', group_owner='quassel',
+            managing_app='quassel')
+        self.add(letsencrypt)
+
         daemon = Daemon('daemon-quassel', managed_services[0])
         self.add(daemon)
 
@@ -106,20 +120,11 @@ def init():
         app.set_enabled(True)
 
 
-class QuasselAppView(AppView):
-    app_id = 'quassel'
-    diagnostics_module_name = 'quassel'
-    name = name
-    description = description
-    clients = clients
-    manual_page = manual_page
-    port_forwarding_info = port_forwarding_info
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', app.enable)
+    app.get_component('letsencrypt-quassel').setup_certificates()
 
 
 def diagnose():
@@ -130,3 +135,40 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(4242, 'tcp6'))
 
     return results
+
+
+def get_available_domains():
+    """Return an iterator with all domains able to have a certificate."""
+    return (domain.name for domain in names.components.DomainName.list()
+            if domain.domain_type.can_have_certificate)
+
+
+def set_domain(domain):
+    """Set the TLS domain by writing a file to data directory."""
+    if domain:
+        actions.superuser_run('quassel', ['set-domain', domain])
+
+
+def get_domain():
+    """Read TLS domain from config file select first available if none."""
+    domain = None
+    try:
+        with open('/var/lib/quassel/domain-freedombox') as file_handle:
+            domain = file_handle.read().strip()
+    except FileNotFoundError:
+        pass
+
+    if not domain:
+        domain = next(get_available_domains(), None)
+        set_domain(domain)
+
+    return domain
+
+
+def get_domains():
+    """Return a list with the configured domain for quassel."""
+    domain = get_domain()
+    if domain:
+        return [domain]
+
+    return []
