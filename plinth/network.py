@@ -468,6 +468,21 @@ def _update_wireless_settings(connection, wireless):
     return connection
 
 
+def _update_wireguard_settings(connection, wireguard):
+    """Create/edit WireGuard settings for network manager connections."""
+    settings = nm.SettingWireGuard.new()
+    connection.add_setting(settings)
+
+    settings.set_property(nm.SETTING_WIREGUARD_PRIVATE_KEY,
+                          wireguard['private_key'])
+    # XXX: not working
+    peer = nm.WireGuardPeer.new()
+    peer.set_endpoint(wireguard['peer_endpoint'], False)
+    peer.set_public_key(wireguard['peer_public_key'], False)
+    peer.set_preshared_key(wireguard['preshared_key'], False)
+    settings.append_peer(peer)
+
+
 def _update_settings(connection, connection_uuid, settings):
     """Create/edit wifi settings for network manager connections."""
     connection = _update_common_settings(connection, connection_uuid,
@@ -483,6 +498,9 @@ def _update_settings(connection, connection_uuid, settings):
 
     if 'wireless' in settings and settings['wireless']:
         _update_wireless_settings(connection, settings['wireless'])
+
+    if 'wireguard' in settings and settings['wireguard']:
+        _update_wireguard_settings(connection, settings['wireguard'])
 
     return connection
 

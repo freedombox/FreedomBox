@@ -195,8 +195,12 @@ def _find_next_interface():
     return new_interface_name
 
 
-def _get_connection_settings(name, interface, client_ip):
+def _get_connection_settings(name, interface, endpoint, client_ip, public_key,
+                             pre_shared_key):
     """Return settings for Network Manager connection."""
+    with PRIVATE_KEY_PATH.open() as private_key_file:
+        private_key = private_key_file.read().strip()
+
     return {
         'common': {
             'name': name,
@@ -212,22 +216,13 @@ def _get_connection_settings(name, interface, client_ip):
             'dns': '',
             'second_dns': '',
         },
+        'wireguard': {
+            'private_key': private_key,
+            'peer_endpoint': endpoint,
+            'peer_public_key': public_key,
+            'preshared_key': pre_shared_key,
+        },
     }
-
-
-def _create_connection(name, interface, client_ip):
-    """Create a NetworkManager connection."""
-    settings = _get_connection_settings(name, interface, client_ip)
-    network.add_connection(settings)
-
-    subprocess.run(['nmcli', 'con', 'modify', name,
-                    'connection.autoconnect', 'TRUE'], check=True)
-
-    with PRIVATE_KEY_PATH.open() as private_key_file:
-        private_key = private_key_file.read().strip()
-
-    subprocess.run(['nmcli', 'con', 'modify', name,
-                    'wireguard.private-key', private_key], check=True)
 
 
 def subcommand_add_server(arguments):
@@ -239,16 +234,13 @@ def subcommand_add_server(arguments):
         check=True)
 
     connection_name = 'WireGuard-' + new_interface_name
-    _create_connection(connection_name, new_interface_name,
-                       arguments.client_ip)
-
-    # XXX: Peer is lost after connection is activated.
-    args = ['wg', 'set', new_interface_name, 'peer', arguments.public_key]
-    if arguments.pre_shared_key:
-        args += ['preshared-key', arguments.pre_shared_key]
-
-    args += ['endpoint', arguments.endpoint]
-    subprocess.run(args, check=True)
+    settings = _get_connection_settings(connection_name,
+                                        new_interface_name,
+                                        arguments.endpoint,
+                                        arguments.client_ip,
+                                        arguments.public_key,
+                                        arguments.pre_shared_key)
+    network.add_connection(settings)
 
 
 def subcommand_modify_server(arguments):
@@ -263,19 +255,14 @@ def subcommand_modify_server(arguments):
                 interface_to_modify = interface['interface_name']
 
     if interface_to_modify:
-        args = ['wg', 'set', interface_to_modify, 'peer', arguments.public_key]
-        if arguments.pre_shared_key:
-            args += ['preshared-key', arguments.pre_shared_key]
-
-        args += ['endpoint', arguments.endpoint]
-        subprocess.run(args, check=True)
-
         connection = network.get_connection_by_interface_name(
             interface_to_modify)
-
         settings = _get_connection_settings('WireGuard-' + interface_to_modify,
                                             interface_to_modify,
-                                            arguments.client_ip)
+                                            arguments.endpoint,
+                                            arguments.client_ip,
+                                            arguments.public_key,
+                                            arguments.pre_shared_key)
 
         if connection:
             network.edit_connection(connection, settings)
