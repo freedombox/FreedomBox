@@ -510,6 +510,11 @@
       <para>It could be used in a village to make available digital communications throughout the village. In the future, FreedomBox intends to deliver support for alternative ways of connecting to the Internet such as Mesh networking. </para>
     </section>
     <section>
+      <title>Advanced usage: For Communities</title>
+      <para>The primary design goal of FreedomBox is to be used as a personal server at home for use by a single family and their friends. However, at the core, it is a server software that can aid a non-technical user to setup services and maintain them with ease. Security is automatically managed and many of the technical choices in system administration are taken care by the software automatically thereby reducing complexity for a non-technical user. This nature of FreedomBox makes it well-suited for hosting services for small communities like villages or small firms. Communities can host their own services using FreedomBox with minimal effort. They can setup Wi-Fi networks that span the entire area of the community and draw Internet connections from long distances. Community members can enjoy previously unavailable Internet connectivity, ubiquitous Wi-Fi coverage, free VOIP services, offline education and entertainment content, etc. This will also boost privacy for individuals in the community, reduce dependence on centralized services provided by large companies and make them resistant to censorship. </para>
+      <para>The free e-book <ulink url="https://en.wikibooks.org/wiki/FreedomBox_for_Communities">FreedomBox for Communities</ulink> describes the motivation and provides detailed instructions to setup FreedomBox for this use case. Members of the FreedomBox project are involved in setting up Wi-Fi networks with free Internet connectivity in rural India. This e-book documents their knowledge and experiences. </para>
+    </section>
+    <section>
       <title>FreedomBox Interface</title>
       <section>
         <title>Screenshot</title>
@@ -1879,7 +1884,7 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
         <title>Synchronizing over Tor</title>
         <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/SyncThing#">SyncThing</ulink> should automatically sync with your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> even if it is only accessible as a Tor hidden service. </para>
         <para>If you would like to proxy your Syncthing client over Tor, set the all_proxy environment variable: </para>
-        <para>$ all_proxy=socks5://localhost:9050 syncthing </para>
+        <screen><![CDATA[$ all_proxy=socks5://localhost:9050 syncthing]]></screen>
         <para>For more information, see the Syncthing documentation on <ulink url="https://docs.syncthing.net/users/proxying.html">using proxies</ulink>. </para>
       </section>
     </section>
@@ -2491,11 +2496,11 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
           </listitem>
           <listitem>
             <para>The downloaded profile contains the domain name of the FreedomBox that the client should connect to. This is picked up from the domain configured in 'Config' section of 'System' page. In case your domain is not configured properly, you may need to change this value after downloading the profile. If your OpenVPN client allows it, you can do this after importing the OpenVPN profile. Otherwise, you can edit the .ovpn profile file in a text editor and change the 'remote' line to contain the WAN IP address or hostname of your FreedomBox as follows. </para>
-          </listitem>
-        </orderedlist>
-        <screen><![CDATA[client
+            <screen><![CDATA[client
 remote mybox.sds-ip.de 1194
 proto udp]]></screen>
+          </listitem>
+        </orderedlist>
       </section>
       <section>
         <title>Browsing Internet after connecting to VPN</title>
@@ -2687,7 +2692,7 @@ proto udp]]></screen>
     </section>
     <section>
       <title>Web Proxy (Privoxy)</title>
-      <para>A web proxy acts as a filter for incoming and outgoing internet traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
+      <para>A web proxy acts as a filter for incoming and outgoing web traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
       <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
       <section>
         <title>Screencast</title>
@@ -9826,6 +9831,23 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.17 (2019-09-23)</title>
+        <itemizedlist>
+          <listitem>
+            <para>firstboot: Add new help menu to firstboot navbar </para>
+          </listitem>
+          <listitem>
+            <para>firstboot: Hide left menu during first boot as intended </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for Chinese (Simplified) and Czech </para>
+          </listitem>
+          <listitem>
+            <para>Fix tests for letsencrypt and tor </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.16 (2019-09-09)</title>
         <itemizedlist>
