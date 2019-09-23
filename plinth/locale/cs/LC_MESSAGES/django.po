@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 17:49-0400\n"
+"POT-Creation-Date: 2019-09-23 17:50-0400\n"
 "PO-Revision-Date: 2019-09-17 19:24+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -1316,7 +1316,7 @@ msgid "Last update"
 msgstr "Minulá aktualizace"
 
 #: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
-#: plinth/templates/base.html:183 plinth/templates/base.html:184
+#: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
 msgstr "O systému"
 
@@ -1576,18 +1576,11 @@ msgstr ""
 "Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení sítě</"
 "a> a případně upravit."
 
-#: plinth/modules/first_boot/templates/firstboot_navbar.html:23
-#: plinth/modules/first_boot/templates/firstboot_navbar.html:26
-#: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:145 plinth/templates/base.html:150
-msgid "Help"
-msgstr "Nápověda"
-
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
 msgstr "Spustit nastavení"
 
-#: plinth/modules/first_boot/views.py:66
+#: plinth/modules/first_boot/views.py:64
 msgid "Setup Complete"
 msgstr "Nastavení dokončeno"
 
@@ -1596,26 +1589,26 @@ msgid "Documentation"
 msgstr "Dokumentace"
 
 #: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
-#: plinth/modules/networks/forms.py:108 plinth/templates/base.html:157
-#: plinth/templates/base.html:158 plinth/templates/index.html:135
+#: plinth/modules/networks/forms.py:108 plinth/templates/help-menu.html:35
+#: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Příručka"
 
 #: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
 #: plinth/modules/help/templates/help_support.html:24
-#: plinth/templates/base.html:164 plinth/templates/base.html:165
+#: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
 msgstr "Získat podporu"
 
 #: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
 #: plinth/modules/help/templates/help_feedback.html:24
-#: plinth/templates/base.html:170 plinth/templates/base.html:171
+#: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
 msgstr "Odeslat zpětnou vazbu"
 
 #: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
 #: plinth/modules/help/templates/help_contribute.html:24
-#: plinth/templates/base.html:176 plinth/templates/base.html:177
+#: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
 msgstr "Zapojit se"
 
@@ -1785,6 +1778,11 @@ msgstr ""
 #: plinth/modules/help/templates/help_feedback.html:51
 msgid "Thank you!"
 msgstr "Děkujeme!"
+
+#: plinth/modules/help/templates/help_index.html:27
+#: plinth/templates/help-menu.html:23 plinth/templates/help-menu.html:28
+msgid "Help"
+msgstr "Nápověda"
 
 #: plinth/modules/help/templates/help_index.html:31
 #, python-format
@@ -2181,7 +2179,7 @@ msgstr ""
 "XMPP serverem."
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:140
-#: plinth/templates/base.html:291
+#: plinth/templates/base.html:249
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -3265,7 +3263,7 @@ msgid "Edit connection"
 msgstr "Upravit připojení"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:200 plinth/templates/base.html:201
+#: plinth/templates/base.html:158 plinth/templates/base.html:159
 msgid "Edit"
 msgstr "Upravit"
 
@@ -5878,40 +5876,40 @@ msgstr "Základní funkce a webové rozhraní pro %(box_name)s"
 msgid "Toggle navigation"
 msgstr "Přepnout navigaci"
 
-#: plinth/templates/base.html:114 plinth/templates/base.html:117
+#: plinth/templates/base.html:115 plinth/templates/base.html:118
 msgid "Home"
 msgstr "Domů"
 
-#: plinth/templates/base.html:122 plinth/templates/base.html:126
+#: plinth/templates/base.html:123 plinth/templates/base.html:127
 msgid "Apps"
 msgstr "Aplikace"
 
-#: plinth/templates/base.html:131 plinth/templates/base.html:135
+#: plinth/templates/base.html:132 plinth/templates/base.html:136
 msgid "System"
 msgstr "Systém"
 
-#: plinth/templates/base.html:206 plinth/templates/base.html:207
+#: plinth/templates/base.html:164 plinth/templates/base.html:165
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: plinth/templates/base.html:214 plinth/templates/base.html:215
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 msgid "Restart"
 msgstr "Restartovat"
 
-#: plinth/templates/base.html:220 plinth/templates/base.html:221
+#: plinth/templates/base.html:178 plinth/templates/base.html:179
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: plinth/templates/base.html:228 plinth/templates/base.html:229
-#: plinth/templates/base.html:253 plinth/templates/base.html:255
+#: plinth/templates/base.html:186 plinth/templates/base.html:187
+#: plinth/templates/base.html:211 plinth/templates/base.html:213
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: plinth/templates/base.html:237 plinth/templates/base.html:240
+#: plinth/templates/base.html:195 plinth/templates/base.html:198
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: plinth/templates/base.html:245 plinth/templates/base.html:247
+#: plinth/templates/base.html:203 plinth/templates/base.html:205
 msgid "Log in"
 msgstr "Přihlásit"
 
