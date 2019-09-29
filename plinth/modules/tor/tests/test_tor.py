@@ -18,6 +18,8 @@
 Tests for Tor module.
 """
 
+from unittest.mock import patch
+
 import pytest
 from django.core.exceptions import ValidationError
 
@@ -36,8 +38,9 @@ class TestTor:
         utils.is_apt_transport_tor_enabled()
 
     @staticmethod
+    @patch('plinth.modules.tor.app')
     @pytest.mark.usefixtures('needs_root', 'load_cfg')
-    def test_get_status():
+    def test_get_status(_app):
         """Test that get_status does not raise any unhandled exceptions.
 
         This should work regardless of whether tor is installed, or

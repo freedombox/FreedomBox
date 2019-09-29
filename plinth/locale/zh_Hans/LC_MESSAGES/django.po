@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-09 17:49-0400\n"
-"PO-Revision-Date: 2019-08-11 14:23+0000\n"
-"Last-Translator: ZeroAurora <zeroaurora@qq.com>\n"
+"POT-Creation-Date: 2019-09-23 17:50-0400\n"
+"PO-Revision-Date: 2019-09-13 05:23+0000\n"
+"Last-Translator: Anxin YI <2732146152@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "freedombox/plinth/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 3.9-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -125,7 +125,7 @@ msgstr ""
 
 #: plinth/modules/avahi/__init__.py:77
 msgid "Local Network Domain"
-msgstr ""
+msgstr "本地网络领域"
 
 #: plinth/modules/backups/__init__.py:40
 msgid "Backups"
@@ -493,7 +493,7 @@ msgstr "从已上传的文件中恢复"
 
 #: plinth/modules/backups/views.py:255
 msgid "No additional disks available to add a repository."
-msgstr ""
+msgstr "没有可增加到信息库的额外可用磁盘。"
 
 #: plinth/modules/backups/views.py:263
 #, fuzzy
@@ -1260,7 +1260,7 @@ msgid "Last update"
 msgstr "最后一次更新"
 
 #: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
-#: plinth/templates/base.html:183 plinth/templates/base.html:184
+#: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
 msgstr "关于"
 
@@ -1511,18 +1511,11 @@ msgid ""
 "modify it if necessary."
 msgstr ""
 
-#: plinth/modules/first_boot/templates/firstboot_navbar.html:23
-#: plinth/modules/first_boot/templates/firstboot_navbar.html:26
-#: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:145 plinth/templates/base.html:150
-msgid "Help"
-msgstr "帮助"
-
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
 msgstr "启动安装程序"
 
-#: plinth/modules/first_boot/views.py:66
+#: plinth/modules/first_boot/views.py:64
 msgid "Setup Complete"
 msgstr "安装完成"
 
@@ -1531,26 +1524,26 @@ msgid "Documentation"
 msgstr "文档"
 
 #: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
-#: plinth/modules/networks/forms.py:108 plinth/templates/base.html:157
-#: plinth/templates/base.html:158 plinth/templates/index.html:135
+#: plinth/modules/networks/forms.py:108 plinth/templates/help-menu.html:35
+#: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "手册"
 
 #: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
 #: plinth/modules/help/templates/help_support.html:24
-#: plinth/templates/base.html:164 plinth/templates/base.html:165
+#: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
 msgstr ""
 
 #: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
 #: plinth/modules/help/templates/help_feedback.html:24
-#: plinth/templates/base.html:170 plinth/templates/base.html:171
+#: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
 msgstr ""
 
 #: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
 #: plinth/modules/help/templates/help_contribute.html:24
-#: plinth/templates/base.html:176 plinth/templates/base.html:177
+#: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
 msgstr ""
 
@@ -1708,6 +1701,11 @@ msgstr ""
 #: plinth/modules/help/templates/help_feedback.html:51
 msgid "Thank you!"
 msgstr ""
+
+#: plinth/modules/help/templates/help_index.html:27
+#: plinth/templates/help-menu.html:23 plinth/templates/help-menu.html:28
+msgid "Help"
+msgstr "帮助"
 
 #: plinth/modules/help/templates/help_index.html:31
 #, python-format
@@ -2118,7 +2116,7 @@ msgid ""
 msgstr "JSXC 是一个 XMPP 网页客户端，主要用于连接本地 XMPP 服务器的连接。"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:140
-#: plinth/templates/base.html:291
+#: plinth/templates/base.html:249
 msgid "JavaScript license information"
 msgstr ""
 
@@ -3189,7 +3187,7 @@ msgid "Edit connection"
 msgstr "编辑连接"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:200 plinth/templates/base.html:201
+#: plinth/templates/base.html:158 plinth/templates/base.html:159
 msgid "Edit"
 msgstr "編輯"
 
@@ -5785,46 +5783,46 @@ msgstr "Plinth %(box_name)s 管理界面"
 msgid "Toggle navigation"
 msgstr "切换导航"
 
-#: plinth/templates/base.html:114 plinth/templates/base.html:117
+#: plinth/templates/base.html:115 plinth/templates/base.html:118
 msgid "Home"
 msgstr "主页"
 
-#: plinth/templates/base.html:122 plinth/templates/base.html:126
+#: plinth/templates/base.html:123 plinth/templates/base.html:127
 msgid "Apps"
 msgstr "应用程序"
 
-#: plinth/templates/base.html:131 plinth/templates/base.html:135
+#: plinth/templates/base.html:132 plinth/templates/base.html:136
 msgid "System"
 msgstr "系统"
 
-#: plinth/templates/base.html:206 plinth/templates/base.html:207
+#: plinth/templates/base.html:164 plinth/templates/base.html:165
 msgid "Change password"
 msgstr "更改密码"
 
-#: plinth/templates/base.html:214 plinth/templates/base.html:215
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 #, fuzzy
 #| msgid "Restart Now"
 msgid "Restart"
 msgstr "现在重新启动"
 
-#: plinth/templates/base.html:220 plinth/templates/base.html:221
+#: plinth/templates/base.html:178 plinth/templates/base.html:179
 #, fuzzy
 #| msgid "Shut Down Now"
 msgid "Shut down"
 msgstr "现在关闭"
 
-#: plinth/templates/base.html:228 plinth/templates/base.html:229
-#: plinth/templates/base.html:253 plinth/templates/base.html:255
+#: plinth/templates/base.html:186 plinth/templates/base.html:187
+#: plinth/templates/base.html:211 plinth/templates/base.html:213
 msgid "Log out"
 msgstr "登出"
 
-#: plinth/templates/base.html:237 plinth/templates/base.html:240
+#: plinth/templates/base.html:195 plinth/templates/base.html:198
 #, fuzzy
 #| msgid "Language"
 msgid "Select language"
 msgstr "语言"
 
-#: plinth/templates/base.html:245 plinth/templates/base.html:247
+#: plinth/templates/base.html:203 plinth/templates/base.html:205
 msgid "Log in"
 msgstr "登录"
 

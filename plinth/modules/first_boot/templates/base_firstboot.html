@@ -28,8 +28,11 @@
   </style>
 {% endblock %}
 
+{% block mainmenu_left_collapse %}
+{% endblock %}
+
 {% block mainmenu_right %}
-    {% if firstboot_complete %}
-        {% include "firstboot_navbar.html" %}
-    {% endif %}
+  {% if user.is_authenticated %}
+    {% include "firstboot_navbar.html" %}
+  {% endif %}
 {% endblock %}
