@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -33,7 +33,17 @@
   </style>
 {% endblock %}
 
-{% block content %}
+{% block status %}
+  <a href="{% url 'users:create' %}" class="btn btn-primary"
+     role="button" title="{% trans 'Create User' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans 'Create User' %}
+  </a>
+{% endblock %}
+
+{% block configuration %}
+
+  <h3>{% trans "Users" %}</h3>
 
   <div class="row">
     <div class="col-sm-6">
@@ -64,7 +74,6 @@
         {% endfor %}
       </div>
 
-      {% include "diagnostics_button.html" with module="users" enabled=True %}
     </div>
   </div>
 

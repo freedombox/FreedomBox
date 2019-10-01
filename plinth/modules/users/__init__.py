@@ -24,7 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils, actions
 from plinth import app as app_module
-from plinth import menu
+from plinth import cfg, menu
+from plinth.utils import format_lazy
 
 version = 2
 
@@ -44,6 +45,20 @@ first_boot_steps = [
 ]
 
 name = _('Users and Groups')
+
+description = [
+    _('Create and managed user accounts. These accounts serve as centralized '
+      'authentication mechanism for most apps. Some apps further require a '
+      'user account to be part of a group to authorize the user to access the '
+      'app.'),
+    format_lazy(
+        _('Any user may login to {box_name} web interface to see a list of '
+          'apps relevant to them in the home page. However, only users of '
+          'the <em>admin</em> group may alter apps or system settings.'),
+        box_name=_(cfg.box_name))
+]
+
+manual_page = 'Users'
 
 # All FreedomBox user groups
 groups = dict()
