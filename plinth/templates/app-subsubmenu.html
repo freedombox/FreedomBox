@@ -23,44 +23,34 @@
 {% load plinth_extras %}
 {% load static %}
 
-{% block container %}
-  <div class="container content-container">
-    {% block content_row %}
+{% block content %}
 
-      {% include 'messages.html' %}
+  {% block pagetitle %}
+    <h2>{{ title }}</h2>
+  {% endblock %}
 
-      {% block content %}
+  {% block description %}
+    {% for paragraph in description %}
+      <p>{{ paragraph|safe }}</p>
+    {% endfor %}
+  {% endblock %}
 
-        {% block pagetitle %}
-          <h2>{{ title }}</h2>
-        {% endblock %}
+  {% if manual_page %}
+    <p class="manual-page">
+      <a href="{% url 'help:manual-page' manual_page %}">
+        {% trans 'Learn more...' %}
+      </a>
+    </p>
+  {% endif %}
 
-        {% block description %}
-          {% for paragraph in description %}
-            <p>{{ paragraph|safe }}</p>
-          {% endfor %}
-        {% endblock %}
+  {% include "clients.html" with clients=clients enabled=is_enabled %}
 
-        {% if manual_page %}
-          <p class="manual-page">
-            <a href="{% url 'help:manual-page' manual_page %}">
-              {% trans 'Learn more...' %}
-            </a>
-          </p>
-        {% endif %}
+  {% block subsubmenu %}
+    {% if subsubmenu %}
+      {% show_subsubmenu subsubmenu %}
+    {% endif %}
+  {% endblock %}
 
-        {% include "clients.html" with clients=clients enabled=is_enabled %}
-
-        {% block subsubmenu %}
-          {% if subsubmenu %}
-            {% show_subsubmenu subsubmenu %}
-          {% endif %}
-        {% endblock %}
-
-        {% block configuration %}
-        {% endblock %}
-      {% endblock %}
-
-    {% endblock %}
-  </div>
+  {% block configuration %}
+  {% endblock %}
 {% endblock %}
