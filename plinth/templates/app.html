@@ -22,6 +22,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 {% load static %}
 
 {% block content %}
@@ -45,6 +46,12 @@
   {% endif %}
 
   {% include "clients.html" with clients=clients enabled=is_enabled %}
+
+  {% block subsubmenu %}
+    {% if subsubmenu %}
+      {% show_subsubmenu subsubmenu %}
+    {% endif %}
+  {% endblock %}
 
   {% block status %}
     {% if show_status_block %}
