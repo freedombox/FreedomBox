@@ -1,4 +1,4 @@
-{% extends "app-subsubmenu.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -21,22 +21,49 @@
 {% load bootstrap %}
 {% load i18n %}
 
+{% block status %}
+  <a href="{% url 'ikiwiki:create' %}" class="btn btn-primary"
+     role="button" title="{% trans 'Create Wiki or Blog' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans 'Create Wiki or Blog' %}
+  </a>
+{% endblock %}
+
 {% block configuration %}
-  <h3>{% trans "Configuration" %}</h3>
+  {{ block.super }}
 
-  {% block diagnostics %}
-    {% if diagnostics_module_name %}
-      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
-    {% endif %}
-  {% endblock %}
+  <h3>{% trans "Manage Wikis and Blogs" %}</h3>
 
-  <form class="form form-configuration" method="post">
-    {% csrf_token %}
+  <div class="row">
+    <div class="col-sm-6">
+      {% if not sites %}
+        <p>{% trans "No wikis or blogs available." %}</p>
+        <p>
+          <a class="btn btn-primary btn-md"
+             href="{% url 'ikiwiki:create' %}">
+            {% trans "Create a Wiki or Blog" %}
+          </a>
+        </p>
+      {% else %}
+        <div class="list-group">
+          {% for site in sites %}
+            <div class="list-group-item clearfix">
+              <a href="{% url 'ikiwiki:delete' site %}"
+                 class="btn btn-default btn-sm pull-right"
+                 role="button"
+                 title="{% blocktrans %}Delete site {{ site }}{% endblocktrans %}">
+                <span class="fa fa-trash-o"
+                      aria-hidden="true"></span>
+              </a>
 
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-
+              <a class="wiki-label" href="/ikiwiki/{{ site }}"
+                 title="{% blocktrans %}Go to site {{ site }}{% endblocktrans %}">
+                {{ site }}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

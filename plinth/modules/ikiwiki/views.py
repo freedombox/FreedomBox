@@ -23,23 +23,11 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
 
 from plinth import actions, views
 from plinth.modules import ikiwiki
 
 from .forms import IkiwikiCreateForm
-
-subsubmenu = [{
-    'url': reverse_lazy('ikiwiki:index'),
-    'text': ugettext_lazy('Configure')
-}, {
-    'url': reverse_lazy('ikiwiki:manage'),
-    'text': ugettext_lazy('Manage')
-}, {
-    'url': reverse_lazy('ikiwiki:create'),
-    'text': ugettext_lazy('Create')
-}]
 
 
 class IkiwikiAppView(views.AppView):
@@ -50,32 +38,17 @@ class IkiwikiAppView(views.AppView):
     diagnostics_module_name = 'ikiwiki'
     show_status_block = False
     template_name = 'ikiwiki_configure.html'
+    manual_page = ikiwiki.manual_page
+    clients = ikiwiki.clients
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
+        sites = actions.run('ikiwiki', ['get-sites']).split('\n')
+        sites = [name for name in sites if name != '']
+
         context = super().get_context_data(**kwargs)
-        context['title'] = ikiwiki.name
-        context['subsubmenu'] = subsubmenu
-        context['clients'] = ikiwiki.clients
-        context['manual_page'] = ikiwiki.manual_page
+        context['sites'] = sites
         return context
-
-
-def manage(request):
-    """Manage existing wikis and blogs."""
-    sites = actions.run('ikiwiki', ['get-sites']).split('\n')
-    sites = [name for name in sites if name != '']
-
-    return TemplateResponse(
-        request, 'ikiwiki_manage.html', {
-            'title': ikiwiki.name,
-            'clients': ikiwiki.clients,
-            'description': ikiwiki.description,
-            'manual_page': ikiwiki.manual_page,
-            'subsubmenu': subsubmenu,
-            'sites': sites,
-            'is_enabled': ikiwiki.app.is_enabled(),
-        })
 
 
 def create(request):
@@ -98,7 +71,7 @@ def create(request):
             shortcut = ikiwiki.app.add_shortcut(site)
             shortcut.enable()
 
-            return redirect(reverse_lazy('ikiwiki:manage'))
+            return redirect(reverse_lazy('ikiwiki:index'))
     else:
         form = IkiwikiCreateForm(prefix='ikiwiki')
 
@@ -109,7 +82,6 @@ def create(request):
             'description': ikiwiki.description,
             'form': form,
             'manual_page': ikiwiki.manual_page,
-            'subsubmenu': subsubmenu,
             'is_enabled': ikiwiki.app.is_enabled(),
         })
 
@@ -157,7 +129,7 @@ def delete(request, name):
                 _('Could not delete {name}: {error}').format(
                     name=name, error=error))
 
-        return redirect(reverse_lazy('ikiwiki:manage'))
+        return redirect(reverse_lazy('ikiwiki:index'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html', {
         'title': ikiwiki.name,
