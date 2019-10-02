@@ -55,6 +55,7 @@ def index(request):
     return TemplateResponse(
         request, 'dynamicdns.html', {
             'title': dynamicdns.name,
+            'name': dynamicdns.name,
             'description': dynamicdns.description,
             'manual_page': dynamicdns.manual_page,
             'subsubmenu': subsubmenu
@@ -78,6 +79,7 @@ def configure(request):
     return TemplateResponse(
         request, 'dynamicdns_configure.html', {
             'title': _('Configure Dynamic DNS'),
+            'name': dynamicdns.name,
             'description': dynamicdns.description,
             'manual_page': dynamicdns.manual_page,
             'form': form,
@@ -103,6 +105,7 @@ def statuspage(request):
     return TemplateResponse(
         request, 'dynamicdns_status.html', {
             'title': _('Dynamic DNS Status'),
+            'name': dynamicdns.name,
             'description': dynamicdns.description,
             'manual_page': dynamicdns.manual_page,
             'no_nat': no_nat,
