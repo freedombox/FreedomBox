@@ -1,4 +1,4 @@
-{% extends 'app-subsubmenu.html' %}
+{% extends 'base.html' %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -32,7 +32,9 @@
 {% endblock %}
 
 
-{% block configuration %}
+{% block content %}
+
+  <h2>{{ title }}</h2>
 
   {% if not is_busy %}
   <p>

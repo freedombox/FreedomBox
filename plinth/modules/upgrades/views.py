@@ -22,39 +22,26 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
 from django.views.generic.edit import FormView
 
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import upgrades
+from plinth.views import AppView
 
 from .forms import ConfigureForm
 
-subsubmenu = [{
-    'url': reverse_lazy('upgrades:index'),
-    'text': ugettext_lazy('Auto-update')
-},
-              {
-                  'url': reverse_lazy('upgrades:upgrade'),
-                  'text': ugettext_lazy('Manual update')
-              }]
 
-
-class UpgradesConfigurationView(FormView):
+class UpgradesConfigurationView(AppView):
     """Serve configuration page."""
     form_class = ConfigureForm
     success_url = reverse_lazy('upgrades:index')
     template_name = "upgrades_configure.html"
-
-    def get_context_data(self, *args, **kwargs):
-        """Return the context data for rendering the template view."""
-        context = super().get_context_data(*args, **kwargs)
-        context['subsubmenu'] = subsubmenu
-        context['title'] = upgrades.name
-        context['description'] = upgrades.description
-        context['manual_page'] = upgrades.manual_page
-        return context
+    app_id = 'upgrades'
+    name = upgrades.name
+    description = upgrades.description
+    manual_page = upgrades.manual_page
+    show_status_block = False
 
     def get_initial(self):
         return {'auto_upgrades_enabled': upgrades.is_enabled()}
@@ -87,7 +74,7 @@ class UpgradesConfigurationView(FormView):
         else:
             messages.info(self.request, _('Settings unchanged'))
 
-        return super().form_valid(form)
+        return FormView.form_valid(self, form)
 
 
 def is_package_manager_busy():
@@ -116,12 +103,8 @@ def upgrade(request):
         except ActionError:
             messages.error(request, _('Starting upgrade failed.'))
 
-    return TemplateResponse(
-        request, 'upgrades.html', {
-            'title': upgrades.name,
-            'description': upgrades.description,
-            'manual_page': upgrades.manual_page,
-            'subsubmenu': subsubmenu,
-            'is_busy': is_busy,
-            'log': get_log()
-        })
+    return TemplateResponse(request, 'upgrades.html', {
+        'title': _('Manual update'),
+        'is_busy': is_busy,
+        'log': get_log()
+    })
