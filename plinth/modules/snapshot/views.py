@@ -35,19 +35,23 @@ from plinth.modules import storage
 from . import get_configuration
 from .forms import SnapshotForm
 
-subsubmenu = [{
-    'url': reverse_lazy('snapshot:index'),
-    'text': ugettext_lazy('Configure')
-}, {
-    'url': reverse_lazy('snapshot:manage'),
-    'text': ugettext_lazy('Manage Snapshots')
-}]
+subsubmenu = [
+    {
+        'url': reverse_lazy('snapshot:index'),
+        'text': ugettext_lazy('Configure')
+    },
+    {
+        'url': reverse_lazy('snapshot:manage'),
+        'text': ugettext_lazy('Manage Snapshots')
+    },
+]
 
 
 def not_supported_view(request):
     """Show that snapshots are not supported on the system."""
     template_data = {
         'title': snapshot_module.name,
+        'name': snapshot_module.name,
         'description': snapshot_module.description,
         'fs_type': storage.get_filesystem_type(),
         'fs_types_supported': snapshot_module.fs_types_supported,
@@ -72,13 +76,15 @@ def index(request):
     else:
         form = SnapshotForm(initial=status)
 
-    return TemplateResponse(request, 'snapshot.html', {
-        'title': snapshot_module.name,
-        'description': snapshot_module.description,
-        'manual_page': snapshot_module.manual_page,
-        'subsubmenu': subsubmenu,
-        'form': form
-    })
+    return TemplateResponse(
+        request, 'snapshot.html', {
+            'title': snapshot_module.name,
+            'name': snapshot_module.name,
+            'description': snapshot_module.description,
+            'manual_page': snapshot_module.manual_page,
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 def manage(request):
@@ -104,6 +110,7 @@ def manage(request):
     return TemplateResponse(
         request, 'snapshot_manage.html', {
             'title': snapshot_module.name,
+            'name': snapshot_module.name,
             'description': snapshot_module.description,
             'manual_page': snapshot_module.manual_page,
             'snapshots': snapshots,
