@@ -34,11 +34,8 @@
   <form class="form" method="post">
     {% csrf_token %}
 
-    <input type="submit" class="btn btn-md btn-primary"
+    <input type="submit" class="btn btn-md btn-danger"
            value="Delete {{ name }}"/>
-
-    <a href="{% url 'networks:index' %}" role="button"
-       class="btn btn-md btn-primary">{% trans "Cancel" %}</a>
   </form>
 
 {% endblock %}
