@@ -43,7 +43,6 @@ def index(request):
     else:
         form = SecurityForm(initial=status, prefix='security')
 
-    vulnerability_counts = security.get_vulnerability_counts()
     return TemplateResponse(
         request, 'security.html', {
             'name':
@@ -52,11 +51,6 @@ def index(request):
                 security.manual_page,
             'form':
                 form,
-            'freedombox_vulns':
-                vulnerability_counts.pop('freedombox'),
-            'apps_vulns':
-                sorted(vulnerability_counts.values(),
-                       key=lambda app: app['name']),
         })
 
 
@@ -86,3 +80,18 @@ def _apply_changes(request, old_status, new_status):
             actions.superuser_run('service', ['enable', 'fail2ban'])
         else:
             actions.superuser_run('service', ['disable', 'fail2ban'])
+
+
+def report(request):
+    """Serve the security report page"""
+    vulnerability_counts = security.get_vulnerability_counts()
+    return TemplateResponse(
+        request, 'security_report.html', {
+            'title':
+                _('Security Report'),
+            'freedombox_vulns':
+                vulnerability_counts.pop('freedombox'),
+            'apps_vulns':
+                sorted(vulnerability_counts.values(),
+                       key=lambda app: app['name']),
+        })

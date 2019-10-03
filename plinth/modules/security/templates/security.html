@@ -22,44 +22,9 @@
 {% load i18n %}
 
 {% block status %}
-  <h3>{% trans "Status" %}</h3>
-  <p>
-    {% blocktrans trimmed with count=freedombox_vulns.count %}
-      The installed version of FreedomBox has {{ count }} reported security
-      vulnerabilities.
-    {% endblocktrans %}
-  </p>
-  <p>
-    {% blocktrans trimmed %}
-      The following table lists the reported number of security vulnerabilities
-      for each installed app.
-    {% endblocktrans %}
-  </p>
-  <a class="btn btn-default collapsed collapsible-button" role="button"
-     data-toggle="collapse" href="#collapse-vulns" aria-expanded="false"
-     aria-controls="collapse-vulns">
-    <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
-    {% trans "Show security vulnerabilities" %}
+  <a class="btn btn-default" role="button" href="{% url 'security:report' %}"
+     title="{% trans 'Show security report' %}">
+    <span class="fa fa-line-chart" aria-hidden="true"></span>
+    {% trans "Show security report" %}
   </a>
-
-  <div class="collapse" id="collapse-vulns">
-    <table class="table table-bordered table-condensed table-striped">
-      <thead>
-        <tr>
-          <th>{% trans "App Name" %}</th>
-          <th>{% trans "Current Vulnerabilities" %}</th>
-          <th>{% trans "Past Vulnerabilities" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for app in apps_vulns %}
-          <tr>
-            <td>{{ app.name }}</td>
-            <td>{{ app.count }}</td>
-            <td>{{ app.past_count }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
 {% endblock %}
