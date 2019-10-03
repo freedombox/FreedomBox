@@ -21,6 +21,7 @@ FreedomBox app for security configuration.
 import subprocess
 from collections import defaultdict
 
+import requests
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -121,13 +122,23 @@ def get_vulnerability_counts():
             (label, package, *_) = line.split()
             cves[label].add(package)
 
+    try:
+        past_cves = requests.get(
+            'https://security-tracker.debian.org/tracker/data/json').json()
+    except Exception:
+        past_cves = None
+
     apps = {
         'freedombox': {
             'name': 'freedombox',
             'packages': {'freedombox'},
             'count': 0,
+            'past_count': 0 if past_cves else None,
         }
     }
+    if past_cves and 'freedombox' in past_cves:
+        apps['freedombox']['past_count'] = len(past_cves['freedombox'])
+
     for module_name, module in module_loader.loaded_modules.items():
         try:
             packages = module.managed_packages
@@ -142,7 +153,12 @@ def get_vulnerability_counts():
             'name': module_name,
             'packages': set(packages),
             'count': 0,
+            'past_count': 0 if past_cves else None,
         }
+
+        for package in packages:
+            if past_cves and package in past_cves:
+                apps[module_name]['past_count'] += len(past_cves[package])
 
     for cve_packages in cves.values():
         for app_ in apps.values():

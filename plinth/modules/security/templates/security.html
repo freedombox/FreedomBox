@@ -47,7 +47,8 @@
       <thead>
         <tr>
           <th>{% trans "App Name" %}</th>
-          <th>{% trans "Vulnerabilities Reported" %}</th>
+          <th>{% trans "Current Vulnerabilities" %}</th>
+          <th>{% trans "Past Vulnerabilities" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -55,6 +56,7 @@
           <tr>
             <td>{{ app.name }}</td>
             <td>{{ app.count }}</td>
+            <td>{{ app.past_count }}</td>
           </tr>
         {% endfor %}
       </tbody>
