@@ -10,7 +10,8 @@ if (($wikiname eq "") || ($admin eq "")) {
     exit;
 }
 
-our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);
+our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname . "_");
+if (length($wikiname_short)>1) { chop($wikiname_short) };
 
 IkiWiki::Setup::Automator->import(
     wikiname => $wikiname,

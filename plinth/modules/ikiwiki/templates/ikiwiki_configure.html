@@ -48,17 +48,17 @@
         <div class="list-group">
           {% for site in sites %}
             <div class="list-group-item clearfix">
-              <a href="{% url 'ikiwiki:delete' site %}"
+              <a href="{% url 'ikiwiki:delete' site.0 %}"
                  class="btn btn-default btn-sm pull-right"
                  role="button"
-                 title="{% blocktrans %}Delete site {{ site }}{% endblocktrans %}">
+                 title="{% blocktrans with site=site.1 %}Delete site {{ site }}{% endblocktrans %}">
                 <span class="fa fa-trash-o"
                       aria-hidden="true"></span>
               </a>
 
-              <a class="wiki-label" href="/ikiwiki/{{ site }}"
-                 title="{% blocktrans %}Go to site {{ site }}{% endblocktrans %}">
-                {{ site }}
+              <a class="wiki-label" href="/ikiwiki/{{ site.0 }}"
+                 title="{% blocktrans with site=site.1 %}Go to site {{ site }}{% endblocktrans %}">
+                {{ site.1 }}
               </a>
             </div>
           {% endfor %}

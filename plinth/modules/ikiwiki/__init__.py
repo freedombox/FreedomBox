@@ -29,7 +29,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -79,10 +79,7 @@ class IkiwikiApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        sites = actions.run('ikiwiki', ['get-sites']).split('\n')
-        sites = [name for name in sites if name != '']
-        for site in sites:
-            self.add_shortcut(site)
+        self.refresh_sites()
 
         firewall = Firewall('firewall-ikiwiki', name, ports=['http', 'https'],
                             is_external=True)
@@ -91,9 +88,9 @@ class IkiwikiApp(app_module.App):
         webserver = Webserver('webserver-ikiwiki', 'ikiwiki-plinth')
         self.add(webserver)
 
-    def add_shortcut(self, site):
+    def add_shortcut(self, site, title):
         """Add an ikiwiki shortcut to frontpage."""
-        shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, site,
+        shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, title,
                                       icon='ikiwiki', url='/ikiwiki/' + site,
                                       clients=clients)
         self.add(shortcut)
@@ -103,6 +100,17 @@ class IkiwikiApp(app_module.App):
         """Remove an ikiwiki shortcut from frontpage."""
         component = self.remove('shortcut-ikiwiki-' + site)
         component.remove()  # Remove from global list.
+
+    def refresh_sites(self):
+        """Refresh blog and wiki list"""
+        sites = actions.run('ikiwiki', ['get-sites']).split('\n')
+        sites = [name.split(' ', 1) for name in sites if name != '']
+
+        for site in sites:
+            if not 'shortcut-ikiwiki-' + site[0] in self.components:
+                self.add_shortcut(site[0], site[1])
+
+        return sites
 
 
 def init():

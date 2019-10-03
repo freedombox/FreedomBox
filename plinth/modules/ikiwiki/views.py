@@ -43,7 +43,7 @@ class IkiwikiAppView(views.AppView):
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
-        sites = actions.run('ikiwiki', ['get-sites']).split('\n')
+        sites = ikiwiki.app.refresh_sites()
         sites = [name for name in sites if name != '']
 
         context = super().get_context_data(**kwargs)
@@ -67,9 +67,9 @@ def create(request):
                              form.cleaned_data['admin_name'],
                              form.cleaned_data['admin_password'])
 
-            site = form.cleaned_data['name'].replace(' ', '')
-            shortcut = ikiwiki.app.add_shortcut(site)
-            shortcut.enable()
+            ikiwiki.app.refresh_sites()
+            if ikiwiki.app.is_enabled():
+                ikiwiki.app.set_enabled(True)
 
             return redirect(reverse_lazy('ikiwiki:index'))
     else:
@@ -118,20 +118,22 @@ def delete(request, name):
     On GET, display a confirmation page.
     On POST, delete the wiki/blog.
     """
+    title = ikiwiki.app.components['shortcut-ikiwiki-' + name].name
     if request.method == 'POST':
         try:
             actions.superuser_run('ikiwiki', ['delete', '--name', name])
             ikiwiki.app.remove_shortcut(name)
-            messages.success(request, _('{name} deleted.').format(name=name))
+            messages.success(request,
+                             _('{title} deleted.').format(title=title))
         except actions.ActionError as error:
             messages.error(
                 request,
-                _('Could not delete {name}: {error}').format(
-                    name=name, error=error))
+                _('Could not delete {title}: {error}').format(
+                    title=title, error=error))
 
         return redirect(reverse_lazy('ikiwiki:index'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html', {
         'title': ikiwiki.name,
-        'name': name
+        'name': title
     })
