@@ -28,9 +28,9 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 2
+version = 3
 
 managed_services = ['deluge-web']
 

@@ -350,7 +350,8 @@ def _deluge_ensure_daemon_started(browser):
     """Start the deluge daemon if it is not started."""
     _deluge_open_connection_manager(browser)
 
-    browser.find_by_xpath('//em[text()="127.0.0.1:58846"]').first.click()
+    browser.find_by_xpath(
+        '//em[contains(text(),"127.0.0.1:58846")]').first.click()
 
     if browser.is_element_present_by_xpath('//button[text()="Stop Daemon"]'):
         return
@@ -433,22 +434,27 @@ def deluge_upload_sample_torrent(browser):
     eventually(
         lambda: _deluge_get_active_window_title(browser) == 'Add Torrents')
 
-    browser.find_by_css('button.x-deluge-add-file').first.click()
-
-    # Add from file window appears
-    eventually(
-        lambda: _deluge_get_active_window_title(browser) == 'Add from File')
-
-    # Attach file
     file_path = os.path.join(
         os.path.dirname(__file__), '..', 'data', 'sample.torrent')
-    browser.attach_file('file', file_path)
 
-    # Click Add
-    _deluge_click_active_window_button(browser, 'Add')
+    if browser.find_by_id('fileUploadForm'):  # deluge-web 2.x
+        browser.attach_file('file', file_path)
+    else:  # deluge-web 1.x
+        browser.find_by_css('button.x-deluge-add-file').first.click()
 
-    eventually(
-        lambda: _deluge_get_active_window_title(browser) == 'Add Torrents')
+        # Add from file window appears
+        eventually(
+            lambda: _deluge_get_active_window_title(browser) == 'Add from File'
+        )
+
+        # Attach file
+        browser.attach_file('file', file_path)
+
+        # Click Add
+        _deluge_click_active_window_button(browser, 'Add')
+
+        eventually(
+            lambda: _deluge_get_active_window_title(browser) == 'Add Torrents')
 
     # Click Add
     time.sleep(1)
