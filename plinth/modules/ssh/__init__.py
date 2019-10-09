@@ -18,6 +18,10 @@
 FreedomBox app for OpenSSH server.
 """
 
+import pathlib
+import re
+import subprocess
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -25,9 +29,8 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.views import AppView
 
-from .manifest import backup # noqa, pylint: disable=unused-import
+from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -84,8 +87,21 @@ def setup(helper, old_version=None):
     actions.superuser_run('ssh', ['setup'])
 
 
-class SshAppView(AppView):
-    app_id = 'ssh'
-    name = name
-    description = description
-    port_forwarding_info = port_forwarding_info
+def get_host_keys():
+    """Return Host keys of the system."""
+    etc_ssh = pathlib.Path('/etc/ssh/')
+    host_keys = []
+    pattern = re.compile(r'^(?P<bit_size>\d+) (?P<fingerprint>[\S]+) '
+                         r'.+ \((?P<algorithm>\w+)\)$')
+
+    for public_key in etc_ssh.glob('*.pub'):
+        process = subprocess.run(['ssh-keygen', '-l', '-f',
+                                  str(public_key)], stdout=subprocess.PIPE,
+                                 check=True)
+        output = process.stdout.decode().strip()
+        if output:
+            match = re.match(pattern, output)
+            if match:
+                host_keys.append(match.groupdict())
+
+    return host_keys

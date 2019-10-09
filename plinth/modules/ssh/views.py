@@ -15,13 +15,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-URLs for the Secure Shell Server module.
+Views for the SSH module
 """
 
-from django.conf.urls import url
+from plinth.modules import ssh
+from plinth.views import AppView
 
-from plinth.modules.ssh.views import SshAppView
 
-urlpatterns = [
-    url(r'^sys/ssh/$', SshAppView.as_view(), name='index'),
-]
+class SshAppView(AppView):
+    app_id = 'ssh'
+    name = ssh.name
+    description = ssh.description
+    port_forwarding_info = ssh.port_forwarding_info
+    template_name = 'ssh.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['host_keys'] = ssh.get_host_keys()
+
+        return context
