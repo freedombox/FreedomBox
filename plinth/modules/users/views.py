@@ -29,29 +29,21 @@ from django.views.generic.edit import (CreateView, DeleteView, FormView,
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules import first_boot
+from plinth.modules import first_boot, users
 from plinth.utils import is_user_admin
+from plinth.views import AppView
 
 from . import get_last_admin_user
 from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
                     UserUpdateForm)
 
-subsubmenu = [{
-    'url': reverse_lazy('users:index'),
-    'text': ugettext_lazy('Users')
-}, {
-    'url': reverse_lazy('users:create'),
-    'text': ugettext_lazy('Create User')
-}]
-
 
 class ContextMixin(object):
-    """Mixin to add 'subsubmenu' and 'title' to the context."""
+    """Mixin to add 'title' to the template context."""
 
     def get_context_data(self, **kwargs):
-        """Use self.title and the module-level subsubmenu"""
+        """Add self.title to template context."""
         context = super(ContextMixin, self).get_context_data(**kwargs)
-        context['subsubmenu'] = subsubmenu
         context['title'] = getattr(self, 'title', '')
         return context
 
@@ -76,11 +68,17 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
         return reverse('users:index')
 
 
-class UserList(ContextMixin, django.views.generic.ListView):
+class UserList(AppView, ContextMixin, django.views.generic.ListView):
     """View to list users."""
     model = User
     template_name = 'users_list.html'
     title = ugettext_lazy('Users')
+    name = users.name
+    description = users.description
+    app_id = 'users'
+    show_status_block = False
+    diagnostics_module_name = 'users'
+    manual_page = users.manual_page
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserList, self).get_context_data(*args, **kwargs)
@@ -128,13 +126,6 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         """Return the URL to redirect to in case of successful updation."""
         return reverse('users:edit', kwargs={'slug': self.object.username})
-
-    def get_context_data(self, **kwargs):
-        """Use self.title and the module-level subsubmenu"""
-        context = super(UserUpdate, self).get_context_data(**kwargs)
-        if not is_user_admin(self.request):
-            del context['subsubmenu']
-        return context
 
 
 class UserDelete(ContextMixin, DeleteView):
@@ -206,13 +197,6 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         form.save()
         update_session_auth_hash(self.request, form.user)
         return super(UserChangePassword, self).form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        """Remove subsubmenu for non-admin users."""
-        context = super(UserChangePassword, self).get_context_data(**kwargs)
-        if not is_user_admin(self.request):
-            del context['subsubmenu']
-        return context
 
 
 class FirstBootView(django.views.generic.CreateView):

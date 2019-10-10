@@ -36,14 +36,6 @@ managed_services = ['pagekite']
 
 managed_packages = ['pagekite']
 
-first_boot_steps = [
-    {
-        'id': 'pagekite_firstboot',
-        'url': 'pagekite:firstboot',
-        'order': 5,
-    },
-]
-
 name = _('PageKite')
 
 short_description = _('Public Visibility')

@@ -273,6 +273,7 @@ setuptools.setup(
         'pytest-cov',
         'pytest-django',
         'flake8',
+        'requests',
     ],
     package_data={
         '': ['templates/*', 'static/*', 'locale/*/LC_MESSAGES/*.[pm]o']

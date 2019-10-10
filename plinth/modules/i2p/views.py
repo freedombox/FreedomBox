@@ -71,6 +71,7 @@ class ServiceBaseView(TemplateView):
         """Add context data for template."""
         context = super().get_context_data(**kwargs)
         context['title'] = i2p.name
+        context['name'] = i2p.name
         context['description'] = i2p.description
         context['clients'] = i2p.clients
         context['manual_page'] = i2p.manual_page

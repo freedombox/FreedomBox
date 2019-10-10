@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -54,7 +54,22 @@
   </style>
 {% endblock %}
 
-{% block content %}
+{% block status %}
+  <a href="{% url 'networks:scan' %}" class="btn btn-default"
+     role="button" title="{% trans 'Nearby Wi-Fi Networks' %}">
+    <span class="fa fa-wifi" aria-hidden="true"></span>
+    {% trans "Nearby Wi-Fi Networks" %}
+  </a>
+  <a href="{% url 'networks:add' %}" class="btn btn-default"
+     role="button" title="{% trans 'Add Connection' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans "Add Connection" %}
+  </a>
+  {% endblock %}
+
+{% block configuration %}
+
+  <h3>{% trans "Connections" %}</h3>
 
   <div class="list-group">
     {% for connection in connections %}
@@ -105,7 +120,5 @@
   </div>
 
   {% include "connections_diagram.html" %}
-
-  {% include "diagnostics_button.html" with module="networks" enabled=True %}
 
 {% endblock %}

@@ -22,26 +22,35 @@
 {% load i18n %}
 
 {% block content %}
-
-  <h3>
-    {% blocktrans trimmed %}
-      Delete Wiki or Blog <em>{{ name }}</em>
-    {% endblocktrans %}
-  </h3>
-
+  <h3>{% trans "Security Report" %}</h3>
   <p>
-    {% blocktrans trimmed %}
-      This action will remove all the posts, pages and comments
-      including revision history.  Delete this wiki or blog
-      permanently?
+    {% blocktrans trimmed with count=freedombox_vulns.count %}
+      The installed version of FreedomBox has {{ count }} reported security
+      vulnerabilities.
     {% endblocktrans %}
   </p>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    <input type="submit" class="btn btn-md btn-danger"
-           value="{% blocktrans %}Delete {{ name }}{% endblocktrans %}"/>
-  </form>
-
+  <p>
+    {% blocktrans trimmed %}
+      The following table lists the current reported number, and historical
+      count, of security vulnerabilities for each installed app.
+    {% endblocktrans %}
+  </p>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>{% trans "App Name" %}</th>
+        <th>{% trans "Current Vulnerabilities" %}</th>
+        <th>{% trans "Past Vulnerabilities" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in apps_vulns %}
+        <tr>
+          <td>{{ app.name }}</td>
+          <td>{{ app.count }}</td>
+          <td>{{ app.past_count|default_if_none:"❗"}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

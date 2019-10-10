@@ -22,7 +22,6 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
 from django.views.decorators.http import require_POST
 
 from plinth import network
@@ -33,17 +32,6 @@ from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
 
 logger = Logger(__name__)
 
-subsubmenu = [{
-    'url': reverse_lazy('networks:index'),
-    'text': ugettext_lazy('Network Connections')
-}, {
-    'url': reverse_lazy('networks:scan'),
-    'text': ugettext_lazy('Nearby Wi-Fi Networks')
-}, {
-    'url': reverse_lazy('networks:add'),
-    'text': ugettext_lazy('Add Connection')
-}]
-
 
 def index(request):
     """Show connection list."""
@@ -52,8 +40,11 @@ def index(request):
     return TemplateResponse(
         request, 'connections_list.html', {
             'title': _('Network Connections'),
+            'name': networks.name,
+            'description': networks.description,
             'manual_page': networks.manual_page,
-            'subsubmenu': subsubmenu,
+            'diagnostics_module_name': 'networks',
+            'is_enabled': True,
             'connections': connections
         })
 
@@ -100,7 +91,6 @@ def show(request, uuid):
     return TemplateResponse(
         request, 'connection_show.html', {
             'title': _('Connection Information'),
-            'subsubmenu': subsubmenu,
             'connection': connection_status,
             'active_connection': active_connection_status,
             'device': device_status,
@@ -141,12 +131,10 @@ def edit(request, uuid):
 
             return redirect(reverse_lazy('networks:index'))
         else:
-            return TemplateResponse(
-                request, 'connections_edit.html', {
-                    'title': _('Edit Connection'),
-                    'subsubmenu': subsubmenu,
-                    'form': form
-                })
+            return TemplateResponse(request, 'connections_edit.html', {
+                'title': _('Edit Connection'),
+                'form': form
+            })
     else:
         settings_connection = connection.get_setting_connection()
         form_data['interface'] = connection.get_interface_name()
@@ -229,7 +217,6 @@ def edit(request, uuid):
 
         return TemplateResponse(request, 'connections_edit.html', {
             'title': _('Edit Connection'),
-            'subsubmenu': subsubmenu,
             'form': form
         })
 
@@ -243,14 +230,16 @@ def activate(request, uuid):
         messages.success(request,
                          _('Activated connection {name}.').format(name=name))
     except network.ConnectionNotFound:
-        messages.error(request,
-                       _('Failed to activate connection: '
-                         'Connection not found.'))
+        messages.error(
+            request,
+            _('Failed to activate connection: '
+              'Connection not found.'))
     except network.DeviceNotFound as exception:
         name = exception.args[0].get_id()
-        messages.error(request,
-                       _('Failed to activate connection {name}: '
-                         'No suitable device is available.').format(name=name))
+        messages.error(
+            request,
+            _('Failed to activate connection {name}: '
+              'No suitable device is available.').format(name=name))
 
     return redirect(reverse_lazy('networks:index'))
 
@@ -264,9 +253,10 @@ def deactivate(request, uuid):
         messages.success(request,
                          _('Deactivated connection {name}.').format(name=name))
     except network.ConnectionNotFound:
-        messages.error(request,
-                       _('Failed to de-activate connection: '
-                         'Connection not found.'))
+        messages.error(
+            request,
+            _('Failed to de-activate connection: '
+              'Connection not found.'))
 
     return redirect(reverse_lazy('networks:index'))
 
@@ -274,12 +264,10 @@ def deactivate(request, uuid):
 def scan(request):
     """Show a list of nearby visible Wi-Fi access points."""
     access_points = network.wifi_scan()
-    return TemplateResponse(
-        request, 'wifi_scan.html', {
-            'title': _('Nearby Wi-Fi Networks'),
-            'subsubmenu': subsubmenu,
-            'access_points': access_points
-        })
+    return TemplateResponse(request, 'wifi_scan.html', {
+        'title': _('Nearby Wi-Fi Networks'),
+        'access_points': access_points
+    })
 
 
 def add(request):
@@ -302,7 +290,6 @@ def add(request):
         form = ConnectionTypeSelectForm()
         return TemplateResponse(request, 'connections_type_select.html', {
             'title': _('Add Connection'),
-            'subsubmenu': subsubmenu,
             'form': form
         })
 
@@ -319,12 +306,10 @@ def add_generic(request):
     else:
         form = GenericForm()
 
-    return TemplateResponse(
-        request, 'connections_create.html', {
-            'title': _('Adding New Generic Connection'),
-            'subsubmenu': subsubmenu,
-            'form': form
-        })
+    return TemplateResponse(request, 'connections_create.html', {
+        'title': _('Adding New Generic Connection'),
+        'form': form
+    })
 
 
 def add_ethernet(request):
@@ -339,12 +324,10 @@ def add_ethernet(request):
     else:
         form = EthernetForm()
 
-    return TemplateResponse(
-        request, 'connections_create.html', {
-            'title': _('Adding New Ethernet Connection'),
-            'subsubmenu': subsubmenu,
-            'form': form
-        })
+    return TemplateResponse(request, 'connections_create.html', {
+        'title': _('Adding New Ethernet Connection'),
+        'form': form
+    })
 
 
 def add_pppoe(request):
@@ -359,12 +342,10 @@ def add_pppoe(request):
     else:
         form = PPPoEForm()
 
-    return TemplateResponse(
-        request, 'connections_create.html', {
-            'title': _('Adding New PPPoE Connection'),
-            'subsubmenu': subsubmenu,
-            'form': form
-        })
+    return TemplateResponse(request, 'connections_create.html', {
+        'title': _('Adding New PPPoE Connection'),
+        'form': form
+    })
 
 
 def add_wifi(request, ssid=None, interface_name=None):
@@ -396,12 +377,10 @@ def add_wifi(request, ssid=None, interface_name=None):
         else:
             form = WifiForm()
 
-    return TemplateResponse(
-        request, 'connections_create.html', {
-            'title': _('Adding New Wi-Fi Connection'),
-            'subsubmenu': subsubmenu,
-            'form': form
-        })
+    return TemplateResponse(request, 'connections_create.html', {
+        'title': _('Adding New Wi-Fi Connection'),
+        'form': form
+    })
 
 
 def delete(request, uuid):
@@ -416,9 +395,10 @@ def delete(request, uuid):
             messages.success(request,
                              _('Connection {name} deleted.').format(name=name))
         except network.ConnectionNotFound:
-            messages.error(request,
-                           _('Failed to delete connection: '
-                             'Connection not found.'))
+            messages.error(
+                request,
+                _('Failed to delete connection: '
+                  'Connection not found.'))
 
         return redirect(reverse_lazy('networks:index'))
 
@@ -426,13 +406,12 @@ def delete(request, uuid):
         connection = network.get_connection(uuid)
         name = connection.get_id()
     except network.ConnectionNotFound:
-        messages.error(request,
-                       _('Failed to delete connection: '
-                         'Connection not found.'))
+        messages.error(
+            request, _('Failed to delete connection: '
+                       'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
     return TemplateResponse(request, 'connections_delete.html', {
         'title': _('Delete Connection'),
-        'subsubmenu': subsubmenu,
         'name': name
     })

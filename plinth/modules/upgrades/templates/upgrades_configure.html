@@ -1,4 +1,4 @@
-{% extends "app-subsubmenu.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -21,15 +21,9 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block configuration %}
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary btn-md"
-           value="{% trans "Update setup" %}"/>
-  </form>
-
+{% block status %}
+  <a href="{% url 'upgrades:upgrade' %}" class="btn btn-default"
+     role="button" title="{% trans 'Manual update' %}">
+    {% trans 'Manual update' %}
+  </a>
 {% endblock %}

@@ -844,6 +844,14 @@ $ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
 
 # This is the FreedomBox CI server's key
 $ gpg --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8]]></screen>
+            <para>If this command shows an error such as <emphasis>new key but contains no user ID - skipped</emphasis>, then use a different keyserver to download the keys: </para>
+            <screen><![CDATA[$ gpg --keyserver keys.gnupg.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+$ gpg --keyserver keys.gnupg.net --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+$ gpg --keyserver keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8]]></screen>
+            <para>Or </para>
+            <screen><![CDATA[$ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8]]></screen>
           </listitem>
           <listitem>
             <para>Next, verify the fingerprint of the public keys: </para>
@@ -1731,6 +1739,32 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
         <title>Memory usage</title>
         <para>The Synapse reference server implemented in Python is known to be quite RAM hungry, especially when loading large rooms with thousands of members like #matrix:matrix.org. It is recommended to avoid joining such rooms if your FreedomBox device only has 1 GiB RAM or less. Rooms with up to a hundred members should be safe to join. The Matrix team is working on a new implementation of the Matrix server written in Go called Dendrite which might perform better in low-memory environments. </para>
         <para>Some large public rooms in the Matrix network are also available as IRC channels (e.g. #freedombox:matrix.org is also available as #freedombox on irc.debian.org). It is better to use IRC instead of Matrix for such large rooms. You can join the IRC channels using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Quassel#">Quassel</ulink>. </para>
+      </section>
+      <section>
+        <title>Advanced usage</title>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>If you wish to create a large number of users on your Matrix Synapse server, use the following commands on a remote shell as root user: </para>
+            <itemizedlist>
+              <listitem override="none">
+                <screen><![CDATA[cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 | sed "s+^+registration_shared_secret: +" > /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+chmod 600 /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+chown matrix-synapse:nogroup /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+systemctl restart matrix-synapse
+register_new_matrix_user -c /etc/matrix-synapse/conf.d/registration_shared_secret.yaml]]></screen>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>If you wish to see the list of users registered in Matrix Synapse, the following as root user: </para>
+            <itemizedlist>
+              <listitem override="none">
+                <screen><![CDATA[apt install sqlite3
+echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]]></screen>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </orderedlist>
       </section>
     </section>
     <section>
@@ -9831,6 +9865,35 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.18 (2019-10-07)</title>
+        <itemizedlist>
+          <listitem>
+            <para>diagnostics: Ensure that exceptions are reported as failures </para>
+          </listitem>
+          <listitem>
+            <para>users: Rearrange UI to match with other apps </para>
+          </listitem>
+          <listitem>
+            <para>upgrades, ikiwiki, networks, backups: Replace page tabs with buttons </para>
+          </listitem>
+          <listitem>
+            <para>dynamicdns, i2p, pagekite, snapshot: Cleanup page templates </para>
+          </listitem>
+          <listitem>
+            <para>deluge: Support deluge 2 by starting it properly </para>
+          </listitem>
+          <listitem>
+            <para>minetest: Remove mod-torches no longer available in testing/unstable </para>
+          </listitem>
+          <listitem>
+            <para>security: Add past vulnerabilities count, move report to new page </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for Spanish, Norwegian Bokmål, German </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.17 (2019-09-23)</title>
         <itemizedlist>

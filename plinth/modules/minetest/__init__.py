@@ -29,7 +29,7 @@ from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 2
 
@@ -42,9 +42,8 @@ mods = [
     'minetest-mod-moreblocks', 'minetest-mod-moreores', 'minetest-mod-nether',
     'minetest-mod-pipeworks', 'minetest-mod-player-3d-armor',
     'minetest-mod-protector', 'minetest-mod-quartz', 'minetest-mod-skyblock',
-    'minetest-mod-throwing', 'minetest-mod-torches',
-    'minetest-mod-unified-inventory', 'minetest-mod-unifieddyes',
-    'minetest-mod-worldedit'
+    'minetest-mod-throwing', 'minetest-mod-unified-inventory',
+    'minetest-mod-unifieddyes', 'minetest-mod-worldedit'
 ]
 
 managed_packages = ['minetest-server'] + mods

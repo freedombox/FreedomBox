@@ -26,4 +26,5 @@ from . import views
 
 urlpatterns = [
     url(r'^sys/security/$', views.index, name='index'),
+    url(r'^sys/security/report$', views.report, name='report'),
 ]

@@ -35,6 +35,13 @@ managed_packages = ['network-manager', 'batctl']
 
 name = _('Networks')
 
+description = [
+    _('Configure network devices. Connect to the Internet via Ethernet, Wi-Fi '
+      'or PPPoE. Share that connection with other devices on the network.'),
+    _('Devices administered through other methods may not be available for '
+      'configuration here.'),
+]
+
 logger = Logger(__name__)
 
 manual_page = 'Networks'

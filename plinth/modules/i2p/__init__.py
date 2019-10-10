@@ -29,7 +29,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users import register_group
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -97,7 +97,7 @@ class I2PApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        firewall = Firewall('firewall-i2p-proxies', name,
+        firewall = Firewall('firewall-i2p-proxies', _('I2P Proxy'),
                             ports=tunnels_to_manage.values(),
                             is_external=False)
         self.add(firewall)

@@ -141,6 +141,5 @@ def compare_configurations(parser):
     assert isinstance(cfg.use_x_forwarded_host, bool)
     assert parser.get('Network', 'use_x_forwarded_host') == \
         str(cfg.use_x_forwarded_host)
-    assert len(parser.items('Misc')) == 3
-    assert parser.get('Misc', 'danube_edition') == str(cfg.danube_edition)
+    assert len(parser.items('Misc')) == 2
     assert parser.get('Misc', 'box_name') == cfg.box_name

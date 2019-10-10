@@ -423,12 +423,14 @@ def diagnose_netcat(host, port, input='', negate=False):
             result = 'failed'
         else:
             result = 'passed'
+
+        if negate:
+            result = 'failed' if result == 'passed' else 'passed'
     except Exception:
         result = 'failed'
 
     test = _('Connect to {host}:{port}')
     if negate:
-        result = 'failed' if result == 'passed' else 'passed'
         test = _('Cannot connect to {host}:{port}')
 
     return [test.format(host=host, port=port), result]
