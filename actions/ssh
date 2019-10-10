@@ -70,7 +70,7 @@ def get_user_homedir(username):
     """Return the home dir of a user by looking up in password database."""
     try:
         return pwd.getpwnam(username).pw_dir
-    except KeyError as exception:
+    except KeyError:
         print('Username not found')
         sys.exit(1)
 

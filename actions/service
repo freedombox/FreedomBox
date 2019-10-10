@@ -100,15 +100,21 @@ def subcommand_is_running(arguments):
 
 
 def subcommand_list(_):
-    """Get list of plinth-managed services with their status (running or not)"""
+    """Get list of plinth-managed services with their status.
+
+    Status may be either running or not.
+
+    """
     managed_services = _get_managed_services()
     services = dict.fromkeys(managed_services, {'running': False})
 
     output = subprocess.check_output(['systemctl', 'list-units'])
     for line in output.decode().strip().split('\n'):
-        if line.startswith('UNIT'): continue
+        if line.startswith('UNIT'):
+            continue
         # Stop parsing on empty line after the service list
-        if not len(line): break
+        if not len(line):
+            break
 
         try:
             unit, load, active, sub = line.split()[:4]

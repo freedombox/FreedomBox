@@ -290,7 +290,7 @@ def get_user_groups(username):
         groups_part = output.split(' ')[2]
         groups = groups_part.split('=')[1]
         group_names = [
-            user.strip('()') for user in re.findall('\(.*?\)', groups)
+            user.strip('()') for user in re.findall(r'\(.*?\)', groups)
         ]
         group_names.remove('users')
         return group_names

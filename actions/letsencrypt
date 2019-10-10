@@ -56,8 +56,9 @@ def parse_arguments():
     setup_parser = subparsers.add_parser(
         'setup', help='Run any setup/upgrade activities.')
     setup_parser.add_argument(
-        '--old-version', type=int, required=True, help=
-        'Version number being upgraded from or None if setting up first time.')
+        '--old-version', type=int, required=True,
+        help='Version number being upgraded from or None if setting up first '
+        'time.')
 
     subparsers.add_parser('get-status',
                           help='Return the status of configured domains.')
@@ -273,8 +274,8 @@ def subcommand_obtain(arguments):
 def _remove_old_hooks():
     """Remove old style renewal hooks from individual configuration files.
 
-    This has been replaced with global hooks by adding script files in directory
-    /etc/letsencrypt/renewal-hooks/{pre,post,deploy}/.
+    This has been replaced with global hooks by adding script files in
+    directory /etc/letsencrypt/renewal-hooks/{pre,post,deploy}/.
 
     """
     for file_path in glob.glob(RENEWAL_DIRECTORY + '*.conf'):

@@ -20,10 +20,7 @@ Configuration helper for BitTorrent web client.
 """
 
 import argparse
-import os
 import subprocess
-
-from plinth import action_utils
 
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 SYSTEMD_SERVICE = '''
@@ -44,7 +41,7 @@ Group=debian-deluged
 
 [Install]
 WantedBy=multi-user.target
-'''
+'''  # noqa: E501
 
 
 def parse_arguments():

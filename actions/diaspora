@@ -37,11 +37,14 @@ def parse_arguments():
     subparsers.add_parser(
         'pre-install',
         help='Preseed debconf values before packages are installed.')
-
-    subparsers.add_parser('enable-user-registrations', help='Allow users to' \
-                          'sign up to this diaspora* pod without an invitation.')
-    subparsers.add_parser('disable-user-registrations', help='Allow only, ' \
-                          'users with an invitation to register to this diaspora* pod')
+    subparsers.add_parser(
+        'enable-user-registrations',
+        help='Allow users to sign up to this diaspora* pod without an '
+        'invitation.')
+    subparsers.add_parser(
+        'disable-user-registrations',
+        help='Allow only users with an invitation to register to this '
+        'diaspora* pod')
     subparsers.add_parser('start-diaspora', help='Start diaspora* service')
     subparsers.add_parser(
         'disable-ssl', help="Disable SSL on the diaspora* application server")

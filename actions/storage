@@ -92,7 +92,7 @@ def _resize_partition(device, requested_partition, free_space):
     ]
     try:
         subprocess.run(command, check=True)
-    except subprocess.CalledProcessError as exception:
+    except subprocess.CalledProcessError:
         try:
             subprocess.run(fallback_command, check=True)
         except subprocess.CalledProcessError as exception:
@@ -182,9 +182,9 @@ def _get_partition_device(device, partition_number):
 
 def _get_root_device_and_partition_number(device):
     """Return the parent device and number of partition separately."""
-    match = re.match('(.+[a-zA-Z]\d+)p(\d+)$', device)
+    match = re.match(r'(.+[a-zA-Z]\d+)p(\d+)$', device)
     if not match:
-        match = re.match('(.+[a-zA-Z])(\d+)$', device)
+        match = re.match(r'(.+[a-zA-Z])(\d+)$', device)
         if not match:
             print('Invalid device, must be a partition', file=sys.stderr)
             sys.exit(1)
