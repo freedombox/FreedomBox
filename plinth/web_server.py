@@ -71,10 +71,12 @@ def init():
 
     _mount_static_directory('/usr/share/javascript', '/javascript')
 
-    manual_dir = os.path.join(cfg.doc_dir, 'images')
-    manual_url = '/'.join([cfg.server_dir, 'help/manual/images']) \
-        .replace('//', '/')
-    _mount_static_directory(manual_dir, manual_url)
+    langs = os.listdir(os.path.join(cfg.doc_dir, 'manual'))
+    for lang in langs:
+        manual_dir = os.path.join(cfg.doc_dir, 'manual', lang, 'images')
+        manual_url = '/'.join([cfg.server_dir, f'help/manual/{lang}/images']) \
+                        .replace('//', '/')
+        _mount_static_directory(manual_dir, manual_url)
 
     for module_name, module in module_loader.loaded_modules.items():
         module_path = os.path.dirname(module.__file__)
