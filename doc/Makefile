@@ -19,6 +19,8 @@ MANUAL_URL="https://wiki.debian.org/FreedomBox/Manual?action=show&mimetype=text%
 
 OUTPUTS=freedombox-manual.pdf plinth.1 manual-pages
 
+SCRIPTS_DIR=scripts
+
 # In order to debug various problems with the documents especially
 # intermediate LaTeX state, run make as follows:
 #
@@ -50,9 +52,9 @@ all: $(OUTPUTS)
 fetch:
 	wget --quiet -O - $(MANUAL_URL) | \
 	  xmllint --format --output freedombox-manual.raw.xml -
-	xsltproc fetch-images.xslt freedombox-manual.raw.xml | sort -u | \
-	  awk 'NF {print "wget --quiet -O images/" $$1 " " $$2}' | sh
-	./fetch-manual-pages
+	xsltproc $(SCRIPTS_DIR)/fetch-images.xslt freedombox-manual.raw.xml | \
+          sort -u | awk 'NF {print "wget --quiet -O images/" $$1 " " $$2}' | sh
+	$(SCRIPTS_DIR)/fetch-manual-pages
 
 .PHONY: manual-pages
 manual-pages-list:=$(shell cat manual-pages.list) freedombox-manual
@@ -68,13 +70,13 @@ manual-pages: $(manual-pages-part-html)
 %.part.html: %.html
 	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' $< > $@
 
-freedombox-manual.xml: freedombox-manual.raw.xml fixes.xslt
-	xsltproc --output $@ fixes.xslt $<
+freedombox-manual.xml: freedombox-manual.raw.xml $(SCRIPTS_DIR)/fixes.xslt
+	xsltproc --output $@ $(SCRIPTS_DIR)/fixes.xslt $<
 
-%.xml: %.raw.xml manual-page-fixes.xslt
-	xsltproc --output $@ manual-page-fixes.xslt $<
-	./post-processor remove-footer $@
-	./post-processor fix-wiki-urls $@
+%.xml: %.raw.xml $(SCRIPTS_DIR)/manual-page-fixes.xslt
+	xsltproc --output $@ $(SCRIPTS_DIR)/manual-page-fixes.xslt $<
+	$(SCRIPTS_DIR)/post-processor remove-footer $@
+	$(SCRIPTS_DIR)/post-processor fix-wiki-urls $@
 
 %.html: %.xml
 	xsltproc --output $@ /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $<
