@@ -1,0 +1,94 @@
+{% extends "app.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block page_head %}
+  <style type="text/css">
+    .repo-label {
+        display: inline-block;
+        width: 40%;
+    }
+    .repo-private-icon {
+        margin: 4px 10px;
+    }
+    .list-group-item .btn {
+        margin: -5px 2px;
+    }
+  </style>
+{% endblock %}
+
+{% block status %}
+  <a href="{% url 'gitweb:create' %}" class="btn btn-primary"
+     role="button" title="{% trans 'Create repository' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans 'Create repository' %}
+  </a>
+{% endblock %}
+
+<h2>{{ title }}</h2>
+
+{% block configuration %}
+  <h3>{% trans "Configuration" %}</h3>
+
+  <form class="form form-configuration" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
+
+  <h3>{% trans "Manage Repositories" %}</h3>
+
+  <div class="row">
+    <div class="col-sm-6">
+      {% if not repos %}
+        <p>{% trans 'No repositories available.' %}</p>
+      {% else %}
+        {% for repo in repos %}
+          <div class="list-group-item clearfix">
+            <a href="{% url 'gitweb:delete' repo.name %}"
+              class="btn btn-default btn-sm pull-right"
+              role="button"
+              title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
+              <span class="fa fa-trash-o" aria-hidden="true"></span>
+            </a>
+            <a class="repo-edit btn btn-sm btn-default pull-right"
+              href="{% url 'gitweb:edit' repo.name %}">
+              <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+            </a>
+              {% if repo.access == 'private' %}
+                  <span class="repo-private-icon fa fa-lock pull-right" aria-label="private"></span></span>
+              {% endif %}
+            <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
+              title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
+              {{ repo.name }}
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
