@@ -77,7 +77,8 @@ freedombox-manual.xml: freedombox-manual.raw.xml fixes.xslt
 	./post-processor fix-wiki-urls $@
 
 %.html: %.xml
-	docbook2html --nochunks $<
+	xsltproc --output $@ /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $<
+	rm -f $(dir $@)docbook.css
 
 %.1: %.xml
 	xmlto man $<
