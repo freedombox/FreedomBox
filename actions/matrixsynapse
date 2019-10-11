@@ -42,13 +42,6 @@ def parse_arguments():
         '--domain-name',
         help='The domain name that will be used by Matrix Synapse')
 
-    help_le = "Add/drop Let's Encrypt certificate if configured domain matches"
-    subparser = subparsers.add_parser('letsencrypt', help=help_le)
-    subparser.add_argument('command', choices=('add', 'drop', 'get-status'),
-                           help='Whether to add or drop the certificate')
-    subparser.add_argument('--domain',
-                           help='Domain name to renew certificates for')
-
     subparsers.required = True
     return parser.parse_args()
 
