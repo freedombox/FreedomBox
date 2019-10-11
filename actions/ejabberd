@@ -87,11 +87,6 @@ def parse_arguments():
     mam.add_argument('command', choices=('enable', 'disable', 'status'),
                      help=help_MAM)
 
-    help_LE = "Add/drop Let's Encrypt certificate if configured domain matches"
-    letsencrypt = subparsers.add_parser('letsencrypt', help=help_LE)
-    letsencrypt.add_argument('command', choices=('add', 'drop'), help=help_LE)
-    letsencrypt.add_argument('--domain', help='Domain name to drop.')
-
     subparsers.required = True
     return parser.parse_args()
 
