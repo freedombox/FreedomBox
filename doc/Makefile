@@ -51,7 +51,7 @@ fetch:
 	wget --quiet -O - $(MANUAL_URL) | \
 	  xmllint --format --output freedombox-manual.raw.xml -
 	xsltproc fetch-images.xslt freedombox-manual.raw.xml | sort -u | \
-	  awk '{print "wget --quiet -O images/" $$1 " " $$2}' | sh
+	  awk 'NF {print "wget --quiet -O images/" $$1 " " $$2}' | sh
 	./fetch-manual-pages
 
 .PHONY: manual-pages
