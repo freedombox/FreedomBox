@@ -46,8 +46,15 @@
     <xsl:param name="title"/>
     <xsl:choose>
       <xsl:when test="contains($title, '/')">
-        <xsl:value-of select="substring-before($title, '/')"/>
-        <xsl:text> </xsl:text>
+        <!-- Skip copying the language code -->
+        <xsl:choose>
+          <xsl:when test="not(string-length(substring-before($title, '/'))=2)
+                          and
+                          not(string-length(substring-before($title, '/'))=5 and contains(substring-before($title, '/'), '-'))">
+            <xsl:value-of select="substring-before($title, '/')"/>
+            <xsl:text> </xsl:text>
+          </xsl:when>
+        </xsl:choose>
         <xsl:call-template name="clean-title">
           <xsl:with-param name="title" select="substring-after($title, '/')"/>
         </xsl:call-template>
