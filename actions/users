@@ -370,9 +370,10 @@ def subcommand_get_group_users(arguments):
 
 
 def flush_cache():
-    """Flush nscd cache."""
+    """Flush nscd and apache2 cache."""
     _run(['nscd', '--invalidate=passwd'])
     _run(['nscd', '--invalidate=group'])
+    action_utils.service_reload('apache2')
 
 
 def _run(arguments, **kwargs):
