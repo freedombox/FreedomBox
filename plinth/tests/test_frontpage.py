@@ -86,9 +86,9 @@ def fixture_common_shortcuts(clean_global_shortcuts):
     shortcuts = [
         Shortcut('anon-web-app-component-1', 'name1', 'short4', url='url1'),
         Shortcut('group1-web-app-component-1', 'Name2', 'Short3', url='url2',
-                 allowed_groups=['group1']),
+                 login_required=True, allowed_groups=['group1']),
         Shortcut('group2-web-app-component-1', 'name3', 'short2', url='url3',
-                 allowed_groups=['group2']),
+                 login_required=True, allowed_groups=['group2']),
         Shortcut('anon-non-web-app-component-1', 'name4', 'short1', url=None),
     ]
     return shortcuts
@@ -141,6 +141,16 @@ def test_shortcut_list_with_username(superuser_run, common_shortcuts):
     superuser_run.return_value = 'group1\ngroup2'
     return_list = Shortcut.list(username='user2')
     assert return_list == [cuts[0], cuts[1], cuts[2], cuts[3]]
+
+    cut = Shortcut('group2-web-app-component-1', 'name5', 'short2', url='url4',
+                   login_required=False, allowed_groups=['group3'])
+    superuser_run.return_value = 'group3'
+    return_list = Shortcut.list(username='user3')
+    assert return_list == [cuts[0], cuts[3], cut]
+
+    superuser_run.return_value = 'group4'
+    return_list = Shortcut.list(username='user4')
+    assert return_list == [cuts[0], cuts[3], cut]
 
 
 @pytest.mark.usefixtures('nextcloud_shortcut')
