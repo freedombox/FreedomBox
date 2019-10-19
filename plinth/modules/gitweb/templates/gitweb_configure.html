@@ -44,8 +44,6 @@
   </a>
 {% endblock %}
 
-<h2>{{ title }}</h2>
-
 {% block configuration %}
   {{ block.super }}
 
@@ -56,30 +54,35 @@
       {% if not repos %}
         <p>{% trans 'No repositories available.' %}</p>
       {% else %}
-        {% for repo in repos %}
-          <div class="list-group-item clearfix">
-            <a href="{% url 'gitweb:delete' repo.name %}"
-              class="btn btn-default btn-sm pull-right"
-              role="button"
-              title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
-              <span class="fa fa-trash-o" aria-hidden="true"></span>
-            </a>
-            <a class="repo-edit btn btn-sm btn-default pull-right"
-              href="{% url 'gitweb:edit' repo.name %}">
-              <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
-            </a>
+        <div class="list-group">
+          {% for repo in repos %}
+            <div class="list-group-item clearfix">
+              <a href="{% url 'gitweb:delete' repo.name %}"
+                class="btn btn-default btn-sm pull-right"
+                role="button"
+                title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
+              </a>
+
+              <a class="repo-edit btn btn-sm btn-default pull-right"
+                href="{% url 'gitweb:edit' repo.name %}">
+                <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+              </a>
+
               {% if repo.access == 'private' %}
-                  <span class="repo-private-icon fa fa-lock pull-right" aria-label="private"></span></span>
+                <span class="repo-private-icon fa fa-lock pull-right"
+                      aria-label="private"></span>
               {% endif %}
-            <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
-              title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
-              {{ repo.name }}
-            </a>
-          </div>
-        {% endfor %}
+
+              <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
+                title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
+                {{ repo.name }}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
       {% endif %}
     </div>
   </div>
-</div>
 
 {% endblock %}
