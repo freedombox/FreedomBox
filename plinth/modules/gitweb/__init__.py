@@ -127,14 +127,14 @@ class GitwebApp(app_module.App):
 
     def _enable_public_access(self):
         """Allow Gitweb app to be accessed by anyone with access."""
-        if self.auth_webserver.is_running():
+        if self.auth_webserver.is_conf_enabled():
             self.auth_webserver.disable()
 
         self.set_shortcut_login_required(False)
 
     def _disable_public_access(self):
         """Allow Gitweb app to be accessed by logged-in users only."""
-        if not self.auth_webserver.is_running():
+        if not self.auth_webserver.is_conf_enabled():
             self.auth_webserver.enable()
 
         self.set_shortcut_login_required(True)
@@ -143,13 +143,13 @@ class GitwebApp(app_module.App):
 class GitwebWebserverAuth(Webserver):
     """Component to handle Gitweb authentication webserver configuration."""
 
-    def is_running(self):
-        """Check whether Gitweb authentication webserver is running"""
+    def is_conf_enabled(self):
+        """Check whether Gitweb authentication configuration is enabled."""
         return super().is_enabled()
 
     def is_enabled(self):
         """Return if configuration is enabled or public access is enabled."""
-        return app.have_public_repos or super().is_enabled()
+        return app.have_public_repos() or super().is_enabled()
 
 
 def init():

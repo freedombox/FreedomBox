@@ -45,12 +45,12 @@ class GitwebAppView(views.AppView):
     show_status_block = False
     template_name = 'gitweb_configure.html'
 
-    def get_initial(self):
-        """Return the status of the service to fill in the form."""
-        initial = super().get_initial()
+    def get_context_data(self, *args, **kwargs):
+        """Add repositories to the context data."""
+        context = super().get_context_data(*args, **kwargs)
         gitweb.app.update_repo_list()
-        initial['repos'] = gitweb.app.repos
-        return initial
+        context['repos'] = gitweb.app.repos
+        return context
 
 
 class CreateRepoView(SuccessMessageMixin, FormView):

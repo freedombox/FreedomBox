@@ -47,16 +47,7 @@
 <h2>{{ title }}</h2>
 
 {% block configuration %}
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form form-configuration" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
+  {{ block.super }}
 
   <h3>{% trans "Manage Repositories" %}</h3>
 
