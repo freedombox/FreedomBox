@@ -38,12 +38,6 @@
     <div class="col-sm-6">
       {% if not sites %}
         <p>{% trans "No wikis or blogs available." %}</p>
-        <p>
-          <a class="btn btn-primary btn-md"
-             href="{% url 'ikiwiki:create' %}">
-            {% trans "Create a Wiki or Blog" %}
-          </a>
-        </p>
       {% else %}
         <div class="list-group">
           {% for site in sites %}
