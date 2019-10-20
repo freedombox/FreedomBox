@@ -21,6 +21,7 @@ Django form for configuring Gitweb.
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+
 from plinth.modules import gitweb
 
 
@@ -36,10 +37,12 @@ class EditRepoForm(forms.Form):
     )
 
     description = forms.CharField(
-        label=_('Description of the repository'), strip=True, required=False)
+        label=_('Description of the repository'), strip=True, required=False,
+        help_text=_('Optional, for displaying on Gitweb.'))
 
     owner = forms.CharField(
-        label=_('Repository\'s owner name'), strip=True, required=False)
+        label=_('Repository\'s owner name'), strip=True, required=False,
+        help_text=_('Optional, for displaying on Gitweb.'))
 
     is_private = forms.BooleanField(
         label=_('Private repository'), required=False,
