@@ -45,7 +45,7 @@ clients = validate([
         }, {
             'type': 'download',
             'os': 'windows',
-            'url': 'https://git-scm.com/download/mac'
+            'url': 'https://git-scm.com/download/windows'
         }]
     },
 ])
