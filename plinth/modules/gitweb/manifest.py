@@ -34,23 +34,19 @@ clients = validate([
     {
         'name':
             _('Git'),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'gnu-linux',
-                'url': 'https://git-scm.com/download/linux'
-            },
-            {
-                'type': 'download',
-                'os': 'macos',
-                'url': 'https://git-scm.com/download/mac'
-            },
-            {
-                'type': 'download',
-                'os': 'windows',
-                'url': 'https://git-scm.com/download/mac'
-            },
-        ]
+        'platforms': [{
+            'type': 'download',
+            'os': 'gnu-linux',
+            'url': 'https://git-scm.com/download/linux'
+        }, {
+            'type': 'download',
+            'os': 'macos',
+            'url': 'https://git-scm.com/download/mac'
+        }, {
+            'type': 'download',
+            'os': 'windows',
+            'url': 'https://git-scm.com/download/mac'
+        }]
     },
 ])
 
