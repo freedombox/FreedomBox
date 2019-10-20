@@ -62,7 +62,7 @@ class EditRepoForm(forms.Form):
         if (not name) or name.startswith(('-', '.')):
             raise ValidationError(_('Invalid repository name.'))
 
-        for repo in gitweb.app.repos:
+        for repo in gitweb.app.get_repo_list():
             if name == repo['name']:
                 raise ValidationError(
                     _('A repository with this name already exists.'))

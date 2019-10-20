@@ -91,36 +91,31 @@ class GitwebApp(app_module.App):
                                                   'gitweb-freedombox-auth')
         self.add(self.auth_webserver)
 
-    def have_public_repos(self):
-        """If Gitweb have public repos."""
-        return any((repo['access'] == 'public' for repo in self.repos))
-
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
         shortcut = self.remove('shortcut-gitweb')
         shortcut.login_required = login_required
         self.add(shortcut)
 
-    def update_repo_list(self):
+    def get_repo_list(self):
         """List all Git repositories and set Gitweb as public or private."""
         repos = []
         if os.path.exists(GIT_REPO_PATH):
             for repo in os.listdir(GIT_REPO_PATH):
                 if not repo.endswith('.git'):
                     continue
-
                 private_file = os.path.join(GIT_REPO_PATH, repo, 'private')
                 access = 'public'
                 if os.path.exists(private_file):
                     access = 'private'
-
                 repos.append({'name': repo[:-4], 'access': access})
 
-            repos = sorted(repos, key=lambda repo: repo['name'])
+        return sorted(repos, key=lambda repo: repo['name'])
 
-        self.repos = repos
-
-        if self.have_public_repos():
+    def update_service_access(self):
+        """Update the frontpage shortcut and webserver auth requirement."""
+        repos = self.get_repo_list()
+        if have_public_repos(repos):
             self._enable_public_access()
         else:
             self._disable_public_access()
@@ -149,7 +144,8 @@ class GitwebWebserverAuth(Webserver):
 
     def is_enabled(self):
         """Return if configuration is enabled or public access is enabled."""
-        return app.have_public_repos() or super().is_enabled()
+        repos = app.get_repo_list()
+        return have_public_repos(repos) or super().is_enabled()
 
 
 def init():
@@ -159,16 +155,16 @@ def init():
     register_group(group)
 
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.update_repo_list()
-        app.set_enabled(True)
+    if setup_helper.get_state() != 'needs-setup':
+        app.update_service_access()
+        if app.is_enabled():
+            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'gitweb', ['setup'])
-    app.update_repo_list()
     helper.call('post', app.enable)
 
 
@@ -180,6 +176,11 @@ def diagnose():
         action_utils.diagnose_url_on_all('https://{host}/gitweb/',
                                          check_certificate=False))
     return results
+
+
+def have_public_repos(repos):
+    """Check for public repositories"""
+    return any((repo['access'] == 'public' for repo in repos))
 
 
 def create_repo(repo, repo_description, owner, is_private):

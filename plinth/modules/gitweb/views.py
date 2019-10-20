@@ -48,8 +48,7 @@ class GitwebAppView(views.AppView):
     def get_context_data(self, *args, **kwargs):
         """Add repositories to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        gitweb.app.update_repo_list()
-        context['repos'] = gitweb.app.repos
+        context['repos'] = gitweb.app.get_repo_list()
         return context
 
 
@@ -79,6 +78,8 @@ class CreateRepoView(SuccessMessageMixin, FormView):
 
         gitweb.create_repo(form_data['name'], form_data['description'],
                            form_data['owner'], form_data['is_private'])
+        gitweb.app.update_service_access()
+
         return super().form_valid(form)
 
 
@@ -100,7 +101,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
     def get_initial(self):
         """Load information about repository being edited."""
         name = self.kwargs['name']
-        for repo in gitweb.app.repos:
+        for repo in gitweb.app.get_repo_list():
             if repo['name'] == name:
                 break
         else:
@@ -123,6 +124,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
             except ActionError:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
+        gitweb.app.update_service_access()
 
         return super().form_valid(form)
 
@@ -133,7 +135,7 @@ def delete(request, name):
     On GET, display a confirmation page.
     On POST, delete the repository.
     """
-    for repo in gitweb.app.repos:
+    for repo in gitweb.app.get_repo_list():
         if repo['name'] == name:
             break
     else:
@@ -149,6 +151,7 @@ def delete(request, name):
                 _('Could not delete {name}: {error}').format(
                     name=name, error=error),
             )
+        gitweb.app.update_service_access()
 
         return redirect(reverse_lazy('gitweb:index'))
 
