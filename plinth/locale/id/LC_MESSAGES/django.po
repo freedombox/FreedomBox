@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
 "PO-Revision-Date: 2018-11-02 00:44+0000\n"
 "Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -354,6 +354,7 @@ msgid "Create Location"
 msgstr "Aksi"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 #, fuzzy
 #| msgid "Actions"
 msgid "Create Repository"
@@ -364,7 +365,7 @@ msgid "Delete this archive permanently?"
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -384,6 +385,7 @@ msgstr "Hapus %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr ""
@@ -1462,6 +1464,155 @@ msgstr "Jalankan Pengaturan"
 msgid "Setup Complete"
 msgstr "Pengaturan Selesai"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Actions"
+msgid "Name of the repository"
+msgstr "Aksi"
+
+#: plinth/modules/gitweb/forms.py:36
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:40
+msgid "Description of the repository"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+msgid "Repository's owner name"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Actions"
+msgid "Private repository"
+msgstr "Aksi"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+msgid "Invalid repository name."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:71
+msgid "A repository with this name already exists."
+msgstr ""
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Actions"
+msgid "Create repository"
+msgstr "Aksi"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Actions"
+msgid "Manage Repositories"
+msgstr "Aksi"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "No wikis or blogs available."
+msgid "No repositories available."
+msgstr "Tidak ada wiki atau blogs yang tersedia."
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete %(name)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "Hapus %(name)s"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "Pergi ke situs %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "Hapus Wiki atau Blog <em>%(name)s</em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+msgid "Delete this repository permanently?"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "Hapus %(name)s"
+
+#: plinth/modules/gitweb/views.py:62
+msgid "Repository created."
+msgstr ""
+
+#: plinth/modules/gitweb/views.py:93
+msgid "Repository edited."
+msgstr ""
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Actions"
+msgid "Edit repository"
+msgstr "Aksi"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr ""
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} dihapus."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "Tidak dapat menghapus {name}: {error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr ""
@@ -1833,21 +1984,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "Layanan dan Aplikasi"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "Tipe"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr ""
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "Nama Akun Admin"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "Kata sandi Akun Admin"
 
@@ -1865,16 +2012,12 @@ msgstr "Kelola Wiki dan Blog"
 msgid "No wikis or blogs available."
 msgstr "Tidak ada wiki atau blogs yang tersedia."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "Membuat Wiki atau Blog"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Hapus situs %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Pergi ke situs %(site)s"
@@ -1889,11 +2032,6 @@ msgid ""
 "This action will remove all the posts, pages and comments including revision "
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "Hapus %(name)s"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -1915,14 +2053,16 @@ msgstr "membuat blog {name}."
 msgid "Could not create blog: {error}"
 msgstr "Tidak dapat membuat blog: {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} dihapus."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "Tidak dapat menghapus {name}: {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -3682,15 +3822,15 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 msgid "IRC Client"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -3701,12 +3841,24 @@ msgid ""
 "connect and disconnect from it."
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
 "downloads\">desktop</a> and <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobile</a> devices are available."
+msgstr ""
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "Subdomain"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
 msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
@@ -3971,11 +4123,6 @@ msgstr ""
 #: plinth/modules/searx/views.py:59 plinth/modules/searx/views.py:70
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
-msgstr ""
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
 msgstr ""
 
 #: plinth/modules/security/forms.py:29
@@ -4458,17 +4605,39 @@ msgstr ""
 msgid "Rollback to Snapshot"
 msgstr ""
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr ""
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "Sidik Jari SSH"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "Sidik Jari SSH"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -5600,14 +5769,14 @@ msgstr ""
 msgid "Gujarati"
 msgstr ""
 
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "Membuat Wiki atau Blog"
+
 #~ msgid "Manage"
 #~ msgstr "Kelola"
 
 #~ msgid "Create"
 #~ msgstr "Buat"
-
-#~ msgid "Subdomain"
-#~ msgstr "Subdomain"
 
 #~ msgid "This code is not valid"
 #~ msgstr "Kode ini tidak valid"

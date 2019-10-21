@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
 "PO-Revision-Date: 2019-09-13 05:23+0000\n"
 "Last-Translator: Anxin YI <2732146152@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -346,6 +346,7 @@ msgid "Create Location"
 msgstr "创建存储位置"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 #, fuzzy
 #| msgid "Create User"
 msgid "Create Repository"
@@ -356,7 +357,7 @@ msgid "Delete this archive permanently?"
 msgstr "永久删除此归档？"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -373,6 +374,7 @@ msgstr "删除名为 %(name)s 的存档"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "提交"
@@ -1512,6 +1514,169 @@ msgstr "启动安装程序"
 msgid "Setup Complete"
 msgstr "安装完成"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Create new repository"
+msgid "Name of the repository"
+msgstr "创建新存储库"
+
+#: plinth/modules/gitweb/forms.py:36
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Create new repository"
+msgid "Description of the repository"
+msgstr "创建新存储库"
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository's owner name"
+msgstr "储存库被移除。"
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create User"
+msgid "Private repository"
+msgstr "创建用户"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "无效的主机名"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+#| msgid "This service already exists"
+msgid "A repository with this name already exists."
+msgstr "此服务已存在"
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create User"
+msgid "Create repository"
+msgstr "创建用户"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create User"
+msgid "Manage Repositories"
+msgstr "创建用户"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "Tor 中继端口可用"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "删除用户 %(username)s"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "转到站点 %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "删除 wiki 页面或博客 <em> %(name)s </em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete this snapshot permanently?"
+msgid "Delete this repository permanently?"
+msgstr "永久删除此快照？"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "删除 %(name)s"
+
+#: plinth/modules/gitweb/views.py:62
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository created."
+msgstr "储存库被移除。"
+
+#: plinth/modules/gitweb/views.py:93
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository edited."
+msgstr "储存库被移除。"
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create User"
+msgid "Edit repository"
+msgstr "创建用户"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "在配置过程中出错。"
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} 已删除。"
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "不能删除 {name}：{error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr "文档"
@@ -1929,21 +2094,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "服务和应用程序"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "类型"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr "只能使用字母和数字。"
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "管理员帐户名称"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "管理员帐户密码"
 
@@ -1961,16 +2122,12 @@ msgstr "管理 Wiki 和博客"
 msgid "No wikis or blogs available."
 msgstr "没有 wiki 或博客可用。"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "创建一个 Wiki 或博客"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "删除站点 %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "转到站点 %(site)s"
@@ -1986,11 +2143,6 @@ msgid ""
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
 "此操作将删除所有文章、 网页和评论包括修订历史记录。 永久删除此 wiki 或博客吗?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "删除 %(name)s"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2012,14 +2164,16 @@ msgstr "已创建的博客 {name}。"
 msgid "Could not create blog: {error}"
 msgstr "不能创建博客：{error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} 已删除。"
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "不能删除 {name}：{error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -3930,17 +4084,17 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "在 tcp{kind} 上通过 {proxy} 访问 {url}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 #, fuzzy
 #| msgid "Quassel IRC Client"
 msgid "IRC Client"
 msgstr "Quassel IRC 客户端"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -3955,7 +4109,7 @@ msgstr ""
 "以运行 Quassel 核心服务，使您始终在线，并且可以使用桌面或移动设备上的一个或多"
 "个 Quassel 客户端连接和断开连接。"
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -3965,6 +4119,18 @@ msgstr ""
 "您可以通过默认 Quassel 端口 4242 连接到 Quassel 核心。可使用<a href=\"http://"
 "quassel-irc.org/downloads\">桌面</a>和<a href=\"http://quasseldroid."
 "iskrembilen.com/\">移动设备</a>客户端连接到 Quassel 的核心。"
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "子域"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
@@ -4289,11 +4455,6 @@ msgstr ""
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "配置已更新。"
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "在配置过程中出错。"
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -4810,17 +4971,39 @@ msgstr "系统需要重启以完成完全回滚。"
 msgid "Rollback to Snapshot"
 msgstr "回滚到快照"
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "安全 Shell（SSH）服务器"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "SSH 指纹"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "SSH 指纹"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -6057,6 +6240,12 @@ msgstr "应用程序已禁用"
 msgid "Gujarati"
 msgstr "古吉拉特语"
 
+#~ msgid "Only alphanumeric characters are allowed."
+#~ msgstr "只能使用字母和数字。"
+
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "创建一个 Wiki 或博客"
+
 #~ msgid "Manage"
 #~ msgstr "管理"
 
@@ -6065,9 +6254,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr "您收到的您的 {box_name} Danube 版本优惠卷"
-
-#~ msgid "Subdomain"
-#~ msgstr "子域"
 
 #~ msgid "The subdomain you want to register"
 #~ msgstr "您想注册的子域名"
@@ -6120,9 +6306,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "Pagekite"
 #~ msgstr "Pagekite"
-
-#~ msgid "Create new repository"
-#~ msgstr "创建新存储库"
 
 #~ msgid "Upload"
 #~ msgstr "上传"
@@ -6266,9 +6449,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "SSH Keys"
 #~ msgstr "SSH 密钥"
-
-#~ msgid "Delete this snapshot permanently?"
-#~ msgstr "永久删除此快照？"
 
 #~ msgid "Delete Snapshot #%(number)s"
 #~ msgstr "删除快照 #%(number)s"

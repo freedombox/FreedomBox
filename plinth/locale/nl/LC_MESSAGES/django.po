@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
 "PO-Revision-Date: 2019-10-15 22:52+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -350,6 +350,7 @@ msgid "Create Location"
 msgstr "Locatie maken"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 msgid "Create Repository"
 msgstr "Maak Repository"
 
@@ -358,7 +359,7 @@ msgid "Delete this archive permanently?"
 msgstr "Dit archief permanent verwijderen?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -375,6 +376,7 @@ msgstr "Archief %(name)s verwijderen"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "Invoeren"
@@ -747,7 +749,8 @@ msgstr "Domeinnaam ingesteld"
 #: plinth/modules/config/views.py:100
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
-msgstr "Fout bij het instellen van de startpagina van de webserver: {exception}"
+msgstr ""
+"Fout bij het instellen van de startpagina van de webserver: {exception}"
 
 #: plinth/modules/config/views.py:103
 msgid "Webserver home page set"
@@ -1011,9 +1014,9 @@ msgstr ""
 "De diaspora* pod domeinnaam is ingesteld op <b>%(domain_name)s</b>. "
 "Gebruiker IDs zien er uit als <i>username@diaspora.%(domain_name)s</i><br/> "
 "Als de FreedomBox domeinnaam wordt gewijzigd, is alle data van de gebruikers "
-"die geregistreerd zijn met de vorige podnaam zijn niet meer toegankelijk. <"
-"br/> De diaspora* pod is bereikbaar op <a href=\""
-"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
+"die geregistreerd zijn met de vorige podnaam zijn niet meer toegankelijk. "
+"<br/> De diaspora* pod is bereikbaar op <a href=\"https://diaspora."
+"%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -1328,8 +1331,8 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
-"Om daadwerkelijk te communiceren, kan de <a href=\"{jsxc_url}\">web "
-"cliënt</a> of iedere andere <a href='https://xmpp.org/software/clients' "
+"Om daadwerkelijk te communiceren, kan de <a href=\"{jsxc_url}\">web cliënt</"
+"a> of iedere andere <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP cliënt</a> worden gebruikt. Wanneer ejabberd actief is, "
 "kan elke <a href=\"{users_url}\">gebruiker van {box_name}</a> daartoe "
 "toegang krijgen."
@@ -1545,6 +1548,173 @@ msgstr "Setup starten"
 #: plinth/modules/first_boot/views.py:64
 msgid "Setup Complete"
 msgstr "Instelling voltooid"
+
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Name of the share"
+msgid "Name of the repository"
+msgstr "Naam van de gedeelde bron"
+
+#: plinth/modules/gitweb/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "A lowercase alpha-numeric string that uniquely identifies a share. "
+#| "Example: <em>media</em>."
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+"Een aaneengesloten reeks van kleine letters en/of cijfers, die "
+"bestandsdeling aanduidt. Bijvoorbeeld: <em>media</em>."
+
+#: plinth/modules/gitweb/forms.py:40
+msgid "Description of the repository"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository's owner name"
+msgstr "Repository verwijderd."
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Private repository"
+msgstr "Maak Repository"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "Foutieve hostnaam"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A repository with this name already exists."
+msgstr "Er bestaat reeds een gedeelde map met deze naam."
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create repository"
+msgstr "Maak Repository"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Manage Repositories"
+msgstr "Maak Repository"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "Tor relay poort beschikbaar"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "Verwijder gebruiker %(username)s"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "Ga naar site %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "Verwijder Wiki of Blog <em>%(name)s</em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete this snapshot permanently?"
+msgid "Delete this repository permanently?"
+msgstr "Deze Snapshot permanent verwijderen?"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "%(name)s verwijderen"
+
+#: plinth/modules/gitweb/views.py:62
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository created."
+msgstr "Repository verwijderd."
+
+#: plinth/modules/gitweb/views.py:93
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository edited."
+msgstr "Repository verwijderd."
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Edit repository"
+msgstr "Maak Repository"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "Er is een fout opgetreden tijdens de configuratie."
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} verwijderd."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "Verwijderen van {name} mislukt: {error}"
 
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
@@ -1799,8 +1969,8 @@ msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
-"Zoek naar eerdere discussies of stel een nieuwe vraag op ons <a href=\""
-"https://discuss.freedombox.org\" target=\"_blank\">discussieforum</a>."
+"Zoek naar eerdere discussies of stel een nieuwe vraag op ons <a href="
+"\"https://discuss.freedombox.org\" target=\"_blank\">discussieforum</a>."
 
 #: plinth/modules/help/templates/help_support.html:42
 msgid ""
@@ -1956,21 +2126,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "Bekijken en bewerken van wiki toepassingen"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "Type"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr "Alleen alfanumerieke tekens zijn toegestaan."
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "Beheerdersaccount naam"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "Beheerdersaccount wachtwooord"
 
@@ -1988,16 +2154,12 @@ msgstr "Stel Wiki's en Blog's in"
 msgid "No wikis or blogs available."
 msgstr "Geen wiki's of blogs beschikbaar."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "Maak een Wiki of Blog"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Verwijder site %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Ga naar site %(site)s"
@@ -2014,11 +2176,6 @@ msgid ""
 msgstr ""
 "Deze actie zal alle bijdragen, pagina's, en commentaar inclusief revisie-"
 "historie.  Deze wiki of blog permanent verwijderen?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "%(name)s verwijderen"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2040,14 +2197,16 @@ msgstr "Blog {name} gemaakt."
 msgid "Could not create blog: {error}"
 msgstr "Kan blog niet aanmaken: {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} verwijderd."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "Verwijderen van {name} mislukt: {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -3976,15 +4135,15 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Gebruik {url} via proxy {proxy} op tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 msgid "IRC Client"
 msgstr "IRC Cliënt"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -4002,7 +4161,7 @@ msgstr ""
 "telefoon kunnen worden gebruikt om te verbinden of de verbinding te "
 "verbreken."
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -4013,6 +4172,18 @@ msgstr ""
 "4242.  Er zijn clients om verbinding te maken met Quassel vanaf een <a href="
 "\"http://quassel-irc.org/downloads\">desktop</a> en <a href=\"http://"
 "quasseldroid.iskrembilen.com/\">mobiele</a> apparaten."
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "Subdomein"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
@@ -4113,9 +4284,9 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "Voeg een nieuwe kalender en/of adresboek toe aan Evolution door middel van "
-"WebDAV. Voer de URL van de Radicale server in (bijv. "
-"https://<your.freedombox.address>) en uw gebruikersnaam. Klikken op de "
-"zoekknop zal de bestaande kalenders en adresboeken weergeven."
+"WebDAV. Voer de URL van de Radicale server in (bijv. https://<your."
+"freedombox.address>) en uw gebruikersnaam. Klikken op de zoekknop zal de "
+"bestaande kalenders en adresboeken weergeven."
 
 #: plinth/modules/radicale/views.py:56
 msgid "Access rights configuration updated"
@@ -4337,11 +4508,6 @@ msgstr ""
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "Configuratie bijgewerkt."
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "Er is een fout opgetreden tijdens de configuratie."
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -4825,11 +4991,11 @@ msgstr ""
 msgid "Rollback to Snapshot"
 msgstr "Terugdraaien naar Snapshot"
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell (SSH) Server"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -4840,6 +5006,28 @@ msgstr ""
 "vanaf computers op andere locaties mogelijk te maken. Een computer op een "
 "andere locatie die daarvoor geautoriseerd is, kan beheerdertaken uitvoeren, "
 "bestanden kopiëren en andere taken verrichten door zulk een verbinding."
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "SSH Vingerafdruk"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "SSH Vingerafdruk"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -6075,6 +6263,12 @@ msgstr "Toepassing uitgeschakeld"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "Only alphanumeric characters are allowed."
+#~ msgstr "Alleen alfanumerieke tekens zijn toegestaan."
+
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "Maak een Wiki of Blog"
+
 #~ msgid "Manage"
 #~ msgstr "Instellen"
 
@@ -6083,9 +6277,6 @@ msgstr "Gujarati"
 
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr "De voucher die u bij uw {box_name} Danube Edition hebt ontvangen"
-
-#~ msgid "Subdomain"
-#~ msgstr "Subdomein"
 
 #~ msgid "The subdomain you want to register"
 #~ msgstr "Het subdomein dat u wilt registreren"
@@ -6466,9 +6657,6 @@ msgstr "Gujarati"
 
 #~ msgid "SSH Keys"
 #~ msgstr "SSH Sleutels"
-
-#~ msgid "Delete this snapshot permanently?"
-#~ msgstr "Deze Snapshot permanent verwijderen?"
 
 #~ msgid "Delete Snapshot #%(number)s"
 #~ msgstr "Snapshot #%(number)s verwijderen"
