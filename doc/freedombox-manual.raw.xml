@@ -607,7 +607,7 @@
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>On accessing Plinth your browser will warn you that it communicates securely but that it regards the security certificate for doing so as invalid. This is a fact you need to accept because the certificate is auto generated on the box and therefore "self-signed" (the browser might also use words such as "untrusted", "not private", "privacy error" or "unknown issuer/authority"). Telling your browser that you are aware of this might involve pressing buttons such as "I understand the Risks", "proceed to ... (unsafe)" or "Add exception".  After installation this certificate can be changed to a normal one using the Let's Encrypt option. </para>
+          <para>On accessing FreedomBox's web interface (Plinth) your browser will warn you that it communicates securely but that it regards the security certificate for doing so as invalid. This is a fact you need to accept because the certificate is auto generated on the box and therefore "self-signed" (the browser might also use words such as "untrusted", "not private", "privacy error" or "unknown issuer/authority"). Telling your browser that you are aware of this might involve pressing buttons such as "I understand the Risks", "proceed to ... (unsafe)" or "Add exception".  After installation this certificate can be changed to a normal one using the Let's Encrypt option. </para>
           <itemizedlist>
             <listitem override="none">
               <para>
@@ -674,7 +674,7 @@
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>After completing the form, you will be logged in to Plinth and able to access apps and configuration through the interface. </para>
+          <para>After completing the form, you will be logged in to FreedomBox's web interface (Plinth) and able to access apps and configuration through the interface. </para>
           <itemizedlist>
             <listitem override="none">
               <para>
@@ -697,7 +697,7 @@
       <title>Finding your way around</title>
       <section>
         <title>Front page</title>
-        <para>The front page is the page that you will see when accessing the web root of your FreedomBox. You can also access it by clicking the FreedomBox logo in the top-left corner of the Plinth web interface. </para>
+        <para>The front page is the page that you will see when accessing the web root of your FreedomBox. You can also access it by clicking the FreedomBox logo in the top-left corner of the FreedomBox's web interface (Plinth). </para>
         <para>The front page includes shortcuts to apps that have been installed and are enabled. For web apps, clicking the shortcut will take you directly to the app's web page. For other services, clicking the shortcut will show more information about the service. </para>
         <para>
           <inlinemediaobject>
@@ -5438,7 +5438,7 @@ https://exampletorhs.onion/_cockpit/]]></screen>
                   <para> DNS         </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
-                  <para> 53/tdp         </para>
+                  <para> 53/udp         </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
@@ -6563,8 +6563,7 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
     </section>
     <section>
       <title>Security</title>
-      <para>When this option is enabled, only users in the "admin" group will be able to log in to console or via SSH. Console users may be able to access some services without further authorization.  </para>
-      <para>You can define the group of the users in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Users#">Users</ulink> section. </para>
+      <para>When the <emphasis>Restrict console logins</emphasis> option is enabled, only users in the <emphasis>admin</emphasis> group will be able to log in via console, secure shell (SSH) or graphical login. When this option is disabled, any user with an account on FreedomBox will be able to log in. They may be able to access some services without further authorization. This option should only be disabled if all the users of the system are well trusted. If you wish to use your FreedomBox machine also as a desktop and allow non-admin users to login via GUI, this option must be disabled. You can define the list of users belonging to <emphasis>admin</emphasis> group in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Users#">Users</ulink> section. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -6713,7 +6712,7 @@ Password: <enter user password here>
   <section>
     <title>Hardware</title>
     <para>FreedomBox is designed to be the software for a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device ourselves, but instead we intend to partner with hardware vendors to build FreedomBox devices and also support existing hardware. </para>
-    <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox-setup</code> package.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual#">manual</ulink> for more details. </para>
+    <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox</code> package.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">manual page</ulink> for installing on Debian for more details. </para>
     <section>
       <title>Recommended Hardware</title>
       <para>On April 22nd, 2019, the FreedomBox Foundation announced the <ulink url="https://freedomboxfoundation.org/buy/">sales</ulink> of the Pioneer Edition FreedomBox Home Server Kits. This is the recommended pre-installed hardware for all users who don't wish to build their own FreedomBox by choosing the right components, downloading the image and preparing an SD card with FreedomBox. </para>
@@ -9278,6 +9277,12 @@ $ sudo umount /tmp/vbox-root1
         </para>
         <para>Installing FreedomBox changes your Debian system in many important ways.  This includes installing a firewall and regenerating server certificates.  It is hence recommended that you install FreedomBox on a fresh Debian installation instead of an existing setup. </para>
       </caution>
+      <caution>
+        <para>
+          <emphasis role="strong">Console/GUI logins for non-admin users will be disabled</emphasis>
+        </para>
+        <para>After FreedomBox is fully setup, your system will no longer allow users not belonging to the <emphasis>admin</emphasis> group to log in to the system via console, secure shell (SSH) or graphical login. This behaviour can be disabled from the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Security#">Security</ulink> page. Use the administrator account created during FreedomBox first boot for console logins and add further user accounts to <emphasis>admin</emphasis> group, if necessary. </para>
+      </caution>
       <section>
         <title>Installing on Debian 10.0 (Buster) or newer</title>
         <para>Check the Troubleshooting section below, for any tips or workarounds that might help during the install. </para>
@@ -9369,8 +9374,10 @@ iface lo inet loopback]]></screen>
   ipv4.ignore-auto-dns yes  \
   ipv6.method ignore]]></screen>
           </listitem>
+          <listitem override="none">
+            <para>..with the block capitals and somedomain.com replaced with your actual address, mask description, gateway and dns server details. </para>
+          </listitem>
         </orderedlist>
-        <para>...with the block capitals and somedomain.com replaced with your actual address, mask description, gateway and dns server details. </para>
       </section>
     </section>
     <section>
@@ -9865,6 +9872,35 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.19 (2019-10-21)</title>
+        <itemizedlist>
+          <listitem>
+            <para>gitweb: New app for simple git hosting </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Allow full Unicode text in wiki/blog title names </para>
+          </listitem>
+          <listitem>
+            <para>users: reload Apache2 to flush LDAP cache after user operations </para>
+          </listitem>
+          <listitem>
+            <para>ssh: Show server fingerprints in SSH page </para>
+          </listitem>
+          <listitem>
+            <para>frontpage: Show public shortcuts to all users regardless of group </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Remove extra create button when no wiki/blog is present </para>
+          </listitem>
+          <listitem>
+            <para>quassel: Add Let's Encrypt component for certificates </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for Czech, French, Bulgarian, Dutch, German, and Norwegian Bokmål </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.18 (2019-10-07)</title>
         <itemizedlist>
