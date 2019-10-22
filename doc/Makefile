@@ -30,7 +30,7 @@ SCRIPTS_DIR=scripts
 #
 XMLTO_DEBUG_FLAGS=
 ifneq ($(DEBUG),)
-    XMLTO_DEBUG_FLAGS=--noclean -p '--debug'
+	XMLTO_DEBUG_FLAGS=--noclean -p '--debug'
 endif
 
 all: $(OUTPUTS)

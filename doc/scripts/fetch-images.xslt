@@ -41,9 +41,9 @@
   <!-- Output just the filename from a URL -->
   <xsl:template match="@fileref[parent::imagedata]">
     <xsl:attribute name="fileref">
-        <xsl:call-template name="filename">
-          <xsl:with-param name="path" select="."/>
-        </xsl:call-template>
+      <xsl:call-template name="filename">
+        <xsl:with-param name="path" select="."/>
+      </xsl:call-template>
     </xsl:attribute>
   </xsl:template>
 

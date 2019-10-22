@@ -44,7 +44,7 @@ def subcommand_fix_wiki_urls(arguments):
     with open(file_name, 'r') as xml_file:
         lines = xml_file.readlines()
 
-    pattern = 'FreedomBox/Manual/{0}/FreedomBox'.format(page_name)
+    pattern = f'FreedomBox/Manual/{page_name}/FreedomBox'
     lines = list(map(lambda s: s.replace(pattern, 'FreedomBox'), lines))
 
     with open(file_name, 'w') as xml_file:
