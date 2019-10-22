@@ -49,6 +49,9 @@ def parse_arguments():
     subparser.add_argument(
         '--is-private', required=False, default=False, action='store_true',
         help='Allow only authorized users to access this repository')
+    subparser.add_argument(
+        '--keep-ownership', required=False, default=False, action="store_true",
+        help='Do not chanege ownership of the repository directory')
 
     subparser = subparsers.add_parser(
         'repo-info', help='Get information about the repository')
@@ -187,6 +190,10 @@ def subcommand_set_repo_access(arguments):
 
 def subcommand_repo_info(arguments):
     """Get information about repository."""
+    repo_path = os.path.join(GIT_REPO_PATH, arguments.name + '.git')
+    if not os.path.exists(repo_path):
+        raise RuntimeError('Repository not found')
+
     print(
         json.dumps(
             dict(name=arguments.name, description=_get_repo_description(
@@ -199,7 +206,8 @@ def subcommand_create_repo(arguments):
     os.chdir(GIT_REPO_PATH)
     repo_name = arguments.name + '.git'
     subprocess.check_call(['git', 'init', '--bare', repo_name])
-    subprocess.check_call(['chown', '-R', 'www-data:www-data', repo_name])
+    if not arguments.keep_ownership:
+        subprocess.check_call(['chown', '-R', 'www-data:www-data', repo_name])
     _set_repo_description(arguments.name, arguments.description)
     _set_repo_owner(arguments.name, arguments.owner)
     if arguments.is_private:
