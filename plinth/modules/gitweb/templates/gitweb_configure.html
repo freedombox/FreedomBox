@@ -54,7 +54,7 @@
       {% if not repos %}
         <p>{% trans 'No repositories available.' %}</p>
       {% else %}
-        <div class="list-group">
+        <div id="gitweb-repo-list" class="list-group">
           {% for repo in repos %}
             <div class="list-group-item clearfix">
               <a href="{% url 'gitweb:delete' repo.name %}"

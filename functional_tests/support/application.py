@@ -15,6 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import contextlib
+import os
+import shutil
+import subprocess
+import tempfile
 from time import sleep
 
 import requests
@@ -317,6 +322,175 @@ def ejabberd_delete_contact(browser):
 def ejabberd_has_contact(browser):
     """Check whether the contact is in Ejabberd user's roster."""
     return eventually(site.jsxc_has_contact, [browser])
+
+
+def gitweb_create_repo(browser, repo, access=None, ok_if_exists=False):
+    """Create repository."""
+    if not gitweb_repo_exists(browser, repo, access):
+        gitweb_delete_repo(browser, repo, ignore_missing=True)
+        browser.find_link_by_href('/plinth/apps/gitweb/create/').first.click()
+        browser.find_by_id('id_gitweb-name').fill(repo)
+        if access == 'private':
+            browser.find_by_id('id_gitweb-is_private').check()
+        elif access == 'public':
+            browser.find_by_id('id_gitweb-is_private').uncheck()
+        submit(browser)
+    elif not ok_if_exists:
+        assert False, 'Repo already exists.'
+
+
+def gitweb_delete_repo(browser, repo, ignore_missing=False):
+    """Delete repository."""
+    interface.nav_to_module(browser, 'gitweb')
+    delete_link = browser.find_link_by_href(
+        '/plinth/apps/gitweb/{}/delete/'.format(repo))
+    if delete_link or not ignore_missing:
+        delete_link.first.click()
+        submit(browser)
+
+
+def gitweb_edit_repo_metadata(browser, repo, metadata):
+    """Set repository metadata."""
+    interface.nav_to_module(browser, 'gitweb')
+    browser.find_link_by_href(
+        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+    if 'name' in metadata:
+        browser.find_by_id('id_gitweb-name').fill(metadata['name'])
+    if 'description' in metadata:
+        browser.find_by_id('id_gitweb-description').fill(
+            metadata['description'])
+    if 'owner' in metadata:
+        browser.find_by_id('id_gitweb-owner').fill(metadata['owner'])
+    if 'access' in metadata:
+        if metadata['access'] == 'private':
+            browser.find_by_id('id_gitweb-is_private').check()
+        else:
+            browser.find_by_id('id_gitweb-is_private').uncheck()
+    submit(browser)
+
+
+def gitweb_get_repo_metadata(browser, repo):
+    """Get repository metadata."""
+    interface.nav_to_module(browser, 'gitweb')
+    browser.find_link_by_href(
+        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+    metadata = {}
+    for item in ['name', 'description', 'owner']:
+        metadata[item] = browser.find_by_id('id_gitweb-' + item).value
+    if browser.find_by_id('id_gitweb-is_private').value:
+        metadata['access'] = 'private'
+    else:
+        metadata['access'] = 'public'
+    return metadata
+
+
+def _gitweb_get_repo_url(repo, with_auth):
+    """"Get repository URL"""
+    scheme = 'http'
+    if default_url.startswith('https://'):
+        scheme = 'https'
+    url = default_url.split('://')[1] if '://' in default_url else default_url
+    password = 'gitweb_wrong_password'
+    if with_auth:
+        password = config['DEFAULT']['password']
+
+    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(
+        scheme, config['DEFAULT']['username'], password, url, repo)
+
+
+@contextlib.contextmanager
+def _gitweb_temp_directory():
+    """Create temporary directory"""
+    name = tempfile.mkdtemp(prefix='plinth_test_gitweb_')
+    yield name
+    shutil.rmtree(name)
+
+
+def _gitweb_git_command_is_successful(command, cwd):
+    """Check if a command runs successfully or gives authentication error"""
+    process = subprocess.run(command, capture_output=True, cwd=cwd)
+    if process.returncode != 0:
+        if 'Authentication failed' in process.stderr.decode():
+            return False
+        print(process.stdout.decode())
+        # raise exception
+        process.check_returncode()
+    return True
+
+
+def gitweb_repo_exists(browser, repo, access=None):
+    """Check whether the repository exists."""
+    interface.nav_to_module(browser, 'gitweb')
+    links_found = browser.find_link_by_href('/gitweb/{}.git'.format(repo))
+    access_matches = True
+    if links_found and access:
+        parent = links_found.first.find_by_xpath('..').first
+        private_icon = parent.find_by_css('.repo-private-icon')
+        if access == 'private':
+            access_matches = True if private_icon else False
+        if access == 'public':
+            access_matches = True if not private_icon else False
+    return bool(links_found) and access_matches
+
+
+def gitweb_repo_is_readable(repo, with_auth=False, url_git_extension=False):
+    """Check if a git repo is readable with git client."""
+    url = _gitweb_get_repo_url(repo, with_auth)
+    if url_git_extension:
+        url = url + '.git'
+    git_command = ['git', 'clone', '-c', 'http.sslverify=false', url]
+    with _gitweb_temp_directory() as cwd:
+        return _gitweb_git_command_is_successful(git_command, cwd)
+
+
+def gitweb_repo_is_writable(repo, with_auth=False, url_git_extension=False):
+    """Check if a git repo is writable with git client."""
+    url = _gitweb_get_repo_url(repo, with_auth)
+    if url_git_extension:
+        url = url + '.git'
+
+    with _gitweb_temp_directory() as cwd:
+        subprocess.run(['mkdir', 'test-project'], check=True, cwd=cwd)
+        cwd = os.path.join(cwd, 'test-project')
+        prepare_git_repo_commands = [
+            'git init -q', 'git config http.sslVerify false',
+            'git commit -q --allow-empty --author "Tester <>" -m "test"'
+        ]
+        for command in prepare_git_repo_commands:
+            subprocess.run(command, shell=True, check=True, cwd=cwd)
+        git_push_command = ['git', 'push', '-qf', url, 'master']
+
+        return _gitweb_git_command_is_successful(git_push_command, cwd)
+
+
+def gitweb_set_repo_access(browser, repo, access):
+    """Set repository as public or private."""
+    interface.nav_to_module(browser, 'gitweb')
+    browser.find_link_by_href(
+        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+    if access == 'private':
+        browser.find_by_id('id_gitweb-is_private').check()
+    else:
+        browser.find_by_id('id_gitweb-is_private').uncheck()
+    submit(browser)
+
+
+def gitweb_set_all_repos_private(browser):
+    """Set all repositories private"""
+    interface.nav_to_module(browser, 'gitweb')
+    public_repos = []
+    for element in browser.find_by_css('#gitweb-repo-list .list-group-item'):
+        if not element.find_by_css('.repo-private-icon'):
+            repo = element.find_by_css('.repo-label').first.text
+            public_repos.append(repo)
+    for repo in public_repos:
+        gitweb_set_repo_access(browser, repo, 'private')
+
+
+def gitweb_site_repo_exists(browser, repo):
+    """Check whether the repository exists on Gitweb site."""
+    browser.visit('{}/gitweb'.format(default_url))
+    return browser.find_by_css('a[href="/gitweb/{0}.git"]'.format(repo))
 
 
 def ikiwiki_create_wiki_if_needed(browser):

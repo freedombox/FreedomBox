@@ -456,3 +456,133 @@ def app_visible_on_front_page(browser, app_name):
 def app_not_visible_on_front_page(browser, app_name):
     shortcuts = application.find_on_front_page(browser, app_name)
     assert len(shortcuts) == 0
+
+
+@given('a public repository')
+@given('a repository')
+@given('at least one repository exists')
+def gitweb_repo(browser):
+    application.gitweb_create_repo(browser, 'Test-repo', 'public', True)
+
+
+@given('a private repository')
+def gitweb_private_repo(browser):
+    application.gitweb_create_repo(browser, 'Test-repo', 'private', True)
+
+
+@given('both public and private repositories exist')
+def gitweb_public_and_private_repo(browser):
+    application.gitweb_create_repo(browser, 'Test-repo', 'public', True)
+    application.gitweb_create_repo(browser, 'Test-repo2', 'private', True)
+
+
+@given(parsers.parse("a {access:w} repository that doesn't exist"))
+def gitweb_nonexistent_repo(browser, access):
+    application.gitweb_delete_repo(browser, 'Test-repo', ignore_missing=True)
+    return dict(access=access)
+
+
+@given('all repositories are private')
+def gitweb_all_repositories_private(browser):
+    application.gitweb_set_all_repos_private(browser)
+
+
+@given(parsers.parse('a repository metadata:\n{metadata}'))
+def gitweb_repo_metadata(browser, metadata):
+    metadata_dict = {}
+    for item in metadata.split('\n'):
+        item = item.split(': ')
+        metadata_dict[item[0]] = item[1]
+    return metadata_dict
+
+
+@when('I create the repository')
+def gitweb_create_repo(browser, access):
+    application.gitweb_create_repo(browser, 'Test-repo', access)
+
+
+@when('I delete the repository')
+def gitweb_delete_repo(browser):
+    application.gitweb_delete_repo(browser, 'Test-repo')
+
+
+@when('I set the metadata of the repository')
+def gitweb_edit_repo_metadata(browser, gitweb_repo_metadata):
+    application.gitweb_edit_repo_metadata(browser, 'Test-repo',
+                                          gitweb_repo_metadata)
+
+
+@when('using a git client')
+def gitweb_using_git_client():
+    pass
+
+
+@then('the repository should be restored')
+@then('the repository should be listed as a public')
+def gitweb_repo_should_exists(browser):
+    assert application.gitweb_repo_exists(browser, 'Test-repo',
+                                          access='public')
+
+
+@then('the repository should be listed as a private')
+def gitweb_private_repo_should_exists(browser):
+    assert application.gitweb_repo_exists(browser, 'Test-repo', 'private')
+
+
+@then('the repository should not be listed')
+def gitweb_repo_should_not_exist(browser, gitweb_repo):
+    assert not application.gitweb_repo_exists(browser, gitweb_repo)
+
+
+@then('the public repository should be listed on gitweb')
+@then('the repository should be listed on gitweb')
+def gitweb_repo_should_exist_on_gitweb(browser):
+    assert application.gitweb_site_repo_exists(browser, 'Test-repo')
+
+
+@then('the private repository should not be listed on gitweb')
+def gitweb_private_repo_should_exists_on_gitweb(browser):
+    assert not application.gitweb_site_repo_exists(browser, 'Test-repo2')
+
+
+@then('the metadata of the repository should be as set')
+def gitweb_repo_metadata_should_match(browser, gitweb_repo_metadata):
+    actual_metadata = application.gitweb_get_repo_metadata(
+        browser, 'Test-repo')
+    assert all(item in actual_metadata.items()
+               for item in gitweb_repo_metadata.items())
+
+
+@then('the repository should be publicly readable')
+def gitweb_repo_publicly_readable():
+    assert application.gitweb_repo_is_readable('Test-repo')
+    assert application.gitweb_repo_is_readable('Test-repo',
+                                               url_git_extension=True)
+
+
+@then('the repository should not be publicly readable')
+def gitweb_repo_not_publicly_readable():
+    assert not application.gitweb_repo_is_readable('Test-repo')
+    assert not application.gitweb_repo_is_readable('Test-repo',
+                                                   url_git_extension=True)
+
+
+@then('the repository should not be publicly writable')
+def gitweb_repo_not_publicly_writable():
+    assert not application.gitweb_repo_is_writable('Test-repo')
+    assert not application.gitweb_repo_is_writable('Test-repo',
+                                                   url_git_extension=True)
+
+
+@then('the repository should be privately readable')
+def gitweb_repo_privately_readable():
+    assert application.gitweb_repo_is_readable('Test-repo', with_auth=True)
+    assert application.gitweb_repo_is_readable('Test-repo', with_auth=True,
+                                               url_git_extension=True)
+
+
+@then('the repository should be privately writable')
+def gitweb_repo_privately_writable():
+    assert application.gitweb_repo_is_writable('Test-repo', with_auth=True)
+    assert application.gitweb_repo_is_writable('Test-repo', with_auth=True,
+                                               url_git_extension=True)
