@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 17:55-0400\n"
-"PO-Revision-Date: 2019-10-11 10:10+0000\n"
-"Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
+"PO-Revision-Date: 2019-10-26 17:53+0000\n"
+"Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 3.9.1-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -333,8 +333,6 @@ msgid "Add a remote backup location"
 msgstr "Ajouter un dépôt de sauvegarde distant"
 
 #: plinth/modules/backups/templates/backups.html:70
-#, fuzzy
-#| msgid "Add a remote backup location"
 msgid "Add Remote Backup Location"
 msgstr "Ajouter un dépôt de sauvegarde distant"
 
@@ -403,6 +401,12 @@ msgid ""
 "      can add it again later on.\n"
 "    "
 msgstr ""
+"\n"
+"      Le dépôt distant ne sera pas supprimé.\n"
+"      Cela va juste supprimer le dépôt de votre liste sur la page de "
+"sauvegarde,\n"
+"      vous pourrez l’ajouter à nouveau ultérieurement.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 msgid "Remove Location"
@@ -461,10 +465,14 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Lancez la commande suivante sur la machine hôte SSH. Sa sortie devrait "
+"correspondre à l’une des options fournies. Vous pouvez également utiliser "
+"dsa, ecdsa, ed25519, etc., à la place de rsa, en sélectionnant le fichier "
+"correspondant."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
 msgid "Verify Host"
-msgstr ""
+msgstr "Vérifier l’hôte"
 
 #: plinth/modules/backups/views.py:72
 msgid "Archive created."
@@ -496,27 +504,23 @@ msgstr "Restaurer depuis le fichier téléversé"
 
 #: plinth/modules/backups/views.py:255
 msgid "No additional disks available to add a repository."
-msgstr ""
+msgstr "Pas de disques additionnels disponibles pour ajouter un dépôt."
 
 #: plinth/modules/backups/views.py:263
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Create backup repository"
-msgstr "Créer un dépôt de sauvegarde distant"
+msgstr "Créer un dépôt de sauvegarde"
 
 #: plinth/modules/backups/views.py:290
 msgid "Create remote backup repository"
 msgstr "Créer un dépôt de sauvegarde distant"
 
 #: plinth/modules/backups/views.py:309
-#, fuzzy
-#| msgid "Added new repository."
 msgid "Added new remote SSH repository."
-msgstr "Ajouter une nouvelle archive."
+msgstr "Ajouter un nouveau dépôt SSH distant."
 
 #: plinth/modules/backups/views.py:331
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Vérifier la clé SSH de l’hôte"
 
 #: plinth/modules/backups/views.py:357
 msgid "SSH host already verified."
@@ -539,20 +543,16 @@ msgid "Error establishing connection to server: {}"
 msgstr "Erreur en établissant la connexion au serveur : {}"
 
 #: plinth/modules/backups/views.py:396
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository removed."
-msgstr "Dépôt introuvable"
+msgstr "Dépôt supprimé."
 
 #: plinth/modules/backups/views.py:410
 msgid "Remove Repository"
 msgstr "Supprimer ce dépôt"
 
 #: plinth/modules/backups/views.py:419
-#, fuzzy
-#| msgid "Repository removed. The remote backup itself was not deleted."
 msgid "Repository removed. Backups were not deleted."
-msgstr "Dépôt supprimé. Le dépôt distant lui-même n'a pas été supprimé."
+msgstr "Dépôt supprimé. Les sauvegardes n'ont pas été supprimées."
 
 #: plinth/modules/backups/views.py:429
 msgid "Unmounting failed!"
@@ -592,7 +592,7 @@ msgstr ""
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
-msgstr ""
+msgstr "Transitaires"
 
 #: plinth/modules/bind/forms.py:38
 msgid ""
@@ -638,19 +638,15 @@ msgstr ""
 "des opérations depuis une console."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server. It can be accessed by any <a href=\"/"
-#| "plinth/sys/users\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
-"Une fois activé, Cockpit est accessible depuis le chemin <a href=\"/_cockpit"
-"\">/_cockpit</a> sur le serveur web. Il peut être consulté par tout <a href="
-"\"{users_url}\">utilisateur avec un compte admin sur {box_name}</a>."
+"Une fois activé, Cockpit est accessible depuis le chemin <a href=\"/"
+"_cockpit\">/_cockpit</a> sur le serveur web. Il peut être consulté par tout <"
+"a href=\"{users_url}\">utilisateur</a> avec un compte admin sur {box_name}."
 
 #: plinth/modules/config/__init__.py:60 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
@@ -735,11 +731,13 @@ msgstr ""
 
 #: plinth/modules/config/forms.py:107
 msgid "Show advanced apps and features"
-msgstr ""
+msgstr "Montrer les applications et fonctionnalités avancées"
 
 #: plinth/modules/config/forms.py:108
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
+"Montrer les applications et fonctionnalités nécessitant plus de "
+"connaissances techniques."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/help/templates/help_contribute.html:57
@@ -785,10 +783,9 @@ msgid "Webserver home page set"
 msgstr "Page d’accueil du serveur Web établie"
 
 #: plinth/modules/config/views.py:111
-#, fuzzy, python-brace-format
-#| msgid "Error setting domain name: {exception}"
+#, python-brace-format
 msgid "Error changing advanced mode: {exception}"
-msgstr "Erreur lors de l'établissement du nom de domaine : {exception}"
+msgstr "Erreur lors du changement de mode avancé : {exception}"
 
 #: plinth/modules/config/views.py:116
 msgid "Showing advanced apps and features"
@@ -6166,10 +6163,8 @@ msgid "Log out"
 msgstr "Se déconnecter"
 
 #: plinth/templates/base.html:195 plinth/templates/base.html:198
-#, fuzzy
-#| msgid "Language"
 msgid "Select language"
-msgstr "Langue"
+msgstr "Choisir la langue"
 
 #: plinth/templates/base.html:203 plinth/templates/base.html:205
 msgid "Log in"
@@ -6177,15 +6172,15 @@ msgstr "S'identifier"
 
 #: plinth/templates/clients.html:29
 msgid "Client Apps"
-msgstr ""
+msgstr "Applications clientes"
 
 #: plinth/templates/clients.html:40
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: plinth/templates/clients.html:65
 msgid "Desktop"
-msgstr ""
+msgstr "Bureau"
 
 #: plinth/templates/clients.html:76
 msgid "GNU/Linux"
@@ -6201,11 +6196,11 @@ msgstr "macOS"
 
 #: plinth/templates/clients.html:96
 msgid "Mobile"
-msgstr ""
+msgstr "Mobile"
 
 #: plinth/templates/clients.html:107
 msgid "Play Store"
-msgstr ""
+msgstr "Play Store"
 
 #: plinth/templates/clients.html:109
 msgid "F-Droid"
@@ -6213,7 +6208,7 @@ msgstr "F-Droid"
 
 #: plinth/templates/clients.html:111
 msgid "App Store"
-msgstr ""
+msgstr "App Store"
 
 #: plinth/templates/clients.html:127
 msgid "Package"
@@ -6221,15 +6216,15 @@ msgstr "Paquet"
 
 #: plinth/templates/clients.html:134
 msgid "Debian:"
-msgstr "Debian:"
+msgstr "Debian :"
 
 #: plinth/templates/clients.html:137
 msgid "Homebrew:"
-msgstr ""
+msgstr "Homebrew :"
 
 #: plinth/templates/clients.html:140
 msgid "RPM:"
-msgstr ""
+msgstr "RPM :"
 
 #: plinth/templates/first_setup.html:39
 #, python-format
@@ -6237,6 +6232,8 @@ msgid ""
 "Please wait for %(box_name)s to finish installation. You can start using "
 "your %(box_name)s once it is done."
 msgstr ""
+"Veuillez attendre que %(box_name)s termine l’installation. Vous pourrez "
+"utiliser votre %(box_name)s quand ce sera fait."
 
 #: plinth/templates/index.html:37
 #, python-format
@@ -6264,11 +6261,7 @@ msgstr ""
 "fournis respectent votre vie privée et vos données personnelles."
 
 #: plinth/templates/index.html:124
-#, fuzzy, python-format
-#| msgid ""
-#| "This portal is a part of Plinth, the %(box_name)s web interface. Plinth "
-#| "is free software, distributed under the GNU Affero General Public "
-#| "License, Version 3 or later."
+#, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
 "free software, distributed under the GNU Affero General Public License, "
