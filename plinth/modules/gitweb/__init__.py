@@ -147,6 +147,12 @@ class GitwebWebserverAuth(Webserver):
         repos = app.get_repo_list()
         return have_public_repos(repos) or super().is_enabled()
 
+    def enable(self):
+        """Enable apache configuration only if no public repository exists."""
+        repos = app.get_repo_list()
+        if not have_public_repos(repos):
+            super().enable()
+
 
 def init():
     """Initialize the module."""
