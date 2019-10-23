@@ -44,7 +44,6 @@ DIRECTORIES_TO_CREATE = [
 ]
 
 DIRECTORIES_TO_COPY = [
-    ('/usr/share/doc/freedombox', 'doc'),
     ('/usr/share/plinth/static', 'static'),
 ]
 
@@ -151,9 +150,18 @@ class CustomInstall(install):
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
 
+    def _run_doc_install(self):
+        """Install documentation"""
+        command = ['make', '-j', '8', '-C', 'doc', 'install']
+        if self.root:
+            root = os.path.abspath(self.root)
+            command.append(f'DESTDIR={root}')
+
+        subprocess.check_call(command)
+
     def run(self):
         """Execute install command"""
-        subprocess.check_call(['make', '-C', 'doc'])
+        self._run_doc_install()
 
         install_data.run(self)  # Old style base class
 

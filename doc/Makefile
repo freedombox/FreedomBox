@@ -24,11 +24,15 @@ MANUAL_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=show
 MANUAL_URL_RAW="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=raw"
 MANUAL_PAGE_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual/{page}?action=show&mimetype=text%2Fdocbook"
 
+DESTDIR=
+INSTALL_DIR=$(DESTDIR)/usr/share/doc/freedombox
 SCRIPTS_DIR=scripts
 
 manual-pdfs=$(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.pdf)
 manual-xmls=$(patsubst %.pdf,%.xml,$(manual-pdfs))
 OUTPUTS=$(manual-pdfs) plinth.1 manual-pages
+
+INSTALL_OPTS=-D --mode=644
 
 # In order to debug various problems with the documents especially
 # intermediate LaTeX state, run make as follows:
@@ -42,8 +46,14 @@ ifneq ($(DEBUG),)
 	XMLTO_DEBUG_FLAGS=--noclean -p '--debug'
 endif
 
-.PHONY: all
+.PHONY: all install
 all: $(OUTPUTS)
+
+install: all
+	for file in $(manual-pages-part-html) $(manual-pdfs); do \
+		install $(INSTALL_OPTS) -t $(INSTALL_DIR)/$$(dirname $${file}) \
+			$${file} ; \
+	done
 
 # Do not edit the manual page in this directory.  The manual is
 # maintained as separate pages on the FreedomBox wiki and aggregated
