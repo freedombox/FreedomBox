@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -30,25 +30,7 @@
   </style>
 {% endblock %}
 
-{% block content %}
-
-  {% block pagetitle %}
-    <h2>{{ title }}</h2>
-  {% endblock %}
-
-  {% block description %}
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-    {% endfor %}
-  {% endblock %}
-
-  {% if manual_page %}
-    <p class="manual-page">
-      <a href="{% url 'help:manual-page' manual_page %}">
-        {% trans 'Learn more...' %}
-      </a>
-    </p>
-  {% endif %}
+{% block configuration %}
 
   <p>{% trans "The following storage devices are in use:" %}</p>
 
@@ -121,9 +103,4 @@
     </p>
   {% endif %}
 
-  {% block status %}
-
-    {{ block.super }}
-
-  {% endblock %}
 {% endblock %}
