@@ -21,10 +21,9 @@ FreedomBox views for basic system configuration.
 import logging
 
 from django.contrib import messages
-from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
-from plinth import actions
+from plinth import actions, views
 from plinth.modules import config
 from plinth.signals import (domain_added, domain_removed, post_hostname_change,
                             pre_hostname_change)
@@ -34,27 +33,13 @@ from .forms import ConfigurationForm
 LOGGER = logging.getLogger(__name__)
 
 
-def index(request):
-    """Serve the configuration form"""
-    status = get_status()
-
-    if request.method == 'POST':
-        form = ConfigurationForm(request.POST, initial=status,
-                                 prefix='configuration')
-        # pylint: disable-msg=E1101
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = ConfigurationForm(initial=status, prefix='configuration')
-    else:
-        form = ConfigurationForm(initial=status, prefix='configuration')
-
-    return TemplateResponse(
-        request, 'config.html', {
-            'title': _('General Configuration'),
-            'form': form,
-            'manual_page': config.manual_page
-        })
+class ConfigAppView(views.AppView):
+    """Serve configuration page."""
+    name = config.name
+    form_class = ConfigurationForm
+    app_id = 'config'
+    manual_page = config.manual_page
+    show_status_block = False
 
 
 def get_status():
