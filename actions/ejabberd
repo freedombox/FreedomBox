@@ -31,8 +31,6 @@ from distutils.version import LooseVersion as LV
 import ruamel.yaml
 
 from plinth import action_utils
-from plinth.modules import config
-from plinth.modules.letsencrypt import LIVE_DIRECTORY as LE_LIVE_DIRECTORY
 
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
@@ -88,11 +86,6 @@ def parse_arguments():
     mam = subparsers.add_parser('mam', help=help_MAM)
     mam.add_argument('command', choices=('enable', 'disable', 'status'),
                      help=help_MAM)
-
-    help_LE = "Add/drop Let's Encrypt certificate if configured domain matches"
-    letsencrypt = subparsers.add_parser('letsencrypt', help=help_LE)
-    letsencrypt.add_argument('command', choices=('add', 'drop'), help=help_LE)
-    letsencrypt.add_argument('--domain', help='Domain name to drop.')
 
     subparsers.required = True
     return parser.parse_args()

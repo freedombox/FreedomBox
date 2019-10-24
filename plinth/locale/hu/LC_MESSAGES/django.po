@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
 "PO-Revision-Date: 2019-08-31 09:24+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -362,6 +362,7 @@ msgid "Create Location"
 msgstr "Hely létrehozása"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 msgid "Create Repository"
 msgstr "Tároló létrehozása"
 
@@ -370,7 +371,7 @@ msgid "Delete this archive permanently?"
 msgstr "Véglegesen törlöd ezt az archívumot?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -387,6 +388,7 @@ msgstr "%(name)s archívum törlése"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "Küldés"
@@ -1601,6 +1603,175 @@ msgstr "Beállítás elkezdése"
 msgid "Setup Complete"
 msgstr "Beállítás kész"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Name of the share"
+msgid "Name of the repository"
+msgstr "Megosztás neve"
+
+#: plinth/modules/gitweb/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "A lowercase alpha-numeric string that uniquely identifies a share. "
+#| "Example: <em>media</em>."
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+"Kisbetűkből és számokból álló szöveg ami egyedien azonosítja a megosztást. "
+"Példa: <em>media</em>."
+
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Create new repository"
+msgid "Description of the repository"
+msgstr "Új tároló létrehozása"
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository's owner name"
+msgstr "Tároló eltávolítva."
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Private repository"
+msgstr "Tároló létrehozása"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "Érvénytelen állomásnév"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A repository with this name already exists."
+msgstr "Egy megosztás ezzel a névvel már létezik."
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create repository"
+msgstr "Tároló létrehozása"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Manage Repositories"
+msgstr "Tároló létrehozása"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "Tor relay port elérhető"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "%(username)s felhasználó törlése"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "Ugrás a %(site)s webhelyre"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "<em>%(name)s</em> wiki vagy blog törlése"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete this archive permanently?"
+msgid "Delete this repository permanently?"
+msgstr "Véglegesen törlöd ezt az archívumot?"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "%(name)s törlése"
+
+#: plinth/modules/gitweb/views.py:62
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository created."
+msgstr "Tároló eltávolítva."
+
+#: plinth/modules/gitweb/views.py:93
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository edited."
+msgstr "Tároló eltávolítva."
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Edit repository"
+msgstr "Tároló létrehozása"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "Hiba történt a beállítás közben."
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} törölve."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "{name} nem törölhető: {error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr "Dokumentáció"
@@ -2029,21 +2200,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "Wiki alkalmazások megtekintése és szerkesztése"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "Típus"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr "Csak alfanumerikus karakterek engedélyezettek."
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "Adminisztrátori fiók neve"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "Adminisztrátori fiók jelszava"
 
@@ -2061,16 +2228,12 @@ msgstr "Wikik és Blogok kezelése"
 msgid "No wikis or blogs available."
 msgstr "Nincs elérhető wiki vagy blog."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "Wiki vagy Blog létrehozása"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "%(site)s webhely törlése"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Ugrás a %(site)s webhelyre"
@@ -2087,11 +2250,6 @@ msgid ""
 msgstr ""
 "Ez a művelet el fog távolítani minden bejegyzést, oldalt és kommentet "
 "beleértve a verziótörténetet is. Véglegesen törlöd ezt a wiki-t vagy blogot?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "%(name)s törlése"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2113,14 +2271,16 @@ msgstr "{name} blog létrehozva."
 msgid "Could not create blog: {error}"
 msgstr "Nem tudtam létrehozni a blog-ot: {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} törölve."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "{name} nem törölhető: {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -4075,15 +4235,15 @@ msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
 "Hozzáférés a {url} URL-hez {proxy} proxy használatával tcp{kind}-on keresztül"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 msgid "IRC Client"
 msgstr "IRC kliens"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -4100,7 +4260,7 @@ msgstr ""
 "szolgáltatását, aminek segítségével mindig online lehetsz és egy, vagy több "
 "Quassel klienssel kapcsolódhatsz hozzá a mobilodról vagy az asztali gépedről."
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -4111,6 +4271,18 @@ msgstr ""
 "Quassel kliensek elérhetőek <a href=\"http://quassel-irc.org/downloads"
 "\">asztali</a> és <a href=\"http://quasseldroid.iskrembilen.com/\">mobil</a> "
 "eszközökhöz is."
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "Aldomain"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
@@ -4443,11 +4615,6 @@ msgstr ""
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "Beállítások frissítve."
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "Hiba történt a beállítás közben."
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -4966,11 +5133,11 @@ msgstr "A visszaállítás befejezéséhez a rendszert újra kell indítani."
 msgid "Rollback to Snapshot"
 msgstr "Visszaállítás pillanatképre"
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "Biztonságos parancsértelmező (SSH) kiszolgáló"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -4981,6 +5148,28 @@ msgstr ""
 "kapcsolatokat fogadjon távoli számítógépekről. A hitelesített távoli "
 "számítógép felügyeleti feladatokat hajthat végre, fájlokat másolhat vagy "
 "egyéb szolgáltatásokat futtathat ilyen kapcsolat használatával."
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "SSH ujjlenyomat"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "SSH ujjlenyomat"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -6222,6 +6411,12 @@ msgstr "Alkalmazás letiltva"
 msgid "Gujarati"
 msgstr "Gudzsaráti"
 
+#~ msgid "Only alphanumeric characters are allowed."
+#~ msgstr "Csak alfanumerikus karakterek engedélyezettek."
+
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "Wiki vagy Blog létrehozása"
+
 #~ msgid "Manage"
 #~ msgstr "Kezel"
 
@@ -6231,9 +6426,6 @@ msgstr "Gudzsaráti"
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr ""
 #~ "Az utalványkód, amit a {box_name} Danube Edition eszközöddel együtt kaptál"
-
-#~ msgid "Subdomain"
-#~ msgstr "Aldomain"
 
 #~ msgid "The subdomain you want to register"
 #~ msgstr "Az aldomain, amit regisztrálni szeretnél"
@@ -6285,9 +6477,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Pagekite"
 #~ msgstr "Pagekite"
-
-#~ msgid "Create new repository"
-#~ msgstr "Új tároló létrehozása"
 
 #~ msgid "Upload"
 #~ msgstr "Feltöltés"

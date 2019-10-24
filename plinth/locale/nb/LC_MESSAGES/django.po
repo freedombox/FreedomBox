@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
-"PO-Revision-Date: 2019-10-01 06:56+0000\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
+"PO-Revision-Date: 2019-10-21 00:52+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/plinth/nb_NO/>\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 3.9.1-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -364,6 +364,7 @@ msgid "Create Location"
 msgstr "Opprett plassering"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 msgid "Create Repository"
 msgstr "Opprett depot"
 
@@ -372,7 +373,7 @@ msgid "Delete this archive permanently?"
 msgstr "Slett dette arkivet permanent?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -389,6 +390,7 @@ msgstr "Slett arkiv %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "Send inn"
@@ -1580,6 +1582,175 @@ msgstr "Gå i gang med oppsett"
 msgid "Setup Complete"
 msgstr "Oppsett ferdig"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Name of the share"
+msgid "Name of the repository"
+msgstr "Navn på delt område"
+
+#: plinth/modules/gitweb/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "A lowercase alpha-numeric string that uniquely identifies a share. "
+#| "Example: <em>media</em>."
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+"En alfanumerisk streng med små bokstaver som unikt identifiserer en deling. "
+"Eksempel <em>media</em>."
+
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Create new repository"
+msgid "Description of the repository"
+msgstr "Opprett nytt depot"
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository's owner name"
+msgstr "Depot fjernet."
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Private repository"
+msgstr "Opprett depot"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "Ugyldig vertsnavn"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A repository with this name already exists."
+msgstr "En deling ved dette navnet finnes allerede."
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create repository"
+msgstr "Opprett depot"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Manage Repositories"
+msgstr "Opprett depot"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "Tor relay-port tilgjengelig"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "Slette bruker %(username)s"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "Gå til siden %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "Slette wiki eller blogg <em>%(name)s</em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete this snapshot permanently?"
+msgid "Delete this repository permanently?"
+msgstr "Slett dette øyeblikksbildet permanent?"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "Slette %(name)s"
+
+#: plinth/modules/gitweb/views.py:62
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository created."
+msgstr "Depot fjernet."
+
+#: plinth/modules/gitweb/views.py:93
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Repository edited."
+msgstr "Depot fjernet."
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Edit repository"
+msgstr "Opprett depot"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "En feil oppsto under konfigureringen."
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "Slettet {name}."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "Kunne ikke slette {name}: {error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr "Dokumentasjon"
@@ -2031,21 +2202,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "Vis og rediger wiki-programmer"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "Type"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr "Kun alfanumeriske tegn er tillatt."
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "Administratorkonto navn"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "Administratorkonto passord"
 
@@ -2063,16 +2230,12 @@ msgstr "Vedlikehold Wiki og Blogg"
 msgid "No wikis or blogs available."
 msgstr "Ingen wikier eller blogger tilgjengelig."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "Opprett en Wiki eller Blogg"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Slette nettstedet %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Gå til siden %(site)s"
@@ -2089,11 +2252,6 @@ msgid ""
 msgstr ""
 "Denne handlingen vil fjerne alle poster, sider og kommentarer inkludert "
 "revisjonshistorien. Skal denne wiki eller bloggen slettes permanent?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "Slette %(name)s"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2115,14 +2273,16 @@ msgstr "Opprettet blogg {name}."
 msgid "Could not create blog: {error}"
 msgstr "Kunne ikke lage blogg: {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "Slettet {name}."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "Kunne ikke slette {name}: {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -2921,16 +3081,21 @@ msgid "Networks"
 msgstr "Nettverk"
 
 #: plinth/modules/networks/__init__.py:39
+#, fuzzy
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
 msgstr ""
+"Sett opp nettverksenheter. Sett opp Internett via Ethernet, Wi-Fi eller "
+"PPPoE. Del den tilkoblingen med andre enheter på nettverket."
 
 #: plinth/modules/networks/__init__.py:41
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
+"Enheter administrert gjennom andre metoder kan være utilgjengelige for "
+"oppsett her."
 
 #: plinth/modules/networks/__init__.py:151
 #, python-brace-format
@@ -4054,15 +4219,15 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tilgang {url} med mellomtjener {proxy} på tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 msgid "IRC Client"
 msgstr "IRC-klient"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -4079,7 +4244,7 @@ msgstr ""
 "skrivebordet kan en eller flere Quassel-klienter brukes til å koble til og "
 "fra."
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -4090,6 +4255,18 @@ msgstr ""
 "Klienter kan koble til Quassel fra din <a href=\"http://quassel-irc.org/"
 "downloads\"> desktop </a>, og <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobile</a> enheter er tilgjengelig."
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "Underdomene"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
@@ -4415,11 +4592,6 @@ msgstr "Tillat dette programmet brukt av alle som kan nå det."
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "En feil oppsto under konfigureringen."
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -4923,11 +5095,11 @@ msgstr "Systemet må startes på nytt for å fullføre tilbakerullingen."
 msgid "Rollback to Snapshot"
 msgstr "Rull tilbake til øyeblikksbilde"
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell (SSH) tjener"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -4938,6 +5110,28 @@ msgstr ""
 "tilkoblinger fra datamaskiner annensteds hen. En autorisert datamaskin "
 "annensteds hen kan utføre administrasjonsoppgaver, kopiere filer eller kjøre "
 "andre tjenester ved bruk av slike tilkoblinger."
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "SSH Fingeravtrykk"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "SSH Fingeravtrykk"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -5609,12 +5803,15 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/users/__init__.py:55
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
 "relevant to them in the home page. However, only users of the <em>admin</em> "
 "group may alter apps or system settings."
 msgstr ""
+"Enhver bruker kan logge inn på nettgrensesnittet på {box_name} og se en "
+"liste over programmer som er relevante for dem på hjemmesiden. Dog kan kun "
+"brukere av <em>admin</em>-gruppen endre programmer eller systeminnstillinger."
 
 #: plinth/modules/users/__init__.py:123
 #, python-brace-format
@@ -6163,6 +6360,12 @@ msgstr "Programmet er deaktivert"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "Only alphanumeric characters are allowed."
+#~ msgstr "Kun alfanumeriske tegn er tillatt."
+
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "Opprett en Wiki eller Blogg"
+
 #~ msgid "Manage"
 #~ msgstr "Håndtere"
 
@@ -6171,9 +6374,6 @@ msgstr "Gujarati"
 
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr "Bilaget du mottok med din {box_name} Danube Edition"
-
-#~ msgid "Subdomain"
-#~ msgstr "Underdomene"
 
 #~ msgid "The subdomain you want to register"
 #~ msgstr "Underdomenet du vil registrere"
@@ -6226,9 +6426,6 @@ msgstr "Gujarati"
 
 #~ msgid "Pagekite"
 #~ msgstr "PageKite"
-
-#~ msgid "Create new repository"
-#~ msgstr "Opprett nytt depot"
 
 #~ msgid "Upload"
 #~ msgstr "Last opp"
@@ -6483,9 +6680,6 @@ msgstr "Gujarati"
 
 #~ msgid "SSH Keys"
 #~ msgstr "SSH-nøkler"
-
-#~ msgid "Delete this snapshot permanently?"
-#~ msgstr "Slett dette øyeblikksbildet permanent?"
 
 #~ msgid "Delete Snapshot #%(number)s"
 #~ msgstr "Slett øyeblikksbilde #%(number)s"

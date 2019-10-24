@@ -237,7 +237,6 @@ def _setup_firewall():
         except subprocess.CalledProcessError:
             return True  # Safer
 
-
     # XXX: Due to https://bugs.debian.org/919517 when tun+ interface is added,
     # firewalld is unable to handle it in nftables backend causing firewalld to
     # break while applying rules. This makes the entire system unreachable.

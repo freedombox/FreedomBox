@@ -153,7 +153,8 @@ def subcommand_filter_conffile_packages(arguments):
       - Read /var/lib/dpkg/status file to read hashes as provided by currently
         installed version of a package.
 
-      - Read each configuration file for the package from disk and compute hashes.
+      - Read each configuration file for the package from disk and compute
+        hashes.
 
       - If the hashes match, package has no configuration file that got
         modified. There will be no conffile prompt.
@@ -179,8 +180,9 @@ def subcommand_filter_conffile_packages(arguments):
 
     downloaded_files = _download_packages(packages)
 
-    new_package_hashes, new_versions = _get_conffile_hashes_from_downloaded_files(
-        packages, downloaded_files, status_hashes, mismatched_hashes)
+    new_package_hashes, new_versions = \
+        _get_conffile_hashes_from_downloaded_files(
+            packages, downloaded_files, status_hashes, mismatched_hashes)
 
     packages_info = {}
     for package in packages:
@@ -356,7 +358,8 @@ def _get_conffile_hashes_from_downloaded_files(
         try:
             package_name, hashes, new_version = \
                 _get_conffile_hashes_from_downloaded_file(
-                packages, downloaded_file, status_hashes, mismatched_hashes)
+                    packages, downloaded_file, status_hashes,
+                    mismatched_hashes)
         except (LookupError, apt_pkg.Error, ValueError):
             continue
 

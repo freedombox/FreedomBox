@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
 "PO-Revision-Date: 2019-07-22 17:06+0000\n"
 "Last-Translator: Joseph Nuthalapati <joseph.kiran92@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -371,6 +371,7 @@ msgid "Create Location"
 msgstr "అనుసంధానం సృష్టించు"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 #, fuzzy
 #| msgid "Create User"
 msgid "Create Repository"
@@ -383,7 +384,7 @@ msgid "Delete this archive permanently?"
 msgstr "<strong>%(name)s</strong> అనుసంధానం శాశ్వతంగా తొలగించు ?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -401,6 +402,7 @@ msgstr "%(name)s తొలగించు"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "సమర్పించు"
@@ -1579,6 +1581,164 @@ msgstr "అమరికను ప్రారంభించు"
 msgid "Setup Complete"
 msgstr "అమరక పూర్తయ్యింది"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Name of the share"
+msgid "Name of the repository"
+msgstr "షేర్ యొక్క పేరు"
+
+#: plinth/modules/gitweb/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "A lowercase alpha-numeric string that uniquely identifies a share. "
+#| "Example: <em>media</em>."
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr "ప్రత్యేకంగా ఒక వాటాను గుర్తించే చిన్న అక్షర సంఖ్యా స్ట్రింగ్. ఉదాహరణ: <em>media</em>."
+
+#: plinth/modules/gitweb/forms.py:40
+msgid "Description of the repository"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+msgid "Repository's owner name"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create User"
+msgid "Private repository"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "ఆతిథ్యనామం చెల్లనిది"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+msgid "A repository with this name already exists."
+msgstr "ఈ సేవ ఇప్పటికే ఉంది"
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create User"
+msgid "Create repository"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create User"
+msgid "Manage Repositories"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "టార్ రిలే పోర్ట్ అందుబాటులో ఉంది"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "వినియోగదారి %(username)s ను తొలగించు"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "వికీ లేదా బ్లాగ్ తొలగించు <em>%(name)s</em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete connection <strong>%(name)s</strong> permanently?"
+msgid "Delete this repository permanently?"
+msgstr "<strong>%(name)s</strong> అనుసంధానం శాశ్వతంగా తొలగించు ?"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "%(name)s తొలగించు"
+
+#: plinth/modules/gitweb/views.py:62
+msgid "Repository created."
+msgstr ""
+
+#: plinth/modules/gitweb/views.py:93
+msgid "Repository edited."
+msgstr ""
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create User"
+msgid "Edit repository"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "అక్రుతీకరణలో ఒక పొరపాటు జరిగింది."
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} తొలగించబడింది."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "{name} ను తొలగించలేము: {error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr "పత్రావళి"
@@ -1988,21 +2148,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "వికీ అనువర్తనాలను చూడండి మరియు మార్చండి"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "రకం"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr "ఆల్ఫాన్యూమరిక్ అక్షరాలు (ఆంగ్ల అక్షరాలు మరియు అంకెలు) మాత్రమే అనుమతించబడతాయి."
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "నిర్వాహకుని ఖాతా పేరు"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "నిర్వాహకుని ఖాతా రహస్యపదం"
 
@@ -2020,16 +2176,12 @@ msgstr "వికీ మరియు బ్లాగులను నిర్వ
 msgid "No wikis or blogs available."
 msgstr "ఏ వికీలు లేదా బ్లాగులు అందుబాటులో లేవు."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "ఒక వికీ లేదా బ్లాగు సృష్టించండి"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "ప్రదేశం తొలగించు %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
@@ -2046,11 +2198,6 @@ msgid ""
 msgstr ""
 "ఈ చర్య పునర్విమర్శ చరిత్రతో సహా అన్ని పోస్ట్లు, పుటలు మరియు వ్యాఖ్యలు తొలగిస్తుంది. ఈ వికీ లేదా బ్లాగ్ "
 "శాశ్వతంగా తొలగించాలా?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "%(name)s తొలగించు"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2072,14 +2219,16 @@ msgstr "{name} బ్లాగు సృష్టించబడింది."
 msgid "Could not create blog: {error}"
 msgstr "బ్లాగు సృష్టించలేము: {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} తొలగించబడింది."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "{name} ను తొలగించలేము: {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -4049,16 +4198,16 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "టీసీపీ{kind} పై{proxy} తో యాక్సిస్ {url} చేయండి"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "క్వాసెల్"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 #, fuzzy
 msgid "IRC Client"
 msgstr "ఐ ర్ సి క్లయింట్ (Quassel)"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -4069,12 +4218,24 @@ msgid ""
 "connect and disconnect from it."
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
 "downloads\">desktop</a> and <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobile</a> devices are available."
+msgstr ""
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "ఉప డోమైన్ పేరు"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
 msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
@@ -4374,11 +4535,6 @@ msgstr ""
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "అక్రుతీకరణలో ఒక పొరపాటు జరిగింది."
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -4896,17 +5052,39 @@ msgstr "రొల్ల్బచ్క్ ని పూర్తి చేయడ
 msgid "Rollback to Snapshot"
 msgstr "చాయాచిత్రం కు రొల్ల్బచ్క్ చేయండి"
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "సెక్యూర్ షెల్ (SSH) సర్వర్"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "SSH వేలిముద్ర"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "SSH వేలిముద్ర"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -6100,6 +6278,12 @@ msgstr "అనువర్తనం ఆమోదింపబడలేదు"
 msgid "Gujarati"
 msgstr ""
 
+#~ msgid "Only alphanumeric characters are allowed."
+#~ msgstr "ఆల్ఫాన్యూమరిక్ అక్షరాలు (ఆంగ్ల అక్షరాలు మరియు అంకెలు) మాత్రమే అనుమతించబడతాయి."
+
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "ఒక వికీ లేదా బ్లాగు సృష్టించండి"
+
 #~ msgid "Manage"
 #~ msgstr "నిర్వహించండి"
 
@@ -6108,9 +6292,6 @@ msgstr ""
 
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr "మీ {box_name} దానుబే ప్రతి తో మీరు అందుకున్న రశీదు"
-
-#~ msgid "Subdomain"
-#~ msgstr "ఉప డోమైన్ పేరు"
 
 #~ msgid "The subdomain you want to register"
 #~ msgstr "మీరు నమోదు చేయదల్చిన ఉప డోమైన్"
@@ -6487,11 +6668,6 @@ msgstr ""
 
 #~ msgid "SSH Keys"
 #~ msgstr "SSH కీస్"
-
-#, fuzzy
-#~| msgid "Delete connection <strong>%(name)s</strong> permanently?"
-#~ msgid "Delete this snapshot permanently?"
-#~ msgstr "<strong>%(name)s</strong> అనుసంధానం శాశ్వతంగా తొలగించు ?"
 
 #~ msgid "Delete Snapshot #%(number)s"
 #~ msgstr "స్నాప్షాట్‌ #%(number)s 1 తొలగించు"

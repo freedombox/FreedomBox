@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
-"PO-Revision-Date: 2019-09-03 21:24+0000\n"
-"Last-Translator: Swann Martinet <swann.ranskassa@laposte.net>\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
+"PO-Revision-Date: 2019-10-11 10:10+0000\n"
+"Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
 "Language: fr\n"
@@ -226,11 +226,11 @@ msgstr "La phrase de passe est nécessaire pour le chiffrement."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select Disk or Partition"
-msgstr ""
+msgstr "Choisissez un disque ou une partition"
 
 #: plinth/modules/backups/forms.py:190
 msgid "Backups will be stored in the directory FreedomBoxBackups"
-msgstr ""
+msgstr "Les sauvegardes seront conservées dans le répertoire FreedomBoxBackups"
 
 #: plinth/modules/backups/forms.py:199
 msgid "SSH Repository Path"
@@ -291,10 +291,12 @@ msgstr "Accès SSH refusé"
 #: plinth/modules/backups/repository.py:80
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Le chemin du dépôt n’est pas vide et n’est pas un dépôt de sauvegarde "
+"existant."
 
 #: plinth/modules/backups/repository.py:154
 msgid "Existing repository is not encrypted."
-msgstr ""
+msgstr "Le dépôt existant n’est pas chiffré."
 
 #: plinth/modules/backups/repository.py:342
 #, python-brace-format
@@ -319,16 +321,12 @@ msgid "Upload and Restore"
 msgstr "Charger et Restaurer"
 
 #: plinth/modules/backups/templates/backups.html:59
-#, fuzzy
-#| msgid "Add a remote backup location"
 msgid "Add a backup location"
-msgstr "Ajouter un dépôt de sauvegarde distant"
+msgstr "Ajouter un dépôt de sauvegarde"
 
 #: plinth/modules/backups/templates/backups.html:63
-#, fuzzy
-#| msgid "Add a remote backup location"
 msgid "Add Backup Location"
-msgstr "Ajouter un dépôt de sauvegarde distant"
+msgstr "Ajouter un emplacement de sauvegarde"
 
 #: plinth/modules/backups/templates/backups.html:66
 msgid "Add a remote backup location"
@@ -351,14 +349,17 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Les informations d'identification de ce dépôt sont stockées sur votre "
+"%(box_name)s.<br />Pour restaurer une sauvegarde sur une nouvelle "
+"%(box_name)s, vous devez disposer des informations d'identification SSH et, "
+"le cas échéant, de la phrase secrète de chiffrement."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:43
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Create Location"
-msgstr "Créer Connexion"
+msgstr "Créer un emplacement"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 msgid "Create Repository"
 msgstr "Créer un dépôt"
 
@@ -367,7 +368,7 @@ msgid "Delete this archive permanently?"
 msgstr "Supprimer définitivement cette archive ?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -384,6 +385,7 @@ msgstr "Supprimer l'archive %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "Soumettre"
@@ -1585,6 +1587,169 @@ msgstr "Démarrer la configuration"
 msgid "Setup Complete"
 msgstr "Installation Achevée"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Create new repository"
+msgid "Name of the repository"
+msgstr "Créer un nouveau dépôt"
+
+#: plinth/modules/gitweb/forms.py:36
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Create new repository"
+msgid "Description of the repository"
+msgstr "Créer un nouveau dépôt"
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository's owner name"
+msgstr "Dépôt introuvable"
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Private repository"
+msgstr "Créer un dépôt"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "Nom de machine invalide"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+#| msgid "This service already exists"
+msgid "A repository with this name already exists."
+msgstr "Ce service existe déjà"
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create repository"
+msgstr "Créer un dépôt"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Manage Repositories"
+msgstr "Créer un dépôt"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "Port du relais Tor disponible"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "Supprimer l'utilisateur %(username)s"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "Aller au site %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "Supprimer le wki ou blogue <em>%(name)s</em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete this snapshot permanently?"
+msgid "Delete this repository permanently?"
+msgstr "Supprimer définitivement cet instantané ?"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "Supprimer %(name)s"
+
+#: plinth/modules/gitweb/views.py:62
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository created."
+msgstr "Dépôt introuvable"
+
+#: plinth/modules/gitweb/views.py:93
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository edited."
+msgstr "Dépôt introuvable"
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Edit repository"
+msgstr "Créer un dépôt"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "Une erreur est survenue pendant la configuration."
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} supprimé."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "La suppression de {name} n'a pas abouti : {error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr "Documentation"
@@ -2019,21 +2184,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "Afficher et modifier des applications wiki"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "Type"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr "Seuls les caractères alphanumériques sont autorisés."
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "Nom Compte Admin"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "Mot de Passe Compte Admin"
 
@@ -2051,16 +2212,12 @@ msgstr "Gestion Wikis et Blogues"
 msgid "No wikis or blogs available."
 msgstr "Pas de wiki ou de blogue disponible."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "Créer un Wiki ou un Blogue"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Supprimer le site %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Aller au site %(site)s"
@@ -2078,11 +2235,6 @@ msgstr ""
 "Cette action aura pour effet de supprimer tous les messages, pages et "
 "commentaires, ainsi que l'historique des révisions. Voulez-vous supprimer ce "
 "wiki ou blogue de façon permanente ?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "Supprimer %(name)s"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2104,14 +2256,16 @@ msgstr "Blogue {name} créé."
 msgid "Could not create blog: {error}"
 msgstr "Le blogue n'a pu être créé : {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} supprimé."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "La suppression de {name} n'a pas abouti : {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -4064,15 +4218,15 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Accéder à l'URL {url} avec le proxy {proxy} sur tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 msgid "IRC Client"
 msgstr "Client IRC"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -4089,7 +4243,7 @@ msgstr ""
 "vous soyez toujours en ligne. Un ou plusieurs clients Quassel basés sur un "
 "ordinateur ou un mobile servent à se brancher sur le cœur ou s'en débrancher."
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -4101,6 +4255,18 @@ msgstr ""
 "quassel-irc.org/downloads\">ordinateur</a> ou votre <a href=\"http://"
 "quasseldroid.iskrembilen.com/\">mobile</a> sont disponibles pour "
 "téléchargement."
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "Sous-domaine"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
@@ -4421,11 +4587,6 @@ msgstr ""
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "Configuration actualisée."
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "Une erreur est survenue pendant la configuration."
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -4938,11 +5099,11 @@ msgstr "Le système doit être redémarré pour terminer le retour en arrière."
 msgid "Rollback to Snapshot"
 msgstr "Revenir à l'instantané"
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "Serveur Secure Shell (SSH)"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -4953,6 +5114,28 @@ msgstr ""
 "connexions des ordinateurs distants. Un ordinateur distant autorisé peut "
 "effectuer des tâches d'administration, copier des fichiers ou bien faire "
 "fonctionner d'autres services en utilisant de telles connexions."
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Server Fingerprints"
+msgstr "Empreinte SSH"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "SSH Fingerprint"
+msgid "Fingerprint"
+msgstr "Empreinte SSH"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -6208,6 +6391,12 @@ msgstr "Application désactivée"
 msgid "Gujarati"
 msgstr ""
 
+#~ msgid "Only alphanumeric characters are allowed."
+#~ msgstr "Seuls les caractères alphanumériques sont autorisés."
+
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "Créer un Wiki ou un Blogue"
+
 #~ msgid "Manage"
 #~ msgstr "Gérer"
 
@@ -6216,9 +6405,6 @@ msgstr ""
 
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr "Le récépissé reçu avec votre {box_name}, Edition Danube."
-
-#~ msgid "Subdomain"
-#~ msgstr "Sous-domaine"
 
 #~ msgid "The subdomain you want to register"
 #~ msgstr "Le sous-domaine que vous voulez inscrire"
@@ -6266,9 +6452,6 @@ msgstr ""
 
 #~ msgid "Pagekite"
 #~ msgstr "Pagekite"
-
-#~ msgid "Create new repository"
-#~ msgstr "Créer un nouveau dépôt"
 
 #~ msgid "Upload"
 #~ msgstr "Téléverser"
@@ -6553,9 +6736,6 @@ msgstr ""
 
 #~ msgid "SSH Keys"
 #~ msgstr "Clefs SSH"
-
-#~ msgid "Delete this snapshot permanently?"
-#~ msgstr "Supprimer définitivement cet instantané ?"
 
 #~ msgid "Delete Snapshot #%(number)s"
 #~ msgstr "Supprimer l'instantané numéro #%(number)s"

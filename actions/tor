@@ -48,8 +48,9 @@ def parse_arguments():
     setup_parser = subparsers.add_parser('setup',
                                          help='Setup Tor configuration')
     setup_parser.add_argument(
-        '--old-version', type=int, required=True, help=
-        'Version number being upgraded from or None if setting up first time.')
+        '--old-version', type=int, required=True,
+        help='Version number being upgraded from or None if setting up first '
+        'time.')
 
     subparsers.add_parser('get-status', help='Get Tor status in JSON format')
 

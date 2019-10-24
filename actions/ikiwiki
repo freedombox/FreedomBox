@@ -21,6 +21,7 @@ Configuration helper for ikiwiki
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -65,13 +66,28 @@ def subcommand_setup(_):
     setup()
 
 
-def subcommand_get_sites(_):
-    """Get wikis and blogs."""
+def get_title(site):
+    """Get blog or wiki title"""
     try:
-        sites = os.listdir(SITE_PATH)
-        print('\n'.join(sites))
+        with open(os.path.join(SITE_PATH, site, 'index.html')) as index_file:
+            match = re.search(r'<title>(.*)</title>', index_file.read())
+            if match:
+                return match[1]
     except FileNotFoundError:
         pass
+
+    return site
+
+
+def subcommand_get_sites(_):
+    """Get wikis and blogs."""
+    if os.path.exists(SITE_PATH):
+        for site in os.listdir(SITE_PATH):
+            if not os.path.isdir(os.path.join(SITE_PATH, site)):
+                continue
+
+            title = get_title(site)
+            print(site, title)
 
 
 def subcommand_create_wiki(arguments):
@@ -80,7 +96,8 @@ def subcommand_create_wiki(arguments):
     proc = subprocess.Popen([
         'ikiwiki', '-setup', SETUP_WIKI, arguments.wiki_name,
         arguments.admin_name
-    ], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    ], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
+                            env=dict(os.environ, PERL_UNICODE='AS'))
     outs, errs = proc.communicate(input=pw_bytes + b'\n' + pw_bytes)
     print(outs)
     print(errs)
@@ -92,7 +109,8 @@ def subcommand_create_blog(arguments):
     proc = subprocess.Popen([
         'ikiwiki', '-setup', SETUP_BLOG, arguments.blog_name,
         arguments.admin_name
-    ], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    ], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
+                            env=dict(os.environ, PERL_UNICODE='AS'))
     outs, errs = proc.communicate(input=pw_bytes + b'\n' + pw_bytes)
     print(outs)
     print(errs)

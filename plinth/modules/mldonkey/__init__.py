@@ -29,7 +29,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 

@@ -78,7 +78,9 @@ class Shortcut(app.FollowerComponent):
 
         'allowed_groups' specifies a list of user groups to whom this shortcut
         must be shown. All other user groups will not be shown this shortcut on
-        the frontpage.
+        the frontpage. If 'login_required' is False, this property has not
+        effect and the shortcut is shown to all the users including anonymous
+        users.
 
         """
         super().__init__(component_id)
@@ -131,7 +133,7 @@ class Shortcut(app.FollowerComponent):
 
         shortcuts = {}
         for shortcut_id, shortcut in cls._all_shortcuts.items():
-            if shortcut.allowed_groups and \
+            if shortcut.login_required and shortcut.allowed_groups and \
                user_groups.isdisjoint(shortcut.allowed_groups):
                 continue
 

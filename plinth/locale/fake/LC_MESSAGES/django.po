@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 18:31-0400\n"
+"POT-Creation-Date: 2019-10-21 17:55-0400\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -390,6 +390,7 @@ msgid "Create Location"
 msgstr "CREATE CONNECTION"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
+#: plinth/modules/gitweb/views.py:67
 #, fuzzy
 #| msgid "Create User"
 msgid "Create Repository"
@@ -402,7 +403,7 @@ msgid "Delete this archive permanently?"
 msgstr "DELETE USER PERMANENTLY?"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
@@ -422,6 +423,7 @@ msgstr "DELETE %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/config/templates/config.html:45
+#: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
 msgstr "SUBMIT"
@@ -1680,6 +1682,167 @@ msgstr "START SETUP"
 msgid "Setup Complete"
 msgstr "SETUP COMPLETE"
 
+#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+msgid "Gitweb"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:43
+msgid "Simple Git Hosting"
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:46
+msgid ""
+"Git is a distributed version-control system for tracking changes in source "
+"code during software development. Gitweb provides a web interface to Git "
+"repositories. You can browse history and content of source code, use search "
+"to find relevant commits and code. You can also clone repositories and "
+"upload code changes with a command-line Git client or with multiple "
+"available graphical clients. And you can share your code with people around "
+"the world."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:53
+msgid ""
+"To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
+"gittutorial\">Git tutorial</a>."
+msgstr ""
+
+#: plinth/modules/gitweb/__init__.py:57
+msgid "Read-write access to Git repositories"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:32
+#, fuzzy
+#| msgid "Create User"
+msgid "Name of the repository"
+msgstr "CREATE USER"
+
+#: plinth/modules/gitweb/forms.py:36
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:40
+msgid "Description of the repository"
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+msgid "Optional, for displaying on Gitweb."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:44
+#, fuzzy
+#| msgid "packages not found"
+msgid "Repository's owner name"
+msgstr "PACKAGES NOT FOUND"
+
+#: plinth/modules/gitweb/forms.py:48
+#, fuzzy
+#| msgid "Create User"
+msgid "Private repository"
+msgstr "CREATE USER"
+
+#: plinth/modules/gitweb/forms.py:49
+msgid "Allow only authorized users to access this repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:66
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "INVALID HOSTNAME"
+
+#: plinth/modules/gitweb/forms.py:71
+#, fuzzy
+#| msgid "This service already exists"
+msgid "A repository with this name already exists."
+msgstr "THIS SERVICE ALREADY EXISTS"
+
+#: plinth/modules/gitweb/manifest.py:36
+msgid "Git"
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:41
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#, fuzzy
+#| msgid "Create User"
+msgid "Create repository"
+msgstr "CREATE USER"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#, fuzzy
+#| msgid "Create User"
+msgid "Manage Repositories"
+msgstr "CREATE USER"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No repositories available."
+msgstr "TOR RELAY PORT AVAILABLE"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#, fuzzy, python-format
+#| msgid "Delete user %(username)s"
+msgid "Delete repository %(repo.name)s"
+msgstr "DELETE USER %(username)s"
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to repository %(repo.name)s"
+msgstr "GO TO SITE %(site)s"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete Git Repository <em>%(name)s</em>"
+msgstr "DELETE WIKI OR BLOG <em>%(name)s</em>"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:33
+#, fuzzy
+#| msgid "Delete user permanently?"
+msgid "Delete this repository permanently?"
+msgstr "DELETE USER PERMANENTLY?"
+
+#: plinth/modules/gitweb/templates/gitweb_delete.html:42
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
+#, python-format
+msgid "Delete %(name)s"
+msgstr "DELETE %(name)s"
+
+#: plinth/modules/gitweb/views.py:62
+#, fuzzy
+#| msgid "packages not found"
+msgid "Repository created."
+msgstr "PACKAGES NOT FOUND"
+
+#: plinth/modules/gitweb/views.py:93
+#, fuzzy
+#| msgid "packages not found"
+msgid "Repository edited."
+msgstr "PACKAGES NOT FOUND"
+
+#: plinth/modules/gitweb/views.py:98
+#, fuzzy
+#| msgid "Create User"
+msgid "Edit repository"
+msgstr "CREATE USER"
+
+#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
+msgid "An error occurred during configuration."
+msgstr "AN ERROR OCCURRED DURING CONFIGURATION."
+
+#: plinth/modules/gitweb/views.py:147
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} DELETED."
+
+#: plinth/modules/gitweb/views.py:151
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "COULD NOT DELETE {name}: {error}"
+
 #: plinth/modules/help/help.py:47
 msgid "Documentation"
 msgstr "DOCUMENTATION"
@@ -2094,21 +2257,17 @@ msgstr ""
 msgid "View and edit wiki applications"
 msgstr "SERVICES AND APPLICATIONS"
 
-#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "TYPE"
 
-#: plinth/modules/ikiwiki/forms.py:35
-msgid "Only alphanumeric characters are allowed."
-msgstr ""
-
-#: plinth/modules/ikiwiki/forms.py:38
+#: plinth/modules/ikiwiki/forms.py:34
 msgid "Admin Account Name"
 msgstr "ADMIN ACCOUNT NAME"
 
-#: plinth/modules/ikiwiki/forms.py:41
+#: plinth/modules/ikiwiki/forms.py:37
 msgid "Admin Account Password"
 msgstr "ADMIN ACCOUNT NAMEADMIN ACCOUNT PASSWORD"
 
@@ -2126,16 +2285,12 @@ msgstr "MANAGE WIKIS AND BLOGS"
 msgid "No wikis or blogs available."
 msgstr "NO WIKIS OR BLOGS AVAILABLE."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:44
-msgid "Create a Wiki or Blog"
-msgstr "CREATE A WIKI OR BLOG"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:48
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "DELETE SITE %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:60
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "GO TO SITE %(site)s"
@@ -2152,11 +2307,6 @@ msgid ""
 msgstr ""
 "THIS ACTION WILL REMOVE ALL THE POSTS, PAGES AND COMMENTS INCLUDING REVISION "
 "HISTORY.  DELETE THIS WIKI OR BLOG PERMANENTLY?"
-
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
-#, python-format
-msgid "Delete %(name)s"
-msgstr "DELETE %(name)s"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -2178,14 +2328,16 @@ msgstr "CREATED BLOG {name}."
 msgid "Could not create blog: {error}"
 msgstr "COULD NOT CREATE BLOG: {error}"
 
-#: plinth/modules/ikiwiki/views.py:125
-#, python-brace-format
-msgid "{name} deleted."
+#: plinth/modules/ikiwiki/views.py:127
+#, fuzzy, python-brace-format
+#| msgid "{name} deleted."
+msgid "{title} deleted."
 msgstr "{name} DELETED."
 
-#: plinth/modules/ikiwiki/views.py:129
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
+#: plinth/modules/ikiwiki/views.py:131
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {title}: {error}"
 msgstr "COULD NOT DELETE {name}: {error}"
 
 #: plinth/modules/infinoted/__init__.py:40
@@ -4214,17 +4366,17 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "ACCESS {url} WITH PROXY {proxy} ON TCP{kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
+#: plinth/modules/quassel/__init__.py:45 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:47
 #, fuzzy
 #| msgid "Quassel IRC Client"
 msgid "IRC Client"
 msgstr "QUASSEL IRC CLIENT"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:51
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Quassel is an IRC application that is split into two parts, a \"core\" "
@@ -4248,7 +4400,7 @@ msgstr ""
 "ONE OR MORE QUASSEL CLIENTS FROM A DESKTOP OR A MOBILE CAN BE USED TO "
 "CONNECT AND DISCONNECT FROM IT."
 
-#: plinth/modules/quassel/__init__.py:53
+#: plinth/modules/quassel/__init__.py:58
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -4259,6 +4411,18 @@ msgstr ""
 "CLIENTS TO CONNECT TO QUASSEL FROM YOUR <a href=\"http://quassel-irc.org/"
 "downloads\">DESKTOP</a> AND <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">MOBILE</a> DEVICES ARE AVAILABLE."
+
+#: plinth/modules/quassel/forms.py:38
+#, fuzzy
+#| msgid "Enable Subdomains"
+msgid "TLS domain"
+msgstr "ENABLE SUBDOMAINS"
+
+#: plinth/modules/quassel/forms.py:40
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
 
 #: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
@@ -4581,11 +4745,6 @@ msgstr ""
 #: plinth/modules/tor/views.py:141 plinth/modules/tor/views.py:168
 msgid "Configuration updated."
 msgstr "CONFIGURATION UPDATED."
-
-#: plinth/modules/searx/views.py:62 plinth/modules/searx/views.py:73
-#: plinth/modules/tor/views.py:170
-msgid "An error occurred during configuration."
-msgstr "AN ERROR OCCURRED DURING CONFIGURATION."
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
@@ -5089,17 +5248,39 @@ msgstr ""
 msgid "Rollback to Snapshot"
 msgstr ""
 
-#: plinth/modules/ssh/__init__.py:40
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "SECURE SHELL (SSH) SERVER"
 
-#: plinth/modules/ssh/__init__.py:43
+#: plinth/modules/ssh/__init__.py:46
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:26
+#, fuzzy
+#| msgid "GPG Fingerprint"
+msgid "Server Fingerprints"
+msgstr "GPG FINGERPRINT"
+
+#: plinth/modules/ssh/templates/ssh.html:29
+msgid ""
+"When connecting to the server, ensure that the fingerprint shown by the SSH "
+"client matches one of these fingerprints."
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:38
+msgid "Algorithm"
+msgstr ""
+
+#: plinth/modules/ssh/templates/ssh.html:39
+#, fuzzy
+#| msgid "GPG Fingerprint"
+msgid "Fingerprint"
+msgstr "GPG FINGERPRINT"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -6354,16 +6535,14 @@ msgstr "APPLICATIONS"
 msgid "Gujarati"
 msgstr ""
 
+#~ msgid "Create a Wiki or Blog"
+#~ msgstr "CREATE A WIKI OR BLOG"
+
 #~ msgid "Manage"
 #~ msgstr "MANAGE"
 
 #~ msgid "Create"
 #~ msgstr "CREATE"
-
-#, fuzzy
-#~| msgid "Enable Subdomains"
-#~ msgid "Subdomain"
-#~ msgstr "ENABLE SUBDOMAINS"
 
 #, fuzzy
 #~| msgid "This connection is not active."
@@ -6518,11 +6697,6 @@ msgstr ""
 
 #~ msgid "SSH Keys"
 #~ msgstr "SSH KEYS"
-
-#, fuzzy
-#~| msgid "Delete user permanently?"
-#~ msgid "Delete this snapshot permanently?"
-#~ msgstr "DELETE USER PERMANENTLY?"
 
 #, fuzzy
 #~| msgid "Delete %(name)s"

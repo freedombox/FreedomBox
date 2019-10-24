@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration for running tests.
 
@@ -32,6 +31,6 @@ backups_ssh_repo_uuid = 'plinth_test_sshfs'  # will be mounted to /media/<uuid>
 
 # Import config_local to override the default variables
 try:
-    from .config_local import * # noqa, pylint: disable=unused-import
+    from .config_local import *  # noqa, pylint: disable=unused-import
 except ImportError:
     pass

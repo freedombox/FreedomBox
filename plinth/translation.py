@@ -1,5 +1,5 @@
 #
-# This file is part of Plinth.
+# This file is part of FreedomBox.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -66,7 +66,8 @@ def set_language(request, response, language_code):
         request.session[translation.LANGUAGE_SESSION_KEY] = language_code
     else:
         response.set_cookie(
-            settings.LANGUAGE_COOKIE_NAME, language_code,
+            settings.LANGUAGE_COOKIE_NAME,
+            language_code,
             max_age=settings.LANGUAGE_COOKIE_AGE,
             path=settings.LANGUAGE_COOKIE_PATH,
             domain=settings.LANGUAGE_COOKIE_DOMAIN,
