@@ -18,7 +18,7 @@
 
 OUTPUTS=freedombox-manual.pdf plinth.1 manual-pages
 
-MANUAL_LANGUAGES=en
+MANUAL_LANGUAGES=en es
 
 MANUAL_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=show&mimetype=text%2Fdocbook"
 MANUAL_URL_RAW="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=raw"
