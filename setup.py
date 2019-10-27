@@ -280,7 +280,8 @@ setuptools.setup(
     },
     exclude_package_data={'': ['*/data/*']},
     data_files=_gather_data_files() +
-    [('/usr/share/plinth/actions', glob.glob(os.path.join('actions', '*'))),
+    [('/usr/share/plinth/actions', glob.glob(
+        os.path.join('actions', '[a-z]*'))),
      ('/usr/share/man/man1', ['doc/plinth.1'])],
     cmdclass={
         'install': CustomInstall,
