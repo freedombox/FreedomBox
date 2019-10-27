@@ -90,7 +90,8 @@ def test_read_primary_config_file():
 
 def test_read_fallback_config_file():
     """Verify that the correct fallback config file is used"""
-    fallback_root = os.path.realpath('.')
+    test_dir = os.path.dirname(os.path.realpath(__file__))
+    fallback_root = os.path.realpath(os.path.join(test_dir, '..', '..'))
     fallback_config_file = os.path.join(fallback_root, 'plinth.config')
     config_path, root_directory = cfg.get_fallback_config_paths()
     cfg.read(config_path, root_directory)
