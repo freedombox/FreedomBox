@@ -184,6 +184,11 @@ def diagnose():
     return results
 
 
+def restore_post(packet):
+    """Update access after restoration of backups."""
+    app.update_service_access()
+
+
 def have_public_repos(repos):
     """Check for public repositories"""
     return any((repo['access'] == 'public' for repo in repos))
