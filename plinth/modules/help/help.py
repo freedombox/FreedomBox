@@ -123,25 +123,26 @@ def about(request):
 
 def manual(request, lang=None, page=None):
     """Serve the manual page from the 'doc' directory"""
-    language_code = get_language_from_request(request)
-
     if not lang or lang == '-':
-        kwargs = {'lang': language_code}
+        kwargs = {'lang': get_language_from_request(request)}
         if page:
             return HttpResponseRedirect(
                 reverse('help:manual-page', kwargs=dict(kwargs, page=page)))
 
         return HttpResponseRedirect(reverse('help:manual', kwargs=kwargs))
 
-    def read_file(language_code, page):
+    def read_file(lang, file_name):
         """Read the page from disk and return contents or None."""
-        page_file = pathlib.Path(cfg.doc_dir) / 'manual' / language_code / page
+        page_file = pathlib.Path(cfg.doc_dir) / 'manual' / lang / file_name
         return page_file.read_text() if page_file.exists() else None
 
     page = page or 'freedombox-manual'
-    page = f'{page}.part.html'
-    content = read_file(language_code, page) or read_file(language_code, 'en')
+    content = read_file(lang, f'{page}.part.html')
     if not content:
+        if lang != 'en':
+            return HttpResponseRedirect(
+                reverse('help:manual-page', kwargs=dict(lang='en', page=page)))
+
         raise Http404
 
     return TemplateResponse(
