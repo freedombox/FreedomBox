@@ -24,6 +24,7 @@ import pathlib
 from unittest.mock import patch
 
 import pytest
+from django.forms import ValidationError
 
 
 def _action_file():
@@ -91,3 +92,15 @@ def test_actions(call_action):
     call_action(['delete-repo', '--name', repo_renamed])
     with pytest.raises(RuntimeError, match='Repository not found'):
         call_action(['repo-info', '--name', repo_renamed])
+
+
+@pytest.mark.parametrize(
+    'name',
+    ['.Test-repo', 'Test-repo.git.git', '/root/Test-repo', 'Test-repö'])
+def test_action_create_repo_with_invalid_names(call_action, name):
+    """Test that creating repository with invalid names fails."""
+    with pytest.raises(ValidationError):
+        call_action([
+            'create-repo', '--name', name, '--description', '', '--owner', '',
+            '--keep-ownership'
+        ])

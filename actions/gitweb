@@ -27,6 +27,7 @@ import shutil
 import subprocess
 
 from plinth import action_utils
+from plinth.modules.gitweb.forms import validate_repository
 from plinth.modules.gitweb.manifest import GIT_REPO_PATH
 
 
@@ -168,6 +169,8 @@ def _set_access_status(repo, status):
 
 def subcommand_rename_repo(arguments):
     """Rename a repository."""
+    validate_repository(arguments.oldname)
+    validate_repository(arguments.newname)
     oldpath = os.path.join(GIT_REPO_PATH, arguments.oldname + '.git')
     newpath = os.path.join(GIT_REPO_PATH, arguments.newname + '.git')
     os.rename(oldpath, newpath)
@@ -175,21 +178,25 @@ def subcommand_rename_repo(arguments):
 
 def subcommand_set_repo_description(arguments):
     """Set description of the repository."""
+    validate_repository(arguments.name)
     _set_repo_description(arguments.name, arguments.description)
 
 
 def subcommand_set_repo_owner(arguments):
     """Set repository's owner name."""
+    validate_repository(arguments.name)
     _set_repo_owner(arguments.name, arguments.owner)
 
 
 def subcommand_set_repo_access(arguments):
     """Set repository's access status."""
+    validate_repository(arguments.name)
     _set_access_status(arguments.name, arguments.access)
 
 
 def subcommand_repo_info(arguments):
     """Get information about repository."""
+    validate_repository(arguments.name)
     repo_path = os.path.join(GIT_REPO_PATH, arguments.name + '.git')
     if not os.path.exists(repo_path):
         raise RuntimeError('Repository not found')
@@ -203,6 +210,7 @@ def subcommand_repo_info(arguments):
 
 def subcommand_create_repo(arguments):
     """Create a new git repository."""
+    validate_repository(arguments.name)
     os.chdir(GIT_REPO_PATH)
     repo_name = arguments.name + '.git'
     subprocess.check_call(['git', 'init', '--bare', repo_name])
@@ -216,6 +224,7 @@ def subcommand_create_repo(arguments):
 
 def subcommand_delete_repo(arguments):
     """Delete a git repository."""
+    validate_repository(arguments.name)
     repo_path = os.path.join(GIT_REPO_PATH, arguments.name + '.git')
     shutil.rmtree(repo_path)
 
