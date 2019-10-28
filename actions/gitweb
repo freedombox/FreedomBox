@@ -211,11 +211,12 @@ def subcommand_repo_info(arguments):
 def subcommand_create_repo(arguments):
     """Create a new git repository."""
     validate_repository(arguments.name)
-    os.chdir(GIT_REPO_PATH)
     repo_name = arguments.name + '.git'
-    subprocess.check_call(['git', 'init', '--bare', repo_name])
+    subprocess.check_call(['git', 'init', '--bare', repo_name],
+                          cwd=GIT_REPO_PATH)
     if not arguments.keep_ownership:
-        subprocess.check_call(['chown', '-R', 'www-data:www-data', repo_name])
+        subprocess.check_call(['chown', '-R', 'www-data:www-data', repo_name],
+                              cwd=GIT_REPO_PATH)
     _set_repo_description(arguments.name, arguments.description)
     _set_repo_owner(arguments.name, arguments.owner)
     if arguments.is_private:
