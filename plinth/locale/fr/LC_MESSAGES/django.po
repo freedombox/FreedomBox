@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 17:55-0400\n"
-"PO-Revision-Date: 2019-10-26 17:53+0000\n"
-"Last-Translator: homycal <jullien.nom@gmail.com>\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1-dev\n"
+"X-Generator: Weblate 3.10-dev\n"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -735,6 +735,13 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
+"Sélectionnez la page par défaut qui sera affichée lorsque quelqu’un visitera "
+"votre {box_name} sur le web. Un cas d’usage classique est de mettre votre "
+"blog ou votre wiki en page d’accueil lorsque quelqu’un visite le nom de "
+"domaine. Veuillez noter que dès que la page d’accueil est réglée sur autre "
+"chose que le service (Plinth) de {box_name}, vos utilisateurs doivent "
+"explicitement taper /plinth ou /freedombox pour atteindre le service (Plinth)"
+" the {box_name}."
 
 #: plinth/modules/config/forms.py:107
 msgid "Show advanced apps and features"
@@ -795,12 +802,10 @@ msgid "Error changing advanced mode: {exception}"
 msgstr "Erreur lors du changement de mode avancé : {exception}"
 
 #: plinth/modules/config/views.py:116
-#, fuzzy
 msgid "Showing advanced apps and features"
 msgstr "Affichage des applications et fonctionnalités avancées"
 
 #: plinth/modules/config/views.py:119
-#, fuzzy
 msgid "Hiding advanced apps and features"
 msgstr "Cacher les applications et les fonctionnalités avancées"
 
@@ -818,12 +823,11 @@ msgid ""
 "protecting users’ privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
-"Coquelicot est un ficher « en un clic » partageant l'application Web en se "
+"Coquelicot est une application web de partage de fichiers « en un clic » se "
 "concentrant sur la protection de la vie privée des utilisateurs. C'est idéal "
 "pour partager rapidement un seul fichier. "
 
 #: plinth/modules/coquelicot/__init__.py:48
-#, fuzzy
 msgid ""
 "This Coquelicot instance is exposed to the public but requires an upload "
 "password to prevent unauthorized access. You can set a new upload password "
@@ -833,7 +837,7 @@ msgstr ""
 "Cette instance de Coquelicot est à disposition du public mais nécessite un "
 "mot de passe de mise en ligne pour prévenir des accès non-autorisés. Vous "
 "pouvez configurer un nouveau mot de passe de mise en ligne dans le "
-"formulaire qui apparaître dessous après installation. Le mot de passe pas "
+"formulaire qui apparaîtra ci-dessous après installation. Le mot de passe pas "
 "défaut est « test »."
 
 #: plinth/modules/coquelicot/forms.py:30
@@ -845,6 +849,8 @@ msgid ""
 "Set a new upload password for Coquelicot. Leave this field blank to keep the "
 "current password."
 msgstr ""
+"Paramétrez un nouveau mot de passe de téléversement pour Coquelicot. Laissez "
+"ce champ vide pour conserver le mot de passe actuel."
 
 #: plinth/modules/coquelicot/forms.py:35
 msgid "Maximum File Size (in MiB)"
@@ -853,30 +859,28 @@ msgstr "Taille de fichier maximale (en MiB)"
 #: plinth/modules/coquelicot/forms.py:36
 msgid "Set the maximum size of the files that can be uploaded to Coquelicot."
 msgstr ""
+"Réglez la taille maximale des fichiers pouvant être téléversés vers "
+"Coquelicot."
 
 #: plinth/modules/coquelicot/manifest.py:24
 msgid "coquelicot"
 msgstr "coquelicot"
 
 #: plinth/modules/coquelicot/views.py:59
-#, fuzzy
-#| msgid "Password"
 msgid "Upload password updated"
-msgstr "Mise à jour du mot de passe de téléchargement"
+msgstr "Mise à jour du mot de passe de téléversement"
 
 #: plinth/modules/coquelicot/views.py:62
 msgid "Failed to update upload password"
-msgstr ""
+msgstr "Échec de la mise à jour du mot de passe de téléversement"
 
 #: plinth/modules/coquelicot/views.py:70
-#, fuzzy
-#| msgid "Maximum players configuration updated"
 msgid "Maximum file size updated"
 msgstr "Mise à jour de la taille maximale des fichiers"
 
 #: plinth/modules/coquelicot/views.py:73
 msgid "Failed to update maximum file size"
-msgstr ""
+msgstr "Échec de la mise à jour de la taille maximale des fichiers"
 
 #: plinth/modules/datetime/__init__.py:39
 msgid "Date & Time"
@@ -946,11 +950,11 @@ msgstr ""
 #: plinth/modules/deluge/__init__.py:51
 #: plinth/modules/transmission/__init__.py:56
 msgid "Download files using BitTorrent applications"
-msgstr ""
+msgstr "Télécharger des fichiers avec des applications BitTorrent"
 
 #: plinth/modules/deluge/manifest.py:25
 msgid "Bittorrent client written in Python/PyGTK"
-msgstr ""
+msgstr "Client BitTorrent écrit en Python/PyGTK"
 
 #: plinth/modules/diagnostics/__init__.py:33
 msgid "Diagnostics"
@@ -1032,13 +1036,15 @@ msgstr "Activer l'enregistrement de nouveaux utilisateurs"
 
 #: plinth/modules/diaspora/manifest.py:26
 msgid "dandelion*"
-msgstr ""
+msgstr "dandelion*"
 
 #: plinth/modules/diaspora/manifest.py:28
 msgid ""
 "It is an unofficial webview based client for the community-run, distributed "
 "social network diaspora*"
 msgstr ""
+"Il s’agit d’un client basé sur une vue web non officielle  pour le réseau "
+"social distribué et communautaire diaspora*"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
@@ -1120,10 +1126,8 @@ msgstr ""
 "obtiendra votre adresse IP actuelle."
 
 #: plinth/modules/dynamicdns/__init__.py:78
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Dynamic Domain Name"
-msgstr "Nom de Domaine"
+msgstr "Nom de domaine dynamique"
 
 #: plinth/modules/dynamicdns/forms.py:43
 msgid ""
@@ -1409,14 +1413,10 @@ msgstr ""
 "crypté."
 
 #: plinth/modules/ejabberd/manifest.py:26
-#, fuzzy
-#| msgid "Connection"
 msgid "Conversations"
 msgstr "Conversations"
 
 #: plinth/modules/ejabberd/manifest.py:40
-#, fuzzy
-#| msgid "ejabberd"
 msgid "Xabber"
 msgstr "Xabber"
 
@@ -1425,14 +1425,14 @@ msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
 msgstr ""
+"Client libre Jabber (XMPP) avec gestion multicompte et interface claire et "
+"simple. "
 
 #: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr "Yaxim"
 
 #: plinth/modules/ejabberd/manifest.py:71
-#, fuzzy
-#| msgid "Chat Server"
 msgid "ChatSecure"
 msgstr "ChatSecure"
 
@@ -1443,6 +1443,11 @@ msgid ""
 "new accounts on public XMPP servers (including via Tor), or even connect to "
 "your own server for extra security."
 msgstr ""
+"ChatSecure est une application de messagerie libre qui propose le "
+"chiffrement OTR sur XMPP. Vous pouvez vous connecter à un compte Google "
+"existant, créer de nouveaux comptes sur des serveurs XMPP publics (également "
+"via Tor), ou même vous connecter à votre propre serveur pour plus de "
+"sécurité."
 
 #: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
@@ -1570,7 +1575,7 @@ msgstr ""
 
 #: plinth/modules/first_boot/forms.py:31
 msgid "Secret"
-msgstr ""
+msgstr "Secret"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1604,11 +1609,11 @@ msgstr "Installation Achevée"
 
 #: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
 msgid "Gitweb"
-msgstr ""
+msgstr "Gitweb"
 
 #: plinth/modules/gitweb/__init__.py:43
 msgid "Simple Git Hosting"
-msgstr ""
+msgstr "Hébergement Git simple"
 
 #: plinth/modules/gitweb/__init__.py:46
 msgid ""
