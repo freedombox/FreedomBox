@@ -20,7 +20,7 @@ Views for the SSH module
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth.modules import ssh
 from plinth.views import AppView
 
