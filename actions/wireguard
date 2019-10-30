@@ -24,6 +24,7 @@ import json
 import os
 import pathlib
 import subprocess
+import sys
 
 from plinth import network
 
@@ -63,7 +64,6 @@ def parse_arguments():
                             help='Client IP address provided by server')
     add_server.add_argument('--public-key', required=True,
                             help='Public key of the server')
-    add_server.add_argument('--pre-shared-key', help='Pre-shared key')
     add_server.add_argument(
         '--all-outgoing', action='store_true',
         help='Use this connection to send all outgoing traffic')
@@ -200,10 +200,11 @@ def _find_next_interface():
 
 
 def _get_connection_settings(name, interface, endpoint, client_ip, public_key,
-                             pre_shared_key):
+                             client_private_key, pre_shared_key):
     """Return settings for Network Manager connection."""
-    with PRIVATE_KEY_PATH.open() as private_key_file:
-        private_key = private_key_file.read().strip()
+    if not client_private_key:
+        with PRIVATE_KEY_PATH.open() as private_key_file:
+            client_private_key = private_key_file.read().strip()
 
     return {
         'common': {
@@ -221,7 +222,7 @@ def _get_connection_settings(name, interface, endpoint, client_ip, public_key,
             'second_dns': '',
         },
         'wireguard': {
-            'private_key': private_key,
+            'private_key': client_private_key,
             'peer_endpoint': endpoint,
             'peer_public_key': public_key,
             'preshared_key': pre_shared_key,
@@ -231,6 +232,7 @@ def _get_connection_settings(name, interface, endpoint, client_ip, public_key,
 
 def subcommand_add_server(arguments):
     """Add a server."""
+    secret_args = json.loads(sys.stdin.read() or '{}')
     new_interface_name = _find_next_interface()
 
     subprocess.run(
@@ -238,17 +240,19 @@ def subcommand_add_server(arguments):
         check=True)
 
     connection_name = 'WireGuard-' + new_interface_name
-    settings = _get_connection_settings(connection_name,
-                                        new_interface_name,
+    settings = _get_connection_settings(connection_name, new_interface_name,
                                         arguments.endpoint,
                                         arguments.client_ip,
                                         arguments.public_key,
-                                        arguments.pre_shared_key)
+                                        secret_args.get('client_private_key'),
+                                        secret_args.get('pre_shared_key'))
     network.add_connection(settings)
 
 
 def subcommand_modify_server(arguments):
     """Modify a server."""
+    secret_args = json.loads(sys.stdin.read() or '{}')
+
     interfaces = _get_info()
     interfaces.pop(SERVER_INTERFACE, None)
     interface_to_modify = None
@@ -261,12 +265,11 @@ def subcommand_modify_server(arguments):
     if interface_to_modify:
         connection = network.get_connection_by_interface_name(
             interface_to_modify)
-        settings = _get_connection_settings('WireGuard-' + interface_to_modify,
-                                            interface_to_modify,
-                                            arguments.endpoint,
-                                            arguments.client_ip,
-                                            arguments.public_key,
-                                            arguments.pre_shared_key)
+        settings = _get_connection_settings(
+            'WireGuard-' + interface_to_modify, interface_to_modify,
+            arguments.endpoint, arguments.client_ip, arguments.public_key,
+            secret_args.get('client_private_key'),
+            secret_args.get('pre_shared_key'))
 
         if connection:
             network.edit_connection(connection, settings)

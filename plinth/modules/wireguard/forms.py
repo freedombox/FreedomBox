@@ -43,6 +43,11 @@ class AddServerForm(forms.Form):
         label=_('Public key of the server'), strip=True,
         help_text=_('Public key of the server.'))
 
+    client_private_key = forms.CharField(
+        label=_('Private key of the client'), strip=True,
+        help_text=_('Optional. A new key is generated if left blank.'),
+        required=False)
+
     pre_shared_key = forms.CharField(
         label=_('Pre-shared key'), strip=True, required=False,
         help_text=_('Optional: a shared secret key provided by the server to '

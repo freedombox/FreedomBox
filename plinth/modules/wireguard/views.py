@@ -18,6 +18,7 @@
 Views for WireGuard application.
 """
 
+import json
 import tempfile
 import urllib.parse
 
@@ -161,22 +162,25 @@ class AddServerView(SuccessMessageMixin, FormView):
         endpoint = form.cleaned_data.get('endpoint')
         client_ip_address = form.cleaned_data.get('client_ip_address')
         public_key = form.cleaned_data.get('public_key')
+        client_private_key = form.cleaned_data.get('client_private_key')
         pre_shared_key = form.cleaned_data.get('pre_shared_key')
         all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
-        args = ['add-server', '--endpoint', endpoint, '--client-ip',
-                client_ip_address, '--public-key', public_key]
-        optional_psk_file = None
+        args = [
+            'add-server', '--endpoint', endpoint, '--client-ip',
+            client_ip_address, '--public-key', public_key
+        ]
+        secret_args = {}
+        if client_private_key:
+            secret_args['client_private_key'] = client_private_key
+
         if pre_shared_key:
-            optional_psk_file = tempfile.NamedTemporaryFile()
-            optional_psk_file.write(pre_shared_key.encode())
-            args += ['--pre-shared-key', optional_psk_file.name]
+            secret_args['pre_shared_key'] = pre_shared_key
 
         if all_outgoing_traffic:
             args.append('--all-outgoing')
 
-        actions.superuser_run('wireguard', args)
-        if optional_psk_file:
-            optional_psk_file.close()
+        actions.superuser_run('wireguard', args,
+                              input=json.dumps(secret_args).encode())
 
         return super().form_valid(form)
 
@@ -238,22 +242,25 @@ class EditServerView(SuccessMessageMixin, FormView):
         endpoint = form.cleaned_data.get('endpoint')
         client_ip_address = form.cleaned_data.get('client_ip_address')
         public_key = form.cleaned_data.get('public_key')
+        client_private_key = form.client_data.get('client_private_key')
         pre_shared_key = form.cleaned_data.get('pre_shared_key')
         all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
-        args = ['modify-server', '--endpoint', endpoint, '--client-ip',
-                client_ip_address, '--public-key', public_key]
-        optional_psk_file = None
+        args = [
+            'modify-server', '--endpoint', endpoint, '--client-ip',
+            client_ip_address, '--public-key', public_key
+        ]
+        secret_args = {}
+        if client_private_key:
+            secret_args['client_private_key'] = client_private_key
+
         if pre_shared_key:
-            optional_psk_file = tempfile.NamedTemporaryFile()
-            optional_psk_file.write(pre_shared_key.encode())
-            args += ['--pre-shared-key', optional_psk_file.name]
+            secret_args['pre_shared_key'] = pre_shared_key
 
         if all_outgoing_traffic:
             args.append('--all-outgoing')
 
-        actions.superuser_run('wireguard', args)
-        if optional_psk_file:
-            optional_psk_file.close()
+        actions.superuser_run('wireguard', args,
+                              input=json.dumps(secret_args).encode())
 
         return super().form_valid(form)
 
