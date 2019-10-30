@@ -37,7 +37,8 @@ class AddServerForm(forms.Form):
 
     client_ip_address = forms.CharField(
         label=_('Client IP address provided by server'), strip=True,
-        help_text=_('Client IP address provided by server.'))
+        help_text=_('IP address assigned to the client on the VPN after '
+                    'connecting to the endpoint.'))
 
     public_key = forms.CharField(
         label=_('Public key of the server'), strip=True,
@@ -50,7 +51,7 @@ class AddServerForm(forms.Form):
 
     pre_shared_key = forms.CharField(
         label=_('Pre-shared key'), strip=True, required=False,
-        help_text=_('Optional: a shared secret key provided by the server to '
+        help_text=_('Optional. A shared secret key provided by the server to '
                     'add an additional layer of encryption.'))
 
     all_outgoing_traffic = forms.BooleanField(
