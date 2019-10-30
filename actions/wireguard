@@ -114,23 +114,24 @@ def subcommand_setup(_):
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                        check=True)
     except subprocess.CalledProcessError:
-        subprocess.run(
-            ['ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type',
-             'wireguard'], check=True)
+        subprocess.run([
+            'ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type', 'wireguard'
+        ], check=True)
 
     if not (PUBLIC_KEY_PATH.exists() and PRIVATE_KEY_PATH.exists()):
         _generate_key_pair()
 
     # Configure interface.
-    subprocess.run(
-        ['wg', 'set', SERVER_INTERFACE, 'listen-port', '51820', 'private-key',
-         str(PRIVATE_KEY_PATH)], check=True)
+    subprocess.run([
+        'wg', 'set', SERVER_INTERFACE, 'listen-port', '51820', 'private-key',
+        str(PRIVATE_KEY_PATH)
+    ], check=True)
 
 
 def _get_info():
     """Return info for each configured interface."""
-    output = subprocess.check_output(
-        ['wg', 'show', 'all', 'dump']).decode().strip()
+    output = subprocess.check_output(['wg', 'show', 'all',
+                                      'dump']).decode().strip()
     lines = output.split('\n')
     interfaces = {}
     for line in lines:
@@ -183,8 +184,8 @@ def subcommand_remove_client(arguments):
 
 def _find_next_interface():
     """Find next unused wireguard interface name."""
-    output = subprocess.check_output(
-        ['wg', 'show', 'interfaces']).decode().strip()
+    output = subprocess.check_output(['wg', 'show',
+                                      'interfaces']).decode().strip()
     interfaces = output.split()
     interface_num = 1
     new_interface_name = 'wg1'

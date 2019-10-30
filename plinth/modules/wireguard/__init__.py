@@ -31,7 +31,6 @@ from plinth.utils import format_lazy
 
 from .manifest import clients  # noqa, pylint: disable=unused-import
 
-
 version = 1
 
 managed_packages = ['wireguard']
