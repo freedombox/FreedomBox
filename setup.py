@@ -248,7 +248,7 @@ setuptools.setup(
     scripts=['bin/plinth'],
     license='COPYING.md',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: End Users/Desktop',
