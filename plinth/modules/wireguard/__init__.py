@@ -120,7 +120,7 @@ def get_info():
     """Return server and clients info."""
     output = actions.superuser_run('wireguard', ['get-info'])
     info = json.loads(output)
-    my_server_info = info.pop(SERVER_INTERFACE)
+    my_server_info = info.pop(SERVER_INTERFACE, {})
     my_client_servers = []
     for interface in info.values():
         if interface['peers']:
@@ -128,8 +128,8 @@ def get_info():
 
     return {
         'my_server': {
-            'public_key': my_server_info['public_key'],
-            'clients': my_server_info['peers'],
+            'public_key': my_server_info.get('public_key'),
+            'clients': my_server_info.get('peers'),
         },
         'my_client': {
             'servers': my_client_servers,

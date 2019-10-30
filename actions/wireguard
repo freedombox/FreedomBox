@@ -135,6 +135,9 @@ def _get_info():
     lines = output.split('\n')
     interfaces = {}
     for line in lines:
+        if not line:
+            continue
+
         fields = line.split()
         interface_name = fields[0]
         if interface_name in interfaces:
@@ -247,7 +250,7 @@ def subcommand_add_server(arguments):
 def subcommand_modify_server(arguments):
     """Modify a server."""
     interfaces = _get_info()
-    interfaces.pop(SERVER_INTERFACE)
+    interfaces.pop(SERVER_INTERFACE, None)
     interface_to_modify = None
     for interface in interfaces.values():
         if interface['peers']:
@@ -280,7 +283,7 @@ def subcommand_modify_server(arguments):
 def subcommand_remove_server(arguments):
     """Remove a server."""
     interfaces = _get_info()
-    interfaces.pop(SERVER_INTERFACE)
+    interfaces.pop(SERVER_INTERFACE, None)
     interface_to_remove = None
     for interface in interfaces.values():
         if interface['peers']:
