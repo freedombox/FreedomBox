@@ -33,11 +33,11 @@
   <p>{% trans "Latest handshake:" %} {{ server.latest_handshake }}</p>
 
   <p>
-    <a class="btn btn-sm btn-default"
+    <a class="btn btn-default"
        href="{% url 'wireguard:edit-server' server.public_key|urlencode:'' %}">
       {% trans "Edit Server" %}
     </a>
-    <a class="btn btn-sm btn-default"
+    <a class="btn btn-default"
        href="{% url 'wireguard:delete-server' server.public_key|urlencode:'' %}">
       <span class="fa fa-trash-o" aria-hidden="true"></span>
       {% trans "Delete Server" %}
