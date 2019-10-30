@@ -475,11 +475,12 @@ def _update_wireguard_settings(connection, wireguard):
 
     settings.set_property(nm.SETTING_WIREGUARD_PRIVATE_KEY,
                           wireguard['private_key'])
-    # XXX: not working
     peer = nm.WireGuardPeer.new()
     peer.set_endpoint(wireguard['peer_endpoint'], False)
     peer.set_public_key(wireguard['peer_public_key'], False)
     peer.set_preshared_key(wireguard['preshared_key'], False)
+    peer.append_allowed_ip('0.0.0.0/0', False)
+    peer.append_allowed_ip('::/0', False)
     settings.append_peer(peer)
 
 
