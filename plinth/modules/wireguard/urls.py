@@ -34,10 +34,10 @@ urlpatterns = [
         views.DeleteClientView.as_view(), name='delete-client'),
     url(r'^apps/wireguard/server/add/$', views.AddServerView.as_view(),
         name='add-server'),
-    url(r'^apps/wireguard/server/(?P<public_key>[^/]+)/show/$',
+    url(r'^apps/wireguard/server/(?P<interface>wg[0-9]+)/show/$',
         views.ShowServerView.as_view(), name='show-server'),
-    url(r'^apps/wireguard/server/(?P<public_key>[^/]+)/edit/$',
+    url(r'^apps/wireguard/server/(?P<interface>wg[0-9]+)/edit/$',
         views.EditServerView.as_view(), name='edit-server'),
-    url(r'^apps/wireguard/server/(?P<public_key>[^/]+)/delete/$',
+    url(r'^apps/wireguard/server/(?P<interface>wg[0-9]+)/delete/$',
         views.DeleteServerView.as_view(), name='delete-server'),
 ]

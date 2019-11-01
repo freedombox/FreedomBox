@@ -470,17 +470,25 @@ def _update_wireless_settings(connection, wireless):
 
 def _update_wireguard_settings(connection, wireguard):
     """Create/edit WireGuard settings for network manager connections."""
-    settings = nm.SettingWireGuard.new()
-    connection.add_setting(settings)
+    settings = connection.get_setting_by_name('wireguard')
+    if not settings:
+        settings = nm.SettingWireGuard.new()
+        connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_WIREGUARD_PRIVATE_KEY,
                           wireguard['private_key'])
     peer = nm.WireGuardPeer.new()
     peer.set_endpoint(wireguard['peer_endpoint'], False)
     peer.set_public_key(wireguard['peer_public_key'], False)
-    peer.set_preshared_key(wireguard['preshared_key'], False)
+    if wireguard['preshared_key']:
+        # Flag NONE means that NM should store and retain the secret.
+        # Default seems to be NOT_REQUIRED in this case.
+        peer.set_preshared_key_flags(nm.SettingSecretFlags.NONE)
+        peer.set_preshared_key(wireguard['preshared_key'], False)
+
     peer.append_allowed_ip('0.0.0.0/0', False)
     peer.append_allowed_ip('::/0', False)
+    settings.clear_peers()
     settings.append_peer(peer)
 
 

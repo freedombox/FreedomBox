@@ -18,22 +18,21 @@
 Views for WireGuard application.
 """
 
-import json
-import tempfile
 import urllib.parse
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
 
 import plinth.modules.wireguard as wireguard
-from plinth import actions
+from plinth import actions, network
 from plinth.views import AppView
 
-from . import forms
+from . import forms, utils
 
 
 class WireguardView(AppView):
@@ -159,29 +158,7 @@ class AddServerView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Add the server."""
-        endpoint = form.cleaned_data.get('endpoint')
-        client_ip_address = form.cleaned_data.get('client_ip_address')
-        public_key = form.cleaned_data.get('public_key')
-        client_private_key = form.cleaned_data.get('client_private_key')
-        pre_shared_key = form.cleaned_data.get('pre_shared_key')
-        all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
-        args = [
-            'add-server', '--endpoint', endpoint, '--client-ip',
-            client_ip_address, '--public-key', public_key
-        ]
-        secret_args = {}
-        if client_private_key:
-            secret_args['client_private_key'] = client_private_key
-
-        if pre_shared_key:
-            secret_args['pre_shared_key'] = pre_shared_key
-
-        if all_outgoing_traffic:
-            args.append('--all-outgoing')
-
-        actions.superuser_run('wireguard', args,
-                              input=json.dumps(secret_args).encode())
-
+        utils.add_server(form.get_settings())
         return super().form_valid(form)
 
 
@@ -192,15 +169,16 @@ class ShowServerView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Show Server')
+        context['title'] = _('Server Information')
 
-        public_key = urllib.parse.unquote(self.kwargs['public_key'])
+        interface = self.kwargs['interface']
         info = wireguard.get_info()
-        context.update(info)
-        for server in info['my_client']['servers']:
-            if server['public_key'] == public_key:
-                context['server'] = server
+        server = info['my_client']['servers'].get(interface)
+        if not server:
+            raise Http404
 
+        context['interface'] = interface
+        context['server'] = server
         return context
 
 
@@ -220,48 +198,31 @@ class EditServerView(SuccessMessageMixin, FormView):
     def get_initial(self):
         """Get initial form data."""
         initial = super().get_initial()
-        public_key = urllib.parse.unquote(self.kwargs['public_key'])
-        info = wireguard.get_info()
-        for server in info['my_client']['servers']:
-            if server['public_key'] == public_key:
-                initial['endpoint'] = server['endpoint']
-                initial['client_ip_address'] = ''
-                initial['public_key'] = server['public_key']
-                pre_shared_key = server['preshared_key']
-                if pre_shared_key == '(none)':
-                    initial['pre_shared_key'] = ''
-                else:
-                    initial['pre_shared_key'] = server['preshared_key']
+        interface = self.kwargs['interface']
+        info = wireguard.get_nm_info()
+        server = info.get(interface)
+        if not server:
+            raise Http404
 
-                initial['all_outgoing_traffic'] = False
+        initial['ip_address'] = server.get('ip_address')
+        if server['peers']:
+            peer = server['peers'][0]
+            initial['peer_endpoint'] = peer['endpoint']
+            initial['peer_public_key'] = peer['public_key']
+            initial['private_key'] = server['private_key']
+            initial['preshared_key'] = peer['preshared_key']
+            initial['default_route'] = server['default_route']
 
         return initial
 
     def form_valid(self, form):
         """Update the server."""
-        endpoint = form.cleaned_data.get('endpoint')
-        client_ip_address = form.cleaned_data.get('client_ip_address')
-        public_key = form.cleaned_data.get('public_key')
-        client_private_key = form.client_data.get('client_private_key')
-        pre_shared_key = form.cleaned_data.get('pre_shared_key')
-        all_outgoing_traffic = form.cleaned_data.get('all_outgoing_traffic')
-        args = [
-            'modify-server', '--endpoint', endpoint, '--client-ip',
-            client_ip_address, '--public-key', public_key
-        ]
-        secret_args = {}
-        if client_private_key:
-            secret_args['client_private_key'] = client_private_key
-
-        if pre_shared_key:
-            secret_args['pre_shared_key'] = pre_shared_key
-
-        if all_outgoing_traffic:
-            args.append('--all-outgoing')
-
-        actions.superuser_run('wireguard', args,
-                              input=json.dumps(secret_args).encode())
-
+        settings = form.get_settings()
+        interface = self.kwargs['interface']
+        settings['common']['interface'] = interface
+        settings['common']['name'] = 'WireGuard-' + interface
+        connection = network.get_connection_by_interface_name(interface)
+        network.edit_connection(connection, settings)
         return super().form_valid(form)
 
 
@@ -273,12 +234,24 @@ class DeleteServerView(SuccessMessageMixin, TemplateView):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Server')
-        context['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
+
+        interface = self.kwargs['interface']
+        info = wireguard.get_nm_info()
+        server = info.get(interface)
+        if not server:
+            raise Http404
+
+        context['interface'] = interface
+        if server['peers']:
+            peer = server['peers'][0]
+            context['peer_endpoint'] = peer['endpoint']
+            context['peer_public_key'] = peer['public_key']
+
         return context
 
-    def post(self, request, public_key):
+    def post(self, request, interface):
         """Delete the server."""
-        public_key = urllib.parse.unquote(public_key)
-        actions.superuser_run('wireguard', ['remove-server', public_key])
+        connection = network.get_connection_by_interface_name(interface)
+        network.delete_connection(connection.get_uuid())
         messages.success(request, _('Server deleted.'))
         return redirect('wireguard:index')

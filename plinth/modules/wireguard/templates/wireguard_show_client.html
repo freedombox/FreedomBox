@@ -32,8 +32,8 @@
 
   <h4>{% trans "Status" %}</h4>
   <p>{% trans "Client Public Key:" %} {{ client.public_key }}</p>
-  <p>{% trans "Data transmitted:" %} {{ client.transfer_tx }}</p>
-  <p>{% trans "Data received:" %} {{ client.transfer_rx }}</p>
+  <p>{% trans "Data transmitted:" %} {{ client.transfer_tx|filesizeformat }}</p>
+  <p>{% trans "Data received:" %} {{ client.transfer_rx|filesizeformat }}</p>
   <p>{% trans "Latest handshake:" %} {{ client.latest_handshake }}</p>
 
   <p>

@@ -24,9 +24,6 @@ import json
 import os
 import pathlib
 import subprocess
-import sys
-
-from plinth import network
 
 PUBLIC_KEY_HELP = 'Public key for the client'
 
@@ -56,17 +53,6 @@ def parse_arguments():
     remove_client = subparsers.add_parser('remove-client',
                                           help='Remove a client')
     remove_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
-
-    add_server = subparsers.add_parser('add-server', help='Add a server')
-    add_server.add_argument('--endpoint', required=True,
-                            help='Server endpoint')
-    add_server.add_argument('--client-ip', required=True,
-                            help='Client IP address provided by server')
-    add_server.add_argument('--public-key', required=True,
-                            help='Public key of the server')
-    add_server.add_argument(
-        '--all-outgoing', action='store_true',
-        help='Use this connection to send all outgoing traffic')
 
     modify_server = subparsers.add_parser('modify-server',
                                           help='Modify a server')
@@ -183,129 +169,6 @@ def subcommand_remove_client(arguments):
     subprocess.run(
         ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey, 'remove'],
         check=True)
-
-
-def _find_next_interface():
-    """Find next unused wireguard interface name."""
-    output = subprocess.check_output(['wg', 'show',
-                                      'interfaces']).decode().strip()
-    interfaces = output.split()
-    interface_num = 1
-    new_interface_name = 'wg1'
-    while new_interface_name in interfaces:
-        interface_num += 1
-        new_interface_name = 'wg' + str(interface_num)
-
-    return new_interface_name
-
-
-def _get_connection_settings(name, interface, endpoint, client_ip, public_key,
-                             client_private_key, pre_shared_key):
-    """Return settings for Network Manager connection."""
-    if not client_private_key:
-        with PRIVATE_KEY_PATH.open() as private_key_file:
-            client_private_key = private_key_file.read().strip()
-
-    return {
-        'common': {
-            'name': name,
-            'type': 'wireguard',
-            'interface': interface,
-            'zone': 'internal',
-        },
-        'ipv4': {
-            'method': 'manual',
-            'address': client_ip,
-            'netmask': '',
-            'gateway': '',
-            'dns': '',
-            'second_dns': '',
-        },
-        'wireguard': {
-            'private_key': client_private_key,
-            'peer_endpoint': endpoint,
-            'peer_public_key': public_key,
-            'preshared_key': pre_shared_key,
-        },
-    }
-
-
-def subcommand_add_server(arguments):
-    """Add a server."""
-    secret_args = json.loads(sys.stdin.read() or '{}')
-    new_interface_name = _find_next_interface()
-
-    subprocess.run(
-        ['ip', 'link', 'add', 'dev', new_interface_name, 'type', 'wireguard'],
-        check=True)
-
-    connection_name = 'WireGuard-' + new_interface_name
-    settings = _get_connection_settings(connection_name, new_interface_name,
-                                        arguments.endpoint,
-                                        arguments.client_ip,
-                                        arguments.public_key,
-                                        secret_args.get('client_private_key'),
-                                        secret_args.get('pre_shared_key'))
-    network.add_connection(settings)
-
-
-def subcommand_modify_server(arguments):
-    """Modify a server."""
-    secret_args = json.loads(sys.stdin.read() or '{}')
-
-    interfaces = _get_info()
-    interfaces.pop(SERVER_INTERFACE, None)
-    interface_to_modify = None
-    for interface in interfaces.values():
-        if interface['peers']:
-            peer = interface['peers'][0]
-            if peer['public_key'] == arguments.public_key:
-                interface_to_modify = interface['interface_name']
-
-    if interface_to_modify:
-        connection = network.get_connection_by_interface_name(
-            interface_to_modify)
-        settings = _get_connection_settings(
-            'WireGuard-' + interface_to_modify, interface_to_modify,
-            arguments.endpoint, arguments.client_ip, arguments.public_key,
-            secret_args.get('client_private_key'),
-            secret_args.get('pre_shared_key'))
-
-        if connection:
-            network.edit_connection(connection, settings)
-
-        else:
-            # XXX: raise error?
-            network.add_connection(settings)
-
-    else:
-        raise InterfaceNotFoundError(
-            'Interface with peer %s not found' % arguments.public_key)
-
-
-def subcommand_remove_server(arguments):
-    """Remove a server."""
-    interfaces = _get_info()
-    interfaces.pop(SERVER_INTERFACE, None)
-    interface_to_remove = None
-    for interface in interfaces.values():
-        if interface['peers']:
-            peer = interface['peers'][0]
-            if peer['public_key'] == arguments.publickey:
-                interface_to_remove = interface['interface_name']
-
-    if interface_to_remove:
-        connection = network.get_connection_by_interface_name(
-            interface_to_remove)
-        if connection:
-            network.delete_connection(connection.get_uuid())
-
-        subprocess.run(['ip', 'link', 'delete', interface_to_remove],
-                       check=True)
-
-    else:
-        raise InterfaceNotFoundError(
-            'Interface with peer %s not found' % arguments.publickey)
 
 
 def main():

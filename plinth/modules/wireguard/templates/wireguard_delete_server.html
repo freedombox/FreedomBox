@@ -28,9 +28,18 @@
   <p>
     {% trans "Are you sure that you want to delete this server?" %}
   </p>
-  <p>
-    <b>{{ public_key }}</b>
-  </p>
+  <table class="table table-bordered table-condensed table striped">
+    <tbody>
+      <tr>
+        <th>{% trans "Endpoint" %}</th>
+        <td>{{ peer_endpoint }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Public Key" %}</th>
+        <td>{{ peer_public_key }}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <form class="form" method="post">
     {% csrf_token %}

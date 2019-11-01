@@ -24,21 +24,43 @@
 
   <h3>{{ title }}</h3>
 
-  <h4>{% trans "Server Information" %}</h4>
-  <p>{% trans "Endpoint:" %} {{ server.endpoint }}</p>
-  <p>{% trans "Public Key:" %} {{ server.public_key }}</p>
-  <p>{% trans "Pre-shared key:" %} {{ server.preshared_key }}</p>
-  <p>{% trans "Data transmitted:" %} {{ server.transfer_tx }}</p>
-  <p>{% trans "Data received:" %} {{ server.transfer_rx }}</p>
-  <p>{% trans "Latest handshake:" %} {{ server.latest_handshake }}</p>
+  <table class="table table-bordered table-condensed table-striped">
+    <tbody>
+      <tr>
+        <th>{% trans "Endpoint:" %}</th>
+        <td>{{ server.peers.0.endpoint }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Public Key:" %}</th>
+        <td>{{ server.peers.0.public_key }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Pre-shared key:" %}</th>
+        <td>{{ server.peers.0.preshared_key }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Data transmitted:" %}</th>
+        <td>{{ server.peers.0.status.transfer_tx|filesizeformat }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Data received:" %}</th>
+        <td>{{ server.peers.0.status.transfer_rx|filesizeformat }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Latest handshake:" %}</th>
+        <td>{{ server.peers.0.status.latest_handshake }}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <p>
     <a class="btn btn-default"
-       href="{% url 'wireguard:edit-server' server.public_key|urlencode:'' %}">
+       href="{% url 'wireguard:edit-server' interface %}">
+      <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
       {% trans "Edit Server" %}
     </a>
     <a class="btn btn-default"
-       href="{% url 'wireguard:delete-server' server.public_key|urlencode:'' %}">
+       href="{% url 'wireguard:delete-server' interface %}">
       <span class="fa fa-trash-o" aria-hidden="true"></span>
       {% trans "Delete Server" %}
     </a>

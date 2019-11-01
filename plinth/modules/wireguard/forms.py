@@ -31,30 +31,55 @@ class AddClientForm(forms.Form):
 
 class AddServerForm(forms.Form):
     """Form to add server."""
-    endpoint = forms.CharField(
+    peer_endpoint = forms.CharField(
         label=_('Endpoint'), strip=True,
         help_text=_('Server endpoint with the form "ip:port".'))
 
-    client_ip_address = forms.CharField(
+    peer_public_key = forms.CharField(
+        label=_('Public key of the server'), strip=True,
+        help_text=_('Public key of the server.'))
+
+    ip_address = forms.CharField(
         label=_('Client IP address provided by server'), strip=True,
         help_text=_('IP address assigned to the client on the VPN after '
                     'connecting to the endpoint.'))
 
-    public_key = forms.CharField(
-        label=_('Public key of the server'), strip=True,
-        help_text=_('Public key of the server.'))
-
-    client_private_key = forms.CharField(
+    private_key = forms.CharField(
         label=_('Private key of the client'), strip=True,
         help_text=_('Optional. A new key is generated if left blank.'),
         required=False)
 
-    pre_shared_key = forms.CharField(
+    preshared_key = forms.CharField(
         label=_('Pre-shared key'), strip=True, required=False,
         help_text=_('Optional. A shared secret key provided by the server to '
                     'add an additional layer of encryption.'))
 
-    all_outgoing_traffic = forms.BooleanField(
+    default_route = forms.BooleanField(
         label=_('Use this connection to send all outgoing traffic'),
         required=False,
         help_text=_('Use this connection to send all outgoing traffic.'))
+
+    def get_settings(self):
+        """Return NM settings dict from cleaned data."""
+        settings = {
+            'common': {
+                'type': 'wireguard',
+                'zone': 'internal',
+            },
+            'ipv4': {
+                'method': 'manual',
+                'address': self.cleaned_data['ip_address'],
+                'netmask': '',
+                'gateway': '',
+                'dns': '',
+                'second_dns': '',
+            },
+            'wireguard': {
+                'peer_endpoint': self.cleaned_data['peer_endpoint'],
+                'peer_public_key': self.cleaned_data['peer_public_key'],
+                'private_key': self.cleaned_data['private_key'],
+                'preshared_key': self.cleaned_data['preshared_key'],
+                'default_route': self.cleaned_data['default_route'],
+            }
+        }
+        return settings

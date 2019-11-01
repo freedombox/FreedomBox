@@ -43,7 +43,6 @@
           <td>{{ peer.latest_handshake }}</td>
         </tr>
       {% endfor %}
-
     {% else %}
       <tr>
         <td colspan="3">
@@ -72,18 +71,17 @@
       <th>{% trans "Last Connected Time" %}</th>
     </tr>
     {% if client_peers %}
-      {% for peer in client_peers %}
+      {% for interface, server in client_peers.items %}
         <tr>
-          <td>{{ peer.endpoint }}</td>
+          <td>{{ server.peers.0.endpoint }}</td>
           <td>
-            <a href="{% url 'wireguard:show-server' peer.public_key|urlencode:'' %}">
-              {{ peer.public_key }}
+            <a href="{% url 'wireguard:show-server' interface %}">
+              {{ server.peers.0.public_key }}
             </a>
           </td>
-          <td>{{ peer.latest_handshake }}</td>
+          <td>{{ server.peers.0.status.latest_handshake }}</td>
         </tr>
       {% endfor %}
-
     {% else %}
       <tr>
         <td colspan="4">
