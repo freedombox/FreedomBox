@@ -26,10 +26,12 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.errors import ActionError
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
+from .forms import is_repo_url
 from .manifest import GIT_REPO_PATH, backup, clients  # noqa, pylint: disable=unused-import
 
 clients = clients
@@ -102,13 +104,26 @@ class GitwebApp(app_module.App):
         repos = []
         if os.path.exists(GIT_REPO_PATH):
             for repo in os.listdir(GIT_REPO_PATH):
-                if not repo.endswith('.git'):
+                if not repo.endswith('.git') or repo.startswith('.'):
                     continue
+
+                repo_info = {}
+                repo_info['name'] = repo[:-4]
+
                 private_file = os.path.join(GIT_REPO_PATH, repo, 'private')
-                access = 'public'
                 if os.path.exists(private_file):
-                    access = 'private'
-                repos.append({'name': repo[:-4], 'access': access})
+                    repo_info['access'] = 'private'
+                else:
+                    repo_info['access'] = 'public'
+
+                progress_file = os.path.join(GIT_REPO_PATH, repo,
+                                             'clone_progress')
+                if os.path.exists(progress_file):
+                    with open(progress_file) as file_handle:
+                        clone_progress = file_handle.read()
+                        repo_info['clone_progress'] = clone_progress
+
+                repos.append(repo_info)
 
         return sorted(repos, key=lambda repo: repo['name'])
 
@@ -189,21 +204,36 @@ def restore_post(packet):
     app.update_service_access()
 
 
+def repo_exists(name):
+    """Check whether a remote repository exists."""
+    try:
+        actions.run('gitweb', ['check-repo-exists', '--url', name])
+    except ActionError:
+        return False
+
+    return True
+
+
 def have_public_repos(repos):
     """Check for public repositories"""
     return any((repo['access'] == 'public' for repo in repos))
 
 
 def create_repo(repo, repo_description, owner, is_private):
-    """Create a new repository by calling the action script."""
-    args = [
-        'create-repo', '--name', repo, '--description', repo_description,
-        '--owner', owner
-    ]
+    """Create a new repository or clone a remote repository."""
+    args = ['--description', repo_description, '--owner', owner]
     if is_private:
         args.append('--is-private')
-
-    actions.superuser_run('gitweb', args)
+    if is_repo_url(repo):
+        args = ['create-repo', '--url', repo] + args
+        # create a repo directory and set correct access rights
+        actions.superuser_run('gitweb', args + ['--prepare-only'])
+        # start cloning in background
+        actions.superuser_run('gitweb', args + ['--skip-prepare'],
+                              run_in_background=True)
+    else:
+        args = ['create-repo', '--name', repo] + args
+        actions.superuser_run('gitweb', args)
 
 
 def repo_info(repo):

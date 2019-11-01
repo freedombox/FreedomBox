@@ -20,6 +20,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
   <style type="text/css">
@@ -32,6 +33,9 @@
     }
     .list-group-item .btn {
         margin: -5px 2px;
+    }
+    .repo-cloning {
+        margin: 0px 10px;
     }
   </style>
 {% endblock %}
@@ -58,13 +62,13 @@
           {% for repo in repos %}
             <div class="list-group-item clearfix">
               <a href="{% url 'gitweb:delete' repo.name %}"
-                class="btn btn-default btn-sm pull-right"
+                class="btn btn-default btn-sm pull-right {% if 'clone_progress' in repo %} disabled {% endif %}"
                 role="button"
                 title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
                 <span class="fa fa-trash-o" aria-hidden="true"></span>
               </a>
 
-              <a class="repo-edit btn btn-sm btn-default pull-right"
+              <a class="repo-edit btn btn-sm btn-default pull-right {% if 'clone_progress' in repo %} disabled {% endif %}"
                 href="{% url 'gitweb:edit' repo.name %}">
                 <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
               </a>
@@ -74,15 +78,31 @@
                       aria-label="private"></span>
               {% endif %}
 
-              <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
-                title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
-                {{ repo.name }}
-              </a>
+              {% if 'clone_progress' in repo %}
+                <span class="repo-cloning pull-right">
+                    {% trans 'Cloning...' %} {{ repo.clone_progress }}%
+                </span>
+                <span class="repo-label">{{ repo.name }}<span>
+              {% else %}
+                <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
+                  title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
+                  {{ repo.name }}
+                </a>
+              {% endif %}
             </div>
           {% endfor %}
         </div>
       {% endif %}
     </div>
   </div>
+
+{% endblock %}
+
+
+{% block page_js %}
+
+  {% if cloning %}
+    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
+  {% endif %}
 
 {% endblock %}

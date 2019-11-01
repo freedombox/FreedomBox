@@ -31,7 +31,7 @@ from plinth import actions, views
 from plinth.errors import ActionError
 from plinth.modules import gitweb
 
-from .forms import EditRepoForm
+from .forms import CreateRepoForm, EditRepoForm
 
 
 class GitwebAppView(views.AppView):
@@ -48,14 +48,16 @@ class GitwebAppView(views.AppView):
     def get_context_data(self, *args, **kwargs):
         """Add repositories to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        context['repos'] = gitweb.app.get_repo_list()
+        repos = gitweb.app.get_repo_list()
+        context['repos'] = repos
+        context['cloning'] = any('clone_progress' in repo for repo in repos)
         return context
 
 
 class CreateRepoView(SuccessMessageMixin, FormView):
     """View to create a new repository."""
 
-    form_class = EditRepoForm
+    form_class = CreateRepoForm
     prefix = 'gitweb'
     template_name = 'gitweb_create_edit.html'
     success_url = reverse_lazy('gitweb:index')
@@ -75,9 +77,13 @@ class CreateRepoView(SuccessMessageMixin, FormView):
                 form_data[key] = ''
             else:
                 form_data[key] = value
-
-        gitweb.create_repo(form_data['name'], form_data['description'],
-                           form_data['owner'], form_data['is_private'])
+        try:
+            gitweb.create_repo(form_data['name'], form_data['description'],
+                               form_data['owner'], form_data['is_private'])
+        except ActionError:
+            messages.error(
+                self.request,
+                _('An error occurred while creating the repository.'))
         gitweb.app.update_service_access()
 
         return super().form_valid(form)
@@ -102,7 +108,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
         """Load information about repository being edited."""
         name = self.kwargs['name']
         for repo in gitweb.app.get_repo_list():
-            if repo['name'] == name:
+            if repo['name'] == name and 'clone_progress' not in repo:
                 break
         else:
             raise Http404
@@ -136,7 +142,7 @@ def delete(request, name):
     On POST, delete the repository.
     """
     for repo in gitweb.app.get_repo_list():
-        if repo['name'] == name:
+        if repo['name'] == name and 'clone_progress' not in repo:
             break
     else:
         raise Http404
