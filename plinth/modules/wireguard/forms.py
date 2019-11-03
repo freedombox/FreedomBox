@@ -64,7 +64,7 @@ class AddServerForm(forms.Form):
         settings = {
             'common': {
                 'type': 'wireguard',
-                'zone': 'internal',
+                'zone': 'external',
             },
             'ipv4': {
                 'method': 'manual',

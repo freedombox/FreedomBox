@@ -21,21 +21,9 @@ Configuration helper for WireGuard.
 
 import argparse
 import json
-import os
-import pathlib
 import subprocess
 
-PUBLIC_KEY_HELP = 'Public key for the client'
-
 SERVER_INTERFACE = 'wg0'
-
-KEY_FOLDER = pathlib.Path('/var/lib/freedombox/wireguard')
-PRIVATE_KEY_PATH = KEY_FOLDER / 'privatekey'
-PUBLIC_KEY_PATH = KEY_FOLDER / 'publickey'
-
-
-class InterfaceNotFoundError(Exception):
-    """Exception raised when no matching interface is found."""
 
 
 def parse_arguments():
@@ -43,75 +31,11 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup', help='Setup WireGuard')
     subparsers.add_parser('get-info',
                           help='Get info for each configured interface')
 
-    add_client = subparsers.add_parser('add-client', help='Add a client')
-    add_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
-
-    remove_client = subparsers.add_parser('remove-client',
-                                          help='Remove a client')
-    remove_client.add_argument('publickey', help=PUBLIC_KEY_HELP)
-
-    modify_server = subparsers.add_parser('modify-server',
-                                          help='Modify a server')
-    modify_server.add_argument('--endpoint', required=True,
-                               help='Server endpoint')
-    modify_server.add_argument('--client-ip', required=True,
-                               help='Client IP address provided by server')
-    modify_server.add_argument('--public-key', required=True,
-                               help='Public key of the server')
-    modify_server.add_argument('--pre-shared-key', help='Pre-shared key')
-    modify_server.add_argument(
-        '--all-outgoing', action='store_true',
-        help='Use this connection to send all outgoing traffic')
-
-    remove_server = subparsers.add_parser('remove-server',
-                                          help='Remove a server')
-    remove_server.add_argument('publickey', help=PUBLIC_KEY_HELP)
-
     subparsers.required = True
     return parser.parse_args()
-
-
-def _generate_key_pair():
-    """Generate private/public key pair."""
-    private_key = subprocess.check_output(['wg', 'genkey'])
-    public_key = subprocess.check_output(['wg', 'pubkey'], input=private_key)
-    KEY_FOLDER.mkdir(parents=True, exist_ok=True)
-    with PUBLIC_KEY_PATH.open(mode='wb') as public_key_file:
-        public_key_file.write(public_key)
-
-    old_umask = os.umask(0o077)
-    try:
-        with PRIVATE_KEY_PATH.open(mode='wb') as private_key_file:
-            private_key_file.write(private_key)
-
-    finally:
-        os.umask(old_umask)
-
-
-def subcommand_setup(_):
-    """Setup WireGuard."""
-    # Create interface.
-    try:
-        subprocess.run(['ip', 'link', 'show', SERVER_INTERFACE],
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                       check=True)
-    except subprocess.CalledProcessError:
-        subprocess.run([
-            'ip', 'link', 'add', 'dev', SERVER_INTERFACE, 'type', 'wireguard'
-        ], check=True)
-
-    if not (PUBLIC_KEY_PATH.exists() and PRIVATE_KEY_PATH.exists()):
-        _generate_key_pair()
-
-    # Configure interface.
-    subprocess.run([
-        'wg', 'set', SERVER_INTERFACE, 'listen-port', '51820', 'private-key',
-        str(PRIVATE_KEY_PATH)
-    ], check=True)
 
 
 def _get_info():
@@ -125,14 +49,16 @@ def _get_info():
             continue
 
         fields = line.split()
+        fields = [field if field != '(none)' else None for field in fields]
         interface_name = fields[0]
         if interface_name in interfaces:
+            latest_handshake = int(fields[5]) if int(fields[5]) else None
             peer = {
                 'public_key': fields[1],
                 'preshared_key': fields[2],
                 'endpoint': fields[3],
                 'allowed_ips': fields[4],
-                'latest_handshake': fields[5],
+                'latest_handshake': latest_handshake,
                 'transfer_rx': fields[6],
                 'transfer_tx': fields[7],
                 'persistent_keepalive': fields[8],
@@ -155,20 +81,6 @@ def _get_info():
 def subcommand_get_info(_):
     """Print info for each configured interface."""
     print(json.dumps(_get_info()))
-
-
-def subcommand_add_client(arguments):
-    """Add a client."""
-    subprocess.run(
-        ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey],
-        check=True)
-
-
-def subcommand_remove_client(arguments):
-    """Remove a client."""
-    subprocess.run(
-        ['wg', 'set', SERVER_INTERFACE, 'peer', arguments.publickey, 'remove'],
-        check=True)
 
 
 def main():

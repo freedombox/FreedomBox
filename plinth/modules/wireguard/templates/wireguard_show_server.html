@@ -26,30 +26,34 @@
 
   <table class="table table-bordered table-condensed table-striped">
     <tbody>
-      <tr>
-        <th>{% trans "Endpoint:" %}</th>
-        <td>{{ server.peers.0.endpoint }}</td>
-      </tr>
-      <tr>
-        <th>{% trans "Public Key:" %}</th>
-        <td>{{ server.peers.0.public_key }}</td>
-      </tr>
-      <tr>
-        <th>{% trans "Pre-shared key:" %}</th>
-        <td>{{ server.peers.0.preshared_key }}</td>
-      </tr>
-      <tr>
-        <th>{% trans "Data transmitted:" %}</th>
-        <td>{{ server.peers.0.status.transfer_tx|filesizeformat }}</td>
-      </tr>
-      <tr>
-        <th>{% trans "Data received:" %}</th>
-        <td>{{ server.peers.0.status.transfer_rx|filesizeformat }}</td>
-      </tr>
-      <tr>
-        <th>{% trans "Latest handshake:" %}</th>
-        <td>{{ server.peers.0.status.latest_handshake }}</td>
-      </tr>
+      {% for peer in server.peers.values %}
+        {% if forloop.first %}
+          <tr>
+            <th>{% trans "Endpoint:" %}</th>
+            <td>{{ peer.endpoint }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Public Key:" %}</th>
+            <td>{{ peer.public_key }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Pre-shared key:" %}</th>
+            <td>{{ peer.preshared_key }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Data transmitted:" %}</th>
+            <td>{{ peer.status.transfer_tx|filesizeformat }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Data received:" %}</th>
+            <td>{{ peer.status.transfer_rx|filesizeformat }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Latest handshake:" %}</th>
+            <td>{{ peer.status.latest_handshake|default:'' }}</td>
+          </tr>
+        {% endif %}
+      {% endfor %}
     </tbody>
   </table>
 

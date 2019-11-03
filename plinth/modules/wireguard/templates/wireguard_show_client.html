@@ -22,23 +22,58 @@
 
 {% block content %}
 
-  <h3>{{ title }}</h3>
+  <h3>{% trans "Connection Information" %}</h3>
+  <table class="table table-bordered table-condensed table-striped">
+    <tbody>
+      <tr>
+        <th>{% trans "Client public key:" %}</th>
+        <td>{{ client.public_key }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "IP address to use:" %}</th>
+        <td>{{ client.allowed_ips|join:", " }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Pre-shared key:" %}</th>
+        <td>{{ client.preshared_key }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Server endpoints:" %}</th>
+        <td>
+          {% for endpoint in endpoints %}
+            <div>{{ endpoint }}</div>
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <th>{% trans "Server's public key:" %}</th>
+        <td>{{ server.public_key }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <h4>{% trans "Connection Information" %}</h4>
-  <p>{% trans "IP address to use:" %}</p>
-  <p>{% trans "Server endpoints:" %}</p>
-  <p>{% trans "Server's public key:" %} {{ my_server.public_key }}</p>
-  <p>{% trans "Pre-shared key:" %}</p>
-
-  <h4>{% trans "Status" %}</h4>
-  <p>{% trans "Client Public Key:" %} {{ client.public_key }}</p>
-  <p>{% trans "Data transmitted:" %} {{ client.transfer_tx|filesizeformat }}</p>
-  <p>{% trans "Data received:" %} {{ client.transfer_rx|filesizeformat }}</p>
-  <p>{% trans "Latest handshake:" %} {{ client.latest_handshake }}</p>
+  <h3>{% trans "Status" %}</h3>
+  <table class="table table-bordered table-condensed table-striped">
+    <tbody>
+      <tr>
+        <th>{% trans "Data transmitted:" %}</th>
+        <td>{{ client.status.transfer_tx|filesizeformat }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Data received:" %}</th>
+        <td>{{ client.status.transfer_rx|filesizeformat }}</td>
+      </tr>
+      <tr>
+        <th>{% trans "Latest handshake:" %}</th>
+        <td>{{ client.status.latest_handshake|default:'' }}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <p>
     <a class="btn btn-default"
        href="{% url 'wireguard:edit-client' client.public_key|urlencode:'' %}">
+      <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
       {% trans "Edit Client" %}
     </a>
     <a class="btn btn-default"

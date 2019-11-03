@@ -30,18 +30,22 @@
          id="server-peers-list">
     <tr>
       <th>{% trans "Public Key" %}</th>
+      <th>{% trans "Allowed IPs" %}</th>
       <th>{% trans "Last Connected Time" %}</th>
     </tr>
-    {% if server_peers %}
-      {% for peer in server_peers %}
-        <tr>
-          <td>
-            <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
-              {{ peer.public_key }}
-            </a>
-          </td>
-          <td>{{ peer.latest_handshake }}</td>
-        </tr>
+    {% if server.peers %}
+      {% for peer in server.peers.values %}
+        {% if peer.public_key %}
+          <tr>
+            <td>
+              <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
+                {{ peer.public_key }}
+              </a>
+            </td>
+            <td>{{ peer.allowed_ips|join:", " }}</td>
+            <td>{{ peer.status.latest_handshake|default:'' }}</td>
+          </tr>
+        {% endif %}
       {% endfor %}
     {% else %}
       <tr>
@@ -53,6 +57,13 @@
       </tr>
     {% endif %}
   </table>
+
+  <p>
+    {% blocktrans %}
+      Public key for this {{ box_name }}:
+    {% endblocktrans %}
+    <pre>{{ server.public_key }}</pre>
+  </p>
 
   <a title="{% trans 'Add a new peer' %}"
      role="button" class="btn btn-default"
@@ -72,15 +83,19 @@
     </tr>
     {% if client_peers %}
       {% for interface, server in client_peers.items %}
-        <tr>
-          <td>{{ server.peers.0.endpoint }}</td>
-          <td>
-            <a href="{% url 'wireguard:show-server' interface %}">
-              {{ server.peers.0.public_key }}
-            </a>
-          </td>
-          <td>{{ server.peers.0.status.latest_handshake }}</td>
-        </tr>
+        {% for peer in server.peers.values %}
+          {% if forloop.first %}
+            <tr>
+              <td>{{ peer.endpoint }}</td>
+              <td>
+                <a href="{% url 'wireguard:show-server' interface %}">
+                  {{ peer.public_key }}
+                </a>
+              </td>
+              <td>{{ peer.status.latest_handshake|default:'' }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     {% else %}
       <tr>
@@ -99,16 +114,6 @@
     <span class="fa fa-plus" aria-hidden="true"></span>
     {% trans "Add Server" %}
   </a>
-
-  <h3>{% trans "Connection Information" %}</h3>
-
-  <p>
-    {% blocktrans %}
-      Public key for this {{ box_name }}:
-    {% endblocktrans %}
-
-    <pre>{{ public_key }}</pre>
-  </p>
 
   {{ block.super }}
 

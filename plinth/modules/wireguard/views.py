@@ -29,7 +29,8 @@ from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
 
 import plinth.modules.wireguard as wireguard
-from plinth import actions, network
+from plinth import network
+from plinth.modules.names.components import DomainName
 from plinth.views import AppView
 
 from . import forms, utils
@@ -49,9 +50,8 @@ class WireguardView(AppView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['public_key'] = wireguard.get_public_key()
-        info = wireguard.get_info()
-        context['server_peers'] = info['my_server']['clients']
+        info = utils.get_info()
+        context['server'] = info['my_server']
         context['client_peers'] = info['my_client']['servers']
         return context
 
@@ -72,7 +72,13 @@ class AddClientView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Add the client."""
         public_key = form.cleaned_data.get('public_key')
-        actions.superuser_run('wireguard', ['add-client', public_key])
+        try:
+            utils.add_client(public_key)
+        except ValueError:
+            messages.warning(self.request,
+                             _('Client with public key already exists'))
+            return redirect('wireguard:index')
+
         return super().form_valid(form)
 
 
@@ -86,12 +92,17 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         context['title'] = _('Show Client')
 
         public_key = urllib.parse.unquote(self.kwargs['public_key'])
-        info = wireguard.get_info()
-        context.update(info)
-        for client in info['my_server']['clients']:
-            if client['public_key'] == public_key:
-                context['client'] = client
+        server_info = utils.get_info()['my_server']
+        if not server_info or public_key not in server_info['peers']:
+            raise Http404
 
+        domains = DomainName.list_names(filter_for_service='wireguard')
+        context['server'] = server_info
+        context['client'] = server_info['peers'][public_key]
+        context['endpoints'] = [
+            domain + ':' + str(server_info['listen_port'])
+            for domain in domains
+        ]
         return context
 
 
@@ -117,10 +128,17 @@ class EditClientView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Update the client."""
         old_public_key = form.initial['public_key']
-        actions.superuser_run('wireguard', ['remove-client', old_public_key])
-
         public_key = form.cleaned_data.get('public_key')
-        actions.superuser_run('wireguard', ['add-client', public_key])
+
+        if old_public_key != public_key:
+            try:
+                utils.add_client(public_key)
+            except ValueError:
+                messages.warning(self.request,
+                                 _('Client with public key already exists'))
+
+            utils.remove_client(old_public_key)
+
         return super().form_valid(form)
 
 
@@ -138,8 +156,12 @@ class DeleteClientView(SuccessMessageMixin, TemplateView):
     def post(self, request, public_key):
         """Delete the client."""
         public_key = urllib.parse.unquote(public_key)
-        actions.superuser_run('wireguard', ['remove-client', public_key])
-        messages.success(request, _('Client deleted.'))
+        try:
+            utils.remove_client(public_key)
+            messages.success(request, _('Client deleted.'))
+        except KeyError:
+            messages.error(request, _('Client not found'))
+
         return redirect('wireguard:index')
 
 
@@ -172,7 +194,7 @@ class ShowServerView(SuccessMessageMixin, TemplateView):
         context['title'] = _('Server Information')
 
         interface = self.kwargs['interface']
-        info = wireguard.get_info()
+        info = utils.get_info()
         server = info['my_client']['servers'].get(interface)
         if not server:
             raise Http404
@@ -199,14 +221,14 @@ class EditServerView(SuccessMessageMixin, FormView):
         """Get initial form data."""
         initial = super().get_initial()
         interface = self.kwargs['interface']
-        info = wireguard.get_nm_info()
+        info = utils.get_nm_info()
         server = info.get(interface)
         if not server:
             raise Http404
 
         initial['ip_address'] = server.get('ip_address')
         if server['peers']:
-            peer = server['peers'][0]
+            peer = next(peer for peer in server['peers'].values())
             initial['peer_endpoint'] = peer['endpoint']
             initial['peer_public_key'] = peer['public_key']
             initial['private_key'] = server['private_key']
@@ -220,7 +242,7 @@ class EditServerView(SuccessMessageMixin, FormView):
         settings = form.get_settings()
         interface = self.kwargs['interface']
         settings['common']['interface'] = interface
-        settings['common']['name'] = 'WireGuard-' + interface
+        settings['common']['name'] = 'WireGuard-Client-' + interface
         connection = network.get_connection_by_interface_name(interface)
         network.edit_connection(connection, settings)
         return super().form_valid(form)
@@ -236,14 +258,14 @@ class DeleteServerView(SuccessMessageMixin, TemplateView):
         context['title'] = _('Delete Server')
 
         interface = self.kwargs['interface']
-        info = wireguard.get_nm_info()
+        info = utils.get_nm_info()
         server = info.get(interface)
         if not server:
             raise Http404
 
         context['interface'] = interface
         if server['peers']:
-            peer = server['peers'][0]
+            peer = next(peer for peer in server['peers'].values())
             context['peer_endpoint'] = peer['endpoint']
             context['peer_public_key'] = peer['public_key']
 

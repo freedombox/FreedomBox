@@ -477,19 +477,27 @@ def _update_wireguard_settings(connection, wireguard):
 
     settings.set_property(nm.SETTING_WIREGUARD_PRIVATE_KEY,
                           wireguard['private_key'])
-    peer = nm.WireGuardPeer.new()
-    peer.set_endpoint(wireguard['peer_endpoint'], False)
-    peer.set_public_key(wireguard['peer_public_key'], False)
-    if wireguard['preshared_key']:
-        # Flag NONE means that NM should store and retain the secret.
-        # Default seems to be NOT_REQUIRED in this case.
-        peer.set_preshared_key_flags(nm.SettingSecretFlags.NONE)
-        peer.set_preshared_key(wireguard['preshared_key'], False)
+    if 'listen_port' in wireguard:
+        settings.set_property(nm.SETTING_WIREGUARD_LISTEN_PORT,
+                              wireguard['listen_port'])
 
-    peer.append_allowed_ip('0.0.0.0/0', False)
-    peer.append_allowed_ip('::/0', False)
-    settings.clear_peers()
-    settings.append_peer(peer)
+    if 'peer_public_key' in wireguard:
+        peer = nm.WireGuardPeer.new()
+        peer.set_public_key(wireguard['peer_public_key'], False)
+
+        if 'peer_endpoint' in wireguard:
+            peer.set_endpoint(wireguard['peer_endpoint'], False)
+
+        if wireguard['preshared_key']:
+            # Flag NONE means that NM should store and retain the secret.
+            # Default seems to be NOT_REQUIRED in this case.
+            peer.set_preshared_key_flags(nm.SettingSecretFlags.NONE)
+            peer.set_preshared_key(wireguard['preshared_key'], False)
+
+        peer.append_allowed_ip('0.0.0.0/0', False)
+        peer.append_allowed_ip('::/0', False)
+        settings.clear_peers()
+        settings.append_peer(peer)
 
 
 def _update_settings(connection, connection_uuid, settings):
