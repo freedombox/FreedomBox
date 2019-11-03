@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 17:55-0400\n"
-"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"PO-Revision-Date: 2019-11-04 18:04+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -1246,13 +1246,6 @@ msgid "Please provide a password"
 msgstr "Ange ett lösenord"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:27
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services on <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
@@ -1261,24 +1254,21 @@ msgid ""
 "freedns.afraid.org</a>."
 msgstr ""
 "Om du önskar ett gratis konto för dynamiskt DNS, kan du hitta en gratis "
-"GnuDIP-tjänst på <a href='http://gnudip.datasystems24.net' target='_blank'> "
-"gnudip.datasystems24.net</a> eller så kan du hitta  tjänster baserade på "
-"gratis uppdateringsadress från <a href='http://freedns.afraid.org/' "
+"GnuDIP-tjänst på <a href='http://gnudip.datasystems24.net' "
+"target='_blank'>gnudip.datasystems24.net</a> eller så kan du hitta gratis "
+"uppdaterade URL-baserade tjänster på <a href='http://freedns.afraid.org/' "
 "target='_blank'> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:38
-#, fuzzy, python-format
-#| msgid ""
-#| "If your %(box_name)s is connected behind some NAT router, don't forget to "
-#| "add port forwarding (i.e. forward some standard ports like 80 and 443)."
+#, python-format
 msgid ""
 "If your %(box_name)s is connected behind a NAT router, don't forget to add "
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
 "Om din %(box_name)s är ansluten bakom en NAT-router, glöm inte att lägga "
-"till port forwarding (dvs vidarebefordra några standardportar, såsom 80 och "
-"443)."
+"till port forwarding för standard ports, såsom TCP port 80 (HTTP) och TCP "
+"port 443 (HTTPS)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
@@ -1294,38 +1284,30 @@ msgid "NAT type"
 msgstr "NAT-typ"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:28
-#, fuzzy
-#| msgid ""
-#| "NAT type not detected yet, if you do not provide a \"IP check URL\" we "
-#| "will not detect a NAT type."
 msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
 msgstr ""
-"NAT-typ ännu inte upptäckt. Om du inte anger en \"IP-kontroll  adress\" "
-"kommer vi inte att upptäcka en NAT-typ."
+"NAT-typen har ännu inte upptäckts. Om du inte anger en \"IP-kontrolladress\" "
+"kommer vi inte att kunna upptäcka NAT-typen."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:34
 msgid "Direct connection to the Internet."
 msgstr "Direktanslutning till Internet."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:36
-#, fuzzy, python-format
-#| msgid ""
-#| "Behind NAT. This means that Dynamic DNS service will poll the \"IP check "
-#| "URL\" for changes (the \"IP check URL\" entry is needed for this - "
-#| "otherwise IP changes will not be detected).  In case the WAN IP changes, "
-#| "it may take up to %(timer)s minutes until your DNS entry is updated."
+#, python-format
 msgid ""
 "Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
 "up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
 "for this, otherwise IP changes will not be detected). In case the WAN IP "
 "changes, it may take up to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
-"Bakom NAT. Detta betyder att dynamisk DNS-tjänsten kommer att fråga \"IP-"
-"kontrolladress\" om ändringar skett (\"IP-kontrolladress\" behöver därför "
-"anges, annars kan inte ändringar av IP adress upptäckas). Det kan ta upp "
-"till %(timer)s minuter tills din DNS-inställning uppdateras."
+"Bakom NAT. Detta innebär att Dynamic DNS-tjänst kommer att undersöka \"URL "
+"för att leta upp offentlig IP\" för ändringar (posten \"URL för att leta upp "
+"offentlig IP\" behövs för detta, annars kommer IP-ändringar inte att "
+"upptäckas). Om WAN IP ändras kan det ta upp till%(timer) s minuter tills din "
+"DNS-post har uppdaterats."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
@@ -1352,27 +1334,25 @@ msgid "Configure Dynamic DNS"
 msgstr "Konfigurera Dynamisk DNS"
 
 #: plinth/modules/dynamicdns/views.py:107
-#, fuzzy
-#| msgid "Dynamic DNS"
 msgid "Dynamic DNS Status"
-msgstr "Dynamisk DNS (DomänNamnsServer)"
+msgstr "Dynamisk DNS (DomänNamnsServer) status"
 
 #: plinth/modules/ejabberd/__init__.py:50
 msgid "ejabberd"
-msgstr ""
+msgstr "ejabbert"
 
 #: plinth/modules/ejabberd/__init__.py:52
 #: plinth/modules/matrixsynapse/__init__.py:49
-#, fuzzy
-#| msgid "DNS Server"
 msgid "Chat Server"
-msgstr "DNS-Server"
+msgstr "Chat-Server"
 
 #: plinth/modules/ejabberd/__init__.py:55
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
 msgstr ""
+"XMPP är en öppen och standardiserad kommunikationsprotokoll. Här kan du köra "
+"din XMPP-server (kallad ejabberd)."
 
 #: plinth/modules/ejabberd/__init__.py:58
 #, python-brace-format
@@ -1382,10 +1362,14 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
+"För att faktiskt kommunicera kan du använda <a href=\"{jsxc_url}\""
+">webbklient</a> eller andra <a href='https://xmpp.org/software/clients' "
+"target='_blank'>XMPP-klient</a>. När den är aktiverad kan ejabberd nås av "
+"alla <a href=\"{users_url}\"> användare med en {box_name} inloggning</a>."
 
 #: plinth/modules/ejabberd/forms.py:32
 msgid "Enable Message Archive Management"
-msgstr ""
+msgstr "Aktivera meddelandearkivhantering"
 
 #: plinth/modules/ejabberd/forms.py:34
 #, python-brace-format
@@ -1395,32 +1379,34 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Om det är aktiverat lagrar din {box_name} historia för chattmeddelanden. "
+"Detta tillåter synkronisering av konversationer mellan flera klienter och "
+"läsa historiken för ett chattrum med flera användare. Det beror på "
+"klientinställningarna om historiken lagras som ren text eller krypterad."
 
 #: plinth/modules/ejabberd/manifest.py:26
-#, fuzzy
-#| msgid "Connection"
 msgid "Conversations"
-msgstr "Anslutning"
+msgstr "Konversationer"
 
 #: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
-msgstr ""
+msgstr "Xabber"
 
 #: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
 msgstr ""
+"Open Source Jabber (XMPP) -klient med stöd för flera konton och ett rent och "
+"enkelt gränssnitt. "
 
 #: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
-msgstr ""
+msgstr "Yaxim"
 
 #: plinth/modules/ejabberd/manifest.py:71
-#, fuzzy
-#| msgid "DNS Server"
 msgid "ChatSecure"
-msgstr "DNS-Server"
+msgstr "ChatSecure"
 
 #: plinth/modules/ejabberd/manifest.py:73
 msgid ""
@@ -1429,14 +1415,18 @@ msgid ""
 "new accounts on public XMPP servers (including via Tor), or even connect to "
 "your own server for extra security."
 msgstr ""
+"ChatSecure är en gratis och open source meddelanden-app som har OTR-"
+"kryptering via XMPP. Du kan ansluta till ett befintligt Google-konto, skapa "
+"nya konton på offentliga XMPP-servrar (inklusive via Tor) eller till och med "
+"ansluta till din egen server för extra säkerhet."
 
 #: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
-msgstr ""
+msgstr "Dino"
 
 #: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
-msgstr ""
+msgstr "Gajim"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -1445,11 +1435,14 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
+"Din XMPP-serverdomän är inställd på <b>%(domännamn)s</b>. Användar-ID kommer "
+"att se ut som <i>användarnamn@%(domännamn)s</i>. Du kan ställa in din domän "
+"på systemet <a href=\"%(index_url)s\">Konfigurera</a> sidan."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:47
 #: plinth/modules/jsxc/templates/jsxc.html:32
 msgid "Launch web client"
-msgstr ""
+msgstr "Starta webbklient"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/i2p/templates/i2p.html:26
@@ -1463,29 +1456,25 @@ msgstr "Konfiguration"
 
 #: plinth/modules/ejabberd/views.py:77
 msgid "Message Archive Management enabled"
-msgstr ""
+msgstr "Meddelandearkivhantering aktiverad"
 
 #: plinth/modules/ejabberd/views.py:81
 msgid "Message Archive Management disabled"
-msgstr ""
+msgstr "Meddelandearkivhantering avaktiverad"
 
 #: plinth/modules/firewall/__init__.py:36
 msgid "Firewall"
 msgstr "Brandvägg"
 
 #: plinth/modules/firewall/__init__.py:40
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Firewall is a security system that controls the incoming and outgoing "
-#| "network traffic on your %(box_name)s. Keeping a firewall enabled and "
-#| "properly configured reduces risk of security threat from the Internet."
+#, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
 "Brandväggen är ett säkerhetssystem som styr den inkommande och utgående "
-"nätverkstrafiken på din %(box_name)s. Att ha en brandvägg aktiverad och "
+"nätverkstrafiken på din {box_name}. Att ha en brandvägg aktiverad och "
 "korrekt konfigurerad minskar risken för säkerhetshot från Internet."
 
 #: plinth/modules/firewall/templates/firewall.html:30
@@ -1502,10 +1491,8 @@ msgstr ""
 "alternativt, vid ett system med systemd \"systemctl start firewalld\"."
 
 #: plinth/modules/firewall/templates/firewall.html:43
-#, fuzzy
-#| msgid "Show password"
 msgid "Show Ports"
-msgstr "Visa lösenord"
+msgstr "Visa Ports"
 
 #: plinth/modules/firewall/templates/firewall.html:44
 msgid "Service/Port"
@@ -1553,10 +1540,13 @@ msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
 "also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
 msgstr ""
+"Ange hemligheten som genererades under FreedomBox-installationen. Denna "
+"hemlighet kan också erhållas från filen /var/lib/plinth/firstboot-wizard-"
+"secret"
 
 #: plinth/modules/first_boot/forms.py:31
 msgid "Secret"
-msgstr ""
+msgstr "Hemlighet"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1565,11 +1555,11 @@ msgstr "Installation klar!"
 #: plinth/modules/first_boot/templates/firstboot_complete.html:29
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
+msgstr "Utan några appar kan dina%(box_name)s inte göra så mycket."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:36
 msgid "Install Apps"
-msgstr ""
+msgstr "Installera appar"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:42
 #, python-format
@@ -1577,6 +1567,8 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
+"Du kanske vill kontrollera <a href=\"%(networks_url)s\""
+">nätverksinställningar</a> och ändra den vid behov."
 
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
@@ -1588,11 +1580,11 @@ msgstr "Installationen Klar"
 
 #: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
 msgid "Gitweb"
-msgstr ""
+msgstr "Gitweb"
 
 #: plinth/modules/gitweb/__init__.py:43
 msgid "Simple Git Hosting"
-msgstr ""
+msgstr "Enkelt Git hosting"
 
 #: plinth/modules/gitweb/__init__.py:46
 msgid ""
@@ -1604,103 +1596,97 @@ msgid ""
 "available graphical clients. And you can share your code with people around "
 "the world."
 msgstr ""
+"Git är ett distribuerat versionskontrollsystem för att spåra förändringar i "
+"källkoden under mjukvaruutveckling. Gitweb tillhandahåller ett "
+"webbgränssnitt till Git-respositorys. Du kan bläddra i historik och innehåll "
+"i källkoden, använda sökning för att hitta relevanta åtaganden och kod. Du "
+"kan också klona respositorys och ladda upp kodändringar med en kommandorad "
+"Git-klient eller med flera tillgängliga grafiska klienter. Och du kan dela "
+"din kod med människor runt om i världen."
 
 #: plinth/modules/gitweb/__init__.py:53
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
+"För att lära dig mer om hur du använder Git besök<a href=\"https://git-scm."
+"com/docs/gittutorial\">Git handledning</a>."
 
 #: plinth/modules/gitweb/__init__.py:57
 msgid "Read-write access to Git repositories"
-msgstr ""
+msgstr "Läs-skrivåtkomst till Git-respositories"
 
 #: plinth/modules/gitweb/forms.py:32
-#, fuzzy
-#| msgid "Documentation"
 msgid "Name of the repository"
-msgstr "Dokumentation"
+msgstr "Förvarets namn"
 
 #: plinth/modules/gitweb/forms.py:36
 msgid "An alpha-numeric string that uniquely identifies a repository."
-msgstr ""
+msgstr "En alfanumerisk sträng som identifierar ett respository unikt."
 
 #: plinth/modules/gitweb/forms.py:40
 msgid "Description of the repository"
-msgstr ""
+msgstr "Beskrivning av förvaret"
 
 #: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
 msgid "Optional, for displaying on Gitweb."
-msgstr ""
+msgstr "Tillval, för att visa på Gitweb."
 
 #: plinth/modules/gitweb/forms.py:44
 msgid "Repository's owner name"
-msgstr ""
+msgstr "Förvarets ägarnamn"
 
 #: plinth/modules/gitweb/forms.py:48
-#, fuzzy
-#| msgid "Documentation"
 msgid "Private repository"
-msgstr "Dokumentation"
+msgstr "Privat respository"
 
 #: plinth/modules/gitweb/forms.py:49
 msgid "Allow only authorized users to access this repository."
-msgstr ""
+msgstr "Tillåt endast behöriga användare att komma åt detta respository."
 
 #: plinth/modules/gitweb/forms.py:66
-#, fuzzy
-#| msgid "Invalid hostname"
 msgid "Invalid repository name."
-msgstr "Ogiltigt värdnamn"
+msgstr "Ogiltigt respository namn."
 
 #: plinth/modules/gitweb/forms.py:71
 msgid "A repository with this name already exists."
-msgstr ""
+msgstr "Ett förvar med det här namnet finns redan."
 
 #: plinth/modules/gitweb/manifest.py:36
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:41
 #: plinth/modules/gitweb/templates/gitweb_configure.html:43
-#, fuzzy
-#| msgid "Documentation"
 msgid "Create repository"
-msgstr "Dokumentation"
+msgstr "Skapa respository"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:50
-#, fuzzy
-#| msgid "Documentation"
 msgid "Manage Repositories"
-msgstr "Dokumentation"
+msgstr "Hantera respositories"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:55
-#, fuzzy
-#| msgid "No wikis or blogs available."
 msgid "No repositories available."
-msgstr "Ingen wiki eller blogg tillgänglig."
+msgstr "Inga förvar finns tillgängliga."
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:63
-#, fuzzy, python-format
-#| msgid "Delete %(name)s"
+#, python-format
 msgid "Delete repository %(repo.name)s"
-msgstr "Ta bort %(name)s"
+msgstr "Ta bort respository %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:78
-#, fuzzy, python-format
-#| msgid "Go to site %(site)s"
+#, python-format
 msgid "Go to repository %(repo.name)s"
-msgstr "Gå till webbsidan %(site)s"
+msgstr "Gå till respository %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:27
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete Git Repository <em>%(name)s</em>"
-msgstr "Ta bort Wiki eller Blogg <em>%(name)s</em>"
+msgstr "Ta bort Git-respository <em>%(name)s</em>"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:33
 msgid "Delete this repository permanently?"
-msgstr ""
+msgstr "Radera detta arkiv permanent?"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:42
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
@@ -1710,22 +1696,20 @@ msgstr "Ta bort %(name)s"
 
 #: plinth/modules/gitweb/views.py:62
 msgid "Repository created."
-msgstr ""
+msgstr "Respository skapat."
 
 #: plinth/modules/gitweb/views.py:93
 msgid "Repository edited."
-msgstr ""
+msgstr "Respository redigerad."
 
 #: plinth/modules/gitweb/views.py:98
-#, fuzzy
-#| msgid "Documentation"
 msgid "Edit repository"
-msgstr "Dokumentation"
+msgstr "Redigera respository"
 
 #: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
 #: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Ett fel inträffade under konfiguration."
 
 #: plinth/modules/gitweb/views.py:147
 #, python-brace-format
@@ -1751,19 +1735,19 @@ msgstr "Manual"
 #: plinth/modules/help/templates/help_support.html:24
 #: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
-msgstr ""
+msgstr "Få stöd"
 
 #: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
 #: plinth/modules/help/templates/help_feedback.html:24
 #: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
-msgstr ""
+msgstr "Skicka feedback"
 
 #: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
 #: plinth/modules/help/templates/help_contribute.html:24
 #: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
-msgstr ""
+msgstr "Bidra"
 
 #: plinth/modules/help/help.py:86
 msgid "Documentation and FAQ"
@@ -1840,25 +1824,23 @@ msgid "Learn more &raquo;"
 msgstr "Läs mer &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:78
-#, fuzzy, python-format
-#| msgid "You are running Plinth version %(version)s."
+#, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
-msgstr "Du använder Plinth version %(version)s."
+msgstr "Du använder %(os_release)s och %(box_name)s version %(version)s."
 
 #: plinth/modules/help/templates/help_about.html:83
 #, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr ""
+msgstr "Det finns en ny %(box_name)s version tillgänglig."
 
 #: plinth/modules/help/templates/help_about.html:87
-#, fuzzy, python-format
-#| msgid "%(box_name)s Setup"
+#, python-format
 msgid "%(box_name)s is up to date."
-msgstr "%(box_name)s Installation"
+msgstr "%(box_name)s är uppdaterad."
 
 #: plinth/modules/help/templates/help_about.html:94
 msgid "Security Notice"
-msgstr ""
+msgstr "Säkerhetsmeddelande"
 
 #: plinth/modules/help/templates/help_about.html:96
 msgid ""
@@ -1867,6 +1849,9 @@ msgid ""
 "maintained on a best-effort basis by contributors in Debian and FreedomBox "
 "community."
 msgstr ""
+"Du använder paket från Debian backports. Observera att dessa paket inte har "
+"säkerhetsstöd från Debian. De underhålls emellertid på bästa sätt av "
+"medarbetare i Debian och FreedomBox gemenskap."
 
 #: plinth/modules/help/templates/help_base.html:36
 #: plinth/modules/help/templates/help_index.html:76
@@ -1876,7 +1861,7 @@ msgstr "%(box_name)s Installation"
 
 #: plinth/modules/help/templates/help_contribute.html:27
 msgid "The FreedomBox project welcomes contributions of all kinds."
-msgstr ""
+msgstr "FreedomBox-projektet välkomnar bidrag av alla slag."
 
 #: plinth/modules/help/templates/help_contribute.html:33
 msgid ""
@@ -1886,6 +1871,11 @@ msgid ""
 "into your language, hosting hackathons or install fests, and by spreading "
 "the word."
 msgstr ""
+"Du kan bidra med att skriva kod, testa och rapportera buggar, diskutera nya "
+"användningsfall och applikationer, designa logotyper och konstverk, ge "
+"support till dina medanvändare, översätta FreedomBox och dess applikationer "
+"till ditt språk, vara värd för hackathons eller installera fests och genom "
+"att sprida ord."
 
 #: plinth/modules/help/templates/help_contribute.html:43
 msgid ""
@@ -1898,11 +1888,19 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
+"Du kan också hjälpa projektet ekonomiskt genom<a href=\""
+"https://freedomboxfoundation.org/donate/\">donera</a> till den icke-"
+"vinstdrivande FreedomBox Foundation. FreedomBox Foundation grundades 2011 "
+"och är en ideell organisation med status 501(c)(3) baserad i New York City "
+"som finns för att stödja FreedomBox. Det tillhandahåller teknisk "
+"infrastruktur och juridiska tjänster för projektet, bedriver partnerskap och "
+"förespråkar för FreedomBox över hela världen. FreedomBox Foundatio n skulle "
+"inte existera utan sina anhängare."
 
 #: plinth/modules/help/templates/help_feedback.html:27
 #, python-format
 msgid "Your feedback will help us improve %(box_name)s!"
-msgstr ""
+msgstr "Din feedback hjälper oss att förbättra%(box_name)s!"
 
 #: plinth/modules/help/templates/help_feedback.html:33
 msgid ""
@@ -1910,6 +1908,9 @@ msgid ""
 "improve them on our <a href=\"https://discuss.freedombox.org\" target="
 "\"_blank\"> discussion forum</a>."
 msgstr ""
+"Låt oss veta om saknade funktioner, dina favoritappar och hur vi kan "
+"förbättra dem på våra <a href=\"https://discuss.freedombox.org\" target=\""
+"_blank\"> diskussionsforum</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:41
 msgid ""
@@ -1918,10 +1919,14 @@ msgid ""
 "a> to let our developers know. To report, first check if the issue is "
 "already reported and then use the \"New issue\" button."
 msgstr ""
+"Om du hittar fel eller problem kan du använda <a href=\"https://salsa.debian."
+"org/freedombox-team/plinth/issues\" target=\"_blank\">utföra tracker</a> att "
+"låta våra utvecklare veta. För att rapportera ska du först kontrollera om "
+"problemet redan har rapporterats och sedan använda knappen \"New issue\"."
 
 #: plinth/modules/help/templates/help_feedback.html:51
 msgid "Thank you!"
-msgstr ""
+msgstr "Tack så mycket!"
 
 #: plinth/modules/help/templates/help_index.html:27
 #: plinth/templates/help-menu.html:23 plinth/templates/help-menu.html:28
@@ -1973,10 +1978,8 @@ msgstr ""
 "#freedombox</a> kanal via webbchatten."
 
 #: plinth/modules/help/templates/help_manual.html:40
-#, fuzzy
-#| msgid "{box_name} Manual"
 msgid "Download as PDF"
-msgstr "{box_name} Manual"
+msgstr "Ladda ner som PDF fil"
 
 #: plinth/modules/help/templates/help_support.html:27
 #, python-format
