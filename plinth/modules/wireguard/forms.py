@@ -32,32 +32,37 @@ class AddClientForm(forms.Form):
 class AddServerForm(forms.Form):
     """Form to add server."""
     peer_endpoint = forms.CharField(
-        label=_('Endpoint'), strip=True,
-        help_text=_('Server endpoint with the form "ip:port".'))
+        label=_('Endpoint of the server'), strip=True,
+        help_text=_('Domain name and port in the form "ip:port". Example: '
+                    'demo.wireguard.com:12912 .'))
 
     peer_public_key = forms.CharField(
-        label=_('Public key of the server'), strip=True,
-        help_text=_('Public key of the server.'))
+        label=_('Public key of the server'), strip=True, help_text=_(
+            'Provided by the server operator, a long string of characters.'))
 
     ip_address = forms.CharField(
         label=_('Client IP address provided by server'), strip=True,
-        help_text=_('IP address assigned to the client on the VPN after '
-                    'connecting to the endpoint.'))
+        help_text=_('IP address assigned to this machine on the VPN after '
+                    'connecting to the endpoint. This value is usually '
+                    'provided by the server operator. Example: 192.168.0.10.'))
 
     private_key = forms.CharField(
-        label=_('Private key of the client'), strip=True,
-        help_text=_('Optional. A new key is generated if left blank.'),
-        required=False)
+        label=_('Private key of this machine'), strip=True, help_text=_(
+            'Optional. New public/private keys are generated if left blank. '
+            'Public key can then be provided to the server. This is the '
+            'recommended way. However, some server operators insist on '
+            'providing this.'), required=False)
 
     preshared_key = forms.CharField(
-        label=_('Pre-shared key'), strip=True, required=False,
-        help_text=_('Optional. A shared secret key provided by the server to '
-                    'add an additional layer of encryption.'))
+        label=_('Pre-shared key'), strip=True, required=False, help_text=_(
+            'Optional. A shared secret key provided by the server to add an '
+            'additional layer of security. Fill in only if provided.'))
 
     default_route = forms.BooleanField(
         label=_('Use this connection to send all outgoing traffic'),
-        required=False,
-        help_text=_('Use this connection to send all outgoing traffic.'))
+        required=False, help_text=_(
+            'Typically checked for a VPN service though which all traffic '
+            'is sent.'))
 
     def get_settings(self):
         """Return NM settings dict from cleaned data."""

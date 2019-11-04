@@ -66,7 +66,7 @@ class AddClientView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Add Client')
+        context['title'] = _('Add Allowed Client')
         return context
 
     def form_valid(self, form):
@@ -89,7 +89,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Show Client')
+        context['title'] = _('Allowed Client')
 
         public_key = urllib.parse.unquote(self.kwargs['public_key'])
         server_info = utils.get_info()['my_server']
@@ -149,7 +149,7 @@ class DeleteClientView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Delete Client')
+        context['title'] = _('Delete Allowed Client')
         context['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
         return context
 
@@ -175,7 +175,7 @@ class AddServerView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Add Server')
+        context['title'] = _('Add Connection to Server')
         return context
 
     def form_valid(self, form):
@@ -191,7 +191,7 @@ class ShowServerView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Server Information')
+        context['title'] = _('Connection to Server')
 
         interface = self.kwargs['interface']
         info = utils.get_info()
@@ -214,7 +214,7 @@ class EditServerView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Modify Server')
+        context['title'] = _('Modify Connection to Server')
         return context
 
     def get_initial(self):
@@ -255,7 +255,7 @@ class DeleteServerView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Delete Server')
+        context['title'] = _('Delete Connection to Server')
 
         interface = self.kwargs['interface']
         info = utils.get_nm_info()

@@ -22,24 +22,44 @@
 
 {% block content %}
 
-  <h3>{{ title }}</h3>
-
-  <table class="table table-bordered table-condensed table-striped">
-    <tbody>
-      {% for peer in server.peers.values %}
-        {% if forloop.first %}
+  {% for peer in server.peers.values %}
+    {% if forloop.first %}
+      <h3>{{ title }}</h3>
+      <p>
+        {% blocktrans trimmed %}
+          {{ box_name }} will attempt to reach a WireGuard server with the
+          following information. Ensure that the server is configured to allow
+          {{ box_name }}'s public key and IP address.
+        {% endblocktrans %}
+      </p>
+      <table class="table table-bordered table-condensed table-striped">
+        <tbody>
           <tr>
-            <th>{% trans "Endpoint:" %}</th>
+            <th>{% trans "Server endpoint:" %}</th>
             <td>{{ peer.endpoint }}</td>
           </tr>
           <tr>
-            <th>{% trans "Public Key:" %}</th>
+            <th>{% trans "Server public key:" %}</th>
             <td>{{ peer.public_key }}</td>
           </tr>
           <tr>
             <th>{% trans "Pre-shared key:" %}</th>
             <td>{{ peer.preshared_key }}</td>
           </tr>
+          <tr>
+            <th>{% trans "Public key of this machine:" %}</th>
+            <td>{{ server.public_key }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "IP address of this machine:" %}</th>
+            <td>{{ server.ip_address }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>{% trans "Status" %}</h3>
+      <table class="table table-bordered table-condensed table-striped">
+        <tbody>
           <tr>
             <th>{% trans "Data transmitted:" %}</th>
             <td>{{ peer.status.transfer_tx|filesizeformat }}</td>
@@ -52,21 +72,21 @@
             <th>{% trans "Latest handshake:" %}</th>
             <td>{{ peer.status.latest_handshake|default:'' }}</td>
           </tr>
-        {% endif %}
-      {% endfor %}
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    {% endif %}
+  {% endfor %}
 
   <p>
     <a class="btn btn-default"
        href="{% url 'wireguard:edit-server' interface %}">
       <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
-      {% trans "Edit Server" %}
+      {% trans "Edit" %}
     </a>
     <a class="btn btn-default"
        href="{% url 'wireguard:delete-server' interface %}">
       <span class="fa fa-trash-o" aria-hidden="true"></span>
-      {% trans "Delete Server" %}
+      {% trans "Delete" %}
     </a>
   </p>
 

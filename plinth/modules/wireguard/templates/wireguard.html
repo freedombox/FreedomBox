@@ -22,9 +22,9 @@
 {% load i18n %}
 
 {% block configuration %}
-  <h3>{% trans "Server" %}</h3>
+  <h3>{% trans "As a Server" %}</h3>
 
-  <p>{% trans "Peers allowed to connect to this server" %}</p>
+  <p>{% trans "Peers allowed to connect to this server:" %}</p>
 
   <table class="table table-bordered table-condensed table-striped"
          id="server-peers-list">
@@ -69,11 +69,15 @@
      role="button" class="btn btn-default"
      href="{% url 'wireguard:add-client' %}">
     <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans "Add Client" %}
+    {% trans "Add Allowed Client" %}
   </a>
 
-  <h3>{% trans "Client" %}</h3>
-  <p>{% trans "Peer servers that FreedomBox will connect to" %}</p>
+  <h3>{% trans "As a Client" %}</h3>
+  <p>
+    {% blocktrans trimmed %}
+    Servers that {{ box_name }} will connect to:
+    {% endblocktrans %}
+  </p>
   <table class="table table-bordered table-condensed table-striped"
          id="client-peers-list">
     <tr>
@@ -112,7 +116,7 @@
      role="button" class="btn btn-default"
      href="{% url 'wireguard:add-server' %}">
     <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans "Add Server" %}
+    {% trans "Add Connection to Server" %}
   </a>
 
   {{ block.super }}

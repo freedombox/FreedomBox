@@ -22,7 +22,13 @@
 
 {% block content %}
 
-  <h3>{% trans "Connection Information" %}</h3>
+  <h3>{{ title }}</h3>
+  <p>
+    {% blocktrans trimmed %}
+      {{ box_name }} will allow this client to connect to it. Ensure that the
+      client is configured with the following information.
+    {% endblocktrans %}
+  </p>
   <table class="table table-bordered table-condensed table-striped">
     <tbody>
       <tr>
@@ -30,7 +36,7 @@
         <td>{{ client.public_key }}</td>
       </tr>
       <tr>
-        <th>{% trans "IP address to use:" %}</th>
+        <th>{% trans "IP address to use for client:" %}</th>
         <td>{{ client.allowed_ips|join:", " }}</td>
       </tr>
       <tr>
@@ -46,7 +52,7 @@
         </td>
       </tr>
       <tr>
-        <th>{% trans "Server's public key:" %}</th>
+        <th>{% trans "Server public key:" %}</th>
         <td>{{ server.public_key }}</td>
       </tr>
     </tbody>
@@ -74,12 +80,12 @@
     <a class="btn btn-default"
        href="{% url 'wireguard:edit-client' client.public_key|urlencode:'' %}">
       <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
-      {% trans "Edit Client" %}
+      {% trans "Edit" %}
     </a>
     <a class="btn btn-default"
        href="{% url 'wireguard:delete-client' client.public_key|urlencode:'' %}">
       <span class="fa fa-trash-o" aria-hidden="true"></span>
-      {% trans "Delete Client" %}
+      {% trans "Delete" %}
     </a>
   </p>
 
