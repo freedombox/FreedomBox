@@ -42,8 +42,8 @@ name = _('Coquelicot')
 short_description = _('File Sharing')
 
 description = [
-    _('Coquelicot is a “one-click” file sharing web application with a focus '
-      'on protecting users’ privacy. It is best used for quickly sharing a '
+    _('Coquelicot is a "one-click" file sharing web application with a focus '
+      'on protecting users\' privacy. It is best used for quickly sharing a '
       'single file. '),
     _('This Coquelicot instance is exposed to the public but requires an '
       'upload password to prevent unauthorized access. You can set a new '
