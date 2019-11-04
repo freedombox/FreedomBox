@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 17:55-0400\n"
+"POT-Creation-Date: 2019-11-04 18:34-0500\n"
 "PO-Revision-Date: 2019-10-26 17:53+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Weblate 3.9.1-dev\n"
+
+#: doc/dev/_templates/layout.html:11
+msgid "Page source"
+msgstr ""
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -379,7 +383,6 @@ msgid "Delete Archive %(name)s"
 msgstr "Smazat archiv %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
-#: plinth/modules/config/templates/config.html:45
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
@@ -422,11 +425,19 @@ msgid "Restoring"
 msgstr "Obnovuje se"
 
 #: plinth/modules/backups/templates/backups_upload.html:32
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      Upload a backup file downloaded from another %(box_name)s to "
+#| "restore is\n"
+#| "      contents. You can choose the apps you wish to restore after "
+#| "uploading a\n"
+#| "      backup file.\n"
+#| "    "
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
-"is\n"
+"its\n"
 "      contents. You can choose the apps you wish to restore after uploading "
 "a\n"
 "      backup file.\n"
@@ -647,7 +658,11 @@ msgstr ""
 "\"{users_url}\">uživatele s účtem na {box_name}</a>, náležejícím do skupiny "
 "admin."
 
-#: plinth/modules/config/__init__.py:60 plinth/modules/dynamicdns/views.py:45
+#: plinth/modules/config/__init__.py:37
+msgid "General Configuration"
+msgstr "Obecná nastavení"
+
+#: plinth/modules/config/__init__.py:62 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
 #: plinth/modules/names/templates/names.html:58
 #: plinth/modules/pagekite/views.py:32 plinth/modules/snapshot/views.py:41
@@ -739,57 +754,43 @@ msgstr "Zobrazit pokročilé aplikace a funkce"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Zobrazit aplikace a funkce, které vyžadují techničtější znalosti."
 
-#: plinth/modules/config/templates/config.html:34
-#: plinth/modules/help/templates/help_contribute.html:57
-#: plinth/modules/power/templates/power_restart.html:42
-#: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
-#: plinth/templates/simple_app.html:38
-msgid "Learn more..."
-msgstr "Zjistit více…"
-
-#: plinth/modules/config/views.py:54
-msgid "General Configuration"
-msgstr "Obecná nastavení"
-
-#: plinth/modules/config/views.py:78
+#: plinth/modules/config/views.py:64
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Chyba při nastavování názvu stroje: {exception}"
 
-#: plinth/modules/config/views.py:81
+#: plinth/modules/config/views.py:67
 msgid "Hostname set"
 msgstr "Nastavení názvu stroje"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:76
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Chyba při nastavování doménového názvu: {exception}"
 
-#: plinth/modules/config/views.py:92
+#: plinth/modules/config/views.py:79
 msgid "Domain name set"
 msgstr "Nastavení doménového názvu"
 
-#: plinth/modules/config/views.py:100
+#: plinth/modules/config/views.py:87
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Chyba při nastavování domovské stránky webového serveru: {exception}"
 
-#: plinth/modules/config/views.py:103
+#: plinth/modules/config/views.py:90
 msgid "Webserver home page set"
 msgstr "Nastavení domovské stránky webového serveru"
 
-#: plinth/modules/config/views.py:111
+#: plinth/modules/config/views.py:98
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Chyba při změně pokročilého režimu: {exception}"
 
-#: plinth/modules/config/views.py:116
+#: plinth/modules/config/views.py:103
 msgid "Showing advanced apps and features"
 msgstr "Jsou zobrazovány pokročilé aplikace a funkce"
 
-#: plinth/modules/config/views.py:119
+#: plinth/modules/config/views.py:106
 msgid "Hiding advanced apps and features"
 msgstr "Jsou skryté pokročilé aplikace a funkce"
 
@@ -802,9 +803,14 @@ msgid "File Sharing"
 msgstr "Sdílení souborů"
 
 #: plinth/modules/coquelicot/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "Coquelicot is a “one-click” file sharing web application with a focus on "
+#| "protecting users’ privacy. It is best used for quickly sharing a single "
+#| "file. "
 msgid ""
-"Coquelicot is a “one-click” file sharing web application with a focus on "
-"protecting users’ privacy. It is best used for quickly sharing a single "
+"Coquelicot is a \"one-click\" file sharing web application with a focus on "
+"protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
 "Coquelicot je webová aplikace pro jednoduché sdílení souborů, zaměřená na "
@@ -1063,7 +1069,7 @@ msgstr "Aktualizovat nastavení"
 #: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
-#: plinth/modules/tor/views.py:148 plinth/views.py:175
+#: plinth/modules/tor/views.py:148 plinth/views.py:176
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
 
@@ -1313,7 +1319,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Minulá aktualizace"
 
-#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:73
 #: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
 msgstr "O systému"
@@ -1617,39 +1623,40 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Přístup do Git repozitářů pro čtení a zápis"
 
-#: plinth/modules/gitweb/forms.py:32
-msgid "Name of the repository"
-msgstr "Název repozitáře"
-
-#: plinth/modules/gitweb/forms.py:36
-msgid "An alpha-numeric string that uniquely identifies a repository."
-msgstr "Řetězec písmeny a číslicemi, který jednoznačně identifikuje repozitář."
-
+#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
 #: plinth/modules/gitweb/forms.py:40
-msgid "Description of the repository"
-msgstr "Popis repozitáře"
-
-#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
-msgid "Optional, for displaying on Gitweb."
-msgstr "Volitelné, zobrazuje se na Gitweb"
-
-#: plinth/modules/gitweb/forms.py:44
-msgid "Repository's owner name"
-msgstr "Jméno vlastníka repozitáře"
-
-#: plinth/modules/gitweb/forms.py:48
-msgid "Private repository"
-msgstr "Neveřejný repozitář"
-
-#: plinth/modules/gitweb/forms.py:49
-msgid "Allow only authorized users to access this repository."
-msgstr "K tomuto repozitáři umožnit přístup pouze pověřeným uživatelům."
-
-#: plinth/modules/gitweb/forms.py:66
 msgid "Invalid repository name."
 msgstr "Neplatný název repozitáře."
 
-#: plinth/modules/gitweb/forms.py:71
+#: plinth/modules/gitweb/forms.py:47
+msgid "Name of the repository"
+msgstr "Název repozitáře"
+
+#: plinth/modules/gitweb/forms.py:51
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr "Řetězec písmeny a číslicemi, který jednoznačně identifikuje repozitář."
+
+#: plinth/modules/gitweb/forms.py:55
+msgid "Description of the repository"
+msgstr "Popis repozitáře"
+
+#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
+msgid "Optional, for displaying on Gitweb."
+msgstr "Volitelné, zobrazuje se na Gitweb"
+
+#: plinth/modules/gitweb/forms.py:59
+msgid "Repository's owner name"
+msgstr "Jméno vlastníka repozitáře"
+
+#: plinth/modules/gitweb/forms.py:63
+msgid "Private repository"
+msgstr "Neveřejný repozitář"
+
+#: plinth/modules/gitweb/forms.py:64
+msgid "Allow only authorized users to access this repository."
+msgstr "K tomuto repozitáři umožnit přístup pouze pověřeným uživatelům."
+
+#: plinth/modules/gitweb/forms.py:83
 msgid "A repository with this name already exists."
 msgstr "Repozitář s tímto názvem už existuje."
 
@@ -1722,44 +1729,44 @@ msgstr "{name} smazáno."
 msgid "Could not delete {name}: {error}"
 msgstr "{name} se nepodařilo smazat: {error}"
 
-#: plinth/modules/help/help.py:47
+#: plinth/modules/help/help.py:50
 msgid "Documentation"
 msgstr "Dokumentace"
 
-#: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
+#: plinth/modules/help/help.py:54 plinth/modules/networks/forms.py:68
 #: plinth/modules/networks/forms.py:108 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Příručka"
 
-#: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
+#: plinth/modules/help/help.py:59 plinth/modules/help/help.py:107
 #: plinth/modules/help/templates/help_support.html:24
 #: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
 msgstr "Získat podporu"
 
-#: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
+#: plinth/modules/help/help.py:64 plinth/modules/help/help.py:101
 #: plinth/modules/help/templates/help_feedback.html:24
 #: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
 msgstr "Odeslat zpětnou vazbu"
 
-#: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
+#: plinth/modules/help/help.py:69 plinth/modules/help/help.py:95
 #: plinth/modules/help/templates/help_contribute.html:24
 #: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
 msgstr "Zapojit se"
 
-#: plinth/modules/help/help.py:86
+#: plinth/modules/help/help.py:89
 msgid "Documentation and FAQ"
 msgstr "Dokumentace a často kladené dotazy"
 
-#: plinth/modules/help/help.py:112
+#: plinth/modules/help/help.py:115
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "O {box_name}"
 
-#: plinth/modules/help/help.py:134
+#: plinth/modules/help/help.py:150
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Příručka k {box_name}"
@@ -1890,6 +1897,14 @@ msgid ""
 "supporters."
 msgstr ""
 
+#: plinth/modules/help/templates/help_contribute.html:57
+#: plinth/modules/power/templates/power_restart.html:42
+#: plinth/modules/power/templates/power_shutdown.html:41
+#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/simple_app.html:38
+msgid "Learn more..."
+msgstr "Zjistit více…"
+
 #: plinth/modules/help/templates/help_feedback.html:27
 #, python-format
 msgid "Your feedback will help us improve %(box_name)s!"
@@ -1990,8 +2005,8 @@ msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
-"Hledejte v předchozích diskuzích nebo napište nový dotaz na našem <a href=\""
-"https://discuss.freedombox.org\" target=\"_blank\">diskuzním fóru</a>."
+"Hledejte v předchozích diskuzích nebo napište nový dotaz na našem <a href="
+"\"https://discuss.freedombox.org\" target=\"_blank\">diskuzním fóru</a>."
 
 #: plinth/modules/help/templates/help_support.html:42
 msgid ""
@@ -2157,7 +2172,7 @@ msgstr "Zobrazit a upravit wiki aplikace"
 
 #: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:61
+#: plinth/modules/storage/templates/storage.html:43
 msgid "Type"
 msgstr "Typ"
 
@@ -2236,20 +2251,20 @@ msgstr "{title} dsmazáno."
 msgid "Could not delete {title}: {error}"
 msgstr "{title} se nepodařilo smazat: {error}"
 
-#: plinth/modules/infinoted/__init__.py:40
+#: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:42
+#: plinth/modules/infinoted/__init__.py:44
 msgid "Gobby Server"
 msgstr "Gobby server"
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr ""
 "infinoted je server pro Gobby – textový editor pro spolupráci ve skupině."
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:49
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -2346,7 +2361,7 @@ msgid "Website Security"
 msgstr "Zabezpečení webové stránky"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/storage/templates/storage.html:63
+#: plinth/modules/storage/templates/storage.html:45
 msgid "Actions"
 msgstr "Akce"
 
@@ -3435,7 +3450,7 @@ msgid "yes"
 msgstr "ano"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:40
 msgid "Device"
 msgstr "Zařízení"
 
@@ -5051,6 +5066,19 @@ msgstr ""
 "spojení provádět úkoly správy, kopírovat soubory nebo spouštět ostatní "
 "služby."
 
+#: plinth/modules/ssh/forms.py:30
+#, fuzzy
+#| msgid "Use HTTP basic authentication"
+msgid "Disable password authentication"
+msgstr "Použít základní HTTP ověřování"
+
+#: plinth/modules/ssh/forms.py:31
+msgid ""
+"Improves security by preventing password guessing. Ensure that you have "
+"setup SSH keys in your administrator user account before enabling this "
+"option."
+msgstr ""
+
 #: plinth/modules/ssh/templates/ssh.html:26
 msgid "Server Fingerprints"
 msgstr "Otisky serveru"
@@ -5069,6 +5097,16 @@ msgstr "Algoritmus"
 msgid "Fingerprint"
 msgstr "Otisk (fingerprint)"
 
+#: plinth/modules/ssh/views.py:66
+msgid "SSH authentication with password disabled."
+msgstr ""
+
+#: plinth/modules/ssh/views.py:69
+#, fuzzy
+#| msgid "Authentication to remote server failed."
+msgid "SSH authentication with password enabled."
+msgstr "Ověření vůči vzdálenému serveru se nezdařilo."
+
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
 msgstr "Sdružené přihlášení (SSO)"
@@ -5077,7 +5115,7 @@ msgstr "Sdružené přihlášení (SSO)"
 msgid "Login"
 msgstr "Přihlášení"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:37
 msgid "Storage"
 msgstr "Úložiště"
 
@@ -5169,27 +5207,27 @@ msgstr "Není umožněno použít požadovanou volbu."
 msgid "The device is mounted by another user."
 msgstr "Zařízení je připojeno jiným uživatelem."
 
-#: plinth/modules/storage/templates/storage.html:53
+#: plinth/modules/storage/templates/storage.html:35
 msgid "The following storage devices are in use:"
 msgstr "Jsou používána následující úložná zařízení:"
 
-#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:41
 msgid "Label"
 msgstr "Štítek"
 
-#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:42
 msgid "Mount Point"
 msgstr "Přípojný bod"
 
-#: plinth/modules/storage/templates/storage.html:62
+#: plinth/modules/storage/templates/storage.html:44
 msgid "Used"
 msgstr "Použito"
 
-#: plinth/modules/storage/templates/storage.html:108
+#: plinth/modules/storage/templates/storage.html:90
 msgid "Partition Expansion"
 msgstr "Zvětšení oddílu"
 
-#: plinth/modules/storage/templates/storage.html:110
+#: plinth/modules/storage/templates/storage.html:92
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -5200,9 +5238,9 @@ msgstr ""
 "Kořenový oddíl je možné zvětšit a místo tak využít. Poskytne vám to další "
 "prostor pro ukládání vašich souborů."
 
-#: plinth/modules/storage/templates/storage.html:120
+#: plinth/modules/storage/templates/storage.html:102
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:74
+#: plinth/modules/storage/views.py:83
 msgid "Expand Root Partition"
 msgstr "Zvětšit kořenový oddíl"
 
@@ -5216,16 +5254,16 @@ msgstr ""
 "Než budete pokračovat, zazálohujte svá data. Po provedení této operace na "
 "kořenovém oddílu bude k dispozici %(expandable_root_size)s dalšího prostoru."
 
-#: plinth/modules/storage/views.py:86
+#: plinth/modules/storage/views.py:95
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Chyba při zvětšování oddílu: {exception}"
 
-#: plinth/modules/storage/views.py:89
+#: plinth/modules/storage/views.py:98
 msgid "Partition expanded successfully."
 msgstr "Oddíl úspěšně zvětšen."
 
-#: plinth/modules/storage/views.py:106
+#: plinth/modules/storage/views.py:115
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -5234,16 +5272,16 @@ msgstr ""
 "Varování: Dochází volné místo na systémovém oddílu ({percent_used}% využito, "
 "{free_space} volné)."
 
-#: plinth/modules/storage/views.py:132
+#: plinth/modules/storage/views.py:141
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor} {drive_model} je možné bezpečně odebrat."
 
-#: plinth/modules/storage/views.py:136
+#: plinth/modules/storage/views.py:145
 msgid "Device can be safely unplugged."
 msgstr "Zařízení je možné bezpečně odebrat."
 
-#: plinth/modules/storage/views.py:146
+#: plinth/modules/storage/views.py:155
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Chyba při vysouvání zařízení: {error_message}"
@@ -6281,11 +6319,11 @@ msgstr "Instalace %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% dokončeno"
 
-#: plinth/views.py:179
+#: plinth/views.py:180
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
-#: plinth/views.py:182
+#: plinth/views.py:183
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
 

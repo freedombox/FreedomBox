@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 17:55-0400\n"
+"POT-Creation-Date: 2019-11-04 18:34-0500\n"
 "PO-Revision-Date: 2019-10-26 17:53+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -26,6 +26,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.9.1-dev\n"
+
+#: doc/dev/_templates/layout.html:11
+msgid "Page source"
+msgstr ""
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -389,7 +393,6 @@ msgid "Delete Archive %(name)s"
 msgstr "Slett arkiv %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
-#: plinth/modules/config/templates/config.html:45
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
@@ -433,11 +436,19 @@ msgid "Restoring"
 msgstr "Gjenoppretter"
 
 #: plinth/modules/backups/templates/backups_upload.html:32
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      Upload a backup file downloaded from another %(box_name)s to "
+#| "restore is\n"
+#| "      contents. You can choose the apps you wish to restore after "
+#| "uploading a\n"
+#| "      backup file.\n"
+#| "    "
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
-"is\n"
+"its\n"
 "      contents. You can choose the apps you wish to restore after uploading "
 "a\n"
 "      backup file.\n"
@@ -660,7 +671,11 @@ msgstr ""
 "a>-banen på nettjeneren. Den kan brukes av <a href=\"{users_url}\">enhver "
 "bruker</a> på {box_name} som er medlem i admin-gruppen."
 
-#: plinth/modules/config/__init__.py:60 plinth/modules/dynamicdns/views.py:45
+#: plinth/modules/config/__init__.py:37
+msgid "General Configuration"
+msgstr "Generelt oppsett"
+
+#: plinth/modules/config/__init__.py:62 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
 #: plinth/modules/names/templates/names.html:58
 #: plinth/modules/pagekite/views.py:32 plinth/modules/snapshot/views.py:41
@@ -751,57 +766,43 @@ msgstr "Vis avanserte programmer og funksjoner"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Vis programmer og funksjoner som krever dypere teknisk innsikt."
 
-#: plinth/modules/config/templates/config.html:34
-#: plinth/modules/help/templates/help_contribute.html:57
-#: plinth/modules/power/templates/power_restart.html:42
-#: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
-#: plinth/templates/simple_app.html:38
-msgid "Learn more..."
-msgstr "Lær mer…"
-
-#: plinth/modules/config/views.py:54
-msgid "General Configuration"
-msgstr "Generelt oppsett"
-
-#: plinth/modules/config/views.py:78
+#: plinth/modules/config/views.py:64
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Feil ved setting av vertsnavn: {exception}"
 
-#: plinth/modules/config/views.py:81
+#: plinth/modules/config/views.py:67
 msgid "Hostname set"
 msgstr "Vertsnavn satt"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:76
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Feil ved innstilling/setting av domenenavn: {exception}"
 
-#: plinth/modules/config/views.py:92
+#: plinth/modules/config/views.py:79
 msgid "Domain name set"
 msgstr "Domenenavn satt"
 
-#: plinth/modules/config/views.py:100
+#: plinth/modules/config/views.py:87
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Feil ved setting av nettstedets hjemmeside: {exception}"
 
-#: plinth/modules/config/views.py:103
+#: plinth/modules/config/views.py:90
 msgid "Webserver home page set"
 msgstr "Webtjenerforside satt"
 
-#: plinth/modules/config/views.py:111
+#: plinth/modules/config/views.py:98
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Feil ved bytte til avansert modus: {exception}"
 
-#: plinth/modules/config/views.py:116
+#: plinth/modules/config/views.py:103
 msgid "Showing advanced apps and features"
 msgstr "Viser avanserte programmer og funksjoner"
 
-#: plinth/modules/config/views.py:119
+#: plinth/modules/config/views.py:106
 msgid "Hiding advanced apps and features"
 msgstr "Viser ikke avanserte programmer og funksjoner"
 
@@ -814,9 +815,14 @@ msgid "File Sharing"
 msgstr "Fildeling"
 
 #: plinth/modules/coquelicot/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "Coquelicot is a “one-click” file sharing web application with a focus on "
+#| "protecting users’ privacy. It is best used for quickly sharing a single "
+#| "file. "
 msgid ""
-"Coquelicot is a “one-click” file sharing web application with a focus on "
-"protecting users’ privacy. It is best used for quickly sharing a single "
+"Coquelicot is a \"one-click\" file sharing web application with a focus on "
+"protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
 "Coquelicot er et fildelingsprogram som kun krever ett klikk, med fokus på "
@@ -1071,7 +1077,7 @@ msgstr "Oppdater oppsett"
 #: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
-#: plinth/modules/tor/views.py:148 plinth/views.py:175
+#: plinth/modules/tor/views.py:148 plinth/views.py:176
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
@@ -1316,7 +1322,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Siste oppdatering"
 
-#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:73
 #: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
 msgstr "Om"
@@ -1611,13 +1617,20 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:32
+#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "Ugyldig vertsnavn"
+
+#: plinth/modules/gitweb/forms.py:47
 #, fuzzy
 #| msgid "Name of the share"
 msgid "Name of the repository"
 msgstr "Navn på delt område"
 
-#: plinth/modules/gitweb/forms.py:36
+#: plinth/modules/gitweb/forms.py:51
 #, fuzzy
 #| msgid ""
 #| "A lowercase alpha-numeric string that uniquely identifies a share. "
@@ -1627,39 +1640,33 @@ msgstr ""
 "En alfanumerisk streng med små bokstaver som unikt identifiserer en deling. "
 "Eksempel <em>media</em>."
 
-#: plinth/modules/gitweb/forms.py:40
+#: plinth/modules/gitweb/forms.py:55
 #, fuzzy
 #| msgid "Create new repository"
 msgid "Description of the repository"
 msgstr "Opprett nytt depot"
 
-#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
 msgid "Optional, for displaying on Gitweb."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:44
+#: plinth/modules/gitweb/forms.py:59
 #, fuzzy
 #| msgid "Repository removed."
 msgid "Repository's owner name"
 msgstr "Depot fjernet."
 
-#: plinth/modules/gitweb/forms.py:48
+#: plinth/modules/gitweb/forms.py:63
 #, fuzzy
 #| msgid "Create Repository"
 msgid "Private repository"
 msgstr "Opprett depot"
 
-#: plinth/modules/gitweb/forms.py:49
+#: plinth/modules/gitweb/forms.py:64
 msgid "Allow only authorized users to access this repository."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:66
-#, fuzzy
-#| msgid "Invalid hostname"
-msgid "Invalid repository name."
-msgstr "Ugyldig vertsnavn"
-
-#: plinth/modules/gitweb/forms.py:71
+#: plinth/modules/gitweb/forms.py:83
 #, fuzzy
 #| msgid "A share with this name already exists."
 msgid "A repository with this name already exists."
@@ -1751,44 +1758,44 @@ msgstr "Slettet {name}."
 msgid "Could not delete {name}: {error}"
 msgstr "Kunne ikke slette {name}: {error}"
 
-#: plinth/modules/help/help.py:47
+#: plinth/modules/help/help.py:50
 msgid "Documentation"
 msgstr "Dokumentasjon"
 
-#: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
+#: plinth/modules/help/help.py:54 plinth/modules/networks/forms.py:68
 #: plinth/modules/networks/forms.py:108 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Manual"
 
-#: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
+#: plinth/modules/help/help.py:59 plinth/modules/help/help.py:107
 #: plinth/modules/help/templates/help_support.html:24
 #: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
 msgstr "Få støtte"
 
-#: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
+#: plinth/modules/help/help.py:64 plinth/modules/help/help.py:101
 #: plinth/modules/help/templates/help_feedback.html:24
 #: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
 msgstr "Send inn tilbakemeldinger"
 
-#: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
+#: plinth/modules/help/help.py:69 plinth/modules/help/help.py:95
 #: plinth/modules/help/templates/help_contribute.html:24
 #: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
 msgstr "Bidra"
 
-#: plinth/modules/help/help.py:86
+#: plinth/modules/help/help.py:89
 msgid "Documentation and FAQ"
 msgstr "Dokumentasjon og ofte stilte spørsmål"
 
-#: plinth/modules/help/help.py:112
+#: plinth/modules/help/help.py:115
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Om {box_name}"
 
-#: plinth/modules/help/help.py:134
+#: plinth/modules/help/help.py:150
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Manual"
@@ -1926,6 +1933,14 @@ msgstr ""
 "med teknisk infrastruktur og juridisk støtte, håndterer "
 "forretningskontakter, og sprer budskapet rundt omkring i verden. FreedomBox-"
 "stiftelsen ville ikke eksistert uten dens støttespillere."
+
+#: plinth/modules/help/templates/help_contribute.html:57
+#: plinth/modules/power/templates/power_restart.html:42
+#: plinth/modules/power/templates/power_shutdown.html:41
+#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/simple_app.html:38
+msgid "Learn more..."
+msgstr "Lær mer…"
 
 #: plinth/modules/help/templates/help_feedback.html:27
 #, python-format
@@ -2204,7 +2219,7 @@ msgstr "Vis og rediger wiki-programmer"
 
 #: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:61
+#: plinth/modules/storage/templates/storage.html:43
 msgid "Type"
 msgstr "Type"
 
@@ -2285,19 +2300,19 @@ msgstr "Slettet {name}."
 msgid "Could not delete {title}: {error}"
 msgstr "Kunne ikke slette {name}: {error}"
 
-#: plinth/modules/infinoted/__init__.py:40
+#: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:42
+#: plinth/modules/infinoted/__init__.py:44
 msgid "Gobby Server"
 msgstr "Gobby-tjener"
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "infinoted er en tjener for Gobby, en samskrivende teksteditor."
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:49
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -2394,7 +2409,7 @@ msgid "Website Security"
 msgstr "Nettstedssikkerhet"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/storage/templates/storage.html:63
+#: plinth/modules/storage/templates/storage.html:45
 msgid "Actions"
 msgstr "Handlinger"
 
@@ -3484,7 +3499,7 @@ msgid "yes"
 msgstr "Ja"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:40
 msgid "Device"
 msgstr "Enhet"
 
@@ -5111,6 +5126,19 @@ msgstr ""
 "annensteds hen kan utføre administrasjonsoppgaver, kopiere filer eller kjøre "
 "andre tjenester ved bruk av slike tilkoblinger."
 
+#: plinth/modules/ssh/forms.py:30
+#, fuzzy
+#| msgid "Use HTTP basic authentication"
+msgid "Disable password authentication"
+msgstr "Bruk HTTP-basisgodkjenning"
+
+#: plinth/modules/ssh/forms.py:31
+msgid ""
+"Improves security by preventing password guessing. Ensure that you have "
+"setup SSH keys in your administrator user account before enabling this "
+"option."
+msgstr ""
+
 #: plinth/modules/ssh/templates/ssh.html:26
 #, fuzzy
 #| msgid "SSH Fingerprint"
@@ -5133,6 +5161,16 @@ msgstr "Algoritme"
 msgid "Fingerprint"
 msgstr "SSH Fingeravtrykk"
 
+#: plinth/modules/ssh/views.py:66
+msgid "SSH authentication with password disabled."
+msgstr ""
+
+#: plinth/modules/ssh/views.py:69
+#, fuzzy
+#| msgid "Authentication to remote server failed."
+msgid "SSH authentication with password enabled."
+msgstr "Identitetsbekreftelse til fjerntjener mislyktes."
+
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
 msgstr "Engangspålogging"
@@ -5141,7 +5179,7 @@ msgstr "Engangspålogging"
 msgid "Login"
 msgstr "Login"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:37
 msgid "Storage"
 msgstr "Lager"
 
@@ -5234,27 +5272,27 @@ msgstr "Mangler rettigheter til bruk av forespurt valg."
 msgid "The device is mounted by another user."
 msgstr "Enheten er montert av en annen bruker."
 
-#: plinth/modules/storage/templates/storage.html:53
+#: plinth/modules/storage/templates/storage.html:35
 msgid "The following storage devices are in use:"
 msgstr "Følgende lagringsenheter er i bruk:"
 
-#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:41
 msgid "Label"
 msgstr "Merkelapp"
 
-#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:42
 msgid "Mount Point"
 msgstr "Monteringspunkt"
 
-#: plinth/modules/storage/templates/storage.html:62
+#: plinth/modules/storage/templates/storage.html:44
 msgid "Used"
 msgstr "Brukt"
 
-#: plinth/modules/storage/templates/storage.html:108
+#: plinth/modules/storage/templates/storage.html:90
 msgid "Partition Expansion"
 msgstr "Partisjonsutvidelse"
 
-#: plinth/modules/storage/templates/storage.html:110
+#: plinth/modules/storage/templates/storage.html:92
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -5265,9 +5303,9 @@ msgstr ""
 "root-partisjonen din. Root-partisjonen kan utvides til å bruke denne "
 "plassen. Det vil gi deg mer plass til å lagre filene dine."
 
-#: plinth/modules/storage/templates/storage.html:120
+#: plinth/modules/storage/templates/storage.html:102
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:74
+#: plinth/modules/storage/views.py:83
 msgid "Expand Root Partition"
 msgstr "Utvid root-partisjon"
 
@@ -5282,16 +5320,16 @@ msgstr ""
 "operasjonen vil det være %(expandable_root_size)s med ekstra plass "
 "tilgjengelig på root-partisjonen din."
 
-#: plinth/modules/storage/views.py:86
+#: plinth/modules/storage/views.py:95
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Utviding av partisjon feilet: {exception}"
 
-#: plinth/modules/storage/views.py:89
+#: plinth/modules/storage/views.py:98
 msgid "Partition expanded successfully."
 msgstr "Vellykket partisjonsutvidelse."
 
-#: plinth/modules/storage/views.py:106
+#: plinth/modules/storage/views.py:115
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -5300,16 +5338,16 @@ msgstr ""
 "Advarsel: Lite plass igjen på systempartisjon ({percent_used}% brukt, "
 "{free_space} ledig)."
 
-#: plinth/modules/storage/views.py:132
+#: plinth/modules/storage/views.py:141
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor} {drive_model} kan trygt kobles fra."
 
-#: plinth/modules/storage/views.py:136
+#: plinth/modules/storage/views.py:145
 msgid "Device can be safely unplugged."
 msgstr "Enheten kan trygt kobles fra."
 
-#: plinth/modules/storage/views.py:146
+#: plinth/modules/storage/views.py:155
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Feil ved utløsing av enhet: {error_message}"
@@ -6348,11 +6386,11 @@ msgstr "Installere %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% fullført"
 
-#: plinth/views.py:179
+#: plinth/views.py:180
 msgid "Application enabled"
 msgstr "Programmet er aktivert"
 
-#: plinth/views.py:182
+#: plinth/views.py:183
 msgid "Application disabled"
 msgstr "Programmet er deaktivert"
 

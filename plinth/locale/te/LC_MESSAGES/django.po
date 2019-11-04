@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 17:55-0400\n"
+"POT-Creation-Date: 2019-11-04 18:34-0500\n"
 "PO-Revision-Date: 2019-07-22 17:06+0000\n"
 "Last-Translator: Joseph Nuthalapati <joseph.kiran92@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -20,6 +20,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.8-dev\n"
+
+#: doc/dev/_templates/layout.html:11
+msgid "Page source"
+msgstr ""
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -401,7 +405,6 @@ msgid "Delete Archive %(name)s"
 msgstr "%(name)s తొలగించు"
 
 #: plinth/modules/backups/templates/backups_form.html:35
-#: plinth/modules/config/templates/config.html:45
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
@@ -451,7 +454,7 @@ msgstr "రిస్టోర్"
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
-"is\n"
+"its\n"
 "      contents. You can choose the apps you wish to restore after uploading "
 "a\n"
 "      backup file.\n"
@@ -681,7 +684,11 @@ msgstr ""
 "ద్వారా పొందవచ్చు {box_name}.\n"
 "అంగీకార సమాచారం మరియు సిస్టమ్ మార్చడం సామర్ధ్యాలు నిర్వాహక సమూహం చెందిన వినియోగదారులకు పరిమితం."
 
-#: plinth/modules/config/__init__.py:60 plinth/modules/dynamicdns/views.py:45
+#: plinth/modules/config/__init__.py:37
+msgid "General Configuration"
+msgstr "సాధారణ ఆకృతీకరణ"
+
+#: plinth/modules/config/__init__.py:62 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
 #: plinth/modules/names/templates/names.html:58
 #: plinth/modules/pagekite/views.py:32 plinth/modules/snapshot/views.py:41
@@ -769,59 +776,45 @@ msgstr ""
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 
-#: plinth/modules/config/templates/config.html:34
-#: plinth/modules/help/templates/help_contribute.html:57
-#: plinth/modules/power/templates/power_restart.html:42
-#: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
-#: plinth/templates/simple_app.html:38
-msgid "Learn more..."
-msgstr "మరింత తెలుసుకోండి.."
-
-#: plinth/modules/config/views.py:54
-msgid "General Configuration"
-msgstr "సాధారణ ఆకృతీకరణ"
-
-#: plinth/modules/config/views.py:78
+#: plinth/modules/config/views.py:64
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
 
-#: plinth/modules/config/views.py:81
+#: plinth/modules/config/views.py:67
 msgid "Hostname set"
 msgstr "ఆతిథ్యనామం అమర్చు"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:76
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
 
-#: plinth/modules/config/views.py:92
+#: plinth/modules/config/views.py:79
 msgid "Domain name set"
 msgstr "అధికారక్షేత్రం పేరు అమర్పు"
 
-#: plinth/modules/config/views.py:100
+#: plinth/modules/config/views.py:87
 #, fuzzy, python-brace-format
 #| msgid "Error setting hostname: {exception}"
 msgid "Error setting webserver home page: {exception}"
 msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
 
-#: plinth/modules/config/views.py:103
+#: plinth/modules/config/views.py:90
 msgid "Webserver home page set"
 msgstr ""
 
-#: plinth/modules/config/views.py:111
+#: plinth/modules/config/views.py:98
 #, fuzzy, python-brace-format
 #| msgid "Error setting domain name: {exception}"
 msgid "Error changing advanced mode: {exception}"
 msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
 
-#: plinth/modules/config/views.py:116
+#: plinth/modules/config/views.py:103
 msgid "Showing advanced apps and features"
 msgstr ""
 
-#: plinth/modules/config/views.py:119
+#: plinth/modules/config/views.py:106
 msgid "Hiding advanced apps and features"
 msgstr ""
 
@@ -834,9 +827,14 @@ msgid "File Sharing"
 msgstr "ఫైలు పంచుకొనుట"
 
 #: plinth/modules/coquelicot/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "Coquelicot is a “one-click” file sharing web application with a focus on "
+#| "protecting users’ privacy. It is best used for quickly sharing a single "
+#| "file. "
 msgid ""
-"Coquelicot is a “one-click” file sharing web application with a focus on "
-"protecting users’ privacy. It is best used for quickly sharing a single "
+"Coquelicot is a \"one-click\" file sharing web application with a focus on "
+"protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
 "కోక్యూలికట్ అనేది వినియోగదారుని గోప్యతా కేంద్రీకృతమై \"ఒకే క్లిక్ విధానం\" తో నిర్మించబడిన ఫైల్స్ పంచుకునే వెబ్ "
@@ -1081,7 +1079,7 @@ msgstr "అమరికను నవీకరించు"
 #: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
-#: plinth/modules/tor/views.py:148 plinth/views.py:175
+#: plinth/modules/tor/views.py:148 plinth/views.py:176
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
@@ -1321,7 +1319,7 @@ msgstr ""
 msgid "Last update"
 msgstr "చివరి నవీకరణ"
 
-#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:73
 #: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
 msgstr "గురించి"
@@ -1610,13 +1608,20 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:32
+#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "ఆతిథ్యనామం చెల్లనిది"
+
+#: plinth/modules/gitweb/forms.py:47
 #, fuzzy
 #| msgid "Name of the share"
 msgid "Name of the repository"
 msgstr "షేర్ యొక్క పేరు"
 
-#: plinth/modules/gitweb/forms.py:36
+#: plinth/modules/gitweb/forms.py:51
 #, fuzzy
 #| msgid ""
 #| "A lowercase alpha-numeric string that uniquely identifies a share. "
@@ -1624,35 +1629,29 @@ msgstr "షేర్ యొక్క పేరు"
 msgid "An alpha-numeric string that uniquely identifies a repository."
 msgstr "ప్రత్యేకంగా ఒక వాటాను గుర్తించే చిన్న అక్షర సంఖ్యా స్ట్రింగ్. ఉదాహరణ: <em>media</em>."
 
-#: plinth/modules/gitweb/forms.py:40
+#: plinth/modules/gitweb/forms.py:55
 msgid "Description of the repository"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
 msgid "Optional, for displaying on Gitweb."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:44
+#: plinth/modules/gitweb/forms.py:59
 msgid "Repository's owner name"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:48
+#: plinth/modules/gitweb/forms.py:63
 #, fuzzy
 #| msgid "Create User"
 msgid "Private repository"
 msgstr "వినియోగదారుని సృష్టించు"
 
-#: plinth/modules/gitweb/forms.py:49
+#: plinth/modules/gitweb/forms.py:64
 msgid "Allow only authorized users to access this repository."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:66
-#, fuzzy
-#| msgid "Invalid hostname"
-msgid "Invalid repository name."
-msgstr "ఆతిథ్యనామం చెల్లనిది"
-
-#: plinth/modules/gitweb/forms.py:71
+#: plinth/modules/gitweb/forms.py:83
 #, fuzzy
 msgid "A repository with this name already exists."
 msgstr "ఈ సేవ ఇప్పటికే ఉంది"
@@ -1739,44 +1738,44 @@ msgstr "{name} తొలగించబడింది."
 msgid "Could not delete {name}: {error}"
 msgstr "{name} ను తొలగించలేము: {error}"
 
-#: plinth/modules/help/help.py:47
+#: plinth/modules/help/help.py:50
 msgid "Documentation"
 msgstr "పత్రావళి"
 
-#: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
+#: plinth/modules/help/help.py:54 plinth/modules/networks/forms.py:68
 #: plinth/modules/networks/forms.py:108 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "కరదీపిక"
 
-#: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
+#: plinth/modules/help/help.py:59 plinth/modules/help/help.py:107
 #: plinth/modules/help/templates/help_support.html:24
 #: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
 msgstr ""
 
-#: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
+#: plinth/modules/help/help.py:64 plinth/modules/help/help.py:101
 #: plinth/modules/help/templates/help_feedback.html:24
 #: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
 msgstr ""
 
-#: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
+#: plinth/modules/help/help.py:69 plinth/modules/help/help.py:95
 #: plinth/modules/help/templates/help_contribute.html:24
 #: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
 msgstr ""
 
-#: plinth/modules/help/help.py:86
+#: plinth/modules/help/help.py:89
 msgid "Documentation and FAQ"
 msgstr "పత్రావళి మరియు తరచూ అడిగే ప్రశ్నలు"
 
-#: plinth/modules/help/help.py:112
+#: plinth/modules/help/help.py:115
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "{box_name} గురించి"
 
-#: plinth/modules/help/help.py:134
+#: plinth/modules/help/help.py:150
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} కరదీపిక"
@@ -1894,6 +1893,14 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:57
+#: plinth/modules/power/templates/power_restart.html:42
+#: plinth/modules/power/templates/power_shutdown.html:41
+#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/simple_app.html:38
+msgid "Learn more..."
+msgstr "మరింత తెలుసుకోండి.."
 
 #: plinth/modules/help/templates/help_feedback.html:27
 #, python-format
@@ -2150,7 +2157,7 @@ msgstr "వికీ అనువర్తనాలను చూడండి మ
 
 #: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:61
+#: plinth/modules/storage/templates/storage.html:43
 msgid "Type"
 msgstr "రకం"
 
@@ -2231,19 +2238,19 @@ msgstr "{name} తొలగించబడింది."
 msgid "Could not delete {title}: {error}"
 msgstr "{name} ను తొలగించలేము: {error}"
 
-#: plinth/modules/infinoted/__init__.py:40
+#: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
 msgstr "ఇన్ఫినోటెడ్"
 
-#: plinth/modules/infinoted/__init__.py:42
+#: plinth/modules/infinoted/__init__.py:44
 msgid "Gobby Server"
 msgstr "గాబ్బీ సేవకం"
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "Gobby కోసం ఇన్ఫినోటెడ్ అనేది ఒక సర్వర్,ఒక సహకార టెక్స్ట్ ఎడిటర్."
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:49
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -2339,7 +2346,7 @@ msgid "Website Security"
 msgstr "వెబ్‌సైటు భద్రత"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/storage/templates/storage.html:63
+#: plinth/modules/storage/templates/storage.html:45
 msgid "Actions"
 msgstr "చర్యలు"
 
@@ -3452,7 +3459,7 @@ msgid "yes"
 msgstr "అవును"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:40
 msgid "Device"
 msgstr "పరికరం"
 
@@ -5064,6 +5071,19 @@ msgid ""
 "connections."
 msgstr ""
 
+#: plinth/modules/ssh/forms.py:30
+#, fuzzy
+#| msgid "Use HTTP basic authentication"
+msgid "Disable password authentication"
+msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
+
+#: plinth/modules/ssh/forms.py:31
+msgid ""
+"Improves security by preventing password guessing. Ensure that you have "
+"setup SSH keys in your administrator user account before enabling this "
+"option."
+msgstr ""
+
 #: plinth/modules/ssh/templates/ssh.html:26
 #, fuzzy
 #| msgid "SSH Fingerprint"
@@ -5086,6 +5106,14 @@ msgstr ""
 msgid "Fingerprint"
 msgstr "SSH వేలిముద్ర"
 
+#: plinth/modules/ssh/views.py:66
+msgid "SSH authentication with password disabled."
+msgstr ""
+
+#: plinth/modules/ssh/views.py:69
+msgid "SSH authentication with password enabled."
+msgstr ""
+
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
 msgstr ""
@@ -5094,7 +5122,7 @@ msgstr ""
 msgid "Login"
 msgstr "ప్రవేశించు"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:37
 #, fuzzy
 msgid "Storage"
 msgstr "అన్హొస్టెడ్ స్టోరేజ్  ని (పునరుద్ధరించండి)"
@@ -5189,29 +5217,29 @@ msgstr ""
 msgid "The device is mounted by another user."
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:53
+#: plinth/modules/storage/templates/storage.html:35
 #, fuzzy
 #| msgid "The following disks are in use:"
 msgid "The following storage devices are in use:"
 msgstr "క్రింది డిస్కులు ఉపయోగంలో ఉన్నాయి:"
 
-#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:41
 msgid "Label"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:42
 msgid "Mount Point"
 msgstr "ఆరొహించు కోన"
 
-#: plinth/modules/storage/templates/storage.html:62
+#: plinth/modules/storage/templates/storage.html:44
 msgid "Used"
 msgstr "ఉపయోగించబడినది"
 
-#: plinth/modules/storage/templates/storage.html:108
+#: plinth/modules/storage/templates/storage.html:90
 msgid "Partition Expansion"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:110
+#: plinth/modules/storage/templates/storage.html:92
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -5222,9 +5250,9 @@ msgstr ""
 "రూట్ విభజనను మీరు విస్తరించుకోగలరు. మీ ఫైళ్లు భద్రపరుచుకునేందుకు అది మీకు అదనపు సామర్ధ్యాన్ని "
 "అందిస్తుంది."
 
-#: plinth/modules/storage/templates/storage.html:120
+#: plinth/modules/storage/templates/storage.html:102
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:74
+#: plinth/modules/storage/views.py:83
 msgid "Expand Root Partition"
 msgstr "రూట్ విభజనను విస్తరించు"
 
@@ -5238,32 +5266,32 @@ msgstr ""
 "దయచేసి మీ సమాచారాన్ని బ్యాకప్ (భద్రపరచు కొనుట) చేస్కోండి. ఈ క్రియ తర్వాత %(expandable_root_size)s "
 "అధనపు సామర్ధ్యం మీ రూ విభజనలో అందుబాటులోకి వస్తుంది."
 
-#: plinth/modules/storage/views.py:86
+#: plinth/modules/storage/views.py:95
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "విభజన విస్తరణలో దోషం: {exception}"
 
-#: plinth/modules/storage/views.py:89
+#: plinth/modules/storage/views.py:98
 msgid "Partition expanded successfully."
 msgstr "విభజనను విస్తరించడం విజయవంతమైనది."
 
-#: plinth/modules/storage/views.py:106
+#: plinth/modules/storage/views.py:115
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
 msgstr ""
 
-#: plinth/modules/storage/views.py:132
+#: plinth/modules/storage/views.py:141
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr ""
 
-#: plinth/modules/storage/views.py:136
+#: plinth/modules/storage/views.py:145
 msgid "Device can be safely unplugged."
 msgstr ""
 
-#: plinth/modules/storage/views.py:146
+#: plinth/modules/storage/views.py:155
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr ""
@@ -6266,11 +6294,11 @@ msgstr "సంస్థాపన %(package_names)s%:(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% పూర్తి"
 
-#: plinth/views.py:179
+#: plinth/views.py:180
 msgid "Application enabled"
 msgstr "అనువర్తనం ఆమోదింపబడింది"
 
-#: plinth/views.py:182
+#: plinth/views.py:183
 msgid "Application disabled"
 msgstr "అనువర్తనం ఆమోదింపబడలేదు"
 
