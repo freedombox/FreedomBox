@@ -92,8 +92,7 @@ class IkiwikiApp(app_module.App):
         """Add an ikiwiki shortcut to frontpage."""
         shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, title,
                                       icon=icon_filename,
-                                      url='/ikiwiki/' + site,
-                                      clients=clients)
+                                      url='/ikiwiki/' + site, clients=clients)
         self.add(shortcut)
         return shortcut
 

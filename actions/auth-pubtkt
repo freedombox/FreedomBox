@@ -109,8 +109,9 @@ def subcommand_generate_ticket(arguments):
         pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
     valid_until = minutes_from_now(12 * 60)
     grace_period = minutes_from_now(11 * 60)
-    print(create_ticket(pkey, uid, valid_until, tokens=tokens,
-                        graceperiod=grace_period))
+    print(
+        create_ticket(pkey, uid, valid_until, tokens=tokens,
+                      graceperiod=grace_period))
 
 
 def minutes_from_now(minutes):
@@ -120,8 +121,8 @@ def minutes_from_now(minutes):
 
 def seconds_from_now(seconds):
     """Return a timestamp at the given number of seconds from now."""
-    return (
-        datetime.datetime.now() + datetime.timedelta(0, seconds)).timestamp()
+    return (datetime.datetime.now() +
+            datetime.timedelta(0, seconds)).timestamp()
 
 
 def main():

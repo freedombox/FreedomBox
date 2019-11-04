@@ -132,8 +132,8 @@ def diagnose():
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Php/lens', 'Php.lns')
     aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
     aug.load()

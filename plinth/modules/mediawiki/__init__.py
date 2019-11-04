@@ -101,7 +101,6 @@ class MediaWikiApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut for only logged users when in private mode."""
-
     def enable(self):
         """When enabled, check if MediaWiki is in private mode."""
         super().enable()

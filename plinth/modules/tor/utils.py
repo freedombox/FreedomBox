@@ -104,8 +104,8 @@ def get_real_apt_uri_path(aug, path):
 
 def get_augeas():
     """Return an instance of Augeaus for processing APT configuration."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Aptsources/lens', 'Aptsources.lns')
     aug.set('/augeas/load/Aptsources/incl[last() + 1]',
             '/etc/apt/sources.list')

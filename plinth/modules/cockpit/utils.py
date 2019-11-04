@@ -27,8 +27,8 @@ CONFIG_FILE = '/etc/cockpit/cockpit.conf'
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
     aug.set('/augeas/load/inifile/incl[last() + 1]', CONFIG_FILE)
     aug.load()

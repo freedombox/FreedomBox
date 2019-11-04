@@ -65,8 +65,8 @@ def test_shortcuts_api_with_empty_custom_shortcuts_list():
 def test_shortcuts_api_with_custom_nextcloud_shortcut():
     shortcuts = get_shortcuts_as_json()
     assert len(shortcuts['shortcuts']) >= 1
-    assert any(
-        shortcut['name'] == 'NextCloud' for shortcut in shortcuts['shortcuts'])
+    assert any(shortcut['name'] == 'NextCloud'
+               for shortcut in shortcuts['shortcuts'])
 
 
 @pytest.mark.usefixtures('nextcloud_shortcut')

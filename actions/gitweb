@@ -38,7 +38,6 @@ logger = logging.getLogger(__name__)
 
 class ValidateRepoName(argparse.Action):
     """Validate a repository name and add .git extension if necessary."""
-
     def __call__(self, parser, namespace, values, option_string=None):
         RepositoryValidator()(values)
         if not values.endswith('.git'):
@@ -48,7 +47,6 @@ class ValidateRepoName(argparse.Action):
 
 class ValidateRepoUrl(argparse.Action):
     """Validate a repository URL."""
-
     def __call__(self, parser, namespace, values, option_string=None):
         RepositoryValidator(input_should_be='url')(values)
         setattr(namespace, self.dest, values)
@@ -359,8 +357,9 @@ def subcommand_repo_info(arguments):
 
     print(
         json.dumps(
-            dict(name=arguments.name[:-4], description=_get_repo_description(
-                arguments.name), owner=_get_repo_owner(arguments.name),
+            dict(name=arguments.name[:-4],
+                 description=_get_repo_description(arguments.name),
+                 owner=_get_repo_owner(arguments.name),
                  access=_get_access_status(arguments.name))))
 
 

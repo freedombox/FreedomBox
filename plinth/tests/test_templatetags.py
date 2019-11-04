@@ -51,9 +51,9 @@ def test_highlighting():
         'text': 'create'
     }]
 
-    tests = [['/abc/123/crunch/new/', '/abc/123/crunch/'], [
-        '/abc/123/create/', '/abc/123/create/'
-    ], ['/abc/123/nolink/', '/abc/123/'], ['/abc/123/abx/', '/abc/123/'],
+    tests = [['/abc/123/crunch/new/', '/abc/123/crunch/'],
+             ['/abc/123/create/', '/abc/123/create/'],
+             ['/abc/123/nolink/', '/abc/123/'], ['/abc/123/abx/', '/abc/123/'],
              ['/abc/123/ab/', '/abc/123/'], ['/abc/123/', '/abc/123/']]
 
     for check_path, expected_active_path in tests:

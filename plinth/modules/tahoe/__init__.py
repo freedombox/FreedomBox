@@ -76,9 +76,10 @@ class TahoeApp(app_module.App):
                               parent_url_name='apps', advanced=True)
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-tahoe', name, short_description=short_description,
-            icon=icon_filename, url=None, login_required=True)
+        shortcut = frontpage.Shortcut('shortcut-tahoe', name,
+                                      short_description=short_description,
+                                      icon=icon_filename, url=None,
+                                      login_required=True)
         self.add(shortcut)
 
         firewall = Firewall('firewall-tahoe', name, ports=['tahoe-plinth'],
@@ -94,7 +95,6 @@ class TahoeApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
-
     def enable(self):
         """Set the proper shortcut URL when enabled."""
         super().enable()

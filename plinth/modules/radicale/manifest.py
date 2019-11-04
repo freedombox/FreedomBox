@@ -87,8 +87,7 @@ clients = validate([{
         'name': 'evolution'
     }]
 }, {
-    'name':
-        _('Radicale'),
+    'name': _('Radicale'),
     'platforms': [{
         'type': 'web',
         'url': '/radicale/'

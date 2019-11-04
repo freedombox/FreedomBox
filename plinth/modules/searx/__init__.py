@@ -29,7 +29,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
-from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients # noqa, pylint: disable=unused-import
+from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients  # noqa, pylint: disable=unused-import
 
 clients = clients
 
@@ -99,7 +99,6 @@ class SearxApp(app_module.App):
 
 class SearxWebserverAuth(Webserver):
     """Component to handle Searx authentication webserver configuration."""
-
     def is_enabled(self):
         """Return if configuration is enabled or public access is enabled."""
         return is_public_access_enabled() or super().is_enabled()

@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the name services module
 """
@@ -22,7 +21,6 @@ URLs for the name services module
 from django.conf.urls import url
 
 from . import views
-
 
 urlpatterns = [
     url(r'^sys/names/$', views.index, name='index'),

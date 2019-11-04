@@ -294,8 +294,8 @@ def transmission_remove_all_torrents(browser):
 def transmission_upload_sample_torrent(browser):
     """Upload a sample torrent into transmission."""
     browser.visit(config['DEFAULT']['url'] + '/transmission')
-    file_path = os.path.join(
-        os.path.dirname(__file__), '..', 'data', 'sample.torrent')
+    file_path = os.path.join(os.path.dirname(__file__), '..', 'data',
+                             'sample.torrent')
     browser.click_link_by_id('toolbar-open')
     eventually(browser.is_element_not_present_by_css,
                args=['#upload-container[style="display: none;"]'])
@@ -396,9 +396,8 @@ def deluge_remove_all_torrents(browser):
         browser.find_by_id('remove').first.click()
 
         # Remove window shows up
-        assert eventually(
-            lambda: _deluge_get_active_window_title(browser) == 'Remove Torrent'
-        )
+        assert eventually(lambda: _deluge_get_active_window_title(browser) ==
+                          'Remove Torrent')
 
         _deluge_click_active_window_button(browser, 'Remove With Data')
 
@@ -434,8 +433,8 @@ def deluge_upload_sample_torrent(browser):
     eventually(
         lambda: _deluge_get_active_window_title(browser) == 'Add Torrents')
 
-    file_path = os.path.join(
-        os.path.dirname(__file__), '..', 'data', 'sample.torrent')
+    file_path = os.path.join(os.path.dirname(__file__), '..', 'data',
+                             'sample.torrent')
 
     if browser.find_by_id('fileUploadForm'):  # deluge-web 2.x
         browser.attach_file('file', file_path)
@@ -443,9 +442,8 @@ def deluge_upload_sample_torrent(browser):
         browser.find_by_css('button.x-deluge-add-file').first.click()
 
         # Add from file window appears
-        eventually(
-            lambda: _deluge_get_active_window_title(browser) == 'Add from File'
-        )
+        eventually(lambda: _deluge_get_active_window_title(browser) ==
+                   'Add from File')
 
         # Attach file
         browser.attach_file('file', file_path)

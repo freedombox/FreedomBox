@@ -66,8 +66,8 @@ def subcommand_reset_home_page(_):
     config_file = FREEDOMBOX_APACHE_CONFIG
     default_path = 'plinth'
 
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
     aug.set('/augeas/load/Httpd/incl[last() + 1]', config_file)
     aug.load()

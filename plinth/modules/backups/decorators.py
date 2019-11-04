@@ -30,7 +30,6 @@ def delete_tmp_backup_file(function):
     XXX: Implement a better way to delete uploaded files.
 
     """
-
     @functools.wraps(function)
     def wrapper(request, *args, **kwargs):
         path = request.session.get(SESSION_PATH_VARIABLE, None)

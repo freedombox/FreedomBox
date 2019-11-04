@@ -31,13 +31,18 @@ from plinth.modules.pagekite import utils
 aug = None
 
 PATHS = {
-    'service_on': os.path.join(utils.CONF_PATH, '*', 'service_on', '*'),
-    'kitename': os.path.join(utils.CONF_PATH, '10_account.rc', 'kitename'),
-    'kitesecret': os.path.join(utils.CONF_PATH, '10_account.rc', 'kitesecret'),
-    'abort_not_configured': os.path.join(utils.CONF_PATH, '10_account.rc',
-                                         'abort_not_configured'),
-    'defaults': os.path.join(utils.CONF_PATH, '20_frontends.rc', 'defaults'),
-    'frontend': os.path.join(utils.CONF_PATH, '20_frontends.rc', 'frontend'),
+    'service_on':
+        os.path.join(utils.CONF_PATH, '*', 'service_on', '*'),
+    'kitename':
+        os.path.join(utils.CONF_PATH, '10_account.rc', 'kitename'),
+    'kitesecret':
+        os.path.join(utils.CONF_PATH, '10_account.rc', 'kitesecret'),
+    'abort_not_configured':
+        os.path.join(utils.CONF_PATH, '10_account.rc', 'abort_not_configured'),
+    'defaults':
+        os.path.join(utils.CONF_PATH, '20_frontends.rc', 'defaults'),
+    'frontend':
+        os.path.join(utils.CONF_PATH, '20_frontends.rc', 'frontend'),
 }
 
 
@@ -50,9 +55,9 @@ def parse_arguments():
     subparsers.add_parser('start-and-enable', help='Enable PageKite service')
     subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
     subparsers.add_parser('restart', help='Restart PageKite service')
-    subparsers.add_parser('is-disabled',
-                          help=('Whether PageKite is disabled in the file '
-                                '/etc/pagekite.d/10_accounts.rc'))
+    subparsers.add_parser(
+        'is-disabled', help=('Whether PageKite is disabled in the file '
+                             '/etc/pagekite.d/10_accounts.rc'))
 
     # Frontend
     subparsers.add_parser('get-frontend', help='Get pagekite frontend')

@@ -62,8 +62,9 @@ def parse_arguments():
     # Add a service
     add_service = subparsers.add_parser('add-service', help='Add a service')
     add_service.add_argument('service', help='Name of the service to add')
-    add_service.add_argument(
-        '--zone', help='Zone to which service is to be added', required=True)
+    add_service.add_argument('--zone',
+                             help='Zone to which service is to be added',
+                             required=True)
 
     # Remove a service status
     remove_service = subparsers.add_parser('remove-service',
@@ -111,8 +112,8 @@ def _flush_iptables_rules():
 def set_firewall_backend(backend):
     """Set FirewallBackend attribute to the specified string."""
     conf_file = '/etc/firewalld/firewalld.conf'
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # lens for shell-script config file
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')

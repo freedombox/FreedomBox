@@ -82,8 +82,8 @@ class CaptchaLoginView(LoginView):
     form_class = AuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
-        response = super(CaptchaLoginView, self).dispatch(
-            request, *args, **kwargs)
+        response = super(CaptchaLoginView,
+                         self).dispatch(request, *args, **kwargs)
         if not request.POST:
             return response
 

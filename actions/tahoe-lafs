@@ -114,8 +114,8 @@ def subcommand_setup(arguments):
 def subcommand_autostart(_):
     """Automatically start all introducers and storage nodes on system startup.
     """
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.load()
@@ -157,8 +157,9 @@ def subcommand_create_storage_node(_):
     if not os.path.exists(os.path.join(tahoe_home, storage_node_name)):
         subprocess.check_call([
             'tahoe', 'create-node', '--nickname=\"storage_node\"',
-            '--webport=1234', '--hostname={}'.format(
-                get_configured_domain_name()), storage_node_name
+            '--webport=1234',
+            '--hostname={}'.format(get_configured_domain_name()),
+            storage_node_name
         ])
         with open(
                 os.path.join(tahoe_home, introducer_name, 'private',

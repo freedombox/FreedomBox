@@ -529,8 +529,8 @@ def _update_ports():
 
 def augeas_load():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Tor/lens', 'Tor.lns')
     aug.set('/augeas/load/Tor/incl[last() + 1]',
             '/etc/tor/instances/plinth/torrc')

@@ -32,11 +32,10 @@ subsubmenu = [{
 }, {
     'url': reverse_lazy('i2p:tunnels'),
     'text': ugettext_lazy('Proxies')
-},
-              {
-                  'url': reverse_lazy('i2p:torrents'),
-                  'text': ugettext_lazy('Anonymous torrents')
-              }]
+}, {
+    'url': reverse_lazy('i2p:torrents'),
+    'text': ugettext_lazy('Anonymous torrents')
+}]
 
 
 class I2PAppView(AppView):

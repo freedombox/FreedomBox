@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for configuring ikiwiki
 """
@@ -25,14 +24,12 @@ from django.utils.translation import ugettext_lazy as _
 
 class IkiwikiCreateForm(forms.Form):
     """Form to create a wiki or blog."""
-    site_type = forms.ChoiceField(
-        label=_('Type'),
-        choices=[('wiki', 'Wiki'), ('blog', 'Blog')])
+    site_type = forms.ChoiceField(label=_('Type'), choices=[('wiki', 'Wiki'),
+                                                            ('blog', 'Blog')])
 
     name = forms.CharField(label=_('Name'))
 
     admin_name = forms.CharField(label=_('Admin Account Name'))
 
-    admin_password = forms.CharField(
-        label=_('Admin Account Password'),
-        widget=forms.PasswordInput())
+    admin_password = forms.CharField(label=_('Admin Account Password'),
+                                     widget=forms.PasswordInput())

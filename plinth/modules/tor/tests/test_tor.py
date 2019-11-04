@@ -28,7 +28,6 @@ from plinth.modules.tor import forms, utils
 
 class TestTor:
     """Test cases for testing the Tor module."""
-
     @staticmethod
     @pytest.mark.usefixtures('needs_root')
     def test_is_apt_transport_tor_enabled():
@@ -51,7 +50,6 @@ class TestTor:
 
 class TestTorForm:
     """Test whether Tor configration form works."""
-
     @staticmethod
     def test_bridge_validator():
         """Test upstream bridges' form field validator."""

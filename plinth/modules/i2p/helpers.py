@@ -35,7 +35,6 @@ class TunnelEditor():
     :type aug: augeas.Augeas
 
     """
-
     def __init__(self, conf_filename=None, idx=None):
         self.conf_filename = conf_filename or FILE_TUNNEL_CONF
         self.idx = idx
@@ -55,8 +54,8 @@ class TunnelEditor():
         Chainable method.
 
         """
-        self.aug = augeas.Augeas(
-            flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+        self.aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                                 augeas.Augeas.NO_MODL_AUTOLOAD)
         self.aug.set('/augeas/load/Properties/lens', 'Properties.lns')
         self.aug.set('/augeas/load/Properties/incl[last() + 1]',
                      self.conf_filename)
@@ -160,8 +159,8 @@ class RouterEditor():
         Chainable method.
 
         """
-        self.aug = augeas.Augeas(
-            flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+        self.aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                                 augeas.Augeas.NO_MODL_AUTOLOAD)
         self.aug.set('/augeas/load/Properties/lens', 'Properties.lns')
         self.aug.set('/augeas/load/Properties/incl[last() + 1]',
                      self.conf_filename)

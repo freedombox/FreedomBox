@@ -150,9 +150,8 @@ def get_monkeysphere_keys(key_id=None):
     """Return the list of keys imported into monkeysphere."""
     try:
         key_ids = [] if not key_id else [key_id]
-        output = subprocess.check_output(
-            ['monkeysphere-host', 'show-keys'] + key_ids,
-            stderr=subprocess.DEVNULL)
+        output = subprocess.check_output(['monkeysphere-host', 'show-keys'] +
+                                         key_ids, stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         # no keys available
         return {}
@@ -288,9 +287,10 @@ def subcommand_host_publish_key(arguments):
     # setting TMPDIR as workaround for Debian bug #656750
     proc = subprocess.Popen(
         ['monkeysphere-host', 'publish-keys'] + arguments.key_ids,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=dict(
-            os.environ, TMPDIR='/var/lib/monkeysphere/authentication/tmp/',
-            MONKEYSPHERE_PROMPT='false'))
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        env=dict(os.environ,
+                 TMPDIR='/var/lib/monkeysphere/authentication/tmp/',
+                 MONKEYSPHERE_PROMPT='false'))
     output, error = proc.communicate()
     output, error = output.decode(), error.decode()
     if proc.returncode != 0:

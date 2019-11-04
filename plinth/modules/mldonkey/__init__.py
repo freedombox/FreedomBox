@@ -80,10 +80,11 @@ class MLDonkeyApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        shortcuts = frontpage.Shortcut(
-            'shortcut-mldonkey', name, short_description=short_description,
-            icon=icon_filename, url='/mldonkey/', login_required=True,
-            clients=clients, allowed_groups=[group[0]])
+        shortcuts = frontpage.Shortcut('shortcut-mldonkey', name,
+                                       short_description=short_description,
+                                       icon=icon_filename, url='/mldonkey/',
+                                       login_required=True, clients=clients,
+                                       allowed_groups=[group[0]])
         self.add(shortcuts)
 
         firewall = Firewall('firewall-mldonkey', name, ports=['http', 'https'],

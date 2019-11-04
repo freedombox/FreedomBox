@@ -59,10 +59,8 @@ KNOWN_ERRORS = [
         'errors': [
             'not a valid repository', 'does not exist', 'FileNotFoundError'
         ],
-        'message':
-            _('Repository not found'),
-        'raise_as':
-            errors.BorgRepositoryDoesNotExistError,
+        'message': _('Repository not found'),
+        'raise_as': errors.BorgRepositoryDoesNotExistError,
     },
     {
         'errors': ['passphrase supplied in .* is incorrect'],
@@ -176,7 +174,6 @@ class BaseBorgRepository(abc.ABC):
 
     def remove(self):
         """Remove a borg repository"""
-
     def list_archives(self):
         """Return list of archives in this repository."""
         output = self.run(['list-repo', '--path', self.borg_path])
@@ -241,7 +238,6 @@ class BaseBorgRepository(abc.ABC):
 
     def get_download_stream(self, archive_name):
         """Return an stream of .tar.gz binary data for a backup archive."""
-
         class BufferedReader(io.BufferedReader):
             """Improve performance of buffered binary streaming.
 
@@ -255,7 +251,6 @@ class BaseBorgRepository(abc.ABC):
             binary data.
 
             """
-
             def __next__(self):
                 """Override to call read() instead of readline()."""
                 chunk = self.read(io.DEFAULT_BUFFER_SIZE)

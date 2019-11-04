@@ -30,14 +30,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True,
-                                        serialize=False, verbose_name='ID')),
-                ('language', models.CharField(default=None, max_length=32,
-                                              null=True)),
-                ('user', models.OneToOneField(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    to=settings.AUTH_USER_MODEL)),
-            ], ),
+                ('id',
+                 models.AutoField(auto_created=True, primary_key=True,
+                                  serialize=False, verbose_name='ID')),
+                ('language',
+                 models.CharField(default=None, max_length=32, null=True)),
+                ('user',
+                 models.OneToOneField(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
         migrations.RunPython(code=insert_users,
                              reverse_code=truncate_user_profile),
     ]

@@ -89,10 +89,11 @@ class I2PApp(app_module.App):
                               'i2p:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-i2p', name, short_description=short_description,
-            icon=icon_filename, url='/i2p/', clients=clients, login_required=True,
-            allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-i2p', name,
+                                      short_description=short_description,
+                                      icon=icon_filename, url='/i2p/',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-i2p-web', name, ports=['http', 'https'],

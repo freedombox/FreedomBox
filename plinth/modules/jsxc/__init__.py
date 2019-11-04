@@ -63,10 +63,11 @@ class JSXCApp(app_module.App):
                               'jsxc:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-jsxc', name=name, short_description=short_description,
-            icon=icon_filename,
-            url=reverse_lazy('jsxc:jsxc'), clients=clients)
+        shortcut = frontpage.Shortcut('shortcut-jsxc', name=name,
+                                      short_description=short_description,
+                                      icon=icon_filename,
+                                      url=reverse_lazy('jsxc:jsxc'),
+                                      clients=clients)
         self.add(shortcut)
 
         firewall = Firewall('firewall-jsxc', name, ports=['http', 'https'],

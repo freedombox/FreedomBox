@@ -96,11 +96,11 @@ def validate_mountpoint(mountpoint):
     """Check that the folder is empty, and create it if it doesn't exist"""
     if os.path.exists(mountpoint):
         if _is_mounted(mountpoint):
-            raise AlreadyMountedError(
-                'Mountpoint %s already mounted' % mountpoint)
+            raise AlreadyMountedError('Mountpoint %s already mounted' %
+                                      mountpoint)
         if os.listdir(mountpoint) or not os.path.isdir(mountpoint):
-            raise ValueError(
-                'Mountpoint %s is not an empty directory' % mountpoint)
+            raise ValueError('Mountpoint %s is not an empty directory' %
+                             mountpoint)
     else:
         os.makedirs(mountpoint)
 

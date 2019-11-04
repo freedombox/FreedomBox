@@ -81,8 +81,8 @@ def _update_uwsgi_configuration():
 
     uwsgi 2.0.15-debian crashes when trying to autoload.
     """
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
     aug.set('/augeas/load/inifile/incl[last() + 1]', UWSGI_FILE)
     aug.load()

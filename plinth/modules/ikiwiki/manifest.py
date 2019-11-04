@@ -28,8 +28,7 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
-    'data': {
+backup = validate_backup(
+    {'data': {
         'directories': ['/var/lib/ikiwiki/', '/var/www/ikiwiki/']
-    }
-})
+    }})

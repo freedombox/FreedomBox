@@ -28,7 +28,6 @@ from plinth.utils import format_lazy
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField."""
-
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
@@ -81,12 +80,12 @@ class ConfigureForm(forms.Form):
                                                       'freedns.afraid.org'),
                         ('other', 'other update URL'))
 
-    enabled = forms.BooleanField(
-        label=ugettext_lazy('Enable Dynamic DNS'), required=False)
+    enabled = forms.BooleanField(label=ugettext_lazy('Enable Dynamic DNS'),
+                                 required=False)
 
-    service_type = forms.ChoiceField(
-        label=ugettext_lazy('Service Type'), help_text=help_services,
-        choices=provider_choices)
+    service_type = forms.ChoiceField(label=ugettext_lazy('Service Type'),
+                                     help_text=help_services,
+                                     choices=provider_choices)
 
     dynamicdns_server = TrimmedCharField(
         label=ugettext_lazy('GnuDIP Server Address'), required=False,
@@ -95,9 +94,9 @@ class ConfigureForm(forms.Form):
                                       ugettext_lazy('Invalid server name'))
         ])
 
-    dynamicdns_update_url = TrimmedCharField(
-        label=ugettext_lazy('Update URL'), required=False,
-        help_text=help_update_url)
+    dynamicdns_update_url = TrimmedCharField(label=ugettext_lazy('Update URL'),
+                                             required=False,
+                                             help_text=help_update_url)
 
     disable_SSL_cert_check = forms.BooleanField(
         label=ugettext_lazy('Accept all SSL certificates'),
@@ -114,15 +113,15 @@ class ConfigureForm(forms.Form):
                                       ugettext_lazy('Invalid domain name'))
         ])
 
-    dynamicdns_user = TrimmedCharField(
-        label=ugettext_lazy('Username'), required=False, help_text=help_user)
+    dynamicdns_user = TrimmedCharField(label=ugettext_lazy('Username'),
+                                       required=False, help_text=help_user)
 
-    dynamicdns_secret = TrimmedCharField(
-        label=ugettext_lazy('Password'), widget=forms.PasswordInput(),
-        required=False, help_text=help_secret)
+    dynamicdns_secret = TrimmedCharField(label=ugettext_lazy('Password'),
+                                         widget=forms.PasswordInput(),
+                                         required=False, help_text=help_secret)
 
-    showpw = forms.BooleanField(
-        label=ugettext_lazy('Show password'), required=False)
+    showpw = forms.BooleanField(label=ugettext_lazy('Show password'),
+                                required=False)
 
     dynamicdns_ipurl = TrimmedCharField(
         label=ugettext_lazy('URL to look up public IP'), required=False,

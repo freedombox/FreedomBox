@@ -83,7 +83,6 @@ class PackageHandler():
 
 class DBusServer():
     """Abstraction over a connection to D-Bus."""
-
     def __init__(self):
         """Initialize the server object."""
         self.package_handler = None

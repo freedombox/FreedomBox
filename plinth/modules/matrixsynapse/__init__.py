@@ -108,9 +108,8 @@ class MatrixSynapseApp(app_module.App):
         self.add(webserver)
 
         letsencrypt = LetsEncrypt(
-            'letsencrypt-matrixsynapse', domains=get_domains, daemons=[
-                managed_services[0]
-            ], should_copy_certificates=True,
+            'letsencrypt-matrixsynapse', domains=get_domains,
+            daemons=[managed_services[0]], should_copy_certificates=True,
             private_key_path='/etc/matrix-synapse/homeserver.tls.key',
             certificate_path='/etc/matrix-synapse/homeserver.tls.crt',
             user_owner='matrix-synapse', group_owner='nogroup',

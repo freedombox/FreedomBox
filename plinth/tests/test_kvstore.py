@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test module for key/value store.
 """
@@ -38,8 +37,15 @@ def test_get_set():
 def test_get_set_complex_structures():
     """Verify that complex structures can be stored and retrieved."""
     key = 'compex_structure'
-    expected_value = {'k1': 1, 'k2': [2, 3], 'k3': 4.5, 'k4': 'Hello',
-                      'k5': {'a': 'b'}}
+    expected_value = {
+        'k1': 1,
+        'k2': [2, 3],
+        'k3': 4.5,
+        'k4': 'Hello',
+        'k5': {
+            'a': 'b'
+        }
+    }
     kvstore.set(key, expected_value)
     actual_value = kvstore.get(key)
     assert expected_value == actual_value

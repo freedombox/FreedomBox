@@ -89,9 +89,10 @@ class DiasporaApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = Shortcut(
-            'shortcut-diaspora', name, short_description=short_description,
-            icon='diaspora', url=None, clients=clients, login_required=True)
+        shortcut = Shortcut('shortcut-diaspora', name,
+                            short_description=short_description,
+                            icon='diaspora', url=None, clients=clients,
+                            login_required=True)
         self.add(shortcut)
 
         firewall = Firewall('firewall-diaspora', name, ports=['http', 'https'],
@@ -107,7 +108,6 @@ class DiasporaApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
-
     def enable(self):
         """Set the proper shortcut URL when enabled."""
         super().enable()
@@ -179,8 +179,8 @@ def generate_apache_configuration(conf_file, domain_name):
 
     diaspora_domain_name = ".".join(["diaspora", domain_name])
 
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
     aug.set('/augeas/load/Httpd/incl[last() + 1]', conf_file)

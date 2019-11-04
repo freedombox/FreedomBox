@@ -81,8 +81,8 @@ def get_hostname():
 
 def _get_home_page_url():
     """Get the default application for the domain."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
     conf_file = APACHE_HOMEPAGE_CONFIG if os.path.exists(
         APACHE_HOMEPAGE_CONFIG) else FREEDOMBOX_APACHE_CONFIG

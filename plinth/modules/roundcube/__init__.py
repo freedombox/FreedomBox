@@ -80,8 +80,7 @@ class RoundcubeApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-roundcube', name,
                                       short_description=short_description,
-                                      icon=icon_filename,
-                                      url='/roundcube/',
+                                      icon=icon_filename, url='/roundcube/',
                                       clients=clients, login_required=True)
         self.add(shortcut)
 

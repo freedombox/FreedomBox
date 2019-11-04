@@ -91,9 +91,10 @@ def init():
     global app
     app = AvahiApp()
     if app.is_enabled():
-        domain_added.send_robust(
-            sender='avahi', domain_type='domain-type-local',
-            name=get_hostname() + '.local', services='__all__')
+        domain_added.send_robust(sender='avahi',
+                                 domain_type='domain-type-local',
+                                 name=get_hostname() + '.local',
+                                 services='__all__')
         app.set_enabled(True)
 
     post_hostname_change.connect(on_post_hostname_change)

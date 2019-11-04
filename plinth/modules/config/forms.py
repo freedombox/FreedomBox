@@ -67,11 +67,10 @@ class ConfigurationForm(forms.Form):
                 'end with an alphabet or a digit and have as interior '
                 'characters only alphabets, digits and hyphens.  Total '
                 'length must be 63 characters or less.'),
-            box_name=ugettext_lazy(cfg.box_name)),
-        validators=[
-            validators.RegexValidator(HOSTNAME_REGEX,
-                                      ugettext_lazy('Invalid hostname'))
-        ], strip=True)
+            box_name=ugettext_lazy(cfg.box_name)), validators=[
+                validators.RegexValidator(HOSTNAME_REGEX,
+                                          ugettext_lazy('Invalid hostname'))
+            ], strip=True)
 
     domainname = forms.CharField(
         label=ugettext_lazy('Domain Name'), help_text=format_lazy(
@@ -83,12 +82,12 @@ class ConfigurationForm(forms.Form):
                 'only alphabets, digits and hyphens.  Length of each label '
                 'must be 63 characters or less.  Total length of domain name '
                 'must be 253 characters or less.'),
-            box_name=ugettext_lazy(cfg.box_name)),
-        required=False, validators=[
-            validators.RegexValidator(
-                r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
-                ugettext_lazy('Invalid domain name')), domain_label_validator
-        ], strip=True)
+            box_name=ugettext_lazy(cfg.box_name)), required=False, validators=[
+                validators.RegexValidator(
+                    r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
+                    ugettext_lazy('Invalid domain name')),
+                domain_label_validator
+            ], strip=True)
 
     homepage = forms.ChoiceField(
         label=ugettext_lazy('Webserver Home Page'), help_text=format_lazy(

@@ -36,7 +36,6 @@ def _get_partition_device(device, partition_number):
 
 class Disk():
     """Context manager to create/destroy a disk."""
-
     def __init__(self, test_case, size, disk_info, file_system_info=None):
         """Initialize the context manager object."""
         self.size = size
@@ -120,7 +119,6 @@ class Disk():
 
 class TestActions:
     """Test all actions related to storage."""
-
     @pytest.mark.usefixtures('needs_root')
     def test_simple_case(self):
         """Test a simple with no complications"""

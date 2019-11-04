@@ -77,7 +77,6 @@ def test_port_details(get_port_details):
 @patch('plinth.modules.firewall.get_enabled_services')
 def test_enable(get_enabled_services, add_service):
     """Test enabling a firewall component."""
-
     def get_enabled_services_side_effect(zone):
         return {'internal': ['test-port1'], 'external': ['test-port2']}[zone]
 

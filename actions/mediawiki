@@ -48,8 +48,8 @@ def parse_arguments():
     help_private_mode = 'Enable/Disable/Status private mode.'
     private_mode = subparsers.add_parser('private-mode',
                                          help=help_private_mode)
-    private_mode.add_argument('command', choices=('enable', 'disable',
-                                                  'status'),
+    private_mode.add_argument('command',
+                              choices=('enable', 'disable', 'status'),
                               help=help_private_mode)
 
     change_password = subparsers.add_parser('change-password',

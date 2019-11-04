@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Remove the deprecated KVStore entries 'setup_state' and 'firstboot_state',
 and only use the new entry 'firstboot_completed' instead.
@@ -63,8 +62,8 @@ def merge_firstboot_finished_fields(apps, schema_editor):
         firstboot_completed = _object.value
 
     # Set new 'firstboot_completed' if needed
-    new_firstboot_completed = bool(firstboot_completed or setup_state or
-                                   firstboot_state)
+    new_firstboot_completed = bool(firstboot_completed or setup_state
+                                   or firstboot_state)
     if new_firstboot_completed and not firstboot_completed:
         obj, created = KVStore.objects.get_or_create(key='firstboot_completed')
         obj.value = 1

@@ -43,7 +43,6 @@ _force_upgrader = None
 
 class Helper(object):
     """Helper routines for modules to show progress."""
-
     def __init__(self, module_name, module):
         """Initialize the object."""
         self.module_name = module_name
@@ -421,11 +420,9 @@ class ForceUpgrader():
 
     class TemporaryFailure(Exception):
         """Raised when upgrade fails but can be tried again immediately."""
-
     class PermanentFailure(Exception):
         """Raised when upgrade fails and there is nothing more we wish to do.
         """
-
     def __init__(self):
         """Initialize the force upgrader."""
         if plinth.cfg.develop:

@@ -108,9 +108,8 @@ def _backup_handler(packet, encryption_passphrase=None):
     arguments = ['create-archive', '--path', packet.path, '--paths'] + paths
     input_data = ''
     if encryption_passphrase:
-        input_data = json.dumps({
-            'encryption_passphrase': encryption_passphrase
-        })
+        input_data = json.dumps(
+            {'encryption_passphrase': encryption_passphrase})
 
     actions.superuser_run('backups', arguments, input=input_data.encode())
 

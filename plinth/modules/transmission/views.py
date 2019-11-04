@@ -50,9 +50,7 @@ class TransmissionAppView(views.AppView):
                                               ['get-configuration'])
         configuration = json.loads(configuration)
         status.update({
-            key.translate(str.maketrans({
-                '-': '_'
-            })): value
+            key.translate(str.maketrans({'-': '_'})): value
             for key, value in configuration.items()
         })
         status['hostname'] = socket.gethostname()

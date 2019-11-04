@@ -349,8 +349,9 @@ def _download_packages(packages):
     return downloaded_files
 
 
-def _get_conffile_hashes_from_downloaded_files(
-        packages, downloaded_files, status_hashes, mismatched_hashes):
+def _get_conffile_hashes_from_downloaded_files(packages, downloaded_files,
+                                               status_hashes,
+                                               mismatched_hashes):
     """Retrieve the conffile hashes from downloaded .deb files."""
     new_hashes = defaultdict(dict)
     new_versions = defaultdict(lambda: None)
@@ -369,8 +370,9 @@ def _get_conffile_hashes_from_downloaded_files(
     return new_hashes, new_versions
 
 
-def _get_conffile_hashes_from_downloaded_file(
-        packages, downloaded_file, status_hashes, mismatched_hashes):
+def _get_conffile_hashes_from_downloaded_file(packages, downloaded_file,
+                                              status_hashes,
+                                              mismatched_hashes):
     """Retrieve the conffile hashes from a single downloaded .deb file."""
     deb_file = apt_inst.DebFile(downloaded_file)
 

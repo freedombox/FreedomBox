@@ -43,7 +43,6 @@ class DomainSelectionForm(forms.Form):
     """Form for selecting a domain name to be used for
     distributed federated applications
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -84,9 +83,9 @@ class LanguageSelectionFormMixin:
             plinth_dir = os.path.dirname(plinth.__file__)
             if language_code == 'en' or os.path.exists(
                     os.path.join(plinth_dir, 'locale', locale_code)):
-                supported_languages.append((language_code,
-                                            _get_local_name(
-                                                language_code, language_name)))
+                supported_languages.append(
+                    (language_code,
+                     _get_local_name(language_code, language_name)))
 
         self.fields['language'].choices = supported_languages
 
@@ -106,7 +105,6 @@ class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
 
     Derived from https://djangosnippets.org/snippets/2786/
     """
-
     def render(self, name, value, attrs=None, choices=(), renderer=None):
         if value is None:
             value = []
@@ -114,8 +112,8 @@ class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
         output = [u'<ul>']
         global_readonly = 'readonly' in final_attrs
         str_values = set([v for v in value])
-        for i, (option_value, option_label) in enumerate(
-                chain(self.choices, choices)):
+        for i, (option_value,
+                option_label) in enumerate(chain(self.choices, choices)):
             if not global_readonly and 'readonly' in final_attrs:
                 # If the entire group is readonly keep all options readonly
                 del final_attrs['readonly']

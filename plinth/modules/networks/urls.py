@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Network module
 """
@@ -22,7 +21,6 @@ URLs for the Network module
 from django.conf.urls import url
 
 from . import networks as views
-
 
 urlpatterns = [
     url(r'^sys/networks/$', views.index, name='index'),
@@ -38,9 +36,9 @@ urlpatterns = [
     url(r'^sys/networks/add/ethernet/$', views.add_ethernet,
         name='add_ethernet'),
     url(r'^sys/networks/add/pppoe/$', views.add_pppoe, name='add_pppoe'),
-    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/'
-        r'(?P<interface_name>[^/]+)/)?$',
-        views.add_wifi, name='add_wifi'),
+    url(
+        r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/'
+        r'(?P<interface_name>[^/]+)/)?$', views.add_wifi, name='add_wifi'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),
 ]

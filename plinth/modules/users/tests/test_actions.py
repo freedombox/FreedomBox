@@ -81,8 +81,8 @@ def _try_login_to_ssh(username, password, returncode=0):
 def _action_file():
     """Return the path to the 'users' actions file."""
     current_directory = pathlib.Path(__file__).parent
-    return str(
-        current_directory / '..' / '..' / '..' / '..' / 'actions' / 'users')
+    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
+               'users')
 
 
 @pytest.fixture(name='disable_restricted_access', autouse=True)
