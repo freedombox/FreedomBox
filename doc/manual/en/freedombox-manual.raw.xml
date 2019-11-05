@@ -776,6 +776,31 @@
           </inlinemediaobject>
         </para>
       </section>
+      <section>
+        <title>Burger menu</title>
+        <para>FreedomBox's web interface (Plinth) is responsive. Eventually you might miss the menu options on slim windows. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_burger_icon.png" width="600"/>
+            </imageobject>
+            <textobject>
+              <phrase>User</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>That's because the top menu options collapsed into the burger icon shown at the top right corner of the window. Clicking on it the menu drops down. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/QuickStart?action=AttachFile&amp;do=get&amp;target=ui_burger_menu.png" width="600"/>
+            </imageobject>
+            <textobject>
+              <phrase>User</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
     </section>
   </section>
   <section>
@@ -1148,19 +1173,22 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
         <para>The following apps can be accessed over Tor. Note that this list is not exhaustive. </para>
         <itemizedlist>
           <listitem>
-            <para>Calendar and Addressbook (Radicale) </para>
+            <para>Calendar and Addressbook (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Radicale#">Radicale</ulink>) </para>
           </listitem>
           <listitem>
-            <para>File Synchronization (Syncthing) </para>
+            <para>File Synchronization (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Syncthing#">Syncthing</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Web Search (Searx) </para>
+            <para>Feed reader (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/TinyTinyRSS#">TinyTinyRSS</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Wiki (<ulink url="https://wiki.debian.org/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink>) </para>
+            <para>Web Search (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Searx#">Searx</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Wiki and Blog (Ikiwiki) </para>
+            <para>Wiki (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink>) </para>
+          </listitem>
+          <listitem>
+            <para>Wiki and Blog (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Ikiwiki#">Ikiwiki</ulink>) </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -1182,8 +1210,24 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
         </itemizedlist>
       </section>
       <section>
-        <title>Using Tor SOCKS port (advanced)</title>
+        <title>(Advanced) Usage as a SOCKS proxy</title>
         <para>FreedomBox provides a Tor SOCKS port that other applications can connect to, in order to route their traffic over the Tor network. This port is accessible on any interfaces configured in the internal firewall zone. To configure the application, set SOCKS Host to the internal network connection's IP address, and set the SOCKS Port to 9050. </para>
+        <section>
+          <title>Example with Firefox</title>
+          <para>Your web browser can be configured to use the Tor network for all of your browsing activity. This allows for censorship circumvention and also hides your IP address from websites during regular browsing. For anonymity, using tor browser is recommended. </para>
+          <para>Configure your local FreedomBox IP address and port 9050 as a SOCKS v5 proxy in Firefox. There are extensions to allow for easily turning the proxy on and off. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Tor?action=AttachFile&amp;do=get&amp;target=tor-socks-firefox.png" width="800"/>
+              </imageobject>
+              <textobject>
+                <phrase>Configuring Firefox with Tor SOCKS proxy</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>With the SOCKS proxy configured, you can now access any onion URL directly from Firefox. FreedomBox itself has an onion v3 address that you can connect to over the Tor network (bookmark this for use in emergency situations). </para>
+        </section>
       </section>
       <section>
         <title>Circumventing Tor censorship</title>
@@ -1234,15 +1278,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       </section>
       <section>
         <title>Using Transmission</title>
-        <para>After installing Transmission, it can be accessed at <code>https://&lt;your freedombox&gt;/transmission</code>. When you try to access this page, you will be required to login with a username and password. The default for both is "transmission". You can and should change the username and password using the configuration form in Plinth. </para>
-      </section>
-      <section>
-        <title>Known Issues</title>
-        <itemizedlist>
-          <listitem>
-            <para>The initial password is shown in the Plinth configuration form in a hashed format. This prevents it from being read or copied. However, after the password is changed, it is shown directly, without hashing. </para>
-          </listitem>
-        </itemizedlist>
+        <para>After installing Transmission, it can be accessed at <code>https://&lt;your freedombox&gt;/transmission</code>. Transmission uses single sign-on from FreedomBox, which means that if you are logged in on your FreedomBox, you can directly access Transmission without having to enter the credentials again. Otherwise, you will be prompted to login first and then redirected to the Transmission app. </para>
       </section>
       <section>
         <title>Tips</title>
@@ -1898,7 +1934,7 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
     <section>
       <title>File Synchronization (Syncthing)</title>
       <para>With <emphasis>Syncthing</emphasis> installed on your FreedomBox, you can synchronize content from other devices to your FreedomBox and vice-versa. For example, you can keep the photos taken on your mobile phone synchronized to your FreedomBox. </para>
-      <para><emphasis role="strong">Note:</emphasis> Syncthing is available in FreedomBox starting with Plinth version 0.14. </para>
+      <para><emphasis>Available since version:</emphasis>  0.14 </para>
       <para>Users should keep in mind that Syncthing is a peer-to-peer synchronization solution, not a client-server one. This means that the FreedomBox isn't really the server and your other devices clients. They're all devices from Syncthing's perspective. You can use Syncthing to synchronize your files between any of your devices. The advantage that FreedomBox provides is that it is a server that's always running. Suppose you want your photos on your phone to be synchronized to your laptop, if you simply sync the photos to the FreedomBox, the laptop can get them from the FreedomBox whenever it comes online the next time. You don't have to be worried about your other devices being online for synchronization. If your FreedomBox is one of the devices set up with your Syncthing shared folder, you can rest assured that your other devices will eventually get the latest files once they come online. </para>
       <para>After installation follow the instructions in the <ulink url="https://docs.syncthing.net/intro/getting-started.html">getting started of the Syncthing project</ulink>.  Syncthing allows individual folders to be selectively shared with other devices. Devices must be paired up before sharing by scanning QR codes or entering the device ids manually. Syncthing has a discovery service for easily identifying the other devices on the same network having Syncthing installed. </para>
       <para>In order to access to the web client of the Syncthing instance running on your FreedomBox, use the path <emphasis>/syncthing</emphasis>. This web client is currently only accessible to the users of the FreedomBox that have administrator privileges, though it might be accessible to all FreedomBox users in a future release. </para>
@@ -1916,10 +1952,23 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
       <para>To learn more about Syncthing, please visit their <ulink url="https://syncthing.net">official website</ulink> and <ulink url="https://docs.syncthing.net">documentation</ulink>.  </para>
       <section>
         <title>Synchronizing over Tor</title>
-        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/SyncThing#">SyncThing</ulink> should automatically sync with your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> even if it is only accessible as a Tor hidden service. </para>
-        <para>If you would like to proxy your Syncthing client over Tor, set the all_proxy environment variable: </para>
+        <para>Syncthing should automatically sync with your FreedomBox even if it is only accessible as a Tor hidden service. </para>
+        <para>If you would like to proxy your Syncthing client over Tor, set the <code>all_proxy</code> environment variable: </para>
         <screen><![CDATA[$ all_proxy=socks5://localhost:9050 syncthing]]></screen>
         <para>For more information, see the Syncthing documentation on <ulink url="https://docs.syncthing.net/users/proxying.html">using proxies</ulink>. </para>
+      </section>
+      <section>
+        <title>Avoiding Syncthing Relays</title>
+        <para>Syncthing uses dynamic connections by default to connect with other peers. This means that if you are synchronizing over the Internet, the data might have to go through public Syncthing relays to reach your devices. This doesn't take advantage of the fact that your FreedomBox has a public IP address. </para>
+        <para>When adding your FreedomBox as a device in other Syncthing clients, set the address like "tcp://&lt;my.freedombox.domain&gt;" instead of "dynamic". This allows your Syncthing peers to directly connect to your FreedomBox avoiding the need for relays. It also allows for fast on-demand syncing if you don't want to keep Syncthing running all the time on your mobile devices. </para>
+      </section>
+      <section>
+        <title>Using Syncthing with other applications</title>
+        <section>
+          <title>Password Manager</title>
+          <para>Password managers that store their databases in files are suitable for synchronization using Syncthing. The following example describes using a free password manager called KeePassXC in combination with Syncthing to serve as a replacement for proprietary password managers that store your passwords in the cloud. </para>
+          <para>KeePassXC stores usernames, passwords etc. in files have the .kdbx extension. These kdbx files can be stored in a Syncthing shared folder to keep them synchronized on multiple machines. Free software applications which can read this file format are available for both desktop and mobile. You typically have to just point the application at the .kdbx file and enter the master password to access your stored credentials. For example, the same kdbx file can be accessed by using KeePassXC on desktop and KeePassDX on Android. KeePassXC can also be used to fill credentials into login fields in the browser by installing a browser extension. </para>
+        </section>
       </section>
     </section>
     <section>
@@ -5981,7 +6030,17 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
             <para>Make the domain name known: </para>
             <itemizedlist>
               <listitem>
-                <para>In <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Configure#">Configure</ulink> insert your <emphasis>domain name</emphasis>, e.g. <emphasis><code>MyWebName.com</code></emphasis> <inlinemediaobject><imageobject><imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/LetsEncrypt?action=AttachFile&amp;do=get&amp;target=LetsEncrypt-Configure.png" width="800"/></imageobject><textobject><phrase>Let's Encrypt</phrase></textobject></inlinemediaobject> </para>
+                <para>In <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Configure#">Configure</ulink> insert your <emphasis>domain name</emphasis>, e.g. <emphasis><code>MyWebName.com</code></emphasis> </para>
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/LetsEncrypt?action=AttachFile&amp;do=get&amp;target=LetsEncrypt-Configure.png" width="800"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Let's Encrypt</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -9265,6 +9324,13 @@ $ sudo umount /tmp/vbox-root1
           <screen><![CDATA[*/15 * *   *   *     /etc/init.d/ntp restart]]></screen>
           <para>Do not restart this service too often as this increases the load of publicly and freely available NTP servers. </para>
         </section>
+        <section>
+          <title>UUID collision in VB</title>
+          <para>Whenever this happens VirtualBox shows following error message: <emphasis>Cannot register the hard disk A with UUID ... because a hard disk B with UUID ... already exists in the media registry</emphasis> </para>
+          <para>Creating several VMs from the same image causes collisions due to ID's (hostname, IP, UUID, etc) that are expected to be universally unique. Most can be handeled operating the running VM. But VirtualBox complains before that (at the very creation of the VM) about the hard disk's UUID. This is usual stuff when you develop/test e.g. FreedomBox. </para>
+          <para>You can change a clone's UUID in the terminal as follows: </para>
+          <screen><![CDATA[$ VBoxManage internalcommands sethduuid path/to/the/hd/vdi/file]]></screen>
+        </section>
       </section>
     </section>
     <section>
@@ -9872,6 +9938,41 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Freedombox 19.20 (2019-11-04)</title>
+        <itemizedlist>
+          <listitem>
+            <para>doc: Add Spanish manual </para>
+          </listitem>
+          <listitem>
+            <para>ssh: Add option to disable password authentication </para>
+          </listitem>
+          <listitem>
+            <para>sharing: Fix wrong links on Apache2 directory index page </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Set correct access rights after enabling application </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Fix links leading to blank page </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Set proper access after restoration of a backup </para>
+          </listitem>
+          <listitem>
+            <para>snapshot: Sort snapshot list from newest to oldest </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Add missing manual page link </para>
+          </listitem>
+          <listitem>
+            <para>backups: Fix typo </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for German, Spanish, Swedish, Czech, French, Norwegian Bokmål, Hungarian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.19 (2019-10-21)</title>
         <itemizedlist>

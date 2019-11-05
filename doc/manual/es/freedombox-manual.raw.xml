@@ -1047,19 +1047,19 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
         <para>Las siguientes apps se pueden acceder a través de Tor. Esta lista puede ser incompleta. </para>
         <itemizedlist>
           <listitem>
-            <para>Calendario y Libreta de direcciones (Radicale) </para>
+            <para>Calendario y Libreta de direcciones (<ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Radicale#">Radicale</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Sincronización de ficheros (Syncthing) </para>
+            <para>Sincronización de ficheros (<ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Syncthing#">Syncthing</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Búsqueda Web (Searx) </para>
+            <para>Búsqueda Web (<ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Searx#">Searx</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Wiki (<ulink url="https://wiki.debian.org/es/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink>) </para>
+            <para>Wiki (<ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink>) </para>
           </listitem>
           <listitem>
-            <para>Wiki y Blog (Ikiwiki) </para>
+            <para>Wiki y Blog (<ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Ikiwiki#">Ikiwiki</ulink>) </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -1083,9 +1083,25 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       <section>
         <title>Usar el puerto Tor SOCKS (avanzado)</title>
         <para>FreedomBox proporciona un puerto Tor SOCKS al que pueden conectar otras aplicaciones para enrutar su tráfico a través de la red Tor. Este puerto es accesible a cualquier interfaz (de red) configurado en la zona interna del cortafuegos. Para configurar la aplicación apunta el <emphasis>Host SOCKS</emphasis> a la dirección IP interna de la conexión y pon el <emphasis>Puerto SOCKS</emphasis> a 9050. </para>
+        <section>
+          <title>Exjemplo con Firefox</title>
+          <para>Tu navegador web se puede configurar para emplear la red Tor para toda tu actividad de navegación. Esto permite eludir la censura y oculta tu dirección IP a los sitios web durante la navegación normal. Para anonimato se recomienda usar el Navegador Tor. </para>
+          <para>Configura tu dirección IP local de FreedomBox y el puerto 9050 como un proxy SOCKS en Firefox. Hay extensiones para facilitar la activación y desactivación del proxy. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Tor?action=AttachFile&amp;do=get&amp;target=tor-socks-firefox.png" width="800"/>
+              </imageobject>
+              <textobject>
+                <phrase>Configuring Firefox with Tor SOCKS proxy</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>Con en proxy SOCKS configurado puedes acceder cualquier URL de tipo <emphasis>onion</emphasis> diréctamente desde Firefox. FreedomBox tiene una dirección onion v3 propia a la que puedes conectarte por la red Tor (guárdala en tus favoritos para usarla en situaciones de emergencia). </para>
+        </section>
       </section>
       <section>
-        <title>Saltando la censura de Tor</title>
+        <title>Eludiendo la censura de Tor</title>
         <para>Si tu proveedor de Internet (ISP) está tratando de bloquear el tráfico Tor puedes usar puentes (a la red Tor) para conectar (a la red Tor).  </para>
         <para>1. Obtén la configuración de los puentes de <ulink url="https://bridges.torproject.org/bridges">Tor BridgeDB</ulink> </para>
         <para>
@@ -1133,15 +1149,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       </section>
       <section>
         <title>Usar Transmission</title>
-        <para>Tras instalar <emphasis>Transmission</emphasis> está accesible en <code>https://&lt;tu freedombox&gt;/transmission</code>. Cuando trates de acceder a esta página se te pedirá ingresar con tu usuario y contraseña. Por defecto ambas son <code>transmission</code>. Puedes y debes cambiar usuario y contraseña usando el formulario de  configuración en Plinth. </para>
-      </section>
-      <section>
-        <title>Incidencias conocidas</title>
-        <itemizedlist>
-          <listitem>
-            <para>La contraseña inicial se muestra cifrada en el formulario de  configuración de Plinth. Esto impide que sea leída o copiada. Sin embargo tras cambiar la contraseña se muestra directamente sin cifrar. </para>
-          </listitem>
-        </itemizedlist>
+        <para>Tras instalar <emphasis>Transmission</emphasis> está accesible en <code>https://&lt;tu freedombox&gt;/transmission</code>.  Transmission emplea el ingreso único de FreedomBox lo que significa que si has ingresado en tu  FreedomBox puedes acceder diréctamente a Transmission sin tener que volver a introducir las credenciales. Si no, se te pedirá que ingreses primero y luego se te redirigirá a la app Transmission. </para>
       </section>
       <section>
         <title>Consejos</title>
@@ -1796,7 +1804,7 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
     <section>
       <title>Sincronización de Archivos (Syncthing)</title>
       <para>Con <emphasis>Syncthing</emphasis> instalado en tu FreedomBox puedes sincronizar contenido desde otros dispositivos a tu FreedomBox y vice-versa. Por ejemplo puedes mantener sincronizadas las fotos tomadas desde tu teléfono móvil con tu FreedomBox. </para>
-      <para><emphasis role="strong">Nota:</emphasis> Syncthing está disponible en FreedomBox desde la versión de Plinth 0.14. </para>
+      <para><emphasis>Disponible desde versión:</emphasis> 0.14. </para>
       <para>Syncthing es una solución de sincronización entre pares, no una de tipo cliente-servidor. Esto implica que FreedomBox no es realmente el servidor y tus otros dispositivos no son sus clientes. Desde la perspectiva de Syncthing todos son dispositivos equivalentes. Puedes emplear Syncthing para sincronizar tus archivos  entre cualquiera de tus dispositivos. La ventaja que aporta FreedomBox consiste en que como es un servidor está encendida (casi) siempre. Supón que quieres sincronizar las fotos de tu teléfono con tu portátil. Si sincronizas tu teléfono con FreedomBox el portátil podrá obtenerlas desde la FreedomBox cuando vuelva a conectarse. No necesitas preocuparte de cuando se conectan los otros dispositivos. Si tu FreedomBox es uno de los dispositivos configurados con la carpeta compartida de Syncthing puedes estár tranquilo que tus otros dispositivos se sincronizarán en cuanto se conecten. </para>
       <para>Tras instalarlo sigue estas instrucciones del proyecto Syncthing: <ulink url="https://docs.syncthing.net/intro/getting-started.html">Arrancando</ulink>. </para>
       <para>Syncthing permite compartir selectivamente carpetas individuales. Antes de compartir los dispositivos tienen que estar emparejados leyendo códigos QR o introduciendo manualmente identificadores de dispositivo. Syncthing tiene un servicio de autodescubrimiento para identicar fácilmente a los otros dispositivos de la misma subred que tengan Syncthing instalado. </para>
@@ -1819,6 +1827,11 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
         <para>Si quieres enrutar tu cliente Syncthing via Tor configura la variable de entorno <code>all_proxy</code>: </para>
         <screen><![CDATA[$ all_proxy=socks5://localhost:9050 syncthing]]></screen>
         <para>Para más información mira la documentación de Syncthing acerca de <ulink url="https://docs.syncthing.net/users/proxying.html">el uso de proxies</ulink>. </para>
+      </section>
+      <section>
+        <title>Evitar repetidores de Syncthing</title>
+        <para>Syncthing emplea por defecto conexiones dinámicas para conectar con otros pares. Esto significa que si estás sincronizando a través de Internet, los datos quizá tengan que atravesar repetidores de Syncthing públicos para alcanzar tus dispositivos. Esto desaprovecha que tu FreedomBox tenga una dirección IP pública. </para>
+        <para>Al añadir tu FreedomBox como dispositivo en otros clientes de Syncthing establece tu dirección como "tcp://&lt;mi.dominio.freedombox&gt;" en vez de "dinámica". Esto permite a tus pares Syncthing conectarse diréctamente a tu FreedomBox eludiendo la necesidad de repetidores. También permite sincronización rápida bajo demanda si no quieres mantener a Syncthing ejecuándose todo el tiempo en tus dispositivos móviles. </para>
       </section>
     </section>
     <section>
@@ -9771,6 +9784,41 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Freedombox 19.20 (2019-11-04)</title>
+        <itemizedlist>
+          <listitem>
+            <para>doc: Add Spanish manual </para>
+          </listitem>
+          <listitem>
+            <para>ssh: Add option to disable password authentication </para>
+          </listitem>
+          <listitem>
+            <para>sharing: Fix wrong links on Apache2 directory index page </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Set correct access rights after enabling application </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Fix links leading to blank page </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Set proper access after restoration of a backup </para>
+          </listitem>
+          <listitem>
+            <para>snapshot: Sort snapshot list from newest to oldest </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Add missing manual page link </para>
+          </listitem>
+          <listitem>
+            <para>backups: Fix typo </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for German, Spanish, Swedish, Czech, French, Norwegian Bokmål, Hungarian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.19 (2019-10-21)</title>
         <itemizedlist>
