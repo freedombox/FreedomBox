@@ -28,35 +28,45 @@
   <form class="form" method="post">
     {% csrf_token %}
 
-    <p>
-      The authenticity of SSH host {{ hostname }} could not be established. The host advertises the following SSH public keys. Please verify any one of them.
-    </p>
-
-    <section>
+    {% if form.ssh_public_key|length_is:"0" %}
       <p>
-        <a class="btn btn-default collapsed collapsible-button"
-           data-toggle="collapse" href="#help" aria-expanded="false">
-          <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
-          {% trans "How to verify?" %}
-        </a>
+        {% blocktrans trimmed %}
+          Could not reach SSH host {{ hostname }}. Please verify that the host
+          is up and accepting connections.
+        {% endblocktrans %}
       </p>
-      <div class="collapse panel-body" id="help">
-        <p>
-          {% blocktrans trimmed %}
-            Run the following command on the SSH host machine. The output should
-            match one of the provided options. You can also use dsa, ecdsa,
-            ed25519 etc. instead of rsa, by choosing the corresponding file.
-          {% endblocktrans %}
-        </p>
-        <p>
-          <code>sudo ssh-keygen -lf /etc/ssh/ssh_host_rsa_key</code>
-        </p>
-      </div>
-    </section>
+    {% else %}
+      <p>
+        The authenticity of SSH host {{ hostname }} could not be established. The host advertises the following SSH public keys. Please verify any one of them.
+      </p>
 
-    {{ form|bootstrap }}
+      <section>
+        <p>
+          <a class="btn btn-default collapsed collapsible-button"
+             data-toggle="collapse" href="#help" aria-expanded="false">
+            <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+            {% trans "How to verify?" %}
+          </a>
+        </p>
+        <div class="collapse panel-body" id="help">
+          <p>
+            {% blocktrans trimmed %}
+              Run the following command on the SSH host machine. The output
+              should match one of the provided options. You can also use dsa,
+              ecdsa, ed25519 etc. instead of rsa, by choosing the corresponding
+              file.
+            {% endblocktrans %}
+          </p>
+          <p>
+            <code>sudo ssh-keygen -lf /etc/ssh/ssh_host_rsa_key</code>
+          </p>
+        </div>
+      </section>
 
-    <input type="submit" class="btn btn-primary" value="{% trans 'Verify Host' %}"/>
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-primary" value="{% trans 'Verify Host' %}"/>
+    {% endif %}
   </form>
 
 {% endblock %}
