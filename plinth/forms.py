@@ -35,6 +35,7 @@ import plinth
 class AppForm(forms.Form):
     """Generic configuration form for an app."""
     is_enabled = forms.BooleanField(
+        widget=CheckboxInput(attrs={'id': 'app-toggle-input'}),
         label=_('Enable application'), required=False)
 
 

@@ -464,3 +464,46 @@ a.menu_link_active {
 .names-domain-column {
     width: 50%;
 }
+
+.toggle-button-container {
+    display: none;
+    flex-flow: row;
+    justify-content: flex-end;
+}
+
+.toggle-button-container .form-group {
+    display: none;
+}
+
+.toggle-button {
+    border-radius: 25px;
+    border: none;
+    width: 55px;
+    height: 25px;
+    background: #ccc;
+    position: relative;
+}
+
+.toggle-button::before {
+    content: '';
+    display: block;
+    height: 18px;       
+    width: 18px;
+    border-radius: 100%;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 6%;
+    transform: translateY(-50%);
+}
+.toggle-button--toggled {
+    background: #337ab7;
+}
+.toggle-button--toggled::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%) translateX(-116%)
+}
+
