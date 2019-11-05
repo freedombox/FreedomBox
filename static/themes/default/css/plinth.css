@@ -505,9 +505,11 @@ a.menu_link_active {
     left: 6%;
     transform: translateY(-50%);
 }
+
 .toggle-button--toggled {
     background: #337ab7;
 }
+
 .toggle-button--toggled::before {
     content: '';
     position: absolute;
@@ -534,4 +536,30 @@ a.menu_link_active {
 
 .btn-toolbar .button-extra-actions {
     float: right;
+}
+
+.app-header {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    column-gap: 20px;
+    margin-bottom: 20px;
+}
+
+.app-header > figure {
+    margin-top: 25px;
+}
+
+.app-header > figure img {
+    width: 100%;
+}
+
+.app-header > figure figcaption {
+    text-align: center;
+    opacity: 0.5;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.app-description {
+    grid-column: 2;
 }
