@@ -39,6 +39,8 @@ managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
 
 name = _('Searx')
 
+icon_filename = 'searx'
+
 short_description = _('Web Search')
 
 description = [
@@ -69,7 +71,7 @@ class SearxApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-searx', name, short_description=short_description,
-            icon='searx', url='/searx/', clients=clients,
+            icon=icon_filename, url='/searx/', clients=clients,
             login_required=(not is_public_access_enabled()),
             allowed_groups=[group[0]])
         self.add(shortcut)

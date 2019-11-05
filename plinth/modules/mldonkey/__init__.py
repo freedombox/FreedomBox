@@ -39,6 +39,8 @@ managed_packages = ['mldonkey-server']
 
 name = _('MLDonkey')
 
+icon_filename = 'mldonkey'
+
 short_description = _('Peer-to-peer File Sharing')
 
 description = [
@@ -80,7 +82,7 @@ class MLDonkeyApp(app_module.App):
 
         shortcuts = frontpage.Shortcut(
             'shortcut-mldonkey', name, short_description=short_description,
-            icon='mldonkey', url='/mldonkey/', login_required=True,
+            icon=icon_filename, url='/mldonkey/', login_required=True,
             clients=clients, allowed_groups=[group[0]])
         self.add(shortcuts)
 

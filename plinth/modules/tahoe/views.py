@@ -57,6 +57,7 @@ class TahoeAppView(AppView):
     description = tahoe.description
     diagnostics_module_name = 'tahoe'
     port_forwarding_info = tahoe.port_forwarding_info
+    icon_filename = tahoe.icon_filename
 
     def dispatch(self, request, *args, **kwargs):
         if not tahoe.is_setup():

@@ -38,6 +38,8 @@ managed_packages = ['openvpn', 'easy-rsa']
 
 name = _('OpenVPN')
 
+icon_filename = 'openvpn'
+
 short_description = _('Virtual Private Network')
 
 description = [
@@ -79,7 +81,7 @@ class OpenVPNApp(app_module.App):
                         link=reverse_lazy('openvpn:profile'))
         shortcut = frontpage.Shortcut(
             'shortcut-openvpn', name, short_description=short_description,
-            icon='openvpn', description=description + [download_profile],
+            icon=icon_filename, description=description + [download_profile],
             configure_url=reverse_lazy('openvpn:index'), login_required=True)
         self.add(shortcut)
 

@@ -40,6 +40,8 @@ managed_packages = ['transmission-daemon']
 
 name = _('Transmission')
 
+icon_filename = 'transmission'
+
 short_description = _('BitTorrent Web Client')
 
 description = [
@@ -74,7 +76,7 @@ class TransmissionApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-transmission', name,
                                       short_description=short_description,
-                                      icon='transmission', url='/transmission',
+                                      icon=icon_filename, url='/transmission',
                                       clients=clients, login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)

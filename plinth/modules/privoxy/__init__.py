@@ -41,6 +41,8 @@ managed_packages = ['privoxy']
 
 name = _('Privoxy')
 
+icon_filename = 'privoxy'
+
 short_description = _('Web Proxy')
 
 description = [
@@ -80,7 +82,7 @@ class PrivoxyApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-privoxy', name, short_description=short_description,
-            icon='privoxy', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('privoxy:index'), login_required=True)
         self.add(shortcut)
 
@@ -115,7 +117,7 @@ class PrivoxyAppView(AppView):
     name = name
     description = description
     manual_page = manual_page
-
+    icon_filename = icon_filename
 
 def diagnose():
     """Run diagnostics and return the results."""

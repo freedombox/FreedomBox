@@ -44,6 +44,8 @@ managed_packages = ['radicale', 'uwsgi', 'uwsgi-plugin-python3']
 
 name = _('Radicale')
 
+icon_filename = 'radicale'
+
 short_description = _('Calendar and Addressbook')
 
 description = [
@@ -88,7 +90,7 @@ class RadicaleApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-radicale', name,
                                       short_description=short_description,
-                                      icon='radicale', url='/radicale/',
+                                      icon=icon_filename, url='/radicale/',
                                       clients=clients, login_required=True)
         self.add(shortcut)
 

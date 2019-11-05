@@ -44,6 +44,8 @@ managed_paths = [pathlib.Path('/var/lib/quassel/')]
 
 name = _('Quassel')
 
+icon_filename = 'quassel'
+
 short_description = _('IRC Client')
 
 description = [
@@ -88,7 +90,7 @@ class QuasselApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-quassel', name, short_description=short_description,
-            icon='quassel', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('quassel:index'), clients=clients,
             login_required=True)
         self.add(shortcut)

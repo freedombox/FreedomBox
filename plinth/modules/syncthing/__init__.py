@@ -39,6 +39,8 @@ managed_packages = ['syncthing']
 
 name = _('Syncthing')
 
+icon_filename = 'syncthing'
+
 short_description = _('File Synchronization')
 
 description = [
@@ -80,7 +82,7 @@ class SyncthingApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-syncthing', name,
                                       short_description=short_description,
-                                      icon='syncthing', url='/syncthing/',
+                                      icon=icon_filename, url='/syncthing/',
                                       clients=clients, login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)

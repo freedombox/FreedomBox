@@ -40,6 +40,8 @@ managed_packages = [
 
 name = _('ikiwiki')
 
+icon_filename = 'ikiwiki'
+
 short_description = _('Wiki and Blog')
 
 description = [
@@ -89,7 +91,8 @@ class IkiwikiApp(app_module.App):
     def add_shortcut(self, site, title):
         """Add an ikiwiki shortcut to frontpage."""
         shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, title,
-                                      icon='ikiwiki', url='/ikiwiki/' + site,
+                                      icon=icon_filename,
+                                      url='/ikiwiki/' + site,
                                       clients=clients)
         self.add(shortcut)
         return shortcut

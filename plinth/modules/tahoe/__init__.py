@@ -42,6 +42,8 @@ managed_packages = ['tahoe-lafs']
 
 name = _('Tahoe-LAFS')
 
+icon_filename = 'tahoe-lafs'
+
 short_description = _('Distributed File Storage')
 
 port_forwarding_info = [
@@ -76,7 +78,7 @@ class TahoeApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-tahoe', name, short_description=short_description,
-            icon='tahoe-lafs', url=None, login_required=True)
+            icon=icon_filename, url=None, login_required=True)
         self.add(shortcut)
 
         firewall = Firewall('firewall-tahoe', name, ports=['tahoe-plinth'],

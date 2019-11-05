@@ -50,6 +50,8 @@ managed_packages = ['minetest-server'] + mods
 
 name = _('Minetest')
 
+icon_filename = 'minetest'
+
 short_description = _('Block Sandbox')
 
 description = [
@@ -90,7 +92,7 @@ class MinetestApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-minetest', name, short_description=short_description,
-            icon='minetest', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('minetest:index'), clients=clients,
             login_required=False)
         self.add(shortcut)

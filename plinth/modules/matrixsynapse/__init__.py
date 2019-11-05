@@ -46,6 +46,8 @@ managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
 name = _('Matrix Synapse')
 
+icon_filename = 'matrixsynapse'
+
 short_description = _('Chat Server')
 
 description = [
@@ -91,7 +93,7 @@ class MatrixSynapseApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-matrixsynapse', name,
-            short_description=short_description, icon='matrixsynapse',
+            short_description=short_description, icon=icon_filename,
             description=description,
             configure_url=reverse_lazy('matrixsynapse:index'), clients=clients,
             login_required=True)

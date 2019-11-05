@@ -41,6 +41,8 @@ managed_packages = ['i2p']
 
 name = _('I2P')
 
+icon_filename = 'i2p'
+
 short_description = _('Anonymity Network')
 
 description = [
@@ -89,7 +91,7 @@ class I2PApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-i2p', name, short_description=short_description,
-            icon='i2p', url='/i2p/', clients=clients, login_required=True,
+            icon=icon_filename, url='/i2p/', clients=clients, login_required=True,
             allowed_groups=[group[0]])
         self.add(shortcut)
 

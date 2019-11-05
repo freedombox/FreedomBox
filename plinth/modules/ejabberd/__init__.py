@@ -49,6 +49,8 @@ managed_paths = [pathlib.Path('/etc/ejabberd/')]
 
 name = _('ejabberd')
 
+icon_filename = 'ejabberd'
+
 short_description = _('Chat Server')
 
 description = [
@@ -96,7 +98,7 @@ class EjabberdApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-ejabberd', name, short_description=short_description,
-            icon='ejabberd', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('ejabberd:index'), clients=clients,
             login_required=True)
         self.add(shortcut)

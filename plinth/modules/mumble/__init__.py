@@ -34,6 +34,8 @@ version = 1
 
 name = _('Mumble')
 
+icon_filename = 'mumble'
+
 short_description = _('Voice Chat')
 
 managed_services = ['mumble-server']
@@ -76,7 +78,7 @@ class MumbleApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-mumble', name, short_description=short_description,
-            icon='mumble', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('mumble:index'), clients=clients)
         self.add(shortcut)
 
@@ -106,7 +108,7 @@ class MumbleAppView(AppView):
     clients = clients
     manual_page = manual_page
     port_forwarding_info = port_forwarding_info
-
+    icon_filename = icon_filename
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
