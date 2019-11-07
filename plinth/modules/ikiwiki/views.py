@@ -40,6 +40,7 @@ class IkiwikiAppView(views.AppView):
     template_name = 'ikiwiki_configure.html'
     manual_page = ikiwiki.manual_page
     clients = ikiwiki.clients
+    icon_filename = ikiwiki.icon_filename
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""

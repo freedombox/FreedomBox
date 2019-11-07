@@ -1,0 +1,35 @@
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+<header class="app-header {% if not icon_filename %} app-header-single-column {% endif %}">
+  {% if icon_filename %}
+
+    <img src="{% static 'theme/icons/' %}{{ icon_filename }}.svg" alt="{{ name  }}"/>
+
+  {% endif %}
+
+  <section class="app-description" >
+    {% block pagetitle %}
+      {% if setup %}
+        <h2>{% trans "Installation" %}: {{ short_description|default:'' }} ({{ name }})</h2>
+      {% else %}
+        <h2>{{ name }}</h2>
+      {% endif %}
+    {% endblock %}
+
+    {% block description %}
+      {% for paragraph in description %}
+        <p>{{ paragraph|safe }}</p>
+      {% endfor %}
+    {% endblock %}
+
+    {% if manual_page %}
+      <p class="manual-page">
+        <a href="{% url 'help:manual-page' lang='-' page=manual_page %}">
+          {% trans 'Learn more...' %}
+        </a>
+      </p>
+    {% endif %}
+  </section>
+</header>

@@ -44,6 +44,7 @@ class GitwebAppView(views.AppView):
     app_id = 'gitweb'
     show_status_block = False
     template_name = 'gitweb_configure.html'
+    icon_filename = gitweb.icon_filename
 
     def get_context_data(self, *args, **kwargs):
         """Add repositories to the context data."""

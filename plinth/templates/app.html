@@ -27,35 +27,7 @@
 
 {% block content %}
 
-  <header>
-    <section class='header-bar'>
-      {% block pagetitle %}
-        <h2>{{ name }}</h2>
-      {% endblock %}
-
-      <div id='app-toggle-container' class="app-toggle-container">
-          {% if is_enabled %}
-            <button id="app-toggle-button" value="False" class="btn toggle-button toggle-button--toggled"></button>
-          {% else %}
-            <button id="app-toggle-button" value="True" class="btn toggle-button"></button>
-          {% endif %}
-      </div>
-    </section>
-
-    {% block description %}
-      {% for paragraph in description %}
-        <p>{{ paragraph|safe }}</p>
-      {% endfor %}
-    {% endblock %}
-  </header>
-
-  {% if manual_page %}
-    <p class="manual-page">
-      <a href="{% url 'help:manual-page' lang='-' page=manual_page %}">
-        {% trans 'Learn more...' %}
-      </a>
-    </p>
-  {% endif %}
+  {% include "header.html" with icon_filename=icon_filename name=name description=description manual_page=manual_page %}
 
   {% include "toolbar.html" with enabled=is_enabled %}
 

@@ -38,7 +38,6 @@ def index(request):
     status = letsencrypt.get_status()
     return TemplateResponse(
         request, 'letsencrypt.html', {
-            'title': letsencrypt.name,
             'name': letsencrypt.name,
             'description': letsencrypt.description,
             'status': status,

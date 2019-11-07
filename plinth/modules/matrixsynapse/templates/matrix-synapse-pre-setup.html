@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -21,13 +21,12 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-  <h2>{{ title }}</h2>
+{% block pagetitle %}
+  <h2>{{ name }}</h2>
+{% endblock %}
 
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
 
+{% block configuration %}
   <h3>{% trans "Configuration" %}</h3>
 
   <p>

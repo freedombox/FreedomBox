@@ -42,6 +42,7 @@ class TransmissionAppView(views.AppView):
     form_class = TransmissionForm
     app_id = 'transmission'
     manual_page = transmission.manual_page
+    icon_filename = transmission.icon_filename
 
     def get_initial(self):
         """Get the current settings from Transmission server."""

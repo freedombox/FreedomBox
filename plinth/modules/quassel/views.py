@@ -30,6 +30,7 @@ class QuasselAppView(AppView):
     manual_page = quassel.manual_page
     port_forwarding_info = quassel.port_forwarding_info
     form_class = QuasselForm
+    icon_filename = quassel.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

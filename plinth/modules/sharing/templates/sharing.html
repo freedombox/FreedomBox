@@ -33,11 +33,7 @@
 
 {% block content %}
 
-  <h2>{{ title }}</h2>
-
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
+  {% include "header.html" with icon_filename=icon_filename name=title description='' %}
 
   <p>
     <a title="{% trans 'Add share' %}"

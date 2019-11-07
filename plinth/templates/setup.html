@@ -36,30 +36,7 @@
 
 {% block content %}
 
-  <header class="app-header {% if not setup_helper.module.icon_filename %} app-header-single-column {% endif %}">
-
-    {% if setup_helper.module.icon_filename %}
-
-      <img src="{% static 'theme/icons/' %}{{ setup_helper.module.icon_filename }}.svg" alt="{{ setup_helper.module.name  }}"/>
-
-    {% endif %}
-
-    <section class="app-description" >
-      <h2>{% trans "Installation" %}: {{ setup_helper.module.short_description|default:'' }} ({{ setup_helper.module.name }}) </h2>
-
-      {% for paragraph in setup_helper.module.description %}
-        <p>{{ paragraph|safe }}</p>
-      {% endfor %}
-
-      {% if setup_helper.module.manual_page %}
-        <p class="manual-page">
-          <a href="{% url 'help:manual-page' lang='-' page=setup_helper.module.manual_page %}">
-            {% trans 'Learn more...' %}
-          </a>
-        </p>
-      {% endif %}
-    </section>
-  </header>
+  {% include "header.html" with icon_filename=setup_helper.module.icon_filename name=setup_helper.module.name description=setup_helper.module.description manual_page=setup_helper.module.manual_page setup=True %}
 
   {% include "toolbar.html" with clients=setup_helper.module.clients %}
 

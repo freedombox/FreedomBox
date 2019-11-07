@@ -34,7 +34,7 @@ class JSXCAppView(AppView):
     description = jsxc.description
     show_status_block = False
     clients = jsxc.clients
-
+    icon_filename = jsxc.icon_filename
 
 class JsxcView(TemplateView):
     """A simple page to embed Javascript XMPP Client library."""
