@@ -35,6 +35,9 @@
           is up and accepting connections.
         {% endblocktrans %}
       </p>
+      {% if form.keyscan_error %}
+        <pre class="alert alert-danger">{{ form.keyscan_error }}</pre>
+      {% endif %}
     {% else %}
       <p>
         The authenticity of SSH host {{ hostname }} could not be established. The host advertises the following SSH public keys. Please verify any one of them.
