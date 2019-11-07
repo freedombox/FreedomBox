@@ -25,7 +25,7 @@ import pytest
 from plinth.app import App, Component, FollowerComponent, LeaderComponent
 
 
-class TestApp(App):
+class AppTest(App):
     """Sample App for testing."""
     app_id = 'test-app'
 
@@ -38,7 +38,7 @@ class LeaderTest(FollowerComponent):
 @pytest.fixture(name='app_with_components')
 def fixture_app_with_components():
     """Setup an app with some components."""
-    app = TestApp()
+    app = AppTest()
     app.add(FollowerComponent('test-follower-1'))
     app.add(FollowerComponent('test-follower-2'))
     app.add(LeaderTest('test-leader-1'))
@@ -54,7 +54,7 @@ def fixture_empty_apps():
 
 def test_app_instantiation():
     """Test that App is instantiated properly."""
-    app = TestApp()
+    app = AppTest()
     assert isinstance(app.components, collections.OrderedDict)
     assert not app.components
     assert app.app_id == 'test-app'
@@ -64,13 +64,13 @@ def test_app_instantiation():
 
 def test_get():
     """Test that an app can be correctly retrieved."""
-    app = TestApp()
+    app = AppTest()
     assert App.get(app.app_id) == app
 
 
 def test_app_add():
     """Test adding a components to an App."""
-    app = TestApp()
+    app = AppTest()
     component = Component('test-component')
     return_value = app.add(component)
     assert len(app.components) == 1
@@ -157,7 +157,7 @@ def test_app_is_enabled(app_with_components):
 
 def test_app_is_enabled_with_no_leader_components():
     """When there are not leader components, app.is_enabled() returns True."""
-    app = TestApp()
+    app = AppTest()
     assert app.is_enabled()
 
 

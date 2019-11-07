@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 17:55-0400\n"
+"POT-Creation-Date: 2019-11-04 18:34-0500\n"
 "PO-Revision-Date: 2019-07-22 17:06+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -19,6 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.8-dev\n"
+
+#: doc/dev/_templates/layout.html:11
+msgid "Page source"
+msgstr ""
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -401,7 +405,6 @@ msgid "Delete Archive %(name)s"
 msgstr "Удалить архив %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
-#: plinth/modules/config/templates/config.html:45
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
@@ -448,11 +451,19 @@ msgid "Restoring"
 msgstr "Восстановление"
 
 #: plinth/modules/backups/templates/backups_upload.html:32
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      Upload a backup file downloaded from another %(box_name)s to "
+#| "restore is\n"
+#| "      contents. You can choose the apps you wish to restore after "
+#| "uploading a\n"
+#| "      backup file.\n"
+#| "    "
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
-"is\n"
+"its\n"
 "      contents. You can choose the apps you wish to restore after uploading "
 "a\n"
 "      backup file.\n"
@@ -679,7 +690,11 @@ msgstr ""
 "веб-сервере. Он может быть доступен на <a href=\"{users_url}\">любому "
 "пользователю</a> {box_name}, принадлежащему к группе админов."
 
-#: plinth/modules/config/__init__.py:60 plinth/modules/dynamicdns/views.py:45
+#: plinth/modules/config/__init__.py:37
+msgid "General Configuration"
+msgstr "Общие настройки"
+
+#: plinth/modules/config/__init__.py:62 plinth/modules/dynamicdns/views.py:45
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
 #: plinth/modules/names/templates/names.html:58
 #: plinth/modules/pagekite/views.py:32 plinth/modules/snapshot/views.py:41
@@ -770,58 +785,44 @@ msgstr "Показывать дополнительные приложения �
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 
-#: plinth/modules/config/templates/config.html:34
-#: plinth/modules/help/templates/help_contribute.html:57
-#: plinth/modules/power/templates/power_restart.html:42
-#: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
-#: plinth/templates/simple_app.html:38
-msgid "Learn more..."
-msgstr "Подробнее..."
-
-#: plinth/modules/config/views.py:54
-msgid "General Configuration"
-msgstr "Общие настройки"
-
-#: plinth/modules/config/views.py:78
+#: plinth/modules/config/views.py:64
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Ошибка параметра hostname: {exception}"
 
-#: plinth/modules/config/views.py:81
+#: plinth/modules/config/views.py:67
 msgid "Hostname set"
 msgstr "Смена имени хоста"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:76
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Ошибка параметра имени домена: {exception}"
 
-#: plinth/modules/config/views.py:92
+#: plinth/modules/config/views.py:79
 msgid "Domain name set"
 msgstr "Смена доменного имени"
 
-#: plinth/modules/config/views.py:100
+#: plinth/modules/config/views.py:87
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Ошибка параметра домашней страницы веб-сервера: {exception}"
 
-#: plinth/modules/config/views.py:103
+#: plinth/modules/config/views.py:90
 msgid "Webserver home page set"
 msgstr "Установка домашней страницы веб-сервера"
 
-#: plinth/modules/config/views.py:111
+#: plinth/modules/config/views.py:98
 #, fuzzy, python-brace-format
 #| msgid "Error setting domain name: {exception}"
 msgid "Error changing advanced mode: {exception}"
 msgstr "Ошибка параметра имени домена: {exception}"
 
-#: plinth/modules/config/views.py:116
+#: plinth/modules/config/views.py:103
 msgid "Showing advanced apps and features"
 msgstr ""
 
-#: plinth/modules/config/views.py:119
+#: plinth/modules/config/views.py:106
 msgid "Hiding advanced apps and features"
 msgstr ""
 
@@ -834,9 +835,14 @@ msgid "File Sharing"
 msgstr "Обмен Файлами"
 
 #: plinth/modules/coquelicot/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "Coquelicot is a “one-click” file sharing web application with a focus on "
+#| "protecting users’ privacy. It is best used for quickly sharing a single "
+#| "file. "
 msgid ""
-"Coquelicot is a “one-click” file sharing web application with a focus on "
-"protecting users’ privacy. It is best used for quickly sharing a single "
+"Coquelicot is a \"one-click\" file sharing web application with a focus on "
+"protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
 "Coquelicot является однокликовым веб-приложением для обмена файлами с "
@@ -1091,7 +1097,7 @@ msgstr "Обновить настройки"
 #: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
-#: plinth/modules/tor/views.py:148 plinth/views.py:175
+#: plinth/modules/tor/views.py:148 plinth/views.py:176
 msgid "Setting unchanged"
 msgstr "Настройки без изменений"
 
@@ -1338,7 +1344,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Последнее обновление"
 
-#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:70
+#: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/help.py:73
 #: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
 msgstr "О службе"
@@ -1638,13 +1644,20 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:32
+#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
+#: plinth/modules/gitweb/forms.py:40
+#, fuzzy
+#| msgid "Invalid hostname"
+msgid "Invalid repository name."
+msgstr "Недопустимое имя хоста"
+
+#: plinth/modules/gitweb/forms.py:47
 #, fuzzy
 #| msgid "Name of the share"
 msgid "Name of the repository"
 msgstr "Имя общего ресурса"
 
-#: plinth/modules/gitweb/forms.py:36
+#: plinth/modules/gitweb/forms.py:51
 #, fuzzy
 #| msgid ""
 #| "A lowercase alpha-numeric string that uniquely identifies a share. "
@@ -1654,39 +1667,33 @@ msgstr ""
 "Цифро-буквенная строка в нижнем регистре, однозначно идентифицирующая "
 "ресурс. Пример: <em>media</em>."
 
-#: plinth/modules/gitweb/forms.py:40
+#: plinth/modules/gitweb/forms.py:55
 #, fuzzy
 #| msgid "Create new repository"
 msgid "Description of the repository"
 msgstr "Создать новый репозиторий"
 
-#: plinth/modules/gitweb/forms.py:41 plinth/modules/gitweb/forms.py:45
+#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
 msgid "Optional, for displaying on Gitweb."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:44
+#: plinth/modules/gitweb/forms.py:59
 #, fuzzy
 #| msgid "Repository removed."
 msgid "Repository's owner name"
 msgstr "Репозиторий удалён."
 
-#: plinth/modules/gitweb/forms.py:48
+#: plinth/modules/gitweb/forms.py:63
 #, fuzzy
 #| msgid "Create Repository"
 msgid "Private repository"
 msgstr "Создать репозиторий"
 
-#: plinth/modules/gitweb/forms.py:49
+#: plinth/modules/gitweb/forms.py:64
 msgid "Allow only authorized users to access this repository."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:66
-#, fuzzy
-#| msgid "Invalid hostname"
-msgid "Invalid repository name."
-msgstr "Недопустимое имя хоста"
-
-#: plinth/modules/gitweb/forms.py:71
+#: plinth/modules/gitweb/forms.py:83
 #, fuzzy
 #| msgid "A share with this name already exists."
 msgid "A repository with this name already exists."
@@ -1778,44 +1785,44 @@ msgstr "{name} удален."
 msgid "Could not delete {name}: {error}"
 msgstr "Не удалось удалить {name}: {error}"
 
-#: plinth/modules/help/help.py:47
+#: plinth/modules/help/help.py:50
 msgid "Documentation"
 msgstr "Документация"
 
-#: plinth/modules/help/help.py:51 plinth/modules/networks/forms.py:68
+#: plinth/modules/help/help.py:54 plinth/modules/networks/forms.py:68
 #: plinth/modules/networks/forms.py:108 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "Руководство"
 
-#: plinth/modules/help/help.py:56 plinth/modules/help/help.py:104
+#: plinth/modules/help/help.py:59 plinth/modules/help/help.py:107
 #: plinth/modules/help/templates/help_support.html:24
 #: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
 msgstr ""
 
-#: plinth/modules/help/help.py:61 plinth/modules/help/help.py:98
+#: plinth/modules/help/help.py:64 plinth/modules/help/help.py:101
 #: plinth/modules/help/templates/help_feedback.html:24
 #: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
 msgstr ""
 
-#: plinth/modules/help/help.py:66 plinth/modules/help/help.py:92
+#: plinth/modules/help/help.py:69 plinth/modules/help/help.py:95
 #: plinth/modules/help/templates/help_contribute.html:24
 #: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
 msgstr ""
 
-#: plinth/modules/help/help.py:86
+#: plinth/modules/help/help.py:89
 msgid "Documentation and FAQ"
 msgstr "Документация и FAQ"
 
-#: plinth/modules/help/help.py:112
+#: plinth/modules/help/help.py:115
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "О {box_name}"
 
-#: plinth/modules/help/help.py:134
+#: plinth/modules/help/help.py:150
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Руководство {box_name}"
@@ -1938,6 +1945,14 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:57
+#: plinth/modules/power/templates/power_restart.html:42
+#: plinth/modules/power/templates/power_shutdown.html:41
+#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/simple_app.html:38
+msgid "Learn more..."
+msgstr "Подробнее..."
 
 #: plinth/modules/help/templates/help_feedback.html:27
 #, python-format
@@ -2192,7 +2207,7 @@ msgstr "Просмотр и редактирование приложений Wi
 
 #: plinth/modules/ikiwiki/forms.py:29
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:61
+#: plinth/modules/storage/templates/storage.html:43
 msgid "Type"
 msgstr "Тип"
 
@@ -2273,19 +2288,19 @@ msgstr "{name} удален."
 msgid "Could not delete {title}: {error}"
 msgstr "Не удалось удалить {name}: {error}"
 
-#: plinth/modules/infinoted/__init__.py:40
+#: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:42
+#: plinth/modules/infinoted/__init__.py:44
 msgid "Gobby Server"
 msgstr "Сервер Gobby"
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "infinoted это сервер для Gobby, совместный текстовый редактор."
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:49
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -2382,7 +2397,7 @@ msgid "Website Security"
 msgstr "Безопасность Веб-сайта"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/storage/templates/storage.html:63
+#: plinth/modules/storage/templates/storage.html:45
 msgid "Actions"
 msgstr "Действия"
 
@@ -3474,7 +3489,7 @@ msgid "yes"
 msgstr "Да"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:40
 msgid "Device"
 msgstr "Устройство"
 
@@ -5099,6 +5114,19 @@ msgstr ""
 "может выполнять задачи администрирования, копировать файлы или запускать "
 "другие услуги с использованием таких соединений."
 
+#: plinth/modules/ssh/forms.py:30
+#, fuzzy
+#| msgid "Use HTTP basic authentication"
+msgid "Disable password authentication"
+msgstr "Использовать базовую аутентификацию HTTP"
+
+#: plinth/modules/ssh/forms.py:31
+msgid ""
+"Improves security by preventing password guessing. Ensure that you have "
+"setup SSH keys in your administrator user account before enabling this "
+"option."
+msgstr ""
+
 #: plinth/modules/ssh/templates/ssh.html:26
 #, fuzzy
 #| msgid "SSH Fingerprint"
@@ -5121,6 +5149,16 @@ msgstr ""
 msgid "Fingerprint"
 msgstr "SSH отпечаток"
 
+#: plinth/modules/ssh/views.py:66
+msgid "SSH authentication with password disabled."
+msgstr ""
+
+#: plinth/modules/ssh/views.py:69
+#, fuzzy
+#| msgid "Authentication to remote server failed."
+msgid "SSH authentication with password enabled."
+msgstr "Аутентификация на удалённый сервер не прошла."
+
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
 msgstr "Единый вход"
@@ -5129,7 +5167,7 @@ msgstr "Единый вход"
 msgid "Login"
 msgstr "Логин"
 
-#: plinth/modules/storage/__init__.py:37 plinth/modules/storage/views.py:53
+#: plinth/modules/storage/__init__.py:37
 msgid "Storage"
 msgstr "Storage"
 
@@ -5222,27 +5260,27 @@ msgstr "Использование запрошенной опции не раз
 msgid "The device is mounted by another user."
 msgstr "Устройство подключено другим пользователем."
 
-#: plinth/modules/storage/templates/storage.html:53
+#: plinth/modules/storage/templates/storage.html:35
 msgid "The following storage devices are in use:"
 msgstr "Используются следующие устройства хранения:"
 
-#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:41
 msgid "Label"
 msgstr "Метка"
 
-#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:42
 msgid "Mount Point"
 msgstr "Точка монтирования"
 
-#: plinth/modules/storage/templates/storage.html:62
+#: plinth/modules/storage/templates/storage.html:44
 msgid "Used"
 msgstr "Используется"
 
-#: plinth/modules/storage/templates/storage.html:108
+#: plinth/modules/storage/templates/storage.html:90
 msgid "Partition Expansion"
 msgstr "Расширение Раздела"
 
-#: plinth/modules/storage/templates/storage.html:110
+#: plinth/modules/storage/templates/storage.html:92
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -5254,9 +5292,9 @@ msgstr ""
 "пространства. Это даст вам дополнительное свободное место для хранения ваших "
 "файлов."
 
-#: plinth/modules/storage/templates/storage.html:120
+#: plinth/modules/storage/templates/storage.html:102
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:74
+#: plinth/modules/storage/views.py:83
 msgid "Expand Root Partition"
 msgstr "Расширить корневой раздел"
 
@@ -5271,16 +5309,16 @@ msgstr ""
 "этой операции будет доступно %(expandable_root_size)s свободного места в "
 "вашем корневом разделе."
 
-#: plinth/modules/storage/views.py:86
+#: plinth/modules/storage/views.py:95
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Ошибка расширения раздела: {exception}"
 
-#: plinth/modules/storage/views.py:89
+#: plinth/modules/storage/views.py:98
 msgid "Partition expanded successfully."
 msgstr "Раздел успешно расширен."
 
-#: plinth/modules/storage/views.py:106
+#: plinth/modules/storage/views.py:115
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -5289,16 +5327,16 @@ msgstr ""
 "Предупреждение: недостаточно свободного пространства на системном разделе "
 "({percent_used}% используется, {free_space} свободно)."
 
-#: plinth/modules/storage/views.py:132
+#: plinth/modules/storage/views.py:141
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor}{drive_model} может быть безопасно отсоединено."
 
-#: plinth/modules/storage/views.py:136
+#: plinth/modules/storage/views.py:145
 msgid "Device can be safely unplugged."
 msgstr "Устройство может быть безопасно отсоединено."
 
-#: plinth/modules/storage/views.py:146
+#: plinth/modules/storage/views.py:155
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Ошибка извлечения устройства: {error_message}"
@@ -6338,11 +6376,11 @@ msgstr "Установка %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% завершено"
 
-#: plinth/views.py:179
+#: plinth/views.py:180
 msgid "Application enabled"
 msgstr "Приложение включено"
 
-#: plinth/views.py:182
+#: plinth/views.py:183
 msgid "Application disabled"
 msgstr "Приложение отключено"
 

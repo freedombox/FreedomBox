@@ -44,7 +44,6 @@ DIRECTORIES_TO_CREATE = [
 ]
 
 DIRECTORIES_TO_COPY = [
-    ('/usr/share/doc/freedombox', 'doc'),
     ('/usr/share/plinth/static', 'static'),
 ]
 
@@ -151,9 +150,18 @@ class CustomInstall(install):
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
 
+    def _run_doc_install(self):
+        """Install documentation"""
+        command = ['make', '-j', '8', '-C', 'doc', 'install']
+        if self.root:
+            root = os.path.abspath(self.root)
+            command.append(f'DESTDIR={root}')
+
+        subprocess.check_call(command)
+
     def run(self):
         """Execute install command"""
-        subprocess.check_call(['make', '-C', 'doc'])
+        self._run_doc_install()
 
         install_data.run(self)  # Old style base class
 
@@ -240,7 +248,7 @@ setuptools.setup(
     scripts=['bin/plinth'],
     license='COPYING.md',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: End Users/Desktop',
@@ -250,9 +258,36 @@ setuptools.setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Unix Shell',
+        'Topic :: Communications',
+        'Topic :: Communications :: Chat',
+        'Topic :: Communications :: Chat :: Internet Relay Chat',
+        'Topic :: Communications :: File Sharing',
+        'Topic :: Internet',
+        'Topic :: Internet :: Name Service (DNS)'
+        'Topic :: Internet :: Proxy Servers',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Wiki',
+        'Topic :: Internet :: WWW/HTTP :: WSGI',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
+        'Topic :: Office/Business',
+        'Topic :: Office/Business :: Scheduling',
+        'Topic :: Security',
+        'Topic :: System'
+        'Topic :: System :: Archiving',
+        'Topic :: System :: Archiving :: Backup',
+        'Topic :: System :: Distributed Computing'
+        'Topic :: System :: Filesystems',
+        'Topic :: System :: Installation/Setup',
+        'Topic :: System :: Networking',
+        'Topic :: System :: Networking :: Firewalls',
+        'Topic :: System :: Operating System',
+        'Topic :: System :: Software Distribution'
         'Topic :: System :: Systems Administration',
+        'Topic :: System :: Systems Administration :: Authentication/Directory',
+        'Topic :: System :: Systems Administration :: Authentication/Directory :: LDAP   ',
+        'Topic :: System :: System Shells',
     ],
     setup_requires=['pytest-runner', 'setuptools-git'],
     install_requires=[
@@ -280,7 +315,8 @@ setuptools.setup(
     },
     exclude_package_data={'': ['*/data/*']},
     data_files=_gather_data_files() +
-    [('/usr/share/plinth/actions', glob.glob(os.path.join('actions', '*'))),
+    [('/usr/share/plinth/actions', glob.glob(
+        os.path.join('actions', '[a-z]*'))),
      ('/usr/share/man/man1', ['doc/plinth.1'])],
     cmdclass={
         'install': CustomInstall,

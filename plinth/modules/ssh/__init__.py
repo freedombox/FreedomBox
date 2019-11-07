@@ -105,3 +105,9 @@ def get_host_keys():
                 host_keys.append(match.groupdict())
 
     return host_keys
+
+
+def is_password_authentication_disabled():
+    """Return if ssh password authentication is enabled."""
+    return actions.superuser_run('ssh',
+                                 ['get-password-config']).strip() == 'no'

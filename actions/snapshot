@@ -201,6 +201,7 @@ def subcommand_list(_):
     for snapshot in snapshots:
         snapshot['is_default'] = (snapshot['number'] == default)
 
+    snapshots.reverse()
     print(json.dumps(snapshots))
 
 

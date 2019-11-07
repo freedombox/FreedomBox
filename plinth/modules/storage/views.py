@@ -29,7 +29,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import actions
+from plinth import actions, views
 from plinth.errors import PlinthError
 from plinth.modules import storage
 from plinth.utils import format_lazy, is_user_admin
@@ -39,23 +39,32 @@ from . import get_disk_info, get_error_message
 logger = logging.getLogger(__name__)
 
 
-def index(request):
-    """Show connection list."""
-    disks = storage.get_disks()
-    root_device = storage.get_root_device(disks)
-    expandable_root_size = storage.is_expandable(root_device)
-    expandable_root_size = storage.format_bytes(expandable_root_size)
+class StorageAppView(views.AppView):
+    """Show storage information."""
+    name = storage.name
+    description = storage.description
+    manual_page = storage.manual_page
+    app_id = 'storage'
+    template_name = 'storage.html'
+    show_status_block = False
 
-    warn_about_low_disk_space(request)
+    def render_to_response(self, context, **response_kwargs):
+        """Add disk space warning to the view."""
+        warn_about_low_disk_space(self.request)
+        return super().render_to_response(context, **response_kwargs)
 
-    return TemplateResponse(
-        request, 'storage.html', {
-            'title': _('Storage'),
-            'description': storage.description,
-            'disks': disks,
-            'manual_page': storage.manual_page,
-            'expandable_root_size': expandable_root_size
-        })
+    def get_context_data(self, *args, **kwargs):
+        """Return template context data."""
+        context = super().get_context_data(*args, **kwargs)
+
+        disks = storage.get_disks()
+        root_device = storage.get_root_device(disks)
+        expandable_root_size = storage.is_expandable(root_device)
+        expandable_root_size = storage.format_bytes(expandable_root_size)
+
+        context['disks'] = disks
+        context['expandable_root_size'] = expandable_root_size
+        return context
 
 
 def expand(request):
@@ -83,8 +92,8 @@ def expand_partition(request, device):
     except Exception as exception:
         messages.error(
             request,
-            _('Error expanding partition: {exception}')
-            .format(exception=exception))
+            _('Error expanding partition: {exception}').format(
+                exception=exception))
     else:
         messages.success(request, _('Partition expanded successfully.'))
 
@@ -129,9 +138,9 @@ def eject(request, device_path):
         if drive:
             messages.success(
                 request,
-                _('{drive_vendor} {drive_model} can be safely unplugged.')
-                .format(drive_vendor=drive['vendor'],
-                        drive_model=drive['model']))
+                _('{drive_vendor} {drive_model} can be safely unplugged.').
+                format(drive_vendor=drive['vendor'],
+                       drive_model=drive['model']))
         else:
             messages.success(request, _('Device can be safely unplugged.'))
     except Exception as exception:

@@ -134,11 +134,16 @@ def _run(action, options=None, input=None, run_in_background=False,
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
+
     - options are added to the action command.
+
     - input: data (as bytes) that will be sent to the action command's stdin.
+
     - run_in_background: run asynchronously or wait for the command to
       complete.
+
     - run_as_root: execute the command through sudo.
+
     """
     if options is None:
         options = []

@@ -34,7 +34,6 @@ from plinth import package
 from plinth.app import App
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
-from plinth.modules.storage import views as disk_views
 from plinth.translation import get_language_from_request, set_language
 
 from . import forms, frontpage
@@ -54,6 +53,7 @@ def index(request):
     ]
     selected_shortcut = selected_shortcut[0] if selected_shortcut else None
 
+    from plinth.modules.storage import views as disk_views
     disk_views.warn_about_low_disk_space(request)
 
     return TemplateResponse(
@@ -77,6 +77,7 @@ class AppsIndexView(TemplateView):
 
 def system_index(request):
     """Serve the system index page."""
+    from plinth.modules.storage import views as disk_views
     disk_views.warn_about_low_disk_space(request)
     return TemplateResponse(request, 'system.html',
                             {'advanced_mode': get_advanced_mode()})

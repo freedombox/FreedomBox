@@ -37,6 +37,8 @@ managed_services = ['infinoted']
 
 managed_packages = ['infinoted']
 
+manual_page = 'Infinoted'
+
 name = _('infinoted')
 
 short_description = _('Gobby Server')

@@ -22,7 +22,7 @@ import os
 import socket
 
 import augeas
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
@@ -33,6 +33,8 @@ from plinth.signals import domain_added
 version = 2
 
 is_essential = True
+
+name = _('General Configuration')
 
 depends = ['firewall', 'names']
 
@@ -57,14 +59,12 @@ class ConfigApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-config', ugettext_lazy('Configure'), None,
-                              'fa-cog', 'config:index',
-                              parent_url_name='system')
+        menu_item = menu.Menu('menu-config', _('Configure'), None, 'fa-cog',
+                              'config:index', parent_url_name='system')
         self.add(menu_item)
 
-        domain_type = DomainType('domain-type-static',
-                                 ugettext_lazy('Domain Name'), 'config:index',
-                                 can_have_certificate=True)
+        domain_type = DomainType('domain-type-static', _('Domain Name'),
+                                 'config:index', can_have_certificate=True)
         self.add(domain_type)
 
 

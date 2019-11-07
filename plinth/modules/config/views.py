@@ -21,10 +21,9 @@ FreedomBox views for basic system configuration.
 import logging
 
 from django.contrib import messages
-from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
-from plinth import actions
+from plinth import actions, views
 from plinth.modules import config
 from plinth.signals import (domain_added, domain_removed, post_hostname_change,
                             pre_hostname_change)
@@ -34,89 +33,79 @@ from .forms import ConfigurationForm
 LOGGER = logging.getLogger(__name__)
 
 
-def index(request):
-    """Serve the configuration form"""
-    status = get_status()
+class ConfigAppView(views.AppView):
+    """Serve configuration page."""
+    name = config.name
+    form_class = ConfigurationForm
+    app_id = 'config'
+    manual_page = config.manual_page
+    show_status_block = False
 
-    if request.method == 'POST':
-        form = ConfigurationForm(request.POST, initial=status,
-                                 prefix='configuration')
-        # pylint: disable-msg=E1101
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = ConfigurationForm(initial=status, prefix='configuration')
-    else:
-        form = ConfigurationForm(initial=status, prefix='configuration')
+    def get_initial(self):
+        """Return the current status"""
+        return {
+            'hostname': config.get_hostname(),
+            'domainname': config.get_domainname(),
+            'homepage': config.get_home_page(),
+            'advanced_mode': config.get_advanced_mode(),
+        }
 
-    return TemplateResponse(
-        request, 'config.html', {
-            'title': _('General Configuration'),
-            'form': form,
-            'manual_page': config.manual_page
-        })
+    def form_valid(self, form):
+        """Apply the form changes"""
+        old_status = form.initial
+        new_status = form.cleaned_data
 
-
-def get_status():
-    """Return the current status"""
-    return {
-        'hostname': config.get_hostname(),
-        'domainname': config.get_domainname(),
-        'homepage': config.get_home_page(),
-        'advanced_mode': config.get_advanced_mode(),
-    }
-
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the form changes"""
-    if old_status['hostname'] != new_status['hostname']:
-        try:
-            set_hostname(new_status['hostname'])
-        except Exception as exception:
-            messages.error(
-                request,
-                _('Error setting hostname: {exception}').format(
-                    exception=exception))
-        else:
-            messages.success(request, _('Hostname set'))
-
-    if old_status['domainname'] != new_status['domainname']:
-        try:
-            set_domainname(new_status['domainname'], old_status['domainname'])
-        except Exception as exception:
-            messages.error(
-                request,
-                _('Error setting domain name: {exception}').format(
-                    exception=exception))
-        else:
-            messages.success(request, _('Domain name set'))
-
-    if old_status['homepage'] != new_status['homepage']:
-        try:
-            config.change_home_page(new_status['homepage'])
-        except Exception as exception:
-            messages.error(
-                request,
-                _('Error setting webserver home page: {exception}').format(
-                    exception=exception))
-        else:
-            messages.success(request, _('Webserver home page set'))
-
-    if old_status['advanced_mode'] != new_status['advanced_mode']:
-        try:
-            config.set_advanced_mode(new_status['advanced_mode'])
-        except Exception as exception:
-            messages.error(
-                request,
-                _('Error changing advanced mode: {exception}').format(
-                    exception=exception))
-        else:
-            if new_status['advanced_mode']:
-                messages.success(request,
-                                 _('Showing advanced apps and features'))
+        if old_status['hostname'] != new_status['hostname']:
+            try:
+                set_hostname(new_status['hostname'])
+            except Exception as exception:
+                messages.error(
+                    self.request,
+                    _('Error setting hostname: {exception}').format(
+                        exception=exception))
             else:
-                messages.success(request,
-                                 _('Hiding advanced apps and features'))
+                messages.success(self.request, _('Hostname set'))
+
+        if old_status['domainname'] != new_status['domainname']:
+            try:
+                set_domainname(new_status['domainname'],
+                               old_status['domainname'])
+            except Exception as exception:
+                messages.error(
+                    self.request,
+                    _('Error setting domain name: {exception}').format(
+                        exception=exception))
+            else:
+                messages.success(self.request, _('Domain name set'))
+
+        if old_status['homepage'] != new_status['homepage']:
+            try:
+                config.change_home_page(new_status['homepage'])
+            except Exception as exception:
+                messages.error(
+                    self.request,
+                    _('Error setting webserver home page: {exception}').format(
+                        exception=exception))
+            else:
+                messages.success(self.request, _('Webserver home page set'))
+
+        if old_status['advanced_mode'] != new_status['advanced_mode']:
+            try:
+                config.set_advanced_mode(new_status['advanced_mode'])
+            except Exception as exception:
+                messages.error(
+                    self.request,
+                    _('Error changing advanced mode: {exception}').format(
+                        exception=exception))
+            else:
+                if new_status['advanced_mode']:
+                    messages.success(self.request,
+                                     _('Showing advanced apps and features'))
+                else:
+                    messages.success(self.request,
+                                     _('Hiding advanced apps and features'))
+
+        return super(views.AppView, self).form_valid(form)
 
 
 def set_hostname(hostname):
@@ -137,8 +126,9 @@ def set_hostname(hostname):
     LOGGER.info('Setting domain name after hostname change - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])
 
-    post_hostname_change.send_robust(
-        sender='config', old_hostname=old_hostname, new_hostname=hostname)
+    post_hostname_change.send_robust(sender='config',
+                                     old_hostname=old_hostname,
+                                     new_hostname=hostname)
 
 
 def set_domainname(domainname, old_domainname):

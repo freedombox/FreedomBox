@@ -43,23 +43,23 @@ config_page_title_language_map = {
 
 def get_hostname(browser):
     nav_to_module(browser, 'config')
-    return browser.find_by_id('id_configuration-hostname').value
+    return browser.find_by_id('id_hostname').value
 
 
 def set_hostname(browser, hostname):
     nav_to_module(browser, 'config')
-    browser.find_by_id('id_configuration-hostname').fill(hostname)
+    browser.find_by_id('id_hostname').fill(hostname)
     submit(browser)
 
 
 def get_domain_name(browser):
     nav_to_module(browser, 'config')
-    return browser.find_by_id('id_configuration-domainname').value
+    return browser.find_by_id('id_domainname').value
 
 
 def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
-    browser.find_by_id('id_configuration-domainname').fill(domain_name)
+    browser.find_by_id('id_domainname').fill(domain_name)
     submit(browser)
 
 
@@ -68,7 +68,7 @@ def set_home_page(browser, home_page):
         home_page = 'shortcut-' + home_page
 
     nav_to_module(browser, 'config')
-    drop_down = browser.find_by_id('id_configuration-homepage')
+    drop_down = browser.find_by_id('id_homepage')
     drop_down.select(home_page)
     submit(browser)
 

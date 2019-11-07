@@ -147,6 +147,12 @@ class GitwebWebserverAuth(Webserver):
         repos = app.get_repo_list()
         return have_public_repos(repos) or super().is_enabled()
 
+    def enable(self):
+        """Enable apache configuration only if no public repository exists."""
+        repos = app.get_repo_list()
+        if not have_public_repos(repos):
+            super().enable()
+
 
 def init():
     """Initialize the module."""
@@ -176,6 +182,11 @@ def diagnose():
         action_utils.diagnose_url_on_all('https://{host}/gitweb/',
                                          check_certificate=False))
     return results
+
+
+def restore_post(packet):
+    """Update access after restoration of backups."""
+    app.update_service_access()
 
 
 def have_public_repos(repos):

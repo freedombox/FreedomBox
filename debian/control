@@ -14,7 +14,7 @@ Build-Depends:
  debhelper-compat (= 12),
  dblatex,
  dh-python,
- docbook-utils,
+ docbook-xsl,
  e2fsprogs,
  gir1.2-nm-1.0,
  libjs-bootstrap,
@@ -43,6 +43,7 @@ Build-Depends:
  python3-setuptools-git,
  python3-yaml,
  xmlto,
+ xsltproc
 Standards-Version: 4.4.1
 Homepage: https://salsa.debian.org/freedombox-team/plinth
 Vcs-Git: https://salsa.debian.org/freedombox-team/plinth.git
@@ -171,18 +172,3 @@ Description: easy to manage, privacy oriented home server
  This package provides the FreedomBox Service (Plinth) which installs,
  configures and manages all functions of FreedomBox. The service is managed
  using a web interface available at https://localhost/.
-
-Package: plinth
-Architecture: all
-Section: oldlibs
-Depends:
- ${misc:Depends},
- freedombox (>> 0.46.0),
-Description: easy to manage, privacy oriented home server (transitional package)
- FreedomBox is designed to be your own inexpensive server at home. It runs free
- software and offers an increasing number of services ranging from a calendar or
- jabber server to a wiki or VPN. A web interface allows you to easily install
- and configure your apps.
- .
- This is a transitional package. It can safely be removed. plinth package has
- been renamed to freedombox.

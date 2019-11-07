@@ -18,6 +18,8 @@
 Django form for configuring Gitweb.
 """
 
+import re
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -25,13 +27,26 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.modules import gitweb
 
 
+def validate_repository(name):
+    """Validate a Git repository name."""
+
+    if not re.match(r'^[a-zA-Z0-9-._]+$', name):
+        raise ValidationError(_('Invalid repository name.'))
+
+    if name.startswith(('-', '.')):
+        raise ValidationError(_('Invalid repository name.'))
+
+    if name.endswith('.git.git'):
+        raise ValidationError(_('Invalid repository name.'))
+
+
 class EditRepoForm(forms.Form):
     """Form to create and edit a new repository."""
 
-    name = forms.RegexField(
+    name = forms.CharField(
         label=_('Name of the repository'),
         strip=True,
-        regex=r'^[a-zA-Z0-9-._]+$',
+        validators=[validate_repository],
         help_text=_(
             'An alpha-numeric string that uniquely identifies a repository.'),
     )
@@ -61,9 +76,6 @@ class EditRepoForm(forms.Form):
 
         if name.endswith('.git'):
             name = name[:-4]
-
-        if (not name) or name.startswith(('-', '.')):
-            raise ValidationError(_('Invalid repository name.'))
 
         for repo in gitweb.app.get_repo_list():
             if name == repo['name']:

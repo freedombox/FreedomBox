@@ -20,12 +20,15 @@ Help app for FreedomBox.
 
 import mimetypes
 import os
+import pathlib
 import subprocess
 
 from apt.cache import Cache
 from django.core.files.base import File
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.urls import reverse
+from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
@@ -118,15 +121,28 @@ def about(request):
     return TemplateResponse(request, 'help_about.html', context)
 
 
-def manual(request, page='freedombox-manual.part.html'):
+def manual(request, lang=None, page=None):
     """Serve the manual page from the 'doc' directory"""
-    try:
-        page = '{}.part.html'.format(
-            page) if not page.endswith('html') else page
-        with open(os.path.join(cfg.doc_dir, page), 'r',
-                  encoding='utf-8') as input_file:
-            content = input_file.read()
-    except IOError:
+    if not lang or lang == '-':
+        kwargs = {'lang': get_language_from_request(request)}
+        if page:
+            return HttpResponseRedirect(
+                reverse('help:manual-page', kwargs=dict(kwargs, page=page)))
+
+        return HttpResponseRedirect(reverse('help:manual', kwargs=kwargs))
+
+    def read_file(lang, file_name):
+        """Read the page from disk and return contents or None."""
+        page_file = pathlib.Path(cfg.doc_dir) / 'manual' / lang / file_name
+        return page_file.read_text() if page_file.exists() else None
+
+    page = page or 'freedombox-manual'
+    content = read_file(lang, f'{page}.part.html')
+    if not content:
+        if lang != 'en':
+            return HttpResponseRedirect(
+                reverse('help:manual-page', kwargs=dict(lang='en', page=page)))
+
         raise Http404
 
     return TemplateResponse(
@@ -138,17 +154,26 @@ def manual(request, page='freedombox-manual.part.html'):
 
 def download_manual(request):
     """Serve the PDF version of the manual from the 'doc' directory"""
-    files = [
-        os.path.join(cfg.doc_dir, file_name)
-        for file_name in ['freedombox-manual.pdf.gz', 'freedombox-manual.pdf']
-        if os.path.isfile(os.path.join(cfg.doc_dir, file_name))
-    ]
+    language_code = get_language_from_request(request)
 
-    if not files:
+    def get_manual_file_name(language_code):
+        for file_name in ['freedombox-manual.pdf.gz', 'freedombox-manual.pdf']:
+            name = os.path.join(cfg.doc_dir, 'manual', language_code,
+                                file_name)
+            if os.path.isfile(name):
+                return name
+
+        return None
+
+    manual_file_name = get_manual_file_name(
+        language_code) or get_manual_file_name('en')
+
+    if not manual_file_name:
         raise Http404
 
-    (content_type, encoding) = mimetypes.guess_type(files[0])
-    with open(files[0], 'rb') as file_handle:
+    (content_type, encoding) = mimetypes.guess_type(manual_file_name)
+
+    with open(manual_file_name, 'rb') as file_handle:
         response = HttpResponse(File(file_handle), content_type=content_type)
         if encoding:
             response['Content-Encoding'] = encoding
