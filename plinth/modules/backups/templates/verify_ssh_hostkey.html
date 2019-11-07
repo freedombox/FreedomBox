@@ -40,7 +40,11 @@
       {% endif %}
     {% else %}
       <p>
-        The authenticity of SSH host {{ hostname }} could not be established. The host advertises the following SSH public keys. Please verify any one of them.
+        {% blocktrans trimmed %}
+          The authenticity of SSH host {{ hostname }} could not be established.
+          The host advertises the following SSH public keys. Please verify any
+          one of them.
+        {% endblocktrans %}
       </p>
 
       <section>
