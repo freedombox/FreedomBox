@@ -75,7 +75,7 @@ def set_home_page(browser, home_page):
 
 def set_advanced_mode(browser, mode):
     nav_to_module(browser, 'config')
-    advanced_mode = browser.find_by_name('configuration-advanced_mode')
+    advanced_mode = browser.find_by_id('id_advanced_mode')
     if mode:
         advanced_mode.check()
     else:

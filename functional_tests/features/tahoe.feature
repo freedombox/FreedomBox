@@ -25,6 +25,7 @@ Feature: Tahoe-LAFS distribute file storage
 
 Background:
   Given I'm a logged in user
+  And advanced mode is on
   And the domain name is set to mydomain.example
   And the tahoe application is installed
   And the domain name for tahoe is set to mydomain.example
