@@ -31,6 +31,6 @@ urlpatterns = [
                         description=syncthing.description,
                         clients=syncthing.clients,
                         manual_page=syncthing.manual_page,
-                        icon_filename = syncthing.icon_filename,
+                        icon_filename=syncthing.icon_filename,
                         show_status_block=True), name='index'),
 ]

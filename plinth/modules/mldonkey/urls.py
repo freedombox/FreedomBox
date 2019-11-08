@@ -32,6 +32,5 @@ urlpatterns = [
                         clients=mldonkey.clients,
                         manual_page=mldonkey.manual_page,
                         show_status_block=True,
-                        icon_filename=mldonkey.icon_filename),
-                        name='index'),
+                        icon_filename=mldonkey.icon_filename), name='index'),
 ]

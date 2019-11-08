@@ -36,6 +36,7 @@ class JSXCAppView(AppView):
     clients = jsxc.clients
     icon_filename = jsxc.icon_filename
 
+
 class JsxcView(TemplateView):
     """A simple page to embed Javascript XMPP Client library."""
     template_name = 'jsxc_launch.html'

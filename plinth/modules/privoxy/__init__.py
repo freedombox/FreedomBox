@@ -119,6 +119,7 @@ class PrivoxyAppView(AppView):
     manual_page = manual_page
     icon_filename = icon_filename
 
+
 def diagnose():
     """Run diagnostics and return the results."""
     results = []

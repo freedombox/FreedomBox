@@ -110,6 +110,7 @@ class MumbleAppView(AppView):
     port_forwarding_info = port_forwarding_info
     icon_filename = icon_filename
 
+
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
