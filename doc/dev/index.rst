@@ -11,8 +11,8 @@ This manual is meant for developers intending to develop apps for FreedomBox.
 It provides an API reference and a step-by-step tutorial for developing apps.
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: Contents
 
    tutorial/index
    reference/index
