@@ -18,7 +18,7 @@ It provides an API reference and a step-by-step tutorial for developing apps.
    reference/index
 
 External References
-===================
+*******************
 
 #. :doc:`Django Documentation - Getting Started <django:intro/index>`
 
@@ -31,7 +31,7 @@ External References
 #. `FreedomBox User Manual <https://wiki.debian.org/FreedomBox/Manual>`_
 
 Indices and tables
-==================
+******************
 
 * :ref:`genindex`
 * :ref:`modindex`
