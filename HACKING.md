@@ -1,5 +1,51 @@
 # Hacking
 
+## Requirements for Development OS
+
+FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
+install Debian to do development for FreedomBox. FreedomBox development is
+typically done on a Virtual Machine. You can work on any operating system that
+can install latest versions of Git, Vagrant and VirtualBox.
+
+### For Debian GNU/Linux and Derivatives
+
+1. Install Git, Vagrant and VirtualBox using apt.
+
+   ```
+   $ sudo apt install git virtualbox vagrant
+   ```
+
+### For Other GNU/Linux Distributions or *BSDs
+
+1. Install Git, Vagrant and VirtualBox using your favourite package manager.
+
+### For macOS
+
+1. Install [Brew](https://brew.sh/).
+
+2. Install Git, Vagrant and VirtualBox using Brew.
+
+   ```
+   brew install git
+   brew cask install vagrant
+   brew cask install virtualbox
+   ```
+
+### For Windows
+
+1. Install [Git](https://git-scm.com/download/windows),
+   [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
+   [Vagrant](https://www.vagrantup.com/downloads.html) from their respective
+   download pages.
+
+2. Tell Git to use Unix line endings by running the following in Git Bash.
+
+   ```
+   git config --global core.autocrlf input
+   ```
+
+3. Run all the following commands inside Git Bash.
+
 ## Setting Up Development Environment Using Vagrant
 
 Vagrant is a free software command line utility for managing the life cycle of
@@ -9,10 +55,11 @@ FreedomBox development rather simple: You can edit the source code on your host
 and immediately see the effects in the running VM. The entire setup is automatic
 and requires about 4.5 GB of disk space.
 
-1.  Install Vagrant and VirtualBox:
+1.  Checkout FreedomBox Service (Plinth) source code using Git.
 
     ```
-    $ sudo apt-get install virtualbox vagrant
+    git clone https://salsa.debian.org/freedombox-team/plinth.git
+    cd plinth
     ```
 
 2.  To download, setup, run, and configure a VM for FreedomBox development using
@@ -23,92 +70,31 @@ and requires about 4.5 GB of disk space.
     $ vagrant up
     ```
 
-3. SSH into the running vagrant box with the following command:
+3.  SSH into the running vagrant box with the following command:
+
     ```
     $ vagrant ssh
     ```
 
-4. Run the development version of Plinth from your source directory in the
-   virtual machine using the following command. This command continuously
-   deploys your code changes into the virtual machine providing a quick feedback
-   cycle during development.
+4.  Run the development version of FreedomBox Service (Plinth) from your source
+    directory in the virtual machine using the following command. This command
+    continuously deploys your code changes into the virtual machine providing a
+    quick feedback cycle during development.
 
     ```
     $ sudo -u plinth /vagrant/run --develop
     ```
 
-Note: This virtual machine has automatic upgrades disabled by default.
-
-
-## Manually Setting Up for Development
-
-It is recommended that you use Vagrant to setup your development environment.
-However, for some reason, you wish setup manually, the following tips will help:
-
-1.  Install dependencies as follows:
+5.  If you have changed any system configuration files during your development,
+    you will need to run the following to install those files properly on to the
+    system and their changes to reflect properly.
 
     ```
-    $ sudo apt build-dep .
+    $ sudo ./setup.py install
     ```
 
-    ```
-    $ sudo apt install -y $(./run --list-dependencies)
-    ```
-
-    Install additional dependencies by picking the list from debian/control file
-    fields Depends: and Recommends: for the package ''freedombox''.
-
-2.  Instead of running `setup.py install` after every source modification, run
-    the following command:
-
-    ```
-    $ sudo python3 setup.py develop
-    ```
-
-    This will install the python package in a special development mode.  Run it
-    normally.  Any updates to the code (and core package data files) do not
-    require re-installation after every modification.
-
-    CherryPy web server also monitors changes to the source files and reloads
-    the server as soon as a file is modified.  Hence it is usually sufficient
-    to modify the source and refresh the browser page to see the changes.
-
-2.  FreedomBox Service (Plinth) also supports running without installing (as much
-    as possible). Simply run it as:
-
-    ```
-    $ sudo ./run --develop
-    ```
-
-    In this mode, FreedomBox Service (Plinth) runs from the working directory
-    without need for installation. The server restarts automatically when any
-    python file changes.  The `plinth.conf` config file and the action
-    scripts of the working directory are used. It creates all that data and
-    runtime files in `data/var/*`.
-    More extensive debugging is enabled, Django security features are disabled
-    and module initialization errors will not pass silently.
-
-    *Note:* This mode is supported only in a limited manner.  The following are
-    the unknown issues with it:
-
-     1. Help pages are also not built. Run `make -C doc` manually.
-
-     2. Actions do not work when running as normal user without `sudo` prefix.
-        You need to add `actions` directory to be allowed for `sudo` commands.
-        See `data/etc/sudoers.d/plinth` for a hint.
-
-### Testing Inside a Virtual Machine
-
-1.  Checkout source on the host.
-
-2.  Share the source folder and mount it on virtual machine.  This could be done
-    over NFS, SSH-fs or 'Shared Folders' feature on VirtualBox.
-
-3.  Run `setup.py develop` or `setup.py install` as described above on guest
-    machine.
-
-4.  Access the guest machine's FreedomBox web UI from host after setting bridging
-    or NATing for guest virtual machine.
+Note: This development virtual machine has automatic upgrades disabled by
+default.
 
 ## Running Tests
 
@@ -125,7 +111,7 @@ $ ./setup.py test
 ```
 
 To run a specific test function, test class or test module, use pytest filtering
-options.
+options. See pytest documentation for further filter options.
 
 **Examples:**
 
@@ -169,26 +155,27 @@ executed (red).
 
 ### Install Dependencies
 
-**For running tests in the VM** run `vagrant provision --provision-with tests`.
-Otherwise follow the instructions below.
+#### For running tests inside the VM
+
+Run `vagrant provision --provision-with test.
+
+#### For running tests on host machine
+
+Follow the instructions below to run the tests on host machine. If you wish
+perform the tests on host machine, the host machine must be based on Debian
+Buster (or later).
 
 ```
 $ pip3 install splinter
 $ pip3 install pytest-splinter
-$ pip3 install pytest-bdd
-$ sudo apt install xvfb  # optional, to avoid opening browser windows
-$ pip3 install pytest-xvfb  # optional, to avoid opening browser windows
+$ sudo apt install python3-pytest-bdd
+$ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening browser windows
+$ sudo apt install firefox
 ```
 
-- Install the latest version of geckodriver.
-It's usually a single binary which you can place at /usr/local/bin/geckodriver
-
-- Install the latest version of Mozilla Firefox.
-Download and extract the latest version from the Firefox website and symlink the
-binary named `firefox` to /usr/local/bin.
-
-Geckodriver will then use whatever version of Firefox you symlink as
-/usr/local/bin/firefox.
+- Install the latest version of geckodriver. It is usually a single binary which
+  you can place at /usr/local/bin/geckodriver . Geckodriver will use whichever
+  binary is named 'firefox' for launching the browser and interacting with it.
 
 ### Run FreedomBox Service
 
@@ -225,17 +212,18 @@ $ py.test-3 --include-functional
 ```
 
 The full test suite can take a long time to run (more than an hour). You can
-also specify which tests to run, by tag or keyword:
+also specify which tests to run, by specifying a mark:
 
 ```
-$ py.test-3 -k essential --include-functional
+$ py.test-3 -m essential --include-functional
+$ py.test-3 -m mediawiki --include-functional
 ```
 
 If xvfb is installed and you still want to see browser windows, use the
 `--no-xvfb` command-line argument.
 
 ```
-$ py.test-3 --no-xvfb -k mediawiki --include-functional
+$ py.test-3 --no-xvfb -m mediawiki --include-functional
 ```
 
 ## Building the Documentation Separately
