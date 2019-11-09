@@ -207,3 +207,5 @@ todo_include_todos = True
 autodoc_default_options = {
     'special-members': '__init__',
 }
+
+html_favicon = './_static/favicon.ico'
