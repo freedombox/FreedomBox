@@ -30,7 +30,7 @@ from .. import on_domain_added, on_domain_removed
 @pytest.fixture(name='domain_types')
 def fixture_domain_types():
     """Create a domain types required for tests."""
-    DomainType('domain-type-tor', 'Tor Hidden Service', 'tor:index',
+    DomainType('domain-type-tor', 'Tor Onion Service', 'tor:index',
                can_have_certificate=False)
     DomainType('domain-type-test', 'Test Domain Type', 'test:index')
 

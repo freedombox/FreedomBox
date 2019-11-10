@@ -77,7 +77,7 @@ class TorApp(app_module.App):
                               'tor:index', parent_url_name='apps')
         self.add(menu_item)
 
-        domain_type = DomainType('domain-type-tor', _('Tor Hidden Service'),
+        domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
                                  'tor:index', can_have_certificate=False)
         self.add(domain_type)
 

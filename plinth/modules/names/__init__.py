@@ -43,7 +43,7 @@ manual_page = 'NameServices'
 description = [
     format_lazy(
         _('Name Services provides an overview of the ways {box_name} can be '
-          'reached from the public Internet: domain name, Tor hidden service, '
+          'reached from the public Internet: domain name, Tor onion service, '
           'and Pagekite. For each type of name, it is shown whether the HTTP, '
           'HTTPS, and SSH services are enabled or disabled for incoming '
           'connections through the given name.'), box_name=(cfg.box_name))
