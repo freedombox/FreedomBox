@@ -1,0 +1,138 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for samba.
+"""
+
+import argparse
+import os
+import shutil
+import subprocess
+
+import augeas
+from plinth import action_utils
+
+SHARES_PATH = '/var/lib/samba/shares'
+DEFAULT_FILE = '/etc/default/samba'
+
+CONF_PATH = '/etc/samba/smb-freedombox.conf'
+CONF = r'''
+#
+# This file is managed and overwritten by Plinth.  If you wish to manage
+# Samba yourself, disable Samba in Plinth, remove this file and remove
+# the --configfile parameter in /etc/default/samba
+#
+# To view configured samba shares use command `net conf list`
+#
+
+[global]
+   workgroup = WORKGROUP
+   log file = /var/log/samba/log.%m
+   max log size = 1000
+   logging = file
+   panic action = /usr/share/samba/panic-action %d
+   server role = standalone server
+   obey pam restrictions = yes
+   unix password sync = yes
+   passwd program = /usr/bin/passwd %u
+   passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+   pam password change = yes
+   map to guest = bad user
+   # enable registry based shares
+   registry shares = yes
+'''  # noqa: E501
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup', help='Configure samba after install')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def _share_conf(parameters, **kwargs):
+    """Run samba registry edit command."""
+    subprocess.check_call(['net', 'conf'] + parameters, **kwargs)
+
+
+def _create_open_share(name, path):
+    """Create an open samba share."""
+    try:
+        _share_conf(['delshare', name], stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        pass
+    _share_conf(['addshare', name, path, 'writeable=y', 'guest_ok=y'])
+    _share_conf(['setparm', name, 'force group', 'sambashare'])
+    _share_conf(['setparm', name, 'inherit permissions', 'yes'])
+
+
+def _use_config_file(conf):
+    """Set samba configuration file location."""
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
+    aug.load()
+
+    aug.set('/files' + DEFAULT_FILE + '/SMBDOPTIONS',
+            '--configfile={0}'.format(conf))
+    aug.save()
+
+
+def subcommand_setup(_):
+    """Configure samba after install."""
+    try:
+        os.mkdir(SHARES_PATH)
+    except FileExistsError:
+        pass
+
+    open_share_path = os.path.join(SHARES_PATH, 'open_share')
+    try:
+        os.mkdir(open_share_path)
+    except FileExistsError:
+        pass
+    # set folder group writable, 2 turns on the setGID bit
+    #
+    # TODO: some filesystems doesn't support chown and chmod
+    # (and it is not needed if mounted with correct parameters)
+    shutil.chown(open_share_path, group='sambashare')
+    os.chmod(open_share_path, 0o2775)
+
+    # use custom samba config file
+    with open(CONF_PATH, 'w') as file_handle:
+        file_handle.write(CONF)
+    _use_config_file(CONF_PATH)
+    _create_open_share('freedombox-open-share', open_share_path)
+    action_utils.service_restart('smbd')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
