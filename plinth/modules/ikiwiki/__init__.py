@@ -46,8 +46,9 @@ description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
       'several lightweight markup languages, including Markdown, and '
       'common blogging functionality such as comments and RSS feeds. '
-      'When enabled, the blogs and wikis will be available '
-      'at <a href="/ikiwiki">/ikiwiki</a> (once created).'),
+      'When enabled, the blogs and wikis will be available at '
+      '<a href="/ikiwiki" data-turbolinks="false">/ikiwiki</a> '
+      '(once created).'),
     format_lazy(
         _('Only {box_name} users in the <b>admin</b> group can <i>create</i> '
           'and <i>manage</i> blogs and wikis, but any user in the <b>wiki</b> '
