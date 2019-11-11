@@ -26,16 +26,12 @@
 {% load static %}
 
 {% block content %}
-  <div id='app-toggle-container' class="toggle-button-container">
-    <form id="app-toggle" class="form form-configuration" method="post">
-      {% csrf_token %}
-      {{ form|bootstrap }}
+  <div id='app-toggle-container' class="app-toggle-container">
       {% if is_enabled %}
-        <button type="submit" value="False" class="btn toggle-button toggle-button--toggled"></button>
+        <button id="app-toggle-button" value="False" class="btn toggle-button toggle-button--toggled"></button>
       {% else %}
-        <button type="submit" value="True" class="btn toggle-button"></button>
+        <button id="app-toggle-button" value="True" class="btn toggle-button"></button>
       {% endif %}
-    </form>
   </div>
   <header>
     {% block pagetitle %}
@@ -110,19 +106,17 @@
 
   {% include "port-forwarding-info.html" with service_name=name %}
 
-  <noscript>
-    {% block configuration %}
-      <h3>{% trans "Configuration" %}</h3>
-      <form class="form form-configuration" method="post">
-        {% csrf_token %}
+  {% block configuration %}
+    <h3>{% trans "Configuration" %}</h3>
+    <form id="app-form" class="form form-configuration" method="post">
+      {% csrf_token %}
 
-        {{ form|bootstrap }}
+      {{ form|bootstrap }}
 
-        <input type="submit" class="btn btn-primary"
-              value="{% trans "Update setup" %}"/>
-      </form>
-    {% endblock %}
-  </noscript>
+      <input type="submit" class="btn btn-primary"
+            value="{% trans "Update setup" %}"/>
+    </form>
+  {% endblock %}
   
   <script src="{% static 'theme/js/app.template.js' %}"></script>
 {% endblock %}
