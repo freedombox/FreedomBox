@@ -36,6 +36,11 @@ is_essential = True
 
 name = _('General Configuration')
 
+description = [
+    _('Here you can set some general configuration options ',
+      'like hostname, domain name, webserver home page etc.')
+]
+
 depends = ['firewall', 'names']
 
 manual_page = 'Configure'
