@@ -178,6 +178,8 @@ def diagnose():
     if 'obfs3' in ports:
         results.append(
             action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp6'))
 
     results.append([
         _('Obfs4 transport registered'),
@@ -186,6 +188,8 @@ def diagnose():
     if 'obfs4' in ports:
         results.append(
             action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp6'))
 
     results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
     results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
