@@ -157,7 +157,7 @@ executed (red).
 
 #### For running tests inside the VM
 
-Run `vagrant provision --provision-with test.
+Run `vagrant provision --provision-with tests`.
 
 #### For running tests on host machine
 
