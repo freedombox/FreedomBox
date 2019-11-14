@@ -45,7 +45,20 @@
     </p>
   {% endif %}
 
-  {% include "clients.html" with clients=clients enabled=is_enabled %}
+  {% if clients|length == 1 and clients|first|lookup:'platforms'|length == 1 and clients|first|lookup:'platforms'|first|lookup:'type'  == 'web' %}
+
+    {% block launch_button %}
+      <p>
+        <a href='{{ clients|first|lookup:"platforms"|first|lookup:"url" }}' target='_blank' class='btn btn-primary'>
+          {% trans "Launch web client" %}</a>
+      </p>
+    {% endblock %}
+
+  {% else %}
+
+    {% include "clients.html" with clients=clients enabled=is_enabled %}
+
+  {% endif %}
 
   {% block subsubmenu %}
     {% if subsubmenu %}

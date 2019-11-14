@@ -76,7 +76,6 @@ def is_user_admin(request, cached=False):
 
 class YAMLFile(object):
     """A context management class for updating YAML files"""
-
     def __init__(self, yaml_file):
         """Return a context object for the YAML file.
 

@@ -29,6 +29,6 @@ urlpatterns = [
         AppView.as_view(app_id='roundcube', name=roundcube.name,
                         diagnostics_module_name='roundcube',
                         description=roundcube.description,
-                        show_status_block=False,
+                        show_status_block=False, clients=roundcube.clients,
                         manual_page=roundcube.manual_page), name='index'),
 ]
