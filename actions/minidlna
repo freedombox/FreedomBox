@@ -21,7 +21,7 @@ Configuration actions for the minidlna server.
 import argparse
 from tempfile import mkstemp
 from shutil import move
-from os import fdopen, remove
+from os import fdopen, remove, chmod, stat
 
 import augeas
 
@@ -82,6 +82,7 @@ def replace_in_config_file(file_path, pattern, subst):
     Create a temporary minidlna.conf file,
     replace the media dir config,
     remove original one and move the temporary file.
+    Preserve permissions as the original file.
     """
     temp_file, temp_file_path = mkstemp()
     with fdopen(temp_file, 'w') as new_file:
@@ -89,8 +90,10 @@ def replace_in_config_file(file_path, pattern, subst):
             for line in old_file:
                 new_file.write(line.replace(pattern, subst))
 
+    old_st_mode = stat(file_path).st_mode
     remove(file_path)
     move(temp_file_path, file_path)
+    chmod(file_path, old_st_mode)
 
 
 def main():
