@@ -108,6 +108,11 @@ def _set_timeout(settings):
     settings['outgoing']['request_timeout'] = 20.0
 
 
+def _set_safe_search(settings):
+    """Set safe search to Moderate."""
+    settings['search']['safe_search'] = 1
+
+
 def subcommand_set_safe_search(arguments):
     """Set safe search filter for search results."""
     value = arguments.filter
@@ -150,6 +155,7 @@ def subcommand_setup(_):
     _generate_secret_key(settings)
     _set_title(settings)
     _set_timeout(settings)
+    _set_safe_search(settings)
     write_settings(settings)
 
     action_utils.service_restart('uwsgi')
