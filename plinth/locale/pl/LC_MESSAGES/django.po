@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-04 18:34-0500\n"
-"PO-Revision-Date: 2019-08-08 00:23+0000\n"
+"PO-Revision-Date: 2019-11-17 13:04+0000\n"
 "Last-Translator: Radek Pasiok <rpasiok@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/plinth/"
 "pl/>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 3.10-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
-msgstr ""
+msgstr "Źródło strony"
 
 #: plinth/action_utils.py:298
 #, python-brace-format
@@ -127,13 +127,13 @@ msgid ""
 msgstr ""
 "Wykrywanie usług pozwala innym urządzeniom w twojej sieci wykrywanie jakie "
 "usługi operuje twój {box_name}. Pozwala także twojemu {box_name} na "
-"wykrywanie uslug udostępnianich przez inne urządzenia w twojej sieci. "
-"Wykrywanie usług działą tylko w sieci lokalnej i może zistać wyłączone aby "
+"wykrywanie usług udostępnianych przez inne urządzenia w twojej sieci. "
+"Wykrywanie usług działa tylko w sieci lokalnej i może zostać wyłączone aby "
 "poprawić bezpieczeństwo, szczególnie gdy podłączony do nieprzyjaznych sieci."
 
 #: plinth/modules/avahi/__init__.py:77
 msgid "Local Network Domain"
-msgstr ""
+msgstr "Lokalna domena sieciowa"
 
 #: plinth/modules/backups/__init__.py:40
 msgid "Backups"
@@ -229,11 +229,11 @@ msgstr "Przy szyfrowaniu wymagane jest hasło."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select Disk or Partition"
-msgstr ""
+msgstr "Zaznacz dysk lub partycję"
 
 #: plinth/modules/backups/forms.py:190
 msgid "Backups will be stored in the directory FreedomBoxBackups"
-msgstr ""
+msgstr "Kopie zapasowe będą zachowane w katalogu FreedomBoxBackups"
 
 #: plinth/modules/backups/forms.py:199
 msgid "SSH Repository Path"
@@ -298,7 +298,7 @@ msgstr ""
 
 #: plinth/modules/backups/repository.py:154
 msgid "Existing repository is not encrypted."
-msgstr ""
+msgstr "Istniejące repozytorium nie jest zaszyfrowane."
 
 #: plinth/modules/backups/repository.py:342
 #, python-brace-format
@@ -323,26 +323,20 @@ msgid "Upload and Restore"
 msgstr "Prześlij i odtwórz"
 
 #: plinth/modules/backups/templates/backups.html:59
-#, fuzzy
-#| msgid "Add a remote backup location"
 msgid "Add a backup location"
-msgstr "Dodaj lokalizację zdalnego repozytorium kopii zapasowych"
+msgstr "Dodaj lokalizację repozytorium kopii zapasowych"
 
 #: plinth/modules/backups/templates/backups.html:63
-#, fuzzy
-#| msgid "Add a remote backup location"
 msgid "Add Backup Location"
-msgstr "Dodaj lokalizację zdalnego repozytorium kopii zapasowych"
+msgstr "Dodaj lokalizację kopii zapasowych"
 
 #: plinth/modules/backups/templates/backups.html:66
 msgid "Add a remote backup location"
 msgstr "Dodaj lokalizację zdalnego repozytorium kopii zapasowych"
 
 #: plinth/modules/backups/templates/backups.html:70
-#, fuzzy
-#| msgid "Add a remote backup location"
 msgid "Add Remote Backup Location"
-msgstr "Dodaj lokalizację zdalnego repozytorium kopii zapasowych"
+msgstr "Dodaj zdalną lokalizację kopii zapasowej"
 
 #: plinth/modules/backups/templates/backups.html:73
 #, fuzzy
@@ -525,13 +519,11 @@ msgstr "Odtwórz z przesłanego pliku"
 
 #: plinth/modules/backups/views.py:255
 msgid "No additional disks available to add a repository."
-msgstr ""
+msgstr "Nie ma dysków, na których można dodać repozytorium."
 
 #: plinth/modules/backups/views.py:263
-#, fuzzy
-#| msgid "Create remote backup repository"
 msgid "Create backup repository"
-msgstr "Utwórz zdalne repozytorium kopii zapasowych"
+msgstr "Utwórz repozytorium kopii zapasowych"
 
 #: plinth/modules/backups/views.py:290
 msgid "Create remote backup repository"
@@ -574,12 +566,10 @@ msgid "Remove Repository"
 msgstr "Usuń repozytorium"
 
 #: plinth/modules/backups/views.py:419
-#, fuzzy
-#| msgid "Repository removed. The remote backup itself was not deleted."
 msgid "Repository removed. Backups were not deleted."
 msgstr ""
-"Usunięto repozytorium. Umieszczona w nim kopia bezpieczeństwa nie została "
-"usunięta."
+"Usunięto repozytorium. Umieszczone w nim kopie bezpieczeństwa nie zostały "
+"usunięte."
 
 #: plinth/modules/backups/views.py:429
 msgid "Unmounting failed!"
@@ -613,6 +603,9 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
+"Obecnie na {box_name} BIND używany jest jedynie do rozwiązywania zapytań DNS "
+"dla innych maszyn w sieci lokalnej. Nie można go też użyć do współdzielenia "
+"łącza internetowego z {box_name}."
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
@@ -622,6 +615,8 @@ msgstr ""
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr ""
+"Lista serwerów DNS rozdzielonych spacjami, do których przekierowane zostaną "
+"zapytania"
 
 #: plinth/modules/bind/forms.py:42
 msgid "Enable DNSSEC"
@@ -639,13 +634,11 @@ msgstr "Konfigurcja uaktualniona"
 
 #: plinth/modules/cockpit/__init__.py:45 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:47
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Server Administration"
-msgstr "Konto Administratora"
+msgstr "Administracja serwera"
 
 #: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
@@ -655,6 +648,10 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
+"Cockpit jest menadżerem serwera ułatwiającym zarządzanie serwerami GNU/"
+"Linuksa za pomocą przeglądarki internetowej. Na {box_name} dostępnych jest "
+"wiele ustawień dla zaawansowanych funkcji serwera, które zwykle nie są "
+"wymagane. Dostępny jest również terminal konsoli."
 
 #: plinth/modules/cockpit/__init__.py:57
 #, python-brace-format
@@ -663,6 +660,9 @@ msgid ""
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
+"Jeśli Cockpit zostanie włączony, dostępny jest na serwerze pod adresem <a "
+"href=\"/_cockpit/\">/_cockpit/</a>. Dostęp do niego mają <a href=\""
+"{users_url}\">użytkownicy</a> {box_name} z do grupy administratorów."
 
 #: plinth/modules/config/__init__.py:37
 msgid "General Configuration"
@@ -688,11 +688,11 @@ msgstr "Niewłaściwa nazwa domeny"
 
 #: plinth/modules/config/forms.py:50
 msgid "Apache Default"
-msgstr ""
+msgstr "Domyślny dla Apache"
 
 #: plinth/modules/config/forms.py:51
 msgid "FreedomBox Service (Plinth)"
-msgstr ""
+msgstr "Usługa Freedombox (Plinth)"
 
 #: plinth/modules/config/forms.py:63
 msgid "Hostname"
@@ -732,7 +732,7 @@ msgstr ""
 
 #: plinth/modules/config/forms.py:94
 msgid "Webserver Home Page"
-msgstr ""
+msgstr "Strona startowa serwera Web"
 
 #: plinth/modules/config/forms.py:96
 #, python-brace-format
