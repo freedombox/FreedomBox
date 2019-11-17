@@ -15,18 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-URLs for the Samba module.
+URLs for the samba module.
 """
 
 from django.conf.urls import url
-from plinth.modules import samba
-from plinth.views import AppView
+
+from . import views
 
 urlpatterns = [
-    url(
-        r'^apps/samba/$',
-        AppView.as_view(app_id='samba', name=samba.name,
-                        diagnostics_module_name='samba',
-                        description=samba.description,
-                        show_status_block=False), name='index')
+    url(r'^samba/$', views.SambaAppView.as_view(), name='index'),
+    url(r'^samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$', views.share,
+        name='share'),
+    url(r'^samba/unshare/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$', views.unshare,
+        name='unshare'),
 ]

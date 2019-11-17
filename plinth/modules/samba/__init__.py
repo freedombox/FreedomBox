@@ -18,6 +18,7 @@
 FreedomBox app to configure samba.
 """
 
+import json
 import socket
 
 from django.urls import reverse_lazy
@@ -34,7 +35,7 @@ from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 1
 
-managed_services = ['smbd']
+managed_services = ['smbd', 'nmbd']
 
 managed_packages = ['samba']
 
@@ -43,12 +44,13 @@ name = _('Samba')
 short_description = _('Samba File Sharing')
 
 description = [
-    _('Samba file sharing allows to share files between computers in your '
-      'local network. '),
+    _('Samba allows to share files and folders between computers in your '
+      'local network.'),
     format_lazy(
-        _('If enabled, Samba share will be available at \\\\{hostname} on '
-          'Windows and smb://{hostname} on Linux and Mac'),
-        hostname=socket.gethostname()),
+        _('After installation, you can choose which disks to use for sharing. '
+          'Enabled {hostname} shares are open to everyone in your local '
+          'network and are accessible under Network section in the file '
+          'manager.'), hostname=socket.gethostname().upper())
 ]
 
 clients = clients
@@ -81,6 +83,9 @@ class SambaApp(app_module.App):
         daemon = Daemon('daemon-samba', managed_services[0])
         self.add(daemon)
 
+        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1])
+        self.add(daemon_nmbd)
+
 
 def init():
     """Initialize the module."""
@@ -111,3 +116,35 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(445, 'tcp6'))
 
     return results
+
+
+def add_share(mount_point, filesystem):
+    """Add a share."""
+    command = ['add-share', '--mount-point', mount_point]
+    if filesystem in ['ntfs', 'vfat']:
+        command = command + ['--windows-filesystem']
+    actions.superuser_run('samba', command)
+
+
+def delete_share(mount_point):
+    """Delete a share."""
+    command = ['delete-share', '--mount-point', mount_point]
+    actions.superuser_run('samba', command)
+
+
+def get_shares():
+    """Get defined shares."""
+    output = actions.superuser_run('samba', ['get-shares'])
+
+    return json.loads(output)
+
+
+def backup_pre(packet):
+    """Save registry share configuration."""
+    actions.superuser_run('samba', ['dump-shares'])
+
+
+def restore_post(packet):
+    """Restore configuration."""
+    actions.superuser_run('samba', ['setup'])
+    actions.superuser_run('samba', ['restore-config'])

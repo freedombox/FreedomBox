@@ -14,10 +14,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+"""
+Application manifest for Samba.
+"""
 
 from plinth.clients import validate
 from plinth.modules.backups.api import validate as validate_backup
 
+# A directory where the 'open_share' subdirectory will be created
+SHARES_PATH = 'FreedomBox/shares/'
+SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
+
 clients = validate([])
 
-backup = validate_backup({})
+backup = validate_backup({
+    'data': {
+        'files': [SHARES_CONF_BACKUP_FILE]
+    },
+    'services': ['smbd', 'nmbd']
+})

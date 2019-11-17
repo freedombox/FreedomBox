@@ -1,0 +1,139 @@
+{% extends "app.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+{% block page_head %}
+  <style type="text/css">
+    .progress {
+        margin-bottom: 0;
+    }
+  </style>
+{% endblock %}
+
+
+{% block configuration %}
+  {{ block.super }}
+
+  {% if is_enabled %}
+    <h3>{% trans "Select devices for sharing:" %}</h3>
+    <p>
+    {% blocktrans trimmed %}
+      NB! Selecting device does not share the whole disk, only the folder
+      FreedomBox/shares/open_share will be shared on that disk.
+    {% endblocktrans %}
+    </p>
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>{% trans "Device" %}</th>
+          <th>{% trans "Label" %}</th>
+          <th>{% trans "Mount Point" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Used" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for disk in disks %}
+        <tr>
+          <td>
+            {% if disk.mount_point in shared_mounts %}
+              <form class="form shareform" method="post"
+                    action="{% url 'samba:unshare' disk.mount_point|urlencode:'' %}">
+                {% csrf_token %}
+                <input type="checkbox" value="{{ disk.mount_point }}"
+                       name="mount_point" autocomplete="off" checked/>
+              </form>
+            {% else %}
+              <form class="form shareform" method="post"
+                    action="{% url 'samba:share' disk.mount_point|urlencode:'' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{ disk.filesystem_type }}"
+                       name="filesystem_type">
+                <input type="checkbox" value="{{ disk.mount_point }}"
+                       name="mount_point" autocomplete="off"/>
+              </form>
+            {% endif %}
+          </td>
+          <td>{{ disk.device }}</td>
+          <td>{{ disk.label|default_if_none:"" }}</td>
+          <td>{{ disk.mount_point }}</td>
+          <td>{{ disk.filesystem_type }}</td>
+          <td>
+            <div class="progress">
+              {% if disk.percent_used < 75 %}
+                <div class="progress-bar progress-bar-striped progress-bar-success"
+              {% elif disk.percent_used < 90 %}
+                  <div class="progress-bar progress-bar-striped progress-bar-warning"
+              {% else %}
+                    <div class="progress-bar progress-bar-striped progress-bar-danger"
+              {% endif %}
+                         role="progressbar" aria-valuenow="disk.percent_used"
+                         aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ disk.percent_used }}%;">
+                      {{ disk.percent_used }}%
+                    </div>
+                  </div>
+                  <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    {% if unavailable_shares %}
+      <h3>Shares configured but the disk is not available:</h3>
+      <p>
+      {% blocktrans trimmed %}
+        If the disk is plugged back in, sharing will be automatically enabled.
+      {% endblocktrans %}
+      </p>
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Share name" %}</th>
+            <th>{% trans "Action" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for share in unavailable_shares %}
+          <tr>
+            <td>{{ share.name }}</td>
+            <td>
+              <form class="form" method="post"
+                    action="{% url 'samba:unshare' share.mount_point|urlencode:'' %}">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-danger" value="Delete">
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'samba/samba.js' %}"></script>
+{% endblock %}
