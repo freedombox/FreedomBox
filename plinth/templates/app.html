@@ -45,19 +45,20 @@
     </p>
   {% endif %}
 
-  {% if clients|length == 1 and clients|first|lookup:'platforms'|length == 1 and clients|first|lookup:'platforms'|first|lookup:'type'  == 'web' %}
-
-    {% block launch_button %}
-      <p>
-        <a href='{{ clients|first|lookup:"platforms"|first|lookup:"url" }}' target='_blank' class='btn btn-primary'>
-          {% trans "Launch web client" %}</a>
-      </p>
-    {% endblock %}
-
+  {% if clients|length == 1 %}
+    {% with clients|first|lookup:'platforms' as platforms %}
+      {% if platforms|length == 1 and platforms|first|lookup:'type' == 'web' %}
+        {% block launch_button %}
+          <p>
+            <a href='{{ platforms|first|lookup:"url" }}'
+               target='_blank' class='btn btn-primary'>
+              {% trans "Launch web client" %}</a>
+          </p>
+        {% endblock %}
+      {% endif %}
+    {% endwith %}
   {% else %}
-
     {% include "clients.html" with clients=clients enabled=is_enabled %}
-
   {% endif %}
 
   {% block subsubmenu %}
