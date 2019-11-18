@@ -26,17 +26,21 @@
 {% load static %}
 
 {% block content %}
-  <div id='app-toggle-container' class="app-toggle-container">
-      {% if is_enabled %}
-        <button id="app-toggle-button" value="False" class="btn toggle-button toggle-button--toggled"></button>
-      {% else %}
-        <button id="app-toggle-button" value="True" class="btn toggle-button"></button>
-      {% endif %}
-  </div>
+
   <header>
-    {% block pagetitle %}
-      <h2>{{ name }}</h2>
-    {% endblock %}
+    <section class='header-bar'>
+      {% block pagetitle %}
+        <h2>{{ name }}</h2>
+      {% endblock %}
+
+      <div id='app-toggle-container' class="app-toggle-container">
+          {% if is_enabled %}
+            <button id="app-toggle-button" value="False" class="btn toggle-button toggle-button--toggled"></button>
+          {% else %}
+            <button id="app-toggle-button" value="True" class="btn toggle-button"></button>
+          {% endif %}
+      </div>
+    </section>
 
     {% block description %}
       {% for paragraph in description %}
@@ -44,7 +48,7 @@
       {% endfor %}
     {% endblock %}
   </header>
-  
+
   {% if manual_page %}
     <p class="manual-page">
       <a href="{% url 'help:manual-page' lang='-' page=manual_page %}">
@@ -117,6 +121,6 @@
             value="{% trans "Update setup" %}"/>
     </form>
   {% endblock %}
-  
+
   <script src="{% static 'theme/js/app.template.js' %}"></script>
 {% endblock %}
