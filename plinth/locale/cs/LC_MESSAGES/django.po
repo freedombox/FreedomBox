@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-04 18:34-0500\n"
+"POT-Creation-Date: 2019-11-18 18:45-0500\n"
 "PO-Revision-Date: 2019-10-26 17:53+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -57,15 +57,15 @@ msgstr "Nedaří se připojit k {host}:{port}"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Enable application"
 msgstr "Zapnout aplikaci"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:55
 msgid "Select a domain name to be used with this application"
 msgstr "Vyberte doménový název který použít pro tuto aplikaci"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -73,15 +73,15 @@ msgstr ""
 "Varování! Pokud snad později změníte doménový název, může se stát, že "
 "aplikace nebude správně fungovat."
 
-#: plinth/forms.py:64
+#: plinth/forms.py:65
 msgid "Language"
 msgstr "Jazyk"
 
-#: plinth/forms.py:65
+#: plinth/forms.py:66
 msgid "Language to use for presenting this web interface"
 msgstr "Jazyk pro toto webové rozhraní"
 
-#: plinth/forms.py:72
+#: plinth/forms.py:73
 msgid "Use the language preference set in the browser"
 msgstr "Použít upřednostňovaný jazyk nastavený ve webovém prohlížeči"
 
@@ -358,7 +358,7 @@ msgid "Create Location"
 msgstr "Vytvořit umístění"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
-#: plinth/modules/gitweb/views.py:67
+#: plinth/modules/gitweb/views.py:69
 msgid "Create Repository"
 msgstr "Vytvořit repozitář"
 
@@ -468,11 +468,25 @@ msgstr ""
 msgid "Upload file"
 msgstr "Nahrát soubor"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:33
+#, python-format
+msgid ""
+"Could not reach SSH host %(hostname)s. Please verify that the host is up and "
+"accepting connections."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
+#, python-format
+msgid ""
+"The authenticity of SSH host %(hostname)s could not be established. The host "
+"advertises the following SSH public keys. Please verify any one of them."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
 msgstr "Jak ověřit?"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
@@ -482,7 +496,7 @@ msgstr ""
 "jednou z poskytnutých možností. Zvolením příslušného souboru je také možné "
 "použít dsa , ecdsa, ed25519 atp. namísto rsa."
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:75
 msgid "Verify Host"
 msgstr "Ověřit stroj"
 
@@ -647,11 +661,16 @@ msgstr ""
 "terminál pro operace na příkazovém řádku."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
+#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgid ""
-"When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-"_cockpit/</a> path on the web server. It can be accessed by <a href="
-"\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+"When enabled, Cockpit will be available from <a href=\"/_cockpit/\" data-"
+"turbolinks=\"false\">/_cockpit/</a> path on the web server. It can be "
+"accessed by <a href=\"{users_url}\">any user</a> on {box_name} belonging to "
+"the admin group."
 msgstr ""
 "Pokud je zapnuto, Cockpit bude k dispozici v umístění <a href=\"/cockpit\">/"
 "cockpit</a> na webovém serveru. Je přístupné pro libovolného <a href="
@@ -929,17 +948,24 @@ msgstr ""
 "Deluge je BitTorrent klient který poskytuje webové uživatelské rozhraní."
 
 #: plinth/modules/deluge/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "When enabled, the Deluge web client will be available from <a href=\"/"
+#| "deluge\">/deluge</a> path on the web server. The default password is "
+#| "'deluge', but you should log in and change it immediately after enabling "
+#| "this service."
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
-"\">/deluge</a> path on the web server. The default password is 'deluge', but "
-"you should log in and change it immediately after enabling this service."
+"\" data-turbolinks=\"false\">/deluge</a> path on the web server. The default "
+"password is 'deluge', but you should log in and change it immediately after "
+"enabling this service."
 msgstr ""
 "Když je zapnutý, webový klient Deluge bude k dispozici na <a href=\"/deluge"
 "\">/deluge</a> umístění na webovém serveru. Výchozí heslo je „deluge“, ale "
 "hned po zapnutí této služby se okamžitě přihlaste a změňte ho."
 
 #: plinth/modules/deluge/__init__.py:51
-#: plinth/modules/transmission/__init__.py:56
+#: plinth/modules/transmission/__init__.py:57
 msgid "Download files using BitTorrent applications"
 msgstr "Stahovat soubory pomocí BitTorrent aplikací"
 
@@ -1054,7 +1080,7 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:62
+#: plinth/modules/ejabberd/templates/ejabberd.html:58
 #: plinth/modules/i2p/templates/i2p.html:34
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
@@ -1062,11 +1088,11 @@ msgstr ""
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
-#: plinth/modules/tor/templates/tor.html:94 plinth/templates/app.html:96
+#: plinth/modules/tor/templates/tor.html:94 plinth/templates/app.html:121
 msgid "Update setup"
 msgstr "Aktualizovat nastavení"
 
-#: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
+#: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
 #: plinth/modules/tor/views.py:148 plinth/views.py:176
@@ -1331,7 +1357,7 @@ msgstr "O systému"
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/app.html:58
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/app.html:84
 msgid "Status"
 msgstr "Stav"
 
@@ -1446,26 +1472,21 @@ msgstr ""
 "%(domainname)s</i>. Doménu je možné nastavit na stránce <a href="
 "\"%(index_url)s\">nastavení</a> systému."
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:47
-#: plinth/modules/jsxc/templates/jsxc.html:32
-msgid "Launch web client"
-msgstr "Spustit webového klienta"
-
-#: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ejabberd/templates/ejabberd.html:50
 #: plinth/modules/i2p/templates/i2p.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:123
 #: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
-#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:88
+#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:114
 msgid "Configuration"
 msgstr "Nastavení"
 
-#: plinth/modules/ejabberd/views.py:77
+#: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management enabled"
 msgstr "Správa archivu zpráv zapnuta"
 
-#: plinth/modules/ejabberd/views.py:81
+#: plinth/modules/ejabberd/views.py:82
 msgid "Message Archive Management disabled"
 msgstr "Správa archivu zpráv vypnuta"
 
@@ -1543,17 +1564,22 @@ msgstr ""
 "také povolena na bráně firewall a když nějako službu vypnete, je také "
 "zakázána na bráně firewall."
 
-#: plinth/modules/first_boot/forms.py:28
+#: plinth/modules/first_boot/forms.py:29
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
 msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"wizard-secret\" on your {box_name}"
 msgstr ""
 "Zadejte heslo vytvořené při instalaci FreedomBox. Toto heslo je možné získat "
 "také ze souboru /var/lib/plinth/firstboot-wizard-secret"
 
-#: plinth/modules/first_boot/forms.py:31
-msgid "Secret"
-msgstr "Heslo"
+#: plinth/modules/first_boot/forms.py:34
+msgid "Firstboot Wizard Secret"
+msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1585,15 +1611,15 @@ msgstr "Spustit nastavení"
 msgid "Setup Complete"
 msgstr "Nastavení dokončeno"
 
-#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+#: plinth/modules/gitweb/__init__.py:43 plinth/modules/gitweb/manifest.py:28
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:43
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Simple Git Hosting"
 msgstr "Jednoduché hostování Git"
 
-#: plinth/modules/gitweb/__init__.py:46
+#: plinth/modules/gitweb/__init__.py:48
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -1611,7 +1637,7 @@ msgstr ""
 "grafických klientů. A svoje zdrojové kódy můžete sdílet s lidmi z celého "
 "světa."
 
-#: plinth/modules/gitweb/__init__.py:53
+#: plinth/modules/gitweb/__init__.py:55
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -1619,70 +1645,88 @@ msgstr ""
 "Více o Git se dozvíte navštívením <a href=\"https://git-scm.com/docs/"
 "gittutorial\">výuky Gitu</a>."
 
-#: plinth/modules/gitweb/__init__.py:57
+#: plinth/modules/gitweb/__init__.py:59
 msgid "Read-write access to Git repositories"
 msgstr "Přístup do Git repozitářů pro čtení a zápis"
 
-#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
-#: plinth/modules/gitweb/forms.py:40
+#: plinth/modules/gitweb/forms.py:59
+#, fuzzy
+#| msgid "Invalid repository name."
+msgid "Invalid repository URL."
+msgstr "Neplatný název repozitáře."
+
+#: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Neplatný název repozitáře."
 
-#: plinth/modules/gitweb/forms.py:47
-msgid "Name of the repository"
-msgstr "Název repozitáře"
+#: plinth/modules/gitweb/forms.py:77
+#, fuzzy
+#| msgid ""
+#| "Repository path is neither empty nor is an existing backups repository."
+msgid "Name of a new repository or URL to import an existing repository."
+msgstr ""
+"Popis umístění repozitáře buď není vyplněný nebo se nejedná o existující "
+"repozitář záloh."
 
-#: plinth/modules/gitweb/forms.py:51
-msgid "An alpha-numeric string that uniquely identifies a repository."
-msgstr "Řetězec písmeny a číslicemi, který jednoznačně identifikuje repozitář."
-
-#: plinth/modules/gitweb/forms.py:55
+#: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
 msgstr "Popis repozitáře"
 
-#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
+#: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
 msgid "Optional, for displaying on Gitweb."
 msgstr "Volitelné, zobrazuje se na Gitweb"
 
-#: plinth/modules/gitweb/forms.py:59
+#: plinth/modules/gitweb/forms.py:87
 msgid "Repository's owner name"
 msgstr "Jméno vlastníka repozitáře"
 
-#: plinth/modules/gitweb/forms.py:63
+#: plinth/modules/gitweb/forms.py:91
 msgid "Private repository"
 msgstr "Neveřejný repozitář"
 
-#: plinth/modules/gitweb/forms.py:64
+#: plinth/modules/gitweb/forms.py:92
 msgid "Allow only authorized users to access this repository."
 msgstr "K tomuto repozitáři umožnit přístup pouze pověřeným uživatelům."
 
-#: plinth/modules/gitweb/forms.py:83
+#: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:145
 msgid "A repository with this name already exists."
 msgstr "Repozitář s tímto názvem už existuje."
+
+#: plinth/modules/gitweb/forms.py:126
+msgid "Name of the repository"
+msgstr "Název repozitáře"
+
+#: plinth/modules/gitweb/forms.py:130
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr "Řetězec písmeny a číslicemi, který jednoznačně identifikuje repozitář."
 
 #: plinth/modules/gitweb/manifest.py:36
 msgid "Git"
 msgstr "Git"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:41
-#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#: plinth/modules/gitweb/templates/gitweb_configure.html:45
+#: plinth/modules/gitweb/templates/gitweb_configure.html:47
 msgid "Create repository"
 msgstr "Vytvořit repozitář"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#: plinth/modules/gitweb/templates/gitweb_configure.html:54
 msgid "Manage Repositories"
 msgstr "Spravovat repozitáře"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#: plinth/modules/gitweb/templates/gitweb_configure.html:59
 msgid "No repositories available."
 msgstr "Nejsou k dispozici žádné repozitáře."
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#: plinth/modules/gitweb/templates/gitweb_configure.html:67
 #, python-format
 msgid "Delete repository %(repo.name)s"
 msgstr "Smazat repozitář %(repo.name)s"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#: plinth/modules/gitweb/templates/gitweb_configure.html:83
+msgid "Cloning..."
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
 msgid "Go to repository %(repo.name)s"
 msgstr "Přejít do repozitáře %(repo.name)s"
@@ -1702,29 +1746,35 @@ msgstr "Nevratně smazat tento repozitář?"
 msgid "Delete %(name)s"
 msgstr "Smazat %(name)s"
 
-#: plinth/modules/gitweb/views.py:62
+#: plinth/modules/gitweb/views.py:64
 msgid "Repository created."
 msgstr "Repozitář vytvořen."
 
-#: plinth/modules/gitweb/views.py:93
+#: plinth/modules/gitweb/views.py:86
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "An error occurred while creating the repository."
+msgstr "Při nastavování se vyskytla chyba."
+
+#: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
 msgstr "Repozitář upraven."
 
-#: plinth/modules/gitweb/views.py:98
+#: plinth/modules/gitweb/views.py:104
 msgid "Edit repository"
 msgstr "Upravit repozitář"
 
-#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/gitweb/views.py:132 plinth/modules/searx/views.py:62
 #: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
 msgid "An error occurred during configuration."
 msgstr "Při nastavování se vyskytla chyba."
 
-#: plinth/modules/gitweb/views.py:147
+#: plinth/modules/gitweb/views.py:153
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} smazáno."
 
-#: plinth/modules/gitweb/views.py:151
+#: plinth/modules/gitweb/views.py:157
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} se nepodařilo smazat: {error}"
@@ -1900,7 +1950,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:57
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/app.html:55 plinth/templates/setup.html:48
 #: plinth/templates/simple_app.html:38
 msgid "Learn more..."
 msgstr "Zjistit více…"
@@ -2142,18 +2192,26 @@ msgid "Wiki and Blog"
 msgstr "wiki a blog"
 
 #: plinth/modules/ikiwiki/__init__.py:46
+#, fuzzy
+#| msgid ""
+#| "ikiwiki is a simple wiki and blog application. It supports several "
+#| "lightweight markup languages, including Markdown, and common blogging "
+#| "functionality such as comments and RSS feeds. When enabled, the blogs and "
+#| "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once "
+#| "created)."
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
-"wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once created)."
+"wikis will be available at <a href=\"/ikiwiki\" data-turbolinks=\"false\">/"
+"ikiwiki</a> (once created)."
 msgstr ""
 "ikiwiki je jednoduchá wiki a blog. Podporuje několik zjednodušených "
 "značkovacích jazyků (včetně Markdown) běžné funkce blogu, jako například "
 "komentáře a RSS kanály. Když je zapnuté, blogy a wiki budou dostupné na <a "
 "href=\"/ikiwiki\">/ikiwiki</a> (po vytvoření)."
 
-#: plinth/modules/ikiwiki/__init__.py:52
+#: plinth/modules/ikiwiki/__init__.py:53
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2166,7 +2224,7 @@ msgstr ""
 "může <i>upravovat</i> ty stávající. V <a href=\"{users_url}\">Nastavení "
 "uživatele</a> můžete tato oprávnění změnit nebo přidat nové uživatele."
 
-#: plinth/modules/ikiwiki/__init__.py:62
+#: plinth/modules/ikiwiki/__init__.py:63
 msgid "View and edit wiki applications"
 msgstr "Zobrazit a upravit wiki aplikace"
 
@@ -2203,7 +2261,7 @@ msgstr "Nejsou k dispozici žádné wiki nebo blogy."
 msgid "Delete site %(site)s"
 msgstr "Smazat stránku %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:55
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Přejít na stránku %(site)s"
@@ -3025,10 +3083,16 @@ msgid "Name Services"
 msgstr "Jmenné služby"
 
 #: plinth/modules/names/__init__.py:45
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Name Services provides an overview of the ways {box_name} can be reached "
+#| "from the public Internet: domain name, Tor hidden service, and Pagekite. "
+#| "For each type of name, it is shown whether the HTTP, HTTPS, and SSH "
+#| "services are enabled or disabled for incoming connections through the "
+#| "given name."
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
-"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"from the public Internet: domain name, Tor onion service, and Pagekite. For "
 "each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
@@ -4370,12 +4434,21 @@ msgstr ""
 "csipsimple\"> CSipSimple</a> (pro Android telefony)."
 
 #: plinth/modules/repro/__init__.py:55
+#, fuzzy
+#| msgid ""
+#| "<strong>Note:</strong>  Before using repro, domains and users will need "
+#| "to be configured using the <a href=\"/repro/domains.html\">web-based "
+#| "configuration panel</a>. Users in the <em>admin</em> group will be able "
+#| "to log in to the repro configuration panel. After setting the domain, it "
+#| "is required to restart the repro service. Disable the service and re-"
+#| "enable it."
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
-"be configured using the <a href=\"/repro/domains.html\">web-based "
-"configuration panel</a>. Users in the <em>admin</em> group will be able to "
-"log in to the repro configuration panel. After setting the domain, it is "
-"required to restart the repro service. Disable the service and re-enable it."
+"be configured using the <a href=\"/repro/domains.html\" data-turbolinks="
+"\"false\">web-based configuration panel</a>. Users in the <em>admin</em> "
+"group will be able to log in to the repro configuration panel. After setting "
+"the domain, it is required to restart the repro service. Disable the service "
+"and re-enable it."
 msgstr ""
 "<strong>Upozornění:</strong> Před použitím repro je třeba, aby pomocí <a "
 "href=\"/repro/domains.html\">webový nastavovací panel</a> byli nastavení "
@@ -4459,12 +4532,20 @@ msgstr ""
 "vyhledávání ve zprávách a kontrolou pravopisu."
 
 #: plinth/modules/roundcube/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
+#| "Provide the username and password of the email account you wish to access "
+#| "followed by the domain name of the IMAP server for your email provider, "
+#| "like <code>imap.example.com</code>.  For IMAP over SSL (recommended), "
+#| "fill the server field like <code>imaps://imap.example.com</code>."
 msgid ""
-"You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. Provide "
-"the username and password of the email account you wish to access followed "
-"by the domain name of the IMAP server for your email provider, like "
-"<code>imap.example.com</code>.  For IMAP over SSL (recommended), fill the "
-"server field like <code>imaps://imap.example.com</code>."
+"You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
+"\">/roundcube</a>. Provide the username and password of the email account "
+"you wish to access followed by the domain name of the IMAP server for your "
+"email provider, like <code>imap.example.com</code>.  For IMAP over SSL "
+"(recommended), fill the server field like <code>imaps://imap.example.com</"
+"code>."
 msgstr ""
 "K Roundcube je možné pristupovat z <a href=\"/roundcube\">/roundcube</a>. "
 "Zadejte uživatelské jméno a heslo e-mailového účtu ke kterému si přejete "
@@ -4636,10 +4717,16 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli umožňuje ukládat a sdílet záložky."
 
 #: plinth/modules/shaarli/__init__.py:40
+#, fuzzy
+#| msgid ""
+#| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
+#| "shaarli</a> path on the web server. Note that Shaarli only supports a "
+#| "single user account, which you will need to setup on the initial visit."
 msgid ""
-"When enabled, Shaarli will be available from <a href=\"/shaarli\">/shaarli</"
-"a> path on the web server. Note that Shaarli only supports a single user "
-"account, which you will need to setup on the initial visit."
+"When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
+"turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
+"only supports a single user account, which you will need to setup on the "
+"initial visit."
 msgstr ""
 "Když je zapnuté, Shaarli bude k dispozici v umístění <a href=\"/shaarli\">/"
 "shaarli</a> na webovém serveru. Poznamenejme, že Shaarli podporuje pouze "
@@ -5325,16 +5412,21 @@ msgstr ""
 "dispozici pouze pro uživatele náležející do skupiny „admin“."
 
 #: plinth/modules/syncthing/__init__.py:57
+#, fuzzy
+#| msgid ""
+#| "When enabled, Syncthing's web interface will be available from <a href=\"/"
+#| "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
+#| "\"https://syncthing.net/\">available</a>."
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
-"syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
-"\"https://syncthing.net/\">available</a>."
+"syncthing/\" data-turbolinks=\"false\">/syncthing</a>. Desktop and mobile "
+"clients are also <a href=\"https://syncthing.net/\">available</a>."
 msgstr ""
 "Když je zapnuté, webové rozhraní Syncthing bude k dispozici na <a href=\"/"
 "syncthing/\">/syncthing</a>.  Jsou <a href=\"https://syncthing.net/\">k "
 "dispozici</a> také klienti pro osobní počítače a mobilní platformy."
 
-#: plinth/modules/syncthing/__init__.py:64
+#: plinth/modules/syncthing/__init__.py:65
 msgid "Administer Syncthing application"
 msgstr "Spravovat aplikaci Syncthing"
 
@@ -5426,7 +5518,9 @@ msgstr ""
 "\">Tor Browser</a>."
 
 #: plinth/modules/tor/__init__.py:80
-msgid "Tor Hidden Service"
+#, fuzzy
+#| msgid "Tor Hidden Service"
+msgid "Tor Onion Service"
 msgstr "Tor skrytá služba"
 
 #: plinth/modules/tor/__init__.py:84
@@ -5445,16 +5539,16 @@ msgstr "Port Tor předávání k dispozici"
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:183
+#: plinth/modules/tor/__init__.py:185
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:222
+#: plinth/modules/tor/__init__.py:226
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Přistoupit k URL adrese {url} na tcp{kind} prostřednictvím Tor"
 
-#: plinth/modules/tor/__init__.py:233
+#: plinth/modules/tor/__init__.py:237
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Potvrdit použití Tor na {url} na tcp{kind}"
@@ -5527,13 +5621,19 @@ msgstr ""
 "Toto ostatním pomůže obcházet cenzuru."
 
 #: plinth/modules/tor/forms.py:128
-msgid "Enable Tor Hidden Service"
+#, fuzzy
+#| msgid "Enable Tor Hidden Service"
+msgid "Enable Tor Onion Service"
 msgstr "Zapnout Tor skrytou službu"
 
 #: plinth/modules/tor/forms.py:131
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "A hidden service will allow {box_name} to provide selected services (such "
+#| "as wiki or chat) without revealing its location. Do not use this for "
+#| "strong anonymity yet."
 msgid ""
-"A hidden service will allow {box_name} to provide selected services (such as "
+"An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
@@ -5580,7 +5680,9 @@ msgid "Tor is not running"
 msgstr "Tor není spuštěné"
 
 #: plinth/modules/tor/templates/tor.html:67
-msgid "Hidden Service"
+#, fuzzy
+#| msgid "Hidden Service"
+msgid "Onion Service"
 msgstr "Skrytá služba"
 
 #: plinth/modules/tor/templates/tor.html:69
@@ -5625,8 +5727,12 @@ msgstr ""
 "není anonymní."
 
 #: plinth/modules/transmission/__init__.py:49
+#, fuzzy
+#| msgid ""
+#| "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgid ""
-"Access the web interface at <a href=\"/transmission\">/transmission</a>."
+"Access the web interface at <a href=\"/transmission\" data-turbolinks=\"false"
+"\">/transmission</a>."
 msgstr ""
 "Webové rozhraní je dostupné na <a href=\"/transmission\">/transmission</a>."
 
@@ -5662,25 +5768,34 @@ msgstr ""
 "odkudkoli, ale s pohodlím podobným desktopové aplikaci."
 
 #: plinth/modules/ttrss/__init__.py:52
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server. It can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
 msgid ""
-"When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
-"rss</a> path on the web server. It can be accessed by any <a href="
-"\"{users_url}\">user with a {box_name} login</a>."
+"When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\" data-"
+"turbolinks=\"false\">/tt-rss</a> path on the web server. It can be accessed "
+"by any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Pokud je zapnuto, Tiny Tiny RSS bude k dispozici v umístění <a href=\"/tt-rss"
 "\">/tt-rss</a> umístění na webovém serveru. Je přístupné pro libovolného <a "
 "href=\"{users_url}\">uživatele s účtem na {box_name}</a>."
 
-#: plinth/modules/ttrss/__init__.py:57
+#: plinth/modules/ttrss/__init__.py:58
+#, fuzzy
+#| msgid ""
+#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
+"href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
+"connecting."
 msgstr ""
 "Při používání mobilní nebo desktopové aplikace pro Tiny Tiny RSS použijte "
 "pro připojování URL adresu <a href=\"/tt-rss-app/\">/tt-rss-app</a>."
 
-#: plinth/modules/ttrss/__init__.py:63
+#: plinth/modules/ttrss/__init__.py:65
 msgid "Read and subscribe to news feeds"
 msgstr "Číst a přihlásit se k odběru novinek"
 
@@ -6056,12 +6171,16 @@ msgstr ""
 "issues\">systému hlášení chyb</a> abychom to mohli opravit. K hlášení také "
 "přiložte <a href=\"%(status_log_url)s\">záznam (log) stavu</a>."
 
-#: plinth/templates/app.html:63
+#: plinth/templates/app.html:67
+msgid "Launch web client"
+msgstr "Spustit webového klienta"
+
+#: plinth/templates/app.html:89
 #, python-format
 msgid "Service <em>%(service_name)s</em> is running."
 msgstr "Služba <em>%(service_name)s</em> je spuštěná."
 
-#: plinth/templates/app.html:68
+#: plinth/templates/app.html:94
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Služba <em>%(service_name)s</em> není spuštěná."
@@ -6330,6 +6449,9 @@ msgstr "Aplikace vypnuta"
 #: plinth/web_framework.py:189
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Secret"
+#~ msgstr "Heslo"
 
 #~ msgid "Only alphanumeric characters are allowed."
 #~ msgstr "Je možné použít pouze písmena a číslice."

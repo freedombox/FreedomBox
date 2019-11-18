@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-04 18:34-0500\n"
+"POT-Creation-Date: 2019-11-18 18:45-0500\n"
 "PO-Revision-Date: 2019-11-06 06:03+0000\n"
 "Last-Translator: nautilusx <mail.ka@mailbox.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -59,15 +59,15 @@ msgstr "Verbindung mit {host}:{port} fehlgeschlagen"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Enable application"
 msgstr "Anwendung aktivieren"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:55
 msgid "Select a domain name to be used with this application"
 msgstr "Einen Domainnamen für die Nutzung dieser Anwendung wählen"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -75,15 +75,15 @@ msgstr ""
 "Achtung! Die Anwendung könnte fehlerhaft laufen, falls der Domainname später "
 "geändert wird."
 
-#: plinth/forms.py:64
+#: plinth/forms.py:65
 msgid "Language"
 msgstr "Sprache"
 
-#: plinth/forms.py:65
+#: plinth/forms.py:66
 msgid "Language to use for presenting this web interface"
 msgstr "Sprache für die Darstellung dieser Weboberfläche"
 
-#: plinth/forms.py:72
+#: plinth/forms.py:73
 msgid "Use the language preference set in the browser"
 msgstr "Die im Browser festgelegte Sprache verwenden"
 
@@ -361,7 +361,7 @@ msgid "Create Location"
 msgstr "Standort anlegen"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
-#: plinth/modules/gitweb/views.py:67
+#: plinth/modules/gitweb/views.py:69
 msgid "Create Repository"
 msgstr "Archiv anlegen"
 
@@ -466,11 +466,25 @@ msgstr ""
 msgid "Upload file"
 msgstr "Datei hochladen"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:33
+#, python-format
+msgid ""
+"Could not reach SSH host %(hostname)s. Please verify that the host is up and "
+"accepting connections."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
+#, python-format
+msgid ""
+"The authenticity of SSH host %(hostname)s could not be established. The host "
+"advertises the following SSH public keys. Please verify any one of them."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
 msgstr "Wie kann man verifizieren?"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
@@ -480,7 +494,7 @@ msgstr ""
 "einer der angegebenen Optionen übereinstimmen. Sie können anstatt RSA auch "
 "DSA, ECDSA, ED25519, usw. auswählen, indem Sie die jeweilige Datei auswählen."
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:75
 msgid "Verify Host"
 msgstr "Host verifizieren"
 
@@ -651,11 +665,16 @@ msgstr ""
 "einzugeben."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
+#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgid ""
-"When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-"_cockpit/</a> path on the web server. It can be accessed by <a href="
-"\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+"When enabled, Cockpit will be available from <a href=\"/_cockpit/\" data-"
+"turbolinks=\"false\">/_cockpit/</a> path on the web server. It can be "
+"accessed by <a href=\"{users_url}\">any user</a> on {box_name} belonging to "
+"the admin group."
 msgstr ""
 "Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
 "\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
@@ -925,17 +944,24 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge ist ein BitTorrent-Client mit einer Weboberfläche."
 
 #: plinth/modules/deluge/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "When enabled, the Deluge web client will be available from <a href=\"/"
+#| "deluge\">/deluge</a> path on the web server. The default password is "
+#| "'deluge', but you should log in and change it immediately after enabling "
+#| "this service."
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
-"\">/deluge</a> path on the web server. The default password is 'deluge', but "
-"you should log in and change it immediately after enabling this service."
+"\" data-turbolinks=\"false\">/deluge</a> path on the web server. The default "
+"password is 'deluge', but you should log in and change it immediately after "
+"enabling this service."
 msgstr ""
 "Falls aktiviert, ist die Deluge-Weboberfläche über <a href=\"/deluge\">/"
 "deluge</a> verfügbar. Das Standardpasswort lautet „deluge“, aber dieses "
 "sollte sofort nach dem ersten Anmelden geändert werden."
 
 #: plinth/modules/deluge/__init__.py:51
-#: plinth/modules/transmission/__init__.py:56
+#: plinth/modules/transmission/__init__.py:57
 msgid "Download files using BitTorrent applications"
 msgstr "Dateien mit BitTorrent herunterladen"
 
@@ -1050,7 +1076,7 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:62
+#: plinth/modules/ejabberd/templates/ejabberd.html:58
 #: plinth/modules/i2p/templates/i2p.html:34
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
@@ -1058,11 +1084,11 @@ msgstr ""
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
-#: plinth/modules/tor/templates/tor.html:94 plinth/templates/app.html:96
+#: plinth/modules/tor/templates/tor.html:94 plinth/templates/app.html:121
 msgid "Update setup"
 msgstr "Update-Einstellungen"
 
-#: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
+#: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
 #: plinth/modules/tor/views.py:148 plinth/views.py:176
@@ -1328,7 +1354,7 @@ msgstr "Über"
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/app.html:58
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/app.html:84
 msgid "Status"
 msgstr "Status"
 
@@ -1446,26 +1472,21 @@ msgstr ""
 "auf der Seite <a href=\"%(index_url)s\">Systemeinstellungen</a> "
 "konfigurieren."
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:47
-#: plinth/modules/jsxc/templates/jsxc.html:32
-msgid "Launch web client"
-msgstr "Webclient starten"
-
-#: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ejabberd/templates/ejabberd.html:50
 #: plinth/modules/i2p/templates/i2p.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:123
 #: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
-#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:88
+#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:114
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: plinth/modules/ejabberd/views.py:77
+#: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management enabled"
 msgstr "Nachrichten-Archiv-Verwaltung aktiviert"
 
-#: plinth/modules/ejabberd/views.py:81
+#: plinth/modules/ejabberd/views.py:82
 msgid "Message Archive Management disabled"
 msgstr "Nachrichten-Archiv-Verwaltung deaktiviert"
 
@@ -1543,18 +1564,23 @@ msgstr ""
 "aktivieren, wird dieser in der Firewall ebenfalls aktiviert und wenn Sie "
 "einen Dienst deaktivieren, wird dieser ebenso in der Firewall deaktiviert."
 
-#: plinth/modules/first_boot/forms.py:28
+#: plinth/modules/first_boot/forms.py:29
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
 msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"wizard-secret\" on your {box_name}"
 msgstr ""
 "Das Passwort eingeben, das während der FreedomBox-Installation erzeugt "
 "wurde. Das Passwort kann auch aus der Datei /var/lib/plinth/firstboot-wizard-"
 "secret bezogen werden"
 
-#: plinth/modules/first_boot/forms.py:31
-msgid "Secret"
-msgstr "Passwort"
+#: plinth/modules/first_boot/forms.py:34
+msgid "Firstboot Wizard Secret"
+msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1587,15 +1613,15 @@ msgstr "Einrichten beginnen"
 msgid "Setup Complete"
 msgstr "Installation abgeschlossen"
 
-#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+#: plinth/modules/gitweb/__init__.py:43 plinth/modules/gitweb/manifest.py:28
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:43
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Simple Git Hosting"
 msgstr "Einfaches Git Hosting"
 
-#: plinth/modules/gitweb/__init__.py:46
+#: plinth/modules/gitweb/__init__.py:48
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -1614,7 +1640,7 @@ msgstr ""
 "Git-Befehlszeilenclient oder mit mehreren verfügbaren Grafikclients "
 "hochladen. Und Sie können Ihren Code mit Menschen auf der ganzen Welt teilen."
 
-#: plinth/modules/gitweb/__init__.py:53
+#: plinth/modules/gitweb/__init__.py:55
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -1622,72 +1648,89 @@ msgstr ""
 "Um weiter über Git Betrieb zu lernen, schauen Sie sich die <a href=\"https://"
 "git-scm.com/docs/gittutorial\">Gitanleitung</a> an."
 
-#: plinth/modules/gitweb/__init__.py:57
+#: plinth/modules/gitweb/__init__.py:59
 msgid "Read-write access to Git repositories"
 msgstr "Lese- und Schreibberechtigung auf Git respositories"
 
-#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
-#: plinth/modules/gitweb/forms.py:40
+#: plinth/modules/gitweb/forms.py:59
+#, fuzzy
+#| msgid "Invalid repository name."
+msgid "Invalid repository URL."
+msgstr "Ungültiger Respositoryname."
+
+#: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Ungültiger Respositoryname."
 
-#: plinth/modules/gitweb/forms.py:47
+#: plinth/modules/gitweb/forms.py:77
+#, fuzzy
+#| msgid ""
+#| "Repository path is neither empty nor is an existing backups repository."
+msgid "Name of a new repository or URL to import an existing repository."
+msgstr ""
+"Pfad zum Archiv ist weder leer, noch ist ein existierendes Backup-Archiv."
+
+#: plinth/modules/gitweb/forms.py:83
+msgid "Description of the repository"
+msgstr "Beschreibung des Archivs"
+
+#: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
+msgid "Optional, for displaying on Gitweb."
+msgstr "Optional, zur Anzeige auf Gitweb."
+
+#: plinth/modules/gitweb/forms.py:87
+msgid "Repository's owner name"
+msgstr "Name des Resposity Besitzers"
+
+#: plinth/modules/gitweb/forms.py:91
+msgid "Private repository"
+msgstr "Privates Archiv"
+
+#: plinth/modules/gitweb/forms.py:92
+msgid "Allow only authorized users to access this repository."
+msgstr "Zugriff auf diesem Repository nur bevollmächtigte Benutzer erlauben."
+
+#: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:145
+msgid "A repository with this name already exists."
+msgstr "Eine Resposity mit diesem Namen existiert bereits."
+
+#: plinth/modules/gitweb/forms.py:126
 msgid "Name of the repository"
 msgstr "Name des resositorys"
 
-#: plinth/modules/gitweb/forms.py:51
+#: plinth/modules/gitweb/forms.py:130
 msgid "An alpha-numeric string that uniquely identifies a repository."
 msgstr ""
 "Eine alphanumerische Zeichenfolge in Kleinbuchstaben, die ein Resposity "
 "eindeutig identifiziert. Beispiel: <em>media</em>."
 
-#: plinth/modules/gitweb/forms.py:55
-msgid "Description of the repository"
-msgstr "Beschreibung des Archivs"
-
-#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
-msgid "Optional, for displaying on Gitweb."
-msgstr "Optional, zur Anzeige auf Gitweb."
-
-#: plinth/modules/gitweb/forms.py:59
-msgid "Repository's owner name"
-msgstr "Name des Resposity Besitzers"
-
-#: plinth/modules/gitweb/forms.py:63
-msgid "Private repository"
-msgstr "Privates Archiv"
-
-#: plinth/modules/gitweb/forms.py:64
-msgid "Allow only authorized users to access this repository."
-msgstr "Zugriff auf diesem Repository nur bevollmächtigte Benutzer erlauben."
-
-#: plinth/modules/gitweb/forms.py:83
-msgid "A repository with this name already exists."
-msgstr "Eine Resposity mit diesem Namen existiert bereits."
-
 #: plinth/modules/gitweb/manifest.py:36
 msgid "Git"
 msgstr "Git"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:41
-#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#: plinth/modules/gitweb/templates/gitweb_configure.html:45
+#: plinth/modules/gitweb/templates/gitweb_configure.html:47
 msgid "Create repository"
 msgstr "Respository anlegen"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#: plinth/modules/gitweb/templates/gitweb_configure.html:54
 msgid "Manage Repositories"
 msgstr "Archive verwalten"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#: plinth/modules/gitweb/templates/gitweb_configure.html:59
 msgid "No repositories available."
 msgstr "Keine Archive verfügbar."
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#: plinth/modules/gitweb/templates/gitweb_configure.html:67
 #, python-format
 msgid "Delete repository %(repo.name)s"
 msgstr "Archiv %(repo.name)s löschen"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#: plinth/modules/gitweb/templates/gitweb_configure.html:83
+msgid "Cloning..."
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
 msgid "Go to repository %(repo.name)s"
 msgstr "Gehe zum Archiv %(repo.name)s"
@@ -1707,29 +1750,35 @@ msgstr "Dieses respository permanent löschen?"
 msgid "Delete %(name)s"
 msgstr "%(name)s löschen"
 
-#: plinth/modules/gitweb/views.py:62
+#: plinth/modules/gitweb/views.py:64
 msgid "Repository created."
 msgstr "Archiv erstellt."
 
-#: plinth/modules/gitweb/views.py:93
+#: plinth/modules/gitweb/views.py:86
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "An error occurred while creating the repository."
+msgstr "Ein Fehler ist bei der Konfiguration aufgetreten."
+
+#: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
 msgstr "Archiv bearbeitet."
 
-#: plinth/modules/gitweb/views.py:98
+#: plinth/modules/gitweb/views.py:104
 msgid "Edit repository"
 msgstr "Archiv bearbeiten"
 
-#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/gitweb/views.py:132 plinth/modules/searx/views.py:62
 #: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
 msgid "An error occurred during configuration."
 msgstr "Ein Fehler ist bei der Konfiguration aufgetreten."
 
-#: plinth/modules/gitweb/views.py:147
+#: plinth/modules/gitweb/views.py:153
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} gelöscht."
 
-#: plinth/modules/gitweb/views.py:151
+#: plinth/modules/gitweb/views.py:157
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} konnte nicht gelöscht werden: {error}"
@@ -1917,7 +1966,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:57
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/app.html:55 plinth/templates/setup.html:48
 #: plinth/templates/simple_app.html:38
 msgid "Learn more..."
 msgstr "Mehr erfahren …"
@@ -2167,18 +2216,26 @@ msgid "Wiki and Blog"
 msgstr "Wiki und Blog"
 
 #: plinth/modules/ikiwiki/__init__.py:46
+#, fuzzy
+#| msgid ""
+#| "ikiwiki is a simple wiki and blog application. It supports several "
+#| "lightweight markup languages, including Markdown, and common blogging "
+#| "functionality such as comments and RSS feeds. When enabled, the blogs and "
+#| "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once "
+#| "created)."
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
-"wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once created)."
+"wikis will be available at <a href=\"/ikiwiki\" data-turbolinks=\"false\">/"
+"ikiwiki</a> (once created)."
 msgstr ""
 "ikiwiki ist eine einfache Wiki- und Blog-Anwendung. Sie unterstützt mehrere "
 "einfache Markup-Sprachen wie Markdown und übliche Blogging-Funktionen wie "
 "Kommentare und RSS-Feeds. Wenn aktiviert, stehen die Blogs und Wikis unter "
 "<a href=\"/ikiwiki\">/ikiwiki</a> bereit (nach Erstellung)."
 
-#: plinth/modules/ikiwiki/__init__.py:52
+#: plinth/modules/ikiwiki/__init__.py:53
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2192,7 +2249,7 @@ msgstr ""
 "\"{users_url}\">Benutzerkonfiguration</a> können diese Rechte geändert oder "
 "neue Benutzer angelegt werden."
 
-#: plinth/modules/ikiwiki/__init__.py:62
+#: plinth/modules/ikiwiki/__init__.py:63
 msgid "View and edit wiki applications"
 msgstr "Wiki-Anwendungen ansehen und bearbeiten"
 
@@ -2229,7 +2286,7 @@ msgstr "Keine Wikis oder Blogs verfügbar."
 msgid "Delete site %(site)s"
 msgstr "Seite %(site)s löschen"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:55
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Gehe zu Seite %(site)s"
@@ -3065,10 +3122,16 @@ msgid "Name Services"
 msgstr "Namen-Dienste"
 
 #: plinth/modules/names/__init__.py:45
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Name Services provides an overview of the ways {box_name} can be reached "
+#| "from the public Internet: domain name, Tor hidden service, and Pagekite. "
+#| "For each type of name, it is shown whether the HTTP, HTTPS, and SSH "
+#| "services are enabled or disabled for incoming connections through the "
+#| "given name."
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
-"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"from the public Internet: domain name, Tor onion service, and Pagekite. For "
 "each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
@@ -4433,12 +4496,21 @@ msgstr ""
 "csipsimple\">CSipSimple</a> (für Android-Telefone)."
 
 #: plinth/modules/repro/__init__.py:55
+#, fuzzy
+#| msgid ""
+#| "<strong>Note:</strong>  Before using repro, domains and users will need "
+#| "to be configured using the <a href=\"/repro/domains.html\">web-based "
+#| "configuration panel</a>. Users in the <em>admin</em> group will be able "
+#| "to log in to the repro configuration panel. After setting the domain, it "
+#| "is required to restart the repro service. Disable the service and re-"
+#| "enable it."
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
-"be configured using the <a href=\"/repro/domains.html\">web-based "
-"configuration panel</a>. Users in the <em>admin</em> group will be able to "
-"log in to the repro configuration panel. After setting the domain, it is "
-"required to restart the repro service. Disable the service and re-enable it."
+"be configured using the <a href=\"/repro/domains.html\" data-turbolinks="
+"\"false\">web-based configuration panel</a>. Users in the <em>admin</em> "
+"group will be able to log in to the repro configuration panel. After setting "
+"the domain, it is required to restart the repro service. Disable the service "
+"and re-enable it."
 msgstr ""
 "<strong>Hinweis:</strong> Vor der Verwendung von repro, müssen Domains und "
 "Benutzer über das <a href=\"/repro/domains.html\">web-basierte "
@@ -4525,12 +4597,20 @@ msgstr ""
 "Nachrichten und Rechtschreibprüfung."
 
 #: plinth/modules/roundcube/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
+#| "Provide the username and password of the email account you wish to access "
+#| "followed by the domain name of the IMAP server for your email provider, "
+#| "like <code>imap.example.com</code>.  For IMAP over SSL (recommended), "
+#| "fill the server field like <code>imaps://imap.example.com</code>."
 msgid ""
-"You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. Provide "
-"the username and password of the email account you wish to access followed "
-"by the domain name of the IMAP server for your email provider, like "
-"<code>imap.example.com</code>.  For IMAP over SSL (recommended), fill the "
-"server field like <code>imaps://imap.example.com</code>."
+"You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
+"\">/roundcube</a>. Provide the username and password of the email account "
+"you wish to access followed by the domain name of the IMAP server for your "
+"email provider, like <code>imap.example.com</code>.  For IMAP over SSL "
+"(recommended), fill the server field like <code>imaps://imap.example.com</"
+"code>."
 msgstr ""
 "Sie können auf Roundcube von <a href=\"/roundcube\">/roundcube</a> "
 "zugreifen. Geben Sie Benutzernamen und Passwort des E-Mail-Kontos ein, "
@@ -4708,10 +4788,16 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli ermöglicht das Speichern und Teilen von Lesezeichen."
 
 #: plinth/modules/shaarli/__init__.py:40
+#, fuzzy
+#| msgid ""
+#| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
+#| "shaarli</a> path on the web server. Note that Shaarli only supports a "
+#| "single user account, which you will need to setup on the initial visit."
 msgid ""
-"When enabled, Shaarli will be available from <a href=\"/shaarli\">/shaarli</"
-"a> path on the web server. Note that Shaarli only supports a single user "
-"account, which you will need to setup on the initial visit."
+"When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
+"turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
+"only supports a single user account, which you will need to setup on the "
+"initial visit."
 msgstr ""
 "Falls aktiviert, wird Shaarli auf dem Webserver unter <a href=\"/shaarli\">/"
 "shaarli</a> erreichar sein. Shaarli unterstützt nur ein Benutzerkonto; "
@@ -5407,17 +5493,22 @@ msgstr ""
 "{box_name} ist nur für Benutzer der „admin“-Gruppe zugänglich."
 
 #: plinth/modules/syncthing/__init__.py:57
+#, fuzzy
+#| msgid ""
+#| "When enabled, Syncthing's web interface will be available from <a href=\"/"
+#| "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
+#| "\"https://syncthing.net/\">available</a>."
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
-"syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
-"\"https://syncthing.net/\">available</a>."
+"syncthing/\" data-turbolinks=\"false\">/syncthing</a>. Desktop and mobile "
+"clients are also <a href=\"https://syncthing.net/\">available</a>."
 msgstr ""
 "Falls aktiviert, ist die Weboberfläche von Syncthing auf <a href=\"/"
 "syncthing/\">/syncthing</a> erreichbar. Client-Apps für Desktop und "
 "Mobiltelefon sind ebenfalls <a href=\"https://syncthing.net/\">erhältlich</"
 "a>."
 
-#: plinth/modules/syncthing/__init__.py:64
+#: plinth/modules/syncthing/__init__.py:65
 msgid "Administer Syncthing application"
 msgstr "Syncthing-Anwendung einstellen"
 
@@ -5512,7 +5603,9 @@ msgstr ""
 "\">Tor Browser</a> verwenden."
 
 #: plinth/modules/tor/__init__.py:80
-msgid "Tor Hidden Service"
+#, fuzzy
+#| msgid "Tor Hidden Service"
+msgid "Tor Onion Service"
 msgstr "Tor versteckte Dienste"
 
 #: plinth/modules/tor/__init__.py:84
@@ -5531,16 +5624,16 @@ msgstr "Tor-Relay-Port ist verfügbar"
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-Transport registriert"
 
-#: plinth/modules/tor/__init__.py:183
+#: plinth/modules/tor/__init__.py:185
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-Transport registriert"
 
-#: plinth/modules/tor/__init__.py:222
+#: plinth/modules/tor/__init__.py:226
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Zugangs-URL {url} auf TCP{kind} über Tor"
 
-#: plinth/modules/tor/__init__.py:233
+#: plinth/modules/tor/__init__.py:237
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tor-Nutzung auf {url} über TCP{kind} bestätigen"
@@ -5617,13 +5710,19 @@ msgstr ""
 "was die Zensur des Knotens erschwert. Dies hilft anderen, Zensur zu umgehen."
 
 #: plinth/modules/tor/forms.py:128
-msgid "Enable Tor Hidden Service"
+#, fuzzy
+#| msgid "Enable Tor Hidden Service"
+msgid "Enable Tor Onion Service"
 msgstr "Von Tor verborgene Dienste einschalten"
 
 #: plinth/modules/tor/forms.py:131
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "A hidden service will allow {box_name} to provide selected services (such "
+#| "as wiki or chat) without revealing its location. Do not use this for "
+#| "strong anonymity yet."
 msgid ""
-"A hidden service will allow {box_name} to provide selected services (such as "
+"An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
@@ -5672,7 +5771,9 @@ msgid "Tor is not running"
 msgstr "Tor läuft nicht"
 
 #: plinth/modules/tor/templates/tor.html:67
-msgid "Hidden Service"
+#, fuzzy
+#| msgid "Hidden Service"
+msgid "Onion Service"
 msgstr "Verborgene Dienste"
 
 #: plinth/modules/tor/templates/tor.html:69
@@ -5717,8 +5818,12 @@ msgstr ""
 "BitTorrent ist nicht anonym!"
 
 #: plinth/modules/transmission/__init__.py:49
+#, fuzzy
+#| msgid ""
+#| "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgid ""
-"Access the web interface at <a href=\"/transmission\">/transmission</a>."
+"Access the web interface at <a href=\"/transmission\" data-turbolinks=\"false"
+"\">/transmission</a>."
 msgstr ""
 "Die Weboberfläche kann über <a href=\"/transmission\">/transmission</a> "
 "erreicht werden."
@@ -5755,25 +5860,34 @@ msgstr ""
 "genutzt werden kann, sich aber sehr wie eine normale Anwendung anfühlt."
 
 #: plinth/modules/ttrss/__init__.py:52
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server. It can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
 msgid ""
-"When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
-"rss</a> path on the web server. It can be accessed by any <a href="
-"\"{users_url}\">user with a {box_name} login</a>."
+"When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\" data-"
+"turbolinks=\"false\">/tt-rss</a> path on the web server. It can be accessed "
+"by any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Falls aktiviert, steht Tiny Tiny RSS auf dem Webserver unter <a href=\"/tt-"
 "rss\">/tt-rss</a> zur Verfügung. Zugriff hat jeder mit einem <a href="
 "\"{users_url}\">{box_name}-Benutzerkonto</a>."
 
-#: plinth/modules/ttrss/__init__.py:57
+#: plinth/modules/ttrss/__init__.py:58
+#, fuzzy
+#| msgid ""
+#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
+"href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
+"connecting."
 msgstr ""
 "Um Tiny Tiny RSS mit einer Anwendung auf ihrem Handy oder Computer zu "
 "nutzen, tragen Sie die URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> ein."
 
-#: plinth/modules/ttrss/__init__.py:63
+#: plinth/modules/ttrss/__init__.py:65
 msgid "Read and subscribe to news feeds"
 msgstr "Lesen und Abonnieren von Neuigkeiten-Feeds"
 
@@ -6161,12 +6275,16 @@ msgstr ""
 "wir ihn beheben können. Fügen Sie auch das <a href=\"%(status_log_url)s"
 "\">Statusprotokoll</a> dem Fehlerbericht bei."
 
-#: plinth/templates/app.html:63
+#: plinth/templates/app.html:67
+msgid "Launch web client"
+msgstr "Webclient starten"
+
+#: plinth/templates/app.html:89
 #, python-format
 msgid "Service <em>%(service_name)s</em> is running."
 msgstr "Dienst <em>%(service_name)s</em> läuft."
 
-#: plinth/templates/app.html:68
+#: plinth/templates/app.html:94
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Dienst <em>%(service_name)s</em> läuft nicht."
@@ -6435,6 +6553,9 @@ msgstr "Anwendung deaktiviert"
 #: plinth/web_framework.py:189
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Secret"
+#~ msgstr "Passwort"
 
 #~ msgid "Only alphanumeric characters are allowed."
 #~ msgstr "Nur alphanumerische Zeichen sind erlaubt."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-04 18:34-0500\n"
+"POT-Creation-Date: 2019-11-18 18:45-0500\n"
 "PO-Revision-Date: 2019-11-10 15:04+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -57,15 +57,15 @@ msgstr "Kan inte ansluta till {host}:{port}"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Enable application"
 msgstr "Aktivera applikation"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:55
 msgid "Select a domain name to be used with this application"
 msgstr "Välj ett domännamn som ska användas med den här applikationen"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -73,15 +73,15 @@ msgstr ""
 "Varning! Programmet kanske inte fungerar korrekt om domännamnet ändras "
 "senare."
 
-#: plinth/forms.py:64
+#: plinth/forms.py:65
 msgid "Language"
 msgstr "Språkval"
 
-#: plinth/forms.py:65
+#: plinth/forms.py:66
 msgid "Language to use for presenting this web interface"
 msgstr "Språk att använda för att presentera detta webbgränssnitt"
 
-#: plinth/forms.py:72
+#: plinth/forms.py:73
 msgid "Use the language preference set in the browser"
 msgstr "Använd språkinställningen i webbläsaren"
 
@@ -348,9 +348,9 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
-"Autentiseringsuppgifterna för den här respository lagras på din %(box_name)"
-"s. <br /> För att återställa en säkerhetskopia på en ny %(box_name)s du "
-"behöver SSH-autentiseringsuppgifter och, om det väljs, "
+"Autentiseringsuppgifterna för den här respository lagras på din "
+"%(box_name)s. <br /> För att återställa en säkerhetskopia på en ny "
+"%(box_name)s du behöver SSH-autentiseringsuppgifter och, om det väljs, "
 "krypteringslösenfrasen."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:43
@@ -358,7 +358,7 @@ msgid "Create Location"
 msgstr "Skapa plats"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
-#: plinth/modules/gitweb/views.py:67
+#: plinth/modules/gitweb/views.py:69
 msgid "Create Repository"
 msgstr "Skapa respository"
 
@@ -462,11 +462,25 @@ msgstr ""
 msgid "Upload file"
 msgstr "Ladda upp fil"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:33
+#, python-format
+msgid ""
+"Could not reach SSH host %(hostname)s. Please verify that the host is up and "
+"accepting connections."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
+#, python-format
+msgid ""
+"The authenticity of SSH host %(hostname)s could not be established. The host "
+"advertises the following SSH public keys. Please verify any one of them."
+msgstr ""
+
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
 msgstr "Hur man verifierar?"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
@@ -476,7 +490,7 @@ msgstr ""
 "följande alternativen. Du kan också använda dsa, ecdsa, ed25519 etc. "
 "istället för rsa, genom att välja motsvarande fil."
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:59
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:75
 msgid "Verify Host"
 msgstr "Verifiera Host"
 
@@ -644,11 +658,16 @@ msgstr ""
 "webbaserad terminal för konsoloperationer är också tillgänglig."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
+#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgid ""
-"When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-"_cockpit/</a> path on the web server. It can be accessed by <a href="
-"\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+"When enabled, Cockpit will be available from <a href=\"/_cockpit/\" data-"
+"turbolinks=\"false\">/_cockpit/</a> path on the web server. It can be "
+"accessed by <a href=\"{users_url}\">any user</a> on {box_name} belonging to "
+"the admin group."
 msgstr ""
 "När det är aktiverat kommer cockpit att finnas tillgänglig från <a href=\"/"
 "_cockpit/\">/_cockpit/</a> path på webbservern. Det kan nås via <a href="
@@ -917,17 +936,24 @@ msgstr ""
 "användargränssnitt."
 
 #: plinth/modules/deluge/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "When enabled, the Deluge web client will be available from <a href=\"/"
+#| "deluge\">/deluge</a> path on the web server. The default password is "
+#| "'deluge', but you should log in and change it immediately after enabling "
+#| "this service."
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
-"\">/deluge</a> path on the web server. The default password is 'deluge', but "
-"you should log in and change it immediately after enabling this service."
+"\" data-turbolinks=\"false\">/deluge</a> path on the web server. The default "
+"password is 'deluge', but you should log in and change it immediately after "
+"enabling this service."
 msgstr ""
 "När aktiverad blir Deluges webbklient tillgänglig via <a href=\"/deluge\"> / "
 "deluge</a> address på webbservern. Standardlösenordet är \"deluge\", men du "
 "bör logga in och ändra det omedelbart efter att du aktiverat tjänsten."
 
 #: plinth/modules/deluge/__init__.py:51
-#: plinth/modules/transmission/__init__.py:56
+#: plinth/modules/transmission/__init__.py:57
 msgid "Download files using BitTorrent applications"
 msgstr "Ladda ner filer med BitTorrent-applikationer"
 
@@ -1042,7 +1068,7 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:62
+#: plinth/modules/ejabberd/templates/ejabberd.html:58
 #: plinth/modules/i2p/templates/i2p.html:34
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:33
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
@@ -1050,11 +1076,11 @@ msgstr ""
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
-#: plinth/modules/tor/templates/tor.html:94 plinth/templates/app.html:96
+#: plinth/modules/tor/templates/tor.html:94 plinth/templates/app.html:121
 msgid "Update setup"
 msgstr "Uppdatera inställningar"
 
-#: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:65
+#: plinth/modules/diaspora/views.py:94 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:105
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:148
 #: plinth/modules/tor/views.py:148 plinth/views.py:176
@@ -1096,11 +1122,10 @@ msgid ""
 msgstr ""
 "Lösningen är att tilldela DNS-namn till din IP-adress och uppdatera DNS-"
 "namnet varje gång din IP ändras av din Internetleverantör. Dynamisk DNS "
-"kopplar din nuvarande offentliga IP-adress till en <a "
-"href='http://gnudip2.sourceforge.net/' target='_blank'> GnuDIP</a> server. "
-"Därefter ihopkopplar servern ditt DNS-namn till din nya IP, och om någon "
-"från Internet ber om ditt DNS-namn, kommer hen att få din aktuella IP som "
-"svar."
+"kopplar din nuvarande offentliga IP-adress till en <a href='http://gnudip2."
+"sourceforge.net/' target='_blank'> GnuDIP</a> server. Därefter ihopkopplar "
+"servern ditt DNS-namn till din nya IP, och om någon från Internet ber om "
+"ditt DNS-namn, kommer hen att få din aktuella IP som svar."
 
 #: plinth/modules/dynamicdns/__init__.py:78
 msgid "Dynamic Domain Name"
@@ -1315,7 +1340,7 @@ msgstr "Om"
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:71
 #: plinth/modules/tor/templates/tor.html:40
-#: plinth/modules/tor/templates/tor.html:68 plinth/templates/app.html:58
+#: plinth/modules/tor/templates/tor.html:68 plinth/templates/app.html:84
 msgid "Status"
 msgstr "Status"
 
@@ -1430,26 +1455,21 @@ msgstr ""
 "kommer att se ut som <i>användarnamn@%(domainname)s</i>. Du kan ställa in "
 "din domän på systemet <a href=\"%(index_url)s\">Konfigurera</a> sidan."
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:47
-#: plinth/modules/jsxc/templates/jsxc.html:32
-msgid "Launch web client"
-msgstr "Starta webbklient"
-
-#: plinth/modules/ejabberd/templates/ejabberd.html:54
+#: plinth/modules/ejabberd/templates/ejabberd.html:50
 #: plinth/modules/i2p/templates/i2p.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:123
 #: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
-#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:88
+#: plinth/modules/tor/templates/tor.html:86 plinth/templates/app.html:114
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: plinth/modules/ejabberd/views.py:77
+#: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management enabled"
 msgstr "Meddelandearkivhantering aktiverad"
 
-#: plinth/modules/ejabberd/views.py:81
+#: plinth/modules/ejabberd/views.py:82
 msgid "Message Archive Management disabled"
 msgstr "Meddelandearkivhantering avaktiverad"
 
@@ -1526,18 +1546,23 @@ msgstr ""
 "automatiskt i brandväggen och om du inaktiverar en tjänst, så inaktiveras "
 "den även automatiskt i brandväggen."
 
-#: plinth/modules/first_boot/forms.py:28
+#: plinth/modules/first_boot/forms.py:29
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
 msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"wizard-secret\" on your {box_name}"
 msgstr ""
 "Ange hemligheten som genererades under FreedomBox-installationen. Denna "
 "hemlighet kan också erhållas från filen /var/lib/plinth/firstboot-wizard-"
 "secret"
 
-#: plinth/modules/first_boot/forms.py:31
-msgid "Secret"
-msgstr "Hemlighet"
+#: plinth/modules/first_boot/forms.py:34
+msgid "Firstboot Wizard Secret"
+msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1569,15 +1594,15 @@ msgstr "Starta installationsprogrammet"
 msgid "Setup Complete"
 msgstr "Installationen Klar"
 
-#: plinth/modules/gitweb/__init__.py:41 plinth/modules/gitweb/manifest.py:28
+#: plinth/modules/gitweb/__init__.py:43 plinth/modules/gitweb/manifest.py:28
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:43
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Simple Git Hosting"
 msgstr "Enkelt Git hosting"
 
-#: plinth/modules/gitweb/__init__.py:46
+#: plinth/modules/gitweb/__init__.py:48
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -1595,7 +1620,7 @@ msgstr ""
 "Git-klient eller med flera tillgängliga grafiska klienter. Och du kan dela "
 "din kod med människor runt om i världen."
 
-#: plinth/modules/gitweb/__init__.py:53
+#: plinth/modules/gitweb/__init__.py:55
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -1603,70 +1628,86 @@ msgstr ""
 "För att lära dig mer om hur du använder Git besök<a href=\"https://git-scm."
 "com/docs/gittutorial\">Git handledning</a>."
 
-#: plinth/modules/gitweb/__init__.py:57
+#: plinth/modules/gitweb/__init__.py:59
 msgid "Read-write access to Git repositories"
 msgstr "Läs-skrivåtkomst till Git-respositories"
 
-#: plinth/modules/gitweb/forms.py:34 plinth/modules/gitweb/forms.py:37
-#: plinth/modules/gitweb/forms.py:40
+#: plinth/modules/gitweb/forms.py:59
+#, fuzzy
+#| msgid "Invalid repository name."
+msgid "Invalid repository URL."
+msgstr "Ogiltigt respository namn."
+
+#: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Ogiltigt respository namn."
 
-#: plinth/modules/gitweb/forms.py:47
-msgid "Name of the repository"
-msgstr "Förvarets namn"
+#: plinth/modules/gitweb/forms.py:77
+#, fuzzy
+#| msgid ""
+#| "Repository path is neither empty nor is an existing backups repository."
+msgid "Name of a new repository or URL to import an existing repository."
+msgstr "Respositorysökvägen är varken tom eller en befintlig säkerhetskopia."
 
-#: plinth/modules/gitweb/forms.py:51
-msgid "An alpha-numeric string that uniquely identifies a repository."
-msgstr "En alfanumerisk sträng som identifierar ett respository unikt."
-
-#: plinth/modules/gitweb/forms.py:55
+#: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
 msgstr "Beskrivning av förvaret"
 
-#: plinth/modules/gitweb/forms.py:56 plinth/modules/gitweb/forms.py:60
+#: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
 msgid "Optional, for displaying on Gitweb."
 msgstr "Tillval, för att visa på Gitweb."
 
-#: plinth/modules/gitweb/forms.py:59
+#: plinth/modules/gitweb/forms.py:87
 msgid "Repository's owner name"
 msgstr "Förvarets ägarnamn"
 
-#: plinth/modules/gitweb/forms.py:63
+#: plinth/modules/gitweb/forms.py:91
 msgid "Private repository"
 msgstr "Privat respository"
 
-#: plinth/modules/gitweb/forms.py:64
+#: plinth/modules/gitweb/forms.py:92
 msgid "Allow only authorized users to access this repository."
 msgstr "Tillåt endast behöriga användare att komma åt detta respository."
 
-#: plinth/modules/gitweb/forms.py:83
+#: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:145
 msgid "A repository with this name already exists."
 msgstr "Ett förvar med det här namnet finns redan."
+
+#: plinth/modules/gitweb/forms.py:126
+msgid "Name of the repository"
+msgstr "Förvarets namn"
+
+#: plinth/modules/gitweb/forms.py:130
+msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr "En alfanumerisk sträng som identifierar ett respository unikt."
 
 #: plinth/modules/gitweb/manifest.py:36
 msgid "Git"
 msgstr "Git"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:41
-#: plinth/modules/gitweb/templates/gitweb_configure.html:43
+#: plinth/modules/gitweb/templates/gitweb_configure.html:45
+#: plinth/modules/gitweb/templates/gitweb_configure.html:47
 msgid "Create repository"
 msgstr "Skapa respository"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:50
+#: plinth/modules/gitweb/templates/gitweb_configure.html:54
 msgid "Manage Repositories"
 msgstr "Hantera respositories"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:55
+#: plinth/modules/gitweb/templates/gitweb_configure.html:59
 msgid "No repositories available."
 msgstr "Inga förvar finns tillgängliga."
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:63
+#: plinth/modules/gitweb/templates/gitweb_configure.html:67
 #, python-format
 msgid "Delete repository %(repo.name)s"
 msgstr "Ta bort respository %(repo.name)s"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:78
+#: plinth/modules/gitweb/templates/gitweb_configure.html:83
+msgid "Cloning..."
+msgstr ""
+
+#: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
 msgid "Go to repository %(repo.name)s"
 msgstr "Gå till respository %(repo.name)s"
@@ -1686,29 +1727,35 @@ msgstr "Radera detta arkiv permanent?"
 msgid "Delete %(name)s"
 msgstr "Ta bort %(name)s"
 
-#: plinth/modules/gitweb/views.py:62
+#: plinth/modules/gitweb/views.py:64
 msgid "Repository created."
 msgstr "Respository skapat."
 
-#: plinth/modules/gitweb/views.py:93
+#: plinth/modules/gitweb/views.py:86
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "An error occurred while creating the repository."
+msgstr "Ett fel inträffade under konfiguration."
+
+#: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
 msgstr "Respository redigerad."
 
-#: plinth/modules/gitweb/views.py:98
+#: plinth/modules/gitweb/views.py:104
 msgid "Edit repository"
 msgstr "Redigera respository"
 
-#: plinth/modules/gitweb/views.py:126 plinth/modules/searx/views.py:62
+#: plinth/modules/gitweb/views.py:132 plinth/modules/searx/views.py:62
 #: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:170
 msgid "An error occurred during configuration."
 msgstr "Ett fel inträffade under konfiguration."
 
-#: plinth/modules/gitweb/views.py:147
+#: plinth/modules/gitweb/views.py:153
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} borttagen."
 
-#: plinth/modules/gitweb/views.py:151
+#: plinth/modules/gitweb/views.py:157
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Kunde inte ta bort {name}: {error}"
@@ -1892,7 +1939,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:57
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/templates/app.html:43 plinth/templates/setup.html:48
+#: plinth/templates/app.html:55 plinth/templates/setup.html:48
 #: plinth/templates/simple_app.html:38
 msgid "Learn more..."
 msgstr "Läs mer..."
@@ -1997,8 +2044,8 @@ msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
-"Sök efter tidigare diskussioner eller lägg en ny fråga på vår<a href=\""
-"https://discuss.freedombox.org\" target=\"_blank\">diskussionsforum</a>."
+"Sök efter tidigare diskussioner eller lägg en ny fråga på vår<a href="
+"\"https://discuss.freedombox.org\" target=\"_blank\">diskussionsforum</a>."
 
 #: plinth/modules/help/templates/help_support.html:42
 msgid ""
@@ -2009,8 +2056,8 @@ msgid ""
 msgstr ""
 "Du kan också chatta med oss på våra IRC- och Matrix-kanaler (överbryggade): "
 "<ul><li>#freedombox on irc.oftc.net</li><li>#freedombox:matrix.org</li></ul> "
-"Eller skicka ett e-postmeddelande till vår<a href=\"mailto:freedombox-discuss"
-"@alioth-lists.debian.net\">adresslista</a>."
+"Eller skicka ett e-postmeddelande till vår<a href=\"mailto:freedombox-"
+"discuss@alioth-lists.debian.net\">adresslista</a>."
 
 #: plinth/modules/help/templates/statuslog.html:25
 msgid "Status Log"
@@ -2025,9 +2072,9 @@ msgid ""
 "this status log to the bug report."
 msgstr ""
 "Dessa är de sista %(num_lines)s rader i statusloggen för detta "
-"webbgränssnitt. Om du vill rapportera ett fel, använd <a href=\""
-"https://salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> och "
-"bifoga denna statuslogg rapport bug-tracker."
+"webbgränssnitt. Om du vill rapportera ett fel, använd <a href=\"https://"
+"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> och bifoga "
+"denna statuslogg rapport bug-tracker."
 
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
@@ -2062,8 +2109,8 @@ msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p.net"
 "\" target=\"_blank\">homepage</a>."
 msgstr ""
-"För att hitta mer information om I2P på deras projekt<a href=\""
-"https://geti2p.net\" target=\"_blank\">hemsida</a>."
+"För att hitta mer information om I2P på deras projekt<a href=\"https://"
+"geti2p.net\" target=\"_blank\">hemsida</a>."
 
 #: plinth/modules/i2p/__init__.py:53
 msgid ""
@@ -2139,18 +2186,26 @@ msgid "Wiki and Blog"
 msgstr "Wiki och Blogg"
 
 #: plinth/modules/ikiwiki/__init__.py:46
+#, fuzzy
+#| msgid ""
+#| "ikiwiki is a simple wiki and blog application. It supports several "
+#| "lightweight markup languages, including Markdown, and common blogging "
+#| "functionality such as comments and RSS feeds. When enabled, the blogs and "
+#| "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once "
+#| "created)."
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
-"wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once created)."
+"wikis will be available at <a href=\"/ikiwiki\" data-turbolinks=\"false\">/"
+"ikiwiki</a> (once created)."
 msgstr ""
 "ikiwiki är en enkel wiki- och bloggapplikation. Det stöder flera lätta "
 "markeringsspråk, inklusive Markdown och vanliga bloggfunktioner som "
 "kommentarer och RSS-flöden. När det är aktiverat kommer bloggarna och wikis "
 "att vara tillgängliga på <a href=\"/ikiwiki\">/ikiwiki</a> (En gång skapats)."
 
-#: plinth/modules/ikiwiki/__init__.py:52
+#: plinth/modules/ikiwiki/__init__.py:53
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2160,11 +2215,10 @@ msgid ""
 msgstr ""
 "Endast {box_name}-användare i <b>admin</b> gruppen kan <i>skapa</i> och "
 "<i>hantera</i> blogs och wikis, men alla användare i <b>wiki</b> gruppen kan "
-"<i>redigera</i> befindliga. I <a href=\"{users_url}\""
-">Användarkonfiguration</a> kan du ändra dessa behörigheter eller lägga till "
-"nya användare."
+"<i>redigera</i> befindliga. I <a href=\"{users_url}\">Användarkonfiguration</"
+"a> kan du ändra dessa behörigheter eller lägga till nya användare."
 
-#: plinth/modules/ikiwiki/__init__.py:62
+#: plinth/modules/ikiwiki/__init__.py:63
 msgid "View and edit wiki applications"
 msgstr "Visa och redigera wiki-applikationer"
 
@@ -2201,7 +2255,7 @@ msgstr "Ingen wiki eller blogg tillgänglig."
 msgid "Delete site %(site)s"
 msgstr "Ta bort webbsida %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:54
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:55
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Gå till webbsidan %(site)s"
@@ -2269,8 +2323,8 @@ msgid ""
 "enter your {box_name}'s domain name."
 msgstr ""
 "Om du vill använda det <a href=\"https://gobby.github.io/\"> ladda ner Gobby "
-"</a>, desktop client och installera det. Starta sedan Gobby och välj \""
-"Anslut till server\" och ange ditt {box_name} domännamn."
+"</a>, desktop client och installera det. Starta sedan Gobby och välj "
+"\"Anslut till server\" och ange ditt {box_name} domännamn."
 
 #: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
@@ -2342,8 +2396,8 @@ msgid ""
 msgstr ""
 "Let's Encrypt  en är gratis, automatiserad och öppen certifikatutfärdare, "
 "använd för allmänhetens nytta av Internet Security Research Group (ISRG).  "
-"Läs igenom och acceptera <a href=\"https://letsencrypt.org/repository/\">"
-"Let's Encrypt användaravtal</a> innan du använder denna tjänst."
+"Läs igenom och acceptera <a href=\"https://letsencrypt.org/repository/"
+"\">Let's Encrypt användaravtal</a> innan du använder denna tjänst."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:44
 msgid "Domain"
@@ -2606,10 +2660,10 @@ msgid ""
 "CreateAccount\">Special:CreateAccount</a> page."
 msgstr ""
 "Denna MediaWiki-instans kommer med ett slumpmässigt genererat "
-"administratörslösenord. Du kan ställa in ett nytt lösenord i avsnittet \""
-"Konfiguration\" och logga in med \"admin\" -kontot. Du kan sedan skapa fler "
-"användarkonton från MediaWiki själv genom att gå till <a href=\"/mediawiki/"
-"index.php/Special:CreateAccount\">Special: Skapa konto</a> sida."
+"administratörslösenord. Du kan ställa in ett nytt lösenord i avsnittet "
+"\"Konfiguration\" och logga in med \"admin\" -kontot. Du kan sedan skapa "
+"fler användarkonton från MediaWiki själv genom att gå till <a href=\"/"
+"mediawiki/index.php/Special:CreateAccount\">Special: Skapa konto</a> sida."
 
 #: plinth/modules/mediawiki/__init__.py:53
 msgid ""
@@ -2652,8 +2706,9 @@ msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
-"Om aktiverad kommer tillgång begränsas. Endast personer som har konton kan lä"
-"sa/skriva till wiki. Offentliga registreringar kommer också att inaktiveras."
+"Om aktiverad kommer tillgång begränsas. Endast personer som har konton kan "
+"läsa/skriva till wiki. Offentliga registreringar kommer också att "
+"inaktiveras."
 
 #: plinth/modules/mediawiki/views.py:71
 msgid "Password updated"
@@ -2798,7 +2853,8 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr "På {box_name}, kan nedladdade filer hittas i /var/lib/mldonkey/ mappen."
+msgstr ""
+"På {box_name}, kan nedladdade filer hittas i /var/lib/mldonkey/ mappen."
 
 #: plinth/modules/mldonkey/__init__.py:61
 msgid "Download files using eDonkey applications"
@@ -2852,8 +2908,8 @@ msgstr ""
 "nyckeln kan sedan laddas upp till OpenPGP nyckelservrar. Användare som "
 "ansluter till denna enhet via SSH kan verifiera att de ansluter till rätt "
 "värd. För att validera certifikatet måste användaren installera vissa "
-"program som finns på <a href=\"https://web.monkeysphere.info/download/\">"
-"Monkeyshere webbsida</a>."
+"program som finns på <a href=\"https://web.monkeysphere.info/download/"
+"\">Monkeyshere webbsida</a>."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:60
 msgid "Publishing key to keyserver..."
@@ -3018,10 +3074,16 @@ msgid "Name Services"
 msgstr "Namntjänster"
 
 #: plinth/modules/names/__init__.py:45
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Name Services provides an overview of the ways {box_name} can be reached "
+#| "from the public Internet: domain name, Tor hidden service, and Pagekite. "
+#| "For each type of name, it is shown whether the HTTP, HTTPS, and SSH "
+#| "services are enabled or disabled for incoming connections through the "
+#| "given name."
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
-"from the public Internet: domain name, Tor hidden service, and Pagekite. For "
+"from the public Internet: domain name, Tor onion service, and Pagekite. For "
 "each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
@@ -3210,8 +3272,8 @@ msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
-"Valfritt värde. Om detta anges och IPv6-adresserings metod är satt till \""
-"Automatisk\", kommer DNS-servrar tillhandahållna av en DHCP-server att "
+"Valfritt värde. Om detta anges och IPv6-adresserings metod är satt till "
+"\"Automatisk\", kommer DNS-servrar tillhandahållna av en DHCP-server att "
 "ignoreras."
 
 #: plinth/modules/networks/forms.py:134
@@ -4039,8 +4101,8 @@ msgstr "Webb server (HTTP)"
 #, python-brace-format
 msgid "Site will be available at <a href=\"http://{0}\">http://{0}</a>"
 msgstr ""
-"Webbplatsen kommer att finnas tillgänglig på <a href=\"http://{0}\""
-">http://{0}</a>"
+"Webbplatsen kommer att finnas tillgänglig på <a href=\"http://{0}\">http://"
+"{0}</a>"
 
 #: plinth/modules/pagekite/utils.py:71
 msgid "Web Server (HTTPS)"
@@ -4050,8 +4112,8 @@ msgstr "Webb server (HTTPS)"
 #, python-brace-format
 msgid "Site will be available at <a href=\"https://{0}\">https://{0}</a>"
 msgstr ""
-"Webbplatsen kommer att finnas tillgänglig på <a href=\"https://{0}\""
-">https://{0} </a>"
+"Webbplatsen kommer att finnas tillgänglig på <a href=\"https://{0}\">https://"
+"{0} </a>"
 
 #: plinth/modules/pagekite/utils.py:85
 msgid "Secure Shell (SSH)"
@@ -4169,9 +4231,9 @@ msgid ""
 msgstr ""
 "Du kan använda Privoxy genom att ändra webbläsarens proxyinställningar till "
 "ditt {box_name}-värdnamn (eller IP-adress) med port 8118. När du använder "
-"Privoxy kan du se dess konfigurationsdetaljer och dokumentation på <a href=\""
-"http://config.privoxy.org\">http://config.privoxy.org/</a> eller <a href=\""
-"http://p.p\">http://p.p</a>."
+"Privoxy kan du se dess konfigurationsdetaljer och dokumentation på <a href="
+"\"http://config.privoxy.org\">http://config.privoxy.org/</a> eller <a href="
+"\"http://p.p\">http://p.p</a>."
 
 #: plinth/modules/privoxy/__init__.py:142
 #, python-brace-format
@@ -4212,8 +4274,8 @@ msgid ""
 msgstr ""
 "Du kan ansluta till din quassel-kärna på standard-quassel-porten 4242.  "
 "Klienter att ansluta till quassel från din <a href=\"http://quassel-irc.org/"
-"downloads\" >Desktop</a> och <a href=\"http://quasseldroid.iskrembilen.com/\""
-">mobila</a>-enheter är tillgängliga."
+"downloads\" >Desktop</a> och <a href=\"http://quasseldroid.iskrembilen.com/"
+"\">mobila</a>-enheter är tillgängliga."
 
 #: plinth/modules/quassel/forms.py:38
 msgid "TLS domain"
@@ -4265,7 +4327,8 @@ msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
-msgstr "Endast ägaren av en kalender/AddressBook kan visa eller göra ändringar."
+msgstr ""
+"Endast ägaren av en kalender/AddressBook kan visa eller göra ändringar."
 
 #: plinth/modules/radicale/forms.py:34
 #, python-brace-format
@@ -4295,9 +4358,9 @@ msgid ""
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Ange URL-adressen till Radicale-servern (t. ex. "
-"https://<your.freedombox.address>) och ditt användarnamn. DAVx5 kommer att "
-"visa alla befintliga kalendrar och adressböcker och du kan skapa nya."
+"Ange URL-adressen till Radicale-servern (t. ex. https://<your.freedombox."
+"address>) och ditt användarnamn. DAVx5 kommer att visa alla befintliga "
+"kalendrar och adressböcker och du kan skapa nya."
 
 #: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
@@ -4327,9 +4390,9 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "I evolution lägga till en ny kalender och adressbok respektive med WebDAV. "
-"Ange URL-adressen till Radicale-servern (t. ex. "
-"https://<your.freedombox.address>) och ditt användarnamn. Om du klickar på "
-"sökknappen visas en lista över befintliga kalendrar och adressböcker."
+"Ange URL-adressen till Radicale-servern (t. ex. https://<your.freedombox."
+"address>) och ditt användarnamn. Om du klickar på sökknappen visas en lista "
+"över befintliga kalendrar och adressböcker."
 
 #: plinth/modules/radicale/views.py:56
 msgid "Access rights configuration updated"
@@ -4370,12 +4433,21 @@ msgstr ""
 "CSipSimple</a> (för Android-telefoner)."
 
 #: plinth/modules/repro/__init__.py:55
+#, fuzzy
+#| msgid ""
+#| "<strong>Note:</strong>  Before using repro, domains and users will need "
+#| "to be configured using the <a href=\"/repro/domains.html\">web-based "
+#| "configuration panel</a>. Users in the <em>admin</em> group will be able "
+#| "to log in to the repro configuration panel. After setting the domain, it "
+#| "is required to restart the repro service. Disable the service and re-"
+#| "enable it."
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
-"be configured using the <a href=\"/repro/domains.html\">web-based "
-"configuration panel</a>. Users in the <em>admin</em> group will be able to "
-"log in to the repro configuration panel. After setting the domain, it is "
-"required to restart the repro service. Disable the service and re-enable it."
+"be configured using the <a href=\"/repro/domains.html\" data-turbolinks="
+"\"false\">web-based configuration panel</a>. Users in the <em>admin</em> "
+"group will be able to log in to the repro configuration panel. After setting "
+"the domain, it is required to restart the repro service. Disable the service "
+"and re-enable it."
 msgstr ""
 "<strong>Obs:</strong> Innan repro används måste domäner och användare "
 "konfigureras med <a href=\"/repro/domains.html\"> webbaserad "
@@ -4434,8 +4506,8 @@ msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
 msgstr ""
-"Du kan skapa och redigera konton i webbgränssnittet <a href='/restore/"
-"'>reStore</a> ."
+"Du kan skapa och redigera konton i webbgränssnittet <a href='/"
+"restore/'>reStore</a> ."
 
 #: plinth/modules/roundcube/__init__.py:35
 #: plinth/modules/roundcube/manifest.py:24
@@ -4459,18 +4531,26 @@ msgstr ""
 "mappmanipulering, meddelande sökning och stavningskontroll."
 
 #: plinth/modules/roundcube/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
+#| "Provide the username and password of the email account you wish to access "
+#| "followed by the domain name of the IMAP server for your email provider, "
+#| "like <code>imap.example.com</code>.  For IMAP over SSL (recommended), "
+#| "fill the server field like <code>imaps://imap.example.com</code>."
 msgid ""
-"You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. Provide "
-"the username and password of the email account you wish to access followed "
-"by the domain name of the IMAP server for your email provider, like "
-"<code>imap.example.com</code>.  For IMAP over SSL (recommended), fill the "
-"server field like <code>imaps://imap.example.com</code>."
+"You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
+"\">/roundcube</a>. Provide the username and password of the email account "
+"you wish to access followed by the domain name of the IMAP server for your "
+"email provider, like <code>imap.example.com</code>.  For IMAP over SSL "
+"(recommended), fill the server field like <code>imaps://imap.example.com</"
+"code>."
 msgstr ""
 "Du kan komma åt roundcube från <a href=\"/roundcube\">/roundcube</a>. Ange "
 "användarnamn och lösenord för det e-postkonto du vill komma åt följt av "
-"domännamnet för IMAP-servern för din e-postleverantör, som "
-"<code>imap.example.com</code>.  För IMAP över SSL (rekommenderas), Fyll i "
-"fältet Server som <code>imaps://imap.example.com</code>."
+"domännamnet för IMAP-servern för din e-postleverantör, som <code>imap."
+"example.com</code>.  För IMAP över SSL (rekommenderas), Fyll i fältet Server "
+"som <code>imaps://imap.example.com</code>."
 
 #: plinth/modules/roundcube/__init__.py:51
 msgid ""
@@ -4482,11 +4562,11 @@ msgid ""
 "a>)."
 msgstr ""
 "För Gmail, anvädarnamn vilja bli din Gmail adress, lösenord vilja bli din "
-"Google redovisa lösenord och Servaren vilja bli "
-"<code>imaps://imap.gmail.com</code>.  Observera att du också måste aktivera "
-"\"mindre säkra appar\" i inställningarna för Google-kontot (<a href=\""
-"https://www.google.com/settings/security/lesssecureapps\" "
-">https://www.Google.com/settings/Security/lesssecureapps</a>)."
+"Google redovisa lösenord och Servaren vilja bli <code>imaps://imap.gmail."
+"com</code>.  Observera att du också måste aktivera \"mindre säkra appar\" i "
+"inställningarna för Google-kontot (<a href=\"https://www.google.com/settings/"
+"security/lesssecureapps\" >https://www.Google.com/settings/Security/"
+"lesssecureapps</a>)."
 
 #: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:24
 msgid "Searx"
@@ -4559,8 +4639,8 @@ msgid ""
 "to log in to console or via SSH. Console users may be able to access some "
 "services without further authorization."
 msgstr ""
-"När det här alternativet är aktiverat kommer endast användare i gruppen \""
-"admin\" att kunna logga in på Console eller via SSH. Konsolanvändare kan "
+"När det här alternativet är aktiverat kommer endast användare i gruppen "
+"\"admin\" att kunna logga in på Console eller via SSH. Konsolanvändare kan "
 "komma åt vissa tjänster utan ytterligare auktorisering."
 
 #: plinth/modules/security/forms.py:35
@@ -4638,10 +4718,16 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli kan du spara och dela bokmärken."
 
 #: plinth/modules/shaarli/__init__.py:40
+#, fuzzy
+#| msgid ""
+#| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
+#| "shaarli</a> path on the web server. Note that Shaarli only supports a "
+#| "single user account, which you will need to setup on the initial visit."
 msgid ""
-"When enabled, Shaarli will be available from <a href=\"/shaarli\">/shaarli</"
-"a> path on the web server. Note that Shaarli only supports a single user "
-"account, which you will need to setup on the initial visit."
+"When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
+"turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
+"only supports a single user account, which you will need to setup on the "
+"initial visit."
 msgstr ""
 "När den är aktiverad kommer Shaarli att vara tillgänglig från <a href=\"/"
 "shaarli\">/shaarli</a> Path på webbservern. Observera att Shaarli bara "
@@ -5298,8 +5384,8 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
-"Syncthing är ett program för att synkronisera filer över flera enheter, "
-"t.ex. din stationära dator och mobiltelefon. Skapa, modifiera eller radera "
+"Syncthing är ett program för att synkronisera filer över flera enheter, t."
+"ex. din stationära dator och mobiltelefon. Skapa, modifiera eller radera "
 "filer på en enhet kommer att replikeras automatiskt på alla andra enheter "
 "som också kör Syncthing."
 
@@ -5318,20 +5404,25 @@ msgstr ""
 "synkronisera oftare.  {box_name} kör en enda instans av Syncthing som kan "
 "användas av flera användare.  Varje användares uppsättning enheter kan "
 "synkroniseras med en särskild uppsättning mappar.  Webbgränssnittet på "
-"{box_name} är endast tillgängligt för användare som tillhör gruppen \"admin\""
-"."
+"{box_name} är endast tillgängligt för användare som tillhör gruppen \"admin"
+"\"."
 
 #: plinth/modules/syncthing/__init__.py:57
+#, fuzzy
+#| msgid ""
+#| "When enabled, Syncthing's web interface will be available from <a href=\"/"
+#| "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
+#| "\"https://syncthing.net/\">available</a>."
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
-"syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
-"\"https://syncthing.net/\">available</a>."
+"syncthing/\" data-turbolinks=\"false\">/syncthing</a>. Desktop and mobile "
+"clients are also <a href=\"https://syncthing.net/\">available</a>."
 msgstr ""
 "När aktiverat är Syncthings webbgränssnitt tillgängligt från <a href=\"/"
 "syncthing/\">/ syncthing</a>.   Desktop- och mobilklienter är också <a href="
 "\"https://syncthing.net/\">tillgängliga</a>."
 
-#: plinth/modules/syncthing/__init__.py:64
+#: plinth/modules/syncthing/__init__.py:65
 msgid "Administer Syncthing application"
 msgstr "Administrera Syncthing-program"
 
@@ -5376,8 +5467,8 @@ msgid ""
 msgstr ""
 "Tahoe-LAFS Server domänen är inställd på <b>%(domain_name)s </b>. Ändra "
 "FreedomBox domännamn behöver en ominstallation av Tahoe-LAFS och DU KOMMER "
-"ATT FÖRLORA DATA. Du kan komma åt Tahoe-LAFS på <a href=\""
-"https://%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
+"ATT FÖRLORA DATA. Du kan komma åt Tahoe-LAFS på <a href=\"https://"
+"%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
@@ -5420,11 +5511,13 @@ msgstr ""
 "Tor är ett anonymt kommunikationssystem. Du kan läsa mer om det från "
 "webbplatsen <a href=\"https://www.torproject.org/\">Tor Project</a>. För "
 "bästa skydd när du surfar på webben rekommenderar Tor-projektet att du "
-"använder <a href=\"https://www.torproject.org/download/download-easy.html."
-"en\">TOR Browser</a>."
+"använder <a href=\"https://www.torproject.org/download/download-easy.html.en"
+"\">TOR Browser</a>."
 
 #: plinth/modules/tor/__init__.py:80
-msgid "Tor Hidden Service"
+#, fuzzy
+#| msgid "Tor Hidden Service"
+msgid "Tor Onion Service"
 msgstr "Tor Hidden service"
 
 #: plinth/modules/tor/__init__.py:84
@@ -5443,16 +5536,16 @@ msgstr "Tor relä port tillgänglig"
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport registrerad"
 
-#: plinth/modules/tor/__init__.py:183
+#: plinth/modules/tor/__init__.py:185
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport registrerad"
 
-#: plinth/modules/tor/__init__.py:222
+#: plinth/modules/tor/__init__.py:226
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tillgång URL {url} på TCP {kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:233
+#: plinth/modules/tor/__init__.py:237
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekräfta Tor-användning vid {url} på TCP {kind}"
@@ -5493,8 +5586,8 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
-"Du kan få några broar från <a href=\"https://bridges.torproject.org/\""
-">https://Bridges.torproject.org/</a> och kopiera/klistra in bro "
+"Du kan få några broar från <a href=\"https://bridges.torproject.org/"
+"\">https://Bridges.torproject.org/</a> och kopiera/klistra in bro "
 "informationen här. För närvarande stöds transporter är ingen, obfs3, obfs4 "
 "och scamblesuit."
 
@@ -5528,13 +5621,19 @@ msgstr ""
 "den här noden. Detta hjälper andra att kringgå censur."
 
 #: plinth/modules/tor/forms.py:128
-msgid "Enable Tor Hidden Service"
+#, fuzzy
+#| msgid "Enable Tor Hidden Service"
+msgid "Enable Tor Onion Service"
 msgstr "Aktivera Tor Hidden service"
 
 #: plinth/modules/tor/forms.py:131
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "A hidden service will allow {box_name} to provide selected services (such "
+#| "as wiki or chat) without revealing its location. Do not use this for "
+#| "strong anonymity yet."
 msgid ""
-"A hidden service will allow {box_name} to provide selected services (such as "
+"An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
@@ -5581,7 +5680,9 @@ msgid "Tor is not running"
 msgstr "Tor kör inte"
 
 #: plinth/modules/tor/templates/tor.html:67
-msgid "Hidden Service"
+#, fuzzy
+#| msgid "Hidden Service"
+msgid "Onion Service"
 msgstr "Dold tjänst"
 
 #: plinth/modules/tor/templates/tor.html:69
@@ -5624,8 +5725,12 @@ msgstr ""
 "hanterar bitorrent fildelning.  Observera att BitTorrent inte är anonym."
 
 #: plinth/modules/transmission/__init__.py:49
+#, fuzzy
+#| msgid ""
+#| "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgid ""
-"Access the web interface at <a href=\"/transmission\">/transmission</a>."
+"Access the web interface at <a href=\"/transmission\" data-turbolinks=\"false"
+"\">/transmission</a>."
 msgstr ""
 "Komma åt webbgränssnittet på <a href=\"/transmission\">/transmission</a>."
 
@@ -5640,8 +5745,8 @@ msgid ""
 "\" user."
 msgstr ""
 "Katalog där nedladdningar sparas.  Om du ändrar standardkatalogen ska du se "
-"till att den nya katalogen finns och att den är skrivbar av användaren \""
-"Debian-transmission\"."
+"till att den nya katalogen finns och att den är skrivbar av användaren "
+"\"Debian-transmission\"."
 
 #: plinth/modules/ttrss/__init__.py:43 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
@@ -5662,25 +5767,34 @@ msgstr ""
 "känner dig så nära en riktig stationär applikation som möjligt."
 
 #: plinth/modules/ttrss/__init__.py:52
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server. It can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
 msgid ""
-"When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
-"rss</a> path on the web server. It can be accessed by any <a href="
-"\"{users_url}\">user with a {box_name} login</a>."
+"When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\" data-"
+"turbolinks=\"false\">/tt-rss</a> path on the web server. It can be accessed "
+"by any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"När den är aktiverad kommer Tiny Tiny RSS att finnas tillgänglig från <a href"
-"=\"/tt-rss\">/tt-RSS</a> Path på webbservern. Den kan nås av alla <a href=\""
-"{users_url}\"> användare med en {box_name} login </a>."
+"När den är aktiverad kommer Tiny Tiny RSS att finnas tillgänglig från <a "
+"href=\"/tt-rss\">/tt-RSS</a> Path på webbservern. Den kan nås av alla <a "
+"href=\"{users_url}\"> användare med en {box_name} login </a>."
 
-#: plinth/modules/ttrss/__init__.py:57
+#: plinth/modules/ttrss/__init__.py:58
+#, fuzzy
+#| msgid ""
+#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
+"href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
+"connecting."
 msgstr ""
 "När du använder en mobil eller stationär applikation för Tiny Tiny RSS, "
 "Använd URL: en <a href=\"/tt-rss-app/\">/tt-RSS-app</a> för att ansluta."
 
-#: plinth/modules/ttrss/__init__.py:63
+#: plinth/modules/ttrss/__init__.py:65
 msgid "Read and subscribe to news feeds"
 msgstr "Läsa och prenumerera på nyhetsflöden"
 
@@ -6060,12 +6174,16 @@ msgstr ""
 "plinth/issues\">bug tracker</a> så att vi kan fixa det. Bifoga också <a href="
 "\"%(status_log_url)s\">status logg</a> till felrapporten."
 
-#: plinth/templates/app.html:63
+#: plinth/templates/app.html:67
+msgid "Launch web client"
+msgstr "Starta webbklient"
+
+#: plinth/templates/app.html:89
 #, python-format
 msgid "Service <em>%(service_name)s</em> is running."
 msgstr "Tjänsten <em> %(service_name)s </em> körs."
 
-#: plinth/templates/app.html:68
+#: plinth/templates/app.html:94
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Tjänsten <em> %(service_name)s </em> körs inte."
@@ -6332,6 +6450,9 @@ msgstr "Programmet är inaktiverat"
 #: plinth/web_framework.py:189
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Secret"
+#~ msgstr "Hemlighet"
 
 #~ msgid "Create a Wiki or Blog"
 #~ msgstr "Skapa en wiki eller blogg"
