@@ -112,6 +112,24 @@ class ConfigurationForm(forms.Form):
             if old['enabled'] != new['enabled']:
                 if new['enabled']:
                     utils.run(['start-and-enable'])
+                    # Ensure all standard/predefined services are enabled
+                    for service_name in utils.PREDEFINED_SERVICES.keys():
+                        service = \
+                            utils.PREDEFINED_SERVICES[service_name]['params']
+                        service = json.dumps(service)
+
+                        # Probably should keep track of which services
+                        #    are enabled since adding the service produces
+                        #    an error if it is already added. But this works
+                        #    too.
+
+                        try:
+                            utils.run(['add-service', '--service', service])
+                        except ActionError as exception:
+                            if "already exists" in str(exception):
+                                pass
+                            else:
+                                raise
                     messages.success(request, _('PageKite enabled'))
                 else:
                     utils.run(['stop-and-disable'])
@@ -125,43 +143,6 @@ class ConfigurationForm(forms.Form):
             # Update kite name registered with Name Services module.
             utils.update_names_module(enabled=new['enabled'],
                                       kite_name=new['kite_name'])
-
-
-class StandardServiceForm(forms.Form):
-    """Creates a form out of PREDEFINED_SERVICES"""
-
-    def __init__(self, *args, **kwargs):
-        """Add the fields from PREDEFINED_SERVICES"""
-        super(StandardServiceForm, self).__init__(*args, **kwargs)
-        kite = utils.get_kite_details()
-        for name, service in utils.PREDEFINED_SERVICES.items():
-            if name in ('http', 'https'):
-                help_text = service['help_text'].format(kite['kite_name'])
-            else:
-                help_text = service['help_text']
-            self.fields[name] = forms.BooleanField(
-                label=service['label'], help_text=help_text, required=False)
-
-    def save(self, request):
-        formdata = self.cleaned_data
-        for service_name in utils.PREDEFINED_SERVICES.keys():
-            if self.initial[service_name] != formdata[service_name]:
-                service = utils.PREDEFINED_SERVICES[service_name]['params']
-                service = json.dumps(service)
-                if formdata[service_name]:
-                    utils.run(['add-service', '--service', service])
-                    messages.success(
-                        request,
-                        _('Service enabled: {name}').format(name=service_name))
-                else:
-                    utils.run(['remove-service', '--service', service])
-                    messages.success(
-                        request,
-                        _('Service disabled: {name}').format(
-                            name=service_name))
-
-        # Update kite services registered with Name Services module.
-        utils.update_names_module()
 
 
 class BaseCustomServiceForm(forms.Form):
