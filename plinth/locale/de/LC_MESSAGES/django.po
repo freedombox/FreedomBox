@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-18 18:45-0500\n"
-"PO-Revision-Date: 2019-11-06 06:03+0000\n"
+"PO-Revision-Date: 2019-11-21 18:04+0000\n"
 "Last-Translator: nautilusx <mail.ka@mailbox.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
@@ -472,6 +472,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"SSH-Host %(hostname)s konnte nicht erreicht werden. Bitte vergewissern Sie "
+"sich, dass der Host eingeschaltet ist und Verbindungen akzeptiert."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
 #, python-format
@@ -665,20 +667,17 @@ msgstr ""
 "einzugeben."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\" data-"
 "turbolinks=\"false\">/_cockpit/</a> path on the web server. It can be "
 "accessed by <a href=\"{users_url}\">any user</a> on {box_name} belonging to "
 "the admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
-"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
-"Benutzer</a> auf {box_name}, der zur Gruppe der Administratoren gehört."
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
+" data-turbolinks=\"false\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href="
+"\"{users_url}\">jeder Benutzer</a> auf {box_name}, der zur Gruppe der "
+"Administratoren gehört."
 
 #: plinth/modules/config/__init__.py:37
 msgid "General Configuration"
@@ -944,21 +943,15 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge ist ein BitTorrent-Client mit einer Weboberfläche."
 
 #: plinth/modules/deluge/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "When enabled, the Deluge web client will be available from <a href=\"/"
-#| "deluge\">/deluge</a> path on the web server. The default password is "
-#| "'deluge', but you should log in and change it immediately after enabling "
-#| "this service."
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
 "\" data-turbolinks=\"false\">/deluge</a> path on the web server. The default "
 "password is 'deluge', but you should log in and change it immediately after "
 "enabling this service."
 msgstr ""
-"Falls aktiviert, ist die Deluge-Weboberfläche über <a href=\"/deluge\">/"
-"deluge</a> verfügbar. Das Standardpasswort lautet „deluge“, aber dieses "
-"sollte sofort nach dem ersten Anmelden geändert werden."
+"Falls aktiviert, ist die Deluge-Weboberfläche über <a href=\"/deluge\" data-"
+"turbolinks=\"false\">/deluge</a> verfügbar. Das Standardpasswort lautet "
+"„deluge“, aber dieses sollte sofort nach dem ersten Anmelden geändert werden."
 
 #: plinth/modules/deluge/__init__.py:51
 #: plinth/modules/transmission/__init__.py:57
@@ -1580,7 +1573,7 @@ msgstr ""
 
 #: plinth/modules/first_boot/forms.py:34
 msgid "Firstboot Wizard Secret"
-msgstr ""
+msgstr "Assistent beim ersten Start"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1653,10 +1646,8 @@ msgid "Read-write access to Git repositories"
 msgstr "Lese- und Schreibberechtigung auf Git respositories"
 
 #: plinth/modules/gitweb/forms.py:59
-#, fuzzy
-#| msgid "Invalid repository name."
 msgid "Invalid repository URL."
-msgstr "Ungültiger Respositoryname."
+msgstr "Ungültige Repository-URL."
 
 #: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
@@ -1728,7 +1719,7 @@ msgstr "Archiv %(repo.name)s löschen"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:83
 msgid "Cloning..."
-msgstr ""
+msgstr "Klonen..."
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
@@ -1755,10 +1746,8 @@ msgid "Repository created."
 msgstr "Archiv erstellt."
 
 #: plinth/modules/gitweb/views.py:86
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the repository."
-msgstr "Ein Fehler ist bei der Konfiguration aufgetreten."
+msgstr "Beim Erstellen des Repository ist ein Fehler aufgetreten."
 
 #: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
@@ -3122,13 +3111,7 @@ msgid "Name Services"
 msgstr "Namen-Dienste"
 
 #: plinth/modules/names/__init__.py:45
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Name Services provides an overview of the ways {box_name} can be reached "
-#| "from the public Internet: domain name, Tor hidden service, and Pagekite. "
-#| "For each type of name, it is shown whether the HTTP, HTTPS, and SSH "
-#| "services are enabled or disabled for incoming connections through the "
-#| "given name."
+#, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
 "from the public Internet: domain name, Tor onion service, and Pagekite. For "
@@ -3136,7 +3119,7 @@ msgid ""
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
 "Namen-Dienste bietet eine Übersicht wie {box_name} aus dem öffentlichen "
-"Internet erreichbar ist: Domainname, Tor-Hidden-Service und Pagekite. Für "
+"Internet erreichbar ist: Domainname, Tor-Onion-Service und Pagekite. Für "
 "jeden Namens-Typ wird angezeigt, ob die HTTP-, HTTPS- und SSH-Dienste für "
 "eingehende Verbindungen eingeschaltet oder ausgeschaltet ist."
 
@@ -5603,10 +5586,8 @@ msgstr ""
 "\">Tor Browser</a> verwenden."
 
 #: plinth/modules/tor/__init__.py:80
-#, fuzzy
-#| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
-msgstr "Tor versteckte Dienste"
+msgstr "Tor-Onion-Dienste"
 
 #: plinth/modules/tor/__init__.py:84
 msgid "Tor Socks Proxy"
@@ -5710,10 +5691,8 @@ msgstr ""
 "was die Zensur des Knotens erschwert. Dies hilft anderen, Zensur zu umgehen."
 
 #: plinth/modules/tor/forms.py:128
-#, fuzzy
-#| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
-msgstr "Von Tor verborgene Dienste einschalten"
+msgstr "Tor-Onion-Service aktivieren"
 
 #: plinth/modules/tor/forms.py:131
 #, fuzzy, python-brace-format
@@ -5771,10 +5750,8 @@ msgid "Tor is not running"
 msgstr "Tor läuft nicht"
 
 #: plinth/modules/tor/templates/tor.html:67
-#, fuzzy
-#| msgid "Hidden Service"
 msgid "Onion Service"
-msgstr "Verborgene Dienste"
+msgstr "Onion-Dienste"
 
 #: plinth/modules/tor/templates/tor.html:69
 msgid "Ports"
