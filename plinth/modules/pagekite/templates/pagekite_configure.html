@@ -40,22 +40,19 @@
 {% endblock %}
 
 {% block configuration %}
-{{ block.super }}
+  {{ block.super }}
 
-<h3>{% trans "Custom Services" %}</h3>
+  <h3>{% trans "Custom Services" %}</h3>
 
-    <a href="{% url 'pagekite:add-custom-service' %}" class="btn btn-primary"
-       role="button" title="{% trans 'Add Custom Service' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
-      {% trans 'Add Custom Service' %}
-    </a>
+  <a href="{% url 'pagekite:add-custom-service' %}" class="btn btn-primary"
+     role="button" title="{% trans 'Add Custom Service' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans 'Add Custom Service' %}
+  </a>
 
+  {% if custom_services %}
     <div>
       <h4>{% trans "Existing custom services" %}</h4>
-
-      {% if not custom_services %}
-        <i>{% trans "You don't have any Custom Services enabled" %}</i>
-      {% endif %}
 
       <div class="list-group">
         {% for service in custom_services %}
@@ -84,11 +81,12 @@
                       title="{% trans "Delete this service" %}">
                 <span class="fa fa-trash-o" aria-hidden="true">
                 </span>
-              </button> 
+              </button>
             </form>
           </div>
         {% endfor %}
       </div>
     </div>
+  {% endif %}
 
 {% endblock %}
