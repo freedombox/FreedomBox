@@ -2,13 +2,11 @@
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
 
-  <name replace-wildcards="yes">%h</name>
+  <name replace-wildcards="yes">%h SFTP server</name>
 
   <service>
     <type>_sftp-ssh._tcp</type>
     <port>22</port>
-    <txt-record>path=/home/fbx</txt-record>
-    <txt-record>u=fbx</txt-record>
   </service>
 
 </service-group>
