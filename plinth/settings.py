@@ -135,6 +135,7 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'plinth.middleware.CommonErrorMiddleware',
     'stronghold.middleware.LoginRequiredMiddleware',
     'plinth.middleware.AdminRequiredMiddleware',
     'plinth.middleware.FirstSetupMiddleware',

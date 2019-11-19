@@ -10,8 +10,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.db.utils import OperationalError
 from django.shortcuts import render
+from django.template.response import SimpleTemplateResponse
 from django.utils.deprecation import MiddlewareMixin
+from django.utils.translation import gettext as _
 from stronghold.utils import is_view_func_public
 
 from plinth import app as app_module
@@ -114,3 +117,19 @@ class FirstSetupMiddleware(MiddlewareMixin):
             'refresh_page_sec': 3
         }
         return render(request, 'first_setup.html', context)
+
+
+class CommonErrorMiddleware(MiddlewareMixin):
+    """Django middleware to handle common errors."""
+
+    @staticmethod
+    def process_exception(request, exception):
+        """Show a custom error page when OperationalError is raised."""
+        if isinstance(exception, OperationalError):
+            message = _(
+                'System is possibly under heavy load. Please retry later.')
+            return SimpleTemplateResponse('error.html',
+                                          context={'message': message},
+                                          status=503)
+
+        return None
