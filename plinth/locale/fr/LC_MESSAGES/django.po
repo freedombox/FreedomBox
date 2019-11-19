@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-18 18:45-0500\n"
-"PO-Revision-Date: 2019-11-10 15:04+0000\n"
+"PO-Revision-Date: 2019-11-20 17:53+0000\n"
 "Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -471,13 +471,17 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Impossible d’atteindre l’hôte SSH %(hostname)s. Veuillez vérifier que l’hôte "
+"est démarré et qu’il accepte les connexions."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"L’authenticité de l’hôte SSH %(hostname)s n’a pu être établie. L’hôte "
+"présente les clés publiques SSH suivantes. Veuillez les vérifier."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
@@ -662,20 +666,17 @@ msgstr ""
 "des opérations depuis une console."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\" data-"
 "turbolinks=\"false\">/_cockpit/</a> path on the web server. It can be "
 "accessed by <a href=\"{users_url}\">any user</a> on {box_name} belonging to "
 "the admin group."
 msgstr ""
-"Une fois activé, Cockpit est accessible depuis le chemin <a href=\"/_cockpit"
-"\">/_cockpit</a> sur le serveur web. Il peut être consulté par tout <a href="
-"\"{users_url}\">utilisateur</a> avec un compte admin sur {box_name}."
+"Une fois activé, Cockpit est accessible depuis le chemin <a href=\"/"
+"_cockpit\" data-turbolinks=\"false\">/_cockpit</a> sur le serveur web. Il "
+"peut être consulté par tout <a href=\"{users_url}\">utilisateur</a> avec un "
+"compte admin sur {box_name}."
 
 #: plinth/modules/config/__init__.py:37
 msgid "General Configuration"
@@ -949,22 +950,16 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge est un client BitTorrent avec une interface utilisateur Web."
 
 #: plinth/modules/deluge/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "When enabled, the Deluge web client will be available from <a href=\"/"
-#| "deluge\">/deluge</a> path on the web server. The default password is "
-#| "'deluge', but you should log in and change it immediately after enabling "
-#| "this service."
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
 "\" data-turbolinks=\"false\">/deluge</a> path on the web server. The default "
 "password is 'deluge', but you should log in and change it immediately after "
 "enabling this service."
 msgstr ""
-"Lorsqu'il est activé, le client Web Deluge sera accessible depuis le chemin "
-"<a href=\"/deluge\">/deluge</a> sur le serveur Web. Le mot de passe par "
-"défaut est 'deluge'. Vous devrez toutefois vous connecter et le changer tout "
-"de suite après l'activation du service."
+"Lorsqu'il est activé, le client Web Deluge sera accessible depuis le chemin <"
+"a href=\"/deluge\" data-turbolinks=\"false\">/deluge</a> sur le serveur Web. "
+"Le mot de passe par défaut est 'deluge'. Vous devrez toutefois vous "
+"connecter et le changer tout de suite après l'activation du service."
 
 #: plinth/modules/deluge/__init__.py:51
 #: plinth/modules/transmission/__init__.py:57
@@ -1589,8 +1584,9 @@ msgstr ""
 "être également trouvé dans le fichier /var/lib/plinth/firstboot-wizard-secret"
 
 #: plinth/modules/first_boot/forms.py:34
+#, fuzzy
 msgid "Firstboot Wizard Secret"
-msgstr ""
+msgstr "Secret de l’assistant Firstboot"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1736,7 +1732,7 @@ msgstr "Supprimer le dépôt %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:83
 msgid "Cloning..."
-msgstr ""
+msgstr "Clonage en cours…"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
