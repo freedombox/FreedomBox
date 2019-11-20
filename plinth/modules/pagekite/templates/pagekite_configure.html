@@ -42,7 +42,9 @@
 {% block configuration %}
   {{ block.super }}
 
-  <h3>{% trans "Custom Services" %}</h3>
+  <hr/>
+
+  <h4>{% trans "Custom Services" %}</h4>
 
   <a href="{% url 'pagekite:add-custom-service' %}" class="btn btn-primary"
      role="button" title="{% trans 'Add Custom Service' %}">
@@ -52,7 +54,7 @@
 
   {% if custom_services %}
     <div>
-      <h4>{% trans "Existing custom services" %}</h4>
+      <h5>{% trans "Existing custom services" %}</h5>
 
       <div class="list-group">
         {% for service in custom_services %}
