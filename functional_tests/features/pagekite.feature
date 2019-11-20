@@ -24,17 +24,17 @@ Background:
   Given the pagekite application is installed
 
 Scenario: Enable pagekite application
-  Given pagekite is disabled
-  When I enable pagekite
+  Given the pagekite application is disabled
+  When I enable the pagekite application
   Then pagekite should be enabled
 
 Scenario: Configure pagekite application
-  Given pagekite is enabled
+  Given the pagekite application is enabled
   When I configure pagekite with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
   Then pagekite should be configured with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
 
 Scenario: Backup and restore pagekite
-  Given pagekite is enabled
+  Given the pagekite application is enabled
   When I configure pagekite with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
   And I create a backup of the pagekite app data
   And I configure pagekite with host afterbackup.example.com, port 8082, kite name afterbackup.example.com and kite secret afterbackupsecret
@@ -43,6 +43,6 @@ Scenario: Backup and restore pagekite
   And pagekite should be configured with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
 
 Scenario: Disable pagekite application
-  Given pagekite is enabled
-  When I disable pagekite
+  Given the pagekite application is enabled
+  When I disable the pagekite application
   Then pagekite should be disabled

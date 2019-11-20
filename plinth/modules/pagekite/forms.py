@@ -26,6 +26,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
 from plinth.errors import ActionError
+from plinth.forms import AppForm
 
 from . import utils
 
@@ -34,7 +35,6 @@ LOGGER = logging.getLogger(__name__)
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
-
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
@@ -45,7 +45,6 @@ class TrimmedCharField(forms.CharField):
 
 class SubdomainWidget(forms.widgets.TextInput):
     """Append the domain to the subdomain bootstrap input field"""
-
     def __init__(self, domain, *args, **kwargs):
         """Initialize the widget by storing the domain value."""
         super().__init__(*args, **kwargs)
@@ -60,11 +59,8 @@ class SubdomainWidget(forms.widgets.TextInput):
                </div>""".format(inputfield, self.domain)
 
 
-class ConfigurationForm(forms.Form):
+class ConfigurationForm(AppForm):
     """Configure PageKite credentials and frontend"""
-
-    enabled = forms.BooleanField(
-        label=ugettext_lazy('Enable PageKite'), required=False)
 
     server_domain = forms.CharField(
         label=ugettext_lazy('Server domain'), required=False,
@@ -109,8 +105,8 @@ class ConfigurationForm(forms.Form):
                 messages.success(request, _('Pagekite server set'))
                 config_changed = True
 
-            if old['enabled'] != new['enabled']:
-                if new['enabled']:
+            if old['is_enabled'] != new['is_enabled']:
+                if new['is_enabled']:
                     utils.run(['start-and-enable'])
                     # Ensure all standard/predefined services are enabled
                     for service_name in utils.PREDEFINED_SERVICES.keys():
@@ -119,9 +115,9 @@ class ConfigurationForm(forms.Form):
                         service = json.dumps(service)
 
                         # Probably should keep track of which services
-                        #    are enabled since adding the service produces
-                        #    an error if it is already added. But this works
-                        #    too.
+                        # are enabled since adding the service produces
+                        # an error if it is already added. But this works
+                        # too.
 
                         try:
                             utils.run(['add-service', '--service', service])
@@ -137,11 +133,11 @@ class ConfigurationForm(forms.Form):
 
             # Restart the service if the config was changed while the service
             # was running, so changes take effect immediately.
-            elif config_changed and new['enabled']:
+            elif config_changed and new['is_enabled']:
                 utils.run(['restart'])
 
             # Update kite name registered with Name Services module.
-            utils.update_names_module(enabled=new['enabled'],
+            utils.update_names_module(enabled=new['is_enabled'],
                                       kite_name=new['kite_name'])
 
 
@@ -156,8 +152,8 @@ class BaseCustomServiceForm(forms.Form):
     backend_port = forms.IntegerField(
         min_value=0, max_value=65535,
         label=ugettext_lazy('internal (freedombox) port'))
-    subdomains = forms.BooleanField(
-        label=ugettext_lazy('Enable Subdomains'), required=False)
+    subdomains = forms.BooleanField(label=ugettext_lazy('Enable Subdomains'),
+                                    required=False)
 
     def convert_formdata_to_service(self, formdata):
         """Add information to make a service out of the form data"""
@@ -187,7 +183,6 @@ class BaseCustomServiceForm(forms.Form):
 
 class DeleteCustomServiceForm(BaseCustomServiceForm):
     """Form to remove custom service."""
-
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         utils.run(['remove-service', '--service', json.dumps(service)])
@@ -196,7 +191,6 @@ class DeleteCustomServiceForm(BaseCustomServiceForm):
 
 class AddCustomServiceForm(BaseCustomServiceForm):
     """Adds the save() method and validation to not add predefined services"""
-
     def matches_predefined_service(self, formdata):
         """Returns whether the user input matches a predefined service"""
         service = self.convert_formdata_to_service(formdata)

@@ -32,7 +32,6 @@ class ContextMixin(object):
 
     Also adds the requirement of all necessary packages to be installed
     """
-
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
@@ -40,6 +39,7 @@ class ContextMixin(object):
         context['name'] = pagekite.name
         context['description'] = pagekite.description
         context['manual_page'] = pagekite.manual_page
+        context['is_enabled'] = pagekite.app.is_enabled()
         return context
 
     def dispatch(self, *args, **kwargs):
@@ -58,8 +58,8 @@ class AddCustomServiceView(ContextMixin, TemplateView):
     template_name = 'pagekite_custom_services.html'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(AddCustomServiceView, self).get_context_data(
-            *args, **kwargs)
+        context = super(AddCustomServiceView,
+                        self).get_context_data(*args, **kwargs)
         unused, custom_services = utils.get_pagekite_services()
         for service in custom_services:
             service['form'] = AddCustomServiceForm(initial=service)
@@ -94,8 +94,8 @@ class ConfigurationView(ContextMixin, FormView):
     success_url = reverse_lazy('pagekite:index')
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ConfigurationView, self).get_context_data(
-            *args, **kwargs)
+        context = super(ConfigurationView,
+                        self).get_context_data(*args, **kwargs)
         unused, custom_services = utils.get_pagekite_services()
         for service in custom_services:
             service['form'] = AddCustomServiceForm(initial=service)

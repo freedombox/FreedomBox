@@ -275,25 +275,10 @@ def download_file_logged_in(browser, url, suffix=''):
     return temp_file.name
 
 
-def pagekite_enable(browser, should_enable):
-    """Enable/disable pagekite service."""
-    nav_to_module(browser, 'pagekite')
-    checkbox = browser.find_by_id('id_pagekite-enabled').first
-    if checkbox.checked == should_enable:
-        return
-
-    if should_enable:
-        checkbox.check()
-    else:
-        checkbox.uncheck()
-
-    submit(browser)
-
-
 def pagekite_is_enabled(browser):
     """Return whether pagekite is enabled."""
     nav_to_module(browser, 'pagekite')
-    return browser.find_by_id('id_pagekite-enabled').checked
+    return browser.find_by_id('app-toggle-input').checked
 
 
 def pagekite_configure(browser, host, port, kite_name, kite_secret):
