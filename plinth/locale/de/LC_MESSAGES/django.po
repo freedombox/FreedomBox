@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-18 18:45-0500\n"
 "PO-Revision-Date: 2019-11-21 18:04+0000\n"
-"Last-Translator: nautilusx <mail.ka@mailbox.org>\n"
+"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
 "Language: de\n"
@@ -481,6 +481,9 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Die Authentizität von SSH-Host %(hostname)s konnte nicht ermittelt werden. "
+"Der Host kündigt die folgenden öffentlichen SSH-Schlüssel an. Bitte "
+"überprüfen Sie einen von ihnen."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
@@ -1558,18 +1561,16 @@ msgstr ""
 "einen Dienst deaktivieren, wird dieser ebenso in der Firewall deaktiviert."
 
 #: plinth/modules/first_boot/forms.py:29
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Enter the secret generated during FreedomBox installation. This secret "
-#| "can also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+#, python-brace-format
 msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
 "also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
-"Das Passwort eingeben, das während der FreedomBox-Installation erzeugt "
-"wurde. Das Passwort kann auch aus der Datei /var/lib/plinth/firstboot-wizard-"
-"secret bezogen werden"
+"Geben Sie den geheimen Schlüssel ein, der während der FreedomBox-"
+"Installation generiert wurde. Dieser Geheime kann auch durch Ausführen des "
+"Befehls \"sudo cat /var/lib/plinth/firstboot-wizard-secret\" auf Ihrer "
+"{box_name}"
 
 #: plinth/modules/first_boot/forms.py:34
 msgid "Firstboot Wizard Secret"
@@ -1654,12 +1655,10 @@ msgid "Invalid repository name."
 msgstr "Ungültiger Respositoryname."
 
 #: plinth/modules/gitweb/forms.py:77
-#, fuzzy
-#| msgid ""
-#| "Repository path is neither empty nor is an existing backups repository."
 msgid "Name of a new repository or URL to import an existing repository."
 msgstr ""
-"Pfad zum Archiv ist weder leer, noch ist ein existierendes Backup-Archiv."
+"Name eines neuen Repositorys oder einer neuen URL zum Importieren eines "
+"vorhandenen Repositorys."
 
 #: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
@@ -2205,13 +2204,6 @@ msgid "Wiki and Blog"
 msgstr "Wiki und Blog"
 
 #: plinth/modules/ikiwiki/__init__.py:46
-#, fuzzy
-#| msgid ""
-#| "ikiwiki is a simple wiki and blog application. It supports several "
-#| "lightweight markup languages, including Markdown, and common blogging "
-#| "functionality such as comments and RSS feeds. When enabled, the blogs and "
-#| "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once "
-#| "created)."
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -2221,8 +2213,9 @@ msgid ""
 msgstr ""
 "ikiwiki ist eine einfache Wiki- und Blog-Anwendung. Sie unterstützt mehrere "
 "einfache Markup-Sprachen wie Markdown und übliche Blogging-Funktionen wie "
-"Kommentare und RSS-Feeds. Wenn aktiviert, stehen die Blogs und Wikis unter "
-"<a href=\"/ikiwiki\">/ikiwiki</a> bereit (nach Erstellung)."
+"Kommentare und RSS-Feeds. Wenn aktiviert, stehen die Blogs und Wikis unter <"
+"a href=\"/ikiwiki\" data-turbolinks=\"false\">/ikiwiki</a> bereit (nach "
+"Erstellung)."
 
 #: plinth/modules/ikiwiki/__init__.py:53
 #, python-brace-format
@@ -4479,14 +4472,6 @@ msgstr ""
 "csipsimple\">CSipSimple</a> (für Android-Telefone)."
 
 #: plinth/modules/repro/__init__.py:55
-#, fuzzy
-#| msgid ""
-#| "<strong>Note:</strong>  Before using repro, domains and users will need "
-#| "to be configured using the <a href=\"/repro/domains.html\">web-based "
-#| "configuration panel</a>. Users in the <em>admin</em> group will be able "
-#| "to log in to the repro configuration panel. After setting the domain, it "
-#| "is required to restart the repro service. Disable the service and re-"
-#| "enable it."
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
 "be configured using the <a href=\"/repro/domains.html\" data-turbolinks="
@@ -4496,11 +4481,11 @@ msgid ""
 "and re-enable it."
 msgstr ""
 "<strong>Hinweis:</strong> Vor der Verwendung von repro, müssen Domains und "
-"Benutzer über das <a href=\"/repro/domains.html\">web-basierte "
-"Konfigurationspanel</a> konfiguriert werden. Die Benutzer der Gruppe "
-"<em>admin</em> können sich dort anmelden. Nach dem Festlegen der Domain, ist "
-"es erforderlich, den repro Dienst neu zu starten. Deaktivieren Sie den "
-"Dienst und aktivieren ihn wieder."
+"Benutzer über das <a href=\"/repro/domains.html\" data-turbolinks=\"false\""
+">web-basierte Konfigurationspanel</a> konfiguriert werden. Die Benutzer der "
+"Gruppe <em>admin</em> können sich dort anmelden. Nach dem Festlegen der "
+"Domain, ist es erforderlich, den repro Dienst neu zu starten. Deaktivieren "
+"Sie den Dienst und aktivieren ihn wieder."
 
 #: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
@@ -4580,13 +4565,6 @@ msgstr ""
 "Nachrichten und Rechtschreibprüfung."
 
 #: plinth/modules/roundcube/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
-#| "Provide the username and password of the email account you wish to access "
-#| "followed by the domain name of the IMAP server for your email provider, "
-#| "like <code>imap.example.com</code>.  For IMAP over SSL (recommended), "
-#| "fill the server field like <code>imaps://imap.example.com</code>."
 msgid ""
 "You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
 "\">/roundcube</a>. Provide the username and password of the email account "
@@ -4595,11 +4573,11 @@ msgid ""
 "(recommended), fill the server field like <code>imaps://imap.example.com</"
 "code>."
 msgstr ""
-"Sie können auf Roundcube von <a href=\"/roundcube\">/roundcube</a> "
-"zugreifen. Geben Sie Benutzernamen und Passwort des E-Mail-Kontos ein, "
-"gefolgt von dem Domainnamen des IMAP-Servers Ihres Anbieters wie z. B. "
-"<code>imap.example.com</code>. Für IMAP über SSL (empfohlen) geben Sie im "
-"Feld Server etwas ein wie <code>imaps://imap.example.com</code>."
+"Sie können auf Roundcube von <a href=\"/roundcube\" data-turbolinks=\"false\""
+">/roundcube</a> zugreifen. Geben Sie Benutzernamen und Passwort des E-Mail-"
+"Kontos ein, gefolgt von dem Domainnamen des IMAP-Servers Ihres Anbieters wie "
+"z. B. <code>imap.example.com</code>. Für IMAP über SSL (empfohlen) geben Sie "
+"im Feld Server etwas ein wie <code>imaps://imap.example.com</code>."
 
 #: plinth/modules/roundcube/__init__.py:51
 msgid ""
@@ -4771,20 +4749,16 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli ermöglicht das Speichern und Teilen von Lesezeichen."
 
 #: plinth/modules/shaarli/__init__.py:40
-#, fuzzy
-#| msgid ""
-#| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
-#| "shaarli</a> path on the web server. Note that Shaarli only supports a "
-#| "single user account, which you will need to setup on the initial visit."
 msgid ""
 "When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
 "turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
 "only supports a single user account, which you will need to setup on the "
 "initial visit."
 msgstr ""
-"Falls aktiviert, wird Shaarli auf dem Webserver unter <a href=\"/shaarli\">/"
-"shaarli</a> erreichar sein. Shaarli unterstützt nur ein Benutzerkonto; "
-"dieses muss beim ersten Besuch der Seite eingerichtet werden."
+"Falls aktiviert, wird Shaarli auf dem Webserver unter <a href=\"/shaarli\" "
+"data-turbolinks=\"false\">/shaarli</a> erreichar sein. Shaarli unterstützt "
+"nur ein Benutzerkonto; dieses muss beim ersten Besuch der Seite eingerichtet "
+"werden."
 
 #: plinth/modules/shadowsocks/__init__.py:35
 msgid "Shadowsocks"
@@ -5476,20 +5450,15 @@ msgstr ""
 "{box_name} ist nur für Benutzer der „admin“-Gruppe zugänglich."
 
 #: plinth/modules/syncthing/__init__.py:57
-#, fuzzy
-#| msgid ""
-#| "When enabled, Syncthing's web interface will be available from <a href=\"/"
-#| "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
-#| "\"https://syncthing.net/\">available</a>."
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
 "syncthing/\" data-turbolinks=\"false\">/syncthing</a>. Desktop and mobile "
 "clients are also <a href=\"https://syncthing.net/\">available</a>."
 msgstr ""
 "Falls aktiviert, ist die Weboberfläche von Syncthing auf <a href=\"/"
-"syncthing/\">/syncthing</a> erreichbar. Client-Apps für Desktop und "
-"Mobiltelefon sind ebenfalls <a href=\"https://syncthing.net/\">erhältlich</"
-"a>."
+"syncthing/\" data-turbolinks=\"false\">/syncthing</a> erreichbar. Client-"
+"Apps für Desktop und Mobiltelefon sind ebenfalls <a href=\"https://syncthing."
+"net/\">erhältlich</a>."
 
 #: plinth/modules/syncthing/__init__.py:65
 msgid "Administer Syncthing application"
@@ -5695,19 +5664,15 @@ msgid "Enable Tor Onion Service"
 msgstr "Tor-Onion-Service aktivieren"
 
 #: plinth/modules/tor/forms.py:131
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Ein verborgener Dienst ermöglicht {box_name} ausgewählte Dienste (wie Wiki "
-"oder Chat) ohne Offenlegung seiner Position anzubieten. Verwenden Sie es "
-"noch nicht, wenn Sie starke Anonymität wünschen."
+"Ein onion Dienst ermöglicht {box_name} ausgewählte Dienste (wie Wiki oder "
+"Chat) ohne Offenlegung seiner Position anzubieten. Verwenden Sie es noch "
+"nicht, wenn Sie starke Anonymität wünschen."
 
 #: plinth/modules/tor/forms.py:136
 msgid "Download software packages over Tor"
@@ -5795,15 +5760,12 @@ msgstr ""
 "BitTorrent ist nicht anonym!"
 
 #: plinth/modules/transmission/__init__.py:49
-#, fuzzy
-#| msgid ""
-#| "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgid ""
 "Access the web interface at <a href=\"/transmission\" data-turbolinks=\"false"
 "\">/transmission</a>."
 msgstr ""
-"Die Weboberfläche kann über <a href=\"/transmission\">/transmission</a> "
-"erreicht werden."
+"Die Weboberfläche kann über <a href=\"/transmission\" data-turbolinks=\""
+"false\">/transmission</a> erreicht werden."
 
 #: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
@@ -5837,32 +5799,25 @@ msgstr ""
 "genutzt werden kann, sich aber sehr wie eine normale Anwendung anfühlt."
 
 #: plinth/modules/ttrss/__init__.py:52
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server. It can be accessed by any <a href="
-#| "\"{users_url}\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\" data-"
 "turbolinks=\"false\">/tt-rss</a> path on the web server. It can be accessed "
 "by any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Falls aktiviert, steht Tiny Tiny RSS auf dem Webserver unter <a href=\"/tt-"
-"rss\">/tt-rss</a> zur Verfügung. Zugriff hat jeder mit einem <a href="
-"\"{users_url}\">{box_name}-Benutzerkonto</a>."
+"rss\" data-turbolinks=\"false\">/tt-rss</a> zur Verfügung. Zugriff hat jeder "
+"mit einem <a href=\"{users_url}\">{box_name}-Benutzerkonto</a>."
 
 #: plinth/modules/ttrss/__init__.py:58
-#, fuzzy
-#| msgid ""
-#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
-#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
 "connecting."
 msgstr ""
 "Um Tiny Tiny RSS mit einer Anwendung auf ihrem Handy oder Computer zu "
-"nutzen, tragen Sie die URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> ein."
+"nutzen, tragen Sie die URL <a href=\"/tt-rss-app/\" data-turbolinks=\"false\""
+">/tt-rss-app</a> ein."
 
 #: plinth/modules/ttrss/__init__.py:65
 msgid "Read and subscribe to news feeds"
