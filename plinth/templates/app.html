@@ -57,21 +57,7 @@
     </p>
   {% endif %}
 
-  {% if clients|length == 1 %}
-    {% with clients|first|lookup:'platforms' as platforms %}
-      {% if platforms|length == 1 and platforms|first|lookup:'type' == 'web' %}
-        {% block launch_button %}
-          <p>
-            <a href='{{ platforms|first|lookup:"url" }}'
-               target='_blank' class='btn btn-primary'>
-              {% trans "Launch web client" %}</a>
-          </p>
-        {% endblock %}
-      {% endif %}
-    {% endwith %}
-  {% else %}
-    {% include "clients.html" with clients=clients enabled=is_enabled %}
-  {% endif %}
+  {% include "toolbar.html" with clients=clients enabled=is_enabled diagnostics_module_name=diagnostics_module_name %}
 
   {% block subsubmenu %}
     {% if subsubmenu %}
@@ -97,12 +83,6 @@
           {% endif %}
         {% endwith %}
       </p>
-    {% endif %}
-  {% endblock %}
-
-  {% block diagnostics %}
-    {% if diagnostics_module_name %}
-      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
     {% endif %}
   {% endblock %}
 

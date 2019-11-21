@@ -16,6 +16,7 @@
 #
 
 import os
+from urllib.parse import urlparse
 
 from django import template
 
@@ -73,3 +74,32 @@ def clients_of_type(clients, client_type):
 def lookup(dictionary, key):
     """Get the value in the dictionary at given key"""
     return dictionary[key]
+
+
+@register.filter(name='is_relative_url')
+def is_relative_url(url):
+    """Check if the given link is relative or not"""
+    parsed_url = urlparse(url)
+    return not parsed_url.netloc
+
+
+@register.filter(name='get_self_hosted_web_apps')
+def get_self_hosted_web_apps(clients):
+    """Get a list of self hosted web apps"""
+    clients_with_web_platforms = list(
+        filter(
+            lambda c: len(
+                list(filter(lambda p: p['type'] == 'web', c['platforms']))),
+            clients))
+    clients_with_self_hosted_apps = list(
+        filter(
+            lambda c: len(
+                list(
+                    filter(lambda p: is_relative_url(p['url']), c['platforms'])
+                )), clients_with_web_platforms))
+    mapped_list = list(
+        map(
+            lambda c: list(filter(lambda p: p['type'] == 'web', c['platforms'])
+                           ), clients_with_self_hosted_apps))
+
+    return [elm for clnt in mapped_list for elm in clnt]
