@@ -46,8 +46,6 @@ description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Transmission daemon handles Bitorrent file sharing.  Note that '
       'BitTorrent is not anonymous.'),
-    _('Access the web interface at '
-      '<a href="/transmission" data-turbolinks="false">/transmission</a>.')
 ]
 
 clients = clients
@@ -74,10 +72,11 @@ class TransmissionApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-transmission', name, short_description=short_description,
-            icon='transmission', url='/transmission', clients=clients,
-            login_required=True, allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-transmission', name,
+                                      short_description=short_description,
+                                      icon='transmission', url='/transmission',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-transmission', name,
