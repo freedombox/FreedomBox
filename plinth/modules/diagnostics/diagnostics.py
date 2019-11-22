@@ -78,14 +78,15 @@ def _start_task():
     if _running_task:
         raise Exception('Task already running')
 
-    _running_task = threading.Thread(target=_run_on_all_modules_wrapper)
+    _running_task = threading.Thread(
+        target=_run_on_all_enabled_modules_wrapper)
     _running_task.start()
 
 
-def _run_on_all_modules_wrapper():
+def _run_on_all_enabled_modules_wrapper():
     """Wrapper over actual task to catch exceptions."""
     try:
-        run_on_all_modules()
+        run_on_all_enabled_modules()
     except Exception as exception:
         logger.exception('Error running diagnostics - %s', exception)
         current_results['error'] = str(exception)
@@ -94,8 +95,8 @@ def _run_on_all_modules_wrapper():
     _running_task = None
 
 
-def run_on_all_modules():
-    """Run diagnostics on all modules and store the result."""
+def run_on_all_enabled_modules():
+    """Run diagnostics on all the enabled modules and store the result."""
     global current_results
     current_results = {
         'modules': [],
@@ -111,6 +112,9 @@ def run_on_all_modules():
         # Don't run setup on modules have not been setup yet.
         # However, run on modules that need an upgrade.
         if module.setup_helper.get_state() == 'needs-setup':
+            continue
+
+        if not module.app.is_enabled():
             continue
 
         modules.append((module_name, module))
