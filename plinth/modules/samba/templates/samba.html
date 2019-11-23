@@ -35,11 +35,11 @@
   {{ block.super }}
 
   {% if is_enabled %}
-    <h3>{% trans "Select devices for sharing:" %}</h3>
+    <h3>{% trans "Select disks for sharing" %}</h3>
     <p>
     {% blocktrans trimmed %}
-      NB! Selecting device does not share the whole disk, only the folder
-      FreedomBox/shares/open_share will be shared on that disk.
+      NB! Only the directory FreedomBox/shares/open_share will be shared on
+      selected disks. The directory will be created if it doesn't exist.
     {% endblocktrans %}
     </p>
     <table class="table table-bordered table-condensed table-striped">
@@ -71,7 +71,10 @@
                 <input type="hidden" value="{{ disk.filesystem_type }}"
                        name="filesystem_type">
                 <input type="checkbox" value="{{ disk.mount_point }}"
-                       name="mount_point" autocomplete="off"/>
+                       name="mount_point" autocomplete="off"
+                       {% if disk.filesystem_type == 'vfat' %}
+                         title='{% trans "vfat partitions are not supported" %}' disabled
+                       {% endif %}/>
               </form>
             {% endif %}
           </td>
@@ -102,11 +105,9 @@
     </table>
 
     {% if unavailable_shares %}
-      <h3>Shares configured but the disk is not available:</h3>
+      <h3>{% trans "Shares configured but the disk is not available" %}</h3>
       <p>
-      {% blocktrans trimmed %}
-        If the disk is plugged back in, sharing will be automatically enabled.
-      {% endblocktrans %}
+      {% trans "If the disk is plugged back in, sharing will be automatically enabled." %}
       </p>
       <table class="table table-bordered table-condensed table-striped">
         <thead>

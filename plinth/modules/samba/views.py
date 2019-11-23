@@ -36,6 +36,7 @@ class SambaAppView(views.AppView):
     """Samba sharing basic configuration."""
     name = samba.name
     description = samba.description
+    diagnostics_module_name = 'samba'
     app_id = 'samba'
     template_name = 'samba.html'
 

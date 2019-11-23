@@ -24,6 +24,7 @@ import configparser
 import json
 import os
 import shutil
+import stat
 import subprocess
 
 import augeas
@@ -93,6 +94,11 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def _close_share(share_name):
+    """Disconnect all samba users who are connected to the share."""
+    subprocess.check_call(['smbcontrol', 'smbd', 'close-share', share_name])
+
+
 def _conf_command(parameters, **kwargs):
     """Run samba configuration registry command."""
     subprocess.check_call(['net', 'conf'] + parameters, **kwargs)
@@ -103,6 +109,8 @@ def _create_share(mount_point, windows_filesystem=False):
     open_share_path = os.path.join(mount_point, SHARES_PATH, 'open_share')
     os.makedirs(open_share_path, exist_ok=True)
 
+    _make_mounts_readable_by_others(mount_point)
+
     # FAT and NTFS partitions don't support chown and chmod
     if not windows_filesystem:
         shutil.chown(open_share_path, group='sambashare')
@@ -110,6 +118,15 @@ def _create_share(mount_point, windows_filesystem=False):
 
     share_name = _create_share_name(mount_point)
     _define_open_share(share_name, open_share_path, windows_filesystem)
+
+
+def _create_share_name(mount_point):
+    """Create a share name."""
+    share_name = os.path.basename(mount_point)
+    if not share_name:
+        share_name = 'disk'
+
+    return share_name
 
 
 def _define_open_share(name, path, windows_filesystem=False):
@@ -124,20 +141,10 @@ def _define_open_share(name, path, windows_filesystem=False):
         _conf_command(['setparm', name, 'inherit permissions', 'yes'])
 
 
-def _create_share_name(mount_point):
-    """Create a share name."""
-    share_name = os.path.basename(mount_point)
-    if not share_name:
-        share_name = "disk"
-
-    return share_name
-
-
 def _get_shares():
-    """Get shares"""
+    """Get shares."""
     shares = []
-    command = ['net', 'conf', 'list']
-    output = subprocess.check_output(command)
+    output = subprocess.check_output(['net', 'conf', 'list'])
     config = configparser.ConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
@@ -146,6 +153,13 @@ def _get_shares():
         shares.append(dict(name=name, mount_point=mount_point))
 
     return shares
+
+
+def _make_mounts_readable_by_others(mount_point):
+    """Make mounted devices readable/traversible by others."""
+    dirname = os.path.dirname(mount_point)
+    stats = os.stat(dirname)
+    os.chmod(dirname, stats.st_mode | stat.S_IROTH | stat.S_IXOTH)
 
 
 def _use_config_file(conf_file):
@@ -182,13 +196,12 @@ def subcommand_delete_share(arguments):
     shares = _get_shares()
     for share in shares:
         if share['mount_point'] == mount_point:
+            _close_share(share['name'])
             _conf_command(['delshare', share['name']])
-            # restart samba to disconnect all users
-            action_utils.service_restart('smbd')
             break
     else:
         raise RuntimeError(
-            'Mount path "{0}" is not shared.'.format(mount_point))
+            'Mount point "{0}" is not shared.'.format(mount_point))
 
 
 def subcommand_get_shares(_):
@@ -197,7 +210,7 @@ def subcommand_get_shares(_):
 
 
 def subcommand_setup(_):
-    """Configure samba. Use custom samba config file."""
+    """Configure samba, use custom samba config file."""
     with open(CONF_PATH, 'w') as file_handle:
         file_handle.write(CONF)
     _use_config_file(CONF_PATH)

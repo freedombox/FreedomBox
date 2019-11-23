@@ -41,11 +41,11 @@ managed_packages = ['samba']
 
 name = _('Samba')
 
-short_description = _('Samba File Sharing')
+short_description = _('File Sharing')
 
 description = [
-    _('Samba allows to share files and folders between computers in your '
-      'local network.'),
+    _('Samba allows to share files and folders between FreedomBox and '
+      'other computers in your local network.'),
     format_lazy(
         _('After installation, you can choose which disks to use for sharing. '
           'Enabled {hostname} shares are open to everyone in your local '
