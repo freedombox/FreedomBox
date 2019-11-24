@@ -42,10 +42,6 @@
     {% endif %}
   </p>
 
-  <p>
-    <a href='{% url "jsxc:jsxc" %}' target='_blank' class='btn btn-primary'>
-      {% trans "Launch web client" %}</a>
-  </p>
 {% endblock %}
 
 
@@ -53,7 +49,7 @@
 
   <h3>{% trans "Configuration" %}</h3>
 
-  <form class="form form-configuration" method="post">
+  <form id="app-form" class="form form-configuration" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}

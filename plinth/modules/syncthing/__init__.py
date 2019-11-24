@@ -55,8 +55,9 @@ description = [
           'folders.  The web interface on {box_name} is only available for '
           'users belonging to the "admin" group.'), box_name=_(cfg.box_name)),
     _('When enabled, Syncthing\'s web interface will be available from '
-      '<a href="/syncthing/">/syncthing</a>.  Desktop and mobile clients are '
-      'also <a href="https://syncthing.net/">available</a>.'),
+      '<a href="/syncthing/" data-turbolinks="false">/syncthing</a>. '
+      'Desktop and mobile clients are also <a href="https://syncthing.net/">'
+      'available</a>.'),
 ]
 
 clients = clients

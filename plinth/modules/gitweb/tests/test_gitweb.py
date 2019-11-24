@@ -104,3 +104,16 @@ def test_action_create_repo_with_invalid_names(call_action, name):
             'create-repo', '--name', name, '--description', '', '--owner', '',
             '--keep-ownership'
         ])
+
+
+@pytest.mark.parametrize('url', [
+    'Test-repo', 'file://root/Test-repo', 'localhost/Test-repo',
+    'ssh://localhost/Test-repo', 'https://localhost/.Test-repo'
+])
+def test_action_create_repo_with_invalid_urls(call_action, url):
+    """Test that cloning repository with invalid URL fails."""
+    with pytest.raises(ValidationError):
+        call_action([
+            'create-repo', '--url', url, '--description', '', '--owner', '',
+            '--keep-ownership'
+        ])

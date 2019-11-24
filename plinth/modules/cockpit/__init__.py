@@ -54,11 +54,11 @@ description = [
           'required. A web based terminal for console operations is also '
           'available.'), box_name=_(cfg.box_name)),
     format_lazy(
-        _('When enabled, Cockpit will be available from <a href="/_cockpit/">'
-          '/_cockpit/</a> path on the web server. It can be accessed by '
-          '<a href="{users_url}">any user</a> on {box_name} belonging to '
-          'the admin group.'), box_name=_(cfg.box_name),
-        users_url=reverse_lazy('users:index')),
+        _('When enabled, Cockpit will be available from <a href="/_cockpit/" '
+          'data-turbolinks="false">/_cockpit/</a> path on the web server. It '
+          'can be accessed by <a href="{users_url}">any user</a> on '
+          '{box_name} belonging to the admin group.'),
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
 ]
 
 manual_page = 'Cockpit'

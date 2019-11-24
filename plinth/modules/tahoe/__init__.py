@@ -71,7 +71,7 @@ class TahoeApp(app_module.App):
         super().__init__()
         menu_item = menu.Menu('menu-tahoe', name, short_description,
                               'tahoe-lafs', 'tahoe:index',
-                              parent_url_name='apps')
+                              parent_url_name='apps', advanced=True)
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(

@@ -67,3 +67,9 @@ def show_subsubmenu(context, menu):
 def clients_of_type(clients, client_type):
     """Filter and get clients of a particular type"""
     return clients_module.of_type(clients, client_type)
+
+
+@register.filter(name='lookup')
+def lookup(dictionary, key):
+    """Get the value in the dictionary at given key"""
+    return dictionary[key]

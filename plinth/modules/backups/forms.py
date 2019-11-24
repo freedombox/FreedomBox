@@ -233,8 +233,8 @@ class VerifySshHostkeyForm(forms.Form):
         """Initialize the form with selectable apps."""
         hostname = kwargs.pop('hostname')
         super().__init__(*args, **kwargs)
-        self.fields['ssh_public_key'].choices = self._get_all_public_keys(
-            hostname)
+        (self.fields['ssh_public_key'].choices,
+         self.keyscan_error) = self._get_all_public_keys(hostname)
 
     @staticmethod
     def _get_all_public_keys(hostname):
@@ -242,11 +242,12 @@ class VerifySshHostkeyForm(forms.Form):
         # Fetch public keys of ssh remote
         keyscan = subprocess.run(['ssh-keyscan', hostname],
                                  stdout=subprocess.PIPE,
-                                 stderr=subprocess.DEVNULL)
+                                 stderr=subprocess.PIPE)
         keys = keyscan.stdout.decode().splitlines()
+        error_message = keyscan.stderr.decode() if keyscan.returncode else None
         # Generate user-friendly fingerprints of public keys
         keygen = subprocess.run(['ssh-keygen', '-l', '-f', '-'],
                                 input=keyscan.stdout, stdout=subprocess.PIPE)
         fingerprints = keygen.stdout.decode().splitlines()
 
-        return zip(keys, fingerprints)
+        return zip(keys, fingerprints), error_message

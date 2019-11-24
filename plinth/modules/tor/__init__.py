@@ -33,7 +33,7 @@ from plinth.signals import domain_added, domain_removed
 from . import utils
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 4
 
 depends = ['names']
 
@@ -77,7 +77,7 @@ class TorApp(app_module.App):
                               'tor:index', parent_url_name='apps')
         self.add(menu_item)
 
-        domain_type = DomainType('domain-type-tor', _('Tor Hidden Service'),
+        domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
                                  'tor:index', can_have_certificate=False)
         self.add(domain_type)
 
@@ -167,9 +167,9 @@ def diagnose():
     ])
     if 'orport' in ports:
         results.append(
-            action_utils.diagnose_port_listening(ports['orport'], 'tcp4'))
+            action_utils.diagnose_port_listening(int(ports['orport']), 'tcp4'))
         results.append(
-            action_utils.diagnose_port_listening(ports['orport'], 'tcp6'))
+            action_utils.diagnose_port_listening(int(ports['orport']), 'tcp6'))
 
     results.append([
         _('Obfs3 transport registered'),
@@ -177,7 +177,9 @@ def diagnose():
     ])
     if 'obfs3' in ports:
         results.append(
-            action_utils.diagnose_port_listening(ports['obfs3'], 'tcp4'))
+            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp6'))
 
     results.append([
         _('Obfs4 transport registered'),
@@ -185,7 +187,9 @@ def diagnose():
     ])
     if 'obfs4' in ports:
         results.append(
-            action_utils.diagnose_port_listening(ports['obfs4'], 'tcp4'))
+            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp6'))
 
     results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
     results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))

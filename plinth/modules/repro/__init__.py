@@ -53,11 +53,11 @@ description = [
       '<a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple"> '
       'CSipSimple</a> (for Android phones).'),
     _('<strong>Note:</strong>  Before using repro, domains and users will '
-      'need to be configured using the <a href="/repro/domains.html">'
-      'web-based configuration panel</a>. Users in the <em>admin</em> group '
-      'will be able to log in to the repro configuration panel. After setting '
-      'the domain, it is required to restart the repro service. Disable the '
-      'service and re-enable it.'),
+      'need to be configured using the <a href="/repro/domains.html" '
+      'data-turbolinks="false">web-based configuration panel</a>. Users in '
+      'the <em>admin</em> group will be able to log in to the repro '
+      'configuration panel. After setting the domain, it is required to '
+      'restart the repro service. Disable the service and re-enable it.'),
 ]
 
 clients = clients

@@ -18,6 +18,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import cfg
 from plinth.modules import first_boot
 
 
@@ -26,9 +27,11 @@ class FirstbootWizardSecretForm(forms.Form):
     secret = forms.CharField(
         label='', help_text=_(
             'Enter the secret generated during FreedomBox installation. '
-            'This secret can also be obtained from the file '
-            '/var/lib/plinth/firstboot-wizard-secret'), required=False,
-        widget=forms.PasswordInput(attrs={'placeholder': _('Secret')}))
+            'This secret can also be obtained by running the command "sudo '
+            'cat /var/lib/plinth/firstboot-wizard-secret" on your {box_name}'.
+            format(box_name=_(cfg.box_name))), required=False,
+        widget=forms.PasswordInput(
+            attrs={'placeholder': _('Firstboot Wizard Secret')}))
 
     def validate_secret(self, secret):
         """Match the secret provided by the user with the one

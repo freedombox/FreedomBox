@@ -20,19 +20,31 @@ Naming conventions:
 
 # For authors of patches
 * If you would like to contribute, but are unsure what to do, just ask. There
-  are usually also issues tagged as 'beginner', which might be a good starting
-  point to work on and have a known solution.  Also, other developers are ready
-  to guide you on the implementation for such tasks.
+  are usually also issues tagged as 'Contributor Invite' or 'beginner', which
+  might be a good starting point to work on and have a known solution. Also,
+  other developers are ready to guide you on the implementation for such tasks.
   Feel free to pickup a task from the issue by announcing it on the issue or by
   creating a new issue for whatever task you are going to work on.
-* To get your changes included, you must open a pull request (PR), to get them
-  reviewed. Briefly, fork the repository to your account, and edit, commit and
-  push there. Then you can create a PR to the main repository.
-* Please include one single feature per PR, to keep the review simple and
-  focused on one topic. (This might still mean hundreds of lines of code.) Use
-  another branch than `master`, so you can create multiple PRs and still keep
-  merging from `master`. Depending on the complexity of your PR, it may take a
-  while until it is reviewed and merged.
+* To get your changes included, you must open a merge request (MR) and get them
+  reviewed. Briefly, fork the repository to your account, create a branch, edit
+  code, commit and push there. Then you can create a merge request on the main
+  repository.
+* Before committing your changes ensure that your code conforms to base code
+  hygiene by running tests (see HACKING.md) and the automatic code formatting
+  tools `yapf` and `isort`.
+* Please include one single feature per merge request, to keep the review simple
+  and focused on one topic. (This might still mean hundreds of lines of code.)
+  Use a branch other than `master`, so you can create multiple merge requests
+  and still keep merging from `master`. Depending on the complexity of your
+  merge request, it may take a while until it is reviewed and merged.
+* Keep your commits organized logically and as small as possible. If commit B
+  fixes a mistake in commit A, both of which are part of the same merge request,
+  combine them into a single commit. If commit A introduces a single logical
+  change but breaks existing functionality and then commit B rectifies it, then
+  also combine the two commits. This is to ensure that the source code can be
+  checked out at any revision and used (such as during git bisect). If there are
+  two unrelated changes in the same commit, split them to into separate commits.
+  See Git documentation on how to merge, split and reorder commits.
 * Please create meaningful commit messages, by following common guidelines:
     * Multiple lines are allowed if it makes the message clearer.
     * Separate the first subject line from the text body with a blank line.
@@ -48,9 +60,21 @@ Naming conventions:
   your work under the project's license (see LICENSES file) and that you agree
   to a [Developer Certificate of Origin](http://developercertificate.org/).
 * If (part of) your code changes were inspired or plainly copied from another
-  source, please indicate this in the PR, so the reviewer can handle it.
-* If your PR is not ready for merging yet, the title of your PR must start with
+  source, please indicate this in the merge request, so the reviewer can handle
+  it.
+* If your merge request is not ready for merging yet, the title of your merge
+  request must start with
   `WIP:`
+* If a reviewer asks for changes to your merge request, perform the changes as
+  requested or provide clarification. Close the discussion threads so that the
+  reviewer knows that it is ready for another round of review.
+* Newer changes addressing review comments should go into the old commits which
+  are being changed. For example, if there is a security problem with one of
+  your commits, the commit should be edited instead of introducing a new commit
+  with fix for it. After a merge, if a developer checks out any revision, it
+  could not contain serious problem. See Git documentation on how to merge,
+  split, reorder commits and how to force push your branches after altering
+  commits.
 * Have fun contributing :)
 
 
@@ -84,9 +108,9 @@ Naming conventions:
 * In case more fundamental changes are necessary, or if the contributor is new,
   try to encourage them to make changes by giving appropriate feedback. This is
   a major way how we mentor new contributors.
-* Any PR whose title starts with `WIP:` cannot be merged. Communicate with the
-  author on what the pending changes are. Get the author to complete them or
-  complete them yourself in case of an emergency.
+* Any merge request whose title starts with `WIP:` cannot be merged. Communicate
+  with the author on what the pending changes are. Get the author to complete
+  them or complete them yourself in case of an emergency.
 * Have fun reviewing :)
 
 

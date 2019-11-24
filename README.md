@@ -1,19 +1,19 @@
 [![pipeline status](https://salsa.debian.org/freedombox-team/plinth/badges/master/pipeline.svg)](https://salsa.debian.org/freedombox-team/plinth/commits/master)
-[![Translation status](https://hosted.weblate.org/widgets/freedombox/-/shields-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
-[![Debian Unstable](https://badges.debian.net/badges/debian/unstable/plinth/version.svg)](https://packages.debian.org/unstable/plinth)
-[![Debian Testing](https://badges.debian.net/badges/debian/testing/plinth/version.svg)](https://packages.debian.org/testing/plinth)
-[![Debian Stable](https://badges.debian.net/badges/debian/stable/plinth/version.svg)](https://packages.debian.org/stable/plinth)
+[![Translation status](https://hosted.weblate.org/widgets/freedombox/-/svg-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
+[![Debian Unstable](https://badges.debian.net/badges/debian/unstable/freedombox/version.svg)](https://packages.debian.org/unstable/freedombox)
+[![Debian Testing](https://badges.debian.net/badges/debian/testing/freedombox/version.svg)](https://packages.debian.org/testing/freedombox)
+[![Debian Stable](https://badges.debian.net/badges/debian/stable/freedombox/version.svg)](https://packages.debian.org/stable/freedombox)
 
 # FreedomBox Service (Plinth)
 
 The core functionality and web front-end of
 [FreedomBox](https://freedombox.org/).
 
-<img src="doc/images/freedombox-screenshot-home.png" width="425px" style="margin: 10px"> <img src="doc/images/freedombox-screenshot-apps.png" width="425px" style="margin: 10px">
+<img src="doc/manual/en/images/freedombox-screenshot-home.png" width="425px" style="margin: 10px"> <img src="doc/manual/en/images/freedombox-screenshot-apps.png" width="425px" style="margin: 10px">
 
-<img src="doc/images/freedombox-screenshot-system.png" width="425px" style="margin: 10px"> <img src="doc/images/freedombox-screenshot-tor.png" width="425px" style="margin: 10px">
+<img src="doc/manual/en/images/freedombox-screenshot-system.png" width="425px" style="margin: 10px"> <img src="doc/manual/en/images/freedombox-screenshot-tor.png" width="425px" style="margin: 10px">
 
-<img src="doc/images/freedombox-screenshot-manual.png" width="425px" style="margin: 10px"> <img src="doc/images/freedombox-screenshot-about.png" width="425px" style="margin: 10px">
+<img src="doc/manual/en/images/freedombox-screenshot-manual.png" width="425px" style="margin: 10px"> <img src="doc/manual/en/images/freedombox-screenshot-about.png" width="425px" style="margin: 10px">
 
 # Description
 

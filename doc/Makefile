@@ -54,6 +54,11 @@ install: all
 		install $(INSTALL_OPTS) -t $(INSTALL_DIR)/$$(dirname $${file}) \
 			$${file} ; \
 	done
+	for lang in $(MANUAL_LANGUAGES); do \
+		install $(INSTALL_OPTS) manual/$${lang}/images/*.png \
+			manual/$${lang}/images/*.jpg \
+			-t $(INSTALL_DIR)/manual/$${lang}/images ; \
+	done
 
 # Do not edit the manual page in this directory.  The manual is
 # maintained as separate pages on the FreedomBox wiki and aggregated

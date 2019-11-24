@@ -27,15 +27,27 @@
 
 {% block content %}
 
-  {% block pagetitle %}
-    <h2>{{ name }}</h2>
-  {% endblock %}
+  <header>
+    <section class='header-bar'>
+      {% block pagetitle %}
+        <h2>{{ name }}</h2>
+      {% endblock %}
 
-  {% block description %}
-    {% for paragraph in description %}
-      <p>{{ paragraph|safe }}</p>
-    {% endfor %}
-  {% endblock %}
+      <div id='app-toggle-container' class="app-toggle-container">
+          {% if is_enabled %}
+            <button id="app-toggle-button" value="False" class="btn toggle-button toggle-button--toggled"></button>
+          {% else %}
+            <button id="app-toggle-button" value="True" class="btn toggle-button"></button>
+          {% endif %}
+      </div>
+    </section>
+
+    {% block description %}
+      {% for paragraph in description %}
+        <p>{{ paragraph|safe }}</p>
+      {% endfor %}
+    {% endblock %}
+  </header>
 
   {% if manual_page %}
     <p class="manual-page">
@@ -45,7 +57,21 @@
     </p>
   {% endif %}
 
-  {% include "clients.html" with clients=clients enabled=is_enabled %}
+  {% if clients|length == 1 %}
+    {% with clients|first|lookup:'platforms' as platforms %}
+      {% if platforms|length == 1 and platforms|first|lookup:'type' == 'web' %}
+        {% block launch_button %}
+          <p>
+            <a href='{{ platforms|first|lookup:"url" }}'
+               target='_blank' class='btn btn-primary'>
+              {% trans "Launch web client" %}</a>
+          </p>
+        {% endblock %}
+      {% endif %}
+    {% endwith %}
+  {% else %}
+    {% include "clients.html" with clients=clients enabled=is_enabled %}
+  {% endif %}
 
   {% block subsubmenu %}
     {% if subsubmenu %}
@@ -86,15 +112,15 @@
 
   {% block configuration %}
     <h3>{% trans "Configuration" %}</h3>
-
-    <form class="form form-configuration" method="post">
+    <form id="app-form" class="form form-configuration" method="post">
       {% csrf_token %}
 
       {{ form|bootstrap }}
 
       <input type="submit" class="btn btn-primary"
-             value="{% trans "Update setup" %}"/>
+            value="{% trans "Update setup" %}"/>
     </form>
   {% endblock %}
 
+  <script src="{% static 'theme/js/app.template.js' %}"></script>
 {% endblock %}

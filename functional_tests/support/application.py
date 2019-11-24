@@ -54,7 +54,7 @@ def get_app_module(app_name):
 
 
 def get_app_checkbox_id(app_name):
-    checkbox_id = 'id_is_enabled'
+    checkbox_id = 'app-toggle-input'
     if app_name in app_checkbox_id:
         checkbox_id = app_checkbox_id[app_name]
     return checkbox_id
@@ -103,8 +103,15 @@ def _change_status(browser, app_name, change_status_to='enabled',
     interface.nav_to_module(browser, get_app_module(app_name))
     checkbox_id = checkbox_id or get_app_checkbox_id(app_name)
     checkbox = browser.find_by_id(checkbox_id)
-    checkbox.check() if change_status_to == 'enabled' else checkbox.uncheck()
-    interface.submit(browser, form_class='form-configuration')
+    button = browser.find_by_id('app-toggle-button')
+    if button:
+        if checkbox.checked and change_status_to == 'disabled' or (
+                not checkbox.checked and change_status_to == 'enabled'):
+            interface.submit(browser, element=button)
+    else:
+        checkbox.check(
+        ) if change_status_to == 'enabled' else checkbox.uncheck()
+        interface.submit(browser, form_class='form-configuration')
     if app_name in apps_with_loaders:
         wait_for_config_update(browser, app_name)
 
@@ -394,8 +401,9 @@ def _gitweb_get_repo_url(repo, with_auth):
     if with_auth:
         password = config['DEFAULT']['password']
 
-    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(
-        scheme, config['DEFAULT']['username'], password, url, repo)
+    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(scheme,
+                                                 config['DEFAULT']['username'],
+                                                 password, url, repo)
 
 
 @contextlib.contextmanager

@@ -43,9 +43,9 @@ short_description = _('BitTorrent Web Client')
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
     _('When enabled, the Deluge web client will be available from '
-      '<a href="/deluge">/deluge</a> path on the web server. The '
-      'default password is \'deluge\', but you should log in and change '
-      'it immediately after enabling this service.')
+      '<a href="/deluge" data-turbolinks="false">/deluge</a> path on the web '
+      'server. The default password is \'deluge\', but you should log in and '
+      'change it immediately after enabling this service.')
 ]
 
 group = ('bit-torrent', _('Download files using BitTorrent applications'))

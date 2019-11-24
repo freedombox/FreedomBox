@@ -3,18 +3,22 @@
 FreedomBox Developer Documentation
 ==================================
 
-This manual is meant for developers intending to develop app for FreedomBox. It
-provides a step by step tutorial and an API reference.
+**Note:** If you are looking for documentation on using FreedomBox, please visit
+the `FreedomBox Manual <https://wiki.debian.org/FreedomBox/Manual>`__. You can
+also find a copy of the user manual in the help section of your FreedomBox.
+
+This manual is meant for developers intending to develop apps for FreedomBox.
+It provides an API reference and a step-by-step tutorial for developing apps.
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: Contents
 
    tutorial/index
    reference/index
 
 External References
-===================
+*******************
 
 #. :doc:`Django Documentation - Getting Started <django:intro/index>`
 
@@ -27,7 +31,7 @@ External References
 #. `FreedomBox User Manual <https://wiki.debian.org/FreedomBox/Manual>`_
 
 Indices and tables
-==================
+******************
 
 * :ref:`genindex`
 * :ref:`modindex`

@@ -46,7 +46,8 @@ description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Transmission daemon handles Bitorrent file sharing.  Note that '
       'BitTorrent is not anonymous.'),
-    _('Access the web interface at <a href="/transmission">/transmission</a>.')
+    _('Access the web interface at '
+      '<a href="/transmission" data-turbolinks="false">/transmission</a>.')
 ]
 
 clients = clients
