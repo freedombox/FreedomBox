@@ -3,6 +3,7 @@
 {% load static %}
 
 <header class="app-header {% if not icon_filename %} app-header-single-column {% endif %}">
+
   {% if icon_filename %}
 
     <img src="{% static 'theme/icons/' %}{{ icon_filename }}.svg" alt="{{ name  }}"/>
@@ -10,13 +11,22 @@
   {% endif %}
 
   <section class="app-description" >
-    {% block pagetitle %}
-      {% if setup %}
-        <h2>{% trans "Installation" %}: {{ short_description|default:'' }} ({{ name }})</h2>
-      {% else %}
-        <h2>{{ name }}</h2>
-      {% endif %}
-    {% endblock %}
+    <section class='header-bar'>
+      {% block pagetitle %}
+        {% if setup %}
+          <h2>{% trans "Installation" %}: {{ short_description|default:'' }} ({{ name }})</h2>
+        {% else %}
+          <h2>{{ name }}</h2>
+        {% endif %}
+      {% endblock %}
+      <div id='app-toggle-container' class="app-toggle-container">
+          {% if is_enabled %}
+            <button id="app-toggle-button" value="False" class="btn toggle-button toggle-button--toggled"></button>
+          {% else %}
+            <button id="app-toggle-button" value="True" class="btn toggle-button"></button>
+          {% endif %}
+      </div>
+    </section>
 
     {% block description %}
       {% for paragraph in description %}
