@@ -81,7 +81,16 @@
 
           {% block diagnostics %}
             {% if diagnostics_module_name %}
-              {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
+            <!-- Single button -->
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                  {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
+                </div>
+              </div>
+              
             {% endif %}
           {% endblock %}
     
