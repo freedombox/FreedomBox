@@ -23,83 +23,54 @@
 {% load static %}
 
 {% block toolbar %}
-  {% if clients %}
-    <div class="toolbar toolbar-default">
-      <div class="toolbar-heading">
-        <section class="toolbar-title">
 
-          {% if clients|get_self_hosted_web_apps|length == 1 and clients|length == 1 %}
+  <section class="toolbar">
+    <div class="btn-toolbar" role="toolbar">
 
-            <a
-              {% if enabled %}
-                href='{{ clients|get_self_hosted_web_apps|first|lookup:"url" }}'
-              {% endif %}
-              target='_blank'
-            >
-              <button
-                role="button"
-                type="button"
-                class="btn btn-primary"
-                {% if not enabled %}
-                  disabled="disabled"
-                {% endif %}
-              >
+        {% if clients %}
+          {% with client_platforms=clients|clients_get_platforms %}
+            {% if client_platforms.web|length == 1 %}
+              <a target='_blank' rel="noopener noreferrer"
+                 class="btn btn-primary" role="button" data-turbolinks="false"
+                 {% if not enabled %} disabled="disabled"
+                 {% else %} href="{{ client_platforms.web.0.url }}"
+                 {% endif %} data-turbolinks="false">
                 {% trans "Launch web client" %}
-              </button>
-            </a>
-
-          {% elif clients|get_self_hosted_web_apps|length == 1 %}
-            <button type="button" class="btn btn-default collapsed collapsible-button"
-                  data-toggle="collapse" data-target="#clients">
-              <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
-              {% trans "Client Apps" %}
-            </button>
-            <a
-              {% if enabled %}
-                href='{{ clients|get_self_hosted_web_apps|first|lookup:"url" }}'
-              {% endif %}
-              target='_blank'
-            >
-              <button
-                role="button"
-                type="button"
-                class="btn btn-primary"
-                {% if not enabled %}
-                  disabled="disabled"
-                {% endif %}
-              >
-                {% trans "Launch web client" %}
-              </button>
-            </a>
-          {% else %}
-            <button type="button" class="btn btn-default collapsed collapsible-button"
-                  data-toggle="collapse" data-target="#clients">
-              <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
-              {% trans "Client Apps" %}
-            </button>
-          {% endif %}
-
-          {% block diagnostics %}
-            {% if diagnostics_module_name %}
-            <!-- Single button -->
-              <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu">
-                  {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
-                </div>
-              </div>
-              
+                <span class="fa fa-external-link"></span>
+              </a>
             {% endif %}
-          {% endblock %}
-    
-        </section>
-      </div>
-      <div class="toolbar-body">
-        {% include "clients.html" with clients=clients enabled=is_enabled %}
-      </div>
-    </div>
 
-  {% endif %}
+            {% if client_platforms.web|length > 1 or client_platforms.other %}
+              <button type="button" data-toggle="collapse" data-target="#clients"
+                      class="btn btn-default collapsed collapsible-button">
+                <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+                {% trans "Client Apps" %}
+              </button>
+            {% endif %}
+          {% endwith %}
+        {% endif %}
+
+        {% if diagnostics_module_name %}
+          <!-- Single button -->
+          <div class="btn-group button-extra-actions">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+              <span class="fa fa-cog" aria-hidden="true"></span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
+              </li>
+            </ul>
+          </div>
+        {% endif %}
+
+    </div>
+    <div class="toolbar-collapsed-content">
+      {% include "clients.html" with clients=clients enabled=is_enabled %}
+    </div>
+  </section>
+
 {% endblock toolbar %}
