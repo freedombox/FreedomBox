@@ -32,6 +32,7 @@ def index(request):
     return TemplateResponse(
         request, 'names.html', {
             'title': names.name,
+            'name': names.name,
             'description': names.description,
             'manual_page': names.manual_page,
             'status': status
