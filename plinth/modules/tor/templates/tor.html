@@ -1,4 +1,4 @@
-{% extends "simple_app.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -32,33 +32,16 @@
 
 {% endblock %}
 
-
-{% block configuration %}
-
-  {% include "clients.html" with clients=clients %}
-
-  <h3>{% trans "Status" %}</h3>
-
+{% block status %}
   {% if config_running %}
+    <h3>{% trans "Status" %}</h3>
 
     <p class="running-status-parent">
       <span class="running-status loading"></span>
       {% trans "Tor configuration is being updated" %}
     </p>
-
   {% else %}
-
-    <p class="running-status-parent">
-      {% if status.is_running %}
-        <span class="running-status active"></span>
-        {% trans "Tor is running" %}
-      {% else %}
-        <span class="running-status inactive"></span>
-        {% trans "Tor is not running" %}
-      {% endif %}
-    </p>
-
-    {% include "diagnostics_button.html" with module="tor" enabled=status.enabled %}
+    {{ block.super }}
 
     {% if status.hs_enabled %}
       <table class="table table-bordered table-condensed table-striped tor-hs">
@@ -80,19 +63,20 @@
         </tbody>
       </table>
     {% endif %}
+  {% endif %}
+{% endblock %}
 
-    {% include "internal-zone.html" %}
+{% block internal_zone %}
+  {% if not config_running %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
 
-    <h3>{% trans "Configuration" %}</h3>
+{% block configuration %}
 
-    <form class="form form-configuration" method="post">
-      {% csrf_token %}
+  {% if not config_running %}
 
-      {{ form|bootstrap }}
-
-      <input type="submit" class="btn btn-primary btn-md"
-             value="{% trans "Update setup" %}"/>
-    </form>
+    {{ block.super }}
 
     {% if status.relay_enabled %}
       <h3>{% trans "Relay" %}</h3>

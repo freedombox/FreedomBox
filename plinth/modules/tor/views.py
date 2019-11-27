@@ -53,13 +53,18 @@ def index(request):
     return TemplateResponse(
         request, 'tor.html', {
             'title': tor.name,
+            'name': tor.name,
             'description': tor.description,
             'clients': tor.clients,
             'manual_page': tor.manual_page,
             'status': status,
             'config_running': bool(config_process),
             'form': form,
-            'firewall': tor.app.get_components_of_type(Firewall)
+            'firewall': tor.app.get_components_of_type(Firewall),
+            'diagnostics_module_name': 'tor',
+            'is_enabled': status['enabled'],
+            'show_status_block': True,
+            'is_running': status['is_running'],
         })
 
 
@@ -70,8 +75,9 @@ def _apply_changes(request, old_status, new_status):
     except ActionError as exception:
         messages.error(
             request,
-            _('Action error: {0} [{1}] [{2}]').format(
-                exception.args[0], exception.args[1], exception.args[2]))
+            _('Action error: {0} [{1}] [{2}]').format(exception.args[0],
+                                                      exception.args[1],
+                                                      exception.args[2]))
 
 
 def __apply_changes(request, old_status, new_status):
@@ -131,8 +137,9 @@ def __apply_changes(request, old_status, new_status):
         else:
             tor.app.disable()
 
-        config_process = actions.superuser_run(
-            'tor', ['configure'] + arguments, run_in_background=True)
+        config_process = actions.superuser_run('tor',
+                                               ['configure'] + arguments,
+                                               run_in_background=True)
         return
 
     if arguments:
