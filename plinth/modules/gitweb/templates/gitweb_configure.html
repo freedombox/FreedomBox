@@ -40,18 +40,18 @@
   </style>
 {% endblock %}
 
-{% block status %}
-  <a href="{% url 'gitweb:create' %}" class="btn btn-primary"
-     role="button" title="{% trans 'Create repository' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Create repository' %}
-  </a>
-{% endblock %}
-
 {% block configuration %}
   {{ block.super }}
 
   <h3>{% trans "Manage Repositories" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'gitweb:create' %}" class="btn btn-default"
+       role="button" title="{% trans 'Create repository' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create repository' %}
+    </a>
+  </div>
 
   <div class="row">
     <div class="col-sm-6">
