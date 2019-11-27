@@ -1,4 +1,4 @@
-{% extends "simple_app.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -126,8 +126,6 @@
         {% endfor %}
       </tbody>
     </table>
-
-    {% include "diagnostics_button.html" with module="letsencrypt" enabled=True %}
 
   {% else %}
     {% url 'config:index' as config_url %}
