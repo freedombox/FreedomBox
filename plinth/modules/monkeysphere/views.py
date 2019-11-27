@@ -40,6 +40,7 @@ def index(request):
     return TemplateResponse(
         request, 'monkeysphere.html', {
             'title': monkeysphere.name,
+            'name': monkeysphere.name,
             'description': monkeysphere.description,
             'status': status,
             'manual_page': monkeysphere.manual_page,
@@ -53,9 +54,9 @@ def import_key(request, ssh_fingerprint):
     keys = get_keys()
     available_domains = keys[ssh_fingerprint]['available_domains']
     try:
-        actions.superuser_run(
-            'monkeysphere',
-            ['host-import-key', ssh_fingerprint] + list(available_domains))
+        actions.superuser_run('monkeysphere',
+                              ['host-import-key', ssh_fingerprint] +
+                              list(available_domains))
         messages.success(request, _('Imported key.'))
     except actions.ActionError as exception:
         messages.error(request, str(exception))
