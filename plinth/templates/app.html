@@ -86,9 +86,13 @@
     {% endif %}
   {% endblock %}
 
-  {% include "internal-zone.html" %}
+  {% block internal_zone %}
+    {% include "internal-zone.html" %}
+  {% endblock %}
 
-  {% include "port-forwarding-info.html" with service_name=name %}
+  {% block port_forwarding_info %}
+    {% include "port-forwarding-info.html" with service_name=name %}
+  {% endblock %}
 
   {% block configuration %}
     <h3>{% trans "Configuration" %}</h3>
