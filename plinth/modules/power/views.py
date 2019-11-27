@@ -33,6 +33,7 @@ def index(request):
     return TemplateResponse(
         request, 'power.html', {
             'title': power.name,
+            'name': power.name,
             'description': power.description,
             'manual_page': power.manual_page,
             'pkg_manager_is_busy': _is_pkg_manager_busy()
