@@ -35,6 +35,8 @@
 
 {% block configuration %}
 
+  {% include "clients.html" with clients=clients enabled=is_enabled %}
+
   {% if status.is_setup %}
 
     <h3>{% trans "Profile" %}</h3>
