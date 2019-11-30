@@ -29,7 +29,7 @@ import subprocess
 
 import augeas
 from plinth import action_utils
-from plinth.modules.samba.manifest import SHARES_CONF_BACKUP_FILE, SHARES_PATH
+from plinth.modules.samba.manifest import SHARES_CONF_BACKUP_FILE
 
 DEFAULT_FILE = '/etc/default/samba'
 
@@ -106,15 +106,18 @@ def _conf_command(parameters, **kwargs):
 
 def _create_share(mount_point, windows_filesystem=False):
     """Create a samba share."""
-    open_share_path = os.path.join(mount_point, SHARES_PATH, 'open_share')
+    shares_path = _get_shares_path(mount_point)
+    open_share_path = os.path.join(mount_point, shares_path, 'open_share')
     os.makedirs(open_share_path, exist_ok=True)
 
     _make_mounts_readable_by_others(mount_point)
 
-    # FAT and NTFS partitions don't support chown and chmod
+    # FAT and NTFS partitions don't support setting permissions
     if not windows_filesystem:
-        shutil.chown(open_share_path, group='sambashare')
+        shutil.chown(open_share_path, group='freedombox-share')
         os.chmod(open_share_path, 0o2775)
+        subprocess.check_call(['setfacl', '-Rm', 'g::rwx', open_share_path])
+        subprocess.check_call(['setfacl', '-Rdm', 'g::rwx', open_share_path])
 
     share_name = _create_share_name(mount_point)
     _define_open_share(share_name, open_share_path, windows_filesystem)
@@ -137,8 +140,23 @@ def _define_open_share(name, path, windows_filesystem=False):
         pass
     _conf_command(['addshare', name, path, 'writeable=y', 'guest_ok=y'])
     if not windows_filesystem:
-        _conf_command(['setparm', name, 'force group', 'sambashare'])
+        _conf_command(['setparm', name, 'force group', 'freedombox-share'])
         _conf_command(['setparm', name, 'inherit permissions', 'yes'])
+
+
+def _get_mount_point(path):
+    """Get the mount point where the share is."""
+    subpath = 'FreedomBox/shares/'
+    if '/var/lib/freedombox/shares/' in path:
+        try:
+            # test whether var directory is a mount point
+            _validate_mount_point(path.split('lib/freedombox/shares/')[0])
+        except RuntimeError:
+            subpath = 'var/lib/freedombox/shares/'
+        else:
+            subpath = 'lib/freedombox/shares/'
+
+    return path.split(subpath)[0]
 
 
 def _get_shares():
@@ -148,11 +166,24 @@ def _get_shares():
     config = configparser.ConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
-        mount_point = config[name]['path'].split(SHARES_PATH)[0]
+        mount_point = _get_mount_point(config[name]['path'])
         mount_point = os.path.normpath(mount_point)
         shares.append(dict(name=name, mount_point=mount_point))
 
     return shares
+
+
+def _get_shares_path(mount_point):
+    """Return base path of the shared directories."""
+    if mount_point == '/var':
+        return 'lib/freedombox/shares/'
+    var_directory = os.path.join(mount_point, 'var')
+
+    if os.path.exists(var_directory) and os.stat(
+            mount_point).st_dev == os.stat(var_directory).st_dev:
+        return 'var/lib/freedombox/shares/'
+
+    return 'FreedomBox/shares/'
 
 
 def _make_mounts_readable_by_others(mount_point):

@@ -28,6 +28,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.users import create_group
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -50,8 +51,10 @@ description = [
         _('After installation, you can choose which disks to use for sharing. '
           'Enabled {hostname} shares are open to everyone in your local '
           'network and are accessible under Network section in the file '
-          'manager.'), hostname=socket.gethostname().upper())
+          'manager on your computer.'), hostname=socket.gethostname().upper())
 ]
+
+group = ('freedombox-share', _('Access shared folders from inside the server'))
 
 clients = clients
 
@@ -100,6 +103,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    create_group('freedombox-share')
     helper.call('post', actions.superuser_run, 'samba', ['setup'])
     helper.call('post', app.enable)
 
