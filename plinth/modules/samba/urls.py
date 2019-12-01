@@ -23,9 +23,9 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^samba/$', views.SambaAppView.as_view(), name='index'),
-    url(r'^samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$', views.share,
-        name='share'),
-    url(r'^samba/unshare/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$', views.unshare,
-        name='unshare'),
+    url(r'^apps/samba/$', views.SambaAppView.as_view(), name='index'),
+    url(r'^apps/samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
+        views.share, name='share'),
+    url(r'^apps/samba/unshare/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
+        views.unshare, name='unshare'),
 ]
