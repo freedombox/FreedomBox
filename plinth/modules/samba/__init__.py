@@ -38,7 +38,7 @@ version = 1
 
 managed_services = ['smbd', 'nmbd']
 
-managed_packages = ['samba']
+managed_packages = ['samba', 'acl']
 
 name = _('Samba')
 
