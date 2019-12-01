@@ -77,7 +77,7 @@ class SambaApp(app_module.App):
             'shortcut-samba', name, short_description=short_description,
             icon='samba', description=description,
             configure_url=reverse_lazy('samba:index'), clients=clients,
-            login_required=True)
+            login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-samba', name, ports=['samba'])
