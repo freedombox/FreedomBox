@@ -151,4 +151,4 @@ def backup_pre(packet):
 def restore_post(packet):
     """Restore configuration."""
     actions.superuser_run('samba', ['setup'])
-    actions.superuser_run('samba', ['restore-config'])
+    actions.superuser_run('samba', ['restore-shares'])
