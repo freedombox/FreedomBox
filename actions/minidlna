@@ -21,6 +21,7 @@ Configuration actions for the minidlna server.
 import argparse
 from tempfile import mkstemp
 from shutil import move
+import subprocess
 from os import fdopen, remove, chmod, stat
 
 import augeas
@@ -60,6 +61,8 @@ def subcommand_setup(arguments):
 
     aug.set('/files/etc/sysctl.conf/fs.inotify.max_user_watches', '100000')
     aug.save()
+
+    subprocess.run(['sysctl', '--system'], check=True)
 
 
 def subcommand_get_media_dir(arguments):
