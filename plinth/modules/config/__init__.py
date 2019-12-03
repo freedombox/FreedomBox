@@ -37,7 +37,7 @@ is_essential = True
 name = _('General Configuration')
 
 description = [
-    _('Here you can set some general configuration options ',
+    _('Here you can set some general configuration options '
       'like hostname, domain name, webserver home page etc.')
 ]
 
