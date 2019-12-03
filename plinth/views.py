@@ -211,7 +211,7 @@ class SetupView(TemplateView):
     template_name = 'setup.html'
     name = 'None'
     # List of paragraphs describing the service
-    description = ""
+    description = []
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
