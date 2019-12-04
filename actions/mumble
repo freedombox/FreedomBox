@@ -1,0 +1,79 @@
+#!/usr/bin/python3
+
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configure Mumble server.
+"""
+
+import argparse
+import sys
+from subprocess import Popen, PIPE
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('create-password',
+                          help='Setup mumble superuser password')
+
+    return parser.parse_args()
+
+
+def read_from_stdin():
+    """Read password from stdin"""
+
+    return (''.join(sys.stdin)).strip()
+
+
+def subcommand_create_password(arguments):
+    """Save superuser password with murmurd command"""
+
+    password = read_from_stdin()
+
+    cmd = ['murmurd', '-ini', '/etc/mumble-server.ini', '-readsupw']
+    proc = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=False)
+
+    # The exit code of the command above seems to be 1 when successful!
+    # checking if the 'phrase' is included in the error message which
+    # shows that the password is successfully set.
+    out, err = proc.communicate(input=password.encode())
+    out, err = out.decode(), err.decode()
+
+    phrase = "Superuser password set on server"
+    if phrase not in err:
+        print(
+            "Error occured while saving password: %s" % err
+        )
+        sys.exit(1)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

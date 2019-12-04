@@ -26,7 +26,6 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.views import AppView
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -98,17 +97,6 @@ def init():
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
         app.set_enabled(True)
-
-
-class MumbleAppView(AppView):
-    app_id = 'mumble'
-    diagnostics_module_name = 'mumble'
-    name = name
-    description = description
-    clients = clients
-    manual_page = manual_page
-    port_forwarding_info = port_forwarding_info
-    icon_filename = icon_filename
 
 
 def setup(helper, old_version=None):

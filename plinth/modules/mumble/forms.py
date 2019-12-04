@@ -15,13 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-URLs for the Mumble module
+Mumble server configuration form
 """
 
-from django.conf.urls import url
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.mumble.views import MumbleAppView
+from plinth.forms import AppForm
 
-urlpatterns = [
-    url(r'^apps/mumble/$', MumbleAppView.as_view(), name='index'),
-]
+
+class MumbleForm(AppForm):
+    """Mumble server configuration"""
+    super_user_password = forms.CharField(
+        max_length=20,
+        label=_('Set SuperUser Password'),
+        widget=forms.PasswordInput,
+        help_text=_(
+            'Optional. Leave this field blank to keep the current password. '
+            'SuperUser password can be used to manage permissions in Mumble.'
+        ),
+        required=False,
+    )
