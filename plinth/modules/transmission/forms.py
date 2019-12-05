@@ -18,16 +18,20 @@
 FreedomBox app for configuring Transmission.
 """
 
-from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
+from plinth.modules.transmission import reserved_usernames
+from plinth.modules.storage.forms import (DirectorySelectForm,
+                                          DirectoryValidator)
 
 
-class TransmissionForm(AppForm):  # pylint: disable=W0232
+class TransmissionForm(DirectorySelectForm):
     """Transmission configuration form"""
-    download_dir = forms.CharField(
-        label=_('Download directory'),
-        help_text=_('Directory where downloads are saved.  If you change the '
-                    'default directory, ensure that the new directory exists '
-                    'and is writable by "debian-transmission" user.'))
+
+    def __init__(self, *args, **kw):
+        validator = DirectoryValidator(
+            username=reserved_usernames[0], check_writable=True)
+        super(TransmissionForm, self).__init__(
+            title=_('Download directory'),
+            default='/var/lib/transmission-daemon/downloads/',
+            validator=validator, *args, **kw)
