@@ -18,6 +18,7 @@
 FreedomBox app to manage users.
 """
 
+import grp
 import subprocess
 
 from django.utils.translation import ugettext_lazy as _
@@ -27,7 +28,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.utils import format_lazy
 
-version = 2
+version = 3
 
 is_essential = True
 
@@ -92,6 +93,7 @@ def setup(helper, old_version=None):
     if not old_version:
         helper.call('post', actions.superuser_run, 'users', ['first-setup'])
     helper.call('post', actions.superuser_run, 'users', ['setup'])
+    create_group('freedombox-share')
 
 
 def diagnose():
@@ -148,3 +150,16 @@ def get_last_admin_user():
         return admin_users[0]
 
     return None
+
+
+def add_user_to_share_group(username, service=None):
+    """Add user to the freedombox-share group."""
+    try:
+        group_members = grp.getgrnam('freedombox-share').gr_mem
+    except KeyError:
+        group_members = []
+    if username not in group_members:
+        actions.superuser_run(
+            'users', ['add-user-to-group', username, 'freedombox-share'])
+        if service:
+            action_utils.service_restart(service)

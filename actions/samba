@@ -163,9 +163,10 @@ def _get_shares():
     config = configparser.ConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
-        mount_point = _get_mount_point(config[name]['path'])
+        path = config[name]['path']
+        mount_point = _get_mount_point(path)
         mount_point = os.path.normpath(mount_point)
-        shares.append(dict(name=name, mount_point=mount_point))
+        shares.append(dict(name=name, mount_point=mount_point, path=path))
 
     return shares
 

@@ -28,7 +28,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules.users import create_group, register_group
+from plinth.modules.users import register_group
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -106,7 +106,6 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    create_group('freedombox-share')
     helper.call('post', actions.superuser_run, 'samba', ['setup'])
     helper.call('post', app.enable)
 
