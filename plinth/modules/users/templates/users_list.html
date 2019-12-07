@@ -33,17 +33,17 @@
   </style>
 {% endblock %}
 
-{% block status %}
-  <a href="{% url 'users:create' %}" class="btn btn-primary"
-     role="button" title="{% trans 'Create User' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Create User' %}
-  </a>
-{% endblock %}
-
 {% block configuration %}
 
   <h3>{% trans "Users" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'users:create' %}" class="btn btn-primary"
+       role="button" title="{% trans 'Create User' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create User' %}
+    </a>
+  </div>
 
   <div class="row">
     <div class="col-sm-6">

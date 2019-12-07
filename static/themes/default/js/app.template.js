@@ -21,34 +21,38 @@
  * in this page.
  */
 
-const appForm = document.querySelector('#app-form');
-const appToggleContainer = document.querySelector('#app-toggle-container');
-const appToggleButton = document.querySelector('#app-toggle-button');
-const appToggleInput = document.querySelector('#app-toggle-input');
+$(document).on('turbolinks:load', function() {
+  const appForm = document.querySelector('#app-form');
+  const appToggleContainer = document.querySelector('#app-toggle-container');
+  const appToggleButton = document.querySelector('#app-toggle-button');
+  const appToggleInput = document.querySelector('#app-toggle-input');
 
-const onSubmit = (e) => {
-  e.preventDefault;
-  appToggleInput.checked = !appToggleInput.checked;
-  appForm.submit();
-};
+  if (appForm && appToggleButton && appToggleInput && appToggleContainer) {
+    const onSubmit = (e) => {
+      e.preventDefault;
+      appToggleInput.checked = !appToggleInput.checked;
+      appForm.submit();
+    };
 
-appToggleButton.addEventListener('click', onSubmit);
+    appToggleButton.addEventListener('click', onSubmit);
 
-/**
- * if javascript is enabled, this script will run and show the toggle button
- */
+    /**
+     * if javascript is enabled, this script will run and show the toggle button
+     */
 
-appToggleInput.parentElement.style.display = 'none';
-appToggleContainer.style.display = 'flex';
+    appToggleInput.parentElement.style.display = 'none';
+    appToggleContainer.style.display = 'flex';
 
-/* A basic form has only three elements:
- *   1. An input tag with CSRF token
- *   2. A div with form elements
- *   3. A Submit button
- *
- * This kind of form can be completely hidden.
-*/
-if (appForm.children.length === 3) {
-  appForm.style.display = 'none';
-  appForm.previousElementSibling.style.display = 'none';
-}
+    /* A basic form has only three elements:
+     *   1. An input tag with CSRF token
+     *   2. A div with form elements
+     *   3. A Submit button
+     *
+     * This kind of form can be completely hidden.
+    */
+    if (appForm.children.length === 3) {
+      appForm.style.display = 'none';
+      appForm.previousElementSibling.style.display = 'none';
+    }
+  }
+});

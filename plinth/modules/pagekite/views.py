@@ -17,7 +17,6 @@
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView
 
@@ -25,20 +24,7 @@ from plinth.modules import pagekite
 
 from . import utils
 from .forms import (AddCustomServiceForm, ConfigurationForm,
-                    DeleteCustomServiceForm, StandardServiceForm)
-
-subsubmenu = [{
-    'url': reverse_lazy('pagekite:index'),
-    'text': _('Configure')
-},
-              {
-                  'url': reverse_lazy('pagekite:standard-services'),
-                  'text': _('Standard Services')
-              },
-              {
-                  'url': reverse_lazy('pagekite:custom-services'),
-                  'text': _('Custom Services')
-              }]
+                    DeleteCustomServiceForm)
 
 
 class ContextMixin(object):
@@ -46,7 +32,6 @@ class ContextMixin(object):
 
     Also adds the requirement of all necessary packages to be installed
     """
-
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
@@ -54,7 +39,7 @@ class ContextMixin(object):
         context['name'] = pagekite.name
         context['description'] = pagekite.description
         context['manual_page'] = pagekite.manual_page
-        context['subsubmenu'] = subsubmenu
+        context['is_enabled'] = pagekite.app.is_enabled()
         return context
 
     def dispatch(self, *args, **kwargs):
@@ -66,15 +51,15 @@ class DeleteServiceView(ContextMixin, View):
         form = DeleteCustomServiceForm(request.POST)
         if form.is_valid():
             form.delete(request)
-        return HttpResponseRedirect(reverse('pagekite:custom-services'))
+        return HttpResponseRedirect(reverse('pagekite:index'))
 
 
-class CustomServiceView(ContextMixin, TemplateView):
+class AddCustomServiceView(ContextMixin, TemplateView):
     template_name = 'pagekite_custom_services.html'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(CustomServiceView, self).get_context_data(
-            *args, **kwargs)
+        context = super(AddCustomServiceView,
+                        self).get_context_data(*args, **kwargs)
         unused, custom_services = utils.get_pagekite_services()
         for service in custom_services:
             service['form'] = AddCustomServiceForm(initial=service)
@@ -99,21 +84,7 @@ class CustomServiceView(ContextMixin, TemplateView):
 
         context = self.get_context_data()
         context['form'] = form
-
-        return self.render_to_response(context)
-
-
-class StandardServiceView(ContextMixin, FormView):
-    template_name = 'pagekite_standard_services.html'
-    form_class = StandardServiceForm
-    success_url = reverse_lazy('pagekite:standard-services')
-
-    def get_initial(self):
-        return utils.get_pagekite_services()[0]
-
-    def form_valid(self, form):
-        form.save(self.request)
-        return super(StandardServiceView, self).form_valid(form)
+        return HttpResponseRedirect(reverse('pagekite:index'))
 
 
 class ConfigurationView(ContextMixin, FormView):
@@ -121,6 +92,19 @@ class ConfigurationView(ContextMixin, FormView):
     form_class = ConfigurationForm
     prefix = 'pagekite'
     success_url = reverse_lazy('pagekite:index')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ConfigurationView,
+                        self).get_context_data(*args, **kwargs)
+        unused, custom_services = utils.get_pagekite_services()
+        for service in custom_services:
+            service['form'] = AddCustomServiceForm(initial=service)
+        context['custom_services'] = [
+            utils.prepare_service_for_display(service)
+            for service in custom_services
+        ]
+        context.update(utils.get_kite_details())
+        return context
 
     def get_initial(self):
         return utils.get_pagekite_config()

@@ -21,18 +21,18 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block status %}
-  <a href="{% url 'ikiwiki:create' %}" class="btn btn-primary"
-     role="button" title="{% trans 'Create Wiki or Blog' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Create Wiki or Blog' %}
-  </a>
-{% endblock %}
-
 {% block configuration %}
   {{ block.super }}
 
   <h3>{% trans "Manage Wikis and Blogs" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'ikiwiki:create' %}" class="btn btn-default"
+       role="button" title="{% trans 'Create Wiki or Blog' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create Wiki or Blog' %}
+    </a>
+  </div>
 
   <div class="row">
     <div class="col-sm-6">

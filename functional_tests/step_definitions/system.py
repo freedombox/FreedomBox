@@ -211,26 +211,6 @@ def backup_restore_from_upload(browser, app_name, downloaded_file_info):
         os.remove(path)
 
 
-@given('pagekite is enabled')
-def pagekite_is_enabled(browser):
-    system.pagekite_enable(browser, True)
-
-
-@given('pagekite is disabled')
-def pagekite_is_disabled(browser):
-    system.pagekite_enable(browser, False)
-
-
-@when('I enable pagekite')
-def pagekite_enable(browser):
-    system.pagekite_enable(browser, True)
-
-
-@when('I disable pagekite')
-def pagekite_disable(browser):
-    system.pagekite_enable(browser, False)
-
-
 @then('pagekite should be enabled')
 def pagekite_assert_enabled(browser):
     assert system.pagekite_is_enabled(browser)
@@ -333,8 +313,8 @@ def monkeysphere_given_import_key(browser, key_type, domain):
     system.monkeysphere_import_key(browser, key_type.lower(), domain)
 
 
-@when(
-    parsers.parse('I import {key_type:w} key for {domain:S} in monkeysphere'))
+@when(parsers.parse('I import {key_type:w} key for {domain:S} in monkeysphere')
+      )
 def monkeysphere_import_key(browser, key_type, domain):
     system.monkeysphere_import_key(browser, key_type.lower(), domain)
 

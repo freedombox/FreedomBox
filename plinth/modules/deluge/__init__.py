@@ -42,9 +42,7 @@ short_description = _('BitTorrent Web Client')
 
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
-    _('When enabled, the Deluge web client will be available from '
-      '<a href="/deluge" data-turbolinks="false">/deluge</a> path on the web '
-      'server. The default password is \'deluge\', but you should log in and '
+    _('The default password is \'deluge\', but you should log in and '
       'change it immediately after enabling this service.')
 ]
 
@@ -71,10 +69,11 @@ class DelugeApp(app_module.App):
                               'deluge:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-deluge', name, short_description=short_description,
-            url='/deluge', icon='deluge', clients=clients, login_required=True,
-            allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-deluge', name,
+                                      short_description=short_description,
+                                      url='/deluge', icon='deluge',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-deluge', name, ports=['http', 'https'],
@@ -111,7 +110,6 @@ def diagnose():
     results = []
 
     results.append(action_utils.diagnose_port_listening(8112, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(8112, 'tcp6'))
     results.extend(
         action_utils.diagnose_url_on_all('https://{host}/deluge',
                                          check_certificate=False))

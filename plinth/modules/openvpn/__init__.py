@@ -28,7 +28,7 @@ from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 3
 
@@ -56,6 +56,8 @@ manual_page = 'OpenVPN'
 port_forwarding_info = [('UDP', 1194)]
 
 app = None
+
+clients = clients
 
 
 class OpenVPNApp(app_module.App):

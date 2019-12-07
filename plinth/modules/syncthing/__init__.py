@@ -54,10 +54,6 @@ description = [
           'user\'s set of devices may be synchronized with a distinct set of '
           'folders.  The web interface on {box_name} is only available for '
           'users belonging to the "admin" group.'), box_name=_(cfg.box_name)),
-    _('When enabled, Syncthing\'s web interface will be available from '
-      '<a href="/syncthing/" data-turbolinks="false">/syncthing</a>. '
-      'Desktop and mobile clients are also <a href="https://syncthing.net/">'
-      'available</a>.'),
 ]
 
 clients = clients
@@ -82,10 +78,11 @@ class SyncthingApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-syncthing', name, short_description=short_description,
-            icon='syncthing', url='/syncthing/', clients=clients,
-            login_required=True, allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-syncthing', name,
+                                      short_description=short_description,
+                                      icon='syncthing', url='/syncthing/',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-syncthing-web', name,

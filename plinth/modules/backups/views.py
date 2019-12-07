@@ -54,7 +54,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = backups.name
+        context['name'] = backups.name
         context['description'] = backups.description
         context['manual_page'] = backups.manual_page
         context['repositories'] = [
@@ -180,7 +180,6 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
 
 class RestoreFromUploadView(BaseRestoreView):
     """View to restore files from an (uploaded) exported archive."""
-
     def get(self, *args, **kwargs):
         path = self.request.session.get(SESSION_PATH_VARIABLE)
         if not os.path.isfile(path):
@@ -210,7 +209,6 @@ class RestoreFromUploadView(BaseRestoreView):
 
 class RestoreArchiveView(BaseRestoreView):
     """View to restore files from an archive."""
-
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
         name = unquote(self.kwargs['name'])
@@ -228,14 +226,12 @@ class RestoreArchiveView(BaseRestoreView):
 
 class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
-
     def get(self, request, uuid, name):
         repository = get_instance(uuid)
         filename = f'{name}.tar.gz'
 
-        response = StreamingHttpResponse(
-            repository.get_download_stream(name),
-            content_type='application/gzip')
+        response = StreamingHttpResponse(repository.get_download_stream(name),
+                                         content_type='application/gzip')
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
             filename
         return response

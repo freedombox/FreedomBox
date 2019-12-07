@@ -16,6 +16,7 @@
 #
 
 import os
+from urllib.parse import urlparse
 
 from django import template
 
@@ -73,3 +74,24 @@ def clients_of_type(clients, client_type):
 def lookup(dictionary, key):
     """Get the value in the dictionary at given key"""
     return dictionary[key]
+
+
+def _is_relative_url(url):
+    """Check if the given link is relative or not."""
+    parsed_url = urlparse(str(url))
+    return not parsed_url.netloc
+
+
+@register.filter(name='clients_get_platforms')
+def clients_get_platforms(clients):
+    """Return lists of self hosted platforms and all other platforms."""
+    other = []
+    web = []
+    for client in clients:
+        for platform in client['platforms']:
+            if platform['type'] == 'web' and _is_relative_url(platform['url']):
+                web.append(platform)
+            else:
+                other.append(platform)
+
+    return {'web': web, 'other': other}

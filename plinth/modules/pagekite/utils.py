@@ -109,7 +109,7 @@ def get_pagekite_config():
     # 2) the pagekite service running
     is_disabled = (run(['is-disabled']).strip() == 'true')
     service_running = action_utils.service_is_running('pagekite')
-    status['enabled'] = service_running and not is_disabled
+    status['is_enabled'] = service_running and not is_disabled
 
     # PageKite kite details
     status.update(get_kite_details())
@@ -265,7 +265,7 @@ def update_names_module(initial_registration=False, enabled=None,
 
     if enabled is None:
         try:
-            enabled = get_pagekite_config()['enabled']
+            enabled = get_pagekite_config()['is_enabled']
         except IndexError:
             enabled = False
 

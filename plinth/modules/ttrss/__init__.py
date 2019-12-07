@@ -49,10 +49,8 @@ description = [
       'designed to allow reading news from any location, while feeling as '
       'close to a real desktop application as possible.'),
     format_lazy(
-        _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-'
-          'rss" data-turbolinks="false">/tt-rss</a> path on the web server. '
-          'It can be accessed by any <a href="{users_url}">user with a '
-          '{box_name} login</a>.'),
+        _('When enabled, Tiny Tiny RSS can be accessed by any '
+          '<a href="{users_url}">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
     format_lazy(
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
@@ -81,10 +79,11 @@ class TTRSSApp(app_module.App):
                               'ttrss:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-ttrss', name, short_description=short_description,
-            icon='ttrss', url='/tt-rss', clients=clients, login_required=True,
-            allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-ttrss', name,
+                                      short_description=short_description,
+                                      icon='ttrss', url='/tt-rss',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-ttrss', name, ports=['http', 'https'],

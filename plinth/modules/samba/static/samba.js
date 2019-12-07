@@ -21,14 +21,13 @@
  * in this page.
  */
 
-(function($) {
 
-    $('#id_pagekite-enabled').change(function() {
-        if ($('#id_pagekite-enabled').prop('checked')) {
-            $('#pagekite-post-enabled-form').show('fast');
-        } else {
-            $('#pagekite-post-enabled-form').hide('fast');
-        }
-    }).change();
+$(document).on('turbolinks:load', function() {
+  const share_checkbox = $(".shareform > input[type='checkbox']");
 
-})(jQuery);
+  share_checkbox.change(function(event) {
+    this.disabled=true;
+    this.style.cursor='wait';
+    this.form.submit();
+  });
+});

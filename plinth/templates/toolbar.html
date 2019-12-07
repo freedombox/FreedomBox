@@ -1,0 +1,76 @@
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load plinth_extras %}
+{% load static %}
+
+{% block toolbar %}
+
+  <section class="toolbar">
+    <div class="btn-toolbar" role="toolbar">
+
+        {% if clients %}
+          {% with client_platforms=clients|clients_get_platforms %}
+            {% if client_platforms.web|length == 1 %}
+              <a target='_blank' rel="noopener noreferrer"
+                 class="btn btn-primary" role="button" data-turbolinks="false"
+                 {% if not enabled %} disabled="disabled"
+                 {% else %} href="{{ client_platforms.web.0.url }}"
+                 {% endif %} data-turbolinks="false">
+                {% trans "Launch web client" %}
+                <span class="fa fa-external-link"></span>
+              </a>
+            {% endif %}
+
+            {% if client_platforms.web|length > 1 or client_platforms.other %}
+              <button type="button" data-toggle="collapse" data-target="#clients"
+                      class="btn btn-default collapsed collapsible-button">
+                <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+                {% trans "Client Apps" %}
+              </button>
+            {% endif %}
+          {% endwith %}
+        {% endif %}
+
+        {% if diagnostics_module_name %}
+          <!-- Single button -->
+          <div class="btn-group button-extra-actions">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+              <span class="fa fa-cog" aria-hidden="true"></span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
+              </li>
+            </ul>
+          </div>
+        {% endif %}
+
+    </div>
+    <div class="toolbar-collapsed-content">
+      {% include "clients.html" with clients=clients enabled=is_enabled %}
+    </div>
+  </section>
+
+{% endblock toolbar %}

@@ -1,5 +1,3 @@
-{% extends "base.html" %}
-{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -16,31 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
+"""
+URLs for the samba module.
+"""
 
-{# Template for simple service configuration/description pages #}
+from django.conf.urls import url
 
-{% load i18n %}
-{% load static %}
+from . import views
 
-{% block content %}
-  {% block pagetitle %}
-    <h2>{{ title }}</h2>
-  {% endblock %}
-
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
-
-  {% if manual_page %}
-    <p class="manual-page">
-      <a href="{% url 'help:manual-page' lang='-' page=manual_page %}">
-        {% trans 'Learn more...' %}
-      </a>
-    </p>
-  {% endif %}
-
-  {% block configuration %}
-  {% endblock %}
-
-{% endblock %}
+urlpatterns = [
+    url(r'^apps/samba/$', views.SambaAppView.as_view(), name='index'),
+    url(r'^apps/samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
+        views.share, name='share'),
+    url(r'^apps/samba/unshare/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
+        views.unshare, name='unshare'),
+]

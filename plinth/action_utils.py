@@ -20,6 +20,7 @@ Python action utility functions.
 
 import logging
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -351,7 +352,16 @@ def _check_port(port, kind='tcp', listen_address=None):
 def check_url(url, kind=None, env=None, check_certificate=True,
               extra_options=None, wrapper=None, expected_output=None):
     """Check whether a URL is accessible."""
-    command = ['curl', '--location', '-f', '-w', '%{response_code}', url]
+    command = ['curl', '--location', '-f', '-w', '%{response_code}']
+
+    if kind == '6':
+        # extract zone index
+        match = re.match(r'(.*://)\[(.*)%(?P<zone>.*)\](.*)', url)
+        if match:
+            command = command + ['--interface', match.group('zone')]
+            url = '{0}[{1}]{2}'.format(*match.group(1, 2, 4))
+
+    command.append(url)
 
     if wrapper:
         command.insert(0, wrapper)

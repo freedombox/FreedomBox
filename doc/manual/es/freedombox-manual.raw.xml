@@ -366,6 +366,11 @@
           <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Support#">Ayuda en directo de la comunidad</ulink>
         </para>
       </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://docs.freedombox.org">Manual del Desarrollador de FreedomBox</ulink>
+        </para>
+      </listitem>
     </itemizedlist>
     <section>
       <title>Uso típico: Nube Privada</title>
@@ -449,7 +454,7 @@
               <para>Si tu ordenador está conectado directamente a tu FreedomBox a través de un segundo puerto <emphasis>Ethernet</emphasis> de la red local, puedes navegar a <ulink url="http://freedombox/"/> o a <ulink url="http://10.42.0.1/"/>. </para>
             </listitem>
             <listitem>
-              <para>Si tu ordenador sopora mDNS (GNU/Linux, Mac OSX o Windows con software mDNS instalado), puedes navegar a: <ulink url="http://freedombox.local/"/> (o a <ulink url="http://&lt;el-hostname-que-estableciste-durante-la-instalación&gt;.local/"/>) </para>
+              <para>Si tu ordenador soporta mDNS (GNU/Linux, Mac OSX o Windows con software mDNS instalado), puedes navegar a: <ulink url="http://freedombox.local/"/> (o a <ulink url="http://&lt;el-hostname-que-estableciste-durante-la-instalación&gt;.local/"/>) </para>
             </listitem>
             <listitem>
               <para>Si te manejas con el interfaz web de tu router, puedes buscar allí la dirección IP de tu FreedomBox y navegar a ella. </para>
@@ -873,7 +878,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
           <listitem>
             <para>Para obtener el código fuente de cualquiera de esos programas ejecuta: </para>
             <screen><![CDATA[apt source <nombre_del_paquete>]]></screen>
-            <para>Esto requiere que el archivo <ulink url="https://www.debian.org/doc/manuals/apt-howto/ch-basico.en.html">/etc/apt/sources.list</ulink> contenga información acerca de los repositorios de código fuente. Esto es así por defecto en todas las imágenes FreedomBox. Pero si has instalado FreedomBox desde Debian necesitas asegurarte de que los repositorios de código fuente figuren en este archivo. </para>
+            <para>Esto requiere que el archivo <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/SourcesList#">/etc/apt/sources/list</ulink> contenga información acerca de los repositorios de código fuente. Esto es así por defecto en todas las imágenes FreedomBox. Pero si has instalado FreedomBox desde Debian necesitas asegurarte de que los repositorios de código fuente figuren en este archivo. </para>
           </listitem>
           <listitem>
             <para>Para construir el paquete desde su código fuente, primero instala sus dependencias </para>
@@ -1026,10 +1031,9 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
         <para><emphasis>Tor Browser</emphasis> es la manera recomendada para navegar la web a través de Tor. Puedes descargar Tor Browser desde <ulink url="https://www.torproject.org/projects/torbrowser.html"/> y seguir sus instrucciones para instalarlo y ejecutarlo. </para>
       </section>
       <section>
-        <title>Usar Servicio Oculto Tor para acceder a tu FreedomBox</title>
-        <para>El <emphasis>Servicio Oculto Tor</emphasis> proporciona una manera de acceder a tu FreedomBox incluso aunque esté detrás de un router, cortafuegos, o redirector NAT (p.ej. si tu proveedor de Internet no proporciona una dirección pública IPv4 para tu router). </para>
-        <para>Para habilitar el <emphasis>Servicio Oculto Tor</emphasis> primero navega a la página <emphasis>Red para el anónimato (Tor)</emphasis>. (Si no la ves haz clic en el logo de  FreedomBox de arriba a la izquierda de la página y ve a la página principal de Apps.) En la página <emphasis>Red para el anónimato (Tor)</emphasis>, bajo <emphasis>Configuración</emphasis>, habilita la caja <emphasis>Habilitar los Servicios Ocultos Tor</emphasis> y pulsa el botón de <emphasis>Actualizar configuración</emphasis>. Tor se reconfigurará y se reiniciará. </para>
-        <para>Transcurrido un rato la página se refrescará bajo <emphasis>Estado</emphasis> verás la tabla que lista la dirección .onion del servicio oculto. Copia toda la dirección (que termina en .onion) y pégala en el campo dirección de <emphasis>Tor Browser</emphasis>. Deberías poder acceder a tu FreedomBox. (Quizá veas un aviso de certificado porque FreedomBox tiene un certificado autofirmado.) </para>
+        <title>Usar Servicio Tor Onion para acceder a tu FreedomBox</title>
+        <para>El <emphasis>Servicio Tor Onion</emphasis> proporciona una manera de acceder a tu FreedomBox incluso aunque esté detrás de un router, cortafuegos, o redirector NAT (p.ej. si tu proveedor de Internet no proporciona una dirección pública IPv4 para tu router). Para habilitar el <emphasis>Servicio Tor Onion</emphasis> primero navega a la página <emphasis>Red para el anónimato (Tor)</emphasis>. (Si no la ves haz clic en el logo de  FreedomBox de arriba a la izquierda de la página y ve a la página principal de Apps.) En la página <emphasis>Red para el anónimato (Tor)</emphasis>, bajo <emphasis>Configuración</emphasis>, habilita la caja <emphasis>Habilitar los Servicios Tor Onion</emphasis> y pulsa el botón de <emphasis>Actualizar configuración</emphasis>. Tor se reconfigurará y se reiniciará. </para>
+        <para>Transcurrido un rato la página se refrescará bajo <emphasis>Estado</emphasis> verás la tabla que lista la dirección .onion del servicio. Copia toda la dirección (que termina en .onion) y pégala en el campo dirección de <emphasis>Tor Browser</emphasis>. Deberías poder acceder a tu FreedomBox. (Quizá veas un aviso de certificado porque FreedomBox tiene un certificado autofirmado.) </para>
         <para>
           <inlinemediaobject>
             <imageobject>
@@ -1040,7 +1044,12 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
             </textobject>
           </inlinemediaobject>
         </para>
-        <para>Actualmente solo HTTP (puerto 80), HTTPS (puerto 443) y SSH (puerto 22) están accesibles a través del <emphasis>Servicio Oculto Tor</emphasis> configurado en la FreedomBox. </para>
+        <itemizedlist>
+          <listitem override="none">
+            <para>Onion </para>
+          </listitem>
+        </itemizedlist>
+        <para>Actualmente solo HTTP (puerto 80), HTTPS (puerto 443) y SSH (puerto 22) están accesibles a través del <emphasis>Servicio Tor Onion</emphasis> configurado en la FreedomBox. </para>
       </section>
       <section>
         <title>Apps accesibles via Tor</title>
@@ -1067,7 +1076,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
         <title>Ejecutar un nodo Tor</title>
         <para>Cuando se instala Tor se configura por defecto para ejecutarse como puente a la red (<emphasis>bridge relay</emphasis>). Esta opción se puede deshabilitar en la página de configuración de Tor de Plinth. </para>
         <para>En la parte inferior de página de Tor de Plinth hay una lista de puertos que usa el puente a la red Tor. Si tu FreedomBox está detrás de un router necesitarás configurar la redirección de puertos de tu router para que estos puertos sean accesibles desde Internet. </para>
-        <para>Los requisitos para ejecutar un puente a la red se listan en la <ulink url="https://trac.torproject.org/projects/tor/wiki/TorRelayGuide">Tor Relay Guide</ulink>. En resúmen, se   </para>
+        <para>Los requisitos para ejecutar un puente a la red se listan en la <ulink url="https://community.torproject.org/relay/">Tor Relay Guide</ulink>. En resúmen, se   </para>
         <itemizedlist>
           <listitem>
             <para>recomienda que un puente tenga disponibles para Tor al menos 16 Mbit/s (Mbps) de ancho de banda para subida y bajada. Mejor más. </para>
@@ -1823,7 +1832,7 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
       <para>Para más información acerca de Syncthing visita su <ulink url="https://syncthing.net">sitio web oficial</ulink> y su <ulink url="https://docs.syncthing.net">documentación</ulink>.  </para>
       <section>
         <title>Sincronizar via Tor</title>
-        <para>Syncthing debe sincronizar automáticamente con tu <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> incluso cuando esta solo sea accesible como servicio oculto Tor. </para>
+        <para>Syncthing debe sincronizar automáticamente con tu <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> incluso cuando esta solo sea accesible como servicio Tor Onion. </para>
         <para>Si quieres enrutar tu cliente Syncthing via Tor configura la variable de entorno <code>all_proxy</code>: </para>
         <screen><![CDATA[$ all_proxy=socks5://localhost:9050 syncthing]]></screen>
         <para>Para más información mira la documentación de Syncthing acerca de <ulink url="https://docs.syncthing.net/users/proxying.html">el uso de proxies</ulink>. </para>
@@ -2603,6 +2612,9 @@ proto udp]]></screen>
               <para>El comando <code>traceroute freedombox.org</code> debiera mostrar la dirección IP del servidor VPN como primer salto. </para>
             </listitem>
           </orderedlist>
+          <para>Si usas <code>Network Manager</code> puedes crear una conexión nueva importando el fichero: </para>
+          <screen><![CDATA[$ sudo apt install network-manager-openvpn-gnome
+$ sudo nmcli connection import type openvpn file /ruta/a/<USUARIO>.ovpn]]></screen>
         </section>
       </section>
       <section>
@@ -2633,6 +2645,16 @@ proto udp]]></screen>
             <para>UDP 64738 </para>
           </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Administrar Permisos</title>
+        <para>En Mumble un supeusuario puede crear cuentas de administrador que a su vez pueden administrar permisos a grupos y canales. Esto se puede hacer tras ingresar con el usuario "SuperUser" y la contraseña de superusuario. Ver la <ulink url="https://wiki.mumble.info/wiki/Murmurguide">Guía de Mumble</ulink> para obtener información respecto a cómo hacer esto. Actualmente FreedomBox no ofrece una interfaz gráfica para obtener o establecer la contraseña de superusuario en Mumble. Se genera una contraseña de superusuario automáticamente durante la instalación de Mumble. Para obtenerla ingresa en el terminal como <code>admin</code> usando <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Cockpit#">Cockpit</ulink> , la <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/SecureShell#">Shell Segura</ulink> o la consola. Y ejecuta el siguiente comando: </para>
+        <screen><![CDATA[sudo grep SuperUser /var/log/mumble-server/mumble-server.log]]></screen>
+        <para>Deberás ver una salida como esta: </para>
+        <screen><![CDATA[<W>2019-11-06 02:47:41.313 1 => Password for 'SuperUser' set to 'noo8Dahwiesh']]></screen>
+        <para>O puedes establecer una contraseña nueva así: </para>
+        <screen><![CDATA[sudo su -
+echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc/mumble-server.ini --readsupw"]]></screen>
       </section>
     </section>
     <section>
@@ -3403,7 +3425,7 @@ proto udp]]></screen>
                   <para> 0.42 </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
-                  <para> includes configuración y secretos como las claves de servicios ocultos </para>
+                  <para> includes configuración y secretos como las claves de servicios Tor Onion </para>
                 </entry>
               </row>
               <row rowsep="1">
@@ -3808,7 +3830,7 @@ proto udp]]></screen>
         <screen><![CDATA[https://192.168.0.10/_cockpit/
 https://freedombox.local/_cockpit/]]></screen>
         <para>A partir de la versión 19.15 funciona el dominio <emphasis>.local</emphasis>. Puedes acceder a Cockpit mediante la URL <ulink url="https://freedombox.local/_cockpit/"/>. El dominio <emphasis>.local</emphasis> se basa en tu <emphasis>hostname</emphasis>. Si tu <emphasis>hostname</emphasis> es <emphasis>mifb</emphasis> tu nombre de dominio <emphasis>.local</emphasis> será <emphasis>mifb.local</emphasis> y la URL de Cockpit será <ulink url="https://mifb.local/_cockpit/"/>. </para>
-        <para>Para acceder apropiadamente a Cockpit, usa el nombre de dominio <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Configure#">configurado</ulink> en tu FreedomBox. Cockpit también funcionará cuando se use un <ulink url="https://wiki.debian.org/FreedomBox/Manual/Tor">Servicio Oculto Tor</ulink>. Las siguientes URLs funcionarán: </para>
+        <para>Para acceder apropiadamente a Cockpit, usa el nombre de dominio <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Configure#">configurado</ulink> en tu FreedomBox. Cockpit también funcionará cuando se use un <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Tor#">Servicio Tor Onion</ulink>. Las siguientes URLs funcionarán: </para>
         <screen><![CDATA[https://mybox.freedombox.rocks/cockpit/
 https://exampletorhs.onion/cockpit/]]></screen>
         <para>La razón para este comportamiento es que Cockpit emplea WebSockets para conectar con el servidor de <emphasis>backend</emphasis>. Por seguridad se deben evitar las peticiones a WebSockets con servidores cruzados. Para implementar esto Cockpit maintiene una lista de todos los dominios desde los que se admiten peticiones. FreedomBox configura automaticamente esta lista cuando añades o borras un dominio. Sin embargo, como no podemos fiarnos de las direcciones IP, FreedomBox no las añade a esta lista. Puedes mirar la lista actual de dominios aceptados administrada por FreedomBox en <emphasis>/etc/cockpit/cockpit.conf</emphasis>. Puedes editarla pero hazlo solo si comprendes sus consecuencias para la seguridad web. </para>
@@ -5949,7 +5971,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
     </section>
     <section>
       <title>Servicios de Nombre</title>
-      <para>Los Servicios de Nombre proporcionan una vista general a las formas de acceder desde la Internet pública a tu !Freedombox: nombre de dominio, servicio oculto <emphasis>Tor</emphasis> y cometa (<emphasis>Pagekite</emphasis>). Para cada tipo de nombre se indica si los servicios HTTP, HTTPS, y SSH  están habilitados o deshabilitados para conexiones entrantes. </para>
+      <para>Los Servicios de Nombre proporcionan una vista general a las formas de acceder desde la Internet pública a tu !Freedombox: nombre de dominio, servicio <emphasis>Tor Onion</emphasis> y cometa (<emphasis>Pagekite</emphasis>). Para cada tipo de nombre se indica si los servicios HTTP, HTTPS, y SSH  están habilitados o deshabilitados para conexiones entrantes. </para>
     </section>
     <section>
       <title>Redes</title>
@@ -6448,7 +6470,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
         </section>
         <section>
           <title>SSH via Tor</title>
-          <para>Si tienes habilitados en Plinth los servicios ocultos mediante Tor puedes acceder a tu FreedomBox mediante ssh sobre Tor. Instala <code>netcat-openbsd</code>. </para>
+          <para>Si tienes habilitados en Plinth los servicios Tor Onion puedes acceder a tu FreedomBox mediante ssh sobre Tor. Instala <code>netcat-openbsd</code>. </para>
           <screen><![CDATA[$ sudo apt-get install netcat-openbsd]]></screen>
           <para>Edita <code>~/.ssh/config</code> para habilitar conexiones sobre Tor. </para>
           <screen><![CDATA[$ nano ~/.ssh/config]]></screen>
@@ -6461,7 +6483,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
           <para>En algunos casos podrías necesitar reemplazar 9050 por 9150. </para>
           <para>Ahora, para conectar a la FreedomBox abre un terminal y teclea: </para>
           <screen><![CDATA[$ ssh USUARIO@DIRECCION.onion]]></screen>
-          <para>Reemplaza USUARIO por un usuario del grupo <code>admin</code> y DIRECCION por la dirección del servicio oculto de SSH de tu FreedomBox. </para>
+          <para>Reemplaza USUARIO por un usuario del grupo <code>admin</code> y DIRECCION por la dirección del servicio Tor Onion para SSH de tu FreedomBox. </para>
         </section>
       </section>
       <section>
@@ -9785,7 +9807,131 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
-        <title>Freedombox 19.20 (2019-11-04)</title>
+        <title>FreedomBox 19.22 (2019-12-02)</title>
+        <itemizedlist>
+          <listitem>
+            <para>samba: Add new app for Samba file sharing </para>
+          </listitem>
+          <listitem>
+            <para>pagekite: Remove tabs in the configuration page </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Fix text with manual link </para>
+          </listitem>
+          <listitem>
+            <para>pagekite: Show existing services only if there are any </para>
+          </listitem>
+          <listitem>
+            <para>pagekite: Move Custom Services under Configuration </para>
+          </listitem>
+          <listitem>
+            <para>pagekite: Use the new app toggle button </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Add client apps </para>
+          </listitem>
+          <listitem>
+            <para>backups: Fix title not appearing </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Don't run on disabled modules </para>
+          </listitem>
+          <listitem>
+            <para>apps: Remove link to webapps in app descriptions </para>
+          </listitem>
+          <listitem>
+            <para>interface: Fix error with app toggle input </para>
+          </listitem>
+          <listitem>
+            <para>templates: Add toolbar for apps </para>
+          </listitem>
+          <listitem>
+            <para>toolbar: Move diagnostics button into dropdown menu </para>
+          </listitem>
+          <listitem>
+            <para>ssh: Fix Avahi SFTP service file </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Fix IPv6 failures </para>
+          </listitem>
+          <listitem>
+            <para>matrix-synapse: Fix installation of 1.5 from buster-backports </para>
+          </listitem>
+          <listitem>
+            <para>app: Fix javascript constant redeclaration error </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Move the create button to manage section </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Move create button into manage section </para>
+          </listitem>
+          <listitem>
+            <para>networks: Move actions button into connection section </para>
+          </listitem>
+          <listitem>
+            <para>users: Move create button into users section </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for French, German, and Swedish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 19.21 (2019-11-18)</title>
+        <itemizedlist>
+          <listitem>
+            <para>gitweb: Allow to import from a remote repository </para>
+          </listitem>
+          <listitem>
+            <para>interface: Disable turbolinks on links that don't point to /plinth/... </para>
+          </listitem>
+          <listitem>
+            <para>backups: Show proper error when SSH server is not reachable </para>
+          </listitem>
+          <listitem>
+            <para>tor: Rename "Hidden Service" to "Onion Service" </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Handle case where domain name is not set </para>
+          </listitem>
+          <listitem>
+            <para>tahoe: Mark Tahoe-LAFS as an advanced app </para>
+          </listitem>
+          <listitem>
+            <para>searx: Set safe_search to Moderate by default </para>
+          </listitem>
+          <listitem>
+            <para>backups: Make verify ssh host page string translatable </para>
+          </listitem>
+          <listitem>
+            <para>backups: Simplify SSH fingerprint verification command </para>
+          </listitem>
+          <listitem>
+            <para>doc: Fix unavailability of manual images </para>
+          </listitem>
+          <listitem>
+            <para>tor: Fix port diagnostics by correcting port data type </para>
+          </listitem>
+          <listitem>
+            <para>tor: Expect obfs service to be also available on IPv6 </para>
+          </listitem>
+          <listitem>
+            <para>tor: Listen on IPv6 for OrPort </para>
+          </listitem>
+          <listitem>
+            <para>clients: implement launch button feature </para>
+          </listitem>
+          <listitem>
+            <para>apps: Implement toggle button in apps pages </para>
+          </listitem>
+          <listitem>
+            <para>Update translations for German, Hungarian, Swedish, Norwegian Bokmål, French, Polish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 19.20 (2019-11-04)</title>
         <itemizedlist>
           <listitem>
             <para>doc: Add Spanish manual </para>
@@ -12178,6 +12324,9 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Enlaces Rápidos</title>
       <para>
+        <ulink url="https://docs.freedombox.org/">Manual del Desarrollador de FreedomBox</ulink>
+      </para>
+      <para>
         <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/ProgressCalls#">Reuniones de revisión de avance</ulink>
       </para>
       <para>
@@ -12200,7 +12349,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Se necesitan Contribuciones</title>
       <section>
         <title>Añadir una Aplicación</title>
-        <para>Si eres desarrollador y quieres ver disponible en FreedomBox alguna aplicación, puedes contribuir añadiéndola a FreedomBox.  Mira el <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Manual/Developer#">Manual de Desarrollo de FreedomBox</ulink>. </para>
+        <para>Si eres desarrollador y quieres ver disponible en FreedomBox alguna aplicación, puedes contribuir añadiéndola a FreedomBox.  Mira el <ulink url="https://docs.freedombox.org/">Manual del Desarrollador de FreedomBox</ulink>. </para>
       </section>
       <section>
         <title>Defectos</title>
@@ -12303,513 +12452,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
   </section>
   <section>
     <title>Guía del Desarrollador</title>
-    <para>This manual is meant for developers intending to develop applications for FreedomBox.  It provides a step by step tutorial and an API reference. </para>
-    <section>
-      <title>Writing Applications - Tutorial</title>
-      <para>This tutorial covers writing an application for FreedomBox. FreedomBox is a pure blend of Debian with a web interface, known as Plinth, that configures its applications.  We shall discuss various aspects of building an application for FreedomBox, by creating an example application. </para>
-      <para>There are two parts to writing a FreedomBox application.  First is to make sure that the application is available as a Debian package uploaded to the repositories.  This is the majority of the work involved.  However, if an application is already available in Debian repositories, it is trivial to build a FreedomBox UI for it. The second part of writing an application for FreedomBox is to provide a thin web interface layer for configuring the application.  This is done by extending Plinth's user interface to provide visibility to the application and to let the user control its operations in a highly simplified way.  This layer is referred to as 'Plinth application'. </para>
-      <para>Plinth applications can either be distributed as part of Plinth source code by submitting the applications to the Plinth project or they can distributed independently.  This tutorial covers writing an application that is meant to be distributed as part of Plinth. However, writing independent Plinth applications is also very similar and most of this tutorial is applicable. </para>
-      <note>
-        <para>
-          <emphasis role="strong">Note</emphasis>
-        </para>
-        <para>The term application, in this tutorial, is used to mean multiple concepts.  FreedomBox application is a combination of Debian package and a web interface layer.  The web interface layer is also called a Plinth application which is very similar to and built upon a Django application. </para>
-      </note>
-      <section>
-        <title>Before we begin</title>
-        <para>Plinth is a web interface built using Python3 and Django.  FreedomBox applications are simply Django applications within the Plinth project. Hence, for the most part, writing a FreedomBox application is all about writing a Django application. </para>
-        <para>You should start by reading the <ulink url="https://docs.djangoproject.com/en/stable/intro/tutorial01/">Django tutorial</ulink>.  All the concepts described there are applicable for how plinth and its applications are be built. </para>
-      </section>
-      <section>
-        <title>Picking an application</title>
-        <para>We must first, of course, pick an application to add to FreedomBox. For the purpose of this tutorial, let us pick Tiny Tiny RSS.  The project description reads as, <emphasis>Tiny Tiny RSS is an open source web-based news feed (RSS/Atom) reader and aggregator, designed to allow you to read news from any location, while feeling as close to a real desktop application as possible</emphasis>. </para>
-        <important>
-          <para>
-            <emphasis role="strong">Choosing an application</emphasis>
-          </para>
-          <para>When choosing an application we must make sure that the application respects users' freedom and privacy.  By choosing to use FreedomBox, users have explicitly made a choice to keep the data with themselves, to not provide privacy compromising data to centralized entities and to use Free Software that respects their Software Freedom.  These are not properties of <emphasis>some</emphasis> of the applications in FreedomBox but all applications <emphasis>must</emphasis> adhere to these principles. Applications should not even ask the users questions to this effect, because users have already made a choice. </para>
-        </important>
-      </section>
-      <section>
-        <title>Packaging the application</title>
-        <para>Majority of the effort in creating an application for FreedomBox is to package it for Debian and get it uploaded to Debian repositories. Going through the process of packaging itself is outside the scope of this tutorial.  It is, however, well documented elsewhere.  You should start <ulink url="https://wiki.debian.org/Packaging">here</ulink>. </para>
-        <para>Debian packaging might seem like an unnecessary process that takes time with its adherence to standards, review process, legal checks, etc.  However, upon close examination, one will find that without these steps the goals of the FreedomBox project cannot be met.  Some of the advantages of Debian packaging are listed below: </para>
-        <itemizedlist>
-          <listitem>
-            <para>Legal check ensures that proprietary licensed code or code with bad licenses does not inadvertently creep in. </para>
-          </listitem>
-          <listitem>
-            <para>Libraries have to be packaged separately easing security handling. When a security vulnerability is identified in a library, just the library will have to be updated and not all the applications that depend on it. </para>
-          </listitem>
-          <listitem>
-            <para>Upgrades become smoother.  The dependency handling of the packaging system, configuration handling tools, tools to deal with various types of well known files help with ensuring a proper upgrade. </para>
-          </listitem>
-          <listitem>
-            <para>Collaborative maintenance teams ensure that the package is well cared for even if you get busy with other work and can't spend time on your package.  Following standards and using common infrastructure is critical to enable this development methodology. </para>
-          </listitem>
-        </itemizedlist>
-      </section>
-      <section>
-        <title>Creating the project structure</title>
-        <para>Create a directory structure as follows with empty files.  We will fill them up in a step-by-step manner. </para>
-        <screen><![CDATA[+- <plinth_root>/
-  |
-  +- plinth/
-  | |
-  | +- modules/
-  |   |
-  |   +- ttrss/
-  |     |
-  |     +- __init__.py
-  |     |
-  |     +- forms.py
-  |     |
-  |     +- urls.py
-  |     |
-  |     +- views.py
-  |     |
-  |     +- templates/
-  |     | |
-  |     | +- ttrss.html
-  |     |
-  |     +- tests
-  |       |
-  |       +- __init__.py
-  |
-  +- actions/
-  | |
-  | +- ttrss
-  |
-  +- data/
-    |
-    +- etc/
-      |
-      +- plinth/
-        |
-        +- modules-enabled/
-          |
-          +- ttrss]]></screen>
-        <para>The <code>__init__.py</code> indicates that the directory in which it is present is a Python module.  For now, it is an empty file. </para>
-        <para>Plinth's setup script <code>setup.py</code> will automatically install the <code>plinth/modules/ttrss</code> directory (along with other files described later) to an appropriate location.  If you are creating an application that stays independent and outside of Plinth source tree, then your <code>setup.py</code> script will need to install it a proper location on the system. The <code>plinth/modules/</code> directory is a Python3 <ulink url="https://www.python.org/dev/peps/pep-0420/">namespace package</ulink>. So, you can install it with the <code>plinth/modules/</code> directory structure into any Python path and still be discovered as <code>plinth.modules.*</code>. </para>
-      </section>
-      <section>
-        <title>Tell Plinth that we exist</title>
-        <para>The first thing to do is tell Plinth that our application exists.  This is done by writing a small file with the Python import path to our application and placing it in <code>data/etc/plinth/modules-enabled/</code>.  Let us create this file <code>ttrss</code>: </para>
-        <screen><![CDATA[plinth.modules.ttrss]]></screen>
-        <para>This file is automatically installed to <code>/etc/plinth/modules-enabled/</code> by Plinth's installation script <code>setup.py</code>.  If we are writing a module that resides independently outside the Plinth's source code, the setup script will need to copy it to the target location.   Further, it is not necessary for the application to be part of the <code>plinth.modules</code> namespace. It can, for example, be <code>plinth_ttrss</code>. </para>
-      </section>
-      <section>
-        <title>Writing the URLs</title>
-        <para>For a user to visit our application in Plinth, we need to provide a URL.  When the user visits this URL, a view is executed and a page is displayed.  In <code>urls.py</code> write the following: </para>
-        <screen><![CDATA[from django.conf.urls import url
-
-from . import views
-
-urlpatterns = [
-    url(r'^apps/ttrss/$', views.index, name='index'),
-]]]></screen>
-        <para>This routes the <code>/apps/ttrss/</code> URL to a view called <code>index</code> defined in <code>plinth/modules/ttrss/views.py</code>.  This is no different than how routing URLs are written in Django.  See <ulink url="https://docs.djangoproject.com/en/stable/topics/http/urls/">Django URL dispatcher</ulink> for more information. </para>
-      </section>
-      <section>
-        <title>Adding a menu item</title>
-        <para>We have added a URL to be handled by our application but this does not yet show up to be a link in Plinth web interface.  Let us add a link in the applications list.  In <code>__init__.py</code> add the following: </para>
-        <screen><![CDATA[from django.utils.translation import ugettext_lazy as _
-from plinth.menu import main_menu
-
-def init():
-    """Initialize the module."""
-    menu = main_menu.get('apps')
-    menu.add_urlname(_('Tiny Tiny RSS'), 'glyphicon-bullhorn',
-                     'ttrss:index', _('News Feed Reader'))]]></screen>
-        <para>As soon as Plinth starts, it will load all the enabled modules into memory.  After this, it gives a chance to each of the modules to initialize itself by calling the <code>init()</code> method if there is such a method available as <code>&lt;app&gt;.init()</code>.  Here we have implemented this method and added our menu item to the applications menu as part of the initialization process. </para>
-        <para>We wish to add our menu item to the list of applications which is why we have retrieved the applications menu which is available under the main menu.  After this we add our own menu item to this menu.  There are several parameters during this process that are important: </para>
-        <itemizedlist>
-          <listitem>
-            <para>In the first parameter we are providing the display name to use for our application when showing the menu item. </para>
-          </listitem>
-          <listitem>
-            <para>In the second parameter we are providing the icon to show for this menu item.  This is an icon from the Twitter Bootstrap library.  See </para>
-            <para>the Twitter Bootstrap library documentation for a list of <ulink url="http://getbootstrap.com/components/#glyphicons">available icons</ulink>.  We can pick an icon from the available list of icons and just mention its glyphicon class as name here. </para>
-          </listitem>
-          <listitem>
-            <para>The third parameter is the name of the URL we have created for our application.  Note that when including this application's URLs, Plinth will automatically set the name of the module as the Django </para>
-            <para>URL namespace.  Hence it is <code>ttrss:index</code> and not just <code>index</code>. </para>
-          </listitem>
-          <listitem>
-            <para>The final parameter is a short description of the application. </para>
-          </listitem>
-        </itemizedlist>
-        <para>We have used the application menu item to insert our own menu item as a child.  To be able to use the application menu item, we need to make sure that the module providing the application menu is loaded before our application is loaded.  We will do that in the next step. </para>
-      </section>
-      <section>
-        <title>Specifying module dependencies</title>
-        <para>Specifying a simple list of applications to be loaded before our application provided to Plinth is sufficient.  Add this in <code>__init__.py</code>. </para>
-        <screen><![CDATA[depends = ['plinth.modules.apps']]]></screen>
-        <para>Plinth will now make sure that the <code>apps</code> module is loaded before our module is loaded.  Application initialization is also ensured to happen in this order.  We can safely use any features of this module knowing that they have been initialized. </para>
-        <note>
-          <para>
-            <emphasis role="strong">Circular dependencies</emphasis>
-          </para>
-          <para>Circular dependencies are not possible among Plinth applications.  Attempting to add them will result in error during startup. </para>
-        </note>
-      </section>
-      <section>
-        <title>Writing the enable/disable form</title>
-        <para>We wish to provide a user interface to the user to enable and disable the application.  Complex modules may require more options but this is sufficient for our application.  Add the following <code>forms.py</code>. </para>
-        <screen><![CDATA[from django import forms
-
-class TtrssForm(forms.Form):
-    """Tiny Tiny RSS configuration form."""
-    enabled = forms.BooleanField(
-        label='Enable Tiny Tiny RSS',
-        required=False)]]></screen>
-        <para>This creates a Django form that shows a single option to enable/disable the application.  It also shows its current state. This is how a regular Django form is built.  See <ulink url="https://docs.djangoproject.com/en/stable/topics/forms/">Django Forms documentation</ulink> for more information. </para>
-        <tip>
-          <para>
-            <emphasis role="strong">Too many options</emphasis>
-          </para>
-          <para>Resist the temptation to create a lot of configuration options.  Although this will put more control in the hands of the users, it will make FreedomBox less usable.  FreedomBox is a consumer product.  Our target users are not technically savvy and we have make most of the decisions on behalf of the user to make the interface as simple and easy to use as possible. </para>
-        </tip>
-      </section>
-      <section>
-        <title>Writing a view</title>
-        <para>In <code>views.py</code>, let us add a view that can handle the URL we have provided above. </para>
-        <screen><![CDATA[from .forms import TtrssForm
-
-def index(request):
-    """Serve configuration page."""
-    status = get_status()
-
-    form = None
-
-    if request.method == 'POST':
-        form = TtrssForm(request.POST, prefix='ttrss')
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = TtrssForm(initial=status, prefix='ttrss')
-    else:
-        form = TtrssForm(initial=status, prefix='ttrss')
-
-    return TemplateResponse(request, 'ttrss.html',
-                            {'title': 'News Feed Reader (Tiny Tiny RSS)',
-                             'status': status,
-                             'form': form})]]></screen>
-        <para>This view works with the form we created in the previous step.  It shows the current status of the service in form.  This status is retrieved with the help of <code>get_status()</code> helper method.  When the form is posted, again this view is called and it verifies whether the form's input values are correct.  If so, it will apply the actions necessary for changed form values using the <code>_apply_changes()</code> method. </para>
-      </section>
-      <section>
-        <title>Getting the current status of the application</title>
-        <para>The view in the previous setup requires the status of the application to be retrieved using the <code>get_status()</code> method.  Let us implement that method in <code>views.py</code>. </para>
-        <screen><![CDATA[from plinth.modules import ttrss
-
-def get_status():
-    """Get the current status."""
-    return {'enabled': ttrss.is_enabled()}]]></screen>
-        <para>This method retrieves the various statuses of the application for display in the view.  Currently, we only need to show whether the application is enabled or disabled.  So, we retrieve that using a helper method defined in <code>__init__.py</code>. </para>
-        <screen><![CDATA[from plinth import action_utils
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.webserver_is_enabled('50-tt-rss')]]></screen>
-        <para>This method uses one of the several action utilities provided by Plinth.  This method checks whether a webserver configuration named <code>50-tt-rss</code> is enabled. </para>
-      </section>
-      <section>
-        <title>Displaying the application page</title>
-        <para>The view that we have written above requires a template file known as <code>ttrss.html</code> to work.  This template file controls how the web page for our application is displayed.  Let us create this template file in <code>templates/ttrss.html</code>. </para>
-        <screen><![CDATA[{% extends "base.html" %}
-
-{% load bootstrap %}
-
-{% block content %}
-
-<h2>News Feed Reader (Tiny Tiny RSS)</h2>
-
-<p>Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator,
-  designed to allow you to read news from any location, while feeling
-  as close to a real desktop application as possible.</p>
-
-<h3>Configuration</h3>
-
-<form class="form" method="post">
-  {% csrf_token %}
-
-  {{ form|bootstrap }}
-
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
-
-{% endblock %}]]></screen>
-        <para>This template extends an existing template known as <code>base.html</code>.  This template is available in Plinth core to provide all the basic layout, styling, menus, JavaScript and CSS libraries.  We will override the content area of the base template and keep the rest. </para>
-        <para>Yet again, there is nothing special about the way this template is written.  This is a regular Django template. See <ulink url="https://docs.djangoproject.com/en/stable/topics/templates/">Django Template documentation</ulink>. </para>
-        <para>For styling and UI components, Plinth uses the Twitter Bootstrap project. See <ulink url="http://getbootstrap.com/css/">Bootstrap documentation</ulink> for reference. </para>
-      </section>
-      <section>
-        <title>Applying the changes from the form</title>
-        <para>The view we have created displays the form and processes the form after the user submits it.  It used a helper method called <code>_apply_changes()</code> to actually get the work done.  Let us implement that method in <code>views.py</code>. </para>
-        <screen><![CDATA[from django.contrib import messages
-
-from plinth import actions
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the changes."""
-    modified = False
-
-    if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('ttrss', [sub_command])
-        modified = True
-
-    if modified:
-        messages.success(request, 'Configuration updated')
-    else:
-        messages.info(request, 'Setting unchanged')]]></screen>
-        <para>We check to make sure that we don't try to disable the application when it is already disabled or try to enable the application when it is already enabled.  Although Plinth's operations are idempotent, meaning that running them twice will not be problematic, we still wish avoid unnecessary operations for the sake of speed. </para>
-        <para>We are actually perform the operation using Plinth actions.  We will implement the action to be performed a bit later. </para>
-        <para>After we perform the operation, we will show a message on the response page showing that the action was successful or that nothing happened. We use the Django messaging framework to accomplish this.  See <ulink url="https://docs.djangoproject.com/en/stable/ref/contrib/messages/">Django messaging framework</ulink> for more information. </para>
-      </section>
-      <section>
-        <title>Installing packages required for the application</title>
-        <para>Plinth takes care of installing all the Debian packages required for our application to work.  All we need to do is specify the list of the Debian packages required using a decorator on our view as follows: </para>
-        <screen><![CDATA[from plinth import package
-
-@package.required(['tt-rss'])
-def index(request):
-    """Serve configuration page."""
-    ...]]></screen>
-        <para>The first time this application's view is accessed, Plinth shows a package installation page and allows the user to install the required packages.  After the package installation is completed, the user is shown the application's configuration page. </para>
-        <para>If there are configuration tasks to be performed immediately before or after the package installation, Plinth provides hooks for it.  The <code>before_install=</code> and <code>on_install=</code> parameters to the <code>@package.required</code> decorator take a callback methods that are called before installation of packages and after installation of packages respectively.  See the reference section of this manual or the <code>plinth.package</code> module for details.  Other modules in Plinth that use this feature provided example usage. </para>
-      </section>
-      <section>
-        <title>Writing actions</title>
-        <para>The actual work of performing the configuration change is carried out by a Plinth action.  Actions are independent scripts that run with higher privileges required to perform a task.  They are placed in a separate directory and invoked as scripts via sudo.  For our application we need to write an action that can enable and disable the web configuration.  We will do this by creating a file <code>actions/ttrss</code>. </para>
-        <screen><![CDATA[import argparse
-
-from plinth import action_utils
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('enable', help='Enable Tiny Tiny RSS')
-    subparsers.add_parser('disable', help='Disable Tiny Tiny RSS')
-
-    return parser.parse_args()
-
-
-def subcommand_enable(_):
-    """Enable web configuration and reload."""
-    action_utils.webserver_enable('50-tt-rss')
-
-
-def subcommand_disable(_):
-    """Disable web configuration and reload."""
-    action_utils.webserver_disable('50-tt-rss')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()]]></screen>
-        <para>This is a simple Python3 program that parses command line arguments. While Python3 is preferred, it can be written in other languages also. It uses a helper utility provided by Plinth to actually enable and disable Apache2 web server configuration. </para>
-        <para>This script is automatically installed to <code>/usr/share/plinth/actions</code> by Plinth's installation script <code>setup.py</code>. Only from here will there is a possibility of running the script under <code>sudo</code>.  If you are writing an application that resides indenpendently of Plinth's source code, your <code>setup.py</code> script will need to take care of copying the file to the target location. </para>
-      </section>
-      <section>
-        <title>Creating diagnostics</title>
-        <para>Plinth provides a simple API for showing diagnostics results.  The application has to implement a method for actually running the diagnostics and return the results as a list.  Plinth then takes care of calling the diagnostics method and displaying the list in a formatted manner. </para>
-        <para>To implement the diagnostics method, method called <code>diagnose()</code> has to be available as <code>&lt;app&gt;.diagnose()</code>.  It must return a list in which each item is the result of a test performed.  The item itself is a two-tuple containing the display name of the test followed by the result as <code>passed</code>, <code>failed</code> or <code>error</code>. </para>
-        <screen><![CDATA[def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/ttrss', extra_options=['--no-check-certificate']))
-
-    return results]]></screen>
-        <para>There are several helpers available to implement some of the common diagnostic tests.  For our application we wish to implement a test to check whether the <code>/ttrss</code> URL is accessible.  Since this is a commonly performed test, there is a helper method available and we have used it in the above code.  The <code>{host}</code> tag replaced with various IP addresses, hostnames and domain names by the helper to produce different kinds of URLs and they are all tested.  Results for all tests are returned which we then pass on to Plinth. </para>
-        <para>The user can trigger the diagnostics test by going to <code>System -&gt; Diagnostics</code> page.  This runs diagnostics for all the applications.  If we want users to be able to run diagnostics specifically for this application, we can include a button for it in our template immediately after the application description. </para>
-        <screen><![CDATA[{% include "diagnostics_button.html" with module="ttrss" enabled=True %}]]></screen>
-      </section>
-      <section>
-        <title>Logging</title>
-        <para>Sometimes we may feel the need to write some debug messages to the console and Plinth log file.  Doing this in Plinth is just like doing this any other Python application. </para>
-        <screen><![CDATA[import logging
-
-logger = logging.getLogger(__name__)
-
-def example_method():
-    logger.debug('A debug level message')
-
-    logger.info('Showing application page - %s', request.method)
-
-    try:
-        something()
-    except Exception as exception:
-        # Print stack trace
-        logger.exception('Encountered an exception - %s', exception)]]></screen>
-        <para>For more information see Python <ulink url="https://docs.python.org/3.4/library/logging.html">logging framework</ulink> documentation. </para>
-      </section>
-      <section>
-        <title>Adding a License</title>
-        <para>Plinth is licensed under the GNU Affero General Public License Version 3 or later.  FreedomBox UI applications, which run as modules under Plinth, also need to be under the same license or under a compatible license.  The license of our application needs to clear for our application to be accepted by users and other developers.  Let us add license headers to our application. </para>
-        <screen><![CDATA[#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#]]></screen>
-        <para>The above header needs to be present in every file of the application. It is suitable for Python files.  However, in template files, we need to modify it slightly. </para>
-        <screen><![CDATA[{% extends "base.html" %}
-{% comment %}
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-{% endcomment %}
-
-...]]></screen>
-      </section>
-      <section>
-        <title>Internationalization</title>
-        <para>Every string message that is visible to the user must be localized to user's native language.  For this to happen, our application needs to be internationalized.  This requires marking the user visible messages for translation.  Plinth applications use the Django's localization methods to make that happen. </para>
-        <screen><![CDATA[from django.utils.translation import ugettext as _
-
-def index(request):
-    ...
-    return TemplateResponse(request, 'ttrss.html',
-                            {'title': _('News Feed Reader (Tiny Tiny RSS)'),
-                             'status': status,
-                             'form': form})]]></screen>
-        <para>Notice that the page's title is wrapped in the <code>_()</code> method call. Let us do that for the menu item of the application too. </para>
-        <screen><![CDATA[from django.utils.translation import ugettext_lazy as _
-
-def init():
-    """Initialize the module."""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('News Feed Reader (Tiny Tiny RSS)'), 'glyphicon-envelope',
-                     'ttrss:index', 600)]]></screen>
-        <para>Notice that in this case, we have used the <code>ugettext_lazy</code> and in the first case we have used the regular <code>ugettext</code>.  This is because in the second case the <code>gettext</code> lookup is made once and reused for every user looking at the interface.  These users may each have a different language set for their interface.  Lookup made for one language should not be used for other users.  The <code>_lazy</code> method provided by Django makes sure that the return value is an object that will actually be converted to string at the final moment when the string is being displayed.  In the first case, the looked is made and string is returned immediately. </para>
-        <para>All of this is the usual way internationalization is done in Django.  See <ulink url="https://docs.djangoproject.com/en/stable/topics/i18n/">Django internationalization and localization</ulink> documentation for more information. </para>
-      </section>
-      <section>
-        <title>Coding standards</title>
-        <para>For readability and easy collaboration it is important to follow common coding standards.  Plinth uses the Python coding standards and uses the <code>pylint</code> and <code>flake8</code> tools to check if the there are any violations.  Run these tools on our application and fix any errors and warnings.  Better yet, integrate these tools into your favorite IDE for on-the-fly checking. </para>
-        <para>For the most part, the code we have written so far, is already compliant with the coding standards.  This includes variable/method naming, indentation, document strings, comments, etc.  One thing we have to add are the module documentation strings.  Let us add those. In <code>__init__.py</code> add the top: </para>
-        <screen><![CDATA["""
-FreedomBox app to configure Tiny Tiny RSS.
-"""]]></screen>
-      </section>
-    </section>
-    <section>
-      <title>Reference Guide</title>
-      <para>This section describes Plinth API that is most frequently used by application.  Note that since Plinth is under development and has not yet declared a stable API, this API is subject to change.  This is not usually a problem because all the Plinth applications currently reside in Plinth source repository itself and are updated when the API is updated. </para>
-      <section>
-        <title>Applications</title>
-        <para>These methods are optionally provided by the application and Plinth calls/uses them if they are present. </para>
-        <section>
-          <title>&lt;application&gt;.init()</title>
-          <para>Optional.  This method is called by Plinth soon after all the applications are loaded.  The <code>init()</code> call order guarantees that other applications that this application depends on will be initialized before this application is initialized. </para>
-        </section>
-        <section>
-          <title>&lt;application&gt;.diagnose()</title>
-          <para>Optional.  Called when the user invokes system-wide diagnostics by visiting <code>System -&gt; Diagnositcs</code>.  This method must return an array of diagnostic results.  Each diagnostic result must be a two-tuple with first element as a string that is shown to the user as name of the test and second element is the result of the test.  It must be one of <code>passed</code>, <code>failed</code>, <code>error</code>.  Example return value: </para>
-          <screen><![CDATA[[('Check http://localhost/app is reachable', 'passed'),
- ('Check configuration is sane', 'passed')]]]></screen>
-        </section>
-        <section>
-          <title>&lt;appliation&gt;.depends</title>
-          <para>Optional.  This module property must contain a list of all applications that this application depends on.  The application is specified as string containing the full module load path.  For example, <code>plinth.modules.apps</code>. </para>
-        </section>
-        <section>
-          <title>plinth.package.required(package_list, before_install=None, on_install=on_install)</title>
-          <para>Make sure that a set of Debian packages are installed before a view can be accessed.  If the packages are not currently installed on the system, a special installation view is displayed showing the list of packages to be installed.  If the user chooses to proceed, package installation will start and an installation progress screen will be shown.  After completion of the installation process, the original view is shown. </para>
-          <para>The <code>package_list</code> must be an iterable containing the Debian package names as strings.  If provided, the <code>before_install</code> callable is called just before the installation process starts.  Similarly, <code>on_install</code> callable is called just after the package installation completes. </para>
-        </section>
-      </section>
-      <section>
-        <title>Actions</title>
-        <para>Plinth's web front does not directly change any aspect of the underlying operating system.  Instead, it calls upon <emphasis>Actions</emphasis>, as shell commands.  Actions live in <code>/usr/share/plinth/actions</code> directory. They require no interaction beyond passing command line arguments or taking sensitive arguments via stdin. They change the operation of the services and applications of the FreedomBox and nothing else. These actions are also directly usable by a skilled administrator. </para>
-        <para>The following methods are provided by Plinth to run actions and to implement them easily by reusing code for common tasks. </para>
-        <section>
-          <title>plinth.actions.run(action, options=None, input=None, async=False)</title>
-          <para>Run an action command present under the <code>actions/</code> directory.  This runs <code>subprocess.Popen()</code> after some checks.  The action must be present in the actions/ directory. </para>
-          <para><code>options</code> are a list of additional arguments to pass to the command.  If <code>input</code> is given it must be bytearray containing the input to pass on to the executed action.  If <code>async</code> is set to True, the method will return without waiting for the command to finish. </para>
-        </section>
-        <section>
-          <title>plinth.actions.superuser_run(action, options=None, input=None, async=False)</title>
-          <para>This is same as <code>plinth.actions.run()</code> except the command is run with superuser privelages. </para>
-        </section>
-        <section>
-          <title>plinth.action_utils</title>
-          <para>Several utilities to help with the implementation of actions and diagnostic tests are implemented in this module.  Refer to the module source code for a list of these methods and their documentation. </para>
-        </section>
-      </section>
-      <section>
-        <title>Menus</title>
-        <section>
-          <title>plinth.cfg.main_menu</title>
-          <para>This is a reference to the global main menu.  All menu entries in Plinth are descendents of this menu item.  See <code>Menu.add_item()</code> and <code>Menu.add_urlname()</code> for adding items to this menu or its children. </para>
-        </section>
-        <section>
-          <title>plinth.menu.Menu.get(self, urlname, url_args=None, url_kwargs=None)</title>
-          <para>Return a child of this menu item.  <code>urlname</code> must be the name of a URL as configured in Django.  <code>django.core.urlresolvers.reverse()</code> is called before the lookup for child menu item is performed.  <code>url_args</code> and <code>url_kwargs</code> are passed on to <code>reverse()</code>. </para>
-        </section>
-        <section>
-          <title>plinth.menu.Menu.add_item(self, label, icon, url, order=50)</title>
-          <para>Add a menu item as a child to the current menu item.  <code>label</code> is the user visible string shown for the menu item.  <code>icon</code> must be a glyphicon class from the Twitter Bootstrap library.  <code>url</code> is the relative URL to which this menu item will take the user to. </para>
-        </section>
-        <section>
-          <title>plinth.menu.Menu.add_urlname(self, label, icon, urlname, order=50, url_args=None, url_kwargs=None)</title>
-          <para>Same as <code>plinth.menu.Menu.add_item()</code> but instead of URL as input it is the name of a URL as configured in Django. <code>django.core.urlresolvers.reverse()</code> is called before it is added to the parent menu item.  <code>url_args</code> and <code>url_kwargs</code> are passed on to <code>reverse()</code>. </para>
-        </section>
-      </section>
-      <section>
-        <title>Services</title>
-        <section>
-          <title>plinth.service.Service.__init__(self, service_id, name, ports=None, is_external=False, enabled=True)</title>
-          <para>Create a new Service object to notify all applications about the existence and status of a given application.  <code>service_id</code> is a unique identifier for this application.  <code>name</code> is a display name of this application that is shown by other applications such as on the firewall status page.  <code>ports</code> is a list of names recognized by firewalld when enabling or disabling firewalld services.  If <code>is_external</code> is true, the ports for this service are accessible from external interfaces, that is, from the Internet.  Otherwise, the service is only available for client connected via LAN.  <code>enabled</code> is the current state of the application. </para>
-        </section>
-        <section>
-          <title>plinth.service.Service.is_enabled(self)</title>
-          <para>Return whether the service is currently enabled. </para>
-        </section>
-        <section>
-          <title>plinth.service.Service.notify_enabled(self, sender, enabled)</title>
-          <para>Notify other applications about the change of status of this application.  <code>sender</code> object should identify which application made the change.  <code>enabled</code> is a boolean that signifies whether the application is enabled (= True) or disabled (= False). </para>
-          <para>This is typically caught by the firewall application to enable or disable the ports corresponding to an application. </para>
-        </section>
-      </section>
-    </section>
+    <para>The FreedomBox Developer Manual provides a step by step tutorial for writing apps for FreedomBox and an API reference. It is available from <ulink url="https://docs.freedombox.org">docs.freedombox.org</ulink>. </para>
   </section>
   <section>
     <title>Cacharreo</title>
@@ -12852,7 +12495,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-home.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>Home Page</phrase>
+                <phrase>Página Principal</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12862,7 +12505,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-apps.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>Apps Page</phrase>
+                <phrase>Página de Apps</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12872,7 +12515,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-system.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>System Page</phrase>
+                <phrase>Página del Sistema</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12884,7 +12527,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-tor.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>Enabling Tor Hidden Services</phrase>
+                <phrase>Habilitar Servicios or Onion</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12894,7 +12537,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-ttrss.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>Newsfeed from anywhere</phrase>
+                <phrase>Newsfeed desde cualquier lugar</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12904,7 +12547,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-roundcube.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>Email Client</phrase>
+                <phrase>Cliente Email</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12916,7 +12559,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-manual.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>Manual Pages</phrase>
+                <phrase>Páginas Man</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
@@ -12926,7 +12569,7 @@ FreedomBox app to configure Tiny Tiny RSS.
                 <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=freedombox-screenshot-about.png" width="300"/>
               </imageobject>
               <textobject>
-                <phrase>About Page</phrase>
+                <phrase>Página Acerca de</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>

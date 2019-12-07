@@ -1,4 +1,4 @@
-{% extends 'simple_app.html' %}
+{% extends 'app.html' %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -35,7 +35,7 @@
 {% block configuration %}
 
   {% if not is_running %}
-    <form class="form form-diagnostics-button" method="post"
+    <form class="form form-run-diagnostics" method="post"
           action="{% url 'diagnostics:index' %}">
       {% csrf_token %}
 
