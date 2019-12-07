@@ -42,6 +42,8 @@ managed_packages = ['samba', 'acl']
 
 name = _('Samba')
 
+icon_filename = 'samba'
+
 short_description = _('File Sharing')
 
 description = [
@@ -75,7 +77,7 @@ class SambaApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-samba', name, short_description=short_description,
-            icon='samba', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('samba:index'), clients=clients,
             login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
