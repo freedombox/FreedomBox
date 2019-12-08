@@ -22,6 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 import plinth.app as app_module
 from plinth import frontpage, menu
+from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
@@ -36,6 +37,8 @@ name = 'minidlna'
 icon_name = name
 
 managed_packages = ['minidlna']
+
+managed_services = ['minidlna']
 
 short_description = _('Simple Media Server')
 
@@ -84,11 +87,13 @@ class MiniDLNAApp(app_module.App):
             url='/_minidlna/',
             login_required=True,
         )
+        daemon = Daemon('daemon-minidlna', managed_services[0])
 
         self.add(menu_item)
         self.add(webserver)
         self.add(firewall)
         self.add(shortcut)
+        self.add(daemon)
 
 
 def init():
