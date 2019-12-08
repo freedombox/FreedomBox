@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-02 17:30-0500\n"
-"PO-Revision-Date: 2019-10-26 17:53+0000\n"
-"Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
+"PO-Revision-Date: 2019-12-11 16:43+0000\n"
+"Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/es/>\n"
 "Language: es\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1-dev\n"
+"X-Generator: Weblate 3.10-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
-msgstr ""
+msgstr "Página origen"
 
 #: plinth/action_utils.py:299
 #, python-brace-format
@@ -432,15 +432,7 @@ msgid "Restoring"
 msgstr "Restaurar"
 
 #: plinth/modules/backups/templates/backups_upload.html:32
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Upload a backup file downloaded from another %(box_name)s to "
-#| "restore is\n"
-#| "      contents. You can choose the apps you wish to restore after "
-#| "uploading a\n"
-#| "      backup file.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
@@ -482,6 +474,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"No se localizó el host SSh %(hostname)s. Por favor verifique que está activo "
+"y acepta conexiones."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
 #, python-format
@@ -489,6 +483,9 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"No se puede verificar la autenticidad del host SSH %(hostname)s. El host "
+"muestra las siguientes claves SSH públicas. Por favor verifique cualquiera "
+"de ellas."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
@@ -671,19 +668,13 @@ msgstr ""
 "ofrece una terminal de consola basada en web."
 
 #: plinth/modules/cockpit/__init__.py:57
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+#, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"Una vez activado Cockpit estará disponible en la ruta <a href=\"/_cockpit/"
-"\">/_cockpit/</a> en su servidor web. Puede acceder <a href="
-"\"{users_url}\">cualquier usuario</a> en {box_name} que pertenezca al grupo "
-"«admin»."
+"Puede acceder <a href=\"{users_url}\">cualquier usuario/a</a> en {box_name} "
+"que pertenezca al grupo «admin»."
 
 #: plinth/modules/config/__init__.py:37
 msgid "General Configuration"
@@ -832,19 +823,14 @@ msgid "File Sharing"
 msgstr "Compartir archivos"
 
 #: plinth/modules/coquelicot/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "Coquelicot is a “one-click” file sharing web application with a focus on "
-#| "protecting users’ privacy. It is best used for quickly sharing a single "
-#| "file. "
 msgid ""
 "Coquelicot is a \"one-click\" file sharing web application with a focus on "
 "protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
 "Coquelicot es una aplicación web para compartir archivos \"con un click\", "
-"enfocada en proteger la privacidad del usuario. Su mejor uso es para "
-"compartir rápidamente un solo  archivo. "
+"enfocada en proteger la privacidad del usuario. Es muy usada para compartir "
+"rápidamente un solo archivo. "
 
 #: plinth/modules/coquelicot/__init__.py:48
 msgid ""
@@ -955,20 +941,12 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge es un cliente BitTorrent con interfaz web."
 
 #: plinth/modules/deluge/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "When enabled, the Deluge web client will be available from <a href=\"/"
-#| "deluge\">/deluge</a> path on the web server. The default password is "
-#| "'deluge', but you should log in and change it immediately after enabling "
-#| "this service."
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr ""
-"Cuando se activa, el cliente web Deluge está disponible en la dirección <a "
-"href=\"/deluge\">/deluge</a> de su servidor web. La clave de acceso por "
-"defecto es 'deluge' pero es muy recomendable que nada más activar el "
-"servicio acceda al mismo y la cambie."
+"La clave de acceso por defecto es 'deluge' pero es muy recomendable que nada "
+"más activar el servicio acceda al mismo y la cambie."
 
 #: plinth/modules/deluge/__init__.py:49
 #: plinth/modules/transmission/__init__.py:55
@@ -1566,21 +1544,19 @@ msgstr ""
 "firewall."
 
 #: plinth/modules/first_boot/forms.py:29
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Enter the secret generated during FreedomBox installation. This secret "
-#| "can also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+#, python-brace-format
 msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
 "also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "Introduzca la clave generada en la instalación de FreedomBox. También puede "
-"obtenerla del archivo /var/lib/plinth/firstboot-wizard-secret"
+"obtenerla con el comando \"sudo cat /var/lib/plinth/firstboot-wizard-secret\""
+" en su {box_name}"
 
 #: plinth/modules/first_boot/forms.py:34
 msgid "Firstboot Wizard Secret"
-msgstr ""
+msgstr "Ayudante de clave de primer arranque"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1652,23 +1628,17 @@ msgid "Read-write access to Git repositories"
 msgstr "Acceso de lectura y escritura para repositorios Git"
 
 #: plinth/modules/gitweb/forms.py:59
-#, fuzzy
-#| msgid "Invalid repository name."
 msgid "Invalid repository URL."
-msgstr "Nombre de repositorio no válido."
+msgstr "URL de repositorio no válida."
 
 #: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Nombre de repositorio no válido."
 
 #: plinth/modules/gitweb/forms.py:77
-#, fuzzy
-#| msgid ""
-#| "Repository path is neither empty nor is an existing backups repository."
 msgid "Name of a new repository or URL to import an existing repository."
 msgstr ""
-"La ruta del repositorio ni está vacía ni es un repositorio de copias de "
-"seguridad."
+"Nombre de un nuevo repositorio o URL para importar un repositorio existente."
 
 #: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
@@ -1726,7 +1696,7 @@ msgstr "Eliminar repositorio %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:83
 msgid "Cloning..."
-msgstr ""
+msgstr "Clonando..."
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
@@ -1753,10 +1723,8 @@ msgid "Repository created."
 msgstr "Repositorio creado."
 
 #: plinth/modules/gitweb/views.py:86
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the repository."
-msgstr "Ha habido un error en la configuración."
+msgstr "Ha habido un error al crear el repositorio."
 
 #: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
@@ -2209,22 +2177,14 @@ msgid "Wiki and Blog"
 msgstr "Wiki y Blog"
 
 #: plinth/modules/ikiwiki/__init__.py:46
-#, fuzzy
-#| msgid ""
-#| "ikiwiki is a simple wiki and blog application. It supports several "
-#| "lightweight markup languages, including Markdown, and common blogging "
-#| "functionality such as comments and RSS feeds. When enabled, the blogs and "
-#| "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once "
-#| "created)."
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds."
 msgstr ""
 "ikiwiki es una sencilla aplicación de wiki y blog. Soporta algunos lenguajes "
-"de marcado,  Markdown incluido, y funcionalidades comunes de los blogs tal "
-"como comentarios o fuentes RSS. Cuando está activo los blogs y wikis están "
-"accesibles en <a href=\"/ikiwiki\">/ikiwiki</a> (una vez hayan sido creados)."
+"de marcado, Markdown incluido, y funcionalidades comunes de los blogs tal "
+"como comentarios o fuentes RSS."
 
 #: plinth/modules/ikiwiki/__init__.py:50
 #, python-brace-format
@@ -3107,24 +3067,17 @@ msgid "Name Services"
 msgstr "Servicios de nombres"
 
 #: plinth/modules/names/__init__.py:45
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Name Services provides an overview of the ways {box_name} can be reached "
-#| "from the public Internet: domain name, Tor hidden service, and Pagekite. "
-#| "For each type of name, it is shown whether the HTTP, HTTPS, and SSH "
-#| "services are enabled or disabled for incoming connections through the "
-#| "given name."
+#, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
 "from the public Internet: domain name, Tor onion service, and Pagekite. For "
 "each type of name, it is shown whether the HTTP, HTTPS, and SSH services are "
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
-"«Name Services» (servicios de nombre) proporciona un resumen de las maneras "
-"que {box_name} puede ser accedido desde la internet pública: nombre de "
-"dominio, servicio oculto de Tor y Pagekite. Para cada tipo de nombre se "
-"muestra si los servicios HTTP, HTTPS y SSH están activados o desactivados "
-"para las conexiones entrantes."
+"«Name Services» (servicios de nombre) proporciona un resumen de cómo "
+"{box_name} puede ser accedido desde la Internet pública: nombre de dominio, "
+"servicio de Tor onion. Para cada tipo de nombre se muestra si los servicios "
+"HTTP, HTTPS y SSH están activos o no para las conexiones entrantes."
 
 #: plinth/modules/names/components.py:27
 msgid "All"
@@ -3784,7 +3737,7 @@ msgstr "Activar servidor OpenVPN"
 
 #: plinth/modules/openvpn/manifest.py:63
 msgid "TunnelBlick"
-msgstr ""
+msgstr "TunnelBlick"
 
 #: plinth/modules/openvpn/templates/openvpn.html:42
 #, python-format
@@ -3822,13 +3775,7 @@ msgid "Profile"
 msgstr "Perfil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:90
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  See the <a href=\"/plinth/help/"
-#| "manual/OpenVPN\" title=\"%(box_name)s Manual - OpenVPN\">manual page</a> "
-#| "on recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine.  OpenVPN Clients are "
@@ -3837,9 +3784,9 @@ msgid ""
 msgstr ""
 "Para conectar a la VPN de %(box_name)s necesita descargar un perfil y "
 "añadirlo a un cliente OpenVPN en su ordenador de escritorio o móvil.  Hay "
-"clientes OpenVPN para la mayoría de las plataformas.  Consulte la <a href=\"/"
-"plinth/help/manual/OpenVPN\" title=\"%(box_name)s Manual - OpenVPN"
-"\">documentación</a> sobre los clientes recomendados y cómo configurarlos."
+"clientes OpenVPN para la mayoría de las plataformas.  Haga clic en \""
+"Aprender más...\" para  información sobre los clientes recomendados y cómo "
+"configurarlos."
 
 #: plinth/modules/openvpn/templates/openvpn.html:100
 #, python-format
@@ -3913,13 +3860,7 @@ msgid "Your ISP limits incoming connections."
 msgstr "Su proveedor de servicios limita las conexiones entrantes."
 
 #: plinth/modules/pagekite/__init__.py:61
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "PageKite works around NAT, firewalls and IP-address limitations by using "
-#| "a combination of tunnels and reverse proxies. You can use any pagekite "
-#| "service provider, for example <a href=\"https://pagekite.net\">pagekite."
-#| "net</a>.  In future it might be possible to use your buddy's {box_name} "
-#| "for this."
+#, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP address limitations by using a "
 "combination of tunnels and reverse proxies. You can use any pagekite service "
@@ -3928,8 +3869,9 @@ msgid ""
 msgstr ""
 "PageKite evita NAT, firewalls y limitaciones de direcciones IP mediante una "
 "combinación de túneles y proxys inversos. Puede elegir cualquier proveedor "
-"de servicios pagekite, por ejemplo <a href=\"https://pagekite.net\">pagekite."
-"net</a>. En el futuro será posible usar su amigable {box_name} para esto."
+"de servicios pagekite, por ejemplo <a href=\"https://pagekite.net\""
+">pagekite.net</a>. En el futuro será posible usar su amigable {box_name} "
+"para esto."
 
 #: plinth/modules/pagekite/__init__.py:87
 msgid "PageKite Domain"
@@ -4037,10 +3979,8 @@ msgstr "Servicios personalizados"
 
 #: plinth/modules/pagekite/templates/pagekite_configure.html:50
 #: plinth/modules/pagekite/templates/pagekite_configure.html:52
-#, fuzzy
-#| msgid "Custom Services"
 msgid "Add Custom Service"
-msgstr "Servicios personalizados"
+msgstr "Añadir servicios personalizados"
 
 #: plinth/modules/pagekite/templates/pagekite_configure.html:57
 msgid "Existing custom services"
@@ -4056,10 +3996,8 @@ msgid "Delete this service"
 msgstr "Eliminar este servicio"
 
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:30
-#, fuzzy
-#| msgid "Added custom service"
 msgid "Add custom PageKite service"
-msgstr "Servicio personalizado añadido"
+msgstr "Añadir servicio PageKite personalizado"
 
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
 msgid ""
@@ -4447,14 +4385,6 @@ msgstr ""
 "csipsimple\">CsipSimple</a> (para teléfonos Android)."
 
 #: plinth/modules/repro/__init__.py:55
-#, fuzzy
-#| msgid ""
-#| "<strong>Note:</strong>  Before using repro, domains and users will need "
-#| "to be configured using the <a href=\"/repro/domains.html\">web-based "
-#| "configuration panel</a>. Users in the <em>admin</em> group will be able "
-#| "to log in to the repro configuration panel. After setting the domain, it "
-#| "is required to restart the repro service. Disable the service and re-"
-#| "enable it."
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
 "be configured using the <a href=\"/repro/domains.html\" data-turbolinks="
@@ -4464,10 +4394,11 @@ msgid ""
 "and re-enable it."
 msgstr ""
 "<strong>Nota:</strong> Antes de usar repro tiene que configurar los dominios "
-"y usuarias/os con el <a href=\"/repro/domains.html\">Panel web de "
-"configuración</a>. Usuarias/os en el grupo <em>admin</em> podrán acceder al "
-"panel de configuración. Después de configurar el dominio es necesario "
-"reiniciar el servicio repro: desactive el servicio y vuélvalo a activar."
+"y usuarias/os con el <a href=\"/repro/domains.html\" data-turbolinks=\""
+"false\">Panel web de configuración</a>. Usuarias/os en el grupo "
+"<em>admin</em> podrán acceder al panel de configuración. Después de "
+"configurar el dominio es necesario reiniciar el servicio repro: desactive el "
+"servicio y vuélvalo a activar."
 
 #: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
@@ -4545,13 +4476,6 @@ msgstr ""
 "organización de carpetas, búsqueda de mensajes y corrección ortográfica."
 
 #: plinth/modules/roundcube/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
-#| "Provide the username and password of the email account you wish to access "
-#| "followed by the domain name of the IMAP server for your email provider, "
-#| "like <code>imap.example.com</code>.  For IMAP over SSL (recommended), "
-#| "fill the server field like <code>imaps://imap.example.com</code>."
 msgid ""
 "You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
 "\">/roundcube</a>. Provide the username and password of the email account "
@@ -4560,12 +4484,12 @@ msgid ""
 "(recommended), fill the server field like <code>imaps://imap.example.com</"
 "code>."
 msgstr ""
-"Puede acceder a Roundcube en <a href=\"/roundcube\">/roundcube/</a>. Debe "
-"facilitar el nombre de usuaria/o y la clave de la cuenta de correo a la que "
-"desea acceder, además del nombre de dominio del servidor IMAP de su "
-"proveedor, por ejemplo <code>imap.ejemplo.com</code>. Para IMAP sobre SSL "
-"(recomendado) rellene el campo del servidor como <code>imaps://imap.ejemplo."
-"com</code>."
+"Puede acceder a Roundcube en <a href=\"/roundcube\" data-turbolinks=\"false\""
+">roundcube</a>. Debe facilitar el nombre de usuaria/o y la clave de la "
+"cuenta de correo a la que desea acceder, además del nombre de dominio del "
+"servidor IMAP de su proveedor, por ejemplo <code>imap.ejemplo.com</code>. "
+"Para IMAP sobre SSL (recomendado) rellene el campo del servidor como "
+"<code>imaps://imap.ejemplo.com</code>."
 
 #: plinth/modules/roundcube/__init__.py:51
 msgid ""
@@ -4585,13 +4509,15 @@ msgstr ""
 
 #: plinth/modules/samba/__init__.py:43
 msgid "Samba"
-msgstr ""
+msgstr "Samba"
 
 #: plinth/modules/samba/__init__.py:48
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
 msgstr ""
+"Samba permite compartir archivos y carpetas entre FreedomBox y otras "
+"computadoras en su red local."
 
 #: plinth/modules/samba/__init__.py:51
 #, python-brace-format
@@ -4600,22 +4526,26 @@ msgid ""
 "{hostname} shares are open to everyone in your local network and are "
 "accessible under Network section in the file manager on your computer."
 msgstr ""
+"Tras instalarlo puede elegir qué disco se comparte. Los elementos "
+"compartidos en {hostname} son accesibles para cualquier persona en su red "
+"local, y pueden encontrarse en la sección \"Red local\" de su gestor de "
+"archivos."
 
 #: plinth/modules/samba/__init__.py:57
 msgid "Access shared folders from inside the server"
-msgstr ""
+msgstr "Acceso a carpetas compartidas desde el servidor"
 
 #: plinth/modules/samba/templates/samba.html:38
-#, fuzzy
-#| msgid "Select Disk or Partition"
 msgid "Select disks for sharing"
-msgstr "Seleccionar Disco o Partición"
+msgstr "Seleccionar discos para compartir"
 
 #: plinth/modules/samba/templates/samba.html:40
 msgid ""
 "Note: only specially created directory will be shared on selected disks, not "
 "the whole disk."
 msgstr ""
+"Nota: Solo se compartirá una carpeta especialmente creada para ello, no se "
+"compartirá el disco completo."
 
 #: plinth/modules/samba/templates/samba.html:50
 #: plinth/modules/storage/templates/storage.html:41
@@ -4634,51 +4564,43 @@ msgstr "Usado"
 
 #: plinth/modules/samba/templates/samba.html:76
 msgid "vfat partitions are not supported"
-msgstr ""
+msgstr "Las particiones vfat no están soportadas"
 
 #: plinth/modules/samba/templates/samba.html:108
 msgid "Shares configured but the disk is not available"
-msgstr ""
+msgstr "Compartir está configurado pero el disco no está disponible"
 
 #: plinth/modules/samba/templates/samba.html:110
 msgid "If the disk is plugged back in, sharing will be automatically enabled."
 msgstr ""
+"Si el disco se conecta de nuevo, los elementos compartidos estarán "
+"accesibles automáticamente."
 
 #: plinth/modules/samba/templates/samba.html:115
-#, fuzzy
-#| msgid "Share added."
 msgid "Share name"
-msgstr "Compartición añadida."
+msgstr "Nombre de compartición"
 
 #: plinth/modules/samba/templates/samba.html:116
-#, fuzzy
-#| msgid "Actions"
 msgid "Action"
-msgstr "Acciones"
+msgstr "Acción"
 
 #: plinth/modules/samba/views.py:74
-#, fuzzy
-#| msgid "Share deleted."
 msgid "Share enabled."
-msgstr "Compartición eliminada."
+msgstr "Compartición activada."
 
 #: plinth/modules/samba/views.py:79
-#, fuzzy, python-brace-format
-#| msgid "Error ejecting device: {error_message}"
+#, python-brace-format
 msgid "Error enabling share: {error_message}"
-msgstr "Error al expulsar el dispositivo: {error_message}"
+msgstr "Error al activar compartición: {error_message}"
 
 #: plinth/modules/samba/views.py:95
-#, fuzzy
-#| msgid "Share edited."
 msgid "Share disabled."
-msgstr "Compartición editada."
+msgstr "Compartición desactivada."
 
 #: plinth/modules/samba/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Error ejecting device: {error_message}"
+#, python-brace-format
 msgid "Error disabling share: {error_message}"
-msgstr "Error al expulsar el dispositivo: {error_message}"
+msgstr "Error al desactivar compartición: {error_message}"
 
 #: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:24
 msgid "Searx"
@@ -4833,20 +4755,16 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli le permite guardar y compartir marcadores."
 
 #: plinth/modules/shaarli/__init__.py:40
-#, fuzzy
-#| msgid ""
-#| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
-#| "shaarli</a> path on the web server. Note that Shaarli only supports a "
-#| "single user account, which you will need to setup on the initial visit."
 msgid ""
 "When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
 "turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
 "only supports a single user account, which you will need to setup on the "
 "initial visit."
 msgstr ""
-"Cuando se activa Shaarli está disponible en la dirección <a href=\"/shaarli"
-"\">/shaarli</a> de su servidor. Note que Shaarli solo soporta una cuenta de "
-"usuaria/o, que debe configurar en el primer acceso."
+"Cuando se activa Shaarli está disponible en la dirección <a href=\"/shaarli\""
+" data-turbolinks=\"false\">/shaarli</a> de su servidor. Note que Shaarli "
+"solo soporta una cuenta de usuaria/o, que debe configurar en el primer "
+"acceso."
 
 #: plinth/modules/shadowsocks/__init__.py:35
 msgid "Shadowsocks"
@@ -5266,10 +5184,8 @@ msgstr ""
 "servicios a través de esas conexiones."
 
 #: plinth/modules/ssh/forms.py:30
-#, fuzzy
-#| msgid "Use HTTP basic authentication"
 msgid "Disable password authentication"
-msgstr "Usar autenticación básica de HTTP"
+msgstr "Desactivar autentificación de clave"
 
 #: plinth/modules/ssh/forms.py:31
 msgid ""
@@ -5277,6 +5193,9 @@ msgid ""
 "setup SSH keys in your administrator user account before enabling this "
 "option."
 msgstr ""
+"Mejora la seguridad previniendo adivinar la clave. Asegúrese de que ha "
+"configurado las claves SSH en su cuenta de administrador antes de activar "
+"esta opción."
 
 #: plinth/modules/ssh/templates/ssh.html:26
 msgid "Server Fingerprints"
@@ -5300,13 +5219,11 @@ msgstr "Huella digital"
 
 #: plinth/modules/ssh/views.py:66
 msgid "SSH authentication with password disabled."
-msgstr ""
+msgstr "Acceso SSH con clave desactivado."
 
 #: plinth/modules/ssh/views.py:69
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "SSH authentication with password enabled."
-msgstr "Ha fallado la autenticación en el servidor remoto."
+msgstr "Acceso SSH con clave activado."
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
@@ -5608,10 +5525,8 @@ msgstr ""
 "protección cuando navega por la red."
 
 #: plinth/modules/tor/__init__.py:80
-#, fuzzy
-#| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
-msgstr "Servicio de ocultación Tor"
+msgstr "Servicio Tor Onion"
 
 #: plinth/modules/tor/__init__.py:84
 msgid "Tor Socks Proxy"
@@ -5714,23 +5629,17 @@ msgstr ""
 "este nodo. Ayuda a otros usuarios a esquivar la censura."
 
 #: plinth/modules/tor/forms.py:128
-#, fuzzy
-#| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
-msgstr "Activar el servicio de ocultación de Tor"
+msgstr "Activar el servicio Tor Onion"
 
 #: plinth/modules/tor/forms.py:131
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Un servicio de ocultación permite a su {box_name} proporcionar determinados "
+"Un servicio Onion permite a su {box_name} proporcionar determinados "
 "servicios (como wiki o chat) sin revelar su localización. No lo emplee para "
 "un anonimato fuerte."
 
@@ -5766,10 +5675,8 @@ msgid "Tor configuration is being updated"
 msgstr "La configuración de Tor está actualizándose"
 
 #: plinth/modules/tor/templates/tor.html:50
-#, fuzzy
-#| msgid "Hidden Service"
 msgid "Onion Service"
-msgstr "Servicio de ocultación"
+msgstr "Servicio Onion"
 
 #: plinth/modules/tor/templates/tor.html:52
 msgid "Ports"
@@ -5847,32 +5754,23 @@ msgstr ""
 "aplicación de escritorio en la medida de lo posible."
 
 #: plinth/modules/ttrss/__init__.py:52
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server. It can be accessed by any <a href="
-#| "\"{users_url}\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Cuando está activado, Tiny Tiny RSS estará disponible en la ruta <a href=\"/"
-"tt-rss\">/tt-rss</a> en el servidor web. Cualquier <a href="
-"\"{users_url}\">persona con una cuenta de acceso en {box_name}</a> puede "
-"acceder."
+"Cuando está activado, Tiny Tiny RSS estará disponible para cualquier <a href="
+"\"{users_url}\">persona con una cuenta de acceso en {box_name}</a>."
 
 #: plinth/modules/ttrss/__init__.py:56
-#, fuzzy
-#| msgid ""
-#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
-#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
 "connecting."
 msgstr ""
 "Cuando emplee una aplicación de móvil o de escritorio para Tiny Tiny RSS, "
-"use la URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> para conectar."
+"use la URL <a href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a>"
+" para conectar."
 
 #: plinth/modules/ttrss/__init__.py:63
 msgid "Read and subscribe to news feeds"
