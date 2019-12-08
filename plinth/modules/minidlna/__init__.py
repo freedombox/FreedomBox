@@ -77,7 +77,7 @@ class MiniDLNAApp(app_module.App):
         )
         firewall = Firewall('firewall-minidlna', name, ports=['minidlna'],
                             is_external=False)
-        webserver = Webserver('webserver-minidlna', 'minidlna-plinth')
+        webserver = Webserver('webserver-minidlna', 'minidlna-freedombox')
         shortcut = frontpage.Shortcut(
             'shortcut-minidlna',
             name,
