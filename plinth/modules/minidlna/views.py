@@ -59,7 +59,6 @@ class MiniDLNAAppView(AppView):
                     'minidlna',
                     ['set-media-dir', '--dir', new_config['media_dir']]
                 )
-                actions.superuser_run('service', ['restart', 'minidlna'])
                 messages.success(self.request, _('Updated media directory'))
 
         return super().form_valid(form)
