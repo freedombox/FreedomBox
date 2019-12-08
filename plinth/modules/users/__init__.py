@@ -34,7 +34,7 @@ is_essential = True
 
 managed_packages = [
     'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nscd',
-    'nslcd', 'slapd'
+    'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
 ]
 
 first_boot_steps = [

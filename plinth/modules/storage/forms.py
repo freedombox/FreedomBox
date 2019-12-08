@@ -150,8 +150,15 @@ class DirectorySelectForm(AppForm):
                 _('Default'), self.default))]
         available_shares = get_available_samba_shares()
         for share in available_shares:
-            choices = choices + [(share['path'], '{0} ({1}): {2}'.format(
-                _('Samba share'), share['name'], share['path']))]
+            if share['share_type'] != 'home':
+                share_type = _('Share')
+                if share['share_type'] == 'group':
+                    share_type = _('Group Share')
+                elif share['share_type'] == 'open':
+                    share_type = _('Open Share')
+                selection_text = 'Samba {0} ({1}): {2}'.format(
+                    share_type, share['name'], share['path'])
+                choices = choices + [(share['path'], selection_text)]
         choices = choices + [('/', _('Other directory (specify below)'))]
 
         initial_value, subdir = self.get_initial(choices)
