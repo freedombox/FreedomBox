@@ -34,7 +34,7 @@ version = 1
 
 name = 'minidlna'
 
-icon_name = name
+icon_filename = name
 
 managed_packages = ['minidlna']
 
@@ -73,7 +73,7 @@ class MiniDLNAApp(app_module.App):
             short_description=short_description,
             url_name='minidlna:index',
             parent_url_name='apps',
-            icon=icon_name,
+            icon=icon_filename,
         )
         firewall = Firewall('firewall-minidlna', name, ports=['minidlna'],
                             is_external=False)
@@ -83,7 +83,7 @@ class MiniDLNAApp(app_module.App):
             name,
             short_description=short_description,
             description=description,
-            icon=icon_name,
+            icon=icon_filename,
             url='/_minidlna/',
             login_required=True,
         )
