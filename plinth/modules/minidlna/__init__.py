@@ -86,6 +86,7 @@ class MiniDLNAApp(app_module.App):
             icon=icon_filename,
             url='/_minidlna/',
             login_required=True,
+            allowed_groups=[group[0]],
         )
         daemon = Daemon('daemon-minidlna', managed_services[0])
 
@@ -97,6 +98,7 @@ class MiniDLNAApp(app_module.App):
 
 
 def init():
+    """Initialize the module."""
     global app
     app = MiniDLNAApp()
     register_group(group)
