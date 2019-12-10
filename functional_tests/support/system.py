@@ -95,7 +95,8 @@ def set_language(browser, language_code):
 
 def check_language(browser, language_code):
     nav_to_module(browser, 'config')
-    return browser.title == config_page_title_language_map[language_code]
+    return browser.find_by_css('.header-bar').first.find_by_tag(
+        'h2').first.value == config_page_title_language_map[language_code]
 
 
 def delete_all_snapshots(browser):
