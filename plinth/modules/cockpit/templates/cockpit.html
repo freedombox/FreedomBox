@@ -1,3 +1,5 @@
+{% extends "app.html" %}
+{% comment %}
 #
 # This file is part of FreedomBox.
 #
@@ -14,14 +16,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""
-URLs for Cockpit module.
-"""
+{% endcomment %}
+{% load bootstrap %}
+{% load i18n %}
 
-from django.conf.urls import url
+{% block status %}
+  {{ block.super }}
 
-from plinth.modules.cockpit.views import CockpitAppView
+  <h3>{% trans "Access" %}</h3>
 
-urlpatterns = [
-    url(r'^sys/cockpit/$', CockpitAppView.as_view(), name='index'),
-]
+  <p>
+    {% blocktrans trimmed %}
+        Cockpit will only work when accessed using the following URLs.
+    {% endblocktrans %}
+  </p>
+
+  <ol>
+    {% for url_ in urls %}
+    <li>{{ url_ }}</li>
+    {% endfor %}
+  </ol>
+{% endblock %}

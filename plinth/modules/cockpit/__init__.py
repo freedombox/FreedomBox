@@ -44,6 +44,8 @@ managed_packages = ['cockpit']
 
 name = _('Cockpit')
 
+icon_filename = 'cockpit'
+
 short_description = _('Server Administration')
 
 description = [
