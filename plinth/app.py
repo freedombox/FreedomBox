@@ -104,6 +104,24 @@ class App:
             if not component.is_leader:
                 component.set_enabled(enabled)
 
+    def diagnose(self):
+        """Run diagnostics and return results.
+
+        Return value must be a list of results. Each result is a two-tuple with
+        first value as user visible description of the test followed by the
+        result. The test result is a string enumeration from 'failed', 'passed'
+        and 'error'.
+
+        Results are typically collected by diagnosing each component of the app
+        and then supplementing the results with any app level diagnostic tests.
+
+        """
+        results = []
+        for component in self.components.values():
+            results.extend(component.diagnose())
+
+        return results
+
 
 class Component:
     """Interface for an app component."""
@@ -121,6 +139,17 @@ class Component:
         """Run operations to enable the component."""
     def disable(self):
         """Run operations to disable the component."""
+    @staticmethod
+    def diagnose():
+        """Run diagnostics and return results.
+
+        Return value must be a list of results. Each result is a two-tuple with
+        first value as user visible description of the test followed by the
+        result. The test result is a string enumeration from 'failed', 'passed'
+        and 'error'.
+
+        """
+        return []
 
 
 class FollowerComponent(Component):

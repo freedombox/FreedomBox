@@ -34,6 +34,10 @@ class LeaderTest(FollowerComponent):
     """Test class for using LeaderComponent in tests."""
     is_leader = True
 
+    def diagnose(self):
+        """Return diagnostic results."""
+        return [('test-result-' + self.component_id, 'success')]
+
 
 @pytest.fixture(name='app_with_components')
 def fixture_app_with_components():
@@ -182,6 +186,13 @@ def test_app_set_enabled(app_with_components):
     assert app.components['test-leader-1'].is_enabled()
 
 
+def test_app_diagnose(app_with_components):
+    """Test running diagnostics on an app."""
+    results = app_with_components.diagnose()
+    assert results == [('test-result-test-leader-1', 'success'),
+                       ('test-result-test-leader-2', 'success')]
+
+
 def test_component_initialization():
     """Test that component is initialized properly."""
     with pytest.raises(ValueError):
@@ -190,6 +201,12 @@ def test_component_initialization():
     component = Component('test-component')
     assert component.component_id == 'test-component'
     assert not component.is_leader
+
+
+def test_component_diagnose():
+    """Test running diagnostics on component."""
+    component = Component('test-component')
+    assert component.diagnose() == []
 
 
 def test_follower_component_initialization():
