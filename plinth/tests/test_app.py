@@ -62,10 +62,16 @@ def test_app_instantiation():
     assert len(app._all_apps) == 1
 
 
-def test_get():
+def test_app_get():
     """Test that an app can be correctly retrieved."""
     app = AppTest()
     assert App.get(app.app_id) == app
+
+
+def test_app_list():
+    """Test listing all apps."""
+    app = AppTest()
+    assert list(App.list()) == [app]
 
 
 def test_app_add():

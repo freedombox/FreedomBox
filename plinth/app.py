@@ -49,6 +49,11 @@ class App:
         """Return an app with given ID."""
         return cls._all_apps[app_id]
 
+    @classmethod
+    def list(cls):
+        """Return a list of all apps."""
+        return cls._all_apps.values()
+
     def add(self, component):
         """Add a component to an app."""
         self.components[component.component_id] = component
