@@ -19,7 +19,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.modules.mumble import (
-    name, description, clients, manual_page, port_forwarding_info,
+    name,
+    icon_filename,
+    description,
+    clients,
+    manual_page,
+    port_forwarding_info,
 )
 from plinth.modules.mumble.forms import MumbleForm
 from plinth.views import AppView
@@ -33,6 +38,7 @@ class MumbleAppView(AppView):
     clients = clients
     manual_page = manual_page
     port_forwarding_info = port_forwarding_info
+    icon_filename = icon_filename
     form_class = MumbleForm
 
     def form_valid(self, form):
@@ -42,7 +48,8 @@ class MumbleAppView(AppView):
         password = new_config.get('super_user_password')
         if password:
             actions.run_as_user(
-                'mumble', ['create-password'],
+                'mumble',
+                ['create-password'],
                 input=password.encode(),
                 become_user="mumble-server",
             )
