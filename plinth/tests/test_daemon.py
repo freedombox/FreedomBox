@@ -41,9 +41,13 @@ def test_initialization():
     assert daemon.component_id == 'test-daemon'
     assert daemon.unit == 'test-unit'
     assert not daemon.strict_check
+    assert daemon.listen_ports == []
 
-    daemon = Daemon('test-daemon', 'test-unit', strict_check=True)
+    listen_ports = [(345, 'tcp4'), (123, 'udp')]
+    daemon = Daemon('test-daemon', 'test-unit', strict_check=True,
+                    listen_ports=listen_ports)
     assert daemon.strict_check
+    assert daemon.listen_ports == listen_ports
 
 
 @patch('plinth.action_utils.service_is_enabled')
@@ -86,6 +90,22 @@ def test_is_running(service_is_running, daemon):
 
     service_is_running.return_value = False
     assert not daemon.is_running()
+
+
+@patch('plinth.action_utils.diagnose_port_listening')
+def test_diagnose(diagnose_port_listening, daemon):
+    """Test running diagnostics."""
+    def side_effect(port, kind):
+        return [f'test-result-{port}-{kind}', 'passed']
+
+    daemon = Daemon('test-daemon', 'test-unit', listen_ports=[(8273, 'tcp4'),
+                                                              (345, 'udp')])
+    diagnose_port_listening.side_effect = side_effect
+    results = daemon.diagnose()
+    assert results == [['test-result-8273-tcp4', 'passed'],
+                       ['test-result-345-udp', 'passed']]
+    diagnose_port_listening.assert_has_calls(
+        [call(8273, 'tcp4'), call(345, 'udp')])
 
 
 @patch('plinth.action_utils.service_is_running')

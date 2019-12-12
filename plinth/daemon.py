@@ -23,7 +23,8 @@ from plinth import action_utils, actions, app
 
 class Daemon(app.LeaderComponent):
     """Component to manage a background daemon or any systemd unit."""
-    def __init__(self, component_id, unit, strict_check=False):
+    def __init__(self, component_id, unit, strict_check=False,
+                 listen_ports=None):
         """Initialize a new daemon component.
 
         'component_id' must be a unique string across all apps and components
@@ -31,11 +32,17 @@ class Daemon(app.LeaderComponent):
 
         'unit' must the name of systemd unit that this component should manage.
 
+        'listen_ports' is a list of tuples. Each tuple contains the port number
+        as integer followed by a string with one of the values 'tcp4', 'tcp6',
+        'tcp', 'udp4', 'udp6', 'udp' indicating the protocol that the daemon
+        listens on. This information is used to run diagnostic tests.
+
         """
         super().__init__(component_id)
 
         self.unit = unit
         self.strict_check = strict_check
+        self.listen_ports = listen_ports or []
 
     def is_enabled(self):
         """Return if the daemon/unit is enabled."""
@@ -53,6 +60,15 @@ class Daemon(app.LeaderComponent):
     def is_running(self):
         """Return whether the daemon/unit is running."""
         return action_utils.service_is_running(self.unit)
+
+    def diagnose(self):
+        """Check if the daemon is listening on expected ports."""
+        results = []
+        for port in self.listen_ports:
+            results.append(
+                action_utils.diagnose_port_listening(port[0], port[1]))
+
+        return results
 
 
 def app_is_running(app_):

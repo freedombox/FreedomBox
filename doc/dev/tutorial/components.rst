@@ -26,14 +26,17 @@ our app's class.
       def __init__(self):
         ...
 
-        daemon = Daemon('daemon-transmission', managed_services[0])
+        daemon = Daemon('daemon-transmission', managed_services[0],
+                        listen_ports=[(9091, 'tcp4')])
         self.add(daemon)
 
 
 The first argument to instantiate the :class:`~plinth.daemon.Daemon` class is a
 unique ID. The second is the name of the `systemd
 <https://www.freedesktop.org/wiki/Software/systemd/>`_ unit file which manages
-the daemon.
+the daemon. The final argument is the list of ports that this daemon listens on.
+This information is used to check if the daemon is listening on the expected
+ports when the user requests diagnostic tests on the app.
 
 Managing web server configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
