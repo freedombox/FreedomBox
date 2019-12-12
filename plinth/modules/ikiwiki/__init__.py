@@ -21,7 +21,7 @@ FreedomBox app to configure ikiwiki.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Webserver
@@ -85,7 +85,8 @@ class IkiwikiApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-ikiwiki', 'ikiwiki-plinth')
+        webserver = Webserver('webserver-ikiwiki', 'ikiwiki-plinth',
+                              urls=['https://{host}/ikiwiki'])
         self.add(webserver)
 
     def add_shortcut(self, site, title):
@@ -129,14 +130,3 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/ikiwiki',
-                                         check_certificate=False))
-
-    return results

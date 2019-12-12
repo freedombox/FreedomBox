@@ -85,6 +85,17 @@ class LetsEncryptApp(app_module.App):
                               parent_url_name='system')
         self.add(menu_item)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        for domain in names.components.DomainName.list():
+            if domain.domain_type.can_have_certificate:
+                results.append(
+                    action_utils.diagnose_url('https://' + domain.name))
+
+        return results
+
 
 def init():
     """Initialize the module."""
@@ -104,17 +115,6 @@ def setup(helper, old_version=None):
     actions.superuser_run(
         'letsencrypt',
         ['setup', '--old-version', str(old_version)])
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    for domain in names.components.DomainName.list():
-        if domain.domain_type.can_have_certificate:
-            results.append(action_utils.diagnose_url('https://' + domain.name))
-
-    return results
 
 
 def certificate_obtain(domain):

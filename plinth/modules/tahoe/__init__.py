@@ -92,6 +92,20 @@ class TahoeApp(app_module.App):
         daemon = Daemon('daemon-tahoe', managed_services[0])
         self.add(daemon)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.extend([
+            action_utils.diagnose_url('http://localhost:5678', kind='4',
+                                      check_certificate=False),
+            action_utils.diagnose_url('http://localhost:5678', kind='6',
+                                      check_certificate=False),
+            action_utils.diagnose_url(
+                'http://{}:5678'.format(get_configured_domain_name()),
+                kind='4', check_certificate=False)
+        ])
+        return results
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -155,19 +169,6 @@ def post_setup(configured_domain_name):
                         become_user='tahoe-lafs')
     actions.superuser_run('tahoe-lafs', ['autostart'])
     app.enable()
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    return [
-        action_utils.diagnose_url('http://localhost:5678', kind='4',
-                                  check_certificate=False),
-        action_utils.diagnose_url('http://localhost:5678', kind='6',
-                                  check_certificate=False),
-        action_utils.diagnose_url(
-            'http://{}:5678'.format(get_configured_domain_name()), kind='4',
-            check_certificate=False)
-    ]
 
 
 def add_introducer(introducer):

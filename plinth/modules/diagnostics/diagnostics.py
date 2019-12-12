@@ -19,6 +19,7 @@ FreedomBox app for running diagnostics.
 """
 
 import collections
+import importlib
 import logging
 import threading
 
@@ -27,7 +28,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
 
-from plinth import module_loader
+from plinth.app import App
 from plinth.modules import diagnostics
 
 logger = logging.Logger(__name__)
@@ -53,23 +54,18 @@ def index(request):
 
 
 @require_POST
-def module(request, module_name):
-    """Return diagnostics for a particular module."""
+def diagnose_app(request, app_id):
+    """Return diagnostics for a particular app."""
     try:
-        module = module_loader.loaded_modules[module_name]
+        app = App.get(app_id)
     except KeyError:
-        raise Http404('Module does not exist or not loaded')
+        raise Http404('App does not exist')
 
-    results = []
-    if hasattr(module, 'diagnose'):
-        results = module.diagnose()
-
-    return TemplateResponse(
-        request, 'diagnostics_module.html', {
-            'title': _('Diagnostic Test'),
-            'module_name': module_name,
-            'results': results
-        })
+    return TemplateResponse(request, 'diagnostics_app.html', {
+        'title': _('Diagnostic Test'),
+        'app_id': app_id,
+        'results': app.diagnose()
+    })
 
 
 def _start_task():
@@ -99,29 +95,28 @@ def run_on_all_enabled_modules():
     """Run diagnostics on all the enabled modules and store the result."""
     global current_results
     current_results = {
-        'modules': [],
+        'apps': [],
         'results': collections.OrderedDict(),
         'progress_percentage': 0
     }
 
-    modules = []
-    for module_name, module in module_loader.loaded_modules.items():
-        if not hasattr(module, 'diagnose'):
-            continue
-
-        # Don't run setup on modules have not been setup yet.
-        # However, run on modules that need an upgrade.
+    apps = []
+    for app in App.list():
+        # XXX: Implement more cleanly.
+        # Don't run diagnostics on apps have not been setup yet.
+        # However, run on apps that need an upgrade.
+        module = importlib.import_module(app.__class__.__module__)
         if module.setup_helper.get_state() == 'needs-setup':
             continue
 
-        if not module.app.is_enabled():
+        if not app.is_enabled():
             continue
 
-        modules.append((module_name, module))
-        current_results['results'][module_name] = None
+        apps.append((app.app_id, app))
+        current_results['results'][app.app_id] = None
 
-    current_results['modules'] = modules
-    for current_index, (module_name, module) in enumerate(modules):
-        current_results['results'][module_name] = module.diagnose()
+    current_results['apps'] = apps
+    for current_index, (app_id, app) in enumerate(apps):
+        current_results['results'][app_id] = app.diagnose()
         current_results['progress_percentage'] = \
-            int((current_index + 1) * 100 / len(modules))
+            int((current_index + 1) * 100 / len(apps))

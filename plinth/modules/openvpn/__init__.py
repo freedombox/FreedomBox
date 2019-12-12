@@ -21,7 +21,7 @@ FreedomBox app to configure OpenVPN server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -89,7 +89,8 @@ class OpenVPNApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-openvpn', managed_services[0])
+        daemon = Daemon('daemon-openvpn', managed_services[0],
+                        listen_ports=[(1194, 'udp4')])
         self.add(daemon)
 
 
@@ -115,8 +116,3 @@ def setup(helper, old_version=None):
 def is_setup():
     """Return whether the service is running."""
     return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    return [action_utils.diagnose_port_listening(1194, 'udp4')]

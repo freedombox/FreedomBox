@@ -92,8 +92,64 @@ class TorApp(app_module.App):
                                    'tor-obfs4'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-tor', managed_services[0], strict_check=True)
+        daemon = Daemon(
+            'daemon-tor', managed_services[0], strict_check=True,
+            listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
+                          (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
         self.add(daemon)
+
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        results.extend(_diagnose_control_port())
+
+        output = actions.superuser_run('tor', ['get-status'])
+        ports = json.loads(output)['ports']
+
+        results.append([
+            _('Tor relay port available'),
+            'passed' if 'orport' in ports else 'failed'
+        ])
+        if 'orport' in ports:
+            results.append(
+                action_utils.diagnose_port_listening(int(ports['orport']),
+                                                     'tcp4'))
+            results.append(
+                action_utils.diagnose_port_listening(int(ports['orport']),
+                                                     'tcp6'))
+
+        results.append([
+            _('Obfs3 transport registered'),
+            'passed' if 'obfs3' in ports else 'failed'
+        ])
+        if 'obfs3' in ports:
+            results.append(
+                action_utils.diagnose_port_listening(int(ports['obfs3']),
+                                                     'tcp4'))
+            results.append(
+                action_utils.diagnose_port_listening(int(ports['obfs3']),
+                                                     'tcp6'))
+
+        results.append([
+            _('Obfs4 transport registered'),
+            'passed' if 'obfs4' in ports else 'failed'
+        ])
+        if 'obfs4' in ports:
+            results.append(
+                action_utils.diagnose_port_listening(int(ports['obfs4']),
+                                                     'tcp4'))
+            results.append(
+                action_utils.diagnose_port_listening(int(ports['obfs4']),
+                                                     'tcp6'))
+
+        results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
+        results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
+
+        results.append(_diagnose_tor_use('https://check.torproject.org', '4'))
+        results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
+
+        return results
 
 
 def init():
@@ -146,60 +202,6 @@ def update_hidden_service_domain(status=None):
         services = [int(port['virtport']) for port in status['hs_ports']]
         domain_added.send_robust(sender='tor', domain_type='domain-type-tor',
                                  name=status['hs_hostname'], services=services)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-    results.append(action_utils.diagnose_port_listening(9050, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(9050, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(9040, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(9040, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(9053, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(9053, 'udp6'))
-
-    results.extend(_diagnose_control_port())
-
-    output = actions.superuser_run('tor', ['get-status'])
-    ports = json.loads(output)['ports']
-
-    results.append([
-        _('Tor relay port available'),
-        'passed' if 'orport' in ports else 'failed'
-    ])
-    if 'orport' in ports:
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['orport']), 'tcp4'))
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['orport']), 'tcp6'))
-
-    results.append([
-        _('Obfs3 transport registered'),
-        'passed' if 'obfs3' in ports else 'failed'
-    ])
-    if 'obfs3' in ports:
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp4'))
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp6'))
-
-    results.append([
-        _('Obfs4 transport registered'),
-        'passed' if 'obfs4' in ports else 'failed'
-    ])
-    if 'obfs4' in ports:
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp4'))
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp6'))
-
-    results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
-    results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
-
-    results.append(_diagnose_tor_use('https://check.torproject.org', '4'))
-    results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
-
-    return results
 
 
 def _diagnose_control_port():

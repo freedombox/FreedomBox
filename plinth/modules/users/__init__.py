@@ -23,9 +23,10 @@ import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.daemon import Daemon
 from plinth.utils import format_lazy
 
 version = 3
@@ -36,6 +37,8 @@ managed_packages = [
     'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nscd',
     'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
 ]
+
+managed_services = ['slapd']
 
 first_boot_steps = [
     {
@@ -79,6 +82,20 @@ class UsersApp(app_module.App):
                               'users:index', parent_url_name='system')
         self.add(menu_item)
 
+        daemon = Daemon('daemon-users', managed_services[0],
+                        listen_ports=[(389, 'tcp4'), (389, 'tcp6')])
+        self.add(daemon)
+
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        results.append(_diagnose_ldap_entry('dc=thisbox'))
+        results.append(_diagnose_ldap_entry('ou=people'))
+        results.append(_diagnose_ldap_entry('ou=groups'))
+
+        return results
+
 
 def init():
     """Initialize the user module."""
@@ -94,20 +111,6 @@ def setup(helper, old_version=None):
         helper.call('post', actions.superuser_run, 'users', ['first-setup'])
     helper.call('post', actions.superuser_run, 'users', ['setup'])
     create_group('freedombox-share')
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(389, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(389, 'tcp6'))
-
-    results.append(_diagnose_ldap_entry('dc=thisbox'))
-    results.append(_diagnose_ldap_entry('ou=people'))
-    results.append(_diagnose_ldap_entry('ou=groups'))
-
-    return results
 
 
 def _diagnose_ldap_entry(search_item):

@@ -27,12 +27,12 @@ import socket
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules.users import register_group
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -94,10 +94,16 @@ class SambaApp(app_module.App):
         firewall = Firewall('firewall-samba', name, ports=['samba'])
         self.add(firewall)
 
-        daemon = Daemon('daemon-samba', managed_services[0])
+        daemon = Daemon(
+            'daemon-samba', managed_services[0], listen_ports=[(139, 'tcp4'),
+                                                               (139, 'tcp6'),
+                                                               (445, 'tcp4'),
+                                                               (445, 'tcp6')])
         self.add(daemon)
 
-        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1])
+        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1],
+                             listen_ports=[(137, 'udp4'), (138, 'udp4')])
+
         self.add(daemon_nmbd)
 
 
@@ -117,20 +123,6 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'samba', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(137, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(138, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(139, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(139, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(445, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(445, 'tcp6'))
-
-    return results
 
 
 def add_share(mount_point, share_type, filesystem):

@@ -24,6 +24,6 @@ from . import diagnostics as views
 
 urlpatterns = [
     url(r'^sys/diagnostics/$', views.index, name='index'),
-    url(r'^sys/diagnostics/(?P<module_name>[1-9a-z\-]+)/$', views.module,
-        name='module'),
+    url(r'^sys/diagnostics/(?P<app_id>[1-9a-z\-]+)/$', views.diagnose_app,
+        name='app'),
 ]

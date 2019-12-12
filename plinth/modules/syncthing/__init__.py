@@ -20,7 +20,7 @@ FreedomBox app to configure Syncthing.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -95,7 +95,8 @@ class SyncthingApp(app_module.App):
                             ports=['syncthing'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-syncthing', 'syncthing-plinth')
+        webserver = Webserver('webserver-syncthing', 'syncthing-plinth',
+                              urls=['https://{host}/syncthing/'])
         self.add(webserver)
 
         daemon = Daemon('daemon-syncthing', managed_services[0])
@@ -122,14 +123,3 @@ def setup(helper, old_version=None):
 
     if old_version == 1 and app.is_enabled():
         app.get_component('firewall-syncthing-ports').enable()
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/syncthing/',
-                                         check_certificate=False))
-
-    return results

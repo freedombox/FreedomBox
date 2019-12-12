@@ -20,7 +20,7 @@
 {% load i18n %}
 
 <form class="form form-diagnostics-button" method="post"
-      action="{% url 'diagnostics:module' module %}">
+      action="{% url 'diagnostics:app' app_id %}">
   {% csrf_token %}
 
   {% if enabled %}

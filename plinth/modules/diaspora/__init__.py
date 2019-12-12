@@ -105,6 +105,23 @@ class DiasporaApp(app_module.App):
         daemon = Daemon('daemon-diaspora', managed_services[0])
         self.add(daemon)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        results.append(
+            action_utils.diagnose_url('http://diaspora.localhost', kind='4',
+                                      check_certificate=False))
+        results.append(
+            action_utils.diagnose_url('http://diaspora.localhost', kind='6',
+                                      check_certificate=False))
+        results.append(
+            action_utils.diagnose_url(
+                'http://diaspora.{}'.format(get_configured_domain_name()),
+                kind='4', check_certificate=False))
+
+        return results
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -153,24 +170,6 @@ def enable_user_registrations():
 def disable_user_registrations():
     """Disallow users from registering without invitation"""
     actions.superuser_run('diaspora', ['disable-user-registrations'])
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(
-        action_utils.diagnose_url('http://diaspora.localhost', kind='4',
-                                  check_certificate=False))
-    results.append(
-        action_utils.diagnose_url('http://diaspora.localhost', kind='6',
-                                  check_certificate=False))
-    results.append(
-        action_utils.diagnose_url(
-            'http://diaspora.{}'.format(get_configured_domain_name()),
-            kind='4', check_certificate=False))
-
-    return results
 
 
 def generate_apache_configuration(conf_file, domain_name):

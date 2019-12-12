@@ -22,7 +22,7 @@ import re
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
@@ -102,7 +102,11 @@ class BindApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-bind', managed_services[0])
+        daemon = Daemon(
+            'daemon-bind', managed_services[0], listen_ports=[(53, 'tcp6'),
+                                                              (53, 'udp6'),
+                                                              (53, 'tcp4'),
+                                                              (53, 'udp4')])
         self.add(daemon)
 
 
@@ -127,18 +131,6 @@ def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
     helper.install(managed_packages, force_configuration='old')
     return True
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(53, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(53, 'udp6'))
-    results.append(action_utils.diagnose_port_listening(53, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(53, 'udp4'))
-
-    return results
 
 
 def get_config():

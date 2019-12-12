@@ -90,8 +90,16 @@ class PrivoxyApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-privoxy', managed_services[0])
+        daemon = Daemon('daemon-privoxy', managed_services[0],
+                        listen_ports=[(8118, 'tcp4'), (8118, 'tcp6')])
         self.add(daemon)
+
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(action_utils.diagnose_url('https://www.debian.org'))
+        results.extend(diagnose_url_with_proxy())
+        return results
 
 
 def init():
@@ -118,18 +126,6 @@ class PrivoxyAppView(AppView):
     description = description
     manual_page = manual_page
     icon_filename = icon_filename
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(8118, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(8118, 'tcp6'))
-    results.append(action_utils.diagnose_url('https://www.debian.org'))
-    results.extend(diagnose_url_with_proxy())
-
-    return results
 
 
 def diagnose_url_with_proxy():

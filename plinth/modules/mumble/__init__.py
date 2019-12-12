@@ -21,7 +21,6 @@ FreedomBox app to configure Mumble server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -85,7 +84,10 @@ class MumbleApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-mumble', managed_services[0])
+        daemon = Daemon(
+            'daemon-mumble', managed_services[0],
+            listen_ports=[(64738, 'tcp4'), (64738, 'tcp6'), (64738, 'udp4'),
+                          (64738, 'udp6')])
         self.add(daemon)
 
 
@@ -103,15 +105,3 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(64738, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(64738, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(64738, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(64738, 'udp6'))
-
-    return results

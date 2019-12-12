@@ -61,6 +61,24 @@ class NetworksApp(app_module.App):
                               'networks:index', parent_url_name='system')
         self.add(menu_item)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        interfaces = _get_shared_interfaces()
+        addresses = _get_interface_addresses(interfaces)
+
+        for address in addresses:
+            results.append(
+                action_utils.diagnose_port_listening(53, 'tcp', address))
+            results.append(
+                action_utils.diagnose_port_listening(53, 'udp', address))
+
+        results.append(_diagnose_dnssec('4'))
+        results.append(_diagnose_dnssec('6'))
+
+        return results
+
 
 def init():
     """Initialize the Networks module."""
@@ -74,25 +92,6 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     actions.superuser_run('networks')
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    interfaces = _get_shared_interfaces()
-    addresses = _get_interface_addresses(interfaces)
-
-    for address in addresses:
-        results.append(action_utils.diagnose_port_listening(
-            53, 'tcp', address))
-        results.append(action_utils.diagnose_port_listening(
-            53, 'udp', address))
-
-    results.append(_diagnose_dnssec('4'))
-    results.append(_diagnose_dnssec('6'))
-
-    return results
 
 
 def _get_shared_interfaces():

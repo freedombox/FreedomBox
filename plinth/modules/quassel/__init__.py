@@ -23,7 +23,7 @@ import pathlib
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -108,7 +108,8 @@ class QuasselApp(app_module.App):
             managing_app='quassel')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-quassel', managed_services[0])
+        daemon = Daemon('daemon-quassel', managed_services[0],
+                        listen_ports=[(4242, 'tcp4'), (4242, 'tcp6')])
         self.add(daemon)
 
 
@@ -127,16 +128,6 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', app.enable)
     app.get_component('letsencrypt-quassel').setup_certificates()
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(4242, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(4242, 'tcp6'))
-
-    return results
 
 
 def get_available_domains():

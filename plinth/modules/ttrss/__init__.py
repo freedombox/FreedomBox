@@ -21,7 +21,7 @@ FreedomBox app to configure Tiny Tiny RSS.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -92,7 +92,8 @@ class TTRSSApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-ttrss', 'tt-rss-plinth')
+        webserver = Webserver('webserver-ttrss', 'tt-rss-plinth',
+                              urls=['https://{host}/tt-rss'])
         self.add(webserver)
 
         daemon = Daemon('daemon-ttrss', managed_services[0])
@@ -136,17 +137,6 @@ def force_upgrade(helper, packages):
     helper.install(['tt-rss'], force_configuration='new')
     actions.superuser_run('ttrss', ['setup'])
     return True
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/tt-rss',
-                                         check_certificate=False))
-
-    return results
 
 
 def backup_pre(packet):

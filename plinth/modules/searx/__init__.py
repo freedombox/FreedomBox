@@ -22,14 +22,15 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
-from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients  # noqa, pylint: disable=unused-import
+from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unused-import
+                       backup, clients)
 
 clients = clients
 
@@ -80,7 +81,8 @@ class SearxApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-searx', 'searx-freedombox')
+        webserver = Webserver('webserver-searx', 'searx-freedombox',
+                              urls=['https://{host}/searx/'])
         self.add(webserver)
 
         webserver = SearxWebserverAuth('webserver-searx-auth',
@@ -140,17 +142,6 @@ def get_safe_search_setting():
 def is_public_access_enabled():
     """Check whether public access is enabled for Searx."""
     return os.path.exists(PUBLIC_ACCESS_SETTING_FILE)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/searx/',
-                                         check_certificate=False))
-
-    return results
 
 
 def enable_public_access():
