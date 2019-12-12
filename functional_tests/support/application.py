@@ -98,30 +98,40 @@ def is_installed(browser, app_name):
     return not bool(install_button)
 
 
-def _change_status(browser, app_name, change_status_to='enabled',
-                   checkbox_id=None):
-    interface.nav_to_module(browser, get_app_module(app_name))
-    checkbox_id = checkbox_id or get_app_checkbox_id(app_name)
-    checkbox = browser.find_by_id(checkbox_id)
+def _change_app_status(browser, app_name, change_status_to='enabled'):
+    """Enable or disable application."""
     button = browser.find_by_id('app-toggle-button')
+    checkbox_id = get_app_checkbox_id(app_name)
+    checkbox = browser.find_by_id(checkbox_id)
     if button:
         if checkbox.checked and change_status_to == 'disabled' or (
                 not checkbox.checked and change_status_to == 'enabled'):
             interface.submit(browser, element=button)
     else:
-        checkbox.check(
-        ) if change_status_to == 'enabled' else checkbox.uncheck()
-        interface.submit(browser, form_class='form-configuration')
+        _change_status(browser, app_name, checkbox_id, change_status_to)
+
+    if app_name in apps_with_loaders:
+        wait_for_config_update(browser, app_name)
+
+
+def _change_status(browser, app_name, checkbox_id, change_status_to='enabled'):
+    """Change checkbox status."""
+    checkbox = browser.find_by_id(checkbox_id)
+    checkbox.check() if change_status_to == 'enabled' else checkbox.uncheck()
+    interface.submit(browser, form_class='form-configuration')
+
     if app_name in apps_with_loaders:
         wait_for_config_update(browser, app_name)
 
 
 def enable(browser, app_name):
-    _change_status(browser, app_name, 'enabled')
+    interface.nav_to_module(browser, get_app_module(app_name))
+    _change_app_status(browser, app_name, 'enabled')
 
 
 def disable(browser, app_name):
-    _change_status(browser, app_name, 'disabled')
+    interface.nav_to_module(browser, get_app_module(app_name))
+    _change_app_status(browser, app_name, 'disabled')
 
 
 def wait_for_config_update(browser, app_name):
@@ -270,29 +280,27 @@ def verify_inaccessible_share(browser, name):
 def enable_mediawiki_public_registrations(browser):
     """Enable public registrations in MediaWiki."""
     interface.nav_to_module(browser, 'mediawiki')
-    _change_status(browser, 'mediawiki', 'enabled',
-                   checkbox_id='id_enable_public_registrations')
+    _change_status(browser, 'mediawiki', 'id_enable_public_registrations',
+                   'enabled')
 
 
 def disable_mediawiki_public_registrations(browser):
     """Enable public registrations in MediaWiki."""
     interface.nav_to_module(browser, 'mediawiki')
-    _change_status(browser, 'mediawiki', 'disabled',
-                   checkbox_id='id_enable_public_registrations')
+    _change_status(browser, 'mediawiki', 'id_enable_public_registrations',
+                   'disabled')
 
 
 def enable_mediawiki_private_mode(browser):
     """Enable public registrations in MediaWiki."""
     interface.nav_to_module(browser, 'mediawiki')
-    _change_status(browser, 'mediawiki', 'enabled',
-                   checkbox_id='id_enable_private_mode')
+    _change_status(browser, 'mediawiki', 'id_enable_private_mode', 'enabled')
 
 
 def disable_mediawiki_private_mode(browser):
     """Enable public registrations in MediaWiki."""
     interface.nav_to_module(browser, 'mediawiki')
-    _change_status(browser, 'mediawiki', 'disabled',
-                   checkbox_id='id_enable_private_mode')
+    _change_status(browser, 'mediawiki', 'id_enable_private_mode', 'disabled')
 
 
 def set_mediawiki_admin_password(browser, password):
@@ -305,15 +313,13 @@ def set_mediawiki_admin_password(browser, password):
 def enable_ejabberd_message_archive_management(browser):
     """Enable Message Archive Management in Ejabberd."""
     interface.nav_to_module(browser, 'ejabberd')
-    _change_status(browser, 'ejabberd', 'enabled',
-                   checkbox_id='id_MAM_enabled')
+    _change_status(browser, 'ejabberd', 'id_MAM_enabled', 'enabled')
 
 
 def disable_ejabberd_message_archive_management(browser):
     """Enable Message Archive Management in Ejabberd."""
     interface.nav_to_module(browser, 'ejabberd')
-    _change_status(browser, 'ejabberd', 'disabled',
-                   checkbox_id='id_MAM_enabled')
+    _change_status(browser, 'ejabberd', 'id_MAM_enabled', 'disabled')
 
 
 def ejabberd_add_contact(browser):
@@ -401,9 +407,8 @@ def _gitweb_get_repo_url(repo, with_auth):
     if with_auth:
         password = config['DEFAULT']['password']
 
-    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(scheme,
-                                                 config['DEFAULT']['username'],
-                                                 password, url, repo)
+    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(
+        scheme, config['DEFAULT']['username'], password, url, repo)
 
 
 @contextlib.contextmanager
