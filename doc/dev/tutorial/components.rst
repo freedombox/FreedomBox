@@ -57,14 +57,18 @@ app. Let us do that in our app's class.
       def __init__(self):
         ...
 
-        webserver = Webserver('webserver-transmission', 'transmission-plinth')
+        webserver = Webserver('webserver-transmission', 'transmission-plinth'
+                              urls=['https://{host}/transmission'])
         self.add(webserver)
 
 The first argument to instantiate the
 :class:`~plinth.modules.apache.components.Webserver` class is a unique ID. The
 second is the name of the Apache2 web server configuration snippet that contains
 the directives to proxy Transmission web interface via Apache2. We then need to
-create the configuration file itself in ``tranmission-freedombox.conf``.
+create the configuration file itself in ``tranmission-freedombox.conf``. The
+final argument is the list of URLs that the app exposes to the users of the app.
+This information is used to check if the URLs are accessible as expected when
+the user requests diagnostic tests on the app.
 
 .. code-block:: apache
 

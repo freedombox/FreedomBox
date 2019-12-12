@@ -23,7 +23,7 @@ from plinth import action_utils, actions, app
 
 class Webserver(app.LeaderComponent):
     """Component to enable/disable Apache configuration."""
-    def __init__(self, component_id, web_name, kind='config'):
+    def __init__(self, component_id, web_name, kind='config', urls=None):
         """Initialize the web server component.
 
         component_id should be a unique ID across all components of an app and
@@ -37,11 +37,15 @@ class Webserver(app.LeaderComponent):
         'module' for configuration in /etc/apache2/mods-available/, 'site' for
         configuration in /etc/apache2/sites-available/.
 
+        urls is a list of URLs over which a HTTP services will be available due
+        to this component. This list is only used for running diagnostics.
+
         """
         super().__init__(component_id)
 
         self.web_name = web_name
         self.kind = kind
+        self.urls = urls or []
 
     def is_enabled(self):
         """Return whether the Apache configuration is enabled."""
@@ -57,6 +61,24 @@ class Webserver(app.LeaderComponent):
         actions.superuser_run(
             'apache',
             ['disable', '--name', self.web_name, '--kind', self.kind])
+
+    def diagnose(self):
+        """Check if the web path is accessible by clients.
+
+        See :py:meth:`plinth.app.Component.diagnose`.
+
+        """
+        results = []
+        for url in self.urls:
+            if '{host}' in url:
+                results.extend(
+                    action_utils.diagnose_url_on_all(url,
+                                                     check_certificate=False))
+            else:
+                results.append(
+                    action_utils.diagnose_url(url, check_certificate=False))
+
+        return results
 
 
 class Uwsgi(app.LeaderComponent):

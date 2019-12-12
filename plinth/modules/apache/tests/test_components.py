@@ -30,13 +30,16 @@ def test_webserver_init():
     with pytest.raises(ValueError):
         Webserver(None, None)
 
-    webserver = Webserver('test-webserver', 'test-config', kind='module')
+    webserver = Webserver('test-webserver', 'test-config', kind='module',
+                          urls=['url1', 'url2'])
     assert webserver.component_id == 'test-webserver'
     assert webserver.web_name == 'test-config'
     assert webserver.kind == 'module'
+    assert webserver.urls == ['url1', 'url2']
 
     webserver = Webserver('test-webserver', None)
     assert webserver.kind == 'config'
+    assert webserver.urls == []
 
 
 @patch('plinth.action_utils.webserver_is_enabled')
@@ -75,6 +78,28 @@ def test_webserver_disable(superuser_run):
         call('apache',
              ['disable', '--name', 'test-config', '--kind', 'module'])
     ])
+
+
+@patch('plinth.action_utils.diagnose_url')
+@patch('plinth.action_utils.diagnose_url_on_all')
+def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
+    """Test running diagnostics."""
+    def on_all_side_effect(url, check_certificate):
+        return [('test-result-' + url, 'success')]
+
+    def side_effect(url, check_certificate):
+        return ('test-result-' + url, 'success')
+
+    diagnose_url_on_all.side_effect = on_all_side_effect
+    diagnose_url.side_effect = side_effect
+    webserver = Webserver('test-webserver', 'test-config',
+                          urls=['{host}url1', 'url2'])
+    results = webserver.diagnose()
+    assert results == [('test-result-{host}url1', 'success'),
+                       ('test-result-url2', 'success')]
+    diagnose_url_on_all.assert_has_calls(
+        [call('{host}url1', check_certificate=False)])
+    diagnose_url.assert_has_calls([call('url2', check_certificate=False)])
 
 
 def test_uwsgi_init():
