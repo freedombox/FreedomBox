@@ -23,8 +23,8 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.views import AppView
 from plinth.modules import minidlna
+from plinth.views import AppView
 
 from .forms import MiniDLNAServerForm
 
@@ -58,8 +58,7 @@ class MiniDLNAAppView(AppView):
             else:
                 actions.superuser_run(
                     'minidlna',
-                    ['set-media-dir', '--dir', new_config['media_dir']]
-                )
+                    ['set-media-dir', '--dir', new_config['media_dir']])
                 messages.success(self.request, _('Updated media directory'))
 
         return super().form_valid(form)

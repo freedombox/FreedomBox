@@ -18,14 +18,8 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.modules.mumble import (
-    name,
-    icon_filename,
-    description,
-    clients,
-    manual_page,
-    port_forwarding_info,
-)
+from plinth.modules.mumble import (clients, description, icon_filename,
+                                   manual_page, name, port_forwarding_info)
 from plinth.modules.mumble.forms import MumbleForm
 from plinth.views import AppView
 
