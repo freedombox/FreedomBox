@@ -41,6 +41,7 @@ class CockpitAppView(AppView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['urls'] = get_origin_domains(load_augeas())
+        urls = get_origin_domains(load_augeas())
+        context['urls'] = [url for url in urls if 'localhost' not in url]
 
         return context
