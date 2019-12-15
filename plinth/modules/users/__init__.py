@@ -162,4 +162,4 @@ def add_user_to_share_group(username, service=None):
         actions.superuser_run(
             'users', ['add-user-to-group', username, 'freedombox-share'])
         if service:
-            action_utils.service_restart(service)
+            actions.superuser_run('service', ['restart', service])
