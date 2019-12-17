@@ -26,6 +26,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon, diagnose_netcat, diagnose_port_listening
+from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed
@@ -220,7 +221,7 @@ def _diagnose_control_port():
 
 def _diagnose_url_via_tor(url, kind=None):
     """Diagnose whether a URL is reachable via Tor."""
-    result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks')
+    result = diagnose_url(url, kind=kind, wrapper='torsocks')
     result[0] = _('Access URL {url} on tcp{kind} via Tor') \
         .format(url=url, kind=kind)
 
@@ -230,8 +231,8 @@ def _diagnose_url_via_tor(url, kind=None):
 def _diagnose_tor_use(url, kind=None):
     """Diagnose whether webpage at URL reports that we are using Tor."""
     expected_output = 'Congratulations. This browser is configured to use Tor.'
-    result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks',
-                                       expected_output=expected_output)
+    result = diagnose_url(url, kind=kind, wrapper='torsocks',
+                          expected_output=expected_output)
     result[0] = _('Confirm Tor usage at {url} on tcp{kind}') \
         .format(url=url, kind=kind)
 

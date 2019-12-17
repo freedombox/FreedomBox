@@ -26,7 +26,7 @@ import re
 import subprocess
 import sys
 
-from plinth import action_utils
+from plinth.modules.apache.components import check_url
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
@@ -129,8 +129,7 @@ def _is_release_file_available(protocol):
     if protocol == 'tor+http':
         wrapper = 'torsocks'
 
-    result = action_utils.check_url(BUSTER_BACKPORTS_RELEASE_FILE_URL,
-                                    wrapper=wrapper)
+    result = check_url(BUSTER_BACKPORTS_RELEASE_FILE_URL, wrapper=wrapper)
     return result == 'passed'
 
 

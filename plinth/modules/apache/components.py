@@ -18,6 +18,11 @@
 App component for other apps to use Apache configuration functionality.
 """
 
+import re
+import subprocess
+
+from django.utils.translation import ugettext as _
+
 from plinth import action_utils, actions, app
 
 
@@ -72,11 +77,9 @@ class Webserver(app.LeaderComponent):
         for url in self.urls:
             if '{host}' in url:
                 results.extend(
-                    action_utils.diagnose_url_on_all(url,
-                                                     check_certificate=False))
+                    diagnose_url_on_all(url, check_certificate=False))
             else:
-                results.append(
-                    action_utils.diagnose_url(url, check_certificate=False))
+                results.append(diagnose_url(url, check_certificate=False))
 
         return results
 
@@ -116,3 +119,76 @@ class Uwsgi(app.LeaderComponent):
         """Return whether the uWSGI daemon is running with configuration."""
         return action_utils.uwsgi_is_enabled(self.uwsgi_name) \
             and action_utils.service_is_running('uwsgi')
+
+
+def diagnose_url(url, kind=None, env=None, check_certificate=True,
+                 extra_options=None, wrapper=None, expected_output=None):
+    """Run a diagnostic on whether a URL is accessible.
+
+    Kind can be '4' for IPv4 or '6' for IPv6.
+    """
+    result = check_url(url, kind, env, check_certificate, extra_options,
+                       wrapper, expected_output)
+
+    if kind:
+        return [
+            _('Access URL {url} on tcp{kind}').format(url=url, kind=kind),
+            result
+        ]
+
+    return [_('Access URL {url}').format(url=url), result]
+
+
+def diagnose_url_on_all(url, **kwargs):
+    """Run a diagnostic on whether a URL is accessible."""
+    results = []
+    for address in action_utils.get_addresses():
+        current_url = url.format(host=address['url_address'])
+        results.append(
+            diagnose_url(current_url, kind=address['kind'], **kwargs))
+
+    return results
+
+
+def check_url(url, kind=None, env=None, check_certificate=True,
+              extra_options=None, wrapper=None, expected_output=None):
+    """Check whether a URL is accessible."""
+    command = ['curl', '--location', '-f', '-w', '%{response_code}']
+
+    if kind == '6':
+        # extract zone index
+        match = re.match(r'(.*://)\[(.*)%(?P<zone>.*)\](.*)', url)
+        if match:
+            command = command + ['--interface', match.group('zone')]
+            url = '{0}[{1}]{2}'.format(*match.group(1, 2, 4))
+
+    command.append(url)
+
+    if wrapper:
+        command.insert(0, wrapper)
+
+    if not check_certificate:
+        command.append('-k')
+
+    if extra_options:
+        command.extend(extra_options)
+
+    if kind:
+        command.append({'4': '-4', '6': '-6'}[kind])
+
+    try:
+        process = subprocess.run(command, env=env, check=True,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        result = 'passed'
+        if expected_output and expected_output not in process.stdout.decode():
+            result = 'failed'
+    except subprocess.CalledProcessError as exception:
+        result = 'failed'
+        # Authorization failed is a success
+        if exception.stdout.decode().strip() in ('401', '405'):
+            result = 'passed'
+    except FileNotFoundError:
+        result = 'error'
+
+    return result

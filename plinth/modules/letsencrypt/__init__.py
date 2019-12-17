@@ -24,11 +24,12 @@ import pathlib
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.errors import ActionError
 from plinth.modules import names
+from plinth.modules.apache.components import diagnose_url
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed, post_module_loading
 from plinth.utils import format_lazy
@@ -91,8 +92,7 @@ class LetsEncryptApp(app_module.App):
 
         for domain in names.components.DomainName.list():
             if domain.domain_type.can_have_certificate:
-                results.append(
-                    action_utils.diagnose_url('https://' + domain.name))
+                results.append(diagnose_url('https://' + domain.name))
 
         return results
 

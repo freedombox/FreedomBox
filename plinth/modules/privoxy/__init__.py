@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 from plinth.views import AppView
@@ -97,7 +98,7 @@ class PrivoxyApp(app_module.App):
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(action_utils.diagnose_url('https://www.debian.org'))
+        results.append(diagnose_url('https://www.debian.org'))
         results.extend(diagnose_url_with_proxy())
         return results
 
@@ -137,7 +138,7 @@ def diagnose_url_with_proxy():
         proxy = 'http://{host}:8118/'.format(host=address['url_address'])
         env = {'https_proxy': proxy}
 
-        result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
+        result = diagnose_url(url, kind=address['kind'], env=env)
         result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
             .format(url=url, proxy=proxy, kind=address['kind'])
         results.append(result)

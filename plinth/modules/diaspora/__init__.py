@@ -19,12 +19,12 @@ import os
 import augeas
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.errors import DomainNotRegisteredError
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -110,13 +110,13 @@ class DiasporaApp(app_module.App):
         results = super().diagnose()
 
         results.append(
-            action_utils.diagnose_url('http://diaspora.localhost', kind='4',
-                                      check_certificate=False))
+            diagnose_url('http://diaspora.localhost', kind='4',
+                         check_certificate=False))
         results.append(
-            action_utils.diagnose_url('http://diaspora.localhost', kind='6',
-                                      check_certificate=False))
+            diagnose_url('http://diaspora.localhost', kind='6',
+                         check_certificate=False))
         results.append(
-            action_utils.diagnose_url(
+            diagnose_url(
                 'http://diaspora.{}'.format(get_configured_domain_name()),
                 kind='4', check_certificate=False))
 

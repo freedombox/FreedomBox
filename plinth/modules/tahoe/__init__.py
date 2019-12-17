@@ -23,11 +23,11 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -96,13 +96,12 @@ class TahoeApp(app_module.App):
         """Run diagnostics and return the results."""
         results = super().diagnose()
         results.extend([
-            action_utils.diagnose_url('http://localhost:5678', kind='4',
-                                      check_certificate=False),
-            action_utils.diagnose_url('http://localhost:5678', kind='6',
-                                      check_certificate=False),
-            action_utils.diagnose_url(
-                'http://{}:5678'.format(get_configured_domain_name()),
-                kind='4', check_certificate=False)
+            diagnose_url('http://localhost:5678', kind='4',
+                         check_certificate=False),
+            diagnose_url('http://localhost:5678', kind='6',
+                         check_certificate=False),
+            diagnose_url('http://{}:5678'.format(get_configured_domain_name()),
+                         kind='4', check_certificate=False)
         ])
         return results
 
