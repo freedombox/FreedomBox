@@ -22,7 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils
 from plinth import app as app_module
-from plinth import menu
+from plinth import daemon, menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -58,7 +58,7 @@ class DiagnosticsApp(app_module.App):
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(action_utils.diagnose_port_listening(8000, 'tcp4'))
+        results.append(daemon.diagnose_port_listening(8000, 'tcp4'))
         results.extend(
             action_utils.diagnose_url_on_all('http://{host}/plinth/',
                                              check_certificate=False))

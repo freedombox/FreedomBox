@@ -23,9 +23,9 @@ from logging import Logger
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
-from plinth import menu, network
+from plinth import daemon, menu, network
 
 version = 1
 
@@ -69,10 +69,8 @@ class NetworksApp(app_module.App):
         addresses = _get_interface_addresses(interfaces)
 
         for address in addresses:
-            results.append(
-                action_utils.diagnose_port_listening(53, 'tcp', address))
-            results.append(
-                action_utils.diagnose_port_listening(53, 'udp', address))
+            results.append(daemon.diagnose_port_listening(53, 'tcp', address))
+            results.append(daemon.diagnose_port_listening(53, 'udp', address))
 
         results.append(_diagnose_dnssec('4'))
         results.append(_diagnose_dnssec('6'))

@@ -22,11 +22,9 @@ import logging
 import os
 import re
 import shutil
-import socket
 import subprocess
 import tempfile
 
-import psutil
 from django.utils.translation import ugettext as _
 
 logger = logging.getLogger(__name__)
@@ -283,69 +281,6 @@ def uwsgi_disable(config_name):
     enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
     os.unlink(enabled_path)
     service_start('uwsgi')
-
-
-def diagnose_port_listening(port, kind='tcp', listen_address=None):
-    """Run a diagnostic on whether a port is being listened on.
-
-    Kind must be one of inet, inet4, inet6, tcp, tcp4, tcp6, udp,
-    udp4, udp6, unix, all.  See psutil.net_connection() for more
-    information.
-    """
-    result = _check_port(port, kind, listen_address)
-
-    if listen_address:
-        test = _('Listening on {kind} port {listen_address}:{port}') \
-               .format(kind=kind, listen_address=listen_address, port=port)
-    else:
-        test = _('Listening on {kind} port {port}') \
-               .format(kind=kind, port=port)
-
-    return [test, 'passed' if result else 'failed']
-
-
-def _check_port(port, kind='tcp', listen_address=None):
-    """Return whether a port is being listened on."""
-    run_kind = kind
-
-    if kind == 'tcp4':
-        run_kind = 'tcp'
-
-    if kind == 'udp4':
-        run_kind = 'udp'
-
-    for connection in psutil.net_connections(run_kind):
-        # TCP connections must have status='listen'
-        if kind in ('tcp', 'tcp4', 'tcp6') and \
-           connection.status != psutil.CONN_LISTEN:
-            continue
-
-        # UDP connections must have empty remote address
-        if kind in ('udp', 'udp4', 'udp6') and \
-           connection.raddr != ():
-            continue
-
-        # Port should match
-        if connection.laddr[1] != port:
-            continue
-
-        # Listen address if requested should match
-        if listen_address and connection.laddr[0] != listen_address:
-            continue
-
-        # Special additional checks only for IPv4
-        if kind != 'tcp4' and kind != 'udp4':
-            return True
-
-        # Found socket is IPv4
-        if connection.family == socket.AF_INET:
-            return True
-
-        # Full IPv6 address range includes mapped IPv4 address also
-        if connection.laddr[0] == '::':
-            return True
-
-    return False
 
 
 def check_url(url, kind=None, env=None, check_certificate=True,

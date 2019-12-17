@@ -18,12 +18,13 @@
 Test module for component managing system daemons and other systemd units.
 """
 
+import socket
 from unittest.mock import Mock, call, patch
 
 import pytest
 
 from plinth.app import App, FollowerComponent
-from plinth.daemon import Daemon, app_is_running
+from plinth.daemon import Daemon, app_is_running, diagnose_port_listening
 
 
 @pytest.fixture(name='daemon')
@@ -93,22 +94,21 @@ def test_is_running(service_is_running, daemon):
 
 
 @patch('plinth.action_utils.service_is_running')
-@patch('plinth.action_utils.diagnose_port_listening')
-def test_diagnose(diagnose_port_listening, service_is_running, daemon):
+@patch('plinth.daemon.diagnose_port_listening')
+def test_diagnose(port_listening, service_is_running, daemon):
     """Test running diagnostics."""
     def side_effect(port, kind):
         return [f'test-result-{port}-{kind}', 'passed']
 
     daemon = Daemon('test-daemon', 'test-unit', listen_ports=[(8273, 'tcp4'),
                                                               (345, 'udp')])
-    diagnose_port_listening.side_effect = side_effect
+    port_listening.side_effect = side_effect
     service_is_running.return_value = True
     results = daemon.diagnose()
     assert results == [['Service test-unit is running', 'passed'],
                        ['test-result-8273-tcp4', 'passed'],
                        ['test-result-345-udp', 'passed']]
-    diagnose_port_listening.assert_has_calls(
-        [call(8273, 'tcp4'), call(345, 'udp')])
+    port_listening.assert_has_calls([call(8273, 'tcp4'), call(345, 'udp')])
     service_is_running.assert_has_calls([call('test-unit')])
 
     service_is_running.return_value = False
@@ -145,3 +145,68 @@ def test_app_is_running(service_is_running):
     service_is_running.return_value = True
     daemon2.is_running.return_value = True
     assert app_is_running(app)
+
+
+@patch('psutil.net_connections')
+def test_diagnose_port_listening(connections):
+    """Test running port listening diagnostics test."""
+    connections.return_value = [
+        Mock(status='LISTEN', laddr=('0.0.0.0', 1234), family=socket.AF_INET),
+        Mock(status='ESTABLISHED', laddr=('0.0.0.0', 2345),
+             family=socket.AF_INET),
+        Mock(raddr=(), laddr=('0.0.0.0', 3456), family=socket.AF_INET),
+        Mock(raddr=('1.1.1.1', 53), laddr=('0.0.0.0', 4567),
+             family=socket.AF_INET),
+        Mock(status='LISTEN', laddr=('::1', 5678), familiy=socket.AF_INET6),
+        Mock(status='LISTEN', laddr=('::', 6789), familiy=socket.AF_INET6),
+        Mock(raddr=(), laddr=('::1', 5678), familiy=socket.AF_INET6),
+        Mock(raddr=(), laddr=('::', 6789), familiy=socket.AF_INET6),
+    ]
+
+    # Check that message is correct
+    results = diagnose_port_listening(1234)
+    assert results == ['Listening on tcp port 1234', 'passed']
+    results = diagnose_port_listening(1234, 'tcp', '0.0.0.0')
+    assert results == ['Listening on tcp port 0.0.0.0:1234', 'passed']
+
+    # Failed results
+    results = diagnose_port_listening(4321)
+    assert results == ['Listening on tcp port 4321', 'failed']
+    results = diagnose_port_listening(4321, 'tcp', '0.0.0.0')
+    assert results == ['Listening on tcp port 0.0.0.0:4321', 'failed']
+
+    # Check if psutil call is being made with right argument
+    results = diagnose_port_listening(1234, 'tcp')
+    connections.assert_called_with('tcp')
+    results = diagnose_port_listening(1234, 'tcp4')
+    connections.assert_called_with('tcp')
+    results = diagnose_port_listening(1234, 'tcp6')
+    connections.assert_called_with('tcp6')
+    results = diagnose_port_listening(3456, 'udp')
+    connections.assert_called_with('udp')
+    results = diagnose_port_listening(3456, 'udp4')
+    connections.assert_called_with('udp')
+    results = diagnose_port_listening(3456, 'udp6')
+    connections.assert_called_with('udp6')
+
+    # TCP
+    assert diagnose_port_listening(1234)[1] == 'passed'
+    assert diagnose_port_listening(1000)[1] == 'failed'
+    assert diagnose_port_listening(2345)[1] == 'failed'
+    assert diagnose_port_listening(1234, 'tcp', '0.0.0.0')[1] == 'passed'
+    assert diagnose_port_listening(1234, 'tcp', '1.1.1.1')[1] == 'failed'
+    assert diagnose_port_listening(1234, 'tcp6')[1] == 'passed'
+    assert diagnose_port_listening(1234, 'tcp4')[1] == 'passed'
+    assert diagnose_port_listening(6789, 'tcp4')[1] == 'passed'
+    assert diagnose_port_listening(5678, 'tcp4')[1] == 'failed'
+
+    # UDP
+    assert diagnose_port_listening(3456, 'udp')[1] == 'passed'
+    assert diagnose_port_listening(3000, 'udp')[1] == 'failed'
+    assert diagnose_port_listening(4567, 'udp')[1] == 'failed'
+    assert diagnose_port_listening(3456, 'udp', '0.0.0.0')[1] == 'passed'
+    assert diagnose_port_listening(3456, 'udp', '1.1.1.1')[1] == 'failed'
+    assert diagnose_port_listening(3456, 'udp6')[1] == 'passed'
+    assert diagnose_port_listening(3456, 'udp4')[1] == 'passed'
+    assert diagnose_port_listening(6789, 'udp4')[1] == 'passed'
+    assert diagnose_port_listening(5678, 'udp4')[1] == 'failed'
