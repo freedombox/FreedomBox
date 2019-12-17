@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import menu
-from plinth.daemon import Daemon, diagnose_port_listening
+from plinth.daemon import Daemon, diagnose_netcat, diagnose_port_listening
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed
@@ -212,8 +212,8 @@ def _diagnose_control_port():
             negate = False
 
         results.append(
-            action_utils.diagnose_netcat(address['address'], 9051,
-                                         input='QUIT\n', negate=negate))
+            diagnose_netcat(address['address'], 9051, input='QUIT\n',
+                            negate=negate))
 
     return results
 

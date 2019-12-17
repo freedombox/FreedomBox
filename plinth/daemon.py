@@ -19,6 +19,7 @@ Component for managing a background daemon or any systemd unit.
 """
 
 import socket
+import subprocess
 
 import psutil
 from django.utils.translation import ugettext as _
@@ -158,3 +159,28 @@ def _check_port(port, kind='tcp', listen_address=None):
             return True
 
     return False
+
+
+def diagnose_netcat(host, port, input='', negate=False):
+    """Run a diagnostic using netcat."""
+    try:
+        process = subprocess.Popen(['nc', host, str(port)],
+                                   stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+        process.communicate(input=input.encode())
+        if process.returncode != 0:
+            result = 'failed'
+        else:
+            result = 'passed'
+
+        if negate:
+            result = 'failed' if result == 'passed' else 'passed'
+    except Exception:
+        result = 'failed'
+
+    test = _('Connect to {host}:{port}')
+    if negate:
+        test = _('Cannot connect to {host}:{port}')
+
+    return [test.format(host=host, port=port), result]

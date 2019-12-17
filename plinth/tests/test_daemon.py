@@ -24,7 +24,8 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth.app import App, FollowerComponent
-from plinth.daemon import Daemon, app_is_running, diagnose_port_listening
+from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
+                           diagnose_port_listening)
 
 
 @pytest.fixture(name='daemon')
@@ -210,3 +211,25 @@ def test_diagnose_port_listening(connections):
     assert diagnose_port_listening(3456, 'udp4')[1] == 'passed'
     assert diagnose_port_listening(6789, 'udp4')[1] == 'passed'
     assert diagnose_port_listening(5678, 'udp4')[1] == 'failed'
+
+
+@patch('subprocess.Popen')
+def test_diagnose_netcat(popen):
+    """Test running diagnostic test using netcat."""
+    popen().returncode = 0
+    result = diagnose_netcat('test-host', 3300, input='test-input')
+    assert result == ['Connect to test-host:3300', 'passed']
+    assert popen.mock_calls[1][1] == (['nc', 'test-host', '3300'], )
+    assert popen.mock_calls[2] == call().communicate(input=b'test-input')
+
+    result = diagnose_netcat('test-host', 3300, input='test-input',
+                             negate=True)
+    assert result == ['Cannot connect to test-host:3300', 'failed']
+
+    popen().returncode = 1
+    result = diagnose_netcat('test-host', 3300, input='test-input')
+    assert result == ['Connect to test-host:3300', 'failed']
+
+    result = diagnose_netcat('test-host', 3300, input='test-input',
+                             negate=True)
+    assert result == ['Cannot connect to test-host:3300', 'passed']

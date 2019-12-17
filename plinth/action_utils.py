@@ -356,31 +356,6 @@ def diagnose_url_on_all(url, **kwargs):
     return results
 
 
-def diagnose_netcat(host, port, input='', negate=False):
-    """Run a diagnostic using netcat."""
-    try:
-        process = subprocess.Popen(['nc', host, str(port)],
-                                   stdin=subprocess.PIPE,
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
-        process.communicate(input=input.encode())
-        if process.returncode != 0:
-            result = 'failed'
-        else:
-            result = 'passed'
-
-        if negate:
-            result = 'failed' if result == 'passed' else 'passed'
-    except Exception:
-        result = 'failed'
-
-    test = _('Connect to {host}:{port}')
-    if negate:
-        test = _('Cannot connect to {host}:{port}')
-
-    return [test.format(host=host, port=port), result]
-
-
 def get_addresses():
     """Return a list of IP addresses and hostnames."""
     addresses = get_ip_addresses()
