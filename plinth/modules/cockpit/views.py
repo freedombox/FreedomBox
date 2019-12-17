@@ -27,7 +27,6 @@ class CockpitAppView(AppView):
     app_id = 'cockpit'
     name = name
     description = description
-    diagnostics_module_name = 'cockpit'
     show_status_block = True
     clients = clients
     manual_page = manual_page

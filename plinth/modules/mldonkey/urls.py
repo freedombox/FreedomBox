@@ -27,7 +27,6 @@ urlpatterns = [
     url(
         r'^apps/mldonkey/$',
         AppView.as_view(app_id='mldonkey', name=mldonkey.name,
-                        diagnostics_module_name='mldonkey',
                         description=mldonkey.description,
                         clients=mldonkey.clients,
                         manual_page=mldonkey.manual_page,

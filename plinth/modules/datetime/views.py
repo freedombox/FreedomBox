@@ -37,7 +37,6 @@ class DateTimeAppView(AppView):
     description = datetime.description
     form_class = DateTimeForm
     app_id = 'datetime'
-    diagnostics_module_name = 'datetime'
     manual_page = datetime.manual_page
 
     def get_initial(self):

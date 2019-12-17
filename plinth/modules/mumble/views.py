@@ -26,7 +26,6 @@ from plinth.views import AppView
 
 class MumbleAppView(AppView):
     app_id = 'mumble'
-    diagnostics_module_name = 'mumble'
     name = name
     description = description
     clients = clients

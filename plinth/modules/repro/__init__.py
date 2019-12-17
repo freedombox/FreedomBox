@@ -122,7 +122,6 @@ class ReproAppView(AppView):
     clients = clients
     name = name
     description = description
-    diagnostics_module_name = 'repro'
     app_id = 'repro'
     manual_page = manual_page
     port_forwarding_info = port_forwarding_info

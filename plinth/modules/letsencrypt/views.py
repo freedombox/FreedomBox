@@ -38,11 +38,12 @@ def index(request):
     status = letsencrypt.get_status()
     return TemplateResponse(
         request, 'letsencrypt.html', {
+            'app_id': 'letsencrypt',
             'name': letsencrypt.name,
             'description': letsencrypt.description,
             'status': status,
             'manual_page': letsencrypt.manual_page,
-            'diagnostics_module_name': 'letsencrypt',
+            'has_diagnostics': True,
             'is_enabled': letsencrypt.app.is_enabled(),
         })
 

@@ -39,7 +39,6 @@ class TransmissionAppView(views.AppView):
     clients = transmission.clients
     name = transmission.name
     description = transmission.description
-    diagnostics_module_name = 'transmission'
     form_class = TransmissionForm
     app_id = 'transmission'
     manual_page = transmission.manual_page

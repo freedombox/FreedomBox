@@ -122,7 +122,6 @@ def setup(helper, old_version=None):
 
 class PrivoxyAppView(AppView):
     app_id = 'privoxy'
-    diagnostics_module_name = 'privoxy'
     name = name
     description = description
     manual_page = manual_page

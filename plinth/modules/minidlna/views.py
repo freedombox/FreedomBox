@@ -34,7 +34,6 @@ class MiniDLNAAppView(AppView):
     name = minidlna.name
     description = minidlna.description
     form_class = MiniDLNAServerForm
-    diagnostics_module_name = 'minidlna'
     icon_filename = minidlna.icon_filename
 
     def get_initial(self):

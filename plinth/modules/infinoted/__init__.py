@@ -102,7 +102,6 @@ def init():
 
 class InfinotedAppView(AppView):
     app_id = 'infinoted'
-    diagnostics_module_name = 'infinoted'
     name = name
     description = description
     clients = clients

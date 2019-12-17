@@ -27,7 +27,6 @@ urlpatterns = [
     url(
         r'^apps/ttrss/$',
         AppView.as_view(app_id='ttrss', name=ttrss.name,
-                        diagnostics_module_name='ttrss',
                         description=ttrss.description, clients=ttrss.clients,
                         icon_filename=ttrss.icon_filename,
                         manual_page=ttrss.manual_page, show_status_block=True),

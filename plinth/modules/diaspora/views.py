@@ -60,7 +60,6 @@ class DiasporaAppView(AppView):
     form_class = DiasporaAppForm
     app_id = 'diaspora'
     template_name = 'diaspora-post-setup.html'
-    diagnostics_module_name = 'diaspora'
     name = diaspora.name
 
     def dispatch(self, request, *args, **kwargs):

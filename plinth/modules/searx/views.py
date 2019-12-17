@@ -33,7 +33,6 @@ class SearxAppView(views.AppView):
     clients = searx.clients
     name = searx.name
     description = searx.description
-    diagnostics_module_name = 'searx'
     app_id = 'searx'
     form_class = SearxForm
     show_status_block = False

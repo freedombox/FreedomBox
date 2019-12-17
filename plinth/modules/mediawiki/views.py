@@ -37,7 +37,6 @@ class MediaWikiAppView(views.AppView):
     clients = mediawiki.clients
     name = mediawiki.name
     description = mediawiki.description
-    diagnostics_module_name = 'mediawiki'
     app_id = 'mediawiki'
     form_class = MediaWikiForm
     manual_page = mediawiki.manual_page

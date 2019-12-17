@@ -44,7 +44,6 @@ class I2PAppView(AppView):
     clients = i2p.clients
     name = i2p.name
     description = i2p.description
-    diagnostics_module_name = i2p.service_name
     show_status_block = True
     template_name = 'i2p.html'
     icon_filename = i2p.icon_filename

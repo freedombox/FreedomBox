@@ -52,6 +52,7 @@ def index(request):
 
     return TemplateResponse(
         request, 'tor.html', {
+            'app_id': 'tor',
             'name': tor.name,
             'description': tor.description,
             'clients': tor.clients,
@@ -60,7 +61,7 @@ def index(request):
             'config_running': bool(config_process),
             'form': form,
             'firewall': tor.app.get_components_of_type(Firewall),
-            'diagnostics_module_name': 'tor',
+            'has_diagnostics': True,
             'is_enabled': status['enabled'],
             'show_status_block': True,
             'is_running': status['is_running'],

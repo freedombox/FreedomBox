@@ -112,8 +112,6 @@ class LanguageSelectionView(FormView):
 class AppView(FormView):
     """A generic view for configuring simple apps."""
     clients = []
-    # Set diagnostics_module_name to the module name to show diagnostics button
-    diagnostics_module_name = ""
     name = None
     # List of paragraphs describing the service
     description = ""
@@ -190,11 +188,12 @@ class AppView(FormView):
         context = super().get_context_data(*args, **kwargs)
         context.update(self._get_common_status())
         context['app'] = self.app
+        context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
         context['clients'] = self.clients
-        context['diagnostics_module_name'] = self.diagnostics_module_name
         context['name'] = self.name
         context['description'] = self.description
+        context['has_diagnostics'] = self.app.has_diagnostics()
         context['show_status_block'] = self.show_status_block
         context['manual_page'] = self.manual_page
         context['port_forwarding_info'] = self.port_forwarding_info
