@@ -62,13 +62,25 @@ class Daemon(app.LeaderComponent):
         return action_utils.service_is_running(self.unit)
 
     def diagnose(self):
-        """Check if the daemon is listening on expected ports."""
+        """Check if the daemon is running and listening on expected ports.
+
+        See :py:meth:`plinth.app.Component.diagnose`.
+
+        """
         results = []
+        results.append(self._diagnose_unit_is_running())
         for port in self.listen_ports:
             results.append(
                 action_utils.diagnose_port_listening(port[0], port[1]))
 
         return results
+
+    def _diagnose_unit_is_running(self):
+        """Check if a daemon is running."""
+        message = _('Service {service_name} is running').format(
+            service_name=self.unit)
+        result = 'passed' if self.is_running() else 'failed'
+        return [message, result]
 
 
 def app_is_running(app_):
