@@ -20,6 +20,8 @@ App component for other apps to use firewall functionality.
 
 import logging
 
+from django.utils.translation import ugettext_lazy as _
+
 from plinth import app
 from plinth.modules import firewall
 
@@ -109,3 +111,38 @@ class Firewall(app.FollowerComponent):
     def get_internal_interfaces():
         """Returns a list of interfaces in a firewall zone."""
         return firewall.get_interfaces('internal')
+
+    def diagnose(self):
+        """Check if the firewall ports are open and only as expected.
+
+        See :py:meth:`plinth.app.Component.diagnose`.
+
+        """
+        results = []
+        internal_ports = firewall.get_enabled_services(zone='internal')
+        external_ports = firewall.get_enabled_services(zone='external')
+        for port_detail in self.ports_details:
+            port = port_detail['name']
+
+            # Internal zone
+            result = 'passed' if port in internal_ports else 'failed'
+            message = _(
+                'Port {name} ({details}) available for internal networks'
+            ).format(name=port, details=port_detail['details'])
+            results.append([message, result])
+
+            # External zone
+            if self.is_external:
+                result = 'passed' if port in external_ports else 'failed'
+                message = _(
+                    'Port {name} ({details}) available for external networks'
+                ).format(name=port, details=port_detail['details'])
+            else:
+                result = 'passed' if port not in external_ports else 'failed'
+                message = _(
+                    'Port {name} ({details}) unavailable for external networks'
+                ).format(name=port, details=port_detail['details'])
+
+            results.append([message, result])
+
+        return results
