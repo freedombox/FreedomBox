@@ -36,6 +36,7 @@ def _get_partition_device(device, partition_number):
 
 class Disk():
     """Context manager to create/destroy a disk."""
+
     def __init__(self, test_case, size, disk_info, file_system_info=None):
         """Initialize the context manager object."""
         self.size = size
@@ -119,6 +120,7 @@ class Disk():
 
 class TestActions:
     """Test all actions related to storage."""
+
     @pytest.mark.usefixtures('needs_root')
     def test_simple_case(self):
         """Test a simple with no complications"""
@@ -192,7 +194,7 @@ class TestActions:
     def assert_free_space(self, partition_number, space=True):
         """Verify that free is available/not available after a partition."""
         device = _get_partition_device(self.device, partition_number)
-        result = self.run_action(
+        result = self.check_action(
             ['storage', 'is-partition-expandable', device])
         assert result == space
 
@@ -200,20 +202,26 @@ class TestActions:
         """Expand a partition."""
         self.assert_aligned(partition_number)
         device = _get_partition_device(self.device, partition_number)
-        result = self.run_action(['storage', 'expand-partition', device])
+        result = self.check_action(['storage', 'expand-partition', device])
         assert result == success
         self.assert_aligned(partition_number)
 
     @staticmethod
-    def run_action(action_command):
-        """Run an action and return success/failure result."""
+    def call_action(action_command, **kwargs):
+        """Call the action script."""
         current_directory = os.path.dirname(os.path.realpath(__file__))
         action = os.path.join(current_directory, '..', '..', '..', '..',
                               'actions', action_command[0])
         action_command[0] = action
+        kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
+        kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
+        kwargs['check'] = kwargs.get('check', True)
+        return subprocess.run(action_command, **kwargs)
+
+    def check_action(self, action_command):
+        """Return success/failure result of the action command."""
         try:
-            subprocess.run(action_command, stdout=subprocess.DEVNULL,
-                           stderr=subprocess.DEVNULL, check=True)
+            self.call_action(action_command)
             return True
         except subprocess.CalledProcessError:
             return False
@@ -238,3 +246,48 @@ class TestActions:
         command = ['e2fsck', '-n', device]
         subprocess.run(command, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True)
+
+    def assert_validate_directory(self, path, error, check_writable=False):
+        """Perform directory validation checks."""
+        action_command = ['storage', 'validate-directory', '--path', path]
+        if check_writable:
+            action_command += ['--check-writable']
+        proc = self.call_action(action_command, stderr=subprocess.PIPE,
+                                stdout=subprocess.PIPE)
+        output = proc.stdout.decode()
+        if 'ValidationError' in output:
+            error_nr = output.strip().split()[1]
+            assert error_nr == error
+        else:
+            assert output == error
+
+    @pytest.mark.usefixtures('needs_not_root')
+    @pytest.mark.parametrize('directory', [{
+        'path': '/missing',
+        'error': '1'
+    }, {
+        'path': '/etc/os-release',
+        'error': '2'
+    }, {
+        'path': '/root',
+        'error': '3'
+    }, {
+        'path': '/',
+        'error': ''
+    }])
+    def test_validate_directory(self, directory):
+        """Test that directory validation returns expected output."""
+        self.assert_validate_directory(directory['path'], directory['error'])
+
+    @pytest.mark.usefixtures('needs_not_root')
+    @pytest.mark.parametrize('directory', [{
+        'path': '/',
+        'error': '4'
+    }, {
+        'path': '/tmp',
+        'error': ''
+    }])
+    def test_validate_directory_writable(self, directory):
+        """Test that directory writable validation returns expected output."""
+        self.assert_validate_directory(directory['path'], directory['error'],
+                                       check_writable=True)

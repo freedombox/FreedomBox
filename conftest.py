@@ -71,6 +71,13 @@ def fixture_needs_root():
         pytest.skip('Needs to be root')
 
 
+@pytest.fixture(name='needs_not_root', scope='session')
+def fixture_needs_not_root():
+    """Skip test if running in root mode."""
+    if os.geteuid() == 0:
+        pytest.skip('Needs not to be root')
+
+
 @pytest.fixture(name='needs_sudo')
 def fixture_needs_sudo():
     """Skip test if sudo command is not available."""
