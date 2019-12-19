@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-16 17:58-0500\n"
-"PO-Revision-Date: 2019-12-18 23:21+0000\n"
+"PO-Revision-Date: 2019-12-20 20:21+0000\n"
 "Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -2880,14 +2880,21 @@ msgid ""
 "gaming systems (such as PS3 and Xbox 360) or applications such as totem and "
 "Kodi."
 msgstr ""
+"MiniDLNA est un serveur logiciel de média simple ayant pour but d’être "
+"entièrement compatible avec les clients DLNA et UPnP-AV. Le démon MiniDNLA "
+"sert des fichiers de médias (musique, photos et vidéos) à des clients sur un "
+"réseau. DNLA/UPnP est un protocole sans configuration et est compatible avec "
+"tout périphérique ayant la certification DLNA comme les lecteurs portables, "
+"les smartphones, les télévisions et les systèmes de jeu (comme PS3 et "
+"Xbox360) ou les applications comme totem et Kodi."
 
 #: plinth/modules/minidlna/__init__.py:58
 msgid "Media streaming server"
-msgstr ""
+msgstr "Serveur de streaming de média"
 
 #: plinth/modules/minidlna/forms.py:30
 msgid "Media Files Directory"
-msgstr ""
+msgstr "Répertoire des fichiers multimédia"
 
 #: plinth/modules/minidlna/forms.py:31
 msgid ""
@@ -2896,6 +2903,11 @@ msgid ""
 "that the new directory exists and that is readable from the \"minidlna\" "
 "user. Any user media directories (\"/home/username/\") will usually work."
 msgstr ""
+"Répertoire utilisé par MiniDLNA pour lire le contenu. Tous les sous-"
+"répertoires seront également analysés à la recherche de fichiers multimédia. "
+"Si vous changez le répertoire par défaut, assurez-vous que celui-ci existe "
+"et que l’utilisateur \"minidlna\" puisse le lire. Tout répertoire d’"
+"utilisateur (\"/home/utilisateur\") fonctionnera en général."
 
 #: plinth/modules/minidlna/manifest.py:25
 msgid "vlc"
@@ -2915,11 +2927,11 @@ msgstr "totem"
 
 #: plinth/modules/minidlna/views.py:57
 msgid "Specified directory does not exist."
-msgstr ""
+msgstr "Le répertoire indiqué n’existe pas."
 
 #: plinth/modules/minidlna/views.py:63
 msgid "Updated media directory"
-msgstr ""
+msgstr "Répertoire multimédia mis à jour"
 
 #: plinth/modules/mldonkey/__init__.py:40
 #: plinth/modules/mldonkey/manifest.py:27
@@ -3169,16 +3181,17 @@ msgstr ""
 "Android."
 
 #: plinth/modules/mumble/forms.py:31
-#, fuzzy
-#| msgid "SSH server password"
 msgid "Set SuperUser Password"
-msgstr "Mot de passe du serveur SSH"
+msgstr "Régler le mot de passe du super utilisateur"
 
 #: plinth/modules/mumble/forms.py:34
 msgid ""
 "Optional. Leave this field blank to keep the current password. SuperUser "
 "password can be used to manage permissions in Mumble."
 msgstr ""
+"Optionnel. Laissez ce champ vide pour conserver le mot de passe actuel. Le "
+"mot de passe du super utilisateur peut servir à gérer les permissions dans "
+"Mumble."
 
 #: plinth/modules/mumble/manifest.py:52
 msgid "Plumble"
@@ -3189,10 +3202,8 @@ msgid "Mumblefly"
 msgstr "Mumblefly"
 
 #: plinth/modules/mumble/views.py:57
-#, fuzzy
-#| msgid "Password changed successfully."
 msgid "SuperUser password successfully updated."
-msgstr "Mot de passe changé avec succès."
+msgstr "Mot de passe du super utilisateur mis à jour avec succès."
 
 #: plinth/modules/names/__init__.py:37
 msgid "Name Services"
@@ -5488,50 +5499,40 @@ msgid "The device is mounted by another user."
 msgstr "Le media est monté par un autre utilisateur."
 
 #: plinth/modules/storage/forms.py:75
-#, fuzzy
-#| msgid "Invalid repository name."
 msgid "Invalid directory name."
-msgstr "Nom de dépôt invalide."
+msgstr "Nom de répertoire invalide."
 
 #: plinth/modules/storage/forms.py:91
 msgid "Directory does not exist."
-msgstr ""
+msgstr "Le répertoire n’existe pas."
 
 #: plinth/modules/storage/forms.py:93
-#, fuzzy
-#| msgid "Download directory"
 msgid "Path is not a directory."
-msgstr "Répertoire de téléchargement"
+msgstr "Le chemin n’est pas un répertoire."
 
 #: plinth/modules/storage/forms.py:96
-#, fuzzy
-#| msgid "The device is mounted by another user."
 msgid "Directory is not readable by the user."
-msgstr "Le media est monté par un autre utilisateur."
+msgstr "Le répertoire n’est pas lisible par l’utilisateur."
 
 #: plinth/modules/storage/forms.py:99
 msgid "Directory is not writable by the user."
-msgstr ""
+msgstr "L’utilisateur ne peut pas écrire dans le répertoire."
 
 #: plinth/modules/storage/forms.py:104
-#, fuzzy
-#| msgid "Download directory"
 msgid "Directory"
-msgstr "Répertoire de téléchargement"
+msgstr "Répertoire"
 
 #: plinth/modules/storage/forms.py:107
 msgid "Subdirectory (optional)"
-msgstr ""
+msgstr "Sous-répertoire (optionnel)"
 
 #: plinth/modules/storage/forms.py:154
-#, fuzzy
-#| msgid "Samba"
 msgid "Samba share"
-msgstr "Samba"
+msgstr "Partage samba"
 
 #: plinth/modules/storage/forms.py:155
 msgid "Other directory (specify below)"
-msgstr ""
+msgstr "Autre répertoire (indiquer ci-dessous)"
 
 #: plinth/modules/storage/templates/storage.html:35
 msgid "The following storage devices are in use:"
@@ -5837,23 +5838,17 @@ msgstr ""
 "contourner la censure."
 
 #: plinth/modules/tor/forms.py:118
-#, fuzzy
-#| msgid "Enable Tor Onion Service"
 msgid "Enable Tor Hidden Service"
-msgstr "Activer le service Tor Onion"
+msgstr "Activer le service Tor caché"
 
 #: plinth/modules/tor/forms.py:120
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "An onion service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Un service Onion permettra à {box_name} de proposer les services "
+"Un service caché permettra à {box_name} de proposer les services "
 "sélectionnés (comme un wiki ou Chat) sans révéler votre emplacement. Ne pas "
 "encore utiliser pour l'anonymat fort."
 
