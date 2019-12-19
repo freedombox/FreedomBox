@@ -30,57 +30,8 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
 
-from plinth import __version__, actions
-from plinth import app as app_module
-from plinth import cfg, menu
-
-app = None
-
-
-class HelpApp(app_module.App):
-    """FreedomBox app for showing help."""
-
-    app_id = 'help'
-
-    def __init__(self):
-        """Create components for the app."""
-        super().__init__()
-        menu_item = menu.Menu('menu-help', ugettext_lazy('Documentation'),
-                              None, 'fa-book', 'help:index',
-                              parent_url_name='index')
-        self.add(menu_item)
-        menu_item = menu.Menu('menu-help-manual', ugettext_lazy('Manual'),
-                              None, 'fa-info-circle', 'help:manual',
-                              parent_url_name='help:index', order=10)
-        self.add(menu_item)
-        menu_item = menu.Menu('menu-help-support',
-                              ugettext_lazy('Get Support'), None,
-                              'fa-life-ring', 'help:support',
-                              parent_url_name='help:index', order=20)
-        self.add(menu_item)
-        menu_item = menu.Menu('menu-help-feedback',
-                              ugettext_lazy('Submit Feedback'), None,
-                              'fa-comments', 'help:feedback',
-                              parent_url_name='help:index', order=25)
-        self.add(menu_item)
-        menu_item = menu.Menu('menu-help-contribute',
-                              ugettext_lazy('Contribute'), None, 'fa-wrench',
-                              'help:contribute', parent_url_name='help:index',
-                              order=30)
-        self.add(menu_item)
-        menu_item = menu.Menu('menu-help-about', ugettext_lazy('About'), None,
-                              'fa-star', 'help:about',
-                              parent_url_name='help:index', order=100)
-        self.add(menu_item)
-
-
-def init():
-    """Initialize the Help module"""
-    global app
-    app = HelpApp()
-    app.set_enabled(True)
+from plinth import __version__, actions, cfg
 
 
 def index(request):
