@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Django middleware to redirect to firstboot wizard if it has not be run
 yet.
@@ -34,7 +33,6 @@ LOGGER = logging.getLogger(__name__)
 
 class FirstBootMiddleware(MiddlewareMixin):
     """Forward to firstboot page if firstboot isn't finished yet."""
-
     @staticmethod
     def process_request(request):
         """Handle a request as Django middleware request handler."""

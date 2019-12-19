@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Helper functions for working with network manager.
 """
@@ -103,9 +102,8 @@ def get_status_from_connection(connection):
 
     primary_connection = nm.Client.new(None).get_primary_connection()
     status['primary'] = (
-        primary_connection and
-        primary_connection.get_uuid() == connection.get_uuid()
-    )
+        primary_connection
+        and primary_connection.get_uuid() == connection.get_uuid())
 
     return status
 
@@ -131,18 +129,20 @@ def get_status_from_device(device):
     ip4_config = device.get_ip4_config()
     if ip4_config:
         addresses = ip4_config.get_addresses()
-        status['ip4']['addresses'] = [{'address': address.get_address(),
-                                       'prefix': address.get_prefix()}
-                                      for address in addresses]
+        status['ip4']['addresses'] = [{
+            'address': address.get_address(),
+            'prefix': address.get_prefix()
+        } for address in addresses]
         status['ip4']['gateway'] = ip4_config.get_gateway()
         status['ip4']['nameservers'] = ip4_config.get_nameservers()
 
     ip6_config = device.get_ip6_config()
     if ip6_config:
         addresses = ip6_config.get_addresses()
-        status['ip6']['addresses'] = [{'address': address.get_address(),
-                                       'prefix': address.get_prefix()}
-                                      for address in addresses]
+        status['ip6']['addresses'] = [{
+            'address': address.get_address(),
+            'prefix': address.get_prefix()
+        } for address in addresses]
         status['ip6']['gateway'] = ip6_config.get_gateway()
         status['ip6']['nameservers'] = ip6_config.get_nameservers()
 
@@ -188,8 +188,19 @@ def _get_wifi_channel_from_frequency(frequency):
     # channel numbers.  Search for a better solution!  Even 5GHz is
     # not included yet.  Only the plain frequency will show up on 5GHz
     # AP's.
-    channel_map = {2412: 1, 2417: 2, 2422: 3, 2427: 4, 2432: 5, 2437: 6,
-                   2442: 7, 2447: 8, 2452: 9, 2457: 10, 2462: 11}
+    channel_map = {
+        2412: 1,
+        2417: 2,
+        2422: 3,
+        2427: 4,
+        2432: 5,
+        2437: 6,
+        2442: 7,
+        2447: 8,
+        2452: 9,
+        2457: 10,
+        2462: 11
+    }
     try:
         return channel_map[frequency]
     except KeyError:
@@ -207,8 +218,8 @@ def get_connection_list():
     for connection in client.get_connections():
         # Display a friendly type name if known.
         connection_type = connection.get_connection_type()
-        connection_type_name = CONNECTION_TYPE_NAMES.get(connection_type,
-                                                         connection_type)
+        connection_type_name = CONNECTION_TYPE_NAMES.get(
+            connection_type, connection_type)
 
         settings_connection = connection.get_setting_connection()
         zone = settings_connection.get_zone()
@@ -250,8 +261,10 @@ def get_active_connection(connection_uuid):
     found.
     """
     connections = nm.Client.new(None).get_active_connections()
-    connections = {connection.get_uuid(): connection
-                   for connection in connections}
+    connections = {
+        connection.get_uuid(): connection
+        for connection in connections
+    }
     try:
         return connections[connection_uuid]
     except KeyError:
@@ -458,8 +471,8 @@ def activate_connection(connection_uuid):
     client = nm.Client.new(None)
     for device in client.get_devices():
         if device.get_iface() == interface:
-            client.activate_connection_async(
-                connection, device, '/', None, _callback, None)
+            client.activate_connection_async(connection, device, '/', None,
+                                             _callback, None)
             break
     else:
         raise DeviceNotFound(connection)
@@ -502,6 +515,7 @@ def wifi_scan():
             access_points.append({
                 'interface_name': device.get_iface(),
                 'ssid': ssid_string,
-                'strength': access_point.get_strength()})
+                'strength': access_point.get_strength()
+            })
 
     return access_points

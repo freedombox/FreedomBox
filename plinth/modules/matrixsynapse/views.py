@@ -38,6 +38,8 @@ class SetupView(FormView):
     template_name = 'matrix-synapse-pre-setup.html'
     form_class = DomainSelectionForm
     success_url = reverse_lazy('matrixsynapse:index')
+    icon_filename = matrixsynapse.icon_filename
+    title = matrixsynapse.name
 
     def form_valid(self, form):
         """Handle valid form submission."""
@@ -48,8 +50,9 @@ class SetupView(FormView):
         """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
 
-        context['title'] = matrixsynapse.name
+        context['name'] = matrixsynapse.name
         context['description'] = matrixsynapse.description
+        context['icon_filename'] = matrixsynapse.icon_filename
         context['domain_names'] = names.components.DomainName.list_names(
             'matrix-synapse-plinth')
 
@@ -65,6 +68,7 @@ class MatrixSynapseAppView(AppView):
     diagnostics_module_name = 'matrixsynapse'
     form_class = MatrixSynapseForm
     port_forwarding_info = matrixsynapse.port_forwarding_info
+    icon_filename = matrixsynapse.icon_filename
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""

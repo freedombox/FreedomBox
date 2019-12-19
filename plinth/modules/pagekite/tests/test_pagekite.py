@@ -14,36 +14,42 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test modules for Pagekite functions.
 """
 
 from plinth.modules.pagekite import utils
 
-
 _tests = [
     {
         'line': 'https/8080:*.@kitename:localhost:8080:@kitesecret',
-        'params': {'kitename': '*.@kitename', 'backend_host': 'localhost',
-                   'secret': '@kitesecret', 'protocol': 'https/8080',
-                   'backend_port': '8080'}
+        'params': {
+            'kitename': '*.@kitename',
+            'backend_host': 'localhost',
+            'secret': '@kitesecret',
+            'protocol': 'https/8080',
+            'backend_port': '8080'
+        }
     },
     {
         'line': 'https:*.@kitename:localhost:80:@kitesecret',
-        'params': {'protocol': 'https',
-                   'kitename': '*.@kitename',
-                   'backend_port': '80',
-                   'backend_host': 'localhost',
-                   'secret': '@kitesecret'}
+        'params': {
+            'protocol': 'https',
+            'kitename': '*.@kitename',
+            'backend_port': '80',
+            'backend_host': 'localhost',
+            'secret': '@kitesecret'
+        }
     },
     {
         'line': 'raw/22:@kitename:localhost:22:@kitesecret',
-        'params': {'protocol': 'raw/22',
-                   'kitename': '@kitename',
-                   'backend_port': '22',
-                   'backend_host': 'localhost',
-                   'secret': '@kitesecret'}
+        'params': {
+            'protocol': 'raw/22',
+            'kitename': '@kitename',
+            'backend_port': '22',
+            'backend_host': 'localhost',
+            'secret': '@kitesecret'
+        }
     },
 ]
 

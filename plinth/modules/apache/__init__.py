@@ -54,9 +54,9 @@ class ApacheApp(app_module.App):
 
         freedombox_ports = Firewall(
             'firewall-plinth',
-            format_lazy(
-                _('{box_name} Web Interface (Plinth)'), box_name=_(
-                    cfg.box_name)), ports=['http', 'https'], is_external=True)
+            format_lazy(_('{box_name} Web Interface (Plinth)'),
+                        box_name=_(cfg.box_name)), ports=['http', 'https'],
+            is_external=True)
         self.add(freedombox_ports)
 
         letsencrypt = LetsEncrypt('letsencrypt-apache', domains='*',

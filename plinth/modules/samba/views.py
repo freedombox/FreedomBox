@@ -39,6 +39,7 @@ class SambaAppView(views.AppView):
     diagnostics_module_name = 'samba'
     app_id = 'samba'
     template_name = 'samba.html'
+    icon_filename = samba.icon_filename
 
     def get_context_data(self, *args, **kwargs):
         """Return template context data."""

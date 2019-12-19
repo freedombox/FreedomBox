@@ -326,9 +326,10 @@ class LetsEncrypt(app.FollowerComponent):
                                        source_certificate_path,
                                        private_key_path, certificate_path)
         else:
-            self._copy_certificate(
-                source_private_key_path, source_certificate_path,
-                self.private_key_path, self.certificate_path)
+            self._copy_certificate(source_private_key_path,
+                                   source_certificate_path,
+                                   self.private_key_path,
+                                   self.certificate_path)
 
     def _copy_certificate(self, source_private_key_path,
                           source_certificate_path, private_key_path,
@@ -374,8 +375,8 @@ def on_certificate_event(event, domains, lineage):
       certificate changes.
 
     """
-    threading.Thread(target=on_certificate_event_sync, args=(event, domains,
-                                                             lineage)).start()
+    threading.Thread(target=on_certificate_event_sync,
+                     args=(event, domains, lineage)).start()
 
 
 def on_certificate_event_sync(event, domains, lineage):

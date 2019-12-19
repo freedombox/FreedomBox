@@ -28,17 +28,19 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users import register_group, add_user_to_share_group
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 2
+version = 3
 
 managed_services = ['transmission-daemon']
 
 managed_packages = ['transmission-daemon']
 
 name = _('Transmission')
+
+icon_filename = 'transmission'
 
 short_description = _('BitTorrent Web Client')
 
@@ -72,11 +74,10 @@ class TransmissionApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-transmission', name,
-                                      short_description=short_description,
-                                      icon='transmission', url='/transmission',
-                                      clients=clients, login_required=True,
-                                      allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut(
+            'shortcut-transmission', name, short_description=short_description,
+            icon=icon_filename, url='/transmission', clients=clients,
+            login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-transmission', name,
@@ -112,7 +113,7 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'transmission',
                 ['merge-configuration'],
                 input=json.dumps(new_configuration).encode())
-
+    add_user_to_share_group(reserved_usernames[0], managed_services[0])
     helper.call('post', app.enable)
 
 

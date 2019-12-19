@@ -211,7 +211,6 @@ def webserver_disable(name, kind='config', apply_changes=True):
 
 class WebserverChange(object):
     """Context to restart/reload Apache after configuration changes."""
-
     def __init__(self):
         """Initialize the context object state."""
         self.actions_required = set()
@@ -425,9 +424,10 @@ def diagnose_url_on_all(url, **kwargs):
 def diagnose_netcat(host, port, input='', negate=False):
     """Run a diagnostic using netcat."""
     try:
-        process = subprocess.Popen(
-            ['nc', host, str(port)], stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(['nc', host, str(port)],
+                                   stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
         process.communicate(input=input.encode())
         if process.returncode != 0:
             result = 'failed'

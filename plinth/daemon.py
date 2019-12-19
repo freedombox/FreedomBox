@@ -23,7 +23,6 @@ from plinth import action_utils, actions, app
 
 class Daemon(app.LeaderComponent):
     """Component to manage a background daemon or any systemd unit."""
-
     def __init__(self, component_id, unit, strict_check=False):
         """Initialize a new daemon component.
 

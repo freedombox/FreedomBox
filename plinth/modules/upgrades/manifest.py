@@ -20,8 +20,7 @@ Application manifest for upgrades.
 
 from plinth.modules.backups.api import validate as validate_backup
 
-backup = validate_backup({
-    'config': {
+backup = validate_backup(
+    {'config': {
         'files': ['/etc/apt/apt.conf.d/20auto-upgrades']
-    }
-})
+    }})

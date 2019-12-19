@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the OpenVPN module.
 """
@@ -23,7 +22,6 @@ from django.conf.urls import url
 
 from plinth.utils import non_admin_view
 from . import views
-
 
 urlpatterns = [
     url(r'^apps/openvpn/$', views.index, name='index'),

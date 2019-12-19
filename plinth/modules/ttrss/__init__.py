@@ -42,6 +42,8 @@ managed_packages = [
 
 name = _('Tiny Tiny RSS')
 
+icon_filename = 'ttrss'
+
 short_description = _('News Feed Reader')
 
 description = [
@@ -81,7 +83,7 @@ class TTRSSApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-ttrss', name,
                                       short_description=short_description,
-                                      icon='ttrss', url='/tt-rss',
+                                      icon=icon_filename, url='/tt-rss',
                                       clients=clients, login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)

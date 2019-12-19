@@ -42,7 +42,6 @@ def fixture_kwargs():
 
 class TestSetupMiddleware:
     """Test cases for setup middleware."""
-
     @staticmethod
     @pytest.fixture(name='middleware')
     def fixture_middleware(load_cfg):
@@ -135,7 +134,6 @@ class TestSetupMiddleware:
 
 class TestAdminMiddleware:
     """Test cases for admin middleware."""
-
     @staticmethod
     @pytest.fixture(name='middleware')
     def fixture_middleware(load_cfg):

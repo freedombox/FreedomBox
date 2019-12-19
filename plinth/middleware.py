@@ -41,7 +41,6 @@ logger = logging.getLogger(__name__)
 
 class SetupMiddleware(MiddlewareMixin):
     """Django middleware to show pre-setup message and setup progress."""
-
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Handle a request as Django middleware request handler."""
@@ -77,8 +76,8 @@ class SetupMiddleware(MiddlewareMixin):
                                            str(exception))
                     error_details = getattr(exception, 'error_details', '')
                     message = _('Error installing application: {string} '
-                                '{details}').format(
-                                    string=error_string, details=error_details)
+                                '{details}').format(string=error_string,
+                                                    details=error_details)
                 else:
                     message = _('Error installing application: {error}') \
                         .format(error=exception)
@@ -96,7 +95,6 @@ class SetupMiddleware(MiddlewareMixin):
 
 class AdminRequiredMiddleware(MiddlewareMixin):
     """Django middleware for authenticating requests for admin areas."""
-
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Reject non-admin access to views that are private and not marked."""
@@ -110,7 +108,6 @@ class AdminRequiredMiddleware(MiddlewareMixin):
 
 class FirstSetupMiddleware(MiddlewareMixin):
     """Django middleware to block all interactions before first setup."""
-
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Block all user interactions when first setup is pending."""

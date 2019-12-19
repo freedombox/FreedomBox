@@ -30,7 +30,6 @@ def index(request):
     if not firewall.get_enabled_status():
         return TemplateResponse(
             request, 'firewall.html', {
-                'title': firewall.name,
                 'name': firewall.name,
                 'description': firewall.description,
                 'firewall_status': 'not_running'
@@ -41,7 +40,6 @@ def index(request):
 
     return TemplateResponse(
         request, 'firewall.html', {
-            'title': firewall.name,
             'name': firewall.name,
             'description': firewall.description,
             'components': components.Firewall.list(),

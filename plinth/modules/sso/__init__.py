@@ -30,7 +30,10 @@ depends = ['security', 'apache']
 name = _('Single Sign On')
 
 managed_packages = [
-    'libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl', 'flite',
+    'libapache2-mod-auth-pubtkt',
+    'openssl',
+    'python3-openssl',
+    'flite',
 ]
 
 

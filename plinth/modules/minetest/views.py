@@ -41,6 +41,7 @@ class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     clients = minetest.clients
     manual_page = minetest.manual_page
     port_forwarding_info = minetest.port_forwarding_info
+    icon_filename = minetest.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

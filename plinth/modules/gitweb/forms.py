@@ -83,9 +83,9 @@ class CreateRepoForm(forms.Form):
         label=_('Description of the repository'), strip=True, required=False,
         help_text=_('Optional, for displaying on Gitweb.'))
 
-    owner = forms.CharField(
-        label=_('Repository\'s owner name'), strip=True, required=False,
-        help_text=_('Optional, for displaying on Gitweb.'))
+    owner = forms.CharField(label=_('Repository\'s owner name'), strip=True,
+                            required=False,
+                            help_text=_('Optional, for displaying on Gitweb.'))
 
     is_private = forms.BooleanField(
         label=_('Private repository'), required=False,

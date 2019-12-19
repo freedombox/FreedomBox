@@ -55,24 +55,18 @@ clients = validate([{
 backup = validate_backup({
     'config': {
         'files': [
-            '/var/lib/mldonkey/bittorrent.ini',
-            '/var/lib/mldonkey/bt_dht.ini',
+            '/var/lib/mldonkey/bittorrent.ini', '/var/lib/mldonkey/bt_dht.ini',
             '/var/lib/mldonkey/directconnect.ini',
-            '/var/lib/mldonkey/donkey.ini',
-            '/var/lib/mldonkey/downloads.ini',
+            '/var/lib/mldonkey/donkey.ini', '/var/lib/mldonkey/downloads.ini',
             '/var/lib/mldonkey/files.ini',
             '/var/lib/mldonkey/file_sources.ini',
-            '/var/lib/mldonkey/fileTP.ini',
-            '/var/lib/mldonkey/friends.ini',
-            '/var/lib/mldonkey/searches.ini',
-            '/var/lib/mldonkey/servers.ini',
+            '/var/lib/mldonkey/fileTP.ini', '/var/lib/mldonkey/friends.ini',
+            '/var/lib/mldonkey/searches.ini', '/var/lib/mldonkey/servers.ini',
             '/var/lib/mldonkey/shared_files.ini',
             '/var/lib/mldonkey/shared_files_new.ini',
             '/var/lib/mldonkey/statistics.ini',
-            '/var/lib/mldonkey/stats_bt.ini',
-            '/var/lib/mldonkey/stats.ini',
-            '/var/lib/mldonkey/stats_mod.ini',
-            '/var/lib/mldonkey/users.ini'
+            '/var/lib/mldonkey/stats_bt.ini', '/var/lib/mldonkey/stats.ini',
+            '/var/lib/mldonkey/stats_mod.ini', '/var/lib/mldonkey/users.ini'
         ]
     },
     'services': ['mldonkey-server']

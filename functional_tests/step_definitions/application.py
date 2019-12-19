@@ -107,8 +107,7 @@ def select_domain_name(browser, app_name, domain_name):
 
 @given('the shadowsocks application is configured')
 def configure_shadowsocks(browser):
-    application.configure_shadowsocks(browser, 'example.com',
-                                      'fakepassword')
+    application.configure_shadowsocks(browser, 'example.com', 'fakepassword')
 
 
 @when(
@@ -128,8 +127,8 @@ def assert_shadowsocks_configuration(browser, server, password):
             password) == application.shadowsocks_get_configuration(browser)
 
 
-@when(
-    parsers.parse('I modify the maximum file size of coquelicot to {size:d}'))
+@when(parsers.parse('I modify the maximum file size of coquelicot to {size:d}')
+      )
 def modify_max_file_size(browser, size):
     application.modify_max_file_size(browser, size)
 
@@ -372,37 +371,54 @@ def tahoe_given_add_introducer(browser, domain):
 def tahoe_remove_introducer(browser, domain):
     application.tahoe_remove_introducer(browser, domain)
 
-@given('the access rights are set to "only the owner can view or make changes"')
+
+@given('the access rights are set to "only the owner can view or make changes"'
+       )
 def radicale_given_owner_only(browser):
     application.radicale_set_access_rights(browser, 'owner_only')
 
-@given('the access rights are set to "any user can view, but only the owner can make changes"')
+
+@given(
+    'the access rights are set to "any user can view, but only the owner can make changes"'
+)
 def radicale_given_owner_write(browser):
     application.radicale_set_access_rights(browser, 'owner_write')
+
 
 @given('the access rights are set to "any user can view or make changes"')
 def radicale_given_authenticated(browser):
     application.radicale_set_access_rights(browser, 'authenticated')
 
-@when('I change the access rights to "only the owner can view or make changes"')
+
+@when('I change the access rights to "only the owner can view or make changes"'
+      )
 def radicale_set_owner_only(browser):
     application.radicale_set_access_rights(browser, 'owner_only')
 
-@when('I change the access rights to "any user can view, but only the owner can make changes"')
+
+@when(
+    'I change the access rights to "any user can view, but only the owner can make changes"'
+)
 def radicale_set_owner_write(browser):
     application.radicale_set_access_rights(browser, 'owner_write')
+
 
 @when('I change the access rights to "any user can view or make changes"')
 def radicale_set_authenticated(browser):
     application.radicale_set_access_rights(browser, 'authenticated')
 
+
 @then('the access rights should be "only the owner can view or make changes"')
 def radicale_check_owner_only(browser):
     assert application.radicale_get_access_rights(browser) == 'owner_only'
 
-@then('the access rights should be "any user can view, but only the owner can make changes"')
+
+@then(
+    'the access rights should be "any user can view, but only the owner can make changes"'
+)
 def radicale_check_owner_write(browser):
     assert application.radicale_get_access_rights(browser) == 'owner_write'
+
 
 @then('the access rights should be "any user can view or make changes"')
 def radicale_check_authenticated(browser):
@@ -451,8 +467,8 @@ def app_visible_on_front_page(browser, app_name):
     assert len(shortcuts) == 1
 
 
-@then(
-    parsers.parse('{app_name:w} app should not be visible on the front page'))
+@then(parsers.parse('{app_name:w} app should not be visible on the front page')
+      )
 def app_not_visible_on_front_page(browser, app_name):
     shortcuts = application.find_on_front_page(browser, app_name)
     assert len(shortcuts) == 0

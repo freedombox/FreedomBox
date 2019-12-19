@@ -28,7 +28,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules.users import create_group, register_group
+from plinth.modules.users import register_group
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -41,6 +41,8 @@ managed_services = ['smbd', 'nmbd']
 managed_packages = ['samba', 'acl']
 
 name = _('Samba')
+
+icon_filename = 'samba'
 
 short_description = _('File Sharing')
 
@@ -75,7 +77,7 @@ class SambaApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-samba', name, short_description=short_description,
-            icon='samba', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('samba:index'), clients=clients,
             login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
@@ -104,7 +106,6 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    create_group('freedombox-share')
     helper.call('post', actions.superuser_run, 'samba', ['setup'])
     helper.call('post', app.enable)
 

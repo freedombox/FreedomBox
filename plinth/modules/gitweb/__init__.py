@@ -42,6 +42,8 @@ managed_packages = ['gitweb', 'highlight']
 
 name = _('Gitweb')
 
+icon_filename = 'gitweb'
+
 short_description = _('Simple Git Hosting')
 
 description = [
@@ -76,10 +78,11 @@ class GitwebApp(app_module.App):
                               'gitweb:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-gitweb', name, short_description=short_description,
-            icon='gitweb', url='/gitweb/', clients=clients,
-            login_required=True, allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-gitweb', name,
+                                      short_description=short_description,
+                                      icon=icon_filename, url='/gitweb/',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-gitweb', name, ports=['http', 'https'],
@@ -152,7 +155,6 @@ class GitwebApp(app_module.App):
 
 class GitwebWebserverAuth(Webserver):
     """Component to handle Gitweb authentication webserver configuration."""
-
     def is_conf_enabled(self):
         """Check whether Gitweb authentication configuration is enabled."""
         return super().is_enabled()

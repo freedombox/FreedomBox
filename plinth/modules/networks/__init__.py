@@ -84,10 +84,10 @@ def diagnose():
     addresses = _get_interface_addresses(interfaces)
 
     for address in addresses:
-        results.append(
-            action_utils.diagnose_port_listening(53, 'tcp', address))
-        results.append(
-            action_utils.diagnose_port_listening(53, 'udp', address))
+        results.append(action_utils.diagnose_port_listening(
+            53, 'tcp', address))
+        results.append(action_utils.diagnose_port_listening(
+            53, 'udp', address))
 
     results.append(_diagnose_dnssec('4'))
     results.append(_diagnose_dnssec('6'))

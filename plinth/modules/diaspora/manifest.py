@@ -40,8 +40,9 @@ clients = validate([{
         'type':
             'web',
         'url':
-            format_lazy('https://diaspora.{host}',
-                        host=diaspora.get_configured_domain_name() if
-                        diaspora.is_setup() else "<please-setup-domain-name>")
+            format_lazy(
+                'https://diaspora.{host}',
+                host=diaspora.get_configured_domain_name()
+                if diaspora.is_setup() else "<please-setup-domain-name>")
     }]
 }])

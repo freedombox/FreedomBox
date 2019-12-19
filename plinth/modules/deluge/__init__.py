@@ -38,6 +38,8 @@ managed_packages = ['deluged', 'deluge-web']
 
 name = _('Deluge')
 
+icon_filename = 'deluge'
+
 short_description = _('BitTorrent Web Client')
 
 description = [
@@ -71,7 +73,7 @@ class DelugeApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-deluge', name,
                                       short_description=short_description,
-                                      url='/deluge', icon='deluge',
+                                      url='/deluge', icon=icon_filename,
                                       clients=clients, login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)

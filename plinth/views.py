@@ -126,6 +126,7 @@ class AppView(FormView):
     template_name = 'app.html'
     manual_page = ''
     port_forwarding_info = None
+    icon_filename = ''
 
     def __init__(self, *args, **kwargs):
         """Initialize the view."""
@@ -197,6 +198,7 @@ class AppView(FormView):
         context['show_status_block'] = self.show_status_block
         context['manual_page'] = self.manual_page
         context['port_forwarding_info'] = self.port_forwarding_info
+        context['icon_filename'] = self.icon_filename
 
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
@@ -207,6 +209,9 @@ class AppView(FormView):
 class SetupView(TemplateView):
     """View to prompt and setup applications."""
     template_name = 'setup.html'
+    name = 'None'
+    # List of paragraphs describing the service
+    description = []
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
@@ -222,6 +227,9 @@ class SetupView(TemplateView):
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
+
+        context['name'] = self.name
+        context['description'] = self.description
 
         return context
 

@@ -29,7 +29,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
-from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients # noqa, pylint: disable=unused-import
+from .manifest import PUBLIC_ACCESS_SETTING_FILE, backup, clients  # noqa, pylint: disable=unused-import
 
 clients = clients
 
@@ -38,6 +38,8 @@ version = 3
 managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
 
 name = _('Searx')
+
+icon_filename = 'searx'
 
 short_description = _('Web Search')
 
@@ -69,7 +71,7 @@ class SearxApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-searx', name, short_description=short_description,
-            icon='searx', url='/searx/', clients=clients,
+            icon=icon_filename, url='/searx/', clients=clients,
             login_required=(not is_public_access_enabled()),
             allowed_groups=[group[0]])
         self.add(shortcut)
@@ -97,7 +99,6 @@ class SearxApp(app_module.App):
 
 class SearxWebserverAuth(Webserver):
     """Component to handle Searx authentication webserver configuration."""
-
     def is_enabled(self):
         """Return if configuration is enabled or public access is enabled."""
         return is_public_access_enabled() or super().is_enabled()

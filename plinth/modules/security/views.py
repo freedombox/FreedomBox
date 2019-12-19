@@ -43,15 +43,11 @@ def index(request):
     else:
         form = SecurityForm(initial=status, prefix='security')
 
-    return TemplateResponse(
-        request, 'security.html', {
-            'name':
-                _('Security'),
-            'manual_page':
-                security.manual_page,
-            'form':
-                form,
-        })
+    return TemplateResponse(request, 'security.html', {
+        'name': _('Security'),
+        'manual_page': security.manual_page,
+        'form': form,
+    })
 
 
 def get_status(request):

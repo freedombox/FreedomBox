@@ -26,10 +26,11 @@ from plinth.views import AppView
 urlpatterns = [
     url(
         r'^apps/syncthing/$',
-        AppView.as_view(
-            app_id='syncthing', name=syncthing.name,
-            diagnostics_module_name='syncthing',
-            description=syncthing.description, clients=syncthing.clients,
-            manual_page=syncthing.manual_page, show_status_block=True),
-        name='index'),
+        AppView.as_view(app_id='syncthing', name=syncthing.name,
+                        diagnostics_module_name='syncthing',
+                        description=syncthing.description,
+                        clients=syncthing.clients,
+                        manual_page=syncthing.manual_page,
+                        icon_filename=syncthing.icon_filename,
+                        show_status_block=True), name='index'),
 ]

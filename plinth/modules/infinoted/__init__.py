@@ -41,6 +41,8 @@ manual_page = 'Infinoted'
 
 name = _('infinoted')
 
+icon_filename = 'infinoted'
+
 short_description = _('Gobby Server')
 
 description = [
@@ -74,7 +76,7 @@ class InfinotedApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-infinoted', name, short_description=short_description,
-            icon='infinoted', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('infinoted:index'), clients=clients,
             login_required=False)
         self.add(shortcut)
@@ -104,6 +106,7 @@ class InfinotedAppView(AppView):
     description = description
     clients = clients
     port_forwarding_info = port_forwarding_info
+    icon_filename = icon_filename
 
 
 def setup(helper, old_version=None):

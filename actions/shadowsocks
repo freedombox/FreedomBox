@@ -35,12 +35,11 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup',
-                          help='Perform initial setup steps')
-    subparsers.add_parser(
-        'get-config', help='Read and print JSON config to stdout')
-    subparsers.add_parser(
-        'merge-config', help='Merge JSON config from stdin with existing')
+    subparsers.add_parser('setup', help='Perform initial setup steps')
+    subparsers.add_parser('get-config',
+                          help='Read and print JSON config to stdout')
+    subparsers.add_parser('merge-config',
+                          help='Merge JSON config from stdin with existing')
 
     subparsers.required = True
     return parser.parse_args()

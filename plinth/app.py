@@ -114,7 +114,6 @@ class Component:
 
     def enable(self):
         """Run operations to enable the component."""
-
     def disable(self):
         """Run operations to disable the component."""
 

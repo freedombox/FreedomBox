@@ -32,7 +32,6 @@ logger = logging.getLogger(__name__)
 
 class PackageException(Exception):
     """A package operation has failed."""
-
     def __init__(self, error_string=None, error_details=None, *args, **kwargs):
         """Store apt-get error string and details."""
         super(PackageException, self).__init__(*args, **kwargs)
@@ -48,7 +47,6 @@ class PackageException(Exception):
 
 class Transaction(object):
     """Information about an ongoing transaction."""
-
     def __init__(self, module_name, package_names):
         """Initialize transaction object.
 

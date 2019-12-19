@@ -37,6 +37,8 @@ managed_services = ['mediawiki-jobrunner']
 
 name = _('MediaWiki')
 
+icon_filename = 'mediawiki'
+
 short_description = _('Wiki')
 
 description = [
@@ -78,7 +80,7 @@ class MediaWikiApp(app_module.App):
 
         shortcut = Shortcut('shortcut-mediawiki', name,
                             short_description=short_description,
-                            icon='mediawiki', url='/mediawiki',
+                            icon=icon_filename, url='/mediawiki',
                             clients=clients, login_required=True)
         self.add(shortcut)
 
@@ -99,7 +101,6 @@ class MediaWikiApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut for only logged users when in private mode."""
-
     def enable(self):
         """When enabled, check if MediaWiki is in private mode."""
         super().enable()

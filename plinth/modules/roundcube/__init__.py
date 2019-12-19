@@ -34,6 +34,8 @@ managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
 
 name = _('Roundcube')
 
+icon_filename = 'roundcube'
+
 short_description = _('Email Client')
 
 description = [
@@ -78,7 +80,7 @@ class RoundcubeApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-roundcube', name,
                                       short_description=short_description,
-                                      icon='roundcube', url='/roundcube/',
+                                      icon=icon_filename, url='/roundcube/',
                                       clients=clients, login_required=True)
         self.add(shortcut)
 

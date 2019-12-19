@@ -30,7 +30,6 @@ from plinth.utils import YAMLFile, is_user_admin
 
 class TestIsAdminUser:
     """Test class for is_user_admin utility."""
-
     @staticmethod
     @pytest.fixture(name='web_request')
     def fixture_web_request():
@@ -113,9 +112,7 @@ class TestYAMLFileUtil:
 
         with open(test_file.name, 'w') as conf_file:
             conf_file.write(
-                ruamel.yaml.round_trip_dump({
-                    'property1': self.kv_pair
-                }))
+                ruamel.yaml.round_trip_dump({'property1': self.kv_pair}))
 
         with YAMLFile(test_file.name) as file_conf:
             file_conf['property2'] = self.kv_pair

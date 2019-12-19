@@ -38,6 +38,7 @@ class EjabberdAppView(AppView):
     form_class = EjabberdForm
     manual_page = ejabberd.manual_page
     port_forwarding_info = ejabberd.port_forwarding_info
+    icon_filename = ejabberd.icon_filename
 
     def get_initial(self):
         initdict = super().get_initial()

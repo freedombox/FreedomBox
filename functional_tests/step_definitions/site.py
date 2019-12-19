@@ -61,8 +61,9 @@ def verify_upload_password(browser, password):
         'I upload the sample local file to coquelicot with password {password:w}'
     ))
 def coquelicot_upload_file(browser, sample_local_file, password):
-    url = site.upload_file_to_coquelicot(
-        browser, sample_local_file['file_path'], password)
+    url = site.upload_file_to_coquelicot(browser,
+                                         sample_local_file['file_path'],
+                                         password)
     sample_local_file['upload_url'] = url
 
 
@@ -214,7 +215,8 @@ def syncthing_folder_not_present(browser, folder_name):
 
 @given(
     parsers.parse(
-        'folder {folder_path:S} is present as syncthing folder {folder_name:w}'))
+        'folder {folder_path:S} is present as syncthing folder {folder_name:w}'
+    ))
 def syncthing_folder_present(browser, folder_name, folder_path):
     if not site.syncthing_folder_is_present(browser, folder_name):
         site.syncthing_add_folder(browser, folder_name, folder_path)

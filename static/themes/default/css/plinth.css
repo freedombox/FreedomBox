@@ -505,9 +505,11 @@ a.menu_link_active {
     left: 6%;
     transform: translateY(-50%);
 }
+
 .toggle-button--toggled {
     background: #337ab7;
 }
+
 .toggle-button--toggled::before {
     content: '';
     position: absolute;
@@ -534,4 +536,77 @@ a.menu_link_active {
 
 .btn-toolbar .button-extra-actions {
     float: right;
+}
+
+.app-header {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    column-gap: 20px;
+    margin-bottom: 20px;
+}
+
+.app-header > img {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.app-description {
+    grid-column: 2;
+}
+
+.app-header-single-column  {
+    grid-template-columns: 1fr;
+}
+.app-header-single-column .app-description {
+    grid-column: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .app-header {
+        display: flex;
+        flex-flow: column;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .app-header img {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 20%;
+        border: 5px solid #fff;
+        box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        transition: height 0.5s width 0.5s;
+    }
+
+    .header-bar {
+        display: flex;
+        flex-flow: column-reverse;
+        justify-content: center;
+        height: auto;
+    }
+
+    .header-bar h2 {
+        margin: 0 0 15px 0;
+    }
+
+    .header-bar .app-toggle-container {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        margin: 30px 0;
+    }
+
+    .header-bar .toggle-button {
+        transform: scale(1.2);
+    }
+
+    .content-container {
+        margin: 0 10vw;
+    }
+
+    .card-list {
+        margin: 20px 10vw;
+    }
 }

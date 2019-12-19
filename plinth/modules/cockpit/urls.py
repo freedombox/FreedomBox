@@ -20,15 +20,8 @@ URLs for Cockpit module.
 
 from django.conf.urls import url
 
-from plinth.modules import cockpit
-from plinth.views import AppView
+from plinth.modules.cockpit.views import CockpitAppView
 
 urlpatterns = [
-    url(
-        r'^sys/cockpit/$',
-        AppView.as_view(app_id='cockpit', name=cockpit.name,
-                        diagnostics_module_name='cockpit',
-                        description=cockpit.description,
-                        show_status_block=True, clients=cockpit.clients,
-                        manual_page=cockpit.manual_page), name='index'),
+    url(r'^sys/cockpit/$', CockpitAppView.as_view(), name='index'),
 ]

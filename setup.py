@@ -118,7 +118,6 @@ class CustomBuild(build):
 
 class CustomClean(clean):
     """Override clean command to clean doc, locales, and egg-info."""
-
     def run(self):
         """Execute clean command"""
         subprocess.check_call(['rm', '-rf', 'Plinth.egg-info/'])
@@ -136,7 +135,6 @@ class CustomClean(clean):
 
 class CustomInstall(install):
     """Override install command."""
-
     def run(self):
         log.info("Removing disabled apps")
         for app in DISABLED_APPS_TO_REMOVE:
@@ -149,7 +147,6 @@ class CustomInstall(install):
 
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
-
     def _run_doc_install(self):
         """Install documentation"""
         command = ['make', '-j', '8', '-C', 'doc', 'install']
@@ -315,8 +312,8 @@ setuptools.setup(
     },
     exclude_package_data={'': ['*/data/*']},
     data_files=_gather_data_files() +
-    [('/usr/share/plinth/actions', glob.glob(
-        os.path.join('actions', '[a-z]*'))),
+    [('/usr/share/plinth/actions', glob.glob(os.path.join('actions',
+                                                          '[a-z]*'))),
      ('/usr/share/man/man1', ['doc/plinth.1'])],
     cmdclass={
         'install': CustomInstall,

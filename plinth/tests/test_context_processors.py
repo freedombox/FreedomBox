@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test module for custom context processors.
 """
@@ -37,7 +36,7 @@ def fixture_menu():
 
 def test_common():
     """Verify that the common() function returns the correct values."""
-    cfg.read()      # initialize config settings
+    cfg.read()  # initialize config settings
 
     request = HttpRequest()
     request.path = '/aaa/bbb/ccc/'

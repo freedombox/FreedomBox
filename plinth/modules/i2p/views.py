@@ -32,11 +32,10 @@ subsubmenu = [{
 }, {
     'url': reverse_lazy('i2p:tunnels'),
     'text': ugettext_lazy('Proxies')
-},
-              {
-                  'url': reverse_lazy('i2p:torrents'),
-                  'text': ugettext_lazy('Anonymous torrents')
-              }]
+}, {
+    'url': reverse_lazy('i2p:torrents'),
+    'text': ugettext_lazy('Anonymous torrents')
+}]
 
 
 class I2PAppView(AppView):
@@ -48,6 +47,7 @@ class I2PAppView(AppView):
     diagnostics_module_name = i2p.service_name
     show_status_block = True
     template_name = 'i2p.html'
+    icon_filename = i2p.icon_filename
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""

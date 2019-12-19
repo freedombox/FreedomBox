@@ -57,7 +57,6 @@ def _get_backup_app(name):
 
 class TestBackupApp:
     """Test the BackupApp class."""
-
     @staticmethod
     def test_run_hook():
         """Test running a hook on an application."""
@@ -82,7 +81,6 @@ class TestBackupApp:
 @pytest.mark.usefixtures('load_cfg')
 class TestBackupProcesses:
     """Test cases for backup processes"""
-
     @staticmethod
     def test_packet_process_manifests():
         """Test that directories/files are collected from manifests."""
@@ -239,7 +237,6 @@ class TestBackupProcesses:
 
 class TestBackupModule:
     """Tests of the backups django module, like views or forms."""
-
     @staticmethod
     def test_file_upload():
         # posting a video should fail

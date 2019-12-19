@@ -30,8 +30,8 @@ from django.forms import ValidationError
 def _action_file():
     """Return the path to the 'gitweb' actions file."""
     current_directory = pathlib.Path(__file__).parent
-    return str(
-        current_directory / '..' / '..' / '..' / '..' / 'actions' / 'gitweb')
+    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
+               'gitweb')
 
 
 gitweb_actions = imp.load_source('gitweb', _action_file())
@@ -40,7 +40,6 @@ gitweb_actions = imp.load_source('gitweb', _action_file())
 @pytest.fixture(name='call_action')
 def fixture_call_action(tmpdir, capsys):
     """Run actions with custom repo root path."""
-
     def _call_action(args, **kwargs):
         gitweb_actions.GIT_REPO_PATH = str(tmpdir)
         with patch('argparse._sys.argv', ['gitweb'] + args):

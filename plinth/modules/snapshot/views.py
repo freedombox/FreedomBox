@@ -121,7 +121,6 @@ def manage(request):
 
 def update_configuration(request, old_status, new_status):
     """Update configuration of snapshots."""
-
     def make_config(args):
         key, stamp = args[0], args[1]
         if old_status[key] != new_status[key]:
@@ -158,8 +157,9 @@ def update_configuration(request, old_status, new_status):
     except ActionError as exception:
         messages.error(
             request,
-            _('Action error: {0} [{1}] [{2}]').format(
-                exception.args[0], exception.args[1], exception.args[2]))
+            _('Action error: {0} [{1}] [{2}]').format(exception.args[0],
+                                                      exception.args[1],
+                                                      exception.args[2]))
 
 
 def delete_selected(request):

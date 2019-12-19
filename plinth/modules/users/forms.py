@@ -47,14 +47,13 @@ def get_group_choices():
 
 class ValidNewUsernameCheckMixin(object):
     """Mixin to check if a username is valid for created new user."""
-
     def clean_username(self):
         """Check for username collisions with system users."""
         username = self.cleaned_data['username']
         if self.instance.username != username and \
                 not self.is_valid_new_username():
-            raise ValidationError(
-                _('Username is taken or is reserved.'), code='invalid')
+            raise ValidationError(_('Username is taken or is reserved.'),
+                                  code='invalid')
 
         return username
 
@@ -147,10 +146,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
-        label=ugettext_lazy('Authorized SSH Keys'),
-        required=False,
-        widget=forms.Textarea,
-        help_text=ugettext_lazy(
+        label=ugettext_lazy('Authorized SSH Keys'), required=False,
+        widget=forms.Textarea, help_text=ugettext_lazy(
             'Setting an SSH public key will allow this user to '
             'securely log in to the system without using a '
             'password. You may enter multiple keys, one on each '
@@ -283,14 +280,12 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
 
 class UserChangePasswordForm(SetPasswordForm):
     """Custom form that also updates password for LDAP users."""
-
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
         self.request = request
         super(UserChangePasswordForm, self).__init__(*args, **kwargs)
-        self.fields['new_password1'].widget.attrs.update({
-            'autofocus': 'autofocus'
-        })
+        self.fields['new_password1'].widget.attrs.update(
+            {'autofocus': 'autofocus'})
 
     def save(self, commit=True):
         """Save the user model and change LDAP password as well."""
@@ -310,7 +305,6 @@ class UserChangePasswordForm(SetPasswordForm):
 
 class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     """User module first boot step: create a new admin user."""
-
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)

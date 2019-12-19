@@ -44,6 +44,8 @@ managed_packages = ['cockpit']
 
 name = _('Cockpit')
 
+icon_filename = 'cockpit'
+
 short_description = _('Server Administration')
 
 description = [
@@ -56,7 +58,11 @@ description = [
     format_lazy(
         _('It can be accessed by <a href="{users_url}">any user</a> on '
           '{box_name} belonging to the admin group.'),
-        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'))
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
+    format_lazy(
+        _('Cockpit requires that you access it through a domain name. '
+          'It will not work when accessed using an IP address as part'
+          ' of the URL.')),
 ]
 
 manual_page = 'Cockpit'

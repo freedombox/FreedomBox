@@ -38,6 +38,7 @@ class ShadowsocksAppView(views.AppView):
     name = shadowsocks.name
     description = shadowsocks.description
     manual_page = shadowsocks.manual_page
+    icon_filename = shadowsocks.icon_filename
 
     def get_initial(self, *args, **kwargs):
         """Get initial values for form."""

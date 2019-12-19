@@ -46,6 +46,8 @@ managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
 name = _('Matrix Synapse')
 
+icon_filename = 'matrixsynapse'
+
 short_description = _('Chat Server')
 
 description = [
@@ -91,7 +93,7 @@ class MatrixSynapseApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-matrixsynapse', name,
-            short_description=short_description, icon='matrixsynapse',
+            short_description=short_description, icon=icon_filename,
             description=description,
             configure_url=reverse_lazy('matrixsynapse:index'), clients=clients,
             login_required=True)
@@ -106,9 +108,8 @@ class MatrixSynapseApp(app_module.App):
         self.add(webserver)
 
         letsencrypt = LetsEncrypt(
-            'letsencrypt-matrixsynapse', domains=get_domains, daemons=[
-                managed_services[0]
-            ], should_copy_certificates=True,
+            'letsencrypt-matrixsynapse', domains=get_domains,
+            daemons=[managed_services[0]], should_copy_certificates=True,
             private_key_path='/etc/matrix-synapse/homeserver.tls.key',
             certificate_path='/etc/matrix-synapse/homeserver.tls.crt',
             user_owner='matrix-synapse', group_owner='nogroup',

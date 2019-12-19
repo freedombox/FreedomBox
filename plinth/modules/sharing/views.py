@@ -42,6 +42,7 @@ class IndexView(TemplateView):
         context['title'] = sharing.name
         context['description'] = sharing.description
         context['shares'] = sharing.list_shares()
+        context['icon_filename'] = sharing.icon_filename
         return context
 
 

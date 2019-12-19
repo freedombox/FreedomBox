@@ -23,7 +23,6 @@ from plinth import action_utils, actions, app
 
 class Webserver(app.LeaderComponent):
     """Component to enable/disable Apache configuration."""
-
     def __init__(self, component_id, web_name, kind='config'):
         """Initialize the web server component.
 
@@ -62,7 +61,6 @@ class Webserver(app.LeaderComponent):
 
 class Uwsgi(app.LeaderComponent):
     """Component to enable/disable uWSGI configuration."""
-
     def __init__(self, component_id, uwsgi_name):
         """Initialize the uWSGI component.
 

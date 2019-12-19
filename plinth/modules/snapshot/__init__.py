@@ -100,8 +100,8 @@ def setup(helper, old_version=None):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')

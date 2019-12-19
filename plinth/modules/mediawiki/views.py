@@ -43,6 +43,7 @@ class MediaWikiAppView(views.AppView):
     manual_page = mediawiki.manual_page
     show_status_block = False
     template_name = 'mediawiki.html'
+    icon_filename = mediawiki.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

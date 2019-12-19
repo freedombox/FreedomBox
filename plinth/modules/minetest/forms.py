@@ -28,9 +28,9 @@ class MinetestForm(AppForm):
     """Minetest configuration form"""
     max_players = forms.IntegerField(
         label=_('Maximum number of players'), required=True, min_value=1,
-        max_value=100, help_text=_(
-            'You can change the maximum number of players playing '
-            'minetest at a single instance of time.'))
+        max_value=100,
+        help_text=_('You can change the maximum number of players playing '
+                    'minetest at a single instance of time.'))
 
     creative_mode = forms.BooleanField(
         label=_('Enable creative mode'), required=False,

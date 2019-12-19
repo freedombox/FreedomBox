@@ -114,10 +114,7 @@ def _create_share(mount_point, windows_filesystem=False):
 
     # FAT and NTFS partitions don't support setting permissions
     if not windows_filesystem:
-        shutil.chown(open_share_path, group='freedombox-share')
-        os.chmod(open_share_path, 0o2775)
-        subprocess.check_call(['setfacl', '-Rm', 'g::rwx', open_share_path])
-        subprocess.check_call(['setfacl', '-Rdm', 'g::rwx', open_share_path])
+        _set_open_share_permissions(open_share_path)
 
     share_name = _create_share_name(mount_point)
     _define_open_share(share_name, open_share_path, windows_filesystem)
@@ -166,9 +163,10 @@ def _get_shares():
     config = configparser.ConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
-        mount_point = _get_mount_point(config[name]['path'])
+        path = config[name]['path']
+        mount_point = _get_mount_point(path)
         mount_point = os.path.normpath(mount_point)
-        shares.append(dict(name=name, mount_point=mount_point))
+        shares.append(dict(name=name, mount_point=mount_point, path=path))
 
     return shares
 
@@ -191,6 +189,23 @@ def _make_mounts_readable_by_others(mount_point):
     dirname = os.path.dirname(mount_point)
     stats = os.stat(dirname)
     os.chmod(dirname, stats.st_mode | stat.S_IROTH | stat.S_IXOTH)
+
+
+def _set_open_share_permissions(directory):
+    """Set file and directory permissions for open share."""
+    shutil.chown(directory, group='freedombox-share')
+    os.chmod(directory, 0o2775)
+    for root, dirs, files in os.walk(directory):
+        for subdir in dirs:
+            subdir_path = os.path.join(root, subdir)
+            shutil.chown(subdir_path, group='freedombox-share')
+            os.chmod(subdir_path, 0o2775)
+        for file in files:
+            file_path = os.path.join(root, file)
+            shutil.chown(file_path, group='freedombox-share')
+            os.chmod(file_path, 0o0664)
+    subprocess.check_call(['setfacl', '-Rm', 'g::rwX', directory])
+    subprocess.check_call(['setfacl', '-Rdm', 'g::rwX', directory])
 
 
 def _use_config_file(conf_file):

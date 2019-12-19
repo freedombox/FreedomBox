@@ -86,9 +86,10 @@ def init():
     app = DynamicDNSApp()
     current_status = get_status()
     if current_status['enabled']:
-        domain_added.send_robust(
-            sender='dynamicdns', domain_type='domain-type-dynamic',
-            name=current_status['dynamicdns_domain'], services='__all__')
+        domain_added.send_robust(sender='dynamicdns',
+                                 domain_type='domain-type-dynamic',
+                                 name=current_status['dynamicdns_domain'],
+                                 services='__all__')
         app.set_enabled(True)
 
 

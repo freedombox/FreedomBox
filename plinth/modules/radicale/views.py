@@ -38,6 +38,7 @@ class RadicaleAppView(AppView):
     form_class = RadicaleForm
     app_id = 'radicale'
     manual_page = radicale.manual_page
+    icon_filename = radicale.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

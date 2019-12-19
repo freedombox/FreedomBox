@@ -64,6 +64,8 @@ manual_page = 'Tor'
 
 app = None
 
+icon_filename = 'tor'
+
 
 class TorApp(app_module.App):
     """FreedomBox app for Tor."""

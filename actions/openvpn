@@ -177,8 +177,8 @@ def subcommand_upgrade(_):
             'renewed/private_by_serial', 'renewed/reqs_by_serial'
         ]
         for dir_name in directories_to_create:
-            os.makedirs(
-                os.path.join(pki_dir, dir_name), mode=0o700, exist_ok=True)
+            os.makedirs(os.path.join(pki_dir, dir_name), mode=0o700,
+                        exist_ok=True)
 
         def _move_by_file_extension(file_extension, directory, excluded=None):
             excluded = excluded or []
@@ -217,7 +217,6 @@ def _write_server_config():
 
 def _setup_firewall():
     """Add TUN device to internal zone in firewalld."""
-
     def _configure_interface(interface, operation):
         """Add or remove an interface into internal zone."""
         command = [
@@ -299,9 +298,10 @@ def subcommand_get_profile(arguments):
     user_key_string = _read_file(user_key)
     ca_string = _read_file(CA_CERTIFICATE_PATH)
 
-    profile = CLIENT_CONFIGURATION.format(
-        ca=ca_string, cert=user_certificate_string, key=user_key_string,
-        remote=remote_server)
+    profile = CLIENT_CONFIGURATION.format(ca=ca_string,
+                                          cert=user_certificate_string,
+                                          key=user_key_string,
+                                          remote=remote_server)
 
     print(profile)
 
@@ -326,8 +326,8 @@ def _is_non_empty_file(filepath):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')

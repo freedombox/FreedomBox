@@ -42,6 +42,8 @@ description = [
 
 app = None
 
+icon_filename = 'sharing'
+
 
 class SharingApp(app_module.App):
     """FreedomBox app for sharing files."""

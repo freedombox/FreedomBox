@@ -45,9 +45,8 @@ def shortcuts(request, **kwargs):
     # XXX: Get the module (or module name) from shortcut properly.
     username = str(request.user) if request.user.is_authenticated else None
     response = get_shortcuts_as_json(username)
-    return HttpResponse(
-        json.dumps(response, cls=DjangoJSONEncoder),
-        content_type='application/json')
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder),
+                        content_type='application/json')
 
 
 def get_shortcuts_as_json(username=None):

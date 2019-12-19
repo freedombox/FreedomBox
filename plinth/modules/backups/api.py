@@ -82,7 +82,6 @@ def _validate_service(service):
 
 class BackupError:
     """Represent an backup/restore operation error."""
-
     def __init__(self, error_type, app, hook=None):
         """Initialize the error object."""
         self.error_type = error_type
@@ -98,7 +97,6 @@ class BackupError:
 
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
-
     def __init__(self, operation, scope, root, apps=None, path=None):
         """Initialize the packet.
 
@@ -240,7 +238,6 @@ def _install_apps_before_restore(apps):
 
 class BackupApp:
     """A application that can be backed up and its manifest."""
-
     def __init__(self, name, app):
         """Initialize object and load manfiest."""
         self.name = name
@@ -365,7 +362,6 @@ def _switch_to_subvolume(subvolume):
 
 class ServiceHandler:
     """Abstraction to help with service shutdown/restart."""
-
     @staticmethod
     def create(backup_app, service):
         service_type = 'system'
@@ -400,7 +396,6 @@ class ServiceHandler:
 
 class SystemServiceHandler(ServiceHandler):
     """Handle starting and stopping of system services for backup."""
-
     def __init__(self, backup_app, service):
         """Initialize the object."""
         super().__init__(backup_app, service)
@@ -420,7 +415,6 @@ class SystemServiceHandler(ServiceHandler):
 
 class ApacheServiceHandler(ServiceHandler):
     """Handle starting and stopping of Apache services for backup."""
-
     def __init__(self, backup_app, service):
         """Initialize the object."""
         super().__init__(backup_app, service)

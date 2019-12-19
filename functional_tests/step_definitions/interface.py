@@ -19,7 +19,6 @@ from pytest_bdd import given, parsers, then, when
 
 from support import config, interface
 
-
 default_url = config['DEFAULT']['url']
 
 
@@ -52,8 +51,8 @@ def new_user_does_not_exist(browser, name):
 @given(parsers.parse('the user {name:w} exists'))
 def test_user_exists(browser, name):
     interface.nav_to_module(browser, 'users')
-    user_link = browser.find_link_by_href(
-        '/plinth/sys/users/' + name + '/edit/')
+    user_link = browser.find_link_by_href('/plinth/sys/users/' + name +
+                                          '/edit/')
     if not user_link:
         create_user(browser, name, 'secret123')
 

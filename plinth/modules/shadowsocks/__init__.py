@@ -34,6 +34,8 @@ version = 1
 
 name = _('Shadowsocks')
 
+icon_filename = 'shadowsocks'
+
 short_description = _('Socks5 Proxy')
 
 managed_services = ['shadowsocks-libev-local@freedombox']
@@ -74,7 +76,7 @@ class ShadowsocksApp(app_module.App):
 
         shortcut = frontpage.Shortcut(
             'shortcut-shadowsocks', name, short_description=short_description,
-            icon='shadowsocks', description=description,
+            icon=icon_filename, description=description,
             configure_url=reverse_lazy('shadowsocks:index'),
             login_required=True)
         self.add(shortcut)

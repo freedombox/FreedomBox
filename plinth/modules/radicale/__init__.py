@@ -44,6 +44,8 @@ managed_packages = ['radicale', 'uwsgi', 'uwsgi-plugin-python3']
 
 name = _('Radicale')
 
+icon_filename = 'radicale'
+
 short_description = _('Calendar and Addressbook')
 
 description = [
@@ -88,7 +90,7 @@ class RadicaleApp(app_module.App):
 
         shortcut = frontpage.Shortcut('shortcut-radicale', name,
                                       short_description=short_description,
-                                      icon='radicale', url='/radicale/',
+                                      icon=icon_filename, url='/radicale/',
                                       clients=clients, login_required=True)
         self.add(shortcut)
 
@@ -108,7 +110,6 @@ class RadicaleApp(app_module.App):
 
 class RadicaleWebserver(Webserver):
     """Webserver enable/disable behavior specific for radicale."""
-
     @property
     def web_name(self):
         """Return web configuration name based on radicale version."""
@@ -125,7 +126,6 @@ class RadicaleWebserver(Webserver):
 
 class RadicaleUwsgi(Uwsgi):
     """uWSGI enable/disable behavior specific for radicale."""
-
     def is_enabled(self):
         """Return whether the uWSGI configuration is enabled if version>=2."""
         package_version = get_package_version()
@@ -150,7 +150,6 @@ class RadicaleUwsgi(Uwsgi):
 
 class RadicaleDaemon(Daemon):
     """Daemon enable/disable behavior specific for radicale."""
-
     @staticmethod
     def _is_old_radicale():
         """Return whether radicale is less than version 2."""
@@ -249,8 +248,8 @@ def disable():
 
 def load_augeas():
     """Prepares the augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # INI file lens
     aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')

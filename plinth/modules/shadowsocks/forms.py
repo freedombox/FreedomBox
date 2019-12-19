@@ -39,7 +39,6 @@ METHODS = [('chacha20-ietf-poly1305',
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
-
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
@@ -50,12 +49,12 @@ class TrimmedCharField(forms.CharField):
 
 class ShadowsocksForm(AppForm):
     """Shadowsocks configuration form"""
-    server = TrimmedCharField(
-        label=_('Server'), help_text=_('Server hostname or IP address'))
+    server = TrimmedCharField(label=_('Server'),
+                              help_text=_('Server hostname or IP address'))
 
-    server_port = forms.IntegerField(
-        label=_('Server port'), min_value=0, max_value=65535,
-        help_text=_('Server port number'))
+    server_port = forms.IntegerField(label=_('Server port'), min_value=0,
+                                     max_value=65535,
+                                     help_text=_('Server port number'))
 
     password = forms.CharField(
         label=_('Password'), help_text=_('Password used to encrypt data. '
