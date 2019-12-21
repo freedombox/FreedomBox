@@ -94,6 +94,24 @@ After=network.target
 User=infinoted
 Group=infinoted
 ExecStart=/usr/bin/infinoted
+ConfigurationDirectory=infinoted
+ConfigurationDirectoryMode=0750
+LockPersonality=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateMounts=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectSystem=full
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictRealtime=yes
+StateDirectory=infinoted
+SystemCallArchitectures=native
 
 [Install]
 WantedBy=multi-user.target
@@ -130,11 +148,10 @@ def subcommand_setup(_):
         with open(CONF_PATH, 'w') as file_handle:
             file_handle.write(CONF)
 
-    if not os.path.isfile(SYSTEMD_SERVICE_PATH):
-        with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
-            file_handle.write(SYSTEMD_SERVICE)
+    with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
+        file_handle.write(SYSTEMD_SERVICE)
 
-        subprocess.check_call(['systemctl', 'daemon-reload'])
+    subprocess.check_call(['systemctl', 'daemon-reload'])
 
     # Create infinoted group if needed.
     try:

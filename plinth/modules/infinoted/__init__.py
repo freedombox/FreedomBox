@@ -31,7 +31,7 @@ from plinth.views import AppView
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 managed_services = ['infinoted']
 
