@@ -30,7 +30,7 @@ from plinth.modules.users import register_group
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 4
 
 managed_services = ['deluge-web']
 
