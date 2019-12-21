@@ -54,7 +54,7 @@ description = [
       'other computers in your local network.'),
     format_lazy(
         _('After installation, you can choose which disks to use for sharing. '
-          'Enabled shares are accessbile in the file manager on your computer '
+          'Enabled shares are accessible in the file manager on your computer '
           'at location \\\\{hostname} (on Windows) or smb://{hostname}.local '
           '(on Linux and Mac). There are three types of shares '
           'you can choose from: '), hostname=socket.gethostname()),
