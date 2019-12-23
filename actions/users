@@ -215,8 +215,8 @@ def configure_ldapscripts():
     # modify a copy of the config file
     shutil.copy('/etc/ldapscripts/ldapscripts.conf', LDAPSCRIPTS_CONF)
 
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', LDAPSCRIPTS_CONF)
     aug.load()
@@ -238,6 +238,13 @@ def get_samba_users():
     stdout = subprocess.check_output(
         ['tdbdump', '/var/lib/samba/private/passdb.tdb']).decode()
     return re.findall(r'USER_(.*)\\0', stdout)
+
+
+def delete_samba_user(username):
+    """Delete a Samba user."""
+    if username in get_samba_users():
+        subprocess.check_call(['smbpasswd', '-x', username])
+        disconnect_samba_user(username)
 
 
 def disconnect_samba_user(username):
@@ -268,9 +275,7 @@ def subcommand_remove_user(arguments):
     username = arguments.username
     groups = get_user_groups(username)
 
-    if username in get_samba_users():
-        subprocess.check_call(['smbpasswd', '-x', username])
-        disconnect_samba_user(username)
+    delete_samba_user(username)
 
     for group in groups:
         remove_user_from_group(username, group)
@@ -285,6 +290,8 @@ def subcommand_rename_user(arguments):
     old_username = arguments.oldusername
     new_username = arguments.newusername
     groups = get_user_groups(old_username)
+
+    delete_samba_user(old_username)
 
     for group in groups:
         remove_user_from_group(old_username, group)

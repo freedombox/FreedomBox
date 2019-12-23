@@ -23,6 +23,7 @@ it is recommended to run this module with root privileges in a virtual machine.
 
 import pathlib
 import random
+import re
 import string
 import subprocess
 
@@ -62,6 +63,13 @@ def _get_password_hash(username):
     return process.stdout.decode().strip().split()[-1]
 
 
+def _get_samba_users():
+    """Get users from the Samba user database."""
+    stdout = subprocess.check_output(
+        ['tdbdump', '/var/lib/samba/private/passdb.tdb']).decode()
+    return re.findall(r'USER_(.*)\\0', stdout)
+
+
 def _try_login_to_ssh(username, password, returncode=0):
     """Return whether the sshpass returncode matches when trying to
     login to ssh using the given username and password"""
@@ -81,8 +89,8 @@ def _try_login_to_ssh(username, password, returncode=0):
 def _action_file():
     """Return the path to the 'users' actions file."""
     current_directory = pathlib.Path(__file__).parent
-    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
-               'users')
+    return str(
+        current_directory / '..' / '..' / '..' / '..' / 'actions' / 'users')
 
 
 @pytest.fixture(name='disable_restricted_access', autouse=True)
@@ -140,7 +148,7 @@ def _create_user(username=None, groups=None):
 
 
 def _delete_user(username):
-    """Utility to delete an LDAP user"""
+    """Utility to delete an LDAP and Samba user"""
     _call_action(['remove-user', username])
 
 
@@ -176,6 +184,7 @@ def test_create_user():
     username, password = _create_user(groups=['admin', _random_string()])
     # assert_can_login_to_console(username, password)
     assert _try_login_to_ssh(username, password)
+    assert username in _get_samba_users()
     with pytest.raises(subprocess.CalledProcessError):
         _create_user(username)
 
@@ -212,6 +221,7 @@ def test_rename_user():
     new_username = _rename_user(old_username)
     assert _try_login_to_ssh(new_username, password)
     assert _try_login_to_ssh(old_username, password, returncode=5)
+    assert old_username not in _get_samba_users()
 
     new_groups = _get_user_groups(new_username)
     old_users_groups = _get_user_groups(old_username)
@@ -244,6 +254,8 @@ def test_delete_user():
 
     # Deleted user cannot login to ssh
     assert _try_login_to_ssh(username, password, returncode=5)
+
+    assert username not in _get_samba_users()
 
 
 def test_delete_non_existent_user():
