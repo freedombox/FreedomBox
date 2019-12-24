@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-16 17:58-0500\n"
-"PO-Revision-Date: 2019-11-06 06:04+0000\n"
+"PO-Revision-Date: 2019-12-26 13:21+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -471,6 +471,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Az SSH állomás %(hostname)s nem érhető el. Ellenőrizd hogy a célállomás "
+"üzemel és fogadhat kapcsolatokat."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
 #, python-format
@@ -478,6 +480,8 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Az SSH állomás %(hostname)s hitelessége nem állapítható meg. A célállomás az "
+"alábbi SSH nyilvános kulcsokat hirdette ki. Kérlek, igazold valamelyiket."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
@@ -660,35 +664,31 @@ msgstr ""
 "terminál szintén elérhető a konzolos műveletekhez."
 
 #: plinth/modules/cockpit/__init__.py:59
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+#, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"Ha engedélyezett, a Cockpit elérhető lesz a webkiszolgáló <a href=\"/"
-"_cockpit/\">/_cockpit/</a> útvonalán. Használhatja majd a {box_name} eszköz "
-"bármely adminisztrátori csoportba tartozó <a href="
-"\"{users_url}\">felhasználója</a>."
+"Használhatja majd a {box_name} eszköz bármely adminisztrátori csoportba "
+"tartozó <a href=\"{users_url}\">felhasználója</a>."
 
 #: plinth/modules/cockpit/__init__.py:63
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
+"A Cockpit megköveteli, hogy a domain néven keresztül érd el. Nem fog működni "
+"ha az URL részeként az IP címmel érik el."
 
 #: plinth/modules/cockpit/templates/cockpit.html:26
-#, fuzzy
-#| msgid "Access Point"
 msgid "Access"
-msgstr "Hozzáférési pont"
+msgstr "Hozzáférés"
 
 #: plinth/modules/cockpit/templates/cockpit.html:29
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr ""
+"A Cockpit csak akkor fog működni, ha az alábbi URL-ek valamelyikével "
+"történik a hozzáférés."
 
 #: plinth/modules/config/__init__.py:37
 msgid "General Configuration"
@@ -699,6 +699,8 @@ msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
+"Itt beállíthatsz néhány általános konfigurációs beállítást, például "
+"gazdagépnév, domain név, webszerver kezdőoldala stb."
 
 #: plinth/modules/config/__init__.py:67 plinth/modules/dynamicdns/views.py:44
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
@@ -961,19 +963,12 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge egy webes felülettel rendelkező BitTorrent kliens."
 
 #: plinth/modules/deluge/__init__.py:47
-#, fuzzy
-#| msgid ""
-#| "When enabled, the Deluge web client will be available from <a href=\"/"
-#| "deluge\">/deluge</a> path on the web server. The default password is "
-#| "'deluge', but you should log in and change it immediately after enabling "
-#| "this service."
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr ""
-"Ha engedélyezett, a Deluge webes kliens elérhető lesz a webszerver <a href="
-"\"/deluge\">/deluge</a> útvonalán. Az alapértelmezett jelszó 'deluge', de a "
-"szolgáltatás engedélyezése után jelentkezz be és azonnal változtasd meg."
+"Az alapértelmezett jelszó 'deluge', de a szolgáltatás engedélyezése után "
+"jelentkezz be és azonnal változtasd meg."
 
 #: plinth/modules/deluge/__init__.py:51
 #: plinth/modules/transmission/__init__.py:57
@@ -1581,22 +1576,19 @@ msgstr ""
 "tűzfalban szintén le lesz tiltva."
 
 #: plinth/modules/first_boot/forms.py:29
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Enter the secret generated during FreedomBox installation. This secret "
-#| "can also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+#, python-brace-format
 msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
 "also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "Add meg a FreedomBox telepítése során létrehozott titkos kulcsot. Ezt a "
-"kulcsot ebben a fájlban is megtalálhatod: /var/lib/plinth/firstboot-wizard-"
-"secret"
+"kulcsot ennek a parancsnak a kiadásával is megszerezheted a saját {box_name} "
+"eszközödön: \"sudo cat /var/lib/plinth/firstboot-wizard-secret\""
 
 #: plinth/modules/first_boot/forms.py:34
 msgid "Firstboot Wizard Secret"
-msgstr ""
+msgstr "Telepítő varázsló titkos kulcsa"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
@@ -1646,12 +1638,22 @@ msgid ""
 "available graphical clients. And you can share your code with people around "
 "the world."
 msgstr ""
+"A Git egy elosztott verziókezelő rendszer a szoftverfejlesztés során a "
+"forráskódban történt változások követésére. A Gitweb webes felületet "
+"biztosít a Git tárolóihoz. Böngészheted az előzményeket és a forráskódok "
+"tartalmát, a keresés használatával megtalálhatod a releváns commitot és "
+"kódot. Továbbá klónozhatsz tárolókat és feltöltheted a kódmódosításokat egy "
+"parancssoros Git klienssel vagy a többféle grafikus kliensek valamelyikével. "
+"És megoszthatod a kódodat az emberekkel szerte a világon."
 
 #: plinth/modules/gitweb/__init__.py:57
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
+"Ha szeretnél többet megtudni a Git használatáról, akkor tekintsd meg a <a "
+"href=\"https://git-scm.com/docs/gittutorial\">Git gyorstalpalót "
+"(angolul)</a>."
 
 #: plinth/modules/gitweb/__init__.py:61
 msgid "Read-write access to Git repositories"
