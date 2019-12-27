@@ -19,6 +19,7 @@ Test module for App, base class for all applications.
 """
 
 import collections
+from unittest.mock import patch
 
 import pytest
 
@@ -193,6 +194,23 @@ def test_app_diagnose(app_with_components):
                        ('test-result-test-leader-2', 'success')]
 
 
+def test_app_has_diagnostics(app_with_components):
+    """Test checking if app has diagnostics implemented."""
+    app = app_with_components
+
+    # App with components that has diagnostics
+    assert app.has_diagnostics()
+
+    # App with components that don't have diagnostics
+    app.remove('test-leader-1')
+    app.remove('test-leader-2')
+    assert not app.has_diagnostics()
+
+    # App with app-level diagnostics
+    with patch.object(AppTest, 'diagnose', return_value=[('test1', 'passed')]):
+        assert app.has_diagnostics()
+
+
 def test_component_initialization():
     """Test that component is initialized properly."""
     with pytest.raises(ValueError):
@@ -207,6 +225,15 @@ def test_component_diagnose():
     """Test running diagnostics on component."""
     component = Component('test-component')
     assert component.diagnose() == []
+
+
+def test_component_has_diagnostics():
+    """Test checking if component has diagnostics implemented."""
+    component = LeaderTest('test-leader-1')
+    assert component.has_diagnostics()
+
+    component = FollowerComponent('test-follower-1')
+    assert not component.has_diagnostics()
 
 
 def test_follower_component_initialization():

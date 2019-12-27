@@ -112,6 +112,9 @@ def run_on_all_enabled_modules():
         if not app.is_enabled():
             continue
 
+        if not app.has_diagnostics():
+            continue
+
         apps.append((app.app_id, app))
         current_results['results'][app.app_id] = None
 

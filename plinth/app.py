@@ -115,12 +115,44 @@ class App:
         Results are typically collected by diagnosing each component of the app
         and then supplementing the results with any app level diagnostic tests.
 
+        Also see :meth:`.has_diagnostics`.
+
         """
         results = []
         for component in self.components.values():
             results.extend(component.diagnose())
 
         return results
+
+    def has_diagnostics(self):
+        """Return whether at least one diagnostic test is implemented.
+
+        If this method returns True, a button or menu item is shown to the
+        user to run diagnostics on this app. When the action is selected by the
+        user, the :meth:`.diagnose` method is called and the results are
+        presented to the user. Additionally collection of diagnostic results of
+        all apps can be obtained by the user from the Diagnostics module in
+        System section.
+
+        If a component of this app implements a diagnostic test, this method
+        returns True.
+
+        Further, if a subclass of App overrides the :meth:`.diagnose` method,
+        it is assumed that it is for implementing diagnostic tests and this
+        method returns True for such an app. Override this method if this
+        default behavior does not fit the needs.
+
+        """
+        # App implements some diagnostics
+        if self.__class__.diagnose is not App.diagnose:
+            return True
+
+        # Any of the components implement diagnostics
+        for component in self.components.values():
+            if component.has_diagnostics():
+                return True
+
+        return False
 
 
 class Component:
@@ -148,8 +180,24 @@ class Component:
         result. The test result is a string enumeration from 'failed', 'passed'
         and 'error'.
 
+        Also see :meth:`.has_diagnostics`.
+
         """
         return []
+
+    def has_diagnostics(self):
+        """Return whether at least one diagnostic test is implemented.
+
+        If this method return True, the :meth:`App.has_diagnostics`. also
+        returns True.
+
+        If a subclass of Component overrides the :meth:`.diagnose` method, it
+        is assumed that it is for implementing diagnostic tests and this method
+        returns True for such a component. Override this method if this default
+        behavior does not fit the needs.
+
+        """
+        return self.__class__.diagnose is not Component.diagnose
 
 
 class FollowerComponent(Component):
