@@ -113,8 +113,8 @@ def set_restricted_access(enabled):
     actions.superuser_run('security', [action])
 
 
-def get_vulnerability_counts():
-    """Return number of security vulnerabilities for each app"""
+def get_apps_report():
+    """Return a security report for each app"""
     lines = subprocess.check_output(['debsecan']).decode().split('\n')
     cves = defaultdict(set)
     for line in lines:
@@ -132,18 +132,23 @@ def get_vulnerability_counts():
         'freedombox': {
             'name': 'freedombox',
             'packages': {'freedombox'},
-            'count': 0,
-            'past_count': 0 if past_cves else None,
+            'vulns': 0,
+            'past_vulns': 0 if past_cves else None,
         }
     }
     if past_cves and 'freedombox' in past_cves:
-        apps['freedombox']['past_count'] = len(past_cves['freedombox'])
+        apps['freedombox']['past_vulns'] = len(past_cves['freedombox'])
 
     for module_name, module in module_loader.loaded_modules.items():
         try:
             packages = module.managed_packages
         except AttributeError:
             continue  # app has no managed packages
+
+        try:
+            services = module.managed_services
+        except AttributeError:
+            services = None
 
         # filter out apps not setup yet
         if module.setup_helper.get_state() == 'needs-setup':
@@ -152,17 +157,56 @@ def get_vulnerability_counts():
         apps[module_name] = {
             'name': module_name,
             'packages': set(packages),
-            'count': 0,
-            'past_count': 0 if past_cves else None,
+            'vulns': 0,
+            'past_vulns': 0 if past_cves else None,
+            'sandboxed': None,
         }
 
         for package in packages:
             if past_cves and package in past_cves:
-                apps[module_name]['past_count'] += len(past_cves[package])
+                apps[module_name]['past_vulns'] += len(past_cves[package])
+
+        if services:
+            apps[module_name]['sandboxed'] = False
+            for service in services:
+                if _get_service_is_sandboxed(service):
+                    apps[module_name]['sandboxed'] = True
 
     for cve_packages in cves.values():
         for app_ in apps.values():
             if cve_packages & app_['packages']:
-                app_['count'] += 1
+                app_['vulns'] += 1
 
     return apps
+
+
+def _get_service_is_sandboxed(service):
+    """Return whether service is sandboxed."""
+    lines = subprocess.check_output([
+        'systemctl',
+        'show',
+        service,
+        '--property=ProtectSystem',
+        '--property=ProtectHome',
+        '--property=PrivateTmp',
+        '--property=PrivateDevices',
+        '--property=PrivateNetwork',
+        '--property=PrivateUsers',
+        '--property=PrivateMounts',
+    ]).decode().strip().split('\n')
+    pairs = [line.partition('=')[::2] for line in lines]
+    properties = {name: value for name, value in pairs}
+    if properties['ProtectSystem'] in ['yes', 'full', 'strict']:
+        return True
+
+    if properties['ProtectHome'] in ['yes', 'read-only', 'tmpfs']:
+        return True
+
+    for name in [
+            'PrivateTmp', 'PrivateDevices', 'PrivateNetwork', 'PrivateUsers',
+            'PrivateMounts'
+    ]:
+        if properties[name] == 'yes':
+            return True
+
+    return False

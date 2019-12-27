@@ -24,7 +24,7 @@
 {% block content %}
   <h3>{% trans "Security Report" %}</h3>
   <p>
-    {% blocktrans trimmed with count=freedombox_vulns.count %}
+    {% blocktrans trimmed with count=freedombox_report.vulns %}
       The installed version of FreedomBox has {{ count }} reported security
       vulnerabilities.
     {% endblocktrans %}
@@ -32,7 +32,8 @@
   <p>
     {% blocktrans trimmed %}
       The following table lists the current reported number, and historical
-      count, of security vulnerabilities for each installed app.
+      count, of security vulnerabilities for each installed app. It also lists
+      whether each service is using sandboxing features.
     {% endblocktrans %}
   </p>
   <table class="table table-bordered table-condensed table-striped">
@@ -41,14 +42,24 @@
         <th>{% trans "App Name" %}</th>
         <th>{% trans "Current Vulnerabilities" %}</th>
         <th>{% trans "Past Vulnerabilities" %}</th>
+        <th>{% trans "Sandboxed" %}</th>
       </tr>
     </thead>
     <tbody>
-      {% for app in apps_vulns %}
+      {% for app in apps_report %}
         <tr>
           <td>{{ app.name }}</td>
-          <td>{{ app.count }}</td>
-          <td>{{ app.past_count|default_if_none:"❗"}}</td>
+          <td>{{ app.vulns }}</td>
+          <td>{{ app.past_vulns|default_if_none:"❗"}}</td>
+          <td>
+            {% if app.sandboxed is None %}
+              {% trans "N/A" %}
+            {% elif app.sandboxed %}
+              {% trans "Yes" %}
+            {% else %}
+              {% trans "No" %}
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </tbody>

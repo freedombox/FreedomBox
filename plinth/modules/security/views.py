@@ -80,14 +80,13 @@ def _apply_changes(request, old_status, new_status):
 
 def report(request):
     """Serve the security report page"""
-    vulnerability_counts = security.get_vulnerability_counts()
+    apps_report = security.get_apps_report()
     return TemplateResponse(
         request, 'security_report.html', {
             'title':
                 _('Security Report'),
-            'freedombox_vulns':
-                vulnerability_counts.pop('freedombox'),
-            'apps_vulns':
-                sorted(vulnerability_counts.values(),
-                       key=lambda app: app['name']),
+            'freedombox_report':
+                apps_report.pop('freedombox'),
+            'apps_report':
+                sorted(apps_report.values(), key=lambda app: app['name']),
         })
