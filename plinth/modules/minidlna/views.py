@@ -35,6 +35,7 @@ class MiniDLNAAppView(AppView):
     description = minidlna.description
     form_class = MiniDLNAServerForm
     icon_filename = minidlna.icon_filename
+    clients = minidlna.clients
 
     def get_initial(self):
         """Initial form value as found in the minidlna.conf"""
