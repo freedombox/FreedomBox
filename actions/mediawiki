@@ -110,7 +110,7 @@ def subcommand_change_password(arguments):
 def subcommand_update(_):
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
-    subprocess.check_call(['php', update_script])
+    subprocess.check_call(['php', update_script, '--quick'])
 
 
 def subcommand_public_registrations(arguments):
