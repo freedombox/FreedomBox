@@ -30,7 +30,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 4
 
 managed_services = ['openvpn-server@freedombox']
 
