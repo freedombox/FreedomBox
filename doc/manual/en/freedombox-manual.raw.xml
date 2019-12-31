@@ -5,6 +5,18 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>80</revnumber>
+        <date>2019-12-25 18:43:42</date>
+        <authorinitials>Drahtseil</authorinitials>
+        <revremark>added MiniDLNA</revremark>
+      </revision>
+      <revision>
+        <revnumber>79</revnumber>
+        <date>2019-12-20 19:58:30</date>
+        <authorinitials>Drahtseil</authorinitials>
+        <revremark>Placed Simple Gitweb in the correct place</revremark>
+      </revision>
+      <revision>
         <revnumber>78</revnumber>
         <date>2019-12-15 19:26:31</date>
         <authorinitials>Drahtseil</authorinitials>
@@ -1811,6 +1823,15 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
               </listitem>
             </itemizedlist>
           </listitem>
+          <listitem>
+            <para>If you wish to create a community in Matrix Synapse, a Matrix user with server admin privileges is needed. Run the following commands:  </para>
+            <itemizedlist>
+              <listitem override="none">
+                <screen><![CDATA[sudo apt install sqlite3
+echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3 /var/lib/matrix-synapse/homeserver.db  ]]></screen>
+              </listitem>
+            </itemizedlist>
+          </listitem>
         </orderedlist>
       </section>
     </section>
@@ -2352,6 +2373,31 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
       </section>
     </section>
     <section>
+      <title>MiniDLNA</title>
+      <para>MiniDLNA is a media server with the aim to be compliant with DLNA/UPnP clients. </para>
+      <section>
+        <title>What is UPnP/DLNA?</title>
+        <para>Universal plug &amp; play is a set of networking protocols that allow devices within  a network such as PCs, TVs, printers etc. to seamlessly discover each other and  establish communication for data sharing. It is zero configuration protocol and  requires only a media server and a media player that are compliant with the  protocol. </para>
+        <para>DLNA is derived from UPnP as a form of standardizing media interoperability. It  forms a standard/certification which many consumer electronics conform to. </para>
+      </section>
+      <section>
+        <title>Setting up MiniDLNA on your FreedomBox.</title>
+        <para>To install/enable the media server you need to navigate at MiniDLNA page and  enable it. The application is intended to be available in the internal (home) network and  therefore it requires a network interface configured for internal traffic. </para>
+        <para>After installation a web page becomes available on <ulink url="https://&lt;your-freedombox&gt;/_minidlna"/>.  It includes information for how many files the server is detecting, how many connections exist etc. This is very useful if plugging external disks with media to check if the new media files are detected properly. If that is not happening, disabling and enabling the server will fix it.  </para>
+      </section>
+      <section>
+        <title>File systems for external drives.</title>
+        <para>If using an external drive that is used also from a Windows system the  preferred filesystem should be NTFS. NTFS will keep Linux file permissions and UTF8 encoding for file names. This is useful if file names are in your language.  </para>
+      </section>
+      <section>
+        <title>External links</title>
+        <para>
+          <ulink url="http://minidlna.sourceforge.net/"/>
+          <ulink url="https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance"/>
+        </para>
+      </section>
+    </section>
+    <section>
       <title>News Feed Reader (Tiny Tiny RSS)</title>
       <para>Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to allow reading news from any location, while feeling as close to a real desktop application as possible. </para>
       <para>Any user created through FreedomBox web interface will be able to login and use this app.  Each user has their own feeds, state and preferences. </para>
@@ -2504,6 +2550,34 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
             </textobject>
           </inlinemediaobject>
         </para>
+      </section>
+    </section>
+    <section>
+      <title>Simple Git Hosting (GitWeb)</title>
+      <para>Git is a distributed version-control system for tracking changes in source code during software development. GitWeb provides a web interface to Git repositories. You can browse history and content of source code, use search to find relevant commits and code. You can also clone repositories and upload code changes with a command-line Git client or with multiple available graphical clients. And you can share your code with people around the world. </para>
+      <para>To learn more on how to use Git visit <ulink url="https://git-scm.com/docs/gittutorial">Git tutorial</ulink>. </para>
+      <para><emphasis role="strong">Available since version:</emphasis> 19.19 </para>
+      <section>
+        <title>Managing the repositories</title>
+        <para>After installation of GitWeb, a new repository can be created. It can be marked as <emphasis>private</emphasis> to limit access. </para>
+      </section>
+      <section>
+        <title>Access</title>
+        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my"/> freedombox name&gt;/gitweb </para>
+      </section>
+      <section>
+        <title>HTTP basic auth</title>
+        <para>GitWeb on FreedomBox currently supports HTTP remotes only. To avoid having to enter the password each time you pull/push to the repository, you can edit your remote to include the credentials. </para>
+        <para>
+          <emphasis>Example:</emphasis>
+          <ulink url="https://username@password:my.freedombox.rocks/gitweb/myrepo"/>
+        </para>
+        <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. </para>
+      </section>
+      <section>
+        <title>Mirroring</title>
+        <para>Though your repositories are primarily hosted on your own FreedomBox, you can configure a repository on another Git hosting system like <ulink url="https://wiki.debian.org/FreedomBox/Manual/GitLab#">GitLab</ulink> as a mirror. </para>
       </section>
     </section>
     <section>
@@ -3117,34 +3191,6 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
             <para><emphasis role="strong">I2P router console</emphasis>: This is the central management interface for I2P. It shows the current status of I2P, bandwidth statistics and allows modifying various configuration settings. You can tune your participation in the I2P network and use/edit a list of your favourite I2P sites (eepsites). Only logged-in users belonging to 'Manage I2P application' group can use this service. </para>
           </listitem>
         </itemizedlist>
-      </section>
-    </section>
-    <section>
-      <title>Simple Git Hosting (GitWeb)</title>
-      <para>Git is a distributed version-control system for tracking changes in source code during software development. GitWeb provides a web interface to Git repositories. You can browse history and content of source code, use search to find relevant commits and code. You can also clone repositories and upload code changes with a command-line Git client or with multiple available graphical clients. And you can share your code with people around the world. </para>
-      <para>To learn more on how to use Git visit <ulink url="https://git-scm.com/docs/gittutorial">Git tutorial</ulink>. </para>
-      <para><emphasis role="strong">Available since version:</emphasis> 19.19 </para>
-      <section>
-        <title>Managing the repositories</title>
-        <para>After installation of GitWeb, a new repository can be created. It can be marked as <emphasis>private</emphasis> to limit access. </para>
-      </section>
-      <section>
-        <title>Access</title>
-        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my"/> freedombox name&gt;/gitweb </para>
-      </section>
-      <section>
-        <title>HTTP basic auth</title>
-        <para>GitWeb on FreedomBox currently supports HTTP remotes only. To avoid having to enter the password each time you pull/push to the repository, you can edit your remote to include the credentials. </para>
-        <para>
-          <emphasis>Example:</emphasis>
-          <ulink url="https://username@password:my.freedombox.rocks/gitweb/myrepo"/>
-        </para>
-        <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. </para>
-      </section>
-      <section>
-        <title>Mirroring</title>
-        <para>Though your repositories are primarily hosted on your own FreedomBox, you can configure a repository on another Git hosting system like <ulink url="https://wiki.debian.org/FreedomBox/Manual/GitLab#">GitLab</ulink> as a mirror. </para>
       </section>
     </section>
   </section>
@@ -9990,6 +10036,50 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.24 (2019-12-30)</title>
+        <itemizedlist>
+          <listitem>
+            <para>app: Fix JavaScript doesn't run on first visit </para>
+          </listitem>
+          <listitem>
+            <para>samba: Add private shares </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Support upgrading firewalld to 0.8 </para>
+          </listitem>
+          <listitem>
+            <para>deluge: Add systemd sandboxing features </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Add systemd sandboxing features </para>
+          </listitem>
+          <listitem>
+            <para>storage: Add systemd sandboxing features to udiskie service </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Add systemd sandboxing features to repository setup service </para>
+          </listitem>
+          <listitem>
+            <para>security: List whether each app is sandboxed </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Avoid delay in update script </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Use new component based API for all diagnostic tests </para>
+          </listitem>
+          <listitem>
+            <para>minidlna: Fix showing clients information </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Fix problem with session cache failing logins </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for French, German, Swedish, Greek, Hungarian, Norwegian Bokmål, and Dutch </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.23 (2019-12-16)</title>
         <itemizedlist>

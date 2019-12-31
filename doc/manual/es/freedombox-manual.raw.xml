@@ -5,6 +5,24 @@
     <title>es/FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>58</revnumber>
+        <date>2019-12-25 21:08:13</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Enlace a página traducida. Se alinea con la versión 80 del 25 de diciembre de 2019.</revremark>
+      </revision>
+      <revision>
+        <revnumber>57</revnumber>
+        <date>2019-12-20 21:18:19</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Se alinea con la versión 79 en inglés del 20 de diciembre de 2019</revremark>
+      </revision>
+      <revision>
+        <revnumber>56</revnumber>
+        <date>2019-12-17 21:17:07</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Se alinea con la versión 78 en inglés del 15 de diciembre de 2019</revremark>
+      </revision>
+      <revision>
         <revnumber>55</revnumber>
         <date>2019-10-21 14:05:52</date>
         <authorinitials>fioddor</authorinitials>
@@ -2213,6 +2231,37 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
       </section>
     </section>
     <section>
+      <title>MiniDLNA</title>
+      <para>MiniDLNA es un servidor multimedia que intenta ser compatible con clientes DLNA/UPnP. </para>
+      <section>
+        <title>¿Qué es UPnP/DLNA?</title>
+        <para>UPnP (<emphasis>Universal plug &amp; play</emphasis>) es un conjunto de protocolos de red que permite a los dispositivos de una red, como PCs, TVs, impresoras etc, reconocerse entre sí y establecer comunicación para compartir datos. Es un protocolo con cero configuración y require solo un servidor multimedia y un reproductor multimedia compatibles con el protocolo. </para>
+        <para>DLNA se deriva de UPnP como una forma de estandarizar interoperabilidad entre medios. Conforma un estándar/certificación que cumplen muchos dispositivos electrónicos de consumo. </para>
+      </section>
+      <section>
+        <title>Desplegando MiniDLNA en tu FreedomBox.</title>
+        <para>Para instalar/habilitar el servidor multimedia necesitas navegar a la página MiniDLNA y habilitarlo. Se intenta que la aplicación esté disponible en la red interna y por ello requiere asignarle un interfaz de red configurado para tráfico interno. </para>
+        <para>Tras la instalación queda disponible una página web en <ulink url="https://&lt;tu-freedombox&gt;/_minidlna"/>.  Incluye información de cuántos ficheros detecta el servidor, cuántas conexiones existen etc. Esto resulta muy útil cuando conectas discos externos con contenido para para verificar que detecta los nuevos archivos como debe. Si no ocurre así, desconectar y activar el servidor lo arreglará.  </para>
+      </section>
+      <section>
+        <title>Sistemas de archivo para discos externos.</title>
+        <para>Al usar un disco externo que se usa también desde sistemas Windows el mejor formato para el sistema de archivos es NTFS. NTFS conservará los permisos de acceso de Linux y la codificación UTF-8 para los nombres de fichero. Esto es útil si los nombres de archivos tienen tildes, eñes u otros signos raros. </para>
+      </section>
+      <section>
+        <title>Enlaces externos</title>
+        <itemizedlist>
+          <listitem>
+            <para><ulink url="http://minidlna.sourceforge.net"/> (en) </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://es.wikipedia.org/wiki/Digital_Living_Network_Alliance"/>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
       <title>Lector de Feeds de Noticias (Tiny Tiny RSS)</title>
       <para><emphasis>Tiny Tiny RSS</emphasis> es un lector y agregador de <emphasis>feeds</emphasis> de noticias (RSS/Atom) diseñado para leer noticias desde cualquier lugar con una experiencia lo más parecida posible a una aplicación de escritorio. </para>
       <para>Cualquier usuario creado mediante el interfaz web de FreedomBox podrá ingresar y usar esta app. Cada usuario tiene sus propios <emphasis>feeds</emphasis>, estado y preferencias. </para>
@@ -2364,6 +2413,25 @@ echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  ]
             </textobject>
           </inlinemediaobject>
         </para>
+      </section>
+    </section>
+    <section>
+      <title>Alojamiento Git Simple (GitWeb)</title>
+      <para>GitWeb proporciona alojamiento Git en FreedomBox. Proporciona un interfaz web simple para realizar acciones comunes como ver archivos, diferencias, descripciones de cambio, etc. </para>
+      <para><emphasis role="strong">Disponible desde versión:</emphasis> 19.19 </para>
+      <section>
+        <title>Autenticación básica HTTP</title>
+        <para>Actualmente el GitWeb de FreedomBox solo soporta remotos HTTP. Para evitar tener que introducir la contraseña cada vez que haces pull/push al repositorio puedes editar tu remoto para incluír credenciales. </para>
+        <para>
+          <emphasis>Ejemplo:</emphasis>
+          <ulink url="https://usuario@contrasena:mi.freedombox.mola/gitweb/mirepo"/>
+        </para>
+        <para>Tu nombre de usuario y contraseña se cifrarán. Quien monitorize el tráfico de la red solo apreciará el nombre de dominio.</para>
+        <para><emphasis role="strong">Nota:</emphasis> Al usar este método tu contraseña se almacenará en claro en el fichero <code>.git/config</code> del repositorio local. </para>
+      </section>
+      <section>
+        <title>Réplicas Espejo</title>
+        <para>Aunque tus repositorios se albergan principalmente en tu propia FreedomBox puedes configurar un repositorio en otro servicio de alojamiento Git como <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/GitLab#">GitLab</ulink> a modo de copia espejo. </para>
       </section>
     </section>
     <section>
@@ -2953,6 +3021,34 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
             <para><emphasis role="strong">Consola de enrutado I2P</emphasis>: Este es el interfaz central de administración de I2P. Muestra el estado actual de I2P, estadísticas de ancho de banda y permite modificar varias preferencias de configuración. Puedes adecuar tu participación en la red I2P y usar/editar una lista con tus sitios I2P (eepsites) favoritos. Solo los usuarios ingresados pertenecientes al grupo <emphasis>Manage I2P application</emphasis> pueden usar este servicio. </para>
           </listitem>
         </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>Simple Git Hosting (GitWeb)</title>
+      <para>Git is a distributed version-control system for tracking changes in source code during software development. GitWeb provides a web interface to Git repositories. You can browse history and content of source code, use search to find relevant commits and code. You can also clone repositories and upload code changes with a command-line Git client or with multiple available graphical clients. And you can share your code with people around the world. </para>
+      <para>To learn more on how to use Git visit <ulink url="https://git-scm.com/docs/gittutorial">Git tutorial</ulink>. </para>
+      <para><emphasis role="strong">Available since version:</emphasis> 19.19 </para>
+      <section>
+        <title>Managing the repositories</title>
+        <para>After installation of GitWeb, a new repository can be created. It can be marked as <emphasis>private</emphasis> to limit access. </para>
+      </section>
+      <section>
+        <title>Access</title>
+        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my"/> freedombox name&gt;/gitweb </para>
+      </section>
+      <section>
+        <title>HTTP basic auth</title>
+        <para>GitWeb on FreedomBox currently supports HTTP remotes only. To avoid having to enter the password each time you pull/push to the repository, you can edit your remote to include the credentials. </para>
+        <para>
+          <emphasis>Example:</emphasis>
+          <ulink url="https://username@password:my.freedombox.rocks/gitweb/myrepo"/>
+        </para>
+        <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. </para>
+      </section>
+      <section>
+        <title>Mirroring</title>
+        <para>Though your repositories are primarily hosted on your own FreedomBox, you can configure a repository on another Git hosting system like <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/GitLab#">GitLab</ulink> as a mirror. </para>
       </section>
     </section>
   </section>
@@ -9806,6 +9902,50 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 19.24 (2019-12-30)</title>
+        <itemizedlist>
+          <listitem>
+            <para>app: Fix JavaScript doesn't run on first visit </para>
+          </listitem>
+          <listitem>
+            <para>samba: Add private shares </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Support upgrading firewalld to 0.8 </para>
+          </listitem>
+          <listitem>
+            <para>deluge: Add systemd sandboxing features </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Add systemd sandboxing features </para>
+          </listitem>
+          <listitem>
+            <para>storage: Add systemd sandboxing features to udiskie service </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Add systemd sandboxing features to repository setup service </para>
+          </listitem>
+          <listitem>
+            <para>security: List whether each app is sandboxed </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Avoid delay in update script </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Use new component based API for all diagnostic tests </para>
+          </listitem>
+          <listitem>
+            <para>minidlna: Fix showing clients information </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Fix problem with session cache failing logins </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for French, German, Swedish, Greek, Hungarian, Norwegian Bokmål, and Dutch </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 19.23 (2019-12-16)</title>
         <itemizedlist>
