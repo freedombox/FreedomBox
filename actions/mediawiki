@@ -59,6 +59,10 @@ def parse_arguments():
     change_password.add_argument('--password',
                                  help='new password for the MediaWiki user')
 
+    default_skin = subparsers.add_parser('set-default-skin',
+                                         help='Set the default skin')
+    default_skin.add_argument('skin', help='name of the skin')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -196,6 +200,28 @@ def subcommand_private_mode(arguments):
             if not read_conf_lines:
                 conf_file.write("$wgGroupPermissions['*']['read'] = " +
                                 conf_value + '\n')
+
+
+def subcommand_set_default_skin(arguments):
+    """Set a default skin"""
+    skin = arguments.skin
+    skin_setting = f'$wgDefaultSkin = "{skin}";\n'
+
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+        inserted = False
+        for i, line in enumerate(lines):
+            if line.strip().startswith('$wgDefaultSkin'):
+                lines[i] = skin_setting
+                inserted = True
+                break
+
+        if not inserted:
+            lines.append(skin_setting)
+
+    with open(CONF_FILE, 'w') as conf_file:
+        conf_file.writelines(lines)
 
 
 def main():

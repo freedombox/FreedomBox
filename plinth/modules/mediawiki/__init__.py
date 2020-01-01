@@ -18,6 +18,8 @@
 FreedomBox app to configure MediaWiki.
 """
 
+import re
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -137,3 +139,20 @@ def is_private_mode_enabled():
     """ Return whether private mode is enabled or disabled"""
     output = actions.superuser_run('mediawiki', ['private-mode', 'status'])
     return output.strip() == 'enabled'
+
+
+def get_default_skin():
+    """Return the value of the default skin"""
+    def _find_skin(config_file):
+        with open(config_file, 'r') as config:
+            for line in config:
+                if line.startswith('$wgDefaultSkin'):
+                    return re.findall(r'["\'][^"\']*["\']',
+                                      line)[0].strip('"\'')
+
+        return None
+
+    user_config = '/etc/mediawiki/FreedomBoxSettings.php'
+    static_config = '/etc/mediawiki/FreedomBoxStaticSettings.php'
+
+    return _find_skin(user_config) or _find_skin(static_config)
