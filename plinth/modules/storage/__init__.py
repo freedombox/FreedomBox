@@ -27,7 +27,7 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu, utils
 from plinth.daemon import Daemon
-from plinth.errors import PlinthError
+from plinth.errors import ActionError, PlinthError
 from plinth.utils import format_lazy, import_from_gi
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
@@ -281,4 +281,7 @@ def setup(helper, old_version=None):
     disks = get_disks()
     root_device = get_root_device(disks)
     if is_expandable(root_device):
-        expand_partition(root_device)
+        try:
+            expand_partition(root_device)
+        except ActionError:
+            pass
