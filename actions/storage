@@ -96,14 +96,15 @@ def _resize_partition(device, requested_partition, free_space):
     # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=24215
     fallback_command = [
         'parted', '--align=optimal', device, '---pretend-input-tty', 'unit',
-        'B', 'resizepart', requested_partition['number'], 'yes',
-        str(free_space['end'])
+        'B', 'resizepart', requested_partition['number']
     ]
     try:
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError:
         try:
-            subprocess.run(fallback_command, check=True)
+            input_text = 'yes\n' + str(free_space['end'])
+            subprocess.run(fallback_command, check=True,
+                           input=input_text.encode())
         except subprocess.CalledProcessError as exception:
             print('Error expanding partition:', exception, file=sys.stderr)
             sys.exit(5)
