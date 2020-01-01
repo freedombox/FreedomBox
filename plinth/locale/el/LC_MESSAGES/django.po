@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-30 20:43-0500\n"
-"PO-Revision-Date: 2019-12-26 13:21+0000\n"
+"PO-Revision-Date: 2020-01-03 07:55+0000\n"
 "Last-Translator: Nektarios Katakis <iam@nektarioskatakis.xyz>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/plinth/"
 "el/>\n"
@@ -30,7 +30,7 @@ msgstr "Freedombox"
 #: plinth/daemon.py:85
 #, python-brace-format
 msgid "Service {service_name} is running"
-msgstr ""
+msgstr "Το πρόγραμμα {service_name} είναι ενεργοποιημένο"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -348,7 +348,6 @@ msgid "Add a remote backup location"
 msgstr "Προσθήκη απομακρυσμένης τοποθεσίας εφεδρικών αρχείων"
 
 #: plinth/modules/backups/templates/backups.html:70
-#, fuzzy
 msgid "Add Remote Backup Location"
 msgstr "Προσθήκη απομακρυσμένης τοποθεσίας εφεδρικών αρχείων"
 
@@ -363,46 +362,50 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Τα διαπιστευτήρια για αυτό το αποθετήριο αποθηκεύονται στο %(box_name)s. <br "
+"/> Για να επαναφέρετε ένα αντίγραφο ασφαλείας σε ένα νέo %(box_name)s "
+"χρειάζεστε τα διαπιστευτήρια SSH και, εάν έχει χρησιμοποιηθεί, τον κωδικό "
+"κρυπτογράφησης."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:43
 msgid "Create Location"
-msgstr ""
+msgstr "Δημιουργία τοποθεσίας"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
 #: plinth/modules/gitweb/views.py:69
 msgid "Create Repository"
-msgstr ""
+msgstr "Δημιουργία Αποθετηρίου"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
-msgstr ""
+msgstr "Διαγράψτε αυτό το αρχείο μόνιμα;"
 
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:52
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
-msgstr ""
+msgstr "Ώρα"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, python-format
 msgid "Delete Archive %(name)s"
-msgstr ""
+msgstr "Διαγραφή αρχείου %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:47
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
-msgstr ""
+msgstr "Υποβολή"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
-msgstr ""
+msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτό το αποθετήριο;"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
 msgid ""
@@ -413,23 +416,29 @@ msgid ""
 "      can add it again later on.\n"
 "    "
 msgstr ""
+"\n"
+"      Το απομακρυσμένο αποθετήριο δεν θα διαγραφεί.\n"
+" Αυτό απλά αφαιρεί το αποθετήριο από τη λίστα στη σελίδα αντιγράφων "
+"ασφαλείας,\n"
+"  μπορείτε να την προσθέσετε ξανά αργότερα.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 msgid "Remove Location"
-msgstr ""
+msgstr "Αφαίρεση τοποθεσίας"
 
 #: plinth/modules/backups/templates/backups_restore.html:30
 msgid "Restore data from"
-msgstr ""
+msgstr "Επαναφορά δεδομένων από"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/views.py:171
 msgid "Restore"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: plinth/modules/backups/templates/backups_restore.html:47
 msgid "Restoring"
-msgstr ""
+msgstr "Επαναφορά αντιγράφων ασφαλείας"
 
 #: plinth/modules/backups/templates/backups_upload.html:32
 #, python-format
@@ -442,11 +451,18 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Ανεβάστε ένα εφεδρικό αρχείο που κατεβάσατε από ένα άλλο %(box_name)s "
+"για να επαναφέρετε τα\n"
+" περιεχόμενα. Μπορείτε να επιλέξετε τις εφαρμογές που θέλετε να επαναφέρετε "
+"μετά την αποστολή ενός\n"
+"αρχείο αντιγράφου ασφαλείας.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:42
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
-msgstr ""
+msgstr "Προσοχή:"
 
 #: plinth/modules/backups/templates/backups_upload.html:43
 #, python-format
@@ -454,10 +470,13 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"Έχετε διαθέσιμο χώρο %(max_filesize)s για την επαναφορά εφεδρικού αρχείου. "
+"Εάν υπερβείτε αυτό το όριο, μπορεί να αφήσει το %(box_name)s να είναι "
+"άχρηστο."
 
 #: plinth/modules/backups/templates/backups_upload.html:56
 msgid "Upload file"
-msgstr ""
+msgstr "Ανέβασμα αρχείου"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:33
 #, python-format
@@ -465,6 +484,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Δεν ήταν δυνατή η πρόσβαση στο %(hostname)s. Βεβαιωθείτε ότι ο υπολογιστής "
+"είναι έτοιμος και ότι δέχεστε συνδέσεις."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
 #, python-format
@@ -472,10 +493,13 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Δεν ήταν δυνατή η απόδειξη της γνησιότητας του υπολογιστή SSH %(hostname)s. "
+"Ο υπολογιστής δείχνει τα ακόλουθα δημόσια κλειδιά SSH. Παρακαλώ επιβεβαιώστε "
+"οποιοδήποτε από αυτά."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
 msgid "How to verify?"
-msgstr ""
+msgstr "Πώς να επιβεβαιώσετε;"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid ""
@@ -483,112 +507,120 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Εκτελέστε την ακόλουθη εντολή στον υπολογιστή SSH. Η έξοδος πρέπει να "
+"ταιριάζει με μία από τις επιλογές που παρέχονται. Μπορείτε επίσης να "
+"χρησιμοποιήσετε DSA, ECDSA, ed25519 κ. λπ., αντί για RSA, επιλέγοντας το "
+"αντίστοιχο αρχείο."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:75
 msgid "Verify Host"
-msgstr ""
+msgstr "Επαλήθευση υπολογιστή"
 
 #: plinth/modules/backups/views.py:72
 msgid "Archive created."
-msgstr ""
+msgstr "Το αρχείο δημιουργήθηκε."
 
 #: plinth/modules/backups/views.py:99
 msgid "Delete Archive"
-msgstr ""
+msgstr "Διαγραφή αρχείου"
 
 #: plinth/modules/backups/views.py:111
 msgid "Archive deleted."
-msgstr ""
+msgstr "Το αρχείο διαγράφηκε."
 
 #: plinth/modules/backups/views.py:124
 msgid "Upload and restore a backup"
-msgstr ""
+msgstr "Ανεβάστε και επαναφέρετε ένα εφεδρικό αρχείο"
 
 #: plinth/modules/backups/views.py:159
 msgid "Restored files from backup."
-msgstr ""
+msgstr "Επαναφορά αρχείων από τα εφεδρικά αρχεία."
 
 #: plinth/modules/backups/views.py:186
 msgid "No backup file found."
-msgstr ""
+msgstr "Δεν βρέθηκε εφεδρικό αρχείο."
 
 #: plinth/modules/backups/views.py:194
 msgid "Restore from uploaded file"
-msgstr ""
+msgstr "Επαναφορά αρχείων από το αρχείο που ανεβάσατε"
 
 #: plinth/modules/backups/views.py:251
 msgid "No additional disks available to add a repository."
 msgstr ""
+"Δεν υπάρχουν επιπλέον δίσκοι διαθέσιμοι για να προσθέσετε ένα αποθετήριο."
 
 #: plinth/modules/backups/views.py:259
 msgid "Create backup repository"
-msgstr ""
+msgstr "Δημιουργία αποθετηρίου εφεδρικών αρχείων"
 
 #: plinth/modules/backups/views.py:286
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Δημιουργία απομακρυσμένου αποθετηρίου εφεδρικών αρχείων"
 
 #: plinth/modules/backups/views.py:305
 msgid "Added new remote SSH repository."
-msgstr ""
+msgstr "Προστέθηκε νέο απομακρυσμένο αποθετήριο SSH."
 
 #: plinth/modules/backups/views.py:327
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Επιβεβαίωση κεντρικού κλειδιού SSH"
 
 #: plinth/modules/backups/views.py:353
 msgid "SSH host already verified."
-msgstr ""
+msgstr "Ο υπολογιστής SSH έχει ήδη επαληθευτεί."
 
 #: plinth/modules/backups/views.py:363
 msgid "SSH host verified."
-msgstr ""
+msgstr "Ο υπολογιστής SSH επιβεβαιώθηκε."
 
 #: plinth/modules/backups/views.py:377
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "Το δημόσιο κλειδί του υπολογιστή SSH δεν μπόρεσε να επαληθευτεί."
 
 #: plinth/modules/backups/views.py:379
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Ο έλεγχος ταυτότητας στον απομακρυσμένο διακομιστή απέτυχε."
 
 #: plinth/modules/backups/views.py:381
 msgid "Error establishing connection to server: {}"
-msgstr ""
+msgstr "Σφάλμα κατά τη δημιουργία σύνδεσης στο διακομιστή: {}"
 
 #: plinth/modules/backups/views.py:392
 msgid "Repository removed."
-msgstr ""
+msgstr "Το αποθετήριο αφαιρέθηκε."
 
 #: plinth/modules/backups/views.py:406
 msgid "Remove Repository"
-msgstr ""
+msgstr "Κατάργηση αποθετηρίου"
 
 #: plinth/modules/backups/views.py:415
 msgid "Repository removed. Backups were not deleted."
-msgstr ""
+msgstr "Το αποθετήριο αφαιρέθηκε. Τα εφεδρικά αρχεία δεν διαγράφηκαν."
 
 #: plinth/modules/backups/views.py:425
 msgid "Unmounting failed!"
-msgstr ""
+msgstr "Η αφαίρεση δίσκου απέτυχε!"
 
 #: plinth/modules/backups/views.py:440 plinth/modules/backups/views.py:444
 msgid "Mounting failed"
-msgstr ""
+msgstr "Η προσθήκη δίσκου απέτυχε"
 
 #: plinth/modules/bind/__init__.py:36
 msgid "BIND"
-msgstr ""
+msgstr "BIND"
 
 #: plinth/modules/bind/__init__.py:38
 msgid "Domain Name Server"
-msgstr ""
+msgstr "Διακομιστής Ονομάτων Διαδικτύου (DNS)"
 
 #: plinth/modules/bind/__init__.py:45
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
+"Το πρόγραμμα BIND σας επιτρέπει να δημοσιεύσετε το όνομα διαδικτύου σας (DNS)"
+", και να ανακαλύψει άλλα ονόματα διαδικτύου για όλες τις συσκευές στο "
+"εσωτερικό σας δίκτυο."
 
 #: plinth/modules/bind/__init__.py:49
 #, python-brace-format
@@ -597,37 +629,44 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
+"Αυτήν τη στιγμή, στο {box_name}, το BIND χρησιμοποιείται μόνο για την "
+"ανεύρεση ονομάτων διαδικτύου για άλλους υπολογιστές στο τοπικό δίκτυο. "
+"Επίσης, δεν είναι συμβατό με την κοινή χρήση σύνδεσης στο Internet από το "
+"{box_name}."
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
-msgstr ""
+msgstr "Προωθητές"
 
 #: plinth/modules/bind/forms.py:38
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr ""
+"Μια λίστα διακομιστών ονομάτων διαδικτύου ( DNS) στις οποίες θα προωθούνται "
+"οι αιτήσεις για την ανεύρεση ονομάτων διαδικτύου"
 
 #: plinth/modules/bind/forms.py:42
 msgid "Enable DNSSEC"
-msgstr ""
+msgstr "Ενεργοποίηση DNSSEC"
 
 #: plinth/modules/bind/forms.py:43
 msgid "Enable Domain Name System Security Extensions"
 msgstr ""
+"Ενεργοποίηση επεκτάσεων ασφαλείας για διακομιστές ονομάτων διαδικτύου (DNS)"
 
 #: plinth/modules/bind/views.py:58 plinth/modules/dynamicdns/views.py:171
 #: plinth/modules/openvpn/views.py:153 plinth/modules/shadowsocks/views.py:79
 #: plinth/modules/transmission/views.py:73
 msgid "Configuration updated"
-msgstr ""
+msgstr "Η ρύθμιση παραμέτρων Ενημερώθηκε"
 
 #: plinth/modules/cockpit/__init__.py:45 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:49
 msgid "Server Administration"
-msgstr ""
+msgstr "Διαχείριση διακομιστή"
 
 #: plinth/modules/cockpit/__init__.py:53
 #, python-brace-format
@@ -637,6 +676,11 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
+"Το Cockpit είναι ένα πρόγραμμα που καθιστά εύκολη τη διαχείριση των "
+"υπολογιστών/διακομιστών GNU/Linux ενώ είναι προσβάσιμο μέσο οποιουδήποτε "
+"προγράμματος περιήγησης ιστού. Στο {box_name}, θα βρείτε διαθέσιμες πολλές "
+"λειτουργίες οι οποίες συνήθως δεν θέλουν αλλαγές. Επιπλέον το Cockpit "
+"παρέχει λειτουργίες κονσόλας σε ένα τερματικό στο πρόγραμμα περιήγησης ιστού."
 
 #: plinth/modules/cockpit/__init__.py:59
 #, python-brace-format
@@ -644,30 +688,40 @@ msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
+"To πρόγραμμα είναι προσβάσιμο στο URL <a href=\"{users_url}\"> από "
+"οποιοσδήποτε χρήστης </a> στο {box_name} που ανήκει στην ομάδα διαχειριστών."
 
 #: plinth/modules/cockpit/__init__.py:63
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
+"Το Cockpit απαιτεί πρόσβαση σε αυτό μέσω ενός ονόματος διαδικτύου. Δεν θα "
+"λειτουργήσει όταν αποκτάτε πρόσβαση χρησιμοποιώντας μια διεύθυνση IP ως "
+"μέρος της διεύθυνσης URL."
 
 #: plinth/modules/cockpit/templates/cockpit.html:26
 msgid "Access"
-msgstr ""
+msgstr "Πρόσβαση"
 
 #: plinth/modules/cockpit/templates/cockpit.html:29
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr ""
+"To Cockpit θα λειτουργήσει μόνο όταν έχετε πρόσβαση σε αυτό χρησιμοποιώντας "
+"τις ακόλουθες διευθύνσεις URL."
 
 #: plinth/modules/config/__init__.py:37
 msgid "General Configuration"
-msgstr ""
+msgstr "Γενικές ρυθμίσεις"
 
 #: plinth/modules/config/__init__.py:40
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
+"Εδώ μπορείτε να ορίσετε κάποιες γενικές επιλογές ρύθμισης, όπως το όνομα "
+"υπολογιστή, το όνομα διαδικτύου σας, την κεντρική ιστοσελίδα του διακομιστή "
+"διαδικτύου κλπ."
 
 #: plinth/modules/config/__init__.py:67 plinth/modules/dynamicdns/views.py:44
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
@@ -675,29 +729,29 @@ msgstr ""
 #: plinth/modules/snapshot/views.py:41
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
-msgstr ""
+msgstr "Ρυθμίσετε"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:76
 #: plinth/modules/dynamicdns/forms.py:110
 msgid "Domain Name"
-msgstr ""
+msgstr "Όνομα διαδικτύου"
 
 #: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:88
 #: plinth/modules/dynamicdns/forms.py:113
 msgid "Invalid domain name"
-msgstr ""
+msgstr "Μη έγκυρο όνομα διαδικτύου"
 
 #: plinth/modules/config/forms.py:50
 msgid "Apache Default"
-msgstr ""
+msgstr "Προκαθορισμένες ρυθμίσεις Apache"
 
 #: plinth/modules/config/forms.py:51
 msgid "FreedomBox Service (Plinth)"
-msgstr ""
+msgstr "Υπηρεσία Freedombox (Plinth)"
 
 #: plinth/modules/config/forms.py:63
 msgid "Hostname"
-msgstr ""
+msgstr "Όνομα υπολογιστή"
 
 #: plinth/modules/config/forms.py:65
 #, python-brace-format
@@ -707,10 +761,15 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
+"Όνομα  υπολογιστή είναι το τοπικό όνομα με το οποίο άλλες συσκευές στο "
+"τοπικό δίκτυο μπορούν να φτάσουν στο {box_name}.  Πρέπει να ξεκινά και να "
+"τελειώνει με ένα ψηφίο της αλφαβήτου ή ένα νούμερο και να έχει ως "
+"εσωτερικούς χαρακτήρες μόνο ψηφία της αλφαβήτου, νούμερα και παύλες.  Το "
+"συνολικό μήκος πρέπει να είναι 63 χαρακτήρες ή λιγότεροι."
 
 #: plinth/modules/config/forms.py:72
 msgid "Invalid hostname"
-msgstr ""
+msgstr "Μη έγκυρο όνομα υπολογιστή"
 
 #: plinth/modules/config/forms.py:78
 #, python-brace-format
@@ -722,10 +781,17 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
+"Το όνομα διαδικτύου είναι το όνομα με το οποίο άλλες συσκευές στο διαδίκτυο "
+"μπορούν να αποκτήσουν πρόσβαση στο {box_name}. Πρέπει να αποτελείται από "
+"ετικέτες διαχωρισμένες με τελείες. Κάθε ετικέτα πρέπει να ξεκινά και να "
+"τελειώνει με ένα γράμμα ή νούμερο και να έχει εσωτερικούς χαρακτήρες μόνο "
+"γράμματα, νούμερα, και παύλες. Το μήκος κάθε ετικέτας πρέπει να είναι "
+"λιγότερο από 63 χαρακτήρες. Το συνολικό μήκος πρέπει να είναι λιγότερο από "
+"253 χαρακτήρες."
 
 #: plinth/modules/config/forms.py:93
 msgid "Webserver Home Page"
-msgstr ""
+msgstr "Αρχική σελίδα του διακομιστή διαδικτύου"
 
 #: plinth/modules/config/forms.py:95
 #, python-brace-format
@@ -736,62 +802,71 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
+"Επιλέξτε τη σελίδαπου θα βλέπει αρχικά κάποιος που επισκέφτεται το {box_name}"
+" στο διαδίκτυο. Μια συνήθης χρήση είναι να ορίσετε το blog ή το wiki σας. Να "
+"σημειωθεί ότι αφού καθορίσετε την αρχική σελίδα σε κάτι διαφορετικό από την "
+"υπηρεσία {box_name} (Plinth), οι χρήστεσ πρέπει να γράψουν /plinth ή /"
+"freedombox για να αποκτήσουν πρόσβαση σε αυτή."
 
 #: plinth/modules/config/forms.py:106
 msgid "Show advanced apps and features"
-msgstr ""
+msgstr "Εμφάνιση προηγμένων εφαρμογών και δυνατοτήτων"
 
 #: plinth/modules/config/forms.py:107
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
+"Εμφάνιση εφαρμογών και δυνατοτήτων που απαιτούν περισσότερες τεχνικές "
+"γνώσεις."
 
 #: plinth/modules/config/views.py:65
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
-msgstr ""
+msgstr "Σφάλμα κατά τη ρύθμιση του ονόματος του υπολογιστή: {exception}"
 
 #: plinth/modules/config/views.py:68
 msgid "Hostname set"
-msgstr ""
+msgstr "To όνομα του υπολογιστη ρυθμίστηκε επιτυχώς"
 
 #: plinth/modules/config/views.py:77
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
-msgstr ""
+msgstr "Σφάλμα κατά τη ρύθμιση ονόματος διδαδικτύου: {exception}"
 
 #: plinth/modules/config/views.py:80
 msgid "Domain name set"
-msgstr ""
+msgstr "To όνομα διαδικτύου ρυθμίστηκε επιτυχώς"
 
 #: plinth/modules/config/views.py:88
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr ""
+"Σφάλμα κατά τη ρύθμιση της αρχικής σελίδας διακομιστή διαδικτύου: {exception}"
 
 #: plinth/modules/config/views.py:91
 msgid "Webserver home page set"
-msgstr ""
+msgstr "Aρχική σελίδα διακομιστή διαδικτύου ρυθμίστηκε"
 
 #: plinth/modules/config/views.py:99
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr ""
+"Παρουσιάστηκε σφάλμα κατά την αλλαγή σε προηγμένη λειτουργία: {exception}"
 
 #: plinth/modules/config/views.py:104
 msgid "Showing advanced apps and features"
-msgstr ""
+msgstr "Εμφανίζονται προηγμένες εφαρμογές και λειτουργίες"
 
 #: plinth/modules/config/views.py:107
 msgid "Hiding advanced apps and features"
-msgstr ""
+msgstr "Απόκρυψη προηγμένων εφαρμογών και χαρακτηριστικών"
 
 #: plinth/modules/coquelicot/__init__.py:40
 msgid "Coquelicot"
-msgstr ""
+msgstr "Coquelicot"
 
 #: plinth/modules/coquelicot/__init__.py:42 plinth/modules/samba/__init__.py:50
 msgid "File Sharing"
-msgstr ""
+msgstr "Διαμοιρασμός αρχείων"
 
 #: plinth/modules/coquelicot/__init__.py:45
 msgid ""
@@ -799,6 +874,10 @@ msgid ""
 "protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
+"To Coquelicot είναι ένα πρόγραμμα που επιτρέπει το διαμοιρασμό αρχείων με "
+"ένα κλικ και εστιάζει στην προστασία της ιδιωτικής ζωής των χρηστών. "
+"Μπορείται να το χρησιμοποιήσετε όταν θέλετε να ανταλλάξετε ένα μεμονωμένο "
+"αρχειο. "
 
 #: plinth/modules/coquelicot/__init__.py:48
 msgid ""
@@ -807,188 +886,212 @@ msgid ""
 "in the form that will appear below after installation. The default upload "
 "password is \"test\"."
 msgstr ""
+"Η υπηρεσία του Coquelicot γίνεται διαθέσιμη στο διαδίτυο αλλά απαιτεί κωδικό "
+"για την προστασία της από μη εξουσιοδοτημένη πρόσβαση. Μπορείτε να ρυθμίσετε "
+"ένα νέο κωδικό για ανέβασμα αρχείων στη φόρμα που θα εμφανιστεί μετά την "
+"εγκατάσταση. Ο κωδικός είναι \"test\" αν δεν αλλαχθεί."
 
 #: plinth/modules/coquelicot/forms.py:30
 msgid "Upload Password"
-msgstr ""
+msgstr "Αποστολή κωδικού πρόσβασης"
 
 #: plinth/modules/coquelicot/forms.py:31
 msgid ""
 "Set a new upload password for Coquelicot. Leave this field blank to keep the "
 "current password."
 msgstr ""
+"Ορίστε καινούριο κωδικό αποστολής για το Coquelicot. Αφήστε το κενό για να "
+"διατηρηθεί ο ήδη υπάρχων."
 
 #: plinth/modules/coquelicot/forms.py:35
 msgid "Maximum File Size (in MiB)"
-msgstr ""
+msgstr "Μέγιστο μέγεθος αρχείου (ΜΙΒ)"
 
 #: plinth/modules/coquelicot/forms.py:36
 msgid "Set the maximum size of the files that can be uploaded to Coquelicot."
 msgstr ""
+"Ρυθμίστε το μέγιστο μέγεθος των αρχείων που μπορούν να αποσταλούν στο "
+"Coquelicot."
 
 #: plinth/modules/coquelicot/manifest.py:24
 msgid "coquelicot"
-msgstr ""
+msgstr "coquelicot"
 
 #: plinth/modules/coquelicot/views.py:58
 msgid "Upload password updated"
-msgstr ""
+msgstr "Ο κωδικός πρόσβασης ρυθμίστηκε"
 
 #: plinth/modules/coquelicot/views.py:61
 msgid "Failed to update upload password"
-msgstr ""
+msgstr "Απέτυχε η ενημέρωση του κωδικού πρόσβασης"
 
 #: plinth/modules/coquelicot/views.py:69
 msgid "Maximum file size updated"
-msgstr ""
+msgstr "Το μέγιστο μέγεθος αρχείου Ενημερώθηκε"
 
 #: plinth/modules/coquelicot/views.py:72
 msgid "Failed to update maximum file size"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η ενημέρωση του μέγιστου μεγέθους αρχείου"
 
 #: plinth/modules/datetime/__init__.py:39
 msgid "Date & Time"
-msgstr ""
+msgstr "Ημερομηνία και ώρα"
 
 #: plinth/modules/datetime/__init__.py:42
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
 msgstr ""
+"Ο διακομιστής ώρας δικτύου είναι ένα πρόγραμμα που διατηρεί την ώρα του "
+"συστήματος σε συγχρονισμό με τους διακομιστές στο διαδίκτυο."
 
 #: plinth/modules/datetime/__init__.py:97
 msgid "Time synchronized to NTP server"
-msgstr ""
+msgstr "Η ώρα συγχρονίστηκε με τον διακομιστή NTP"
 
 #: plinth/modules/datetime/forms.py:35
 msgid "Time Zone"
-msgstr ""
+msgstr "Ζώνη ώρας"
 
 #: plinth/modules/datetime/forms.py:36
 msgid ""
 "Set your time zone to get accurate timestamps. This will set the system-wide "
 "time zone."
 msgstr ""
+"Ρυθμίστε την χρονική ζώνη σας για να πάρετε ακριβείς χρονικές ενδείξεις.Αυτό "
+"θα καθορίσει τη ζώνη ώρας σε όλο το σύστημα."
 
 #: plinth/modules/datetime/forms.py:47
 msgid "-- no time zone set --"
-msgstr ""
+msgstr "--Δεν έχει οριστεί ζώνη ώρας--"
 
 #: plinth/modules/datetime/views.py:64
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
-msgstr ""
+msgstr "Σφάλμα κατά τη ρύθμιση ζώνης ώρας: {exception}"
 
 #: plinth/modules/datetime/views.py:67
 msgid "Time zone set"
-msgstr ""
+msgstr "H ζώνη ώρας ρυθμίστηκε"
 
 #: plinth/modules/deluge/__init__.py:39 plinth/modules/deluge/manifest.py:24
 msgid "Deluge"
-msgstr ""
+msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:43
 #: plinth/modules/transmission/__init__.py:45
 msgid "BitTorrent Web Client"
-msgstr ""
+msgstr "Πρόγραμμα-πελάτης δικτύου BitTorrent"
 
 #: plinth/modules/deluge/__init__.py:46
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr ""
+"Deluge είναι ένα πρόγραμμα-πελάτης BitTorrent που διαθέτει ένα περιβάλλον "
+"εργασίας χρήστη προσβάσιμο από τον περιηγητή ιστού."
 
 #: plinth/modules/deluge/__init__.py:47
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr ""
+"Ο προεπιλεγμένος κωδικός πρόσβασης είναι \"deluge\", αλλά θα πρέπει να "
+"συνδεθείτε και να τον αλλάξετε αμέσως μετά την ενεργοποίηση αυτής της "
+"υπηρεσίας."
 
 #: plinth/modules/deluge/__init__.py:51
 #: plinth/modules/transmission/__init__.py:57
 msgid "Download files using BitTorrent applications"
-msgstr ""
+msgstr "Κατεβάστε αρχεία χρησιμοποιώντας εφαρμογές BitTorrent"
 
 #: plinth/modules/deluge/manifest.py:25
 msgid "Bittorrent client written in Python/PyGTK"
-msgstr ""
+msgstr "Πελάτης BitTorrent γραμμένο σε Python/PyGTK"
 
 #: plinth/modules/diagnostics/__init__.py:33
 msgid "Diagnostics"
-msgstr ""
+msgstr "Διαγνωστικά"
 
 #: plinth/modules/diagnostics/__init__.py:36
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
 msgstr ""
+"Ο διαγνωστικός έλεγχος συστήματος θα εκτελέσει έναν αριθμό ελέγχων στο "
+"σύστημά σας για να επιβεβαιώσει ότι οι εφαρμογές και οι υπηρεσίες "
+"λειτουργούν όπως αναμένεται."
 
 #: plinth/modules/diagnostics/diagnostics.py:65
 msgid "Diagnostic Test"
-msgstr ""
+msgstr "Διαγνωστικός έλεγχος"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:43
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:28
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:31
 msgid "Run Diagnostics"
-msgstr ""
+msgstr "Εκτέλεση διαγνωστικών"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:46
 msgid "Diagnostics test is currently running"
-msgstr ""
+msgstr "Τα διαγνωστικά τεστ εκτελούνται αυτήν τη στιγμή"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:59
 msgid "Results"
-msgstr ""
+msgstr "Αποτελέσματα"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:67
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:27
 #, python-format
 msgid "App: %(app_id)s"
-msgstr ""
+msgstr "Εφαρμογή: %(app_id)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:25
 msgid "Diagnostic Results"
-msgstr ""
+msgstr "Αποτελέσματα διαγνωστικών τεστ"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
-msgstr ""
+msgstr "Αυτή η εφαρμογή δεν υποστηρίζει διαγνωστικά τεστ"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
-msgstr ""
+msgstr "Τεστ"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:26
 msgid "Result"
-msgstr ""
+msgstr "Αποτέλεσμα"
 
 #: plinth/modules/diaspora/__init__.py:54
 #: plinth/modules/diaspora/manifest.py:38
 msgid "diaspora*"
-msgstr ""
+msgstr "diaspora*"
 
 #: plinth/modules/diaspora/__init__.py:56
 msgid "Federated Social Network"
-msgstr ""
+msgstr "Ομοσπονδιακό Κοινωνικό Δίκτυο"
 
 #: plinth/modules/diaspora/__init__.py:63
 msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
 msgstr ""
+"η diaspora * είναι ένα αποκεντρωμένο κοινωνικό δίκτυο όπου μπορείτε να "
+"αποθηκεύετε και να ελέγχετε τα δικά σας δεδομένα."
 
 #: plinth/modules/diaspora/forms.py:30
 msgid "Enable new user registrations"
-msgstr ""
+msgstr "Ενεργοποίηση εγγραφών νέων χρηστών"
 
 #: plinth/modules/diaspora/manifest.py:26
 msgid "dandelion*"
-msgstr ""
+msgstr "dandelion*"
 
 #: plinth/modules/diaspora/manifest.py:28
 msgid ""
 "It is an unofficial webview based client for the community-run, distributed "
 "social network diaspora*"
 msgstr ""
+"Πρόκειται για έναν ανεπίσημο πελάτη που βασίζεται στο webview για την "
+"διανεμημένη κοινωνικό δίκτυο diaspora *"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
@@ -999,6 +1102,13 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
+"Το όνομα διαδικτύου για το diaspora* pod έχει οριστεί <b>%(domain_name)s</b>"
+". Οι ταυτότητες χρηστών θα είναι της μορφής "
+"<i>όνομα@diaspora.%(domain_name)</i><br/> Εάν αλλάξετε το όνομα διαδικτύου "
+"για το Freedombox, όλα τα δεδομένα των χρηστών που έχουν εγγραφεί με το "
+"προηγούμενο όνομα θα χαθούν.<br/> Mπορείτε να αποκτήσετε πρόσβαση στο "
+"diaspora* pod στο σύνδεσμο: <a href=\"https://diaspora.%(domain_name)s\""
+">diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -1011,26 +1121,26 @@ msgstr ""
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
 #: plinth/templates/app.html:77
 msgid "Update setup"
-msgstr ""
+msgstr "Ενημέρωση ρυθμίσεων"
 
 #: plinth/modules/diaspora/views.py:93 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:108
 #: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:155
 #: plinth/modules/tor/views.py:156 plinth/views.py:175
 msgid "Setting unchanged"
-msgstr ""
+msgstr "Οι ρυθμίσεις δεν άλλαξαν"
 
 #: plinth/modules/diaspora/views.py:97
 msgid "User registrations enabled"
-msgstr ""
+msgstr "Οι εγγραφές χρηστών είναι ενεργοποιημένες"
 
 #: plinth/modules/diaspora/views.py:101
 msgid "User registrations disabled"
-msgstr ""
+msgstr "Οι εγγραφές χρηστών είναι απενεργοποιημένες"
 
 #: plinth/modules/dynamicdns/__init__.py:40
 msgid "Dynamic DNS Client"
-msgstr ""
+msgstr "Πελάτης δυναμικού DNS"
 
 #: plinth/modules/dynamicdns/__init__.py:44
 #, python-brace-format
@@ -1039,6 +1149,10 @@ msgid ""
 "24h), it may be hard for others to find you on the Internet. This will "
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
+"Εάν ο πάροχος Internet αλλάζει τη διεύθυνση IP σας περιοδικά (δηλαδή κάθε "
+"24h), μπορεί να είναι δύσκολο για τους άλλους να σας βρουν στο Internet. "
+"Αυτό θα εμποδίσει άλλους να βρουν υπηρεσίες που παρέχονται από αυτό το "
+"{box_name}."
 
 #: plinth/modules/dynamicdns/__init__.py:48
 msgid ""
@@ -1050,10 +1164,17 @@ msgid ""
 "Internet asks for your DNS name, they will get a response with your current "
 "IP address."
 msgstr ""
+"Η λύση είναι να αντιστοιχίσετε ένα όνομα DNS στη διεύθυνση IP σας και να "
+"ενημερώσετε το όνομα DNS κάθε φορά που αλλάζει η IP σας από τον πάροχο "
+"Internet. Το δυναμικό DNS σάς επιτρέπει να πιέσετε την τρέχουσα δημόσια "
+"διεύθυνση IP σε ένα <a href='http://gnudip2.sourceforge.net/' "
+"target='_blank'>GnuDIP</a> διακομιστή. Στη συνέχεια, ο διακομιστής θα "
+"αντιστοιχίσει το όνομα DNS σας στη νέα IP και αν κάποιος από το Internet "
+"ζητήσει το όνομα DNS, θα λάβει απάντηση με την τρέχουσα διεύθυνση IP."
 
 #: plinth/modules/dynamicdns/__init__.py:78
 msgid "Dynamic Domain Name"
-msgstr ""
+msgstr "Δυναμικό όνομα διαδικτύου"
 
 #: plinth/modules/dynamicdns/forms.py:42
 msgid ""
@@ -1061,6 +1182,9 @@ msgid ""
 "used within the URL. For details see the update URL templates of the example "
 "providers."
 msgstr ""
+"Οι μεταβλητές &lt; &gt; χρήστης, &lt; Κωδικός &gt;, &lt; IP &gt;, &lt; όνομα "
+"διαδικτύου &gt; μπορούν να χρησιμοποιηθούν μέσα στη διεύθυνση URL. Για "
+"λεπτομέρειες, ανατρέξτε στα παραδείγματα URL των παρόχων."
 
 #: plinth/modules/dynamicdns/forms.py:46
 msgid ""
@@ -1068,31 +1192,44 @@ msgid ""
 "provider does not support the GnuDIP protocol or your provider is not listed "
 "you may use the update URL of your provider."
 msgstr ""
+"Επιλέξτε ένα πρωτόκολλο ενημέρωσης σύμφωνα με τον παροχέα σας. Εάν η "
+"υπηρεσία που χρησιμοποιείτε δεν υποστηρίζει το πρωτόκολλο GnuDIP ή η "
+"υπηρεσία παροχής σας δεν παρατίθεται, μπορείτε να χρησιμοποιήσετε τη "
+"διεύθυνση URL που δίνει ο παροχέας σας για την ανανέωση."
 
 #: plinth/modules/dynamicdns/forms.py:51
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
+"Παρακαλώ μην εισάγετε μια διεύθυνση URL εδώ (όπως \"https://example.com/\"), "
+"αλλά μόνο το όνομα του διακομιστή GnuDIP (όπως \"example.com\")."
 
 #: plinth/modules/dynamicdns/forms.py:55
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
+"Το δημόσιο όνομα διαδικτύου που θέλετε να χρησιμοποιήσετε για το {box_name}."
 
 #: plinth/modules/dynamicdns/forms.py:58
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
+"Χρησιμοποιήστε αυτήν την επιλογή εάν ο παροχέας σας χρησιμοποιεί SSL "
+"πιστοποιητικά που δεν είναι εγγεκριμένο από αρχή πιστοποιητικών."
 
 #: plinth/modules/dynamicdns/forms.py:61
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
 msgstr ""
+"Εάν αυτή η επιλογή είναι ενεργοποιημένη, το όνομα χρήστη και ο κωδικός "
+"πρόσβασής σας θα χρησιμοποιηθούν για τον βασικό έλεγχο ταυτότητας HTTP."
 
 #: plinth/modules/dynamicdns/forms.py:64
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
+"Αφήστε αυτό το πεδίο κενό αν θέλετε να διατηρήσετε τον τρέχοντα κωδικό "
+"πρόσβασής σας."
 
 #: plinth/modules/dynamicdns/forms.py:67
 #, python-brace-format
@@ -1102,71 +1239,76 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
+"Προαιρετική τιμή. Εάν το {box_name} δεν είναι συνδεδεμένο απευθείας στο "
+"Internet (δηλ. συνδεδεμένο σε δρομολογητή NAT), αυτή η διεύθυνση URL "
+"χρησιμοποιείται για τον προσδιορισμό της πραγματικής διεύθυνσης IP. Η "
+"διεύθυνση URL θα πρέπει απλά να επιστρέψει την IP από την οποία προέρχεται ο "
+"πελάτης (παράδειγμα: http://myip.datasystems24.de)."
 
 #: plinth/modules/dynamicdns/forms.py:75
 msgid "The username that was used when the account was created."
-msgstr ""
+msgstr "Το όνομα χρήστη που χρησιμοποιήθηκε κατά τη δημιουργία του λογαριασμού."
 
 #: plinth/modules/dynamicdns/forms.py:83
 msgid "Enable Dynamic DNS"
-msgstr ""
+msgstr "Ενεργοποιήστε το Δυναμικό DNS"
 
 #: plinth/modules/dynamicdns/forms.py:86
 msgid "Service Type"
-msgstr ""
+msgstr "Τύπος υπηρεσίας"
 
 #: plinth/modules/dynamicdns/forms.py:91
 msgid "GnuDIP Server Address"
-msgstr ""
+msgstr "Διεύθυνση διακομιστή GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:94
 msgid "Invalid server name"
-msgstr ""
+msgstr "Μη έγκυρο όνομα διακομιστή"
 
 #: plinth/modules/dynamicdns/forms.py:97
 msgid "Update URL"
-msgstr ""
+msgstr "Διεύθυνση URL ενημέρωσης"
 
 #: plinth/modules/dynamicdns/forms.py:102
 msgid "Accept all SSL certificates"
-msgstr ""
+msgstr "Αποδοχή όλων των πιστοποιητικών SSL"
 
 #: plinth/modules/dynamicdns/forms.py:106
 msgid "Use HTTP basic authentication"
-msgstr ""
+msgstr "Χρήση βασικού ελέγχου ταυτότητας HTTP"
 
 #: plinth/modules/dynamicdns/forms.py:116 plinth/modules/networks/forms.py:212
 msgid "Username"
-msgstr ""
+msgstr "Όνομα χρήστη"
 
 #: plinth/modules/dynamicdns/forms.py:119 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:60
 msgid "Password"
-msgstr ""
+msgstr "Κωδικός"
 
 #: plinth/modules/dynamicdns/forms.py:123 plinth/modules/networks/forms.py:215
 msgid "Show password"
-msgstr ""
+msgstr "Εμφάνιση κωδικού"
 
 #: plinth/modules/dynamicdns/forms.py:127
 msgid "URL to look up public IP"
-msgstr ""
+msgstr "Διεύθυνση URL για να αναζητήσετε δημόσια IP"
 
 #: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide an update URL or a GnuDIP server address"
-msgstr ""
+msgstr "Δώστε μια διεύθυνση URL ανανέωσης ή ένα διακομιστή GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a GnuDIP username"
-msgstr ""
+msgstr "Παρακαλώ δώστε ένα όνομα χρήστη GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:160
 msgid "Please provide a GnuDIP domain name"
-msgstr ""
+msgstr "Δώστε ένα όνομα διαδικτύου για το GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:165
 msgid "Please provide a password"
-msgstr ""
+msgstr "Δώστε έναν κωδικό πρόσβασης"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:27
 msgid ""
@@ -1176,6 +1318,11 @@ msgid ""
 "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
 "freedns.afraid.org</a>."
 msgstr ""
+"Εάν ψάχνετε για ένα δωρεάν λογαριασμό δυναμικού DNS, μπορείτε να βρείτε μια "
+"δωρεάν GnuDIP υπηρεσια στο <a href='http://gnudip.datasystems24.net' "
+"target='_blank'>gnudip.datasystems24.net</a> ή μια δωρεάν υπηρεσία URL "
+"ανανέωσης στο <a href='http://freedns.afraid.org/' target='_blank'> "
+"freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:38
 #, python-format
@@ -1184,26 +1331,34 @@ msgid ""
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
+"Εάν τo %(box_name)s είναι συνδεδεμένο πίσω από ένα δρομολογητή NAT, μην "
+"ξεχάσετε να προσθέσετε προώθηση θυρών για τυπικές θύρες, συμπεριλαμβανομένης "
+"της θύρας TCP 80 (HTTP) και της θύρας TCP 443 (HTTPS)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
 "You have disabled Javascript. Dynamic form mode is disabled and some helper "
 "functions may not work (but the main functionality should work)."
 msgstr ""
+"Έχετε απενεργοποιήσει την JavaScript. Η λειτουργία δυναμικής φόρμας είναι "
+"απενεργοποιημένη και ορισμένες βοηθητικές λειτουργίες ενδέχεται να μην "
+"λειτουργούν (βασικές λειτουρίες θα είναι εντάξει παραυτά)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:24
 msgid "NAT type"
-msgstr ""
+msgstr "Τύπος NAT"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:28
 msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
 msgstr ""
+"Ο τύπος NAT δεν εντοπίστηκε ακόμα. Εάν δεν παρέχετε μια \"διεύθυνση URL "
+"ελέγχου IP\", δεν θα ανιχνεύσουμε έναν τύπο NAT."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:34
 msgid "Direct connection to the Internet."
-msgstr ""
+msgstr "Άμεση σύνδεση στο Internet."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:36
 #, python-format
@@ -1213,15 +1368,19 @@ msgid ""
 "for this, otherwise IP changes will not be detected). In case the WAN IP "
 "changes, it may take up to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
+"Πίσω από δίκτυο ΝΑΤ. Αυτό σημαίνει ότι το δυναμικό DNS θα αναζητήσει την "
+"δημόσια διεύθυνση ΙΡ στην υπηρεσία του URL ανανέωσης (η υπηρεσία του URL "
+"ανανέωσης χρειάζεται σε αυτή την περίπτωση). Στην περίπτωση που η δημόσια IP "
+"σας αλλάξει μπορεί να χρεαστουν %(timer)s λεπτά για να ανανεωθεί το DNS."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
-msgstr ""
+msgstr "Τελευταία ενημέρωση"
 
 #: plinth/modules/dynamicdns/views.py:41 plinth/modules/help/__init__.py:59
 #: plinth/templates/help-menu.html:61 plinth/templates/help-menu.html:62
 msgid "About"
-msgstr ""
+msgstr "Σχετικά με"
 
 #: plinth/modules/dynamicdns/views.py:47
 #: plinth/modules/firewall/templates/firewall.html:25
@@ -1233,30 +1392,33 @@ msgstr ""
 #: plinth/modules/tor/templates/tor.html:37
 #: plinth/modules/tor/templates/tor.html:51 plinth/templates/app.html:42
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: plinth/modules/dynamicdns/views.py:79
 msgid "Configure Dynamic DNS"
-msgstr ""
+msgstr "Ρύθμιση παραμέτρων δυναμικού DNS"
 
 #: plinth/modules/dynamicdns/views.py:105
 msgid "Dynamic DNS Status"
-msgstr ""
+msgstr "Κατάσταση δυναμικού DNS"
 
 #: plinth/modules/ejabberd/__init__.py:50
 msgid "ejabberd"
-msgstr ""
+msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:54
 #: plinth/modules/matrixsynapse/__init__.py:51
 msgid "Chat Server"
-msgstr ""
+msgstr "Διακομιστής συνομιλίας"
 
 #: plinth/modules/ejabberd/__init__.py:57
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
 msgstr ""
+"Το XMPP είναι ένα ανοικτό και τυποποιημένο πρωτόκολλο επικοινωνίας. Εδώ "
+"μπορείτε να εκτελέσετε και να ρυθμίσετε τις παραμέτρους του διακομιστή XMPP, "
+"που ονομάζεται ejabberd."
 
 #: plinth/modules/ejabberd/__init__.py:60
 #, python-brace-format
@@ -1266,10 +1428,15 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
+"Για να επικοινωνίσετε θα πρέπει να χρησιμοποιήσετε εναν <a href=\"{jsxc_url}"
+"\">web client</a> or any other <a href='https://xmpp.org/software/clients' "
+"target='_blank'>πελάτη XMPP</a>. Όταν ενεργοποιηθεί το ejabberd μπορεί να "
+"χρησιμοποιηθεί από κάθε χρήστη με <a href=\"{users_url}\">πιστοποιητικά για "
+"το {box_name}</a>."
 
 #: plinth/modules/ejabberd/forms.py:32
 msgid "Enable Message Archive Management"
-msgstr ""
+msgstr "Ενεργοποίηση διαχείρισης αρχειοθέτησης μηνυμάτων"
 
 #: plinth/modules/ejabberd/forms.py:34
 #, python-brace-format
@@ -1279,28 +1446,35 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Εάν ενεργοποιηθεί, το {box_name} θα αποθηκεύσει το ιστορικό μηνυμάτων "
+"συνομιλίας. Αυτό επιτρέπει το συγχρονισμό των συνομιλιών μεταξύ πολλών "
+"πελατών και την ανάγνωση του ιστορικού ενός δωματίου συνομιλίας πολλών "
+"χρηστών. Εξαρτάται από τις ρυθμίσεις του πελάτη αν τα μηνύματα αποθηκεύονται "
+"ως απλό κείμενο ή κρυπτογραφούνται."
 
 #: plinth/modules/ejabberd/manifest.py:26
 msgid "Conversations"
-msgstr ""
+msgstr "Conversations"
 
 #: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
-msgstr ""
+msgstr "Xabber"
 
 #: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
 msgstr ""
+"Ανοιχτού πηγαίου κώδικα πελάτης Jabber(XMPP) με υποστήριξη πολλαπλών "
+"λογαριασμών και απλό interface. "
 
 #: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
-msgstr ""
+msgstr "Yaxim"
 
 #: plinth/modules/ejabberd/manifest.py:71
 msgid "ChatSecure"
-msgstr ""
+msgstr "ChatSecure"
 
 #: plinth/modules/ejabberd/manifest.py:73
 msgid ""
@@ -1309,14 +1483,19 @@ msgid ""
 "new accounts on public XMPP servers (including via Tor), or even connect to "
 "your own server for extra security."
 msgstr ""
+"Το ChatSecure είναι μια δωρεάν και ανοικτή εφαρμογή ανταλλαγής μηνυμάτων που "
+"διαθέτει κρυπτογράφηση ΟΤR πάνω από το πρωτόκολλο XMPP. Μπορείτε να "
+"συνδεθείτε σε έναν υπάρχοντα λογαριασμό Google, να δημιουργήσετε νέους "
+"λογαριασμούς σε δημόσιους διακομιστές XMPP (ακόμη και μέσο Tor) ή ακόμη και "
+"να συνδεθείτε με τον δικό σας διακομιστή για επιπλέον ασφάλεια."
 
 #: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
-msgstr ""
+msgstr "Dino"
 
 #: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
-msgstr ""
+msgstr "Gajim"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -1325,6 +1504,10 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
+"To όνομα διαδικτύου για το διακομιστή XMPP έχει ρυθμιστεί ως το "
+"<b>%(domainname)s</b>. Ταυτότητες χρηστών θα είναι όπως: "
+"<i>username@%(domainname)s</i>. Μπορείτε να ρυθμίσετε το όνομα της υπηρεσίας "
+"στο <a href=\"%(index_url)s\">Ρυθμίστε</a> page."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:50
 #: plinth/modules/i2p/templates/i2p.html:26
@@ -1333,19 +1516,19 @@ msgstr ""
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
 #: plinth/templates/app.html:70
 msgid "Configuration"
-msgstr ""
+msgstr "Ρύθμισης παραμέτρων"
 
 #: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management enabled"
-msgstr ""
+msgstr "Η Διαχείριση αρχειοθέτησης μηνυμάτων ενεργοποιήθηκε"
 
 #: plinth/modules/ejabberd/views.py:82
 msgid "Message Archive Management disabled"
-msgstr ""
+msgstr "Η Διαχείριση αρχειοθέτησης μηνυμάτων απενεργοποιήθηκε"
 
 #: plinth/modules/firewall/__init__.py:36
 msgid "Firewall"
-msgstr ""
+msgstr "Firewall (τείχος προστασίας)"
 
 #: plinth/modules/firewall/__init__.py:40
 #, python-brace-format
@@ -1354,21 +1537,25 @@ msgid ""
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
+"Το τείχος προστασίας είναι ένα σύστημα ασφαλείας που ελέγχει την εισερχόμενη "
+"και εξερχόμενη κυκλοφορία δικτύου στο {box_name}. Η διατήρηση ενός τείχους "
+"προστασίας ενεργοποιημένο και η σωστή ρύθμιση παραμέτρων μειώνει τον κίνδυνο "
+"απειλών προερχόμενων από το Internet."
 
 #: plinth/modules/firewall/components.py:130
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr ""
+msgstr "Θύρα {name} ({details}) διαθέσιμη για εσωτερικά δίκτυα"
 
 #: plinth/modules/firewall/components.py:138
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr ""
+msgstr "Η θύρα {name} ({details}) είναι διαθέσιμη για εξωτερικά δίκτυα"
 
 #: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
-msgstr ""
+msgstr "Η θύρα {name} ({details}) δεν είναι διαθέσιμη για εξωτερικά δίκτυα"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1378,41 +1565,47 @@ msgid ""
 "you may run it using the command 'service firewalld start' or in case of a "
 "system with systemd 'systemctl start firewalld'."
 msgstr ""
+"To πρόγραμμα τείχους προστασίας δεν εκτελείται. Παρακαλείστε να το τρέξετε. "
+"Το τείχος προστασίας εμφανίζεται ενεργοποιημένο από προεπιλογή στο "
+"%(box_name)s. Σε οποιοδήποτε σύστημα που βασίζεται στο Debian (όπως το "
+"%(box_name)s) μπορείτε να το εκτελέσετε χρησιμοποιώντας την εντολή ' service "
+"firewalld start ' ή σε περίπτωση ενός συστήματος με systemd ' systemctl "
+"start firewalld '."
 
 #: plinth/modules/firewall/templates/firewall.html:43
 msgid "Show Ports"
-msgstr ""
+msgstr "Εμφάνιση θυρών"
 
 #: plinth/modules/firewall/templates/firewall.html:44
 msgid "Service/Port"
-msgstr ""
+msgstr "Υπηρεσία/θύρα"
 
 #: plinth/modules/firewall/templates/firewall.html:63
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:89
 msgid "Enabled"
-msgstr ""
+msgstr "Ενεργοποιήθηκε"
 
 #: plinth/modules/firewall/templates/firewall.html:66
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 #: plinth/modules/networks/forms.py:63 plinth/templates/cards.html:49
 msgid "Disabled"
-msgstr ""
+msgstr "Απενεργοποιήθηκε"
 
 #: plinth/modules/firewall/templates/firewall.html:78
 msgid "Permitted"
-msgstr ""
+msgstr "Επιτρέπεται"
 
 #: plinth/modules/firewall/templates/firewall.html:81
 msgid "Permitted (internal only)"
-msgstr ""
+msgstr "Επιτρέπεται (μόνο εσωτερικά)"
 
 #: plinth/modules/firewall/templates/firewall.html:84
 msgid "Permitted (external only)"
-msgstr ""
+msgstr "Επιτρέπεται (εξωτερικά μόνο)"
 
 #: plinth/modules/firewall/templates/firewall.html:87
 msgid "Blocked"
-msgstr ""
+msgstr "Αποκλείστηκε"
 
 #: plinth/modules/firewall/templates/firewall.html:99
 msgid ""
@@ -1420,6 +1613,9 @@ msgid ""
 "also permitted in the firewall and when you disable a service it is also "
 "disabled in the firewall."
 msgstr ""
+"Η λειτουργία του τείχους προστασίας είναι αυτόματη. Όταν ενεργοποιείτε μια "
+"υπηρεσία, επιτρέπεται επίσης στο τείχος προστασίας και όταν απενεργοποιείτε "
+"μια υπηρεσία είναι επίσης απενεργοποιημένη στο τείχος προστασίας."
 
 #: plinth/modules/first_boot/forms.py:29
 #, python-brace-format
@@ -1428,23 +1624,26 @@ msgid ""
 "also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
+"Εισάγετε το μυστικό που δημιουργήθηκε κατά την εγκατάσταση του FreedomBox. "
+"Μπορείτε να το βρείτε αν τρέξετε την εντολή \"sudo cat /var/lib/plinth/"
+"firstboot-wizard-secret\" στο {box_name}"
 
 #: plinth/modules/first_boot/forms.py:34
 msgid "Firstboot Wizard Secret"
-msgstr ""
+msgstr "Αρχικό μυστικό οδηγού"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
-msgstr ""
+msgstr "Η εγκατάσταση ολοκληρώθηκε!"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:29
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
+msgstr "Χωρίς εφαρμογές, το %(box_name)s σας δεν μπορεί να κάνει πολλά."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:36
 msgid "Install Apps"
-msgstr ""
+msgstr "Εγκαταστήσετε Εφαρμογές"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:42
 #, python-format
@@ -1452,22 +1651,24 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
+"Ίσως θελήσετε να ελέγξετε την <a href = \"%(networks_url)s\">εγκατάσταση του "
+"δικτύου </a> και να την τροποποιήσετε, εάν είναι απαραίτητο."
 
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
-msgstr ""
+msgstr "Έναρξη εγκατάστασης"
 
 #: plinth/modules/first_boot/views.py:64
 msgid "Setup Complete"
-msgstr ""
+msgstr "Η εγκατάσταση ολοκληρώθηκε"
 
 #: plinth/modules/gitweb/__init__.py:44 plinth/modules/gitweb/manifest.py:28
 msgid "Gitweb"
-msgstr ""
+msgstr "Gitweb"
 
 #: plinth/modules/gitweb/__init__.py:48
 msgid "Simple Git Hosting"
-msgstr ""
+msgstr "Απλό Hosting Git"
 
 #: plinth/modules/gitweb/__init__.py:51
 msgid ""
@@ -1479,179 +1680,195 @@ msgid ""
 "available graphical clients. And you can share your code with people around "
 "the world."
 msgstr ""
+"Το Git είναι ένα διανεμημένο σύστημα ελέγχου για την παρακολούθηση των "
+"αλλαγών στον πηγαίο κώδικα κατά την δημιουργία λογισμικού. Το Gitweb παρέχει "
+"ένα web interface για τα Git repositories. Μπορείτε να δείτε την ιστορία και "
+"το περιεχόμενο του πηγαίου κώδικα, να χρησιμοποιήστε την αναζήτηση για να "
+"βρείτε κώδικα κλπ. Μπορείτε επίσης να αντιγράψεται αποθετήρια και να "
+"ανεβάσετε αλλαγές στον κώδικα με την εντολή git μέσω της κονσόλας ή με "
+"πολλαπλές διαθέσιμες γραφικές εφαρμογές-πελάτες. Και μπορείτε να μοιραστείτε "
+"τον κώδικά σας με τους ανθρώπους σε όλο τον κόσμο."
 
 #: plinth/modules/gitweb/__init__.py:58
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
+"Για να μάθετε περισσότερα για το git <a href=\"https://git-scm.com/docs/"
+"gittutorial\">μάθημα git</a>."
 
 #: plinth/modules/gitweb/__init__.py:62
 msgid "Read-write access to Git repositories"
-msgstr ""
+msgstr "Πρόσβαση ανάγνωσης και εγγραφής σε αποθετήρια Git"
 
 #: plinth/modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
-msgstr ""
+msgstr "Μη έγκυρη διεύθυνση URL για το αποθετήριο."
 
 #: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
-msgstr ""
+msgstr "Μη έγκυρο όνομα αποθετηρίου."
 
 #: plinth/modules/gitweb/forms.py:77
 msgid "Name of a new repository or URL to import an existing repository."
 msgstr ""
+"Όνομα νέου αποθετηρίου ή διεύθυνσης URL για την εισαγωγή υπάρχοντος "
+"αποθετηρίου."
 
 #: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
-msgstr ""
+msgstr "Περιγραφή του αποθετηρίου"
 
 #: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
 msgid "Optional, for displaying on Gitweb."
-msgstr ""
+msgstr "Προαιρετικά, για την εμφάνιση στην Gitweb."
 
 #: plinth/modules/gitweb/forms.py:86
 msgid "Repository's owner name"
-msgstr ""
+msgstr "Όνομα κατόχου αποθετηρίου"
 
 #: plinth/modules/gitweb/forms.py:91
 msgid "Private repository"
-msgstr ""
+msgstr "Ιδιωτικό αποθετήριο"
 
 #: plinth/modules/gitweb/forms.py:92
 msgid "Allow only authorized users to access this repository."
 msgstr ""
+"Να επιτρέπεται μόνο σε εξουσιοδοτημένους χρήστες η πρόσβαση σε αυτό το "
+"αποθετήριο."
 
 #: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:145
 msgid "A repository with this name already exists."
-msgstr ""
+msgstr "Υπάρχει ήδη ένα αποθετήριο με αυτό το όνομα."
 
 #: plinth/modules/gitweb/forms.py:126
 msgid "Name of the repository"
-msgstr ""
+msgstr "Όνομα του αποθετηρίου"
 
 #: plinth/modules/gitweb/forms.py:130
 msgid "An alpha-numeric string that uniquely identifies a repository."
 msgstr ""
+"Μια αλφαριθμητική συμβολοσειρά που προσδιορίζει με μοναδικό τρόπο ένα "
+"αποθετήριο."
 
 #: plinth/modules/gitweb/manifest.py:36
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:46
 msgid "Manage Repositories"
-msgstr ""
+msgstr "Διαχείριση αποθετηρίων"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:50
 #: plinth/modules/gitweb/templates/gitweb_configure.html:52
 msgid "Create repository"
-msgstr ""
+msgstr "Δημιουργία αποθετηρίου"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:59
 msgid "No repositories available."
-msgstr ""
+msgstr "Δεν υπάρχουν διαθέσιμα αποθετήρια."
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:67
 #, python-format
 msgid "Delete repository %(repo.name)s"
-msgstr ""
+msgstr "Διαγραφή του αποθετηρίου %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:83
 msgid "Cloning..."
-msgstr ""
+msgstr "Αντιγραφή..."
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
 msgid "Go to repository %(repo.name)s"
-msgstr ""
+msgstr "Μετάβαση στο αποθετήριο %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:27
 #, python-format
 msgid "Delete Git Repository <em>%(name)s</em>"
-msgstr ""
+msgstr "Διαγραφή αποθετηρίου Git <em>%(name)s</em>"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:33
 msgid "Delete this repository permanently?"
-msgstr ""
+msgstr "Να διαγραφεί μόνιμα αυτό το αποθετήριο;"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:42
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
 #, python-format
 msgid "Delete %(name)s"
-msgstr ""
+msgstr "Διαγραφή %(name)s"
 
 #: plinth/modules/gitweb/views.py:64
 msgid "Repository created."
-msgstr ""
+msgstr "Το αποθετήριο δημιουργήθηκε."
 
 #: plinth/modules/gitweb/views.py:86
 msgid "An error occurred while creating the repository."
-msgstr ""
+msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία του αποθετηρίου."
 
 #: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
-msgstr ""
+msgstr "To αποθετήριο τροποποιήθηκε."
 
 #: plinth/modules/gitweb/views.py:104
 msgid "Edit repository"
-msgstr ""
+msgstr "Τροποποίηση αποθετηρίου"
 
 #: plinth/modules/gitweb/views.py:132 plinth/modules/searx/views.py:62
 #: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:178
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Παρουσιάστηκε σφάλμα κατά τη ρύθμιση παραμέτρων."
 
 #: plinth/modules/gitweb/views.py:153
 #, python-brace-format
 msgid "{name} deleted."
-msgstr ""
+msgstr "το {name} διαγράφηκε."
 
 #: plinth/modules/gitweb/views.py:157
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η διαγραφή του {name}: {error}"
 
 #: plinth/modules/help/__init__.py:40
 msgid "Documentation"
-msgstr ""
+msgstr "Boηθητικά έγγραφα"
 
 #: plinth/modules/help/__init__.py:43 plinth/modules/networks/forms.py:63
 #: plinth/modules/networks/forms.py:94 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
-msgstr ""
+msgstr "Εγχειρίδιο"
 
 #: plinth/modules/help/__init__.py:47 plinth/modules/help/help.py:58
 #: plinth/modules/help/templates/help_support.html:24
 #: plinth/templates/help-menu.html:42 plinth/templates/help-menu.html:43
 msgid "Get Support"
-msgstr ""
+msgstr "Λάβετε Υποστήριξη"
 
 #: plinth/modules/help/__init__.py:51 plinth/modules/help/help.py:52
 #: plinth/modules/help/templates/help_feedback.html:24
 #: plinth/templates/help-menu.html:48 plinth/templates/help-menu.html:49
 msgid "Submit Feedback"
-msgstr ""
+msgstr "Υποβάλετε σχόλια"
 
 #: plinth/modules/help/__init__.py:55 plinth/modules/help/help.py:46
 #: plinth/modules/help/templates/help_contribute.html:24
 #: plinth/templates/help-menu.html:54 plinth/templates/help-menu.html:55
 msgid "Contribute"
-msgstr ""
+msgstr "Συνεισφέρετε"
 
 #: plinth/modules/help/help.py:40
 msgid "Documentation and FAQ"
-msgstr ""
+msgstr "Βοηθητικά έγγραφα και συχνές ερωτήσεις"
 
 #: plinth/modules/help/help.py:66
 #, python-brace-format
 msgid "About {box_name}"
-msgstr ""
+msgstr "Σχετικά με το {box_name}"
 
 #: plinth/modules/help/help.py:101
 #, python-brace-format
 msgid "{box_name} Manual"
-msgstr ""
+msgstr "Εγχειρίδιο για το {box_name}"
 
 #: plinth/modules/help/templates/help_about.html:32
 #, python-format
@@ -1664,6 +1881,14 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
+"To %(box_name)s είναι ένα έργο της κοινότητας για την ανάπτυξη, το σχεδιασμό "
+"και την προώθηση των προσωπικών διακομιστών που τρέχουν ελεύθερο λογισμικό "
+"για ιδιωτική, προσωπική επικοινωνία. Είναι μια δικτυακή συσκευή σχεδιαστεί "
+"για να επιτρέπει τη διασύνδεση με το υπόλοιπο του Διαδικτύου, υπό όρους "
+"προστασία της ιδιωτικής ζωής και των δεδομένων ασφαλείας. Φιλοξενεί "
+"εφαρμογές όπως το blog, wiki, ιστοσελίδα, κοινωνικό δίκτυο, e-mail, web "
+"proxy και ένα Tor relay, σε μια συσκευή που μπορεί να αντικαταστήσει το Wi-"
+"Fi router, έτσι ώστε τα δεδομένα σας να μείνουν μαζί σας."
 
 #: plinth/modules/help/templates/help_about.html:45
 msgid ""
@@ -1674,6 +1899,14 @@ msgid ""
 "giving back power to the users over their networks and machines, we are "
 "returning the Internet to its intended peer-to-peer architecture."
 msgstr ""
+"Ζούμε σε έναν κόσμο όπου η χρήση του δικτύου μας διαμεσολαβείται από "
+"εκείνους που συχνά δεν έχουν το καλύτερο συμφέρον μας κατά νου. Με την "
+"δημιουργία λογισμικού που δεν βασίζεται σε κεντρικους διακομιστές, μπορούμε "
+"να ανακτήσουμε τον έλεγχο και την ιδιωτικότητα. Διατηρώντας τα δεδομένα μας "
+"στα σπίτια μας, κερδίζουμε τη νομική προστασία για αυτά. Δίνοντας τη δύναμη "
+"στους χρήστες μέσω των δικτύων και των μηχανημάτων τους να το "
+"πραγματοποιήσουν, επιστρέφουμε το Internet στην αρχιτεκτονική του ομότιμου "
+"σχεδιασμού."
 
 #: plinth/modules/help/templates/help_about.html:58
 #, python-format
@@ -1682,6 +1915,9 @@ msgid ""
 "services; %(box_name)s aims to bring them all together in a convenient "
 "package."
 msgstr ""
+"Υπάρχουν μια σειρά από σχέδια για να πραγματοποιήσoυμε ένα μέλλον με "
+"κατανεμημένες υπηρεσιες και όχι κεντρικές. Το %(box_name)s έχει ως στόχο να "
+"τα φέρει όλα μαζί σε ένα βολικό πακέτο."
 
 #: plinth/modules/help/templates/help_about.html:66
 #, python-format
@@ -1689,29 +1925,33 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
+"Για περισσότερες πληροφορίες σχετικά με το έργο %(box_name)s, ανατρέξτε στο <"
+"a href = \"https://wiki.debian.org/FreedomBox\" >%(box_name)s wiki </a>."
 
 #: plinth/modules/help/templates/help_about.html:75
 msgid "Learn more &raquo;"
-msgstr ""
+msgstr "Μάθετε περισσότερα &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:78
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr ""
+"Τρέχετε λειτουργικό %(os_release)s και έκδοση %(version)s για το "
+"%(box_name)s."
 
 #: plinth/modules/help/templates/help_about.html:83
 #, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr ""
+msgstr "Υπάρχει μια νέα έκδοση %(box_name)s διαθέσιμη."
 
 #: plinth/modules/help/templates/help_about.html:87
 #, python-format
 msgid "%(box_name)s is up to date."
-msgstr ""
+msgstr "To %(box_name)s είναι ενημερωμένο."
 
 #: plinth/modules/help/templates/help_about.html:94
 msgid "Security Notice"
-msgstr ""
+msgstr "Ειδοποίηση ασφαλείας"
 
 #: plinth/modules/help/templates/help_about.html:96
 msgid ""
@@ -1720,16 +1960,20 @@ msgid ""
 "maintained on a best-effort basis by contributors in Debian and FreedomBox "
 "community."
 msgstr ""
+"Χρησιμοποιείτε πακέτα από τo αποθετήριο του Debian Backports. Παρακαλείστε "
+"να σημειώσετε ότι αυτά τα πακέτα δεν διαθέτουν υποστήριξη ασφαλείας από το "
+"Debian. Ωστόσο, διατηρούνται με βάση την καλύτερη δυνατή προσπάθεια από τους "
+"συνεισφέροντες στην Κοινότητα του Debian και τoυ Freedombox."
 
 #: plinth/modules/help/templates/help_base.html:36
 #: plinth/modules/help/templates/help_index.html:76
 #, python-format
 msgid "%(box_name)s Setup"
-msgstr ""
+msgstr "Ρύθμιση του %(box_name)s"
 
 #: plinth/modules/help/templates/help_contribute.html:27
 msgid "The FreedomBox project welcomes contributions of all kinds."
-msgstr ""
+msgstr "Το Freedombox πρότζεκτ καλωσορίζει κάθε είδους συνεισφορές."
 
 #: plinth/modules/help/templates/help_contribute.html:33
 msgid ""
@@ -1739,6 +1983,12 @@ msgid ""
 "into your language, hosting hackathons or install fests, and by spreading "
 "the word."
 msgstr ""
+"Μπορείτε να συμβάλλετε γράφοντας κώδικα, δοκιμάζοντας και αναφέροντας "
+"σφάλματα, συζητώντας για νέες υποθέσεις χρήσης και εφαρμογές, σχεδιάζοντας "
+"λογότυπα και έργα τέχνης, παρέχοντας υποστήριξη σε άλλους χρήστες, "
+"μεταφράζοντας το Freedombox και τις εφαρμογές της στη γλώσσα σας, "
+"φιλοξενώντας διαγωνισμούς προγραμματισμού ή και διαδίδοντας ότι το "
+"χρησιμοποιείται."
 
 #: plinth/modules/help/templates/help_contribute.html:43
 msgid ""
@@ -1751,18 +2001,26 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
+"Μπορείτε επίσης να βοηθήσετε οικονομικά το έργο με <a href=\""
+"https://freedomboxfoundation.org/donate/\"> δωρεά </a> στο μη κερδοσκοπικό "
+"ίδρυμα FreedomBox. Το Ίδρυμα FreedomBox είναι ένας μη κερδοσκοπικός "
+"οργανισμός με καθεστώς 501 (c) (3) με έδρα τη Νέα Υόρκη που υποστηρίζει το "
+"FreedomBox και ιδρύθηκε το 2011. Παρέχει τεχνική υποδομή και νομικές "
+"υπηρεσίες για το πρότζεκτ, επιδιώκει εταιρικές σχέσεις και υποστηρίζει το "
+"FreedomBox σε ολόκληρο τον κόσμο. Το Ίδρυμα FreedomBox δεν θα υπήρχε χωρίς "
+"τους υποστηρικτές του."
 
 #: plinth/modules/help/templates/help_contribute.html:57
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/templates/header.html:59
 msgid "Learn more..."
-msgstr ""
+msgstr "Μάθε περισσότερα..."
 
 #: plinth/modules/help/templates/help_feedback.html:27
 #, python-format
 msgid "Your feedback will help us improve %(box_name)s!"
-msgstr ""
+msgstr "Τα σχόλιά σας θα μας βοηθήσουν να βελτιώσουμε %(box_name)s!"
 
 #: plinth/modules/help/templates/help_feedback.html:33
 msgid ""
@@ -1770,6 +2028,9 @@ msgid ""
 "improve them on our <a href=\"https://discuss.freedombox.org\" target="
 "\"_blank\"> discussion forum</a>."
 msgstr ""
+"Ενημερώστε μας για τα χαρακτηριστικά που λείπουν, τις αγαπημένες σας "
+"εφαρμογές και το πώς μπορούμε να το βελτιώσουμε στο <a href=\""
+"https://discuss.freedombox.org\" target=\"_blank\"> φόρουμ συζητήσεων</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:41
 msgid ""
@@ -1778,15 +2039,20 @@ msgid ""
 "a> to let our developers know. To report, first check if the issue is "
 "already reported and then use the \"New issue\" button."
 msgstr ""
+"Αν βρείτε οποιαδήποτε σφάλματα ή άλλα θέματα, παρακαλούμε να χρησιμοποιήσετε "
+"το <a href=\"https://salsa.debian.org/freedombox-team/plinth/issues\" target="
+"\"_blank\">issue tracker</a> για να ενημερώσετε τους προγραμματιστές μας. "
+"Για να αναφέρετε ένα πρόβλημα, πρώτα ελέγξτε εάν το ζήτημα έχει ήδη "
+"αναφερθεί και στη συνέχεια, χρησιμοποιήστε το κουμπί \"Νέο θέμα\"."
 
 #: plinth/modules/help/templates/help_feedback.html:51
 msgid "Thank you!"
-msgstr ""
+msgstr "Ευχαριστούμε!"
 
 #: plinth/modules/help/templates/help_index.html:27
 #: plinth/templates/help-menu.html:23 plinth/templates/help-menu.html:28
 msgid "Help"
-msgstr ""
+msgstr "Βοήθεια"
 
 #: plinth/modules/help/templates/help_index.html:31
 #, python-format
@@ -1794,6 +2060,8 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
+"To <a href=\"%(manual_url)s\">%(box_name)s Εγχειρίδιο</a> είναι το καλύτερο "
+"μέρος για να ξεκινήσετε να βρείτε πληροφορίες σχετικά με το %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:38
 #, python-format
@@ -1801,6 +2069,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> %(box_name)"
+"s wiki </a> περιέχει περισσότερες πληροφορίες."
 
 #: plinth/modules/help/templates/help_index.html:45
 #, python-format
@@ -1810,6 +2080,11 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
+"Για να αναζητήσετε βοήθεια από την %(box_name)s κοινότητα, μπορεί να "
+"αποστείλετε ερωτήματα στις <a href=\"https://lists.alioth.debian.org/mailman/"
+"listinfo/freedombox-discuss\"> λίστες ηλεκτρονικού ταχυδρομείου</a>. Η λίστα "
+"έχει αρχειοθετημένες τις παλαιότερες συζητήσεις που περιέχουν πληροφορίες "
+"σχετικά με προβλήματα που αντιμετώπισαν άλλοι χρήστες και τις πιθανές λύσεις."
 
 #: plinth/modules/help/templates/help_index.html:55
 #, python-format
@@ -1819,10 +2094,14 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
+"Πολλοί %(box_name)s συνεισφέροντες και χρήστες είναι, επίσης, διαθέσιμοι στο "
+"irc.oftc.net στο IRC δίκτυο. Γίνετε μέλος και αναζητήσετε βοήθεια στο <a "
+"href=\"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\">"
+" #freedombox</a> κανάλι χρησιμοποιώντας το IRC πελάτη ιστού."
 
 #: plinth/modules/help/templates/help_manual.html:40
 msgid "Download as PDF"
-msgstr ""
+msgstr "Λήψη ως PDF"
 
 #: plinth/modules/help/templates/help_support.html:27
 #, python-format
@@ -1831,12 +2110,18 @@ msgid ""
 "using %(box_name)s, you can ask for help from our community of users and "
 "contributors."
 msgstr ""
+"Αν χρειάζεστε βοήθεια για να κάνετε κάτι ή αν αντιμετωπίζετε προβλήματα με "
+"τη χρήση του %(box_name)s, μπορείτε να ζητήσετε βοήθεια από την κοινότητά "
+"μας των χρηστών και των συνεισφερόντων."
 
 #: plinth/modules/help/templates/help_support.html:35
 msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
+"Αναζητήστε προηγούμενες συζητήσεις ή δημοσιεύστε ένα νέο ερώτημα στο <a href "
+"= \"https://discuss.freedombox.org\" target = \"_blank\"> φόρουμ συζήτησης "
+"</a>."
 
 #: plinth/modules/help/templates/help_support.html:42
 msgid ""
@@ -1845,10 +2130,14 @@ msgid ""
 "Or send an email to our <a href=\"mailto:freedombox-discuss@alioth-lists."
 "debian.net\">mailing list</a>."
 msgstr ""
+"Μπορείτε επίσης να συνομιλήσετε μαζί μας στα κανάλια μας (γεφυρωμένα): <ul> "
+"<li> #freedombox στο irc.oftc.net </li> <li> #freedombox: matrix.org </li> "
+"</ul> ή Στείλτε ένα email στο <a href = \"mailto: freedombox-discuss@alioth. "
+"debian-lists.debian. net\">λίστα ηλεκτρονικού ταχυδρομείου </a>."
 
 #: plinth/modules/help/templates/statuslog.html:25
 msgid "Status Log"
-msgstr ""
+msgstr "Αρχείο καταγραφής κατάστασης"
 
 #: plinth/modules/help/templates/statuslog.html:28
 #, python-format
@@ -1858,20 +2147,27 @@ msgid ""
 "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and attach "
 "this status log to the bug report."
 msgstr ""
+"Αυτές είναι οι τελευταίες γραμμές %(num_lines)s του αρχείου καταγραφής "
+"κατάστασης για αυτό το Web interface. Εάν θέλετε να αναφέρετε ένα σφάλμα, "
+"χρησιμοποιήστε το <a href = \"https://salsa.debian.org/freedombox-team/"
+"plinth/issues\">bug tracker </a> και επισυνάψτε αυτό το αρχείο καταγραφής "
+"κατάστασης στην αναφορά σφάλματος."
 
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
 "Please remove any passwords or other personal information from the log "
 "before submitting the bug report."
 msgstr ""
+"Παρακαλώ αφαιρέστε κωδικούς πρόσβασης ή άλλα προσωπικά στοιχεία από το "
+"αρχείο καταγραφής πριν από την υποβολή της αναφοράς σφάλματος."
 
 #: plinth/modules/i2p/__init__.py:42 plinth/modules/i2p/manifest.py:31
 msgid "I2P"
-msgstr ""
+msgstr "I2P"
 
 #: plinth/modules/i2p/__init__.py:46 plinth/modules/tor/__init__.py:49
 msgid "Anonymity Network"
-msgstr ""
+msgstr "Δίκτυο ανωνυμίας"
 
 #: plinth/modules/i2p/__init__.py:49
 msgid ""
@@ -1880,43 +2176,51 @@ msgid ""
 "anonymity by sending encrypted traffic through a volunteer-run network "
 "distributed around the world."
 msgstr ""
+"Το Αόρατο Internet Project είναι ένα ανώνυμο δίκτυακό στρώμα που προορίζεται "
+"για την προστασία της επικοινωνίας, από την λογοκρισία και την "
+"παρακολούθηση. Το i2p παρέχει ανωνυμία κατά την αποστολή κρυπτογραφημένης "
+"κυκλοφορίας μέσα από ένα εθελοντικό δίκτυο διανεμημένο σε όλο τον κόσμο."
 
 #: plinth/modules/i2p/__init__.py:53
 msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p.net"
 "\" target=\"_blank\">homepage</a>."
 msgstr ""
+"Βρείτε περισσότερες πληροφορίες σχετικά με το έργο τους <a href = \""
+"https:///geti2p.net\" target = \"_blank\">Ι2Ρ</a>."
 
 #: plinth/modules/i2p/__init__.py:55
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
 msgstr ""
+"Η πρώτη επίσκεψη στο παρεχόμενο δικτυακό περιβάλλον θα ξεκινήσει τη "
+"διαδικασία ρύθμισης."
 
 #: plinth/modules/i2p/__init__.py:61
 msgid "Manage I2P application"
-msgstr ""
+msgstr "Διαχείριση εφαρμογής I2P"
 
 #: plinth/modules/i2p/__init__.py:103
 msgid "I2P Proxy"
-msgstr ""
+msgstr "Διακομιστής μεσολάβησης I2P"
 
 #: plinth/modules/i2p/templates/i2p_service.html:31
 #: plinth/templates/clients.html:43
 msgid "Launch"
-msgstr ""
+msgstr "Έναρξη"
 
 #: plinth/modules/i2p/views.py:34
 msgid "Proxies"
-msgstr ""
+msgstr "Διακομιστές μεσολάβησης"
 
 #: plinth/modules/i2p/views.py:37
 msgid "Anonymous torrents"
-msgstr ""
+msgstr "Ανώνυμα torrents"
 
 #: plinth/modules/i2p/views.py:88
 msgid "I2P Proxies and Tunnels"
-msgstr ""
+msgstr "I2Ρ διακομιστές μεσολάβησης και σύραγγες"
 
 #: plinth/modules/i2p/views.py:91
 msgid ""
@@ -1924,6 +2228,9 @@ msgid ""
 "For this, your browser, preferably a Tor Browser, needs to be configured for "
 "a proxy."
 msgstr ""
+"I2P σας επιτρέπει να περιηγηθείτε στο διαδίκτυο και κρυφές υπηρεσίες "
+"(eepsites) ανώνυμα. Για αυτό, το πρόγραμμα περιήγησής σας, κατά προτίμηση "
+"ένα Tor browser, πρέπει να ρυθμιστεί για ένα διακομιστή μεσολάβησης."
 
 #: plinth/modules/i2p/views.py:94
 msgid ""
