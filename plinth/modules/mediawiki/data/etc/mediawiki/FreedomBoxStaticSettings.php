@@ -35,3 +35,6 @@ $wgSVGConverter = 'ImageMagick';
 
 # Fix issue with session cache preventing logins, #1736
 $wgSessionCacheType = CACHE_DB;
+
+# Use the mobile-friendly skin Timeless by default
+$wgDefaultSkin = "timeless";
