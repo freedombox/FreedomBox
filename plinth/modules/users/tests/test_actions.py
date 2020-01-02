@@ -101,6 +101,8 @@ def fixture_disable_restricted_access(needs_root, load_cfg):
         security.set_restricted_access(False)
         yield
         security.set_restricted_access(True)
+    else:
+        yield
 
 
 @pytest.fixture(name='auto_cleanup_users_groups', autouse=True)
