@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-30 20:43-0500\n"
-"PO-Revision-Date: 2019-12-26 13:21+0000\n"
+"PO-Revision-Date: 2020-01-03 07:55+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -28,10 +28,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is running."
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "A szolgáltatás fut (<em>%(service_name)s</em>)."
+msgstr "A szolgáltatás fut: {service_name}"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -1020,17 +1019,15 @@ msgstr "Eredmények"
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:27
 #, python-format
 msgid "App: %(app_id)s"
-msgstr ""
+msgstr "Alkalmazás: %(app_id)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:25
 msgid "Diagnostic Results"
 msgstr "Az ellenőrzés eredménye"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
-#, fuzzy
-#| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
-msgstr "A modul nem támogatja a hibaellenőrzést"
+msgstr "Ez az alkalmazás nem támogatja a hibaellenőrzést"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
@@ -1521,25 +1518,19 @@ msgstr ""
 "tűzfal csökkenti az internetről leselkedő biztonsági fenyegetések kockázatát."
 
 #: plinth/modules/firewall/components.py:130
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr ""
-"<em>%(service_name)s</em> néven futó szolgáltatás csak belső hálózaton "
-"elérhető."
+msgstr "{name} port ({details}) elérhető a belső hálózaton"
 
 #: plinth/modules/firewall/components.py:138
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr ""
-"<em>%(service_name)s</em> néven futó szolgáltatás csak belső hálózaton "
-"elérhető."
+msgstr "{name} port ({details}) elérhető a külső hálózaton"
 
 #: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
-msgstr ""
+msgstr "{name} port ({details}) nem érhető el külső hálózaton"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1682,26 +1673,19 @@ msgstr ""
 
 #: plinth/modules/gitweb/__init__.py:62
 msgid "Read-write access to Git repositories"
-msgstr ""
+msgstr "Olvasási-írási hozzáférés a Git tárolókhoz"
 
 #: plinth/modules/gitweb/forms.py:59
-#, fuzzy
-#| msgid "Invalid repository name."
 msgid "Invalid repository URL."
-msgstr "Érvénytelen tárolónév."
+msgstr "Érvénytelen tároló URL."
 
 #: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Érvénytelen tárolónév."
 
 #: plinth/modules/gitweb/forms.py:77
-#, fuzzy
-#| msgid ""
-#| "Repository path is neither empty nor is an existing backups repository."
 msgid "Name of a new repository or URL to import an existing repository."
-msgstr ""
-"A tároló elérési útja nem üres és nem is már meglévő biztonsági másolat "
-"tároló."
+msgstr "Az új tároló neve vagy URL egy már létező tároló importálásához."
 
 #: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
@@ -1762,7 +1746,7 @@ msgstr "%(repo.name)s tároló törlése"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:83
 msgid "Cloning..."
-msgstr ""
+msgstr "Klónozás…"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
@@ -1789,10 +1773,8 @@ msgid "Repository created."
 msgstr "Tároló létrehozva."
 
 #: plinth/modules/gitweb/views.py:86
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the repository."
-msgstr "Hiba történt a beállítás közben."
+msgstr "Hiba történt a tároló létrehozása közben."
 
 #: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
@@ -1961,7 +1943,7 @@ msgstr "%(box_name)s beállítás"
 
 #: plinth/modules/help/templates/help_contribute.html:27
 msgid "The FreedomBox project welcomes contributions of all kinds."
-msgstr ""
+msgstr "A FreedomBox projekt örömmel fogad mindenféle hozzájárulást."
 
 #: plinth/modules/help/templates/help_contribute.html:33
 msgid ""
