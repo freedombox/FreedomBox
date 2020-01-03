@@ -32,7 +32,6 @@ from .forms import MinetestForm
 class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
     app_id = 'minetest'
-    diagnostics_module_name = 'minetest'
     name = minetest.name
     description = description
     show_status_block = True

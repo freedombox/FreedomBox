@@ -17,6 +17,7 @@
 
 import subprocess
 
+import plinth.forms
 from django import forms
 from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
@@ -24,8 +25,6 @@ from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-
-import plinth.forms
 from plinth import actions, module_loader
 from plinth.errors import ActionError
 from plinth.modules import first_boot, users
@@ -261,6 +260,21 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                 ])
             except ActionError:
                 messages.error(self.request, _('Unable to set SSH keys.'))
+
+            is_active = self.cleaned_data['is_active']
+            if self.initial['is_active'] != is_active:
+                if is_active:
+                    status = 'active'
+                else:
+                    status = 'inactive'
+                try:
+                    actions.superuser_run(
+                        'users',
+                        ['set-user-status',
+                         user.get_username(), status])
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Failed to change user status.'))
 
         return user
 

@@ -21,7 +21,7 @@ FreedomBox app for infinoted.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -31,7 +31,7 @@ from plinth.views import AppView
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 managed_services = ['infinoted']
 
@@ -85,7 +85,8 @@ class InfinotedApp(app_module.App):
                             ports=['infinoted-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-infinoted', managed_services[0])
+        daemon = Daemon('daemon-infinoted', managed_services[0],
+                        listen_ports=[(6523, 'tcp4'), (6523, 'tcp6')])
         self.add(daemon)
 
 
@@ -101,7 +102,6 @@ def init():
 
 class InfinotedAppView(AppView):
     app_id = 'infinoted'
-    diagnostics_module_name = 'infinoted'
     name = name
     description = description
     clients = clients
@@ -114,13 +114,3 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'infinoted', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(6523, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(6523, 'tcp6'))
-
-    return results

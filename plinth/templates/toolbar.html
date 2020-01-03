@@ -50,7 +50,7 @@
           {% endwith %}
         {% endif %}
 
-        {% if diagnostics_module_name %}
+        {% if has_diagnostics %}
           <!-- Single button -->
           <div class="btn-group button-extra-actions">
             <button type="button" class="btn btn-default dropdown-toggle"
@@ -61,7 +61,7 @@
             </button>
             <ul class="dropdown-menu">
               <li>
-                {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=is_enabled %}
+                {% include "diagnostics_button.html" with app_id=app_id enabled=is_enabled %}
               </li>
             </ul>
           </div>

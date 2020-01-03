@@ -63,6 +63,12 @@ class DateTimeApp(app_module.App):
         daemon = Daemon('daemon-datetime', managed_services[0])
         self.add(daemon)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(_diagnose_time_synchronized())
+        return results
+
 
 def init():
     """Initialize the date/time module."""
@@ -75,14 +81,6 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-    results.append(_diagnose_time_synchronized())
-
-    return results
 
 
 def _diagnose_time_synchronized():

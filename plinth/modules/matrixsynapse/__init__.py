@@ -26,7 +26,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -104,7 +104,8 @@ class MatrixSynapseApp(app_module.App):
         self.add(firewall)
 
         webserver = Webserver('webserver-matrixsynapse',
-                              'matrix-synapse-plinth')
+                              'matrix-synapse-plinth',
+                              urls=['https://{host}/_matrix/client/versions'])
         self.add(webserver)
 
         letsencrypt = LetsEncrypt(
@@ -116,7 +117,8 @@ class MatrixSynapseApp(app_module.App):
             managing_app='matrixsynapse')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-matrixsynapse', managed_services[0])
+        daemon = Daemon('daemon-matrixsynapse', managed_services[0],
+                        listen_ports=[(8008, 'tcp4'), (8448, 'tcp4')])
         self.add(daemon)
 
 
@@ -150,19 +152,6 @@ def setup_domain(domain_name):
 def is_setup():
     """Return whether the Matrix Synapse server is setup."""
     return os.path.exists(SERVER_NAME_PATH)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(8008, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(8448, 'tcp4'))
-    results.extend(
-        action_utils.diagnose_url_on_all(
-            'https://{host}/_matrix/client/versions', check_certificate=False))
-
-    return results
 
 
 def get_domains():

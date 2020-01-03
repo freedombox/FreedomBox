@@ -23,7 +23,7 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.errors import ActionError
@@ -32,7 +32,8 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
 
 from .forms import is_repo_url
-from .manifest import GIT_REPO_PATH, backup, clients  # noqa, pylint: disable=unused-import
+from .manifest import (GIT_REPO_PATH,  # noqa, pylint: disable=unused-import
+                       backup, clients)
 
 clients = clients
 
@@ -89,7 +90,8 @@ class GitwebApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-gitweb', 'gitweb-freedombox')
+        webserver = Webserver('webserver-gitweb', 'gitweb-freedombox',
+                              urls=['https://{host}/gitweb/'])
         self.add(webserver)
 
         self.auth_webserver = GitwebWebserverAuth('webserver-gitweb-auth',
@@ -189,16 +191,6 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'gitweb', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/gitweb/',
-                                         check_certificate=False))
-    return results
 
 
 def restore_post(packet):

@@ -58,6 +58,7 @@ def index(request):
 
     return TemplateResponse(
         request, 'openvpn.html', {
+            'app_id': 'openvpn',
             'clients': openvpn.clients,
             'name': openvpn.name,
             'description': openvpn.description,
@@ -67,7 +68,7 @@ def index(request):
             'form': form,
             'show_status_block': True,
             'is_running': status['is_running'],
-            'diagnostics_module_name': 'openvpn',
+            'has_diagnostics': True,
             'is_enabled': status['enabled'],
             'icon_filename': openvpn.icon_filename
         })

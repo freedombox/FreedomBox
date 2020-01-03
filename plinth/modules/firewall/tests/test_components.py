@@ -136,3 +136,59 @@ def test_disable(get_enabled_services, add_service, remove_service):
         call('test-port4', zone='external')
     ]
     remove_service.assert_has_calls(calls)
+
+
+@patch('plinth.modules.firewall.get_port_details')
+@patch('plinth.modules.firewall.get_enabled_services')
+def test_diagnose(get_enabled_services, get_port_details):
+    """Test diagnosing open/closed firewall ports."""
+    def get_port_details_side_effect(port):
+        return {
+            'test-port1': '1234/tcp',
+            'test-port2': '2345/udp',
+            'test-port3': '3456/tcp',
+            'test-port4': '4567/udp'
+        }[port]
+
+    def get_enabled_services_side_effect(zone):
+        return {
+            'internal': ['test-port1', 'test-port3'],
+            'external': ['test-port2', 'test-port3']
+        }[zone]
+
+    get_enabled_services.side_effect = get_enabled_services_side_effect
+    get_port_details.side_effect = get_port_details_side_effect
+    firewall = Firewall('test-firewall-1', ports=['test-port1', 'test-port2'],
+                        is_external=False)
+    results = firewall.diagnose()
+    assert results == [
+        [
+            'Port test-port1 (1234/tcp) available for internal networks',
+            'passed'
+        ],
+        [
+            'Port test-port1 (1234/tcp) unavailable for external networks',
+            'passed'
+        ],
+        [
+            'Port test-port2 (2345/udp) available for internal networks',
+            'failed'
+        ],
+        [
+            'Port test-port2 (2345/udp) unavailable for external networks',
+            'failed'
+        ]
+    ]
+
+    firewall = Firewall('test-firewall-1', ports=['test-port3', 'test-port4'],
+                        is_external=True)
+    results = firewall.diagnose()
+    assert results == [[
+        'Port test-port3 (3456/tcp) available for internal networks', 'passed'
+    ], [
+        'Port test-port3 (3456/tcp) available for external networks', 'passed'
+    ], [
+        'Port test-port4 (4567/udp) available for internal networks', 'failed'
+    ], [
+        'Port test-port4 (4567/udp) available for external networks', 'failed'
+    ]]

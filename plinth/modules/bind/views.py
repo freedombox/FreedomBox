@@ -31,7 +31,6 @@ from .forms import BindForm
 class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring Bind."""
     app_id = 'bind'
-    diagnostics_module_name = 'bind'
     name = name
     description = description
     show_status_block = True

@@ -26,7 +26,7 @@ import augeas
 from apt.cache import Cache
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -98,7 +98,8 @@ class RadicaleApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = RadicaleWebserver('webserver-radicale', None)
+        webserver = RadicaleWebserver('webserver-radicale', None,
+                                      urls=['https://{host}/radicale'])
         self.add(webserver)
 
         uwsgi = RadicaleUwsgi('uwsgi-radicale', 'radicale')
@@ -271,14 +272,3 @@ def get_rights_value():
             value = 'owner_only'
 
     return value
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/radicale',
-                                         check_certificate=False))
-
-    return results

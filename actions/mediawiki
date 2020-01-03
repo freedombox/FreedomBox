@@ -25,7 +25,7 @@ import subprocess
 import sys
 import tempfile
 
-from plinth.utils import generate_password, grep
+from plinth.utils import generate_password
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
 CONF_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
@@ -87,12 +87,30 @@ def subcommand_setup(_):
 
 
 def include_custom_config():
-    """Include FreedomBox specific configuration in LocalSettings.php
-    """
-    if not grep(r'FreedomBoxSettings', LOCAL_SETTINGS_CONF):
-        with open(LOCAL_SETTINGS_CONF, 'a') as conf_file:
-            conf_file.write(
-                'include dirname(__FILE__)."/FreedomBoxSettings.php";\n')
+    """Include FreedomBox specific configuration in LocalSettings.php."""
+    with open(LOCAL_SETTINGS_CONF, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    static_settings_index = None
+    settings_index = None
+    for line_number, line in enumerate(lines):
+        if 'FreedomBoxSettings.php' in line:
+            settings_index = line_number
+
+        if 'FreedomBoxStaticSettings.php' in line:
+            static_settings_index = line_number
+
+    if settings_index is None:
+        settings_index = len(lines)
+        lines.append('include dirname(__FILE__)."/FreedomBoxSettings.php";\n')
+
+    if static_settings_index is None:
+        lines.insert(
+            settings_index,
+            'include dirname(__FILE__)."/FreedomBoxStaticSettings.php";\n')
+
+    with open(LOCAL_SETTINGS_CONF, 'w') as conf_file:
+        conf_file.writelines(lines)
 
 
 def subcommand_change_password(arguments):
@@ -110,7 +128,7 @@ def subcommand_change_password(arguments):
 def subcommand_update(_):
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
-    subprocess.check_call(['php', update_script])
+    subprocess.check_call(['php', update_script, '--quick'])
 
 
 def subcommand_public_registrations(arguments):

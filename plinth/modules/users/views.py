@@ -76,7 +76,6 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
     description = users.description
     app_id = 'users'
     show_status_block = False
-    diagnostics_module_name = 'users'
     manual_page = users.manual_page
 
     def get_context_data(self, *args, **kwargs):

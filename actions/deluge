@@ -38,6 +38,20 @@ ExecStart=bash -c "/usr/bin/deluge-web --base=deluge $(/usr/bin/deluge-web --ver
 Restart=on-failure
 User=debian-deluged
 Group=debian-deluged
+LockPersonality=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectControlGroups=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectSystem=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictRealtime=yes
+StateDirectory=deluged
+SystemCallArchitectures=native
 
 [Install]
 WantedBy=multi-user.target

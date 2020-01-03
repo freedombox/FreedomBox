@@ -39,11 +39,12 @@ def index(request):
 
     return TemplateResponse(
         request, 'connections_list.html', {
+            'app_id': 'networks',
             'title': _('Network Connections'),
             'name': networks.name,
             'description': networks.description,
             'manual_page': networks.manual_page,
-            'diagnostics_module_name': 'networks',
+            'has_diagnostics': True,
             'is_enabled': True,
             'connections': connections
         })

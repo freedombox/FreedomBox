@@ -33,7 +33,6 @@ from .forms import ShadowsocksForm
 class ShadowsocksAppView(views.AppView):
     """Configuration view for Shadowsocks local socks5 proxy."""
     app_id = 'shadowsocks'
-    diagnostics_module_name = 'shadowsocks'
     form_class = ShadowsocksForm
     name = shadowsocks.name
     description = shadowsocks.description

@@ -19,14 +19,12 @@ FreedomBox app to configure minidlna.
 """
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
 import plinth.app as app_module
-from plinth import frontpage, menu
+from plinth import actions, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import register_group
-from plinth.action_utils import diagnose_url
 
 from .manifest import backup, clients  # noqa
 
@@ -77,7 +75,8 @@ class MiniDLNAApp(app_module.App):
         )
         firewall = Firewall('firewall-minidlna', name, ports=['minidlna'],
                             is_external=False)
-        webserver = Webserver('webserver-minidlna', 'minidlna-freedombox')
+        webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
+                              urls=['http://localhost:8200/'])
         shortcut = frontpage.Shortcut(
             'shortcut-minidlna',
             name,
@@ -113,11 +112,3 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Check if the http page listening on 8200 is accessible"""
-    results = []
-    results.append(diagnose_url('http://localhost:8200/'))
-
-    return results

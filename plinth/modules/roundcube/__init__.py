@@ -20,7 +20,7 @@ FreedomBox app to configure Roundcube.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
@@ -88,7 +88,8 @@ class RoundcubeApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-roundcube', 'roundcube')
+        webserver = Webserver('webserver-roundcube', 'roundcube',
+                              urls=['https://{host}/roundcube'])
         self.add(webserver)
 
 
@@ -108,14 +109,3 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/roundcube',
-                                         check_certificate=False))
-
-    return results

@@ -23,11 +23,11 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -92,6 +92,19 @@ class TahoeApp(app_module.App):
         daemon = Daemon('daemon-tahoe', managed_services[0])
         self.add(daemon)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.extend([
+            diagnose_url('http://localhost:5678', kind='4',
+                         check_certificate=False),
+            diagnose_url('http://localhost:5678', kind='6',
+                         check_certificate=False),
+            diagnose_url('http://{}:5678'.format(get_configured_domain_name()),
+                         kind='4', check_certificate=False)
+        ])
+        return results
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -155,19 +168,6 @@ def post_setup(configured_domain_name):
                         become_user='tahoe-lafs')
     actions.superuser_run('tahoe-lafs', ['autostart'])
     app.enable()
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    return [
-        action_utils.diagnose_url('http://localhost:5678', kind='4',
-                                  check_certificate=False),
-        action_utils.diagnose_url('http://localhost:5678', kind='6',
-                                  check_certificate=False),
-        action_utils.diagnose_url(
-            'http://{}:5678'.format(get_configured_domain_name()), kind='4',
-            check_certificate=False)
-    ]
 
 
 def add_introducer(introducer):

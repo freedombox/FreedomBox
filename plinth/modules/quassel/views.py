@@ -23,7 +23,6 @@ from .forms import QuasselForm
 
 class QuasselAppView(AppView):
     app_id = 'quassel'
-    diagnostics_module_name = 'quassel'
     name = quassel.name
     description = quassel.description
     clients = quassel.clients

@@ -17,22 +17,16 @@
 """
 Views for the Cockpit module
 """
-from plinth.views import AppView
-from plinth.modules.cockpit import (
-    name,
-    description,
-    clients,
-    manual_page,
-    icon_filename,
-)
+from plinth.modules.cockpit import (clients, description, icon_filename,
+                                    manual_page, name)
 from plinth.modules.cockpit.utils import get_origin_domains, load_augeas
+from plinth.views import AppView
 
 
 class CockpitAppView(AppView):
     app_id = 'cockpit'
     name = name
     description = description
-    diagnostics_module_name = 'cockpit'
     show_status_block = True
     clients = clients
     manual_page = manual_page

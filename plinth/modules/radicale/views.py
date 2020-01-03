@@ -34,7 +34,6 @@ class RadicaleAppView(AppView):
     clients = radicale.clients
     name = radicale.name
     description = description
-    diagnostics_module_name = 'radicale'
     form_class = RadicaleForm
     app_id = 'radicale'
     manual_page = radicale.manual_page

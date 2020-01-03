@@ -20,7 +20,7 @@ FreedomBox app to configure MediaWiki.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -29,7 +29,7 @@ from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 6
+version = 7
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
@@ -88,7 +88,8 @@ class MediaWikiApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-mediawiki', 'mediawiki')
+        webserver = Webserver('webserver-mediawiki', 'mediawiki',
+                              urls=['https://{host}/mediawiki'])
         self.add(webserver)
 
         webserver = Webserver('webserver-mediawiki-freedombox',
@@ -123,16 +124,6 @@ def setup(helper, old_version=None):
     helper.call('setup', actions.superuser_run, 'mediawiki', ['setup'])
     helper.call('update', actions.superuser_run, 'mediawiki', ['update'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/mediawiki',
-                                         check_certificate=False))
-    return results
 
 
 def is_public_registration_enabled():

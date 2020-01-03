@@ -25,7 +25,7 @@ import pathlib
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -108,7 +108,8 @@ class EjabberdApp(app_module.App):
                                    'xmpp-bosh'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-ejabberd', 'jwchat-plinth')
+        webserver = Webserver('webserver-ejabberd', 'jwchat-plinth',
+                              urls=['http://{host}/bosh/'])
         self.add(webserver)
 
         letsencrypt = LetsEncrypt(
@@ -120,7 +121,10 @@ class EjabberdApp(app_module.App):
             managing_app='ejabberd')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-ejabberd', managed_services[0])
+        daemon = Daemon(
+            'daemon-ejabberd', managed_services[0],
+            listen_ports=[(5222, 'tcp4'), (5222, 'tcp6'), (5269, 'tcp4'),
+                          (5269, 'tcp6'), (5443, 'tcp4'), (5443, 'tcp6')])
         self.add(daemon)
 
 
@@ -214,18 +218,3 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     if name not in conf['domains']:
         actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
         app.get_component('letsencrypt-ejabberd').setup_certificates()
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(5222, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5222, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(5269, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(5443, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5443, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all('http://{host}/bosh/'))
-
-    return results

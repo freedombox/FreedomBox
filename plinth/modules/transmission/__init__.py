@@ -22,13 +22,13 @@ import json
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group, add_user_to_share_group
+from plinth.modules.users import add_user_to_share_group, register_group
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -74,20 +74,23 @@ class TransmissionApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-transmission', name, short_description=short_description,
-            icon=icon_filename, url='/transmission', clients=clients,
-            login_required=True, allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-transmission', name,
+                                      short_description=short_description,
+                                      icon=icon_filename, url='/transmission',
+                                      clients=clients, login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-transmission', name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-transmission', 'transmission-plinth')
+        webserver = Webserver('webserver-transmission', 'transmission-plinth',
+                              urls=['https://{host}/transmission'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-transmission', managed_services[0])
+        daemon = Daemon('daemon-transmission', managed_services[0],
+                        listen_ports=[(9091, 'tcp4')])
         self.add(daemon)
 
 
@@ -115,15 +118,3 @@ def setup(helper, old_version=None):
                 input=json.dumps(new_configuration).encode())
     add_user_to_share_group(reserved_usernames[0], managed_services[0])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(9091, 'tcp4'))
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/transmission',
-                                         check_certificate=False))
-
-    return results

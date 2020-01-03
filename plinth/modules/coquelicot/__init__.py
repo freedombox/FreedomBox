@@ -20,7 +20,7 @@ Plinth module to configure coquelicot.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -79,7 +79,8 @@ class CoquelicotApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-coquelicot', 'coquelicot-freedombox')
+        webserver = Webserver('webserver-coquelicot', 'coquelicot-freedombox',
+                              urls=['https://{host}/coquelicot'])
         self.add(webserver)
 
         daemon = Daemon('daemon-coquelicot', managed_services[0])
@@ -107,14 +108,3 @@ def get_current_max_file_size():
     """Get the current value of maximum file size."""
     size = actions.superuser_run('coquelicot', ['get-max-file-size'])
     return int(size.strip())
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/coquelicot',
-                                         check_certificate=False))
-
-    return results

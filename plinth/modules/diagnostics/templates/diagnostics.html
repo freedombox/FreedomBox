@@ -63,11 +63,11 @@
         {{ results.error }}
       </div>
     {% else %}
-      {% for module, module_results in results.results.items %}
-        <h4>{% blocktrans %}Module: {{ module }}{% endblocktrans %}</h4>
+      {% for app_id, app_results in results.results.items %}
+        <h4>{% blocktrans %}App: {{ app_id }}{% endblocktrans %}</h4>
 
-        {% if module_results %}
-          {% include "diagnostics_results.html" with results=module_results %}
+        {% if app_results %}
+          {% include "diagnostics_results.html" with results=app_results %}
         {% else %}
           <p><span class="fa fa-hourglass-o"></span></p>
         {% endif %}

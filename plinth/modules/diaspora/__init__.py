@@ -19,12 +19,12 @@ import os
 import augeas
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.errors import DomainNotRegisteredError
-from plinth.modules.apache.components import Webserver
+from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
@@ -105,6 +105,23 @@ class DiasporaApp(app_module.App):
         daemon = Daemon('daemon-diaspora', managed_services[0])
         self.add(daemon)
 
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        results.append(
+            diagnose_url('http://diaspora.localhost', kind='4',
+                         check_certificate=False))
+        results.append(
+            diagnose_url('http://diaspora.localhost', kind='6',
+                         check_certificate=False))
+        results.append(
+            diagnose_url(
+                'http://diaspora.{}'.format(get_configured_domain_name()),
+                kind='4', check_certificate=False))
+
+        return results
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
@@ -153,24 +170,6 @@ def enable_user_registrations():
 def disable_user_registrations():
     """Disallow users from registering without invitation"""
     actions.superuser_run('diaspora', ['disable-user-registrations'])
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(
-        action_utils.diagnose_url('http://diaspora.localhost', kind='4',
-                                  check_certificate=False))
-    results.append(
-        action_utils.diagnose_url('http://diaspora.localhost', kind='6',
-                                  check_certificate=False))
-    results.append(
-        action_utils.diagnose_url(
-            'http://diaspora.{}'.format(get_configured_domain_name()),
-            kind='4', check_certificate=False))
-
-    return results
 
 
 def generate_apache_configuration(conf_file, domain_name):

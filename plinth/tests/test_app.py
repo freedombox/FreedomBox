@@ -19,6 +19,7 @@ Test module for App, base class for all applications.
 """
 
 import collections
+from unittest.mock import patch
 
 import pytest
 
@@ -33,6 +34,10 @@ class AppTest(App):
 class LeaderTest(FollowerComponent):
     """Test class for using LeaderComponent in tests."""
     is_leader = True
+
+    def diagnose(self):
+        """Return diagnostic results."""
+        return [('test-result-' + self.component_id, 'success')]
 
 
 @pytest.fixture(name='app_with_components')
@@ -62,10 +67,16 @@ def test_app_instantiation():
     assert len(app._all_apps) == 1
 
 
-def test_get():
+def test_app_get():
     """Test that an app can be correctly retrieved."""
     app = AppTest()
     assert App.get(app.app_id) == app
+
+
+def test_app_list():
+    """Test listing all apps."""
+    app = AppTest()
+    assert list(App.list()) == [app]
 
 
 def test_app_add():
@@ -176,6 +187,30 @@ def test_app_set_enabled(app_with_components):
     assert app.components['test-leader-1'].is_enabled()
 
 
+def test_app_diagnose(app_with_components):
+    """Test running diagnostics on an app."""
+    results = app_with_components.diagnose()
+    assert results == [('test-result-test-leader-1', 'success'),
+                       ('test-result-test-leader-2', 'success')]
+
+
+def test_app_has_diagnostics(app_with_components):
+    """Test checking if app has diagnostics implemented."""
+    app = app_with_components
+
+    # App with components that has diagnostics
+    assert app.has_diagnostics()
+
+    # App with components that don't have diagnostics
+    app.remove('test-leader-1')
+    app.remove('test-leader-2')
+    assert not app.has_diagnostics()
+
+    # App with app-level diagnostics
+    with patch.object(AppTest, 'diagnose', return_value=[('test1', 'passed')]):
+        assert app.has_diagnostics()
+
+
 def test_component_initialization():
     """Test that component is initialized properly."""
     with pytest.raises(ValueError):
@@ -184,6 +219,21 @@ def test_component_initialization():
     component = Component('test-component')
     assert component.component_id == 'test-component'
     assert not component.is_leader
+
+
+def test_component_diagnose():
+    """Test running diagnostics on component."""
+    component = Component('test-component')
+    assert component.diagnose() == []
+
+
+def test_component_has_diagnostics():
+    """Test checking if component has diagnostics implemented."""
+    component = LeaderTest('test-leader-1')
+    assert component.has_diagnostics()
+
+    component = FollowerComponent('test-follower-1')
+    assert not component.has_diagnostics()
 
 
 def test_follower_component_initialization():

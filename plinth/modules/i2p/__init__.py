@@ -20,7 +20,7 @@ FreedomBox app to configure I2P.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -105,10 +105,12 @@ class I2PApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        webserver = Webserver('webserver-i2p', 'i2p-freedombox')
+        webserver = Webserver('webserver-i2p', 'i2p-freedombox',
+                              urls=['https://{host}/i2p/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-i2p', managed_services[0])
+        daemon = Daemon('daemon-i2p', managed_services[0],
+                        listen_ports=[(7657, 'tcp6')])
         self.add(daemon)
 
 
@@ -152,15 +154,3 @@ def setup(helper, old_version=None):
             '--value', '0.0.0.0'
         ])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(7657, 'tcp6'))
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/i2p/',
-                                         check_certificate=False))
-
-    return results

@@ -65,7 +65,6 @@ class MatrixSynapseAppView(AppView):
     template_name = 'matrix-synapse.html'
     name = matrixsynapse.name
     description = matrixsynapse.description
-    diagnostics_module_name = 'matrixsynapse'
     form_class = MatrixSynapseForm
     port_forwarding_info = matrixsynapse.port_forwarding_info
     icon_filename = matrixsynapse.icon_filename

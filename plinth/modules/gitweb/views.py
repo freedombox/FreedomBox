@@ -40,7 +40,6 @@ class GitwebAppView(views.AppView):
     clients = gitweb.clients
     name = gitweb.name
     description = gitweb.description
-    diagnostics_module_name = 'gitweb'
     app_id = 'gitweb'
     show_status_block = False
     template_name = 'gitweb_configure.html'

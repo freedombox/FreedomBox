@@ -81,9 +81,9 @@ def force_upgrade(helper, packages):
     if 'firewalld' not in packages:
         return False
 
-    # firewalld 0.4.4.6-2 -> 0.6.x
+    # firewalld 0.6.x -> 0.7.x, 0.6.x -> 0.8.x, 0.7.x -> 0.8.x
     package = packages['firewalld']
-    if Version(package['current_version']) >= Version('0.7') or \
+    if Version(package['current_version']) >= Version('0.8') or \
        Version(package['new_version']) < Version('0.7'):
         return False
 

@@ -21,7 +21,7 @@ FreedomBox app to configure Cockpit.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -93,7 +93,8 @@ class CockpitApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-cockpit', 'cockpit-freedombox')
+        webserver = Webserver('webserver-cockpit', 'cockpit-freedombox',
+                              urls=['https://{host}/_cockpit/'])
         self.add(webserver)
 
         daemon = Daemon('daemon-cockpit', managed_services[0])
@@ -120,17 +121,6 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'cockpit',
                 ['setup'] + list(domains))
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/_cockpit/',
-                                         check_certificate=False))
-
-    return results
 
 
 def on_domain_added(sender, domain_type, name, description='', services=None,

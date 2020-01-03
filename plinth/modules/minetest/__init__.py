@@ -22,7 +22,6 @@ import augeas
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -101,7 +100,8 @@ class MinetestApp(app_module.App):
                             ports=['minetest-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-minetest', managed_services[0])
+        daemon = Daemon('daemon-minetest', managed_services[0],
+                        listen_ports=[(30000, 'udp4')])
         self.add(daemon)
 
 
@@ -119,15 +119,6 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(30000, 'udp4'))
-
-    return results
 
 
 def load_augeas():

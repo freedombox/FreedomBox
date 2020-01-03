@@ -102,57 +102,38 @@ daemons should be stopped during the backup process. In ``__init__.py``, add:
 Creating diagnostics
 ^^^^^^^^^^^^^^^^^^^^
 
-When the app does not work as expected, the user should known what is happening
-with the app. The FreedomBox framework provides an API for running and showing
-diagnostics results. The app has to implement a method for actually running the
-diagnostics and return the results as a list. FreedomBox then takes care of
+When the app does not work as expected, the user should know what is happening
+with the app. FreedomBox framework provides an API for running and showing
+diagnostics results. Most of the common diagnostic tests are implemented by the
+framework as part of the components used by an app. FreedomBox takes care of
 calling the diagnostics method and displaying the list in a formatted manner.
 
-To implement the diagnostics, a method called ``diagnose()`` has to be available
-as ``<app-module>.diagnose()``. It must return a list in which each item is the
-result of a test performed. The item itself is a two-tuple containing the
-display name of the test followed by the result as ``passed``, ``failed`` or
-``error``.
+To implement additional diagnostic tests on top of those provided by the
+framework, the method :meth:`plinth.app.App.diagnose` has to be overridden or in
+a component that belongs to the app, the method
+:meth:`plinth.app.Component.diagnose` has to be overridden. The methods must
+return a list in which each item is the result of a test performed. The item
+itself is a two-tuple containing the display name of the test followed by the
+result as ``passed``, ``failed`` or ``error``.
 
 .. code-block:: python3
 
-  def diagnose():
-      """Run diagnostics and return the results."""
-      results = []
-
-      results.extend(action_utils.diagnose_url_on_all(
-          'https://{host}/transmission', extra_options=['--no-check-certificate']))
-
-      return results
-
-Now that we have implemented diagnostics, we also need to show a diagnostics
-button in the App's page. Adding an attribute to the
-:class:`~plinth.views.AppView` will take care of this.
-
-.. code-block:: python3
-
-  class TransmissionView(views.AppView):
+  class TransmissionAppView(views.AppView):
       ...
-      diagnostics_module_name = 'transmission'
+      def diagnose():
+          """Run diagnostics and return the results."""
+          results = super().diagnose()
 
-There are several helpers available to implement some of the common diagnostic
-tests. For our application we wish to implement a test to check whether the
-``/transmission`` URL is accessible. Since this is a commonly performed test,
-there is a helper method available and we have used it in the above code. The
-``{host}`` tag replaced with various IP addresses, hostnames and domain names by
-the helper to produce different kinds of URLs and they are all tested. Results
-for all tests are returned which we then pass on to the framework.
+          results.append(['Example test', 'passed'])
+
+          return results
 
 The user can trigger the diagnostics test by going to **System -> Diagnostics**
 page. This runs diagnostics for all the applications. Users can also run
-diagnostics specifically for this app from the app's page. A diagnostics button
-is shown by the `app.html` template automatically when
-``diagnostics_module_name`` attribute is set in the app's ``AppView`` derived
-from :obj:`plinth.views.AppView`.
-
-.. code-block:: django
-
-  {% include "diagnostics_button.html" with module="ttrss" enabled=True %}
+diagnostics specifically for this app from the app's page. A diagnostics menu
+item is shown by the :class:`plinth.views.AppView` and `app.html` template
+automatically when ``diagnose()`` method is overridden in the app or a
+component.
 
 Logging
 ^^^^^^^

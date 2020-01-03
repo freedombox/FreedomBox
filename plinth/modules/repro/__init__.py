@@ -21,7 +21,7 @@ FreedomBox app for repro.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -98,7 +98,13 @@ class ReproApp(app_module.App):
         webserver = Webserver('webserver-repro', 'repro-plinth')
         self.add(webserver)
 
-        daemon = Daemon('daemon-repro', managed_services[0])
+        daemon = Daemon(
+            'daemon-repro', managed_services[0], listen_ports=[(5060, 'udp4'),
+                                                               (5060, 'udp6'),
+                                                               (5060, 'tcp4'),
+                                                               (5060, 'tcp6'),
+                                                               (5061, 'tcp4'),
+                                                               (5061, 'tcp6')])
         self.add(daemon)
 
 
@@ -116,7 +122,6 @@ class ReproAppView(AppView):
     clients = clients
     name = name
     description = description
-    diagnostics_module_name = 'repro'
     app_id = 'repro'
     manual_page = manual_page
     port_forwarding_info = port_forwarding_info
@@ -127,17 +132,3 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(5060, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(5060, 'udp6'))
-    results.append(action_utils.diagnose_port_listening(5060, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5060, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(5061, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5061, 'tcp6'))
-
-    return results

@@ -35,7 +35,6 @@ class IkiwikiAppView(views.AppView):
     app_id = 'ikiwiki'
     name = ikiwiki.name
     description = ikiwiki.description
-    diagnostics_module_name = 'ikiwiki'
     show_status_block = False
     template_name = 'ikiwiki_configure.html'
     manual_page = ikiwiki.manual_page

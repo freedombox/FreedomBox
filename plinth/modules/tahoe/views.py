@@ -55,7 +55,6 @@ class TahoeAppView(AppView):
     template_name = 'tahoe-post-setup.html'
     name = tahoe.name
     description = tahoe.description
-    diagnostics_module_name = 'tahoe'
     port_forwarding_info = tahoe.port_forwarding_info
     icon_filename = tahoe.icon_filename
 

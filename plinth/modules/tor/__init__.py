@@ -25,7 +25,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import menu
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, diagnose_netcat, diagnose_port_listening
+from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed
@@ -92,8 +93,58 @@ class TorApp(app_module.App):
                                    'tor-obfs4'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-tor', managed_services[0], strict_check=True)
+        daemon = Daemon(
+            'daemon-tor', managed_services[0], strict_check=True,
+            listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
+                          (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
         self.add(daemon)
+
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+
+        results.extend(_diagnose_control_port())
+
+        output = actions.superuser_run('tor', ['get-status'])
+        ports = json.loads(output)['ports']
+
+        results.append([
+            _('Tor relay port available'),
+            'passed' if 'orport' in ports else 'failed'
+        ])
+        if 'orport' in ports:
+            results.append(
+                diagnose_port_listening(int(ports['orport']), 'tcp4'))
+            results.append(
+                diagnose_port_listening(int(ports['orport']), 'tcp6'))
+
+        results.append([
+            _('Obfs3 transport registered'),
+            'passed' if 'obfs3' in ports else 'failed'
+        ])
+        if 'obfs3' in ports:
+            results.append(diagnose_port_listening(int(ports['obfs3']),
+                                                   'tcp4'))
+            results.append(diagnose_port_listening(int(ports['obfs3']),
+                                                   'tcp6'))
+
+        results.append([
+            _('Obfs4 transport registered'),
+            'passed' if 'obfs4' in ports else 'failed'
+        ])
+        if 'obfs4' in ports:
+            results.append(diagnose_port_listening(int(ports['obfs4']),
+                                                   'tcp4'))
+            results.append(diagnose_port_listening(int(ports['obfs4']),
+                                                   'tcp6'))
+
+        results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
+        results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
+
+        results.append(_diagnose_tor_use('https://check.torproject.org', '4'))
+        results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
+
+        return results
 
 
 def init():
@@ -148,60 +199,6 @@ def update_hidden_service_domain(status=None):
                                  name=status['hs_hostname'], services=services)
 
 
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-    results.append(action_utils.diagnose_port_listening(9050, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(9050, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(9040, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(9040, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(9053, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(9053, 'udp6'))
-
-    results.extend(_diagnose_control_port())
-
-    output = actions.superuser_run('tor', ['get-status'])
-    ports = json.loads(output)['ports']
-
-    results.append([
-        _('Tor relay port available'),
-        'passed' if 'orport' in ports else 'failed'
-    ])
-    if 'orport' in ports:
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['orport']), 'tcp4'))
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['orport']), 'tcp6'))
-
-    results.append([
-        _('Obfs3 transport registered'),
-        'passed' if 'obfs3' in ports else 'failed'
-    ])
-    if 'obfs3' in ports:
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp4'))
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs3']), 'tcp6'))
-
-    results.append([
-        _('Obfs4 transport registered'),
-        'passed' if 'obfs4' in ports else 'failed'
-    ])
-    if 'obfs4' in ports:
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp4'))
-        results.append(
-            action_utils.diagnose_port_listening(int(ports['obfs4']), 'tcp6'))
-
-    results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
-    results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
-
-    results.append(_diagnose_tor_use('https://check.torproject.org', '4'))
-    results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
-
-    return results
-
-
 def _diagnose_control_port():
     """Diagnose whether Tor control port is open on 127.0.0.1 only."""
     results = []
@@ -216,15 +213,15 @@ def _diagnose_control_port():
             negate = False
 
         results.append(
-            action_utils.diagnose_netcat(address['address'], 9051,
-                                         input='QUIT\n', negate=negate))
+            diagnose_netcat(address['address'], 9051, input='QUIT\n',
+                            negate=negate))
 
     return results
 
 
 def _diagnose_url_via_tor(url, kind=None):
     """Diagnose whether a URL is reachable via Tor."""
-    result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks')
+    result = diagnose_url(url, kind=kind, wrapper='torsocks')
     result[0] = _('Access URL {url} on tcp{kind} via Tor') \
         .format(url=url, kind=kind)
 
@@ -234,8 +231,8 @@ def _diagnose_url_via_tor(url, kind=None):
 def _diagnose_tor_use(url, kind=None):
     """Diagnose whether webpage at URL reports that we are using Tor."""
     expected_output = 'Congratulations. This browser is configured to use Tor.'
-    result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks',
-                                       expected_output=expected_output)
+    result = diagnose_url(url, kind=kind, wrapper='torsocks',
+                          expected_output=expected_output)
     result[0] = _('Confirm Tor usage at {url} on tcp{kind}') \
         .format(url=url, kind=kind)
 

@@ -25,7 +25,5 @@ from . import views
 urlpatterns = [
     url(r'^apps/samba/$', views.SambaAppView.as_view(), name='index'),
     url(r'^apps/samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
-        views.share, name='share'),
-    url(r'^apps/samba/unshare/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
-        views.unshare, name='unshare'),
+        views.share, name='share')
 ]

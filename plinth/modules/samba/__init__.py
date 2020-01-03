@@ -18,23 +18,26 @@
 FreedomBox app to configure samba.
 """
 
+import grp
 import json
+import os
+import pwd
 import socket
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules.users import register_group
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 managed_services = ['smbd', 'nmbd']
 
@@ -51,12 +54,18 @@ description = [
       'other computers in your local network.'),
     format_lazy(
         _('After installation, you can choose which disks to use for sharing. '
-          'Enabled {hostname} shares are open to everyone in your local '
-          'network and are accessible under Network section in the file '
-          'manager on your computer.'), hostname=socket.gethostname().upper())
+          'Enabled shares are accessible in the file manager on your computer '
+          'at location \\\\{hostname} (on Windows) or smb://{hostname}.local '
+          '(on Linux and Mac). There are three types of shares '
+          'you can choose from: '), hostname=socket.gethostname()),
+    _('Open share - accessible to everyone in your local network.'),
+    _('Group share - accessible only to FreedomBox users who are in the '
+      'freedombox-share group.'),
+    _('Home share - every user in the freedombox-share group can have their '
+      'own private space.'),
 ]
 
-group = ('freedombox-share', _('Access shared folders from inside the server'))
+group = ('freedombox-share', _('Access to the private shares'))
 
 clients = clients
 
@@ -85,10 +94,16 @@ class SambaApp(app_module.App):
         firewall = Firewall('firewall-samba', name, ports=['samba'])
         self.add(firewall)
 
-        daemon = Daemon('daemon-samba', managed_services[0])
+        daemon = Daemon(
+            'daemon-samba', managed_services[0], listen_ports=[(139, 'tcp4'),
+                                                               (139, 'tcp6'),
+                                                               (445, 'tcp4'),
+                                                               (445, 'tcp6')])
         self.add(daemon)
 
-        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1])
+        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1],
+                             listen_ports=[(137, 'udp4'), (138, 'udp4')])
+
         self.add(daemon_nmbd)
 
 
@@ -110,32 +125,43 @@ def setup(helper, old_version=None):
     helper.call('post', app.enable)
 
 
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(137, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(138, 'udp4'))
-    results.append(action_utils.diagnose_port_listening(139, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(139, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(445, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(445, 'tcp6'))
-
-    return results
-
-
-def add_share(mount_point, filesystem):
+def add_share(mount_point, share_type, filesystem):
     """Add a share."""
-    command = ['add-share', '--mount-point', mount_point]
+    command = [
+        'add-share', '--mount-point', mount_point, '--share-type', share_type
+    ]
     if filesystem in ['ntfs', 'vfat']:
         command = command + ['--windows-filesystem']
     actions.superuser_run('samba', command)
 
 
-def delete_share(mount_point):
+def delete_share(mount_point, share_type):
     """Delete a share."""
-    command = ['delete-share', '--mount-point', mount_point]
-    actions.superuser_run('samba', command)
+    actions.superuser_run('samba', [
+        'delete-share', '--mount-point', mount_point, '--share-type',
+        share_type
+    ])
+
+
+def get_users():
+    """Get non-system users who are in the freedombox-share or admin group."""
+    output = actions.superuser_run('samba', ['get-users'])
+    samba_users = json.loads(output)['users']
+    group_users = grp.getgrnam('freedombox-share').gr_mem + grp.getgrnam(
+        'admin').gr_mem
+
+    allowed_users = []
+    for group_user in group_users:
+        uid = pwd.getpwnam(group_user).pw_uid
+        if uid > 1000:
+            allowed_users.append(group_user)
+
+    return {
+        'access_ok':
+            sorted(set(allowed_users) & set(samba_users)),
+        'password_re_enter_needed':
+            sorted(set(allowed_users) - set(samba_users))
+    }
 
 
 def get_shares():
@@ -143,6 +169,15 @@ def get_shares():
     output = actions.superuser_run('samba', ['get-shares'])
 
     return json.loads(output)
+
+
+def disk_name(mount_point):
+    """Get a disk name."""
+    share_name = os.path.basename(mount_point)
+    if not share_name:
+        share_name = 'disk'
+
+    return share_name
 
 
 def backup_pre(packet):

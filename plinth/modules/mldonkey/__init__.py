@@ -20,7 +20,7 @@ FreedomBox app for mldonkey.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -91,10 +91,12 @@ class MLDonkeyApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-mldonkey', 'mldonkey-freedombox')
+        webserver = Webserver('webserver-mldonkey', 'mldonkey-freedombox',
+                              urls=['https://{host}/mldonkey/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-mldonkey', managed_services[0])
+        daemon = Daemon('daemon-mldonkey', managed_services[0],
+                        listen_ports=[(4080, 'tcp4')])
         self.add(daemon)
 
 
@@ -114,15 +116,3 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'mldonkey', ['pre-install'])
     helper.install(managed_packages)
     helper.call('post', app.enable)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(4080, 'tcp4'))
-    results.extend(
-        action_utils.diagnose_url_on_all('https://{host}/mldonkey/',
-                                         check_certificate=False))
-
-    return results

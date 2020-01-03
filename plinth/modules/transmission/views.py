@@ -25,6 +25,7 @@ import socket
 
 from django.contrib import messages
 from django.utils.translation import ugettext as _
+
 from plinth import actions, views
 from plinth.modules import transmission
 
@@ -38,7 +39,6 @@ class TransmissionAppView(views.AppView):
     clients = transmission.clients
     name = transmission.name
     description = transmission.description
-    diagnostics_module_name = 'transmission'
     form_class = TransmissionForm
     app_id = 'transmission'
     manual_page = transmission.manual_page

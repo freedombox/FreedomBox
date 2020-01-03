@@ -35,7 +35,6 @@ class CoquelicotAppView(views.AppView):
     clients = clients
     name = name
     description = description
-    diagnostics_module_name = 'coquelicot'
     app_id = 'coquelicot'
     form_class = CoquelicotForm
     show_status_block = True

@@ -27,7 +27,6 @@ urlpatterns = [
     url(
         r'^apps/deluge/$',
         AppView.as_view(name=deluge.name, description=deluge.description,
-                        diagnostics_module_name='deluge',
                         clients=deluge.clients, app_id='deluge',
                         manual_page=deluge.manual_page,
                         icon_filename=deluge.icon_filename), name='index'),

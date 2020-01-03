@@ -25,6 +25,7 @@ from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 from plinth.views import AppView
@@ -90,8 +91,16 @@ class PrivoxyApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-privoxy', managed_services[0])
+        daemon = Daemon('daemon-privoxy', managed_services[0],
+                        listen_ports=[(8118, 'tcp4'), (8118, 'tcp6')])
         self.add(daemon)
+
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(diagnose_url('https://www.debian.org'))
+        results.extend(diagnose_url_with_proxy())
+        return results
 
 
 def init():
@@ -113,23 +122,10 @@ def setup(helper, old_version=None):
 
 class PrivoxyAppView(AppView):
     app_id = 'privoxy'
-    diagnostics_module_name = 'privoxy'
     name = name
     description = description
     manual_page = manual_page
     icon_filename = icon_filename
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(8118, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(8118, 'tcp6'))
-    results.append(action_utils.diagnose_url('https://www.debian.org'))
-    results.extend(diagnose_url_with_proxy())
-
-    return results
 
 
 def diagnose_url_with_proxy():
@@ -141,7 +137,7 @@ def diagnose_url_with_proxy():
         proxy = 'http://{host}:8118/'.format(host=address['url_address'])
         env = {'https_proxy': proxy}
 
-        result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
+        result = diagnose_url(url, kind=address['kind'], env=env)
         result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
             .format(url=url, proxy=proxy, kind=address['kind'])
         results.append(result)

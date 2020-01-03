@@ -51,11 +51,11 @@ CONF = r'''
    logging = file
    panic action = /usr/share/samba/panic-action %d
    server role = standalone server
-   obey pam restrictions = yes
-   unix password sync = yes
-   passwd program = /usr/bin/passwd %u
-   passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
-   pam password change = yes
+   #obey pam restrictions = yes
+   #unix password sync = yes
+   #passwd program = /usr/bin/passwd %u
+   #passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+   #pam password change = yes
    map to guest = bad user
    # connection inactivity timeout in minutes
    deadtime = 5
@@ -73,9 +73,13 @@ def parse_arguments():
 
     subparsers.add_parser('get-shares', help='Get configured samba shares')
 
+    subparsers.add_parser('get-users', help='Get users from Samba database')
+
     subparser = subparsers.add_parser('add-share', help='Add new samba share')
     subparser.add_argument('--mount-point', help='Path of the mount point',
                            required=True)
+    subparser.add_argument('--share-type', help='Type of the share',
+                           required=True, choices=['open', 'group', 'home'])
     subparser.add_argument('--windows-filesystem', required=False,
                            default=False, action='store_true',
                            help='Path is Windows filesystem')
@@ -84,6 +88,8 @@ def parse_arguments():
         'delete-share', help='Delete a samba share configuration')
     subparser.add_argument('--mount-point', help='Path of the mount point',
                            required=True)
+    subparser.add_argument('--share-type', help='Type of the share',
+                           required=True, choices=['open', 'group', 'home'])
 
     subparsers.add_parser('dump-shares',
                           help='Dump share configuration to file')
@@ -104,20 +110,38 @@ def _conf_command(parameters, **kwargs):
     subprocess.check_call(['net', 'conf'] + parameters, **kwargs)
 
 
-def _create_share(mount_point, windows_filesystem=False):
-    """Create a samba share."""
+def _create_share(mount_point, share_type, windows_filesystem=False):
+    """Create samba public, group and private shares."""
+    if share_type == 'open':
+        subdir = 'open_share'
+    elif share_type == 'group':
+        subdir = 'group_share'
+    elif share_type == 'home':
+        subdir = 'homes'
+
     shares_path = _get_shares_path(mount_point)
-    open_share_path = os.path.join(mount_point, shares_path, 'open_share')
-    os.makedirs(open_share_path, exist_ok=True)
+    share_path = os.path.join(mount_point, shares_path, subdir)
+    os.makedirs(share_path, exist_ok=True)
 
     _make_mounts_readable_by_others(mount_point)
 
     # FAT and NTFS partitions don't support setting permissions
     if not windows_filesystem:
-        _set_open_share_permissions(open_share_path)
+        if share_type in ['open', 'group']:
+            _set_share_permissions(share_path)
+        else:
+            shutil.chown(share_path, group='users')
+            os.chmod(share_path, 0o0775)
 
     share_name = _create_share_name(mount_point)
-    _define_open_share(share_name, open_share_path, windows_filesystem)
+
+    if share_type == 'open':
+        _define_open_share(share_name, share_path, windows_filesystem)
+    elif share_type == 'group':
+        _define_group_share(share_name + '_group', share_path,
+                            windows_filesystem)
+    elif share_type == 'home':
+        _define_homes_share(share_name + '_home', share_path)
 
 
 def _create_share_name(mount_point):
@@ -141,17 +165,40 @@ def _define_open_share(name, path, windows_filesystem=False):
         _conf_command(['setparm', name, 'inherit permissions', 'yes'])
 
 
+def _define_group_share(name, path, windows_filesystem=False):
+    """Define a group samba share."""
+    try:
+        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        pass
+    _conf_command(['addshare', name, path, 'writeable=y', 'guest_ok=n'])
+    _conf_command(['setparm', name, 'valid users', '@freedombox-share @admin'])
+    if not windows_filesystem:
+        _conf_command(['setparm', name, 'force group', 'freedombox-share'])
+        _conf_command(['setparm', name, 'inherit permissions', 'yes'])
+
+
+def _define_homes_share(name, path):
+    """Define a samba share for private homes."""
+    try:
+        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        pass
+    userpath = os.path.join(path, '%u')
+    _conf_command(['addshare', name, userpath, 'writeable=y', 'guest_ok=n'])
+    _conf_command(['setparm', name, 'valid users', '@freedombox-share @admin'])
+    _conf_command(
+        ['setparm', name, 'preexec', 'mkdir -p -m 755 {}'.format(userpath)])
+
+
 def _get_mount_point(path):
     """Get the mount point where the share is."""
     subpath = 'FreedomBox/shares/'
     if '/var/lib/freedombox/shares/' in path:
-        try:
-            # test whether var directory is a mount point
-            _validate_mount_point(path.split('lib/freedombox/shares/')[0])
-        except RuntimeError:
-            subpath = 'var/lib/freedombox/shares/'
-        else:
+        if os.path.ismount(path.split('lib/freedombox/shares/')[0]):
             subpath = 'lib/freedombox/shares/'
+        else:
+            subpath = 'var/lib/freedombox/shares/'
 
     return path.split(subpath)[0]
 
@@ -160,13 +207,20 @@ def _get_shares():
     """Get shares."""
     shares = []
     output = subprocess.check_output(['net', 'conf', 'list'])
-    config = configparser.ConfigParser()
+    config = configparser.RawConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
-        path = config[name]['path']
-        mount_point = _get_mount_point(path)
+        share_type = 'open'
+        if name.endswith('_group'):
+            share_type = 'group'
+        elif name.endswith('_home'):
+            share_type = 'home'
+        share_path = config[name]['path']
+        mount_point = _get_mount_point(share_path)
         mount_point = os.path.normpath(mount_point)
-        shares.append(dict(name=name, mount_point=mount_point, path=path))
+        shares.append(
+            dict(name=name, mount_point=mount_point, path=share_path,
+                 share_type=share_type))
 
     return shares
 
@@ -221,19 +275,31 @@ def _use_config_file(conf_file):
     aug.save()
 
 
-def _validate_mount_point(path):
-    """Validate that given path string is a mount point."""
-    if path != '/':
-        parent_path = os.path.dirname(path)
-        if os.stat(path).st_dev == os.stat(parent_path).st_dev:
-            raise RuntimeError('Path "{0}" is not a mount point.'.format(path))
+def _set_share_permissions(directory):
+    """Set file and directory permissions for a share."""
+    shutil.chown(directory, group='freedombox-share')
+    os.chmod(directory, 0o2775)
+    for root, dirs, files in os.walk(directory):
+        for subdir in dirs:
+            subdir_path = os.path.join(root, subdir)
+            shutil.chown(subdir_path, group='freedombox-share')
+            os.chmod(subdir_path, 0o2775)
+        for file in files:
+            file_path = os.path.join(root, file)
+            shutil.chown(file_path, group='freedombox-share')
+            os.chmod(file_path, 0o0664)
+    subprocess.check_call(['setfacl', '-Rm', 'g::rwX', directory])
+    subprocess.check_call(['setfacl', '-Rdm', 'g::rwX', directory])
 
 
 def subcommand_add_share(arguments):
     """Create a samba share."""
     mount_point = os.path.normpath(arguments.mount_point)
-    _validate_mount_point(mount_point)
-    _create_share(mount_point, arguments.windows_filesystem)
+    if not os.path.ismount(mount_point):
+        raise RuntimeError(
+            'Path "{0}" is not a mount point.'.format(mount_point))
+    _create_share(mount_point, arguments.share_type,
+                  arguments.windows_filesystem)
 
 
 def subcommand_delete_share(arguments):
@@ -241,13 +307,10 @@ def subcommand_delete_share(arguments):
     mount_point = os.path.normpath(arguments.mount_point)
     shares = _get_shares()
     for share in shares:
-        if share['mount_point'] == mount_point:
+        if share['mount_point'] == mount_point and share[
+                'share_type'] == arguments.share_type:
             _close_share(share['name'])
             _conf_command(['delshare', share['name']])
-            break
-    else:
-        raise RuntimeError(
-            'Mount point "{0}" is not shared.'.format(mount_point))
 
 
 def subcommand_get_shares(_):
@@ -255,11 +318,20 @@ def subcommand_get_shares(_):
     print(json.dumps(_get_shares()))
 
 
+def subcommand_get_users(_):
+    """Get users from Samba database."""
+    output = subprocess.check_output(['pdbedit', '-L']).decode()
+    samba_users = [line.split(':')[0] for line in output.split()]
+    print(json.dumps({'users': samba_users}))
+
+
 def subcommand_setup(_):
     """Configure samba, use custom samba config file."""
     with open(CONF_PATH, 'w') as file_handle:
         file_handle.write(CONF)
     _use_config_file(CONF_PATH)
+    os.makedirs('/var/lib/freedombox', exist_ok=True)
+    os.chmod('/var/lib/freedombox', 0o0755)
     if action_utils.service_is_running('smbd'):
         action_utils.service_restart('smbd')
 
