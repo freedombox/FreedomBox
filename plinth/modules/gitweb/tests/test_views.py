@@ -55,7 +55,7 @@ EXISTING_REPOS = [
 def fixture_gitweb_urls():
     """Make sure gitweb app's URLs are part of plinth.urls."""
     with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-         patch('plinth.urls.urlpatterns', new=[]):
+            patch('plinth.urls.urlpatterns', new=[]):
         modules.append('plinth.modules.gitweb')
         module_loader.include_urls()
         yield
