@@ -90,7 +90,7 @@ class OpenVPNApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon('daemon-openvpn', managed_services[0],
-                        listen_ports=[(1194, 'udp4')])
+                        listen_ports=[(1194, 'udp4'), (1194, 'udp6')])
         self.add(daemon)
 
 
