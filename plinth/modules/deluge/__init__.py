@@ -30,9 +30,9 @@ from plinth.modules.users import register_group
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 4
+version = 5
 
-managed_services = ['deluge-web']
+managed_services = ['deluged', 'deluge-web']
 
 managed_packages = ['deluged', 'deluge-web']
 
@@ -71,11 +71,10 @@ class DelugeApp(app_module.App):
                               'deluge:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-deluge', name,
-                                      short_description=short_description,
-                                      url='/deluge', icon=icon_filename,
-                                      clients=clients, login_required=True,
-                                      allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut(
+            'shortcut-deluge', name, short_description=short_description,
+            url='/deluge', icon=icon_filename, clients=clients,
+            login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
 
         firewall = Firewall('firewall-deluge', name, ports=['http', 'https'],
@@ -86,9 +85,13 @@ class DelugeApp(app_module.App):
                               urls=['https://{host}/deluge'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-deluge', managed_services[0],
-                        listen_ports=[(8112, 'tcp4')])
+        daemon = Daemon('daemon-deluged', managed_services[0],
+                        listen_ports=[(58846, 'tcp4')])
         self.add(daemon)
+
+        daemon_web = Daemon('daemon-deluge-web', managed_services[1],
+                            listen_ports=[(8112, 'tcp4')])
+        self.add(daemon_web)
 
 
 def init():

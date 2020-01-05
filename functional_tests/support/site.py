@@ -346,22 +346,6 @@ def _deluge_open_connection_manager(browser):
     eventually(lambda: _deluge_get_active_window_title(browser) == title)
 
 
-def _deluge_ensure_daemon_started(browser):
-    """Start the deluge daemon if it is not started."""
-    _deluge_open_connection_manager(browser)
-
-    browser.find_by_xpath(
-        '//em[contains(text(),"127.0.0.1:58846")]').first.click()
-
-    if browser.is_element_present_by_xpath('//button[text()="Stop Daemon"]'):
-        return
-
-    browser.find_by_xpath('//button[text()="Start Daemon"]').first.click()
-
-    assert eventually(browser.is_element_present_by_xpath,
-                      args=['//button[text()="Stop Daemon"]'])
-
-
 def _deluge_ensure_connected(browser):
     """Type the connection password if required and start Deluge daemon."""
     _deluge_ensure_logged_in(browser)
@@ -369,17 +353,6 @@ def _deluge_ensure_connected(browser):
     # Change Default Password window appears once.
     if _deluge_get_active_window_title(browser) == 'Change Default Password':
         _deluge_click_active_window_button(browser, 'No')
-
-    # If the add button is enabled, we are already connected
-    if not browser.is_element_present_by_css('#add.x-item-disabled'):
-        return
-
-    _deluge_ensure_daemon_started(browser)
-
-    if browser.is_element_present_by_xpath('//button[text()="Disconnect"]'):
-        _deluge_click_active_window_button(browser, 'Close')
-    else:
-        _deluge_click_active_window_button(browser, 'Connect')
 
     assert eventually(browser.is_element_not_present_by_css,
                       args=['#add.x-item-disabled'])
