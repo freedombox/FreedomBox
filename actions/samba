@@ -27,10 +27,7 @@ import shutil
 import stat
 import subprocess
 
-import augeas
-from plinth import action_utils
-from plinth.modules.samba.manifest import SHARES_CONF_BACKUP_FILE
-
+SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
 DEFAULT_FILE = '/etc/default/samba'
 
 CONF_PATH = '/etc/samba/smb-freedombox.conf'
@@ -264,6 +261,7 @@ def _set_open_share_permissions(directory):
 
 def _use_config_file(conf_file):
     """Set samba configuration file location."""
+    import augeas
     aug = augeas.Augeas(
         flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
@@ -327,6 +325,7 @@ def subcommand_get_users(_):
 
 def subcommand_setup(_):
     """Configure samba, use custom samba config file."""
+    from plinth import action_utils
     with open(CONF_PATH, 'w') as file_handle:
         file_handle.write(CONF)
     _use_config_file(CONF_PATH)
