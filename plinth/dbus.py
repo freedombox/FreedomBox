@@ -23,7 +23,7 @@ import threading
 
 from plinth.utils import import_from_gi
 
-from . import setup
+from . import network, setup
 
 glib = import_from_gi('GLib', '2.0')
 gio = import_from_gi('Gio', '2.0')
@@ -148,6 +148,10 @@ def _run():
     global _server
     _server = DBusServer()
     _server.connect()
+
+    # Initialize all other modules that glib main loop
+    # XXX: Refactor this code into separate 'glib' module later
+    network.init()
 
     global _main_loop
     _main_loop = glib.MainLoop()

@@ -33,6 +33,8 @@ nm = import_from_gi('NM', '1.0')
 
 logger = logging.getLogger(__name__)
 
+_client = None
+
 CONNECTION_TYPE_NAMES = collections.OrderedDict([
     ('802-3-ethernet', _('Ethernet')),
     ('802-11-wireless', _('Wi-Fi')),
@@ -61,9 +63,24 @@ def ipv4_int_to_string(address_int):
     return socket.inet_ntoa(struct.pack('=I', address_int))
 
 
+def init():
+    """Create and keep a network manager client instance."""
+    def new_callback(source_object, result, user_data):
+        """Called when new() operation is complete."""
+        global _client
+        _client = nm.Client.new_finish(result)
+        logger.info('Created Network manager client')
+
+    logger.info('Creating network manager client')
+    nm.Client.new_async(None, new_callback, None)
+
+
 def get_nm_client():
     """Return a network manager client object."""
-    return nm.Client.new(None)
+    if _client:
+        return _client
+
+    raise Exception('Client not yet ready')
 
 
 def _callback(source_object, result, user_data):
