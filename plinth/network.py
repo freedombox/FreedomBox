@@ -73,13 +73,6 @@ def _callback(source_object, result, user_data):
     del user_data  # Unused
 
 
-def _commit_callback(connection, error, data=None):
-    """Called when the connection changes are committed."""
-    del connection
-    del error
-    del data
-
-
 def get_interface_list(device_type):
     """Get a list of network interface available on the system."""
     interfaces = {}
