@@ -28,7 +28,7 @@ from plinth import network
 from plinth.modules import networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
-                    PPPoEForm, WifiForm)
+                    PPPoEForm, WifiForm, RouterConfigurationWizardForm)
 
 logger = Logger(__name__)
 
@@ -416,3 +416,22 @@ def delete(request, uuid):
         'title': _('Delete Connection'),
         'name': name
     })
+
+
+def router_configuration_help_page(request):
+    """
+    Show the router configuration wizard page/form.
+    Used both for fistboot step and same networks page.
+    """
+    if request.method == "POST":
+        resp = reverse_lazy('networks:index')
+
+        return redirect(resp)
+
+    else:
+        template_kwargs = {
+            'form': RouterConfigurationWizardForm,
+        }
+
+        return TemplateResponse(request, 'router_configuration.html',
+                                template_kwargs)

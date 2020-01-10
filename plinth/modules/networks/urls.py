@@ -19,6 +19,7 @@ URLs for the Network module
 """
 
 from django.conf.urls import url
+from stronghold.decorators import public
 
 from . import networks as views
 
@@ -41,4 +42,7 @@ urlpatterns = [
         r'(?P<interface_name>[^/]+)/)?$', views.add_wifi, name='add_wifi'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),
+    url(r'^sys/networks/router-setup-guide/$',
+        views.router_configuration_help_page,
+        name='router_setup'),
 ]
