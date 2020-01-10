@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from logging import Logger
+import logging
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -24,13 +24,13 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import network
+from plinth import network, kvstore
 from plinth.modules import networks, first_boot
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     PPPoEForm, WifiForm, RouterConfigurationWizardForm)
 
-logger = Logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -426,7 +426,15 @@ def router_configuration_help_page(request):
     is_firstboot = True \
         if 'firstboot' in request.build_absolute_uri() else False
 
-    if request.method == "POST":
+    if request.method == 'POST' and request.POST['router_config']:
+        form = RouterConfigurationWizardForm(request.POST)
+        if form.is_valid():
+            logger.info('Updating router configuration setup with value: %s' %
+                        request.POST['router_config'])
+            kvstore.set(
+                networks.ROUTER_CONFIGURATION_TYPE_KEY,
+                request.POST['router_config']
+            )
         if is_firstboot:
             resp = reverse_lazy(first_boot.next_step())
         else:

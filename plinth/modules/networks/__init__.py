@@ -54,6 +54,8 @@ manual_page = 'Networks'
 
 app = None
 
+ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
+
 
 class NetworksApp(app_module.App):
     """FreedomBox app for Networks."""

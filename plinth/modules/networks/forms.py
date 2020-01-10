@@ -306,7 +306,6 @@ class RouterConfigurationWizardForm(forms.Form):
     future suggestions during the setup process and other apps.
     """
     router_config = forms.ChoiceField(
-        initial='dmz',
         label=_('Preferred router configuration'),
         choices=[
             (
