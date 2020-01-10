@@ -45,4 +45,7 @@ urlpatterns = [
     url(r'^sys/networks/router-setup-guide/$',
         views.router_configuration_help_page,
         name='router_setup'),
+    url(r'^sys/networks/firstboot/$',
+        public(views.router_configuration_help_page),
+        name='firstboot_router_setup'),
 ]
