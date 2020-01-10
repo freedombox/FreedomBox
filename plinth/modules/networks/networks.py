@@ -25,7 +25,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
 from plinth import network
-from plinth.modules import networks
+from plinth.modules import networks, first_boot
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     PPPoEForm, WifiForm, RouterConfigurationWizardForm)
@@ -423,15 +423,34 @@ def router_configuration_help_page(request):
     Show the router configuration wizard page/form.
     Used both for fistboot step and same networks page.
     """
+    is_firstboot = True \
+        if 'firstboot' in request.build_absolute_uri() else False
+
     if request.method == "POST":
-        resp = reverse_lazy('networks:index')
+        if is_firstboot:
+            resp = reverse_lazy(first_boot.next_step())
+        else:
+            resp = reverse_lazy('networks:index')
+            messages.success(request, _('Router configuration type saved.'))
 
         return redirect(resp)
 
     else:
-        template_kwargs = {
-            'form': RouterConfigurationWizardForm,
+        html = "router_configuration_update.html"
+        initial = {
+            "router_config": kvstore.get_default(
+                networks.ROUTER_CONFIGURATION_TYPE_KEY, 'dmz'),
         }
+        template_kwargs = {
+            'form': RouterConfigurationWizardForm(initial=initial),
+        }
+        if is_firstboot:
+            html = "router_configuration_firstboot.html"
 
-        return TemplateResponse(request, 'router_configuration.html',
-                                template_kwargs)
+            # mark step done on firstboot visit to get the next_step
+            first_boot.mark_step_done('router_setup_wizard')
+            template_kwargs.update({
+                'first_boot_next_step': reverse_lazy(first_boot.next_step()),
+            })
+
+        return TemplateResponse(request, html, template_kwargs)
