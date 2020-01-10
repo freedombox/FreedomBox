@@ -110,8 +110,8 @@ def verify_mediawiki_no_anonymous_reads_edits_link(browser):
 
 
 def _login_to_mediawiki(browser, username, password):
-    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
-    browser.find_by_id('pt-login').click()
+    browser.visit(config['DEFAULT']['url'] +
+                  '/mediawiki/index.php?title=Special:Login')
     browser.find_by_id('wpName1').fill(username)
     browser.find_by_id('wpPassword1').fill(password)
     with wait_for_page_update(browser):
