@@ -18,6 +18,7 @@
 from django import forms
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _, ugettext_lazy
+from markupsafe import Markup
 
 from plinth import cfg
 from plinth import network
@@ -296,3 +297,60 @@ requires clients to have the password to connect.'),
             'passphrase': self.cleaned_data['passphrase'],
         }
         return settings
+
+
+class RouterConfigurationWizardForm(forms.Form):
+    """
+    Form to suggest router configuration depending on wan
+    connectivity/specific setup. The choice will affect
+    future suggestions during the setup process and other apps.
+    """
+    router_config = forms.ChoiceField(
+        initial='dmz',
+        label=_('Preferred router configuration'),
+        choices=[
+            (
+                'dmz',
+                Markup(format_lazy(
+                    _('Use DMZ feature to forward all traffic'
+                      '<p class="help-block">Most routers provide a '
+                      'configuration setting called DMZ. This will allow the '
+                      'router to forward all incoming traffic from the '
+                      'internet to a single IP address such as the '
+                      '{box_name}\'s address. First remember to configure a '
+                      'static local IP address for your {box_name} in your '
+                      'router\'s configuration.</p>'),
+                    box_name=cfg.box_name
+                )),
+            ),
+            (
+                'port_forwarding',
+                Markup(format_lazy(
+                    _('Forward Specific Traffic as needed by each '
+                      'application'
+                      '<p class="help-block">You may alternatively choose to '
+                      'forward only specific traffic to your {box_name}. '
+                      'This is ideal if you have other servers like '
+                      '{box_name} in your network or if your router does not '
+                      'support DMZ feature. All applications that provide a '
+                      'web interface need you to forward traffic from ports '
+                      '80 and 443 to work. Each of the other applications '
+                      'will suggest you which port(s) need to be forwarded '
+                      'for that application to work.</p>'),
+                    box_name=cfg.box_name
+                ))
+            ),
+            (
+                'not_configured',
+                Markup(
+                    _('Router is currently unconfigured'
+                      '<p class="help-block">Choose this if you have not '
+                      'configured or are unable to configure the router '
+                      'currently and wish to be reminded later. Some of '
+                      'the other configuration steps may fail.</p>')
+                )
+            ),
+        ],
+        required=True,
+        widget=forms.RadioSelect,
+    )
