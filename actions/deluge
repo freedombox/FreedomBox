@@ -20,15 +20,22 @@ Configuration helper for BitTorrent web client.
 """
 
 import argparse
-import fileinput
+import os
+import shutil
 import subprocess
 import time
 
 import augeas
 from plinth import action_utils
 
+try:
+    from deluge import config
+except ImportError:
+    # deluge is not installed or is python2 version
+    config = None
+
 DELUGED_DEFAULT_FILE = '/etc/default/deluged'
-DELUGE_WEB_CONFIG_FILE = '/var/lib/deluged/.config/deluge/web.conf'
+DELUGE_CONF_DIR = '/var/lib/deluged/.config/deluge/'
 
 DELUGE_WEB_SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 DELUGE_WEB_SYSTEMD_SERVICE = '''
@@ -86,16 +93,38 @@ def _set_configuration(filename, parameter, value):
     if deluge_web_is_running:
         action_utils.service_stop('deluge-web')
 
-    for line in fileinput.FileInput(filename, inplace=True):
-        if '"{0}"'.format(parameter) in line:
-            print('  "{0}": "{1}", '.format(parameter, value))
-        else:
-            print(line, end='')
+    filepath = os.path.join(DELUGE_CONF_DIR, filename)
+    if config is None:
+        script = 'from deluge import config;\
+            conf = config.Config(filename="{0}");\
+            conf["{1}"] = "{2}";\
+            conf.save()'.format(filepath, parameter, value)
+        subprocess.check_call(['python2', '-c', script])
+    else:
+        conf = config.Config(filename=filepath)
+        conf[parameter] = value
+        conf.save()
+    shutil.chown(filepath, 'debian-deluged', 'debian-deluged')
 
     if deluged_is_running:
         action_utils.service_start('deluged')
     if deluge_web_is_running:
         action_utils.service_start('deluge-web')
+
+
+def _get_host_id():
+    """Get default host id."""
+    if config is None:
+        hosts_conf_file = os.path.join(DELUGE_CONF_DIR, 'hostlist.conf.1.2')
+        script = 'from deluge import config;\
+            conf = config.Config(filename="{0}");\
+            print(conf["hosts"][0][0])'.format(hosts_conf_file)
+        output = subprocess.check_output(['python2', '-c', script]).decode()
+        return output.strip()
+    else:
+        hosts_conf_file = os.path.join(DELUGE_CONF_DIR, 'hostlist.conf')
+        conf = config.Config(filename=hosts_conf_file)
+        return conf["hosts"][0][0]
 
 
 def _set_deluged_daemon_options():
@@ -130,8 +159,8 @@ def subcommand_setup(_):
 
     # configure deluge-web to autoconnect to the default deluged daemon, also
     # restarts deluged and deluge-web services again to create config files
-    _set_configuration(DELUGE_WEB_CONFIG_FILE, 'default_daemon',
-                       '127.0.0.1:58846')
+    host_id = _get_host_id()
+    _set_configuration('web.conf', 'default_daemon', host_id)
 
 
 def main():

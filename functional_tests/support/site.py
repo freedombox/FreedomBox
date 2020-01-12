@@ -320,8 +320,20 @@ def _deluge_get_active_window_title(browser):
 def _deluge_ensure_logged_in(browser):
     """Ensure that password dialog is answered and we can interact."""
     url = config['DEFAULT']['url'] + '/deluge'
+
+    def service_is_available():
+        if browser.is_element_present_by_xpath(
+                '//h1[text()="Service Unavailable"]'):
+            access_url(browser, 'deluge')
+            return False
+
+        return True
+
     if browser.url != url:
         browser.visit(url)
+        # After a backup restore, service may not be available immediately
+        eventually(service_is_available)
+
         time.sleep(1)  # Wait for Ext.js application in initialize
 
     if _deluge_get_active_window_title(browser) != 'Login':
