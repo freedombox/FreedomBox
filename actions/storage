@@ -23,6 +23,7 @@ import argparse
 import json
 import os
 import re
+import stat
 import subprocess
 import sys
 
@@ -33,6 +34,8 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup', help='Configure storage after install')
 
     subparser = subparsers.add_parser(
         'is-partition-expandable',
@@ -318,6 +321,20 @@ def umount_all_filesystems_of_drive(drive_object_path):
             continue
 
         umount_filesystem(obj.get_filesystem())
+
+
+def subcommand_setup(_):
+    """Configure storage."""
+    # create udisks2 default mount directory
+    mounts_directory = '/media/root'
+    try:
+        os.mkdir(mounts_directory)
+    except FileExistsError:
+        pass
+
+    # make the directory readable and traversible by other users
+    stats = os.stat(mounts_directory)
+    os.chmod(mounts_directory, stats.st_mode | stat.S_IROTH | stat.S_IXOTH)
 
 
 def subcommand_usage_info(_):

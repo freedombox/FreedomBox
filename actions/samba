@@ -24,7 +24,6 @@ import configparser
 import json
 import os
 import shutil
-import stat
 import subprocess
 
 SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
@@ -119,8 +118,6 @@ def _create_share(mount_point, share_type, windows_filesystem=False):
     shares_path = _get_shares_path(mount_point)
     share_path = os.path.join(mount_point, shares_path, subdir)
     os.makedirs(share_path, exist_ok=True)
-
-    _make_mounts_readable_by_others(mount_point)
 
     # FAT and NTFS partitions don't support setting permissions
     if not windows_filesystem:
@@ -233,13 +230,6 @@ def _get_shares_path(mount_point):
         return 'var/lib/freedombox/shares/'
 
     return 'FreedomBox/shares/'
-
-
-def _make_mounts_readable_by_others(mount_point):
-    """Make mounted devices readable/traversible by others."""
-    dirname = os.path.dirname(mount_point)
-    stats = os.stat(dirname)
-    os.chmod(dirname, stats.st_mode | stat.S_IROTH | stat.S_IXOTH)
 
 
 def _set_open_share_permissions(directory):
