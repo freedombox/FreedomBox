@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-30 20:43-0500\n"
+"POT-Creation-Date: 2020-01-13 18:08-0500\n"
 "PO-Revision-Date: 2019-09-13 05:23+0000\n"
 "Last-Translator: Anxin YI <2732146152@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -1075,7 +1075,7 @@ msgstr "更新安装程序"
 
 #: plinth/modules/diaspora/views.py:93 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:108
-#: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:155
+#: plinth/modules/mediawiki/views.py:79 plinth/modules/openvpn/views.py:155
 #: plinth/modules/tor/views.py:156 plinth/views.py:175
 msgid "Setting unchanged"
 msgstr "设置未改变"
@@ -1341,7 +1341,7 @@ msgid "ejabberd"
 msgstr ""
 
 #: plinth/modules/ejabberd/__init__.py:54
-#: plinth/modules/matrixsynapse/__init__.py:51
+#: plinth/modules/matrixsynapse/__init__.py:52
 #, fuzzy
 #| msgid "Web Server"
 msgid "Chat Server"
@@ -2496,7 +2496,7 @@ msgstr "成功为域名 {domain} 吊销证书"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "无法为 {domain} 撤销证书：{error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:47
+#: plinth/modules/matrixsynapse/__init__.py:48
 #, fuzzy
 #| msgid ""
 #| "Chat Server \n"
@@ -2506,7 +2506,7 @@ msgstr ""
 "聊天服务器\n"
 "（Matrix Synapse）"
 
-#: plinth/modules/matrixsynapse/__init__.py:54
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -2516,7 +2516,7 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:61
+#: plinth/modules/matrixsynapse/__init__.py:62
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -2606,16 +2606,16 @@ msgstr "应用程序已启用"
 msgid "Public registration disabled"
 msgstr "应用程序已禁用"
 
-#: plinth/modules/mediawiki/__init__.py:38
+#: plinth/modules/mediawiki/__init__.py:40
 #: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:42 plinth/templates/index.html:139
+#: plinth/modules/mediawiki/__init__.py:44 plinth/templates/index.html:139
 msgid "Wiki"
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:45
+#: plinth/modules/mediawiki/__init__.py:47
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -2623,7 +2623,7 @@ msgid ""
 "collaborate with friends on projects."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:49
+#: plinth/modules/mediawiki/__init__.py:51
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -2632,61 +2632,73 @@ msgid ""
 "CreateAccount\">Special:CreateAccount</a> page."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:55
+#: plinth/modules/mediawiki/__init__.py:57
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:30
+#: plinth/modules/mediawiki/forms.py:42
 #, fuzzy
 #| msgid "Administrator Account"
 msgid "Administrator Password"
 msgstr "管理员帐户"
 
-#: plinth/modules/mediawiki/forms.py:31
+#: plinth/modules/mediawiki/forms.py:43
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:36
+#: plinth/modules/mediawiki/forms.py:48
 #, fuzzy
 #| msgid "Enable application"
 msgid "Enable public registrations"
 msgstr "启用应用程序"
 
-#: plinth/modules/mediawiki/forms.py:37
+#: plinth/modules/mediawiki/forms.py:49
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:53
 #, fuzzy
 #| msgid "Enable creative mode"
 msgid "Enable private mode"
 msgstr "启用创意模式"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:54
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/forms.py:59
+#, fuzzy
+#| msgid "Default"
+msgid "Default Skin"
+msgstr "默认"
+
+#: plinth/modules/mediawiki/forms.py:60
+msgid ""
+"Choose a default skin for your MediaWiki installation. Users have the option "
+"to select their preferred skin."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:74
 #, fuzzy
 #| msgid "Password"
 msgid "Password updated"
 msgstr "密码"
 
-#: plinth/modules/mediawiki/views.py:89
+#: plinth/modules/mediawiki/views.py:93
 #, fuzzy
 #| msgid "Application enabled"
 msgid "Public registrations enabled"
 msgstr "应用程序已启用"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:102
 #, fuzzy
 #| msgid "Application disabled"
 msgid "Public registrations disabled"
@@ -2698,11 +2710,17 @@ msgstr "应用程序已禁用"
 msgid "Private mode enabled"
 msgstr "PageKite 已启用"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:114
 #, fuzzy
 #| msgid "PageKite disabled"
 msgid "Private mode disabled"
 msgstr "PageKite 已禁用"
+
+#: plinth/modules/mediawiki/views.py:122
+#, fuzzy
+#| msgid "Setting unchanged"
+msgid "Default skin changed"
+msgstr "设置未改变"
 
 #: plinth/modules/minetest/__init__.py:50
 #: plinth/modules/minetest/manifest.py:25
@@ -3699,13 +3717,13 @@ msgstr "间距"
 
 #: plinth/modules/networks/templates/connections_diagram.html:83
 #: plinth/modules/networks/templates/connections_diagram.html:113
-#: plinth/network.py:35
+#: plinth/network.py:39
 msgid "Ethernet"
 msgstr "以太网"
 
 #: plinth/modules/networks/templates/connections_diagram.html:86
 #: plinth/modules/networks/templates/connections_diagram.html:116
-#: plinth/network.py:36
+#: plinth/network.py:40
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -4822,25 +4840,31 @@ msgstr ""
 #: plinth/modules/security/templates/security_report.html:33
 msgid ""
 "The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. It also lists whether "
-"each service is using sandboxing features."
+"of security vulnerabilities for each installed app."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:42
+#: plinth/modules/security/templates/security_report.html:39
+msgid ""
+"For apps that provide services, the \"Sandboxed\" column shows whether "
+"sandboxing features are in use. Sandboxing mitigates the impact of a "
+"potentially compromised app to the rest of the system."
+msgstr ""
+
+#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Name"
 msgid "App Name"
 msgstr "名称"
 
-#: plinth/modules/security/templates/security_report.html:43
+#: plinth/modules/security/templates/security_report.html:49
 msgid "Current Vulnerabilities"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:44
+#: plinth/modules/security/templates/security_report.html:50
 msgid "Past Vulnerabilities"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:45
+#: plinth/modules/security/templates/security_report.html:51
 #, fuzzy
 #| msgid ""
 #| "Block Sandbox \n"
@@ -4850,17 +4874,17 @@ msgstr ""
 "方块沙盒\n"
 "（Minetest）"
 
-#: plinth/modules/security/templates/security_report.html:56
+#: plinth/modules/security/templates/security_report.html:62
 msgid "N/A"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:58
+#: plinth/modules/security/templates/security_report.html:64
 #, fuzzy
 #| msgid "yes"
 msgid "Yes"
 msgstr "是的"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:66
 msgid "No"
 msgstr ""
 
@@ -6264,11 +6288,11 @@ msgstr "更改密码"
 msgid "Password changed successfully."
 msgstr "已成功更改密码。"
 
-#: plinth/network.py:37
+#: plinth/network.py:41
 msgid "PPPoE"
 msgstr "PPPoE"
 
-#: plinth/network.py:38
+#: plinth/network.py:42
 msgid "Generic"
 msgstr "通用"
 
