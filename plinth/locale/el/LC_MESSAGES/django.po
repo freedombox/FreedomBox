@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-13 18:08-0500\n"
-"PO-Revision-Date: 2020-01-13 14:50+0000\n"
+"PO-Revision-Date: 2020-01-17 21:21+0000\n"
 "Last-Translator: Nektarios Katakis <iam@nektarioskatakis.xyz>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/plinth/"
 "el/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.1\n"
+"X-Generator: Weblate 3.10.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -2802,16 +2802,16 @@ msgstr ""
 "εγγραφές θα είναι επίσης απενεργοποιημένες."
 
 #: plinth/modules/mediawiki/forms.py:59
-#, fuzzy
-#| msgid "Default"
 msgid "Default Skin"
-msgstr "Προεπιλεγμένο"
+msgstr "Προεπιλεγμένη εμφάνιση"
 
 #: plinth/modules/mediawiki/forms.py:60
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
+"Επιλέξτε μια προκαθορισμένη εμφάνιση για την εγκατάσταση του wiki σας. Οι "
+"χρήστες έχουν την επιλογή να επιλέξουν την εμφάνιση που προτιμούν."
 
 #: plinth/modules/mediawiki/views.py:74
 msgid "Password updated"
@@ -2834,10 +2834,8 @@ msgid "Private mode disabled"
 msgstr "Η ιδιωτική λειτουργία απενεργοποιήθηκε"
 
 #: plinth/modules/mediawiki/views.py:122
-#, fuzzy
-#| msgid "Setting unchanged"
 msgid "Default skin changed"
-msgstr "Οι ρυθμίσεις δεν άλλαξαν"
+msgstr "Η προεπιλεγμένη εμφάνιση άλλαξε"
 
 #: plinth/modules/minetest/__init__.py:50
 #: plinth/modules/minetest/manifest.py:25
@@ -5034,18 +5032,12 @@ msgstr ""
 "ασφαλείας."
 
 #: plinth/modules/security/templates/security_report.html:33
-#, fuzzy
-#| msgid ""
-#| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app. It also lists "
-#| "whether each service is using sandboxing features."
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app."
 msgstr ""
 "Ο ακόλουθος πίνακας παραθέτει τον τρέχοντα αριθμό και το ιστορικό αδυναμιών "
-"ασφαλείας, για κάθε εγκατεστημένη εφαρμογή. Αναφέρει επίσης αν κάθε υπηρεσία "
-"χρησιμοποιεί δυνατότητες φιλτραρίσματος."
+"ασφαλείας, για κάθε εγκατεστημένη εφαρμογή."
 
 #: plinth/modules/security/templates/security_report.html:39
 msgid ""
@@ -5053,6 +5045,10 @@ msgid ""
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
+"Για εφαρμογές που παρέχουν υπηρεσίες, η στήλη \"Sandboxed\" εμφανίζει εάν "
+"χρησιμοποιούνται δυνατότητες της υπηρεσίας φιλτραρίσματος. Η δυνατότητα "
+"φιλτραρίσματος μετριάζει την επίδραση μιας ενδεχομένως παραβιάσιμης "
+"εφαρμογής στο υπόλοιπο σύστημα."
 
 #: plinth/modules/security/templates/security_report.html:48
 msgid "App Name"
@@ -5747,12 +5743,15 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"Υπάρχει %(expandable_root_size)s διαθέσιμος χώρος μετά το root διαμέρισμα. "
+"Το Root διαμέρισμα πρέπει να επεκταθεί για να χρησιμοποιήσετε αυτό το χώρο. "
+"Αυτό θα σας δώσει επιπλέον ελεύθερο χώρο για να αποθηκεύσετε τα αρχεία σας."
 
 #: plinth/modules/storage/templates/storage.html:102
 #: plinth/modules/storage/templates/storage_expand.html:39
 #: plinth/modules/storage/views.py:83
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Επεκτείνετε το διαμέρισμα root"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -5761,15 +5760,18 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Παρακαλούμε Δημιουργήστε αντίγραφα ασφαλείας των δεδομένων σας πριν "
+"προχωρήσετε.  Μετά από αυτήν τηv ενέργεια, %(expandable_root_size)s του "
+"ελεύθερου χώρου θα είναι διαθέσιμο στο root διαμέρισμα."
 
 #: plinth/modules/storage/views.py:95
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
-msgstr ""
+msgstr "Σφάλμα επέκτασης του διαμερίσματος: {exception}"
 
 #: plinth/modules/storage/views.py:98
 msgid "Partition expanded successfully."
-msgstr ""
+msgstr "Το διαμέρισμα επεκτάθηκε με επιτυχία."
 
 #: plinth/modules/storage/views.py:115
 #, no-python-format, python-brace-format
@@ -5777,29 +5779,31 @@ msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
 msgstr ""
+"Προειδοποίηση: χαμηλός χώρος στο διαμέρισμα του συστήματος ({percent_used}% "
+"χρησιμοποιείται, {free_space} είναι ελεύθερος)."
 
 #: plinth/modules/storage/views.py:141
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
+msgstr "{drive_vendor} {drive_model} μπορεί να αποσυνδεθεί με ασφάλεια."
 
 #: plinth/modules/storage/views.py:145
 msgid "Device can be safely unplugged."
-msgstr ""
+msgstr "Η συσκευή μπορεί να αποσυνδεθεί με ασφάλεια."
 
 #: plinth/modules/storage/views.py:155
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
-msgstr ""
+msgstr "Σφάλμα κατά την αφαίρεση της συσκευής: {error_message}"
 
 #: plinth/modules/syncthing/__init__.py:40
 #: plinth/modules/syncthing/manifest.py:28
 msgid "Syncthing"
-msgstr ""
+msgstr "Syncthing"
 
 #: plinth/modules/syncthing/__init__.py:44
 msgid "File Synchronization"
-msgstr ""
+msgstr "Συγχρονισμός αρχείων"
 
 #: plinth/modules/syncthing/__init__.py:47
 msgid ""
@@ -5808,6 +5812,10 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
+"Το Syncthing είναι μια εφαρμογή που συνγρονίζει τα αρχεία σε πολλές "
+"συσκευές, π.χ. τον επιτραπέζιο υπολογιστή και το κινητό σας τηλέφωνο.  Η "
+"δημιουργία, η τροποποίηση ή η διαγραφή αρχείων σε μία συσκευή θα αναπαραχθεί "
+"αυτόματα σε όλες τις άλλες συσκευές που εκτελούν επίσης το Syncthing."
 
 #: plinth/modules/syncthing/__init__.py:52
 #, python-brace-format
@@ -5819,18 +5827,26 @@ msgid ""
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
+"Η εκτέλεση του Syncthing στο {box_name} παρέχει ένα επιπλέον σημείο "
+"συγχρονισμού για τα δεδομένα σας, το οποίο είναι διαθέσιμο τον περισσότερο "
+"χρόνο, επιτρέποντας στις συσκευές σας να συγχρονίζονται συχνότερα.  Το "
+"{box_name} εκτελεί μια μεμονωμένη παρουσία του Syncthing που μπορεί να "
+"χρησιμοποιηθεί από πολλούς χρήστες.  Το σύνολο συσκευών κάθε χρήστη μπορεί "
+"να συγχρονιστεί με ένα ξεχωριστό σύνολο φακέλων.  Η σελίδα ιστού στο "
+"{box_name} είναι διαθέσιμη μόνο για χρήστες που ανήκουν στην ομάδα \"admin\" "
+"(διαχειριστών)."
 
 #: plinth/modules/syncthing/__init__.py:63
 msgid "Administer Syncthing application"
-msgstr ""
+msgstr "Διαχειριστείτε την εφαρμογή Syncthing"
 
 #: plinth/modules/tahoe/__init__.py:43
 msgid "Tahoe-LAFS"
-msgstr ""
+msgstr "Tahoe-LAFS"
 
 #: plinth/modules/tahoe/__init__.py:47
 msgid "Distributed File Storage"
-msgstr ""
+msgstr "Διανεμημένος χώρος αποθήκευσης αρχείων"
 
 #: plinth/modules/tahoe/__init__.py:134
 msgid ""
@@ -5839,6 +5855,11 @@ msgid ""
 "nodes. Even if some of the nodes fail, your files can be retrieved from the "
 "remaining nodes."
 msgstr ""
+"Το Tahoe-LAFS είναι ένα αποκεντρωμένο ασφαλές σύστημα αποθήκευσης αρχείων. "
+"Χρησιμοποιεί ασφαλεία που είναι ανεξάρτητη του παροχέα για να αποθηκεύσετε "
+"αρχεία πάνω από ένα κατανεμημένο δίκτυο κόμβων αποθηκευτικού χώρου. Ακόμα "
+"και αν κάποιοι κόμβοι αποτυγχάνουν, τα αρχεία μπορούν να ανακτηθούν από τους "
+"υπόλοιπους κόμβους."
 
 #: plinth/modules/tahoe/__init__.py:139
 #, python-brace-format
@@ -5847,6 +5868,9 @@ msgid ""
 "Additional introducers can be added, which will introduce this node to the "
 "other storage nodes."
 msgstr ""
+"Αυτό το {box_name} φιλοξενεί έναν κόμβο αποθήκευσης και έναν \"εισαγωγέα\" "
+"από προεπιλογή. Πρόσθετοι \"εισαγωγείς\" μπορούν να προστεθούν, οι οποίοι θα "
+"διαφημίσουν αυτόν τον κόμβο στους άλλους κόμβους αποθήκευσης."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:33
 #, python-format
@@ -5856,36 +5880,41 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
+"Το Tahoe-LAFS όνομα διαδικτύου έχει οριστεί σε <b>%(domain_name)s</b>. "
+"Αλλαγή του ονόματος διαδικτύου του FreedomBox χρειάζεται επανεγκατάσταση του "
+"Tahoe-LAFS και ΘΑ ΧΑΣΕΤΕ ΔΕΔΟΜΕΝΑ ΣΑΣ. Μπορείτε να αποκτήσετε πρόσβαση στο "
+"Tahoe-LAFS στη διεύθυνση URL <a href=\"https://%(domain_name)s:5678\""
+">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
-msgstr ""
+msgstr "Τοπικός εισαγωγέας"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:75
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:92
 msgid "Pet Name"
-msgstr ""
+msgstr "Όνομα \"κατοικίδιου\""
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:72
 msgid "Add new introducer"
-msgstr ""
+msgstr "Προσθέστε νέο εισαγωγέα"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:83
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:88
 msgid "Connected introducers"
-msgstr ""
+msgstr "Συνδεδεμένοι εισαγωγείς"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:105
 msgid "Remove"
-msgstr ""
+msgstr "Καταργήστε"
 
 #: plinth/modules/tor/__init__.py:47
 msgid "Tor"
-msgstr ""
+msgstr "Tor"
 
 #: plinth/modules/tor/__init__.py:52
 msgid ""
@@ -5895,53 +5924,60 @@ msgid ""
 "the <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">Tor Browser</a>."
 msgstr ""
+"Το Tor είναι ένα ανώνυμο σύστημα επικοινωνίας. Μπορείτε να μάθετε "
+"περισσότερα στη διεύθυνση URL<a href=\"https://www.torproject.org/\">Tor "
+"Project</a>. Για την καλύτερη προστασία όταν σερφάρετε το διαδίκτυο, το Tor "
+"Project συνιστά να χρησιμοποιήσετε το <a href=\"https://www.torproject.org/"
+"download/download-easy.html.en\">πρόγραμμα περιήγησης διαδικτύου Tor</a>."
 
 #: plinth/modules/tor/__init__.py:83
 msgid "Tor Onion Service"
-msgstr ""
+msgstr "Υπηρεσία κρεμυδιού Tor"
 
 #: plinth/modules/tor/__init__.py:87
 msgid "Tor Socks Proxy"
-msgstr ""
+msgstr "Tor διακομιστής μεσολάβησης τύπου socks5"
 
 #: plinth/modules/tor/__init__.py:91
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Γέφυρα/μεσολαβητής Tor"
 
 #: plinth/modules/tor/__init__.py:112
 msgid "Tor relay port available"
-msgstr ""
+msgstr "Θύρα μεσολαβητή Tor διαθέσιμη"
 
 #: plinth/modules/tor/__init__.py:122
 msgid "Obfs3 transport registered"
-msgstr ""
+msgstr "Obfs3 μεταφορά καταχωρήθηκε"
 
 #: plinth/modules/tor/__init__.py:132
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "Obfs4 μεταφορά καταχωρήθηκε"
 
 #: plinth/modules/tor/__init__.py:225
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr ""
+msgstr "Πρόσβαση στη διεύθυνση URL {url} με tcp {kind} μέσω του Tor"
 
 #: plinth/modules/tor/__init__.py:236
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr ""
+msgstr "Επιβεβαίωση χρήσης του Tor στο {url} στο προτόκολλο TCP {kind}"
 
 #: plinth/modules/tor/forms.py:46
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
 msgstr ""
+"Εισαγάγετε μια έγκυρη γέφυρα με αυτήν τη μορφή: [μεταφορά] IP: ORPort "
+"[αποτύπωμα]"
 
 #: plinth/modules/tor/forms.py:88
 msgid "Enable Tor"
-msgstr ""
+msgstr "Ενεργοποίηση Tor"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Χρησιμοποιήστε εξωτερικές γέφυρες για να συνδεθείτε στο δίκτυο Tor"
 
 #: plinth/modules/tor/forms.py:92
 msgid ""
@@ -5949,10 +5985,14 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Όταν είναι ενεργοποιημένες, οι γέφυρες που ρυθμίζονται παρακάτω θα "
+"χρησιμοποιηθούν για τη σύνδεση με το δίκτυο Tor. Χρησιμοποιήστε αυτήν την "
+"επιλογή εάν η υπηρεσία παροχής Internet (ISP) αποκλείει ή χρησιμοποιεί "
+"συνδέσεις στο δίκτυο Tor. Αυτό θα απενεργοποιήσει τh λειτουργία μεσολαβητή."
 
 #: plinth/modules/tor/forms.py:97
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Εξωτερικές γέφυρες"
 
 #: plinth/modules/tor/forms.py:99
 msgid ""
@@ -5960,10 +6000,14 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Μπορείτε να βρείτε μερικές γέφυρες στη διεύθυνση <a href = \""
+"https://bridges.torproject.org/\"> https://bridges.torproject.org/</a> και "
+"να αντιγράψετε τις πληροφορίες της γέφυρας εδώ. Οι τρέχουσες υποστηριζόμενες "
+"μεταφορές είναι 'καμία', obfs3, obfs4 και scamblesuit."
 
 #: plinth/modules/tor/forms.py:105
 msgid "Enable Tor relay"
-msgstr ""
+msgstr "Ενεργοποίηση μεσολαβητή Tor"
 
 #: plinth/modules/tor/forms.py:106
 #, python-brace-format
@@ -5972,10 +6016,13 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Όταν ενεργοποιηθεί, το {box_name} θα τρέξει ένα μεσολαβητή Tor και θα "
+"δωρίσει ένα μερος της ταχήτυτας της σύνδεσής σας στο δίκτυο Tor. Κάντε αυτό "
+"αν έχετε περισσότερα από 2 Mbps ταχύτητα μεταφόρτωσης και λήψης."
 
 #: plinth/modules/tor/forms.py:111
 msgid "Enable Tor bridge relay"
-msgstr ""
+msgstr "Ενεργοποίηση γέφυρας μεσολαβητή Tor"
 
 #: plinth/modules/tor/forms.py:113
 msgid ""
@@ -5983,10 +6030,14 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"Όταν είναι ενεργοποιημένη, οι πληροφορίες του μεσολαβητή δημοσιεύονται στη "
+"βάση δεδομένων της γέφυρας Tor αντί της δημόσιας βάσης δεδομένων μεσολαβητή "
+"Tor που καθιστά δυσκολότερη τη λογοκρισία αυτού του κόμβου. Αυτό βοηθά τους "
+"άλλους να παρακάμψουν τη λογοκρισία."
 
 #: plinth/modules/tor/forms.py:118
 msgid "Enable Tor Hidden Service"
-msgstr ""
+msgstr "Ενεργοποίηση της κρυφής υπηρεσίας Tor"
 
 #: plinth/modules/tor/forms.py:120
 #, python-brace-format
@@ -5995,10 +6046,13 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
+"Μια κρυφή υπηρεσία θα επιτρέψει στο {box_name} να παρέχει επιλεγμένες "
+"υπηρεσίες (όπως wiki ή chat) χωρίς να αποκαλύψει τη θέση της. Να μην "
+"χρησιμοποιείται για πληρη ανωνυμία παρόλαυτα."
 
 #: plinth/modules/tor/forms.py:125
 msgid "Download software packages over Tor"
-msgstr ""
+msgstr "Κατεβάστε πακέτα λογισμικού μέσω του Tor"
 
 #: plinth/modules/tor/forms.py:126
 msgid ""
@@ -6006,34 +6060,39 @@ msgid ""
 "installations and upgrades. This adds a degree of privacy and security "
 "during software downloads."
 msgstr ""
+"Όταν ενεργοποιηθεί, θα γίνει λήψη του λογισμικού μέσω του δικτύου Tor για "
+"εγκαταστάσεις και αναβαθμίσεις. Αυτό προσθέτει ένα βαθμό ιδιωτικότητας και "
+"ασφάλειας κατά τη λήψη λογισμικού."
 
 #: plinth/modules/tor/forms.py:141
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
+"Καθορίστε τουλάχιστον μία εξωτερική γέφυρα για να χρησιμοποιήσετε εξωτερικές "
+"γέφυρες."
 
 #: plinth/modules/tor/manifest.py:29
 msgid "Tor Browser"
-msgstr ""
+msgstr "Tor πρόγραμμα περιήγησης"
 
 #: plinth/modules/tor/manifest.py:45
 msgid "Orbot: Proxy with Tor"
-msgstr ""
+msgstr "Orbot: διακομιστής μεσολάβησης με Tor"
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
-msgstr ""
+msgstr "Οι ρυθμίσεις Tor ενημερώνονται"
 
 #: plinth/modules/tor/templates/tor.html:50
 msgid "Onion Service"
-msgstr ""
+msgstr "Υπηρεσία κρεμμυδιού"
 
 #: plinth/modules/tor/templates/tor.html:52
 msgid "Ports"
-msgstr ""
+msgstr "Θύρες"
 
 #: plinth/modules/tor/templates/tor.html:82
 msgid "Relay"
-msgstr ""
+msgstr "Μεσολαβητής"
 
 #: plinth/modules/tor/templates/tor.html:84
 #, python-format
@@ -6041,38 +6100,44 @@ msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
 "the following ports are open, and port-forwarded, if necessary:"
 msgstr ""
+"Εάν το %(box_name)s βρίσκεται πίσω από ένα δρομολογητή ή τείχος προστασίας, "
+"θα πρέπει να βεβαιωθείτε ότι οι ακόλουθες θύρες είναι ανοιχτές και ότι οι "
+"θύρες προωθούνται, εάν είναι απαραίτητο:"
 
 #: plinth/modules/tor/templates/tor.html:112
 msgid "SOCKS"
-msgstr ""
+msgstr "SOCKS"
 
 #: plinth/modules/tor/templates/tor.html:115
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
-msgstr ""
+msgstr "Μια θύρα Tor SOCKS είναι διαθέσιμη στη θύρα 9050 του %(box_name)s σας."
 
 #: plinth/modules/transmission/__init__.py:41
 #: plinth/modules/transmission/manifest.py:24
 msgid "Transmission"
-msgstr ""
+msgstr "Transmission"
 
 #: plinth/modules/transmission/__init__.py:48
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
 msgstr ""
+"Το BitTorrent είναι ένα ομότιμο πρωτόκολλο κοινής χρήσης αρχείων. To "
+"πρόγραμμα Transmission χειρίζεται την κοινή χρήση αρχείων bitorrent.  "
+"Σημειώστε ότι το BitTorrent δεν είναι ανώνυμο."
 
 #: plinth/modules/transmission/forms.py:35
 msgid "Download directory"
-msgstr ""
+msgstr "Κατάλογος λήψεων"
 
 #: plinth/modules/ttrss/__init__.py:43 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
-msgstr ""
+msgstr "Tiny Tiny RSS"
 
 #: plinth/modules/ttrss/__init__.py:47
 msgid "News Feed Reader"
-msgstr ""
+msgstr "Αναγνώστης ειδήσεων"
 
 #: plinth/modules/ttrss/__init__.py:50
 msgid ""
@@ -6080,6 +6145,9 @@ msgid ""
 "allow reading news from any location, while feeling as close to a real "
 "desktop application as possible."
 msgstr ""
+"Το tiny tiny RSS είναι ένας αναγνώστης και συλλέκτης ειδήσεων (RSS/Atom), "
+"σχεδιασμένος να επιτρέπει την ανάγνωση ειδήσεων από οποιαδήποτε τοποθεσία, "
+"ενώ δίνει την εντύπωση μιας πραγματικής εφαρμογής επιφάνειας εργασίας."
 
 #: plinth/modules/ttrss/__init__.py:54
 #, python-brace-format
@@ -6087,6 +6155,8 @@ msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
+"Όταν είναι ενεργοποιημένο, το Tiny Tiny RSS είναι προσβάσιμο από κάθε <a "
+"href=\"{users_url}\">χρήστη με {box_name} πιστοποιητικά</a>."
 
 #: plinth/modules/ttrss/__init__.py:58
 msgid ""
@@ -6094,38 +6164,44 @@ msgid ""
 "href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
 "connecting."
 msgstr ""
+"Όταν χρησιμοποιείτε μια εφαρμογή επιτραπέζιου υπολογιστή ή κινητού για το "
+"Tiny Tiny RSS, χρησιμοποιήστε τη διεύθυνση URL <a href = \"/tt-rss-app/\" "
+"data-turbolinks=\"false\">/tt-rss-app </a> για τη σύνδεση."
 
 #: plinth/modules/ttrss/__init__.py:65
 msgid "Read and subscribe to news feeds"
-msgstr ""
+msgstr "Διαβάστε και εγγραφείτε τροφοδοσίες ειδήσεων"
 
 #: plinth/modules/ttrss/manifest.py:25
 msgid "Tiny Tiny RSS (Fork)"
-msgstr ""
+msgstr "Tiny Tiny RSS (Fork)"
 
 #: plinth/modules/upgrades/__init__.py:35 plinth/templates/setup.html:89
 msgid "Update"
-msgstr ""
+msgstr "Ενημερωμένη έκδοση"
 
 #: plinth/modules/upgrades/__init__.py:38
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
+"Ελέγξτε και εφαρμόστε τις πιο πρόσφατες ενημερώσεις λογισμικού και ασφαλείας."
 
 #: plinth/modules/upgrades/forms.py:28
 msgid "Enable auto-update"
-msgstr ""
+msgstr "Ενεργοποίηση αυτόματων ενημερώσεων"
 
 #: plinth/modules/upgrades/forms.py:29
 msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr ""
+"Όταν είναι ενεργοποιημένες, το Freedombox ενημερώνεται αυτόματα μία φορά την "
+"ημέρα."
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid "Update now"
-msgstr ""
+msgstr "Ενημέρωση τώρα"
 
 #: plinth/modules/upgrades/templates/upgrades.html:54
 msgid "Updating..."
-msgstr ""
+msgstr "Eνημερώνεται..."
 
 #: plinth/modules/upgrades/templates/upgrades.html:59
 msgid ""
@@ -6133,45 +6209,50 @@ msgid ""
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
+"<strong> αυτό μπορεί να διαρκέσει πολύ χρόνο για να ολοκληρωθεί </strong>. "
+"Κατά τη διάρκεια μιας ενημέρωσης, δεν μπορείτε να εγκαταστήσετε εφαρμογές. "
+"Επίσης, αυτή η ιστοσελίδα ενδέχεται να μην είναι διαθέσιμη προσωρινά και να "
+"εμφανίσει σφάλμα. Σε αυτήν την περίπτωση, ανανεώστε τη σελίδα για να "
+"συνεχίσετε."
 
 #: plinth/modules/upgrades/templates/upgrades.html:73
 msgid "Toggle recent update logs"
-msgstr ""
+msgstr "Ενεργοποίηση αρχείων καταγραφής πρόσφατων ενημερώσεων"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:27
 #: plinth/modules/upgrades/views.py:107
 msgid "Manual update"
-msgstr ""
+msgstr "Μη αυτόματη ενημέρωση"
 
 #: plinth/modules/upgrades/views.py:66
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
-msgstr ""
+msgstr "Σφάλμα κατά τη ρύθμιση των αυτόματων ενημερώσεων: {error}"
 
 #: plinth/modules/upgrades/views.py:70
 msgid "Automatic upgrades enabled"
-msgstr ""
+msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
 
 #: plinth/modules/upgrades/views.py:73
 msgid "Automatic upgrades disabled"
-msgstr ""
+msgstr "Oι αυτόματες ενημερώσεις απενεργοποιήθηκαν"
 
 #: plinth/modules/upgrades/views.py:75
 msgid "Settings unchanged"
-msgstr ""
+msgstr "Οι ρυθμίσεις δεν άλλαξαν"
 
 #: plinth/modules/upgrades/views.py:101
 msgid "Upgrade process started."
-msgstr ""
+msgstr "Ξεκίνησε η διαδικασία αναβάθμισης."
 
 #: plinth/modules/upgrades/views.py:104
 msgid "Starting upgrade failed."
-msgstr ""
+msgstr "Η εκκίνηση της αναβάθμισης απέτυχε."
 
 #: plinth/modules/users/__init__.py:51
 msgid "Users and Groups"
-msgstr ""
+msgstr "Χρήστες και ομάδες"
 
 #: plinth/modules/users/__init__.py:54
 msgid ""
@@ -6179,6 +6260,11 @@ msgid ""
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
+"Δημιουργία και διαχείριση λογαριασμών χρηστών. Αυτοί οι λογαριασμοί "
+"χρησιμεύουν ως κεντρικός μηχανισμός ελέγχου ταυτότητας για τις περισσότερες "
+"εφαρμογές. Ορισμένες εφαρμογές απαιτούν επιπλέον ένα λογαριασμό χρήστη να "
+"είναι μέρος μιας ομάδας για να εξουσιοδοτήσουν το χρήστη να αποκτήσει "
+"πρόσβαση στην εφαρμογή."
 
 #: plinth/modules/users/__init__.py:59
 #, python-brace-format
@@ -6187,23 +6273,27 @@ msgid ""
 "relevant to them in the home page. However, only users of the <em>admin</em> "
 "group may alter apps or system settings."
 msgstr ""
+"Οποιοσδήποτε χρήστης μπορεί να συνδεθεί στην ιστοσελίδα του {box_name} για "
+"να δει μια λίστα με τις εφαρμογές που σχετίζονται με αυτόν στην αρχική "
+"σελίδα. Ωστόσο, μόνο οι χρήστες της ομάδας <em>admin</em> μπορούν να "
+"τροποποιήσουν τις εφαρμογές ή τις ρυθμίσεις του συστήματος."
 
 #: plinth/modules/users/__init__.py:128
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
-msgstr ""
+msgstr "Ελέγξτε την καταχώρηση LDAP \"{search_item}\""
 
 #: plinth/modules/users/forms.py:40
 msgid "Access to all services and system settings"
-msgstr ""
+msgstr "Πρόσβαση σε όλες τις υπηρεσίες και τις ρυθμίσεις συστήματος"
 
 #: plinth/modules/users/forms.py:54
 msgid "Username is taken or is reserved."
-msgstr ""
+msgstr "Το όνομα χρήστη είναι δεσμευμένο."
 
 #: plinth/modules/users/forms.py:86 plinth/modules/users/forms.py:193
 msgid "Permissions"
-msgstr ""
+msgstr "Δικαιώματα"
 
 #: plinth/modules/users/forms.py:89
 msgid ""
@@ -6213,19 +6303,25 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
+"Επιλέξτε ποιες υπηρεσίες πρέπει να είναι διαθέσιμες στον νέο χρήστη. Ο "
+"χρήστης θα μπορεί να συνδεθεί σε υπηρεσίες που υποστηρίζουν την ενιαία "
+"σύνδεση μέσω του LDAP, εάν βρίσκονται στην κατάλληλη ομάδα. <br /><br />Oι "
+"χρήστες της ομάδας διαχειριστών θα μπορούν να συνδεθούν σε όλες τις "
+"υπηρεσίες. Μπορούν επίσης να συνδεθούν στο σύστημα μέσω του SSH και να έχουν "
+"δικαιώματα διαχειριστή (sudo)."
 
 #: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:339
 msgid "Creating LDAP user failed."
-msgstr ""
+msgstr "Η δημιουργία χρήστη LDAP απέτυχε."
 
 #: plinth/modules/users/forms.py:135
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
-msgstr ""
+msgstr "Απέτυχε η προσθήκη νέου χρήστη στην ομάδα {group}."
 
 #: plinth/modules/users/forms.py:148
 msgid "Authorized SSH Keys"
-msgstr ""
+msgstr "Εξουσιοδοτημένα κλειδιά SSH"
 
 #: plinth/modules/users/forms.py:150
 msgid ""
@@ -6233,81 +6329,85 @@ msgid ""
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
+"Η ρύθμιση ενός δημόσιου κλειδιού SSH θα επιτρέψει σε αυτόν το χρήστη να "
+"συνδεθεί με ασφάλεια στο σύστημα χωρίς να χρησιμοποιήσει κωδικό πρόσβασης. "
+"Μπορείτε να εισαγάγετε πολλαπλά κλειδιά, ένα σε κάθε γραμμή. Οι κενές "
+"γραμμές και οι γραμμές που ξεκινούν με # θα αγνοηθούν."
 
 #: plinth/modules/users/forms.py:230
 msgid "Renaming LDAP user failed."
-msgstr ""
+msgstr "Η μετονομασία του χρήστη LDAP απέτυχε."
 
 #: plinth/modules/users/forms.py:242
 msgid "Failed to remove user from group."
-msgstr ""
+msgstr "Απέτυχε η κατάργηση του χρήστη από την ομάδα."
 
 #: plinth/modules/users/forms.py:253
 msgid "Failed to add user to group."
-msgstr ""
+msgstr "Απέτυχε η προσθήκη χρήστη στην ομάδα."
 
 #: plinth/modules/users/forms.py:262
 msgid "Unable to set SSH keys."
-msgstr ""
+msgstr "Δεν ήταν δυνατό να προστεθούν τα κλειδιά SSH."
 
 #: plinth/modules/users/forms.py:277
 msgid "Failed to change user status."
-msgstr ""
+msgstr "Απέτυχε η αλλαγή της κατάστασης χρήστη."
 
 #: plinth/modules/users/forms.py:285
 msgid "Cannot delete the only administrator in the system."
-msgstr ""
+msgstr "Δεν είναι δυνατή η διαγραφή του μοναδικού διαχειριστή στο σύστημα."
 
 #: plinth/modules/users/forms.py:315
 msgid "Changing LDAP user password failed."
-msgstr ""
+msgstr "Η αλλαγή του κωδικού πρόσβασης χρήστη LDAP απέτυχε."
 
 #: plinth/modules/users/forms.py:348
 msgid "Failed to add new user to admin group."
-msgstr ""
+msgstr "Αποτυχία προσθήκης νέου χρήστη στην ομάδα διαχειριστών."
 
 #: plinth/modules/users/forms.py:365
 msgid "Failed to restrict console access."
-msgstr ""
+msgstr "Απέτυχε ο περιορισμός της πρόσβασης στην κονσόλα."
 
 #: plinth/modules/users/forms.py:377
 msgid "User account created, you are now logged in"
-msgstr ""
+msgstr "Ο λογαριασμός χρήστη δημιουργήθηκε, τώρα είστε συνδεδεμένοι"
 
 #: plinth/modules/users/templates/users_change_password.html:26
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
-msgstr ""
+msgstr "Αλλαγή κωδικού πρόσβασης για το <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_change_password.html:36
 msgid "Save Password"
-msgstr ""
+msgstr "Αποθήκευση κωδικού πρόσβασης"
 
 #: plinth/modules/users/templates/users_create.html:32
 #: plinth/modules/users/templates/users_list.html:42
 #: plinth/modules/users/templates/users_list.html:44
 #: plinth/modules/users/views.py:57
 msgid "Create User"
-msgstr ""
+msgstr "Δημιουργία χρήστη"
 
 #: plinth/modules/users/templates/users_delete.html:26
 #: plinth/modules/users/views.py:139
 msgid "Delete User"
-msgstr ""
+msgstr "Διαγραφή χρήστη"
 
 #: plinth/modules/users/templates/users_delete.html:29
 #, python-format
 msgid "Delete user <strong>%(username)s</strong> permanently?"
-msgstr ""
+msgstr "Να διαγραφεί οριστικά ο χρήστης <strong>%(username)s </strong>;"
 
 #: plinth/modules/users/templates/users_delete.html:38
 #, python-format
 msgid "Delete %(username)s"
-msgstr ""
+msgstr "Διαγραφή %(username)s"
 
 #: plinth/modules/users/templates/users_firstboot.html:26
 msgid "Administrator Account"
-msgstr ""
+msgstr "Λογαριασμός διαχειριστή"
 
 #: plinth/modules/users/templates/users_firstboot.html:29
 msgid ""
@@ -6315,25 +6415,29 @@ msgid ""
 "can be changed later. This user will be granted administrative privileges. "
 "Other users can be added later."
 msgstr ""
+"Επιλέξτε ένα όνομα χρήστη και έναν κωδικό πρόσβασης για να αποκτήσετε "
+"πρόσβαση στην ιστοσελίδα. Ο κωδικός πρόσβασης μπορεί να αλλάξει αργότερα. Σε "
+"αυτόν το χρήστη θα εκχωρούνται δικαιώματα διαχείρισης. Άλλοι χρήστες μπορούν "
+"να προστεθούν αργότερα."
 
 #: plinth/modules/users/templates/users_firstboot.html:42
 msgid "Create Account"
-msgstr ""
+msgstr "Δημιουργία λογαριασμού"
 
 #: plinth/modules/users/templates/users_list.html:38
 #: plinth/modules/users/views.py:74
 msgid "Users"
-msgstr ""
+msgstr "Χρήστες"
 
 #: plinth/modules/users/templates/users_list.html:57
 #, python-format
 msgid "Delete user %(username)s"
-msgstr ""
+msgstr "Διαγραφή χρήστη %(username)s"
 
 #: plinth/modules/users/templates/users_list.html:65
 #, python-format
 msgid "Edit user %(username)s"
-msgstr ""
+msgstr "Επεξεργασία χρήστη %(username)s"
 
 #: plinth/modules/users/templates/users_update.html:30
 #, python-format
@@ -6341,89 +6445,92 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
+"Χρησιμοποιήστε τη <a href='%(change_password_url)s'> φόρμα αλλαγής κωδικού "
+"πρόσβασης </a> για να αλλάξετε τον κωδικό πρόσβασης."
 
 #: plinth/modules/users/templates/users_update.html:42
 #: plinth/templates/language-selection.html:32
 msgid "Save Changes"
-msgstr ""
+msgstr "Αποθήκευση αλλαγών"
 
 #: plinth/modules/users/views.py:55
 #, python-format
 msgid "User %(username)s created."
-msgstr ""
+msgstr "Ο χρήστης %(username)s δημιουργήθηκε."
 
 #: plinth/modules/users/views.py:93
 #, python-format
 msgid "User %(username)s updated."
-msgstr ""
+msgstr "O χρήστης %(username)s ενημερώθηκε."
 
 #: plinth/modules/users/views.py:94
 msgid "Edit User"
-msgstr ""
+msgstr "Επεξεργασία χρήστη"
 
 #: plinth/modules/users/views.py:149
 #, python-brace-format
 msgid "User {user} deleted."
-msgstr ""
+msgstr "Ο χρήστης {user} διαγράφηκε."
 
 #: plinth/modules/users/views.py:156
 msgid "Deleting LDAP user failed."
-msgstr ""
+msgstr "Η διαγραφή του χρήστη LDAP απέτυχε."
 
 #: plinth/modules/users/views.py:165
 msgid "Change Password"
-msgstr ""
+msgstr "Αλλαγή κωδικού πρόσβασης"
 
 #: plinth/modules/users/views.py:166
 msgid "Password changed successfully."
-msgstr ""
+msgstr "Ο κωδικός πρόσβασης άλλαξε με επιτυχία."
 
 #: plinth/network.py:41
 msgid "PPPoE"
-msgstr ""
+msgstr "PPPoE"
 
 #: plinth/network.py:42
 msgid "Generic"
-msgstr ""
+msgstr "Γενικός"
 
 #: plinth/package.py:137
 msgid "Error during installation"
-msgstr ""
+msgstr "Σφάλμα κατά την εγκατάσταση"
 
 #: plinth/package.py:159
 msgid "installing"
-msgstr ""
+msgstr "Εγκαθίσταται"
 
 #: plinth/package.py:161
 msgid "downloading"
-msgstr ""
+msgstr "Λήψη"
 
 #: plinth/package.py:163
 msgid "media change"
-msgstr ""
+msgstr "Αλλαγή μέσου"
 
 #: plinth/package.py:165
 #, python-brace-format
 msgid "configuration file: {file}"
-msgstr ""
+msgstr "αρχείο ρυθμίσεων: {file}"
 
 #: plinth/templates/403.html:25
 msgid "403 Forbidden"
-msgstr ""
+msgstr "403 Απαγορεύεται"
 
 #: plinth/templates/403.html:29
 #, python-format
 msgid "You don't have permission to access %(request_path)s on this server."
 msgstr ""
+"Δεν έχετε δικαίωμα πρόσβασης στο %(request_path)s σε αυτόν το διακομιστή."
 
 #: plinth/templates/404.html:25
 msgid "404"
-msgstr ""
+msgstr "404"
 
 #: plinth/templates/404.html:28
 #, python-format
 msgid "Requested page %(request_path)s was not found."
-msgstr ""
+msgstr "Η σελίδα %(request_path)s που ζητήθηκε δεν βρέθηκε."
 
 #: plinth/templates/404.html:34
 msgid ""
@@ -6431,10 +6538,14 @@ msgid ""
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
 "freedombox-team/plinth/issues\">issue tracker</a>."
 msgstr ""
+"Αν πιστεύετε ότι αυτή η σελίδα που λείπει θα πρέπει να υπάρχει, παρακαλούμε "
+"να υποβάλετε ένα σφάλμα στo πρόγραμμα Plinth του πρότζεκτ Freedombox <a href "
+"= \"https://salsa.debian.org/freedombox-team/plinth/issues\">issue "
+"tracker</a>."
 
 #: plinth/templates/500.html:25
 msgid "500"
-msgstr ""
+msgstr "500"
 
 #: plinth/templates/500.html:29
 #, python-format
