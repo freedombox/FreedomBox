@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-13 18:08-0500\n"
-"PO-Revision-Date: 2019-12-31 01:40+0000\n"
-"Last-Translator: erlendnagel <erlend_nagel@yahoo.com>\n"
+"POT-Creation-Date: 2019-12-30 20:43-0500\n"
+"PO-Revision-Date: 2020-01-14 00:56+0000\n"
+"Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
 "nl/>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.11-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -30,10 +30,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is running."
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Service <em>%(service_name)s</em> wordt uitgevoerd."
+msgstr "Service {service_name} wordt uitgevoerd"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -208,6 +207,8 @@ msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
 msgstr ""
+"\"Sleutel in archief\" wil zeggen dat een sleutel, beschermd met een "
+"wachtwoord, is opgeslagen in de backup."
 
 #: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:275
 msgid "Passphrase"
@@ -299,7 +300,7 @@ msgstr "SSH toegang geweigerd"
 
 #: plinth/modules/backups/repository.py:78
 msgid "Repository path is neither empty nor is an existing backups repository."
-msgstr ""
+msgstr "Het opslag pad is niet leeg, en ook geen lege bestaande backup opslag."
 
 #: plinth/modules/backups/repository.py:152
 msgid "Existing repository is not encrypted."
@@ -648,19 +649,13 @@ msgstr ""
 "Er is ook een webgebaseerde terminal beschikbaar voor consoleactiviteiten."
 
 #: plinth/modules/cockpit/__init__.py:59
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+#, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"Indien ingeschakeld, is Cockpit beschikbaar op het <a href=\"/_cockpit/\">/"
-"_cockpit/</a> pad op de webserver. Het kan geraadpleegd worden door <a href="
-"\"{users_url}\">iedere gebruiker</a>  op {box_name} die lid is van de "
-"systeembeheerdergroep (admin)."
+"Het kan geraadpleegd worden door <a href=\"{users_url}\">iedere gebruiker</a>"
+" op {box_name} die lid is van de systeembeheerdergroep (admin)."
 
 #: plinth/modules/cockpit/__init__.py:63
 msgid ""
@@ -824,19 +819,14 @@ msgid "File Sharing"
 msgstr "Delen van bestanden"
 
 #: plinth/modules/coquelicot/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "Coquelicot is a “one-click” file sharing web application with a focus on "
-#| "protecting users’ privacy. It is best used for quickly sharing a single "
-#| "file. "
 msgid ""
 "Coquelicot is a \"one-click\" file sharing web application with a focus on "
 "protecting users' privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
 "Coquelicot is een programma om snel en eenvoudig bestanden te delen. Het is "
-"ontworpen zodat de privacy van gebruikers wordt beschermd.  Coquelicot is "
-"bij uitstek geschikt om gemakkelijk een enkel bestand te delen. "
+"ontworpen zodat de privacy van gebruikers wordt beschermd. Coquelicot is bij "
+"uitstek geschikt om gemakkelijk een enkel bestand te delen. "
 
 #: plinth/modules/coquelicot/__init__.py:48
 msgid ""
@@ -946,19 +936,12 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge is een BitTorrent Cliënt met web-bediening."
 
 #: plinth/modules/deluge/__init__.py:47
-#, fuzzy
-#| msgid ""
-#| "When enabled, the Deluge web client will be available from <a href=\"/"
-#| "deluge\">/deluge</a> path on the web server. The default password is "
-#| "'deluge', but you should log in and change it immediately after enabling "
-#| "this service."
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr ""
-"Indien ingeschakeld, is de Deluge web-client beschikbaar via het <a href=\"/"
-"deluge\">/deluge</a> pad op de webserver. Het standaardwachtwoord is "
-"'deluge', maar dit moet zo snel mogelijk na activering gewijzigd worden."
+"Het standaardwachtwoord is 'deluge', maar dit moet zo snel mogelijk na "
+"activering gewijzigd worden."
 
 #: plinth/modules/deluge/__init__.py:51
 #: plinth/modules/transmission/__init__.py:57
@@ -1010,10 +993,8 @@ msgid "Diagnostic Results"
 msgstr "Resultaten Diagnostische test"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
-#, fuzzy
-#| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
-msgstr "Deze module heeft geen diagnosetests"
+msgstr "Deze applicatie heeft geen diagnosetests"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
@@ -1497,18 +1478,14 @@ msgstr ""
 "firewall vermindert het risico op beveiligingsrisico's vanuit internet."
 
 #: plinth/modules/firewall/components.py:130
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr ""
-"<em>%(service_name)s</em> is alleen beschikbaar binnen interne netwerken."
+msgstr "Poort {name} ({details}) is beschikbaar binnen interne netwerken"
 
 #: plinth/modules/firewall/components.py:138
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr ""
-"<em>%(service_name)s</em> is alleen beschikbaar binnen interne netwerken."
+msgstr "Poort {name} ({details})is beschikbaar voor externe netwerken"
 
 #: plinth/modules/firewall/components.py:143
 #, python-brace-format
@@ -1651,10 +1628,8 @@ msgid "Read-write access to Git repositories"
 msgstr ""
 
 #: plinth/modules/gitweb/forms.py:59
-#, fuzzy
-#| msgid "Invalid hostname"
 msgid "Invalid repository URL."
-msgstr "Foutieve hostnaam"
+msgstr "Ongeldige repository URL."
 
 #: plinth/modules/gitweb/forms.py:69
 #, fuzzy
@@ -1816,7 +1791,7 @@ msgstr "Documentatie"
 #: plinth/modules/networks/forms.py:94 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
-msgstr "Handmatig"
+msgstr "Handleiding"
 
 #: plinth/modules/help/__init__.py:47 plinth/modules/help/help.py:58
 #: plinth/modules/help/templates/help_support.html:24
