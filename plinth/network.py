@@ -307,11 +307,22 @@ def _update_common_settings(connection, connection_uuid, common):
         connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_CONNECTION_UUID, connection_uuid)
-    settings.set_property(nm.SETTING_CONNECTION_ID, common['name'])
-    settings.set_property(nm.SETTING_CONNECTION_TYPE, common['type'])
-    settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME,
-                          common['interface'])
-    settings.set_property(nm.SETTING_CONNECTION_ZONE, common['zone'])
+    if 'name' in common:
+        settings.set_property(nm.SETTING_CONNECTION_ID, common['name'])
+
+    if 'type' in common:
+        settings.set_property(nm.SETTING_CONNECTION_TYPE, common['type'])
+
+    if 'interface' in common:
+        settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME,
+                              common['interface'])
+
+    if 'zone' in common:
+        settings.set_property(nm.SETTING_CONNECTION_ZONE, common['zone'])
+
+    if 'autoconnect' in common:
+        settings.set_property(nm.SETTING_CONNECTION_AUTOCONNECT,
+                              common['autoconnect'])
 
     return connection
 
