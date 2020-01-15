@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-13 18:08-0500\n"
-"PO-Revision-Date: 2020-01-07 06:21+0000\n"
+"PO-Revision-Date: 2020-01-17 21:21+0000\n"
 "Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 3.10.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -28,10 +28,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is running."
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Le service <em>%(service_name)s</em> est en fonctionnement."
+msgstr "Le service {service_name} est en fonctionnement."
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -1035,10 +1034,8 @@ msgid "Diagnostic Results"
 msgstr "Résultats des diagnostics"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
-#, fuzzy
-#| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
-msgstr "Ce module n'est pas compatible avec les tests de diagnostic"
+msgstr "Cette application n'est pas compatible avec les tests de diagnostic."
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
@@ -1532,18 +1529,14 @@ msgstr ""
 "Internet."
 
 #: plinth/modules/firewall/components.py:130
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr ""
-"<em>%(service_name)s</em> n'est disponible que sur les réseaux internes."
+msgstr "Port {name} ({détails}) disponible pour les réseaux internes"
 
 #: plinth/modules/firewall/components.py:138
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr ""
-"<em>%(service_name)s</em> n'est disponible que sur les réseaux internes."
+msgstr "Port {name} ({détails}) disponible pour les réseaux externes"
 
 #: plinth/modules/firewall/components.py:143
 #, python-brace-format
@@ -2778,16 +2771,16 @@ msgstr ""
 "sur ce wiki. Les inscriptions publiques sont également désactivées."
 
 #: plinth/modules/mediawiki/forms.py:59
-#, fuzzy
-#| msgid "Default"
 msgid "Default Skin"
-msgstr "Défaut"
+msgstr "Thème par défaut"
 
 #: plinth/modules/mediawiki/forms.py:60
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
+"Choisissez un thème par défaut pour votre installation de MediaWiki. Les "
+"utilisateurs peuvent sélectionner leur thème préféré."
 
 #: plinth/modules/mediawiki/views.py:74
 msgid "Password updated"
@@ -2810,10 +2803,8 @@ msgid "Private mode disabled"
 msgstr "Mode privé désactivé"
 
 #: plinth/modules/mediawiki/views.py:122
-#, fuzzy
-#| msgid "Setting unchanged"
 msgid "Default skin changed"
-msgstr "Paramètre inchangé"
+msgstr "Thème par défaut changé"
 
 #: plinth/modules/minetest/__init__.py:50
 #: plinth/modules/minetest/manifest.py:25
@@ -4727,11 +4718,7 @@ msgstr ""
 "d’autres machines de votre réseau local."
 
 #: plinth/modules/samba/__init__.py:56
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "After installation, you can choose which disks to use for sharing. "
-#| "Enabled {hostname} shares are open to everyone in your local network and "
-#| "are accessible under Network section in the file manager on your computer."
+#, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
 "shares are accessible in the file manager on your computer at location \\"
@@ -4739,42 +4726,41 @@ msgid ""
 "There are three types of shares you can choose from: "
 msgstr ""
 "Après l’installation, vous pouvez choisir quels disques utiliser pour le "
-"partage. Les partages {hostname} activés sont ouverts à toutes les personnes "
-"de votre réseau local et sont accessibles dans la section Réseau du "
-"gestionnaire de fichiers de votre ordinateur."
+"partage. Les partages activés sont accessibles dans le gestionnaire de "
+"fichier de votre ordinateur à l’emplacement \\\\{hostname} (sur Windows) ou "
+"smb://{hostname}.local (sur Linux et Mac). Vous pouvez choisir parmi trois "
+"types de partages : "
 
 #: plinth/modules/samba/__init__.py:61
 msgid "Open share - accessible to everyone in your local network."
-msgstr ""
+msgstr "Partage ouvert : accessible par tout le monde dans votre réseau local."
 
 #: plinth/modules/samba/__init__.py:62
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
+"Partage de groupe : accessible uniquement aux utilisateurs FreedomBox qui "
+"sont dans le groupe freedombox-share."
 
 #: plinth/modules/samba/__init__.py:64
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
 msgstr ""
+"Partage domestique : chaque utilisateur du groupe freedombox-share a son "
+"propre espace privé."
 
 #: plinth/modules/samba/__init__.py:68
 msgid "Access to the private shares"
-msgstr ""
+msgstr "Accès aux partages privés"
 
 #: plinth/modules/samba/templates/samba.html:39
 #: plinth/modules/samba/templates/samba.html:50
-#, fuzzy
-#| msgid "Shared"
 msgid "Shares"
-msgstr "Partagée"
+msgstr "Partages"
 
 #: plinth/modules/samba/templates/samba.html:41
-#, fuzzy
-#| msgid ""
-#| "Note: only specially created directory will be shared on selected disks, "
-#| "not the whole disk."
 msgid ""
 "Note: only specially created directories will be shared on selected disks, "
 "not the whole disk."
@@ -4783,10 +4769,8 @@ msgstr ""
 "sur les disques sélectionnés, pas les disques en entier."
 
 #: plinth/modules/samba/templates/samba.html:49
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Disk Name"
-msgstr "Nom de domaine"
+msgstr "Nom de disque"
 
 #: plinth/modules/samba/templates/samba.html:51
 #: plinth/modules/storage/templates/storage.html:44
@@ -4804,31 +4788,33 @@ msgid ""
 "\"%(storage_url)s\">storage</a> module page and configure access to the "
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
+"Vous pouvez trouver plus d’informations à propos des disques sur la page du "
+"module de <a href=\"%(storage_url)s\">stockage</a> et configurer l’accès aux "
+"partages sur la page du module <a href=\"%(users_url)s\">utilisateurs</a>."
 
 #: plinth/modules/samba/templates/samba.html:109
 msgid "Users who can currently access group and home shares"
-msgstr ""
+msgstr "Utilisateurs pouvant accéder aux partages de groupe et domestiques"
 
 #: plinth/modules/samba/templates/samba.html:113
 msgid ""
 "Users who need to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
+"Utilisateurs devant ré-entrer leur mot de passe sur la page de changement de "
+"mot de passe pour accéder aux partages de groupe et domestiques"
 
 #: plinth/modules/samba/templates/samba.html:118
-#, fuzzy
-#| msgid "Available Domains"
 msgid "Unavailable Shares"
-msgstr "Domaines disponibles"
+msgstr "Partages indisponibles"
 
 #: plinth/modules/samba/templates/samba.html:120
-#, fuzzy
-#| msgid ""
-#| "If the disk is plugged back in, sharing will be automatically enabled."
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
-msgstr "Si le disque est rebranché, le partage sera automatiquement activé."
+msgstr ""
+"Partages configurés mais dont le disque n’est pas disponible. Si le disque "
+"est rebranché, le partage sera automatiquement activé."
 
 #: plinth/modules/samba/templates/samba.html:128
 msgid "Share name"
@@ -4839,22 +4825,16 @@ msgid "Action"
 msgstr "Action"
 
 #: plinth/modules/samba/views.py:61 plinth/modules/storage/forms.py:158
-#, fuzzy
-#| msgid "Add Share"
 msgid "Open Share"
-msgstr "Ajouter un partage"
+msgstr "Ouvrir un partage"
 
 #: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:156
-#, fuzzy
-#| msgid "Add Share"
 msgid "Group Share"
-msgstr "Ajouter un partage"
+msgstr "Partage de groupe"
 
 #: plinth/modules/samba/views.py:63
-#, fuzzy
-#| msgid "Homepage"
 msgid "Home Share"
-msgstr "Page d'accueil"
+msgstr "Partage domestique"
 
 #: plinth/modules/samba/views.py:96
 msgid "Share enabled."
@@ -4988,10 +4968,6 @@ msgstr ""
 "connue(s)."
 
 #: plinth/modules/security/templates/security_report.html:33
-#, fuzzy
-#| msgid ""
-#| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app."
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app."
@@ -5005,6 +4981,10 @@ msgid ""
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
+"Pour les applications fournissant des services, la colonne \"Bac à sable\" "
+"montre si les fonctionnalités d’isolation (sandboxing) sont utilisées. L’"
+"isolation limite l’impact sur le reste du système d’une application "
+"potentiellement compromise."
 
 #: plinth/modules/security/templates/security_report.html:48
 msgid "App Name"
@@ -5019,26 +4999,20 @@ msgid "Past Vulnerabilities"
 msgstr "Anciennes failles"
 
 #: plinth/modules/security/templates/security_report.html:51
-#, fuzzy
-#| msgid "Block Sandbox"
 msgid "Sandboxed"
-msgstr "Bac à sable cubique"
+msgstr "Bac à sable"
 
 #: plinth/modules/security/templates/security_report.html:62
 msgid "N/A"
-msgstr ""
+msgstr "Non applicable"
 
 #: plinth/modules/security/templates/security_report.html:64
-#, fuzzy
-#| msgid "yes"
 msgid "Yes"
-msgstr "oui"
+msgstr "Oui"
 
 #: plinth/modules/security/templates/security_report.html:66
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "Aucun"
+msgstr "Non"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5667,10 +5641,8 @@ msgid "Subdirectory (optional)"
 msgstr "Sous-répertoire (optionnel)"
 
 #: plinth/modules/storage/forms.py:154
-#, fuzzy
-#| msgid "Shared"
 msgid "Share"
-msgstr "Partagée"
+msgstr "Partage"
 
 #: plinth/modules/storage/forms.py:162
 msgid "Other directory (specify below)"
@@ -6303,10 +6275,8 @@ msgid "Unable to set SSH keys."
 msgstr "Impossible de définir les clés SSH."
 
 #: plinth/modules/users/forms.py:277
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to change user status."
-msgstr "Échec de l'ajout de l'utilisateur au groupe."
+msgstr "Échec du changement de statut de l'utilisateur."
 
 #: plinth/modules/users/forms.py:285
 msgid "Cannot delete the only administrator in the system."
