@@ -29,21 +29,21 @@ from plinth.utils import import_from_gi
 nm = import_from_gi('NM', '1.0')
 
 IP_TEMPLATE = '10.84.0.{}'
-WIREGUARD_SETTING = nm.SETTING_WIREGUARD_SETTING_NAME
 
 
 def get_nm_info():
     """Get information from network manager."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     client = network.get_nm_client()
 
     connections = {}
     for connection in client.get_connections():
-        if connection.get_connection_type() != WIREGUARD_SETTING:
+        if connection.get_connection_type() != setting_name:
             continue
 
-        settings = connection.get_setting_by_name(WIREGUARD_SETTING)
-        secrets = connection.get_secrets(WIREGUARD_SETTING)
-        connection.update_secrets(WIREGUARD_SETTING, secrets)
+        settings = connection.get_setting_by_name(setting_name)
+        secrets = connection.get_secrets(setting_name)
+        connection.update_secrets(setting_name, secrets)
 
         info = {}
         info['interface'] = connection.get_interface_name()
@@ -158,11 +158,12 @@ def edit_server(interface, settings):
 
 def setup_server():
     """Setup a server connection that clients can connect to."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     private_key = _generate_private_key()
     settings = {
         'common': {
             'name': 'WireGuard-Server-wg0',
-            'type': WIREGUARD_SETTING,
+            'type': setting_name,
             'zone': 'internal',
             'interface': 'wg0'
         },
@@ -202,6 +203,7 @@ def _get_next_available_ip_address(settings):
 
 def _server_connection():
     """Return a server connection. Create one if necessary."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     connection = network.get_connection_by_interface_name('wg0')
     if not connection:
         setup_server()
@@ -219,16 +221,17 @@ def _server_connection():
 
     # Retrieve secrets so that when the connection is changed, secrets are
     # preserved properly.
-    secrets = connection.get_secrets(WIREGUARD_SETTING)
-    connection.update_secrets(WIREGUARD_SETTING, secrets)
+    secrets = connection.get_secrets(setting_name)
+    connection.update_secrets(setting_name, secrets)
 
     return connection
 
 
 def add_client(public_key):
     """Add a permission for a client to connect our server."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     connection = _server_connection()
-    settings = connection.get_setting_by_name(WIREGUARD_SETTING)
+    settings = connection.get_setting_by_name(setting_name)
     peer, _ = settings.get_peer_by_public_key(public_key)
     if peer:
         raise ValueError('Peer with public key already exists')
@@ -243,8 +246,9 @@ def add_client(public_key):
 
 def remove_client(public_key):
     """Remove permission for a client to connect our server."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     connection = _server_connection()
-    settings = connection.get_setting_by_name(WIREGUARD_SETTING)
+    settings = connection.get_setting_by_name(setting_name)
     peer, peer_index = settings.get_peer_by_public_key(public_key)
     if not peer:
         raise KeyError('Client not found')
