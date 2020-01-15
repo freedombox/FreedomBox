@@ -84,6 +84,24 @@ class WireguardApp(app_module.App):
                             ports=['wireguard-freedombox'], is_external=True)
         self.add(firewall)
 
+    def enable(self):
+        """Enable the app by simply storing a flag in key/value store."""
+        from plinth import kvstore
+        super().enable()
+        kvstore.set('wireguard-enabled', True)
+
+    def disable(self):
+        """Disable the app by simply storing a flag in key/value store."""
+        from plinth import kvstore
+        super().disable()
+        kvstore.set('wireguard-enabled', False)
+
+    def is_enabled(self):
+        """Return whether all leader components are enabled and flag is set."""
+        from plinth import kvstore
+        enabled = super().is_enabled()
+        return enabled and kvstore.get_default('wireguard-enabled', False)
+
 
 def init():
     """Initialize the module."""
