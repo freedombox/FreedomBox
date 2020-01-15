@@ -486,7 +486,7 @@ def activate_connection(connection_uuid):
     connection = get_connection(connection_uuid)
     interface = connection.get_interface_name()
     client = get_nm_client()
-    for device in client.get_devices():
+    for device in client.get_all_devices():
         if device.get_iface() == interface:
             client.activate_connection_async(connection, device, '/', None,
                                              _callback, None)
