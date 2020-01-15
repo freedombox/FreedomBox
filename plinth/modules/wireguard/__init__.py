@@ -26,6 +26,7 @@ from plinth import cfg, frontpage, menu
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy, import_from_gi
 
+from . import utils
 from .manifest import clients  # noqa, pylint: disable=unused-import
 
 nm = import_from_gi('NM', '1.0')
@@ -89,12 +90,14 @@ class WireguardApp(app_module.App):
         from plinth import kvstore
         super().enable()
         kvstore.set('wireguard-enabled', True)
+        utils.enable_connections(True)
 
     def disable(self):
         """Disable the app by simply storing a flag in key/value store."""
         from plinth import kvstore
         super().disable()
         kvstore.set('wireguard-enabled', False)
+        utils.enable_connections(False)
 
     def is_enabled(self):
         """Return whether all leader components are enabled and flag is set."""
