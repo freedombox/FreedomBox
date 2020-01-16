@@ -417,3 +417,16 @@ def monkeysphere_publish_key(browser, key_type, domain):
 def open_main_page(browser):
     with wait_for_page_update(browser):
         browser.find_link_by_href('/plinth/').first.click()
+
+
+def networks_set_firewall_zone(browser, zone):
+    """"Set the network device firewall zone as internal or external."""
+    nav_to_module(browser, 'networks')
+    device = browser.find_by_xpath('//span[contains(@class, "label-success") '
+        'and contains(@class, "connection-status-label")]/following::a').first
+    network_id = device['href'].split('/')[-3]
+    device.click()
+    edit_url = "/plinth/sys/networks/{}/edit/".format(network_id)
+    browser.find_link_by_href(edit_url).first.click()
+    browser.select('zone', zone)
+    browser.find_by_tag("form").first.find_by_tag('input')[-1].click()

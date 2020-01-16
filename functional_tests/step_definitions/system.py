@@ -347,3 +347,8 @@ def open_main_page(browser):
 @then(parsers.parse('the main page should be shown'))
 def main_page_is_shown(browser):
     assert (browser.url.endswith('/plinth/'))
+
+
+@given(parsers.parse('the network device is in the {zone:w} firewall zone'))
+def networks_set_firewall_zone(browser, zone):
+    system.networks_set_firewall_zone(browser, zone)

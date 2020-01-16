@@ -602,3 +602,31 @@ def gitweb_repo_privately_writable():
     assert application.gitweb_repo_is_writable('Test-repo', with_auth=True)
     assert application.gitweb_repo_is_writable('Test-repo', with_auth=True,
                                                url_git_extension=True)
+
+
+@when(parsers.parse('I {task:w} the {share_type:w} samba share'))
+def samba_enable_share(browser, task, share_type):
+    if task == 'enable':
+        application.samba_set_share(browser, share_type, status='enabled')
+    elif task == 'disable':
+        application.samba_set_share(browser, share_type, status='disabled')
+
+
+@then(parsers.parse('I can write to the {share_type:w} samba share'))
+def samba_share_should_be_writable(share_type):
+    application.samba_assert_share_is_writable(share_type)
+
+
+@then(parsers.parse('a guest user can write to the {share_type:w} samba share'))
+def samba_share_should_be_writable_to_guest(share_type):
+    application.samba_assert_share_is_writable(share_type, as_guest=True)
+
+
+@then(parsers.parse('a guest user can\'t access the {share_type:w} samba share'))
+def samba_share_should_not_be_accessible_to_guest(share_type):
+    application.samba_assert_share_is_not_accessible(share_type, as_guest=True)
+
+
+@then(parsers.parse('the {share_type:w} samba share should not be available'))
+def samba_share_should_not_be_available(share_type):
+    application.samba_assert_share_is_not_available(share_type)

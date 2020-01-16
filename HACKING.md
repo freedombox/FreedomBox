@@ -171,6 +171,7 @@ $ pip3 install pytest-splinter
 $ sudo apt install python3-pytest-bdd
 $ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening browser windows
 $ sudo apt install firefox
+$ sudo apt install smbclient # optional, to test samba
 ```
 
 - Install the latest version of geckodriver. It is usually a single binary which
@@ -187,6 +188,9 @@ The VM should have NAT port-forwarding enabled so that 4430 on the
 host forwards to 443 on the guest. From where the tests are running, the web
 interface of FreedomBox should be accessible at https://localhost:4430/.
 
+To run samba tests, port 4450 on the host should be forwarded to port 445
+on the guest.
+
 ### Setup FreedomBox Service for tests
 
 Via Plinth, create a new user as follows:
@@ -202,7 +206,7 @@ tests will create the required user using FreedomBox's first boot process.
 **When inside a VM you will need to target the guest VM**
 
 ```bash
-export FREEDOMBOX_URL=https://localhost
+export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SAMBA_PORT=445
 ```
 
 You will be running `py.test-3`.
