@@ -138,21 +138,6 @@ def mldonkey_assert_number_of_ed2k_files(browser, ed2k_files_number):
     assert ed2k_files_number == site.mldonkey_get_number_of_ed2k_files(browser)
 
 
-@given('repro has been configured')
-def repro_configure(browser):
-    site.repro_configure(browser)
-
-
-@when('I delete the repro configuration')
-def repro_delete_config(browser):
-    site.repro_delete_config(browser)
-
-
-@then('the repro configuration should be restored')
-def repro_is_configured(browser):
-    assert site.repro_is_configured(browser)
-
-
 @when('all torrents are removed from transmission')
 def transmission_remove_all_torrents(browser):
     site.transmission_remove_all_torrents(browser)
