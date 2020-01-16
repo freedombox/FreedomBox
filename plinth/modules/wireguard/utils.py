@@ -178,6 +178,7 @@ def edit_server(interface, settings):
 
     connection = network.get_connection_by_interface_name(interface)
     network.edit_connection(connection, settings)
+    network.reactivate_connection(connection.get_uuid())
 
 
 def setup_server():
@@ -269,6 +270,7 @@ def add_client(public_key):
     peer.append_allowed_ip(_get_next_available_ip_address(settings), False)
     settings.append_peer(peer)
     connection.commit_changes(True)
+    network.reactivate_connection(connection.get_uuid())
 
 
 def remove_client(public_key):
@@ -282,3 +284,4 @@ def remove_client(public_key):
 
     settings.remove_peer(peer_index)
     connection.commit_changes(True)
+    network.reactivate_connection(connection.get_uuid())
