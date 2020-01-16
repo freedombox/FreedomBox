@@ -22,6 +22,7 @@ import collections
 import logging
 import socket
 import struct
+import time
 import uuid
 
 from django.utils.translation import ugettext_lazy as _
@@ -513,6 +514,33 @@ def deactivate_connection(connection_uuid):
     active_connection = get_active_connection(connection_uuid)
     get_nm_client().deactivate_connection(active_connection)
     return active_connection
+
+
+def reactivate_connection(connection_uuid):
+    """Find and re-activate a network connection to reflect new changes.
+
+    If connection was not active to begin with, do nothing.
+
+    """
+    try:
+        deactivate_connection(connection_uuid)
+    except ConnectionNotFound:
+        return  # Connection was not active to start with
+
+    # deactivate_connection() is a synchronous call. However, it returns before
+    # the connection is fully deactivated. When re-activating such connections,
+    # sometimes, we get a "Authorization request cancelled" error. So, wait
+    # until the connection is fully deactivated. XXX: Perform proper
+    # asynchronous waiting instead of polling. Also find a way to avoid the
+    # problem altogether.
+    for index in range(10):  # pylint: disable=unused-variable
+        try:
+            get_active_connection(connection_uuid)
+            time.sleep(0.1)
+        except ConnectionNotFound:
+            break
+
+    activate_connection(connection_uuid)
 
 
 def delete_connection(connection_uuid):
