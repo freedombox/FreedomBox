@@ -19,9 +19,12 @@ Test module for network configuration utilities.
 """
 
 import copy
+import threading
 import time
 
 import pytest
+
+from plinth.utils import import_from_gi
 
 ethernet_settings = {
     'common': {
@@ -81,6 +84,32 @@ pppoe_settings = {
         'password': 'x-password',
     },
 }
+
+
+@pytest.fixture(autouse=True, scope='module')
+def fixture_network_module_init():
+    """Initialize network module in a separate thread."""
+    from plinth import network as network_module
+    glib = import_from_gi('GLib', '2.0')
+    main_loop = glib.MainLoop()
+
+    def main_loop_runner():
+        """Initialize the network module and run glib main loop until quit."""
+        network_module.init()
+        main_loop.run()
+
+    thread = threading.Thread(target=main_loop_runner)
+    thread.start()
+
+    while not network_module._client:
+        time.sleep(0.1)
+
+    yield
+
+    if main_loop:
+        main_loop.quit()
+
+    thread.join()
 
 
 @pytest.fixture(name='network')

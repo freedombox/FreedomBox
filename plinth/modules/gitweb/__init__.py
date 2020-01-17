@@ -238,6 +238,7 @@ def repo_info(repo):
         info['is_private'] = True
     else:
         info['is_private'] = False
+    del info['access']
 
     return info
 

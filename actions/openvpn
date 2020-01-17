@@ -50,7 +50,9 @@ ATTR_FILE = os.path.join(KEYS_DIRECTORY, 'pki', 'index.txt.attr')
 SERVER_CONFIGURATION = '''
 port 1194
 proto udp
+proto udp6
 dev tun
+client-to-client
 ca /etc/openvpn/freedombox-keys/pki/ca.crt
 cert /etc/openvpn/freedombox-keys/pki/issued/server.crt
 key /etc/openvpn/freedombox-keys/pki/private/server.key
@@ -66,6 +68,7 @@ CLIENT_CONFIGURATION = '''
 client
 remote {remote} 1194
 proto udp
+proto udp6
 dev tun
 nobind
 remote-cert-tls server
@@ -207,6 +210,8 @@ def subcommand_upgrade(_):
     if action_utils.service_is_enabled(OLD_SERVICE_NAME):
         action_utils.service_disable(OLD_SERVICE_NAME)
         action_utils.service_enable(SERVICE_NAME)
+
+    action_utils.service_try_restart(SERVICE_NAME)
 
 
 def _write_server_config():

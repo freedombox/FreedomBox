@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-30 20:43-0500\n"
-"PO-Revision-Date: 2019-12-26 13:21+0000\n"
+"POT-Creation-Date: 2020-01-13 18:08-0500\n"
+"PO-Revision-Date: 2020-01-03 07:55+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -28,10 +28,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is running."
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "A szolgáltatás fut (<em>%(service_name)s</em>)."
+msgstr "A szolgáltatás fut: {service_name}"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -1020,17 +1019,15 @@ msgstr "Eredmények"
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:27
 #, python-format
 msgid "App: %(app_id)s"
-msgstr ""
+msgstr "Alkalmazás: %(app_id)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:25
 msgid "Diagnostic Results"
 msgstr "Az ellenőrzés eredménye"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
-#, fuzzy
-#| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
-msgstr "A modul nem támogatja a hibaellenőrzést"
+msgstr "Ez az alkalmazás nem támogatja a hibaellenőrzést"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
@@ -1104,7 +1101,7 @@ msgstr "Beállítások frissítése"
 
 #: plinth/modules/diaspora/views.py:93 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:108
-#: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:155
+#: plinth/modules/mediawiki/views.py:79 plinth/modules/openvpn/views.py:155
 #: plinth/modules/tor/views.py:156 plinth/views.py:175
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
@@ -1388,7 +1385,7 @@ msgid "ejabberd"
 msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:54
-#: plinth/modules/matrixsynapse/__init__.py:51
+#: plinth/modules/matrixsynapse/__init__.py:52
 msgid "Chat Server"
 msgstr "Chat szerver"
 
@@ -1521,25 +1518,19 @@ msgstr ""
 "tűzfal csökkenti az internetről leselkedő biztonsági fenyegetések kockázatát."
 
 #: plinth/modules/firewall/components.py:130
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr ""
-"<em>%(service_name)s</em> néven futó szolgáltatás csak belső hálózaton "
-"elérhető."
+msgstr "{name} port ({details}) elérhető a belső hálózaton"
 
 #: plinth/modules/firewall/components.py:138
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr ""
-"<em>%(service_name)s</em> néven futó szolgáltatás csak belső hálózaton "
-"elérhető."
+msgstr "{name} port ({details}) elérhető a külső hálózaton"
 
 #: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
-msgstr ""
+msgstr "{name} port ({details}) nem érhető el külső hálózaton"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -1682,26 +1673,19 @@ msgstr ""
 
 #: plinth/modules/gitweb/__init__.py:62
 msgid "Read-write access to Git repositories"
-msgstr ""
+msgstr "Olvasási-írási hozzáférés a Git tárolókhoz"
 
 #: plinth/modules/gitweb/forms.py:59
-#, fuzzy
-#| msgid "Invalid repository name."
 msgid "Invalid repository URL."
-msgstr "Érvénytelen tárolónév."
+msgstr "Érvénytelen tároló URL."
 
 #: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Érvénytelen tárolónév."
 
 #: plinth/modules/gitweb/forms.py:77
-#, fuzzy
-#| msgid ""
-#| "Repository path is neither empty nor is an existing backups repository."
 msgid "Name of a new repository or URL to import an existing repository."
-msgstr ""
-"A tároló elérési útja nem üres és nem is már meglévő biztonsági másolat "
-"tároló."
+msgstr "Az új tároló neve vagy URL egy már létező tároló importálásához."
 
 #: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
@@ -1762,7 +1746,7 @@ msgstr "%(repo.name)s tároló törlése"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:83
 msgid "Cloning..."
-msgstr ""
+msgstr "Klónozás…"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:89
 #, python-format
@@ -1789,10 +1773,8 @@ msgid "Repository created."
 msgstr "Tároló létrehozva."
 
 #: plinth/modules/gitweb/views.py:86
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the repository."
-msgstr "Hiba történt a beállítás közben."
+msgstr "Hiba történt a tároló létrehozása közben."
 
 #: plinth/modules/gitweb/views.py:99
 msgid "Repository edited."
@@ -1961,7 +1943,7 @@ msgstr "%(box_name)s beállítás"
 
 #: plinth/modules/help/templates/help_contribute.html:27
 msgid "The FreedomBox project welcomes contributions of all kinds."
-msgstr ""
+msgstr "A FreedomBox projekt örömmel fogad mindenféle hozzájárulást."
 
 #: plinth/modules/help/templates/help_contribute.html:33
 msgid ""
@@ -2548,11 +2530,11 @@ msgstr "{domain} domain-on a tanúsítvány sikeresen törölve"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "{domain} domain-on nem sikerült kitörölni a tanúsítványt: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:47
+#: plinth/modules/matrixsynapse/__init__.py:48
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/__init__.py:54
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -2570,7 +2552,7 @@ msgstr ""
 "beszélgetni az összes többi Matrix kiszolgáló felhasználóival a szövetségen "
 "keresztül."
 
-#: plinth/modules/matrixsynapse/__init__.py:61
+#: plinth/modules/matrixsynapse/__init__.py:62
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -2678,16 +2660,16 @@ msgstr "Szabad regisztráció engedélyezve"
 msgid "Public registration disabled"
 msgstr "Szabad regisztráció letiltva"
 
-#: plinth/modules/mediawiki/__init__.py:38
+#: plinth/modules/mediawiki/__init__.py:40
 #: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:42 plinth/templates/index.html:139
+#: plinth/modules/mediawiki/__init__.py:44 plinth/templates/index.html:139
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/__init__.py:45
+#: plinth/modules/mediawiki/__init__.py:47
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -2700,7 +2682,7 @@ msgstr ""
 "helyet adj egy wiki-szerű weboldalnak, feljegyzéseket írj vagy hogy "
 "projekteken együttműködj barátaiddal."
 
-#: plinth/modules/mediawiki/__init__.py:49
+#: plinth/modules/mediawiki/__init__.py:51
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -2714,7 +2696,7 @@ msgstr ""
 "további felhasználói fiókokat a MediaWiki <a href=\"/mediawiki/index.php/"
 "Special:CreateAccount\">Special:CreateAccount</a> oldalán."
 
-#: plinth/modules/mediawiki/__init__.py:55
+#: plinth/modules/mediawiki/__init__.py:57
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -2722,11 +2704,11 @@ msgstr ""
 "Bárki, aki ismeri a hivatkozást erre a wiki-re az el is tudja olvasni annak "
 "tartalmát. Azt módosítani viszont csak a bejelentkezett felhasználók tudják."
 
-#: plinth/modules/mediawiki/forms.py:30
+#: plinth/modules/mediawiki/forms.py:42
 msgid "Administrator Password"
 msgstr "Rendszergazdai jelszó"
 
-#: plinth/modules/mediawiki/forms.py:31
+#: plinth/modules/mediawiki/forms.py:43
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
@@ -2734,11 +2716,11 @@ msgstr ""
 "Állíts be új jelszót a MediaWiki rendszergazdai (admin) fiókjának. Hagyd "
 "üresen ezt a mezőt a jelenlegi jelszó megtartásához."
 
-#: plinth/modules/mediawiki/forms.py:36
+#: plinth/modules/mediawiki/forms.py:48
 msgid "Enable public registrations"
 msgstr "Szabad regisztráció engedélyezése"
 
-#: plinth/modules/mediawiki/forms.py:37
+#: plinth/modules/mediawiki/forms.py:49
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -2746,11 +2728,11 @@ msgstr ""
 "Ha engedélyezett, az interneten bárki létrehozhat egy fiókot ebben a "
 "MediaWiki példányban."
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:53
 msgid "Enable private mode"
 msgstr "Privát mód engedélyezése"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:54
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -2759,15 +2741,27 @@ msgstr ""
 "rendelkező emberek fogják tudni olvasni/írni a wiki-t. A szabad regisztráció "
 "is le lesz tiltva."
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/forms.py:59
+#, fuzzy
+#| msgid "Default"
+msgid "Default Skin"
+msgstr "Alapértelmezett"
+
+#: plinth/modules/mediawiki/forms.py:60
+msgid ""
+"Choose a default skin for your MediaWiki installation. Users have the option "
+"to select their preferred skin."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:74
 msgid "Password updated"
 msgstr "Jelszó frissítve"
 
-#: plinth/modules/mediawiki/views.py:89
+#: plinth/modules/mediawiki/views.py:93
 msgid "Public registrations enabled"
 msgstr "Szabad regisztráció engedélyezve"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:102
 msgid "Public registrations disabled"
 msgstr "Szabad regisztráció letiltva"
 
@@ -2775,9 +2769,15 @@ msgstr "Szabad regisztráció letiltva"
 msgid "Private mode enabled"
 msgstr "Privát mód engedélyezve"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:114
 msgid "Private mode disabled"
 msgstr "Privát mód letiltva"
+
+#: plinth/modules/mediawiki/views.py:122
+#, fuzzy
+#| msgid "Setting unchanged"
+msgid "Default skin changed"
+msgstr "A beállítás változatlan"
 
 #: plinth/modules/minetest/__init__.py:50
 #: plinth/modules/minetest/manifest.py:25
@@ -3797,13 +3797,13 @@ msgstr "Térköz"
 
 #: plinth/modules/networks/templates/connections_diagram.html:83
 #: plinth/modules/networks/templates/connections_diagram.html:113
-#: plinth/network.py:35
+#: plinth/network.py:39
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: plinth/modules/networks/templates/connections_diagram.html:86
 #: plinth/modules/networks/templates/connections_diagram.html:116
-#: plinth/network.py:36
+#: plinth/network.py:40
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -4963,45 +4963,51 @@ msgstr ""
 #| "for each installed app."
 msgid ""
 "The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. It also lists whether "
-"each service is using sandboxing features."
+"of security vulnerabilities for each installed app."
 msgstr ""
 "Az alábbi táblázat felsorolja az egyes telepített alkalmazások bejelentett "
 "biztonsági réseinek számát."
 
-#: plinth/modules/security/templates/security_report.html:42
+#: plinth/modules/security/templates/security_report.html:39
+msgid ""
+"For apps that provide services, the \"Sandboxed\" column shows whether "
+"sandboxing features are in use. Sandboxing mitigates the impact of a "
+"potentially compromised app to the rest of the system."
+msgstr ""
+
+#: plinth/modules/security/templates/security_report.html:48
 msgid "App Name"
 msgstr "Alkalmazás neve"
 
-#: plinth/modules/security/templates/security_report.html:43
+#: plinth/modules/security/templates/security_report.html:49
 #, fuzzy
 #| msgid "Show security vulnerabilities"
 msgid "Current Vulnerabilities"
 msgstr "Biztonsági rések megjelenítése"
 
-#: plinth/modules/security/templates/security_report.html:44
+#: plinth/modules/security/templates/security_report.html:50
 #, fuzzy
 #| msgid "Show security vulnerabilities"
 msgid "Past Vulnerabilities"
 msgstr "Biztonsági rések megjelenítése"
 
-#: plinth/modules/security/templates/security_report.html:45
+#: plinth/modules/security/templates/security_report.html:51
 #, fuzzy
 #| msgid "Block Sandbox"
 msgid "Sandboxed"
 msgstr "Blokk sandbox"
 
-#: plinth/modules/security/templates/security_report.html:56
+#: plinth/modules/security/templates/security_report.html:62
 msgid "N/A"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:58
+#: plinth/modules/security/templates/security_report.html:64
 #, fuzzy
 #| msgid "yes"
 msgid "Yes"
 msgstr "igen"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:66
 #, fuzzy
 #| msgid "None"
 msgid "No"
@@ -6434,11 +6440,11 @@ msgstr "Jelszómódosítás"
 msgid "Password changed successfully."
 msgstr "A jelszó módosítása sikeres."
 
-#: plinth/network.py:37
+#: plinth/network.py:41
 msgid "PPPoE"
 msgstr "PPPoE"
 
-#: plinth/network.py:38
+#: plinth/network.py:42
 msgid "Generic"
 msgstr "Általános"
 

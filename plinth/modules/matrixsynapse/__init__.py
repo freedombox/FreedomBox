@@ -33,6 +33,7 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.utils import Version
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -139,6 +140,26 @@ def setup(helper, old_version=None):
                 ['post-install'])
     helper.call('post', app.enable)
     app.get_component('letsencrypt-matrixsynapse').setup_certificates()
+
+
+def force_upgrade(helper, packages):
+    """Force upgrade matrix-synapse to resolve conffile prompt."""
+    if 'matrix-synapse' not in packages:
+        return False
+
+    # Allow any lower version to upgrade to 1.8.*
+    package = packages['matrix-synapse']
+    if Version(package['new_version']) > Version('1.9~'):
+        return False
+
+    public_registration_status = get_public_registration_status()
+    helper.install(['matrix-synapse'], force_configuration='new')
+    actions.superuser_run('matrixsynapse', ['post-install'])
+    if public_registration_status:
+        actions.superuser_run('matrixsynapse',
+                              ['public-registration', 'enable'])
+
+    return True
 
 
 def setup_domain(domain_name):

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-30 20:43-0500\n"
-"PO-Revision-Date: 2019-12-22 20:21+0000\n"
+"POT-Creation-Date: 2020-01-13 18:08-0500\n"
+"PO-Revision-Date: 2020-01-03 07:55+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -28,10 +28,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is running."
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Tjänsten <em> %(service_name)s </em> körs."
+msgstr "Tjänsten service {service_name} körs"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -1014,17 +1013,15 @@ msgstr "Resultat"
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:27
 #, python-format
 msgid "App: %(app_id)s"
-msgstr ""
+msgstr "App: %(app_id)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:25
 msgid "Diagnostic Results"
 msgstr "Diagnostikresultat"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
-#, fuzzy
-#| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
-msgstr "Denna modul har inte stöd för diagnostik"
+msgstr "Den här appen stöder inte diagnostik"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
@@ -1098,7 +1095,7 @@ msgstr "Uppdatera inställningar"
 
 #: plinth/modules/diaspora/views.py:93 plinth/modules/ejabberd/views.py:66
 #: plinth/modules/matrixsynapse/views.py:108
-#: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:155
+#: plinth/modules/mediawiki/views.py:79 plinth/modules/openvpn/views.py:155
 #: plinth/modules/tor/views.py:156 plinth/views.py:175
 msgid "Setting unchanged"
 msgstr "Instänllningar oförändrade"
@@ -1374,7 +1371,7 @@ msgid "ejabberd"
 msgstr "ejabbert"
 
 #: plinth/modules/ejabberd/__init__.py:54
-#: plinth/modules/matrixsynapse/__init__.py:51
+#: plinth/modules/matrixsynapse/__init__.py:52
 msgid "Chat Server"
 msgstr "Chat-Server"
 
@@ -1505,21 +1502,19 @@ msgstr ""
 "korrekt konfigurerad minskar risken för säkerhetshot från Internet."
 
 #: plinth/modules/firewall/components.py:130
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr "<em>%(service_name)s </em> är endast tillgänglig på interna nätverk."
+msgstr "Port {name} ({details}) tillgängligt för interna nätverk"
 
 #: plinth/modules/firewall/components.py:138
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr "<em>%(service_name)s </em> är endast tillgänglig på interna nätverk."
+msgstr "Port {name} ({details}) tillgängligt för externa nätverk"
 
 #: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
-msgstr ""
+msgstr "Port {name} ({details}) är inte tillgängligt för externa nätverk"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -2519,11 +2514,11 @@ msgstr "Certifikatet framgångsrikt återkallat för domänen {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Det gick inte att ta bort certifikatet för domänen {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:47
+#: plinth/modules/matrixsynapse/__init__.py:48
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/__init__.py:54
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -2540,7 +2535,7 @@ msgstr ""
 "fungera. Användare på en given Matrix-server kan samtala med användare på "
 "alla andra Matrix-servrar via federation."
 
-#: plinth/modules/matrixsynapse/__init__.py:61
+#: plinth/modules/matrixsynapse/__init__.py:62
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -2644,16 +2639,16 @@ msgstr "Offentlig registrering aktiverad"
 msgid "Public registration disabled"
 msgstr "Offentlig registrering avaktiverad"
 
-#: plinth/modules/mediawiki/__init__.py:38
+#: plinth/modules/mediawiki/__init__.py:40
 #: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:42 plinth/templates/index.html:139
+#: plinth/modules/mediawiki/__init__.py:44 plinth/templates/index.html:139
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/__init__.py:45
+#: plinth/modules/mediawiki/__init__.py:47
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -2665,7 +2660,7 @@ msgstr ""
 "kan använda Media att vara värd för en wiki-liknande webbplats, göra "
 "anteckningar eller samarbeta med vänner på projekt."
 
-#: plinth/modules/mediawiki/__init__.py:49
+#: plinth/modules/mediawiki/__init__.py:51
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -2679,7 +2674,7 @@ msgstr ""
 "fler användarkonton från MediaWiki själv genom att gå till <a href=\"/"
 "mediawiki/index.php/Special:CreateAccount\">Special: Skapa konto</a> sida."
 
-#: plinth/modules/mediawiki/__init__.py:55
+#: plinth/modules/mediawiki/__init__.py:57
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -2687,11 +2682,11 @@ msgstr ""
 "Alla som har en länk till denna wiki kan läsa den. Endast användare som är "
 "inloggade kan göra ändringar i innehållet."
 
-#: plinth/modules/mediawiki/forms.py:30
+#: plinth/modules/mediawiki/forms.py:42
 msgid "Administrator Password"
 msgstr "Administratörs lösenord"
 
-#: plinth/modules/mediawiki/forms.py:31
+#: plinth/modules/mediawiki/forms.py:43
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
@@ -2699,11 +2694,11 @@ msgstr ""
 "Ställ in ett nytt lösenord för MediaWikis administratörskonto (admin). Lämna "
 "det här fältet tomt för att behålla det aktuella lösenordet."
 
-#: plinth/modules/mediawiki/forms.py:36
+#: plinth/modules/mediawiki/forms.py:48
 msgid "Enable public registrations"
 msgstr "Aktivera offentliga registreringar"
 
-#: plinth/modules/mediawiki/forms.py:37
+#: plinth/modules/mediawiki/forms.py:49
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -2711,11 +2706,11 @@ msgstr ""
 "Om aktiverad, kommer alla på Internet att kunna skapa ett konto på din "
 "MediaWiki instans."
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:53
 msgid "Enable private mode"
 msgstr "Aktivera privat läge"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:54
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -2724,15 +2719,27 @@ msgstr ""
 "läsa/skriva till wiki. Offentliga registreringar kommer också att "
 "inaktiveras."
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/forms.py:59
+#, fuzzy
+#| msgid "Default"
+msgid "Default Skin"
+msgstr "Standard"
+
+#: plinth/modules/mediawiki/forms.py:60
+msgid ""
+"Choose a default skin for your MediaWiki installation. Users have the option "
+"to select their preferred skin."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:74
 msgid "Password updated"
 msgstr "Lösenord uppdaterad"
 
-#: plinth/modules/mediawiki/views.py:89
+#: plinth/modules/mediawiki/views.py:93
 msgid "Public registrations enabled"
 msgstr "Offentliga registreringar aktiverade"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:102
 msgid "Public registrations disabled"
 msgstr "Offentliga registreringar avaktiverad"
 
@@ -2740,9 +2747,15 @@ msgstr "Offentliga registreringar avaktiverad"
 msgid "Private mode enabled"
 msgstr "Privat läge aktiverat"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:114
 msgid "Private mode disabled"
 msgstr "Privat läge inaktiverat"
+
+#: plinth/modules/mediawiki/views.py:122
+#, fuzzy
+#| msgid "Setting unchanged"
+msgid "Default skin changed"
+msgstr "Instänllningar oförändrade"
 
 #: plinth/modules/minetest/__init__.py:50
 #: plinth/modules/minetest/manifest.py:25
@@ -3761,13 +3774,13 @@ msgstr "Avstånd"
 
 #: plinth/modules/networks/templates/connections_diagram.html:83
 #: plinth/modules/networks/templates/connections_diagram.html:113
-#: plinth/network.py:35
+#: plinth/network.py:39
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: plinth/modules/networks/templates/connections_diagram.html:86
 #: plinth/modules/networks/templates/connections_diagram.html:116
-#: plinth/network.py:36
+#: plinth/network.py:40
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -4625,11 +4638,7 @@ msgstr ""
 "datorer i ditt lokala nätverk."
 
 #: plinth/modules/samba/__init__.py:56
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "After installation, you can choose which disks to use for sharing. "
-#| "Enabled {hostname} shares are open to everyone in your local network and "
-#| "are accessible under Network section in the file manager on your computer."
+#, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
 "shares are accessible in the file manager on your computer at location \\"
@@ -4637,53 +4646,50 @@ msgid ""
 "There are three types of shares you can choose from: "
 msgstr ""
 "Efter installationen kan du välja vilka diskar som ska användas för delning. "
-"Aktiverat {hostname}-resurser är öppna för alla i ditt lokala nätverk och är "
-"tillgängliga under nätverks avsnitt i filhanteraren på datorn."
+"Aktiverade resurser är tillgängliga i filhanteraren på din dator på plats \\"
+"\\{hostname} (på Windows) eller SMB://{hostname}. local (på Linux och Mac). "
+"Det finns tre typer av shares som du kan välja mellan: "
 
 #: plinth/modules/samba/__init__.py:61
 msgid "Open share - accessible to everyone in your local network."
-msgstr ""
+msgstr "Öppen delning - tillgänglig för alla i ditt lokala nätverk."
 
 #: plinth/modules/samba/__init__.py:62
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
+"Gruppdelning - endast tillgänglig för FreedomBox-användare som ingår i "
+"freedombox-delningsgruppen."
 
 #: plinth/modules/samba/__init__.py:64
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
 msgstr ""
+"Hemdelning - varje användare i gruppen freedombox-share kan ha sitt eget "
+"privata utrymme."
 
 #: plinth/modules/samba/__init__.py:68
 msgid "Access to the private shares"
-msgstr ""
+msgstr "Tillgång till de privata shares"
 
 #: plinth/modules/samba/templates/samba.html:39
 #: plinth/modules/samba/templates/samba.html:50
-#, fuzzy
-#| msgid "Shared"
 msgid "Shares"
-msgstr "Delade"
+msgstr "Shares"
 
 #: plinth/modules/samba/templates/samba.html:41
-#, fuzzy
-#| msgid ""
-#| "Note: only specially created directory will be shared on selected disks, "
-#| "not the whole disk."
 msgid ""
 "Note: only specially created directories will be shared on selected disks, "
 "not the whole disk."
 msgstr ""
-"Obs: endast särskilt skapade katalog kommer att delas på valda diskar, inte "
-"hela disken."
+"Obs: endast särskilt skapade kataloger kommer att delas på valda diskar, "
+"inte hela disken."
 
 #: plinth/modules/samba/templates/samba.html:49
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Disk Name"
-msgstr "Domännamn"
+msgstr "Diskens namn"
 
 #: plinth/modules/samba/templates/samba.html:51
 #: plinth/modules/storage/templates/storage.html:44
@@ -4701,31 +4707,33 @@ msgid ""
 "\"%(storage_url)s\">storage</a> module page and configure access to the "
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
+"Du kan hitta ytterligare information om diskar på sidan <a href="
+"\"%(storage_url)s\">storage</a> module och konfigurera åtkomsten till "
+"resurserna på sidan <a href=\"%(users_url)s\" >users</a>module."
 
 #: plinth/modules/samba/templates/samba.html:109
 msgid "Users who can currently access group and home shares"
-msgstr ""
+msgstr "Användare som för närvarande kan komma åt grupp-och hem resurser"
 
 #: plinth/modules/samba/templates/samba.html:113
 msgid ""
 "Users who need to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
+"Användare som behöver ange sitt lösenord igen på sidan Ändra lösenord för "
+"att komma åt grupp-och hem resurser"
 
 #: plinth/modules/samba/templates/samba.html:118
-#, fuzzy
-#| msgid "Available Domains"
 msgid "Unavailable Shares"
-msgstr "Tillgängliga domäner"
+msgstr "Ej tillgängliga Shares"
 
 #: plinth/modules/samba/templates/samba.html:120
-#, fuzzy
-#| msgid ""
-#| "If the disk is plugged back in, sharing will be automatically enabled."
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
-msgstr "Om disken ansluts igen aktiveras delning automatiskt."
+msgstr ""
+"Resurser som är konfigurerade men disken är inte tillgänglig. Om disken "
+"ansluts igen aktiveras delning automatiskt."
 
 #: plinth/modules/samba/templates/samba.html:128
 msgid "Share name"
@@ -4736,22 +4744,16 @@ msgid "Action"
 msgstr "Åtgärder"
 
 #: plinth/modules/samba/views.py:61 plinth/modules/storage/forms.py:158
-#, fuzzy
-#| msgid "Add Share"
 msgid "Open Share"
-msgstr "Lägg till share"
+msgstr "Öppna Share"
 
 #: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:156
-#, fuzzy
-#| msgid "Add Share"
 msgid "Group Share"
-msgstr "Lägg till share"
+msgstr "Grupp Share"
 
 #: plinth/modules/samba/views.py:63
-#, fuzzy
-#| msgid "Homepage"
 msgid "Home Share"
-msgstr "Hemsida"
+msgstr "Hemma Share"
 
 #: plinth/modules/samba/views.py:96
 msgid "Share enabled."
@@ -4883,48 +4885,50 @@ msgstr ""
 #, fuzzy
 #| msgid ""
 #| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app."
+#| "count, of security vulnerabilities for each installed app. It also lists "
+#| "whether each service is using sandboxing features."
 msgid ""
 "The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. It also lists whether "
-"each service is using sandboxing features."
+"of security vulnerabilities for each installed app."
 msgstr ""
 "I följande tabell visas aktuellt rapporterat antal och historiskt antal, "
-"säkerhetsproblem för varje installerad app."
+"säkerhetsproblem för varje installerad app. Den listar också om varje tjänst "
+"använder sandbox-funktioner."
 
-#: plinth/modules/security/templates/security_report.html:42
+#: plinth/modules/security/templates/security_report.html:39
+msgid ""
+"For apps that provide services, the \"Sandboxed\" column shows whether "
+"sandboxing features are in use. Sandboxing mitigates the impact of a "
+"potentially compromised app to the rest of the system."
+msgstr ""
+
+#: plinth/modules/security/templates/security_report.html:48
 msgid "App Name"
 msgstr "Appens namn"
 
-#: plinth/modules/security/templates/security_report.html:43
+#: plinth/modules/security/templates/security_report.html:49
 msgid "Current Vulnerabilities"
 msgstr "Aktuella sårbarheter"
 
-#: plinth/modules/security/templates/security_report.html:44
+#: plinth/modules/security/templates/security_report.html:50
 msgid "Past Vulnerabilities"
 msgstr "Tidigare sårbarheter"
 
-#: plinth/modules/security/templates/security_report.html:45
-#, fuzzy
-#| msgid "Block Sandbox"
+#: plinth/modules/security/templates/security_report.html:51
 msgid "Sandboxed"
-msgstr "Block sandbox"
+msgstr "Sandboxed"
 
-#: plinth/modules/security/templates/security_report.html:56
+#: plinth/modules/security/templates/security_report.html:62
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
-#: plinth/modules/security/templates/security_report.html:58
-#, fuzzy
-#| msgid "yes"
+#: plinth/modules/security/templates/security_report.html:64
 msgid "Yes"
 msgstr "Ja"
 
-#: plinth/modules/security/templates/security_report.html:60
-#, fuzzy
-#| msgid "None"
+#: plinth/modules/security/templates/security_report.html:66
 msgid "No"
-msgstr "Ingen"
+msgstr "Nej"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5542,10 +5546,8 @@ msgid "Subdirectory (optional)"
 msgstr "Underkatalog (valfritt)"
 
 #: plinth/modules/storage/forms.py:154
-#, fuzzy
-#| msgid "Shared"
 msgid "Share"
-msgstr "Delade"
+msgstr "Share"
 
 #: plinth/modules/storage/forms.py:162
 msgid "Other directory (specify below)"
@@ -6168,10 +6170,8 @@ msgid "Unable to set SSH keys."
 msgstr "Det går inte att ange SSH-nycklar."
 
 #: plinth/modules/users/forms.py:277
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to change user status."
-msgstr "Det gick inte att lägga till användare i gruppen."
+msgstr "Det gick inte att ändra användarstatus."
 
 #: plinth/modules/users/forms.py:285
 msgid "Cannot delete the only administrator in the system."
@@ -6302,11 +6302,11 @@ msgstr "Ändra lösenord"
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats."
 
-#: plinth/network.py:37
+#: plinth/network.py:41
 msgid "PPPoE"
 msgstr "Pppoe"
 
-#: plinth/network.py:38
+#: plinth/network.py:42
 msgid "Generic"
 msgstr "Generiska"
 

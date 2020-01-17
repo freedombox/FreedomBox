@@ -18,10 +18,22 @@
 FreedomBox app for configuring MediaWiki.
 """
 
+import pathlib
+
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.forms import AppForm
+
+
+def get_skins():
+    """Return a list of available skins as choice field values."""
+    skins_dir = pathlib.Path('/var/lib/mediawiki/skins')
+    if not skins_dir.exists():
+        return []
+
+    return [(skin.name.lower(), skin.name) for skin in skins_dir.iterdir()
+            if skin.is_dir()]
 
 
 class MediaWikiForm(AppForm):  # pylint: disable=W0232
@@ -42,3 +54,9 @@ class MediaWikiForm(AppForm):  # pylint: disable=W0232
         help_text=_('If enabled, access will be restricted. Only people '
                     'who have accounts can read/write to the wiki. '
                     'Public registrations will also be disabled.'))
+
+    default_skin = forms.ChoiceField(
+        label=_('Default Skin'), required=False,
+        help_text=_('Choose a default skin for your MediaWiki installation. '
+                    'Users have the option to select their preferred skin.'),
+        choices=get_skins)

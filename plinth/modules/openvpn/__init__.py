@@ -30,7 +30,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 4
 
 managed_services = ['openvpn-server@freedombox']
 
@@ -90,7 +90,7 @@ class OpenVPNApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon('daemon-openvpn', managed_services[0],
-                        listen_ports=[(1194, 'udp4')])
+                        listen_ports=[(1194, 'udp4'), (1194, 'udp6')])
         self.add(daemon)
 
 

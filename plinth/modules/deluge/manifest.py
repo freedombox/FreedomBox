@@ -31,7 +31,7 @@ clients = validate([{
 
 backup = validate_backup({
     'config': {
-        'directories': ['/var/lib/deluged/.config', '/var/lib/deluged/config']
+        'directories': ['/var/lib/deluged/.config']
     },
-    'services': ['deluge-web']
+    'services': ['deluged', 'deluge-web']
 })

@@ -19,17 +19,21 @@ Helper functions for working with network manager.
 """
 
 import collections
-from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
 import struct
 import uuid
 
+from django.utils.translation import ugettext_lazy as _
+
 from plinth.utils import import_from_gi
+
 glib = import_from_gi('GLib', '2.0')
 nm = import_from_gi('NM', '1.0')
 
 logger = logging.getLogger(__name__)
+
+_client = None
 
 CONNECTION_TYPE_NAMES = collections.OrderedDict([
     ('802-3-ethernet', _('Ethernet')),
@@ -59,6 +63,26 @@ def ipv4_int_to_string(address_int):
     return socket.inet_ntoa(struct.pack('=I', address_int))
 
 
+def init():
+    """Create and keep a network manager client instance."""
+    def new_callback(source_object, result, user_data):
+        """Called when new() operation is complete."""
+        global _client
+        _client = nm.Client.new_finish(result)
+        logger.info('Created Network manager client')
+
+    logger.info('Creating network manager client')
+    nm.Client.new_async(None, new_callback, None)
+
+
+def get_nm_client():
+    """Return a network manager client object."""
+    if _client:
+        return _client
+
+    raise Exception('Client not yet ready')
+
+
 def _callback(source_object, result, user_data):
     """Called when an operation is completed."""
     del source_object  # Unused
@@ -66,17 +90,10 @@ def _callback(source_object, result, user_data):
     del user_data  # Unused
 
 
-def _commit_callback(connection, error, data=None):
-    """Called when the connection changes are committed."""
-    del connection
-    del error
-    del data
-
-
 def get_interface_list(device_type):
     """Get a list of network interface available on the system."""
     interfaces = {}
-    for device in nm.Client.new(None).get_devices():
+    for device in get_nm_client().get_devices():
         if device.get_device_type() == device_type:
             interfaces[device.get_iface()] = device.get_hw_address()
 
@@ -100,7 +117,7 @@ def get_status_from_connection(connection):
         setting_wireless = connection.get_setting_wireless()
         status['wireless']['ssid'] = setting_wireless.get_ssid().get_data()
 
-    primary_connection = nm.Client.new(None).get_primary_connection()
+    primary_connection = get_nm_client().get_primary_connection()
     status['primary'] = (
         primary_connection
         and primary_connection.get_uuid() == connection.get_uuid())
@@ -210,7 +227,7 @@ def _get_wifi_channel_from_frequency(frequency):
 def get_connection_list():
     """Get a list of active and available connections."""
     active_uuids = []
-    client = nm.Client.new(None)
+    client = get_nm_client()
     for connection in client.get_active_connections():
         active_uuids.append(connection.get_uuid())
 
@@ -246,7 +263,7 @@ def get_connection(connection_uuid):
     Raise ConnectionNotFound if a connection with that uuid is not
     found.
     """
-    client = nm.Client.new(None)
+    client = get_nm_client()
     connection = client.get_connection_by_uuid(connection_uuid)
     if not connection:
         raise ConnectionNotFound(connection_uuid)
@@ -260,7 +277,7 @@ def get_active_connection(connection_uuid):
     Raise ConnectionNotFound if a connection with that uuid is not
     found.
     """
-    connections = nm.Client.new(None).get_active_connections()
+    connections = get_nm_client().get_active_connections()
     connections = {
         connection.get_uuid(): connection
         for connection in connections
@@ -273,7 +290,7 @@ def get_active_connection(connection_uuid):
 
 def get_device_by_interface_name(interface_name):
     """Return a device by interface name."""
-    return nm.Client.new(None).get_device_by_iface(interface_name)
+    return get_nm_client().get_device_by_iface(interface_name)
 
 
 def _update_common_settings(connection, connection_uuid, common):
@@ -453,7 +470,7 @@ def add_connection(settings):
     """
     connection_uuid = str(uuid.uuid4())
     connection = _update_settings(None, connection_uuid, settings)
-    client = nm.Client.new(None)
+    client = get_nm_client()
     client.add_connection_async(connection, True, None, _callback, None)
     return connection_uuid
 
@@ -468,7 +485,7 @@ def activate_connection(connection_uuid):
     """Find and activate a network connection."""
     connection = get_connection(connection_uuid)
     interface = connection.get_interface_name()
-    client = nm.Client.new(None)
+    client = get_nm_client()
     for device in client.get_devices():
         if device.get_iface() == interface:
             client.activate_connection_async(connection, device, '/', None,
@@ -483,7 +500,7 @@ def activate_connection(connection_uuid):
 def deactivate_connection(connection_uuid):
     """Find and de-activate a network connection."""
     active_connection = get_active_connection(connection_uuid)
-    nm.Client.new(None).deactivate_connection(active_connection)
+    get_nm_client().deactivate_connection(active_connection)
     return active_connection
 
 
@@ -501,7 +518,7 @@ def delete_connection(connection_uuid):
 def wifi_scan():
     """Scan for available access points across all Wi-Fi devices."""
     access_points = []
-    for device in nm.Client.new(None).get_devices():
+    for device in get_nm_client().get_devices():
         if device.get_device_type() != nm.DeviceType.WIFI:
             continue
 

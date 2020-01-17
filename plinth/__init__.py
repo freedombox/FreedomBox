@@ -18,4 +18,4 @@
 Package init file.
 """
 
-__version__ = '19.24'
+__version__ = '20.0'

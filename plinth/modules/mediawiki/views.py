@@ -26,7 +26,8 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.modules import mediawiki
 
-from . import is_private_mode_enabled, is_public_registration_enabled
+from . import (get_default_skin, is_private_mode_enabled,
+               is_public_registration_enabled)
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -49,7 +50,8 @@ class MediaWikiAppView(views.AppView):
         initial = super().get_initial()
         initial.update({
             'enable_public_registrations': is_public_registration_enabled(),
-            'enable_private_mode': is_private_mode_enabled()
+            'enable_private_mode': is_private_mode_enabled(),
+            'default_skin': get_default_skin()
         })
         return initial
 
@@ -64,13 +66,15 @@ class MediaWikiAppView(views.AppView):
         app_same = is_unchanged('is_enabled')
         pub_reg_same = is_unchanged('enable_public_registrations')
         private_mode_same = is_unchanged('enable_private_mode')
+        default_skin_same = is_unchanged('default_skin')
 
         if new_config['password']:
             actions.superuser_run('mediawiki', ['change-password'],
                                   input=new_config['password'].encode())
             messages.success(self.request, _('Password updated'))
 
-        if app_same and pub_reg_same and private_mode_same:
+        if (app_same and pub_reg_same and private_mode_same
+                and default_skin_same):
             if not self.request._messages._queued_messages:
                 messages.info(self.request, _('Setting unchanged'))
         elif not app_same:
@@ -100,16 +104,21 @@ class MediaWikiAppView(views.AppView):
         if not private_mode_same:
             if new_config['enable_private_mode']:
                 actions.superuser_run('mediawiki', ['private-mode', 'enable'])
+                messages.success(self.request, _('Private mode enabled'))
                 if new_config['enable_public_registrations']:
                     # If public registrations are enabled, then disable it
                     actions.superuser_run('mediawiki',
                                           ['public-registrations', 'disable'])
-                messages.success(self.request, _('Private mode enabled'))
             else:
                 actions.superuser_run('mediawiki', ['private-mode', 'disable'])
                 messages.success(self.request, _('Private mode disabled'))
 
             shortcut = mediawiki.app.get_component('shortcut-mediawiki')
             shortcut.login_required = new_config['enable_private_mode']
+
+        if not default_skin_same:
+            actions.superuser_run(
+                'mediawiki', ['set-default-skin', new_config['default_skin']])
+            messages.success(self.request, _('Default skin changed'))
 
         return super().form_valid(form)
