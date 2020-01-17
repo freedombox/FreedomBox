@@ -26,11 +26,11 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users import register_group, add_user_to_share_group
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 5
+version = 6
 
 managed_services = ['deluged', 'deluge-web']
 
@@ -109,4 +109,5 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'deluge', ['setup'])
+    add_user_to_share_group(reserved_usernames[0])
     helper.call('post', app.enable)

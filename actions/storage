@@ -56,6 +56,9 @@ def parse_arguments():
                                       help='Validate a directory')
     subparser.add_argument('--path', help='Path of the directory',
                            required=True)
+    subparser.add_argument('--check-creatable', required=False, default=False,
+                           action='store_true',
+                           help='Check that the directory is creatable')
     subparser.add_argument('--check-writable', required=False, default=False,
                            action='store_true',
                            help='Check that the directory is writable')
@@ -329,14 +332,32 @@ def subcommand_usage_info(_):
 def subcommand_validate_directory(arguments):
     """Validate a directory"""
     directory = arguments.path
-    if not os.path.exists(directory):
-        print('ValidationError: 1')
+
+    def part_exists(path):
+        """Returns part of the path that exists."""
+        if not path or os.path.exists(path):
+            return path
+        return part_exists(os.path.dirname(path))
+
+    if arguments.check_creatable:
+        directory = part_exists(directory)
+        if not directory:
+            directory = '.'
+    else:
+        if not os.path.exists(directory):
+            # doesn't exist
+            print('ValidationError: 1')
+
     if not os.path.isdir(directory):
+        # is not a directory
         print('ValidationError: 2')
     if not os.access(directory, os.R_OK):
+        # is not readable
         print('ValidationError: 3')
-    if arguments.check_writable and not os.access(directory, os.W_OK):
-        print('ValidationError: 4')
+    if arguments.check_writable or arguments.check_creatable:
+        if not os.access(directory, os.W_OK):
+            # is not writable
+            print('ValidationError: 4')
 
 
 def main():

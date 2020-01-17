@@ -60,14 +60,18 @@ def is_module_enabled(name):
 class DirectoryValidator:
     username = None
     check_writable = False
+    check_creatable = False
     add_user_to_share_group = False
     service_to_restart = None
 
-    def __init__(self, username=None, check_writable=None):
+    def __init__(self, username=None, check_writable=None,
+                 check_creatable=None):
         if username is not None:
             self.username = username
         if check_writable is not None:
             self.check_writable = check_writable
+        if check_creatable is not None:
+            self.check_creatable = check_creatable
 
     def __call__(self, value):
         """Validate a directory."""
@@ -75,7 +79,9 @@ class DirectoryValidator:
             raise ValidationError(_('Invalid directory name.'), 'invalid')
 
         command = ['validate-directory', '--path', value]
-        if self.check_writable:
+        if self.check_creatable:
+            command.append('--check-creatable')
+        elif self.check_writable:
             command.append('--check-writable')
 
         if self.username:

@@ -247,11 +247,14 @@ class TestActions:
         subprocess.run(command, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True)
 
-    def assert_validate_directory(self, path, error, check_writable=False):
+    def assert_validate_directory(self, path, error, check_writable=False,
+                                  check_creatable=False):
         """Perform directory validation checks."""
         action_command = ['storage', 'validate-directory', '--path', path]
         if check_writable:
             action_command += ['--check-writable']
+        if check_creatable:
+            action_command += ['--check-creatable']
         proc = self.call_action(action_command, stderr=subprocess.PIPE,
                                 stdout=subprocess.PIPE)
         output = proc.stdout.decode()
@@ -291,3 +294,16 @@ class TestActions:
         """Test that directory writable validation returns expected output."""
         self.assert_validate_directory(directory['path'], directory['error'],
                                        check_writable=True)
+
+    @pytest.mark.usefixtures('needs_not_root')
+    @pytest.mark.parametrize('directory', [{
+        'path': '/var/lib/plinth_storage_test_not_exists',
+        'error': '4'
+    }, {
+        'path': '/tmp/plint_storage_test_not_exists',
+        'error': ''
+    }])
+    def test_validate_directory_creatable(self, directory):
+        """Test that directory creatable validation returns expected output."""
+        self.assert_validate_directory(directory['path'], directory['error'],
+                                       check_creatable=True)
