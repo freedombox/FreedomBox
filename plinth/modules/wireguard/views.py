@@ -239,12 +239,8 @@ class EditServerView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Update the server."""
-        settings = form.get_settings()
         interface = self.kwargs['interface']
-        settings['common']['interface'] = interface
-        settings['common']['name'] = 'WireGuard-Client-' + interface
-        connection = network.get_connection_by_interface_name(interface)
-        network.edit_connection(connection, settings)
+        utils.edit_server(interface, form.get_settings())
         return super().form_valid(form)
 
 
