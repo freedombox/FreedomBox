@@ -20,6 +20,7 @@ Utilities for managing WireGuard.
 
 import datetime
 import json
+import logging
 import subprocess
 import time
 
@@ -29,6 +30,8 @@ from plinth.utils import import_from_gi
 nm = import_from_gi('NM', '1.0')
 
 IP_TEMPLATE = '10.84.0.{}'
+
+logger = logging.getLogger(__name__)
 
 
 def get_nm_info():
@@ -93,7 +96,12 @@ def get_info():
         else:
             my_client_servers[interface] = info
 
-        if interface not in status:
+        # If the NM connection is not active but the device link is up, 'wg
+        # show' will not show any public key configured on the interface.
+        if interface not in status or (interface in status and
+                                       not status[interface]['public_key']):
+            info['public_key'] = _get_public_key_from_private_key(
+                info['private_key'])
             continue
 
         info['public_key'] = status[interface]['public_key']
@@ -133,6 +141,12 @@ def enable_connections(enable):
                 network.deactivate_connection(connection.get_uuid())
             except network.ConnectionNotFound:
                 pass  # Connection is already inactive
+
+
+def _get_public_key_from_private_key(private_key):
+    process = subprocess.run(['wg', 'pubkey'], check=True, capture_output=True,
+                             input=private_key.encode())
+    return process.stdout.decode()
 
 
 def _generate_private_key():
@@ -209,6 +223,7 @@ def setup_server():
         }
     }
     network.add_connection(settings)
+    logger.info('Created new WireGuard server connection')
 
 
 def _get_next_available_ip_address(settings):

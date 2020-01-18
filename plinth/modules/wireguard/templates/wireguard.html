@@ -62,7 +62,11 @@
     {% blocktrans %}
       Public key for this {{ box_name }}:
     {% endblocktrans %}
-    <pre>{{ server.public_key }}</pre>
+    {% if server.public_key %}
+      <pre>{{ server.public_key }}</pre>
+    {% else %}
+      <p>{% trans "Not configured yet." %}</p>
+    {% endif %}
   </p>
 
   <a title="{% trans 'Add a new peer' %}"
