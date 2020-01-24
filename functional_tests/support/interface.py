@@ -37,7 +37,9 @@ default_url = config['DEFAULT']['url']
 
 def login(browser, url, username, password):
 
-    browser.visit(url)
+    if '/plinth/' not in browser.url:
+        browser.visit(url)
+
     apps_link = browser.find_link_by_href('/plinth/apps/')
     if len(apps_link):
         return
@@ -64,7 +66,7 @@ def is_login_prompt(browser):
 def nav_to_module(browser, module):
     sys_or_apps = 'sys' if module in sys_modules else 'apps'
     required_url = default_url + f'/plinth/{sys_or_apps}/{module}/'
-    if not (browser.url == required_url):
+    if browser.url != required_url:
         browser.visit(required_url)
 
 
