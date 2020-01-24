@@ -62,15 +62,10 @@ def is_login_prompt(browser):
 
 
 def nav_to_module(browser, module):
-    with wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/').first.click()
     sys_or_apps = 'sys' if module in sys_modules else 'apps'
-    with wait_for_page_update(browser):
-        browser.find_link_by_href(
-            '/plinth/{}/'.format(sys_or_apps)).first.click()
-    with wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/{0}/{1}/'.format(
-            sys_or_apps, module)).first.click()
+    required_url = default_url + f'/plinth/{sys_or_apps}/{module}/'
+    if not (browser.url == required_url):
+        browser.visit(required_url)
 
 
 def create_user(browser, name, password):
