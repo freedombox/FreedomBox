@@ -23,488 +23,504 @@ from support import application
 
 
 @given(parsers.parse('the {app_name:w} application is installed'))
-def application_is_installed(browser, app_name):
-    application.install(browser, app_name)
-    assert (application.is_installed(browser, app_name))
+def application_is_installed(session_browser, app_name):
+    application.install(session_browser, app_name)
+    assert (application.is_installed(session_browser, app_name))
 
 
 @given(parsers.parse('the {app_name:w} application is enabled'))
-def application_is_enabled(browser, app_name):
-    application.enable(browser, app_name)
+def application_is_enabled(session_browser, app_name):
+    application.enable(session_browser, app_name)
 
 
 @given(parsers.parse('the {app_name:w} application is disabled'))
-def application_is_disabled(browser, app_name):
-    application.disable(browser, app_name)
+def application_is_disabled(session_browser, app_name):
+    application.disable(session_browser, app_name)
 
 
 @given(parsers.parse('the network time application is enabled'))
-def ntp_is_enabled(browser):
-    application.enable(browser, 'ntp')
+def ntp_is_enabled(session_browser):
+    application.enable(session_browser, 'ntp')
 
 
 @given(parsers.parse('the network time application is disabled'))
-def ntp_is_disabled(browser):
-    application.disable(browser, 'ntp')
+def ntp_is_disabled(session_browser):
+    application.disable(session_browser, 'ntp')
 
 
 @when(parsers.parse('I set the time zone to {time_zone:S}'))
-def time_zone_set(browser, time_zone):
-    application.time_zone_set(browser, time_zone)
+def time_zone_set(session_browser, time_zone):
+    application.time_zone_set(session_browser, time_zone)
 
 
 @then(parsers.parse('the time zone should be {time_zone:S}'))
-def time_zone_assert(browser, time_zone):
-    assert time_zone == application.time_zone_get(browser)
+def time_zone_assert(session_browser, time_zone):
+    assert time_zone == application.time_zone_get(session_browser)
 
 
 @given(parsers.parse('the service discovery application is enabled'))
-def avahi_is_enabled(browser):
-    application.enable(browser, 'avahi')
+def avahi_is_enabled(session_browser):
+    application.enable(session_browser, 'avahi')
 
 
 @given(parsers.parse('the service discovery application is disabled'))
-def avahi_is_disabled(browser):
-    application.disable(browser, 'avahi')
+def avahi_is_disabled(session_browser):
+    application.disable(session_browser, 'avahi')
 
 
 @when(parsers.parse('I enable the {app_name:w} application'))
-def enable_application(browser, app_name):
-    application.enable(browser, app_name)
+def enable_application(session_browser, app_name):
+    application.enable(session_browser, app_name)
 
 
 @when(parsers.parse('I disable the {app_name:w} application'))
-def disable_application(browser, app_name):
-    application.disable(browser, app_name)
+def disable_application(session_browser, app_name):
+    application.disable(session_browser, app_name)
 
 
 @when(parsers.parse('I enable the network time application'))
-def enable_ntp(browser):
-    application.enable(browser, 'ntp')
+def enable_ntp(session_browser):
+    application.enable(session_browser, 'ntp')
 
 
 @when(parsers.parse('I disable the network time application'))
-def disable_ntp(browser):
-    application.disable(browser, 'ntp')
+def disable_ntp(session_browser):
+    application.disable(session_browser, 'ntp')
 
 
 @when(parsers.parse('I enable the service discovery application'))
-def enable_avahi(browser):
-    application.enable(browser, 'avahi')
+def enable_avahi(session_browser):
+    application.enable(session_browser, 'avahi')
 
 
 @when(parsers.parse('I disable the service discovery application'))
-def disable_avahi(browser):
-    application.disable(browser, 'avahi')
+def disable_avahi(session_browser):
+    application.disable(session_browser, 'avahi')
 
 
 @given(
     parsers.parse('the domain name for {app_name:w} is set to {domain_name:S}')
 )
-def select_domain_name(browser, app_name, domain_name):
-    application.select_domain_name(browser, app_name, domain_name)
+def select_domain_name(session_browser, app_name, domain_name):
+    application.select_domain_name(session_browser, app_name, domain_name)
 
 
 @given('the shadowsocks application is configured')
-def configure_shadowsocks(browser):
-    application.configure_shadowsocks(browser, 'example.com', 'fakepassword')
+def configure_shadowsocks(session_browser):
+    application.configure_shadowsocks(session_browser, 'example.com',
+                                      'fakepassword')
 
 
 @when(
     parsers.parse(
         'I configure shadowsocks with server {server:S} and password {password:w}'
     ))
-def configure_shadowsocks_with_details(browser, server, password):
-    application.configure_shadowsocks(browser, server, password)
+def configure_shadowsocks_with_details(session_browser, server, password):
+    application.configure_shadowsocks(session_browser, server, password)
 
 
 @then(
     parsers.parse(
         'shadowsocks should be configured with server {server:S} and password {password:w}'
     ))
-def assert_shadowsocks_configuration(browser, server, password):
-    assert (server,
-            password) == application.shadowsocks_get_configuration(browser)
+def assert_shadowsocks_configuration(session_browser, server, password):
+    assert (
+        server,
+        password) == application.shadowsocks_get_configuration(session_browser)
 
 
 @when(parsers.parse('I modify the maximum file size of coquelicot to {size:d}')
       )
-def modify_max_file_size(browser, size):
-    application.modify_max_file_size(browser, size)
+def modify_max_file_size(session_browser, size):
+    application.modify_max_file_size(session_browser, size)
 
 
 @then(parsers.parse('the maximum file size of coquelicot should be {size:d}'))
-def assert_max_file_size(browser, size):
-    assert application.get_max_file_size(browser) == size
+def assert_max_file_size(session_browser, size):
+    assert application.get_max_file_size(session_browser) == size
 
 
 @when(parsers.parse('I modify the coquelicot upload password to {password:w}'))
-def modify_upload_password(browser, password):
-    application.modify_upload_password(browser, password)
+def modify_upload_password(session_browser, password):
+    application.modify_upload_password(session_browser, password)
 
 
 @given(parsers.parse('share {name:w} is not available'))
-def remove_share(browser, name):
-    application.remove_share(browser, name)
+def remove_share(session_browser, name):
+    application.remove_share(session_browser, name)
 
 
 @when(parsers.parse('I add a share {name:w} from path {path} for {group:w}'))
-def add_share(browser, name, path, group):
-    application.add_share(browser, name, path, group)
+def add_share(session_browser, name, path, group):
+    application.add_share(session_browser, name, path, group)
 
 
 @when(
     parsers.parse(
         'I edit share {old_name:w} to {new_name:w} from path {path} for {group:w}'
     ))
-def edit_share(browser, old_name, new_name, path, group):
-    application.edit_share(browser, old_name, new_name, path, group)
+def edit_share(session_browser, old_name, new_name, path, group):
+    application.edit_share(session_browser, old_name, new_name, path, group)
 
 
 @when(parsers.parse('I remove share {name:w}'))
-def remove_share2(browser, name):
-    application.remove_share(browser, name)
+def remove_share2(session_browser, name):
+    application.remove_share(session_browser, name)
 
 
 @when(parsers.parse('I edit share {name:w} to be public'))
-def edit_share_public_access(browser, name):
-    application.make_share_public(browser, name)
+def edit_share_public_access(session_browser, name):
+    application.make_share_public(session_browser, name)
 
 
 @then(
     parsers.parse(
         'the share {name:w} should be listed from path {path} for {group:w}'))
-def verify_share(browser, name, path, group):
-    application.verify_share(browser, name, path, group)
+def verify_share(session_browser, name, path, group):
+    application.verify_share(session_browser, name, path, group)
 
 
 @then(parsers.parse('the share {name:w} should not be listed'))
-def verify_invalid_share(browser, name):
+def verify_invalid_share(session_browser, name):
     with pytest.raises(splinter.exceptions.ElementDoesNotExist):
-        application.get_share(browser, name)
+        application.get_share(session_browser, name)
 
 
 @then(parsers.parse('the share {name:w} should be accessible'))
-def access_share(browser, name):
-    application.access_share(browser, name)
+def access_share(session_browser, name):
+    application.access_share(session_browser, name)
 
 
 @then(parsers.parse('the share {name:w} should not exist'))
-def verify_nonexistant_share(browser, name):
-    application.verify_nonexistant_share(browser, name)
+def verify_nonexistant_share(session_browser, name):
+    application.verify_nonexistant_share(session_browser, name)
 
 
 @then(parsers.parse('the share {name:w} should not be accessible'))
-def verify_inaccessible_share(browser, name):
-    application.verify_inaccessible_share(browser, name)
+def verify_inaccessible_share(session_browser, name):
+    application.verify_inaccessible_share(session_browser, name)
 
 
 @when(parsers.parse('I enable mediawiki public registrations'))
-def enable_mediawiki_public_registrations(browser):
-    application.enable_mediawiki_public_registrations(browser)
+def enable_mediawiki_public_registrations(session_browser):
+    application.enable_mediawiki_public_registrations(session_browser)
 
 
 @when(parsers.parse('I disable mediawiki public registrations'))
-def disable_mediawiki_public_registrations(browser):
-    application.disable_mediawiki_public_registrations(browser)
+def disable_mediawiki_public_registrations(session_browser):
+    application.disable_mediawiki_public_registrations(session_browser)
 
 
 @when(parsers.parse('I enable mediawiki private mode'))
-def enable_mediawiki_private_mode(browser):
-    application.enable_mediawiki_private_mode(browser)
+def enable_mediawiki_private_mode(session_browser):
+    application.enable_mediawiki_private_mode(session_browser)
 
 
 @when(parsers.parse('I disable mediawiki private mode'))
-def disable_mediawiki_private_mode(browser):
-    application.disable_mediawiki_private_mode(browser)
+def disable_mediawiki_private_mode(session_browser):
+    application.disable_mediawiki_private_mode(session_browser)
 
 
 @when(parsers.parse('I set the mediawiki admin password to {password}'))
-def set_mediawiki_admin_password(browser, password):
-    application.set_mediawiki_admin_password(browser, password)
+def set_mediawiki_admin_password(session_browser, password):
+    application.set_mediawiki_admin_password(session_browser, password)
 
 
 @when(parsers.parse('I enable message archive management'))
-def mediawiki_enable_archive_management(browser):
-    application.enable_ejabberd_message_archive_management(browser)
+def ejabberd_enable_archive_management(session_browser):
+    application.enable_ejabberd_message_archive_management(session_browser)
 
 
 @when(parsers.parse('I disable message archive management'))
-def mediawiki_disable_archive_management(browser):
-    application.disable_ejabberd_message_archive_management(browser)
+def ejabberd_disable_archive_management(session_browser):
+    application.disable_ejabberd_message_archive_management(session_browser)
 
 
 @when('there is an ikiwiki wiki')
-def ikiwiki_create_wiki_if_needed(browser):
-    application.ikiwiki_create_wiki_if_needed(browser)
+def ikiwiki_create_wiki_if_needed(session_browser):
+    application.ikiwiki_create_wiki_if_needed(session_browser)
 
 
 @when('I delete the ikiwiki wiki')
-def ikiwiki_delete_wiki(browser):
-    application.ikiwiki_delete_wiki(browser)
+def ikiwiki_delete_wiki(session_browser):
+    application.ikiwiki_delete_wiki(session_browser)
 
 
 @then('the ikiwiki wiki should be restored')
-def ikiwiki_should_exist(browser):
-    assert application.ikiwiki_wiki_exists(browser)
+def ikiwiki_should_exist(session_browser):
+    assert application.ikiwiki_wiki_exists(session_browser)
 
 
 @given('I have added a contact to my roster')
-def ejabberd_add_contact(browser):
-    application.ejabberd_add_contact(browser)
+def ejabberd_add_contact(session_browser):
+    application.ejabberd_add_contact(session_browser)
 
 
 @when('I delete the contact from my roster')
-def ejabberd_delete_contact(browser):
-    application.ejabberd_delete_contact(browser)
+def ejabberd_delete_contact(session_browser):
+    application.ejabberd_delete_contact(session_browser)
 
 
 @then('I should have a contact on my roster')
-def ejabberd_should_have_contact(browser):
-    assert application.ejabberd_has_contact(browser)
+def ejabberd_should_have_contact(session_browser):
+    assert application.ejabberd_has_contact(session_browser)
 
 
 @given(parsers.parse('tor relay is {enabled:w}'))
-def tor_given_relay_enable(browser, enabled):
-    application.tor_feature_enable(browser, 'relay', enabled)
+def tor_given_relay_enable(session_browser, enabled):
+    application.tor_feature_enable(session_browser, 'relay', enabled)
 
 
 @when(parsers.parse('I {enable:w} tor relay'))
-def tor_relay_enable(browser, enable):
-    application.tor_feature_enable(browser, 'relay', enable)
+def tor_relay_enable(session_browser, enable):
+    application.tor_feature_enable(session_browser, 'relay', enable)
 
 
 @then(parsers.parse('tor relay should be {enabled:w}'))
-def tor_assert_relay_enabled(browser, enabled):
-    application.tor_assert_feature_enabled(browser, 'relay', enabled)
+def tor_assert_relay_enabled(session_browser, enabled):
+    application.tor_assert_feature_enabled(session_browser, 'relay', enabled)
 
 
 @then(parsers.parse('tor {port_name:w} port should be displayed'))
-def tor_assert_port_displayed(browser, port_name):
-    assert port_name in application.tor_get_relay_ports(browser)
+def tor_assert_port_displayed(session_browser, port_name):
+    assert port_name in application.tor_get_relay_ports(session_browser)
 
 
 @given(parsers.parse('tor bridge relay is {enabled:w}'))
-def tor_given_bridge_relay_enable(browser, enabled):
-    application.tor_feature_enable(browser, 'bridge-relay', enabled)
+def tor_given_bridge_relay_enable(session_browser, enabled):
+    application.tor_feature_enable(session_browser, 'bridge-relay', enabled)
 
 
 @when(parsers.parse('I {enable:w} tor bridge relay'))
-def tor_bridge_relay_enable(browser, enable):
-    application.tor_feature_enable(browser, 'bridge-relay', enable)
+def tor_bridge_relay_enable(session_browser, enable):
+    application.tor_feature_enable(session_browser, 'bridge-relay', enable)
 
 
 @then(parsers.parse('tor bridge relay should be {enabled:w}'))
-def tor_assert_bridge_relay_enabled(browser, enabled):
-    application.tor_assert_feature_enabled(browser, 'bridge-relay', enabled)
+def tor_assert_bridge_relay_enabled(session_browser, enabled):
+    application.tor_assert_feature_enabled(session_browser, 'bridge-relay',
+                                           enabled)
 
 
 @given(parsers.parse('tor hidden services are {enabled:w}'))
-def tor_given_hidden_services_enable(browser, enabled):
-    application.tor_feature_enable(browser, 'hidden-services', enabled)
+def tor_given_hidden_services_enable(session_browser, enabled):
+    application.tor_feature_enable(session_browser, 'hidden-services', enabled)
 
 
 @when(parsers.parse('I {enable:w} tor hidden services'))
-def tor_hidden_services_enable(browser, enable):
-    application.tor_feature_enable(browser, 'hidden-services', enable)
+def tor_hidden_services_enable(session_browser, enable):
+    application.tor_feature_enable(session_browser, 'hidden-services', enable)
 
 
 @then(parsers.parse('tor hidden services should be {enabled:w}'))
-def tor_assert_hidden_services_enabled(browser, enabled):
-    application.tor_assert_feature_enabled(browser, 'hidden-services', enabled)
+def tor_assert_hidden_services_enabled(session_browser, enabled):
+    application.tor_assert_feature_enabled(session_browser, 'hidden-services',
+                                           enabled)
 
 
 @then(parsers.parse('tor hidden services information should be displayed'))
-def tor_assert_hidden_services(browser):
-    application.tor_assert_hidden_services(browser)
+def tor_assert_hidden_services(session_browser):
+    application.tor_assert_hidden_services(session_browser)
 
 
 @given(parsers.parse('download software packages over tor is {enabled:w}'))
-def tor_given_download_software_over_tor_enable(browser, enabled):
-    application.tor_feature_enable(browser, 'software', enabled)
+def tor_given_download_software_over_tor_enable(session_browser, enabled):
+    application.tor_feature_enable(session_browser, 'software', enabled)
 
 
 @when(parsers.parse('I {enable:w} download software packages over tor'))
-def tor_download_software_over_tor_enable(browser, enable):
-    application.tor_feature_enable(browser, 'software', enable)
+def tor_download_software_over_tor_enable(session_browser, enable):
+    application.tor_feature_enable(session_browser, 'software', enable)
 
 
 @then(
     parsers.parse('download software packages over tor should be {enabled:w}'))
-def tor_assert_download_software_over_tor(browser, enabled):
-    application.tor_assert_feature_enabled(browser, 'software', enabled)
+def tor_assert_download_software_over_tor(session_browser, enabled):
+    application.tor_assert_feature_enabled(session_browser, 'software',
+                                           enabled)
 
 
 @then(
     parsers.parse(
         '{domain:S} should be a tahoe {introducer_type:w} introducer'))
-def tahoe_assert_introducer(browser, domain, introducer_type):
-    assert application.tahoe_get_introducer(browser, domain, introducer_type)
+def tahoe_assert_introducer(session_browser, domain, introducer_type):
+    assert application.tahoe_get_introducer(session_browser, domain,
+                                            introducer_type)
 
 
 @then(
     parsers.parse(
         '{domain:S} should not be a tahoe {introducer_type:w} introducer'))
-def tahoe_assert_not_introducer(browser, domain, introducer_type):
-    assert not application.tahoe_get_introducer(browser, domain,
+def tahoe_assert_not_introducer(session_browser, domain, introducer_type):
+    assert not application.tahoe_get_introducer(session_browser, domain,
                                                 introducer_type)
 
 
 @given(parsers.parse('{domain:S} is not a tahoe introducer'))
-def tahoe_given_remove_introducer(browser, domain):
-    if application.tahoe_get_introducer(browser, domain, 'connected'):
-        application.tahoe_remove_introducer(browser, domain)
+def tahoe_given_remove_introducer(session_browser, domain):
+    if application.tahoe_get_introducer(session_browser, domain, 'connected'):
+        application.tahoe_remove_introducer(session_browser, domain)
 
 
 @when(parsers.parse('I add {domain:S} as a tahoe introducer'))
-def tahoe_add_introducer(browser, domain):
-    application.tahoe_add_introducer(browser, domain)
+def tahoe_add_introducer(session_browser, domain):
+    application.tahoe_add_introducer(session_browser, domain)
 
 
 @given(parsers.parse('{domain:S} is a tahoe introducer'))
-def tahoe_given_add_introducer(browser, domain):
-    if not application.tahoe_get_introducer(browser, domain, 'connected'):
-        application.tahoe_add_introducer(browser, domain)
+def tahoe_given_add_introducer(session_browser, domain):
+    if not application.tahoe_get_introducer(session_browser, domain,
+                                            'connected'):
+        application.tahoe_add_introducer(session_browser, domain)
 
 
 @when(parsers.parse('I remove {domain:S} as a tahoe introducer'))
-def tahoe_remove_introducer(browser, domain):
-    application.tahoe_remove_introducer(browser, domain)
+def tahoe_remove_introducer(session_browser, domain):
+    application.tahoe_remove_introducer(session_browser, domain)
 
 
 @given('the access rights are set to "only the owner can view or make changes"'
        )
-def radicale_given_owner_only(browser):
-    application.radicale_set_access_rights(browser, 'owner_only')
+def radicale_given_owner_only(session_browser):
+    application.radicale_set_access_rights(session_browser, 'owner_only')
 
 
 @given(
     'the access rights are set to "any user can view, but only the owner can make changes"'
 )
-def radicale_given_owner_write(browser):
-    application.radicale_set_access_rights(browser, 'owner_write')
+def radicale_given_owner_write(session_browser):
+    application.radicale_set_access_rights(session_browser, 'owner_write')
 
 
 @given('the access rights are set to "any user can view or make changes"')
-def radicale_given_authenticated(browser):
-    application.radicale_set_access_rights(browser, 'authenticated')
+def radicale_given_authenticated(session_browser):
+    application.radicale_set_access_rights(session_browser, 'authenticated')
 
 
 @when('I change the access rights to "only the owner can view or make changes"'
       )
-def radicale_set_owner_only(browser):
-    application.radicale_set_access_rights(browser, 'owner_only')
+def radicale_set_owner_only(session_browser):
+    application.radicale_set_access_rights(session_browser, 'owner_only')
 
 
 @when(
     'I change the access rights to "any user can view, but only the owner can make changes"'
 )
-def radicale_set_owner_write(browser):
-    application.radicale_set_access_rights(browser, 'owner_write')
+def radicale_set_owner_write(session_browser):
+    application.radicale_set_access_rights(session_browser, 'owner_write')
 
 
 @when('I change the access rights to "any user can view or make changes"')
-def radicale_set_authenticated(browser):
-    application.radicale_set_access_rights(browser, 'authenticated')
+def radicale_set_authenticated(session_browser):
+    application.radicale_set_access_rights(session_browser, 'authenticated')
 
 
 @then('the access rights should be "only the owner can view or make changes"')
-def radicale_check_owner_only(browser):
-    assert application.radicale_get_access_rights(browser) == 'owner_only'
+def radicale_check_owner_only(session_browser):
+    assert application.radicale_get_access_rights(
+        session_browser) == 'owner_only'
 
 
 @then(
     'the access rights should be "any user can view, but only the owner can make changes"'
 )
-def radicale_check_owner_write(browser):
-    assert application.radicale_get_access_rights(browser) == 'owner_write'
+def radicale_check_owner_write(session_browser):
+    assert application.radicale_get_access_rights(
+        session_browser) == 'owner_write'
 
 
 @then('the access rights should be "any user can view or make changes"')
-def radicale_check_authenticated(browser):
-    assert application.radicale_get_access_rights(browser) == 'authenticated'
+def radicale_check_authenticated(session_browser):
+    assert application.radicale_get_access_rights(
+        session_browser) == 'authenticated'
 
 
 @given(parsers.parse('the openvpn application is setup'))
-def openvpn_setup(browser):
-    application.openvpn_setup(browser)
+def openvpn_setup(session_browser):
+    application.openvpn_setup(session_browser)
 
 
 @given('I download openvpn profile')
-def openvpn_download_profile(browser):
-    return application.openvpn_download_profile(browser)
+def openvpn_download_profile(session_browser):
+    return application.openvpn_download_profile(session_browser)
 
 
 @then('the openvpn profile should be downloadable')
-def openvpn_profile_downloadable(browser):
-    application.openvpn_download_profile(browser)
+def openvpn_profile_downloadable(session_browser):
+    application.openvpn_download_profile(session_browser)
 
 
 @then('the openvpn profile downloaded should be same as before')
-def openvpn_profile_download_compare(browser, openvpn_download_profile):
-    new_profile = application.openvpn_download_profile(browser)
+def openvpn_profile_download_compare(session_browser,
+                                     openvpn_download_profile):
+    new_profile = application.openvpn_download_profile(session_browser)
     assert openvpn_download_profile == new_profile
 
 
 @given('public access is enabled in searx')
-def searx_public_access_enabled(browser):
-    application.searx_enable_public_access(browser)
+def searx_public_access_enabled(session_browser):
+    application.searx_enable_public_access(session_browser)
 
 
 @when('I enable public access in searx')
-def searx_enable_public_access(browser):
-    application.searx_enable_public_access(browser)
+def searx_enable_public_access(session_browser):
+    application.searx_enable_public_access(session_browser)
 
 
 @when('I disable public access in searx')
-def searx_disable_public_access(browser):
-    application.searx_disable_public_access(browser)
+def searx_disable_public_access(session_browser):
+    application.searx_disable_public_access(session_browser)
 
 
 @then(parsers.parse('{app_name:w} app should be visible on the front page'))
-def app_visible_on_front_page(browser, app_name):
-    shortcuts = application.find_on_front_page(browser, app_name)
+def app_visible_on_front_page(session_browser, app_name):
+    shortcuts = application.find_on_front_page(session_browser, app_name)
     assert len(shortcuts) == 1
 
 
 @then(parsers.parse('{app_name:w} app should not be visible on the front page')
       )
-def app_not_visible_on_front_page(browser, app_name):
-    shortcuts = application.find_on_front_page(browser, app_name)
+def app_not_visible_on_front_page(session_browser, app_name):
+    shortcuts = application.find_on_front_page(session_browser, app_name)
     assert len(shortcuts) == 0
 
 
 @given('a public repository')
 @given('a repository')
 @given('at least one repository exists')
-def gitweb_repo(browser):
-    application.gitweb_create_repo(browser, 'Test-repo', 'public', True)
+def gitweb_repo(session_browser):
+    application.gitweb_create_repo(session_browser, 'Test-repo', 'public',
+                                   True)
 
 
 @given('a private repository')
-def gitweb_private_repo(browser):
-    application.gitweb_create_repo(browser, 'Test-repo', 'private', True)
+def gitweb_private_repo(session_browser):
+    application.gitweb_create_repo(session_browser, 'Test-repo', 'private',
+                                   True)
 
 
 @given('both public and private repositories exist')
-def gitweb_public_and_private_repo(browser):
-    application.gitweb_create_repo(browser, 'Test-repo', 'public', True)
-    application.gitweb_create_repo(browser, 'Test-repo2', 'private', True)
+def gitweb_public_and_private_repo(session_browser):
+    application.gitweb_create_repo(session_browser, 'Test-repo', 'public',
+                                   True)
+    application.gitweb_create_repo(session_browser, 'Test-repo2', 'private',
+                                   True)
 
 
 @given(parsers.parse("a {access:w} repository that doesn't exist"))
-def gitweb_nonexistent_repo(browser, access):
-    application.gitweb_delete_repo(browser, 'Test-repo', ignore_missing=True)
+def gitweb_nonexistent_repo(session_browser, access):
+    application.gitweb_delete_repo(session_browser, 'Test-repo',
+                                   ignore_missing=True)
     return dict(access=access)
 
 
 @given('all repositories are private')
-def gitweb_all_repositories_private(browser):
-    application.gitweb_set_all_repos_private(browser)
+def gitweb_all_repositories_private(session_browser):
+    application.gitweb_set_all_repos_private(session_browser)
 
 
 @given(parsers.parse('a repository metadata:\n{metadata}'))
-def gitweb_repo_metadata(browser, metadata):
+def gitweb_repo_metadata(session_browser, metadata):
     metadata_dict = {}
     for item in metadata.split('\n'):
         item = item.split(': ')
@@ -513,18 +529,18 @@ def gitweb_repo_metadata(browser, metadata):
 
 
 @when('I create the repository')
-def gitweb_create_repo(browser, access):
-    application.gitweb_create_repo(browser, 'Test-repo', access)
+def gitweb_create_repo(session_browser, access):
+    application.gitweb_create_repo(session_browser, 'Test-repo', access)
 
 
 @when('I delete the repository')
-def gitweb_delete_repo(browser):
-    application.gitweb_delete_repo(browser, 'Test-repo')
+def gitweb_delete_repo(session_browser):
+    application.gitweb_delete_repo(session_browser, 'Test-repo')
 
 
 @when('I set the metadata of the repository')
-def gitweb_edit_repo_metadata(browser, gitweb_repo_metadata):
-    application.gitweb_edit_repo_metadata(browser, 'Test-repo',
+def gitweb_edit_repo_metadata(session_browser, gitweb_repo_metadata):
+    application.gitweb_edit_repo_metadata(session_browser, 'Test-repo',
                                           gitweb_repo_metadata)
 
 
@@ -535,36 +551,38 @@ def gitweb_using_git_client():
 
 @then('the repository should be restored')
 @then('the repository should be listed as a public')
-def gitweb_repo_should_exists(browser):
-    assert application.gitweb_repo_exists(browser, 'Test-repo',
+def gitweb_repo_should_exists(session_browser):
+    assert application.gitweb_repo_exists(session_browser, 'Test-repo',
                                           access='public')
 
 
 @then('the repository should be listed as a private')
-def gitweb_private_repo_should_exists(browser):
-    assert application.gitweb_repo_exists(browser, 'Test-repo', 'private')
+def gitweb_private_repo_should_exists(session_browser):
+    assert application.gitweb_repo_exists(session_browser, 'Test-repo',
+                                          'private')
 
 
 @then('the repository should not be listed')
-def gitweb_repo_should_not_exist(browser, gitweb_repo):
-    assert not application.gitweb_repo_exists(browser, gitweb_repo)
+def gitweb_repo_should_not_exist(session_browser, gitweb_repo):
+    assert not application.gitweb_repo_exists(session_browser, gitweb_repo)
 
 
 @then('the public repository should be listed on gitweb')
 @then('the repository should be listed on gitweb')
-def gitweb_repo_should_exist_on_gitweb(browser):
-    assert application.gitweb_site_repo_exists(browser, 'Test-repo')
+def gitweb_repo_should_exist_on_gitweb(session_browser):
+    assert application.gitweb_site_repo_exists(session_browser, 'Test-repo')
 
 
 @then('the private repository should not be listed on gitweb')
-def gitweb_private_repo_should_exists_on_gitweb(browser):
-    assert not application.gitweb_site_repo_exists(browser, 'Test-repo2')
+def gitweb_private_repo_should_exists_on_gitweb(session_browser):
+    assert not application.gitweb_site_repo_exists(session_browser,
+                                                   'Test-repo2')
 
 
 @then('the metadata of the repository should be as set')
-def gitweb_repo_metadata_should_match(browser, gitweb_repo_metadata):
+def gitweb_repo_metadata_should_match(session_browser, gitweb_repo_metadata):
     actual_metadata = application.gitweb_get_repo_metadata(
-        browser, 'Test-repo')
+        session_browser, 'Test-repo')
     assert all(item in actual_metadata.items()
                for item in gitweb_repo_metadata.items())
 
@@ -605,11 +623,13 @@ def gitweb_repo_privately_writable():
 
 
 @when(parsers.parse('I {task:w} the {share_type:w} samba share'))
-def samba_enable_share(browser, task, share_type):
+def samba_enable_share(session_browser, task, share_type):
     if task == 'enable':
-        application.samba_set_share(browser, share_type, status='enabled')
+        application.samba_set_share(session_browser, share_type,
+                                    status='enabled')
     elif task == 'disable':
-        application.samba_set_share(browser, share_type, status='disabled')
+        application.samba_set_share(session_browser, share_type,
+                                    status='disabled')
 
 
 @then(parsers.parse('I can write to the {share_type:w} samba share'))
@@ -617,12 +637,14 @@ def samba_share_should_be_writable(share_type):
     application.samba_assert_share_is_writable(share_type)
 
 
-@then(parsers.parse('a guest user can write to the {share_type:w} samba share'))
+@then(parsers.parse('a guest user can write to the {share_type:w} samba share')
+      )
 def samba_share_should_be_writable_to_guest(share_type):
     application.samba_assert_share_is_writable(share_type, as_guest=True)
 
 
-@then(parsers.parse('a guest user can\'t access the {share_type:w} samba share'))
+@then(
+    parsers.parse('a guest user can\'t access the {share_type:w} samba share'))
 def samba_share_should_not_be_accessible_to_guest(share_type):
     application.samba_assert_share_is_not_accessible(share_type, as_guest=True)
 

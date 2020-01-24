@@ -36,10 +36,11 @@ default_url = config['DEFAULT']['url']
 
 
 def login(browser, url, username, password):
-    browser.visit(url)
 
-    # XXX browser.visit goes to the web page with no cookies,
-    # hence there should be some kind of session storage for this to work
+    browser.visit(url)
+    apps_link = browser.find_link_by_href('/plinth/apps/')
+    if len(apps_link):
+        return
 
     login_button = browser.find_link_by_href('/plinth/accounts/login/')
     if login_button:

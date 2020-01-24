@@ -85,15 +85,17 @@ def upload_file_to_coquelicot(browser, file_path, password):
 
 
 def verify_mediawiki_create_account_link(browser):
-    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    browser.visit(config['DEFAULT']['url'] +
+                  '/mediawiki/index.php/Special:CreateAccount')
     assert eventually(browser.is_element_present_by_id,
-                      args=['pt-createaccount'])
+                      args=['wpCreateaccount'])
 
 
 def verify_mediawiki_no_create_account_link(browser):
-    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    browser.visit(config['DEFAULT']['url'] +
+                  '/mediawiki/index.php/Special:CreateAccount')
     assert eventually(browser.is_element_not_present_by_id,
-                      args=['pt-createaccount'])
+                      args=['wpCreateaccount'])
 
 
 def verify_mediawiki_anonymous_reads_edits_link(browser):
