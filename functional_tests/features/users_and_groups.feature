@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@system @essential @users-groups
+@system @essential @users_groups
 Feature: Users and Groups
   Manage users and groups.
 
