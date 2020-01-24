@@ -63,9 +63,13 @@ def get_app_checkbox_id(app_name):
     return checkbox_id
 
 
-def install(browser, app_name):
+def _find_install_button(browser, app_name):
     interface.nav_to_module(browser, get_app_module(app_name))
-    install = browser.find_by_css('.form-install input[type=submit]')
+    return browser.find_by_css('.form-install input[type=submit]')
+
+
+def install(browser, app_name):
+    install_button = _find_install_button(browser, app_name)
 
     def install_in_progress():
         selectors = [
@@ -89,15 +93,14 @@ def install(browser, app_name):
             return
         wait_for_install()
 
-    if install:
-        install.click()
+    if install_button:
+        install_button.click()
         wait_for_install()
-        sleep(2)  # XXX This shouldn't be required.
+        # sleep(2)  # XXX This shouldn't be required.
 
 
 def is_installed(browser, app_name):
-    interface.nav_to_module(browser, get_app_module(app_name))
-    install_button = browser.find_by_css('.form-install input[type=submit]')
+    install_button = _find_install_button(browser, app_name)
     return not bool(install_button)
 
 
@@ -410,8 +413,9 @@ def _gitweb_get_repo_url(repo, with_auth):
     if with_auth:
         password = config['DEFAULT']['password']
 
-    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(
-        scheme, config['DEFAULT']['username'], password, url, repo)
+    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(scheme,
+                                                 config['DEFAULT']['username'],
+                                                 password, url, repo)
 
 
 @contextlib.contextmanager
