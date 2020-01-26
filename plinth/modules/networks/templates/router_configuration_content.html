@@ -21,41 +21,57 @@
 {% load i18n %}
 {% load static %}
 
-<h1>{% trans "Setup FreedomBox Behind a Router" %}</h1>
-  <p>
-    {% blocktrans trimmed %}
-    Your Freedombox gets its internet connection from your router via Wi-Fi or Ethernet cable.
-    This is a typical home setup.
-    {% endblocktrans %}
-  </p>
-  <p>
-    {% blocktrans trimmed %}
-    With this setup, any device on the internet trying to reach your Freedombox will have to
-    go through your router. The router will need to be configured to forward all traffic
-    it receives so that Freedombox provides the services.
-    {% endblocktrans %}
-  </p>
-  <p>
-    {% blocktrans trimmed %}
-    If you don't have control over your router, choose not to configure it. To see options,
-    to overcome this limitation, choose 'no public address' option in Internet connection
-    type selection.
-    {% endblocktrans %}
-  </p>
+<h1>
+  {% blocktrans trimmed %}
+    Setup {{ box_name }} Behind a Router
+  {% endblocktrans %}
+</h1>
 
-  <h2>{% trans "Choose How You Wish to Configure Your Router" %}</h2>
-  <p class='help-block'>
-    {% blocktrans trimmed %}
-    You will need to login to your router's administration
-    console provided by the router. This may look like
-    <a href="http://192.168.0.1/">http://192.168.168.0.1</a>.
-    The username and password is configured by you
-    when you first setup the router. For many routers, this
-    information is printed at the back of the router. If you
-    don't remember the credentials or the IP address of the
-    router, you may decide to reset it and set it up freshly.
-    Lookup your router model number and search online for the
-    router's manual. This will provide full instructions on
-    how to perform this task.
-    {% endblocktrans %}
-  </p>
+<p>
+  {% blocktrans trimmed %}
+    Your {{ box_name }} gets its internet connection from your router via
+    Wi-Fi or Ethernet cable. This is a typical home setup.
+  {% endblocktrans %}
+</p>
+
+<p>
+  {% blocktrans trimmed %}
+    With this setup, any device on the internet trying to reach your
+    {{ box_name }} will have to go through your router. The router will need
+    to be configured to forward all traffic it receives so that {{ box_name }}
+    provides the services.
+  {% endblocktrans %}
+</p>
+
+<p>
+  {% blocktrans trimmed %}
+    If you don't have control over your router, choose not to configure it. To
+    see options, to overcome this limitation, choose 'no public address' option
+    in Internet connection type selection.
+  {% endblocktrans %}
+</p>
+
+<h2>{% trans "Choose How You Wish to Configure Your Router" %}</h2>
+
+<p class='help-block'>
+  {% blocktrans trimmed %}
+    You will need to login to your router's administration console provided by
+    the router. This may look like one of the following:
+  {% endblocktrans %}
+</p>
+
+<ul>
+  <li><a href="http://192.168.0.1/">http://192.168.0.1</a></li>
+  <li><a href="http://192.168.1.1/">http://192.168.1.1</a></li>
+</ul>
+
+<p class='help-block'>
+  {% blocktrans trimmed %}
+    The username and password is configured by you when you first setup the
+    router. For many routers, this information is printed at the back of the
+    router. If you don't remember the credentials or the IP address of the
+    router, you may decide to reset it and set it up freshly. Lookup your router
+    model number and search online for the router's manual. This will provide
+    full instructions on how to perform this task.
+  {% endblocktrans %}
+</p>

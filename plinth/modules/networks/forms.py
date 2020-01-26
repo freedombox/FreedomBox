@@ -334,7 +334,7 @@ class RouterConfigurationWizardForm(forms.Form):
                       'support DMZ feature. All applications that provide a '
                       'web interface need you to forward traffic from ports '
                       '80 and 443 to work. Each of the other applications '
-                      'will suggest you which port(s) need to be forwarded '
+                      'will suggest which port(s) need to be forwarded '
                       'for that application to work.</p>'),
                     box_name=cfg.box_name
                 ))

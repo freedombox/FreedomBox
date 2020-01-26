@@ -55,30 +55,6 @@
 {% endblock %}
 
 {% block configuration %}
-  <h3>{% trans "Freedombox Internet Connectivity" %}</h3>
-  <p>
-  {% blocktrans trimmed %}
-      The following best describes how your Freedombox is connected in your
-      network. This information is used only to suggest you necessary configuration
-      actions.
-  {% endblocktrans %}
-  </p>
-
-  <p>
-  {% blocktrans trimmed %}
-      Your Freedombox gets its internet from your Router via WiFi or Ethernet
-      cable. This is a typical home setup.
-  {% endblocktrans %}
-  </p>
-
-  <div class="btn-toolbar">
-    <a href="{% url 'networks:router_setup' %}" class="btn btn-primary"
-       role="button" title="{% trans 'Update...' %}">
-      <span class="fa" aria-hidden="true"></span>
-      {% trans 'Update...' %}
-    </a>
-  </div>
-
   <h3>{% trans "Connections" %}</h3>
 
   <div class="btn-toolbar">
@@ -143,5 +119,33 @@
   </div>
 
   {% include "connections_diagram.html" %}
+
+  <h3>
+    {% blocktrans trimmed %}
+      {{ box_name }} Internet Connectivity
+    {% endblocktrans %}
+  </h3>
+  <p>
+    {% blocktrans trimmed %}
+      The following best describes how your {{ box_name }} is connected in your
+      network. This information is used only to suggest necessary configuration
+      actions.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      Your {{ box_name }} gets its internet from your Router via WiFi or
+      Ethernet cable. This is a typical home setup.
+    {% endblocktrans %}
+  </p>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'networks:router_setup' %}" class="btn btn-default"
+       role="button" title="{% trans 'Update...' %}">
+      <span class="fa" aria-hidden="true"></span>
+      {% trans 'Update...' %}
+    </a>
+  </div>
 
 {% endblock %}
