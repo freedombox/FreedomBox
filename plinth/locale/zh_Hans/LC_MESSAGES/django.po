@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-13 18:08-0500\n"
+"POT-Creation-Date: 2020-01-27 18:52-0500\n"
 "PO-Revision-Date: 2019-09-13 05:23+0000\n"
 "Last-Translator: Anxin YI <2732146152@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -203,7 +203,7 @@ msgid ""
 "backup."
 msgstr "\"存储库中的密钥\"表示受密码保护的密钥与备份一起存储。"
 
-#: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:275
+#: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:276
 msgid "Passphrase"
 msgstr "密码"
 
@@ -356,7 +356,7 @@ msgid "Create Location"
 msgstr "创建存储位置"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
-#: plinth/modules/gitweb/views.py:69
+#: plinth/modules/gitweb/views.py:70
 #, fuzzy
 #| msgid "Create User"
 msgid "Create Repository"
@@ -384,6 +384,7 @@ msgstr "删除名为 %(name)s 的存档"
 
 #: plinth/modules/backups/templates/backups_form.html:35
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:35
+#: plinth/modules/networks/templates/router_configuration_update.html:34
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:47
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 msgid "Submit"
@@ -632,8 +633,9 @@ msgstr "启用 DNSSEC"
 msgid "Enable Domain Name System Security Extensions"
 msgstr "启用域名系统安全扩展（DNSSEC）"
 
-#: plinth/modules/bind/views.py:58 plinth/modules/dynamicdns/views.py:171
-#: plinth/modules/openvpn/views.py:153 plinth/modules/shadowsocks/views.py:79
+#: plinth/modules/bind/views.py:58 plinth/modules/deluge/views.py:67
+#: plinth/modules/dynamicdns/views.py:171 plinth/modules/openvpn/views.py:153
+#: plinth/modules/shadowsocks/views.py:79
 #: plinth/modules/transmission/views.py:73
 msgid "Configuration updated"
 msgstr "配置已更新"
@@ -964,6 +966,10 @@ msgstr ""
 msgid "Download files using BitTorrent applications"
 msgstr ""
 
+#: plinth/modules/deluge/forms.py:35 plinth/modules/transmission/forms.py:35
+msgid "Download directory"
+msgstr "下载目录"
+
 #: plinth/modules/deluge/manifest.py:25
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr ""
@@ -1217,16 +1223,16 @@ msgstr "接受所有 SSL 证书"
 msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
-#: plinth/modules/dynamicdns/forms.py:116 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:116 plinth/modules/networks/forms.py:213
 msgid "Username"
 msgstr "用户名"
 
-#: plinth/modules/dynamicdns/forms.py:119 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:119 plinth/modules/networks/forms.py:214
 #: plinth/modules/shadowsocks/forms.py:60
 msgid "Password"
 msgstr "密码"
 
-#: plinth/modules/dynamicdns/forms.py:123 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:123 plinth/modules/networks/forms.py:216
 msgid "Show password"
 msgstr "显示密码"
 
@@ -1324,7 +1330,10 @@ msgstr "关于"
 #: plinth/modules/openvpn/templates/openvpn.html:39
 #: plinth/modules/openvpn/templates/openvpn.html:60
 #: plinth/modules/tor/templates/tor.html:37
-#: plinth/modules/tor/templates/tor.html:51 plinth/templates/app.html:42
+#: plinth/modules/tor/templates/tor.html:51
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:61
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:60
+#: plinth/templates/app.html:42
 msgid "Status"
 msgstr "状态"
 
@@ -1511,7 +1520,7 @@ msgstr "启用"
 
 #: plinth/modules/firewall/templates/firewall.html:66
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
-#: plinth/modules/networks/forms.py:63 plinth/templates/cards.html:49
+#: plinth/modules/networks/forms.py:64 plinth/templates/cards.html:49
 msgid "Disabled"
 msgstr "已禁用"
 
@@ -1607,7 +1616,7 @@ msgid ""
 "gittutorial\">Git tutorial</a>."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:62
+#: plinth/modules/gitweb/__init__.py:64
 msgid "Read-write access to Git repositories"
 msgstr ""
 
@@ -1729,41 +1738,41 @@ msgstr "永久删除此快照？"
 msgid "Delete %(name)s"
 msgstr "删除 %(name)s"
 
-#: plinth/modules/gitweb/views.py:64
+#: plinth/modules/gitweb/views.py:65
 #, fuzzy
 #| msgid "Repository removed."
 msgid "Repository created."
 msgstr "储存库被移除。"
 
-#: plinth/modules/gitweb/views.py:86
+#: plinth/modules/gitweb/views.py:87
 #, fuzzy
 #| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the repository."
 msgstr "在配置过程中出错。"
 
-#: plinth/modules/gitweb/views.py:99
+#: plinth/modules/gitweb/views.py:100
 #, fuzzy
 #| msgid "Repository removed."
 msgid "Repository edited."
 msgstr "储存库被移除。"
 
-#: plinth/modules/gitweb/views.py:104
+#: plinth/modules/gitweb/views.py:105
 #, fuzzy
 #| msgid "Create User"
 msgid "Edit repository"
 msgstr "创建用户"
 
-#: plinth/modules/gitweb/views.py:132 plinth/modules/searx/views.py:62
+#: plinth/modules/gitweb/views.py:133 plinth/modules/searx/views.py:62
 #: plinth/modules/searx/views.py:73 plinth/modules/tor/views.py:178
 msgid "An error occurred during configuration."
 msgstr "在配置过程中出错。"
 
-#: plinth/modules/gitweb/views.py:153
+#: plinth/modules/gitweb/views.py:154
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} 已删除。"
 
-#: plinth/modules/gitweb/views.py:157
+#: plinth/modules/gitweb/views.py:158
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "不能删除 {name}：{error}"
@@ -1772,8 +1781,8 @@ msgstr "不能删除 {name}：{error}"
 msgid "Documentation"
 msgstr "文档"
 
-#: plinth/modules/help/__init__.py:43 plinth/modules/networks/forms.py:63
-#: plinth/modules/networks/forms.py:94 plinth/templates/help-menu.html:35
+#: plinth/modules/help/__init__.py:43 plinth/modules/networks/forms.py:64
+#: plinth/modules/networks/forms.py:95 plinth/templates/help-menu.html:35
 #: plinth/templates/help-menu.html:36 plinth/templates/index.html:135
 msgid "Manual"
 msgstr "手册"
@@ -2438,6 +2447,10 @@ msgstr "重新获取"
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:106
 #: plinth/modules/networks/templates/connection_show.html:63
 #: plinth/modules/samba/templates/samba.html:142
+#: plinth/modules/wireguard/templates/wireguard_delete_client.html:39
+#: plinth/modules/wireguard/templates/wireguard_delete_server.html:48
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:88
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:89
 msgid "Delete"
 msgstr "删除"
 
@@ -2803,7 +2816,7 @@ msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "禁用时，玩家间不能互相伤害也不能死"
 
 #: plinth/modules/minetest/templates/minetest.html:33
-#: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:96
+#: plinth/modules/networks/forms.py:66 plinth/modules/networks/forms.py:97
 msgid "Address"
 msgstr "地址"
 
@@ -3173,68 +3186,68 @@ msgstr ""
 msgid "All web apps"
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:36
+#: plinth/modules/networks/__init__.py:42
 msgid "Networks"
 msgstr "网络"
 
-#: plinth/modules/networks/__init__.py:39
+#: plinth/modules/networks/__init__.py:45
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:41
+#: plinth/modules/networks/__init__.py:47
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:148
+#: plinth/modules/networks/__init__.py:156
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "在 IPv{kind} 上使用 DNSSEC"
 
-#: plinth/modules/networks/forms.py:31
+#: plinth/modules/networks/forms.py:32
 msgid "Connection Type"
 msgstr "连接类型"
 
-#: plinth/modules/networks/forms.py:43
+#: plinth/modules/networks/forms.py:44
 msgid "Connection Name"
 msgstr "连接名称"
 
-#: plinth/modules/networks/forms.py:45
+#: plinth/modules/networks/forms.py:46
 msgid "Physical Interface"
 msgstr "物理接口"
 
-#: plinth/modules/networks/forms.py:46
+#: plinth/modules/networks/forms.py:47
 msgid "The network device that this connection should be bound to."
 msgstr "连接应绑定到的网络设备。"
 
-#: plinth/modules/networks/forms.py:49
+#: plinth/modules/networks/forms.py:50
 msgid "Firewall Zone"
 msgstr "防火墙区域"
 
-#: plinth/modules/networks/forms.py:50
+#: plinth/modules/networks/forms.py:51
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
 msgstr "防火墙区域将控制哪些服务可用在此接口。选择内部只有受信任的网络。"
 
-#: plinth/modules/networks/forms.py:53
+#: plinth/modules/networks/forms.py:54
 #: plinth/modules/networks/templates/connections_diagram.html:78
 msgid "External"
 msgstr "外网"
 
-#: plinth/modules/networks/forms.py:53
+#: plinth/modules/networks/forms.py:54
 #: plinth/modules/networks/templates/connections_diagram.html:107
 msgid "Internal"
 msgstr "内网"
 
-#: plinth/modules/networks/forms.py:55
+#: plinth/modules/networks/forms.py:56
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 寻址方式"
 
-#: plinth/modules/networks/forms.py:57
+#: plinth/modules/networks/forms.py:58
 #, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
@@ -3244,39 +3257,39 @@ msgstr ""
 "“自动”方式可以让 {box_name} 从此网络请求一个配置使其成为一个客户端。“共享”方"
 "式会让 {box_name} 作为一个路由器，配置此网络上的客户端并共享互联网连接。"
 
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:63
 msgid "Automatic (DHCP)"
 msgstr "自动 (DHCP)"
 
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:63
 msgid "Shared"
 msgstr "共享"
 
-#: plinth/modules/networks/forms.py:68
+#: plinth/modules/networks/forms.py:69
 msgid "Netmask"
 msgstr "子网掩码"
 
-#: plinth/modules/networks/forms.py:69
+#: plinth/modules/networks/forms.py:70
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr "可选的值。如果为空，则将使用基于地址的默认子网掩码。"
 
-#: plinth/modules/networks/forms.py:73 plinth/modules/networks/forms.py:103
+#: plinth/modules/networks/forms.py:74 plinth/modules/networks/forms.py:104
 #: plinth/modules/networks/templates/connection_show.html:202
 #: plinth/modules/networks/templates/connection_show.html:241
 msgid "Gateway"
 msgstr "网关"
 
-#: plinth/modules/networks/forms.py:73 plinth/modules/networks/forms.py:103
+#: plinth/modules/networks/forms.py:74 plinth/modules/networks/forms.py:104
 msgid "Optional value."
 msgstr "可选的值。"
 
-#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:106
+#: plinth/modules/networks/forms.py:77 plinth/modules/networks/forms.py:107
 msgid "DNS Server"
 msgstr "DNS 服务器"
 
-#: plinth/modules/networks/forms.py:77
+#: plinth/modules/networks/forms.py:78
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3284,11 +3297,11 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv4 寻址方法是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:82 plinth/modules/networks/forms.py:112
+#: plinth/modules/networks/forms.py:83 plinth/modules/networks/forms.py:113
 msgid "Second DNS Server"
 msgstr "备选 DNS 服务器"
 
-#: plinth/modules/networks/forms.py:83
+#: plinth/modules/networks/forms.py:84
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3296,38 +3309,38 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv4 寻址方式是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:88
+#: plinth/modules/networks/forms.py:89
 msgid "IPv6 Addressing Method"
 msgstr "IPv6 寻址方式"
 
-#: plinth/modules/networks/forms.py:90
+#: plinth/modules/networks/forms.py:91
 #, python-brace-format
 msgid ""
 "\"Automatic\" methods will make {box_name} acquire configuration from this "
 "network making it a client."
 msgstr "“自动”方式可以让 {box_name} 从此网络请求一个配置使其成为一个客户端。"
 
-#: plinth/modules/networks/forms.py:93 plinth/modules/networks/forms.py:254
+#: plinth/modules/networks/forms.py:94 plinth/modules/networks/forms.py:255
 msgid "Automatic"
 msgstr "自动"
 
-#: plinth/modules/networks/forms.py:93
+#: plinth/modules/networks/forms.py:94
 msgid "Automatic, DHCP only"
 msgstr "自动，只使用 DHCP"
 
-#: plinth/modules/networks/forms.py:94
+#: plinth/modules/networks/forms.py:95
 msgid "Ignore"
 msgstr "忽略"
 
-#: plinth/modules/networks/forms.py:98
+#: plinth/modules/networks/forms.py:99
 msgid "Prefix"
 msgstr "前缀"
 
-#: plinth/modules/networks/forms.py:99
+#: plinth/modules/networks/forms.py:100
 msgid "Value between 1 and 128."
 msgstr "在 1 到 128 之间取值。"
 
-#: plinth/modules/networks/forms.py:107
+#: plinth/modules/networks/forms.py:108
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3335,7 +3348,7 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv6 寻址方法是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:113
+#: plinth/modules/networks/forms.py:114
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3343,64 +3356,64 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv6 寻址方式是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:122
+#: plinth/modules/networks/forms.py:123
 msgid "-- select --"
 msgstr "-- 选择 --"
 
-#: plinth/modules/networks/forms.py:247
+#: plinth/modules/networks/forms.py:248
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:248
+#: plinth/modules/networks/forms.py:249
 msgid "The visible name of the network."
 msgstr "可见网络的名称。"
 
-#: plinth/modules/networks/forms.py:250
+#: plinth/modules/networks/forms.py:251
 #: plinth/modules/networks/templates/connection_show.html:157
 msgid "Mode"
 msgstr "模式"
 
-#: plinth/modules/networks/forms.py:250
+#: plinth/modules/networks/forms.py:251
 msgid "Infrastructure"
 msgstr "基础架构"
 
-#: plinth/modules/networks/forms.py:251
+#: plinth/modules/networks/forms.py:252
 msgid "Access Point"
 msgstr "访问点"
 
-#: plinth/modules/networks/forms.py:252
+#: plinth/modules/networks/forms.py:253
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:254
+#: plinth/modules/networks/forms.py:255
 msgid "Frequency Band"
 msgstr "频带"
 
-#: plinth/modules/networks/forms.py:255
+#: plinth/modules/networks/forms.py:256
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:256
+#: plinth/modules/networks/forms.py:257
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:258
+#: plinth/modules/networks/forms.py:259
 #: plinth/modules/networks/templates/connection_show.html:173
 msgid "Channel"
 msgstr "信道"
 
-#: plinth/modules/networks/forms.py:259
+#: plinth/modules/networks/forms.py:260
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr "可选值。可通过指定频宽限制无线信道。为空或者填 0 表示自动选择。"
 
-#: plinth/modules/networks/forms.py:264
+#: plinth/modules/networks/forms.py:265
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:266
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -3409,23 +3422,58 @@ msgstr ""
 "可选的值。指定接入点的标识。当要连接到一个接入点时，只会连接到符合给出值的提"
 "供者。例如：00:11:22:aa:bb:cc。"
 
-#: plinth/modules/networks/forms.py:271
+#: plinth/modules/networks/forms.py:272
 msgid "Authentication Mode"
 msgstr "身份验证模式"
 
-#: plinth/modules/networks/forms.py:272
+#: plinth/modules/networks/forms.py:273
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "如果无线网络安全的和要求客户端具有密码才能连接，请选择 WPA。"
 
-#: plinth/modules/networks/forms.py:274
+#: plinth/modules/networks/forms.py:275
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:274
+#: plinth/modules/networks/forms.py:275
 msgid "Open"
 msgstr "打开"
+
+#: plinth/modules/networks/forms.py:309
+#, fuzzy
+#| msgid "Current Network Configuration"
+msgid "Preferred router configuration"
+msgstr "当前的网络配置"
+
+#: plinth/modules/networks/forms.py:314
+#, python-brace-format
+msgid ""
+"Use DMZ feature to forward all traffic<p class=\"help-block\">Most routers "
+"provide a configuration setting called DMZ. This will allow the router to "
+"forward all incoming traffic from the internet to a single IP address such "
+"as the {box_name}'s address. First remember to configure a static local IP "
+"address for your {box_name} in your router's configuration.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:328
+#, python-brace-format
+msgid ""
+"Forward Specific Traffic as needed by each application<p class=\"help-block"
+"\">You may alternatively choose to forward only specific traffic to your "
+"{box_name}. This is ideal if you have other servers like {box_name} in your "
+"network or if your router does not support DMZ feature. All applications "
+"that provide a web interface need you to forward traffic from ports 80 and "
+"443 to work. Each of the other applications will suggest which port(s) need "
+"to be forwarded for that application to work.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:345
+msgid ""
+"Router is currently unconfigured<p class=\"help-block\">Choose this if you "
+"have not configured or are unable to configure the router currently and wish "
+"to be reminded later. Some of the other configuration steps may fail.</p>"
+msgstr ""
 
 #: plinth/modules/networks/networks.py:43
 msgid "Network Connections"
@@ -3477,14 +3525,15 @@ msgid "Failed to de-activate connection: Connection not found."
 msgstr "无法取消激活连接: 找不到连接。"
 
 #: plinth/modules/networks/networks.py:269
-#: plinth/modules/networks/templates/connections_list.html:63
-#: plinth/modules/networks/templates/connections_list.html:65
+#: plinth/modules/networks/templates/connections_list.html:62
+#: plinth/modules/networks/templates/connections_list.html:64
 msgid "Nearby Wi-Fi Networks"
 msgstr "附近的无线网络"
 
 #: plinth/modules/networks/networks.py:293
-#: plinth/modules/networks/templates/connections_list.html:68
-#: plinth/modules/networks/templates/connections_list.html:70
+#: plinth/modules/networks/templates/connections_list.html:67
+#: plinth/modules/networks/templates/connections_list.html:69
+#: plinth/modules/wireguard/templates/wireguard_add_server.html:34
 msgid "Add Connection"
 msgstr "添加连接"
 
@@ -3519,22 +3568,30 @@ msgstr "删除连接失败: 找不到连接。"
 msgid "Delete Connection"
 msgstr "删除连接"
 
+#: plinth/modules/networks/networks.py:442
+#, fuzzy
+#| msgid "Tor configuration is being updated"
+msgid "Router configuration type saved."
+msgstr "Tor 配置已更新"
+
 #: plinth/modules/networks/templates/connection_show.html:43
 msgid "Edit connection"
 msgstr "编辑连接"
 
 #: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:83
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:84
 #: plinth/templates/base.html:158 plinth/templates/base.html:159
 msgid "Edit"
 msgstr "編輯"
 
 #: plinth/modules/networks/templates/connection_show.html:50
-#: plinth/modules/networks/templates/connections_list.html:91
+#: plinth/modules/networks/templates/connections_list.html:90
 msgid "Deactivate"
 msgstr "停用"
 
 #: plinth/modules/networks/templates/connection_show.html:57
-#: plinth/modules/networks/templates/connections_list.html:99
+#: plinth/modules/networks/templates/connections_list.html:98
 msgid "Activate"
 msgstr "激活"
 
@@ -3645,7 +3702,7 @@ msgstr "DNS 服务器"
 
 #: plinth/modules/networks/templates/connection_show.html:216
 #: plinth/modules/networks/templates/connection_show.html:255
-#: plinth/modules/storage/forms.py:150
+#: plinth/modules/storage/forms.py:156
 msgid "Default"
 msgstr "默认"
 
@@ -3717,13 +3774,13 @@ msgstr "间距"
 
 #: plinth/modules/networks/templates/connections_diagram.html:83
 #: plinth/modules/networks/templates/connections_diagram.html:113
-#: plinth/network.py:39
+#: plinth/network.py:40
 msgid "Ethernet"
 msgstr "以太网"
 
 #: plinth/modules/networks/templates/connections_diagram.html:86
 #: plinth/modules/networks/templates/connections_diagram.html:116
-#: plinth/network.py:40
+#: plinth/network.py:41
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -3741,28 +3798,112 @@ msgstr "显示连接 %(name)s"
 msgid "Computer"
 msgstr "计算机"
 
-#: plinth/modules/networks/templates/connections_list.html:59
+#: plinth/modules/networks/templates/connections_list.html:58
 #, fuzzy
 #| msgid "Connection"
 msgid "Connections"
 msgstr "连接"
 
-#: plinth/modules/networks/templates/connections_list.html:80
+#: plinth/modules/networks/templates/connections_list.html:79
 #, python-format
 msgid "Delete connection %(name)s"
 msgstr "删除连接 %(name)s"
 
-#: plinth/modules/networks/templates/connections_list.html:105
+#: plinth/modules/networks/templates/connections_list.html:104
 msgid "Active"
 msgstr "激活"
 
-#: plinth/modules/networks/templates/connections_list.html:108
+#: plinth/modules/networks/templates/connections_list.html:107
 msgid "Inactive"
 msgstr "未激活"
+
+#: plinth/modules/networks/templates/connections_list.html:124
+#, python-format
+msgid "%(box_name)s Internet Connectivity"
+msgstr ""
+
+#: plinth/modules/networks/templates/connections_list.html:129
+#, python-format
+msgid ""
+"The following best describes how your %(box_name)s is connected in your "
+"network. This information is used only to suggest necessary configuration "
+"actions."
+msgstr ""
+
+#: plinth/modules/networks/templates/connections_list.html:137
+#, python-format
+msgid ""
+"Your %(box_name)s gets its internet from your Router via WiFi or Ethernet "
+"cable. This is a typical home setup."
+msgstr ""
+
+#: plinth/modules/networks/templates/connections_list.html:145
+#: plinth/modules/networks/templates/connections_list.html:147
+#, fuzzy
+#| msgid "Update"
+msgid "Update..."
+msgstr "更新"
 
 #: plinth/modules/networks/templates/connections_type_select.html:34
 msgid "Create..."
 msgstr "创建..."
+
+#: plinth/modules/networks/templates/router_configuration_content.html:25
+#, fuzzy, python-format
+#| msgid "%(box_name)s Setup"
+msgid "Setup %(box_name)s Behind a Router"
+msgstr "%(box_name)s 安装程序"
+
+#: plinth/modules/networks/templates/router_configuration_content.html:31
+#, python-format
+msgid ""
+"Your %(box_name)s gets its internet connection from your router via Wi-Fi or "
+"Ethernet cable. This is a typical home setup."
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_content.html:38
+#, python-format
+msgid ""
+"With this setup, any device on the internet trying to reach your "
+"%(box_name)s will have to go through your router. The router will need to be "
+"configured to forward all traffic it receives so that %(box_name)s provides "
+"the services."
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_content.html:47
+msgid ""
+"If you don't have control over your router, choose not to configure it. To "
+"see options, to overcome this limitation, choose 'no public address' option "
+"in Internet connection type selection."
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_content.html:54
+msgid "Choose How You Wish to Configure Your Router"
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_content.html:57
+msgid ""
+"You will need to login to your router's administration console provided by "
+"the router. This may look like one of the following:"
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_content.html:69
+msgid ""
+"The username and password is configured by you when you first setup the "
+"router. For many routers, this information is printed at the back of the "
+"router. If you don't remember the credentials or the IP address of the "
+"router, you may decide to reset it and set it up freshly. Lookup your router "
+"model number and search online for the router's manual. This will provide "
+"full instructions on how to perform this task."
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_firstboot.html:33
+msgid "skip this step"
+msgstr ""
+
+#: plinth/modules/networks/templates/router_configuration_firstboot.html:35
+msgid "Next"
+msgstr ""
 
 #: plinth/modules/openvpn/__init__.py:39 plinth/modules/openvpn/manifest.py:33
 #, fuzzy
@@ -3771,6 +3912,7 @@ msgid "OpenVPN"
 msgstr "打开"
 
 #: plinth/modules/openvpn/__init__.py:43
+#: plinth/modules/wireguard/__init__.py:40
 #, fuzzy
 #| msgid "Virtual Private Network (OpenVPN)"
 msgid "Virtual Private Network"
@@ -4408,113 +4550,6 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "访问权配置已更新"
 
-#: plinth/modules/repro/__init__.py:40
-msgid "repro"
-msgstr ""
-
-#: plinth/modules/repro/__init__.py:42
-#, fuzzy
-#| msgid "DNS Server"
-msgid "SIP Server"
-msgstr "DNS 服务器"
-
-#: plinth/modules/repro/__init__.py:45
-msgid ""
-"repro provides various SIP services that a SIP softphone can utilize to "
-"provide audio and video calls as well as presence and instant messaging. "
-"repro provides a server and SIP user accounts that clients can use to let "
-"their presence known.  It also acts as a proxy to federate SIP "
-"communications to other servers on the Internet similar to email."
-msgstr ""
-"Repro 提供了一个 SIP 软电话可以用来提供音频和视频呼叫以及在线和即时消息等各"
-"种 SIP 服务。Repro 提供一个服务器和 SIP 用户帐户，客户端可以在上线时知道。它"
-"还可以充当代理以将 SIP 通信联合到互联网上类似于电子邮件的其他服务器。"
-
-#: plinth/modules/repro/__init__.py:51
-msgid ""
-"To make SIP calls, a client application is needed. Available clients include "
-"<a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a href="
-"\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
-"a> (for Android phones)."
-msgstr ""
-"要进行SIP呼叫，需要客户端应用程序。可用的客户端程序包括 <a href=\"https://"
-"jitsi.org/\">Jitsi</a>（适用于电脑）和 <a href=\"https://f-droid.org/"
-"repository/browse/?fdid=com.csipsimple\">CSipSimple</a>（适用于 Android 手"
-"机）。"
-
-#: plinth/modules/repro/__init__.py:55
-#, fuzzy
-#| msgid ""
-#| "<strong>Note:</strong>  Before using repro, domains and users will need "
-#| "to be configured using the <a href=\"/repro/domains.html\">web-based "
-#| "configuration panel</a>. Users in the <em>admin</em> group will be able "
-#| "to log in to the repro configuration panel. After setting the domain, it "
-#| "is required to restart the repro service. Disable the service and re-"
-#| "enable it."
-msgid ""
-"<strong>Note:</strong>  Before using repro, domains and users will need to "
-"be configured using the <a href=\"/repro/domains.html\" data-turbolinks="
-"\"false\">web-based configuration panel</a>. Users in the <em>admin</em> "
-"group will be able to log in to the repro configuration panel. After setting "
-"the domain, it is required to restart the repro service. Disable the service "
-"and re-enable it."
-msgstr ""
-"<strong>请注意</strong>：在使用 Repro 前，需要使用 <a href=\"/repro/domains."
-"html\">Web 配置面板</a>配置域名和用户。<em>admin</em> 组中的用户将能够登录到 "
-"Repro 配置面板。设置域名后，需要重新启动 Repro 服务。禁用服务并重新启用既可。"
-
-#: plinth/modules/repro/manifest.py:30
-msgid "Jitsi Meet"
-msgstr ""
-
-#: plinth/modules/repro/manifest.py:32
-msgid ""
-"Jitsi is a set of open-source projects that allows you to easily build and "
-"deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
-"Videobridge and Jitsi Meet, which let you have conferences on the internet, "
-"while other projects in the community enable other features such as audio, "
-"dial-in, recording, and simulcasting."
-msgstr ""
-
-#: plinth/modules/repro/manifest.py:69
-msgid "CSipSimple"
-msgstr ""
-
-#: plinth/modules/restore/__init__.py:37 plinth/modules/restore/manifest.py:23
-msgid "reStore"
-msgstr "reStore"
-
-#: plinth/modules/restore/__init__.py:39
-#, fuzzy
-#| msgid ""
-#| "Unhosted Storage \n"
-#| " (reStore)"
-msgid "Unhosted Storage"
-msgstr ""
-"未托管存储\n"
-"（reStrore）"
-
-#: plinth/modules/restore/__init__.py:43
-#, python-brace-format
-msgid ""
-"reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
-"applications.  The idea is to uncouple web applications from data.  No "
-"matter where a web application is served from, the data can be stored on an "
-"unhosted storage server of user's choice.  With reStore, your {box_name} "
-"becomes your unhosted storage server."
-msgstr ""
-"reStore 是<a href='https://unhosted.org/'>未托管</a>网络应用程序的服务器。这"
-"个想法是将 Web 应用程序与数据断开连接。无论从哪个 Web 应用程序提供服务，数据"
-"都可以存储在用户选择的非主机存储服务器上。使用reStore，您的 {box_name} 将成为"
-"您的未托管存储服务器。"
-
-#: plinth/modules/restore/__init__.py:49
-msgid ""
-"You can create and edit accounts in the <a href='/restore/'>reStore web-"
-"interface</a>."
-msgstr ""
-"您可以在<a href='/restore/'> reStrore 的 web 界面</a> 中创建和编辑帐户 。"
-
 #: plinth/modules/roundcube/__init__.py:35
 #: plinth/modules/roundcube/manifest.py:24
 #, fuzzy
@@ -4626,7 +4661,7 @@ msgstr "共享"
 
 #: plinth/modules/samba/templates/samba.html:41
 msgid ""
-"Note: only specially created directories will be shared on selected disks, "
+"Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
 msgstr ""
 
@@ -4642,7 +4677,7 @@ msgid "Used"
 msgstr "已使用"
 
 #: plinth/modules/samba/templates/samba.html:72
-msgid "vfat partitions are not supported"
+msgid "VFAT partitions are not supported"
 msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:103
@@ -4659,7 +4694,7 @@ msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:113
 msgid ""
-"Users who need to re-enter their password on the password change page to "
+"Users needing to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
 
@@ -4687,13 +4722,13 @@ msgstr "共享"
 msgid "Action"
 msgstr "行动"
 
-#: plinth/modules/samba/views.py:61 plinth/modules/storage/forms.py:158
+#: plinth/modules/samba/views.py:61 plinth/modules/storage/forms.py:164
 #, fuzzy
 #| msgid "Add Service"
 msgid "Open Share"
 msgstr "添加服务"
 
-#: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:156
+#: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:162
 #, fuzzy
 #| msgid "Add Service"
 msgid "Group Share"
@@ -5511,47 +5546,47 @@ msgstr ""
 msgid "The device is mounted by another user."
 msgstr ""
 
-#: plinth/modules/storage/forms.py:75
+#: plinth/modules/storage/forms.py:79
 #, fuzzy
 #| msgid "Invalid hostname"
 msgid "Invalid directory name."
 msgstr "无效的主机名"
 
-#: plinth/modules/storage/forms.py:91
+#: plinth/modules/storage/forms.py:97
 msgid "Directory does not exist."
 msgstr ""
 
-#: plinth/modules/storage/forms.py:93
+#: plinth/modules/storage/forms.py:99
 #, fuzzy
 #| msgid "Download directory"
 msgid "Path is not a directory."
 msgstr "下载目录"
 
-#: plinth/modules/storage/forms.py:96
+#: plinth/modules/storage/forms.py:102
 msgid "Directory is not readable by the user."
 msgstr ""
 
-#: plinth/modules/storage/forms.py:99
+#: plinth/modules/storage/forms.py:105
 msgid "Directory is not writable by the user."
 msgstr ""
 
-#: plinth/modules/storage/forms.py:104
+#: plinth/modules/storage/forms.py:110
 #, fuzzy
 #| msgid "Download directory"
 msgid "Directory"
 msgstr "下载目录"
 
-#: plinth/modules/storage/forms.py:107
+#: plinth/modules/storage/forms.py:113
 msgid "Subdirectory (optional)"
 msgstr ""
 
-#: plinth/modules/storage/forms.py:154
+#: plinth/modules/storage/forms.py:160
 #, fuzzy
 #| msgid "Shared"
 msgid "Share"
 msgstr "共享"
 
-#: plinth/modules/storage/forms.py:162
+#: plinth/modules/storage/forms.py:168
 msgid "Other directory (specify below)"
 msgstr ""
 
@@ -5933,10 +5968,6 @@ msgstr ""
 "BitTorrent 是对等文件共享协议。Transmission 守护进程处理 Bitorrent 文件共享。"
 "请注意，BitTorrent 不是匿名。"
 
-#: plinth/modules/transmission/forms.py:35
-msgid "Download directory"
-msgstr "下载目录"
-
 #: plinth/modules/ttrss/__init__.py:43 plinth/modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr ""
@@ -6288,11 +6319,400 @@ msgstr "更改密码"
 msgid "Password changed successfully."
 msgstr "已成功更改密码。"
 
-#: plinth/network.py:41
+#: plinth/modules/wireguard/__init__.py:38
+#: plinth/modules/wireguard/manifest.py:29
+msgid "WireGuard"
+msgstr ""
+
+#: plinth/modules/wireguard/__init__.py:43
+msgid "WireGuard is a fast, modern, secure VPN tunnel."
+msgstr ""
+
+#: plinth/modules/wireguard/__init__.py:45
+#, python-brace-format
+msgid ""
+"It can be used to connect to a VPN provider which supports WireGuard, and to "
+"route all outgoing traffic from {box_name} through the VPN."
+msgstr ""
+
+#: plinth/modules/wireguard/__init__.py:49
+#, python-brace-format
+msgid ""
+"A second use case is to connect a mobile device to {box_name} while "
+"travelling. While connected to a public Wi-Fi network, all traffic can be "
+"securely relayed through {box_name}."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:47
+#, fuzzy
+#| msgid "Invalid kite name"
+msgid "Invalid key."
+msgstr "无效的 Kite 名称"
+
+#: plinth/modules/wireguard/forms.py:76
+#: plinth/modules/wireguard/templates/wireguard.html:32
+#: plinth/modules/wireguard/templates/wireguard.html:89
+#: plinth/modules/wireguard/templates/wireguard_delete_server.html:38
+#, fuzzy
+#| msgid "Publish Key"
+msgid "Public Key"
+msgstr "发布密钥"
+
+#: plinth/modules/wireguard/forms.py:77
+msgid ""
+"Public key of the peer. Example: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:85
+msgid "Endpoint of the server"
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:86
+msgid ""
+"Domain name and port in the form \"ip:port\". Example: demo.wireguard."
+"com:12912 ."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:91
+#, fuzzy
+#| msgid "Published key to keyserver."
+msgid "Public key of the server"
+msgstr "已发布到密钥服务器的密钥。"
+
+#: plinth/modules/wireguard/forms.py:92
+msgid ""
+"Provided by the server operator, a long string of characters. Example: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:97
+#, fuzzy
+#| msgid "A list of IP addresses, separated by space"
+msgid "Client IP address provided by server"
+msgstr "IP 地址列表，用空格分隔"
+
+#: plinth/modules/wireguard/forms.py:98
+msgid ""
+"IP address assigned to this machine on the VPN after connecting to the "
+"endpoint. This value is usually provided by the server operator. Example: "
+"192.168.0.10."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:104
+msgid "Private key of this machine"
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:105
+msgid ""
+"Optional. New public/private keys are generated if left blank. Public key "
+"can then be provided to the server. This is the recommended way. However, "
+"some server operators insist on providing this. Example: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:113
+msgid "Pre-shared key"
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:114
+msgid ""
+"Optional. A shared secret key provided by the server to add an additional "
+"layer of security. Fill in only if provided. Example: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:120
+msgid "Use this connection to send all outgoing traffic"
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:122
+msgid "Typically checked for a VPN service though which all traffic is sent."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:25
+#, fuzzy
+#| msgid "Web Server"
+msgid "As a Server"
+msgstr "Web 服务器"
+
+#: plinth/modules/wireguard/templates/wireguard.html:27
+msgid "Peers allowed to connect to this server:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:33
+msgid "Allowed IPs"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:34
+#: plinth/modules/wireguard/templates/wireguard.html:90
+#, fuzzy
+#| msgid "Create Connection"
+msgid "Last Connected Time"
+msgstr "创建连接"
+
+#: plinth/modules/wireguard/templates/wireguard.html:53
+#, python-format
+msgid "No peers configured to connect to this %(box_name)s yet."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:62
+#, python-format
+msgid ""
+"\n"
+"      Public key for this %(box_name)s:\n"
+"    "
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:68
+msgid "Not configured yet."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:72
+msgid "Add a new peer"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:76
+#: plinth/modules/wireguard/views.py:69
+msgid "Add Allowed Client"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:79
+#, fuzzy
+#| msgid ""
+#| "Chat Client \n"
+#| " (JSXC)"
+msgid "As a Client"
+msgstr ""
+"聊天客户端\n"
+"（JSXC）"
+
+#: plinth/modules/wireguard/templates/wireguard.html:81
+#, python-format
+msgid "Servers that %(box_name)s will connect to:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:88
+#: plinth/modules/wireguard/templates/wireguard_delete_server.html:34
+msgid "Endpoint"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:111
+#, fuzzy
+#| msgid "Authentication to remote server failed."
+msgid "No connections to remote servers are configured yet."
+msgstr "远程服务器认证失败。"
+
+#: plinth/modules/wireguard/templates/wireguard.html:119
+msgid "Add a new server"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:123
+#: plinth/modules/wireguard/views.py:178
+#, fuzzy
+#| msgid "Add Connection"
+msgid "Add Connection to Server"
+msgstr "添加连接"
+
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:34
+#, fuzzy
+#| msgid "Quassel IRC Client"
+msgid "Add Client"
+msgstr "Quassel IRC 客户端"
+
+#: plinth/modules/wireguard/templates/wireguard_delete_client.html:29
+#, fuzzy
+#| msgid "Are you sure that you want to remove this repository?"
+msgid "Are you sure that you want to delete this client?"
+msgstr "你确定你想移除这一项存储吗？"
+
+#: plinth/modules/wireguard/templates/wireguard_delete_server.html:29
+#, fuzzy
+#| msgid "Are you sure that you want to remove this repository?"
+msgid "Are you sure that you want to delete this server?"
+msgstr "你确定你想移除这一项存储吗？"
+
+#: plinth/modules/wireguard/templates/wireguard_edit_client.html:34
+#, fuzzy
+#| msgid ""
+#| "Chat Client \n"
+#| " (JSXC)"
+msgid "Update Client"
+msgstr ""
+"聊天客户端\n"
+"（JSXC）"
+
+#: plinth/modules/wireguard/templates/wireguard_edit_server.html:34
+#, fuzzy
+#| msgid "Create Connection"
+msgid "Update Connection"
+msgstr "创建连接"
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:27
+#, python-format
+msgid ""
+"%(box_name)s will allow this client to connect to it. Ensure that the client "
+"is configured with the following information."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:35
+msgid "Client public key:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:39
+msgid "IP address to use for client:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:43
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:46
+msgid "Pre-shared key:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:47
+#, fuzzy
+#| msgid "Server domain"
+msgid "Server endpoints:"
+msgstr "服务器域"
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:55
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:42
+#, fuzzy
+#| msgid "Select verified SSH public key"
+msgid "Server public key:"
+msgstr "选择经过验证的 SSH 公钥"
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:65
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:64
+msgid "Data transmitted:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:69
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:68
+msgid "Data received:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:73
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:72
+msgid "Latest handshake:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:29
+#, python-format
+msgid ""
+"%(box_name)s will attempt to reach a WireGuard server with the following "
+"information. Ensure that the server is configured to allow %(box_name)s's "
+"public key and IP address."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:38
+#, fuzzy
+#| msgid "Server domain"
+msgid "Server endpoint:"
+msgstr "服务器域"
+
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:50
+msgid "Public key of this machine:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:54
+msgid "IP address of this machine:"
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:64
+msgid "Added new client."
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
+#, fuzzy
+#| msgid "This service already exists"
+msgid "Client with public key already exists"
+msgstr "此服务已存在"
+
+#: plinth/modules/wireguard/views.py:92
+#, fuzzy
+#| msgid ""
+#| "Email Client \n"
+#| " (Roundcube)"
+msgid "Allowed Client"
+msgstr ""
+"邮件客户端\n"
+"（Roundcube）"
+
+#: plinth/modules/wireguard/views.py:114
+#, fuzzy
+#| msgid "Update setup"
+msgid "Updated client."
+msgstr "更新安装程序"
+
+#: plinth/modules/wireguard/views.py:119
+#, fuzzy
+#| msgid ""
+#| "Email Client \n"
+#| " (Roundcube)"
+msgid "Modify Client"
+msgstr ""
+"邮件客户端\n"
+"（Roundcube）"
+
+#: plinth/modules/wireguard/views.py:152
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Allowed Client"
+msgstr "删除"
+
+#: plinth/modules/wireguard/views.py:161
+#, fuzzy
+#| msgid "Archive deleted."
+msgid "Client deleted."
+msgstr "归档已删除。"
+
+#: plinth/modules/wireguard/views.py:163
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Client not found"
+msgstr "找不到存储库"
+
+#: plinth/modules/wireguard/views.py:173
+#, fuzzy
+#| msgid "Added custom service"
+msgid "Added new server."
+msgstr "已添加的自定义服务"
+
+#: plinth/modules/wireguard/views.py:194
+#, fuzzy
+#| msgid "Connection Type"
+msgid "Connection to Server"
+msgstr "连接类型"
+
+#: plinth/modules/wireguard/views.py:212
+#, fuzzy
+#| msgid "Update setup"
+msgid "Updated server."
+msgstr "更新安装程序"
+
+#: plinth/modules/wireguard/views.py:217
+#, fuzzy
+#| msgid "Edit Connection"
+msgid "Modify Connection to Server"
+msgstr "编辑连接"
+
+#: plinth/modules/wireguard/views.py:254
+#, fuzzy
+#| msgid "Delete Connection"
+msgid "Delete Connection to Server"
+msgstr "删除连接"
+
+#: plinth/modules/wireguard/views.py:274
+#, fuzzy
+#| msgid "{name} deleted."
+msgid "Server deleted."
+msgstr "{name} 已删除。"
+
+#: plinth/network.py:42
 msgid "PPPoE"
 msgstr "PPPoE"
 
-#: plinth/network.py:42
+#: plinth/network.py:43
 msgid "Generic"
 msgstr "通用"
 
@@ -6667,6 +7087,85 @@ msgstr "应用程序已禁用"
 msgid "Gujarati"
 msgstr "古吉拉特语"
 
+#, fuzzy
+#~| msgid "DNS Server"
+#~ msgid "SIP Server"
+#~ msgstr "DNS 服务器"
+
+#~ msgid ""
+#~ "repro provides various SIP services that a SIP softphone can utilize to "
+#~ "provide audio and video calls as well as presence and instant messaging. "
+#~ "repro provides a server and SIP user accounts that clients can use to let "
+#~ "their presence known.  It also acts as a proxy to federate SIP "
+#~ "communications to other servers on the Internet similar to email."
+#~ msgstr ""
+#~ "Repro 提供了一个 SIP 软电话可以用来提供音频和视频呼叫以及在线和即时消息等"
+#~ "各种 SIP 服务。Repro 提供一个服务器和 SIP 用户帐户，客户端可以在上线时知"
+#~ "道。它还可以充当代理以将 SIP 通信联合到互联网上类似于电子邮件的其他服务"
+#~ "器。"
+
+#~ msgid ""
+#~ "To make SIP calls, a client application is needed. Available clients "
+#~ "include <a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a "
+#~ "href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> "
+#~ "CSipSimple</a> (for Android phones)."
+#~ msgstr ""
+#~ "要进行SIP呼叫，需要客户端应用程序。可用的客户端程序包括 <a href=\"https://"
+#~ "jitsi.org/\">Jitsi</a>（适用于电脑）和 <a href=\"https://f-droid.org/"
+#~ "repository/browse/?fdid=com.csipsimple\">CSipSimple</a>（适用于 Android 手"
+#~ "机）。"
+
+#, fuzzy
+#~| msgid ""
+#~| "<strong>Note:</strong>  Before using repro, domains and users will need "
+#~| "to be configured using the <a href=\"/repro/domains.html\">web-based "
+#~| "configuration panel</a>. Users in the <em>admin</em> group will be able "
+#~| "to log in to the repro configuration panel. After setting the domain, it "
+#~| "is required to restart the repro service. Disable the service and re-"
+#~| "enable it."
+#~ msgid ""
+#~ "<strong>Note:</strong>  Before using repro, domains and users will need "
+#~ "to be configured using the <a href=\"/repro/domains.html\" data-"
+#~ "turbolinks=\"false\">web-based configuration panel</a>. Users in the "
+#~ "<em>admin</em> group will be able to log in to the repro configuration "
+#~ "panel. After setting the domain, it is required to restart the repro "
+#~ "service. Disable the service and re-enable it."
+#~ msgstr ""
+#~ "<strong>请注意</strong>：在使用 Repro 前，需要使用 <a href=\"/repro/"
+#~ "domains.html\">Web 配置面板</a>配置域名和用户。<em>admin</em> 组中的用户将"
+#~ "能够登录到 Repro 配置面板。设置域名后，需要重新启动 Repro 服务。禁用服务并"
+#~ "重新启用既可。"
+
+#~ msgid "reStore"
+#~ msgstr "reStore"
+
+#, fuzzy
+#~| msgid ""
+#~| "Unhosted Storage \n"
+#~| " (reStore)"
+#~ msgid "Unhosted Storage"
+#~ msgstr ""
+#~ "未托管存储\n"
+#~ "（reStrore）"
+
+#~ msgid ""
+#~ "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
+#~ "applications.  The idea is to uncouple web applications from data.  No "
+#~ "matter where a web application is served from, the data can be stored on "
+#~ "an unhosted storage server of user's choice.  With reStore, your "
+#~ "{box_name} becomes your unhosted storage server."
+#~ msgstr ""
+#~ "reStore 是<a href='https://unhosted.org/'>未托管</a>网络应用程序的服务器。"
+#~ "这个想法是将 Web 应用程序与数据断开连接。无论从哪个 Web 应用程序提供服务，"
+#~ "数据都可以存储在用户选择的非主机存储服务器上。使用reStore，您的 "
+#~ "{box_name} 将成为您的未托管存储服务器。"
+
+#~ msgid ""
+#~ "You can create and edit accounts in the <a href='/restore/'>reStore web-"
+#~ "interface</a>."
+#~ msgstr ""
+#~ "您可以在<a href='/restore/'> reStrore 的 web 界面</a> 中创建和编辑帐户 。"
+
 #~ msgid "Module: %(module)s"
 #~ msgstr "模块：%(module)s"
 
@@ -6946,11 +7445,6 @@ msgstr "古吉拉特语"
 #~ msgid "Delete Snapshot #%(number)s"
 #~ msgstr "删除快照 #%(number)s"
 
-#, fuzzy
-#~| msgid "Delete"
-#~ msgid "Delete All"
-#~ msgstr "删除"
-
 #~ msgid "Delete snapshot #%(number)s"
 #~ msgstr "删除快照 #%(number)s"
 
@@ -7096,9 +7590,6 @@ msgstr "古吉拉特语"
 #~ msgid "Enable forwarding on your BIND server"
 #~ msgstr "在你的 BIND 服务器上启用转发"
 
-#~ msgid "A list of IP addresses, separated by space"
-#~ msgstr "IP 地址列表，用空格分隔"
-
 #~ msgid "Set forwarding configuration updated"
 #~ msgstr "设置转发配置已更新"
 
@@ -7208,9 +7699,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "Go to Apps"
 #~ msgstr "转到应用程序"
-
-#~ msgid "Current Network Configuration"
-#~ msgstr "当前的网络配置"
 
 #~ msgid ""
 #~ "You should check the network setup and modify it if necessary. Do not "
