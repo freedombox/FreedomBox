@@ -474,7 +474,8 @@ def gitweb_repo_is_writable(repo, with_auth=False, url_git_extension=False):
         cwd = os.path.join(cwd, 'test-project')
         prepare_git_repo_commands = [
             'git init -q', 'git config http.sslVerify false',
-            'git commit -q --allow-empty --author "Tester <>" -m "test"'
+            'git -c "user.name=Tester" -c "user.email=tester" '
+            'commit -q --allow-empty -m "test"'
         ]
         for command in prepare_git_repo_commands:
             subprocess.run(command, shell=True, check=True, cwd=cwd)
