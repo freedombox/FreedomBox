@@ -43,7 +43,7 @@ class ConnectionForm(forms.Form):
     """Base form to create/edit a connection."""
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
-        label=_('Physical Interface'), choices=(),
+        label=_('Network Interface'), choices=(),
         help_text=_('The network device that this connection should be bound '
                     'to.'))
     zone = forms.ChoiceField(
@@ -120,6 +120,10 @@ class ConnectionForm(forms.Form):
     def _get_interface_choices(device_type):
         """Return a list of choices for a given device type."""
         interfaces = network.get_interface_list(device_type)
+        # Support for virtual Ethernet devices used in containers
+        if device_type == nm.DeviceType.ETHERNET:
+            interfaces.update(network.get_interface_list(nm.DeviceType.VETH))
+
         choices = [('', _('-- select --'))]
         for interface, mac in interfaces.items():
             display_string = '{interface} ({mac})'.format(
