@@ -2563,17 +2563,17 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
       </section>
       <section>
         <title>Access</title>
-        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my"/> freedombox name&gt;/gitweb </para>
+        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my_freedombox_name&gt;/gitweb"/> </para>
       </section>
       <section>
         <title>HTTP basic auth</title>
         <para>GitWeb on FreedomBox currently supports HTTP remotes only. To avoid having to enter the password each time you pull/push to the repository, you can edit your remote to include the credentials. </para>
         <para>
           <emphasis>Example:</emphasis>
-          <ulink url="https://username@password:my.freedombox.rocks/gitweb/myrepo"/>
+          <ulink url="https://username:password@my.freedombox.rocks/gitweb/myrepo"/>
         </para>
         <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. </para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user who has only access to the gitweb and not to use an admin account. </para>
       </section>
       <section>
         <title>Mirroring</title>
@@ -3018,7 +3018,7 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
         <para>MediaWiki on FreedomBox is configured to be publicly readable and privately editable. Only logged in users can make edits to the wiki. This configuration prevents spam and vandalism on the wiki. </para>
         <section>
           <title>User management</title>
-          <para>Users can be created by the MediaWiki administrator (user "admin") only. The "admin" user can also be used to reset passwords of MediaWiki users. The administrator password, if forgotten can be reset anytime from the MediaWiki page in the Plinth UI. </para>
+          <para>Users can be created by the MediaWiki administrator (user "admin") only. The "admin" user can also be used to reset passwords of MediaWiki users. The administrator password, if forgotten can be reset anytime from the MediaWiki app page in web interface. </para>
         </section>
         <section>
           <title>Use cases</title>
@@ -3050,11 +3050,22 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
         </section>
         <section>
           <title>Editing Wiki Content</title>
+          <para>The MediaWiki installation on FreedomBox ships with a basic editor with a toolbar for common options like Bold, Italics etc. Click on the Advanced section for more options like Headings, bullet lists etc. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MediaWiki?action=AttachFile&amp;do=get&amp;target=mediawiki-toolbar.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>mediawiki-toolbar.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
           <section>
             <title>Visual Editor</title>
             <itemizedlist>
               <listitem override="none">
-                <para>MediaWiki's new Visual Editor gives a WYSIWYG user interface to creating wiki pages. Unfortunately, it is not yet available in the current version of MediaWiki on Debian. A workaround is to use write your content using the Visual Editor in <ulink url="https://en.wikipedia.org/wiki/Wikipedia:Sandbox">Wikipedia's Sandbox</ulink>, switching to source editing mode and copying the content into your wiki. </para>
+                <para>MediaWiki's new Visual Editor gives a WYSIWYG user interface to creating wiki pages. This is still a Beta feature and is not provided by default with MediaWiki. A workaround is to use write your content using the Visual Editor in <ulink url="https://en.wikipedia.org/wiki/Wikipedia:Sandbox">Wikipedia's Sandbox</ulink>, switching to source editing mode and copying the content into your wiki. </para>
               </listitem>
             </itemizedlist>
           </section>
@@ -3073,6 +3084,15 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
                 <para>Image uploads have been enabled since FreedomBox version 0.36.0. You can also directly use images from Wikimedia Commons using a feature called <ulink url="https://www.mediawiki.org/wiki/InstantCommons">Instant Commons</ulink>. </para>
               </listitem>
             </itemizedlist>
+          </section>
+        </section>
+        <section>
+          <title>Customization</title>
+          <section>
+            <title>Skins</title>
+            <para>MediaWiki's default skin is usually Vector. The default skin set by FreedomBox is Timeless.  </para>
+            <para>Vector is a skin best-suited for viewing on desktop browsers. It is not suitable for mobile screen sizes. Wikimedia sites host a separate mobile site. It is not worth hosting a separate mobile site for small MediaWiki installations like those on FreedomBox. Using a mobile-friendly skin like Timeless is a cheaper way of solving the problem. </para>
+            <para>Administrators can choose a default skin from the app configuration. Users of the site also have the choice of viewing it with a different skin. </para>
           </section>
         </section>
       </section>
@@ -10036,6 +10056,65 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.1 (2020-01-27)</title>
+        <itemizedlist>
+          <listitem>
+            <para>deluge: Allow to set a download directory </para>
+          </listitem>
+          <listitem>
+            <para>deluge: Fix installation failure on slow machine </para>
+          </listitem>
+          <listitem>
+            <para>storage: Make external disk mounts accessible to other users </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Add link to the manual page </para>
+          </listitem>
+          <listitem>
+            <para>style: Fix incorrect margins for containers in mobile view </para>
+          </listitem>
+          <listitem>
+            <para>style: Fix responsiveness for app header </para>
+          </listitem>
+          <listitem>
+            <para>network: Fix activating connections that don't have real devices </para>
+          </listitem>
+          <listitem>
+            <para>wireguard: Add WireGuard VPN app </para>
+          </listitem>
+          <listitem>
+            <para>networks: Add router configuration page </para>
+          </listitem>
+          <listitem>
+            <para>networks: Add first boot step for router config helper </para>
+          </listitem>
+          <listitem>
+            <para>bind: Enable sandboxing for bind service </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Dutch) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Norwegian Bokmål) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (German) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Spanish) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Swedish) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (French) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Greek) </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.0 (2020-01-13)</title>
         <itemizedlist>

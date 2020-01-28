@@ -2881,7 +2881,7 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
         <para>MediaWiki viene configurado en FreedomBox para ser públicamente legible y editable en privado. Sólo los usuarios ingresados pueden editar el wiki. Esta configuración evita publicidad indeseada (<emphasis>spam</emphasis>) y otros vandalismos en tu wiki. </para>
         <section>
           <title>Administración de Usuarios</title>
-          <para>Solo el administrador de MediaWiki (usuario "admin") puede crear los usuarios. El usuario "admin" puede usarse también para restablecer contraseñas de usuarios MediaWiki. Si se olvida la contraseña del administrador se puede restablecer desde la página de MediaWiki del interfaz Plinth. </para>
+          <para>Solo el administrador de MediaWiki (usuario "admin") puede crear los usuarios. El usuario "admin" puede usarse también para restablecer contraseñas de usuarios MediaWiki. Si se olvida la contraseña del administrador se puede restablecer desde la página de MediaWiki del interfaz web de FreedomBox. </para>
         </section>
         <section>
           <title>Casos de uso</title>
@@ -2912,6 +2912,15 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           <section>
             <title>Cargar Imágenes</title>
             <para>Se puede habilitar la carga de imágenes desde FreedomBox versión 0.36.0. También puedes usar directamente imágenes de Wikimedia Commons mediante una funcionalidad llamada <ulink url="https://www.mediawiki.org/wiki/InstantCommons">Instant Commons</ulink>. </para>
+          </section>
+        </section>
+        <section>
+          <title>Personalización</title>
+          <section>
+            <title>Temas de estilo</title>
+            <para>El tema por defecto de MediaWiki suele ser <emphasis>Vector</emphasis>. El de FreedomBox es <emphasis>Timeless</emphasis>.  </para>
+            <para>Vector es un tema optimizado para visualizarlo en pantallas grandes pero no se adecúa bien a los tamaños de pantalla de los móviles. Wikimedia usa otro sitio específico para móviles. Para instalaciones pequeñas como las de FreedomBox no merece la pena un segundo sitio dedicado. Usar un tema de estilo más polivalente como <emphasis>Timeless</emphasis> es una solución más eficiente al problema. </para>
+            <para>Los administradores pueden elegir el tema por defecto desde la configuración de la app. Los usuarios del sitio tienen también la opción de visualizarlo con temas diferentes. </para>
           </section>
         </section>
       </section>
@@ -3043,17 +3052,17 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
       </section>
       <section>
         <title>Access</title>
-        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my"/> freedombox name&gt;/gitweb </para>
+        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my_freedombox_name&gt;/gitweb"/> </para>
       </section>
       <section>
         <title>HTTP basic auth</title>
         <para>GitWeb on FreedomBox currently supports HTTP remotes only. To avoid having to enter the password each time you pull/push to the repository, you can edit your remote to include the credentials. </para>
         <para>
           <emphasis>Example:</emphasis>
-          <ulink url="https://username@password:my.freedombox.rocks/gitweb/myrepo"/>
+          <ulink url="https://username:password@my.freedombox.rocks/gitweb/myrepo"/>
         </para>
         <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. </para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user who has only access to the gitweb and not to use an admin account. </para>
       </section>
       <section>
         <title>Mirroring</title>
@@ -9911,6 +9920,65 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.1 (2020-01-27)</title>
+        <itemizedlist>
+          <listitem>
+            <para>deluge: Allow to set a download directory </para>
+          </listitem>
+          <listitem>
+            <para>deluge: Fix installation failure on slow machine </para>
+          </listitem>
+          <listitem>
+            <para>storage: Make external disk mounts accessible to other users </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Add link to the manual page </para>
+          </listitem>
+          <listitem>
+            <para>style: Fix incorrect margins for containers in mobile view </para>
+          </listitem>
+          <listitem>
+            <para>style: Fix responsiveness for app header </para>
+          </listitem>
+          <listitem>
+            <para>network: Fix activating connections that don't have real devices </para>
+          </listitem>
+          <listitem>
+            <para>wireguard: Add WireGuard VPN app </para>
+          </listitem>
+          <listitem>
+            <para>networks: Add router configuration page </para>
+          </listitem>
+          <listitem>
+            <para>networks: Add first boot step for router config helper </para>
+          </listitem>
+          <listitem>
+            <para>bind: Enable sandboxing for bind service </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Dutch) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Norwegian Bokmål) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (German) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Spanish) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Swedish) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (French) </para>
+          </listitem>
+          <listitem>
+            <para>Translated using Weblate (Greek) </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.0 (2020-01-13)</title>
         <itemizedlist>
