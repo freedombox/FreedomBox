@@ -23,16 +23,13 @@ import threading
 
 from plinth.utils import import_from_gi
 
-from . import network, setup
+from . import setup
 
-glib = import_from_gi('GLib', '2.0')
 gio = import_from_gi('Gio', '2.0')
 
 logger = logging.getLogger(__name__)
 
-_thread = None
 _server = None
-_main_loop = None
 
 
 class PackageHandler():
@@ -127,35 +124,8 @@ class DBusServer():
         # service again.
 
 
-def run():
-    """Run a glib main loop forever in a thread."""
-    global _thread
-    _thread = threading.Thread(target=_run)
-    _thread.start()
-
-
-def stop():
-    """Exit glib main loop and end the thread."""
-    if _main_loop:
-        logger.info('Exiting main loop for D-Bus services')
-        _main_loop.quit()
-
-
-def _run():
-    """Connect to D-Bus and run main loop."""
-    logger.info('Started new thread for D-Bus services')
-
+def init():
+    """Connect to D-Bus service. Must be run from glib thread."""
     global _server
     _server = DBusServer()
     _server.connect()
-
-    # Initialize all other modules that glib main loop
-    # XXX: Refactor this code into separate 'glib' module later
-    network.init()
-
-    global _main_loop
-    _main_loop = glib.MainLoop()
-    _main_loop.run()
-    _main_loop = None
-
-    logger.info('D-Bus services thread exited.')
