@@ -81,15 +81,15 @@ def init():
 
 
 def get_disks():
-    """Returns list of disks by combining information from df and lsblk."""
-    disks = _get_disks_from_udisks()
-    disks_from_df = _get_disks_from_df()
+    """Returns list of disks by combining information from df and udisks."""
+    disks = _get_disks_from_df()
+    disks_from_udisks = _get_disks_from_udisks()
 
-    # Add size info from df to the disks from udisks based on mount point.
-    for disk_from_udisks in disks:
-        for disk_from_df in disks_from_df:
+    # Add info from udisks to the disks from df based on mount point.
+    for disk_from_df in disks:
+        for disk_from_udisks in disks_from_udisks:
             if disk_from_udisks['mount_point'] == disk_from_df['mount_point']:
-                disk_from_udisks.update(disk_from_df)
+                disk_from_df.update(disk_from_udisks)
 
     return sorted(disks, key=lambda disk: disk['device'])
 
@@ -138,7 +138,7 @@ def _get_disks_from_df():
     disks = []
     for line in output.splitlines()[1:]:
         parts = line.split(maxsplit=6)
-        keys = ('device', 'file_system_type', 'size', 'used', 'free',
+        keys = ('device', 'filesystem_type', 'size', 'used', 'free',
                 'percent_used', 'mount_point')
         disk = dict(zip(keys, parts))
         disk['percent_used'] = int(disk['percent_used'].rstrip('%'))
@@ -148,6 +148,8 @@ def _get_disks_from_df():
         disk['size_str'] = format_bytes(disk['size'])
         disk['used_str'] = format_bytes(disk['used'])
         disk['free_str'] = format_bytes(disk['free'])
+        disk['label'] = None
+        disk['is_removable'] = None
         disks.append(disk)
 
     return disks

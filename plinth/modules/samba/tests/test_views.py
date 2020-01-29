@@ -39,7 +39,6 @@ DISKS = [{
     'label': '',
     'filesystem_type': 'ext4',
     'mount_point': '/',
-    'file_system_type': 'ext4',
     'percent_used': 63,
     'size_str': '9.5 GiB',
     'used_str': '5.7 GiB'

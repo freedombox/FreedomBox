@@ -98,3 +98,8 @@ def help_go_to_status_logs(session_browser):
 @then('status logs should be shown')
 def help_status_logs_are_shown(session_browser):
     assert interface.are_status_logs_shown(session_browser)
+
+
+@given(parsers.parse("I'm on the {name:w} page"))
+def go_to_module(session_browser, name):
+    interface.nav_to_module(session_browser, name)

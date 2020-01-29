@@ -427,3 +427,8 @@ def networks_set_firewall_zone(browser, zone):
     browser.find_link_by_href(edit_url).first.click()
     browser.select('zone', zone)
     browser.find_by_tag("form").first.find_by_tag('input')[-1].click()
+
+
+def storage_is_root_disk_shown(browser):
+    table_cells = browser.find_by_tag('td')
+    return any(cell.text == '/' for cell in table_cells)
