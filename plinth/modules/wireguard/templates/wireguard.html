@@ -1,0 +1,128 @@
+{% extends "app.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+  <h3>{% trans "As a Server" %}</h3>
+
+  <p>{% trans "Peers allowed to connect to this server:" %}</p>
+
+  <table class="table table-bordered table-condensed table-striped"
+         id="server-peers-list">
+    <tr>
+      <th>{% trans "Public Key" %}</th>
+      <th>{% trans "Allowed IPs" %}</th>
+      <th>{% trans "Last Connected Time" %}</th>
+    </tr>
+    {% if server.peers %}
+      {% for peer in server.peers.values %}
+        {% if peer.public_key %}
+          <tr>
+            <td>
+              <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
+                {{ peer.public_key }}
+              </a>
+            </td>
+            <td>{{ peer.allowed_ips|join:", " }}</td>
+            <td>{{ peer.status.latest_handshake|default:'' }}</td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="3">
+          {% blocktrans trimmed %}
+            No peers configured to connect to this {{ box_name }} yet.
+          {% endblocktrans %}
+        </td>
+      </tr>
+    {% endif %}
+  </table>
+
+  <p>
+    {% blocktrans %}
+      Public key for this {{ box_name }}:
+    {% endblocktrans %}
+    {% if server.public_key %}
+      <pre>{{ server.public_key }}</pre>
+    {% else %}
+      <p>{% trans "Not configured yet." %}</p>
+    {% endif %}
+  </p>
+
+  <a title="{% trans 'Add a new peer' %}"
+     role="button" class="btn btn-default"
+     href="{% url 'wireguard:add-client' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans "Add Allowed Client" %}
+  </a>
+
+  <h3>{% trans "As a Client" %}</h3>
+  <p>
+    {% blocktrans trimmed %}
+    Servers that {{ box_name }} will connect to:
+    {% endblocktrans %}
+  </p>
+  <table class="table table-bordered table-condensed table-striped"
+         id="client-peers-list">
+    <tr>
+      <th>{% trans "Endpoint" %}</th>
+      <th>{% trans "Public Key" %}</th>
+      <th>{% trans "Last Connected Time" %}</th>
+    </tr>
+    {% if client_peers %}
+      {% for interface, server in client_peers.items %}
+        {% for peer in server.peers.values %}
+          {% if forloop.first %}
+            <tr>
+              <td>{{ peer.endpoint }}</td>
+              <td>
+                <a href="{% url 'wireguard:show-server' interface %}">
+                  {{ peer.public_key }}
+                </a>
+              </td>
+              <td>{{ peer.status.latest_handshake|default:'' }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="4">
+          {% blocktrans trimmed %}
+            No connections to remote servers are configured yet.
+          {% endblocktrans %}
+        </td>
+      </tr>
+    {% endif %}
+  </table>
+
+  <a title="{% trans 'Add a new server' %}"
+     role="button" class="btn btn-default"
+     href="{% url 'wireguard:add-server' %}">
+    <span class="fa fa-plus" aria-hidden="true"></span>
+    {% trans "Add Connection to Server" %}
+  </a>
+
+  {{ block.super }}
+
+{% endblock %}

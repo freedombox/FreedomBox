@@ -20,6 +20,7 @@ Configuration helper for BitTorrent web client.
 """
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -79,6 +80,16 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup deluge')
+
+    subparsers.add_parser('get-configuration',
+                          help='Return the current configuration')
+
+    subparser = subparsers.add_parser('set-configuration',
+                                      help='Set the configuration parameter')
+    subparser.add_argument('parameter',
+                           help='Name of the configuration parameter')
+    subparser.add_argument('value',
+                           help='Value of the configuration parameter')
 
     subparsers.required = True
     return parser.parse_args()
@@ -141,6 +152,29 @@ def _set_deluged_daemon_options():
     aug.save()
 
 
+def subcommand_get_configuration(_):
+    """Return the current deluged configuration in JSON format."""
+    deluged_conf_file = os.path.join(DELUGE_CONF_DIR, 'core.conf')
+    if config is None:
+        script = 'from deluge import config;\
+            conf = config.Config(filename="{0}");\
+            print(conf["download_location"])'.format(deluged_conf_file)
+        output = subprocess.check_output(['python2', '-c', script]).decode()
+        download_location = output.strip()
+    else:
+        conf = config.Config(filename=deluged_conf_file)
+        download_location = conf["download_location"]
+
+    print(json.dumps({'download_location': download_location}))
+
+
+def subcommand_set_configuration(arguments):
+    """Set the deluged configuration."""
+    if arguments.parameter != 'download_location':
+        return
+    _set_configuration('core.conf', arguments.parameter, arguments.value)
+
+
 def subcommand_setup(_):
     """Perform initial setup for deluge."""
 
@@ -155,7 +189,7 @@ def subcommand_setup(_):
     action_utils.service_restart('deluge-web')
     action_utils.service_restart('deluged')
     # wait processes to start
-    time.sleep(5)
+    time.sleep(10)
 
     # configure deluge-web to autoconnect to the default deluged daemon, also
     # restarts deluged and deluge-web services again to create config files

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@backups
+@backups @system
 Feature: Backups module
   Create and restore backups.
 

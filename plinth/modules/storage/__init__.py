@@ -32,7 +32,7 @@ from plinth.utils import format_lazy, import_from_gi
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 4
 
 name = _('Storage')
 
@@ -277,6 +277,7 @@ def get_error_message(error):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages, skip_recommends=True)
+    helper.call('post', actions.superuser_run, 'storage', ['setup'])
     helper.call('post', app.enable)
     disks = get_disks()
     root_device = get_root_device(disks)

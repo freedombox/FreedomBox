@@ -85,15 +85,17 @@ def upload_file_to_coquelicot(browser, file_path, password):
 
 
 def verify_mediawiki_create_account_link(browser):
-    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    browser.visit(config['DEFAULT']['url'] +
+                  '/mediawiki/index.php/Special:CreateAccount')
     assert eventually(browser.is_element_present_by_id,
-                      args=['pt-createaccount'])
+                      args=['wpCreateaccount'])
 
 
 def verify_mediawiki_no_create_account_link(browser):
-    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    browser.visit(config['DEFAULT']['url'] +
+                  '/mediawiki/index.php/Special:CreateAccount')
     assert eventually(browser.is_element_not_present_by_id,
-                      args=['pt-createaccount'])
+                      args=['wpCreateaccount'])
 
 
 def verify_mediawiki_anonymous_reads_edits_link(browser):
@@ -169,32 +171,6 @@ def _mediawiki_has_main_page(browser):
     browser.visit('{}/mediawiki/Main_Page'.format(interface.default_url))
     content = browser.find_by_id('mw-content-text').first
     return 'This page has been deleted.' not in content.text
-
-
-def repro_configure(browser):
-    """Configure repro."""
-    browser.visit(
-        '{}/repro/domains.html?domainUri=freedombox.local&domainTlsPort='
-        '&action=Add'.format(interface.default_url))
-
-
-def repro_delete_config(browser):
-    """Delete the repro config."""
-    browser.visit('{}/repro/domains.html?domainUri=&domainTlsPort='
-                  '&action=Remove&remove.freedombox.local=on'.format(
-                      interface.default_url))
-
-
-def repro_is_configured(browser):
-    """Check whether repro is configured."""
-    return eventually(_repro_is_configured, [browser])
-
-
-def _repro_is_configured(browser):
-    """Check whether repro is configured."""
-    browser.visit('{}/repro/domains.html'.format(interface.default_url))
-    remove = browser.find_by_name('remove.freedombox.local')
-    return bool(remove)
 
 
 def jsxc_login(browser):

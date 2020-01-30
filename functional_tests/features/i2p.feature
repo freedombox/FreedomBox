@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @i2p-app
+@apps @i2p
 Feature: I2P Anonymity Network
   Manage I2P configuration.
 

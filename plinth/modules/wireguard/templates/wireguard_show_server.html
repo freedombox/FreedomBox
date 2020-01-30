@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+  {% for peer in server.peers.values %}
+    {% if forloop.first %}
+      <h3>{{ title }}</h3>
+      <p>
+        {% blocktrans trimmed %}
+          {{ box_name }} will attempt to reach a WireGuard server with the
+          following information. Ensure that the server is configured to allow
+          {{ box_name }}'s public key and IP address.
+        {% endblocktrans %}
+      </p>
+      <table class="table table-bordered table-condensed table-striped">
+        <tbody>
+          <tr>
+            <th>{% trans "Server endpoint:" %}</th>
+            <td>{{ peer.endpoint }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Server public key:" %}</th>
+            <td>{{ peer.public_key }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Pre-shared key:" %}</th>
+            <td>{{ peer.preshared_key }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Public key of this machine:" %}</th>
+            <td>{{ server.public_key }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "IP address of this machine:" %}</th>
+            <td>{{ server.ip_address }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>{% trans "Status" %}</h3>
+      <table class="table table-bordered table-condensed table-striped">
+        <tbody>
+          <tr>
+            <th>{% trans "Data transmitted:" %}</th>
+            <td>{{ peer.status.transfer_tx|filesizeformat }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Data received:" %}</th>
+            <td>{{ peer.status.transfer_rx|filesizeformat }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Latest handshake:" %}</th>
+            <td>{{ peer.status.latest_handshake|default:'' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    {% endif %}
+  {% endfor %}
+
+  <p>
+    <a class="btn btn-default"
+       href="{% url 'wireguard:edit-server' interface %}">
+      <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+      {% trans "Edit" %}
+    </a>
+    <a class="btn btn-default"
+       href="{% url 'wireguard:delete-server' interface %}">
+      <span class="fa fa-trash-o" aria-hidden="true"></span>
+      {% trans "Delete" %}
+    </a>
+  </p>
+
+{% endblock %}

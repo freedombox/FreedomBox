@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from logging import Logger
+import logging
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -24,13 +24,13 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import network
-from plinth.modules import networks
+from plinth import network, kvstore
+from plinth.modules import networks, first_boot
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
-                    PPPoEForm, WifiForm)
+                    PPPoEForm, WifiForm, RouterConfigurationWizardForm)
 
-logger = Logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -416,3 +416,49 @@ def delete(request, uuid):
         'title': _('Delete Connection'),
         'name': name
     })
+
+
+def router_configuration_help_page(request):
+    """
+    Show the router configuration wizard page/form.
+    Used both for fistboot step and same networks page.
+    """
+    is_firstboot = True \
+        if 'firstboot' in request.build_absolute_uri() else False
+
+    if request.method == 'POST' and request.POST['router_config']:
+        form = RouterConfigurationWizardForm(request.POST)
+        if form.is_valid():
+            logger.info('Updating router configuration setup with value: %s' %
+                        request.POST['router_config'])
+            kvstore.set(
+                networks.ROUTER_CONFIGURATION_TYPE_KEY,
+                request.POST['router_config']
+            )
+        if is_firstboot:
+            resp = reverse_lazy(first_boot.next_step())
+        else:
+            resp = reverse_lazy('networks:index')
+            messages.success(request, _('Router configuration type saved.'))
+
+        return redirect(resp)
+
+    else:
+        html = "router_configuration_update.html"
+        initial = {
+            "router_config": kvstore.get_default(
+                networks.ROUTER_CONFIGURATION_TYPE_KEY, 'dmz'),
+        }
+        template_kwargs = {
+            'form': RouterConfigurationWizardForm(initial=initial),
+        }
+        if is_firstboot:
+            html = "router_configuration_firstboot.html"
+
+            # mark step done on firstboot visit to get the next_step
+            first_boot.mark_step_done('router_setup_wizard')
+            template_kwargs.update({
+                'first_boot_next_step': reverse_lazy(first_boot.next_step()),
+            })
+
+        return TemplateResponse(request, html, template_kwargs)

@@ -39,7 +39,7 @@
     <h3>{% trans "Shares" %}</h3>
     <p>
     {% blocktrans trimmed %}
-      Note: only specially created directories will be shared on selected disks,
+      Note: Only specially created directories will be shared on selected disks,
       not the whole disk.
     {% endblocktrans %}
     </p>
@@ -69,7 +69,7 @@
                   class="btn btn-default" name="{{ share_type.0 }}_share" value="enable"
                 {% endif %}
                 {% if disk.filesystem_type == 'vfat' %}
-                  title='{% trans "vfat partitions are not supported" %}' disabled
+                  title='{% trans "VFAT partitions are not supported" %}' disabled
                 {% endif %}>{{ share_type.1 }}
               </button>
             {% endfor %}
@@ -110,7 +110,7 @@
         {{ users.access_ok|join:", " }}</p>
 
       {% if users.password_re_enter_needed %}
-        <p>{% trans "Users who need to re-enter their password on the password change page to access group and home shares" %}:
+        <p>{% trans "Users needing to re-enter their password on the password change page to access group and home shares" %}:
           <strong>{{ users.password_re_enter_needed|join:", " }}</strong>.</p>
       {% endif %}
 

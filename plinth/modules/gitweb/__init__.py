@@ -59,6 +59,8 @@ description = [
       '<a href="https://git-scm.com/docs/gittutorial">Git tutorial</a>.')
 ]
 
+manual_page = 'GitWeb'
+
 group = ('git-access', _('Read-write access to Git repositories'))
 
 app = None

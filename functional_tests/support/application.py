@@ -17,9 +17,12 @@
 
 import contextlib
 import os
+import random
 import shutil
+import string
 import subprocess
 import tempfile
+import urllib
 from time import sleep
 
 import requests
@@ -60,9 +63,13 @@ def get_app_checkbox_id(app_name):
     return checkbox_id
 
 
-def install(browser, app_name):
+def _find_install_button(browser, app_name):
     interface.nav_to_module(browser, get_app_module(app_name))
-    install = browser.find_by_css('.form-install input[type=submit]')
+    return browser.find_by_css('.form-install input[type=submit]')
+
+
+def install(browser, app_name):
+    install_button = _find_install_button(browser, app_name)
 
     def install_in_progress():
         selectors = [
@@ -86,15 +93,14 @@ def install(browser, app_name):
             return
         wait_for_install()
 
-    if install:
-        install.click()
+    if install_button:
+        install_button.click()
         wait_for_install()
-        sleep(2)  # XXX This shouldn't be required.
+        # sleep(2)  # XXX This shouldn't be required.
 
 
 def is_installed(browser, app_name):
-    interface.nav_to_module(browser, get_app_module(app_name))
-    install_button = browser.find_by_css('.form-install input[type=submit]')
+    install_button = _find_install_button(browser, app_name)
     return not bool(install_button)
 
 
@@ -407,8 +413,9 @@ def _gitweb_get_repo_url(repo, with_auth):
     if with_auth:
         password = config['DEFAULT']['password']
 
-    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(
-        scheme, config['DEFAULT']['username'], password, url, repo)
+    return '{0}://{1}:{2}@{3}/gitweb/{4}'.format(scheme,
+                                                 config['DEFAULT']['username'],
+                                                 password, url, repo)
 
 
 @contextlib.contextmanager
@@ -467,7 +474,8 @@ def gitweb_repo_is_writable(repo, with_auth=False, url_git_extension=False):
         cwd = os.path.join(cwd, 'test-project')
         prepare_git_repo_commands = [
             'git init -q', 'git config http.sslVerify false',
-            'git commit -q --allow-empty --author "Tester <>" -m "test"'
+            'git -c "user.name=Tester" -c "user.email=tester" '
+            'commit -q --allow-empty -m "test"'
         ]
         for command in prepare_git_repo_commands:
             subprocess.run(command, shell=True, check=True, cwd=cwd)
@@ -662,6 +670,79 @@ def openvpn_download_profile(browser):
     interface.nav_to_module(browser, 'openvpn')
     url = browser.find_by_css('.form-profile')['action']
     return _download_file(browser, url)
+
+
+def samba_set_share(browser, share_type, status='enabled'):
+    """Enable or disable samba share."""
+    disk_name = 'disk'
+    share_type_name = '{0}_share'.format(share_type)
+    interface.nav_to_module(browser, 'samba')
+    for elem in browser.find_by_tag('td'):
+        if elem.text == disk_name:
+            share_form = elem.find_by_xpath('(..//*)[2]/form').first
+            share_btn = share_form.find_by_name(share_type_name).first
+            if status == 'enabled' and share_btn['value'] == 'enable':
+                share_btn.click()
+            elif status == 'disabled' and share_btn['value'] == 'disable':
+                share_btn.click()
+            break
+
+
+def _samba_write_to_share(share_type, as_guest=False):
+    """Write to the samba share, return output messages as string."""
+    disk_name = 'disk'
+    if share_type == 'open':
+        share_name = disk_name
+    else:
+        share_name = '{0}_{1}'.format(disk_name, share_type)
+    hostname = urllib.parse.urlparse(default_url).hostname
+    servicename = '\\\\{0}\\{1}'.format(hostname, share_name)
+    directory = '_plinth-test_{0}'.format(''.join(
+        random.SystemRandom().choices(string.ascii_letters, k=8)))
+    port = config['DEFAULT']['samba_port']
+
+    smb_command = ['smbclient', '-W', 'WORKGROUP', '-p', port]
+    if as_guest:
+        smb_command += ['-N']
+    else:
+        smb_command += [
+            '-U', '{0}%{1}'.format(config['DEFAULT']['username'],
+                                   config['DEFAULT']['password'])
+        ]
+    smb_command += [
+        servicename, '-c', 'mkdir {0}; rmdir {0}'.format(directory)
+    ]
+
+    return subprocess.check_output(smb_command).decode()
+
+
+def samba_assert_share_is_writable(share_type, as_guest=False):
+    """Assert that samba share is writable."""
+    output = _samba_write_to_share(share_type, as_guest=False)
+
+    assert not output, output
+
+
+def samba_assert_share_is_not_accessible(share_type, as_guest=False):
+    """Assert that samba share is not accessible."""
+    try:
+        _samba_write_to_share(share_type, as_guest)
+    except subprocess.CalledProcessError as err:
+        err_output = err.output.decode()
+        assert 'NT_STATUS_ACCESS_DENIED' in err_output, err_output
+    else:
+        assert False, 'Can access the share.'
+
+
+def samba_assert_share_is_not_available(share_type):
+    """Assert that samba share is not accessible."""
+    try:
+        _samba_write_to_share(share_type)
+    except subprocess.CalledProcessError as err:
+        err_output = err.output.decode()
+        assert 'NT_STATUS_BAD_NETWORK_NAME' in err_output, err_output
+    else:
+        assert False, 'Can access the share.'
 
 
 def searx_enable_public_access(browser):

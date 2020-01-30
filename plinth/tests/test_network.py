@@ -174,6 +174,7 @@ def test_edit_ethernet_connection(network, ethernet_uuid):
     ethernet_settings2['common']['name'] = 'plinth_test_eth_new'
     ethernet_settings2['common']['interface'] = 'eth1'
     ethernet_settings2['common']['zone'] = 'external'
+    ethernet_settings2['common']['autoconnect'] = False
     ethernet_settings2['ipv4']['method'] = 'auto'
     network.edit_connection(connection, ethernet_settings2)
 
@@ -183,6 +184,7 @@ def test_edit_ethernet_connection(network, ethernet_uuid):
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'eth1'
     assert settings_connection.get_zone() == 'external'
+    assert not settings_connection.get_autoconnect()
 
     settings_ipv4 = connection.get_setting_ip4_config()
     assert settings_ipv4.get_method() == 'auto'
@@ -195,6 +197,7 @@ def test_edit_pppoe_connection(network, pppoe_uuid):
     pppoe_settings2['common']['name'] = 'plinth_test_pppoe_new'
     pppoe_settings2['common']['interface'] = 'eth2'
     pppoe_settings2['common']['zone'] = 'external'
+    pppoe_settings2['common']['autoconnect'] = False
     pppoe_settings2['pppoe']['username'] = 'x-user-new'
     pppoe_settings2['pppoe']['password'] = 'x-password-new'
     network.edit_connection(connection, pppoe_settings2)
@@ -205,6 +208,7 @@ def test_edit_pppoe_connection(network, pppoe_uuid):
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'eth2'
     assert settings_connection.get_zone() == 'external'
+    assert not settings_connection.get_autoconnect()
 
     settings_pppoe = connection.get_setting_pppoe()
     assert settings_pppoe.get_username() == 'x-user-new'
@@ -223,6 +227,7 @@ def test_edit_wifi_connection(network, wifi_uuid):
     wifi_settings2['common']['name'] = 'plinth_test_wifi_new'
     wifi_settings2['common']['interface'] = 'wlan1'
     wifi_settings2['common']['zone'] = 'external'
+    wifi_settings2['common']['autoconnect'] = False
     wifi_settings2['ipv4']['method'] = 'auto'
     wifi_settings2['wireless']['ssid'] = 'plinthtestwifi2'
     wifi_settings2['wireless']['mode'] = 'infrastructure'
@@ -237,6 +242,7 @@ def test_edit_wifi_connection(network, wifi_uuid):
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'wlan1'
     assert settings_connection.get_zone() == 'external'
+    assert not settings_connection.get_autoconnect()
 
     settings_wireless = connection.get_setting_wireless()
     assert settings_wireless.get_ssid().get_data() == b'plinthtestwifi2'

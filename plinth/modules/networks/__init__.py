@@ -33,6 +33,12 @@ is_essential = True
 
 managed_packages = ['network-manager', 'batctl']
 
+first_boot_steps = [{
+    'id': 'router_setup_wizard',
+    'url': 'networks:firstboot_router_setup',
+    'order': 4,
+}]
+
 name = _('Networks')
 
 description = [
@@ -47,6 +53,8 @@ logger = Logger(__name__)
 manual_page = 'Networks'
 
 app = None
+
+ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
 
 
 class NetworksApp(app_module.App):

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @tor-app @backups
+@apps @tor @backups
 Feature: Tor Anonymity Network
   Manage Tor configuration.
 

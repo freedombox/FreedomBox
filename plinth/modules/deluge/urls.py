@@ -20,14 +20,8 @@ URLs for the Deluge module.
 
 from django.conf.urls import url
 
-from plinth.modules import deluge
-from plinth.views import AppView
+from .views import DelugeAppView
 
 urlpatterns = [
-    url(
-        r'^apps/deluge/$',
-        AppView.as_view(name=deluge.name, description=deluge.description,
-                        clients=deluge.clients, app_id='deluge',
-                        manual_page=deluge.manual_page,
-                        icon_filename=deluge.icon_filename), name='index'),
+    url(r'^apps/deluge/$', DelugeAppView.as_view(), name='index')
 ]

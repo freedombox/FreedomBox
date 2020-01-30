@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@system @essential
+@system @essential @service_discovery
 Feature: Service Discovery
   Configure service discovery.
 

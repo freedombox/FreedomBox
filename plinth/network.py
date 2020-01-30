@@ -22,6 +22,7 @@ import collections
 import logging
 import socket
 import struct
+import time
 import uuid
 
 from django.utils.translation import ugettext_lazy as _
@@ -288,6 +289,18 @@ def get_active_connection(connection_uuid):
         raise ConnectionNotFound(connection_uuid)
 
 
+def get_connection_by_interface_name(interface_name):
+    """Return connection with matching interface.
+
+    Return None if a connection with the interface is not found."""
+    client = get_nm_client()
+    for connection in client.get_connections():
+        if connection.get_interface_name() == interface_name:
+            return connection
+
+    return None
+
+
 def get_device_by_interface_name(interface_name):
     """Return a device by interface name."""
     return get_nm_client().get_device_by_iface(interface_name)
@@ -307,11 +320,22 @@ def _update_common_settings(connection, connection_uuid, common):
         connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_CONNECTION_UUID, connection_uuid)
-    settings.set_property(nm.SETTING_CONNECTION_ID, common['name'])
-    settings.set_property(nm.SETTING_CONNECTION_TYPE, common['type'])
-    settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME,
-                          common['interface'])
-    settings.set_property(nm.SETTING_CONNECTION_ZONE, common['zone'])
+    if 'name' in common:
+        settings.set_property(nm.SETTING_CONNECTION_ID, common['name'])
+
+    if 'type' in common:
+        settings.set_property(nm.SETTING_CONNECTION_TYPE, common['type'])
+
+    if 'interface' in common:
+        settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME,
+                              common['interface'])
+
+    if 'zone' in common:
+        settings.set_property(nm.SETTING_CONNECTION_ZONE, common['zone'])
+
+    if 'autoconnect' in common:
+        settings.set_property(nm.SETTING_CONNECTION_AUTOCONNECT,
+                              common['autoconnect'])
 
     return connection
 
@@ -444,6 +468,38 @@ def _update_wireless_settings(connection, wireless):
     return connection
 
 
+def _update_wireguard_settings(connection, wireguard):
+    """Create/edit WireGuard settings for network manager connections."""
+    settings = connection.get_setting_by_name('wireguard')
+    if not settings:
+        settings = nm.SettingWireGuard.new()
+        connection.add_setting(settings)
+
+    settings.set_property(nm.SETTING_WIREGUARD_PRIVATE_KEY,
+                          wireguard['private_key'])
+    if 'listen_port' in wireguard:
+        settings.set_property(nm.SETTING_WIREGUARD_LISTEN_PORT,
+                              wireguard['listen_port'])
+
+    if 'peer_public_key' in wireguard:
+        peer = nm.WireGuardPeer.new()
+        peer.set_public_key(wireguard['peer_public_key'], False)
+
+        if 'peer_endpoint' in wireguard:
+            peer.set_endpoint(wireguard['peer_endpoint'], False)
+
+        if wireguard['preshared_key']:
+            # Flag NONE means that NM should store and retain the secret.
+            # Default seems to be NOT_REQUIRED in this case.
+            peer.set_preshared_key_flags(nm.SettingSecretFlags.NONE)
+            peer.set_preshared_key(wireguard['preshared_key'], False)
+
+        peer.append_allowed_ip('0.0.0.0/0', False)
+        peer.append_allowed_ip('::/0', False)
+        settings.clear_peers()
+        settings.append_peer(peer)
+
+
 def _update_settings(connection, connection_uuid, settings):
     """Create/edit wifi settings for network manager connections."""
     connection = _update_common_settings(connection, connection_uuid,
@@ -459,6 +515,9 @@ def _update_settings(connection, connection_uuid, settings):
 
     if 'wireless' in settings and settings['wireless']:
         _update_wireless_settings(connection, settings['wireless'])
+
+    if 'wireguard' in settings and settings['wireguard']:
+        _update_wireguard_settings(connection, settings['wireguard'])
 
     return connection
 
@@ -486,7 +545,7 @@ def activate_connection(connection_uuid):
     connection = get_connection(connection_uuid)
     interface = connection.get_interface_name()
     client = get_nm_client()
-    for device in client.get_devices():
+    for device in client.get_all_devices():
         if device.get_iface() == interface:
             client.activate_connection_async(connection, device, '/', None,
                                              _callback, None)
@@ -502,6 +561,33 @@ def deactivate_connection(connection_uuid):
     active_connection = get_active_connection(connection_uuid)
     get_nm_client().deactivate_connection(active_connection)
     return active_connection
+
+
+def reactivate_connection(connection_uuid):
+    """Find and re-activate a network connection to reflect new changes.
+
+    If connection was not active to begin with, do nothing.
+
+    """
+    try:
+        deactivate_connection(connection_uuid)
+    except ConnectionNotFound:
+        return  # Connection was not active to start with
+
+    # deactivate_connection() is a synchronous call. However, it returns before
+    # the connection is fully deactivated. When re-activating such connections,
+    # sometimes, we get a "Authorization request cancelled" error. So, wait
+    # until the connection is fully deactivated. XXX: Perform proper
+    # asynchronous waiting instead of polling. Also find a way to avoid the
+    # problem altogether.
+    for index in range(10):  # pylint: disable=unused-variable
+        try:
+            get_active_connection(connection_uuid)
+            time.sleep(0.1)
+        except ConnectionNotFound:
+            break
+
+    activate_connection(connection_uuid)
 
 
 def delete_connection(connection_uuid):

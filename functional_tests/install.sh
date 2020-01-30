@@ -5,7 +5,7 @@ IFS=$'\n\t'
 echo "Installing requirements"
 sudo apt-get install -yq --no-install-recommends \
     python3-pytest python3-pytest-django \
-    python3-pip firefox \
+    python3-pip firefox smbclient\
     xvfb
 pip3 install wheel
 pip3 install splinter pytest-splinter pytest-bdd pytest-xvfb
@@ -13,7 +13,7 @@ pip3 install splinter pytest-splinter pytest-bdd pytest-xvfb
 echo "Installing geckodriver"
 (
     DL_DIR=/tmp/gecko
-    GECKO_VERSION="v0.24.0"
+    GECKO_VERSION="v0.26.0"
     FILENAME="geckodriver-${GECKO_VERSION}-linux64.tar.gz"
     GECKO_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/$FILENAME"
 

@@ -36,10 +36,13 @@ default_url = config['DEFAULT']['url']
 
 
 def login(browser, url, username, password):
-    browser.visit(url)
 
-    # XXX browser.visit goes to the web page with no cookies,
-    # hence there should be some kind of session storage for this to work
+    if '/plinth/' not in browser.url:
+        browser.visit(url)
+
+    apps_link = browser.find_link_by_href('/plinth/apps/')
+    if len(apps_link):
+        return
 
     login_button = browser.find_link_by_href('/plinth/accounts/login/')
     if login_button:
@@ -61,15 +64,10 @@ def is_login_prompt(browser):
 
 
 def nav_to_module(browser, module):
-    with wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/').first.click()
     sys_or_apps = 'sys' if module in sys_modules else 'apps'
-    with wait_for_page_update(browser):
-        browser.find_link_by_href(
-            '/plinth/{}/'.format(sys_or_apps)).first.click()
-    with wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/{0}/{1}/'.format(
-            sys_or_apps, module)).first.click()
+    required_url = default_url + f'/plinth/{sys_or_apps}/{module}/'
+    if browser.url != required_url:
+        browser.visit(required_url)
 
 
 def create_user(browser, name, password):
