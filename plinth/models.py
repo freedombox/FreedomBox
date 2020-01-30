@@ -22,6 +22,7 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.dispatch import receiver
 
@@ -63,3 +64,41 @@ def _on_user_post_save(sender, instance, **kwargs):
         instance.userprofile.save()
     else:
         UserProfile.objects.update_or_create(user=instance)
+
+
+class JSONField(models.TextField):
+    """Store and retrieve JSON data into a TextField."""
+    def to_python(self, value):
+        """Deserialize a text string from form field to Python dict."""
+        if not value:
+            return self.default()
+
+        try:
+            return json.loads(value)
+        except json.decoder.JSONDecodeError:
+            raise ValidationError('Invalid JSON value')
+
+    def from_db_value(self, value, *args, **kwargs):
+        """Deserialize a value from DB to Python dict."""
+        return self.to_python(value)
+
+    def get_prep_value(self, value):
+        """Serialize the Python dict to text for form field."""
+        return json.dumps(value or self.default())
+
+
+class StoredNotification(models.Model):
+    """Model to store a user notification."""
+    id = models.CharField(primary_key=True, max_length=128)
+    app_id = models.CharField(max_length=128, null=True, default=None)
+    severity = models.CharField(max_length=32)
+    title = models.CharField(max_length=256)
+    message = models.TextField(null=True, default=None)
+    actions = JSONField(default=list)
+    body_template = models.CharField(max_length=128, null=True, default=None)
+    data = JSONField(default=dict)
+    created_time = models.DateTimeField(auto_now_add=True)
+    last_update_time = models.DateTimeField(auto_now=True)
+    user = models.CharField(max_length=128, null=True, default=None)
+    group = models.CharField(max_length=128, null=True, default=None)
+    dismissed = models.BooleanField(default=False)
