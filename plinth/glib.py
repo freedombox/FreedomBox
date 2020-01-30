@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+"""
+Module to handle glib main loop and provide asynchronous utilities.
+"""
 
 import logging
 import threading
@@ -57,3 +60,25 @@ def _run():
     _main_loop = None
 
     logger.info('Glib main loop thread exited.')
+
+
+def schedule(interval, method, data=None, in_thread=True):
+    """Schedule a recurring call to a method with fixed interval."""
+    def _runner():
+        """Run the target method and log and exceptions."""
+        try:
+            return method(data)
+        except Exception as exception:  # pylint: disable=broad-except
+            logger.exception('Exception in running scheduled method - %s',
+                             exception)
+
+    def _run_bare_or_thread(_user_data):
+        """Run the target method in thread or directly (if async)."""
+        if not in_thread:
+            return _runner()
+
+        thread = threading.Thread(target=_runner)
+        thread.start()
+        return True
+
+    glib.timeout_add(int(interval * 1000), _run_bare_or_thread, None)
