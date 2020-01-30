@@ -18,8 +18,10 @@
 Django context processors to provide common data to templates.
 """
 
-from django.utils.translation import ugettext as _, ugettext_noop
 import re
+
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_noop
 
 from plinth import cfg, menu
 from plinth.utils import is_user_admin
@@ -35,6 +37,9 @@ def common(request):
     # the brand name 'FreedomBox' itself to be translated.
     ugettext_noop('FreedomBox')
 
+    from plinth.notification import Notification
+    notifications_context = Notification.get_display_context(user=request.user)
+
     slash_indices = [match.start() for match in re.finditer('/', request.path)]
     active_menu_urls = [request.path[:index + 1] for index in slash_indices]
     return {
@@ -42,5 +47,7 @@ def common(request):
         'submenu': menu.main_menu.active_item(request),
         'active_menu_urls': active_menu_urls,
         'box_name': _(cfg.box_name),
-        'user_is_admin': is_user_admin(request, True)
+        'user_is_admin': is_user_admin(request, True),
+        'notifications': notifications_context['notifications'],
+        'notifications_max_severity': notifications_context['max_severity']
     }

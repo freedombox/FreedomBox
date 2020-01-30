@@ -1,0 +1,75 @@
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{# Template to display notifications under the navbar #}
+
+{% load i18n %}
+{% load static %}
+
+{% if notifications %}
+  <div class="notifications dropdown">
+    <ul class="dropdown-menu" role="menu">
+      {% for note in notifications %}
+        <li class="notification">
+          {% if note.data.app_name %}
+            <div class="app-name">
+              {% if note.data.app_icon %}
+                <div class="app-icon fa {{ note.data.app_icon }}"></div>
+              {% elif note.data.app_icon_filename %}
+                <img src="{% static 'theme/icons/' %}{{ note.data.app_icon_filename }}.svg"
+                     alt="{{ note.data.app_name  }}"
+                     class="notification-icon" />
+              {% endif %}
+
+              {{ note.data.app_name }}
+            </div>
+          {% endif %}
+
+          {% if note.body %}
+            {{ note.body.content.decode|safe }}
+          {% else %}
+            <div class="notification-title">{{ note.title }}</div>
+
+            {% if note.message %}
+              <p>{{ note.message }}</p>
+            {% endif %}
+
+            {% if note.actions %}
+              <p>
+                {% for action in note.actions %}
+                  {% if action.type == "dismiss" %}
+                    <a href="{% url 'notification_dismiss' id=note.id %}?next={{ request.path|iriencode }}"
+                       role="button" class="btn btn-default">
+                      {% trans "Dismiss" %}
+                    </a>
+                  {% else %}
+                    <a href="{% url action.url %}" role="button"
+                       class="btn btn-{{ action.class|default:'default' }}">
+                      {{ action.text }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </p>
+            {% endif %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
