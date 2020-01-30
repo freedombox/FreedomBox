@@ -17,15 +17,17 @@
 """
 FreedomBox app to manage storage.
 """
+
 import logging
 import subprocess
 
 import psutil
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_noop
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, menu, utils
+from plinth import cfg, glib, menu, utils
 from plinth.daemon import Daemon
 from plinth.errors import ActionError, PlinthError
 from plinth.utils import format_lazy, import_from_gi
@@ -71,6 +73,9 @@ class StorageApp(app_module.App):
 
         daemon = Daemon('daemon-udiskie', managed_services[0])
         self.add(daemon)
+
+        # Check every hour for low disk space
+        glib.schedule(3600, warn_about_low_disk_space)
 
 
 def init():
@@ -288,3 +293,54 @@ def setup(helper, old_version=None):
             expand_partition(root_device)
         except ActionError:
             pass
+
+
+def warn_about_low_disk_space(request):
+    """Warn about insufficient space on root partition."""
+    from plinth.notification import Notification
+
+    try:
+        root_info = get_disk_info('/')
+    except PlinthError as exception:
+        logger.exception('Error getting information about root partition: %s',
+                         exception)
+        return
+
+    show = False
+    if root_info['percent_used'] > 90 or root_info['free_gib'] < 1:
+        severity = 'error'
+        show = True
+    elif root_info['percent_used'] > 75 or root_info['free_gib'] < 2:
+        severity = 'warning'
+        show = True
+
+    if not show:
+        try:
+            Notification.get('storage-low-disk-space').delete()
+        except KeyError:
+            pass
+    else:
+        # Translators: xgettext:no-python-format
+        message = ugettext_noop(
+            'Low space on system partition: {percent_used}% used, '
+            '{free_space} free.')
+        title = ugettext_noop('Low disk space')
+        data = {
+            'app_icon': 'fa-hdd-o',
+            'app_name': ugettext_noop('Storage'),
+            'percent_used': root_info['percent_used'],
+            'free_space': format_bytes(root_info['free_bytes'])
+        }
+        actions = [{
+            'type': 'link',
+            'class': 'primary',
+            'text': 'Go to {app_name}',
+            'url': 'storage:index'
+        }, {
+            'type': 'dismiss'
+        }]
+        Notification.update_or_create(id='storage-low-disk-space',
+                                      app_id='storage', severity=severity,
+                                      title=title, message=message,
+                                      actions=actions, data=data,
+                                      group='admin')

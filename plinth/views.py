@@ -64,9 +64,6 @@ def index(request):
     ]
     selected_shortcut = selected_shortcut[0] if selected_shortcut else None
 
-    from plinth.modules.storage import views as disk_views
-    disk_views.warn_about_low_disk_space(request)
-
     return TemplateResponse(
         request, 'index.html', {
             'title': _('FreedomBox'),
@@ -88,8 +85,6 @@ class AppsIndexView(TemplateView):
 
 def system_index(request):
     """Serve the system index page."""
-    from plinth.modules.storage import views as disk_views
-    disk_views.warn_about_low_disk_space(request)
     return TemplateResponse(request, 'system.html',
                             {'advanced_mode': get_advanced_mode()})
 
