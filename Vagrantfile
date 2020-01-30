@@ -16,13 +16,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+require 'etc'
+
 Vagrant.configure(2) do |config|
   config.vm.box = "freedombox/plinth-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
   config.vm.network "forwarded_port", guest: 445, host: 4450
   config.vm.synced_folder ".", "/vagrant", owner: "plinth", group: "plinth"
   config.vm.provider "virtualbox" do |vb|
-    vb.cpus = 2
+    vb.cpus = Etc.nprocessors
     vb.memory = 2048
     vb.linked_clone = true
   end
