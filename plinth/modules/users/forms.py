@@ -15,14 +15,17 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import subprocess
+import pwd
+import re
 
 import plinth.forms
 from django import forms
 from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
 from django.contrib.auth.models import Group, User
+from django.core import validators
 from django.core.exceptions import ValidationError
+from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from plinth import actions, module_loader
@@ -46,33 +49,49 @@ def get_group_choices():
 
 class ValidNewUsernameCheckMixin(object):
     """Mixin to check if a username is valid for created new user."""
+
     def clean_username(self):
         """Check for username collisions with system users."""
         username = self.cleaned_data['username']
         if self.instance.username != username and \
                 not self.is_valid_new_username():
-            raise ValidationError(_('Username is taken or is reserved.'),
-                                  code='invalid')
+            raise ValidationError(
+                _('Username is taken or is reserved.'), code='invalid')
 
         return username
 
     def is_valid_new_username(self):
         """Check for username collisions with system users."""
         username = self.cleaned_data['username']
-        try:
-            subprocess.run(['getent', 'passwd', username],
-                           stdout=subprocess.DEVNULL, check=True)
-            # Exit code 0 means that the username is already in use.
+        existing_users = (a.pw_name.lower() for a in pwd.getpwall())
+        if username.lower() in existing_users:
             return False
-        except subprocess.CalledProcessError:
-            pass
 
         for module_name, module in module_loader.loaded_modules.items():
             for reserved_username in getattr(module, 'reserved_usernames', []):
-                if username == reserved_username:
+                if username.lower() == reserved_username.lower():
                     return False
 
         return True
+
+
+@deconstructible
+class UsernameValidator(validators.RegexValidator):
+    """Username validator.
+
+    Compared to django builtin ASCIIUsernameValidator, do not allow
+    '+' characters and no '-' character at the beginning.
+
+    """
+    regex = r'^[\w.@][\w.@-]+\Z'
+    message = ugettext_lazy('Enter a valid username.')
+    flags = re.ASCII
+
+
+USERNAME_FIELD = forms.CharField(
+    max_length=150, validators=[UsernameValidator()],
+    help_text='Required. 150 characters or fewer. English letters, \
+                digits and @/./-/_ only.')
 
 
 class CreateUserForm(ValidNewUsernameCheckMixin,
@@ -82,6 +101,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
     Include options to add user to groups.
     """
+    username = USERNAME_FIELD
     groups = forms.MultipleChoiceField(
         choices=get_group_choices(), label=ugettext_lazy('Permissions'),
         required=False, widget=forms.CheckboxSelectMultiple,
@@ -144,6 +164,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 class UserUpdateForm(ValidNewUsernameCheckMixin,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
+    username = USERNAME_FIELD
     ssh_keys = forms.CharField(
         label=ugettext_lazy('Authorized SSH Keys'), required=False,
         widget=forms.Textarea, help_text=ugettext_lazy(
@@ -294,12 +315,14 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
 
 class UserChangePasswordForm(SetPasswordForm):
     """Custom form that also updates password for LDAP users."""
+
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
         self.request = request
         super(UserChangePasswordForm, self).__init__(*args, **kwargs)
-        self.fields['new_password1'].widget.attrs.update(
-            {'autofocus': 'autofocus'})
+        self.fields['new_password1'].widget.attrs.update({
+            'autofocus': 'autofocus'
+        })
 
     def save(self, commit=True):
         """Save the user model and change LDAP password as well."""
@@ -319,6 +342,8 @@ class UserChangePasswordForm(SetPasswordForm):
 
 class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     """User module first boot step: create a new admin user."""
+    username = USERNAME_FIELD
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
