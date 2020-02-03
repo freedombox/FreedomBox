@@ -125,7 +125,11 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         self.request = request
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.fields['groups'].choices = get_group_choices()
-        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
+        self.fields['username'].widget.attrs.update({
+            'autofocus': 'autofocus',
+            'autocapitalize': 'none',
+            'autocomplete': 'username'
+        })
 
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
@@ -194,7 +198,11 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         self.is_last_admin_user = get_last_admin_user() == self.username
-        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
+        self.fields['username'].widget.attrs.update({
+            'autofocus': 'autofocus',
+            'autocapitalize': 'none',
+            'autocomplete': 'username'
+        })
 
         choices = []
 

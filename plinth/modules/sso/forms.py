@@ -24,9 +24,17 @@ from django.contrib.auth.forms import \
 
 
 class AuthenticationForm(DjangoAuthenticationForm):
-    """Authentication form with an additional Captcha field."""
-    captcha = CaptchaField()
+    """Authentication form with an additional username field attributes."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
+        self.fields['username'].widget.attrs.update({
+            'autofocus': 'autofocus',
+            'autocapitalize': 'none',
+            'autocomplete': 'username'
+        })
+
+
+class CaptchaAuthenticationForm(AuthenticationForm):
+    """Authentication form with an additional Captcha field."""
+    captcha = CaptchaField()
