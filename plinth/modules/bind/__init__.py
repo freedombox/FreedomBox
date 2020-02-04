@@ -18,7 +18,10 @@
 FreedomBox app to configure BIND server.
 """
 
+import augeas
 import re
+from collections import defaultdict
+from pathlib import Path
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -58,6 +61,7 @@ port_forwarding_info = [
 ]
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
+ZONES_DIR = '/var/bind/pri'
 
 DEFAULT_CONFIG = '''
 acl goodclients {
@@ -195,3 +199,83 @@ def set_dnssec(choice):
                 line = '//' + line
             conf_file.write(line + '\n')
         conf_file.close()
+
+
+def get_served_domains():
+    """
+
+    Augeas path for zone files:
+    ===========================
+    augtool> print /files/var/bind/pri/local.zone
+    /files/var/bind/pri/local.zone
+    /files/var/bind/pri/local.zone/$TTL = "604800"
+    /files/var/bind/pri/local.zone/@[1]
+    /files/var/bind/pri/local.zone/@[1]/1
+    /files/var/bind/pri/local.zone/@[1]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[1]/1/type = "SOA"
+    /files/var/bind/pri/local.zone/@[1]/1/mname = "localhost."
+    /files/var/bind/pri/local.zone/@[1]/1/rname = "root.localhost."
+    /files/var/bind/pri/local.zone/@[1]/1/serial = "2"
+    /files/var/bind/pri/local.zone/@[1]/1/refresh = "604800"
+    /files/var/bind/pri/local.zone/@[1]/1/retry = "86400"
+    /files/var/bind/pri/local.zone/@[1]/1/expiry = "2419200"
+    /files/var/bind/pri/local.zone/@[1]/1/minimum = "604800"
+    /files/var/bind/pri/local.zone/@[2]
+    /files/var/bind/pri/local.zone/@[2]/1
+    /files/var/bind/pri/local.zone/@[2]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[2]/1/type = "NS"
+    /files/var/bind/pri/local.zone/@[2]/1/rdata = "localhost."
+    /files/var/bind/pri/local.zone/@[3]
+    /files/var/bind/pri/local.zone/@[3]/1
+    /files/var/bind/pri/local.zone/@[3]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[3]/1/type = "A"
+    /files/var/bind/pri/local.zone/@[3]/1/rdata = "127.0.0.1"
+    /files/var/bind/pri/local.zone/@[4]
+    /files/var/bind/pri/local.zone/@[4]/1
+    /files/var/bind/pri/local.zone/@[4]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[4]/1/type = "AAAA"
+    /files/var/bind/pri/local.zone/@[4]/1/rdata = "::1"
+
+    Need to find the related functionality to parse the A records
+
+    Retrieve from /etc/bind/db* zone files all the configured A records.
+    Assuming zones files in ZONES_DIR are all used.
+    :return: dictionary in the form 'domain_name': ['ip_address', 'ipv6_addr']
+    """
+    RECORD_TYPES = ('A', 'AAAA')
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Dns_Zone/lens', 'Dns_Zone.lns')
+
+    zone_file_path = Path(ZONES_DIR)
+    zone_files = [zf for zf in zone_file_path.iterdir() if zf.is_file()]
+
+    # augeas load only required files
+    for zone_file in zone_files:
+        aug.set('/augeas/load/Dns_Zone/incl[last() + 1]', str(zone_file))
+
+    aug.load()
+
+    served_domains = defaultdict(list)
+    for zone_file in zone_files:
+        base_path = '/files/%s/@[{record_order}]/1/{field}' % zone_file
+        count = 1
+        mname = aug.get(base_path.format(record_order=count, field='mname'))
+        while True:
+            record_type = aug.get(base_path.format(record_order=count,
+                                                   field='type'))
+
+            # no record type ends the search
+            if record_type is None:
+                break
+
+            if record_type in RECORD_TYPES:
+                served_domains[mname].append(
+                    aug.get(base_path.format(
+                        record_order=count, field='rdata')
+                    )
+                )
+
+            count += 1
+
+    return served_domains
