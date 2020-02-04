@@ -1,0 +1,55 @@
+{% extends "app.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+{% load bootstrap %}
+{% load i18n %}
+
+{% block status %}
+  {{ block.super }}
+
+  <h3>{% trans "Serving Domains" %}</h3>
+
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "Domain Names" %}</th>
+        <th>{% trans "Serving" %}</th>
+        <th>{% trans "IP addresses" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for domain in domains_table %}
+        <tr>
+          <td>{{ domain.type}}</td>
+          <td>{{ domain.domain_name}}</td>
+          <td>{{ domain.serving }}</td>
+          <td>{{ domain.ip_address }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div>
+  <a href="{% url 'bind:index' %}" class="btn btn-default"
+     role="button" title="{% trans 'Refresh IP address and domains' %}">
+    <span class="fa" aria-hidden="true"></span>
+      {% trans 'Refresh IP address and domains' %}
+  </a>
+  </div>
+{% endblock %}

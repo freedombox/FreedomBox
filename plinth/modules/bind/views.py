@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.views import AppView
+from plinth.modules import bind, names
 
 from . import description, get_config, name, port_forwarding_info
 from .forms import BindForm
@@ -35,7 +36,38 @@ class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     description = description
     show_status_block = True
     form_class = BindForm
+    template_name = 'bind.html'
     port_forwarding_info = port_forwarding_info
+
+    def get_context_data(self, *args, **kwargs):
+        """
+        Get/append information for domains bind is configured to respond for
+        and additional names from the names module
+        """
+        context = super().get_context_data(**kwargs)
+
+        served_domains = bind.get_served_domains()
+        context['domains_table'] = []
+        for key, val in served_domains.items():
+            if key == 'localhost.':
+                continue
+
+            context['domains_table'].append({
+                'type': 'Domain Name',
+                'domain_name': key[:-1:],
+                'serving': 'Yes',
+                'ip_address': ', '.join(val),
+            })
+
+        for item in names.components.DomainName.list():
+            context['domains_table'].append({
+                'type': item.domain_type.display_name,
+                'domain_name': item.name,
+                'serving': '-',
+                'ip_address': ''
+            })
+
+        return context
 
     def get_initial(self):
         """Return the values to fill in the form."""
