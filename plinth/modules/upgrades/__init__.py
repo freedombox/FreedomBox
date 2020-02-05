@@ -19,7 +19,9 @@ FreedomBox app for upgrades.
 """
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_noop
 
+import plinth
 from plinth import actions
 from plinth import app as app_module
 from plinth import menu
@@ -54,6 +56,37 @@ class UpgradesApp(app_module.App):
         menu_item = menu.Menu('menu-upgrades', name, None, 'fa-refresh',
                               'upgrades:index', parent_url_name='system')
         self.add(menu_item)
+
+        self._show_new_release_notification()
+
+    def _show_new_release_notification(self):
+        """When upgraded to new release, show a notification."""
+        from plinth.notification import Notification
+        try:
+            note = Notification.get('upgrades-new-release')
+            if note.data['version'] == plinth.__version__:
+                # User already has notification for update to this version. It
+                # may be dismissed or not yet dismissed
+                return
+
+            # User currently has a notification for an older version, update.
+            dismiss = False
+        except KeyError:
+            # Don't show notification for the first version user runs, create
+            # but don't show it.
+            dismiss = True
+
+        data = {
+            'version': plinth.__version__,
+            'app_name': 'Update',
+            'app_icon': 'fa-refresh'
+        }
+        title = ugettext_noop('FreedomBox Updated')
+        note = Notification.update_or_create(
+            id='upgrades-new-release', app_id='upgrades', severity='info',
+            title=title, body_template='upgrades-new-release.html', data=data,
+            group='admin')
+        note.dismiss(should_dismiss=dismiss)
 
 
 def init():
