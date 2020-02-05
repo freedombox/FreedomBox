@@ -42,6 +42,13 @@
       potentially compromised app to the rest of the system.
     {% endblocktrans %}
   </p>
+  <p>
+    {% blocktrans trimmed %}
+      "Sandbox Coverage" is a score of how effectively the service is isolated
+      from the rest of the system. It is only displayed while the service is
+      running.
+    {% endblocktrans %}
+  </p>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>
@@ -49,6 +56,7 @@
         <th>{% trans "Current Vulnerabilities" %}</th>
         <th>{% trans "Past Vulnerabilities" %}</th>
         <th>{% trans "Sandboxed" %}</th>
+        <th>{% trans "Sandbox Coverage" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -64,6 +72,13 @@
               {% trans "Yes" %}
             {% else %}
               {% trans "No" %}
+            {% endif %}
+          </td>
+          <td>
+            {% if app.sandbox_coverage %}
+              {{ app.sandbox_coverage }}%
+            {% elif app.sandboxed %}
+              {% trans "Not running" %}
             {% endif %}
           </td>
         </tr>

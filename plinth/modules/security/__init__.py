@@ -18,6 +18,7 @@
 FreedomBox app for security configuration.
 """
 
+import re
 import subprocess
 from collections import defaultdict
 
@@ -128,6 +129,16 @@ def get_apps_report():
     except Exception:
         past_cves = None
 
+    service_exposure_lines = subprocess.check_output(
+        ['systemd-analyze', 'security']).decode().strip().split('\n')
+    service_exposure_lines.pop(0)
+    sandbox_coverage = {}
+    for line in service_exposure_lines:
+        fields = line.split()
+        name = re.sub(r'\.service$', '', fields[0])
+        score = round(100 - float(fields[1]) * 10)
+        sandbox_coverage[name] = score
+
     apps = {
         'freedombox': {
             'name': 'freedombox',
@@ -171,6 +182,8 @@ def get_apps_report():
             for service in services:
                 if _get_service_is_sandboxed(service):
                     apps[module_name]['sandboxed'] = True
+                    apps[module_name][
+                        'sandbox_coverage'] = sandbox_coverage.get(service)
 
     for cve_packages in cves.values():
         for app_ in apps.values():
