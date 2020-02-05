@@ -66,7 +66,8 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
         if repository.flags.get('mountable'):
             repository.mount()
 
-        name = datetime.now().strftime('%Y-%m-%d:%H:%M')
+        name = form.cleaned_data['name'] or datetime.now().strftime(
+            '%Y-%m-%d:%H:%M')
         selected_apps = form.cleaned_data['selected_apps']
         repository.create_archive(name, selected_apps)
         return super().form_valid(form)
