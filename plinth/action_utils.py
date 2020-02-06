@@ -84,11 +84,11 @@ def service_enable(service_name):
 
 def service_disable(service_name):
     """Disable and stop service in systemd and sysvinit using update-rc.d."""
+    subprocess.call(['systemctl', 'disable', service_name])
     try:
         service_stop(service_name)
     except subprocess.CalledProcessError:
         pass
-    subprocess.call(['systemctl', 'disable', service_name])
 
 
 def service_unmask(service_name):
