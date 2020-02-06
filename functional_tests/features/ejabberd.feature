@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @ejabberd @backups
+@apps @ejabberd
 Feature: Ejabberd Chat Server
   Run ejabberd chat server.
 
@@ -23,6 +23,7 @@ Scenario: Disable message archive management
   When I disable message archive management
   Then the ejabberd service should be running
 
+@backups
 Scenario: Backup and restore ejabberd
   Given the ejabberd application is enabled
   And I have added a contact to my roster

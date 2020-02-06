@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @ssh @backups
+@apps @ssh
 Feature: Secure Shell Server
   Run secure shell server.
 
@@ -20,6 +20,7 @@ Scenario: Disable ssh application
 
 # TODO: Improve this to actually check that earlier ssh certificate has been
 # restored.
+@backups
 Scenario: Backup and restore ssh
   Given the ssh application is enabled
   When I create a backup of the ssh app data with name test_ssh

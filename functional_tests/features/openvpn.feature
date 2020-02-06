@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @openvpn @backups
+@apps @openvpn
 Feature: OpenVPN - Virtual Private Network
   Setup and configure OpenVPN
 
@@ -18,6 +18,7 @@ Scenario: Download openvpn profile
   Given the openvpn application is enabled
   Then the openvpn profile should be downloadable
 
+@backups
 Scenario: Backup and restore openvpn
   Given the openvpn application is enabled
   And I download openvpn profile

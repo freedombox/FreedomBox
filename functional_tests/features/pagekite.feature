@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @pagekite @backups
+@apps @pagekite
 Feature: Pagekite Public Visibility
   Configure Pagekite public visitbility server.
 
@@ -18,6 +18,7 @@ Scenario: Configure pagekite application
   When I configure pagekite with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
   Then pagekite should be configured with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
 
+@backups
 Scenario: Backup and restore pagekite
   Given the pagekite application is enabled
   When I configure pagekite with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret

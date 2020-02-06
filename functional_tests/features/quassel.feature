@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @quassel @backups
+@apps @quassel
 Feature: Quassel IRC Client
   Run Quassel core.
 
@@ -14,6 +14,7 @@ Scenario: Enable quassel application
   Then the quassel service should be running
 
 # TODO: Improve this to actually check that data configured servers is restored.
+@backups
 Scenario: Backup and restore quassel
   Given the quassel application is enabled
   When I create a backup of the quassel app data with name test_quassel

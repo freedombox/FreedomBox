@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@essential @upgrades @system @backups
+@essential @upgrades @system
 Feature: Software Upgrades
   Configure automatic software upgrades
 
@@ -12,6 +12,7 @@ Scenario: Enable automatic upgrades
   When I enable automatic upgrades
   Then automatic upgrades should be enabled
 
+@backups
 Scenario: Backup and restore upgrades
   When I enable automatic upgrades
   And I create a backup of the upgrades app data with name test_upgrades

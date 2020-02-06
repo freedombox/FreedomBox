@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @syncthing @sso @backups
+@apps @syncthing @sso
 Feature: Syncthing File Synchronization
   Run Syncthing File Synchronization server.
 
@@ -25,6 +25,7 @@ Scenario: Remove a syncthing folder
   When I remove syncthing folder Test
   Then syncthing folder Test should not be present
 
+@backups
 Scenario: Backup and restore syncthing
   Given the syncthing application is enabled
   And syncthing folder Test is not present

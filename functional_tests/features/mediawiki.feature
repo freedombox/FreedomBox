@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @mediawiki @backups
+@apps @mediawiki
 Feature: MediaWiki Wiki Engine
   Manage wikis, multimedia and more.
 
@@ -63,6 +63,7 @@ Scenario: Upload SVG image
   When I upload an image named apps-background.svg to mediawiki with credentials admin and whatever123
   Then there should be Apps-background.svg image
 
+@backups
 Scenario: Backup and restore mediawiki
   Given the mediawiki application is enabled
   When I create a backup of the mediawiki app data with name test_mediawiki

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @mumble @backups
+@apps @mumble
 Feature: Mumble Voice Chat
   Run Mumble voice chat server.
 
@@ -15,6 +15,7 @@ Scenario: Enable mumble application
 
 # TODO: Improve this to actually check that data such as rooms, identity or
 # certificates are restored.
+@backups
 Scenario: Backup and restore mumble
   Given the mumble application is enabled
   When I create a backup of the mumble app data with name test_mumble

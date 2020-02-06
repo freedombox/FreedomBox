@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @sharing @backups
+@apps @sharing
 Feature: Sharing
   Share server folders over HTTP, etc.
 
@@ -41,6 +41,7 @@ Scenario: Public share
   And I log out
   Then the share_tmp site should be available
 
+@backups
 Scenario: Backup and restore sharing
   Given share tmp is not available
   When I add a share tmp from path /tmp for admin

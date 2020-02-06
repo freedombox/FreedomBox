@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @samba @backups
+@apps @samba
 Feature: Samba File Sharing
   Configure samba file sharing service.
 
@@ -37,6 +37,7 @@ Scenario: Disable open samba share
   When I disable the open samba share
   Then the open samba share should not be available
 
+@backups
 Scenario: Backup and restore samba
   Given the samba application is enabled
   When I enable the home samba share

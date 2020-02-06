@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @gitweb @backups @sso
+@apps @gitweb @sso
 Feature: gitweb Simple Git Hosting
   Git web interface.
 
@@ -33,6 +33,7 @@ Scenario: Delete repository
   When I delete the repository
   Then the repository should not be listed
 
+@backups
 Scenario: Backup and restore gitweb
   Given the gitweb application is enabled
   And a repository

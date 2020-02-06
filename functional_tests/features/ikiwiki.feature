@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @ikiwiki @backups
+@apps @ikiwiki
 Feature: ikiwiki Wiki and Blog
   Manage wikis and blogs.
 
@@ -13,6 +13,7 @@ Scenario: Enable wiki application
   When I enable the wiki application
   Then the wiki site should be available
 
+@backups
 Scenario: Backup and restore wiki
   Given the wiki application is enabled
   When there is an ikiwiki wiki

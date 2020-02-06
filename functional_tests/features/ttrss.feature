@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @ttrss @sso @backups
+@apps @ttrss @sso
 Feature: TT-RSS News Feed Reader
   Run TT-RSS News Feed Reader.
 
@@ -13,6 +13,7 @@ Scenario: Enable ttrss application
   When I enable the ttrss application
   Then the ttrss service should be running
 
+@backups
 Scenario: Backup and restore ttrss
   Given the ttrss application is enabled
   And I subscribe to a feed in ttrss

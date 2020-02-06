@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @transmission @backups @sso
+@apps @transmission @sso
 Feature: Transmission BitTorrent Client
   Run the Transmission BitTorrent client.
 
@@ -19,6 +19,7 @@ Scenario: Upload a torrent to transmission
   And I upload a sample torrent to transmission
   Then there should be 1 torrents listed in transmission
 
+@backups
 Scenario: Backup and restore transmission
   Given the transmission application is enabled
   When all torrents are removed from transmission

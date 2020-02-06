@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @mldonkey @backups @sso
+@apps @mldonkey @sso
 Feature: MLDonkey eDonkey Network Client
   Run the eDonkey Network client.
 
@@ -20,6 +20,7 @@ Scenario: Upload an ed2k file to mldonkey
   And I upload a sample ed2k file to mldonkey
   Then there should be 1 ed2k files listed in mldonkey
 
+@backups
 Scenario: Backup and restore mldonkey
   Given the mldonkey application is enabled
   When all ed2k files are removed from mldonkey

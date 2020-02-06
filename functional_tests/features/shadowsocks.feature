@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @shadowsocks @backups
+@apps @shadowsocks
 Feature: Shadowsocks Socks5 Proxy
   Run the Shadowsocks Socks5 proxy client.
 
@@ -14,6 +14,7 @@ Scenario: Enable shadowsocks application
   When I enable the shadowsocks application
   Then the shadowsocks service should be running
 
+@backups
 Scenario: Backup and restore shadowsocks
   Given the shadowsocks application is enabled
   When I configure shadowsocks with server example.com and password beforebackup123

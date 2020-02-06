@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@essential @date_and_time @system @backups
+@essential @date_and_time @system
 Feature: Date and Time
   Configure time zone and network time service.
 
@@ -23,6 +23,7 @@ Scenario: Set timezone
   When I set the time zone to Africa/Abidjan
   Then the time zone should be Africa/Abidjan
 
+@backups
 Scenario: Backup and restore datetime
   When I set the time zone to Africa/Accra
   And I create a backup of the datetime app data with name test_datetime

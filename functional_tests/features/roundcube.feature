@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @roundcube @backups
+@apps @roundcube
 Feature: Roundcube Email Client
   Run webmail client.
 
@@ -13,6 +13,7 @@ Scenario: Enable roundcube application
   When I enable the roundcube application
   Then the roundcube site should be available
 
+@backups
 Scenario: Backup and restore roundcube
   Given the roundcube application is enabled
   When I create a backup of the roundcube app data with name test_roundcube

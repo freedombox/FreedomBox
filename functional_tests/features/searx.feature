@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @searx @backups @sso
+@apps @searx @sso
 Feature: Searx Web Search
   Run Searx metasearch engine.
 
@@ -13,6 +13,7 @@ Scenario: Enable searx application
   When I enable the searx application
   Then the searx site should be available
 
+@backups
 Scenario: Backup and restore searx
   Given the searx application is enabled
   When I create a backup of the searx app data with name test_searx

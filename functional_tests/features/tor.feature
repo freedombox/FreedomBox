@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @tor @backups
+@apps @tor
 Feature: Tor Anonymity Network
   Manage Tor configuration.
 
@@ -39,6 +39,7 @@ Scenario: Set download software packages over tor
 
 # TODO: Test more thoroughly by checking same hidden service is restored and by
 # actually connecting using Tor.
+@backups
 Scenario: Backup and restore tor
   Given the tor application is enabled
   And tor relay is enabled

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @bind @backups
+@apps @bind
 Feature: Bind Domain Name Server
   Configure the Bind Domain Name Server.
 
@@ -31,6 +31,7 @@ Scenario: Disable bind DNSSEC
   When I disable bind DNSSEC
   Then bind DNSSEC should be disabled
 
+@backups
 Scenario: Backup and restore bind
   Given the bind application is enabled
   When I set bind forwarders to 1.1.1.1

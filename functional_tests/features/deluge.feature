@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@apps @deluge @backups
+@apps @deluge
 Feature: Deluge BitTorrent Client
   Run the Deluge BitTorrent client.
 
@@ -19,6 +19,7 @@ Scenario: Upload a torrent to deluge
   And I upload a sample torrent to deluge
   Then there should be 1 torrents listed in deluge
 
+@backups
 Scenario: Backup and restore deluge
   Given the deluge application is enabled
   When all torrents are removed from deluge
