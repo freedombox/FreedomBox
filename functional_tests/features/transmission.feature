@@ -23,9 +23,9 @@ Scenario: Backup and restore transmission
   Given the transmission application is enabled
   When all torrents are removed from transmission
   And I upload a sample torrent to transmission
-  And I create a backup of the transmission app data
+  And I create a backup of the transmission app data with name test_transmission
   And all torrents are removed from transmission
-  And I restore the transmission app data backup
+  And I restore the transmission app data backup with name test_transmission
   Then the transmission service should be running
   And there should be 1 torrents listed in transmission
 

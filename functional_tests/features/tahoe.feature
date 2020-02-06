@@ -40,9 +40,9 @@ Scenario: Remove tahoe introducer
 Scenario: Backup and restore tahoe
   Given the tahoe application is enabled
   And backupdomain.example is a tahoe introducer
-  When I create a backup of the tahoe app data
+  When I create a backup of the tahoe app data with name test_tahoe
   And I remove backupdomain.example as a tahoe introducer
-  And I restore the tahoe app data backup
+  And I restore the tahoe app data backup with name test_tahoe
   Then the tahoe service should be running
   And backupdomain.example should be a tahoe connected introducer
 

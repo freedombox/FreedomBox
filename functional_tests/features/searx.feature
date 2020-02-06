@@ -15,8 +15,8 @@ Scenario: Enable searx application
 
 Scenario: Backup and restore searx
   Given the searx application is enabled
-  When I create a backup of the searx app data
-  And I restore the searx app data backup
+  When I create a backup of the searx app data with name test_searx
+  And I restore the searx app data backup with name test_searx
   Then the searx site should be available
 
 Scenario: Enable public access

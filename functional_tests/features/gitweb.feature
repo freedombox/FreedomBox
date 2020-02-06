@@ -36,9 +36,9 @@ Scenario: Delete repository
 Scenario: Backup and restore gitweb
   Given the gitweb application is enabled
   And a repository
-  When I create a backup of the gitweb app data
+  When I create a backup of the gitweb app data with name test_gitweb
   And I delete the repository
-  And I restore the gitweb app data backup
+  And I restore the gitweb app data backup with name test_gitweb
   Then the repository should be restored
   And the gitweb site should be available
 

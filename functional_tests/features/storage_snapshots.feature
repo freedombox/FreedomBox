@@ -20,7 +20,7 @@ Scenario: Configure snapshots
 
 Scenario: Backup and restore snapshot
   When I configure snapshots with free space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0
-  And I create a backup of the snapshot app data
+  And I create a backup of the snapshot app data with name test_storage_snapshots
   And I configure snapshots with free space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
-  And I restore the snapshot app data backup
+  And I restore the snapshot app data backup with name test_storage_snapshots
   Then snapshots should be configured with free space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0

@@ -16,9 +16,9 @@ Scenario: Enable wiki application
 Scenario: Backup and restore wiki
   Given the wiki application is enabled
   When there is an ikiwiki wiki
-  And I create a backup of the ikiwiki app data
+  And I create a backup of the ikiwiki app data with name test_ikiwiki
   And I delete the ikiwiki wiki
-  And I restore the ikiwiki app data backup
+  And I restore the ikiwiki app data backup with name test_ikiwiki
   Then the ikiwiki wiki should be restored
 
 Scenario: Disable wiki application

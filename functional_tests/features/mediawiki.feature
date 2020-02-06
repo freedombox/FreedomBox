@@ -65,10 +65,10 @@ Scenario: Upload SVG image
 
 Scenario: Backup and restore mediawiki
   Given the mediawiki application is enabled
-  When I create a backup of the mediawiki app data
+  When I create a backup of the mediawiki app data with name test_mediawiki
   When I enable mediawiki public registrations
   And I delete the mediawiki main page
-  And I restore the mediawiki app data backup
+  And I restore the mediawiki app data backup with name test_mediawiki
   Then the mediawiki main page should be restored
   Then the mediawiki site should allow creating accounts
 

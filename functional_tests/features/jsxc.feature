@@ -13,6 +13,6 @@ Scenario: Install jsxc application
 
 Scenario: Backup and restore jsxc
   Given the jsxc application is installed
-  When I create a backup of the jsxc app data
-  And I restore the jsxc app data backup
+  When I create a backup of the jsxc app data with name test_jsxc
+  And I restore the jsxc app data backup with name test_jsxc
   Then the jsxc site should be available

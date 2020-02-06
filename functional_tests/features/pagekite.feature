@@ -21,9 +21,9 @@ Scenario: Configure pagekite application
 Scenario: Backup and restore pagekite
   Given the pagekite application is enabled
   When I configure pagekite with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
-  And I create a backup of the pagekite app data
+  And I create a backup of the pagekite app data with name test_pagekite
   And I configure pagekite with host afterbackup.example.com, port 8082, kite name afterbackup.example.com and kite secret afterbackupsecret
-  And I restore the pagekite app data backup
+  And I restore the pagekite app data backup with name test_pagekite
   Then the pagekite service should be running
   And pagekite should be configured with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
 

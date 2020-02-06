@@ -167,22 +167,27 @@ def dynamicdns_has_original_config(session_browser):
     assert system.dynamicdns_has_original_config(session_browser)
 
 
-@when(parsers.parse('I create a backup of the {app_name:w} app data'))
-def backup_create(session_browser, app_name):
-    if config.getboolean('DEFAULT', 'delete_root_backup_archives'):
-        system.backup_delete_root_archives(session_browser)
-    system.backup_create(session_browser, app_name)
+@when(
+    parsers.parse(
+        'I create a backup of the {app_name:w} app data with name {archive_name:w}'
+    ))
+def backup_create(session_browser, app_name, archive_name):
+    system.backup_create(session_browser, app_name, archive_name)
 
 
-@when(parsers.parse('I download the latest app data backup'))
-def backup_download(session_browser, downloaded_file_info):
-    file_path = system.download_latest_backup(session_browser)
+@when(
+    parsers.parse('I download the app data backup with name {archive_name:w}'))
+def backup_download(session_browser, downloaded_file_info, archive_name):
+    file_path = system.download_backup(session_browser, archive_name)
     downloaded_file_info['path'] = file_path
 
 
-@when(parsers.parse('I restore the {app_name:w} app data backup'))
-def backup_restore(session_browser, app_name):
-    system.backup_restore(session_browser, app_name)
+@when(
+    parsers.parse(
+        'I restore the {app_name:w} app data backup with name {archive_name:w}'
+    ))
+def backup_restore(session_browser, app_name, archive_name):
+    system.backup_restore(session_browser, app_name, archive_name)
 
 
 @when(parsers.parse('I restore the downloaded app data backup'))

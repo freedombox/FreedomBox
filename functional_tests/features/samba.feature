@@ -40,9 +40,9 @@ Scenario: Disable open samba share
 Scenario: Backup and restore samba
   Given the samba application is enabled
   When I enable the home samba share
-  And I create a backup of the samba app data
+  And I create a backup of the samba app data with name test_samba
   And I disable the home samba share
-  And I restore the samba app data backup
+  And I restore the samba app data backup with name test_samba
   Then the samba service should be running
   And I can write to the home samba share
 

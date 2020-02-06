@@ -29,7 +29,7 @@ Scenario: Publish HTTPS keys
 Scenario: Backup and restore monkeysphere
   When I import SSH key for mydomain.example in monkeysphere
   And I import HTTPS key for mydomain.example in monkeysphere
-  And I create a backup of the monkeysphere app data
-  And I restore the monkeysphere app data backup
+  And I create a backup of the monkeysphere app data with name test_monkeysphere
+  And I restore the monkeysphere app data backup with name test_monkeysphere
   Then the SSH key should imported for mydomain.example in monkeysphere
   And the HTTPS key should imported for mydomain.example in monkeysphere

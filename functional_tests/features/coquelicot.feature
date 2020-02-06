@@ -41,10 +41,10 @@ Scenario: Backup and restore coquelicot
   When I modify the coquelicot upload password to beforebackup123
   And I modify the maximum file size of coquelicot to 128
   And I upload the sample local file to coquelicot with password beforebackup123
-  And I create a backup of the coquelicot app data
+  And I create a backup of the coquelicot app data with name test_coquelicot
   And I modify the coquelicot upload password to afterbackup123
   And I modify the maximum file size of coquelicot to 64
-  And I restore the coquelicot app data backup
+  And I restore the coquelicot app data backup with name test_coquelicot
   And I download the uploaded file from coquelicot
   Then the coquelicot service should be running
   And I should be able to login to coquelicot with password beforebackup123

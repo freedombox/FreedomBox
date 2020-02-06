@@ -14,9 +14,9 @@ Scenario: Disable restricted console logins
 
 Scenario: Backup and restore security
   When I enable restricted console logins
-  And I create a backup of the security app data
+  And I create a backup of the security app data with name test_security
   And I disable restricted console logins
-  And I restore the security app data backup
+  And I restore the security app data backup with name test_security
   Then restricted console logins should be enabled
 
 Scenario: Enable restricted console logins

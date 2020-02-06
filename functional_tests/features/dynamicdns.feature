@@ -10,7 +10,7 @@ Background:
 
 Scenario: Backup and restore configuration
   Given dynamicdns is configured
-  When I create a backup of the dynamicdns app data
+  When I create a backup of the dynamicdns app data with name test_dynamicdns
   And I change the dynamicdns configuration
-  And I restore the dynamicdns app data backup
+  And I restore the dynamicdns app data backup with name test_dynamicdns
   Then dynamicdns should have the original configuration

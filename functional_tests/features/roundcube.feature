@@ -15,8 +15,8 @@ Scenario: Enable roundcube application
 
 Scenario: Backup and restore roundcube
   Given the roundcube application is enabled
-  When I create a backup of the roundcube app data
-  And I restore the roundcube app data backup
+  When I create a backup of the roundcube app data with name test_roundcube
+  And I restore the roundcube app data backup with name test_roundcube
   Then the roundcube site should be available
 
 Scenario: Disable roundcube application

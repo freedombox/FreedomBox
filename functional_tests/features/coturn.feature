@@ -17,9 +17,9 @@ Scenario: Enable coturn application
 # TODO: Improve this by checking that secret and domain did not change
 Scenario: Backup and restore coturn
   Given the coturn application is enabled
-  When I create a backup of the coturn app data
+  When I create a backup of the coturn app data with name test_coturn
   And I restore the coturn app data backup
-  Then the coturn service should be running
+  Then the coturn service should be running with name test_coturn
 
 Scenario: Disable coturn application
   Given the coturn application is enabled

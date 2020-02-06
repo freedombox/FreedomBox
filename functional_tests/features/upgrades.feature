@@ -14,9 +14,9 @@ Scenario: Enable automatic upgrades
 
 Scenario: Backup and restore upgrades
   When I enable automatic upgrades
-  And I create a backup of the upgrades app data
+  And I create a backup of the upgrades app data with name test_upgrades
   And I disable automatic upgrades
-  And I restore the upgrades app data backup
+  And I restore the upgrades app data backup with name test_upgrades
   Then automatic upgrades should be enabled
 
 Scenario: Disable automatic upgrades

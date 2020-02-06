@@ -23,9 +23,9 @@ Scenario: Backup and restore deluge
   Given the deluge application is enabled
   When all torrents are removed from deluge
   And I upload a sample torrent to deluge
-  And I create a backup of the deluge app data
+  And I create a backup of the deluge app data with name test_deluge
   And all torrents are removed from deluge
-  And I restore the deluge app data backup
+  And I restore the deluge app data backup with name test_deluge
   Then the deluge service should be running
   And there should be 1 torrents listed in deluge
 

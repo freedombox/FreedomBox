@@ -190,22 +190,30 @@ def dynamicdns_change_config(browser):
     submit(browser)
 
 
-def backup_delete_root_archives(browser):
-    """Delete all archives of the root borg repository"""
-    browser.visit(default_url + '/plinth/sys/backups/')
-    path = "//a[starts-with(@href,'/plinth/sys/backups/root/delete/')]"
-    while browser.find_by_xpath(path):
-        browser.find_by_xpath(path).first.click()
+def _click_button_and_confirm(browser, href):
+    buttons = browser.find_link_by_href(href)
+    if buttons:
+        buttons.first.click()
         with wait_for_page_update(browser,
                                   expected_url='/plinth/sys/backups/'):
             submit(browser)
 
 
-def backup_create(browser, app_name):
+def backup_delete_archive_by_name(browser, archive_name):
+    nav_to_module(browser, 'backups')
+    href = f'/plinth/sys/backups/root/delete/{archive_name}/'
+    _click_button_and_confirm(browser, href)
+
+
+def backup_create(browser, app_name, archive_name=None):
     application.install(browser, 'backups')
+    if archive_name:
+        backup_delete_archive_by_name(browser, archive_name)
+
     browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
-    for app in browser.find_by_css('input[type=checkbox]'):
-        app.uncheck()
+    browser.find_by_id('select-all').uncheck()
+    if archive_name:
+        browser.find_by_id('id_backups-name').fill(archive_name)
 
     # ensure the checkbox is scrolled into view
     browser.execute_script('window.scrollTo(0, 0)')
@@ -213,13 +221,10 @@ def backup_create(browser, app_name):
     submit(browser)
 
 
-def backup_restore(browser, app_name):
+def backup_restore(browser, app_name, archive_name=None):
     nav_to_module(browser, 'backups')
-    path = "//a[starts-with(@href,'/plinth/sys/backups/root/restore-archive/')]"
-    # assume that want to restore the last (most recently created) backup
-    browser.find_by_xpath(path).last.click()
-    with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
-        submit(browser)
+    href = f'/plinth/sys/backups/root/restore-archive/{archive_name}/'
+    _click_button_and_confirm(browser, href)
 
 
 def backup_upload_and_restore(browser, app_name, downloaded_file_path):
@@ -234,11 +239,10 @@ def backup_upload_and_restore(browser, app_name, downloaded_file_path):
         submit(browser)
 
 
-def download_latest_backup(browser):
+def download_backup(browser, archive_name=None):
     nav_to_module(browser, 'backups')
-    path = "//a[starts-with(@href,'/plinth/sys/backups/root/download/')]"
-    ele = browser.driver.find_elements_by_xpath(path)[0]
-    url = ele.get_attribute('href')
+    href = f'/plinth/sys/backups/root/download/{archive_name}/'
+    url = config['DEFAULT']['url'] + href
     file_path = download_file_logged_in(browser, url, suffix='.tar.gz')
     return file_path
 

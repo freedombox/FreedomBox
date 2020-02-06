@@ -21,8 +21,8 @@ Scenario: Download openvpn profile
 Scenario: Backup and restore openvpn
   Given the openvpn application is enabled
   And I download openvpn profile
-  When I create a backup of the openvpn app data
-  And I restore the openvpn app data backup
+  When I create a backup of the openvpn app data with name test_openvpn
+  And I restore the openvpn app data backup with name test_openvpn
   Then the openvpn profile downloaded should be same as before
 
 Scenario: Disable openvpn application

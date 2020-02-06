@@ -25,7 +25,7 @@ Scenario: Set timezone
 
 Scenario: Backup and restore datetime
   When I set the time zone to Africa/Accra
-  And I create a backup of the datetime app data
+  And I create a backup of the datetime app data with name test_datetime
   And I set the time zone to Africa/Cairo
-  And I restore the datetime app data backup
+  And I restore the datetime app data backup with name test_datetime
   Then the time zone should be Africa/Accra

@@ -17,9 +17,9 @@ Scenario: Enable shadowsocks application
 Scenario: Backup and restore shadowsocks
   Given the shadowsocks application is enabled
   When I configure shadowsocks with server example.com and password beforebackup123
-  And I create a backup of the shadowsocks app data
+  And I create a backup of the shadowsocks app data with name test_shadowsocks
   And I configure shadowsocks with server example.org and password afterbackup123
-  And I restore the shadowsocks app data backup
+  And I restore the shadowsocks app data backup with name test_shadowsocks
   Then the shadowsocks service should be running
   And shadowsocks should be configured with server example.com and password beforebackup123
 

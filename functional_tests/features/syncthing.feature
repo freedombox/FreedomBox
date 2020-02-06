@@ -29,9 +29,9 @@ Scenario: Backup and restore syncthing
   Given the syncthing application is enabled
   And syncthing folder Test is not present
   When I add a folder /tmp as syncthing folder Test
-  And I create a backup of the syncthing app data
+  And I create a backup of the syncthing app data with name test_syncthing
   And I remove syncthing folder Test
-  And I restore the syncthing app data backup
+  And I restore the syncthing app data backup with name test_syncthing
   Then syncthing folder Test should be present
 
 Scenario: Disable syncthing application

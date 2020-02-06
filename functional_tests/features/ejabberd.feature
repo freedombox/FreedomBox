@@ -26,9 +26,9 @@ Scenario: Disable message archive management
 Scenario: Backup and restore ejabberd
   Given the ejabberd application is enabled
   And I have added a contact to my roster
-  When I create a backup of the ejabberd app data
+  When I create a backup of the ejabberd app data with name test_ejabberd
   And I delete the contact from my roster
-  And I restore the ejabberd app data backup
+  And I restore the ejabberd app data backup with name test_ejabberd
   Then I should have a contact on my roster
 
 Scenario: Disable ejabberd application

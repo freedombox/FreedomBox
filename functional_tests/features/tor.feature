@@ -44,10 +44,10 @@ Scenario: Backup and restore tor
   And tor relay is enabled
   And tor bridge relay is enabled
   And tor hidden services are enabled
-  When I create a backup of the tor app data
+  When I create a backup of the tor app data with name test_tor
   And I disable tor relay
   And I disable tor hidden services
-  And I restore the tor app data backup
+  And I restore the tor app data backup with name test_tor
   Then the tor service should be running
   And tor relay should be enabled
   And tor bridge relay should be enabled

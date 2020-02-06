@@ -24,9 +24,9 @@ Scenario: Backup and restore mldonkey
   Given the mldonkey application is enabled
   When all ed2k files are removed from mldonkey
   And I upload a sample ed2k file to mldonkey
-  And I create a backup of the mldonkey app data
+  And I create a backup of the mldonkey app data with name test_mldonkey
   And all ed2k files are removed from mldonkey
-  And I restore the mldonkey app data backup
+  And I restore the mldonkey app data backup with name test_mldonkey
   Then the mldonkey service should be running
   And there should be 1 ed2k files listed in mldonkey
 

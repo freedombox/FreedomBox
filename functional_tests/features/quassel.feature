@@ -16,8 +16,8 @@ Scenario: Enable quassel application
 # TODO: Improve this to actually check that data configured servers is restored.
 Scenario: Backup and restore quassel
   Given the quassel application is enabled
-  When I create a backup of the quassel app data
-  And I restore the quassel app data backup
+  When I create a backup of the quassel app data with name test_quassel
+  And I restore the quassel app data backup with name test_quassel
   Then the quassel service should be running
 
 Scenario: Disable quassel application

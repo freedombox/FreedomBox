@@ -44,8 +44,8 @@ Scenario: Public share
 Scenario: Backup and restore sharing
   Given share tmp is not available
   When I add a share tmp from path /tmp for admin
-  And I create a backup of the sharing app data
+  And I create a backup of the sharing app data with name test_sharing
   And I remove share tmp
-  And I restore the sharing app data backup
+  And I restore the sharing app data backup with name test_sharing
   Then the share tmp should be listed from path /tmp for admin
   And the share tmp should be accessible

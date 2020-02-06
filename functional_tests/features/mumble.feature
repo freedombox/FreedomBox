@@ -17,8 +17,8 @@ Scenario: Enable mumble application
 # certificates are restored.
 Scenario: Backup and restore mumble
   Given the mumble application is enabled
-  When I create a backup of the mumble app data
-  And I restore the mumble app data backup
+  When I create a backup of the mumble app data with name test_mumble
+  And I restore the mumble app data backup with name test_mumble
   Then the mumble service should be running
 
 Scenario: Disable mumble application

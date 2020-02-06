@@ -10,8 +10,8 @@ Background:
 
 Scenario: Browser waits for redirect after restoring a backup
   Given the bind application is enabled
-  When I create a backup of the bind app data
-  And I restore the bind app data backup
+  When I create a backup of the bind app data with name test_backups
+  And I restore the bind app data backup with name test_backups
   And I open the main page
   And I wait for 5 seconds
   Then the main page should be shown
@@ -19,8 +19,8 @@ Scenario: Browser waits for redirect after restoring a backup
 Scenario: Download, upload and restore a backup
   Given the bind application is enabled
   When I set bind forwarders to 1.1.1.1
-  And I create a backup of the bind app data
+  And I create a backup of the bind app data with name test_backups
   And I set bind forwarders to 1.0.0.1
-  And I download the latest app data backup
+  And I download the app data backup with name test_backups
   And I restore the downloaded app data backup
   Then bind forwarders should be 1.1.1.1
