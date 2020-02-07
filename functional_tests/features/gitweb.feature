@@ -42,11 +42,6 @@ Scenario: Backup and restore gitweb
   Then the repository should be restored
   And the gitweb site should be available
 
-Scenario: Disable gitweb application
-  Given the gitweb application is enabled
-  When I disable the gitweb application
-  Then the gitweb site should not be available
-
 Scenario: Public gitweb site shows only public repositories
   Given the gitweb application is enabled
   And both public and private repositories exist
@@ -90,3 +85,8 @@ Scenario: Access private repository with git client
   And the repository should not be publicly writable
   And the repository should be privately readable
   And the repository should be privately writable
+
+Scenario: Disable gitweb application
+  Given the gitweb application is enabled
+  When I disable the gitweb application
+  Then the gitweb site should not be available

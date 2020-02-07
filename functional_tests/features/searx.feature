@@ -19,11 +19,6 @@ Scenario: Backup and restore searx
   And I restore the searx app data backup
   Then the searx site should be available
 
-Scenario: Disable searx application
-  Given the searx application is enabled
-  When I disable the searx application
-  Then the searx site should not be available
-
 Scenario: Enable public access
   Given the searx application is enabled
   When I enable public access in searx
@@ -47,3 +42,7 @@ Scenario: Preserve public access setting
   Then searx app should be visible on the front page
   And the searx site should be available
 
+Scenario: Disable searx application
+  Given the searx application is enabled
+  When I disable the searx application
+  Then the searx site should not be available
