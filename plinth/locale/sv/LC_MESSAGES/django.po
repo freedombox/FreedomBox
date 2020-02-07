@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-27 18:52-0500\n"
-"PO-Revision-Date: 2020-01-25 17:21+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2020-02-10 05:50+0000\n"
+"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
 "Language: sv\n"
@@ -699,13 +699,12 @@ msgid "General Configuration"
 msgstr "Allmän Konfiguration"
 
 #: plinth/modules/config/__init__.py:40
-#, fuzzy
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
 "Här kan du ställa in några allmänna konfigurationsalternativ som värdnamn, "
-"domännamn, webserver-hemsida, etc."
+"domännamn, webserver, hemsida etc."
 
 #: plinth/modules/config/__init__.py:67 plinth/modules/dynamicdns/views.py:44
 #: plinth/modules/i2p/views.py:31 plinth/modules/names/templates/names.html:44
@@ -2734,16 +2733,16 @@ msgstr ""
 "inaktiveras."
 
 #: plinth/modules/mediawiki/forms.py:59
-#, fuzzy
-#| msgid "Default"
 msgid "Default Skin"
-msgstr "Standard"
+msgstr "Standardskal"
 
 #: plinth/modules/mediawiki/forms.py:60
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
+"Välj ett standardskal för din MediaWiki-installation. Användare har "
+"möjlighet att välja önskad utseendet."
 
 #: plinth/modules/mediawiki/views.py:74
 msgid "Password updated"
@@ -2766,10 +2765,8 @@ msgid "Private mode disabled"
 msgstr "Privat läge inaktiverat"
 
 #: plinth/modules/mediawiki/views.py:122
-#, fuzzy
-#| msgid "Setting unchanged"
 msgid "Default skin changed"
-msgstr "Instänllningar oförändrade"
+msgstr "Standardskal ändrat"
 
 #: plinth/modules/minetest/__init__.py:50
 #: plinth/modules/minetest/manifest.py:25
@@ -3492,10 +3489,8 @@ msgid "Open"
 msgstr "Öppet"
 
 #: plinth/modules/networks/forms.py:309
-#, fuzzy
-#| msgid "Current Network Configuration"
 msgid "Preferred router configuration"
-msgstr "Aktuell Nätverkskonfiguration"
+msgstr "Önskad routerkonfiguration"
 
 #: plinth/modules/networks/forms.py:314
 #, python-brace-format
@@ -3506,6 +3501,12 @@ msgid ""
 "as the {box_name}'s address. First remember to configure a static local IP "
 "address for your {box_name} in your router's configuration.</p>"
 msgstr ""
+"Använd DMZ-funktionen för att vidarebefordra all trafik<p class=\"help-"
+"block\">De flesta routrar tillhandahåller en konfigurationsinställning som "
+"kallas DMZ. Detta gör det möjligt för routern att vidarebefordra all "
+"inkommande trafik från Internet till en enda IP-adress, till exempel "
+"{box_name}-adressen. Kom först ihåg att konfigurera en statisk lokal IP-"
+"adress för din {box_name} i routerns configuration.</p>"
 
 #: plinth/modules/networks/forms.py:328
 #, python-brace-format
@@ -3518,6 +3519,14 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
+"Vidarebefordra specifik trafik efter behov av varje program<p class=\"help-"
+"block\">Du kan alternativt välja att vidarebefordra endast specifik trafik "
+"till din {box_name}. Detta är idealiskt om du har andra servrar som "
+"{box_name} i nätverket eller om routern inte stöder DMZ-funktionen. Alla "
+"program som tillhandahåller ett webbgränssnitt behöver du vidarebefordra "
+"trafik från portar 80 och 443 för att fungera. Var och en av de andra "
+"ansökningarna kommer att föreslå vilka portar som måste vidarebefordras för "
+"att programmet ska fungera.</p>"
 
 #: plinth/modules/networks/forms.py:345
 msgid ""
@@ -3525,6 +3534,10 @@ msgid ""
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
+"Routern är för närvarande okonfigurerad<p class=\"help-block\">Välj detta om "
+"du inte har konfigurerat eller inte kan konfigurera routern för närvarande "
+"och vill bli påmind senare. Vissa av de andra konfigurationsstegen kan "
+"misslyckas.</p>"
 
 #: plinth/modules/networks/networks.py:43
 msgid "Network Connections"
@@ -3622,10 +3635,8 @@ msgid "Delete Connection"
 msgstr "Ta Bort Anslutning"
 
 #: plinth/modules/networks/networks.py:442
-#, fuzzy
-#| msgid "Tor configuration is being updated"
 msgid "Router configuration type saved."
-msgstr "Konfigurationen av Tor uppdateras"
+msgstr "Routerkonfigurationstyp sparade."
 
 #: plinth/modules/networks/templates/connection_show.html:43
 msgid "Edit connection"
@@ -3876,7 +3887,7 @@ msgstr "Inaktiva"
 #: plinth/modules/networks/templates/connections_list.html:124
 #, python-format
 msgid "%(box_name)s Internet Connectivity"
-msgstr ""
+msgstr "%(box_name)s internet-anslutning"
 
 #: plinth/modules/networks/templates/connections_list.html:129
 #, python-format
@@ -3885,6 +3896,9 @@ msgid ""
 "network. This information is used only to suggest necessary configuration "
 "actions."
 msgstr ""
+"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
+"här informationen används bara för att föreslå nödvändiga "
+"konfigurationsåtgärder."
 
 #: plinth/modules/networks/templates/connections_list.html:137
 #, python-format
@@ -3892,23 +3906,22 @@ msgid ""
 "Your %(box_name)s gets its internet from your Router via WiFi or Ethernet "
 "cable. This is a typical home setup."
 msgstr ""
+"Dina %(box_name)s får sitt internet från routern via WiFi eller Ethernet-"
+"kabel. Detta är en typisk hem inställning."
 
 #: plinth/modules/networks/templates/connections_list.html:145
 #: plinth/modules/networks/templates/connections_list.html:147
-#, fuzzy
-#| msgid "Update"
 msgid "Update..."
-msgstr "Uppdatera"
+msgstr "Uppdatering..."
 
 #: plinth/modules/networks/templates/connections_type_select.html:34
 msgid "Create..."
 msgstr "Skaffa..."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:25
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "Setup %(box_name)s Behind a Router"
-msgstr "%(box_name)s är uppdaterad."
+msgstr "Setup %(box_name)s Bakom en Router"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:31
 #, python-format
@@ -3916,6 +3929,8 @@ msgid ""
 "Your %(box_name)s gets its internet connection from your router via Wi-Fi or "
 "Ethernet cable. This is a typical home setup."
 msgstr ""
+"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
+"Ethernet-kabel. Detta är en typisk hem inställning."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:38
 #, python-format
@@ -3925,6 +3940,10 @@ msgid ""
 "configured to forward all traffic it receives so that %(box_name)s provides "
 "the services."
 msgstr ""
+"Med den här inställningen måste alla enheter på internet som försöker nå "
+"dina %(box_name)s gå igenom routern. Routern måste konfigureras för att "
+"vidarebefordra all trafik den tar emot så att %(box_name)s tillhandahåller "
+"tjänsterna."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:47
 msgid ""
@@ -3932,16 +3951,21 @@ msgid ""
 "see options, to overcome this limitation, choose 'no public address' option "
 "in Internet connection type selection."
 msgstr ""
+"Om du inte har kontroll över routern väljer du att inte konfigurera den. Om "
+"du vill visa alternativ väljer du alternativet \"ingen offentlig adress\" i "
+"valet av internetanslutningstyp för internetanslutning."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:54
 msgid "Choose How You Wish to Configure Your Router"
-msgstr ""
+msgstr "Välj hur du vill konfigurera routern"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:57
 msgid ""
 "You will need to login to your router's administration console provided by "
 "the router. This may look like one of the following:"
 msgstr ""
+"Du måste logga in på routerns administrationskonsol som tillhandahålls av "
+"routern. Detta kan se ut som något av följande:"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:69
 msgid ""
@@ -3952,14 +3976,20 @@ msgid ""
 "model number and search online for the router's manual. This will provide "
 "full instructions on how to perform this task."
 msgstr ""
+"Användarnamnet och lösenordet konfigureras av dig när du först konfigurerar "
+"routern. För många routrar skrivs den här informationen ut på routerns "
+"baksida. Om du inte kommer ihåg autentiseringsuppgifterna eller routerns IP-"
+"adress kan du välja att återställa den och konfigurera den på nytt. Slå upp "
+"din router modellnummer och sök online för routerns manual. Detta ger "
+"fullständiga instruktioner om hur du utför den här uppgiften."
 
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:33
 msgid "skip this step"
-msgstr ""
+msgstr "hoppa över det här steget"
 
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:35
 msgid "Next"
-msgstr ""
+msgstr "Nästa"
 
 #: plinth/modules/openvpn/__init__.py:39 plinth/modules/openvpn/manifest.py:33
 msgid "OpenVPN"
@@ -4720,16 +4750,11 @@ msgid "Shares"
 msgstr "Shares"
 
 #: plinth/modules/samba/templates/samba.html:41
-#, fuzzy
-#| msgid ""
-#| "Note: only specially created directories will be shared on selected "
-#| "disks, not the whole disk."
 msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
 msgstr ""
-"Obs: endast särskilt skapade kataloger kommer att delas på valda diskar, "
-"inte hela disken."
+"Endast specialskapade kataloger delas på valda diskar, inte hela disken."
 
 #: plinth/modules/samba/templates/samba.html:49
 msgid "Disk Name"
@@ -4741,8 +4766,6 @@ msgid "Used"
 msgstr "Används"
 
 #: plinth/modules/samba/templates/samba.html:72
-#, fuzzy
-#| msgid "vfat partitions are not supported"
 msgid "VFAT partitions are not supported"
 msgstr "VFAT-partitioner stöds inte"
 
@@ -4762,16 +4785,12 @@ msgid "Users who can currently access group and home shares"
 msgstr "Användare som för närvarande kan komma åt grupp-och hem resurser"
 
 #: plinth/modules/samba/templates/samba.html:113
-#, fuzzy
-#| msgid ""
-#| "Users who need to re-enter their password on the password change page to "
-#| "access group and home shares"
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
-"Användare som behöver ange sitt lösenord igen på sidan Ändra lösenord för "
-"att komma åt grupp-och hem resurser"
+"Användare behöver ange sitt lösenord en gång till på sidan för ändring av "
+"lösenord för att komma åt grupp- och hemresurser"
 
 #: plinth/modules/samba/templates/samba.html:118
 msgid "Unavailable Shares"
@@ -4932,18 +4951,12 @@ msgstr ""
 "säkerhetsproblem."
 
 #: plinth/modules/security/templates/security_report.html:33
-#, fuzzy
-#| msgid ""
-#| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app. It also lists "
-#| "whether each service is using sandboxing features."
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app."
 msgstr ""
-"I följande tabell visas aktuellt rapporterat antal och historiskt antal, "
-"säkerhetsproblem för varje installerad app. Den listar också om varje tjänst "
-"använder sandbox-funktioner."
+"I följande tabell visas det aktuella rapporterade antalet och historiska "
+"antalet säkerhetsproblem för varje installerad app."
 
 #: plinth/modules/security/templates/security_report.html:39
 msgid ""
@@ -4951,6 +4964,9 @@ msgid ""
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
+"För appar som tillhandahåller tjänster visar kolumnen \"Sandboxed\" om "
+"sandboxningsfunktioner används. Sandboxing mildrar effekten av en "
+"potentiellt komprometterad app till resten av systemet."
 
 #: plinth/modules/security/templates/security_report.html:48
 msgid "App Name"
@@ -6351,11 +6367,11 @@ msgstr "Lösenordet har ändrats."
 #: plinth/modules/wireguard/__init__.py:38
 #: plinth/modules/wireguard/manifest.py:29
 msgid "WireGuard"
-msgstr ""
+msgstr "WireGuard"
 
 #: plinth/modules/wireguard/__init__.py:43
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
-msgstr ""
+msgstr "WireGuard är en snabb, modern, säker VPN-tunnel."
 
 #: plinth/modules/wireguard/__init__.py:45
 #, python-brace-format
@@ -6363,6 +6379,8 @@ msgid ""
 "It can be used to connect to a VPN provider which supports WireGuard, and to "
 "route all outgoing traffic from {box_name} through the VPN."
 msgstr ""
+"Den kan användas för att ansluta till en VPN-leverantör som stöder WireGuard "
+"och för att dirigera all utgående trafik från {box_name} via VPN."
 
 #: plinth/modules/wireguard/__init__.py:49
 #, python-brace-format
@@ -6371,53 +6389,56 @@ msgid ""
 "travelling. While connected to a public Wi-Fi network, all traffic can be "
 "securely relayed through {box_name}."
 msgstr ""
+"Ett andra användningsfall är att ansluta en mobil enhet till {box_name} när "
+"du reser. När all trafik är ansluten till ett offentligt Wi-Fi-nätverk kan "
+"den vidarebefordras på ett säkert sätt via {box_name}."
 
 #: plinth/modules/wireguard/forms.py:47
-#, fuzzy
-#| msgid "Invalid kite name"
 msgid "Invalid key."
-msgstr "Ogiltigt kite-namn"
+msgstr "Ogiltig nyckel."
 
 #: plinth/modules/wireguard/forms.py:76
 #: plinth/modules/wireguard/templates/wireguard.html:32
 #: plinth/modules/wireguard/templates/wireguard.html:89
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:38
-#, fuzzy
-#| msgid "Publish Key"
 msgid "Public Key"
-msgstr "Publicera nyckel"
+msgstr "Offentlig nyckel"
 
 #: plinth/modules/wireguard/forms.py:77
 msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Offentlig nyckel för peer. Exempel: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:85
 msgid "Endpoint of the server"
-msgstr ""
+msgstr "Slutpunkt för servern"
 
 #: plinth/modules/wireguard/forms.py:86
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: demo.wireguard."
 "com:12912 ."
 msgstr ""
+"Domännamn och port i formuläret \"ip:port\". Exempel: demo.wireguard.com:"
+"12912 ."
 
 #: plinth/modules/wireguard/forms.py:91
-#, fuzzy
-#| msgid "Published key to keyserver."
 msgid "Public key of the server"
-msgstr "Publicerade nyckeln till nyckelserver."
+msgstr "Offentlig nyckel för servern"
 
 #: plinth/modules/wireguard/forms.py:92
 msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Tillhandahålls av serveroperatören, en lång sträng av tecken. Exempel: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:97
 msgid "Client IP address provided by server"
-msgstr ""
+msgstr "Klient-IP-adress som tillhandahålls av servern"
 
 #: plinth/modules/wireguard/forms.py:98
 msgid ""
@@ -6425,10 +6446,13 @@ msgid ""
 "endpoint. This value is usually provided by the server operator. Example: "
 "192.168.0.10."
 msgstr ""
+"IP-adress som tilldelats den här datorn på VPN efter anslutning till "
+"slutpunkten. Det här värdet tillhandahålls vanligtvis av serveroperatören. "
+"Exempel: 192.168.0.10."
 
 #: plinth/modules/wireguard/forms.py:104
 msgid "Private key of this machine"
-msgstr ""
+msgstr "Maskinens privata nyckel"
 
 #: plinth/modules/wireguard/forms.py:105
 msgid ""
@@ -6437,10 +6461,14 @@ msgid ""
 "some server operators insist on providing this. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Valfri. Nya offentliga/privata nycklar genereras om de lämnas tomma. "
+"Offentlig nyckel kan sedan tillhandahållas till servern. Detta är det "
+"rekommenderade sättet. Vissa serveroperatörer insisterar dock på att "
+"tillhandahålla detta. Exempel: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:113
 msgid "Pre-shared key"
-msgstr ""
+msgstr "I förväg delad nyckel"
 
 #: plinth/modules/wireguard/forms.py:114
 msgid ""
@@ -6448,40 +6476,41 @@ msgid ""
 "layer of security. Fill in only if provided. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 msgstr ""
+"Valfri. En delad hemlig nyckel som tillhandahålls av servern för att lägga "
+"till ytterligare ett säkerhetslager. Fyll bara i om det finns. Exempel: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
 #: plinth/modules/wireguard/forms.py:120
 msgid "Use this connection to send all outgoing traffic"
-msgstr ""
+msgstr "Använd den här anslutningen för att skicka all utgående trafik"
 
 #: plinth/modules/wireguard/forms.py:122
 msgid "Typically checked for a VPN service though which all traffic is sent."
-msgstr ""
+msgstr "Vanligtvis kontrolleras för en VPN-tjänst men som all trafik skickas."
 
 #: plinth/modules/wireguard/templates/wireguard.html:25
-#, fuzzy
-#| msgid "Chat Server"
 msgid "As a Server"
-msgstr "Chat-Server"
+msgstr "Som en server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:27
 msgid "Peers allowed to connect to this server:"
-msgstr ""
+msgstr "Peers får ansluta till den här servern:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:33
 msgid "Allowed IPs"
-msgstr ""
+msgstr "Tillåtna IPs"
 
 #: plinth/modules/wireguard/templates/wireguard.html:34
 #: plinth/modules/wireguard/templates/wireguard.html:90
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Last Connected Time"
-msgstr "Skapa anslutning"
+msgstr "Senast ansluten tid"
 
 #: plinth/modules/wireguard/templates/wireguard.html:53
 #, python-format
 msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr ""
+"Inga peer-datorer har konfigurerats för att ansluta till dessa %(box_name)s "
+"ännu."
 
 #: plinth/modules/wireguard/templates/wireguard.html:62
 #, python-format
@@ -6490,88 +6519,69 @@ msgid ""
 "      Public key for this %(box_name)s:\n"
 "    "
 msgstr ""
+"\n"
+"      Offentlig nyckel för dessa%(box_name)s:\n"
+"    "
 
 #: plinth/modules/wireguard/templates/wireguard.html:68
-#, fuzzy
-#| msgid "No shares currently configured."
 msgid "Not configured yet."
-msgstr "Inga shares har konfigurerats."
+msgstr "Inte konfigurerad än."
 
 #: plinth/modules/wireguard/templates/wireguard.html:72
-#, fuzzy
-#| msgid "Add new introducer"
 msgid "Add a new peer"
-msgstr "Lägg till ny introduktören"
+msgstr "Lägga till en ny peer"
 
 #: plinth/modules/wireguard/templates/wireguard.html:76
 #: plinth/modules/wireguard/views.py:69
 msgid "Add Allowed Client"
-msgstr ""
+msgstr "Lägga till tillåten klient"
 
 #: plinth/modules/wireguard/templates/wireguard.html:79
-#, fuzzy
-#| msgid "Chat Client"
 msgid "As a Client"
-msgstr "Chat klient"
+msgstr "Som klient"
 
 #: plinth/modules/wireguard/templates/wireguard.html:81
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
-msgstr ""
+msgstr "Servrar som %(box_name)s kommer att ansluta till:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:34
 msgid "Endpoint"
-msgstr ""
+msgstr "Slutpunkt"
 
 #: plinth/modules/wireguard/templates/wireguard.html:111
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "No connections to remote servers are configured yet."
-msgstr "Autentisering till remote servern misslyckades."
+msgstr "Inga anslutningar till fjärrservrar har konfigurerats ännu."
 
 #: plinth/modules/wireguard/templates/wireguard.html:119
-#, fuzzy
-#| msgid "Add new introducer"
 msgid "Add a new server"
-msgstr "Lägg till ny introduktören"
+msgstr "Lägga till en ny server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:123
 #: plinth/modules/wireguard/views.py:178
-#, fuzzy
-#| msgid "Add Connection"
 msgid "Add Connection to Server"
-msgstr "Lägg till Anslutning"
+msgstr "Lägga till anslutning till server"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:34
-#, fuzzy
-#| msgid "IRC Client"
 msgid "Add Client"
-msgstr "IRC-klient"
+msgstr "Lägg till klient"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:29
-#, fuzzy
-#| msgid "Are you sure that you want to remove this repository?"
 msgid "Are you sure that you want to delete this client?"
-msgstr "Är du säker på att du vill ta bort den här respository?"
+msgstr "Är du säker på att du vill ta bort denna klient?"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:29
-#, fuzzy
-#| msgid "Are you sure that you want to remove this repository?"
 msgid "Are you sure that you want to delete this server?"
-msgstr "Är du säker på att du vill ta bort den här respository?"
+msgstr "Är du säker på att du vill ta bort den här servern?"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_client.html:34
-#, fuzzy
-#| msgid "Chat Client"
 msgid "Update Client"
-msgstr "Chat klient"
+msgstr "Uppdatera klient"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_server.html:34
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Update Connection"
-msgstr "Skapa anslutning"
+msgstr "Uppdatera anslutningen"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:27
 #, python-format
@@ -6579,47 +6589,45 @@ msgid ""
 "%(box_name)s will allow this client to connect to it. Ensure that the client "
 "is configured with the following information."
 msgstr ""
+"%(box_name)s gör det möjligt för den här klienten att ansluta till den. "
+"Kontrollera att klienten är konfigurerad med följande information."
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:35
 msgid "Client public key:"
-msgstr ""
+msgstr "Offentlig klientnyckel:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:39
 msgid "IP address to use for client:"
-msgstr ""
+msgstr "IP-adress som ska användas för klienten:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:43
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:46
 msgid "Pre-shared key:"
-msgstr ""
+msgstr "I förväg delad nyckel:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:47
-#, fuzzy
-#| msgid "Server domain"
 msgid "Server endpoints:"
-msgstr "Server-domän"
+msgstr "Serverändpunkter:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:55
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:42
-#, fuzzy
-#| msgid "Select verified SSH public key"
 msgid "Server public key:"
-msgstr "Välj verifierad Offentlig SSH-nyckel"
+msgstr "Serverns offentliga nyckel:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:65
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:64
 msgid "Data transmitted:"
-msgstr ""
+msgstr "Överförda uppgifter:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:69
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:68
 msgid "Data received:"
-msgstr ""
+msgstr "Mottagna uppgifter:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:73
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:72
 msgid "Latest handshake:"
-msgstr ""
+msgstr "Senaste handskakningen:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:29
 #, python-format
@@ -6628,104 +6636,77 @@ msgid ""
 "information. Ensure that the server is configured to allow %(box_name)s's "
 "public key and IP address."
 msgstr ""
+"%(box_name)s försöker nå en WireGuard-server med följande information. "
+"Kontrollera att servern är konfigurerad för att tillåta %(box_name)s "
+"offentliga nyckel- och IP-adress."
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:38
-#, fuzzy
-#| msgid "Server domain"
 msgid "Server endpoint:"
-msgstr "Server-domän"
+msgstr "Serverändpunkt:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:50
 msgid "Public key of this machine:"
-msgstr ""
+msgstr "Offentlig nyckel för denna maskin:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:54
 msgid "IP address of this machine:"
-msgstr ""
+msgstr "IP-adressen för denna maskin:"
 
 #: plinth/modules/wireguard/views.py:64
-#, fuzzy
-#| msgid "Add new introducer"
 msgid "Added new client."
-msgstr "Lägg till ny introduktören"
+msgstr "Lade till ny klient."
 
 #: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "Client with public key already exists"
-msgstr "Det finns redan en share med det här namnet."
+msgstr "Klient med offentlig nyckel finns redan"
 
 #: plinth/modules/wireguard/views.py:92
-#, fuzzy
-#| msgid "Email Client"
 msgid "Allowed Client"
-msgstr "E-postklient"
+msgstr "Tillåten klient"
 
 #: plinth/modules/wireguard/views.py:114
-#, fuzzy
-#| msgid "Update setup"
 msgid "Updated client."
-msgstr "Uppdatera inställningar"
+msgstr "Uppdaterad klient."
 
 #: plinth/modules/wireguard/views.py:119
-#, fuzzy
-#| msgid "Email Client"
 msgid "Modify Client"
-msgstr "E-postklient"
+msgstr "Ändra klienten"
 
 #: plinth/modules/wireguard/views.py:152
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Allowed Client"
-msgstr "Ta bort"
+msgstr "Ta bort tillåten klient"
 
 #: plinth/modules/wireguard/views.py:161
-#, fuzzy
-#| msgid "Archive deleted."
 msgid "Client deleted."
-msgstr "Archiv borttagen."
+msgstr "Klienten har tagits bort."
 
 #: plinth/modules/wireguard/views.py:163
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Client not found"
-msgstr "Databasen hittades inte"
+msgstr "Klienten hittades inte"
 
 #: plinth/modules/wireguard/views.py:173
-#, fuzzy
-#| msgid "Added custom service"
 msgid "Added new server."
-msgstr "Lade till anpassad service"
+msgstr "Lade till ny server."
 
 #: plinth/modules/wireguard/views.py:194
-#, fuzzy
-#| msgid "Connection Type"
 msgid "Connection to Server"
-msgstr "Anslutningstyp"
+msgstr "Anslutning till server"
 
 #: plinth/modules/wireguard/views.py:212
-#, fuzzy
-#| msgid "Update setup"
 msgid "Updated server."
-msgstr "Uppdatera inställningar"
+msgstr "Uppdaterad server."
 
 #: plinth/modules/wireguard/views.py:217
-#, fuzzy
-#| msgid "Edit Connection"
 msgid "Modify Connection to Server"
-msgstr "Redigera Anslutning"
+msgstr "Ändra Anslutningen till Servern"
 
 #: plinth/modules/wireguard/views.py:254
-#, fuzzy
-#| msgid "Delete Connection"
 msgid "Delete Connection to Server"
-msgstr "Ta Bort Anslutning"
+msgstr "Ta bort anslutning till server"
 
 #: plinth/modules/wireguard/views.py:274
-#, fuzzy
-#| msgid "Share deleted."
 msgid "Server deleted."
-msgstr "Share borttagen."
+msgstr "Servern har tagits bort."
 
 #: plinth/network.py:42
 msgid "PPPoE"
