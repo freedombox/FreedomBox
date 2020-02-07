@@ -33,9 +33,9 @@ Scenario: Set tor hidden services configuration
   And tor hidden services information should be displayed
 
 Scenario: Set download software packages over tor
-  Given download software packages over tor is disabled
-  When I enable download software packages over tor
-  Then download software packages over tor should be enabled
+  Given download software packages over tor is enabled
+  When I disable download software packages over tor
+  Then download software packages over tor should be disabled
 
 # TODO: Test more thoroughly by checking same hidden service is restored and by
 # actually connecting using Tor.
