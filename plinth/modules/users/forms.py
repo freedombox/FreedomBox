@@ -90,8 +90,8 @@ class UsernameValidator(validators.RegexValidator):
 
 USERNAME_FIELD = forms.CharField(
     max_length=150, validators=[UsernameValidator()],
-    help_text='Required. 150 characters or fewer. English letters, \
-                digits and @/./-/_ only.')
+    help_text=ugettext_lazy('Required. 150 characters or fewer. English '
+                            'letters, digits and @/./-/_ only.'))
 
 
 class CreateUserForm(ValidNewUsernameCheckMixin,
