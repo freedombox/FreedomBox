@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-27 18:52-0500\n"
+"POT-Creation-Date: 2020-02-10 18:35-0500\n"
 "PO-Revision-Date: 2020-02-02 17:50+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Página origen"
 
-#: plinth/context_processors.py:36 plinth/views.py:61
+#: plinth/context_processors.py:38 plinth/views.py:69
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -211,7 +211,7 @@ msgstr ""
 "\"Clave en el repositorio\" significa que una clave protegida por contraseña "
 "está almacenada con la copia de seguridad."
 
-#: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:276
+#: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:280
 msgid "Passphrase"
 msgstr "Clave de acceso"
 
@@ -405,13 +405,17 @@ msgid "Are you sure that you want to remove this repository?"
 msgstr "¿Seguro que desea eliminar este repositorio?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "      The remote repository will not be deleted.\n"
+#| "      This just removes the repository from the listing on the backup "
+#| "page, you\n"
+#| "      can add it again later on.\n"
+#| "    "
 msgid ""
-"\n"
-"      The remote repository will not be deleted.\n"
-"      This just removes the repository from the listing on the backup page, "
-"you\n"
-"      can add it again later on.\n"
-"    "
+"The remote repository will not be deleted. This just removes the repository "
+"from the listing on the backup page, you can add it again later on."
 msgstr ""
 "\n"
 "      El repositorio remoto no será borrado.\n"
@@ -1253,16 +1257,16 @@ msgstr "Aceptar todos los certificados SSL"
 msgid "Use HTTP basic authentication"
 msgstr "Usar autenticación básica de HTTP"
 
-#: plinth/modules/dynamicdns/forms.py:116 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:116 plinth/modules/networks/forms.py:217
 msgid "Username"
 msgstr "Nombre de usuaria/o"
 
-#: plinth/modules/dynamicdns/forms.py:119 plinth/modules/networks/forms.py:214
+#: plinth/modules/dynamicdns/forms.py:119 plinth/modules/networks/forms.py:218
 #: plinth/modules/shadowsocks/forms.py:60
 msgid "Password"
 msgstr "Clave de acceso"
 
-#: plinth/modules/dynamicdns/forms.py:123 plinth/modules/networks/forms.py:216
+#: plinth/modules/dynamicdns/forms.py:123 plinth/modules/networks/forms.py:220
 msgid "Show password"
 msgstr "Mostrar clave de acceso"
 
@@ -1504,11 +1508,11 @@ msgstr "Gestión activa de mensajes activada"
 msgid "Message Archive Management disabled"
 msgstr "Gestión activa de mensajes desactivada"
 
-#: plinth/modules/firewall/__init__.py:36
+#: plinth/modules/firewall/__init__.py:39
 msgid "Firewall"
 msgstr "Firewall"
 
-#: plinth/modules/firewall/__init__.py:40
+#: plinth/modules/firewall/__init__.py:43
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2392,7 +2396,7 @@ msgstr ""
 "local."
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:140
-#: plinth/templates/base.html:243
+#: plinth/templates/base.html:253
 msgid "JavaScript license information"
 msgstr "Información de licencia de JavaScript"
 
@@ -2645,14 +2649,19 @@ msgstr ""
 "usuarias/os desde cualquier cliente."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "        The configured domain name is using a self-signed certificate.\n"
+#| "        Federation with other Matrix Synapse instances requires a valid "
+#| "TLS\n"
+#| "        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
+#| "        Encrypt</a> to obtain one.\n"
+#| "      "
 msgid ""
-"\n"
-"        The configured domain name is using a self-signed certificate.\n"
-"        Federation with other Matrix Synapse instances requires a valid TLS\n"
-"        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
-"        Encrypt</a> to obtain one.\n"
-"      "
+"The configured domain name is using a self-signed certificate. Federation "
+"with other Matrix Synapse instances requires a valid TLS certificate. Please "
+"go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
 "\n"
 "        El nombre de dominio configurado está usando un certificado auto-"
@@ -3271,8 +3280,10 @@ msgid "Connection Name"
 msgstr "Nombre de conexión"
 
 #: plinth/modules/networks/forms.py:46
-msgid "Physical Interface"
-msgstr "Interfaz física"
+#, fuzzy
+#| msgid "Interface"
+msgid "Network Interface"
+msgstr "Interfaz"
 
 #: plinth/modules/networks/forms.py:47
 msgid "The network device that this connection should be bound to."
@@ -3383,7 +3394,7 @@ msgstr ""
 "Los métodos \"automáticos\" harán que {box_name} solicite su configuración a "
 "la red y actúe como cualquier otro cliente."
 
-#: plinth/modules/networks/forms.py:94 plinth/modules/networks/forms.py:255
+#: plinth/modules/networks/forms.py:94 plinth/modules/networks/forms.py:259
 msgid "Automatic"
 msgstr "Automática"
 
@@ -3419,54 +3430,54 @@ msgstr ""
 "Valor opcional. Si se especifica y el método de direccionamiento IPv6 es "
 "\"Automático\", se ignorará el servidor DNS ofrecido por el servidor DHCP."
 
-#: plinth/modules/networks/forms.py:123
+#: plinth/modules/networks/forms.py:127
 msgid "-- select --"
 msgstr "-- seleccionar --"
 
-#: plinth/modules/networks/forms.py:248
+#: plinth/modules/networks/forms.py:252
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:249
+#: plinth/modules/networks/forms.py:253
 msgid "The visible name of the network."
 msgstr "Nombre visible de la red."
 
-#: plinth/modules/networks/forms.py:251
+#: plinth/modules/networks/forms.py:255
 #: plinth/modules/networks/templates/connection_show.html:157
 msgid "Mode"
 msgstr "Modo"
 
-#: plinth/modules/networks/forms.py:251
+#: plinth/modules/networks/forms.py:255
 msgid "Infrastructure"
 msgstr "Infraestructura"
 
-#: plinth/modules/networks/forms.py:252
+#: plinth/modules/networks/forms.py:256
 msgid "Access Point"
 msgstr "Punto de acceso"
 
-#: plinth/modules/networks/forms.py:253
+#: plinth/modules/networks/forms.py:257
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:255
+#: plinth/modules/networks/forms.py:259
 msgid "Frequency Band"
 msgstr "Banda de frecuencia"
 
-#: plinth/modules/networks/forms.py:256
+#: plinth/modules/networks/forms.py:260
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:257
+#: plinth/modules/networks/forms.py:261
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:259
+#: plinth/modules/networks/forms.py:263
 #: plinth/modules/networks/templates/connection_show.html:173
 msgid "Channel"
 msgstr "Canal"
 
-#: plinth/modules/networks/forms.py:260
+#: plinth/modules/networks/forms.py:264
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -3474,11 +3485,11 @@ msgstr ""
 "Valor opcional. Canal inalámbrico para restringir en la frecuencia "
 "seleccionada. Valor 0 o en blanco implica selección automática."
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:269
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:266
+#: plinth/modules/networks/forms.py:270
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -3488,11 +3499,11 @@ msgstr ""
 "a un punto de acceso si su BSSID coincide con el facilitado. Ejemplo: "
 "00:11:22:aa:bb:cc."
 
-#: plinth/modules/networks/forms.py:272
+#: plinth/modules/networks/forms.py:276
 msgid "Authentication Mode"
 msgstr "Modo de autenticación"
 
-#: plinth/modules/networks/forms.py:273
+#: plinth/modules/networks/forms.py:277
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -3500,19 +3511,19 @@ msgstr ""
 "Seleccione WPA si la red inalámbrica está protegida y se necesita una clave "
 "para conectar."
 
-#: plinth/modules/networks/forms.py:275
+#: plinth/modules/networks/forms.py:279
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:275
+#: plinth/modules/networks/forms.py:279
 msgid "Open"
 msgstr "Abierto"
 
-#: plinth/modules/networks/forms.py:309
+#: plinth/modules/networks/forms.py:313
 msgid "Preferred router configuration"
 msgstr "Configuración del router preferida"
 
-#: plinth/modules/networks/forms.py:314
+#: plinth/modules/networks/forms.py:318
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic<p class=\"help-block\">Most routers "
@@ -3527,7 +3538,7 @@ msgstr ""
 "{box_name}. Recuerde configurar su {box_name} con una IP estática en su "
 "router.</p>"
 
-#: plinth/modules/networks/forms.py:328
+#: plinth/modules/networks/forms.py:332
 #, python-brace-format
 msgid ""
 "Forward Specific Traffic as needed by each application<p class=\"help-block"
@@ -3539,14 +3550,14 @@ msgid ""
 "to be forwarded for that application to work.</p>"
 msgstr ""
 "Redirigir el tráfico de aplicaciones específicas <p class=\"help-block\">. "
-"Puede redirigir solo el tráfico de determinadas aplicaciones a su {box_name}"
-". Es la opción recomendad si tiene otros servidores como {box_name} en su "
-"red o si su router no soporta la función DMZ. Todas las aplicaciones con "
-"interfaz web necesitarán redirigir el tráfico de los puertos 80 y 443 para "
-"funcionar. Otras aplicaciones sugerirán qué puertos es necesario redirigir "
-"para su funcionamiento.</p>"
+"Puede redirigir solo el tráfico de determinadas aplicaciones a su "
+"{box_name}. Es la opción recomendad si tiene otros servidores como "
+"{box_name} en su red o si su router no soporta la función DMZ. Todas las "
+"aplicaciones con interfaz web necesitarán redirigir el tráfico de los "
+"puertos 80 y 443 para funcionar. Otras aplicaciones sugerirán qué puertos es "
+"necesario redirigir para su funcionamiento.</p>"
 
-#: plinth/modules/networks/forms.py:345
+#: plinth/modules/networks/forms.py:349
 msgid ""
 "Router is currently unconfigured<p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -3663,7 +3674,7 @@ msgstr "Editar conexión"
 #: plinth/modules/networks/templates/connection_show.html:43
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:83
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:84
-#: plinth/templates/base.html:158 plinth/templates/base.html:159
+#: plinth/templates/base.html:167 plinth/templates/base.html:168
 msgid "Edit"
 msgstr "Editar"
 
@@ -3797,7 +3808,7 @@ msgid "This connection is not active."
 msgstr "Esta conexión no está activa."
 
 #: plinth/modules/networks/templates/connection_show.html:266
-#: plinth/modules/security/__init__.py:37 plinth/modules/security/views.py:47
+#: plinth/modules/security/__init__.py:38 plinth/modules/security/views.py:47
 msgid "Security"
 msgstr "Protección"
 
@@ -4792,10 +4803,10 @@ msgid ""
 "\"%(storage_url)s\">storage</a> module page and configure access to the "
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
-"Puede encontrar información adicional sobre discos en la página del módulo <"
-"a href=\"%(storage_url)s\">almacenamiento</a> y sobre configurar el acceso a "
-"las carpetas compartidas en la página del módulo <a href=\"%(users_url)s\""
-">usuarios</a>."
+"Puede encontrar información adicional sobre discos en la página del módulo "
+"<a href=\"%(storage_url)s\">almacenamiento</a> y sobre configurar el acceso "
+"a las carpetas compartidas en la página del módulo <a href=\"%(users_url)s"
+"\">usuarios</a>."
 
 #: plinth/modules/samba/templates/samba.html:109
 msgid "Users who can currently access group and home shares"
@@ -4985,38 +4996,57 @@ msgid ""
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
-"Para las aplicaciones que provean servicios, la columna \"Aisladas\" "
-"(Sandboxed) muestra qué funciones de aislamiento están en uso. Este "
+"Para las aplicaciones que provean servicios, la columna \"Aisladas"
+"\" (Sandboxed) muestra qué funciones de aislamiento están en uso. Este "
 "aislamiento disminuye el impacto que una aplicación comprometida pueda tener "
 "en el resto del sistema."
 
-#: plinth/modules/security/templates/security_report.html:48
+#: plinth/modules/security/templates/security_report.html:46
+msgid ""
+"\"Sandbox Coverage\" is a score of how effectively the service is isolated "
+"from the rest of the system. It is only displayed while the service is "
+"running."
+msgstr ""
+
+#: plinth/modules/security/templates/security_report.html:55
 msgid "App Name"
 msgstr "Nombre de la app"
 
-#: plinth/modules/security/templates/security_report.html:49
+#: plinth/modules/security/templates/security_report.html:56
 msgid "Current Vulnerabilities"
 msgstr "Vulnerabilidades Actuales"
 
-#: plinth/modules/security/templates/security_report.html:50
+#: plinth/modules/security/templates/security_report.html:57
 msgid "Past Vulnerabilities"
 msgstr "Vulnerabilidades Anteriores"
 
-#: plinth/modules/security/templates/security_report.html:51
+#: plinth/modules/security/templates/security_report.html:58
 msgid "Sandboxed"
 msgstr "Aisladas"
 
-#: plinth/modules/security/templates/security_report.html:62
+#: plinth/modules/security/templates/security_report.html:59
+#, fuzzy
+#| msgid "Sandboxed"
+msgid "Sandbox Coverage"
+msgstr "Aisladas"
+
+#: plinth/modules/security/templates/security_report.html:70
 msgid "N/A"
 msgstr "N/A"
 
-#: plinth/modules/security/templates/security_report.html:64
+#: plinth/modules/security/templates/security_report.html:72
 msgid "Yes"
 msgstr "Sí"
 
-#: plinth/modules/security/templates/security_report.html:66
+#: plinth/modules/security/templates/security_report.html:74
 msgid "No"
 msgstr "No"
+
+#: plinth/modules/security/templates/security_report.html:81
+#, fuzzy
+#| msgid "is not running"
+msgid "Not running"
+msgstr "no se está ejecutando"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5518,11 +5548,11 @@ msgstr "Inicio de sesión único"
 msgid "Login"
 msgstr "Inicio de sesión"
 
-#: plinth/modules/storage/__init__.py:37
+#: plinth/modules/storage/__init__.py:39 plinth/modules/storage/__init__.py:331
 msgid "Storage"
 msgstr "Almacén"
 
-#: plinth/modules/storage/__init__.py:45
+#: plinth/modules/storage/__init__.py:47
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -5533,82 +5563,96 @@ msgstr ""
 "{box_name}. Puede ver el medio de almacenamiento que está usando, montar y "
 "desmontar medios extraíbles, ampliar la partición raíz, etc."
 
-#: plinth/modules/storage/__init__.py:216
+#: plinth/modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bytes"
 
-#: plinth/modules/storage/__init__.py:220
+#: plinth/modules/storage/__init__.py:228
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:224
+#: plinth/modules/storage/__init__.py:232
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:236
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:231
+#: plinth/modules/storage/__init__.py:239
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:238
+#: plinth/modules/storage/__init__.py:246
 msgid "The operation failed."
 msgstr "Falló la operación."
 
-#: plinth/modules/storage/__init__.py:240
+#: plinth/modules/storage/__init__.py:248
 msgid "The operation was cancelled."
 msgstr "Se ha cancelado la operación."
 
-#: plinth/modules/storage/__init__.py:242
+#: plinth/modules/storage/__init__.py:250
 msgid "The device is already unmounting."
 msgstr "El dispositivo ya se está desmontando."
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:252
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "No se soporta esta operación por falta de un driver o herramienta."
 
-#: plinth/modules/storage/__init__.py:247
+#: plinth/modules/storage/__init__.py:255
 msgid "The operation timed out."
 msgstr "La operación agotó el tiempo."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:257
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "La operación podría activar un disco que está en estado de reposo."
 
-#: plinth/modules/storage/__init__.py:252
+#: plinth/modules/storage/__init__.py:260
 msgid "Attempting to unmount a device that is busy."
 msgstr "Tratando de desmontar un dispositivo ocupado."
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:262
 msgid "The operation has already been cancelled."
 msgstr "Ya se ha cancelado la operación."
 
-#: plinth/modules/storage/__init__.py:260
+#: plinth/modules/storage/__init__.py:268
 msgid "Not authorized to perform the requested operation."
 msgstr "No tiene autorización para la operación solicitada."
 
-#: plinth/modules/storage/__init__.py:262
+#: plinth/modules/storage/__init__.py:270
 msgid "The device is already mounted."
 msgstr "El dispositivo ya está montado."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:272
 msgid "The device is not mounted."
 msgstr "El dispositivo no está montado."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:275
 msgid "Not permitted to use the requested option."
 msgstr "La operación solicitada no está permitida."
 
-#: plinth/modules/storage/__init__.py:270
+#: plinth/modules/storage/__init__.py:278
 msgid "The device is mounted by another user."
 msgstr "El dispositivo está ya montado por otro usuario."
+
+#: plinth/modules/storage/__init__.py:326
+#, fuzzy, python-format, python-brace-format
+#| msgid ""
+#| "Warning: Low space on system partition ({percent_used}% used, "
+#| "{free_space} free)."
+msgid "Low space on system partition: {percent_used}% used, {free_space} free."
+msgstr ""
+"Aviso: queda poco espacio libre en la partición del sistema "
+"({percent_used}% usado, {free_space} libre)."
+
+#: plinth/modules/storage/__init__.py:328
+msgid "Low disk space"
+msgstr ""
 
 #: plinth/modules/storage/forms.py:79
 msgid "Invalid directory name."
@@ -5675,7 +5719,7 @@ msgstr ""
 
 #: plinth/modules/storage/templates/storage.html:102
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:83
+#: plinth/modules/storage/views.py:76
 msgid "Expand Root Partition"
 msgstr "Ampliar partición raíz"
 
@@ -5690,34 +5734,25 @@ msgstr ""
 "operación su partición raíz dispondrá de %(expandable_root_size)s espacio "
 "libre adicional."
 
-#: plinth/modules/storage/views.py:95
+#: plinth/modules/storage/views.py:88
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Error al ampliar partición: {exception}"
 
-#: plinth/modules/storage/views.py:98
+#: plinth/modules/storage/views.py:91
 msgid "Partition expanded successfully."
 msgstr "Partición ampliada con éxito."
 
-#: plinth/modules/storage/views.py:115
-#, no-python-format, python-brace-format
-msgid ""
-"Warning: Low space on system partition ({percent_used}% used, {free_space} "
-"free)."
-msgstr ""
-"Aviso: queda poco espacio libre en la partición del sistema ({percent_used}% "
-"usado, {free_space} libre)."
-
-#: plinth/modules/storage/views.py:141
+#: plinth/modules/storage/views.py:109
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "Ya puede desconectar  {drive_vendor} {drive_model} con seguridad."
 
-#: plinth/modules/storage/views.py:145
+#: plinth/modules/storage/views.py:113
 msgid "Device can be safely unplugged."
 msgstr "El dispositivo ya se puede desconectar con seguridad."
 
-#: plinth/modules/storage/views.py:155
+#: plinth/modules/storage/views.py:123
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Error al expulsar el dispositivo: {error_message}"
@@ -6095,14 +6130,20 @@ msgstr "Leer y suscribirse a nuevos agregadores"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Bifurcación)"
 
-#: plinth/modules/upgrades/__init__.py:35 plinth/templates/setup.html:89
+#: plinth/modules/upgrades/__init__.py:37 plinth/templates/setup.html:89
 msgid "Update"
 msgstr "Actualización"
 
-#: plinth/modules/upgrades/__init__.py:38
+#: plinth/modules/upgrades/__init__.py:40
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Buscar y aplicar las últimas actualizaciones del software y de seguridad."
+
+#: plinth/modules/upgrades/__init__.py:84
+#, fuzzy
+#| msgid "FreedomBox Foundation"
+msgid "FreedomBox Updated"
+msgstr "Fundación FreedomBox"
 
 #: plinth/modules/upgrades/forms.py:28
 msgid "Enable auto-update"
@@ -6112,6 +6153,24 @@ msgstr "Activar actualizaciones automáticas"
 msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr ""
 "Si está activado, FreedomBox se actualiza automáticamente una vez al día."
+
+#: plinth/modules/upgrades/templates/upgrades-new-release.html:24
+#, fuzzy, python-format
+#| msgid "%(box_name)s is up to date."
+msgid "%(box_name)s Updated"
+msgstr "%(box_name)s está actualizado."
+
+#: plinth/modules/upgrades/templates/upgrades-new-release.html:28
+#, python-format
+msgid ""
+"%(box_name)s has been updated to version %(version)s. See the <a href="
+"\"%(url)s\">release announcement</a>."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades-new-release.html:37
+#: plinth/templates/notifications.html:59
+msgid "Dismiss"
+msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid "Update now"
@@ -6199,19 +6258,30 @@ msgstr ""
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Comprobar la entrada LDAP \"{search_item}\""
 
-#: plinth/modules/users/forms.py:40
+#: plinth/modules/users/forms.py:43
 msgid "Access to all services and system settings"
 msgstr "Acceso a todos los servicios y configuraciones del sistema"
 
-#: plinth/modules/users/forms.py:54
+#: plinth/modules/users/forms.py:59
 msgid "Username is taken or is reserved."
 msgstr "El nombre de usuaria/o está en uso o reservado."
 
-#: plinth/modules/users/forms.py:86 plinth/modules/users/forms.py:193
+#: plinth/modules/users/forms.py:87
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Enter a valid username."
+msgstr "Nombre de servidor no válido"
+
+#: plinth/modules/users/forms.py:93
+msgid ""
+"Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
+msgstr ""
+
+#: plinth/modules/users/forms.py:106 plinth/modules/users/forms.py:222
 msgid "Permissions"
 msgstr "Permisos"
 
-#: plinth/modules/users/forms.py:89
+#: plinth/modules/users/forms.py:109
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -6226,20 +6296,20 @@ msgstr ""
 "servicios, también podrán acceder al sistema por SSH con privilegios de "
 "administración (sudo)."
 
-#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:339
+#: plinth/modules/users/forms.py:148 plinth/modules/users/forms.py:372
 msgid "Creating LDAP user failed."
 msgstr "Ha fallado la creación de usuaria/o LDAP."
 
-#: plinth/modules/users/forms.py:135
+#: plinth/modules/users/forms.py:159
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "Ha fallado añadir usuaria/o nuevo al grupo {group}."
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:173
 msgid "Authorized SSH Keys"
 msgstr "Claves de SSH autorizadas"
 
-#: plinth/modules/users/forms.py:150
+#: plinth/modules/users/forms.py:175
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -6249,43 +6319,43 @@ msgstr ""
 "de una clave. Puede introducir más de una clave, cada una en una línea. Las "
 "líneas en blanco y las que empiecen por # se ignorarán."
 
-#: plinth/modules/users/forms.py:230
+#: plinth/modules/users/forms.py:259
 msgid "Renaming LDAP user failed."
 msgstr "Ha fallado renombrar al o la usuaria LDAP."
 
-#: plinth/modules/users/forms.py:242
+#: plinth/modules/users/forms.py:271
 msgid "Failed to remove user from group."
 msgstr "Ha fallado la eliminación del o de la usuaria del grupo."
 
-#: plinth/modules/users/forms.py:253
+#: plinth/modules/users/forms.py:282
 msgid "Failed to add user to group."
 msgstr "Ha fallado añadir al o la usuaria al grupo."
 
-#: plinth/modules/users/forms.py:262
+#: plinth/modules/users/forms.py:291
 msgid "Unable to set SSH keys."
 msgstr "No es posible configurar las claves SSH."
 
-#: plinth/modules/users/forms.py:277
+#: plinth/modules/users/forms.py:306
 msgid "Failed to change user status."
 msgstr "Ha fallado al cambiar el estado del usuario."
 
-#: plinth/modules/users/forms.py:285
+#: plinth/modules/users/forms.py:314
 msgid "Cannot delete the only administrator in the system."
 msgstr "No se puede eliminar la única cuenta de administración del sistema."
 
-#: plinth/modules/users/forms.py:315
+#: plinth/modules/users/forms.py:346
 msgid "Changing LDAP user password failed."
 msgstr "Ha fallado cambiar la clave del o de la usuaria LDAP."
 
-#: plinth/modules/users/forms.py:348
+#: plinth/modules/users/forms.py:381
 msgid "Failed to add new user to admin group."
 msgstr "Ha fallado añadir usuaria/o nueva/o al grupo admin."
 
-#: plinth/modules/users/forms.py:365
+#: plinth/modules/users/forms.py:398
 msgid "Failed to restrict console access."
 msgstr "Falló al restringir el acceso a la consola."
 
-#: plinth/modules/users/forms.py:377
+#: plinth/modules/users/forms.py:410
 msgid "User account created, you are now logged in"
 msgstr "Creada cuenta de usuaria/o, ya está usted en el sistema"
 
@@ -6443,8 +6513,8 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"Clave pública del par. Ejemplo: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= "
-"."
+"Clave pública del par. Ejemplo: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:85
 msgid "Endpoint of the server"
@@ -6455,8 +6525,8 @@ msgid ""
 "Domain name and port in the form \"ip:port\". Example: demo.wireguard."
 "com:12912 ."
 msgstr ""
-"Nombre de dominio y puerto de la forma: \"ip:port\". Ejemplo: "
-"demo.wireguard.com:12912."
+"Nombre de dominio y puerto de la forma: \"ip:port\". Ejemplo: demo.wireguard."
+"com:12912."
 
 #: plinth/modules/wireguard/forms.py:91
 msgid "Public key of the server"
@@ -6547,11 +6617,12 @@ msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr "Todavía no hay pares configurados para conectarse a %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard.html:62
-#, python-format
-msgid ""
-"\n"
-"      Public key for this %(box_name)s:\n"
-"    "
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      Public key for this %(box_name)s:\n"
+#| "    "
+msgid "Public key for this %(box_name)s:"
 msgstr ""
 "\n"
 "      Clave pública para esta %(box_name)s:\n"
@@ -6837,40 +6908,40 @@ msgstr "Funcionalidad central e interfaz web para %(box_name)s"
 msgid "Toggle navigation"
 msgstr "Cambiar modo de navegación"
 
-#: plinth/templates/base.html:115 plinth/templates/base.html:118
+#: plinth/templates/base.html:120 plinth/templates/base.html:123
 msgid "Home"
 msgstr "Inicio"
 
-#: plinth/templates/base.html:123 plinth/templates/base.html:127
+#: plinth/templates/base.html:128 plinth/templates/base.html:132
 msgid "Apps"
 msgstr "Aplicaciones"
 
-#: plinth/templates/base.html:132 plinth/templates/base.html:136
+#: plinth/templates/base.html:137 plinth/templates/base.html:141
 msgid "System"
 msgstr "Sistema"
 
-#: plinth/templates/base.html:164 plinth/templates/base.html:165
+#: plinth/templates/base.html:173 plinth/templates/base.html:174
 msgid "Change password"
 msgstr "Cambiar clave de acceso"
 
-#: plinth/templates/base.html:172 plinth/templates/base.html:173
+#: plinth/templates/base.html:181 plinth/templates/base.html:182
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: plinth/templates/base.html:178 plinth/templates/base.html:179
+#: plinth/templates/base.html:187 plinth/templates/base.html:188
 msgid "Shut down"
 msgstr "Apagar"
 
-#: plinth/templates/base.html:186 plinth/templates/base.html:187
-#: plinth/templates/base.html:211 plinth/templates/base.html:213
+#: plinth/templates/base.html:195 plinth/templates/base.html:196
+#: plinth/templates/base.html:220 plinth/templates/base.html:222
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-#: plinth/templates/base.html:195 plinth/templates/base.html:198
+#: plinth/templates/base.html:204 plinth/templates/base.html:207
 msgid "Select language"
 msgstr "Seleccionar idioma"
 
-#: plinth/templates/base.html:203 plinth/templates/base.html:205
+#: plinth/templates/base.html:212 plinth/templates/base.html:214
 msgid "Log in"
 msgstr "Iniciar sesión"
 
@@ -7017,6 +7088,12 @@ msgstr ""
 "Las siguientes interfaces de red están configuradas como internas "
 "actualmente: %(interface_list)s"
 
+#: plinth/templates/notifications-dropdown.html:26
+#, fuzzy
+#| msgid "No certificate"
+msgid "Notifications"
+msgstr "No certificado"
+
 #: plinth/templates/port-forwarding-info.html:23
 msgid "Port Forwarding"
 msgstr "Redirección de Puertos"
@@ -7090,9 +7167,12 @@ msgstr "Aplicación activada"
 msgid "Application disabled"
 msgstr "Aplicación desactivada"
 
-#: plinth/web_framework.py:188
+#: plinth/web_framework.py:190
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Physical Interface"
+#~ msgstr "Interfaz física"
 
 #~ msgid "repro"
 #~ msgstr "repro"
@@ -8001,9 +8081,6 @@ msgstr "Gujarati"
 
 #~ msgid "is running"
 #~ msgstr "se está ejecutando"
-
-#~ msgid "is not running"
-#~ msgstr "no se está ejecutando"
 
 #~ msgid "Anonymity Network (Tor)"
 #~ msgstr "Red anónima (Tor)"
