@@ -74,8 +74,9 @@ class StorageApp(app_module.App):
         daemon = Daemon('daemon-udiskie', managed_services[0])
         self.add(daemon)
 
-        # Check every hour for low disk space
-        glib.schedule(3600, warn_about_low_disk_space)
+        # Check every hour for low disk space, every 3 minutes in debug mode
+        interval = 180 if cfg.develop else 3600
+        glib.schedule(interval, warn_about_low_disk_space)
 
 
 def init():
