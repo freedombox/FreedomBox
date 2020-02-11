@@ -25,7 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions, views
 from plinth.errors import ActionError
-from plinth.modules import shadowsocks
 
 from .forms import ShadowsocksForm
 
@@ -34,10 +33,6 @@ class ShadowsocksAppView(views.AppView):
     """Configuration view for Shadowsocks local socks5 proxy."""
     app_id = 'shadowsocks'
     form_class = ShadowsocksForm
-    name = shadowsocks.name
-    description = shadowsocks.description
-    manual_page = shadowsocks.manual_page
-    icon_filename = shadowsocks.icon_filename
 
     def get_initial(self, *args, **kwargs):
         """Get initial values for form."""

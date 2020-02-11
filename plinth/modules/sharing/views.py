@@ -39,10 +39,9 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = sharing.name
-        context['description'] = sharing.description
+        context['title'] = sharing.app.info.name
+        context['app_info'] = sharing.app.info
         context['shares'] = sharing.list_shares()
-        context['icon_filename'] = sharing.icon_filename
         return context
 
 

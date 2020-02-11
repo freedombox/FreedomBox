@@ -30,15 +30,11 @@ version = 1
 
 is_essential = True
 
-name = _('Diagnostics')
-
-description = [
+_description = [
     _('The system diagnostic test will run a number of checks on your '
       'system to confirm that applications and services are working as '
       'expected.')
 ]
-
-manual_page = 'Diagnostics'
 
 app = None
 
@@ -51,7 +47,14 @@ class DiagnosticsApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-diagnostics', name, None, 'fa-heartbeat',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential,
+                               name=_('Diagnostics'), icon='fa-heartbeat',
+                               description=_description,
+                               manual_page='Diagnostics')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,
                               'diagnostics:index', parent_url_name='system')
         self.add(menu_item)
 

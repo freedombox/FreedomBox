@@ -24,11 +24,11 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import network, kvstore
-from plinth.modules import networks, first_boot
+from plinth import kvstore, network
+from plinth.modules import first_boot, networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
-                    PPPoEForm, WifiForm, RouterConfigurationWizardForm)
+                    PPPoEForm, RouterConfigurationWizardForm, WifiForm)
 
 logger = logging.getLogger(__name__)
 
@@ -40,10 +40,8 @@ def index(request):
     return TemplateResponse(
         request, 'connections_list.html', {
             'app_id': 'networks',
+            'app_info': networks.app.info,
             'title': _('Network Connections'),
-            'name': networks.name,
-            'description': networks.description,
-            'manual_page': networks.manual_page,
             'has_diagnostics': True,
             'is_enabled': True,
             'connections': connections
@@ -431,10 +429,8 @@ def router_configuration_help_page(request):
         if form.is_valid():
             logger.info('Updating router configuration setup with value: %s' %
                         request.POST['router_config'])
-            kvstore.set(
-                networks.ROUTER_CONFIGURATION_TYPE_KEY,
-                request.POST['router_config']
-            )
+            kvstore.set(networks.ROUTER_CONFIGURATION_TYPE_KEY,
+                        request.POST['router_config'])
         if is_firstboot:
             resp = reverse_lazy(first_boot.next_step())
         else:
@@ -446,8 +442,9 @@ def router_configuration_help_page(request):
     else:
         html = "router_configuration_update.html"
         initial = {
-            "router_config": kvstore.get_default(
-                networks.ROUTER_CONFIGURATION_TYPE_KEY, 'dmz'),
+            "router_config":
+                kvstore.get_default(networks.ROUTER_CONFIGURATION_TYPE_KEY,
+                                    'dmz'),
         }
         template_kwargs = {
             'form': RouterConfigurationWizardForm(initial=initial),

@@ -36,14 +36,10 @@ managed_services = ['systemd-timesyncd']
 
 managed_packages = []
 
-name = _('Date & Time')
-
-description = [
+_description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
 ]
-
-manual_page = 'DateTime'
 
 app = None
 
@@ -56,7 +52,14 @@ class DateTimeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-datetime', name, None, 'fa-clock-o',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential,
+                               name=_('Date & Time'), icon='fa-clock-o',
+                               description=_description,
+                               manual_page='DateTime')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,
                               'datetime:index', parent_url_name='system')
         self.add(menu_item)
 

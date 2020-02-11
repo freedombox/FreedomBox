@@ -39,9 +39,6 @@ from . import forms, utils
 class WireguardView(AppView):
     """Serve configuration page."""
     app_id = 'wireguard'
-    clients = wireguard.clients
-    name = wireguard.name
-    description = wireguard.description
     diagnostics_module_name = 'wireguard'
     show_status_block = False
     template_name = 'wireguard.html'

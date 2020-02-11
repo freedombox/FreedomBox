@@ -48,6 +48,10 @@ class ApacheApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential)
+        self.add(info)
+
         web_server_ports = Firewall('firewall-web', _('Web Server'),
                                     ports=['http', 'https'], is_external=True)
         self.add(web_server_ports)

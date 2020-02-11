@@ -31,21 +31,13 @@ version = 1
 
 managed_packages = ['shaarli']
 
-name = _('Shaarli')
-
-short_description = _('Bookmarks')
-
-description = [
+_description = [
     _('Shaarli allows you to save and share bookmarks.'),
     _('When enabled, Shaarli will be available from <a href="/shaarli" '
       'data-turbolinks="false">/shaarli</a> path on the web server. Note that '
       'Shaarli only supports a single user account, which you will need to '
       'setup on the initial visit.'),
 ]
-
-clients = clients
-
-manual_page = 'Shaarli'
 
 app = None
 
@@ -58,19 +50,27 @@ class ShaarliApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-shaarli', name, short_description,
-                              'shaarli', 'shaarli:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Shaarli'), icon_filename='shaarli',
+                               short_description=_('Bookmarks'),
+                               description=_description, manual_page='Shaarli',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-shaarli', info.name,
+                              info.short_description, info.icon_filename,
+                              'shaarli:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-shaarli', name,
-                                      short_description=short_description,
-                                      icon='shaarli', url='/shaarli',
-                                      clients=clients, login_required=True)
+        shortcut = frontpage.Shortcut('shortcut-shaarli', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename, url='/shaarli',
+                                      clients=info.clients,
+                                      login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-shaarli', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-shaarli', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-shaarli', 'shaarli')

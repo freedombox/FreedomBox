@@ -20,8 +20,8 @@ FreedomBox app for help pages.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import app as app_module
 from plinth import menu
-from plinth.app import App
 
 version = 1
 
@@ -29,7 +29,7 @@ is_essential = True
 app = None
 
 
-class HelpApp(App):
+class HelpApp(app_module.App):
     """FreedomBox app for showing help."""
 
     app_id = 'help'
@@ -37,6 +37,11 @@ class HelpApp(App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential)
+        self.add(info)
+
         menu_item = menu.Menu('menu-help', _('Documentation'), None, 'fa-book',
                               'help:index', parent_url_name='index')
         self.add(menu_item)

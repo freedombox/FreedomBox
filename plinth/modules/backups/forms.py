@@ -43,10 +43,10 @@ def _get_app_choices(apps):
     """Return a list of check box multiple choices from list of apps."""
     choices = []
     for app in apps:
-        name = app.app.name
+        name = app.app.app.info.name
         if not app.has_data:
             name = ugettext('{app} (No data to backup)').format(
-                app=app.app.name)
+                app=app.app.app.info.name)
 
         choices.append((app.name, name))
 

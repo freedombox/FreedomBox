@@ -34,13 +34,9 @@ is_essential = True
 
 managed_packages = ['unattended-upgrades']
 
-name = _('Update')
-
-description = [
+_description = [
     _('Check for and apply the latest software and security updates.')
 ]
-
-manual_page = 'Upgrades'
 
 app = None
 
@@ -53,7 +49,13 @@ class UpgradesApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-upgrades', name, None, 'fa-refresh',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Update'),
+                               icon='fa-refresh', description=_description,
+                               manual_page='Upgrades')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-upgrades', info.name, None, info.icon,
                               'upgrades:index', parent_url_name='system')
         self.add(menu_item)
 

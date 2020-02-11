@@ -34,16 +34,12 @@ version = 2
 
 is_essential = True
 
-name = _('General Configuration')
-
-description = [
+_description = [
     _('Here you can set some general configuration options '
       'like hostname, domain name, webserver home page etc.')
 ]
 
 depends = ['firewall', 'names']
-
-manual_page = 'Configure'
 
 APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
 APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
@@ -64,7 +60,14 @@ class ConfigApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-config', _('Configure'), None, 'fa-cog',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, depends=depends,
+                               name=_('General Configuration'), icon='fa-cog',
+                               description=_description,
+                               manual_page='Configure')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-config', _('Configure'), None, info.icon,
                               'config:index', parent_url_name='system')
         self.add(menu_item)
 

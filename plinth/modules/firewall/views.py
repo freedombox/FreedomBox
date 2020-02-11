@@ -26,10 +26,7 @@ from . import components
 
 class FirewallAppView(views.AppView):
     """Serve firewall index page."""
-    name = firewall.name
-    description = firewall.description
     app_id = 'firewall'
-    manual_page = firewall.manual_page
     template_name = 'firewall.html'
 
     def get_context_data(self, *args, **kwargs):

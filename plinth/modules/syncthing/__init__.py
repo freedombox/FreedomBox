@@ -37,13 +37,7 @@ managed_services = ['syncthing@syncthing']
 
 managed_packages = ['syncthing']
 
-name = _('Syncthing')
-
-icon_filename = 'syncthing'
-
-short_description = _('File Synchronization')
-
-description = [
+_description = [
     _('Syncthing is an application to synchronize files across multiple '
       'devices, e.g. your desktop computer and mobile phone.  Creation, '
       'modification, or deletion of files on one device will be automatically '
@@ -58,11 +52,7 @@ description = [
           'users belonging to the "admin" group.'), box_name=_(cfg.box_name)),
 ]
 
-clients = clients
-
 group = ('syncthing', _('Administer Syncthing application'))
-
-manual_page = 'Syncthing'
 
 app = None
 
@@ -75,23 +65,31 @@ class SyncthingApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-syncthing', name, short_description,
-                              'syncthing', 'syncthing:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Syncthing'), icon_filename='syncthing',
+                               short_description=_('File Synchronization'),
+                               description=_description,
+                               manual_page='Syncthing', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-syncthing', info.name,
+                              info.short_description, info.icon_filename,
+                              'syncthing:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-syncthing', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url='/syncthing/',
-                                      clients=clients, login_required=True,
+        shortcut = frontpage.Shortcut('shortcut-syncthing', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename,
+                                      url='/syncthing/', clients=info.clients,
+                                      login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-syncthing-web', name,
+        firewall = Firewall('firewall-syncthing-web', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        firewall = Firewall('firewall-syncthing-ports', name,
+        firewall = Firewall('firewall-syncthing-ports', info.name,
                             ports=['syncthing'], is_external=True)
         self.add(firewall)
 

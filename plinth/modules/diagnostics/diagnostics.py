@@ -45,10 +45,8 @@ def index(request):
 
     return TemplateResponse(
         request, 'diagnostics.html', {
-            'name': diagnostics.name,
-            'description': diagnostics.description,
+            'app_info': diagnostics.app.info,
             'is_running': _running_task is not None,
-            'manual_page': diagnostics.manual_page,
             'results': current_results
         })
 

@@ -45,11 +45,7 @@ depends = ['names']
 
 managed_packages = ['certbot']
 
-name = _('Let\'s Encrypt')
-
-short_description = _('Certificates')
-
-description = [
+_description = [
     format_lazy(
         _('A digital certificate allows users of a web service to verify the '
           'identity of the service and to securely communicate with it. '
@@ -63,8 +59,6 @@ description = [
       '<a href="https://letsencrypt.org/repository/">Let\'s Encrypt '
       'Subscriber Agreement</a> before using this service.')
 ]
-
-manual_page = 'LetsEncrypt'
 
 LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 CERTIFICATE_CHECK_DELAY = 120
@@ -81,9 +75,17 @@ class LetsEncryptApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-letsencrypt', name, short_description,
-                              'fa-lock', 'letsencrypt:index',
-                              parent_url_name='system')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, depends=depends,
+                               name=_('Let\'s Encrypt'), icon='fa-lock',
+                               short_description=_('Certificates'),
+                               description=_description,
+                               manual_page='LetsEncrypt')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-letsencrypt', info.name,
+                              info.short_description, info.icon,
+                              'letsencrypt:index', parent_url_name='system')
         self.add(menu_item)
 
     def diagnose(self):

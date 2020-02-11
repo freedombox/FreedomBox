@@ -37,9 +37,7 @@ depends = ['names']
 
 managed_packages = ['ez-ipupdate']
 
-name = _('Dynamic DNS Client')
-
-description = [
+_description = [
     format_lazy(
         _('If your Internet provider changes your IP address periodically '
           '(i.e. every 24h), it may be hard for others to find you on the '
@@ -57,8 +55,6 @@ description = [
 
 reserved_usernames = ['ez-ipupd']
 
-manual_page = 'DynamicDNS'
-
 app = None
 
 
@@ -70,7 +66,14 @@ class DynamicDNSApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-dynamicdns', name, None, 'fa-refresh',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, depends=depends,
+                               name=_('Dynamic DNS Client'), icon='fa-refresh',
+                               description=_description,
+                               manual_page='DynamicDNS')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-dynamicdns', info.name, None, info.icon,
                               'dynamicdns:index', parent_url_name='system')
         self.add(menu_item)
 

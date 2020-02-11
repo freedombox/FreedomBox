@@ -36,11 +36,7 @@ managed_services = ['pagekite']
 
 managed_packages = ['pagekite']
 
-name = _('PageKite')
-
-short_description = _('Public Visibility')
-
-description = [
+_description = [
     format_lazy(
         _('PageKite is a system for exposing {box_name} services when '
           'you don\'t have a direct connection to the Internet. You only '
@@ -66,8 +62,6 @@ description = [
         box_name=_(cfg.box_name))
 ]
 
-manual_page = 'PageKite'
-
 app = None
 
 
@@ -79,9 +73,17 @@ class PagekiteApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-pagekite', name, short_description,
-                              'fa-flag', 'pagekite:index',
-                              parent_url_name='system')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               depends=depends, name=_('PageKite'),
+                               icon='fa-flag',
+                               short_description=_('Public Visibility'),
+                               description=_description,
+                               manual_page='PageKite')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-pagekite', info.name,
+                              info.short_description, info.icon,
+                              'pagekite:index', parent_url_name='system')
         self.add(menu_item)
 
         domain_type = DomainType('domain-type-pagekite', _('PageKite Domain'),

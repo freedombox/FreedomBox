@@ -18,20 +18,14 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.modules.mumble import (clients, description, icon_filename,
-                                   manual_page, name, port_forwarding_info)
+from plinth.modules.mumble import port_forwarding_info
 from plinth.modules.mumble.forms import MumbleForm
 from plinth.views import AppView
 
 
 class MumbleAppView(AppView):
     app_id = 'mumble'
-    name = name
-    description = description
-    clients = clients
-    manual_page = manual_page
     port_forwarding_info = port_forwarding_info
-    icon_filename = icon_filename
     form_class = MumbleForm
 
     def form_valid(self, form):

@@ -35,13 +35,9 @@ version = 6
 
 is_essential = True
 
-name = _('Security')
-
 managed_packages = ['fail2ban', 'debsecan']
 
 managed_services = ['fail2ban']
-
-manual_page = 'Security'
 
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
 ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
@@ -60,7 +56,12 @@ class SecurityApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-security', name, None, 'fa-lock',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Security'),
+                               icon='fa-lock', manual_page='Security')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-security', info.name, None, info.icon,
                               'security:index', parent_url_name='system')
         self.add(menu_item)
 

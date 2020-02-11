@@ -25,22 +25,17 @@ from plinth import actions
 from plinth.modules import minetest, names
 from plinth.views import AppView
 
-from . import description, get_configuration
+from . import get_configuration
 from .forms import MinetestForm
 
 
 class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
     app_id = 'minetest'
-    name = minetest.name
-    description = description
     show_status_block = True
     template_name = 'minetest.html'
     form_class = MinetestForm
-    clients = minetest.clients
-    manual_page = minetest.manual_page
     port_forwarding_info = minetest.port_forwarding_info
-    icon_filename = minetest.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

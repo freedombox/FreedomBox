@@ -35,8 +35,8 @@ class DiasporaSetupView(FormView):
     """Show diaspora setup page."""
     template_name = 'diaspora-pre-setup.html'
     form_class = DomainSelectionForm
-    description = diaspora.description
-    title = diaspora.name
+    description = diaspora.app.info.description
+    title = diaspora.app.info.name
     success_url = reverse_lazy('diaspora:index')
 
     def form_valid(self, form):
@@ -60,7 +60,6 @@ class DiasporaAppView(AppView):
     form_class = DiasporaAppForm
     app_id = 'diaspora'
     template_name = 'diaspora-post-setup.html'
-    name = diaspora.name
 
     def dispatch(self, request, *args, **kwargs):
         if not diaspora.is_setup():
@@ -70,7 +69,6 @@ class DiasporaAppView(AppView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = diaspora.get_configured_domain_name()
-        context['clients'] = diaspora.clients
         return context
 
     def get_initial(self):

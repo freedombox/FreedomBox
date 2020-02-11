@@ -53,10 +53,7 @@ def index(request):
     return TemplateResponse(
         request, 'tor.html', {
             'app_id': 'tor',
-            'name': tor.name,
-            'description': tor.description,
-            'clients': tor.clients,
-            'manual_page': tor.manual_page,
+            'app_info': tor.app.info,
             'status': status,
             'config_running': bool(config_process),
             'form': form,
@@ -65,7 +62,6 @@ def index(request):
             'is_enabled': status['enabled'],
             'show_status_block': True,
             'is_running': status['is_running'],
-            'icon_filename': tor.icon_filename,
         })
 
 

@@ -100,8 +100,6 @@ view to show the app page for our app. In ``views.py``, let us add a view.
 
   class TransmissionAppView(views.AppView):
       """Serve configuration page."""
-      name = transmission.name
-      description = transmission.description
       app_id = 'transmission'
 
 The base view :class:`~plinth.views.AppView` takes care of a lot of details for

@@ -54,9 +54,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['name'] = backups.name
-        context['description'] = backups.description
-        context['manual_page'] = backups.manual_page
+        context['app_info'] = backups.app.info
         context['repositories'] = [
             repository.get_view_content() for repository in get_repositories()
         ]

@@ -23,7 +23,6 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.modules import minidlna
 from plinth.views import AppView
 
 from .forms import MiniDLNAServerForm
@@ -31,11 +30,7 @@ from .forms import MiniDLNAServerForm
 
 class MiniDLNAAppView(AppView):
     app_id = 'minidlna'
-    name = minidlna.name
-    description = minidlna.description
     form_class = MiniDLNAServerForm
-    icon_filename = minidlna.icon_filename
-    clients = minidlna.clients
 
     def get_initial(self):
         """Initial form value as found in the minidlna.conf"""

@@ -33,13 +33,8 @@ from .forms import IkiwikiCreateForm
 class IkiwikiAppView(views.AppView):
     """Serve configuration page."""
     app_id = 'ikiwiki'
-    name = ikiwiki.name
-    description = ikiwiki.description
     show_status_block = False
     template_name = 'ikiwiki_configure.html'
-    manual_page = ikiwiki.manual_page
-    clients = ikiwiki.clients
-    icon_filename = ikiwiki.icon_filename
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
@@ -77,11 +72,8 @@ def create(request):
 
     return TemplateResponse(
         request, 'ikiwiki_create.html', {
-            'title': ikiwiki.name,
-            'clients': ikiwiki.clients,
-            'description': ikiwiki.description,
+            'title': ikiwiki.app.info.name,
             'form': form,
-            'manual_page': ikiwiki.manual_page,
             'is_enabled': ikiwiki.app.is_enabled(),
         })
 
@@ -134,6 +126,6 @@ def delete(request, name):
         return redirect(reverse_lazy('ikiwiki:index'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html', {
-        'title': ikiwiki.name,
+        'title': ikiwiki.app.info.name,
         'name': title
     })

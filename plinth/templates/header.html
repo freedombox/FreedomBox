@@ -21,11 +21,11 @@
 {% load i18n %}
 {% load static %}
 
-<header class="app-header {% if not icon_filename %} app-header-single-column {% endif %}">
+<header class="app-header {% if not app_info.icon_filename %} app-header-single-column {% endif %}">
 
-  {% if icon_filename %}
+  {% if app_info.icon_filename %}
 
-    <img src="{% static 'theme/icons/' %}{{ icon_filename }}.svg" alt="{{ name  }}"/>
+    <img src="{% static 'theme/icons/' %}{{ app_info.icon_filename }}.svg" alt="{{ app_info.name  }}"/>
 
   {% endif %}
 
@@ -33,9 +33,9 @@
     <section class='header-bar'>
       {% block pagetitle %}
         {% if setup %}
-          <h2>{% trans "Installation" %}: {{ short_description|default:'' }} ({{ name }})</h2>
+          <h2>{% trans "Installation" %}: {{ app_info.short_description|default:'' }} ({{ app_info.name }})</h2>
         {% else %}
-          <h2>{{ name }}</h2>
+          <h2>{{ app_info.name }}</h2>
         {% endif %}
       {% endblock %}
       <div id='app-toggle-container' class="app-toggle-container">
@@ -47,15 +47,15 @@
       </div>
     </section>
 
-    {% block description %}
-      {% for paragraph in description %}
+    {% block app_info.description %}
+      {% for paragraph in app_info.description %}
         <p>{{ paragraph|safe }}</p>
       {% endfor %}
     {% endblock %}
 
-    {% if manual_page %}
+    {% if app_info.manual_page %}
       <p class="manual-page">
-        <a href="{% url 'help:manual-page' lang='-' page=manual_page %}">
+        <a href="{% url 'help:manual-page' lang='-' page=app_info.manual_page %}">
           {% trans 'Learn more...' %}
         </a>
       </p>

@@ -34,9 +34,7 @@ version = 4
 
 managed_packages = ['snapper']
 
-name = _('Storage Snapshots')
-
-description = [
+_description = [
     _('Snapshots allows creating and managing btrfs file system snapshots. '
       'These can be used to roll back the system to a previously known '
       'good state in case of unwanted changes to the system.'),
@@ -49,8 +47,6 @@ description = [
       '<a href="/plinth/sys/backups">backups</a> since '
       'they can only be stored on the same partition. ')
 ]
-
-manual_page = 'Snapshots'
 
 DEFAULT_FILE = '/etc/default/snapper'
 
@@ -67,7 +63,13 @@ class SnapshotApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-snapshot', name, None, 'fa-film',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Storage Snapshots'), icon='fa-film',
+                               description=_description,
+                               manual_page='Snapshots')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-snapshot', info.name, None, info.icon,
                               'snapshot:index', parent_url_name='system')
         self.add(menu_item)
 

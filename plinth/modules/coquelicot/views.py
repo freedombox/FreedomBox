@@ -23,22 +23,16 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions, views
 from plinth.errors import ActionError
-from plinth.modules.coquelicot import (clients, description,
-                                       get_current_max_file_size, manual_page,
-                                       name)
+from plinth.modules.coquelicot import get_current_max_file_size
 
 from .forms import CoquelicotForm
 
 
 class CoquelicotAppView(views.AppView):
     """Serve configuration page."""
-    clients = clients
-    name = name
-    description = description
     app_id = 'coquelicot'
     form_class = CoquelicotForm
     show_status_block = True
-    manual_page = manual_page
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""

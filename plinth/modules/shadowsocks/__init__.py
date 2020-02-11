@@ -32,17 +32,11 @@ from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 1
 
-name = _('Shadowsocks')
-
-icon_filename = 'shadowsocks'
-
-short_description = _('Socks5 Proxy')
-
 managed_services = ['shadowsocks-libev-local@freedombox']
 
 managed_packages = ['shadowsocks-libev']
 
-description = [
+_description = [
     _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
       'protect your Internet traffic. It can be used to bypass Internet '
       'filtering and censorship.'),
@@ -56,8 +50,6 @@ description = [
       'device, browser or application to http://freedombox_address:1080/')
 ]
 
-manual_page = 'Shadowsocks'
-
 app = None
 
 
@@ -69,19 +61,28 @@ class ShadowsocksApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-shadowsocks', name, short_description,
-                              'shadowsocks', 'shadowsocks:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Shadowsocks'),
+                               icon_filename='shadowsocks',
+                               short_description=_('Socks5 Proxy'),
+                               description=_description,
+                               manual_page='Shadowsocks')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-shadowsocks', info.name,
+                              info.short_description, info.icon_filename,
+                              'shadowsocks:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-shadowsocks', name, short_description=short_description,
-            icon=icon_filename, description=description,
+            'shortcut-shadowsocks', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
             configure_url=reverse_lazy('shadowsocks:index'),
             login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-shadowsocks', name,
+        firewall = Firewall('firewall-shadowsocks', info.name,
                             ports=['shadowsocks-local-plinth'],
                             is_external=False)
         self.add(firewall)

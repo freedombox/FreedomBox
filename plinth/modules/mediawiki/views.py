@@ -35,15 +35,10 @@ logger = logging.getLogger(__name__)
 
 class MediaWikiAppView(views.AppView):
     """App configuration page."""
-    clients = mediawiki.clients
-    name = mediawiki.name
-    description = mediawiki.description
     app_id = 'mediawiki'
     form_class = MediaWikiForm
-    manual_page = mediawiki.manual_page
     show_status_block = False
     template_name = 'mediawiki.html'
-    icon_filename = mediawiki.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

@@ -37,15 +37,11 @@ version = 2
 
 managed_packages = ['borgbackup', 'sshfs']
 
-name = _('Backups')
-
 depends = ['storage']
 
-description = [
+_description = [
     _('Backups allows creating and managing backup archives.'),
 ]
-
-manual_page = 'Backups'
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 # session variable name that stores when a backup file should be deleted
@@ -62,7 +58,13 @@ class BackupsApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-backups', name, None, 'fa-files-o',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               depends=depends, name=_('Backups'),
+                               icon='fa-files-o', description=_description,
+                               manual_page='Backups')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
 
@@ -96,7 +98,7 @@ def _backup_handler(packet, encryption_passphrase=None):
     manifests = {
         'apps': [{
             'name': app.name,
-            'version': app.app.version,
+            'version': app.app.app.info.version,
             'backup': app.manifest
         } for app in packet.apps]
     }

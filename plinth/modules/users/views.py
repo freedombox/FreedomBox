@@ -29,7 +29,7 @@ from django.views.generic.edit import (CreateView, DeleteView, FormView,
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules import first_boot, users
+from plinth.modules import first_boot
 from plinth.utils import is_user_admin
 from plinth.views import AppView
 
@@ -72,11 +72,8 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
     model = User
     template_name = 'users_list.html'
     title = ugettext_lazy('Users')
-    name = users.name
-    description = users.description
     app_id = 'users'
     show_status_block = False
-    manual_page = users.manual_page
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserList, self).get_context_data(*args, **kwargs)

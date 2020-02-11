@@ -47,13 +47,7 @@ mods = [
 
 managed_packages = ['minetest-server'] + mods
 
-name = _('Minetest')
-
-icon_filename = 'minetest'
-
-short_description = _('Block Sandbox')
-
-description = [
+_description = [
     format_lazy(
         _('Minetest is a multiplayer infinite-world block sandbox. This '
           'module enables the Minetest server to be run on this '
@@ -61,10 +55,6 @@ description = [
           'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
           'is needed.'), box_name=_(cfg.box_name)),
 ]
-
-clients = clients
-
-manual_page = 'Minetest'
 
 port_forwarding_info = [('UDP', 30000)]
 
@@ -84,19 +74,27 @@ class MinetestApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-minetest', name, short_description,
-                              'minetest', 'minetest:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Minetest'), icon_filename='minetest',
+                               short_description=_('Block Sandbox'),
+                               description=_description,
+                               manual_page='Minetest', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-minetest', info.name,
+                              info.short_description, info.icon_filename,
+                              'minetest:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-minetest', name, short_description=short_description,
-            icon=icon_filename, description=description,
-            configure_url=reverse_lazy('minetest:index'), clients=clients,
+            'shortcut-minetest', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
+            configure_url=reverse_lazy('minetest:index'), clients=info.clients,
             login_required=False)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-minetest', name,
+        firewall = Firewall('firewall-minetest', info.name,
                             ports=['minetest-plinth'], is_external=True)
         self.add(firewall)
 

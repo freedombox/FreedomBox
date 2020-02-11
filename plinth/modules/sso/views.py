@@ -27,6 +27,7 @@ from axes.decorators import axes_form_invalid
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
+
 from plinth import actions, utils, web_framework
 
 from .forms import AuthenticationForm, CaptchaAuthenticationForm
@@ -82,8 +83,8 @@ class CaptchaLoginView(LoginView):
     form_class = CaptchaAuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
-        response = super(CaptchaLoginView, self).dispatch(
-            request, *args, **kwargs)
+        response = super(CaptchaLoginView,
+                         self).dispatch(request, *args, **kwargs)
         if not request.POST:
             return response
 

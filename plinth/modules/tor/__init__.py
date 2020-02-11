@@ -44,11 +44,7 @@ managed_packages = [
 
 managed_services = ['tor@plinth']
 
-name = _('Tor')
-
-short_description = _('Anonymity Network')
-
-description = [
+_description = [
     _('Tor is an anonymous communication system. You can learn more '
       'about it from the <a href="https://www.torproject.org/">Tor '
       'Project</a> website. For best protection when web surfing, the '
@@ -57,15 +53,9 @@ description = [
       'Tor Browser</a>.')
 ]
 
-clients = clients
-
 reserved_usernames = ['debian-tor']
 
-manual_page = 'Tor'
-
 app = None
-
-icon_filename = 'tor'
 
 
 class TorApp(app_module.App):
@@ -76,8 +66,16 @@ class TorApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-tor', name, short_description, 'tor',
-                              'tor:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Tor'), icon_filename='tor',
+                               short_description=_('Anonymity Network'),
+                               description=_description, manual_page='Tor',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-tor', info.name, info.short_description,
+                              info.icon_filename, 'tor:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),

@@ -30,17 +30,11 @@ from .manifest import backup, clients  # noqa
 
 version = 1
 
-name = 'minidlna'
-
-icon_filename = name
-
 managed_packages = ['minidlna']
 
 managed_services = ['minidlna']
 
-short_description = _('Simple Media Server')
-
-description = [
+_description = [
     _('MiniDLNA is a simple media server software, with the aim of being '
       'fully compliant with DLNA/UPnP-AV clients. '
       'The MiniDNLA daemon serves media files '
@@ -50,8 +44,6 @@ description = [
       'media players, Smartphones, Televisions, and gaming systems ('
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
 ]
-
-clients = clients
 
 group = ('minidlna', _('Media streaming server'))
 
@@ -65,24 +57,30 @@ class MiniDLNAApp(app_module.App):
     def __init__(self):
         """Initialize the app components"""
         super().__init__()
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name='minidlna', icon_filename='minidlna',
+                               short_description=_('Simple Media Server'),
+                               description=_description, clients=clients)
+        self.add(info)
+
         menu_item = menu.Menu(
             'menu-minidlna',
-            name=name,
-            short_description=short_description,
+            name=info.name,
+            short_description=info.short_description,
             url_name='minidlna:index',
             parent_url_name='apps',
-            icon=icon_filename,
+            icon=info.icon_filename,
         )
-        firewall = Firewall('firewall-minidlna', name, ports=['minidlna'],
+        firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
                             is_external=False)
         webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
                               urls=['http://localhost:8200/'])
         shortcut = frontpage.Shortcut(
             'shortcut-minidlna',
-            name,
-            short_description=short_description,
-            description=description,
-            icon=icon_filename,
+            info.name,
+            short_description=info.short_description,
+            description=info.description,
+            icon=info.icon_filename,
             url='/_minidlna/',
             login_required=True,
             allowed_groups=[group[0]],

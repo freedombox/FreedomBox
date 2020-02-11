@@ -29,9 +29,7 @@ version = 1
 
 managed_packages = ['monkeysphere']
 
-name = _('Monkeysphere')
-
-description = [
+_description = [
     _('With Monkeysphere, an OpenPGP key can be generated for each configured '
       'domain serving SSH. The OpenPGP public key can then be uploaded to the '
       'OpenPGP keyservers. Users connecting to this machine through SSH can '
@@ -50,8 +48,6 @@ description = [
       'website</a>.')
 ]
 
-manual_page = "Monkeysphere"
-
 reserved_usernames = ['monkeysphere']
 
 app = None
@@ -65,9 +61,15 @@ class MonkeysphereApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-monkeysphere', name, None,
-                              'fa-certificate', 'monkeysphere:index',
-                              parent_url_name='system', advanced=True)
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Monkeysphere'), icon='fa-certificate',
+                               description=_description,
+                               manual_page='Monkeysphere')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-monkeysphere', info.name, None, info.icon,
+                              'monkeysphere:index', parent_url_name='system',
+                              advanced=True)
         self.add(menu_item)
 
 

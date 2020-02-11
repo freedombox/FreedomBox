@@ -35,19 +35,11 @@ from .forms import is_repo_url
 from .manifest import (GIT_REPO_PATH,  # noqa, pylint: disable=unused-import
                        backup, clients)
 
-clients = clients
-
 version = 1
 
 managed_packages = ['gitweb', 'highlight']
 
-name = _('Gitweb')
-
-icon_filename = 'gitweb'
-
-short_description = _('Simple Git Hosting')
-
-description = [
+_description = [
     _('Git is a distributed version-control system for tracking changes in '
       'source code during software development. Gitweb provides a web '
       'interface to Git repositories. You can browse history and content of '
@@ -58,8 +50,6 @@ description = [
     _('To learn more on how to use Git visit '
       '<a href="https://git-scm.com/docs/gittutorial">Git tutorial</a>.')
 ]
-
-manual_page = 'GitWeb'
 
 group = ('git-access', _('Read-write access to Git repositories'))
 
@@ -77,19 +67,28 @@ class GitwebApp(app_module.App):
 
         self.repos = []
 
-        menu_item = menu.Menu('menu-gitweb', name, short_description, 'gitweb',
-                              'gitweb:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Gitweb'), icon_filename='gitweb',
+                               short_description=_('Simple Git Hosting'),
+                               description=_description, manual_page='GitWeb',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-gitweb', info.name, info.short_description,
+                              info.icon_filename, 'gitweb:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-gitweb', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url='/gitweb/',
-                                      clients=clients, login_required=True,
+        shortcut = frontpage.Shortcut('shortcut-gitweb', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename, url='/gitweb/',
+                                      clients=info.clients,
+                                      login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-gitweb', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-gitweb', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-gitweb', 'gitweb-freedombox',

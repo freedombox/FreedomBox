@@ -35,11 +35,8 @@ LOGGER = logging.getLogger(__name__)
 
 class ConfigAppView(views.AppView):
     """Serve configuration page."""
-    name = config.name
-    description = config.description
     form_class = ConfigurationForm
     app_id = 'config'
-    manual_page = config.manual_page
     show_status_block = False
 
     def get_initial(self):

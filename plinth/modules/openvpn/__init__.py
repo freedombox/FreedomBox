@@ -36,13 +36,7 @@ managed_services = ['openvpn-server@freedombox']
 
 managed_packages = ['openvpn', 'easy-rsa']
 
-name = _('OpenVPN')
-
-icon_filename = 'openvpn'
-
-short_description = _('Virtual Private Network')
-
-description = [
+_description = [
     format_lazy(
         _('Virtual Private Network (VPN) is a technique for securely '
           'connecting two devices in order to access resources of a '
@@ -53,13 +47,9 @@ description = [
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
 
-manual_page = 'OpenVPN'
-
 port_forwarding_info = [('UDP', 1194)]
 
 app = None
-
-clients = clients
 
 
 class OpenVPNApp(app_module.App):
@@ -70,9 +60,16 @@ class OpenVPNApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-openvpn', name, short_description,
-                              'openvpn', 'openvpn:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('OpenVPN'), icon_filename='openvpn',
+                               short_description=_('Virtual Private Network'),
+                               description=_description, manual_page='OpenVPN',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-openvpn', info.name,
+                              info.short_description, info.icon_filename,
+                              'openvpn:index', parent_url_name='apps')
         self.add(menu_item)
 
         download_profile = \
@@ -80,12 +77,13 @@ class OpenVPNApp(app_module.App):
                           'Download Profile</a>'),
                         link=reverse_lazy('openvpn:profile'))
         shortcut = frontpage.Shortcut(
-            'shortcut-openvpn', name, short_description=short_description,
-            icon=icon_filename, description=description + [download_profile],
+            'shortcut-openvpn', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description + [download_profile],
             configure_url=reverse_lazy('openvpn:index'), login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-openvpn', name, ports=['openvpn'],
+        firewall = Firewall('firewall-openvpn', info.name, ports=['openvpn'],
                             is_external=True)
         self.add(firewall)
 

@@ -37,13 +37,7 @@ managed_services = ['mldonkey-server']
 
 managed_packages = ['mldonkey-server']
 
-name = _('MLDonkey')
-
-icon_filename = 'mldonkey'
-
-short_description = _('Peer-to-peer File Sharing')
-
-description = [
+_description = [
     _('MLDonkey is a peer-to-peer file sharing application used to exchange '
       'large files. It can participate in multiple peer-to-peer networks '
       'including eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect.'),
@@ -56,13 +50,9 @@ description = [
           'directory.'), box_name=cfg.box_name)
 ]
 
-clients = clients
-
 reserved_usernames = ['mldonkey']
 
 group = ('ed2k', _('Download files using eDonkey applications'))
-
-manual_page = 'MLDonkey'
 
 app = None
 
@@ -75,20 +65,27 @@ class MLDonkeyApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-mldonkey', name, short_description,
-                              'mldonkey', 'mldonkey:index',
-                              parent_url_name='apps')
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('MLDonkey'),
+            icon_filename='mldonkey',
+            short_description=_('Peer-to-peer File Sharing'),
+            description=_description, manual_page='MLDonkey', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-mldonkey', info.name,
+                              info.short_description, info.icon_filename,
+                              'mldonkey:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcuts = frontpage.Shortcut('shortcut-mldonkey', name,
-                                       short_description=short_description,
-                                       icon=icon_filename, url='/mldonkey/',
-                                       login_required=True, clients=clients,
-                                       allowed_groups=[group[0]])
+        shortcuts = frontpage.Shortcut(
+            'shortcut-mldonkey', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            url='/mldonkey/', login_required=True, clients=info.clients,
+            allowed_groups=[group[0]])
         self.add(shortcuts)
 
-        firewall = Firewall('firewall-mldonkey', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-mldonkey', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-mldonkey', 'mldonkey-freedombox',

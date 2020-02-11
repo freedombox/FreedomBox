@@ -26,7 +26,7 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group, add_user_to_share_group
+from plinth.modules.users import add_user_to_share_group, register_group
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -36,13 +36,7 @@ managed_services = ['deluged', 'deluge-web']
 
 managed_packages = ['deluged', 'deluge-web']
 
-name = _('Deluge')
-
-icon_filename = 'deluge'
-
-short_description = _('BitTorrent Web Client')
-
-description = [
+_description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
     _('The default password is \'deluge\', but you should log in and '
       'change it immediately after enabling this service.')
@@ -51,10 +45,6 @@ description = [
 group = ('bit-torrent', _('Download files using BitTorrent applications'))
 
 reserved_usernames = ['debian-deluged']
-
-clients = clients
-
-manual_page = 'Deluge'
 
 app = None
 
@@ -67,18 +57,28 @@ class DelugeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-deluge', name, short_description, 'deluge',
-                              'deluge:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Deluge'), icon_filename='deluge',
+                               short_description=_('BitTorrent Web Client'),
+                               description=_description, manual_page='Deluge',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-deluge', info.name, info.short_description,
+                              info.icon_filename, 'deluge:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-deluge', name, short_description=short_description,
-            url='/deluge', icon=icon_filename, clients=clients,
-            login_required=True, allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut('shortcut-deluge', info.name,
+                                      short_description=info.short_description,
+                                      url='/deluge', icon=info.icon_filename,
+                                      clients=info.clients,
+                                      login_required=True,
+                                      allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-deluge', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-deluge', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-deluge', 'deluge-plinth',

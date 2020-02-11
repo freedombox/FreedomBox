@@ -43,9 +43,7 @@ managed_services = ['avahi-daemon']
 
 managed_packages = ['avahi-daemon', 'avahi-utils']
 
-name = _('Service Discovery')
-
-description = [
+_description = [
     format_lazy(
         _('Service discovery allows other devices on the network to '
           'discover your {box_name} and services running on it.  It '
@@ -69,7 +67,14 @@ class AvahiApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-avahi', name, None, 'fa-compass',
+
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Service Discovery'), icon='fa-compass',
+                               description=_description,
+                               manual_page='ServiceDiscovery')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-avahi', info.name, None, info.icon,
                               'avahi:index', parent_url_name='system')
         self.add(menu_item)
 
@@ -78,7 +83,7 @@ class AvahiApp(app_module.App):
                                  can_have_certificate=False)
         self.add(domain_type)
 
-        firewall = Firewall('firewall-avahi', name, ports=['mdns'],
+        firewall = Firewall('firewall-avahi', info.name, ports=['mdns'],
                             is_external=False)
         self.add(firewall)
 
@@ -123,6 +128,3 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 
 class AvahiAppView(AppView):
     app_id = 'avahi'
-    name = name
-    description = description
-    manual_page = manual_page

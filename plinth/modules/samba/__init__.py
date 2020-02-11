@@ -43,13 +43,7 @@ managed_services = ['smbd', 'nmbd']
 
 managed_packages = ['samba', 'acl']
 
-name = _('Samba')
-
-icon_filename = 'samba'
-
-short_description = _('File Sharing')
-
-description = [
+_description = [
     _('Samba allows to share files and folders between FreedomBox and '
       'other computers in your local network.'),
     format_lazy(
@@ -67,8 +61,6 @@ description = [
 
 group = ('freedombox-share', _('Access to the private shares'))
 
-clients = clients
-
 app = None
 
 
@@ -80,18 +72,26 @@ class SambaApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-samba', name, short_description, 'samba',
-                              'samba:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Samba'), icon_filename='samba',
+                               short_description=_('File Sharing'),
+                               description=_description, clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-samba', info.name, info.short_description,
+                              info.icon_filename, 'samba:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-samba', name, short_description=short_description,
-            icon=icon_filename, description=description,
-            configure_url=reverse_lazy('samba:index'), clients=clients,
+            'shortcut-samba', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
+            configure_url=reverse_lazy('samba:index'), clients=info.clients,
             login_required=True, allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-samba', name, ports=['samba'])
+        firewall = Firewall('firewall-samba', info.name, ports=['samba'])
         self.add(firewall)
 
         daemon = Daemon(

@@ -29,19 +29,13 @@ from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-clients = clients
-
 version = 1
 
 managed_services = ['coquelicot']
 
 managed_packages = ['coquelicot']
 
-name = _('Coquelicot')
-
-short_description = _('File Sharing')
-
-description = [
+_description = [
     _('Coquelicot is a "one-click" file sharing web application with a focus '
       'on protecting users\' privacy. It is best used for quickly sharing a '
       'single file. '),
@@ -50,8 +44,6 @@ description = [
       'upload password in the form that will appear below after installation. '
       'The default upload password is "test".')
 ]
-
-manual_page = 'Coquelicot'
 
 app = None
 
@@ -64,18 +56,27 @@ class CoquelicotApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-coquelicot', name, short_description,
-                              'coquelicot', 'coquelicot:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Coquelicot'),
+                               icon_filename='coquelicot',
+                               short_description=_('File Sharing'),
+                               description=_description,
+                               manual_page='Coquelicot', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-coquelicot', info.name,
+                              info.short_description, info.icon_filename,
+                              'coquelicot:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-coquelicot', name,
-                                      short_description=short_description,
+        shortcut = frontpage.Shortcut('shortcut-coquelicot', info.name,
+                                      short_description=info.short_description,
                                       icon='coquelicot', url='/coquelicot',
-                                      clients=clients, login_required=True)
+                                      clients=info.clients,
+                                      login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-coquelicot', name,
+        firewall = Firewall('firewall-coquelicot', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 

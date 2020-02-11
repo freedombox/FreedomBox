@@ -24,7 +24,6 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 
 from plinth import actions
-from plinth.modules import datetime
 from plinth.views import AppView
 
 from .forms import DateTimeForm
@@ -33,11 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class DateTimeAppView(AppView):
-    name = datetime.name
-    description = datetime.description
     form_class = DateTimeForm
     app_id = 'datetime'
-    manual_page = datetime.manual_page
 
     def get_initial(self):
         status = super().get_initial()

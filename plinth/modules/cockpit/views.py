@@ -17,21 +17,14 @@
 """
 Views for the Cockpit module
 """
-from plinth.modules.cockpit import (clients, description, icon_filename,
-                                    manual_page, name)
 from plinth.modules.cockpit.utils import get_origin_domains, load_augeas
 from plinth.views import AppView
 
 
 class CockpitAppView(AppView):
     app_id = 'cockpit'
-    name = name
-    description = description
     show_status_block = True
-    clients = clients
-    manual_page = manual_page
     template_name = 'cockpit.html'
-    icon_filename = icon_filename
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)

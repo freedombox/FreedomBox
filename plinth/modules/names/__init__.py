@@ -34,13 +34,9 @@ version = 1
 
 is_essential = True
 
-name = _('Name Services')
-
 logger = logging.getLogger(__name__)
 
-manual_page = 'NameServices'
-
-description = [
+_description = [
     format_lazy(
         _('Name Services provides an overview of the ways {box_name} can be '
           'reached from the public Internet: domain name, Tor onion service, '
@@ -60,7 +56,14 @@ class NamesApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-names', name, None, 'fa-tags',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential,
+                               name=_('Name Services'), icon='fa-tags',
+                               description=_description,
+                               manual_page='NameServices')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-names', info.name, None, info.icon,
                               'names:index', parent_url_name='system')
         self.add(menu_item)
 

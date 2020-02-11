@@ -25,15 +25,13 @@ from plinth import actions
 from plinth.views import AppView
 from plinth.modules import bind, names
 
-from . import description, get_config, name, port_forwarding_info
+from . import get_config, port_forwarding_info
 from .forms import BindForm
 
 
 class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring Bind."""
     app_id = 'bind'
-    name = name
-    description = description
     show_status_block = True
     form_class = BindForm
     template_name = 'bind.html'

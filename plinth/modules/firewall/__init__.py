@@ -36,17 +36,13 @@ managed_packages = ['firewalld', 'nftables']
 
 managed_services = ['firewalld']
 
-name = _('Firewall')
-
-description = [
+_description = [
     format_lazy(
         _('Firewall is a security system that controls the incoming and '
           'outgoing network traffic on your {box_name}. Keeping a '
           'firewall enabled and properly configured reduces risk of '
           'security threat from the Internet.'), box_name=cfg.box_name)
 ]
-
-manual_page = 'Firewall'
 
 _port_details = {}
 
@@ -61,7 +57,13 @@ class FirewallApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-firewall', name, None, 'fa-shield',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Firewall'),
+                               icon='fa-shield', description=_description,
+                               manual_page='Firewall')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-firewall', info.name, None, info.icon,
                               'firewall:index', parent_url_name='system')
         self.add(menu_item)
 

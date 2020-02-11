@@ -32,19 +32,11 @@ from plinth.modules.users import register_group
 from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unused-import
                        backup, clients)
 
-clients = clients
-
 version = 3
 
 managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
 
-name = _('Searx')
-
-icon_filename = 'searx'
-
-short_description = _('Web Search')
-
-description = [
+_description = [
     _('Searx is a privacy-respecting Internet metasearch engine. '
       'It aggregrates and displays results from multiple search engines.'),
     _('Searx can be used to avoid tracking and profiling by search engines. '
@@ -66,19 +58,28 @@ class SearxApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-searx', name, short_description, 'searx',
-                              'searx:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Searx'), icon_filename='searx',
+                               short_description=_('Web Search'),
+                               description=_description, manual_page='Searx',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-searx', info.name, info.short_description,
+                              info.icon_filename, 'searx:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-searx', name, short_description=short_description,
-            icon=icon_filename, url='/searx/', clients=clients,
+            'shortcut-searx', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            url='/searx/', clients=info.clients,
             login_required=(not is_public_access_enabled()),
             allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-searx', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-searx', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-searx', 'searx-freedombox',

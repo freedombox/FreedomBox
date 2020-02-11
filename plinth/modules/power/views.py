@@ -22,7 +22,6 @@ from django.forms import Form
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.modules import power
@@ -32,10 +31,8 @@ def index(request):
     """Serve power controls page."""
     return TemplateResponse(
         request, 'power.html', {
-            'title': power.name,
-            'name': power.name,
-            'description': power.description,
-            'manual_page': power.manual_page,
+            'title': power.app.info.name,
+            'app_info': power.app.info,
             'pkg_manager_is_busy': _is_pkg_manager_busy()
         })
 
@@ -52,9 +49,9 @@ def restart(request):
 
     return TemplateResponse(
         request, 'power_restart.html', {
-            'title': _('Power'),
+            'title': power.app.info.name,
             'form': form,
-            'manual_page': power.manual_page,
+            'manual_page': power.app.info.manual_page,
             'pkg_manager_is_busy': _is_pkg_manager_busy()
         })
 
@@ -71,9 +68,9 @@ def shutdown(request):
 
     return TemplateResponse(
         request, 'power_shutdown.html', {
-            'title': _('Power'),
+            'title': power.app.info.name,
             'form': form,
-            'manual_page': power.manual_page,
+            'manual_page': power.app.info.manual_page,
             'pkg_manager_is_busy': _is_pkg_manager_busy()
         })
 

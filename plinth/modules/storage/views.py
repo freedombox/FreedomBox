@@ -39,9 +39,6 @@ logger = logging.getLogger(__name__)
 
 class StorageAppView(views.AppView):
     """Show storage information."""
-    name = storage.name
-    description = storage.description
-    manual_page = storage.manual_page
     app_id = 'storage'
     template_name = 'storage.html'
     show_status_block = False

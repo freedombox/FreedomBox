@@ -47,13 +47,7 @@ managed_packages = ['ejabberd']
 
 managed_paths = [pathlib.Path('/etc/ejabberd/')]
 
-name = _('ejabberd')
-
-icon_filename = 'ejabberd'
-
-short_description = _('Chat Server')
-
-description = [
+_description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
     format_lazy(
@@ -66,11 +60,7 @@ description = [
         jsxc_url=reverse_lazy('jsxc:index'))
 ]
 
-clients = clients
-
 reserved_usernames = ['ejabberd']
-
-manual_page = 'ejabberd'
 
 port_forwarding_info = [
     ('TCP', 5222),
@@ -91,19 +81,27 @@ class EjabberdApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-ejabberd', name, short_description,
-                              'ejabberd', 'ejabberd:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('ejabberd'), icon_filename='ejabberd',
+                               short_description=_('Chat Server'),
+                               description=_description,
+                               manual_page='ejabberd', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-ejabberd', info.name,
+                              info.short_description, info.icon_filename,
+                              'ejabberd:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-ejabberd', name, short_description=short_description,
-            icon=icon_filename, description=description,
-            configure_url=reverse_lazy('ejabberd:index'), clients=clients,
+            'shortcut-ejabberd', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
+            configure_url=reverse_lazy('ejabberd:index'), clients=info.clients,
             login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-ejabberd', name,
+        firewall = Firewall('firewall-ejabberd', info.name,
                             ports=['xmpp-client', 'xmpp-server',
                                    'xmpp-bosh'], is_external=True)
         self.add(firewall)

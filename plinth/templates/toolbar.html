@@ -27,8 +27,8 @@
   <section class="toolbar">
     <div class="btn-toolbar" role="toolbar">
 
-        {% if clients %}
-          {% with client_platforms=clients|clients_get_platforms %}
+        {% if app_info.clients %}
+          {% with client_platforms=app_info.clients|clients_get_platforms %}
             {% if client_platforms.web|length == 1 %}
               <a target='_blank' rel="noopener noreferrer"
                  class="btn btn-primary" role="button" data-turbolinks="false"
@@ -69,7 +69,7 @@
 
     </div>
     <div class="toolbar-collapsed-content">
-      {% include "clients.html" with clients=clients enabled=is_enabled %}
+      {% include "clients.html" with clients=app_info.clients enabled=is_enabled %}
     </div>
   </section>
 

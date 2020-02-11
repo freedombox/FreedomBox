@@ -32,12 +32,8 @@ class EjabberdAppView(AppView):
     """Show ejabberd as a service."""
     app_id = 'ejabberd'
     template_name = 'ejabberd.html'
-    name = ejabberd.name
-    description = ejabberd.description
     form_class = EjabberdForm
-    manual_page = ejabberd.manual_page
     port_forwarding_info = ejabberd.port_forwarding_info
-    icon_filename = ejabberd.icon_filename
 
     def get_initial(self):
         initdict = super().get_initial()
@@ -49,7 +45,6 @@ class EjabberdAppView(AppView):
         context = super().get_context_data(*args, **kwargs)
         domains = ejabberd.get_domains()
         context['domainname'] = domains[0] if domains else None
-        context['clients'] = ejabberd.clients
         return context
 
     def form_valid(self, form):

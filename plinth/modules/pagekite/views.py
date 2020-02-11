@@ -35,10 +35,8 @@ class ContextMixin(object):
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
-        context['title'] = pagekite.name
-        context['name'] = pagekite.name
-        context['description'] = pagekite.description
-        context['manual_page'] = pagekite.manual_page
+        context['app_info'] = pagekite.app.info
+        context['title'] = pagekite.app.info.name
         context['is_enabled'] = pagekite.app.is_enabled()
         return context
 

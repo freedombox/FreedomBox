@@ -27,7 +27,6 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 
 from plinth import actions, views
-from plinth.modules import transmission
 
 from .forms import TransmissionForm
 
@@ -36,13 +35,8 @@ logger = logging.getLogger(__name__)
 
 class TransmissionAppView(views.AppView):
     """Serve configuration page."""
-    clients = transmission.clients
-    name = transmission.name
-    description = transmission.description
     form_class = TransmissionForm
     app_id = 'transmission'
-    manual_page = transmission.manual_page
-    icon_filename = transmission.icon_filename
 
     def get_initial(self):
         """Get the current settings from Transmission server."""

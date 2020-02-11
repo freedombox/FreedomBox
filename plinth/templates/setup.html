@@ -36,9 +36,9 @@
 
 {% block content %}
 
-  {% include "header.html" with icon_filename=setup_helper.module.icon_filename name=setup_helper.module.name description=setup_helper.module.description short_description=setup_helper.module.short_description manual_page=setup_helper.module.manual_page setup=True %}
+  {% include "header.html" with setup=True %}
 
-  {% include "toolbar.html" with clients=setup_helper.module.clients %}
+  {% include "toolbar.html" %}
 
   {% if setup_state == 'up-to-date' %}
 

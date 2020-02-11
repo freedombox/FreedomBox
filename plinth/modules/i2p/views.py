@@ -41,20 +41,14 @@ subsubmenu = [{
 class I2PAppView(AppView):
     """Serve configuration page."""
     app_id = 'i2p'
-    clients = i2p.clients
-    name = i2p.name
-    description = i2p.description
     show_status_block = True
     template_name = 'i2p.html'
-    icon_filename = i2p.icon_filename
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
         context = super().get_context_data(**kwargs)
-        context['title'] = i2p.name
-        context['description'] = i2p.description
-        context['clients'] = i2p.clients
-        context['manual_page'] = i2p.manual_page
+        context['title'] = i2p.app.info.name
+        context['app_info'] = i2p.app.info
         context['subsubmenu'] = subsubmenu
         context['port_forwarding_info'] = i2p.port_forwarding_info
         return context
@@ -69,11 +63,8 @@ class ServiceBaseView(TemplateView):
     def get_context_data(self, **kwargs):
         """Add context data for template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = i2p.name
-        context['name'] = i2p.name
-        context['description'] = i2p.description
-        context['clients'] = i2p.clients
-        context['manual_page'] = i2p.manual_page
+        context['title'] = i2p.app.info.name
+        context['app_info'] = i2p.app.info
         context['subsubmenu'] = subsubmenu
         context['is_enabled'] = i2p.app.is_enabled()
         context['service_title'] = self.service_title

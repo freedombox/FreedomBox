@@ -38,9 +38,6 @@ class UpgradesConfigurationView(AppView):
     success_url = reverse_lazy('upgrades:index')
     template_name = "upgrades_configure.html"
     app_id = 'upgrades'
-    name = upgrades.name
-    description = upgrades.description
-    manual_page = upgrades.manual_page
     show_status_block = False
 
     def get_initial(self):

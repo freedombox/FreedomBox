@@ -20,15 +20,10 @@ URLs for the Roundcube module.
 
 from django.conf.urls import url
 
-from plinth.modules import roundcube
 from plinth.views import AppView
 
 urlpatterns = [
-    url(
-        r'^apps/roundcube/$',
-        AppView.as_view(app_id='roundcube', name=roundcube.name,
-                        description=roundcube.description,
-                        show_status_block=False, clients=roundcube.clients,
-                        manual_page=roundcube.manual_page,
-                        icon_filename=roundcube.icon_filename), name='index'),
+    url(r'^apps/roundcube/$',
+        AppView.as_view(app_id='roundcube', show_status_block=False),
+        name='index'),
 ]

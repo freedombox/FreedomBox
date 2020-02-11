@@ -39,10 +39,8 @@ def index(request):
     return TemplateResponse(
         request, 'letsencrypt.html', {
             'app_id': 'letsencrypt',
-            'name': letsencrypt.name,
-            'description': letsencrypt.description,
+            'app_info': letsencrypt.app.info,
             'status': status,
-            'manual_page': letsencrypt.manual_page,
             'has_diagnostics': True,
             'is_enabled': letsencrypt.app.is_enabled(),
         })

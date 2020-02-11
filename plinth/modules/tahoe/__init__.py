@@ -21,6 +21,7 @@ FreedomBox app to configure Tahoe-LAFS.
 import json
 import os
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -40,11 +41,16 @@ managed_services = ['tahoe-lafs']
 
 managed_packages = ['tahoe-lafs']
 
-name = _('Tahoe-LAFS')
-
-icon_filename = 'tahoe-lafs'
-
-short_description = _('Distributed File Storage')
+_description = [
+    _('Tahoe-LAFS is a decentralized secure file storage system. '
+      'It uses provider independent security to store files over a '
+      'distributed network of storage nodes. Even if some of the nodes fail, '
+      'your files can be retrieved from the remaining nodes.'),
+    format_lazy(
+        _('This {box_name} hosts a storage node and an introducer by default. '
+          'Additional introducers can be added, which will introduce this '
+          'node to the other storage nodes.'), box_name=_(cfg.box_name)),
+]
 
 port_forwarding_info = [
     ('TCP', 3456),
@@ -71,19 +77,28 @@ class TahoeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-tahoe', name, short_description,
-                              'tahoe-lafs', 'tahoe:index',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Tahoe-LAFS'),
+                               icon_filename='tahoe-lafs',
+                               short_description=_('Distributed File Storage'),
+                               description=_description)
+
+        self.add(info)
+
+        menu_item = menu.Menu('menu-tahoe', info.name, info.short_description,
+                              info.icon_filename, 'tahoe:index',
                               parent_url_name='apps', advanced=True)
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-tahoe', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url=None,
-                                      login_required=True)
+        shortcut = frontpage.Shortcut(
+            'shortcut-tahoe', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description, url=None,
+            configure_url=reverse_lazy('tahoe:index'), login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-tahoe', name, ports=['tahoe-plinth'],
-                            is_external=True)
+        firewall = Firewall('firewall-tahoe', info.name,
+                            ports=['tahoe-plinth'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-tahoe', 'tahoe-plinth')
@@ -128,18 +143,6 @@ def get_configured_domain_name():
     else:
         with open(domain_name_file) as dnf:
             return dnf.read().rstrip()
-
-
-description = [
-    _('Tahoe-LAFS is a decentralized secure file storage system. '
-      'It uses provider independent security to store files over a '
-      'distributed network of storage nodes. Even if some of the nodes fail, '
-      'your files can be retrieved from the remaining nodes.'),
-    format_lazy(
-        _('This {box_name} hosts a storage node and an introducer by default. '
-          'Additional introducers can be added, which will introduce this '
-          'node to the other storage nodes.'), box_name=_(cfg.box_name)),
-]
 
 
 def init():

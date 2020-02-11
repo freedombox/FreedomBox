@@ -30,14 +30,9 @@ from .forms import SearxForm
 
 class SearxAppView(views.AppView):
     """Serve configuration page."""
-    clients = searx.clients
-    name = searx.name
-    description = searx.description
     app_id = 'searx'
     form_class = SearxForm
     show_status_block = False
-    manual_page = searx.manual_page
-    icon_filename = searx.icon_filename
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""

@@ -36,15 +36,11 @@ from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 2
 
-name = _('BIND')
-
-short_description = _('Domain Name Server')
-
 managed_services = ['bind9']
 
 managed_packages = ['bind9']
 
-description = [
+_description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
       'your network.'),
@@ -97,12 +93,18 @@ class BindApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-bind', name, short_description,
-                              'fa-globe-w', 'bind:index',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('BIND'), icon='fa-globe-w',
+                               short_description=_('Domain Name Server'),
+                               description=_description)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-bind', info.name, info.short_description,
+                              info.icon, 'bind:index',
                               parent_url_name='system')
         self.add(menu_item)
 
-        firewall = Firewall('firewall-bind', name, ports=['dns'],
+        firewall = Firewall('firewall-bind', info.name, ports=['dns'],
                             is_external=False)
         self.add(firewall)
 

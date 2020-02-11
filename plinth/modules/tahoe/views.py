@@ -30,8 +30,6 @@ class TahoeSetupView(FormView):
     """Show tahoe-lafs setup page."""
     template_name = 'tahoe-pre-setup.html'
     form_class = DomainSelectionForm
-    description = tahoe.description
-    title = tahoe.name
     success_url = reverse_lazy('tahoe:index')
 
     def form_valid(self, form):
@@ -41,8 +39,8 @@ class TahoeSetupView(FormView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = self.description
-        context['title'] = self.title
+        context['description'] = tahoe.app.info.description
+        context['title'] = tahoe.app.info.name
         context['domain_names'] = names.components.DomainName.list_names(
             'tahoe-plinth')
 
@@ -53,10 +51,7 @@ class TahoeAppView(AppView):
     """Show tahoe-lafs service page."""
     app_id = 'tahoe'
     template_name = 'tahoe-post-setup.html'
-    name = tahoe.name
-    description = tahoe.description
     port_forwarding_info = tahoe.port_forwarding_info
-    icon_filename = tahoe.icon_filename
 
     def dispatch(self, request, *args, **kwargs):
         if not tahoe.is_setup():

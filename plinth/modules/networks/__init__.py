@@ -39,9 +39,7 @@ first_boot_steps = [{
     'order': 4,
 }]
 
-name = _('Networks')
-
-description = [
+_description = [
     _('Configure network devices. Connect to the Internet via Ethernet, Wi-Fi '
       'or PPPoE. Share that connection with other devices on the network.'),
     _('Devices administered through other methods may not be available for '
@@ -49,8 +47,6 @@ description = [
 ]
 
 logger = Logger(__name__)
-
-manual_page = 'Networks'
 
 app = None
 
@@ -65,7 +61,13 @@ class NetworksApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-networks', name, None, 'fa-signal',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Networks'),
+                               icon='fa-signal', description=_description,
+                               manual_page='Networks')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-networks', info.name, None, info.icon,
                               'networks:index', parent_url_name='system')
         self.add(menu_item)
 

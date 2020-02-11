@@ -39,11 +39,9 @@ def index(request):
     status = get_status()
     return TemplateResponse(
         request, 'monkeysphere.html', {
-            'title': monkeysphere.name,
-            'name': monkeysphere.name,
-            'description': monkeysphere.description,
+            'app_info': monkeysphere.app.info,
+            'title': monkeysphere.app.info.name,
             'status': status,
-            'manual_page': monkeysphere.manual_page,
             'running': bool(publish_process)
         })
 
@@ -67,7 +65,7 @@ def import_key(request, ssh_fingerprint):
 def details(request, fingerprint):
     """Get details for an OpenPGP key."""
     return TemplateResponse(request, 'monkeysphere_details.html', {
-        'title': monkeysphere.name,
+        'title': monkeysphere.app.info.name,
         'key': get_key(fingerprint)
     })
 

@@ -20,7 +20,7 @@ Views for the JSXC module
 
 from django.views.generic import TemplateView
 
-from plinth.modules import config, jsxc
+from plinth.modules import config
 from plinth.views import AppView
 
 
@@ -28,11 +28,7 @@ class JSXCAppView(AppView):
     """Show ejabberd as an app."""
     app_id = 'jsxc'
     template_name = 'jsxc.html'
-    name = jsxc.name
-    description = jsxc.description
     show_status_block = False
-    clients = jsxc.clients
-    icon_filename = jsxc.icon_filename
 
 
 class JsxcView(TemplateView):

@@ -20,14 +20,10 @@ URLs for the Shaarli module.
 
 from django.conf.urls import url
 
-from plinth.modules import shaarli
 from plinth.views import AppView
 
 urlpatterns = [
-    url(
-        r'^apps/shaarli/$',
-        AppView.as_view(app_id='shaarli', name=shaarli.name,
-                        description=shaarli.description,
-                        show_status_block=False,
-                        manual_page=shaarli.manual_page), name='index'),
+    url(r'^apps/shaarli/$',
+        AppView.as_view(app_id='shaarli', show_status_block=False),
+        name='index'),
 ]

@@ -36,13 +36,11 @@ from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 4
 
-name = _('Storage')
-
 managed_services = ['freedombox-udiskie']
 
 managed_packages = ['parted', 'udiskie', 'gir1.2-udisks-2.0']
 
-description = [
+_description = [
     format_lazy(
         _('This module allows you to manage storage media attached to your '
           '{box_name}. You can view the storage media currently in use, mount '
@@ -51,8 +49,6 @@ description = [
 ]
 
 logger = logging.getLogger(__name__)
-
-manual_page = 'Storage'
 
 is_essential = True
 
@@ -67,7 +63,13 @@ class StorageApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-storage', name, None, 'fa-hdd-o',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Storage'),
+                               icon='fa-hdd-o', description=_description,
+                               manual_page='Storage')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-storage', info.name, None, info.icon,
                               'storage:index', parent_url_name='system')
         self.add(menu_item)
 

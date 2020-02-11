@@ -44,8 +44,7 @@ def index(request):
         form = SecurityForm(initial=status, prefix='security')
 
     return TemplateResponse(request, 'security.html', {
-        'name': _('Security'),
-        'manual_page': security.manual_page,
+        'app_info': security.app.info,
         'form': form,
     })
 

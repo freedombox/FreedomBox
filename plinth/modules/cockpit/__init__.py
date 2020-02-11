@@ -42,13 +42,7 @@ managed_services = ['cockpit.socket']
 
 managed_packages = ['cockpit']
 
-name = _('Cockpit')
-
-icon_filename = 'cockpit'
-
-short_description = _('Server Administration')
-
-description = [
+_description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
           'GNU/Linux servers via a web browser. On a {box_name}, controls '
@@ -65,8 +59,6 @@ description = [
           ' of the URL.')),
 ]
 
-manual_page = 'Cockpit'
-
 app = None
 
 
@@ -78,19 +70,28 @@ class CockpitApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-cockpit', name, short_description,
-                              'fa-wrench', 'cockpit:index',
-                              parent_url_name='system')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Cockpit'),
+                               icon='fa-wrench', icon_filename='cockpit',
+                               short_description=_('Server Administration'),
+                               description=_description, manual_page='Cockpit',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-cockpit', info.name,
+                              info.short_description, info.icon,
+                              'cockpit:index', parent_url_name='system')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-cockpit', name,
-                                      short_description=short_description,
-                                      icon='cockpit', url='/_cockpit/',
-                                      clients=clients, login_required=True)
+        shortcut = frontpage.Shortcut('shortcut-cockpit', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename,
+                                      url='/_cockpit/', clients=info.clients,
+                                      login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-cockpit', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-cockpit', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-cockpit', 'cockpit-freedombox',

@@ -22,22 +22,16 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.modules import radicale
 from plinth.views import AppView
 
-from . import description, get_rights_value
+from . import get_rights_value
 from .forms import RadicaleForm
 
 
 class RadicaleAppView(AppView):
     """A specialized view for configuring radicale service."""
-    clients = radicale.clients
-    name = radicale.name
-    description = description
     form_class = RadicaleForm
     app_id = 'radicale'
-    manual_page = radicale.manual_page
-    icon_filename = radicale.icon_filename
 
     def get_initial(self):
         """Return the values to fill in the form."""

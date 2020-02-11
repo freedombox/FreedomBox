@@ -30,9 +30,6 @@ from .forms import SSHServerForm
 
 class SshAppView(AppView):
     app_id = 'ssh'
-    name = ssh.name
-    description = ssh.description
-    port_forwarding_info = ssh.port_forwarding_info
     template_name = 'ssh.html'
     form_class = SSHServerForm
 

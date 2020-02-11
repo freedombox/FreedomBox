@@ -31,8 +31,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
-from plinth import package
-from plinth.app import App
+from plinth import app, package
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.translation import get_language_from_request, set_language
@@ -111,10 +110,6 @@ class LanguageSelectionView(FormView):
 
 class AppView(FormView):
     """A generic view for configuring simple apps."""
-    clients = []
-    name = None
-    # List of paragraphs describing the service
-    description = ""
     form_class = forms.AppForm
     # Display the 'status' block of the app.html template
     # This block uses information from service.is_running. This method is
@@ -122,17 +117,12 @@ class AppView(FormView):
     show_status_block = True
     app_id = None
     template_name = 'app.html'
-    manual_page = ''
     port_forwarding_info = None
-    icon_filename = ''
 
     def __init__(self, *args, **kwargs):
         """Initialize the view."""
         super().__init__(*args, **kwargs)
         self._common_status = None
-
-        if not self.name:
-            raise ImproperlyConfigured('Missing name attribute')
 
     @property
     def success_url(self):
@@ -144,7 +134,7 @@ class AppView(FormView):
         if not self.app_id:
             raise ImproperlyConfigured('Missing attribute: app_id')
 
-        return App.get(self.app_id)
+        return app.App.get(self.app_id)
 
     def _get_common_status(self):
         """Return the status needed for form and template.
@@ -187,17 +177,13 @@ class AppView(FormView):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context.update(self._get_common_status())
-        context['app'] = self.app
+        context['app'] = self.app  # XXX: Remove this for template security
         context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
-        context['clients'] = self.clients
-        context['name'] = self.name
-        context['description'] = self.description
+        context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
         context['show_status_block'] = self.show_status_block
-        context['manual_page'] = self.manual_page
         context['port_forwarding_info'] = self.port_forwarding_info
-        context['icon_filename'] = self.icon_filename
 
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
@@ -208,15 +194,13 @@ class AppView(FormView):
 class SetupView(TemplateView):
     """View to prompt and setup applications."""
     template_name = 'setup.html'
-    name = 'None'
-    # List of paragraphs describing the service
-    description = []
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
         context = super(SetupView, self).get_context_data(**kwargs)
         setup_helper = self.kwargs['setup_helper']
         context['setup_helper'] = setup_helper
+        context['app_info'] = setup_helper.module.app.info
 
         # Reuse the value of setup_state throughout the view for consistency.
         context['setup_state'] = setup_helper.get_state()
@@ -226,9 +210,6 @@ class SetupView(TemplateView):
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
-
-        context['name'] = self.name
-        context['description'] = self.description
 
         return context
 

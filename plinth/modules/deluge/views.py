@@ -25,21 +25,15 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 
 from plinth import actions, views
-from plinth.modules import deluge
 
 from .forms import DelugeForm
 
 
 class DelugeAppView(views.AppView):
     """Serve configuration page."""
-    clients = deluge.clients
-    name = deluge.name
-    description = deluge.description
     diagnostics_module_name = 'deluge'
     form_class = DelugeForm
     app_id = 'deluge'
-    manual_page = deluge.manual_page
-    icon_filename = deluge.icon_filename
 
     def get_initial(self):
         """Get current Deluge server settings."""
@@ -62,8 +56,8 @@ class DelugeAppView(views.AppView):
                     'download_location', new_status['storage_path']
                 ]
 
-                actions.superuser_run(
-                    'deluge', ['set-configuration'] + new_configuration)
+                actions.superuser_run('deluge', ['set-configuration'] +
+                                      new_configuration)
                 messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
