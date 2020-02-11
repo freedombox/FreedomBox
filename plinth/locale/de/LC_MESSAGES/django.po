@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-10 18:35-0500\n"
-"PO-Revision-Date: 2020-02-10 05:50+0000\n"
-"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
+"PO-Revision-Date: 2020-02-14 03:18+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
 "Language: de\n"
@@ -403,24 +403,13 @@ msgid "Are you sure that you want to remove this repository?"
 msgstr "Sind Sie sicher, dass Sie dieses Archiv löschen wollen?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      The remote repository will not be deleted.\n"
-#| "      This just removes the repository from the listing on the backup "
-#| "page, you\n"
-#| "      can add it again later on.\n"
-#| "    "
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
-"\n"
-"      Das Remote-Archiv wird nicht gelöscht.\n"
-"Diese Aktion entfernt das Archiv lediglich aus der Liste auf der Backup-"
-"Seite, Sie\n"
-"können es später erneut hinzufügen.\n"
-"    "
+"Das Remote-Archiv wird nicht gelöscht. Diese Aktion entfernt das Archiv "
+"lediglich aus der Liste auf der Backup-Seite, Sie\n"
+"können es später erneut hinzufügen."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 msgid "Remove Location"
@@ -2675,26 +2664,16 @@ msgstr ""
 "öffentliche Registrierung aktiviert ist."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        The configured domain name is using a self-signed certificate.\n"
-#| "        Federation with other Matrix Synapse instances requires a valid "
-#| "TLS\n"
-#| "        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
-#| "        Encrypt</a> to obtain one.\n"
-#| "      "
+#, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
-"\n"
-"        Der eingestellte Domainname nutzt ein selbstsigniertes Zertifikat.\n"
-"Föderation mit anderen Matrix-Synapse-Instanzen erfordert ein gültiges TLS-\n"
-"Zertifikat. Bitte gehen Sie zu <a href=\"%(letsencrypt_url)s\">Let's\n"
-"Encrypt</a>, um eines zu beziehen.\n"
-"      "
+"Der eingestellte Domainname nutzt ein selbstsigniertes Zertifikat. "
+"Föderation mit anderen Matrix-Synapse-Instanzen erfordert ein gültiges TLS-"
+"Zertifikat. Bitte gehen Sie zu <a href=\"%(letsencrypt_url)s\">Let's "
+"Encrypt</a>, um eines zu beziehen."
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -3313,10 +3292,8 @@ msgid "Connection Name"
 msgstr "Verbindungsname"
 
 #: plinth/modules/networks/forms.py:46
-#, fuzzy
-#| msgid "Interface"
 msgid "Network Interface"
-msgstr "Schnittstelle"
+msgstr "Netzwerk-Schnittstelle"
 
 #: plinth/modules/networks/forms.py:47
 msgid "The network device that this connection should be bound to."
@@ -5062,6 +5039,8 @@ msgid ""
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
+"Die \"Sandbox-Abdeckung\" ist ein Maß dafür, wie effektiv der Dienst vom "
+"Rest des Systems isoliert ist. Sie wird nur angezeigt, wenn der Dienst läuft."
 
 #: plinth/modules/security/templates/security_report.html:55
 msgid "App Name"
@@ -5080,10 +5059,8 @@ msgid "Sandboxed"
 msgstr "Sandboxed"
 
 #: plinth/modules/security/templates/security_report.html:59
-#, fuzzy
-#| msgid "Sandboxed"
 msgid "Sandbox Coverage"
-msgstr "Sandboxed"
+msgstr "Sandbox-Abdeckung"
 
 #: plinth/modules/security/templates/security_report.html:70
 msgid "N/A"
@@ -5098,10 +5075,8 @@ msgid "No"
 msgstr "Nein"
 
 #: plinth/modules/security/templates/security_report.html:81
-#, fuzzy
-#| msgid "is not running"
 msgid "Not running"
-msgstr "läuft nicht"
+msgstr "Läuft nicht"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5706,18 +5681,15 @@ msgid "The device is mounted by another user."
 msgstr "Das Gerät ist von einem anderen Benutzer eingebunden."
 
 #: plinth/modules/storage/__init__.py:326
-#, fuzzy, python-format, python-brace-format
-#| msgid ""
-#| "Warning: Low space on system partition ({percent_used}% used, "
-#| "{free_space} free)."
+#, python-brace-format, python-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
-"Warnung: Geringer Speicherplatz auf der Systempartition ({percent_used}% "
-"belegt, {free_space} verfügbar)."
+"Geringer Speicherplatz auf der Systempartition: {percent_used}% belegt, "
+"{free_space} verfügbar."
 
 #: plinth/modules/storage/__init__.py:328
 msgid "Low disk space"
-msgstr ""
+msgstr "Wenig Plattenspeicherplatz"
 
 #: plinth/modules/storage/forms.py:79
 msgid "Invalid directory name."
@@ -6208,10 +6180,8 @@ msgstr ""
 "Sie diese."
 
 #: plinth/modules/upgrades/__init__.py:84
-#, fuzzy
-#| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
-msgstr "FreedomBox Stiftung"
+msgstr "FreedomBox aktualisiert"
 
 #: plinth/modules/upgrades/forms.py:28
 msgid "Enable auto-update"
@@ -6223,10 +6193,9 @@ msgstr ""
 "Wenn aktiviert, aktualisiert sich FreedomBox automatisch einmal täglich."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:24
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "%(box_name)s Updated"
-msgstr "%(box_name)s ist auf dem neuesten Stand."
+msgstr "%(box_name)s aktualisiert"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:28
 #, python-format
@@ -6234,11 +6203,13 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
+"%(box_name)s wurde auf die Version %(version)s aktualisiert. Siehe die <a "
+"href=\"%(url)s\">Veröffentlichungsankündigung</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:37
 #: plinth/templates/notifications.html:59
 msgid "Dismiss"
-msgstr ""
+msgstr "Verwerfen"
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid "Update now"
@@ -6335,15 +6306,15 @@ msgid "Username is taken or is reserved."
 msgstr "Benutzername wird bereits verwendet oder ist reserviert."
 
 #: plinth/modules/users/forms.py:87
-#, fuzzy
-#| msgid "Invalid server name"
 msgid "Enter a valid username."
-msgstr "Ungültiger Servername"
+msgstr "Einen gültigen Benutzernamen eingeben."
 
 #: plinth/modules/users/forms.py:93
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
+"Erforderlich. 150 Zeichen oder weniger. Nur englische Buchstaben, Ziffern "
+"und @/./-/_."
 
 #: plinth/modules/users/forms.py:106 plinth/modules/users/forms.py:222
 msgid "Permissions"
@@ -6694,16 +6665,9 @@ msgstr ""
 "konfiguriert."
 
 #: plinth/modules/wireguard/templates/wireguard.html:62
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Public key for this %(box_name)s:\n"
-#| "    "
+#, python-format
 msgid "Public key for this %(box_name)s:"
-msgstr ""
-"\n"
-"      Öffentlicher Schlüssel für diese %(box_name)s:\n"
-"    "
+msgstr "Öffentlicher Schlüssel für diese %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:68
 msgid "Not configured yet."
@@ -7172,10 +7136,8 @@ msgstr ""
 "%(interface_list)s"
 
 #: plinth/templates/notifications-dropdown.html:26
-#, fuzzy
-#| msgid "No certificate"
 msgid "Notifications"
-msgstr "Kein Zertifikat"
+msgstr "Benachrichtigungen"
 
 #: plinth/templates/port-forwarding-info.html:23
 msgid "Port Forwarding"
