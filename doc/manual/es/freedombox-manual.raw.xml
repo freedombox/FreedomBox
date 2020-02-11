@@ -2433,10 +2433,10 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
         <para>Actualmente el GitWeb de FreedomBox solo soporta remotos HTTP. Para evitar tener que introducir la contraseña cada vez que haces pull/push al repositorio puedes editar tu remoto para incluír credenciales. </para>
         <para>
           <emphasis>Ejemplo:</emphasis>
-          <ulink url="https://usuario@contrasena:mi.freedombox.mola/gitweb/mirepo"/>
+          <ulink url="https://usuario:contrasena@mi.freedombox.mola/gitweb/mirepo"/>
         </para>
         <para>Tu nombre de usuario y contraseña se cifrarán. Quien monitorize el tráfico de la red solo apreciará el nombre de dominio.</para>
-        <para><emphasis role="strong">Nota:</emphasis> Al usar este método tu contraseña se almacenará en claro en el fichero <code>.git/config</code> del repositorio local. </para>
+        <para><emphasis role="strong">Nota:</emphasis> Al usar este método tu contraseña se almacenará en claro en el fichero <code>.git/config</code> del repositorio local. Por este motivo debes crear un usuario FreedomBox que solo tenga acceso a gitweb y no usar nunca una cuenta de administrador. </para>
       </section>
       <section>
         <title>Réplicas Espejo</title>
@@ -2901,9 +2901,20 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
         </section>
         <section>
           <title>Editar Contenido del Wiki</title>
+          <para>FreedomBox monta MediaWiki con un editor básico con una barra de herramientas con opciones de uso habitual como negrita, cursiva etc. Haz clic en la sección <emphasis>Avanzadas</emphasis> para acceder a más opciones como cabaceras, listas con viñetas, etc. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/MediaWiki?action=AttachFile&amp;do=get&amp;target=mediawiki-toolbar.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>mediawiki-toolbar.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
           <section>
             <title>Editor Visual</title>
-            <para>Como su nombre indica, el nuevo <emphasis>Editor Visual</emphasis> de MediaWiki ofrece un interfaz de usuario visual (<emphasis>WYSIWYG</emphasis>) para crear páginas del wiki. Por desgracia aún no está disponible en la versión actual de MediaWiki en Debian. Una solución temporal posible sería escribir tu contenido con el Editor Visual del <ulink url="https://en.wikipedia.org/wiki/Wikipedia:Sandbox">borrador de Wikipedia</ulink>, cambiar el modo de edición a texto y copiarlo a tu wiki. </para>
+            <para>Como su nombre indica, el nuevo <emphasis>Editor Visual</emphasis> de MediaWiki ofrece un interfaz de usuario visual (<emphasis>WYSIWYG</emphasis>) para crear páginas del wiki. Pero esta funcionalidad está todavía en pruebas y MediaWiki no la trae de serie. Una solución temporal posible sería escribir tu contenido con el Editor Visual del <ulink url="https://en.wikipedia.org/wiki/Wikipedia:Sandbox">borrador de Wikipedia</ulink>, cambiar el modo de edición a texto y copiarlo a tu wiki. </para>
           </section>
           <section>
             <title>Otros Formatos</title>
@@ -3062,7 +3073,7 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           <ulink url="https://username:password@my.freedombox.rocks/gitweb/myrepo"/>
         </para>
         <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user who has only access to the gitweb and not to use an admin account. </para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a FreedomBox user who has only access to the gitweb and never use an admin account. </para>
       </section>
       <section>
         <title>Mirroring</title>
@@ -9921,6 +9932,59 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
+        <title>FreedomBox 20.2 (2020-02-10)</title>
+        <itemizedlist>
+          <listitem>
+            <para>networks: Support virtual Ethernet (veth) devices </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Show firewall service status </para>
+          </listitem>
+          <listitem>
+            <para>storage: Show disks if FreedomBox is running in an unprivileged container </para>
+          </listitem>
+          <listitem>
+            <para>service: Stop service not before but after disabling it </para>
+          </listitem>
+          <listitem>
+            <para>users: Use more precise username validation </para>
+          </listitem>
+          <listitem>
+            <para>sso, users: Turn off autocapitalization on the username field </para>
+          </listitem>
+          <listitem>
+            <para>help: Fix anchor hidden under navbar </para>
+          </listitem>
+          <listitem>
+            <para>searx: Fix installation issue for 0.16.0 </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Show Run Diagnostics button in app </para>
+          </listitem>
+          <listitem>
+            <para>glib: Introduce method to schedule an operation at regular intervals </para>
+          </listitem>
+          <listitem>
+            <para>notification: Show a drop down from main navbar for notifications </para>
+          </listitem>
+          <listitem>
+            <para>storage: Show low disk space warning using notifications API </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Show notification when FreedomBox is updated </para>
+          </listitem>
+          <listitem>
+            <para>security: Add Sandbox Coverage to report page </para>
+          </listitem>
+          <listitem>
+            <para>matrixsynapse: Enable systemd sandboxing </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Telugu, French, Norwegian Bokmål, German, Spanish, and Swedish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>FreedomBox 20.1 (2020-01-27)</title>
         <itemizedlist>
           <listitem>
@@ -9957,25 +10021,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
             <para>bind: Enable sandboxing for bind service </para>
           </listitem>
           <listitem>
-            <para>Translated using Weblate (Dutch) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Norwegian Bokmål) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (German) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Spanish) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Swedish) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (French) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Greek) </para>
+            <para>locale: Updated translations for Dutch, Norwegian Bokmål, German, Spanish, Swedish, French, and Greek </para>
           </listitem>
         </itemizedlist>
       </section>
