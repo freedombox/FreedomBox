@@ -75,6 +75,20 @@ class App:
             if isinstance(component, component_type):
                 yield component
 
+    @property
+    def info(self):
+        """Return the information component of the app.
+
+        It is mandatory to have one :class:`~plinth.app.Info` component in
+        every app to provide basic information about the app. Trying to access
+        this property without having the Info component will result in a
+        KeyError exception being raised. The lookup for the Info component is
+        performed using the auto-generated component_id assigned to the Info
+        component based on the app_id.
+
+        """
+        return self.get_component(self.app_id + '-info')
+
     def enable(self):
         """Enable all the components of the app."""
         for component in self.components.values():
