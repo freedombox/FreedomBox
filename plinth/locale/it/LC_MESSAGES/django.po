@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-10 18:35-0500\n"
-"PO-Revision-Date: 2019-09-03 21:24+0000\n"
-"Last-Translator: Swann Martinet <swann.ranskassa@laposte.net>\n"
+"PO-Revision-Date: 2020-02-14 03:18+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/it/>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -28,10 +28,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "OpenVPN server is running"
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Il server OpenVPN è in esecuzione"
+msgstr "Il server {service_name} è in esecuzione"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -105,7 +104,7 @@ msgstr "Web Server"
 #: plinth/modules/apache/__init__.py:57
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
-msgstr ""
+msgstr "{box_name} Interfaccia Web (Plinth)"
 
 #: plinth/modules/apache/components.py:135
 #, python-brace-format
@@ -142,7 +141,7 @@ msgstr ""
 
 #: plinth/modules/avahi/__init__.py:77
 msgid "Local Network Domain"
-msgstr ""
+msgstr "Dominio rete locale"
 
 #: plinth/modules/backups/__init__.py:40
 msgid "Backups"
@@ -155,69 +154,73 @@ msgstr "Backups consente di creare e gestire archivi di backup."
 #: plinth/modules/backups/forms.py:48
 #, python-brace-format
 msgid "{app} (No data to backup)"
-msgstr ""
+msgstr "{app} (Nessun dato da salvare)"
 
 #: plinth/modules/backups/forms.py:67
 msgid "Included apps"
-msgstr ""
+msgstr "Apps incluse"
 
 #: plinth/modules/backups/forms.py:67
 msgid "Apps to include in the backup"
-msgstr ""
+msgstr "Apps da includere nel backup"
 
 #: plinth/modules/backups/forms.py:81
 msgid "Select the apps you want to restore"
-msgstr ""
+msgstr "Selezionare le app che si desidera ristabilire"
 
 #: plinth/modules/backups/forms.py:94
 msgid "Upload File"
-msgstr ""
+msgstr "Carica file"
 
 #: plinth/modules/backups/forms.py:96
 msgid "Backup files have to be in .tar.gz format"
-msgstr ""
+msgstr "I file di backup devono essere in formato .tar.gz"
 
 #: plinth/modules/backups/forms.py:97
+#, fuzzy
 msgid "Select the backup file you want to upload"
-msgstr ""
+msgstr "Selezionare il file di backup che si desidera caricare"
 
 #: plinth/modules/backups/forms.py:103
 msgid "Repository path format incorrect."
-msgstr ""
+msgstr "Il formato del percorso di deposito non è corretto."
 
 #: plinth/modules/backups/forms.py:110
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Nome Server Invalido"
+msgstr "Nome utente non valido: {username}"
 
 #: plinth/modules/backups/forms.py:120
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Hostname non valido"
+msgstr "Hostname non valido: {hostname}"
 
 #: plinth/modules/backups/forms.py:124
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "Percorso della directory non valido: {dir_path}"
 
 #: plinth/modules/backups/forms.py:130
 msgid "Encryption"
 msgstr "Crittografia"
 
 #: plinth/modules/backups/forms.py:131
+#, fuzzy
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
 msgstr ""
+"\"Key in Repository\" significa che con il backup viene memorizzata una "
+"chiave protetta da password."
 
 #: plinth/modules/backups/forms.py:135 plinth/modules/networks/forms.py:280
 msgid "Passphrase"
 msgstr "Passphrase"
 
 #: plinth/modules/backups/forms.py:136
+#, fuzzy
 msgid "Passphrase; Only needed when using encryption."
-msgstr ""
+msgstr "Passphrase; Necessaria solo quando si utilizza la crittografia."
 
 #: plinth/modules/backups/forms.py:139
 msgid "Confirm Passphrase"
@@ -225,135 +228,144 @@ msgstr "Conferma la Passphrase"
 
 #: plinth/modules/backups/forms.py:139
 msgid "Repeat the passphrase."
-msgstr ""
+msgstr "Ripetere la passphrase."
 
 #: plinth/modules/backups/forms.py:150
 msgid "The entered encryption passphrases do not match"
-msgstr ""
+msgstr "Le passphrase di cifratura inserite non corrispondono"
 
 #: plinth/modules/backups/forms.py:154
 msgid "Passphrase is needed for encryption."
-msgstr ""
+msgstr "La passphrase è necessaria per la crittografia."
 
 #: plinth/modules/backups/forms.py:189
 msgid "Select Disk or Partition"
-msgstr ""
+msgstr "Seleziona disco o partizione"
 
 #: plinth/modules/backups/forms.py:190
 msgid "Backups will be stored in the directory FreedomBoxBackups"
-msgstr ""
+msgstr "I backup saranno memorizzati nella directory FreedomBoxBackups"
 
 #: plinth/modules/backups/forms.py:199
 msgid "SSH Repository Path"
-msgstr ""
+msgstr "Percorso del deposito SSH"
 
 #: plinth/modules/backups/forms.py:200
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
 msgstr ""
+"Percorso di un deposito nuovo o esistente. Esempio: <i>user@host:~/path/to/"
+"repo/</i>"
 
 #: plinth/modules/backups/forms.py:204
 msgid "SSH server password"
-msgstr ""
+msgstr "Password server SSH"
 
 #: plinth/modules/backups/forms.py:205
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
+"La password del Server SSH.<br />L'autenticazione basata su chiave SSH non è "
+"ancora possibile."
 
 #: plinth/modules/backups/forms.py:224
+#, fuzzy
 msgid "Remote backup repository already exists."
-msgstr ""
+msgstr "Il repository di backup remoto esiste già."
 
 #: plinth/modules/backups/forms.py:230
+#, fuzzy
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Selezionare la chiave pubblica SSH verificata"
 
 #: plinth/modules/backups/repository.py:48
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
+"Connessione rifiutata - assicurarsi di aver fornito le credenziali corrette "
+"e che il server sia in funzione."
 
 #: plinth/modules/backups/repository.py:55
 msgid "Connection refused"
 msgstr "Connessione rifiutata"
 
 #: plinth/modules/backups/repository.py:62
+#, fuzzy
 msgid "Repository not found"
-msgstr ""
+msgstr "Repository non trovato"
 
 #: plinth/modules/backups/repository.py:67
+#, fuzzy
 msgid "Incorrect encryption passphrase"
-msgstr ""
+msgstr "Passphrase di crittografia errata"
 
 #: plinth/modules/backups/repository.py:72
 msgid "SSH access denied"
-msgstr ""
+msgstr "Accesso SSH rifiutato"
 
 #: plinth/modules/backups/repository.py:78
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Il percorso del repository non è né vuoto né un repository di backup "
+"esistente."
 
 #: plinth/modules/backups/repository.py:152
+#, fuzzy
 msgid "Existing repository is not encrypted."
-msgstr ""
+msgstr "Il repository esistente non è criptato."
 
 #: plinth/modules/backups/repository.py:337
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "{box_name} storage"
-msgstr ""
+msgstr "{box_name} archiviazione"
 
 #: plinth/modules/backups/templates/backups.html:45
 #: plinth/modules/backups/views.py:77
-#, fuzzy
-#| msgid "Create"
 msgid "Create a new backup"
-msgstr "Crea"
+msgstr "Creare un nuovo backup"
 
 #: plinth/modules/backups/templates/backups.html:49
-#, fuzzy
-#| msgid "Create"
 msgid "Create Backup"
-msgstr "Crea"
+msgstr "Creare backup"
 
 #: plinth/modules/backups/templates/backups.html:52
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "Upload and restore a backup archive"
-msgstr "Nome del nuovo archivio di backup."
+msgstr "Caricare e ristabilire un archivio di backup"
 
 #: plinth/modules/backups/templates/backups.html:56
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "Upload and Restore"
-msgstr "Nome del nuovo archivio di backup."
+msgstr "Carica e ristabilisci"
 
 #: plinth/modules/backups/templates/backups.html:59
 #, fuzzy
 #| msgid "Existing backups"
 msgid "Add a backup location"
-msgstr "Backups esistenti"
+msgstr "Aggiungere una destinazione di backup"
 
 #: plinth/modules/backups/templates/backups.html:63
 #, fuzzy
 #| msgid "Existing backups"
 msgid "Add Backup Location"
-msgstr "Backups esistenti"
+msgstr "Aggiungi luogo di backup"
 
 #: plinth/modules/backups/templates/backups.html:66
 #, fuzzy
 #| msgid "Existing backups"
 msgid "Add a remote backup location"
-msgstr "Backups esistenti"
+msgstr "Aggiungere una locazione di backup remota"
 
 #: plinth/modules/backups/templates/backups.html:70
 #, fuzzy
 #| msgid "Existing backups"
 msgid "Add Remote Backup Location"
-msgstr "Backups esistenti"
+msgstr "Aggiungi una locazione di backup remoto"
 
 #: plinth/modules/backups/templates/backups.html:73
 #, fuzzy
@@ -368,19 +380,20 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Le credenziali di questo repository sono memorizzate sul vostro %(box_name)"
+"s. <br /> Per ristabilire un backup su un nuovo %(box_name)s sono necessarie "
+"le credenziali ssh e, se scelta, la passphrase di crittografia."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:43
 #, fuzzy
 #| msgid "Create Connection"
 msgid "Create Location"
-msgstr "Crea Connessione"
+msgstr "Creare la posizione"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:34
 #: plinth/modules/gitweb/views.py:70
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Create Repository"
-msgstr "Crea Connessione"
+msgstr "Creare Repository"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -395,7 +408,7 @@ msgstr "Nome"
 
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
-msgstr ""
+msgstr "Ora"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, python-format
@@ -409,39 +422,43 @@ msgstr "Cancella archivio %(name)s"
 #: plinth/modules/sharing/templates/sharing_add_edit.html:35
 #, fuzzy
 msgid "Submit"
-msgstr "Immetti"
+msgstr "Inviare"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
-msgstr ""
+msgstr "È sicuro di voler rimuovere questo repository?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
+"Il repository remoto non verrà rimosso. Questo rimuove semplicemente il "
+"repository dall'elenco nella pagina di backup; è possibile aggiungerlo di "
+"nuovo in futuro."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
-#, fuzzy
-#| msgid "Documentation"
 msgid "Remove Location"
-msgstr "Documentazione"
+msgstr "Rimuovere la posizione"
 
 #: plinth/modules/backups/templates/backups_restore.html:30
+#, fuzzy
 msgid "Restore data from"
-msgstr ""
+msgstr "Recupero dei dati da"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/views.py:171
+#, fuzzy
 msgid "Restore"
-msgstr ""
+msgstr "Restaurare"
 
 #: plinth/modules/backups/templates/backups_restore.html:47
+#, fuzzy
 msgid "Restoring"
-msgstr ""
+msgstr "Recupero"
 
 #: plinth/modules/backups/templates/backups_upload.html:32
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
@@ -451,6 +468,13 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Caricare un file di backup scaricato da un altro %(box_name)s per "
+"recuperare il suo\n"
+"      contenuto. È possibile scegliere le app che si desidera recuperare "
+"dopo aver caricato un\n"
+"      file di backup.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:42
 #: plinth/modules/help/templates/statuslog.html:38
@@ -458,11 +482,13 @@ msgid "Caution:"
 msgstr "Attenzione:"
 
 #: plinth/modules/backups/templates/backups_upload.html:43
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"È disponibile %(max_filesize)s per recuperare un backup. Il superamento di "
+"questo limite può lasciare inutilizzabili vostro %(box_name)s."
 
 #: plinth/modules/backups/templates/backups_upload.html:56
 msgid "Upload file"
@@ -474,17 +500,23 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Non è stato possibile raggiungere la %(hostname)s dell'host SSH. Si prega di "
+"verificare che l'host sia attivo e accetti le connessioni."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:43
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Non è stato possibile stabilire l'autenticità dell'host %(hostname)s di SSH. "
+"L'host pubblicizza le seguenti chiavi pubbliche SSH. Si prega di verificare "
+"una qualsiasi di esse."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:55
+#, fuzzy
 msgid "How to verify?"
-msgstr ""
+msgstr "Come verificare?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid ""
@@ -610,15 +642,15 @@ msgstr ""
 "rete."
 
 #: plinth/modules/bind/__init__.py:49
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Currently, on {box_name}, BIND is only used to resolve DNS queries for other "
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
-"Attualmente, sul {box_name}1, BIND viene usato solamente per risolvere le "
+"Attualmente, sul {box_name}, BIND viene usato solamente per risolvere le "
 "richieste DNS di altri dispositivi della rete locale. E' inoltre compatibile "
-"con la condivisione della connessione Internet del {box_name}2"
+"con la condivisione della connessione Internet del {box_name}."
 
 #: plinth/modules/bind/forms.py:37
 #, fuzzy
@@ -726,8 +758,9 @@ msgid "Invalid domain name"
 msgstr "Nome dominio non valido"
 
 #: plinth/modules/config/forms.py:50
+#, fuzzy
 msgid "Apache Default"
-msgstr ""
+msgstr "Valore predefinito per Apache"
 
 #: plinth/modules/config/forms.py:51
 msgid "FreedomBox Service (Plinth)"
@@ -757,7 +790,7 @@ msgid "Invalid hostname"
 msgstr "Hostname non valido"
 
 #: plinth/modules/config/forms.py:78
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
 "reach your {box_name}.  It must consist of labels separated by dots.  Each "
@@ -766,8 +799,8 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
-"Il nome di dominio è il nome globale tramite il quale, gli altri dispositivi "
-"connessi in Internet, possono raggiungere il tuo {box_name}. Deve consistere "
+"Il nome di dominio è il nome globale tramite il quale gli altri dispositivi "
+"connessi in Internet possono raggiungere il tuo {box_name}. Deve consistere "
 "in una serie di etichette separate da dei punti. Ogni etichetta deve "
 "iniziare  e finire con una lettera dell'alfabeto o con una cifra, e come "
 "caratteri intermedi sono ammesse lettere, numeri e trattini. La lunghezza di "
@@ -775,8 +808,9 @@ msgstr ""
 "del nome di dominio non deve superare i 253 caratreri"
 
 #: plinth/modules/config/forms.py:93
+#, fuzzy
 msgid "Webserver Home Page"
-msgstr ""
+msgstr "Pagina iniziale del server web"
 
 #: plinth/modules/config/forms.py:95
 #, python-brace-format
@@ -1093,7 +1127,7 @@ msgstr ""
 "network  distribuito ed eseguito dalla comunità"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
 "look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
@@ -1102,11 +1136,11 @@ msgid ""
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
 "Il dominio del pod diaspora* è impostato su <b>%(domain_name)s</b>. L'ID "
-"utente apparirà <i>username e diaspora.%(domain_name)s</i><br/>. Nel caso in "
+"utente apparirà <i>username@diaspora.%(domain_name)s</i><br/>. Nel caso in "
 "cui il nome di dominio del FreedomBox venga cambiato, tutti i dati degli "
 "utenti registrati col podname precedente non saranno accessibili. <br/> Puoi "
-"accedere al pod diaspora* da <a href=\"https://diaspora.%(domain_name)s"
-"\">diaspora.%(domain_name)s</a>"
+"accedere al pod diaspora* da <a href=\"https://diaspora.%(domain_name)s\""
+">diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -1141,7 +1175,7 @@ msgid "Dynamic DNS Client"
 msgstr "Client DNS Dinamico"
 
 #: plinth/modules/dynamicdns/__init__.py:44
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
 "24h), it may be hard for others to find you on the Internet. This will "
@@ -1149,7 +1183,7 @@ msgid ""
 msgstr ""
 "Se il tuo fornitore Internet cambia periodicamente il tuo IP (per es. ogni "
 "24 ore), può essere difficile per gli altri trovarti in Internet. Questo "
-"impedirà altri di raggiungere i servizi forniti da questo {box_name}"
+"impedirà altri di raggiungere i servizi forniti da questo {box_name}."
 
 #: plinth/modules/dynamicdns/__init__.py:48
 msgid ""
@@ -1175,15 +1209,14 @@ msgid "Dynamic Domain Name"
 msgstr "Nome Dominio"
 
 #: plinth/modules/dynamicdns/forms.py:42
-#, fuzzy
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
 "providers."
 msgstr ""
-"Le Variabili&lt;User&gt;User&gt;,&lt;Pass&gt;,&lt;Ip&gt;&lt;Dominio&gt; "
-"possono essere usati all'interno dell'URL. Per maggiori dettagli vedi i "
-"modelli di URL del provider d'esempio."
+"Le Variabili &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Dominio&gt; possono "
+"essere usati all'interno dell'URL. Per maggiori dettagli vedi i modelli di "
+"URL del provider d'esempio."
 
 #: plinth/modules/dynamicdns/forms.py:46
 msgid ""
@@ -1327,13 +1360,13 @@ msgstr ""
 "afraid.org/' target='_blank'>freedns.afraid.org</a>"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:38
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If your %(box_name)s is connected behind a NAT router, don't forget to add "
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
-"Se io tuo %(box_name)s è connesso tramite un router NAT, non dimenticarti di "
+"Se il tuo %(box_name)s è connesso tramite un router NAT, non dimenticarti di "
 "impostare l'inoltro delle porte standard, inclusa la porta TCP 80 (HTTP) e "
 "la porta TCP 443 (HTTPS)."
 
@@ -1483,7 +1516,6 @@ msgid "ChatSecure"
 msgstr "ChatSecure"
 
 #: plinth/modules/ejabberd/manifest.py:73
-#, fuzzy
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1494,7 +1526,7 @@ msgstr ""
 "supporta la cifratura OTR over XMPP. Puoi connetterti ad un profilo "
 "esistente di Google, puoi creare degli account nuovi su server XMPP pubblici "
 "(anche tramite TOR), o anche connetterti al tuo server per una maggiore  "
-"sicurezza"
+"sicurezza."
 
 #: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
@@ -1505,13 +1537,14 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
-"Il tuo dominio server XMPP è impostato su <b>%(domainname)s</b>. Puoi "
+"Il tuo dominio server XMPP è impostato su <b>%(domainname)s</b>. Gli ID "
+"utente appariranno in forma di <i>username@%(domainname)s</i>.  Puoi "
 "impostare il tuo dominio nel sistema <a href=\"%(index_url)s\">. Configura "
 "la pagina </a>."
 
@@ -1930,13 +1963,13 @@ msgstr ""
 "%(box_name)s mira a portarli tutti insieme in un apposito pacchetto."
 
 #: plinth/modules/help/templates/help_about.html:66
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"Per maggiori informazioni sul progetto %(box_name)s, vedi l'wiki <a href="
-"\"https://wiki.debian.org/FreedomBox\"></a>"
+"Per maggiori informazioni sul progetto %(box_name)s, vedi l'<a href=\""
+"https://wiki.debian.org/FreedomBox\">wiki</a>."
 
 #: plinth/modules/help/templates/help_about.html:75
 #, fuzzy
@@ -2040,13 +2073,13 @@ msgid "Help"
 msgstr "Aiuto"
 
 #: plinth/modules/help/templates/help_index.html:31
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
-"Il manuale <a href=\"%(manual_url)s\"> </a> è il miglior posto da cui "
-"partire per cercare informazioni riguardanti %(box_name)s."
+"Il <a href=\"%(manual_url)s\">manuale</a> è il miglior posto da cui partire "
+"per cercare informazioni riguardanti %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:38
 #, python-format
@@ -2058,7 +2091,7 @@ msgstr ""
 "%(box_name)sIl project wiki</a> contiene ulteriori informazioni."
 
 #: plinth/modules/help/templates/help_index.html:45
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "To seek help from %(box_name)s community, queries may be posted on the <a "
 "href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
@@ -2066,21 +2099,23 @@ msgid ""
 "problems faced by other users and possible solutions."
 msgstr ""
 "Per chiedere aiuto dalla comunità %(box_name)s, le richieste possono essere "
-"postate sulla mailing lista </a> <a href=\"https://lists.alioth.debian.org/"
-"mailman/listinfo/freedombox-discuss\">"
+"postate sulla <a href=\"https://lists.alioth.debian.org/mailman/listinfo/"
+"freedombox-discuss\">mailing lista</a>. L'archivio della lista contiene "
+"anche informazioni sui problemi affrontati dagli altri utenti e sulle "
+"possibili soluzioni."
 
 #: plinth/modules/help/templates/help_index.html:55
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Many %(box_name)s contributors and users are also available on the irc.oftc."
 "net IRC network.  Join and request help on the <a href=\"https://webchat."
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
-"Molti contributori e utenti %(box_name)s sono disponibili nella rete IRC irc."
-"oftc.net. Unisciti e chiedi aiuto a nel canale #freedombox </a> href="
-"\"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
-"usando l'interfaccia web IRC."
+"Molti contributori e utenti %(box_name)s sono disponibili nella rete IRC "
+"irc.oftc.net. Unisciti e chiedi aiuto a nel canale <a href=\""
+"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\""
+">#freedombox</a> usando l'interfaccia web IRC."
 
 #: plinth/modules/help/templates/help_manual.html:40
 #, fuzzy
@@ -2116,7 +2151,7 @@ msgid "Status Log"
 msgstr "Stato Log"
 
 #: plinth/modules/help/templates/statuslog.html:28
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
@@ -2124,9 +2159,9 @@ msgid ""
 "this status log to the bug report."
 msgstr ""
 "Queste sono  le ultime %(num_lines)s del status log di questa interfaccia "
-"web. Se vuoi riportare un bug, prego usa  il bug tracker </a> <a href="
-"\"https://salsa.debian.org/freedombox-team/plinth/issues\"> e allega questo "
-"status log report del bug."
+"web. Se vuoi riportare un bug, prego usa  il <a href=\"https://salsa.debian."
+"org/freedombox-team/plinth/issues\">bug tracker</a> e allega questo status "
+"log report del bug."
 
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
@@ -2315,9 +2350,9 @@ msgid "Created wiki {name}."
 msgstr "Creato wiki {name}."
 
 #: plinth/modules/ikiwiki/views.py:99
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not create wiki: {error}"
-msgstr "Non è stato possibile creare l'wiki:{error}"
+msgstr "Non è stato possibile creare l'wiki: {error}"
 
 #: plinth/modules/ikiwiki/views.py:109
 #, python-brace-format
@@ -2725,7 +2760,7 @@ msgstr ""
 
 #: plinth/modules/mediawiki/forms.py:48
 msgid "Enable public registrations"
-msgstr ""
+msgstr "Attivare le registrazioni pubbliche"
 
 #: plinth/modules/mediawiki/forms.py:49
 msgid ""
@@ -2770,19 +2805,21 @@ msgstr "Password aggiornata"
 
 #: plinth/modules/mediawiki/views.py:93
 msgid "Public registrations enabled"
-msgstr ""
+msgstr "Registrazioni pubbliche abilitate"
 
 #: plinth/modules/mediawiki/views.py:102
 msgid "Public registrations disabled"
-msgstr ""
+msgstr "Registrazioni pubbliche disabilitate"
 
 #: plinth/modules/mediawiki/views.py:107
+#, fuzzy
 msgid "Private mode enabled"
-msgstr ""
+msgstr "Modo privato abilitato"
 
 #: plinth/modules/mediawiki/views.py:114
+#, fuzzy
 msgid "Private mode disabled"
-msgstr ""
+msgstr "Modo privato disabilitato"
 
 #: plinth/modules/mediawiki/views.py:122
 #, fuzzy
@@ -3001,7 +3038,12 @@ msgstr ""
 "keysphere può essere generata una chiave OpenPGP per ogni dominio "
 "configurato, in cui è attivo SSH. La chiave pubblica OpenPGP potrà essere "
 "caricata nei keyserver OpenPGP. Gli utenti connessi a questa macchina "
-"tramite SSH potranno verificare di essere connessi all'host corretto."
+"tramite SSH potranno verificare di essere connessi all'host corretto. "
+"Affinché gli utenti si fidino della chiave, almeno una persona (di solito il "
+"proprietario della macchina) deve firmare la chiave utilizzando il normale "
+"processo di firma della chiave OpenPGP.  Vedere la <a href=\""
+"http://web.monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+"documentation</a> per maggiori dettagli."
 
 #: plinth/modules/monkeysphere/__init__.py:43
 msgid ""
@@ -3968,7 +4010,7 @@ msgstr "OpenVPN"
 #: plinth/modules/openvpn/__init__.py:43
 #: plinth/modules/wireguard/__init__.py:40
 msgid "Virtual Private Network"
-msgstr "Virtual Private Network"
+msgstr "Rete virtuale privata"
 
 #: plinth/modules/openvpn/__init__.py:47
 #, python-brace-format
@@ -4369,7 +4411,7 @@ msgstr ""
 #: plinth/modules/power/__init__.py:29 plinth/modules/power/views.py:55
 #: plinth/modules/power/views.py:74
 msgid "Power"
-msgstr "Power"
+msgstr "Alimentazione"
 
 #: plinth/modules/power/__init__.py:31
 msgid "Restart or shut down the system."
@@ -5338,8 +5380,9 @@ msgid "Deleted all snapshots"
 msgstr ""
 
 #: plinth/modules/snapshot/views.py:179
+#, fuzzy
 msgid "Deleted selected snapshots"
-msgstr ""
+msgstr "Istantanee selezionate cancellate"
 
 #: plinth/modules/snapshot/views.py:184
 msgid "Snapshot is currently in use. Please try again later."
@@ -5466,8 +5509,9 @@ msgid "The operation was cancelled."
 msgstr ""
 
 #: plinth/modules/storage/__init__.py:250
+#, fuzzy
 msgid "The device is already unmounting."
-msgstr ""
+msgstr "Il dispositivo sta già smontando."
 
 #: plinth/modules/storage/__init__.py:252
 msgid "The operation is not supported due to missing driver/tool support."
@@ -5495,7 +5539,7 @@ msgstr ""
 
 #: plinth/modules/storage/__init__.py:270
 msgid "The device is already mounted."
-msgstr ""
+msgstr "Il dispositivo è già montato."
 
 #: plinth/modules/storage/__init__.py:272
 msgid "The device is not mounted."
@@ -5976,7 +6020,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid "Update now"
-msgstr ""
+msgstr "Aggiorna adesso"
 
 #: plinth/modules/upgrades/templates/upgrades.html:54
 msgid "Updating..."
