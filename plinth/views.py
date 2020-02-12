@@ -109,7 +109,42 @@ class LanguageSelectionView(FormView):
 
 
 class AppView(FormView):
-    """A generic view for configuring simple apps."""
+    """A generic view for showing an app's main page.
+
+    The view and it's template may be customized but by default show the
+    following:
+
+    * Icon for the app
+    * Name of the app
+    * Description of the app
+    * Link to the manual page for the app
+    * A button to enable/disable the app
+    * A toolbar with common actions such as 'Run diagnostics'
+    * A status section showing the running status of the app
+    * A form for configuring the app
+
+    The following class properties are available on the view:
+
+    'app_id' is the mandatory property to set the ID of the app. It is used to
+    retrieve the App instance for the app that is needed for basic information
+    and operations such as enabling/disabling the app.
+
+    'form_class' is the Django form class that is used by this view. By default
+    the AppForm class is used.
+
+    'show_status_block' is a boolean to determine if the status section must be
+    shown in this app's page.
+
+    'template_name' is the template used to render this view. By default it is
+    app.html. It may be overridden with a template that derives from app.html
+    to customize the appearance of the app to achieve more complex presentation
+    instead of the simple appearance provided by default.
+
+    'port_forwarding_info' is a list of port information dictionaries that can
+    used to show a special section in the app page that tells the users how to
+    forward ports on their router for this app to work properly.
+
+    """
     form_class = forms.AppForm
     # Display the 'status' block of the app.html template
     # This block uses information from service.is_running. This method is
