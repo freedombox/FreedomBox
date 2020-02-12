@@ -20,9 +20,10 @@ Configuration helper for BIND server.
 """
 
 import argparse
+from pathlib import Path
 
 from plinth import action_utils
-from plinth.modules.bind import CONFIG_FILE, DEFAULT_CONFIG
+from plinth.modules.bind import CONFIG_FILE, DEFAULT_CONFIG, ZONES_DIR
 from plinth.modules.bind import set_forwarders, set_dnssec
 
 
@@ -47,6 +48,9 @@ def subcommand_setup(_):
     conf_file = open(CONFIG_FILE, "w")
     conf_file.write(DEFAULT_CONFIG)
     conf_file.close()
+
+    Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
+
     action_utils.service_restart('bind9')
 
 
