@@ -38,7 +38,7 @@ django.setup(set_prefix=True)
 
 # pylint: disable=invalid-name
 project = 'FreedomBox'
-copyright = '2019, FreedomBox Authors'
+copyright = '2020, FreedomBox Authors'
 author = 'FreedomBox Authors'
 
 # The short X.Y version
