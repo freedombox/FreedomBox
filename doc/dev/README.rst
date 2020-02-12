@@ -1,16 +1,16 @@
 .. SPDX-License-Identifier: CC-BY-SA-4.0
 
-About
-=====
-
-This directory contains the FreedomBox Developer Manual. Specifically the
-tutorial for writing new applications and API reference for writing apps for
-FreedomBox. It is kept as part of the main FreedomBox source code with the
-expectation that when the API changes the developer documentation is also
-updated in the same patch set.
-
 Editing the Developer Documentation
 ===================================
+
+About
+*****
+
+The doc/dev directory in FreedomBox repository contains the FreedomBox Developer
+Manual. Specifically the tutorial for writing new applications and API reference
+for writing apps for FreedomBox. It is kept as part of the main FreedomBox
+source code with the expectation that when the API changes the developer
+documentation is also updated in the same patch set.
 
 Setup on Debian
 ***************

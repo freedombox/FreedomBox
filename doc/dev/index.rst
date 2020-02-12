@@ -30,6 +30,13 @@ External References
 
 #. `FreedomBox User Manual <https://wiki.debian.org/FreedomBox/Manual>`_
 
+Contributing to this Documentation
+**********************************
+
+.. toctree::
+
+   README
+
 Indices and tables
 ******************
 
