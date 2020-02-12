@@ -29,6 +29,11 @@ class App:
     variation their behavior by choosing which components to have and by
     customizing the components themselves.
 
+    'app_id' property of the app must string that is a globally unique ID. This
+    is typically also the name of the python module handling the app. So, it
+    should be all lower-case English alphabet and digits without any special
+    characters.
+
     """
 
     app_id = None
