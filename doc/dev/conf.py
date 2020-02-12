@@ -16,7 +16,23 @@ list see the documentation: http://www.sphinx-doc.org/en/master/config
 import os
 import sys
 
+import django
+import django.conf
+
 sys.path.insert(0, os.path.abspath('../../'))
+
+# -- Django setup ------------------------------------------------------------
+
+# Ensure that Django models can be imported by Sphinx
+import plinth.settings  # noqa pylint: disable=E402 isort:skip
+
+kwargs = {}
+for setting in dir(plinth.settings):
+    if setting.isupper():
+        kwargs[setting] = getattr(plinth.settings, setting)
+
+django.conf.settings.configure(**kwargs)
+django.setup(set_prefix=True)
 
 # -- Project information -----------------------------------------------------
 
