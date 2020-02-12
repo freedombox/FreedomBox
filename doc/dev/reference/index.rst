@@ -19,5 +19,6 @@ and are updated when the API is updated.
    action_utils
    views
    forms
+   notifications
 
 .. automodule:: plinth.modules.ttrss
