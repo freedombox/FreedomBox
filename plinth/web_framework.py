@@ -13,145 +13,42 @@ import django.core.wsgi
 from django.conf import global_settings
 from django.contrib.messages import constants as message_constants
 
-from . import cfg, log, module_loader
+from . import cfg, log, module_loader, settings
 
 logger = logging.getLogger(__name__)
 
 
 def init():
     """Setup Django configuration in the absence of .settings file"""
-    templates = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.contrib.auth.context_processors.auth',
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.i18n',
-                    'django.template.context_processors.media',
-                    'django.template.context_processors.request',
-                    'django.template.context_processors.static',
-                    'django.template.context_processors.tz',
-                    'django.contrib.messages.context_processors.messages',
-                    'plinth.context_processors.common',
-                ],
-            },
-        },
-    ]
-
-    applications = [
-        'axes',
-        'captcha',
-        'bootstrapform',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.messages',
-        'stronghold',
-        'plinth',
-    ]
-    applications += module_loader.get_modules_to_load()
-    sessions_directory = os.path.join(cfg.data_dir, 'sessions')
-
-    secure_proxy_ssl_header = None
     if cfg.secure_proxy_ssl_header:
-        secure_proxy_ssl_header = (cfg.secure_proxy_ssl_header, 'https')
+        settings.SECURE_PROXY_SSL_HEADER = (cfg.secure_proxy_ssl_header,
+                                            'https')
 
-    ipware_meta_precedence_order = ('REMOTE_ADDR', )
     if cfg.use_x_forwarded_for:
-        ipware_meta_precedence_order = ('HTTP_X_FORWARDED_FOR', )
+        settings.IPWARE_META_PRECEDENCE_ORDER = ('HTTP_X_FORWARDED_FOR', )
 
-    pwd = 'django.contrib.auth.password_validation'
+    settings.DATABASES['default']['NAME'] = cfg.store_file
+    settings.DEBUG = cfg.develop
+    settings.FORCE_SCRIPT_NAME = cfg.server_dir
+    settings.INSTALLED_APPS += module_loader.get_modules_to_load()
+    settings.LANGUAGES = get_languages()
+    settings.LOGGING = log.get_configuration()
+    settings.MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+    settings.SESSION_FILE_PATH = os.path.join(cfg.data_dir, 'sessions')
+    settings.STATIC_URL = '/'.join([cfg.server_dir,
+                                    'static/']).replace('//', '/')
+    settings.USE_X_FORWARDED_HOST = cfg.use_x_forwarded_host
 
-    django.conf.settings.configure(
-        ALLOWED_HOSTS=['*'],
-        AUTH_PASSWORD_VALIDATORS=[
-            {
-                'NAME': '{}.UserAttributeSimilarityValidator'.format(pwd),
-            },
-            {
-                'NAME': '{}.MinimumLengthValidator'.format(pwd),
-                'OPTIONS': {
-                    'min_length': 8,
-                }
-            },
-            {
-                'NAME': '{}.CommonPasswordValidator'.format(pwd),
-            },
-            {
-                'NAME': '{}.NumericPasswordValidator'.format(pwd),
-            },
-        ],
-        AXES_LOCKOUT_URL='locked/',
-        AXES_RESET_ON_SUCCESS=True,  # Only used with axes >= 4.4.3
-        CACHES={
-            'default': {
-                'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
-            }
-        },
-        CAPTCHA_FONT_PATH=[
-            '/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'
-        ],
-        CAPTCHA_LENGTH=6,
-        CAPTCHA_FLITE_PATH='/usr/bin/flite',
-        DATABASES={
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': cfg.store_file
-            }
-        },
-        DEBUG=cfg.develop,
-        FORCE_SCRIPT_NAME=cfg.server_dir,
-        INSTALLED_APPS=applications,
-        IPWARE_META_PRECEDENCE_ORDER=ipware_meta_precedence_order,
-        LANGUAGES=get_languages(),
-        LOGGING=log.get_configuration(),
-        LOGIN_URL='users:login',
-        LOGIN_REDIRECT_URL='index',
-        MESSAGE_TAGS={message_constants.ERROR: 'danger'},
-        MIDDLEWARE=(
-            'django.middleware.security.SecurityMiddleware',
-            'django.contrib.sessions.middleware.SessionMiddleware',
-            'django.middleware.locale.LocaleMiddleware',
-            'django.middleware.common.CommonMiddleware',
-            'django.middleware.csrf.CsrfViewMiddleware',
-            'django.contrib.auth.middleware.AuthenticationMiddleware',
-            'django.contrib.messages.middleware.MessageMiddleware',
-            'django.middleware.clickjacking.XFrameOptionsMiddleware',
-            'stronghold.middleware.LoginRequiredMiddleware',
-            'plinth.middleware.AdminRequiredMiddleware',
-            'plinth.middleware.FirstSetupMiddleware',
-            'plinth.modules.first_boot.middleware.FirstBootMiddleware',
-            'plinth.middleware.SetupMiddleware',
-        ),
-        PASSWORD_HASHERS=[
-            'django.contrib.auth.hashers.Argon2PasswordHasher',
-            'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-            'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-            'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-        ],
-        ROOT_URLCONF='plinth.urls',
-        SECURE_BROWSER_XSS_FILTER=True,
-        SECURE_CONTENT_TYPE_NOSNIFF=True,
-        SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
-        SESSION_ENGINE='django.contrib.sessions.backends.file',
-        SESSION_FILE_PATH=sessions_directory,
-        STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
-        # STRONGHOLD_PUBLIC_URLS=(r'^captcha/', ),
-        STRONGHOLD_PUBLIC_NAMED_URLS=(
-            'captcha-image',
-            'captcha-image-2x',
-            'captcha-audio',
-            'captcha-refresh',
-        ),
-        TEMPLATES=templates,
-        TIME_ZONE='UTC',
-        USE_L10N=True,
-        USE_TZ=True,
-        USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
+    kwargs = {}
+    for setting in dir(settings):
+        if setting.isupper():
+            kwargs[setting] = getattr(settings, setting)
+
+    django.conf.settings.configure(**kwargs)
     django.setup(set_prefix=True)
 
-    logger.debug('Configured Django with applications - %s', applications)
+    logger.debug('Configured Django with applications - %s',
+                 settings.INSTALLED_APPS)
 
     logger.debug('Creating or adding new tables to data file')
     verbosity = 1 if cfg.develop else 0
