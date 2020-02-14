@@ -60,7 +60,7 @@ clients = validate([{
     }]
 }, {
     'name':
-        _('TunnelBlick'),
+        _('Tunnelblick'),
     'platforms': [{
         'type': 'download',
         'os': 'macos',
