@@ -123,12 +123,15 @@ class Firewall(app.FollowerComponent):
         external_ports = firewall.get_enabled_services(zone='external')
         for port_detail in self.ports_details:
             port = port_detail['name']
+            details = ', '.join(
+                (f'{port_number}/{protocol}'
+                 for port_number, protocol in port_detail['details']))
 
             # Internal zone
             result = 'passed' if port in internal_ports else 'failed'
             message = _(
                 'Port {name} ({details}) available for internal networks'
-            ).format(name=port, details=port_detail['details'])
+            ).format(name=port, details=details)
             results.append([message, result])
 
             # External zone
@@ -136,12 +139,12 @@ class Firewall(app.FollowerComponent):
                 result = 'passed' if port in external_ports else 'failed'
                 message = _(
                     'Port {name} ({details}) available for external networks'
-                ).format(name=port, details=port_detail['details'])
+                ).format(name=port, details=details)
             else:
                 result = 'passed' if port not in external_ports else 'failed'
                 message = _(
                     'Port {name} ({details}) unavailable for external networks'
-                ).format(name=port, details=port_detail['details'])
+                ).format(name=port, details=details)
 
             results.append([message, result])
 

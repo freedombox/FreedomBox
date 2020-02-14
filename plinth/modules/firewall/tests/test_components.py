@@ -57,7 +57,10 @@ def test_init():
 @patch('plinth.modules.firewall.get_port_details')
 def test_port_details(get_port_details):
     """Test retrieving port details for a firewall component."""
-    return_values = {'test-port1': '1234/tcp', 'test-port2': '5678/udp'}
+    return_values = {
+        'test-port1': [(1234, 'tcp')],
+        'test-port2': [(5678, 'udp')]
+    }
 
     def get_port_details_side_effect(port):
         return return_values[port]
@@ -66,10 +69,10 @@ def test_port_details(get_port_details):
     firewall = Firewall('test-component', ports=['test-port1', 'test-port2'])
     assert firewall.ports_details == [{
         'name': 'test-port1',
-        'details': '1234/tcp'
+        'details': [(1234, 'tcp')]
     }, {
         'name': 'test-port2',
-        'details': '5678/udp'
+        'details': [(5678, 'udp')]
     }]
 
 
@@ -144,10 +147,10 @@ def test_diagnose(get_enabled_services, get_port_details):
     """Test diagnosing open/closed firewall ports."""
     def get_port_details_side_effect(port):
         return {
-            'test-port1': '1234/tcp',
-            'test-port2': '2345/udp',
-            'test-port3': '3456/tcp',
-            'test-port4': '4567/udp'
+            'test-port1': [(1234, 'tcp'), (1234, 'udp')],
+            'test-port2': [(2345, 'udp')],
+            'test-port3': [(3456, 'tcp')],
+            'test-port4': [(4567, 'udp')]
         }[port]
 
     def get_enabled_services_side_effect(zone):
@@ -163,12 +166,12 @@ def test_diagnose(get_enabled_services, get_port_details):
     results = firewall.diagnose()
     assert results == [
         [
-            'Port test-port1 (1234/tcp) available for internal networks',
-            'passed'
+            'Port test-port1 (1234/tcp, 1234/udp) available for internal '
+            'networks', 'passed'
         ],
         [
-            'Port test-port1 (1234/tcp) unavailable for external networks',
-            'passed'
+            'Port test-port1 (1234/tcp, 1234/udp) unavailable for external '
+            'networks', 'passed'
         ],
         [
             'Port test-port2 (2345/udp) available for internal networks',

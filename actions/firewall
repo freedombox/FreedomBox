@@ -39,42 +39,6 @@ def parse_arguments():
     subparsers.add_parser('get-status',
                           help='Get whether firewalld is running')
 
-    # Get service status
-    get_enabled_services = subparsers.add_parser(
-        'get-enabled-services', help='Get list of enabled services')
-    get_enabled_services.add_argument(
-        '--zone', help='Zone from which the list is to be retrieved',
-        required=True)
-
-    # Get service ports
-    get_service_ports = subparsers.add_parser(
-        'get-service-ports', help='Get list of ports for service')
-    get_service_ports.add_argument('--service', help='Name of service',
-                                   required=True)
-
-    # Get interface status
-    get_interfaces = subparsers.add_parser(
-        'get-interfaces', help='Get list of interfaces in a zone')
-    get_interfaces.add_argument(
-        '--zone', help='Zone from which the list is to be retrieved',
-        required=True)
-
-    # Add a service
-    add_service = subparsers.add_parser('add-service', help='Add a service')
-    add_service.add_argument('service', help='Name of the service to add')
-    add_service.add_argument('--zone',
-                             help='Zone to which service is to be added',
-                             required=True)
-
-    # Remove a service status
-    remove_service = subparsers.add_parser('remove-service',
-                                           help='Remove a service')
-    remove_service.add_argument('service',
-                                help='Name of the service to remove')
-    remove_service.add_argument(
-        '--zone', help='Zone from which service is to be removed',
-        required=True)
-
     subparsers.required = True
     return parser.parse_args()
 
@@ -138,62 +102,10 @@ def subcommand_setup(_):
     subprocess.call(['firewall-cmd', '--set-default-zone=external'])
     set_firewall_backend('nftables')
 
-    add_service('external', 'http')
-    add_service('internal', 'http')
-    add_service('external', 'https')
-    add_service('internal', 'https')
-    add_service('internal', 'dns')
-    add_service('internal', 'dhcp')
-
 
 def subcommand_get_status(_):
     """Print status of the firewalld service"""
     subprocess.call(['firewall-cmd', '--state'])
-
-
-def subcommand_get_enabled_services(arguments):
-    """Print the status of variours services"""
-    subprocess.call(
-        ['firewall-cmd', '--zone', arguments.zone, '--list-services'])
-
-
-def subcommand_get_service_ports(arguments):
-    """Print list of ports for service"""
-    subprocess.call([
-        'firewall-cmd', '--permanent', '--service', arguments.service,
-        '--get-ports'
-    ])
-
-
-def subcommand_get_interfaces(arguments):
-    """Print the list of interfaces in a zone."""
-    subprocess.call(
-        ['firewall-cmd', '--zone', arguments.zone, '--list-interfaces'])
-
-
-def subcommand_add_service(arguments):
-    """Permit a service in the firewall."""
-    add_service(arguments.zone, arguments.service)
-
-
-def add_service(zone, service):
-    """Permit a service in the firewall."""
-    subprocess.call(['firewall-cmd', '--zone', zone, '--add-service', service])
-    subprocess.call([
-        'firewall-cmd', '--zone', zone, '--permanent', '--add-service', service
-    ])
-
-
-def subcommand_remove_service(arguments):
-    """Block a service in the firewall"""
-    subprocess.call([
-        'firewall-cmd', '--zone', arguments.zone, '--remove-service',
-        arguments.service
-    ])
-    subprocess.call([
-        'firewall-cmd', '--zone', arguments.zone, '--permanent',
-        '--remove-service', arguments.service
-    ])
 
 
 def main():
