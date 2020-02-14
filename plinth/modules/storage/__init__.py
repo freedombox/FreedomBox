@@ -321,8 +321,8 @@ def warn_about_low_disk_space(request):
         except KeyError:
             pass
     else:
-        # Translators: xgettext:no-python-format
         message = ugettext_noop(
+            # xgettext:no-python-format
             'Low space on system partition: {percent_used}% used, '
             '{free_space} free.')
         title = ugettext_noop('Low disk space')
