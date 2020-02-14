@@ -18,9 +18,7 @@
 Views for the JSXC module
 """
 
-from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from stronghold.decorators import public
 
 from plinth.modules import config, jsxc
 from plinth.views import AppView
@@ -40,11 +38,6 @@ class JSXCAppView(AppView):
 class JsxcView(TemplateView):
     """A simple page to embed Javascript XMPP Client library."""
     template_name = 'jsxc_launch.html'
-
-    @method_decorator(public)
-    def dispatch(self, *args, **kwargs):
-        """Dispatch a get, post etc. request."""
-        return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         """Add domain information to view context."""

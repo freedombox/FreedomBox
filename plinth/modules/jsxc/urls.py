@@ -19,10 +19,11 @@ URLs for the JSXC module
 """
 
 from django.conf.urls import url
+from stronghold.decorators import public
 
 from .views import JSXCAppView, JsxcView
 
 urlpatterns = [
     url(r'^apps/jsxc/$', JSXCAppView.as_view(), name='index'),
-    url(r'^apps/jsxc/jsxc/$', JsxcView.as_view(), name='jsxc')
+    url(r'^apps/jsxc/jsxc/$', public(JsxcView.as_view()), name='jsxc')
 ]
