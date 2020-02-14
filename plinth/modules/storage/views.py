@@ -30,11 +30,9 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
 from plinth import actions, views
-from plinth.errors import PlinthError
 from plinth.modules import storage
-from plinth.utils import format_lazy, is_user_admin
 
-from . import get_disk_info, get_error_message
+from . import get_error_message
 
 logger = logging.getLogger(__name__)
 
@@ -47,11 +45,6 @@ class StorageAppView(views.AppView):
     app_id = 'storage'
     template_name = 'storage.html'
     show_status_block = False
-
-    def render_to_response(self, context, **response_kwargs):
-        """Add disk space warning to the view."""
-        warn_about_low_disk_space(self.request)
-        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, *args, **kwargs):
         """Return template context data."""
@@ -96,31 +89,6 @@ def expand_partition(request, device):
                 exception=exception))
     else:
         messages.success(request, _('Partition expanded successfully.'))
-
-
-def warn_about_low_disk_space(request):
-    """Warn about insufficient space on root partition."""
-    if not is_user_admin(request, cached=True):
-        return
-
-    try:
-        root_info = get_disk_info('/')
-    except PlinthError as exception:
-        logger.exception('Error getting information about root partition: %s',
-                         exception)
-        return
-
-    message = format_lazy(
-        # Translators: xgettext:no-python-format
-        _('Warning: Low space on system partition ({percent_used}% used, '
-          '{free_space} free).'),
-        percent_used=root_info['percent_used'],
-        free_space=storage.format_bytes(root_info['free_bytes']))
-
-    if root_info['percent_used'] > 90 or root_info['free_gib'] < 1:
-        messages.error(request, message)
-    elif root_info['percent_used'] > 75 or root_info['free_gib'] < 2:
-        messages.warning(request, message)
 
 
 @require_POST

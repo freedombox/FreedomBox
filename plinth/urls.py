@@ -17,11 +17,11 @@
 """
 Django URLconf file containing all urls
 """
-from django.conf.urls import url
-
 from captcha import views as cviews
-from plinth.modules.sso.views import CaptchaLoginView
+from django.conf.urls import url
 from stronghold.decorators import public
+
+from plinth.modules.sso.views import CaptchaLoginView
 
 from . import views
 
@@ -45,4 +45,8 @@ urlpatterns = [
 
     # locked url from django-axes
     url(r'locked/$', public(CaptchaLoginView.as_view()), name='locked_out'),
+
+    # Notifications
+    url(r'^notification/(?P<id>[a-z0-9-]+)/dismiss/$',
+        views.notification_dismiss, name='notification_dismiss')
 ]

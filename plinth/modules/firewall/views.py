@@ -18,32 +18,34 @@
 FreedomBox app to configure a firewall.
 """
 
-from django.template.response import TemplateResponse
-
+from plinth import views
 from plinth.modules import firewall
 
 from . import components
 
 
-def index(request):
-    """Serve introduction page"""
-    if not firewall.get_enabled_status():
-        return TemplateResponse(
-            request, 'firewall.html', {
-                'name': firewall.name,
-                'description': firewall.description,
-                'firewall_status': 'not_running'
-            })
+class FirewallAppView(views.AppView):
+    """Serve firewall index page."""
+    name = firewall.name
+    description = firewall.description
+    app_id = 'firewall'
+    manual_page = firewall.manual_page
+    template_name = 'firewall.html'
 
-    internal_enabled_ports = firewall.get_enabled_services(zone='internal')
-    external_enabled_ports = firewall.get_enabled_services(zone='external')
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for the template."""
+        context = super().get_context_data(*args, **kwargs)
 
-    return TemplateResponse(
-        request, 'firewall.html', {
-            'name': firewall.name,
-            'description': firewall.description,
-            'components': components.Firewall.list(),
-            'manual_page': firewall.manual_page,
-            'internal_enabled_ports': internal_enabled_ports,
-            'external_enabled_ports': external_enabled_ports
-        })
+        status = 'running' if firewall.get_enabled_status() else 'not_running'
+        context['firewall_status'] = status
+
+        if status == 'running':
+            context['components'] = components.Firewall.list()
+            internal_enabled_ports = firewall.get_enabled_services(
+                zone='internal')
+            external_enabled_ports = firewall.get_enabled_services(
+                zone='external')
+            context['internal_enabled_ports'] = internal_enabled_ports
+            context['external_enabled_ports'] = external_enabled_ports
+
+        return context

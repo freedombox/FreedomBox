@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.daemon import Daemon
 from plinth.utils import Version, format_lazy
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
@@ -32,6 +33,8 @@ version = 2
 is_essential = True
 
 managed_packages = ['firewalld', 'nftables']
+
+managed_services = ['firewalld']
 
 name = _('Firewall')
 
@@ -61,6 +64,9 @@ class FirewallApp(app_module.App):
         menu_item = menu.Menu('menu-firewall', name, None, 'fa-shield',
                               'firewall:index', parent_url_name='system')
         self.add(menu_item)
+
+        daemon = Daemon('daemon-firewall', managed_services[0])
+        self.add(daemon)
 
 
 def init():

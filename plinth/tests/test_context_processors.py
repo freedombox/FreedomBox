@@ -18,7 +18,7 @@
 Test module for custom context processors.
 """
 
-from unittest.mock import MagicMock, Mock
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 from django.http import HttpRequest
@@ -34,7 +34,8 @@ def fixture_menu():
     menu_module.init()
 
 
-def test_common():
+@patch('plinth.notification.Notification')
+def test_common(Notification):
     """Verify that the common() function returns the correct values."""
     cfg.read()  # initialize config settings
 
@@ -62,7 +63,8 @@ def test_common():
     assert response['user_is_admin']
 
 
-def test_common_border_conditions():
+@patch('plinth.notification.Notification')
+def test_common_border_conditions(Notification):
     """Verify that the common() function works for border conditions."""
     request = HttpRequest()
     request.path = ''

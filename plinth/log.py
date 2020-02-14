@@ -121,6 +121,11 @@ def get_configuration():
         'root': {
             'handlers': ['console'],
             'level': 'DEBUG' if cfg.develop else 'INFO'
+        },
+        'loggers': {
+            'django.db.backends': {
+                'level': 'INFO'  # Set to 'DEBUG' to log database queries
+            }
         }
     }
 

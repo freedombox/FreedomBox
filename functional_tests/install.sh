@@ -13,11 +13,14 @@ pip3 install splinter pytest-splinter pytest-bdd pytest-xvfb
 echo "Installing geckodriver"
 (
     DL_DIR=/tmp/gecko
-    GECKO_VERSION="v0.26.0"
+    GECKO_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/geckodriver/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
     FILENAME="geckodriver-${GECKO_VERSION}-linux64.tar.gz"
     GECKO_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/$FILENAME"
 
-    test -e /usr/local/bin/geckodriver &&  echo "geckodriver already installed" && exit 0
+    test -e /usr/local/bin/geckodriver && \
+        test "$GECKO_VERSION" = "v$(geckodriver --version | head -1 | awk '{ print $2 }')" && \
+        echo "geckodriver already installed" && \
+        exit 0
 
     mkdir -p $DL_DIR
     cd $DL_DIR

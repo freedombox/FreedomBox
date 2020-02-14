@@ -22,6 +22,7 @@ import time
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
+from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.http import is_safe_url
@@ -41,6 +42,16 @@ from . import forms, frontpage
 REDIRECT_FIELD_NAME = 'next'
 
 
+def _get_redirect_url_from_param(request):
+    """Return the redirect URL from 'next' GET/POST param."""
+    redirect_to = request.GET.get(REDIRECT_FIELD_NAME, '')
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME, redirect_to)
+    if is_safe_url(url=redirect_to, allowed_hosts={request.get_host()}):
+        return redirect_to
+
+    return reverse('index')
+
+
 @public
 def index(request):
     """Serve the main index page."""
@@ -52,9 +63,6 @@ def index(request):
         shortcut for shortcut in shortcuts if shortcut.component_id == selected
     ]
     selected_shortcut = selected_shortcut[0] if selected_shortcut else None
-
-    from plinth.modules.storage import views as disk_views
-    disk_views.warn_about_low_disk_space(request)
 
     return TemplateResponse(
         request, 'index.html', {
@@ -77,8 +85,6 @@ class AppsIndexView(TemplateView):
 
 def system_index(request):
     """Serve the system index page."""
-    from plinth.modules.storage import views as disk_views
-    disk_views.warn_about_low_disk_space(request)
     return TemplateResponse(request, 'system.html',
                             {'advanced_mode': get_advanced_mode()})
 
@@ -100,13 +106,7 @@ class LanguageSelectionView(FormView):
 
     def get_success_url(self):
         """Return the URL in the next parameter or home page."""
-        redirect_to = self.request.GET.get(REDIRECT_FIELD_NAME, '')
-        redirect_to = self.request.POST.get(REDIRECT_FIELD_NAME, redirect_to)
-        if is_safe_url(url=redirect_to,
-                       allowed_hosts={self.request.get_host()}):
-            return redirect_to
-
-        return reverse('index')
+        return _get_redirect_url_from_param(self.request)
 
 
 class AppView(FormView):
@@ -254,3 +254,15 @@ class SetupView(TemplateView):
                 return self.render_to_response(self.get_context_data())
 
         return super(SetupView, self).dispatch(request, *args, **kwargs)
+
+
+def notification_dismiss(request, id):
+    """Dismiss a notification."""
+    from .notification import Notification
+    notes = Notification.list(key=id, user=request.user)
+    if not notes:
+        raise Http404
+
+    notes[0].dismiss()
+
+    return HttpResponseRedirect(_get_redirect_url_from_param(request))

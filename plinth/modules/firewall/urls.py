@@ -23,5 +23,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^sys/firewall/$', views.index, name='index'),
+    url(r'^sys/firewall/$', views.FirewallAppView.as_view(), name='index'),
 ]

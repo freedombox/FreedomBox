@@ -21,7 +21,7 @@ import importlib
 import logging
 import sys
 
-from . import (__version__, cfg, dbus, frontpage, log, menu, module_loader,
+from . import (__version__, cfg, frontpage, glib, log, menu, module_loader,
                setup, utils, web_framework, web_server)
 
 if utils.is_axes_old():
@@ -130,7 +130,7 @@ def adapt_config(arguments):
 def on_web_server_stop():
     """Stop all other threads since web server is trying to exit."""
     setup.stop()
-    dbus.stop()
+    glib.stop()
 
 
 def main():
@@ -178,7 +178,7 @@ def main():
 
     setup.run_setup_in_background()
 
-    dbus.run()
+    glib.run()
 
     web_server.init()
     web_server.run(on_web_server_stop)

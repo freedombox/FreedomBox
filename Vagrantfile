@@ -16,13 +16,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+require 'etc'
+
 Vagrant.configure(2) do |config|
   config.vm.box = "freedombox/plinth-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
   config.vm.network "forwarded_port", guest: 445, host: 4450
   config.vm.synced_folder ".", "/vagrant", owner: "plinth", group: "plinth"
   config.vm.provider "virtualbox" do |vb|
-    vb.cpus = 2
+    vb.cpus = Etc.nprocessors
     vb.memory = 2048
     vb.linked_clone = true
   end
@@ -48,6 +51,7 @@ Vagrant.configure(2) do |config|
     apt-mark unhold freedombox
     # Install ncurses-term
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
+    echo 'alias run-develop="sudo -u plinth /vagrant/run --develop"' >> /home/vagrant/.bashrc
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "functional_tests/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready

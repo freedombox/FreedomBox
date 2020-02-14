@@ -28,8 +28,8 @@ from .service import wait_for_page_update
 sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
     'dynamicdns', 'firewall', 'letsencrypt', 'monkeysphere', 'names',
-    'networks', 'pagekite', 'power', 'security', 'snapshot', 'ssh', 'upgrades',
-    'users'
+    'networks', 'pagekite', 'power', 'security', 'snapshot', 'ssh', 'storage',
+    'upgrades','users'
 ]
 
 default_url = config['DEFAULT']['url']
@@ -101,7 +101,9 @@ def delete_user(browser, name):
 
 def is_user(browser, name):
     nav_to_module(browser, 'users')
-    return browser.is_text_present(name)
+    edit_link = browser.find_link_by_href('/plinth/sys/users/' + name +
+                                          '/edit/')
+    return bool(edit_link)
 
 
 def create_admin_account(browser, username, password):

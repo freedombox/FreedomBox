@@ -356,3 +356,8 @@ def main_page_is_shown(session_browser):
 @given(parsers.parse('the network device is in the {zone:w} firewall zone'))
 def networks_set_firewall_zone(session_browser, zone):
     system.networks_set_firewall_zone(session_browser, zone)
+
+
+@then('the root disk should be shown')
+def storage_root_disk_is_shown(session_browser):
+    assert system.storage_is_root_disk_shown(session_browser)

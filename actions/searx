@@ -21,6 +21,7 @@ Configuration helper for searx.
 
 import argparse
 import os
+import pathlib
 import secrets
 import shutil
 
@@ -142,14 +143,26 @@ def write_settings(settings):
         yaml.dump(settings, settings_file)
 
 
+def _get_example_settings_file():
+    searx_doc_dir = pathlib.Path('/usr/share/doc/searx/examples/')
+    if (searx_doc_dir / 'settings.yml').exists():
+        return searx_doc_dir / 'settings.yml'
+
+    return searx_doc_dir / 'settings.yml.gz'
+
+
 def subcommand_setup(_):
     """Post installation actions for Searx"""
     _copy_uwsgi_configuration()
     _update_uwsgi_configuration()
 
     if not os.path.exists(SETTINGS_FILE):
-        example_settings_file = '/usr/share/doc/searx/examples/settings.yml.gz'
-        gunzip(example_settings_file, SETTINGS_FILE)
+        example_settings_file = _get_example_settings_file()
+        if example_settings_file.suffix == '.gz':
+            gunzip(str(example_settings_file), SETTINGS_FILE)
+        else:
+            pathlib.Path(SETTINGS_FILE).parent.mkdir(mode=0o755)
+            shutil.copy(example_settings_file, SETTINGS_FILE)
 
     settings = read_settings()
     _generate_secret_key(settings)

@@ -160,7 +160,9 @@ def init():
             'captcha-refresh',
         ),
         TEMPLATES=templates,
+        TIME_ZONE='UTC',
         USE_L10N=True,
+        USE_TZ=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
     django.setup(set_prefix=True)
 

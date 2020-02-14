@@ -59,3 +59,9 @@ MIDDLEWARE = (
 ROOT_URLCONF = 'plinth.tests.data.urls'
 
 SECRET_KEY = 'django_tests_secret_key'
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'APP_DIRS': True,
+    'DIRS': ['plinth/tests/data/templates/'],
+}]

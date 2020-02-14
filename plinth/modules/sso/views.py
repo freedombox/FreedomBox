@@ -27,10 +27,9 @@ from axes.decorators import axes_form_invalid
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-
 from plinth import actions, utils, web_framework
 
-from .forms import AuthenticationForm
+from .forms import AuthenticationForm, CaptchaAuthenticationForm
 
 PRIVATE_KEY_FILE_NAME = 'privkey.pem'
 SSO_COOKIE_NAME = 'auth_pubtkt'
@@ -61,6 +60,7 @@ class SSOLoginView(LoginView):
     """
     redirect_authenticated_user = True
     template_name = 'login.html'
+    form_class = AuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
         response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
@@ -79,11 +79,11 @@ class SSOLoginView(LoginView):
 class CaptchaLoginView(LoginView):
     redirect_authenticated_user = True
     template_name = 'login.html'
-    form_class = AuthenticationForm
+    form_class = CaptchaAuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
-        response = super(CaptchaLoginView,
-                         self).dispatch(request, *args, **kwargs)
+        response = super(CaptchaLoginView, self).dispatch(
+            request, *args, **kwargs)
         if not request.POST:
             return response
 

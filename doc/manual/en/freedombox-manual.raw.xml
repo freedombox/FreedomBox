@@ -2573,7 +2573,7 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
           <ulink url="https://username:password@my.freedombox.rocks/gitweb/myrepo"/>
         </para>
         <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user who has only access to the gitweb and not to use an admin account. </para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a FreedomBox user who has only access to the gitweb and never use an admin account. </para>
       </section>
       <section>
         <title>Mirroring</title>
@@ -10057,6 +10057,59 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
+        <title>FreedomBox 20.2 (2020-02-10)</title>
+        <itemizedlist>
+          <listitem>
+            <para>networks: Support virtual Ethernet (veth) devices </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Show firewall service status </para>
+          </listitem>
+          <listitem>
+            <para>storage: Show disks if FreedomBox is running in an unprivileged container </para>
+          </listitem>
+          <listitem>
+            <para>service: Stop service not before but after disabling it </para>
+          </listitem>
+          <listitem>
+            <para>users: Use more precise username validation </para>
+          </listitem>
+          <listitem>
+            <para>sso, users: Turn off autocapitalization on the username field </para>
+          </listitem>
+          <listitem>
+            <para>help: Fix anchor hidden under navbar </para>
+          </listitem>
+          <listitem>
+            <para>searx: Fix installation issue for 0.16.0 </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Show Run Diagnostics button in app </para>
+          </listitem>
+          <listitem>
+            <para>glib: Introduce method to schedule an operation at regular intervals </para>
+          </listitem>
+          <listitem>
+            <para>notification: Show a drop down from main navbar for notifications </para>
+          </listitem>
+          <listitem>
+            <para>storage: Show low disk space warning using notifications API </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Show notification when FreedomBox is updated </para>
+          </listitem>
+          <listitem>
+            <para>security: Add Sandbox Coverage to report page </para>
+          </listitem>
+          <listitem>
+            <para>matrixsynapse: Enable systemd sandboxing </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Telugu, French, Norwegian Bokmål, German, Spanish, and Swedish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>FreedomBox 20.1 (2020-01-27)</title>
         <itemizedlist>
           <listitem>
@@ -10093,25 +10146,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
             <para>bind: Enable sandboxing for bind service </para>
           </listitem>
           <listitem>
-            <para>Translated using Weblate (Dutch) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Norwegian Bokmål) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (German) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Spanish) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Swedish) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (French) </para>
-          </listitem>
-          <listitem>
-            <para>Translated using Weblate (Greek) </para>
+            <para>locale: Updated translations for Dutch, Norwegian Bokmål, German, Spanish, Swedish, French, and Greek </para>
           </listitem>
         </itemizedlist>
       </section>
