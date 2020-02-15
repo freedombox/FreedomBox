@@ -37,7 +37,8 @@ default_url = config['DEFAULT']['url']
 
 def login(browser, url, username, password):
 
-    if '/plinth/' not in browser.url:
+    # XXX: Find a way to remove the hardcoded jsxc URL
+    if '/plinth/' not in browser.url or '/jsxc/jsxc' in browser.url:
         browser.visit(url)
 
     apps_link = browser.find_link_by_href('/plinth/apps/')
