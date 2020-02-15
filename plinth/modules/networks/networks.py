@@ -457,12 +457,26 @@ def internet_connection_type_help_page(request):
     Show the internet connection type page.
     Used for first boot step and networks page.
     """
-    # stub for now
+    is_firstboot = True \
+        if 'firstboot' in request.build_absolute_uri() else False
+
     if request.method == 'POST':
-        resp = reverse_lazy('networks:index')
+        if is_firstboot:
+            resp = reverse_lazy(first_boot.next_step())
+        else:
+            resp = reverse_lazy('networks:index')
+            messages.success(request, _('Internet connection type saved.'))
     else:
         html = "internet_connectivity_type.html"
         template_kwargs = {'form': InternetConnectionTypeForm}
+        if is_firstboot:
+            html = "internet_connectivity_type_firstboot.html"
+
+            # mark step done on firstboot visit to get the next_step
+            first_boot.mark_step_done('router_setup_wizard')
+            template_kwargs.update({
+                'first_boot_next_step': reverse_lazy(first_boot.next_step()),
+            })
 
         resp = TemplateResponse(request, html, template_kwargs)
 

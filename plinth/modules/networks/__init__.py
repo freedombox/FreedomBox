@@ -18,11 +18,18 @@ is_essential = True
 
 managed_packages = ['network-manager', 'batctl']
 
-first_boot_steps = [{
-    'id': 'router_setup_wizard',
-    'url': 'networks:firstboot_router_setup',
-    'order': 4,
-}]
+first_boot_steps = [
+    {
+        'id': 'internet_connectivity_type',
+        'url': 'networks:firstboot_internet_connection_type',
+        'order': 3,
+    },
+    {
+        'id': 'router_setup_wizard',
+        'url': 'networks:firstboot_router_setup',
+        'order': 4,
+    },
+]
 
 _description = [
     _('Configure network devices. Connect to the Internet via Ethernet, Wi-Fi '
