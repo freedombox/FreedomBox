@@ -29,7 +29,7 @@ sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
     'dynamicdns', 'firewall', 'letsencrypt', 'monkeysphere', 'names',
     'networks', 'pagekite', 'power', 'security', 'snapshot', 'ssh', 'storage',
-    'upgrades','users'
+    'upgrades', 'users'
 ]
 
 default_url = config['DEFAULT']['url']
