@@ -288,6 +288,58 @@ requires clients to have the password to connect.'),
         return settings
 
 
+class InternetConnectionTypeForm(forms.Form):
+    """
+    Ask the user for what type of Internet connection they have. We store this
+    information and use it suggest various setup options during the setup
+    process and also later on when setting up apps.
+    """
+    internet_connection_type = forms.ChoiceField(
+        label=_('Choose your internet connection type'),
+        choices=[
+            ('dynamic_public_ip',
+             Markup(
+                 _('I have a public IP address that may change over time'
+                   '<p class="help-block">This means that devices on the '
+                   'internet can reach you when you are connected on the '
+                   'Internet. Every time you connect to the Internet with '
+                   'your Internet Service Provider (ISP), you may get a '
+                   'different IP address, especially after some offline time. '
+                   'Many ISPs offer this type of connectivity. If you have a '
+                   'public IP address but are unsure if it changes over time '
+                   'or not, it is safer to choose this option.</p>'))),
+            ('static_public_ip',
+             Markup(format_lazy(
+                _('I have a public IP address that does not change overtime '
+                  '(recommended)'
+                  '<p class="help-block">This means that devices on the '
+                  'Internet can reach you when you are connected on the '
+                  'Internet. Every time you connect to the Internet with '
+                  'your Internet Service Provider (ISP), you always get the '
+                  'same IP address. This is the most trouble free setup for '
+                  'many {box_name} services but very few ISPs offer this. '
+                  'You may be able to get this service from your ISP by '
+                  'making an additional payment.</p>'),
+                box_name=cfg.box_name))),
+            ('private_ip',
+             Markup(format_lazy(
+                _('I dont have a public IP address'
+                  '<p class="help-block">This means that devices on the '
+                  'Internet <b>can not</b> reach you when you are connected '
+                  'to the Internet. Every time you connect to the Internet '
+                  'with your Internet Service Provider (ISP), you get an IP '
+                  'address that is only relevant for local networks. '
+                  'Many ISPs offer this type of connectivity. This is the '
+                  'most troublesome situation for hosting services at home. '
+                  '{box_name} provides many workaround solutions but each '
+                  'solution has some limitations.</p>'),
+                box_name=cfg.box_name))),
+        ],
+        required=True,
+        widget=forms.RadioSelect,
+    )
+
+
 class RouterConfigurationWizardForm(forms.Form):
     """
     Form to suggest router configuration depending on wan
