@@ -31,7 +31,10 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-    subparsers.add_parser('setup', help='Setup for BIND')
+    setup = subparsers.add_parser('setup', help='Setup for BIND')
+    setup.add_argument(
+        '--old-version', type=int, required=True,
+        help='Earlier version of the app that is already setup.')
 
     configure = subparsers.add_parser('configure', help='Configure BIND')
     configure.add_argument('--forwarders',
@@ -43,11 +46,11 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Setup BIND configuration."""
-    conf_file = open(CONFIG_FILE, "w")
-    conf_file.write(DEFAULT_CONFIG)
-    conf_file.close()
+    if arguments.old_version == 0:
+        with open(CONFIG_FILE, "w") as conf_file:
+            conf_file.write(DEFAULT_CONFIG)
 
     Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
 

@@ -34,7 +34,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 name = _('BIND')
 
@@ -127,7 +127,9 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'bind', ['setup'])
+    helper.call(
+        'post', actions.superuser_run, 'bind',
+        ['setup', '--old-version', str(old_version)])
     helper.call('post', app.enable)
 
 
