@@ -460,24 +460,34 @@ def internet_connection_type_help_page(request):
     is_firstboot = True \
         if 'firstboot' in request.build_absolute_uri() else False
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST['internet_connection_type']:
+        form = InternetConnectionTypeForm(request.POST)
+        if form.is_valid():
+            logger.info('Updating internet connectivity type with value: %s' %
+                        request.POST['internet_connection_type'])
+            kvstore.set(
+                networks.INTERNET_CONNECTION_TYPE_KEY,
+                request.POST['internet_connection_type'],
+            )
         if is_firstboot:
-            resp = reverse_lazy(first_boot.next_step())
+            return redirect(reverse_lazy(first_boot.next_step()))
         else:
-            resp = reverse_lazy('networks:index')
             messages.success(request, _('Internet connection type saved.'))
+            return redirect(reverse_lazy('networks:index'))
     else:
         html = "internet_connectivity_type.html"
-        template_kwargs = {'form': InternetConnectionTypeForm}
+        initial = {
+            "internet_connection_type": kvstore.get_default(
+                networks.INTERNET_CONNECTION_TYPE_KEY, 'dynamic_public_ip'),
+        }
+        template_kwargs = {'form': InternetConnectionTypeForm(initial=initial)}
         if is_firstboot:
-            html = "internet_connectivity_type_firstboot.html"
+            html = "internet_connectivity_firstboot.html"
 
             # mark step done on firstboot visit to get the next_step
-            first_boot.mark_step_done('router_setup_wizard')
+            first_boot.mark_step_done('internet_connectivity_type')
             template_kwargs.update({
                 'first_boot_next_step': reverse_lazy(first_boot.next_step()),
             })
 
-        resp = TemplateResponse(request, html, template_kwargs)
-
-    return resp
+        return TemplateResponse(request, html, template_kwargs)

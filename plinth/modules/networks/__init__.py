@@ -43,6 +43,7 @@ logger = Logger(__name__)
 app = None
 
 ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
+INTERNET_CONNECTION_TYPE_KEY = 'networks_internet_type'
 
 
 class NetworksApp(app_module.App):
