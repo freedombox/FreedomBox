@@ -1,0 +1,23 @@
+{% extends "base_firstboot.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  {% include "internet_connectivity_content.html" %}
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <a href='{{ first_boot_next_step }}'>{% trans "skip this step" %}</a>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Next" %}" style="float: right;"/>
+  </form>
+
+{% endblock %}
