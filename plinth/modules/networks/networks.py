@@ -35,7 +35,9 @@ def index(request):
             'title': _('Network Connections'),
             'has_diagnostics': True,
             'is_enabled': True,
-            'connections': connections
+            'connections': connections,
+            'internet_connectivity_type': kvstore.get_default(
+                networks.INTERNET_CONNECTION_TYPE_KEY, "dynamic_public_ip")
         })
 
 

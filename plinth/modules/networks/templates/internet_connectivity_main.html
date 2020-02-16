@@ -18,10 +18,17 @@
   {% endblocktrans %}
 </p>
 
-<div class="btn-toolbar">
+<p>
+  {% if internet_connectivity_type == "static_public_ip" %}
+  My ISP provides a public IP address that does not change over time.
+  {% elif internet_connectivity_type == "dynamic_public_ip" %}
+  My ISP provides a public IP address that may change over time.
+  {% else %}
+  I don't have a public IP address.
+  {% endif %}
   <a href="{% url 'networks:internet_connection_type_setup' %}" class="btn btn-default"
      role="button" title="{% trans 'Update...' %}">
     <span class="fa" aria-hidden="true"></span>
     {% trans 'Update...' %}
   </a>
-</div>
+</p>
