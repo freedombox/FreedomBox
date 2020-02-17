@@ -23,6 +23,6 @@
  */
 
 (function($) {
-    let downloadManualButton = $('a[href="/plinth/help/manual/download/"]');
+    let downloadManualButton = $('a[href="/plinth/help/manual-download/"]');
     downloadManualButton.attr("data-turbolinks", "false");
 })(jQuery);
