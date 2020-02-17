@@ -1,0 +1,48 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block page_head %}
+  <style type="text/css">
+    .connection-status-label {
+        display: inline-block;
+        width: 5.5em;
+        padding: 5px 0px;
+        text-align: center;
+        margin-right: 10px;
+    }
+
+    .connection-show-label {
+        display: inline-block;
+        width: 40%;
+    }
+
+    .connection-type-label {
+        display: inline-block;
+    }
+
+    .list-group-item .btn {
+        margin: -2px 0;
+    }
+
+    .form.pull-right {
+        margin-right: 20px;
+    }
+
+    .form button {
+        width: 7em;
+    }
+  </style>
+{% endblock %}
+
+{% block configuration %}
+  {% include "connections_list.html" %}
+
+  {% include "router_configuration_main.html" %}
+
+  {% include "internet_connectivity_main.html" %}
+{% endblock %}

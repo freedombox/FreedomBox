@@ -29,7 +29,7 @@ def index(request):
     connections = network.get_connection_list()
 
     return TemplateResponse(
-        request, 'connections_list.html', {
+        request, 'networks_configuration.html', {
             'app_id': 'networks',
             'app_info': networks.app.info,
             'title': _('Network Connections'),

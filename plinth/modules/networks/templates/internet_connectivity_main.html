@@ -1,0 +1,27 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+<h3>
+  {% blocktrans trimmed %}
+    Your Internet Connection Type
+  {% endblocktrans %}
+</h3>
+<p>
+  {% blocktrans trimmed %}
+    The following best describes the type of Internet connection provided
+    by your ISP. This information is only used to suggest you necessary
+    configuration actions.
+  {% endblocktrans %}
+</p>
+
+<div class="btn-toolbar">
+  <a href="{% url 'networks:internet_connection_type_setup' %}" class="btn btn-default"
+     role="button" title="{% trans 'Update...' %}">
+    <span class="fa" aria-hidden="true"></span>
+    {% trans 'Update...' %}
+  </a>
+</div>

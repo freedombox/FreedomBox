@@ -1,4 +1,3 @@
-{% extends "app.html" %}
 {% comment %}
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
@@ -6,40 +5,6 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block page_head %}
-  <style type="text/css">
-    .connection-status-label {
-        display: inline-block;
-        width: 5.5em;
-        padding: 5px 0px;
-        text-align: center;
-        margin-right: 10px;
-    }
-
-    .connection-show-label {
-        display: inline-block;
-        width: 40%;
-    }
-
-    .connection-type-label {
-        display: inline-block;
-    }
-
-    .list-group-item .btn {
-        margin: -2px 0;
-    }
-
-    .form.pull-right {
-        margin-right: 20px;
-    }
-
-    .form button {
-        width: 7em;
-    }
-  </style>
-{% endblock %}
-
-{% block configuration %}
   <h3>{% trans "Connections" %}</h3>
 
   <div class="btn-toolbar">
@@ -102,56 +67,4 @@
       </div>
     {% endfor %}
   </div>
-
   {% include "connections_diagram.html" %}
-
-  <h3>
-    {% blocktrans trimmed %}
-      {{ box_name }} Internet Connectivity
-    {% endblocktrans %}
-  </h3>
-  <p>
-    {% blocktrans trimmed %}
-      The following best describes how your {{ box_name }} is connected in your
-      network. This information is used only to suggest necessary configuration
-      actions.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      Your {{ box_name }} gets its internet from your Router via WiFi or
-      Ethernet cable. This is a typical home setup.
-    {% endblocktrans %}
-  </p>
-
-  <div class="btn-toolbar">
-    <a href="{% url 'networks:router_setup' %}" class="btn btn-default"
-       role="button" title="{% trans 'Update...' %}">
-      <span class="fa" aria-hidden="true"></span>
-      {% trans 'Update...' %}
-    </a>
-  </div>
-
-  <h3>
-    {% blocktrans trimmed %}
-      Your Internet Connection Type
-    {% endblocktrans %}
-  </h3>
-  <p>
-    {% blocktrans trimmed %}
-      The following best describes the type of Internet connection provided
-			by your ISP. This information is only used to suggest you necessary
-			configuration actions.
-    {% endblocktrans %}
-  </p>
-
-  <div class="btn-toolbar">
-    <a href="{% url 'networks:internet_connection_type_setup' %}" class="btn btn-default"
-       role="button" title="{% trans 'Update...' %}">
-      <span class="fa" aria-hidden="true"></span>
-      {% trans 'Update...' %}
-    </a>
-  </div>
-
-{% endblock %}
