@@ -39,7 +39,7 @@ _description = [
       'like hostname, domain name, webserver home page etc.')
 ]
 
-depends = ['firewall', 'names']
+depends = ['apache', 'firewall', 'names']
 
 APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
 APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
