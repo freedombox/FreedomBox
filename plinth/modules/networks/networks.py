@@ -11,9 +11,15 @@ from django.views.decorators.http import require_POST
 
 from plinth import kvstore, network
 from plinth.modules import first_boot, networks
-
-from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
-                    PPPoEForm, RouterConfigurationWizardForm, WifiForm)
+from .forms import (
+    ConnectionTypeSelectForm,
+    EthernetForm,
+    GenericForm,
+    PPPoEForm,
+    WifiForm,
+    RouterConfigurationWizardForm,
+    InternetConnectionTypeForm,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -444,3 +450,20 @@ def router_configuration_help_page(request):
             })
 
         return TemplateResponse(request, html, template_kwargs)
+
+
+def internet_connection_type_help_page(request):
+    """
+    Show the internet connection type page.
+    Used for first boot step and networks page.
+    """
+    # stub for now
+    if request.method == 'POST':
+        resp = reverse_lazy('networks:index')
+    else:
+        html = "internet_connectivity_type.html"
+        template_kwargs = {'form': InternetConnectionTypeForm}
+
+        resp = TemplateResponse(request, html, template_kwargs)
+
+    return resp

@@ -33,4 +33,7 @@ urlpatterns = [
     url(r'^sys/networks/firstboot/$',
         public(views.router_configuration_help_page),
         name='firstboot_router_setup'),
+    url(r'^sys/networks/internet-connection-type/$',
+        views.internet_connection_type_help_page,
+        name='internet_connection_type_setup'),
 ]
