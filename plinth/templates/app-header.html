@@ -17,11 +17,16 @@
   <section class="app-description" >
     <section class='app-titles'>
       {% block pagetitle %}
-        {% if setup %}
-          <h2>{% trans "Installation" %}: {{ app_info.short_description|default:'' }} ({{ app_info.name }})</h2>
-        {% else %}
-          <h2>{{ app_info.name }}</h2>
-        {% endif %}
+        <div>
+          {% if setup %}
+            <h2>{% trans "Installation" %}: {{ app_info.name }}</h2>
+          {% else %}
+            <h2>{{ app_info.name }}</h2>
+          {% endif %}
+          {% if app_info.short_description %}
+            <h3>{{ app_info.short_description }}</h3>
+          {% endif %}
+        </div>
       {% endblock %}
       <div id='app-toggle-container' class="app-toggle-container">
         {% if is_enabled %}
