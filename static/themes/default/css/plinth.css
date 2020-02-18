@@ -493,11 +493,13 @@ a.menu_link_active {
     justify-content: flex-end;
 }
 
+/*
+ * Toggle button
+ */
 .toggle-button {
-    border-radius: 25px;
-    border: none;
-    width: 55px;
-    height: 25px;
+    border-radius: 13px;
+    width: 50px;
+    height: 26px;
     background: #ccc;
     position: relative;
 }
@@ -505,26 +507,23 @@ a.menu_link_active {
 .toggle-button::before {
     content: '';
     display: block;
-    height: 18px;
-    width: 18px;
+    height: 24px;
+    width: 24px;
     border-radius: 100%;
     background: #fff;
     position: absolute;
     top: 50%;
-    left: 6%;
+    left: 0%;
     transform: translateY(-50%);
 }
 
 .toggle-button--toggled {
-    background: #337ab7;
+    background: #4989D4;
 }
 
 .toggle-button--toggled::before {
-    content: '';
-    position: absolute;
-    top: 50%;
     left: 100%;
-    transform: translateY(-50%) translateX(-116%)
+    transform: translateY(-50%) translateX(-100%)
 }
 
 .header-bar {
