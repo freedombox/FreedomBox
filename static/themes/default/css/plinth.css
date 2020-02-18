@@ -487,12 +487,6 @@ a.menu_link_active {
     width: 50%;
 }
 
-.app-toggle-container {
-    display: none;
-    flex-flow: row;
-    justify-content: flex-end;
-}
-
 /*
  * Toggle button
  */
@@ -526,17 +520,9 @@ a.menu_link_active {
     transform: translateY(-50%) translateX(-100%)
 }
 
-.header-bar {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    height: 70px;
-}
-
-.header-bar .app-toggle-container, .header-bar h2 {
-    margin: auto 0;
-}
-
+/*
+ * Button toolbar
+ */
 .btn-toolbar {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -546,6 +532,9 @@ a.menu_link_active {
     float: right;
 }
 
+/*
+ * App's header
+ */
 .app-header {
     display: grid;
     grid-template-columns: 0.2fr 1fr;
@@ -569,13 +558,22 @@ a.menu_link_active {
     grid-column: 1;
 }
 
-/* Help manual - anchor is below navbar */
-*[id^='idm']:before {
-  display: block;
-  content: " ";
-  margin-top: -60px;
-  height: 60px;
-  visibility: hidden;
+.header-bar {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.header-bar .app-toggle-container,
+.header-bar h2 {
+    margin: auto 0;
+}
+
+.app-toggle-container {
+    display: none;
+    flex-flow: row;
+    justify-content: flex-end;
 }
 
 @media screen and (max-width: 767px) {
@@ -611,6 +609,15 @@ a.menu_link_active {
     .header-bar .toggle-button {
         transform: scale(1.2);
     }
+}
+
+/* Help manual - anchor is below navbar */
+*[id^='idm']:before {
+    display: block;
+    content: " ";
+    margin-top: -60px;
+    height: 60px;
+    visibility: hidden;
 }
 
 /*
