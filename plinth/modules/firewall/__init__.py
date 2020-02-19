@@ -4,6 +4,7 @@ FreedomBox app to configure a firewall.
 """
 
 import contextlib
+import logging
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -37,6 +38,8 @@ _description = [
 _port_details = {}
 
 app = None
+
+logger = logging.getLogger(__name__)
 
 _DBUS_NAME = 'org.fedoraproject.FirewallD1'
 _FIREWALLD_OBJECT = '/org/fedoraproject/FirewallD1'
@@ -118,12 +121,22 @@ def _get_dbus_proxy(object, interface):
 
 
 @contextlib.contextmanager
-def ignore_dbus_error(ignored_exception):
+def ignore_dbus_error(dbus_error=None, service_error=None):
     try:
         yield
     except glib.Error as exception:
         parts = exception.message.split(':')
-        if parts[0] != 'GDBus.Error' or parts[2].strip() != ignored_exception:
+        if parts[0] != 'GDBus.Error':
+            raise
+
+        if (dbus_error and parts[1].strip() == 'org.freedesktop.DBus.Error.' +
+                dbus_error):
+            logger.error('Firewalld is not running.')
+            pass
+        elif (service_error and parts[2].strip() == service_error):
+            logger.warning('Ignoring firewall exception: %s', service_error)
+            pass
+        else:
             raise
 
 
@@ -138,8 +151,11 @@ def get_enabled_status():
 
 def get_enabled_services(zone):
     """Return the status of various services currently enabled"""
-    zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
-    return zone_proxy.getServices('(s)', zone)
+    with ignore_dbus_error(dbus_error='ServiceUnknown'):
+        zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
+        return zone_proxy.getServices('(s)', zone)
+
+    return []  # When firewalld is not running
 
 
 def get_port_details(service_port):
@@ -160,34 +176,39 @@ def get_port_details(service_port):
 
 def get_interfaces(zone):
     """Return the list of interfaces in a zone."""
-    zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
-    return zone_proxy.getInterfaces('(s)', zone)
+    with ignore_dbus_error(dbus_error='ServiceUnknown'):
+        zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
+        return zone_proxy.getInterfaces('(s)', zone)
+
+    return []  # When firewalld is not running
 
 
 def add_service(port, zone):
     """Enable a service in firewall"""
-    zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
-    with ignore_dbus_error('ALREADY_ENABLED'):
-        zone_proxy.addService('(ssi)', zone, port, 0)
+    with ignore_dbus_error(dbus_error='ServiceUnknown'):
+        zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
+        with ignore_dbus_error(service_error='ALREADY_ENABLED'):
+            zone_proxy.addService('(ssi)', zone, port, 0)
 
-    config = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_INTERFACE)
-    zone_path = config.getZoneByName('(s)', zone)
-    config_zone = _get_dbus_proxy(zone_path, _CONFIG_ZONE_INTERFACE)
-    with ignore_dbus_error('ALREADY_ENABLED'):
-        config_zone.addService('(s)', port)
+        config = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_INTERFACE)
+        zone_path = config.getZoneByName('(s)', zone)
+        config_zone = _get_dbus_proxy(zone_path, _CONFIG_ZONE_INTERFACE)
+        with ignore_dbus_error(service_error='ALREADY_ENABLED'):
+            config_zone.addService('(s)', port)
 
 
 def remove_service(port, zone):
     """Remove a service in firewall"""
-    zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
-    with ignore_dbus_error('NOT_ENABLED'):
-        zone_proxy.removeService('(ss)', zone, port)
+    with ignore_dbus_error(dbus_error='ServiceUnknown'):
+        zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
+        with ignore_dbus_error(service_error='NOT_ENABLED'):
+            zone_proxy.removeService('(ss)', zone, port)
 
-    config = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_INTERFACE)
-    zone_path = config.getZoneByName('(s)', zone)
-    config_zone = _get_dbus_proxy(zone_path, _CONFIG_ZONE_INTERFACE)
-    with ignore_dbus_error('NOT_ENABLED'):
-        config_zone.removeService('(s)', port)
+        config = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_INTERFACE)
+        zone_path = config.getZoneByName('(s)', zone)
+        config_zone = _get_dbus_proxy(zone_path, _CONFIG_ZONE_INTERFACE)
+        with ignore_dbus_error(service_error='NOT_ENABLED'):
+            config_zone.removeService('(s)', port)
 
 
 def _run(arguments, superuser=False):
