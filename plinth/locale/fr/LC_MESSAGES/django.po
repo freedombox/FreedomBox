@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-14 21:26+0200\n"
-"PO-Revision-Date: 2020-01-31 13:50+0000\n"
+"PO-Revision-Date: 2020-02-21 23:32+0000\n"
 "Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -17,17 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 3.11.1\n"
 
 #: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:23
-#, fuzzy
-#| msgid "Custom Services"
 msgid "Custom Section"
-msgstr "Services Personnalisés"
+msgstr "Section Personnalisée"
 
 #: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:26
 msgid "Custom paragraph content."
-msgstr ""
+msgstr "Contenu de paragraphe personnalisé."
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -413,24 +411,13 @@ msgid "Are you sure that you want to remove this repository?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce dépôt ?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      The remote repository will not be deleted.\n"
-#| "      This just removes the repository from the listing on the backup "
-#| "page, you\n"
-#| "      can add it again later on.\n"
-#| "    "
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
-"\n"
-"      Le dépôt distant ne sera pas supprimé.\n"
-"      Cela va juste supprimer le dépôt de votre liste sur la page de "
-"sauvegarde,\n"
-"      vous pourrez l’ajouter à nouveau ultérieurement.\n"
-"    "
+"Le dépôt distant ne sera pas supprimé. Cela va juste supprimer le dépôt de "
+"votre liste sur la page de sauvegarde, vous pourrez l’ajouter à nouveau "
+"ultérieurement."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 msgid "Remove Location"
@@ -2691,27 +2678,16 @@ msgstr ""
 "inscriptions publiques sont activées."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        The configured domain name is using a self-signed certificate.\n"
-#| "        Federation with other Matrix Synapse instances requires a valid "
-#| "TLS\n"
-#| "        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
-#| "        Encrypt</a> to obtain one.\n"
-#| "      "
+#, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
-"\n"
-"        Le nom de domaine configuré utilise un certificat auto-signé.\n"
-"        La fédération avec d'autres instances de Matrix Synapse nécessite un "
-"certificat TLS\n"
-"        valide. Rendez-vous sur <a href=\"%(letsencrypt_url)s\">Let's\n"
-"        Encrypt</a> pour en obtenir un.\n"
-"      "
+"Le nom de domaine configuré utilise un certificat auto-signé. La fédération "
+"avec d'autres instances de Matrix Synapse nécessite un certificat TLS "
+"valide. Rendez-vous sur <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> "
+"pour en obtenir un."
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -3329,10 +3305,8 @@ msgid "Connection Name"
 msgstr "Nom Connexion"
 
 #: plinth/modules/networks/forms.py:46
-#, fuzzy
-#| msgid "Interface"
 msgid "Network Interface"
-msgstr "Interface"
+msgstr "Interface réseau"
 
 #: plinth/modules/networks/forms.py:47
 msgid "The network device that this connection should be bound to."
@@ -3574,10 +3548,8 @@ msgid "Open"
 msgstr "Ouvert"
 
 #: plinth/modules/networks/forms.py:313
-#, fuzzy
-#| msgid "Current Network Configuration"
 msgid "Preferred router configuration"
-msgstr "Configuration réseau actuelle"
+msgstr "Configuration préférée de routeur"
 
 #: plinth/modules/networks/forms.py:318
 #, python-brace-format
@@ -3588,6 +3560,12 @@ msgid ""
 "as the {box_name}'s address. First remember to configure a static local IP "
 "address for your {box_name} in your router's configuration.</p>"
 msgstr ""
+"Utilisez la fonction de réseau isolé (DMZ) pour transférer tout le trafic<p "
+"class=\"help-block\">La plupart des routeurs proposent une configuration "
+"appelée DMZ. Celle-ci vous permet de transférer tout le trafic entrant "
+"depuis Internet vers une adresse IP unique telle que l’adresse de {box_name}"
+". Pensez d’abord à configurer une adresse IP locale statique pour votre "
+"{box_name} dans la configuration de votre router.</p>"
 
 #: plinth/modules/networks/forms.py:332
 #, python-brace-format
@@ -3704,10 +3682,8 @@ msgid "Delete Connection"
 msgstr "Supprimer Connexion"
 
 #: plinth/modules/networks/networks.py:442
-#, fuzzy
-#| msgid "Tor configuration is being updated"
 msgid "Router configuration type saved."
-msgstr "La configuration de Tor est en cours d'actualisation"
+msgstr "Type de configuration de routeur enregistré."
 
 #: plinth/modules/networks/templates/connection_show.html:43
 msgid "Edit connection"
@@ -3967,6 +3943,9 @@ msgid ""
 "network. This information is used only to suggest necessary configuration "
 "actions."
 msgstr ""
+"Les informations suivantes décrivent au mieux comment votre %(box_name)s est "
+"connectée à votre réseau. Ces informations ne sont utilisées que pour "
+"suggérer des actions de configuration nécessaires."
 
 #: plinth/modules/networks/templates/connections_list.html:137
 #, python-format
@@ -3974,23 +3953,22 @@ msgid ""
 "Your %(box_name)s gets its internet from your Router via WiFi or Ethernet "
 "cable. This is a typical home setup."
 msgstr ""
+"Votre %(box_name)s tire son accès à Internet de votre routeur grâce au WiFi "
+"ou à un câble Ethernet. Il s’agit de la configuration domestique classique."
 
 #: plinth/modules/networks/templates/connections_list.html:145
 #: plinth/modules/networks/templates/connections_list.html:147
-#, fuzzy
-#| msgid "Update"
 msgid "Update..."
-msgstr "Actualiser"
+msgstr "Actualiser…"
 
 #: plinth/modules/networks/templates/connections_type_select.html:34
 msgid "Create..."
 msgstr "Créer..."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:25
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "Setup %(box_name)s Behind a Router"
-msgstr "%(box_name)s est à jour."
+msgstr "Installer %(box_name)s derrière un routeur"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:31
 #, python-format
@@ -3998,6 +3976,8 @@ msgid ""
 "Your %(box_name)s gets its internet connection from your router via Wi-Fi or "
 "Ethernet cable. This is a typical home setup."
 msgstr ""
+"Votre %(box_name)s tire son accès à Internet de votre routeur grâce au WiFi "
+"ou à un câble Ethernet. Il s’agit de la configuration domestique classique."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:38
 #, python-format
@@ -4815,10 +4795,6 @@ msgid "Shares"
 msgstr "Partages"
 
 #: plinth/modules/samba/templates/samba.html:41
-#, fuzzy
-#| msgid ""
-#| "Note: only specially created directories will be shared on selected "
-#| "disks, not the whole disk."
 msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
@@ -4836,8 +4812,6 @@ msgid "Used"
 msgstr "Utilisé"
 
 #: plinth/modules/samba/templates/samba.html:72
-#, fuzzy
-#| msgid "vfat partitions are not supported"
 msgid "VFAT partitions are not supported"
 msgstr "Les partitions formatées en VFAT ne sont pas gérées"
 
@@ -4857,10 +4831,6 @@ msgid "Users who can currently access group and home shares"
 msgstr "Utilisateurs pouvant accéder aux partages de groupe et domestiques"
 
 #: plinth/modules/samba/templates/samba.html:113
-#, fuzzy
-#| msgid ""
-#| "Users who need to re-enter their password on the password change page to "
-#| "access group and home shares"
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
@@ -5092,10 +5062,8 @@ msgid "No"
 msgstr "Non"
 
 #: plinth/modules/security/templates/security_report.html:81
-#, fuzzy
-#| msgid "is not running"
 msgid "Not running"
-msgstr "n'est pas actif"
+msgstr "Inactif"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5696,18 +5664,15 @@ msgid "The device is mounted by another user."
 msgstr "Le media est monté par un autre utilisateur."
 
 #: plinth/modules/storage/__init__.py:326
-#, fuzzy, no-python-format, python-brace-format
-#| msgid ""
-#| "Warning: Low space on system partition ({percent_used}% used, "
-#| "{free_space} free)."
+#, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
-"Attention : espace faible sur la partition système, ({percent_used}% "
-"utilisé, {free_space} libre)."
+"Espace faible sur la partition système : {percent_used}% utilisé, "
+"{free_space} libre."
 
 #: plinth/modules/storage/__init__.py:328
 msgid "Low disk space"
-msgstr ""
+msgstr "Espace disque faible"
 
 #: plinth/modules/storage/forms.py:79
 msgid "Invalid directory name."
@@ -6195,10 +6160,8 @@ msgstr ""
 "correctifs de sécurité."
 
 #: plinth/modules/upgrades/__init__.py:84
-#, fuzzy
-#| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
-msgstr "Fondation FreedomBox"
+msgstr "FreedomBox mise à jour"
 
 #: plinth/modules/upgrades/forms.py:28
 msgid "Enable auto-update"
@@ -6211,10 +6174,9 @@ msgstr ""
 "jour."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:24
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "%(box_name)s Updated"
-msgstr "%(box_name)s est à jour."
+msgstr "%(box_name)s mis à jour"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:28
 #, python-format
@@ -6530,7 +6492,7 @@ msgstr "Mot de passe changé avec succès."
 #: plinth/modules/wireguard/__init__.py:38
 #: plinth/modules/wireguard/manifest.py:29
 msgid "WireGuard"
-msgstr ""
+msgstr "WireGuard"
 
 #: plinth/modules/wireguard/__init__.py:43
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
@@ -6552,19 +6514,15 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:47
-#, fuzzy
-#| msgid "Invalid kite name"
 msgid "Invalid key."
-msgstr "Nom Kite invalide"
+msgstr "Clé invalide."
 
 #: plinth/modules/wireguard/forms.py:76
 #: plinth/modules/wireguard/templates/wireguard.html:32
 #: plinth/modules/wireguard/templates/wireguard.html:89
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:38
-#, fuzzy
-#| msgid "Publish Key"
 msgid "Public Key"
-msgstr "Publier la clef"
+msgstr "Clé publique"
 
 #: plinth/modules/wireguard/forms.py:77
 msgid ""
@@ -6583,10 +6541,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:91
-#, fuzzy
-#| msgid "Published key to keyserver."
 msgid "Public key of the server"
-msgstr "Clef publiée sur le serveur de clefs."
+msgstr "Clé publique du serveur"
 
 #: plinth/modules/wireguard/forms.py:92
 msgid ""
@@ -6609,7 +6565,7 @@ msgstr ""
 
 #: plinth/modules/wireguard/forms.py:104
 msgid "Private key of this machine"
-msgstr ""
+msgstr "Clé privée de cette machine"
 
 #: plinth/modules/wireguard/forms.py:105
 msgid ""
@@ -6621,7 +6577,7 @@ msgstr ""
 
 #: plinth/modules/wireguard/forms.py:113
 msgid "Pre-shared key"
-msgstr ""
+msgstr "Clé pré-partagée"
 
 #: plinth/modules/wireguard/forms.py:114
 msgid ""
