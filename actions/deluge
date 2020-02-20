@@ -6,22 +6,17 @@ Configuration helper for BitTorrent web client.
 
 import argparse
 import json
-import os
-import shutil
+import pathlib
 import subprocess
 import time
 
 import augeas
-from plinth import action_utils
 
-try:
-    from deluge import config
-except ImportError:
-    # deluge is not installed or is python2 version
-    config = None
+from plinth import action_utils
+from plinth.modules.deluge.utils import Config
 
 DELUGED_DEFAULT_FILE = '/etc/default/deluged'
-DELUGE_CONF_DIR = '/var/lib/deluged/.config/deluge/'
+DELUGE_CONF_DIR = pathlib.Path('/var/lib/deluged/.config/deluge/')
 
 DELUGE_WEB_SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 DELUGE_WEB_SYSTEMD_SERVICE = '''
@@ -88,18 +83,8 @@ def _set_configuration(filename, parameter, value):
     if deluge_web_is_running:
         action_utils.service_stop('deluge-web')
 
-    filepath = os.path.join(DELUGE_CONF_DIR, filename)
-    if config is None:
-        script = 'from deluge import config;\
-            conf = config.Config(filename="{0}");\
-            conf["{1}"] = "{2}";\
-            conf.save()'.format(filepath, parameter, value)
-        subprocess.check_call(['python2', '-c', script])
-    else:
-        conf = config.Config(filename=filepath)
-        conf[parameter] = value
-        conf.save()
-    shutil.chown(filepath, 'debian-deluged', 'debian-deluged')
+    with Config(DELUGE_CONF_DIR / filename) as config:
+        config.content[parameter] = value
 
     if deluged_is_running:
         action_utils.service_start('deluged')
@@ -109,23 +94,18 @@ def _set_configuration(filename, parameter, value):
 
 def _get_host_id():
     """Get default host id."""
-    if config is None:
-        hosts_conf_file = os.path.join(DELUGE_CONF_DIR, 'hostlist.conf.1.2')
-        script = 'from deluge import config;\
-            conf = config.Config(filename="{0}");\
-            print(conf["hosts"][0][0])'.format(hosts_conf_file)
-        output = subprocess.check_output(['python2', '-c', script]).decode()
-        return output.strip()
-    else:
-        hosts_conf_file = os.path.join(DELUGE_CONF_DIR, 'hostlist.conf')
-        conf = config.Config(filename=hosts_conf_file)
-        return conf["hosts"][0][0]
+    try:
+        with Config(DELUGE_CONF_DIR / 'hostlist.conf') as config:
+            return config.content['hosts'][0][0]
+    except FileNotFoundError:
+        with Config(DELUGE_CONF_DIR / 'hostlist.conf.1.2') as config:
+            return config.content['hosts'][0][0]
 
 
 def _set_deluged_daemon_options():
     """Set deluged daemon options."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DELUGED_DEFAULT_FILE)
     aug.load()
@@ -138,16 +118,8 @@ def _set_deluged_daemon_options():
 
 def subcommand_get_configuration(_):
     """Return the current deluged configuration in JSON format."""
-    deluged_conf_file = os.path.join(DELUGE_CONF_DIR, 'core.conf')
-    if config is None:
-        script = 'from deluge import config;\
-            conf = config.Config(filename="{0}");\
-            print(conf["download_location"])'.format(deluged_conf_file)
-        output = subprocess.check_output(['python2', '-c', script]).decode()
-        download_location = output.strip()
-    else:
-        conf = config.Config(filename=deluged_conf_file)
-        download_location = conf["download_location"]
+    with Config(DELUGE_CONF_DIR / 'core.conf') as config:
+        download_location = config.content['download_location']
 
     print(json.dumps({'download_location': download_location}))
 
@@ -156,6 +128,7 @@ def subcommand_set_configuration(arguments):
     """Set the deluged configuration."""
     if arguments.parameter != 'download_location':
         return
+
     _set_configuration('core.conf', arguments.parameter, arguments.value)
 
 
