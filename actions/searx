@@ -5,6 +5,7 @@ Configuration helper for searx.
 """
 
 import argparse
+import gzip
 import os
 import pathlib
 import secrets
@@ -119,7 +120,7 @@ def subcommand_get_safe_search(_):
 def read_settings():
     """Load settings as dictionary from YAML config file."""
     with open(SETTINGS_FILE, 'rb') as settings_file:
-        return yaml.load(settings_file)
+        return yaml.safe_load(settings_file)
 
 
 def write_settings(settings):
@@ -134,6 +135,14 @@ def _get_example_settings_file():
         return searx_doc_dir / 'settings.yml'
 
     return searx_doc_dir / 'settings.yml.gz'
+
+
+def _update_search_engines(settings):
+    """Updates settings with the latest supported search engines."""
+    example_settings_file = _get_example_settings_file()
+    open_func = gzip.open if example_settings_file.suffix == '.gz' else open
+    with open_func(example_settings_file, 'rb') as example_settings:
+        settings['engines'] = yaml.safe_load(example_settings)['engines']
 
 
 def subcommand_setup(_):
@@ -154,6 +163,7 @@ def subcommand_setup(_):
     _set_title(settings)
     _set_timeout(settings)
     _set_safe_search(settings)
+    _update_search_engines(settings)
     write_settings(settings)
 
     action_utils.service_restart('uwsgi')

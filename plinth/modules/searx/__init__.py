@@ -17,7 +17,7 @@ from plinth.modules.users import register_group
 from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unused-import
                        backup, clients)
 
-version = 3
+version = 4
 
 managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
 
