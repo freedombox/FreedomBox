@@ -34,7 +34,7 @@ class Config:
         try:
             self._version = json.loads(matches.group(1))
             self.content = json.loads(matches.group(2))
-        except json.decoder.JSONDecoderError:
+        except json.decoder.JSONDecodeError:
             raise Exception('Unable to parse JSON in file.')
 
         if self._version['format'] != 1:

@@ -141,17 +141,44 @@ def subcommand_setup(_):
     _set_deluged_daemon_options()
 
     subprocess.check_call(['systemctl', 'daemon-reload'])
-    # restarting deluge-web service stops also possible deluged process
-    # that was started from the web interface
-    action_utils.service_restart('deluge-web')
-    action_utils.service_restart('deluged')
-    # wait processes to start
-    time.sleep(10)
 
-    # configure deluge-web to autoconnect to the default deluged daemon, also
-    # restarts deluged and deluge-web services again to create config files
+    # Restarting an old deluge-web service stops also possible deluged process
+    # that was started from the web interface.
+    action_utils.service_try_restart('deluge-web')
+
+    # Wait until core configuration is available so that status of the app can
+    # be shown properly.
+    _wait_for_configuration('deluged', 'core.conf')
+
+    # Configure deluge-web to autoconnect to the default deluged daemon.
+    _wait_for_configuration('deluge-web', 'web.conf')
     host_id = _get_host_id()
     _set_configuration('web.conf', 'default_daemon', host_id)
+
+
+def _wait_for_configuration(service, file_name):
+    """Wait until configuration file has been created."""
+    conf_file = DELUGE_CONF_DIR / file_name
+    if conf_file.exists():
+        return
+
+    # deluge-web creates files on first run. deluged on the other than differs
+    # in version. Older version in Debian Buster creates the files after a
+    # restart while newer versions create the files on first run. The following
+    # approach is slightly better for create-on-exit case.
+    is_running = action_utils.service_is_running(service)
+    for interval in range(7):
+        action_utils.service_restart(service)
+        if conf_file.exists():
+            break
+
+        print('Waiting for {service} configuration')
+        time.sleep(2**interval)  # Exponentially increase the time waited
+    else:
+        raise Exception(f'Unable to setup {service}.')
+
+    if not is_running:
+        action_utils.service_stop(service)
 
 
 def main():
