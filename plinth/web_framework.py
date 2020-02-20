@@ -5,6 +5,8 @@ Setup Django web framework.
 
 import logging
 import os
+import pathlib
+import random
 import stat
 
 import django.conf
@@ -34,6 +36,7 @@ def init():
     settings.LANGUAGES = get_languages()
     settings.LOGGING = log.get_configuration()
     settings.MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+    settings.SECRET_KEY = _get_secret_key()
     settings.SESSION_FILE_PATH = os.path.join(cfg.data_dir, 'sessions')
     settings.STATIC_URL = '/'.join([cfg.server_dir,
                                     'static/']).replace('//', '/')
@@ -55,6 +58,35 @@ def init():
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+
+
+def _get_secret_key():
+    """Retrieve or create a new Django secret key."""
+    secret_key_file = pathlib.Path(cfg.data_dir) / 'django-secret.key'
+    if secret_key_file.exists():
+        secret_key = secret_key_file.read_text()
+        if len(secret_key) >= 128:
+            return secret_key
+
+    secret_key = _generate_secret_key()
+    # File should be created with permission 0o700
+    old_umask = os.umask(0o077)
+    try:
+        secret_key_file.write_text(secret_key)
+    finally:
+        os.umask(old_umask)
+
+    return secret_key
+
+
+def _generate_secret_key():
+    """Generate a new random secret key for use with Django."""
+    # We could have used django.core.management.utils.get_random_secret_key
+    # but it is not documented and should be considered private.
+    length = 128
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    rand = random.SystemRandom()
+    return ''.join(rand.choice(chars) for _ in range(length))
 
 
 def get_languages():

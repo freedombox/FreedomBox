@@ -173,7 +173,7 @@ def _ignore_data_file(file_name):
     ignore_patterns = [
         r'\.log$', r'\.pid$', r'\.py.bak$', r'\.pyc$', r'\.pytest_cache$',
         r'\.sqlite3$', r'\.swp$', r'^#', r'^\.', r'^__pycache__$',
-        r'^sessionid\w*$', r'~$'
+        r'^sessionid\w*$', r'~$', r'django-secret.key'
     ]
     for pattern in ignore_patterns:
         if re.match(pattern, file_name):
