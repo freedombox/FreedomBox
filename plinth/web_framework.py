@@ -15,7 +15,7 @@ import django.core.wsgi
 from django.conf import global_settings
 from django.contrib.messages import constants as message_constants
 
-from . import cfg, log, module_loader, settings
+from . import cfg, glib, log, module_loader, settings
 
 logger = logging.getLogger(__name__)
 
@@ -58,6 +58,9 @@ def init():
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+
+    # Cleanup expired sessions every day
+    glib.schedule(24 * 3600, _cleanup_expired_sessions, in_thread=True)
 
 
 def _get_secret_key():
@@ -103,6 +106,12 @@ def get_languages():
         list(global_settings.LANGUAGES) + [
             ('gu', gettext_noop('Gujarati')),
         ])
+
+
+def _cleanup_expired_sessions(data):
+    """Cleanup expired Django sessions."""
+    verbosity = 1 if cfg.develop else 0
+    django.core.management.call_command('clearsessions', verbosity=verbosity)
 
 
 def get_wsgi_application():
