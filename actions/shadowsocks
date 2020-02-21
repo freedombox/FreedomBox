@@ -60,7 +60,10 @@ def subcommand_merge_config(arguments):
     new_config.update(config)
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
 
-    old_umask = os.umask(0o027)
+    # XXX: Config file with password is world-readable. This is the
+    # same as the default config file, but find a way to avoid this.
+    # See https://salsa.debian.org/freedombox-team/plinth/-/merge_requests/1724
+    old_umask = os.umask(0o022)
     try:
         open(SHADOWSOCKS_CONFIG, 'w').write(new_config)
     finally:
