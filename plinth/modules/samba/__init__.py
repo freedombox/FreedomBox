@@ -60,7 +60,8 @@ class SambaApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Samba'), icon_filename='samba',
                                short_description=_('File Sharing'),
-                               description=_description, clients=clients)
+                               manual_page='Samba', description=_description,
+                               clients=clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-samba', info.name, info.short_description,

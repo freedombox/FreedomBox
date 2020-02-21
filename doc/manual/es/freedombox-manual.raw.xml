@@ -5,6 +5,12 @@
     <title>es/FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>59</revnumber>
+        <date>2020-02-21 15:55:40</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add entry for Samba</revremark>
+      </revision>
+      <revision>
         <revnumber>58</revnumber>
         <date>2019-12-25 21:08:13</date>
         <authorinitials>fioddor</authorinitials>
@@ -1868,6 +1874,45 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
         <title>Evitar repetidores de Syncthing</title>
         <para>Syncthing emplea por defecto conexiones dinámicas para conectar con otros pares. Esto significa que si estás sincronizando a través de Internet, los datos quizá tengan que atravesar repetidores de Syncthing públicos para alcanzar tus dispositivos. Esto desaprovecha que tu FreedomBox tenga una dirección IP pública. </para>
         <para>Al añadir tu FreedomBox como dispositivo en otros clientes de Syncthing establece tu dirección como "tcp://&lt;mi.dominio.freedombox&gt;" en vez de "dinámica". Esto permite a tus pares Syncthing conectarse diréctamente a tu FreedomBox eludiendo la necesidad de repetidores. También permite sincronización rápida bajo demanda si no quieres mantener a Syncthing ejecuándose todo el tiempo en tus dispositivos móviles. </para>
+      </section>
+    </section>
+    <section>
+      <title>Sincronización de Ficheros (Samba)</title>
+      <para>Samba te permite tener una carpeta compartida en la red local que se puede usar desde multiples ordenadores con sistemas operativos diferentes. De ahora en adelante nos referiremos a estas carpetas como "shares". Puedes tener una carpeta personal compartida por tus propios dispositivos (share casero), una compartida con un grupo de confianza (share de grupo) o una compartida con todo dispositivo de la red (share abierto). </para>
+      <para>Samba te permite tratar un share como si fuera una carpeta local de tu ordenador. No obstante los shares solo están disponibles en la red local. </para>
+      <para>Para aprender más acerca de Samba, mira la <ulink url="https://wiki.samba.org/index.php/User_Documentation">documentación de usuario</ulink> de su wiki. </para>
+      <para><emphasis>Disponible desde la versión:</emphasis>  19.22 </para>
+      <section>
+        <title>Usar Samba</title>
+        <para>Tras la instalación, puedes elegir qué discos compartir. Los shares habilitados están accesibles en el administrador de archivos de tu ordenador en la ruta \\freedombox (en Windows) o smb://freedombox.local (en Linux y Mac). Hay 3 tipos de share para elegir: </para>
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="strong">Share abierto</emphasis> - accesible a cualquiera en tu red local. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">Share de grupo</emphasis> - accesible solo a usuarios FreedomBox que estén en el grupo <emphasis>freedombox-share</emphasis>. </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">Share casero</emphasis> - cada usuario del <emphasis>grupo freedombox-share</emphasis> puede tener su propio espacio privado. </para>
+          </listitem>
+        </itemizedlist>
+        <section>
+          <title>En Android</title>
+          <para>Para acceder a shares Samba desde un dispositivo Android instala el "Cliente Samba para Android" desde F-Droid o Google Play. Introduce <emphasis>smb://freedombox.local/&lt;disco&gt;</emphasis> como ruta del share en la app. Tus carpetas compartidas deberían estar visibles en la app de administración de archivos. </para>
+        </section>
+      </section>
+      <section>
+        <title>Integración con otras apps</title>
+        <para>La app Transmission de FreedomBox proporciona una configuración para permitir que las descargas se graben directamente en un share Samba. </para>
+      </section>
+      <section>
+        <title>Comparación con otras apps</title>
+        <section>
+          <title>Syncthing</title>
+          <para><ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Syncthing#">Syncthing</ulink> mantiene una copia de la carpeta compartida en cada dispositivo con el que se comparte. Samba mantiene solo una copy en tu dispositivo FreedomBox. </para>
+          <para>Syncthing puede sincronizar tus carpetas compartidas entre dispositivos por Internet. Los shares Samba solo están disponibles en tu red local. </para>
+          <para>Como Syncthing es primordialmente una solución de sincronización, tiene funcionalidades como resolución de conflictos y versionado. Samba solo tiene una copia del fichero, así que no necesita tales funcionalidades. Por ejemplo, si dos personas están editando una hoja de cálculo almacenada en un share Samba el último que grabe el fichero gana. </para>
+        </section>
       </section>
     </section>
     <section>

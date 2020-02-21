@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>81</revnumber>
+        <date>2020-02-21 15:51:40</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add entry for Samba</revremark>
+      </revision>
+      <revision>
         <revnumber>80</revnumber>
         <date>2019-12-25 18:43:42</date>
         <authorinitials>Drahtseil</authorinitials>
@@ -2000,6 +2006,38 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
           <title>Password Manager</title>
           <para>Password managers that store their databases in files are suitable for synchronization using Syncthing. The following example describes using a free password manager called KeePassXC in combination with Syncthing to serve as a replacement for proprietary password managers that store your passwords in the cloud. </para>
           <para>KeePassXC stores usernames, passwords etc. in files have the .kdbx extension. These kdbx files can be stored in a Syncthing shared folder to keep them synchronized on multiple machines. Free software applications which can read this file format are available for both desktop and mobile. You typically have to just point the application at the .kdbx file and enter the master password to access your stored credentials. For example, the same kdbx file can be accessed by using KeePassXC on desktop and KeePassDX on Android. KeePassXC can also be used to fill credentials into login fields in the browser by installing a browser extension. </para>
+        </section>
+      </section>
+    </section>
+    <section>
+      <title>File Synchronization (Samba)</title>
+      <para>Samba lets you have a shared folder over the local network that can be used from multiple computers running different operating systems. We will henceforth refer to these shared folders as "shares".  </para>
+      <para>You can have a personal folder shared between your own devices (Home share), a folder shared with a trusted group (Group share) or one that is shared with every device on the network (Open share). </para>
+      <para>Samba lets you to treat a share as if it's a local folder on your computer. However, shares are available only on the local network. </para>
+      <para>To learn more about Samba, please refer to the <ulink url="https://wiki.samba.org/index.php/User_Documentation">user documentation</ulink> on their wiki. </para>
+      <para><emphasis>Available since version:</emphasis>  19.22 </para>
+      <section>
+        <title>Using Samba</title>
+        <para>After installation, you can choose which disks to use for sharing. Enabled shares are accessible in the file manager on your computer at location \\freedombox (on Windows) or smb://freedombox.local (on Linux and Mac). There are three types of shares you can choose from: </para>
+        <para><emphasis role="strong">Open share</emphasis> - accessible to everyone in your local network.</para>
+        <para><emphasis role="strong">Group share</emphasis> - accessible only to FreedomBox users who are in the <emphasis>freedombox-share</emphasis> group.</para>
+        <para><emphasis role="strong">Home share</emphasis> - every user in the <emphasis>freedombox-share group</emphasis> can have their own private space. </para>
+        <section>
+          <title>On Android</title>
+          <para>To access Samba shares on an Android device, install "Android Samba Client" from F-Droid or Google Play. Enter <emphasis>smb://freedombox.local/&lt;disk&gt;</emphasis> as the share path in the app. Your shared folders should then be visible in the file manager app. </para>
+        </section>
+      </section>
+      <section>
+        <title>Integration with other apps</title>
+        <para>Transmission app on FreedomBox provides a setting to allow downloads to be saved directly to a Samba share. </para>
+      </section>
+      <section>
+        <title>Comparison with other apps</title>
+        <section>
+          <title>Syncthing</title>
+          <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Syncthing#">Syncthing</ulink> maintains a copy of the shared folder on each device that it is shared with. Samba maintains only one copy on your FreedomBox device. </para>
+          <para>Syncthing can synchronize your shared folders between devices over the Internet. Samba shares are only available on the local network. </para>
+          <para>Since Syncthing is primarily a synchronization solution, it has features like conflict resolution and versioning. Samba has only copy of the file, so it doesn't need such features. For example, if two people are editing a spreadsheet stored on a Samba share, the last one to save the file wins. </para>
         </section>
       </section>
     </section>
