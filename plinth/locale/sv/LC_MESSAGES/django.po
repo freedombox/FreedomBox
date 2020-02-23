@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-14 21:26+0200\n"
-"PO-Revision-Date: 2020-02-10 05:50+0000\n"
+"PO-Revision-Date: 2020-02-24 21:32+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -17,17 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:23
-#, fuzzy
-#| msgid "Custom Services"
 msgid "Custom Section"
-msgstr "Anpassade tjänster"
+msgstr "Anpassat avsnitt"
 
 #: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:26
 msgid "Custom paragraph content."
-msgstr ""
+msgstr "Anpassat styckeinnehåll."
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -410,24 +408,12 @@ msgid "Are you sure that you want to remove this repository?"
 msgstr "Är du säker på att du vill ta bort den här respository?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      The remote repository will not be deleted.\n"
-#| "      This just removes the repository from the listing on the backup "
-#| "page, you\n"
-#| "      can add it again later on.\n"
-#| "    "
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
-"\n"
-"      Fjärrdatabasen kommer inte att tas bort.\n"
-"      Detta tar bara bort databasen från listan på säkerhetskopierings "
-"sidan, du\n"
-"      kan lägga till den igen senare.\n"
-"    "
+"Fjärrdatabasen tas inte bort. Detta tar bara bort databasen från listan på "
+"säkerhetskopieringssidan, kan du lägga till den igen senare."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 msgid "Remove Location"
@@ -2641,27 +2627,16 @@ msgstr ""
 "är aktiverad."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        The configured domain name is using a self-signed certificate.\n"
-#| "        Federation with other Matrix Synapse instances requires a valid "
-#| "TLS\n"
-#| "        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
-#| "        Encrypt</a> to obtain one.\n"
-#| "      "
+#, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
-"\n"
-"        Nya användare kan registreras från valfri klient om offentlig "
-"registrering är aktiverad.\n"
-"        Förening med andra Matrix Synapse-instanser kräver en giltig TLS\n"
-"        certifikat. Var snäll gå till <a href=\"%(letsencrypt_url)s\">Let's\n"
-"        Encrypt</a> för att få en.\n"
-"      "
+"Det konfigurerade domännamnet använder ett självsignerat certifikat. "
+"Federation med andra Matrix Synapse-instanser kräver ett giltigt TLS-"
+"certifikat. Gå till <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> för "
+"att få en sådan."
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -3268,10 +3243,8 @@ msgid "Connection Name"
 msgstr "Anslutningens namn"
 
 #: plinth/modules/networks/forms.py:46
-#, fuzzy
-#| msgid "Interface"
 msgid "Network Interface"
-msgstr "Gränssnitt"
+msgstr "Nätverksgränssnitt"
 
 #: plinth/modules/networks/forms.py:47
 msgid "The network device that this connection should be bound to."
@@ -4995,6 +4968,8 @@ msgid ""
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
+"\"Sandbox Coverage\" är en poäng av hur effektivt tjänsten isoleras från "
+"resten av systemet. Den visas bara när tjänsten körs."
 
 #: plinth/modules/security/templates/security_report.html:55
 msgid "App Name"
@@ -5013,10 +4988,8 @@ msgid "Sandboxed"
 msgstr "Sandboxed"
 
 #: plinth/modules/security/templates/security_report.html:59
-#, fuzzy
-#| msgid "Sandboxed"
 msgid "Sandbox Coverage"
-msgstr "Sandboxed"
+msgstr "Sandbox Täckning"
 
 #: plinth/modules/security/templates/security_report.html:70
 msgid "N/A"
@@ -5031,10 +5004,8 @@ msgid "No"
 msgstr "Nej"
 
 #: plinth/modules/security/templates/security_report.html:81
-#, fuzzy
-#| msgid "deluge-web is not running"
 msgid "Not running"
-msgstr "Deluges webbgränssnitt är inaktiverat"
+msgstr "Körs inte"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5624,18 +5595,15 @@ msgid "The device is mounted by another user."
 msgstr "Enheten monteras av en annan användare."
 
 #: plinth/modules/storage/__init__.py:326
-#, fuzzy, no-python-format, python-brace-format
-#| msgid ""
-#| "Warning: Low space on system partition ({percent_used}% used, "
-#| "{free_space} free)."
+#, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
-"Varning: låg utrymme på systempartitionen ({percent_used}% används, "
-"{free_space} fri)."
+"Lågt utrymme på systempartitionen: {percent_used}% används, {free_space} "
+"fritt."
 
 #: plinth/modules/storage/__init__.py:328
 msgid "Low disk space"
-msgstr ""
+msgstr "Lågt diskutrymme"
 
 #: plinth/modules/storage/forms.py:79
 msgid "Invalid directory name."
@@ -6118,10 +6086,8 @@ msgstr ""
 "Sök efter och installera de senaste program-och säkerhetsuppdateringarna."
 
 #: plinth/modules/upgrades/__init__.py:84
-#, fuzzy
-#| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
-msgstr "FreedomBox Foundation"
+msgstr "FreedomBox uppdaterad"
 
 #: plinth/modules/upgrades/forms.py:28
 msgid "Enable auto-update"
@@ -6133,10 +6099,9 @@ msgstr ""
 "När den är aktiverad uppdateras FreedomBox automatiskt en gång om dagen."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:24
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "%(box_name)s Updated"
-msgstr "%(box_name)s är uppdaterad."
+msgstr "%(box_name)s uppdaterat"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:28
 #, python-format
@@ -6144,11 +6109,13 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
+"%(box_name)s har uppdaterats till version %(version)s. Se <a href=\"%(url)s\""
+">release-meddelande</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:37
 #: plinth/templates/notifications.html:59
 msgid "Dismiss"
-msgstr ""
+msgstr "Avfärda"
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid "Update now"
@@ -6244,15 +6211,15 @@ msgid "Username is taken or is reserved."
 msgstr "Användarnamnet är upptaget eller är reserverade."
 
 #: plinth/modules/users/forms.py:87
-#, fuzzy
-#| msgid "Invalid server name"
 msgid "Enter a valid username."
-msgstr "Du har angett ett ogiltigt servernamn"
+msgstr "Ange ett giltigt användarnamn."
 
 #: plinth/modules/users/forms.py:93
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
+"Krävs. 150 tecken eller färre. Engelska bokstäver, siffror och endast @/./-/"
+"_ ."
 
 #: plinth/modules/users/forms.py:106 plinth/modules/users/forms.py:222
 msgid "Permissions"
@@ -6593,16 +6560,9 @@ msgstr ""
 "ännu."
 
 #: plinth/modules/wireguard/templates/wireguard.html:62
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Public key for this %(box_name)s:\n"
-#| "    "
+#, python-format
 msgid "Public key for this %(box_name)s:"
-msgstr ""
-"\n"
-"      Offentlig nyckel för dessa%(box_name)s:\n"
-"    "
+msgstr "Offentlig nyckel för dessa %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:68
 msgid "Not configured yet."
@@ -7066,10 +7026,8 @@ msgstr ""
 "%(interface_list)s"
 
 #: plinth/templates/notifications-dropdown.html:26
-#, fuzzy
-#| msgid "No certificate"
 msgid "Notifications"
-msgstr "Inget certifikat"
+msgstr "Aviseringar"
 
 #: plinth/templates/port-forwarding-info.html:23
 msgid "Port Forwarding"
