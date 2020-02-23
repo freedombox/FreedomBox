@@ -9,8 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-14 21:26+0200\n"
 "PO-Revision-Date: 2020-02-24 21:32+0000\n"
-"Last-Translator: Jaime Marquínez Ferrándiz <weblate@jregistros.fastmail.net>"
-"\n"
+"Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/es/>\n"
 "Language: es\n"
@@ -21,10 +20,8 @@ msgstr ""
 "X-Generator: Weblate 4.0-dev\n"
 
 #: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:23
-#, fuzzy
-#| msgid "Custom Services"
 msgid "Custom Section"
-msgstr "Servicios personalizados"
+msgstr "Personalización"
 
 #: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:26
 msgid "Custom paragraph content."
@@ -2649,29 +2646,16 @@ msgstr ""
 "usuarias/os desde cualquier cliente."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        The configured domain name is using a self-signed certificate.\n"
-#| "        Federation with other Matrix Synapse instances requires a valid "
-#| "TLS\n"
-#| "        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
-#| "        Encrypt</a> to obtain one.\n"
-#| "      "
+#, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
-"\n"
-"        El nombre de dominio configurado está usando un certificado auto-"
-"firmado.\n"
-"        La federación con otras instancias de Matrix Synapse requiere un "
-"certificado\n"
-"        TLS válido. Vaya a <a href=\"%(letsencrypt_url)s\">Let's Encrypt</"
-"a>\n"
-"        para obtener uno.\n"
-"      "
+"El nombre de dominio configurado usa un certificado auto-firmado. La "
+"federación con otras instancias de Matrix Synapse requiere un certificado "
+"TLS válido. Vaya a <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> para "
+"obtener uno."
 
 #: plinth/modules/matrixsynapse/views.py:121
 msgid "Public registration enabled"
@@ -3280,10 +3264,8 @@ msgid "Connection Name"
 msgstr "Nombre de conexión"
 
 #: plinth/modules/networks/forms.py:46
-#, fuzzy
-#| msgid "Interface"
 msgid "Network Interface"
-msgstr "Interfaz"
+msgstr "Interfaz de red"
 
 #: plinth/modules/networks/forms.py:47
 msgid "The network device that this connection should be bound to."
@@ -5007,6 +4989,8 @@ msgid ""
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
+"\"Índice de aislamiento\" informa de cómo de efectivo es el aislamiento. "
+"Solo se muestra cuando el servicio está en ejecución."
 
 #: plinth/modules/security/templates/security_report.html:55
 msgid "App Name"
@@ -5025,10 +5009,8 @@ msgid "Sandboxed"
 msgstr "Aisladas"
 
 #: plinth/modules/security/templates/security_report.html:59
-#, fuzzy
-#| msgid "Sandboxed"
 msgid "Sandbox Coverage"
-msgstr "Aisladas"
+msgstr "Índice de aislamiento"
 
 #: plinth/modules/security/templates/security_report.html:70
 msgid "N/A"
@@ -5043,10 +5025,8 @@ msgid "No"
 msgstr "No"
 
 #: plinth/modules/security/templates/security_report.html:81
-#, fuzzy
-#| msgid "is not running"
 msgid "Not running"
-msgstr "no se está ejecutando"
+msgstr "No se está ejecutando"
 
 #: plinth/modules/security/views.py:69
 #, python-brace-format
@@ -5641,18 +5621,15 @@ msgid "The device is mounted by another user."
 msgstr "El dispositivo está ya montado por otro usuario."
 
 #: plinth/modules/storage/__init__.py:326
-#, fuzzy, no-python-format, python-brace-format
-#| msgid ""
-#| "Warning: Low space on system partition ({percent_used}% used, "
-#| "{free_space} free)."
+#, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
-"Aviso: queda poco espacio libre en la partición del sistema ({percent_used}% "
-"usado, {free_space} libre)."
+"Poco espacio en la partición del sistema: {percent_used}% usado, {free_space}"
+" libre."
 
 #: plinth/modules/storage/__init__.py:328
 msgid "Low disk space"
-msgstr ""
+msgstr "Poco espacio en disco"
 
 #: plinth/modules/storage/forms.py:79
 msgid "Invalid directory name."
@@ -6140,10 +6117,8 @@ msgstr ""
 "Buscar y aplicar las últimas actualizaciones del software y de seguridad."
 
 #: plinth/modules/upgrades/__init__.py:84
-#, fuzzy
-#| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
-msgstr "Fundación FreedomBox"
+msgstr "FreedomBox actualizado"
 
 #: plinth/modules/upgrades/forms.py:28
 msgid "Enable auto-update"
@@ -6155,10 +6130,9 @@ msgstr ""
 "Si está activado, FreedomBox se actualiza automáticamente una vez al día."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:24
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "%(box_name)s Updated"
-msgstr "%(box_name)s está actualizado."
+msgstr "%(box_name)s actualizado"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:28
 #, python-format
@@ -6166,11 +6140,13 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
+"%(box_name)s se ha actualizado a la versión %(version)s. Consulte el <a href="
+"\"%(url)s\">anuncio de lanzamiento</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:37
 #: plinth/templates/notifications.html:59
 msgid "Dismiss"
-msgstr ""
+msgstr "Descartar"
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid "Update now"
@@ -6267,15 +6243,13 @@ msgid "Username is taken or is reserved."
 msgstr "El nombre de usuaria/o está en uso o reservado."
 
 #: plinth/modules/users/forms.py:87
-#, fuzzy
-#| msgid "Invalid server name"
 msgid "Enter a valid username."
-msgstr "Nombre de servidor no válido"
+msgstr "Indique un nombre de usuario válido."
 
 #: plinth/modules/users/forms.py:93
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
-msgstr ""
+msgstr "Obligatorio. Hasta 150 caracteres. Solo letras, números y @/./-/_ ."
 
 #: plinth/modules/users/forms.py:106 plinth/modules/users/forms.py:222
 msgid "Permissions"
@@ -6617,16 +6591,9 @@ msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr "Todavía no hay pares configurados para conectarse a %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard.html:62
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Public key for this %(box_name)s:\n"
-#| "    "
+#, python-format
 msgid "Public key for this %(box_name)s:"
-msgstr ""
-"\n"
-"      Clave pública para esta %(box_name)s:\n"
-"    "
+msgstr "Clave pública para esta %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:68
 msgid "Not configured yet."
@@ -7089,10 +7056,8 @@ msgstr ""
 "actualmente: %(interface_list)s"
 
 #: plinth/templates/notifications-dropdown.html:26
-#, fuzzy
-#| msgid "No certificate"
 msgid "Notifications"
-msgstr "No certificado"
+msgstr "Notificaciones"
 
 #: plinth/templates/port-forwarding-info.html:23
 msgid "Port Forwarding"
