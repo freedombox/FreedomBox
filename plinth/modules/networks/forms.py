@@ -2,12 +2,11 @@
 
 from django import forms
 from django.core import validators
-from django.utils.translation import ugettext_lazy as _, ugettext_lazy
-from markupsafe import Markup
+from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
-from plinth import network
+from plinth import cfg, network
 from plinth.utils import format_lazy, import_from_gi
+
 nm = import_from_gi('NM', '1.0')
 
 
@@ -39,12 +38,11 @@ class ConnectionForm(forms.Form):
         choices=[('external', _('External')), ('internal', _('Internal'))])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'), help_text=format_lazy(
-            ugettext_lazy(
-                '"Automatic" method will make {box_name} acquire '
-                'configuration from this network making it a client. "Shared" '
-                'method will make {box_name} act as a router, configure '
-                'clients on this network and share its Internet connection.'),
-            box_name=ugettext_lazy(cfg.box_name)),
+            _('"Automatic" method will make {box_name} acquire '
+              'configuration from this network making it a client. "Shared" '
+              'method will make {box_name} act as a router, configure '
+              'clients on this network and share its Internet connection.'),
+            box_name=_(cfg.box_name)),
         choices=[('auto', _('Automatic (DHCP)')), ('shared', _('Shared')),
                  ('manual', _('Manual')), ('disabled', _('Disabled'))])
     ipv4_address = forms.CharField(
@@ -72,10 +70,9 @@ class ConnectionForm(forms.Form):
         validators=[validators.validate_ipv4_address], required=False)
     ipv6_method = forms.ChoiceField(
         label=_('IPv6 Addressing Method'), help_text=format_lazy(
-            ugettext_lazy(
-                '"Automatic" methods will make {box_name} acquire '
-                'configuration from this network making it a client.'),
-            box_name=ugettext_lazy(cfg.box_name)),
+            _('"Automatic" methods will make {box_name} acquire '
+              'configuration from this network making it a client.'),
+            box_name=_(cfg.box_name)),
         choices=[('auto', _('Automatic')), ('dhcp', _('Automatic, DHCP only')),
                  ('manual', _('Manual')), ('ignore', _('Ignore'))])
     ipv6_address = forms.CharField(
@@ -298,7 +295,7 @@ class InternetConnectionTypeForm(forms.Form):
         label=_('Choose your internet connection type'),
         choices=[
             ('dynamic_public_ip',
-             Markup(
+             format_lazy(
                  _('I have a public IP address that may change over time'
                    '<p class="help-block">This means that devices on the '
                    'internet can reach you when you are connected on the '
@@ -307,33 +304,34 @@ class InternetConnectionTypeForm(forms.Form):
                    'different IP address, especially after some offline time. '
                    'Many ISPs offer this type of connectivity. If you have a '
                    'public IP address but are unsure if it changes over time '
-                   'or not, it is safer to choose this option.</p>'))),
+                   'or not, it is safer to choose this option.</p>'),
+                 allow_markup=True)),
             ('static_public_ip',
-             Markup(format_lazy(
-                _('I have a public IP address that does not change overtime '
-                  '(recommended)'
-                  '<p class="help-block">This means that devices on the '
-                  'Internet can reach you when you are connected on the '
-                  'Internet. Every time you connect to the Internet with '
-                  'your Internet Service Provider (ISP), you always get the '
-                  'same IP address. This is the most trouble free setup for '
-                  'many {box_name} services but very few ISPs offer this. '
-                  'You may be able to get this service from your ISP by '
-                  'making an additional payment.</p>'),
-                box_name=cfg.box_name))),
+             format_lazy(
+                 _('I have a public IP address that does not change overtime '
+                   '(recommended)'
+                   '<p class="help-block">This means that devices on the '
+                   'Internet can reach you when you are connected on the '
+                   'Internet. Every time you connect to the Internet with '
+                   'your Internet Service Provider (ISP), you always get the '
+                   'same IP address. This is the most trouble-free setup for '
+                   'many {box_name} services but very few ISPs offer this. '
+                   'You may be able to get this service from your ISP by '
+                   'making an additional payment.</p>'), box_name=cfg.box_name,
+                 allow_markup=True)),
             ('private_ip',
-             Markup(format_lazy(
-                _('I dont have a public IP address'
-                  '<p class="help-block">This means that devices on the '
-                  'Internet <b>can not</b> reach you when you are connected '
-                  'to the Internet. Every time you connect to the Internet '
-                  'with your Internet Service Provider (ISP), you get an IP '
-                  'address that is only relevant for local networks. '
-                  'Many ISPs offer this type of connectivity. This is the '
-                  'most troublesome situation for hosting services at home. '
-                  '{box_name} provides many workaround solutions but each '
-                  'solution has some limitations.</p>'),
-                box_name=cfg.box_name))),
+             format_lazy(
+                 _('I dont have a public IP address'
+                   '<p class="help-block">This means that devices on the '
+                   'Internet <b>can not</b> reach you when you are connected '
+                   'to the Internet. Every time you connect to the Internet '
+                   'with your Internet Service Provider (ISP), you get an IP '
+                   'address that is only relevant for local networks. '
+                   'Many ISPs offer this type of connectivity. This is the '
+                   'most troublesome situation for hosting services at home. '
+                   '{box_name} provides many workaround solutions but each '
+                   'solution has some limitations.</p>'),
+                 box_name=cfg.box_name, allow_markup=True)),
         ],
         required=True,
         widget=forms.RadioSelect,
@@ -351,7 +349,7 @@ class RouterConfigurationWizardForm(forms.Form):
         choices=[
             (
                 'dmz',
-                Markup(format_lazy(
+                format_lazy(
                     _('Use DMZ feature to forward all traffic'
                       '<p class="help-block">Most routers provide a '
                       'configuration setting called DMZ. This will allow the '
@@ -359,37 +357,31 @@ class RouterConfigurationWizardForm(forms.Form):
                       'internet to a single IP address such as the '
                       '{box_name}\'s address. First remember to configure a '
                       'static local IP address for your {box_name} in your '
-                      'router\'s configuration.</p>'),
-                    box_name=cfg.box_name
-                )),
+                      'router\'s configuration.</p>'), box_name=cfg.box_name,
+                    allow_markup=True),
             ),
-            (
-                'port_forwarding',
-                Markup(format_lazy(
-                    _('Forward Specific Traffic as needed by each '
-                      'application'
-                      '<p class="help-block">You may alternatively choose to '
-                      'forward only specific traffic to your {box_name}. '
-                      'This is ideal if you have other servers like '
-                      '{box_name} in your network or if your router does not '
-                      'support DMZ feature. All applications that provide a '
-                      'web interface need you to forward traffic from ports '
-                      '80 and 443 to work. Each of the other applications '
-                      'will suggest which port(s) need to be forwarded '
-                      'for that application to work.</p>'),
-                    box_name=cfg.box_name
-                ))
-            ),
-            (
-                'not_configured',
-                Markup(
-                    _('Router is currently unconfigured'
-                      '<p class="help-block">Choose this if you have not '
-                      'configured or are unable to configure the router '
-                      'currently and wish to be reminded later. Some of '
-                      'the other configuration steps may fail.</p>')
-                )
-            ),
+            ('port_forwarding',
+             format_lazy(
+                 _('Forward Specific Traffic as needed by each '
+                   'application'
+                   '<p class="help-block">You may alternatively choose to '
+                   'forward only specific traffic to your {box_name}. '
+                   'This is ideal if you have other servers like '
+                   '{box_name} in your network or if your router does not '
+                   'support DMZ feature. All applications that provide a '
+                   'web interface need you to forward traffic from ports '
+                   '80 and 443 to work. Each of the other applications '
+                   'will suggest which port(s) need to be forwarded '
+                   'for that application to work.</p>'), box_name=cfg.box_name,
+                 allow_markup=True)),
+            ('not_configured',
+             format_lazy(
+                 _('Router is currently unconfigured'
+                   '<p class="help-block">Choose this if you have not '
+                   'configured or are unable to configure the router '
+                   'currently and wish to be reminded later. Some of '
+                   'the other configuration steps may fail.</p>'),
+                 allow_markup=True)),
         ],
         required=True,
         widget=forms.RadioSelect,

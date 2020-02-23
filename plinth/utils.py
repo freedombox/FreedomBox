@@ -11,6 +11,7 @@ import re
 import string
 from distutils.version import LooseVersion
 
+import markupsafe
 import ruamel.yaml
 from django.utils.functional import lazy
 
@@ -33,8 +34,13 @@ def import_from_gi(library, version):
 
 def _format_lazy(string, *args, **kwargs):
     """Lazily format a lazy string."""
+    allow_markup = kwargs.pop('allow_markup', False)
     string = str(string)
-    return string.format(*args, **kwargs)
+    string = string.format(*args, **kwargs)
+    if allow_markup:
+        string = markupsafe.Markup(string)
+
+    return string
 
 
 format_lazy = lazy(_format_lazy, str)
