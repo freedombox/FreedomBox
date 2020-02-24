@@ -11,15 +11,10 @@ from django.views.decorators.http import require_POST
 
 from plinth import kvstore, network
 from plinth.modules import first_boot, networks
-from .forms import (
-    ConnectionTypeSelectForm,
-    EthernetForm,
-    GenericForm,
-    PPPoEForm,
-    WifiForm,
-    RouterConfigurationWizardForm,
-    InternetConnectionTypeForm,
-)
+
+from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
+                    InternetConnectionTypeForm, PPPoEForm,
+                    RouterConfigurationWizardForm, WifiForm)
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +23,8 @@ def index(request):
     """Show connection list."""
     connections = network.get_connection_list()
 
+    internet_connection_type = kvstore.get_default(
+        networks.INTERNET_CONNECTION_TYPE_KEY, None)
     return TemplateResponse(
         request, 'networks_configuration.html', {
             'app_id': 'networks',
@@ -36,8 +33,7 @@ def index(request):
             'has_diagnostics': True,
             'is_enabled': True,
             'connections': connections,
-            'internet_connectivity_type': kvstore.get_default(
-                networks.INTERNET_CONNECTION_TYPE_KEY, "dynamic_public_ip")
+            'internet_connectivity_type': internet_connection_type
         })
 
 
@@ -410,9 +406,10 @@ def delete(request, uuid):
 
 
 def router_configuration_help_page(request):
-    """
-    Show the router configuration wizard page/form.
+    """Show the router configuration wizard page/form.
+
     Used both for fistboot step and same networks page.
+
     """
     is_firstboot = True \
         if 'firstboot' in request.build_absolute_uri() else False
@@ -431,19 +428,18 @@ def router_configuration_help_page(request):
             messages.success(request, _('Router configuration type saved.'))
 
         return redirect(resp)
-
     else:
-        html = "router_configuration_update.html"
+        html = 'router_configuration_update.html'
         initial = {
-            "router_config":
+            'router_config':
                 kvstore.get_default(networks.ROUTER_CONFIGURATION_TYPE_KEY,
-                                    'dmz'),
+                                    'not_configured'),
         }
         template_kwargs = {
             'form': RouterConfigurationWizardForm(initial=initial),
         }
         if is_firstboot:
-            html = "router_configuration_firstboot.html"
+            html = 'router_configuration_firstboot.html'
 
             # mark step done on firstboot visit to get the next_step
             first_boot.mark_step_done('router_setup_wizard')
@@ -455,9 +451,10 @@ def router_configuration_help_page(request):
 
 
 def internet_connection_type_help_page(request):
-    """
-    Show the internet connection type page.
+    """Show the internet connection type page.
+
     Used for first boot step and networks page.
+
     """
     is_firstboot = True \
         if 'firstboot' in request.build_absolute_uri() else False
@@ -477,17 +474,18 @@ def internet_connection_type_help_page(request):
             messages.success(request, _('Internet connection type saved.'))
             return redirect(reverse_lazy('networks:index'))
     else:
-        html = "internet_connectivity_type.html"
+        html = 'internet_connectivity_type.html'
         initial = {
-            "internet_connection_type": kvstore.get_default(
-                networks.INTERNET_CONNECTION_TYPE_KEY, 'dynamic_public_ip'),
+            'internet_connection_type':
+                kvstore.get_default(networks.INTERNET_CONNECTION_TYPE_KEY,
+                                    None)
         }
         template_kwargs = {'form': InternetConnectionTypeForm(initial=initial)}
         if is_firstboot:
-            html = "internet_connectivity_firstboot.html"
+            html = 'internet_connectivity_firstboot.html'
 
             # mark step done on firstboot visit to get the next_step
-            first_boot.mark_step_done('internet_connectivity_type')
+            first_boot.mark_step_done('internet_connectivity_type_wizard')
             template_kwargs.update({
                 'first_boot_next_step': reverse_lazy(first_boot.next_step()),
             })

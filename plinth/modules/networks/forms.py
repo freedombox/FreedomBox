@@ -286,10 +286,12 @@ requires clients to have the password to connect.'),
 
 
 class InternetConnectionTypeForm(forms.Form):
-    """
+    """Form for type of public/private IP address ISP provides.
+
     Ask the user for what type of Internet connection they have. We store this
     information and use it suggest various setup options during the setup
     process and also later on when setting up apps.
+
     """
     internet_connection_type = forms.ChoiceField(
         label=_('Choose your internet connection type'),
@@ -298,7 +300,7 @@ class InternetConnectionTypeForm(forms.Form):
              format_lazy(
                  _('I have a public IP address that may change over time'
                    '<p class="help-block">This means that devices on the '
-                   'internet can reach you when you are connected on the '
+                   'Internet can reach you when you are connected to the '
                    'Internet. Every time you connect to the Internet with '
                    'your Internet Service Provider (ISP), you may get a '
                    'different IP address, especially after some offline time. '
@@ -311,7 +313,7 @@ class InternetConnectionTypeForm(forms.Form):
                  _('I have a public IP address that does not change overtime '
                    '(recommended)'
                    '<p class="help-block">This means that devices on the '
-                   'Internet can reach you when you are connected on the '
+                   'Internet can reach you when you are connected to the '
                    'Internet. Every time you connect to the Internet with '
                    'your Internet Service Provider (ISP), you always get the '
                    'same IP address. This is the most trouble-free setup for '
@@ -339,10 +341,11 @@ class InternetConnectionTypeForm(forms.Form):
 
 
 class RouterConfigurationWizardForm(forms.Form):
-    """
-    Form to suggest router configuration depending on wan
-    connectivity/specific setup. The choice will affect
-    future suggestions during the setup process and other apps.
+    """Form to suggest how to configure a router.
+
+    Suggest depending on wan connectivity/specific setup. The choice will
+    affect future suggestions during the setup process and other apps.
+
     """
     router_config = forms.ChoiceField(
         label=_('Preferred router configuration'),
@@ -350,20 +353,20 @@ class RouterConfigurationWizardForm(forms.Form):
             (
                 'dmz',
                 format_lazy(
-                    _('Use DMZ feature to forward all traffic'
+                    _('Use DMZ feature to forward all traffic (recommended) '
                       '<p class="help-block">Most routers provide a '
                       'configuration setting called DMZ. This will allow the '
                       'router to forward all incoming traffic from the '
-                      'internet to a single IP address such as the '
-                      '{box_name}\'s address. First remember to configure a '
-                      'static local IP address for your {box_name} in your '
+                      'Internet to a single IP address such as the '
+                      '{box_name}\'s IP address. First remember to configure '
+                      'a static local IP address for your {box_name} in your '
                       'router\'s configuration.</p>'), box_name=cfg.box_name,
                     allow_markup=True),
             ),
             ('port_forwarding',
              format_lazy(
-                 _('Forward Specific Traffic as needed by each '
-                   'application'
+                 _('Forward specific traffic as needed by each '
+                   'application '
                    '<p class="help-block">You may alternatively choose to '
                    'forward only specific traffic to your {box_name}. '
                    'This is ideal if you have other servers like '
@@ -376,7 +379,7 @@ class RouterConfigurationWizardForm(forms.Form):
                  allow_markup=True)),
             ('not_configured',
              format_lazy(
-                 _('Router is currently unconfigured'
+                 _('Router is currently unconfigured '
                    '<p class="help-block">Choose this if you have not '
                    'configured or are unable to configure the router '
                    'currently and wish to be reminded later. Some of '
