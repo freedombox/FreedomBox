@@ -334,13 +334,18 @@ class InternetConnectionTypeForm(forms.Form):
                    '{box_name} provides many workaround solutions but each '
                    'solution has some limitations.</p>'),
                  box_name=cfg.box_name, allow_markup=True)),
+            ('unknown',
+             format_lazy(
+                 _('I do not know the type of connection my ISP provides '
+                   '<p class="help-block">You will be suggested the most '
+                   'conservative actions.</p>'), allow_markup=True)),
         ],
         required=True,
         widget=forms.RadioSelect,
     )
 
 
-class RouterConfigurationWizardForm(forms.Form):
+class RouterConfigurationForm(forms.Form):
     """Form to suggest how to configure a router.
 
     Suggest depending on wan connectivity/specific setup. The choice will

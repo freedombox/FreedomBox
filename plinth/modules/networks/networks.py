@@ -8,13 +8,14 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
+from django.views.generic.edit import FormView
 
 from plinth import kvstore, network
 from plinth.modules import first_boot, networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     InternetConnectionTypeForm, PPPoEForm,
-                    RouterConfigurationWizardForm, WifiForm)
+                    RouterConfigurationForm, WifiForm)
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ def index(request):
     connections = network.get_connection_list()
 
     internet_connection_type = kvstore.get_default(
-        networks.INTERNET_CONNECTION_TYPE_KEY, None)
+        networks.INTERNET_CONNECTION_TYPE_KEY, 'unknown')
     return TemplateResponse(
         request, 'networks_configuration.html', {
             'app_id': 'networks',
@@ -405,89 +406,79 @@ def delete(request, uuid):
     })
 
 
-def router_configuration_help_page(request):
-    """Show the router configuration wizard page/form.
+class RouterConfigurationView(FormView):
+    """View for router configuration form."""
+    template_name = 'router_configuration_update.html'
+    form_class = RouterConfigurationForm
+    success_url = reverse_lazy('networks:index')
 
-    Used both for fistboot step and same networks page.
-
-    """
-    is_firstboot = True \
-        if 'firstboot' in request.build_absolute_uri() else False
-
-    if request.method == 'POST' and request.POST['router_config']:
-        form = RouterConfigurationWizardForm(request.POST)
-        if form.is_valid():
-            logger.info('Updating router configuration setup with value: %s' %
-                        request.POST['router_config'])
-            kvstore.set(networks.ROUTER_CONFIGURATION_TYPE_KEY,
-                        request.POST['router_config'])
-        if is_firstboot:
-            resp = reverse_lazy(first_boot.next_step())
-        else:
-            resp = reverse_lazy('networks:index')
-            messages.success(request, _('Router configuration type saved.'))
-
-        return redirect(resp)
-    else:
-        html = 'router_configuration_update.html'
-        initial = {
+    def get_initial(self):
+        """Return initial data for the form."""
+        return {
             'router_config':
                 kvstore.get_default(networks.ROUTER_CONFIGURATION_TYPE_KEY,
-                                    'not_configured'),
+                                    'not_configured')
         }
-        template_kwargs = {
-            'form': RouterConfigurationWizardForm(initial=initial),
-        }
-        if is_firstboot:
-            html = 'router_configuration_firstboot.html'
 
-            # mark step done on firstboot visit to get the next_step
-            first_boot.mark_step_done('router_setup_wizard')
-            template_kwargs.update({
-                'first_boot_next_step': reverse_lazy(first_boot.next_step()),
-            })
-
-        return TemplateResponse(request, html, template_kwargs)
+    def form_valid(self, form):
+        """Save value to DB and redirect."""
+        type_ = form.cleaned_data['router_config']
+        logger.info('Updating router configuration: %s', type_)
+        kvstore.set(networks.ROUTER_CONFIGURATION_TYPE_KEY, type_)
+        return super().form_valid(form)
 
 
-def internet_connection_type_help_page(request):
-    """Show the internet connection type page.
+class RouterConfigurationFirstBootView(RouterConfigurationView):
+    """View for router configuration form during first wizard."""
+    template_name = 'router_configuration_firstboot.html'
 
-    Used for first boot step and networks page.
+    def get_success_url(self):
+        """Return the next wizard step after this one."""
+        return reverse_lazy(first_boot.next_step())
 
-    """
-    is_firstboot = True \
-        if 'firstboot' in request.build_absolute_uri() else False
+    def form_valid(self, form):
+        """Mark the first wizard step as done, save value and redirect."""
+        first_boot.mark_step_done('router_setup_wizard')
+        if 'skip' in form.data:
+            return FormView.form_valid(self, form)
 
-    if request.method == 'POST' and request.POST['internet_connection_type']:
-        form = InternetConnectionTypeForm(request.POST)
-        if form.is_valid():
-            logger.info('Updating internet connectivity type with value: %s' %
-                        request.POST['internet_connection_type'])
-            kvstore.set(
-                networks.INTERNET_CONNECTION_TYPE_KEY,
-                request.POST['internet_connection_type'],
-            )
-        if is_firstboot:
-            return redirect(reverse_lazy(first_boot.next_step()))
-        else:
-            messages.success(request, _('Internet connection type saved.'))
-            return redirect(reverse_lazy('networks:index'))
-    else:
-        html = 'internet_connectivity_type.html'
-        initial = {
+        return super().form_valid(form)
+
+
+class InternetConnectionTypeView(FormView):
+    """View for Internet connection type form."""
+    template_name = 'internet_connectivity_type.html'
+    form_class = InternetConnectionTypeForm
+    success_url = reverse_lazy('networks:index')
+
+    def get_initial(self):
+        """Return initial data for the form."""
+        return {
             'internet_connection_type':
                 kvstore.get_default(networks.INTERNET_CONNECTION_TYPE_KEY,
-                                    None)
+                                    'unknown')
         }
-        template_kwargs = {'form': InternetConnectionTypeForm(initial=initial)}
-        if is_firstboot:
-            html = 'internet_connectivity_firstboot.html'
 
-            # mark step done on firstboot visit to get the next_step
-            first_boot.mark_step_done('internet_connectivity_type_wizard')
-            template_kwargs.update({
-                'first_boot_next_step': reverse_lazy(first_boot.next_step()),
-            })
+    def form_valid(self, form):
+        """Save value to DB and redirect."""
+        type_ = form.cleaned_data['internet_connection_type']
+        logger.info('Updating internet connectivity type: %s', type_)
+        kvstore.set(networks.INTERNET_CONNECTION_TYPE_KEY, type_)
+        return super().form_valid(form)
 
-        return TemplateResponse(request, html, template_kwargs)
+
+class InternetConnectionTypeFirstBootView(InternetConnectionTypeView):
+    """View to show Internet connection type form during first wizard."""
+    template_name = 'internet_connectivity_firstboot.html'
+
+    def get_success_url(self):
+        """Return the next wizard step after this one."""
+        return reverse_lazy(first_boot.next_step())
+
+    def form_valid(self, form):
+        """Mark the first wizard step as done, save value and redirect."""
+        first_boot.mark_step_done('internet_connectivity_type_wizard')
+        if 'skip' in form.data:
+            return FormView.form_valid(self, form)
+
+        return super().form_valid(form)

@@ -21,12 +21,12 @@ managed_packages = ['network-manager', 'batctl']
 first_boot_steps = [
     {
         'id': 'internet_connectivity_type_wizard',
-        'url': 'networks:firstboot_internet_connection_type',
+        'url': 'networks:internet-connection-type-first-boot',
         'order': 3,
     },
     {
         'id': 'router_setup_wizard',
-        'url': 'networks:firstboot_router_setup',
+        'url': 'networks:router-configuration-first-boot',
         'order': 4,
     },
 ]

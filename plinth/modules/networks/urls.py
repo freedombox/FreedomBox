@@ -4,7 +4,6 @@ URLs for the Network module
 """
 
 from django.conf.urls import url
-from stronghold.decorators import public
 
 from . import networks as views
 
@@ -27,16 +26,15 @@ urlpatterns = [
         r'(?P<interface_name>[^/]+)/)?$', views.add_wifi, name='add_wifi'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),
-    url(r'^sys/networks/router-setup-guide/$',
-        views.router_configuration_help_page,
-        name='router_setup'),
-    url(r'^sys/networks/firstboot/router_setup/$',
-        public(views.router_configuration_help_page),
-        name='firstboot_router_setup'),
+    url(r'^sys/networks/router-configuration/$',
+        views.RouterConfigurationView.as_view(), name='router-configuration'),
+    url(r'^sys/networks/firstboot/router-configuration/$',
+        views.RouterConfigurationFirstBootView.as_view(),
+        name='router-configuration-first-boot'),
     url(r'^sys/networks/internet-connection-type/$',
-        views.internet_connection_type_help_page,
-        name='internet_connection_type_setup'),
-    url(r'^sys/networks/firstboot/internet_connection_type/$',
-        public(views.internet_connection_type_help_page),
-        name='firstboot_internet_connection_type'),
+        views.InternetConnectionTypeView.as_view(),
+        name='internet-connection-type'),
+    url(r'^sys/networks/firstboot/internet-connection-type/$',
+        views.InternetConnectionTypeFirstBootView.as_view(),
+        name='internet-connection-type-first-boot'),
 ]
