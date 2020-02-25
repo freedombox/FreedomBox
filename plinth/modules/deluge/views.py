@@ -4,7 +4,6 @@ Django views for Deluge.
 """
 
 import json
-import os
 
 from django.contrib import messages
 from django.utils.translation import ugettext as _
@@ -25,8 +24,7 @@ class DelugeAppView(views.AppView):
         status = super().get_initial()
         configuration = json.loads(
             actions.superuser_run('deluge', ['get-configuration']))
-        status['storage_path'] = os.path.normpath(
-            configuration['download_location'])
+        status['storage_path'] = configuration['download_location']
         return status
 
     def form_valid(self, form):

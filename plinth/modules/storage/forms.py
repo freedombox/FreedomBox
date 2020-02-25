@@ -103,7 +103,7 @@ class DirectorySelectForm(AppForm):
         if title:
             self.fields['storage_dir'].label = title
         self.validator = validator
-        self.default = os.path.normpath(default)
+        self.default = default
         self.set_form_data()
 
     def clean(self):
