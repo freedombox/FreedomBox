@@ -20,7 +20,9 @@ class QuasselAppView(AppView):
     def form_valid(self, form):
         """Change the access control of Radicale service."""
         data = form.cleaned_data
-        if quassel.get_domain() != data['domain']:
+        app_disable = form.initial['is_enabled'] and not data['is_enabled']
+
+        if not app_disable and quassel.get_domain() != data['domain']:
             quassel.set_domain(data['domain'])
             quassel.app.get_component(
                 'letsencrypt-quassel').setup_certificates()
