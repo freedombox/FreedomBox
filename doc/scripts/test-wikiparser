@@ -1,0 +1,9 @@
+#!/bin/bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+for var in "$@"
+do
+    gen=$(python3 scripts/wikiparser.py "$var" | xmllint --format -)
+    orig=$(sed 's/<revhistory>.*<\/revhistory>//g' "${var//.wiki/.xml}" | xmllint --format -)
+    diff --ignore-all-space <(echo "$gen") <(echo "$orig")
+done
