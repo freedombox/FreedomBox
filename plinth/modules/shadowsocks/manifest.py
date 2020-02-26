@@ -7,7 +7,9 @@ from plinth.modules.backups.api import validate as validate_backup
 
 backup = validate_backup({
     'secrets': {
-        'files': ['/etc/shadowsocks-libev/freedombox.json']
+        'files': [
+            '/var/lib/private/shadowsocks-libev/freedombox/freedombox.json'
+        ]
     },
     'services': ['shadowsocks-libev-local@freedombox']
 })
