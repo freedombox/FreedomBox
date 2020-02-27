@@ -6,6 +6,7 @@ Components
 .. toctree::
    :caption: Available components:
 
+   info
    menu
    daemon
    firewall

@@ -1,25 +1,11 @@
 #!/usr/bin/python3
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Configuration helper for searx.
 """
 
 import argparse
+import gzip
 import os
 import pathlib
 import secrets
@@ -134,7 +120,7 @@ def subcommand_get_safe_search(_):
 def read_settings():
     """Load settings as dictionary from YAML config file."""
     with open(SETTINGS_FILE, 'rb') as settings_file:
-        return yaml.load(settings_file)
+        return yaml.safe_load(settings_file)
 
 
 def write_settings(settings):
@@ -149,6 +135,14 @@ def _get_example_settings_file():
         return searx_doc_dir / 'settings.yml'
 
     return searx_doc_dir / 'settings.yml.gz'
+
+
+def _update_search_engines(settings):
+    """Updates settings with the latest supported search engines."""
+    example_settings_file = _get_example_settings_file()
+    open_func = gzip.open if example_settings_file.suffix == '.gz' else open
+    with open_func(example_settings_file, 'rb') as example_settings:
+        settings['engines'] = yaml.safe_load(example_settings)['engines']
 
 
 def subcommand_setup(_):
@@ -169,6 +163,7 @@ def subcommand_setup(_):
     _set_title(settings)
     _set_timeout(settings)
     _set_safe_search(settings)
+    _update_search_engines(settings)
     write_settings(settings)
 
     action_utils.service_restart('uwsgi')

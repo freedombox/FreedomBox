@@ -1,0 +1,39 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+<h3>
+  {% blocktrans trimmed %}
+    Your Internet Connection Type
+  {% endblocktrans %}
+</h3>
+<p>
+  {% blocktrans trimmed %}
+    The following best describes the type of Internet connection provided
+    by your ISP. This information is only used to suggest you necessary
+    configuration actions.
+  {% endblocktrans %}
+</p>
+
+<p>
+  {% if internet_connectivity_type == "static_public_ip" %}
+    {% blocktrans trimmed %}
+      My ISP provides a public IP address that does not change over time.
+    {% endblocktrans %}
+  {% elif internet_connectivity_type == "dynamic_public_ip" %}
+    {% blocktrans trimmed %}
+      My ISP provides a public IP address that may change over time.
+    {% endblocktrans %}
+  {% else %}
+    {% blocktrans trimmed %}
+      My ISP does not provide a public IP address.
+    {% endblocktrans %}
+  {% endif %}
+  <a href="{% url 'networks:internet_connection_type_setup' %}" class="btn btn-default"
+     role="button">
+    {% trans 'Update...' %}
+  </a>
+</p>

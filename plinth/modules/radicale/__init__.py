@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for radicale.
 """
@@ -42,13 +27,7 @@ managed_services = ['radicale']
 
 managed_packages = ['radicale', 'uwsgi', 'uwsgi-plugin-python3']
 
-name = _('Radicale')
-
-icon_filename = 'radicale'
-
-short_description = _('Calendar and Addressbook')
-
-description = [
+_description = [
     format_lazy(
         _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
           'and sharing of scheduling and contact data. To use Radicale, a '
@@ -60,11 +39,7 @@ description = [
       'contacts, which must be done using a separate client.'),
 ]
 
-clients = clients
-
 reserved_usernames = ['radicale']
-
-manual_page = 'Radicale'
 
 logger = logging.getLogger(__name__)
 
@@ -83,19 +58,27 @@ class RadicaleApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-radicale', name, short_description,
-                              'radicale', 'radicale:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Radicale'), icon_filename='radicale',
+                               short_description=_('Calendar and Addressbook'),
+                               description=_description,
+                               manual_page='Radicale', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-radicale', info.name,
+                              info.short_description, info.icon_filename,
+                              'radicale:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-radicale', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url='/radicale/',
-                                      clients=clients, login_required=True)
+        shortcut = frontpage.Shortcut('shortcut-radicale', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename,
+                                      url='/radicale/', clients=info.clients,
+                                      login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-radicale', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-radicale', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = RadicaleWebserver('webserver-radicale', None,

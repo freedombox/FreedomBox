@@ -1,24 +1,12 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure BIND server.
 """
 
+import augeas
 import re
+from collections import defaultdict
+from pathlib import Path
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -31,17 +19,13 @@ from plinth.utils import format_lazy
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 1
-
-name = _('BIND')
-
-short_description = _('Domain Name Server')
+version = 2
 
 managed_services = ['bind9']
 
 managed_packages = ['bind9']
 
-description = [
+_description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
       'your network.'),
@@ -58,6 +42,7 @@ port_forwarding_info = [
 ]
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
+ZONES_DIR = '/var/bind/pri'
 
 DEFAULT_CONFIG = '''
 acl goodclients {
@@ -93,12 +78,18 @@ class BindApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-bind', name, short_description,
-                              'fa-globe-w', 'bind:index',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('BIND'), icon='fa-globe-w',
+                               short_description=_('Domain Name Server'),
+                               description=_description)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-bind', info.name, info.short_description,
+                              info.icon, 'bind:index',
                               parent_url_name='system')
         self.add(menu_item)
 
-        firewall = Firewall('firewall-bind', name, ports=['dns'],
+        firewall = Firewall('firewall-bind', info.name, ports=['dns'],
                             is_external=False)
         self.add(firewall)
 
@@ -123,7 +114,9 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'bind', ['setup'])
+    helper.call(
+        'post', actions.superuser_run, 'bind',
+        ['setup', '--old-version', str(old_version)])
     helper.call('post', app.enable)
 
 
@@ -195,3 +188,83 @@ def set_dnssec(choice):
                 line = '//' + line
             conf_file.write(line + '\n')
         conf_file.close()
+
+
+def get_served_domains():
+    """
+
+    Augeas path for zone files:
+    ===========================
+    augtool> print /files/var/bind/pri/local.zone
+    /files/var/bind/pri/local.zone
+    /files/var/bind/pri/local.zone/$TTL = "604800"
+    /files/var/bind/pri/local.zone/@[1]
+    /files/var/bind/pri/local.zone/@[1]/1
+    /files/var/bind/pri/local.zone/@[1]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[1]/1/type = "SOA"
+    /files/var/bind/pri/local.zone/@[1]/1/mname = "localhost."
+    /files/var/bind/pri/local.zone/@[1]/1/rname = "root.localhost."
+    /files/var/bind/pri/local.zone/@[1]/1/serial = "2"
+    /files/var/bind/pri/local.zone/@[1]/1/refresh = "604800"
+    /files/var/bind/pri/local.zone/@[1]/1/retry = "86400"
+    /files/var/bind/pri/local.zone/@[1]/1/expiry = "2419200"
+    /files/var/bind/pri/local.zone/@[1]/1/minimum = "604800"
+    /files/var/bind/pri/local.zone/@[2]
+    /files/var/bind/pri/local.zone/@[2]/1
+    /files/var/bind/pri/local.zone/@[2]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[2]/1/type = "NS"
+    /files/var/bind/pri/local.zone/@[2]/1/rdata = "localhost."
+    /files/var/bind/pri/local.zone/@[3]
+    /files/var/bind/pri/local.zone/@[3]/1
+    /files/var/bind/pri/local.zone/@[3]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[3]/1/type = "A"
+    /files/var/bind/pri/local.zone/@[3]/1/rdata = "127.0.0.1"
+    /files/var/bind/pri/local.zone/@[4]
+    /files/var/bind/pri/local.zone/@[4]/1
+    /files/var/bind/pri/local.zone/@[4]/1/class = "IN"
+    /files/var/bind/pri/local.zone/@[4]/1/type = "AAAA"
+    /files/var/bind/pri/local.zone/@[4]/1/rdata = "::1"
+
+    Need to find the related functionality to parse the A records
+
+    Retrieve from /etc/bind/db* zone files all the configured A records.
+    Assuming zones files in ZONES_DIR are all used.
+    :return: dictionary in the form 'domain_name': ['ip_address', 'ipv6_addr']
+    """
+    RECORD_TYPES = ('A', 'AAAA')
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Dns_Zone/lens', 'Dns_Zone.lns')
+
+    zone_file_path = Path(ZONES_DIR)
+    zone_files = [zf for zf in zone_file_path.iterdir() if zf.is_file()]
+
+    # augeas load only required files
+    for zone_file in zone_files:
+        aug.set('/augeas/load/Dns_Zone/incl[last() + 1]', str(zone_file))
+
+    aug.load()
+
+    served_domains = defaultdict(list)
+    for zone_file in zone_files:
+        base_path = '/files/%s/@[{record_order}]/1/{field}' % zone_file
+        count = 1
+        mname = aug.get(base_path.format(record_order=count, field='mname'))
+        while True:
+            record_type = aug.get(base_path.format(record_order=count,
+                                                   field='type'))
+
+            # no record type ends the search
+            if record_type is None:
+                break
+
+            if record_type in RECORD_TYPES:
+                served_domains[mname].append(
+                    aug.get(base_path.format(
+                        record_order=count, field='rdata')
+                    )
+                )
+
+            count += 1
+
+    return served_domains

@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure matrix-synapse server.
 """
@@ -45,13 +30,7 @@ managed_packages = ['matrix-synapse', 'matrix-synapse-ldap3']
 
 managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
-name = _('Matrix Synapse')
-
-icon_filename = 'matrixsynapse'
-
-short_description = _('Chat Server')
-
-description = [
+_description = [
     _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '
       'ecosystem for open, federated instant messaging and VoIP. Synapse is a '
       'server implementing the Matrix protocol. It provides chat groups, '
@@ -64,10 +43,6 @@ description = [
       'for mobile, desktop and the web. <a href="https://riot.im/">Riot</a> '
       'client is recommended.')
 ]
-
-clients = clients
-
-manual_page = 'MatrixSynapse'
 
 port_forwarding_info = [('TCP', 8448)]
 
@@ -87,20 +62,28 @@ class MatrixSynapseApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-matrixsynapse', name, short_description,
-                              'matrixsynapse', 'matrixsynapse:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Matrix Synapse'),
+                               icon_filename='matrixsynapse',
+                               short_description=_('Chat Server'),
+                               description=_description,
+                               manual_page='MatrixSynapse', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-matrixsynapse', info.name,
+                              info.short_description, 'matrixsynapse',
+                              'matrixsynapse:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-matrixsynapse', name,
-            short_description=short_description, icon=icon_filename,
-            description=description,
-            configure_url=reverse_lazy('matrixsynapse:index'), clients=clients,
-            login_required=True)
+            'shortcut-matrixsynapse', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
+            configure_url=reverse_lazy('matrixsynapse:index'),
+            clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-matrixsynapse', name,
+        firewall = Firewall('firewall-matrixsynapse', info.name,
                             ports=['matrix-synapse-plinth'], is_external=True)
         self.add(firewall)
 

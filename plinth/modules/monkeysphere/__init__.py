@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for monkeysphere.
 """
@@ -29,9 +14,7 @@ version = 1
 
 managed_packages = ['monkeysphere']
 
-name = _('Monkeysphere')
-
-description = [
+_description = [
     _('With Monkeysphere, an OpenPGP key can be generated for each configured '
       'domain serving SSH. The OpenPGP public key can then be uploaded to the '
       'OpenPGP keyservers. Users connecting to this machine through SSH can '
@@ -50,8 +33,6 @@ description = [
       'website</a>.')
 ]
 
-manual_page = "Monkeysphere"
-
 reserved_usernames = ['monkeysphere']
 
 app = None
@@ -65,9 +46,15 @@ class MonkeysphereApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-monkeysphere', name, None,
-                              'fa-certificate', 'monkeysphere:index',
-                              parent_url_name='system', advanced=True)
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Monkeysphere'), icon='fa-certificate',
+                               description=_description,
+                               manual_page='Monkeysphere')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-monkeysphere', info.name, None, info.icon,
+                              'monkeysphere:index', parent_url_name='system',
+                              advanced=True)
         self.add(menu_item)
 
 

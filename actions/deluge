@@ -1,42 +1,22 @@
 #!/usr/bin/python3
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Configuration helper for BitTorrent web client.
 """
 
 import argparse
 import json
-import os
-import shutil
+import pathlib
 import subprocess
 import time
 
 import augeas
-from plinth import action_utils
 
-try:
-    from deluge import config
-except ImportError:
-    # deluge is not installed or is python2 version
-    config = None
+from plinth import action_utils
+from plinth.modules.deluge.utils import Config
 
 DELUGED_DEFAULT_FILE = '/etc/default/deluged'
-DELUGE_CONF_DIR = '/var/lib/deluged/.config/deluge/'
+DELUGE_CONF_DIR = pathlib.Path('/var/lib/deluged/.config/deluge/')
 
 DELUGE_WEB_SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 DELUGE_WEB_SYSTEMD_SERVICE = '''
@@ -103,18 +83,8 @@ def _set_configuration(filename, parameter, value):
     if deluge_web_is_running:
         action_utils.service_stop('deluge-web')
 
-    filepath = os.path.join(DELUGE_CONF_DIR, filename)
-    if config is None:
-        script = 'from deluge import config;\
-            conf = config.Config(filename="{0}");\
-            conf["{1}"] = "{2}";\
-            conf.save()'.format(filepath, parameter, value)
-        subprocess.check_call(['python2', '-c', script])
-    else:
-        conf = config.Config(filename=filepath)
-        conf[parameter] = value
-        conf.save()
-    shutil.chown(filepath, 'debian-deluged', 'debian-deluged')
+    with Config(DELUGE_CONF_DIR / filename) as config:
+        config.content[parameter] = value
 
     if deluged_is_running:
         action_utils.service_start('deluged')
@@ -124,23 +94,18 @@ def _set_configuration(filename, parameter, value):
 
 def _get_host_id():
     """Get default host id."""
-    if config is None:
-        hosts_conf_file = os.path.join(DELUGE_CONF_DIR, 'hostlist.conf.1.2')
-        script = 'from deluge import config;\
-            conf = config.Config(filename="{0}");\
-            print(conf["hosts"][0][0])'.format(hosts_conf_file)
-        output = subprocess.check_output(['python2', '-c', script]).decode()
-        return output.strip()
-    else:
-        hosts_conf_file = os.path.join(DELUGE_CONF_DIR, 'hostlist.conf')
-        conf = config.Config(filename=hosts_conf_file)
-        return conf["hosts"][0][0]
+    try:
+        with Config(DELUGE_CONF_DIR / 'hostlist.conf') as config:
+            return config.content['hosts'][0][0]
+    except FileNotFoundError:
+        with Config(DELUGE_CONF_DIR / 'hostlist.conf.1.2') as config:
+            return config.content['hosts'][0][0]
 
 
 def _set_deluged_daemon_options():
     """Set deluged daemon options."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DELUGED_DEFAULT_FILE)
     aug.load()
@@ -153,16 +118,8 @@ def _set_deluged_daemon_options():
 
 def subcommand_get_configuration(_):
     """Return the current deluged configuration in JSON format."""
-    deluged_conf_file = os.path.join(DELUGE_CONF_DIR, 'core.conf')
-    if config is None:
-        script = 'from deluge import config;\
-            conf = config.Config(filename="{0}");\
-            print(conf["download_location"])'.format(deluged_conf_file)
-        output = subprocess.check_output(['python2', '-c', script]).decode()
-        download_location = output.strip()
-    else:
-        conf = config.Config(filename=deluged_conf_file)
-        download_location = conf["download_location"]
+    with Config(DELUGE_CONF_DIR / 'core.conf') as config:
+        download_location = config.content['download_location']
 
     print(json.dumps({'download_location': download_location}))
 
@@ -171,6 +128,7 @@ def subcommand_set_configuration(arguments):
     """Set the deluged configuration."""
     if arguments.parameter != 'download_location':
         return
+
     _set_configuration('core.conf', arguments.parameter, arguments.value)
 
 
@@ -183,17 +141,44 @@ def subcommand_setup(_):
     _set_deluged_daemon_options()
 
     subprocess.check_call(['systemctl', 'daemon-reload'])
-    # restarting deluge-web service stops also possible deluged process
-    # that was started from the web interface
-    action_utils.service_restart('deluge-web')
-    action_utils.service_restart('deluged')
-    # wait processes to start
-    time.sleep(10)
 
-    # configure deluge-web to autoconnect to the default deluged daemon, also
-    # restarts deluged and deluge-web services again to create config files
+    # Restarting an old deluge-web service stops also possible deluged process
+    # that was started from the web interface.
+    action_utils.service_try_restart('deluge-web')
+
+    # Wait until core configuration is available so that status of the app can
+    # be shown properly.
+    _wait_for_configuration('deluged', 'core.conf')
+
+    # Configure deluge-web to autoconnect to the default deluged daemon.
+    _wait_for_configuration('deluge-web', 'web.conf')
     host_id = _get_host_id()
     _set_configuration('web.conf', 'default_daemon', host_id)
+
+
+def _wait_for_configuration(service, file_name):
+    """Wait until configuration file has been created."""
+    conf_file = DELUGE_CONF_DIR / file_name
+    if conf_file.exists():
+        return
+
+    # deluge-web creates files on first run. deluged on the other than differs
+    # in version. Older version in Debian Buster creates the files after a
+    # restart while newer versions create the files on first run. The following
+    # approach is slightly better for create-on-exit case.
+    is_running = action_utils.service_is_running(service)
+    for interval in range(7):
+        action_utils.service_restart(service)
+        if conf_file.exists():
+            break
+
+        print('Waiting for {service} configuration')
+        time.sleep(2**interval)  # Exponentially increase the time waited
+    else:
+        raise Exception(f'Unable to setup {service}.')
+
+    if not is_running:
+        action_utils.service_stop(service)
 
 
 def main():

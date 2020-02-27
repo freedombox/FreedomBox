@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure Tiny Tiny RSS.
 """
@@ -40,13 +25,7 @@ managed_packages = [
     'tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql', 'python3-psycopg2'
 ]
 
-name = _('Tiny Tiny RSS')
-
-icon_filename = 'ttrss'
-
-short_description = _('News Feed Reader')
-
-description = [
+_description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
       'close to a real desktop application as possible.'),
@@ -60,11 +39,7 @@ description = [
           '/tt-rss-app</a> for connecting.'))
 ]
 
-clients = clients
-
 group = ('feed-reader', _('Read and subscribe to news feeds'))
-
-manual_page = 'TinyTinyRSS'
 
 app = None
 
@@ -77,19 +52,28 @@ class TTRSSApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-ttrss', name, short_description, 'ttrss',
-                              'ttrss:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Tiny Tiny RSS'), icon_filename='ttrss',
+                               short_description=_('News Feed Reader'),
+                               description=_description,
+                               manual_page='TinyTinyRSS', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-ttrss', info.name, info.short_description,
+                              info.icon_filename, 'ttrss:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-ttrss', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url='/tt-rss',
-                                      clients=clients, login_required=True,
+        shortcut = frontpage.Shortcut('shortcut-ttrss', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename, url='/tt-rss',
+                                      clients=info.clients,
+                                      login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-ttrss', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-ttrss', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-ttrss', 'tt-rss-plinth',

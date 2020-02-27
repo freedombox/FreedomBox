@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure I2P.
 """
@@ -39,13 +24,7 @@ managed_services = [service_name]
 
 managed_packages = ['i2p']
 
-name = _('I2P')
-
-icon_filename = 'i2p'
-
-short_description = _('Anonymity Network')
-
-description = [
+_description = [
     _('The Invisible Internet Project is an anonymous network layer intended '
       'to protect communication from censorship and surveillance. I2P '
       'provides anonymity by sending encrypted traffic through a '
@@ -56,11 +35,7 @@ description = [
       'configuration process.')
 ]
 
-clients = clients
-
 group = ('i2p', _('Manage I2P application'))
-
-manual_page = 'I2P'
 
 port_forwarding_info = [
     ('TCP', 4444),
@@ -85,19 +60,28 @@ class I2PApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-i2p', name, short_description, 'i2p',
-                              'i2p:index', parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('I2P'), icon_filename='i2p',
+                               short_description=_('Anonymity Network'),
+                               description=_description, manual_page='I2P',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-i2p', info.name, info.short_description,
+                              info.icon_filename, 'i2p:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-i2p', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url='/i2p/',
-                                      clients=clients, login_required=True,
+        shortcut = frontpage.Shortcut('shortcut-i2p', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename, url='/i2p/',
+                                      clients=info.clients,
+                                      login_required=True,
                                       allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-i2p-web', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-i2p-web', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         firewall = Firewall('firewall-i2p-proxies', _('I2P Proxy'),

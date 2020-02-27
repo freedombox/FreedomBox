@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for infinoted.
 """
@@ -37,15 +22,7 @@ managed_services = ['infinoted']
 
 managed_packages = ['infinoted']
 
-manual_page = 'Infinoted'
-
-name = _('infinoted')
-
-icon_filename = 'infinoted'
-
-short_description = _('Gobby Server')
-
-description = [
+_description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
     format_lazy(
         _('To use it, <a href="https://gobby.github.io/">download Gobby</a>, '
@@ -53,8 +30,6 @@ description = [
           '"Connect to Server" and enter your {box_name}\'s domain name.'),
         box_name=_(cfg.box_name)),
 ]
-
-clients = clients
 
 port_forwarding_info = [('TCP', 6523)]
 
@@ -69,19 +44,27 @@ class InfinotedApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-infinoted', name, short_description,
-                              'infinoted', 'infinoted:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('infinoted'), icon_filename='infinoted',
+                               short_description=_('Gobby Server'),
+                               description=_description,
+                               manual_page='Infinoted', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-infinoted', info.name,
+                              info.short_description, info.icon_filename,
+                              'infinoted:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-infinoted', name, short_description=short_description,
-            icon=icon_filename, description=description,
-            configure_url=reverse_lazy('infinoted:index'), clients=clients,
-            login_required=False)
+            'shortcut-infinoted', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
+            configure_url=reverse_lazy('infinoted:index'),
+            clients=info.clients, login_required=False)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-infinoted', name,
+        firewall = Firewall('firewall-infinoted', info.name,
                             ports=['infinoted-plinth'], is_external=True)
         self.add(firewall)
 
@@ -102,11 +85,7 @@ def init():
 
 class InfinotedAppView(AppView):
     app_id = 'infinoted'
-    name = name
-    description = description
-    clients = clients
     port_forwarding_info = port_forwarding_info
-    icon_filename = icon_filename
 
 
 def setup(helper, old_version=None):

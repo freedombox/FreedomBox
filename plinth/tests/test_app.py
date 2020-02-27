@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Test module for App, base class for all applications.
 """
@@ -23,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth.app import App, Component, FollowerComponent, LeaderComponent
+from plinth.app import App, Component, FollowerComponent, Info, LeaderComponent
 
 
 class AppTest(App):
@@ -282,3 +267,37 @@ def test_leader_component_is_enabled():
     component = LeaderComponent('test-leader-1')
     with pytest.raises(NotImplementedError):
         assert component.is_enabled()
+
+
+def test_info_initialization_without_args():
+    """Test initializing the Info component without arguments."""
+    info = Info('test-app', 3)
+    assert info.component_id == 'test-app-info'
+    assert info.app_id == 'test-app'
+    assert info.version == 3
+    assert not info.is_essential
+    assert info.depends == []
+    assert info.name is None
+    assert info.icon is None
+    assert info.icon_filename is None
+    assert info.short_description is None
+    assert info.description is None
+    assert info.manual_page is None
+    assert info.clients is None
+
+
+def test_info_initialization_with_args():
+    """Test initializing the Info component with arguments."""
+    info = Info('test-app', 3, is_essential=True, depends=['test-app-2'],
+                name='Test App', icon='fa-test', icon_filename='test-icon',
+                short_description='For Test', description='Test description',
+                manual_page='Test', clients=['test'])
+    assert info.is_essential
+    assert info.depends == ['test-app-2']
+    assert info.name == 'Test App'
+    assert info.icon == 'fa-test'
+    assert info.icon_filename == 'test-icon'
+    assert info.short_description == 'For Test'
+    assert info.description == 'Test description'
+    assert info.manual_page == 'Test'
+    assert info.clients == ['test']

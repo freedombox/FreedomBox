@@ -1,20 +1,5 @@
 #!/usr/bin/python3
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox Service setup file.
 """
@@ -188,7 +173,7 @@ def _ignore_data_file(file_name):
     ignore_patterns = [
         r'\.log$', r'\.pid$', r'\.py.bak$', r'\.pyc$', r'\.pytest_cache$',
         r'\.sqlite3$', r'\.swp$', r'^#', r'^\.', r'^__pycache__$',
-        r'^sessionid\w*$', r'~$'
+        r'^sessionid\w*$', r'~$', r'django-secret.key'
     ]
     for pattern in ignore_patterns:
         if re.match(pattern, file_name):

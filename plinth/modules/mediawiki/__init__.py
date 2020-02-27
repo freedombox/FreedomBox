@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure MediaWiki.
 """
@@ -37,13 +22,7 @@ managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
 managed_services = ['mediawiki-jobrunner']
 
-name = _('MediaWiki')
-
-icon_filename = 'mediawiki'
-
-short_description = _('Wiki')
-
-description = [
+_description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
       'projects. A wiki engine is a program for creating a collaboratively '
       'edited website. You can use MediaWiki to host a wiki-like website, '
@@ -58,10 +37,6 @@ description = [
       'logged in can make changes to the content.')
 ]
 
-manual_page = 'MediaWiki'
-
-clients = clients
-
 app = None
 
 
@@ -75,18 +50,25 @@ class MediaWikiApp(app_module.App):
         super().__init__()
         self._private_mode = True
 
-        menu_item = menu.Menu('menu-mediawiki', name, short_description,
-                              'mediawiki', 'mediawiki:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('MediaWiki'), icon_filename='mediawiki',
+                               short_description=_('Wiki'),
+                               description=_description,
+                               manual_page='MediaWiki', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-mediawiki', info.name,
+                              info.short_description, info.icon_filename,
+                              'mediawiki:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = Shortcut('shortcut-mediawiki', name,
-                            short_description=short_description,
-                            icon=icon_filename, url='/mediawiki',
-                            clients=clients, login_required=True)
+        shortcut = Shortcut('shortcut-mediawiki', info.name,
+                            short_description=info.short_description,
+                            icon=info.icon_filename, url='/mediawiki',
+                            clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-mediawiki', name,
+        firewall = Firewall('firewall-mediawiki', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 

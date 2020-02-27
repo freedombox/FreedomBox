@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure system date and time.
 """
@@ -36,14 +21,10 @@ managed_services = ['systemd-timesyncd']
 
 managed_packages = []
 
-name = _('Date & Time')
-
-description = [
+_description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
 ]
-
-manual_page = 'DateTime'
 
 app = None
 
@@ -56,7 +37,14 @@ class DateTimeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-datetime', name, None, 'fa-clock-o',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential,
+                               name=_('Date & Time'), icon='fa-clock-o',
+                               description=_description,
+                               manual_page='DateTime')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,
                               'datetime:index', parent_url_name='system')
         self.add(menu_item)
 

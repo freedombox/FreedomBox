@@ -1,22 +1,8 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Test actions for configuring bind
 """
+from pathlib import Path
 
 import pytest
 
@@ -32,6 +18,50 @@ def fixture_configuration_file(tmp_path):
     bind.CONFIG_FILE = str(conf_file)
     yield
     bind.CONFIG_FILE = old_config_file
+
+
+@pytest.fixture
+def bind_zones_folder(tmp_path):
+    """Setup the a bind configuration file temporary directory."""
+    test_zone_file = """
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	{name} root.localhost. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	{name}
+@	IN	A	{a_record}
+@	IN	AAAA	{aaaa_record}
+    """ # noqa
+
+    old_zones_dir = bind.ZONES_DIR
+    bind.ZONES_DIR = tmp_path
+    zones_dir_path = Path(bind.ZONES_DIR)
+    zones_dir_path.mkdir(exist_ok=True, parents=True)
+
+    local_path = zones_dir_path / "local.zone"
+    local_path.write_text(
+        test_zone_file.format(name='localhost.', a_record="127.0.0.1",
+                              aaaa_record="::1")
+    )
+
+    custom_zone_path = zones_dir_path / "custom.zone"
+    custom_zone_path.write_text(
+        test_zone_file.format(name='custom.domain.', a_record="10.10.10.1",
+                              aaaa_record="fe80::c6e9:84ff:fe16:95da")
+    )
+
+    yield
+
+    local_path.unlink()
+    custom_zone_path.unlink()
+    bind.ZONES_DIR = old_zones_dir
 
 
 @pytest.mark.usefixtures('configuration_file')
@@ -56,3 +86,16 @@ def test_enable_dnssec():
     bind.set_dnssec('disable')
     conf = bind.get_config()
     assert not conf['enable_dnssec']
+
+
+@pytest.mark.usefixtures('bind_zones_folder')
+def test_get_correct_served_domains():
+    """
+    Test that get_served_domains collects the right a/aaaa records from zone
+    files
+    """
+    served_domains = bind.get_served_domains()
+
+    assert served_domains['localhost.'] == ["127.0.0.1", "::1"]
+    assert served_domains['custom.domain.'] == [
+        "10.10.10.1", "fe80::c6e9:84ff:fe16:95da"]

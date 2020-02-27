@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to manage backup archives.
 """
@@ -37,15 +22,11 @@ version = 2
 
 managed_packages = ['borgbackup', 'sshfs']
 
-name = _('Backups')
-
 depends = ['storage']
 
-description = [
+_description = [
     _('Backups allows creating and managing backup archives.'),
 ]
-
-manual_page = 'Backups'
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 # session variable name that stores when a backup file should be deleted
@@ -62,7 +43,13 @@ class BackupsApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-backups', name, None, 'fa-files-o',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               depends=depends, name=_('Backups'),
+                               icon='fa-files-o', description=_description,
+                               manual_page='Backups')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
 
@@ -96,7 +83,7 @@ def _backup_handler(packet, encryption_passphrase=None):
     manifests = {
         'apps': [{
             'name': app.name,
-            'version': app.app.version,
+            'version': app.app.app.info.version,
             'backup': app.manifest
         } for app in packet.apps]
     }

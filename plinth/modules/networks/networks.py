@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 import logging
 
@@ -24,11 +9,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import network, kvstore
-from plinth.modules import networks, first_boot
+from plinth import kvstore, network
+from plinth.modules import first_boot, networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
-                    PPPoEForm, WifiForm, RouterConfigurationWizardForm)
+                    InternetConnectionTypeForm, PPPoEForm,
+                    RouterConfigurationWizardForm, WifiForm)
 
 logger = logging.getLogger(__name__)
 
@@ -37,16 +23,17 @@ def index(request):
     """Show connection list."""
     connections = network.get_connection_list()
 
+    internet_connection_type = kvstore.get_default(
+        networks.INTERNET_CONNECTION_TYPE_KEY, None)
     return TemplateResponse(
-        request, 'connections_list.html', {
+        request, 'networks_configuration.html', {
             'app_id': 'networks',
+            'app_info': networks.app.info,
             'title': _('Network Connections'),
-            'name': networks.name,
-            'description': networks.description,
-            'manual_page': networks.manual_page,
             'has_diagnostics': True,
             'is_enabled': True,
-            'connections': connections
+            'connections': connections,
+            'internet_connectivity_type': internet_connection_type
         })
 
 
@@ -419,9 +406,10 @@ def delete(request, uuid):
 
 
 def router_configuration_help_page(request):
-    """
-    Show the router configuration wizard page/form.
+    """Show the router configuration wizard page/form.
+
     Used both for fistboot step and same networks page.
+
     """
     is_firstboot = True \
         if 'firstboot' in request.build_absolute_uri() else False
@@ -431,10 +419,8 @@ def router_configuration_help_page(request):
         if form.is_valid():
             logger.info('Updating router configuration setup with value: %s' %
                         request.POST['router_config'])
-            kvstore.set(
-                networks.ROUTER_CONFIGURATION_TYPE_KEY,
-                request.POST['router_config']
-            )
+            kvstore.set(networks.ROUTER_CONFIGURATION_TYPE_KEY,
+                        request.POST['router_config'])
         if is_firstboot:
             resp = reverse_lazy(first_boot.next_step())
         else:
@@ -442,21 +428,64 @@ def router_configuration_help_page(request):
             messages.success(request, _('Router configuration type saved.'))
 
         return redirect(resp)
-
     else:
-        html = "router_configuration_update.html"
+        html = 'router_configuration_update.html'
         initial = {
-            "router_config": kvstore.get_default(
-                networks.ROUTER_CONFIGURATION_TYPE_KEY, 'dmz'),
+            'router_config':
+                kvstore.get_default(networks.ROUTER_CONFIGURATION_TYPE_KEY,
+                                    'not_configured'),
         }
         template_kwargs = {
             'form': RouterConfigurationWizardForm(initial=initial),
         }
         if is_firstboot:
-            html = "router_configuration_firstboot.html"
+            html = 'router_configuration_firstboot.html'
 
             # mark step done on firstboot visit to get the next_step
             first_boot.mark_step_done('router_setup_wizard')
+            template_kwargs.update({
+                'first_boot_next_step': reverse_lazy(first_boot.next_step()),
+            })
+
+        return TemplateResponse(request, html, template_kwargs)
+
+
+def internet_connection_type_help_page(request):
+    """Show the internet connection type page.
+
+    Used for first boot step and networks page.
+
+    """
+    is_firstboot = True \
+        if 'firstboot' in request.build_absolute_uri() else False
+
+    if request.method == 'POST' and request.POST['internet_connection_type']:
+        form = InternetConnectionTypeForm(request.POST)
+        if form.is_valid():
+            logger.info('Updating internet connectivity type with value: %s' %
+                        request.POST['internet_connection_type'])
+            kvstore.set(
+                networks.INTERNET_CONNECTION_TYPE_KEY,
+                request.POST['internet_connection_type'],
+            )
+        if is_firstboot:
+            return redirect(reverse_lazy(first_boot.next_step()))
+        else:
+            messages.success(request, _('Internet connection type saved.'))
+            return redirect(reverse_lazy('networks:index'))
+    else:
+        html = 'internet_connectivity_type.html'
+        initial = {
+            'internet_connection_type':
+                kvstore.get_default(networks.INTERNET_CONNECTION_TYPE_KEY,
+                                    None)
+        }
+        template_kwargs = {'form': InternetConnectionTypeForm(initial=initial)}
+        if is_firstboot:
+            html = 'internet_connectivity_firstboot.html'
+
+            # mark step done on firstboot visit to get the next_step
+            first_boot.mark_step_done('internet_connectivity_type_wizard')
             template_kwargs.update({
                 'first_boot_next_step': reverse_lazy(first_boot.next_step()),
             })

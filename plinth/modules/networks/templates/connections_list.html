@@ -1,60 +1,10 @@
-{% extends "app.html" %}
 {% comment %}
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
 {% load bootstrap %}
 {% load i18n %}
 
-{% block page_head %}
-  <style type="text/css">
-    .connection-status-label {
-        display: inline-block;
-        width: 5.5em;
-        padding: 5px 0px;
-        text-align: center;
-        margin-right: 10px;
-    }
-
-    .connection-show-label {
-        display: inline-block;
-        width: 40%;
-    }
-
-    .connection-type-label {
-        display: inline-block;
-    }
-
-    .list-group-item .btn {
-        margin: -2px 0;
-    }
-
-    .form.pull-right {
-        margin-right: 20px;
-    }
-
-    .form button {
-        width: 7em;
-    }
-  </style>
-{% endblock %}
-
-{% block configuration %}
   <h3>{% trans "Connections" %}</h3>
 
   <div class="btn-toolbar">
@@ -117,35 +67,4 @@
       </div>
     {% endfor %}
   </div>
-
   {% include "connections_diagram.html" %}
-
-  <h3>
-    {% blocktrans trimmed %}
-      {{ box_name }} Internet Connectivity
-    {% endblocktrans %}
-  </h3>
-  <p>
-    {% blocktrans trimmed %}
-      The following best describes how your {{ box_name }} is connected in your
-      network. This information is used only to suggest necessary configuration
-      actions.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      Your {{ box_name }} gets its internet from your Router via WiFi or
-      Ethernet cable. This is a typical home setup.
-    {% endblocktrans %}
-  </p>
-
-  <div class="btn-toolbar">
-    <a href="{% url 'networks:router_setup' %}" class="btn btn-default"
-       role="button" title="{% trans 'Update...' %}">
-      <span class="fa" aria-hidden="true"></span>
-      {% trans 'Update...' %}
-    </a>
-  </div>
-
-{% endblock %}

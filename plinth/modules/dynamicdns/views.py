@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Views for the dynamicsdns module.
 """
@@ -52,10 +37,8 @@ def index(request):
     """Serve Dynamic DNS page."""
     return TemplateResponse(
         request, 'dynamicdns.html', {
-            'title': dynamicdns.name,
-            'name': dynamicdns.name,
-            'description': dynamicdns.description,
-            'manual_page': dynamicdns.manual_page,
+            'app_info': dynamicdns.app.info,
+            'title': dynamicdns.app.info.name,
             'subsubmenu': subsubmenu
         })
 
@@ -77,9 +60,7 @@ def configure(request):
     return TemplateResponse(
         request, 'dynamicdns_configure.html', {
             'title': _('Configure Dynamic DNS'),
-            'name': dynamicdns.name,
-            'description': dynamicdns.description,
-            'manual_page': dynamicdns.manual_page,
+            'app_info': dynamicdns.app.info,
             'form': form,
             'subsubmenu': subsubmenu
         })
@@ -103,9 +84,7 @@ def statuspage(request):
     return TemplateResponse(
         request, 'dynamicdns_status.html', {
             'title': _('Dynamic DNS Status'),
-            'name': dynamicdns.name,
-            'description': dynamicdns.description,
-            'manual_page': dynamicdns.manual_page,
+            'app_info': dynamicdns.app.info,
             'no_nat': no_nat,
             'nat_unchecked': nat_unchecked,
             'timer': timer,

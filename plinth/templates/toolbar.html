@@ -1,20 +1,5 @@
 {% comment %}
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
 {% load bootstrap %}
@@ -27,8 +12,8 @@
   <section class="toolbar">
     <div class="btn-toolbar" role="toolbar">
 
-        {% if clients %}
-          {% with client_platforms=clients|clients_get_platforms %}
+        {% if app_info.clients %}
+          {% with client_platforms=app_info.clients|clients_get_platforms %}
             {% if client_platforms.web|length == 1 %}
               <a target='_blank' rel="noopener noreferrer"
                  class="btn btn-primary" role="button" data-turbolinks="false"
@@ -69,7 +54,7 @@
 
     </div>
     <div class="toolbar-collapsed-content">
-      {% include "clients.html" with clients=clients enabled=is_enabled %}
+      {% include "clients.html" with clients=app_info.clients enabled=is_enabled %}
     </div>
   </section>
 

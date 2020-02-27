@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -35,10 +20,8 @@ class ContextMixin(object):
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
-        context['title'] = pagekite.name
-        context['name'] = pagekite.name
-        context['description'] = pagekite.description
-        context['manual_page'] = pagekite.manual_page
+        context['app_info'] = pagekite.app.info
+        context['title'] = pagekite.app.info.name
         context['is_enabled'] = pagekite.app.is_enabled()
         return context
 

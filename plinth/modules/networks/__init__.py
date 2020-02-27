@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to interface with network-manager.
 """
@@ -33,15 +18,20 @@ is_essential = True
 
 managed_packages = ['network-manager', 'batctl']
 
-first_boot_steps = [{
-    'id': 'router_setup_wizard',
-    'url': 'networks:firstboot_router_setup',
-    'order': 4,
-}]
+first_boot_steps = [
+    {
+        'id': 'internet_connectivity_type_wizard',
+        'url': 'networks:firstboot_internet_connection_type',
+        'order': 3,
+    },
+    {
+        'id': 'router_setup_wizard',
+        'url': 'networks:firstboot_router_setup',
+        'order': 4,
+    },
+]
 
-name = _('Networks')
-
-description = [
+_description = [
     _('Configure network devices. Connect to the Internet via Ethernet, Wi-Fi '
       'or PPPoE. Share that connection with other devices on the network.'),
     _('Devices administered through other methods may not be available for '
@@ -50,11 +40,10 @@ description = [
 
 logger = Logger(__name__)
 
-manual_page = 'Networks'
-
 app = None
 
 ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
+INTERNET_CONNECTION_TYPE_KEY = 'networks_internet_type'
 
 
 class NetworksApp(app_module.App):
@@ -65,7 +54,13 @@ class NetworksApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-networks', name, None, 'fa-signal',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Networks'),
+                               icon='fa-signal', description=_description,
+                               manual_page='Networks')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-networks', info.name, None, info.icon,
                               'networks:index', parent_url_name='system')
         self.add(menu_item)
 

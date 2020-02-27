@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Main FreedomBox views.
 """
@@ -31,8 +16,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
-from plinth import package
-from plinth.app import App
+from plinth import app, package
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.translation import get_language_from_request, set_language
@@ -110,11 +94,42 @@ class LanguageSelectionView(FormView):
 
 
 class AppView(FormView):
-    """A generic view for configuring simple apps."""
-    clients = []
-    name = None
-    # List of paragraphs describing the service
-    description = ""
+    """A generic view for showing an app's main page.
+
+    The view and it's template may be customized but by default show the
+    following:
+
+    * Icon for the app
+    * Name of the app
+    * Description of the app
+    * Link to the manual page for the app
+    * A button to enable/disable the app
+    * A toolbar with common actions such as 'Run diagnostics'
+    * A status section showing the running status of the app
+    * A form for configuring the app
+
+    The following class properties are available on the view:
+
+    'app_id' is the mandatory property to set the ID of the app. It is used to
+    retrieve the App instance for the app that is needed for basic information
+    and operations such as enabling/disabling the app.
+
+    'form_class' is the Django form class that is used by this view. By default
+    the AppForm class is used.
+
+    'show_status_block' is a boolean to determine if the status section must be
+    shown in this app's page.
+
+    'template_name' is the template used to render this view. By default it is
+    app.html. It may be overridden with a template that derives from app.html
+    to customize the appearance of the app to achieve more complex presentation
+    instead of the simple appearance provided by default.
+
+    'port_forwarding_info' is a list of port information dictionaries that can
+    used to show a special section in the app page that tells the users how to
+    forward ports on their router for this app to work properly.
+
+    """
     form_class = forms.AppForm
     # Display the 'status' block of the app.html template
     # This block uses information from service.is_running. This method is
@@ -122,17 +137,12 @@ class AppView(FormView):
     show_status_block = True
     app_id = None
     template_name = 'app.html'
-    manual_page = ''
     port_forwarding_info = None
-    icon_filename = ''
 
     def __init__(self, *args, **kwargs):
         """Initialize the view."""
         super().__init__(*args, **kwargs)
         self._common_status = None
-
-        if not self.name:
-            raise ImproperlyConfigured('Missing name attribute')
 
     @property
     def success_url(self):
@@ -144,7 +154,7 @@ class AppView(FormView):
         if not self.app_id:
             raise ImproperlyConfigured('Missing attribute: app_id')
 
-        return App.get(self.app_id)
+        return app.App.get(self.app_id)
 
     def _get_common_status(self):
         """Return the status needed for form and template.
@@ -187,17 +197,13 @@ class AppView(FormView):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context.update(self._get_common_status())
-        context['app'] = self.app
+        context['app'] = self.app  # XXX: Remove this for template security
         context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
-        context['clients'] = self.clients
-        context['name'] = self.name
-        context['description'] = self.description
+        context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
         context['show_status_block'] = self.show_status_block
-        context['manual_page'] = self.manual_page
         context['port_forwarding_info'] = self.port_forwarding_info
-        context['icon_filename'] = self.icon_filename
 
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
@@ -208,15 +214,13 @@ class AppView(FormView):
 class SetupView(TemplateView):
     """View to prompt and setup applications."""
     template_name = 'setup.html'
-    name = 'None'
-    # List of paragraphs describing the service
-    description = []
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
         context = super(SetupView, self).get_context_data(**kwargs)
         setup_helper = self.kwargs['setup_helper']
         context['setup_helper'] = setup_helper
+        context['app_info'] = setup_helper.module.app.info
 
         # Reuse the value of setup_state throughout the view for consistency.
         context['setup_state'] = setup_helper.get_state()
@@ -226,9 +230,6 @@ class SetupView(TemplateView):
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
-
-        context['name'] = self.name
-        context['description'] = self.description
 
         return context
 

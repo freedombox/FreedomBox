@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for wireguard.
 """
@@ -35,11 +20,7 @@ version = 1
 
 managed_packages = ['wireguard']
 
-name = _('WireGuard')
-
-short_description = _('Virtual Private Network')
-
-description = [
+_description = [
     _('WireGuard is a fast, modern, secure VPN tunnel.'),
     format_lazy(
         _('It can be used to connect to a VPN provider which supports '
@@ -51,8 +32,6 @@ description = [
           'traffic can be securely relayed through {box_name}.'),
         box_name=_(cfg.box_name))
 ]
-
-clients = clients
 
 port_forwarding_info = [('UDP', 51820)]
 
@@ -69,19 +48,26 @@ class WireguardApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-wireguard', name, short_description,
-                              'wireguard', 'wireguard:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('WireGuard'), icon_filename='wireguard',
+                               short_description=_('Virtual Private Network'),
+                               description=_description, clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-wireguard', info.name,
+                              info.short_description, info.icon_filename,
+                              'wireguard:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-wireguard', name, short_description=short_description,
-            icon='wireguard', description=description,
+            'shortcut-wireguard', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description,
             configure_url=reverse_lazy('wireguard:index'), login_required=True,
-            clients=clients)
+            clients=info.clients)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-wireguard', name,
+        firewall = Firewall('firewall-wireguard', info.name,
                             ports=['wireguard-freedombox'], is_external=True)
         self.add(firewall)
 

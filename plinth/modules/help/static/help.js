@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * @licstart The following is the entire license notice for the JavaScript
  * code in this page.
@@ -22,6 +23,6 @@
  */
 
 (function($) {
-    let downloadManualButton = $('a[href="/plinth/help/manual/download/"]');
+    let downloadManualButton = $('a[href="/plinth/help/manual-download/"]');
     downloadManualButton.attr("data-turbolinks", "false");
 })(jQuery);

@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure ikiwiki.
 """
@@ -38,13 +23,7 @@ managed_packages = [
     'libsearch-xapian-perl', 'libimage-magick-perl'
 ]
 
-name = _('ikiwiki')
-
-icon_filename = 'ikiwiki'
-
-short_description = _('Wiki and Blog')
-
-description = [
+_description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
       'several lightweight markup languages, including Markdown, and '
       'common blogging functionality such as comments and RSS feeds.'),
@@ -57,11 +36,7 @@ description = [
         users_url=reverse_lazy('users:index'))
 ]
 
-clients = clients
-
 group = ('wiki', _('View and edit wiki applications'))
-
-manual_page = 'Ikiwiki'
 
 app = None
 
@@ -74,15 +49,22 @@ class IkiwikiApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-ikiwiki', name, short_description,
-                              'ikiwiki', 'ikiwiki:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('ikiwiki'), icon_filename='ikiwiki',
+                               short_description=_('Wiki and Blog'),
+                               description=_description, manual_page='Ikiwiki',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-ikiwiki', info.name,
+                              info.short_description, info.icon_filename,
+                              'ikiwiki:index', parent_url_name='apps')
         self.add(menu_item)
 
         self.refresh_sites()
 
-        firewall = Firewall('firewall-ikiwiki', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-ikiwiki', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-ikiwiki', 'ikiwiki-plinth',
@@ -92,8 +74,9 @@ class IkiwikiApp(app_module.App):
     def add_shortcut(self, site, title):
         """Add an ikiwiki shortcut to frontpage."""
         shortcut = frontpage.Shortcut('shortcut-ikiwiki-' + site, title,
-                                      icon=icon_filename,
-                                      url='/ikiwiki/' + site, clients=clients)
+                                      icon=self.info.icon_filename,
+                                      url='/ikiwiki/' + site,
+                                      clients=self.info.clients)
         self.add(shortcut)
         return shortcut
 

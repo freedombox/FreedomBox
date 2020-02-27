@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure Cockpit.
 """
@@ -42,13 +27,7 @@ managed_services = ['cockpit.socket']
 
 managed_packages = ['cockpit']
 
-name = _('Cockpit')
-
-icon_filename = 'cockpit'
-
-short_description = _('Server Administration')
-
-description = [
+_description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
           'GNU/Linux servers via a web browser. On a {box_name}, controls '
@@ -65,8 +44,6 @@ description = [
           ' of the URL.')),
 ]
 
-manual_page = 'Cockpit'
-
 app = None
 
 
@@ -78,19 +55,28 @@ class CockpitApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-cockpit', name, short_description,
-                              'fa-wrench', 'cockpit:index',
-                              parent_url_name='system')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential, name=_('Cockpit'),
+                               icon='fa-wrench', icon_filename='cockpit',
+                               short_description=_('Server Administration'),
+                               description=_description, manual_page='Cockpit',
+                               clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-cockpit', info.name,
+                              info.short_description, info.icon,
+                              'cockpit:index', parent_url_name='system')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-cockpit', name,
-                                      short_description=short_description,
-                                      icon='cockpit', url='/_cockpit/',
-                                      clients=clients, login_required=True)
+        shortcut = frontpage.Shortcut('shortcut-cockpit', info.name,
+                                      short_description=info.short_description,
+                                      icon=info.icon_filename,
+                                      url='/_cockpit/', clients=info.clients,
+                                      login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-cockpit', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-cockpit', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-cockpit', 'cockpit-freedombox',

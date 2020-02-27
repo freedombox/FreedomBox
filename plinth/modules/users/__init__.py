@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to manage users.
 """
@@ -48,9 +33,7 @@ first_boot_steps = [
     },
 ]
 
-name = _('Users and Groups')
-
-description = [
+_description = [
     _('Create and managed user accounts. These accounts serve as centralized '
       'authentication mechanism for most apps. Some apps further require a '
       'user account to be part of a group to authorize the user to access the '
@@ -61,8 +44,6 @@ description = [
           'the <em>admin</em> group may alter apps or system settings.'),
         box_name=_(cfg.box_name))
 ]
-
-manual_page = 'Users'
 
 # All FreedomBox user groups
 groups = dict()
@@ -78,7 +59,13 @@ class UsersApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-users', name, None, 'fa-users',
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential,
+                               name=_('Users and Groups'), icon='fa-users',
+                               description=_description, manual_page='Users')
+        self.add(info)
+
+        menu_item = menu.Menu('menu-users', info.name, None, info.icon,
                               'users:index', parent_url_name='system')
         self.add(menu_item)
 

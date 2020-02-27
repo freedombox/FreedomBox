@@ -1,18 +1,4 @@
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 import os
 
@@ -51,15 +37,11 @@ def get_configured_domain_name():
 
 version = 1
 
-name = _('diaspora*')
-
-short_description = _('Federated Social Network')
-
 managed_services = ['diaspora']
 
 managed_packages = ['diaspora']
 
-description = [
+_description = [
     _('diaspora* is a decentralized social network where you can store '
       'and control your own data.'),
     format_lazy(
@@ -71,7 +53,6 @@ description = [
 ]
 
 from .manifest import clients  # noqa pylint:disable=E402 isort:skip
-clients = clients
 
 app = None
 
@@ -84,19 +65,25 @@ class DiasporaApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-diaspora', name, short_description,
-                              'diaspora', 'diaspora:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('diaspora*'), icon_filename='diaspora',
+                               short_description=_('Federated Social Network'),
+                               description=_description, clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-diaspora', info.name,
+                              info.short_description, info.icon_filename,
+                              'diaspora:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = Shortcut('shortcut-diaspora', name,
-                            short_description=short_description,
-                            icon='diaspora', url=None, clients=clients,
-                            login_required=True)
+        shortcut = Shortcut('shortcut-diaspora', info.name,
+                            short_description=info.short_description,
+                            icon=info.icon_filename, url=None,
+                            clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        firewall = Firewall('firewall-diaspora', name, ports=['http', 'https'],
-                            is_external=True)
+        firewall = Firewall('firewall-diaspora', info.name,
+                            ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-diaspora', 'diaspora-plinth')

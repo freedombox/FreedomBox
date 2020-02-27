@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app to configure Transmission server.
 """
@@ -38,25 +23,15 @@ managed_services = ['transmission-daemon']
 
 managed_packages = ['transmission-daemon']
 
-name = _('Transmission')
-
-icon_filename = 'transmission'
-
-short_description = _('BitTorrent Web Client')
-
-description = [
+_description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Transmission daemon handles Bitorrent file sharing.  Note that '
       'BitTorrent is not anonymous.'),
 ]
 
-clients = clients
-
 reserved_usernames = ['debian-transmission']
 
 group = ('bit-torrent', _('Download files using BitTorrent applications'))
-
-manual_page = 'Transmission'
 
 app = None
 
@@ -69,19 +44,27 @@ class TransmissionApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        menu_item = menu.Menu('menu-transmission', name, short_description,
-                              'transmission', 'transmission:index',
-                              parent_url_name='apps')
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               name=_('Transmission'),
+                               icon_filename='transmission',
+                               short_description=_('BitTorrent Web Client'),
+                               description=_description,
+                               manual_page='Transmission', clients=clients)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-transmission', info.name,
+                              info.short_description, info.icon_filename,
+                              'transmission:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-transmission', name,
-                                      short_description=short_description,
-                                      icon=icon_filename, url='/transmission',
-                                      clients=clients, login_required=True,
-                                      allowed_groups=[group[0]])
+        shortcut = frontpage.Shortcut(
+            'shortcut-transmission', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            url='/transmission', clients=info.clients, login_required=True,
+            allowed_groups=[group[0]])
         self.add(shortcut)
 
-        firewall = Firewall('firewall-transmission', name,
+        firewall = Firewall('firewall-transmission', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 

@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 URLs for the Network module
 """
@@ -45,7 +30,13 @@ urlpatterns = [
     url(r'^sys/networks/router-setup-guide/$',
         views.router_configuration_help_page,
         name='router_setup'),
-    url(r'^sys/networks/firstboot/$',
+    url(r'^sys/networks/firstboot/router_setup/$',
         public(views.router_configuration_help_page),
         name='firstboot_router_setup'),
+    url(r'^sys/networks/internet-connection-type/$',
+        views.internet_connection_type_help_page,
+        name='internet_connection_type_setup'),
+    url(r'^sys/networks/firstboot/internet_connection_type/$',
+        public(views.internet_connection_type_help_page),
+        name='firstboot_internet_connection_type'),
 ]

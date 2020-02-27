@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for configuring ikiwiki.
 """
@@ -33,13 +18,8 @@ from .forms import IkiwikiCreateForm
 class IkiwikiAppView(views.AppView):
     """Serve configuration page."""
     app_id = 'ikiwiki'
-    name = ikiwiki.name
-    description = ikiwiki.description
     show_status_block = False
     template_name = 'ikiwiki_configure.html'
-    manual_page = ikiwiki.manual_page
-    clients = ikiwiki.clients
-    icon_filename = ikiwiki.icon_filename
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
@@ -77,11 +57,8 @@ def create(request):
 
     return TemplateResponse(
         request, 'ikiwiki_create.html', {
-            'title': ikiwiki.name,
-            'clients': ikiwiki.clients,
-            'description': ikiwiki.description,
+            'title': ikiwiki.app.info.name,
             'form': form,
-            'manual_page': ikiwiki.manual_page,
             'is_enabled': ikiwiki.app.is_enabled(),
         })
 
@@ -134,6 +111,6 @@ def delete(request, name):
         return redirect(reverse_lazy('ikiwiki:index'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html', {
-        'title': ikiwiki.name,
+        'title': ikiwiki.app.info.name,
         'name': title
     })

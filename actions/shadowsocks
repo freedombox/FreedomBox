@@ -1,20 +1,5 @@
 #!/usr/bin/python3
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Helper script for configuring Shadowsocks.
 """
@@ -75,7 +60,10 @@ def subcommand_merge_config(arguments):
     new_config.update(config)
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
 
-    old_umask = os.umask(0o027)
+    # XXX: Config file with password is world-readable. This is the
+    # same as the default config file, but find a way to avoid this.
+    # See https://salsa.debian.org/freedombox-team/plinth/-/merge_requests/1724
+    old_umask = os.umask(0o022)
     try:
         open(SHADOWSOCKS_CONFIG, 'w').write(new_config)
     finally:

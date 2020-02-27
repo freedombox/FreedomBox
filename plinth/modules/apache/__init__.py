@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for Apache server.
 """
@@ -47,6 +32,10 @@ class ApacheApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        info = app_module.Info(app_id=self.app_id, version=version,
+                               is_essential=is_essential)
+        self.add(info)
 
         web_server_ports = Firewall('firewall-web', _('Web Server'),
                                     ports=['http', 'https'], is_external=True)

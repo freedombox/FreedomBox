@@ -1,25 +1,12 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Setup Django web framework.
 """
 
 import logging
 import os
+import pathlib
+import random
 import stat
 
 import django.conf
@@ -28,151 +15,81 @@ import django.core.wsgi
 from django.conf import global_settings
 from django.contrib.messages import constants as message_constants
 
-from . import cfg, log, module_loader
+from . import cfg, glib, log, module_loader, settings
 
 logger = logging.getLogger(__name__)
 
 
 def init():
     """Setup Django configuration in the absence of .settings file"""
-    templates = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.contrib.auth.context_processors.auth',
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.i18n',
-                    'django.template.context_processors.media',
-                    'django.template.context_processors.request',
-                    'django.template.context_processors.static',
-                    'django.template.context_processors.tz',
-                    'django.contrib.messages.context_processors.messages',
-                    'plinth.context_processors.common',
-                ],
-            },
-        },
-    ]
-
-    applications = [
-        'axes',
-        'captcha',
-        'bootstrapform',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.messages',
-        'stronghold',
-        'plinth',
-    ]
-    applications += module_loader.get_modules_to_load()
-    sessions_directory = os.path.join(cfg.data_dir, 'sessions')
-
-    secure_proxy_ssl_header = None
     if cfg.secure_proxy_ssl_header:
-        secure_proxy_ssl_header = (cfg.secure_proxy_ssl_header, 'https')
+        settings.SECURE_PROXY_SSL_HEADER = (cfg.secure_proxy_ssl_header,
+                                            'https')
 
-    ipware_meta_precedence_order = ('REMOTE_ADDR', )
     if cfg.use_x_forwarded_for:
-        ipware_meta_precedence_order = ('HTTP_X_FORWARDED_FOR', )
+        settings.IPWARE_META_PRECEDENCE_ORDER = ('HTTP_X_FORWARDED_FOR', )
 
-    pwd = 'django.contrib.auth.password_validation'
+    settings.DATABASES['default']['NAME'] = cfg.store_file
+    settings.DEBUG = cfg.develop
+    settings.FORCE_SCRIPT_NAME = cfg.server_dir
+    settings.INSTALLED_APPS += module_loader.get_modules_to_load()
+    settings.LANGUAGES = get_languages()
+    settings.LOGGING = log.get_configuration()
+    settings.MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+    settings.SECRET_KEY = _get_secret_key()
+    settings.SESSION_FILE_PATH = os.path.join(cfg.data_dir, 'sessions')
+    settings.STATIC_URL = '/'.join([cfg.server_dir,
+                                    'static/']).replace('//', '/')
+    settings.USE_X_FORWARDED_HOST = cfg.use_x_forwarded_host
 
-    django.conf.settings.configure(
-        ALLOWED_HOSTS=['*'],
-        AUTH_PASSWORD_VALIDATORS=[
-            {
-                'NAME': '{}.UserAttributeSimilarityValidator'.format(pwd),
-            },
-            {
-                'NAME': '{}.MinimumLengthValidator'.format(pwd),
-                'OPTIONS': {
-                    'min_length': 8,
-                }
-            },
-            {
-                'NAME': '{}.CommonPasswordValidator'.format(pwd),
-            },
-            {
-                'NAME': '{}.NumericPasswordValidator'.format(pwd),
-            },
-        ],
-        AXES_LOCKOUT_URL='locked/',
-        AXES_RESET_ON_SUCCESS=True,  # Only used with axes >= 4.4.3
-        CACHES={
-            'default': {
-                'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
-            }
-        },
-        CAPTCHA_FONT_PATH=[
-            '/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'
-        ],
-        CAPTCHA_LENGTH=6,
-        CAPTCHA_FLITE_PATH='/usr/bin/flite',
-        DATABASES={
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': cfg.store_file
-            }
-        },
-        DEBUG=cfg.develop,
-        FORCE_SCRIPT_NAME=cfg.server_dir,
-        INSTALLED_APPS=applications,
-        IPWARE_META_PRECEDENCE_ORDER=ipware_meta_precedence_order,
-        LANGUAGES=get_languages(),
-        LOGGING=log.get_configuration(),
-        LOGIN_URL='users:login',
-        LOGIN_REDIRECT_URL='index',
-        MESSAGE_TAGS={message_constants.ERROR: 'danger'},
-        MIDDLEWARE=(
-            'django.middleware.security.SecurityMiddleware',
-            'django.contrib.sessions.middleware.SessionMiddleware',
-            'django.middleware.locale.LocaleMiddleware',
-            'django.middleware.common.CommonMiddleware',
-            'django.middleware.csrf.CsrfViewMiddleware',
-            'django.contrib.auth.middleware.AuthenticationMiddleware',
-            'django.contrib.messages.middleware.MessageMiddleware',
-            'django.middleware.clickjacking.XFrameOptionsMiddleware',
-            'stronghold.middleware.LoginRequiredMiddleware',
-            'plinth.middleware.AdminRequiredMiddleware',
-            'plinth.middleware.FirstSetupMiddleware',
-            'plinth.modules.first_boot.middleware.FirstBootMiddleware',
-            'plinth.middleware.SetupMiddleware',
-        ),
-        PASSWORD_HASHERS=[
-            'django.contrib.auth.hashers.Argon2PasswordHasher',
-            'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-            'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-            'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-        ],
-        ROOT_URLCONF='plinth.urls',
-        SECURE_BROWSER_XSS_FILTER=True,
-        SECURE_CONTENT_TYPE_NOSNIFF=True,
-        SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
-        SESSION_ENGINE='django.contrib.sessions.backends.file',
-        SESSION_FILE_PATH=sessions_directory,
-        STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
-        # STRONGHOLD_PUBLIC_URLS=(r'^captcha/', ),
-        STRONGHOLD_PUBLIC_NAMED_URLS=(
-            'captcha-image',
-            'captcha-image-2x',
-            'captcha-audio',
-            'captcha-refresh',
-        ),
-        TEMPLATES=templates,
-        TIME_ZONE='UTC',
-        USE_L10N=True,
-        USE_TZ=True,
-        USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
+    kwargs = {}
+    for setting in dir(settings):
+        if setting.isupper():
+            kwargs[setting] = getattr(settings, setting)
+
+    django.conf.settings.configure(**kwargs)
     django.setup(set_prefix=True)
 
-    logger.debug('Configured Django with applications - %s', applications)
+    logger.debug('Configured Django with applications - %s',
+                 settings.INSTALLED_APPS)
 
     logger.debug('Creating or adding new tables to data file')
     verbosity = 1 if cfg.develop else 0
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+
+    # Cleanup expired sessions every day
+    glib.schedule(24 * 3600, _cleanup_expired_sessions, in_thread=True)
+
+
+def _get_secret_key():
+    """Retrieve or create a new Django secret key."""
+    secret_key_file = pathlib.Path(cfg.data_dir) / 'django-secret.key'
+    if secret_key_file.exists():
+        secret_key = secret_key_file.read_text()
+        if len(secret_key) >= 128:
+            return secret_key
+
+    secret_key = _generate_secret_key()
+    # File should be created with permission 0o700
+    old_umask = os.umask(0o077)
+    try:
+        secret_key_file.write_text(secret_key)
+    finally:
+        os.umask(old_umask)
+
+    return secret_key
+
+
+def _generate_secret_key():
+    """Generate a new random secret key for use with Django."""
+    # We could have used django.core.management.utils.get_random_secret_key
+    # but it is not documented and should be considered private.
+    length = 128
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    rand = random.SystemRandom()
+    return ''.join(rand.choice(chars) for _ in range(length))
 
 
 def get_languages():
@@ -189,6 +106,12 @@ def get_languages():
         list(global_settings.LANGUAGES) + [
             ('gu', gettext_noop('Gujarati')),
         ])
+
+
+def _cleanup_expired_sessions(data):
+    """Cleanup expired Django sessions."""
+    verbosity = 1 if cfg.develop else 0
+    django.core.management.call_command('clearsessions', verbosity=verbosity)
 
 
 def get_wsgi_application():

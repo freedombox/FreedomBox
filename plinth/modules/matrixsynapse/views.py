@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Views for the Matrix Synapse module.
 """
@@ -38,8 +23,6 @@ class SetupView(FormView):
     template_name = 'matrix-synapse-pre-setup.html'
     form_class = DomainSelectionForm
     success_url = reverse_lazy('matrixsynapse:index')
-    icon_filename = matrixsynapse.icon_filename
-    title = matrixsynapse.name
 
     def form_valid(self, form):
         """Handle valid form submission."""
@@ -50,9 +33,8 @@ class SetupView(FormView):
         """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
 
-        context['name'] = matrixsynapse.name
-        context['description'] = matrixsynapse.description
-        context['icon_filename'] = matrixsynapse.icon_filename
+        context['title'] = matrixsynapse.app.info.name
+        context['app_info'] = matrixsynapse.app.info
         context['domain_names'] = names.components.DomainName.list_names(
             'matrix-synapse-plinth')
 
@@ -63,11 +45,8 @@ class MatrixSynapseAppView(AppView):
     """Show matrix-synapse service page."""
     app_id = 'matrixsynapse'
     template_name = 'matrix-synapse.html'
-    name = matrixsynapse.name
-    description = matrixsynapse.description
     form_class = MatrixSynapseForm
     port_forwarding_info = matrixsynapse.port_forwarding_info
-    icon_filename = matrixsynapse.icon_filename
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""
@@ -80,8 +59,6 @@ class MatrixSynapseAppView(AppView):
         """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
-        context['clients'] = matrixsynapse.clients
-        context['manual_page'] = matrixsynapse.manual_page
         context['certificate_status'] = matrixsynapse.get_certificate_status()
         return context
 

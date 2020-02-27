@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Views for the diaspora module
 """
@@ -35,8 +20,8 @@ class DiasporaSetupView(FormView):
     """Show diaspora setup page."""
     template_name = 'diaspora-pre-setup.html'
     form_class = DomainSelectionForm
-    description = diaspora.description
-    title = diaspora.name
+    description = diaspora.app.info.description
+    title = diaspora.app.info.name
     success_url = reverse_lazy('diaspora:index')
 
     def form_valid(self, form):
@@ -60,7 +45,6 @@ class DiasporaAppView(AppView):
     form_class = DiasporaAppForm
     app_id = 'diaspora'
     template_name = 'diaspora-post-setup.html'
-    name = diaspora.name
 
     def dispatch(self, request, *args, **kwargs):
         if not diaspora.is_setup():
@@ -70,7 +54,6 @@ class DiasporaAppView(AppView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = diaspora.get_configured_domain_name()
-        context['clients'] = diaspora.clients
         return context
 
     def get_initial(self):

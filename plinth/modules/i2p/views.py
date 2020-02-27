@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Views for I2P application.
 """
@@ -41,20 +26,14 @@ subsubmenu = [{
 class I2PAppView(AppView):
     """Serve configuration page."""
     app_id = 'i2p'
-    clients = i2p.clients
-    name = i2p.name
-    description = i2p.description
     show_status_block = True
     template_name = 'i2p.html'
-    icon_filename = i2p.icon_filename
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
         context = super().get_context_data(**kwargs)
-        context['title'] = i2p.name
-        context['description'] = i2p.description
-        context['clients'] = i2p.clients
-        context['manual_page'] = i2p.manual_page
+        context['title'] = i2p.app.info.name
+        context['app_info'] = i2p.app.info
         context['subsubmenu'] = subsubmenu
         context['port_forwarding_info'] = i2p.port_forwarding_info
         return context
@@ -69,11 +48,8 @@ class ServiceBaseView(TemplateView):
     def get_context_data(self, **kwargs):
         """Add context data for template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = i2p.name
-        context['name'] = i2p.name
-        context['description'] = i2p.description
-        context['clients'] = i2p.clients
-        context['manual_page'] = i2p.manual_page
+        context['title'] = i2p.app.info.name
+        context['app_info'] = i2p.app.info
         context['subsubmenu'] = subsubmenu
         context['is_enabled'] = i2p.app.is_enabled()
         context['service_title'] = self.service_title

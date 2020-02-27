@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 import logging
 import random
@@ -29,7 +14,7 @@ sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
     'dynamicdns', 'firewall', 'letsencrypt', 'monkeysphere', 'names',
     'networks', 'pagekite', 'power', 'security', 'snapshot', 'ssh', 'storage',
-    'upgrades','users'
+    'upgrades', 'users'
 ]
 
 default_url = config['DEFAULT']['url']
@@ -37,7 +22,8 @@ default_url = config['DEFAULT']['url']
 
 def login(browser, url, username, password):
 
-    if '/plinth/' not in browser.url:
+    # XXX: Find a way to remove the hardcoded jsxc URL
+    if '/plinth/' not in browser.url or '/jsxc/jsxc' in browser.url:
         browser.visit(url)
 
     apps_link = browser.find_link_by_href('/plinth/apps/')

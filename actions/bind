@@ -1,28 +1,14 @@
 #!/usr/bin/python3
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Configuration helper for BIND server.
 """
 
 import argparse
+from pathlib import Path
 
 from plinth import action_utils
-from plinth.modules.bind import CONFIG_FILE, DEFAULT_CONFIG
+from plinth.modules.bind import CONFIG_FILE, DEFAULT_CONFIG, ZONES_DIR
 from plinth.modules.bind import set_forwarders, set_dnssec
 
 
@@ -30,7 +16,10 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-    subparsers.add_parser('setup', help='Setup for BIND')
+    setup = subparsers.add_parser('setup', help='Setup for BIND')
+    setup.add_argument(
+        '--old-version', type=int, required=True,
+        help='Earlier version of the app that is already setup.')
 
     configure = subparsers.add_parser('configure', help='Configure BIND')
     configure.add_argument('--forwarders',
@@ -42,11 +31,14 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Setup BIND configuration."""
-    conf_file = open(CONFIG_FILE, "w")
-    conf_file.write(DEFAULT_CONFIG)
-    conf_file.close()
+    if arguments.old_version == 0:
+        with open(CONFIG_FILE, "w") as conf_file:
+            conf_file.write(DEFAULT_CONFIG)
+
+    Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
+
     action_utils.service_restart('bind9')
 
 

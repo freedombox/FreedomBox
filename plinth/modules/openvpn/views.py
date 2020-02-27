@@ -1,19 +1,4 @@
-#
-# This file is part of FreedomBox.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox app for configuring OpenVPN server.
 """
@@ -59,10 +44,7 @@ def index(request):
     return TemplateResponse(
         request, 'openvpn.html', {
             'app_id': 'openvpn',
-            'clients': openvpn.clients,
-            'name': openvpn.name,
-            'description': openvpn.description,
-            'manual_page': openvpn.manual_page,
+            'app_info': openvpn.app.info,
             'port_forwarding_info': openvpn.port_forwarding_info,
             'status': status,
             'form': form,
@@ -70,7 +52,6 @@ def index(request):
             'is_running': status['is_running'],
             'has_diagnostics': True,
             'is_enabled': status['enabled'],
-            'icon_filename': openvpn.icon_filename
         })
 
 
