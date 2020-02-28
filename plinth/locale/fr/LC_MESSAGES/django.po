@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 19:12-0500\n"
-"PO-Revision-Date: 2020-02-26 23:32+0000\n"
+"PO-Revision-Date: 2020-03-01 14:33+0000\n"
 "Last-Translator: Thomas Vincent <thomas@vinc-net.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -3647,7 +3647,7 @@ msgid ""
 "static local IP address for your {box_name} in your router's configuration.</"
 "p>"
 msgstr ""
-"Utilisez la fonction de réseau isolé (DMZ) pour transférer tout le trafic "
+"Utiliser la fonction de réseau isolé (DMZ) pour transférer tout le trafic "
 "(recommandé)<p class=\"help-block\">La plupart des routeurs proposent une "
 "configuration appelée DMZ. Celle-ci vous permet de transférer tout le trafic "
 "entrant depuis Internet vers une adresse IP unique telle que l’adresse IP de "
@@ -3665,6 +3665,14 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
+"Transférer le trafic spécifique tel que requis par chaque application <p "
+"class=\"help-block\">Vous pourriez aussi choisir de transférer uniquement un "
+"trafic spécifique vers votre {box_name}. Cela est idéal si vous avez d’"
+"autres serveurs tels que {box_name} dans votre réseau ou si votre routeur ne "
+"gère pas les fonctions de DMZ. Toutes les applications qui fournissent une "
+"interface web ont besoin que vous transfériez le trafic des ports 80 et 443 "
+"pour fonctionner. Les autres applications suggéreront quel(s) port(s) "
+"transférer pour qu’elles fonctionnent.</p>"
 
 #: plinth/modules/networks/forms.py:382
 msgid ""
@@ -3672,6 +3680,10 @@ msgid ""
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
+"Le routeur n’est pas configuré actuellement <p class=\"help-block\">"
+"Choisissez ceci si vous n’avez pas configuré le routeur ou si vous n’en êtes "
+"pas capable et souhaitez vous le rappeler plus tard. Certaines des autres "
+"étapes de configuration pourraient échouer.</p>"
 
 #: plinth/modules/networks/networks.py:32
 msgid "Network Connections"
@@ -4092,7 +4104,7 @@ msgid ""
 "Your %(box_name)s gets its internet connection from your router via Wi-Fi or "
 "Ethernet cable. This is a typical home setup."
 msgstr ""
-"Votre %(box_name)s tire son accès à Internet de votre routeur grâce au WiFi "
+"Votre %(box_name)s tire son accès à Internet de votre routeur grâce au Wi-Fi "
 "ou à un câble Ethernet. Il s’agit de la configuration domestique classique."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:23
@@ -4103,6 +4115,10 @@ msgid ""
 "configured to forward all traffic it receives so that %(box_name)s provides "
 "the services."
 msgstr ""
+"Avec cette configuration, tout appareil sur Internet tentant de joindre "
+"votre %(box_name)s devra passer par votre routeur. Le routeur devra être "
+"configuré pour transférer tout le trafic qu’il reçoit afin que %(box_name)s "
+"fournisse ses services."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
 msgid ""
@@ -4110,10 +4126,14 @@ msgid ""
 "see options to overcome this limitation, choose 'no public address' option "
 "in Internet connection type selection."
 msgstr ""
+"Si vous n’avez pas le contrôle de votre routeur, choisissez de ne pas le "
+"configurer. Pour voir les options permettant de surmonter cette limitation, "
+"choisissez l’option « pas d’adresses publique » dans la sélection du type de "
+"connexion à Internet."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
-msgstr ""
+msgstr "Choisissez comment vous souhaitez configurer votre routeur"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:42
 msgid ""
@@ -6686,10 +6706,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:82
-#, fuzzy
-#| msgid "A list of IP addresses, separated by space"
 msgid "Client IP address provided by server"
-msgstr "Une liste d'adresses IP séparées par des espaces"
+msgstr "Adresse IP client fournie par le serveur"
 
 #: plinth/modules/wireguard/forms.py:83
 msgid ""
@@ -6720,6 +6738,9 @@ msgid ""
 "layer of security. Fill in only if provided. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 msgstr ""
+"Optionnel. Une clé secrète partagée fournie par le serveur pour ajouter un "
+"niveau supplémentaire de sécurité. Ne remplir que si une clé est fournie. "
+"Exemple : MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
 #: plinth/modules/wireguard/forms.py:105
 msgid "Use this connection to send all outgoing traffic"
@@ -6730,25 +6751,21 @@ msgid "Typically checked for a VPN service though which all traffic is sent."
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
-#, fuzzy
-#| msgid "Chat Server"
 msgid "As a Server"
-msgstr "Serveur de discussion"
+msgstr "En tant que serveur"
 
 #: plinth/modules/wireguard/templates/wireguard.html:12
 msgid "Peers allowed to connect to this server:"
-msgstr ""
+msgstr "Pairs autorisés à se connecter à ce serveur :"
 
 #: plinth/modules/wireguard/templates/wireguard.html:18
 msgid "Allowed IPs"
-msgstr ""
+msgstr "IP autorisées"
 
 #: plinth/modules/wireguard/templates/wireguard.html:19
 #: plinth/modules/wireguard/templates/wireguard.html:75
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Last Connected Time"
-msgstr "Créer Connexion"
+msgstr "Date de dernière connexion"
 
 #: plinth/modules/wireguard/templates/wireguard.html:38
 #, python-format
@@ -6758,89 +6775,67 @@ msgstr ""
 #: plinth/modules/wireguard/templates/wireguard.html:47
 #, python-format
 msgid "Public key for this %(box_name)s:"
-msgstr ""
+msgstr "Clé publique pour ce %(box_name)s :"
 
 #: plinth/modules/wireguard/templates/wireguard.html:53
-#, fuzzy
-#| msgid "No shares currently configured."
 msgid "Not configured yet."
-msgstr "Aucun partage actuellement configuré."
+msgstr "Pas encore configuré."
 
 #: plinth/modules/wireguard/templates/wireguard.html:57
-#, fuzzy
-#| msgid "Add new introducer"
 msgid "Add a new peer"
-msgstr "Ajouter un nouvel introducteur"
+msgstr "Ajouter un nouveau pair"
 
 #: plinth/modules/wireguard/templates/wireguard.html:61
 #: plinth/modules/wireguard/views.py:51
 msgid "Add Allowed Client"
-msgstr ""
+msgstr "Ajouter un client autorisé"
 
 #: plinth/modules/wireguard/templates/wireguard.html:64
-#, fuzzy
-#| msgid "Chat Client"
 msgid "As a Client"
-msgstr "Client de discussion"
+msgstr "En tant que client"
 
 #: plinth/modules/wireguard/templates/wireguard.html:66
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
-msgstr ""
+msgstr "Serveurs auxquels %(box_name)s va se connecter :"
 
 #: plinth/modules/wireguard/templates/wireguard.html:73
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:19
 msgid "Endpoint"
-msgstr ""
+msgstr "Endpoint"
 
 #: plinth/modules/wireguard/templates/wireguard.html:96
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "No connections to remote servers are configured yet."
-msgstr "Échec de l'authentification sur le serveur distant."
+msgstr "Aucune connexion vers le serveur distant n’est encore configurée."
 
 #: plinth/modules/wireguard/templates/wireguard.html:104
-#, fuzzy
-#| msgid "Add new introducer"
 msgid "Add a new server"
-msgstr "Ajouter un nouvel introducteur"
+msgstr "Ajouter un nouveau serveur"
 
 #: plinth/modules/wireguard/templates/wireguard.html:108
 #: plinth/modules/wireguard/views.py:160
-#, fuzzy
-#| msgid "Add Connection"
 msgid "Add Connection to Server"
-msgstr "Ajouter connexion"
+msgstr "Ajouter connexion au serveur"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:19
-#, fuzzy
-#| msgid "IRC Client"
 msgid "Add Client"
-msgstr "Client IRC"
+msgstr "Ajouter un client"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
-#, fuzzy
-#| msgid "Are you sure that you want to remove this repository?"
 msgid "Are you sure that you want to delete this client?"
-msgstr "Êtes-vous sûr de vouloir supprimer ce dépôt ?"
+msgstr "Voulez-vous vraiment supprimer ce client ?"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:14
-#, fuzzy
-#| msgid "Are you sure that you want to remove this repository?"
 msgid "Are you sure that you want to delete this server?"
-msgstr "Êtes-vous sûr de vouloir supprimer ce dépôt ?"
+msgstr "Voulez-vous vraiment supprimer ce serveur ?"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_client.html:19
-#, fuzzy
-#| msgid "Chat Client"
 msgid "Update Client"
-msgstr "Client de discussion"
+msgstr "Mettre à jour le client"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_server.html:19
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Update Connection"
-msgstr "Créer Connexion"
+msgstr "Mettre à jour la connexion"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:12
 #, python-format
@@ -6863,10 +6858,8 @@ msgid "Pre-shared key:"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:32
-#, fuzzy
-#| msgid "Server domain"
 msgid "Server endpoints:"
-msgstr "Domaine du serveur"
+msgstr "Endpoints du serveur :"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:40
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:27
