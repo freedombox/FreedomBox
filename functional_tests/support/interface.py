@@ -41,6 +41,11 @@ def login(browser, url, username, password):
         browser.visit(default_url + '/plinth/firstboot/welcome')
         submit(browser)  # click the "Start Setup" button
         create_admin_account(browser, username, password)
+        if '/network-topology-first-boot' in browser.url:
+            submit(browser, element=browser.find_by_name('skip')[0])
+
+        if '/internet-connection-type' in browser.url:
+            submit(browser, element=browser.find_by_name('skip')[0])
 
 
 def is_login_prompt(browser):
