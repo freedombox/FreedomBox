@@ -14,7 +14,7 @@ from plinth import kvstore, network
 from plinth.modules import first_boot, networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
-                    InternetConnectionTypeForm, PPPoEForm,
+                    InternetConnectionTypeForm, NetworkTopologyForm, PPPoEForm,
                     RouterConfigurationForm, WifiForm)
 
 logger = logging.getLogger(__name__)
@@ -404,6 +404,21 @@ def delete(request, uuid):
         'title': _('Delete Connection'),
         'name': name
     })
+
+
+class NetworkTopologyView(FormView):
+    """View for local network topology form."""
+    template_name = 'network_topology_update.html'
+    form_class = NetworkTopologyForm
+    success_url = reverse_lazy('networks:index')
+
+    def get_initial(self):
+        """Get initial form data."""
+        pass
+
+    def form_valid(self, form):
+        """Save value to DB."""
+        return super().form_valid(form)
 
 
 class RouterConfigurationView(FormView):
