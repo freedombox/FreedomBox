@@ -285,6 +285,48 @@ requires clients to have the password to connect.'),
         return settings
 
 
+class NetworkTopologyForm(forms.Form):
+    """Form to ask the user for network topology.
+
+    That is how the FreedomBox is connected to the internal network topology.
+    Store this information for future suggestions when setting up services.
+
+    """
+    network_topology = forms.ChoiceField(
+        label=format_lazy(
+            _('Choose how your {box_name} is connected to your network'),
+            box_name=cfg.box_name),
+        required=True,
+        widget=forms.RadioSelect,
+        choices=[
+            ('to_router',
+             format_lazy(
+                 _('Connected to a router '
+                   '<p class="help-block">Your {box_name} gets its Internet '
+                   'connection from your router via Wi-Fi or Ethernet cable. '
+                   'This is a typical home setup.</p>'), box_name=cfg.box_name,
+                 allow_markup=True)),
+            ('as_router',
+             format_lazy(
+                 _('{box_name} is your router '
+                   '<p class="help-block">Your {box_name} has multiple '
+                   'network interfaces such as multiple Ethernet ports or '
+                   'a Wi-Fi adapter. {box_name} is directly connected to the '
+                   'Internet and all your devices connect to {box_name} '
+                   'for their Internet connectivity.</p>'),
+                 box_name=cfg.box_name, allow_markup=True)),
+            ('direct',
+             format_lazy(
+                 _('Directly connected to the Internet '
+                   '<p class="help-block">Your Internet connection is '
+                   'directly attached to your {box_name} and there are no '
+                   'other devices on the network. This can happen on '
+                   'community or cloud setups.</p>'), box_name=cfg.box_name,
+                 allow_markup=True)),
+        ],
+    )
+
+
 class InternetConnectionTypeForm(forms.Form):
     """Form for type of public/private IP address ISP provides.
 
