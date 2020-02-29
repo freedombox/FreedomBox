@@ -421,6 +421,23 @@ class NetworkTopologyView(FormView):
         return super().form_valid(form)
 
 
+class NetworkTopologyFirstBootView(NetworkTopologyView):
+    """View for network topology form during first wizard."""
+    template_name = 'network_topology_firstboot.html'
+
+    def get_success_url(self):
+        """Return next fistboot step."""
+        return reverse_lazy(first_boot.next_step())
+
+    def form_valid(self, form):
+        """Mark the first wizard step as done, save value and redirect."""
+        first_boot.mark_step_done('network_topology_wizard')
+        if 'skip' in form.data:
+            return FormView.form_valid(self, form)
+
+        return super().form_valid(form)
+
+
 class RouterConfigurationView(FormView):
     """View for router configuration form."""
     template_name = 'router_configuration_update.html'
