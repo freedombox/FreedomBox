@@ -47,6 +47,7 @@ logger = Logger(__name__)
 
 app = None
 
+NETWORK_TOPOLOGY_TYPE_KEY = 'networks_topology_type'
 ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
 INTERNET_CONNECTION_TYPE_KEY = 'networks_internet_type'
 

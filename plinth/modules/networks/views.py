@@ -414,10 +414,18 @@ class NetworkTopologyView(FormView):
 
     def get_initial(self):
         """Get initial form data."""
-        pass
+        return {
+            'network_topology':
+                kvstore.get_default(networks.NETWORK_TOPOLOGY_TYPE_KEY,
+                                    'to_router')
+        }
 
     def form_valid(self, form):
         """Save value to DB."""
+        network_topology = form.cleaned_data['network_topology']
+        logger.info('Updating network topology type with value %s' %
+                    network_topology)
+        kvstore.set(networks.NETWORK_TOPOLOGY_TYPE_KEY, network_topology)
         return super().form_valid(form)
 
 
