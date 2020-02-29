@@ -18,7 +18,6 @@ from .forms import IkiwikiCreateForm
 class IkiwikiAppView(views.AppView):
     """Serve configuration page."""
     app_id = 'ikiwiki'
-    show_status_block = False
     template_name = 'ikiwiki_configure.html'
 
     def get_context_data(self, **kwargs):

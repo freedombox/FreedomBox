@@ -26,7 +26,6 @@ subsubmenu = [{
 class I2PAppView(AppView):
     """Serve configuration page."""
     app_id = 'i2p'
-    show_status_block = True
     template_name = 'i2p.html'
 
     def get_context_data(self, **kwargs):

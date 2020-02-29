@@ -23,7 +23,6 @@ class UpgradesConfigurationView(AppView):
     success_url = reverse_lazy('upgrades:index')
     template_name = "upgrades_configure.html"
     app_id = 'upgrades'
-    show_status_block = False
 
     def get_initial(self):
         return {'auto_upgrades_enabled': upgrades.is_enabled()}

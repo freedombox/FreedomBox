@@ -13,7 +13,6 @@ class JSXCAppView(AppView):
     """Show ejabberd as an app."""
     app_id = 'jsxc'
     template_name = 'jsxc.html'
-    show_status_block = False
 
 
 class JsxcView(TemplateView):

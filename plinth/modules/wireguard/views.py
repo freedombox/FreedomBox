@@ -25,7 +25,6 @@ class WireguardView(AppView):
     """Serve configuration page."""
     app_id = 'wireguard'
     diagnostics_module_name = 'wireguard'
-    show_status_block = False
     template_name = 'wireguard.html'
     port_forwarding_info = wireguard.port_forwarding_info
 

@@ -23,12 +23,12 @@ def get_service_module(service_name):
 
 def is_running(browser, service_name):
     interface.nav_to_module(browser, get_service_module(service_name))
-    return len(browser.find_by_css('.running-status.active')) != 0
+    return len(browser.find_by_id('service-not-running')) == 0
 
 
 def is_not_running(browser, service_name):
     interface.nav_to_module(browser, get_service_module(service_name))
-    return len(browser.find_by_css('.running-status.inactive')) != 0
+    return len(browser.find_by_id('service-not-running')) != 0
 
 
 def eventually(function, args=[], timeout=30):

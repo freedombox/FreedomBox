@@ -45,7 +45,6 @@ def index(request):
             'firewall': tor.app.get_components_of_type(Firewall),
             'has_diagnostics': True,
             'is_enabled': status['enabled'],
-            'show_status_block': True,
             'is_running': status['is_running'],
         })
 

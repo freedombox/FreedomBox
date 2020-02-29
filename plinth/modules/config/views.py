@@ -22,7 +22,6 @@ class ConfigAppView(views.AppView):
     """Serve configuration page."""
     form_class = ConfigurationForm
     app_id = 'config'
-    show_status_block = False
 
     def get_initial(self):
         """Return the current status"""

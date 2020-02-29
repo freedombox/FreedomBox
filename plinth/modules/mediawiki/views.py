@@ -22,7 +22,6 @@ class MediaWikiAppView(views.AppView):
     """App configuration page."""
     app_id = 'mediawiki'
     form_class = MediaWikiForm
-    show_status_block = False
     template_name = 'mediawiki.html'
 
     def get_initial(self):

@@ -23,23 +23,13 @@
   {% endblock %}
 
   {% block status %}
-    {% if show_status_block %}
-      <h3>{% trans "Status" %}</h3>
-      <p class="running-status-parent">
-        {% with service_name=app_info.name %}
-          {% if is_running %}
-            <span class="running-status active"></span>
-            {% blocktrans trimmed %}
-              Service <em>{{ service_name }}</em> is running.
-            {% endblocktrans %}
-          {% else %}
-            <span class="running-status inactive"></span>
-            {% blocktrans trimmed %}
-              Service <em>{{ service_name }}</em> is not running.
-            {% endblocktrans %}
-          {% endif %}
-        {% endwith %}
-      </p>
+    {% if is_running is not None and not is_running %}
+      <div id='service-not-running' role="alert"
+           class="alert alert-danger {{ is_enabled|yesno:',hidden' }}">
+        {% blocktrans trimmed with service_name=app_info.name %}
+          Service <em>{{ service_name }}</em> is not running.
+        {% endblocktrans %}
+      </div>
     {% endif %}
   {% endblock %}
 

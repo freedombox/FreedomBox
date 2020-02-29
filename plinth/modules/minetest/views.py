@@ -17,7 +17,6 @@ from .forms import MinetestForm
 class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
     app_id = 'minetest'
-    show_status_block = True
     template_name = 'minetest.html'
     form_class = MinetestForm
     port_forwarding_info = minetest.port_forwarding_info

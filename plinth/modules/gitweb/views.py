@@ -23,7 +23,6 @@ class GitwebAppView(views.AppView):
     """Serve configuration page."""
 
     app_id = 'gitweb'
-    show_status_block = False
     template_name = 'gitweb_configure.html'
 
     def get_context_data(self, *args, **kwargs):
