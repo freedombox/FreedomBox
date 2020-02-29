@@ -24,6 +24,8 @@ def index(request):
     """Show connection list."""
     connections = network.get_connection_list()
 
+    network_topology = kvstore.get_default(networks.NETWORK_TOPOLOGY_TYPE_KEY,
+                                           'to_router')
     internet_connection_type = kvstore.get_default(
         networks.INTERNET_CONNECTION_TYPE_KEY, 'unknown')
     return TemplateResponse(
@@ -34,7 +36,8 @@ def index(request):
             'has_diagnostics': True,
             'is_enabled': True,
             'connections': connections,
-            'internet_connectivity_type': internet_connection_type
+            'network_topology': network_topology,
+            'internet_connectivity_type': internet_connection_type,
         })
 
 
@@ -426,6 +429,9 @@ class NetworkTopologyView(FormView):
         logger.info('Updating network topology type with value %s' %
                     network_topology)
         kvstore.set(networks.NETWORK_TOPOLOGY_TYPE_KEY, network_topology)
+        if network_topology == 'to_router':
+            self.success_url = reverse_lazy('networks:router-configuration')
+
         return super().form_valid(form)
 
 
