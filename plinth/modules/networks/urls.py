@@ -39,4 +39,7 @@ urlpatterns = [
         name='internet-connection-type-first-boot'),
     url(r'^sys/networks/network-topology/$',
         views.NetworkTopologyView.as_view(), name='network-topology'),
+    url(r'^sys/networks/firstboot/network-topology-first-boot/$',
+        views.NetworkTopologyFirstBootView.as_view(),
+        name='network-topology-first-boot'),
 ]

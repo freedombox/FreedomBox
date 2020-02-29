@@ -20,6 +20,11 @@ managed_packages = ['network-manager', 'batctl']
 
 first_boot_steps = [
     {
+        'id': 'network_topology_wizard',
+        'url': 'networks:network-topology-first-boot',
+        'order': 2,
+    },
+    {
         'id': 'internet_connectivity_type_wizard',
         'url': 'networks:internet-connection-type-first-boot',
         'order': 3,
