@@ -5,7 +5,7 @@ URLs for the Network module
 
 from django.conf.urls import url
 
-from . import networks as views
+from . import views
 
 urlpatterns = [
     url(r'^sys/networks/$', views.index, name='index'),
