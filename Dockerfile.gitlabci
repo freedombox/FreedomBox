@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+FROM debian:unstable
+
+USER root
+COPY . /plinth
+WORKDIR /plinth
+
+RUN echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+RUN apt-get build-dep -y .  # Dependencies of the freedombox Debian package
+RUN apt-get install -y build-essential # Build dependencies
+RUN apt-get install -y sshpass parted # Test dependencies
+RUN apt-get install -y sudo
+RUN apt-mark hold fuse fuse3 # not installable in CI environment
+RUN apt-get install -y $(./run --list-dependencies) # Module dependencies
