@@ -7,7 +7,7 @@ from django.conf.urls import url
 
 from plinth.utils import non_admin_view
 
-from . import help as views
+from . import views
 
 urlpatterns = [
     url(r'^help/$', non_admin_view(views.index), name='index'),
