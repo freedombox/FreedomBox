@@ -190,7 +190,6 @@ class AppView(FormView):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context.update(self._get_common_status())
-        context['app'] = self.app  # XXX: Remove this for template security
         context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
