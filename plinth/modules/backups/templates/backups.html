@@ -58,7 +58,7 @@
   <h3>{% trans 'Existing Backups' %}</h3>
 
   {% for repository in repositories %}
-    {% include "backups_repository.inc" with uuid=repository.uuid %}
+    {% include "backups_repository.html" with uuid=repository.uuid %}
   {% endfor %}
 
 {% endblock %}
