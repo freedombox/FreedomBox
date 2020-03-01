@@ -5,7 +5,7 @@ URLs for the Diagnostics module
 
 from django.conf.urls import url
 
-from . import diagnostics as views
+from . import views
 
 urlpatterns = [
     url(r'^sys/diagnostics/$', views.index, name='index'),
