@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 19:12-0500\n"
-"PO-Revision-Date: 2020-02-24 21:32+0000\n"
+"PO-Revision-Date: 2020-03-04 22:32+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/es/>\n"
@@ -649,10 +649,8 @@ msgid "Enable Domain Name System Security Extensions"
 msgstr "Activar Extensiones de Seguridad del Sistema de Nombre de Dominios"
 
 #: plinth/modules/bind/templates/bind.html:11
-#, fuzzy
-#| msgid "Server domain"
 msgid "Serving Domains"
-msgstr "Dominio del servidor"
+msgstr "Dominios en servicio"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
@@ -662,27 +660,21 @@ msgid "Type"
 msgstr "Tipo"
 
 #: plinth/modules/bind/templates/bind.html:17
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Names"
-msgstr "Nombre de dominio"
+msgstr "Nombres de dominio"
 
 #: plinth/modules/bind/templates/bind.html:18
-#, fuzzy
-#| msgid "Service"
 msgid "Serving"
-msgstr "Servicio"
+msgstr "En servicio"
 
 #: plinth/modules/bind/templates/bind.html:19
-#, fuzzy
-#| msgid "IP address"
 msgid "IP addresses"
-msgstr "Dirección IP"
+msgstr "Direcciones IP"
 
 #: plinth/modules/bind/templates/bind.html:35
 #: plinth/modules/bind/templates/bind.html:37
 msgid "Refresh IP address and domains"
-msgstr ""
+msgstr "Actualizar direcciones IP y dominios"
 
 #: plinth/modules/bind/views.py:73 plinth/modules/deluge/views.py:46
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:134
@@ -3534,7 +3526,7 @@ msgstr "Abierto"
 
 #: plinth/modules/networks/forms.py:297
 msgid "Choose your internet connection type"
-msgstr ""
+msgstr "Elija su tipo de conexión a Internet"
 
 #: plinth/modules/networks/forms.py:301
 msgid ""
@@ -3546,6 +3538,14 @@ msgid ""
 "connectivity. If you have a public IP address but are unsure if it changes "
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
+"Tengo una dirección IP pública que cambia cada cierto tiempo<p class=\"help-"
+"block\">Implica que otros dispositivos en Internet pueden acceder a su "
+"equipo cuando está conectado a Internet. Cada vez que se conecta a través de "
+"su proveedor de servicio Internet (ISP) puede que obtenga una dirección IP "
+"diferente, sobre todo si ha estado un tiempo desconectado. Muchos "
+"proveedores ofrecen este tipo de conexión. Si tienen una dirección IP "
+"pública pero no sabe si cambia cada cierto tiempo, elegir esta opción es lo "
+"más seguro.</p>"
 
 #: plinth/modules/networks/forms.py:313
 #, python-brace-format
@@ -3558,6 +3558,13 @@ msgid ""
 "but very few ISPs offer this. You may be able to get this service from your "
 "ISP by making an additional payment.</p>"
 msgstr ""
+"Tengo una dirección IP pública que no cambia (recomendada)<p class=\"help-"
+"block\">Implica que otros dispositivos pueden acceder a su equipo cuando "
+"éste está conectado a Internet. Cada vez que se conecta a Internet a través "
+"de su proveedor de servicios (ISP) obtiene la misma dirección IP. Es la "
+"configuración más estable para muchos servicios de {box_name} pero muy pocos "
+"ISP la ofrecen. Puede que su proveedor ofrezca esta posibilidad con un pago "
+"adicional.</p>"
 
 #: plinth/modules/networks/forms.py:326
 #, python-brace-format
@@ -3570,20 +3577,21 @@ msgid ""
 "troublesome situation for hosting services at home. {box_name} provides many "
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
+"No tengo una dirección IP pública<p class=\"help-block\">Implica que otros "
+"dispositivos en Internet <b>no pueden</b> acceder a su equipo aunque éste "
+"esté conectado a Internet. Cada vez que se conecta con su proveedor de "
+"servicios de Internet (ISP) obtiene una dirección IP válida solo para "
+"entornos de red local. Muchos ISP ofrecen este tipo de conexión. Es la más "
+"proclive a problemas para los servicios de auto-hospedaje doméstico. "
+"{box_name} proporciona algunas soluciones pero todas presentan algunas "
+"limitaciones.</p>"
 
 #: plinth/modules/networks/forms.py:351
 msgid "Preferred router configuration"
 msgstr "Configuración del router preferida"
 
 #: plinth/modules/networks/forms.py:356
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Use DMZ feature to forward all traffic<p class=\"help-block\">Most "
-#| "routers provide a configuration setting called DMZ. This will allow the "
-#| "router to forward all incoming traffic from the internet to a single IP "
-#| "address such as the {box_name}'s address. First remember to configure a "
-#| "static local IP address for your {box_name} in your router's "
-#| "configuration.</p>"
+#, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
 "\">Most routers provide a configuration setting called DMZ. This will allow "
@@ -3592,23 +3600,14 @@ msgid ""
 "static local IP address for your {box_name} in your router's configuration.</"
 "p>"
 msgstr ""
-"Emplee DMZ para dirigir el tráfico de la red<p class=\"help-block\">. La "
-"mayoría de los routers proporcionan una función DMZ que permite dirigir el "
-"tráfico entrante de Internet a una única dirección IP como puede ser la de "
-"{box_name}. Recuerde configurar su {box_name} con una IP estática en su "
-"router.</p>"
+"Emplee DMZ para dirigir el tráfico de la red (recomendada)<p class=\"help-"
+"block\">. La mayoría de los routers proporcionan una función DMZ que permite "
+"dirigir el tráfico entrante de Internet a una única dirección IP como puede "
+"ser la de su {box_name}. Recuerde configurar su {box_name} con una IP "
+"estática en su router.</p>"
 
 #: plinth/modules/networks/forms.py:368
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Forward Specific Traffic as needed by each application<p class=\"help-"
-#| "block\">You may alternatively choose to forward only specific traffic to "
-#| "your {box_name}. This is ideal if you have other servers like {box_name} "
-#| "in your network or if your router does not support DMZ feature. All "
-#| "applications that provide a web interface need you to forward traffic "
-#| "from ports 80 and 443 to work. Each of the other applications will "
-#| "suggest which port(s) need to be forwarded for that application to work.</"
-#| "p>"
+#, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
 "\">You may alternatively choose to forward only specific traffic to your "
@@ -3618,21 +3617,15 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
-"Redirigir el tráfico de aplicaciones específicas <p class=\"help-block\">. "
-"Puede redirigir solo el tráfico de determinadas aplicaciones a su "
-"{box_name}. Es la opción recomendad si tiene otros servidores como "
-"{box_name} en su red o si su router no soporta la función DMZ. Todas las "
-"aplicaciones con interfaz web necesitarán redirigir el tráfico de los "
-"puertos 80 y 443 para funcionar. Otras aplicaciones sugerirán qué puertos es "
-"necesario redirigir para su funcionamiento.</p>"
+"Redirigir el tráfico de aplicaciones específicas <p class=\"help-block\"> "
+"Puede redirigir solo el tráfico de determinadas aplicaciones a su {box_name}"
+". Es la opción recomendada si tiene otros servidores como {box_name} en su "
+"red o si su router no soporta la función DMZ. Todas las aplicaciones con "
+"interfaz web necesitarán redirigir el tráfico de los puertos 80 y 443 para "
+"funcionar. Otras aplicaciones sugerirán qué puertos es necesario redirigir "
+"para su funcionamiento.</p>"
 
 #: plinth/modules/networks/forms.py:382
-#, fuzzy
-#| msgid ""
-#| "Router is currently unconfigured<p class=\"help-block\">Choose this if "
-#| "you have not configured or are unable to configure the router currently "
-#| "and wish to be reminded later. Some of the other configuration steps may "
-#| "fail.</p>"
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -3640,8 +3633,8 @@ msgid ""
 msgstr ""
 "El router no está configurado <p class=\"help-block\">Elija esta opción si "
 "no ha configurado o no puede configurar el router en este momento y desea "
-"que se le recuerde más tarde. Puede que alguno de los siguientes pasos de la "
-"configuración falle.</p>"
+"que se le recuerde más tarde. Puede que falle alguno de los siguientes pasos "
+"de la configuración.</p>"
 
 #: plinth/modules/networks/networks.py:32
 msgid "Network Connections"
@@ -3743,10 +3736,8 @@ msgid "Router configuration type saved."
 msgstr "Se ha guardado la configuración del router."
 
 #: plinth/modules/networks/networks.py:474
-#, fuzzy
-#| msgid "Router configuration type saved."
 msgid "Internet connection type saved."
-msgstr "Se ha guardado la configuración del router."
+msgstr "Se ha guardado el tipo de conexión a Internet."
 
 #: plinth/modules/networks/templates/connection_show.html:28
 msgid "Edit connection"
@@ -3999,25 +3990,18 @@ msgstr "Crear…"
 
 #: plinth/modules/networks/templates/internet_connectivity_content.html:10
 msgid "What Type Of Internet Connection Do You Have?"
-msgstr ""
+msgstr "¿Qué tipo de conexión a Internet tiene?"
 
 #: plinth/modules/networks/templates/internet_connectivity_content.html:16
-#, fuzzy
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
 msgid ""
 "Select an option that best describes the type of Internet connection. This "
 "information is used only to guide you with further setup."
 msgstr ""
-"Lo siguiente describe cómo se conecta su %(box_name)s a su red. Esta "
+"Elija la opción que mejor describa el tipo de conexión a Internet. Esta "
 "información se emplea solo para sugerir otras configuraciones necesarias."
 
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:18
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:18
-#, fuzzy
-#| msgid "skip this step"
 msgid "Skip this step"
 msgstr "Saltar este paso"
 
@@ -4027,36 +4011,31 @@ msgid "Next"
 msgstr "Siguiente"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:9
-#, fuzzy
-#| msgid "Connection Type"
 msgid "Your Internet Connection Type"
-msgstr "Tipo de conexión"
+msgstr "Tipo de su conexión a Internet"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:14
-#, fuzzy
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
 msgid ""
 "The following best describes the type of Internet connection provided by "
 "your ISP. This information is only used to suggest you necessary "
 "configuration actions."
 msgstr ""
-"Lo siguiente describe cómo se conecta su %(box_name)s a su red. Esta "
-"información se emplea solo para sugerir otras configuraciones necesarias."
+"Lo siguiente describe el tipo de conexión a Internet ofrecida por su ISP. "
+"Esta información se emplea solo para sugerir otras configuraciones "
+"necesarias."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:23
 msgid "My ISP provides a public IP address that does not change over time."
-msgstr ""
+msgstr "Mi ISP proporciona una dirección IP pública permanente."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:27
 msgid "My ISP provides a public IP address that may change over time."
 msgstr ""
+"Mi ISP proporciona una dirección IP pública que cambia cada cierto tiempo."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:31
 msgid "My ISP does not provide a public IP address."
-msgstr ""
+msgstr "Mi ISP no proporciona una dirección IP pública."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:37
 #: plinth/modules/networks/templates/router_configuration_main.html:29
@@ -4091,18 +4070,13 @@ msgstr ""
 "provee los servicios."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options, to overcome this limitation, choose 'no public address' "
-#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'no public address' option "
 "in Internet connection type selection."
 msgstr ""
 "Si no tiene acceso a su router, elija la opción de no configurarlo. Para ver "
-"opciones para superar esta limitación, elija la opción \"sin dirección "
+"opciones para solucionar esta limitación, elija la opción \"sin dirección "
 "pública\" en los tipos de conexión a Internet."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
@@ -4149,16 +4123,13 @@ msgstr ""
 "información se emplea solo para sugerir otras configuraciones necesarias."
 
 #: plinth/modules/networks/templates/router_configuration_main.html:23
-#, fuzzy, python-format
-#| msgid ""
-#| "Your %(box_name)s gets its internet from your Router via WiFi or Ethernet "
-#| "cable. This is a typical home setup."
+#, python-format
 msgid ""
 "Your %(box_name)s gets its Internet from your Router via Wi-Fi or Ethernet "
 "cable. This is a typical home setup."
 msgstr ""
 "Su %(box_name)s accede a Internet a través de su router vía Wi-Fi o cable "
-"Ethernet. Es la configuración doméstica habitual."
+"Ethernet. Ésta es la configuración doméstica habitual."
 
 #: plinth/modules/openvpn/__init__.py:26
 #, python-brace-format
@@ -4198,10 +4169,8 @@ msgid "Enable OpenVPN server"
 msgstr "Activar servidor OpenVPN"
 
 #: plinth/modules/openvpn/manifest.py:48
-#, fuzzy
-#| msgid "TunnelBlick"
 msgid "Tunnelblick"
-msgstr "TunnelBlick"
+msgstr "Tunnelblick"
 
 #: plinth/modules/openvpn/templates/openvpn.html:27
 #, python-format
