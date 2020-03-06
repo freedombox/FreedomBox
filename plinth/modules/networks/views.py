@@ -3,6 +3,7 @@
 import logging
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -477,6 +478,16 @@ class RouterConfigurationView(FormView):
 class RouterConfigurationFirstBootView(RouterConfigurationView):
     """View for router configuration form during first wizard."""
     template_name = 'router_configuration_firstboot.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """Don't show wizard step if FreedomBox is not behind a router."""
+        network_topology = kvstore.get_default(
+            networks.NETWORK_TOPOLOGY_TYPE_KEY, 'to_router')
+        if network_topology != 'to_router':
+            first_boot.mark_step_done('router_setup_wizard')
+            return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
+
+        return super().dispatch(request, *args, *kwargs)
 
     def get_success_url(self):
         """Return the next wizard step after this one."""
