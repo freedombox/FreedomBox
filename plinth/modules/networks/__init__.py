@@ -25,13 +25,13 @@ first_boot_steps = [
         'order': 2,
     },
     {
-        'id': 'internet_connectivity_type_wizard',
-        'url': 'networks:internet-connection-type-first-boot',
+        'id': 'router_setup_wizard',
+        'url': 'networks:router-configuration-first-boot',
         'order': 3,
     },
     {
-        'id': 'router_setup_wizard',
-        'url': 'networks:router-configuration-first-boot',
+        'id': 'internet_connectivity_type_wizard',
+        'url': 'networks:internet-connection-type-first-boot',
         'order': 4,
     },
 ]
