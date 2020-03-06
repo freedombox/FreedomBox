@@ -448,6 +448,7 @@ class NetworkTopologyFirstBootView(NetworkTopologyView):
         """Mark the first wizard step as done, save value and redirect."""
         first_boot.mark_step_done('network_topology_wizard')
         if 'skip' in form.data:
+            first_boot.mark_step_done('router_setup_wizard')
             return FormView.form_valid(self, form)
 
         return super().form_valid(form)
