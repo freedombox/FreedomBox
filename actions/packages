@@ -11,6 +11,7 @@ import os
 import subprocess
 import sys
 from collections import defaultdict
+from contextlib import contextmanager
 from importlib import import_module
 
 import apt.cache
@@ -54,6 +55,15 @@ def parse_arguments():
     return parser.parse_args()
 
 
+@contextmanager
+def _apt_hold():
+    """Do not allow freedombox package to be removed during package install."""
+    try:
+        yield subprocess.run(['apt-mark', 'hold', 'freedombox'], check=True)
+    finally:
+        subprocess.run(['apt-mark', 'unhold', 'freedombox'], check=True)
+
+
 def _run_apt_command(arguments):
     """Run apt-get with provided arguments."""
     # Ask apt-get to output its progress to file descriptor 3.
@@ -71,12 +81,12 @@ def _run_apt_command(arguments):
     process = subprocess.run(command, stdin=subprocess.DEVNULL,
                              stdout=subprocess.DEVNULL, close_fds=False,
                              env=env)
-    sys.exit(process.returncode)
+    return process.returncode
 
 
 def subcommand_update(arguments):
     """Update apt package lists."""
-    _run_apt_command(['update'])
+    sys.exit(_run_apt_command(['update']))
 
 
 def subcommand_install(arguments):
@@ -99,7 +109,11 @@ def subcommand_install(arguments):
     elif arguments.force_configuration == 'new':
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confnew']
 
-    _run_apt_command(['install'] + extra_arguments + arguments.packages)
+    with _apt_hold():
+        returncode = _run_apt_command(['install'] + extra_arguments +
+                                      arguments.packages)
+
+    sys.exit(returncode)
 
 
 def _assert_managed_packages(module, packages):
