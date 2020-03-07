@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 19:12-0500\n"
-"PO-Revision-Date: 2020-02-24 21:32+0000\n"
+"PO-Revision-Date: 2020-03-08 17:32+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -643,10 +643,8 @@ msgid "Enable Domain Name System Security Extensions"
 msgstr "Aktivera Domain Name System Security Extensions"
 
 #: plinth/modules/bind/templates/bind.html:11
-#, fuzzy
-#| msgid "Server domain"
 msgid "Serving Domains"
-msgstr "Server-domän"
+msgstr "Betjäna domäner"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
@@ -656,27 +654,21 @@ msgid "Type"
 msgstr "Typ"
 
 #: plinth/modules/bind/templates/bind.html:17
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Names"
 msgstr "Domännamn"
 
 #: plinth/modules/bind/templates/bind.html:18
-#, fuzzy
-#| msgid "Service"
 msgid "Serving"
-msgstr "Tjänst"
+msgstr "Servering"
 
 #: plinth/modules/bind/templates/bind.html:19
-#, fuzzy
-#| msgid "IP address"
 msgid "IP addresses"
-msgstr "IP-adress"
+msgstr "IP-adresser"
 
 #: plinth/modules/bind/templates/bind.html:35
 #: plinth/modules/bind/templates/bind.html:37
 msgid "Refresh IP address and domains"
-msgstr ""
+msgstr "Uppdatera IP-adress och domäner"
 
 #: plinth/modules/bind/views.py:73 plinth/modules/deluge/views.py:46
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:134
@@ -3515,7 +3507,7 @@ msgstr "Öppet"
 
 #: plinth/modules/networks/forms.py:297
 msgid "Choose your internet connection type"
-msgstr ""
+msgstr "Välj din internetanslutningstyp"
 
 #: plinth/modules/networks/forms.py:301
 msgid ""
@@ -3527,6 +3519,13 @@ msgid ""
 "connectivity. If you have a public IP address but are unsure if it changes "
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
+"Jag har en offentlig IP-adress som kan ändras med tiden<p class=\"help-"
+"block\">Det innebär att enheter på Internet kan nå dig när du är ansluten "
+"till Internet. Varje gång du ansluter till Internet med Internet-"
+"leverantören kan du få en annan IP-adress, särskilt efter lite offlinetid. "
+"Många Internetleverantörer erbjuder den här typen av anslutning. Om du har "
+"en offentlig IP-adress men är osäker på om den ändras med tiden eller inte, "
+"är det säkrare att välja det här alternativet.</p>"
 
 #: plinth/modules/networks/forms.py:313
 #, python-brace-format
@@ -3539,6 +3538,13 @@ msgid ""
 "but very few ISPs offer this. You may be able to get this service from your "
 "ISP by making an additional payment.</p>"
 msgstr ""
+"Jag har en offentlig IP-adress som inte ändrar övertid (rekommenderas)<p "
+"class=\"help-block\">Det innebär att enheter på Internet kan nå dig när du "
+"är ansluten till Internet. Varje gång du ansluter till Internet med Internet-"
+"leverantören får du alltid samma IP-adress. Detta är den mest problemfria "
+"installationen för många {box_name} tjänster men mycket få "
+"Internetleverantörer erbjuder detta. Du kanske kan få den här tjänsten från "
+"internetleverantören genom att göra en extra betalning.</p>"
 
 #: plinth/modules/networks/forms.py:326
 #, python-brace-format
@@ -3551,20 +3557,20 @@ msgid ""
 "troublesome situation for hosting services at home. {box_name} provides many "
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
+"Jag har ingen offentlig IP-adress<p class=\"help-block\">Det innebär att "
+"enheter på Internet <b> inte kan</b> nå dig när du är ansluten till "
+"Internet. Varje gång du ansluter till Internet med Internet-leverantören får "
+"du en IP-adress som endast är relevant för lokala nätverk. Många "
+"Internetleverantörer erbjuder den här typen av anslutning. Detta är den mest "
+"besvärliga situationen för hosting tjänster hemma. {box_name} innehåller "
+"många lösningar men varje lösning har vissa begränsningar.</p>"
 
 #: plinth/modules/networks/forms.py:351
 msgid "Preferred router configuration"
 msgstr "Önskad routerkonfiguration"
 
 #: plinth/modules/networks/forms.py:356
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Use DMZ feature to forward all traffic<p class=\"help-block\">Most "
-#| "routers provide a configuration setting called DMZ. This will allow the "
-#| "router to forward all incoming traffic from the internet to a single IP "
-#| "address such as the {box_name}'s address. First remember to configure a "
-#| "static local IP address for your {box_name} in your router's "
-#| "configuration.</p>"
+#, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
 "\">Most routers provide a configuration setting called DMZ. This will allow "
@@ -3573,12 +3579,12 @@ msgid ""
 "static local IP address for your {box_name} in your router's configuration.</"
 "p>"
 msgstr ""
-"Använd DMZ-funktionen för att vidarebefordra all trafik<p class=\"help-block"
-"\">De flesta routrar tillhandahåller en konfigurationsinställning som kallas "
-"DMZ. Detta gör det möjligt för routern att vidarebefordra all inkommande "
-"trafik från Internet till en enda IP-adress, till exempel {box_name}-"
-"adressen. Kom först ihåg att konfigurera en statisk lokal IP-adress för din "
-"{box_name} i routerns configuration.</p>"
+"Använd DMZ-funktionen för att vidarebefordra all trafik<p class=\"help-"
+"block\">De flesta routrar tillhandahåller en konfigurationsinställning som "
+"kallas DMZ. Detta gör det möjligt för routern att vidarebefordra all "
+"inkommande trafik från Internet till en enda IP-adress, till exempel "
+"{box_name}-adressen. Kom först ihåg att konfigurera en statisk lokal IP-"
+"adress för din {box_name} i routerns konfiguration.</p>"
 
 #: plinth/modules/networks/forms.py:368
 #, fuzzy, python-brace-format
