@@ -6,7 +6,7 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import actions
 from plinth.signals import domain_added, domain_removed
 
 LOGGER = logging.getLogger(__name__)
@@ -76,84 +76,9 @@ PREDEFINED_SERVICES = {
 }
 
 
-def get_kite_details():
-    output = run(['get-kite'])
-    kite_details = output.split()
-    return {'kite_name': kite_details[0], 'kite_secret': kite_details[1]}
-
-
-def get_pagekite_config():
-    """
-    Return the current PageKite configuration by executing various actions.
-    """
-    status = {}
-
-    # PageKite service enabled/disabled
-    # To enable PageKite two things are necessary:
-    # 1) pagekite not being disabled in /etc/pagekite.d/10_account.rc
-    # 2) the pagekite service running
-    is_disabled = (run(['is-disabled']).strip() == 'true')
-    service_running = action_utils.service_is_running('pagekite')
-    status['is_enabled'] = service_running and not is_disabled
-
-    # PageKite kite details
-    status.update(get_kite_details())
-
-    # PageKite frontend server
-    server = run(['get-frontend']).strip()
-
-    # Frontend entries are only considered valid if there's a ':' in
-    # them otherwise, pagekite refuses to work, and we only set values
-    # with ':'.
-    if ':' in server:
-        server_domain, server_port = server.split(':')
-        status['server_domain'] = server_domain
-        status['server_port'] = int(server_port)
-    else:
-        status['server_domain'] = server
-        # No valid entry exists, default to port 80.  Hack: Return
-        # string instead of int to force setting port on save
-        status['server_port'] = '80'
-
-    return status
-
-
-def get_pagekite_services():
-    """Get enabled services. Returns two values:
-
-    1. predefined services: {'http': False, 'ssh': True, 'https': True}
-    2. custom services: [{'protocol': 'http', 'secret' 'nono', ..}, [..]}
-    """
-    custom = []
-    predefined = {}
-    # set all predefined services to 'disabled' by default
-    [predefined.update({proto: False}) for proto in PREDEFINED_SERVICES.keys()]
-    # now, search for the enabled ones
-    for serviceline in run(['get-services']).split('\n'):
-        if not serviceline:  # skip empty lines
-            continue
-
-        service = json.loads(serviceline)
-        for name, predefined_service in PREDEFINED_SERVICES.items():
-            if service == predefined_service['params']:
-                predefined[name] = True
-                break
-        else:
-            custom.append(service)
-    return predefined, custom
-
-
-def prepare_service_for_display(service):
-    """ Add extra information that is used when displaying a service
-
-    - protocol is split into 'protocol' and 'frontend_port'
-    - detect whether 'subdomains' are supported (as boolean)
-    """
-    protocol = service['protocol']
-    if '/' in protocol:
-        service['protocol'], service['frontend_port'] = protocol.split('/')
-    service['subdomains'] = service['kitename'].startswith('*.')
-    return service
+def get_config():
+    """Return the current PageKite configuration."""
+    return json.loads(run(['get-config']))
 
 
 def run(arguments, superuser=True, input=None):
@@ -247,27 +172,18 @@ def update_names_module(initial_registration=False, enabled=None,
     """
     domain_removed.send_robust(sender='pagekite',
                                domain_type='domain-type-pagekite')
-
+    config = get_config()
     if enabled is None:
-        try:
-            enabled = get_pagekite_config()['is_enabled']
-        except IndexError:
-            enabled = False
+        enabled = config.get('is_enabled', False)
 
+    enabled_services = None
+    kite_name = None
     if enabled:
-        # Get enabled services and kite name
-        services = get_pagekite_services()[0]
+        kite_name = config['kite_name']
+        services = config['predefined_services']
         enabled_services = [
-            service for service in services if services[service]
+            service for service, value in services.items() if value
         ]
-        if kite_name is None:
-            try:
-                kite_name = get_kite_details()['kite_name']
-            except IndexError:
-                pass
-    else:
-        enabled_services = None
-        kite_name = None
 
     if initial_registration or (enabled and kite_name):
         domain_added.send_robust(sender='pagekite',
