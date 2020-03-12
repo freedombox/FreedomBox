@@ -61,6 +61,10 @@ def parse_arguments():
 
 def subcommand_get_config(_):
     """Print the current configuration as JSON dictionary."""
+    if aug.match(PATHS['abort_not_configured']):
+        aug.remove(PATHS['abort_not_configured'])
+        aug.save()
+
     if aug.match(PATHS['defaults']):
         frontend = 'pagekite.net'
     else:
