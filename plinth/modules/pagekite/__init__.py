@@ -90,7 +90,7 @@ def init():
         app.set_enabled(True)
 
         # Register kite name with Name Services module.
-        utils.update_names_module(app)
+        utils.update_names_module(is_enabled=True)
 
 
 def setup(helper, old_version=None):

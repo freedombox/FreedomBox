@@ -161,17 +161,24 @@ def get_augeas_servicefile_path(protocol):
     return os.path.join(CONF_PATH, relpath, 'service_on')
 
 
-def update_names_module():
+def update_names_module(is_enabled=None):
     """Update the PageKite domain and services of the 'names' module."""
     domain_removed.send_robust(sender='pagekite',
                                domain_type='domain-type-pagekite')
+
+    if is_enabled is False:
+        return
+
+    from plinth.modules.pagekite import app
+    if is_enabled is None and not app.is_enabled():
+        return
 
     config = get_config()
     enabled_services = [
         service for service, value in config['predefined_services'].items()
         if value
     ]
-    if config['is_enabled'] and config['kite_name']:
+    if config['kite_name']:
         domain_added.send_robust(sender='pagekite',
                                  domain_type='domain-type-pagekite',
                                  name=config['kite_name'],

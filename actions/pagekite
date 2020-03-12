@@ -71,7 +71,6 @@ def subcommand_get_config(_):
     server_port = frontend[1] if len(frontend) >= 2 else '80'
 
     status = {
-        'is_enabled': action_utils.service_is_enabled('pagekite'),
         'kite_name': aug.get(PATHS['kitename']),
         'kite_secret': aug.get(PATHS['kitesecret']),
         'server_domain': server_domain,
