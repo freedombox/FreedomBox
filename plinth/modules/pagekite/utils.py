@@ -161,8 +161,7 @@ def get_augeas_servicefile_path(protocol):
     return os.path.join(CONF_PATH, relpath, 'service_on')
 
 
-def update_names_module(initial_registration=False, enabled=None,
-                        kite_name=None):
+def update_names_module(enabled=None, kite_name=None):
     """
     Update the PageKite domain and services of the 'names' module.
 
@@ -185,7 +184,7 @@ def update_names_module(initial_registration=False, enabled=None,
             service for service, value in services.items() if value
         ]
 
-    if initial_registration or (enabled and kite_name):
+    if enabled and kite_name:
         domain_added.send_robust(sender='pagekite',
                                  domain_type='domain-type-pagekite',
                                  name=kite_name, services=enabled_services)
