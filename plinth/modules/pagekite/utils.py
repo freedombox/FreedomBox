@@ -161,33 +161,21 @@ def get_augeas_servicefile_path(protocol):
     return os.path.join(CONF_PATH, relpath, 'service_on')
 
 
-def update_names_module(enabled=None, kite_name=None):
-    """
-    Update the PageKite domain and services of the 'names' module.
-
-    - initial_registration: Boolean (optional): Register also if not enabled
-    - enabled: Boolean (optional) whether PageKite is enabled
-    - kite_name: String (optional)
-    """
+def update_names_module():
+    """Update the PageKite domain and services of the 'names' module."""
     domain_removed.send_robust(sender='pagekite',
                                domain_type='domain-type-pagekite')
+
     config = get_config()
-    if enabled is None:
-        enabled = config.get('is_enabled', False)
-
-    enabled_services = None
-    kite_name = None
-    if enabled:
-        kite_name = config['kite_name']
-        services = config['predefined_services']
-        enabled_services = [
-            service for service, value in services.items() if value
-        ]
-
-    if enabled and kite_name:
+    enabled_services = [
+        service for service, value in config['predefined_services'].items()
+        if value
+    ]
+    if config['is_enabled'] and config['kite_name']:
         domain_added.send_robust(sender='pagekite',
                                  domain_type='domain-type-pagekite',
-                                 name=kite_name, services=enabled_services)
+                                 name=config['kite_name'],
+                                 services=enabled_services)
 
 
 if __name__ == "__main__":

@@ -91,8 +91,7 @@ class ConfigurationForm(AppForm):
             messages.success(request, _('Configuration updated'))
 
             # Update kite name registered with Name Services module.
-            utils.update_names_module(enabled=new['is_enabled'],
-                                      kite_name=new['kite_name'])
+            utils.update_names_module()
 
 
 class BaseCustomServiceForm(forms.Form):
