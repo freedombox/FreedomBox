@@ -89,8 +89,8 @@ def init():
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
         app.set_enabled(True)
 
-    # Register kite name with Name Services module.
-    utils.update_names_module()
+        # Register kite name with Name Services module.
+        utils.update_names_module(app)
 
 
 def setup(helper, old_version=None):
