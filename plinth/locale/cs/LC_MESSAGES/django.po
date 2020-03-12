@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 19:12-0500\n"
+"POT-Creation-Date: 2020-03-09 19:13-0400\n"
 "PO-Revision-Date: 2019-10-26 17:53+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -18,16 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Weblate 3.9.1-dev\n"
-
-#: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:23
-#, fuzzy
-#| msgid "Custom Services"
-msgid "Custom Section"
-msgstr "Uživatelem určené služby"
-
-#: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:26
-msgid "Custom paragraph content."
-msgstr ""
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -126,7 +116,7 @@ msgstr "Přístup na URL adrese {url} na tcp{kind}"
 msgid "Access URL {url}"
 msgstr "Přístup na URL adrese {url}"
 
-#: plinth/modules/avahi/__init__.py:33
+#: plinth/modules/avahi/__init__.py:32
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -142,11 +132,11 @@ msgstr ""
 "nutné a funguje pouze na vnitřních sítích. Je možné ho vypnout a posílit tak "
 "zabezpečení, hlavně v případě připojení na hostilní místní síť."
 
-#: plinth/modules/avahi/__init__.py:57
+#: plinth/modules/avahi/__init__.py:56
 msgid "Service Discovery"
 msgstr "Zjišťování služby"
 
-#: plinth/modules/avahi/__init__.py:67
+#: plinth/modules/avahi/__init__.py:66
 msgid "Local Network Domain"
 msgstr "Doména místní sítě"
 
@@ -374,7 +364,7 @@ msgid "Create Location"
 msgstr "Vytvořit umístění"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:19
-#: plinth/modules/gitweb/views.py:50
+#: plinth/modules/gitweb/views.py:49
 msgid "Create Repository"
 msgstr "Vytvořit repozitář"
 
@@ -401,11 +391,50 @@ msgstr "Smazat archiv %(name)s"
 #: plinth/modules/backups/templates/backups_form.html:20
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:20
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
+#: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "Potvrdit"
+
+#: plinth/modules/backups/templates/backups_repository.html:19
+#, fuzzy
+#| msgid "Existing repository is not encrypted."
+msgid "This repository is encrypted"
+msgstr "Existující repozitář není šifrován."
+
+#: plinth/modules/backups/templates/backups_repository.html:34
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Unmount Location"
+msgstr "Odebrat umístění"
+
+#: plinth/modules/backups/templates/backups_repository.html:45
+#, fuzzy
+#| msgid "Mount Point"
+msgid "Mount Location"
+msgstr "Přípojný bod"
+
+#: plinth/modules/backups/templates/backups_repository.html:56
+msgid "Remove Backup Location. This will not delete the remote backup."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository.html:77
+#, fuzzy
+#| msgid "downloading"
+msgid "Download"
+msgstr "stahování"
+
+#: plinth/modules/backups/templates/backups_repository.html:81
+#: plinth/modules/backups/templates/backups_restore.html:28
+#: plinth/modules/backups/views.py:154
+msgid "Restore"
+msgstr "Obnovit"
+
+#: plinth/modules/backups/templates/backups_repository.html:103
+msgid "No archives currently exist."
+msgstr "V tuto chvíli neexistují žádné archivy."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
@@ -437,11 +466,6 @@ msgstr "Odebrat umístění"
 #: plinth/modules/backups/templates/backups_restore.html:15
 msgid "Restore data from"
 msgstr "Obnovit data z"
-
-#: plinth/modules/backups/templates/backups_restore.html:28
-#: plinth/modules/backups/views.py:154
-msgid "Restore"
-msgstr "Obnovit"
 
 #: plinth/modules/backups/templates/backups_restore.html:32
 msgid "Restoring"
@@ -692,10 +716,10 @@ msgstr "IP adresa"
 msgid "Refresh IP address and domains"
 msgstr ""
 
-#: plinth/modules/bind/views.py:73 plinth/modules/deluge/views.py:46
-#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:134
+#: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
+#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:52
+#: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
 
@@ -762,7 +786,7 @@ msgid "General Configuration"
 msgstr "Obecná nastavení"
 
 #: plinth/modules/config/__init__.py:55 plinth/modules/dynamicdns/views.py:29
-#: plinth/modules/i2p/views.py:16 plinth/modules/names/templates/names.html:29
+#: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:26
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
@@ -853,43 +877,43 @@ msgstr "Zobrazit pokročilé aplikace a funkce"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Zobrazit aplikace a funkce, které vyžadují techničtější znalosti."
 
-#: plinth/modules/config/views.py:47
+#: plinth/modules/config/views.py:46
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Chyba při nastavování názvu stroje: {exception}"
 
-#: plinth/modules/config/views.py:50
+#: plinth/modules/config/views.py:49
 msgid "Hostname set"
 msgstr "Nastavení názvu stroje"
 
-#: plinth/modules/config/views.py:59
+#: plinth/modules/config/views.py:58
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Chyba při nastavování doménového názvu: {exception}"
 
-#: plinth/modules/config/views.py:62
+#: plinth/modules/config/views.py:61
 msgid "Domain name set"
 msgstr "Nastavení doménového názvu"
 
-#: plinth/modules/config/views.py:70
+#: plinth/modules/config/views.py:69
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Chyba při nastavování domovské stránky webového serveru: {exception}"
 
-#: plinth/modules/config/views.py:73
+#: plinth/modules/config/views.py:72
 msgid "Webserver home page set"
 msgstr "Nastavení domovské stránky webového serveru"
 
-#: plinth/modules/config/views.py:81
+#: plinth/modules/config/views.py:80
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Chyba při změně pokročilého režimu: {exception}"
 
-#: plinth/modules/config/views.py:86
+#: plinth/modules/config/views.py:85
 msgid "Showing advanced apps and features"
 msgstr "Jsou zobrazovány pokročilé aplikace a funkce"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:88
 msgid "Hiding advanced apps and features"
 msgstr "Jsou skryté pokročilé aplikace a funkce"
 
@@ -954,19 +978,19 @@ msgstr ""
 msgid "coquelicot"
 msgstr "coquelicot"
 
-#: plinth/modules/coquelicot/views.py:37
+#: plinth/modules/coquelicot/views.py:36
 msgid "Upload password updated"
 msgstr "Heslo pro nahrávání aktualizováno"
 
-#: plinth/modules/coquelicot/views.py:40
+#: plinth/modules/coquelicot/views.py:39
 msgid "Failed to update upload password"
 msgstr "Heslo pro nahrávání se nepodařilo aktualizovat"
 
-#: plinth/modules/coquelicot/views.py:48
+#: plinth/modules/coquelicot/views.py:47
 msgid "Maximum file size updated"
 msgstr "Nastavení nejvyšší umožněné velikosti souboru aktualizováno"
 
-#: plinth/modules/coquelicot/views.py:51
+#: plinth/modules/coquelicot/views.py:50
 msgid "Failed to update maximum file size"
 msgstr ""
 "Nastavení nejvyšší umožněné velikosti nahrávaného souboru se nepodařilo "
@@ -1055,7 +1079,7 @@ msgstr "Složka pro stahování"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Bittorent klient napsaný v Python/PyGTK"
 
-#: plinth/modules/diagnostics/__init__.py:19
+#: plinth/modules/diagnostics/__init__.py:24
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1063,13 +1087,9 @@ msgstr ""
 "Diagnostický test systému spustí několik kontrol pro potvrzení, že aplikace "
 "a služby fungují tak, jak mají."
 
-#: plinth/modules/diagnostics/__init__.py:37
+#: plinth/modules/diagnostics/__init__.py:48
 msgid "Diagnostics"
 msgstr "Diagnostika"
-
-#: plinth/modules/diagnostics/diagnostics.py:48
-msgid "Diagnostic Test"
-msgstr "Diagnostické testy"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:28
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
@@ -1108,6 +1128,10 @@ msgstr "Vyzkoušet"
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Result"
 msgstr "Výsledek"
+
+#: plinth/modules/diagnostics/views.py:37
+msgid "Diagnostic Test"
+msgstr "Diagnostické testy"
 
 #: plinth/modules/diaspora/__init__.py:45
 msgid ""
@@ -1161,20 +1185,19 @@ msgstr ""
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:43
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
 #: plinth/modules/ejabberd/templates/ejabberd.html:43
-#: plinth/modules/i2p/templates/i2p.html:19
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
 #: plinth/modules/snapshot/templates/snapshot.html:15
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:35
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:43
-#: plinth/templates/app.html:62
+#: plinth/templates/app.html:52
 msgid "Update setup"
 msgstr "Aktualizovat nastavení"
 
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
-#: plinth/modules/mediawiki/views.py:59 plinth/modules/openvpn/views.py:136
-#: plinth/modules/tor/views.py:137 plinth/views.py:185
+#: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
+#: plinth/modules/tor/views.py:136 plinth/views.py:178
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
 
@@ -1440,7 +1463,6 @@ msgstr "O systému"
 #: plinth/modules/tor/templates/tor.html:36
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
-#: plinth/templates/app.html:27
 msgid "Status"
 msgstr "Stav"
 
@@ -1556,11 +1578,10 @@ msgstr ""
 "\"%(index_url)s\">nastavení</a> systému."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:35
-#: plinth/modules/i2p/templates/i2p.html:11
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:27
-#: plinth/templates/app.html:55
+#: plinth/templates/app.html:45
 msgid "Configuration"
 msgstr "Nastavení"
 
@@ -1847,35 +1868,35 @@ msgstr "Nevratně smazat tento repozitář?"
 msgid "Delete %(name)s"
 msgstr "Smazat %(name)s"
 
-#: plinth/modules/gitweb/views.py:45
+#: plinth/modules/gitweb/views.py:44
 msgid "Repository created."
 msgstr "Repozitář vytvořen."
 
-#: plinth/modules/gitweb/views.py:67
+#: plinth/modules/gitweb/views.py:66
 #, fuzzy
 #| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the repository."
 msgstr "Při nastavování se vyskytla chyba."
 
-#: plinth/modules/gitweb/views.py:80
+#: plinth/modules/gitweb/views.py:79
 msgid "Repository edited."
 msgstr "Repozitář upraven."
 
-#: plinth/modules/gitweb/views.py:85
+#: plinth/modules/gitweb/views.py:84
 msgid "Edit repository"
 msgstr "Upravit repozitář"
 
-#: plinth/modules/gitweb/views.py:113 plinth/modules/searx/views.py:42
-#: plinth/modules/searx/views.py:53 plinth/modules/tor/views.py:159
+#: plinth/modules/gitweb/views.py:112 plinth/modules/searx/views.py:41
+#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:158
 msgid "An error occurred during configuration."
 msgstr "Při nastavování se vyskytla chyba."
 
-#: plinth/modules/gitweb/views.py:134
+#: plinth/modules/gitweb/views.py:133
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} smazáno."
 
-#: plinth/modules/gitweb/views.py:138
+#: plinth/modules/gitweb/views.py:137
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} se nepodařilo smazat: {error}"
@@ -1890,37 +1911,26 @@ msgstr "Dokumentace"
 msgid "Manual"
 msgstr "Příručka"
 
-#: plinth/modules/help/__init__.py:37 plinth/modules/help/help.py:43
+#: plinth/modules/help/__init__.py:37
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/templates/help-menu.html:27 plinth/templates/help-menu.html:28
+#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
+#: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Získat podporu"
 
-#: plinth/modules/help/__init__.py:41 plinth/modules/help/help.py:37
+#: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/templates/help-menu.html:33 plinth/templates/help-menu.html:34
+#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
+#: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Odeslat zpětnou vazbu"
 
-#: plinth/modules/help/__init__.py:45 plinth/modules/help/help.py:31
+#: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/templates/help-menu.html:39 plinth/templates/help-menu.html:40
+#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
+#: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Zapojit se"
-
-#: plinth/modules/help/help.py:25
-msgid "Documentation and FAQ"
-msgstr "Dokumentace a často kladené dotazy"
-
-#: plinth/modules/help/help.py:51
-#, python-brace-format
-msgid "About {box_name}"
-msgstr "O {box_name}"
-
-#: plinth/modules/help/help.py:86
-#, python-brace-format
-msgid "{box_name} Manual"
-msgstr "Příručka k {box_name}"
 
 #: plinth/modules/help/templates/help_about.html:17
 #, python-format
@@ -2191,6 +2201,20 @@ msgstr ""
 "Před odesláním hlášení chyby odeberte ze záznamů událostí veškerá hesla a "
 "ostatní osobní údaje."
 
+#: plinth/modules/help/views.py:25
+msgid "Documentation and FAQ"
+msgstr "Dokumentace a často kladené dotazy"
+
+#: plinth/modules/help/views.py:51
+#, python-brace-format
+msgid "About {box_name}"
+msgstr "O {box_name}"
+
+#: plinth/modules/help/views.py:86
+#, python-brace-format
+msgid "{box_name} Manual"
+msgstr "Příručka k {box_name}"
+
 #: plinth/modules/i2p/__init__.py:28
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
@@ -2234,24 +2258,20 @@ msgstr "Anonymní síť"
 msgid "I2P Proxy"
 msgstr "I2P proxy"
 
-#: plinth/modules/i2p/templates/i2p_service.html:16
-#: plinth/templates/clients.html:28
-msgid "Launch"
-msgstr "Spustit"
-
-#: plinth/modules/i2p/views.py:19
-msgid "Proxies"
-msgstr "Proxy servery"
-
-#: plinth/modules/i2p/views.py:22
-msgid "Anonymous torrents"
-msgstr "Anonymní torenty"
-
-#: plinth/modules/i2p/views.py:64
+#: plinth/modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
 msgstr "I2P proxy a tunely"
 
-#: plinth/modules/i2p/views.py:67
+#: plinth/modules/i2p/templates/i2p.html:21
+#: plinth/modules/i2p/templates/i2p.html:34 plinth/templates/clients.html:28
+msgid "Launch"
+msgstr "Spustit"
+
+#: plinth/modules/i2p/templates/i2p.html:25
+msgid "Anonymous Torrents"
+msgstr "Anonymní torrenty"
+
+#: plinth/modules/i2p/views.py:16
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
 "For this, your browser, preferably a Tor Browser, needs to be configured for "
@@ -2261,7 +2281,7 @@ msgstr ""
 "je třeba, aby vámi používaný webový prohlížeč (nejlépe Tor Browser) byl "
 "nastaven pro proxy."
 
-#: plinth/modules/i2p/views.py:70
+#: plinth/modules/i2p/views.py:19
 msgid ""
 "By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
 "tunnels may be configured using the tunnel configuration interface."
@@ -2269,11 +2289,7 @@ msgstr ""
 "Ve výchozím stavu jsou k dispozici proxy pro HTTP, HTTPS a IRC. Další proxy "
 "a tunely je možné nastavit pomocí rozhraní pro nastavení tunelů."
 
-#: plinth/modules/i2p/views.py:79
-msgid "Anonymous Torrents"
-msgstr "Anonymní torrenty"
-
-#: plinth/modules/i2p/views.py:82
+#: plinth/modules/i2p/views.py:24
 msgid ""
 "I2P provides an application to download files anonymously in a peer-to-peer "
 "network. Download files by adding torrents or create a new torrent to share "
@@ -2371,42 +2387,42 @@ msgstr ""
 "Tato akce odebere veškeré příspěvky, stránky a komentáře včetně historie "
 "verzí. Opravdu chcete nenávratně smazat tuto wiki/blog?"
 
-#: plinth/modules/ikiwiki/views.py:73
+#: plinth/modules/ikiwiki/views.py:72
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "Wiki {name} vytvořena."
 
-#: plinth/modules/ikiwiki/views.py:76
+#: plinth/modules/ikiwiki/views.py:75
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Wiki se nepodařilo vytvořit: {error}"
 
-#: plinth/modules/ikiwiki/views.py:86
+#: plinth/modules/ikiwiki/views.py:85
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "Blog {name} vytvořen."
 
-#: plinth/modules/ikiwiki/views.py:89
+#: plinth/modules/ikiwiki/views.py:88
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Blog se nepodařilo vytvořit: {error}"
 
-#: plinth/modules/ikiwiki/views.py:104
+#: plinth/modules/ikiwiki/views.py:103
 #, python-brace-format
 msgid "{title} deleted."
 msgstr "{title} dsmazáno."
 
-#: plinth/modules/ikiwiki/views.py:108
+#: plinth/modules/ikiwiki/views.py:107
 #, python-brace-format
 msgid "Could not delete {title}: {error}"
 msgstr "{title} se nepodařilo smazat: {error}"
 
-#: plinth/modules/infinoted/__init__.py:26
+#: plinth/modules/infinoted/__init__.py:25
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr ""
 "infinoted je server pro Gobby – textový editor pro spolupráci ve skupině."
 
-#: plinth/modules/infinoted/__init__.py:28
+#: plinth/modules/infinoted/__init__.py:27
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -2417,11 +2433,11 @@ msgstr ""
 "desktopového klienta a nainstalujte ho. Poté spusťte Gobby a zvolte "
 "„Připojit k serveru“ a zadejte doménový název svého {box_name}."
 
-#: plinth/modules/infinoted/__init__.py:48
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:49
+#: plinth/modules/infinoted/__init__.py:48
 msgid "Gobby Server"
 msgstr "Gobby server"
 
@@ -2459,7 +2475,7 @@ msgid "Chat Client"
 msgstr "Chatovací klient"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:125
-#: plinth/templates/base.html:238
+#: plinth/templates/base.html:237
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -2833,27 +2849,27 @@ msgid ""
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:54
+#: plinth/modules/mediawiki/views.py:53
 msgid "Password updated"
 msgstr "Heslo aktualizováno"
 
-#: plinth/modules/mediawiki/views.py:73
+#: plinth/modules/mediawiki/views.py:72
 msgid "Public registrations enabled"
 msgstr "Registrace pro veřejnost otevřené"
 
-#: plinth/modules/mediawiki/views.py:82
+#: plinth/modules/mediawiki/views.py:81
 msgid "Public registrations disabled"
 msgstr "Registrace pro veřejnost zavřené"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:86
 msgid "Private mode enabled"
 msgstr "Soukromý režim zapnut"
 
-#: plinth/modules/mediawiki/views.py:94
+#: plinth/modules/mediawiki/views.py:93
 msgid "Private mode disabled"
 msgstr "Soukromý režim vypnut"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:101
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "Default skin changed"
@@ -2931,19 +2947,19 @@ msgstr "Adresa"
 msgid "Port"
 msgstr "Port"
 
-#: plinth/modules/minetest/views.py:50
+#: plinth/modules/minetest/views.py:49
 msgid "Maximum players configuration updated"
 msgstr "Nastavení nejvyššího umožněného počtu hráčů aktualizováno"
 
-#: plinth/modules/minetest/views.py:57
+#: plinth/modules/minetest/views.py:56
 msgid "Creative mode configuration updated"
 msgstr "Nastavení tvořivého režimu aktualizována"
 
-#: plinth/modules/minetest/views.py:63
+#: plinth/modules/minetest/views.py:62
 msgid "PVP configuration updated"
 msgstr "Nastavení PVP aktualizováno"
 
-#: plinth/modules/minetest/views.py:69
+#: plinth/modules/minetest/views.py:68
 msgid "Damage configuration updated"
 msgstr "Nastavení poškozování aktualizováno"
 
@@ -3302,7 +3318,7 @@ msgstr "Vše"
 msgid "All web apps"
 msgstr "Všechny webové aplikace"
 
-#: plinth/modules/networks/__init__.py:35
+#: plinth/modules/networks/__init__.py:40
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3310,17 +3326,17 @@ msgstr ""
 "Nastavit síťová zařízení. Připojit k Internetu přes ethernet, WiFi nebo "
 "PPPoE. Sdílet toto připojení s ostatními zařízeními na síti."
 
-#: plinth/modules/networks/__init__.py:37
+#: plinth/modules/networks/__init__.py:42
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:58
+#: plinth/modules/networks/__init__.py:64
 msgid "Networks"
 msgstr "Sítě"
 
-#: plinth/modules/networks/__init__.py:151
+#: plinth/modules/networks/__init__.py:157
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "S použitím DNSSEC na IPv{kind}"
@@ -3574,10 +3590,41 @@ msgid "Open"
 msgstr "Otevřené"
 
 #: plinth/modules/networks/forms.py:297
+#, fuzzy, python-brace-format
+#| msgid "Use upstream bridges to connect to Tor network"
+msgid "Choose how your {box_name} is connected to your network"
+msgstr "Pro připojení k Tor síti použijte nadřazené mosty"
+
+#: plinth/modules/networks/forms.py:304
+#, python-brace-format
+msgid ""
+"Connected to a router <p class=\"help-block\">Your {box_name} gets its "
+"Internet connection from your router via Wi-Fi or Ethernet cable. This is a "
+"typical home setup.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:311
+#, python-brace-format
+msgid ""
+"{box_name} is your router <p class=\"help-block\">Your {box_name} has "
+"multiple network interfaces such as multiple Ethernet ports or a Wi-Fi "
+"adapter. {box_name} is directly connected to the Internet and all your "
+"devices connect to {box_name} for their Internet connectivity.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:320
+#, python-brace-format
+msgid ""
+"Directly connected to the Internet <p class=\"help-block\">Your Internet "
+"connection is directly attached to your {box_name} and there are no other "
+"devices on the network. This can happen on community or cloud setups.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:339
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:301
+#: plinth/modules/networks/forms.py:343
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-block"
 "\">This means that devices on the Internet can reach you when you are "
@@ -3588,7 +3635,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:313
+#: plinth/modules/networks/forms.py:355
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change overtime (recommended)<p "
@@ -3600,7 +3647,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:326
+#: plinth/modules/networks/forms.py:368
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -3612,13 +3659,19 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:351
+#: plinth/modules/networks/forms.py:381
+msgid ""
+"I do not know the type of connection my ISP provides <p class=\"help-block"
+"\">You will be suggested the most conservative actions.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:398
 #, fuzzy
 #| msgid "Current Network Configuration"
 msgid "Preferred router configuration"
 msgstr "Stávající nastavení sítě"
 
-#: plinth/modules/networks/forms.py:356
+#: plinth/modules/networks/forms.py:403
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
@@ -3629,7 +3682,7 @@ msgid ""
 "p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:368
+#: plinth/modules/networks/forms.py:415
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
@@ -3641,119 +3694,12 @@ msgid ""
 "to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:382
+#: plinth/modules/networks/forms.py:429
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
-
-#: plinth/modules/networks/networks.py:32
-msgid "Network Connections"
-msgstr "Síťová připojení"
-
-#: plinth/modules/networks/networks.py:46
-msgid "Cannot show connection: Connection not found."
-msgstr "Připojení nelze zobrazit: Připojení neexistuje."
-
-#: plinth/modules/networks/networks.py:81
-msgid "Connection Information"
-msgstr "Informace o spojení"
-
-#: plinth/modules/networks/networks.py:95
-msgid "Cannot edit connection: Connection not found."
-msgstr "Připojení nelze upravit: Připojení neexistuje."
-
-#: plinth/modules/networks/networks.py:101
-msgid "This type of connection is not yet understood."
-msgstr "Tento typ připojení ještě není podporován."
-
-#: plinth/modules/networks/networks.py:123
-#: plinth/modules/networks/networks.py:207
-#: plinth/modules/networks/templates/connections_edit.html:20
-msgid "Edit Connection"
-msgstr "Upravit připojení"
-
-#: plinth/modules/networks/networks.py:219
-#, python-brace-format
-msgid "Activated connection {name}."
-msgstr "Připojení {name} aktivováno."
-
-#: plinth/modules/networks/networks.py:223
-msgid "Failed to activate connection: Connection not found."
-msgstr "Aktivace připojení se nezdařila: Připojení nenalezeno."
-
-#: plinth/modules/networks/networks.py:229
-#, python-brace-format
-msgid "Failed to activate connection {name}: No suitable device is available."
-msgstr ""
-"Nepodařilo se aktivovat připojení {name}: Není k dispozici žádné použitelné "
-"zařízení."
-
-#: plinth/modules/networks/networks.py:242
-#, python-brace-format
-msgid "Deactivated connection {name}."
-msgstr "Připojení {name} deaktivováno."
-
-#: plinth/modules/networks/networks.py:246
-msgid "Failed to de-activate connection: Connection not found."
-msgstr "Deaktivace připojení se nezdařila: Připojení nenalezeno."
-
-#: plinth/modules/networks/networks.py:256
-#: plinth/modules/networks/templates/connections_list.html:12
-#: plinth/modules/networks/templates/connections_list.html:14
-msgid "Nearby Wi-Fi Networks"
-msgstr "Wi-Fi sítě poblíž"
-
-#: plinth/modules/networks/networks.py:280
-#: plinth/modules/networks/templates/connections_list.html:17
-#: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/wireguard/templates/wireguard_add_server.html:19
-msgid "Add Connection"
-msgstr "Přidat připojení"
-
-#: plinth/modules/networks/networks.py:298
-msgid "Adding New Generic Connection"
-msgstr "Přidávání nového generického připojení"
-
-#: plinth/modules/networks/networks.py:316
-msgid "Adding New Ethernet Connection"
-msgstr "Přidávání nového ethernetového připojení"
-
-#: plinth/modules/networks/networks.py:334
-msgid "Adding New PPPoE Connection"
-msgstr "Přidávání nového PPPoE připojení"
-
-#: plinth/modules/networks/networks.py:369
-msgid "Adding New Wi-Fi Connection"
-msgstr "Přidávání nového Wi-Fi připojení"
-
-#: plinth/modules/networks/networks.py:384
-#, python-brace-format
-msgid "Connection {name} deleted."
-msgstr "Připojení {name} smazáno."
-
-#: plinth/modules/networks/networks.py:388
-#: plinth/modules/networks/networks.py:398
-msgid "Failed to delete connection: Connection not found."
-msgstr "Smazání připojení se nezdařilo: Připojení nenalezeno."
-
-#: plinth/modules/networks/networks.py:403
-#: plinth/modules/networks/templates/connections_delete.html:11
-msgid "Delete Connection"
-msgstr "Smazat připojení"
-
-#: plinth/modules/networks/networks.py:428
-#, fuzzy
-#| msgid "Tor configuration is being updated"
-msgid "Router configuration type saved."
-msgstr "Nastavení Tor jsou aktualizována"
-
-#: plinth/modules/networks/networks.py:474
-#, fuzzy
-#| msgid "Tor configuration is being updated"
-msgid "Internet connection type saved."
-msgstr "Nastavení Tor jsou aktualizována"
 
 #: plinth/modules/networks/templates/connection_show.html:28
 msgid "Edit connection"
@@ -3762,7 +3708,7 @@ msgstr "Upravit připojení"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:152 plinth/templates/base.html:153
+#: plinth/templates/base.html:151 plinth/templates/base.html:152
 msgid "Edit"
 msgstr "Upravit"
 
@@ -3943,6 +3889,11 @@ msgstr ""
 msgid "Create Connection"
 msgstr "Vytvořit připojení"
 
+#: plinth/modules/networks/templates/connections_delete.html:11
+#: plinth/modules/networks/views.py:408
+msgid "Delete Connection"
+msgstr "Smazat připojení"
+
 #: plinth/modules/networks/templates/connections_delete.html:14
 #, python-format
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
@@ -3983,9 +3934,27 @@ msgstr "Zobrazit připojení %(name)s"
 msgid "Computer"
 msgstr "Počítač"
 
+#: plinth/modules/networks/templates/connections_edit.html:20
+#: plinth/modules/networks/views.py:128 plinth/modules/networks/views.py:212
+msgid "Edit Connection"
+msgstr "Upravit připojení"
+
 #: plinth/modules/networks/templates/connections_list.html:8
 msgid "Connections"
 msgstr "Připojení"
+
+#: plinth/modules/networks/templates/connections_list.html:12
+#: plinth/modules/networks/templates/connections_list.html:14
+#: plinth/modules/networks/views.py:261
+msgid "Nearby Wi-Fi Networks"
+msgstr "Wi-Fi sítě poblíž"
+
+#: plinth/modules/networks/templates/connections_list.html:17
+#: plinth/modules/networks/templates/connections_list.html:19
+#: plinth/modules/networks/views.py:285
+#: plinth/modules/wireguard/templates/wireguard_add_server.html:19
+msgid "Add Connection"
+msgstr "Přidat připojení"
 
 #: plinth/modules/networks/templates/connections_list.html:29
 #, python-format
@@ -4014,13 +3983,15 @@ msgid ""
 "information is used only to guide you with further setup."
 msgstr ""
 
-#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:18
-#: plinth/modules/networks/templates/router_configuration_firstboot.html:18
+#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
+#: plinth/modules/networks/templates/network_topology_firstboot.html:19
+#: plinth/modules/networks/templates/router_configuration_firstboot.html:19
 msgid "Skip this step"
 msgstr ""
 
-#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
-#: plinth/modules/networks/templates/router_configuration_firstboot.html:19
+#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:21
+#: plinth/modules/networks/templates/network_topology_firstboot.html:21
+#: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 msgid "Next"
 msgstr ""
 
@@ -4049,12 +4020,64 @@ msgstr ""
 msgid "My ISP does not provide a public IP address."
 msgstr ""
 
-#: plinth/modules/networks/templates/internet_connectivity_main.html:37
-#: plinth/modules/networks/templates/router_configuration_main.html:29
+#: plinth/modules/networks/templates/internet_connectivity_main.html:35
+msgid "I do not know the type of connection my ISP provides."
+msgstr ""
+
+#: plinth/modules/networks/templates/internet_connectivity_main.html:41
+#: plinth/modules/networks/templates/network_topology_main.html:41
 #, fuzzy
 #| msgid "Update"
 msgid "Update..."
 msgstr "Aktualizovat"
+
+#: plinth/modules/networks/templates/network_topology_content.html:10
+#, fuzzy, python-format
+#| msgid "Direct connection to the Internet."
+msgid "How is Your %(box_name)s Connected to the Internet?"
+msgstr "Přímé připojení do Internetu."
+
+#: plinth/modules/networks/templates/network_topology_content.html:16
+#, python-format
+msgid ""
+"Select an option that best describes how your %(box_name)s is connected in "
+"your network. This information is used to guide you with further setup. It "
+"can be changed later."
+msgstr ""
+
+#: plinth/modules/networks/templates/network_topology_main.html:9
+#, python-format
+msgid "%(box_name)s Internet Connectivity"
+msgstr ""
+
+#: plinth/modules/networks/templates/network_topology_main.html:15
+#, python-format
+msgid ""
+"The following best describes how your %(box_name)s is connected in your "
+"network. This information is used only to suggest necessary configuration "
+"actions."
+msgstr ""
+
+#: plinth/modules/networks/templates/network_topology_main.html:24
+#, python-format
+msgid ""
+"Your %(box_name)s gets its Internet connection from your router via Wi-Fi or "
+"Ethernet cable. This is a typical home setup."
+msgstr ""
+
+#: plinth/modules/networks/templates/network_topology_main.html:29
+#, python-format
+msgid ""
+"Your %(box_name)s is directly connected to the Internet and all your devices "
+"connect to %(box_name)s for their Internet connectivity."
+msgstr ""
+
+#: plinth/modules/networks/templates/network_topology_main.html:34
+#, python-format
+msgid ""
+"Your Internet connection is directly attached to your %(box_name)s and there "
+"are no other devices on the network."
+msgstr ""
 
 #: plinth/modules/networks/templates/router_configuration_content.html:10
 #, fuzzy, python-format
@@ -4105,25 +4128,75 @@ msgid ""
 "full instructions on how to perform this task."
 msgstr ""
 
-#: plinth/modules/networks/templates/router_configuration_main.html:9
-#, python-format
-msgid "%(box_name)s Internet Connectivity"
-msgstr ""
+#: plinth/modules/networks/views.py:36
+msgid "Network Connections"
+msgstr "Síťová připojení"
 
-#: plinth/modules/networks/templates/router_configuration_main.html:15
-#, python-format
-msgid ""
-"The following best describes how your %(box_name)s is connected in your "
-"network. This information is used only to suggest necessary configuration "
-"actions."
-msgstr ""
+#: plinth/modules/networks/views.py:51
+msgid "Cannot show connection: Connection not found."
+msgstr "Připojení nelze zobrazit: Připojení neexistuje."
 
-#: plinth/modules/networks/templates/router_configuration_main.html:23
-#, python-format
-msgid ""
-"Your %(box_name)s gets its Internet from your Router via Wi-Fi or Ethernet "
-"cable. This is a typical home setup."
+#: plinth/modules/networks/views.py:86
+msgid "Connection Information"
+msgstr "Informace o spojení"
+
+#: plinth/modules/networks/views.py:100
+msgid "Cannot edit connection: Connection not found."
+msgstr "Připojení nelze upravit: Připojení neexistuje."
+
+#: plinth/modules/networks/views.py:106
+msgid "This type of connection is not yet understood."
+msgstr "Tento typ připojení ještě není podporován."
+
+#: plinth/modules/networks/views.py:224
+#, python-brace-format
+msgid "Activated connection {name}."
+msgstr "Připojení {name} aktivováno."
+
+#: plinth/modules/networks/views.py:228
+msgid "Failed to activate connection: Connection not found."
+msgstr "Aktivace připojení se nezdařila: Připojení nenalezeno."
+
+#: plinth/modules/networks/views.py:234
+#, python-brace-format
+msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
+"Nepodařilo se aktivovat připojení {name}: Není k dispozici žádné použitelné "
+"zařízení."
+
+#: plinth/modules/networks/views.py:247
+#, python-brace-format
+msgid "Deactivated connection {name}."
+msgstr "Připojení {name} deaktivováno."
+
+#: plinth/modules/networks/views.py:251
+msgid "Failed to de-activate connection: Connection not found."
+msgstr "Deaktivace připojení se nezdařila: Připojení nenalezeno."
+
+#: plinth/modules/networks/views.py:303
+msgid "Adding New Generic Connection"
+msgstr "Přidávání nového generického připojení"
+
+#: plinth/modules/networks/views.py:321
+msgid "Adding New Ethernet Connection"
+msgstr "Přidávání nového ethernetového připojení"
+
+#: plinth/modules/networks/views.py:339
+msgid "Adding New PPPoE Connection"
+msgstr "Přidávání nového PPPoE připojení"
+
+#: plinth/modules/networks/views.py:374
+msgid "Adding New Wi-Fi Connection"
+msgstr "Přidávání nového Wi-Fi připojení"
+
+#: plinth/modules/networks/views.py:389
+#, python-brace-format
+msgid "Connection {name} deleted."
+msgstr "Připojení {name} smazáno."
+
+#: plinth/modules/networks/views.py:393 plinth/modules/networks/views.py:403
+msgid "Failed to delete connection: Connection not found."
+msgstr "Smazání připojení se nezdařilo: Připojení nenalezeno."
 
 #: plinth/modules/openvpn/__init__.py:26
 #, python-brace-format
@@ -4231,11 +4304,11 @@ msgstr ""
 msgid "Download my profile"
 msgstr "Stáhnout si svůj profil"
 
-#: plinth/modules/openvpn/views.py:114
+#: plinth/modules/openvpn/views.py:113
 msgid "Setup completed."
 msgstr "Nastavování dokončeno."
 
-#: plinth/modules/openvpn/views.py:116
+#: plinth/modules/openvpn/views.py:115
 msgid "Setup failed."
 msgstr "Nastavování se nezdařilo."
 
@@ -4591,7 +4664,7 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Vypnout nyní"
 
-#: plinth/modules/privoxy/__init__.py:29
+#: plinth/modules/privoxy/__init__.py:28
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -4601,7 +4674,7 @@ msgstr ""
 "zlepšujícími soukromí, upravující data webových stánek a HTTP hlaviček, "
 "řídící přístup a odebírající reklamy a ostatní otravné Internetové smetí. "
 
-#: plinth/modules/privoxy/__init__.py:34
+#: plinth/modules/privoxy/__init__.py:33
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -4616,15 +4689,15 @@ msgstr ""
 "privoxy.org\">http://config.privoxy.org/</a> nebo <a href=\"http://p.p"
 "\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:57
+#: plinth/modules/privoxy/__init__.py:56
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:58
+#: plinth/modules/privoxy/__init__.py:57
 msgid "Web Proxy"
 msgstr "Webová proxy"
 
-#: plinth/modules/privoxy/__init__.py:121
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Přistupte {url} s proxy {proxy} na tcp{kind}"
@@ -5055,8 +5128,8 @@ msgid "Allow this application to be used by anyone who can reach it."
 msgstr ""
 "Umožnit, aby tato aplikace byla používána kýmkoli, kdo se k ní může dostat."
 
-#: plinth/modules/searx/views.py:39 plinth/modules/searx/views.py:50
-#: plinth/modules/tor/views.py:130 plinth/modules/tor/views.py:157
+#: plinth/modules/searx/views.py:38 plinth/modules/searx/views.py:49
+#: plinth/modules/tor/views.py:129 plinth/modules/tor/views.py:156
 msgid "Configuration updated."
 msgstr "Nastavení aktualizována."
 
@@ -5584,7 +5657,7 @@ msgstr "Zachycený stav pořízen."
 msgid "Storage snapshots configuration updated"
 msgstr "Nastavení zachycování stavů úložiště aktualizováno"
 
-#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Chyba akce: {0} [{1}] [{2}]"
@@ -5860,7 +5933,7 @@ msgstr ""
 
 #: plinth/modules/storage/templates/storage.html:87
 #: plinth/modules/storage/templates/storage_expand.html:24
-#: plinth/modules/storage/views.py:58
+#: plinth/modules/storage/views.py:57
 msgid "Expand Root Partition"
 msgstr "Zvětšit kořenový oddíl"
 
@@ -5874,25 +5947,25 @@ msgstr ""
 "Než budete pokračovat, zazálohujte svá data. Po provedení této operace na "
 "kořenovém oddílu bude k dispozici %(expandable_root_size)s dalšího prostoru."
 
-#: plinth/modules/storage/views.py:70
+#: plinth/modules/storage/views.py:69
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Chyba při zvětšování oddílu: {exception}"
 
-#: plinth/modules/storage/views.py:73
+#: plinth/modules/storage/views.py:72
 msgid "Partition expanded successfully."
 msgstr "Oddíl úspěšně zvětšen."
 
-#: plinth/modules/storage/views.py:91
+#: plinth/modules/storage/views.py:90
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor} {drive_model} je možné bezpečně odebrat."
 
-#: plinth/modules/storage/views.py:95
+#: plinth/modules/storage/views.py:94
 msgid "Device can be safely unplugged."
 msgstr "Zařízení je možné bezpečně odebrat."
 
-#: plinth/modules/storage/views.py:105
+#: plinth/modules/storage/views.py:104
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Chyba při vysouvání zařízení: {error_message}"
@@ -6349,32 +6422,32 @@ msgstr "Vyp/zap. záznamy událostí při nedávných aktualizacích"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:88
 msgid "Manual update"
 msgstr "Ruční aktualizace"
 
-#: plinth/modules/upgrades/views.py:48
+#: plinth/modules/upgrades/views.py:47
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Chyba při nastavování bezobslužných aktualizací: {error}"
 
-#: plinth/modules/upgrades/views.py:52
+#: plinth/modules/upgrades/views.py:51
 msgid "Automatic upgrades enabled"
 msgstr "Automatické aktualizace zapnuty"
 
-#: plinth/modules/upgrades/views.py:55
+#: plinth/modules/upgrades/views.py:54
 msgid "Automatic upgrades disabled"
 msgstr "Automatické aktualizace vypnuty"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:56
 msgid "Settings unchanged"
 msgstr "Nastavení nezměněna"
 
-#: plinth/modules/upgrades/views.py:83
+#: plinth/modules/upgrades/views.py:82
 msgid "Upgrade process started."
 msgstr "Proces přechodu na novější verze zahájen."
 
-#: plinth/modules/upgrades/views.py:86
+#: plinth/modules/upgrades/views.py:85
 msgid "Starting upgrade failed."
 msgstr "Spouštění přechodu na novější verzi se nezdařilo."
 
@@ -6522,7 +6595,7 @@ msgid "Create User"
 msgstr "Vytvořit uživatele"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:121
+#: plinth/modules/users/views.py:120
 msgid "Delete User"
 msgstr "Smazat uživatele"
 
@@ -6588,29 +6661,29 @@ msgstr "Uložit změny"
 msgid "User %(username)s created."
 msgstr "Uživatel %(username)s vytvořen."
 
-#: plinth/modules/users/views.py:75
+#: plinth/modules/users/views.py:74
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Uživatel %(username)s aktualizován."
 
-#: plinth/modules/users/views.py:76
+#: plinth/modules/users/views.py:75
 msgid "Edit User"
 msgstr "Upravit uživatele"
 
-#: plinth/modules/users/views.py:131
+#: plinth/modules/users/views.py:130
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Uživatel {user} smazán."
 
-#: plinth/modules/users/views.py:138
+#: plinth/modules/users/views.py:137
 msgid "Deleting LDAP user failed."
 msgstr "Smazání LDAP uživatele se nezdařilo."
 
-#: plinth/modules/users/views.py:147
+#: plinth/modules/users/views.py:146
 msgid "Change Password"
 msgstr "Změnit heslo"
 
-#: plinth/modules/users/views.py:148
+#: plinth/modules/users/views.py:147
 msgid "Password changed successfully."
 msgstr "Heslo úspěšně změněno."
 
@@ -6769,7 +6842,7 @@ msgid "Add a new peer"
 msgstr "Přidat nový uvaděč"
 
 #: plinth/modules/wireguard/templates/wireguard.html:61
-#: plinth/modules/wireguard/views.py:51
+#: plinth/modules/wireguard/views.py:50
 msgid "Add Allowed Client"
 msgstr ""
 
@@ -6802,7 +6875,7 @@ msgid "Add a new server"
 msgstr "Přidat nový uvaděč"
 
 #: plinth/modules/wireguard/templates/wireguard.html:108
-#: plinth/modules/wireguard/views.py:160
+#: plinth/modules/wireguard/views.py:159
 #, fuzzy
 #| msgid "Add Connection"
 msgid "Add Connection to Server"
@@ -6908,85 +6981,85 @@ msgstr ""
 msgid "IP address of this machine:"
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:46
+#: plinth/modules/wireguard/views.py:45
 #, fuzzy
 #| msgid "Add new introducer"
 msgid "Added new client."
 msgstr "Přidat nový uvaděč"
 
-#: plinth/modules/wireguard/views.py:61 plinth/modules/wireguard/views.py:120
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:119
 #, fuzzy
 #| msgid "A share with this name already exists."
 msgid "Client with public key already exists"
 msgstr "Sdílení s tímto názvem už existuje."
 
-#: plinth/modules/wireguard/views.py:74
+#: plinth/modules/wireguard/views.py:73
 #, fuzzy
 #| msgid "Email Client"
 msgid "Allowed Client"
 msgstr "E-mailový klient"
 
-#: plinth/modules/wireguard/views.py:96
+#: plinth/modules/wireguard/views.py:95
 #, fuzzy
 #| msgid "Update setup"
 msgid "Updated client."
 msgstr "Aktualizovat nastavení"
 
-#: plinth/modules/wireguard/views.py:101
+#: plinth/modules/wireguard/views.py:100
 #, fuzzy
 #| msgid "Email Client"
 msgid "Modify Client"
 msgstr "E-mailový klient"
 
-#: plinth/modules/wireguard/views.py:134
+#: plinth/modules/wireguard/views.py:133
 #, fuzzy
 #| msgid "Delete All"
 msgid "Delete Allowed Client"
 msgstr "Smazat vše"
 
-#: plinth/modules/wireguard/views.py:143
+#: plinth/modules/wireguard/views.py:142
 #, fuzzy
 #| msgid "Archive deleted."
 msgid "Client deleted."
 msgstr "Archiv smazán."
 
-#: plinth/modules/wireguard/views.py:145
+#: plinth/modules/wireguard/views.py:144
 #, fuzzy
 #| msgid "Repository not found"
 msgid "Client not found"
 msgstr "Repozitář nenalezen"
 
-#: plinth/modules/wireguard/views.py:155
+#: plinth/modules/wireguard/views.py:154
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Added new server."
 msgstr "Uživatelem určená služba přidána"
 
-#: plinth/modules/wireguard/views.py:176
+#: plinth/modules/wireguard/views.py:175
 #, fuzzy
 #| msgid "Connection Type"
 msgid "Connection to Server"
 msgstr "Typ připojení"
 
-#: plinth/modules/wireguard/views.py:194
+#: plinth/modules/wireguard/views.py:193
 #, fuzzy
 #| msgid "Update setup"
 msgid "Updated server."
 msgstr "Aktualizovat nastavení"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:198
 #, fuzzy
 #| msgid "Edit Connection"
 msgid "Modify Connection to Server"
 msgstr "Upravit připojení"
 
-#: plinth/modules/wireguard/views.py:236
+#: plinth/modules/wireguard/views.py:235
 #, fuzzy
 #| msgid "Delete Connection"
 msgid "Delete Connection to Server"
 msgstr "Smazat připojení"
 
-#: plinth/modules/wireguard/views.py:256
+#: plinth/modules/wireguard/views.py:255
 #, fuzzy
 #| msgid "Share deleted."
 msgid "Server deleted."
@@ -7070,12 +7143,7 @@ msgstr ""
 msgid "Installation"
 msgstr "Instalace"
 
-#: plinth/templates/app.html:32
-#, python-format
-msgid "Service <em>%(service_name)s</em> is running."
-msgstr "Služba <em>%(service_name)s</em> je spuštěná."
-
-#: plinth/templates/app.html:37
+#: plinth/templates/app.html:29
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Služba <em>%(service_name)s</em> není spuštěná."
@@ -7085,44 +7153,44 @@ msgstr "Služba <em>%(service_name)s</em> není spuštěná."
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Základní funkce a webové rozhraní pro %(box_name)s"
 
-#: plinth/templates/base.html:81
+#: plinth/templates/base.html:80
 msgid "Toggle navigation"
 msgstr "Přepnout navigaci"
 
-#: plinth/templates/base.html:105 plinth/templates/base.html:108
+#: plinth/templates/base.html:104 plinth/templates/base.html:107
 msgid "Home"
 msgstr "Domů"
 
-#: plinth/templates/base.html:113 plinth/templates/base.html:117
+#: plinth/templates/base.html:112 plinth/templates/base.html:116
 msgid "Apps"
 msgstr "Aplikace"
 
-#: plinth/templates/base.html:122 plinth/templates/base.html:126
+#: plinth/templates/base.html:121 plinth/templates/base.html:125
 msgid "System"
 msgstr "Systém"
 
-#: plinth/templates/base.html:158 plinth/templates/base.html:159
+#: plinth/templates/base.html:157 plinth/templates/base.html:158
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: plinth/templates/base.html:166 plinth/templates/base.html:167
+#: plinth/templates/base.html:165 plinth/templates/base.html:166
 msgid "Restart"
 msgstr "Restartovat"
 
-#: plinth/templates/base.html:172 plinth/templates/base.html:173
+#: plinth/templates/base.html:171 plinth/templates/base.html:172
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: plinth/templates/base.html:180 plinth/templates/base.html:181
-#: plinth/templates/base.html:205 plinth/templates/base.html:207
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
+#: plinth/templates/base.html:204 plinth/templates/base.html:206
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: plinth/templates/base.html:189 plinth/templates/base.html:192
+#: plinth/templates/base.html:188 plinth/templates/base.html:191
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: plinth/templates/base.html:197 plinth/templates/base.html:199
+#: plinth/templates/base.html:196 plinth/templates/base.html:198
 msgid "Log in"
 msgstr "Přihlásit"
 
@@ -7339,17 +7407,41 @@ msgstr "Spustit webového klienta"
 msgid "Client Apps"
 msgstr "Klientské aplikace"
 
-#: plinth/views.py:189
+#: plinth/views.py:182
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
-#: plinth/views.py:192
+#: plinth/views.py:185
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#, fuzzy
+#~| msgid "Custom Services"
+#~ msgid "Custom Section"
+#~ msgstr "Uživatelem určené služby"
+
+#~ msgid "Proxies"
+#~ msgstr "Proxy servery"
+
+#~ msgid "Anonymous torrents"
+#~ msgstr "Anonymní torenty"
+
+#, fuzzy
+#~| msgid "Tor configuration is being updated"
+#~ msgid "Router configuration type saved."
+#~ msgstr "Nastavení Tor jsou aktualizována"
+
+#, fuzzy
+#~| msgid "Tor configuration is being updated"
+#~ msgid "Internet connection type saved."
+#~ msgstr "Nastavení Tor jsou aktualizována"
+
+#~ msgid "Service <em>%(service_name)s</em> is running."
+#~ msgstr "Služba <em>%(service_name)s</em> je spuštěná."
 
 #~ msgid "Physical Interface"
 #~ msgstr "Fyzické rozhraní"
@@ -7841,9 +7933,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Invalid archive name"
 #~ msgstr "Neplatný název archivu"
-
-#~ msgid "No archives currently exist."
-#~ msgstr "V tuto chvíli neexistují žádné archivy."
 
 #~ msgid "Upload backup"
 #~ msgstr "Nahrát zálohu"

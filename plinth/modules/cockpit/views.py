@@ -8,7 +8,6 @@ from plinth.views import AppView
 
 class CockpitAppView(AppView):
     app_id = 'cockpit'
-    show_status_block = True
     template_name = 'cockpit.html'
 
     def get_context_data(self, *args, **kwargs):

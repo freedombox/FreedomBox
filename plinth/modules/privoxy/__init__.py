@@ -13,7 +13,6 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
-from plinth.views import AppView
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -102,10 +101,6 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
     helper.install(managed_packages)
     helper.call('post', app.enable)
-
-
-class PrivoxyAppView(AppView):
-    app_id = 'privoxy'
 
 
 def diagnose_url_with_proxy():

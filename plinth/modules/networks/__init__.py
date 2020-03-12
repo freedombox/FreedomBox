@@ -20,13 +20,18 @@ managed_packages = ['network-manager', 'batctl']
 
 first_boot_steps = [
     {
-        'id': 'internet_connectivity_type_wizard',
-        'url': 'networks:firstboot_internet_connection_type',
-        'order': 3,
+        'id': 'network_topology_wizard',
+        'url': 'networks:network-topology-first-boot',
+        'order': 2,
     },
     {
         'id': 'router_setup_wizard',
-        'url': 'networks:firstboot_router_setup',
+        'url': 'networks:router-configuration-first-boot',
+        'order': 3,
+    },
+    {
+        'id': 'internet_connectivity_type_wizard',
+        'url': 'networks:internet-connection-type-first-boot',
         'order': 4,
     },
 ]
@@ -42,6 +47,7 @@ logger = Logger(__name__)
 
 app = None
 
+NETWORK_TOPOLOGY_TYPE_KEY = 'networks_topology_type'
 ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
 INTERNET_CONNECTION_TYPE_KEY = 'networks_internet_type'
 

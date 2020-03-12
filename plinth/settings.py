@@ -67,6 +67,9 @@ CAPTCHA_FLITE_PATH = '/usr/bin/flite'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        'OPTIONS': {
+            'timeout': 30
+        },
         # Overridden based on the configuration key store_file
         'NAME': '/var/lib/plinth/plinth.sqlite3'
     }

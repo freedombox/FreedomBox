@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 19:12-0500\n"
-"PO-Revision-Date: 2020-02-24 21:32+0000\n"
+"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"PO-Revision-Date: 2020-03-08 17:32+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -18,14 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.0-dev\n"
-
-#: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:23
-msgid "Custom Section"
-msgstr "Anpassat avsnitt"
-
-#: doc/dev/_build/html/_sources/tutorial/customizing.rst.txt:26
-msgid "Custom paragraph content."
-msgstr "Anpassat styckeinnehåll."
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -123,7 +115,7 @@ msgstr "Ansluter till adress {url} on tcp{kind}"
 msgid "Access URL {url}"
 msgstr "Ansluter till adress {url}"
 
-#: plinth/modules/avahi/__init__.py:33
+#: plinth/modules/avahi/__init__.py:32
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -140,11 +132,11 @@ msgstr ""
 "nätverk. Du kan låta den vara inaktiverad för att förbättra din säkerhet, "
 "särskilt om du ansluter till ett osäkert lokalt nätverk."
 
-#: plinth/modules/avahi/__init__.py:57
+#: plinth/modules/avahi/__init__.py:56
 msgid "Service Discovery"
 msgstr "Identifiera tjänster"
 
-#: plinth/modules/avahi/__init__.py:67
+#: plinth/modules/avahi/__init__.py:66
 msgid "Local Network Domain"
 msgstr "Lokalt nätverksdomän"
 
@@ -371,7 +363,7 @@ msgid "Create Location"
 msgstr "Skapa plats"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:19
-#: plinth/modules/gitweb/views.py:50
+#: plinth/modules/gitweb/views.py:49
 msgid "Create Repository"
 msgstr "Skapa respository"
 
@@ -398,11 +390,52 @@ msgstr "Ta bort arkiv %(name)s"
 #: plinth/modules/backups/templates/backups_form.html:20
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:20
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
+#: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "Sänd"
+
+#: plinth/modules/backups/templates/backups_repository.html:19
+#, fuzzy
+#| msgid "Existing repository is not encrypted."
+msgid "This repository is encrypted"
+msgstr "Befintlig respository är inte krypterad."
+
+#: plinth/modules/backups/templates/backups_repository.html:34
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Unmount Location"
+msgstr "Ta bort plats"
+
+#: plinth/modules/backups/templates/backups_repository.html:45
+#, fuzzy
+#| msgid "Mount Point"
+msgid "Mount Location"
+msgstr "Monteringspunkt"
+
+#: plinth/modules/backups/templates/backups_repository.html:56
+msgid "Remove Backup Location. This will not delete the remote backup."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository.html:77
+#, fuzzy
+#| msgid "downloading"
+msgid "Download"
+msgstr "ladda ner"
+
+#: plinth/modules/backups/templates/backups_repository.html:81
+#: plinth/modules/backups/templates/backups_restore.html:28
+#: plinth/modules/backups/views.py:154
+msgid "Restore"
+msgstr "Återställa"
+
+#: plinth/modules/backups/templates/backups_repository.html:103
+#, fuzzy
+#| msgid "No shares currently configured."
+msgid "No archives currently exist."
+msgstr "Inga shares har konfigurerats."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
@@ -423,11 +456,6 @@ msgstr "Ta bort plats"
 #: plinth/modules/backups/templates/backups_restore.html:15
 msgid "Restore data from"
 msgstr "Återställa data från"
-
-#: plinth/modules/backups/templates/backups_restore.html:28
-#: plinth/modules/backups/views.py:154
-msgid "Restore"
-msgstr "Återställa"
 
 #: plinth/modules/backups/templates/backups_restore.html:32
 msgid "Restoring"
@@ -643,10 +671,8 @@ msgid "Enable Domain Name System Security Extensions"
 msgstr "Aktivera Domain Name System Security Extensions"
 
 #: plinth/modules/bind/templates/bind.html:11
-#, fuzzy
-#| msgid "Server domain"
 msgid "Serving Domains"
-msgstr "Server-domän"
+msgstr "Betjäna domäner"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
@@ -656,32 +682,26 @@ msgid "Type"
 msgstr "Typ"
 
 #: plinth/modules/bind/templates/bind.html:17
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Names"
 msgstr "Domännamn"
 
 #: plinth/modules/bind/templates/bind.html:18
-#, fuzzy
-#| msgid "Service"
 msgid "Serving"
-msgstr "Tjänst"
+msgstr "Servering"
 
 #: plinth/modules/bind/templates/bind.html:19
-#, fuzzy
-#| msgid "IP address"
 msgid "IP addresses"
-msgstr "IP-adress"
+msgstr "IP-adresser"
 
 #: plinth/modules/bind/templates/bind.html:35
 #: plinth/modules/bind/templates/bind.html:37
 msgid "Refresh IP address and domains"
-msgstr ""
+msgstr "Uppdatera IP-adress och domäner"
 
-#: plinth/modules/bind/views.py:73 plinth/modules/deluge/views.py:46
-#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:134
+#: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
+#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:52
+#: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Konfiguration uppdaterad"
 
@@ -744,7 +764,7 @@ msgid "General Configuration"
 msgstr "Allmän Konfiguration"
 
 #: plinth/modules/config/__init__.py:55 plinth/modules/dynamicdns/views.py:29
-#: plinth/modules/i2p/views.py:16 plinth/modules/names/templates/names.html:29
+#: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:26
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
@@ -834,43 +854,43 @@ msgstr "Visa avancerade appar och funktioner"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Visa appar och funktioner som kräver mer teknisk kunskap."
 
-#: plinth/modules/config/views.py:47
+#: plinth/modules/config/views.py:46
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Fel inställning av värdnamn: {exception}"
 
-#: plinth/modules/config/views.py:50
+#: plinth/modules/config/views.py:49
 msgid "Hostname set"
 msgstr "Värdnamn inställt"
 
-#: plinth/modules/config/views.py:59
+#: plinth/modules/config/views.py:58
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Fel inställning av domännamn: {exception}"
 
-#: plinth/modules/config/views.py:62
+#: plinth/modules/config/views.py:61
 msgid "Domain name set"
 msgstr "Domännamn inställt"
 
-#: plinth/modules/config/views.py:70
+#: plinth/modules/config/views.py:69
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Fel vid inställning av webbserverns hemsida: {exception}"
 
-#: plinth/modules/config/views.py:73
+#: plinth/modules/config/views.py:72
 msgid "Webserver home page set"
 msgstr "Webbserverns hemsida är inställt"
 
-#: plinth/modules/config/views.py:81
+#: plinth/modules/config/views.py:80
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Fel vid ändring av avancerat läge: {exception}"
 
-#: plinth/modules/config/views.py:86
+#: plinth/modules/config/views.py:85
 msgid "Showing advanced apps and features"
 msgstr "Visar avancerade appar och funktioner"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:88
 msgid "Hiding advanced apps and features"
 msgstr "Dölja avancerade appar och funktioner"
 
@@ -929,19 +949,19 @@ msgstr ""
 msgid "coquelicot"
 msgstr "Coquelicot"
 
-#: plinth/modules/coquelicot/views.py:37
+#: plinth/modules/coquelicot/views.py:36
 msgid "Upload password updated"
 msgstr "Ladda upp lösenordet uppdaterat"
 
-#: plinth/modules/coquelicot/views.py:40
+#: plinth/modules/coquelicot/views.py:39
 msgid "Failed to update upload password"
 msgstr "Det gick inte att uppdatera uppladdningslösenordet"
 
-#: plinth/modules/coquelicot/views.py:48
+#: plinth/modules/coquelicot/views.py:47
 msgid "Maximum file size updated"
 msgstr "Maximal filstorlek uppdaterad"
 
-#: plinth/modules/coquelicot/views.py:51
+#: plinth/modules/coquelicot/views.py:50
 msgid "Failed to update maximum file size"
 msgstr "Det gick inte att uppdatera den maximala filstorleken"
 
@@ -1022,7 +1042,7 @@ msgstr "Ladda ner katalog"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Bittorrent-klient skriven i Python / PyGTK"
 
-#: plinth/modules/diagnostics/__init__.py:19
+#: plinth/modules/diagnostics/__init__.py:24
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1030,13 +1050,9 @@ msgstr ""
 "Systemets diagnostiktest utför ett antal kontroller av ditt system för att "
 "bekräfta att program och tjänster fungerar som de ska."
 
-#: plinth/modules/diagnostics/__init__.py:37
+#: plinth/modules/diagnostics/__init__.py:48
 msgid "Diagnostics"
 msgstr "Diagnostik"
-
-#: plinth/modules/diagnostics/diagnostics.py:48
-msgid "Diagnostic Test"
-msgstr "Diagnostiktest"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:28
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
@@ -1073,6 +1089,10 @@ msgstr "Test"
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Result"
 msgstr "Resultat"
+
+#: plinth/modules/diagnostics/views.py:37
+msgid "Diagnostic Test"
+msgstr "Diagnostiktest"
 
 #: plinth/modules/diaspora/__init__.py:45
 msgid ""
@@ -1126,20 +1146,19 @@ msgstr ""
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:43
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
 #: plinth/modules/ejabberd/templates/ejabberd.html:43
-#: plinth/modules/i2p/templates/i2p.html:19
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
 #: plinth/modules/snapshot/templates/snapshot.html:15
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:35
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:43
-#: plinth/templates/app.html:62
+#: plinth/templates/app.html:52
 msgid "Update setup"
 msgstr "Uppdatera inställningar"
 
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
-#: plinth/modules/mediawiki/views.py:59 plinth/modules/openvpn/views.py:136
-#: plinth/modules/tor/views.py:137 plinth/views.py:185
+#: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
+#: plinth/modules/tor/views.py:136 plinth/views.py:178
 msgid "Setting unchanged"
 msgstr "Instänllningar oförändrade"
 
@@ -1400,7 +1419,6 @@ msgstr "Om"
 #: plinth/modules/tor/templates/tor.html:36
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
-#: plinth/templates/app.html:27
 msgid "Status"
 msgstr "Status"
 
@@ -1516,11 +1534,10 @@ msgstr ""
 "din domän på systemet <a href=\"%(index_url)s\">Konfigurera</a> sidan."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:35
-#: plinth/modules/i2p/templates/i2p.html:11
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:27
-#: plinth/templates/app.html:55
+#: plinth/templates/app.html:45
 msgid "Configuration"
 msgstr "Konfiguration"
 
@@ -1794,33 +1811,33 @@ msgstr "Radera detta arkiv permanent?"
 msgid "Delete %(name)s"
 msgstr "Ta bort %(name)s"
 
-#: plinth/modules/gitweb/views.py:45
+#: plinth/modules/gitweb/views.py:44
 msgid "Repository created."
 msgstr "Respository skapat."
 
-#: plinth/modules/gitweb/views.py:67
+#: plinth/modules/gitweb/views.py:66
 msgid "An error occurred while creating the repository."
 msgstr "Ett fel uppstod medan skapa ett repository."
 
-#: plinth/modules/gitweb/views.py:80
+#: plinth/modules/gitweb/views.py:79
 msgid "Repository edited."
 msgstr "Respository redigerad."
 
-#: plinth/modules/gitweb/views.py:85
+#: plinth/modules/gitweb/views.py:84
 msgid "Edit repository"
 msgstr "Redigera respository"
 
-#: plinth/modules/gitweb/views.py:113 plinth/modules/searx/views.py:42
-#: plinth/modules/searx/views.py:53 plinth/modules/tor/views.py:159
+#: plinth/modules/gitweb/views.py:112 plinth/modules/searx/views.py:41
+#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:158
 msgid "An error occurred during configuration."
 msgstr "Ett fel inträffade under konfiguration."
 
-#: plinth/modules/gitweb/views.py:134
+#: plinth/modules/gitweb/views.py:133
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} borttagen."
 
-#: plinth/modules/gitweb/views.py:138
+#: plinth/modules/gitweb/views.py:137
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Kunde inte ta bort {name}: {error}"
@@ -1835,37 +1852,26 @@ msgstr "Dokumentation"
 msgid "Manual"
 msgstr "Manual"
 
-#: plinth/modules/help/__init__.py:37 plinth/modules/help/help.py:43
+#: plinth/modules/help/__init__.py:37
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/templates/help-menu.html:27 plinth/templates/help-menu.html:28
+#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
+#: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Få stöd"
 
-#: plinth/modules/help/__init__.py:41 plinth/modules/help/help.py:37
+#: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/templates/help-menu.html:33 plinth/templates/help-menu.html:34
+#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
+#: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Skicka feedback"
 
-#: plinth/modules/help/__init__.py:45 plinth/modules/help/help.py:31
+#: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/templates/help-menu.html:39 plinth/templates/help-menu.html:40
+#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
+#: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Bidra"
-
-#: plinth/modules/help/help.py:25
-msgid "Documentation and FAQ"
-msgstr "Dokumentation och Vanliga Frågor"
-
-#: plinth/modules/help/help.py:51
-#, python-brace-format
-msgid "About {box_name}"
-msgstr "Om {box_name}"
-
-#: plinth/modules/help/help.py:86
-#, python-brace-format
-msgid "{box_name} Manual"
-msgstr "{box_name} Manual"
 
 #: plinth/modules/help/templates/help_about.html:17
 #, python-format
@@ -2148,6 +2154,20 @@ msgstr ""
 "Ta bort lösenord eller annan personlig information från loggen innan du "
 "skickar felrapporten."
 
+#: plinth/modules/help/views.py:25
+msgid "Documentation and FAQ"
+msgstr "Dokumentation och Vanliga Frågor"
+
+#: plinth/modules/help/views.py:51
+#, python-brace-format
+msgid "About {box_name}"
+msgstr "Om {box_name}"
+
+#: plinth/modules/help/views.py:86
+#, python-brace-format
+msgid "{box_name} Manual"
+msgstr "{box_name} Manual"
+
 #: plinth/modules/i2p/__init__.py:28
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
@@ -2192,24 +2212,20 @@ msgstr "Anonymitetsnätverk"
 msgid "I2P Proxy"
 msgstr "I2P proxy"
 
-#: plinth/modules/i2p/templates/i2p_service.html:16
-#: plinth/templates/clients.html:28
-msgid "Launch"
-msgstr "Lansera"
-
-#: plinth/modules/i2p/views.py:19
-msgid "Proxies"
-msgstr "Proxyservrar"
-
-#: plinth/modules/i2p/views.py:22
-msgid "Anonymous torrents"
-msgstr "Anonyma torrenter"
-
-#: plinth/modules/i2p/views.py:64
+#: plinth/modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
 msgstr "I2P Proxies och tunnlar"
 
-#: plinth/modules/i2p/views.py:67
+#: plinth/modules/i2p/templates/i2p.html:21
+#: plinth/modules/i2p/templates/i2p.html:34 plinth/templates/clients.html:28
+msgid "Launch"
+msgstr "Lansera"
+
+#: plinth/modules/i2p/templates/i2p.html:25
+msgid "Anonymous Torrents"
+msgstr "Anonyma torrenter"
+
+#: plinth/modules/i2p/views.py:16
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
 "For this, your browser, preferably a Tor Browser, needs to be configured for "
@@ -2219,7 +2235,7 @@ msgstr ""
 "detta måste din webbläsare, helst en Tor-webbläsare, konfigureras för en "
 "proxy."
 
-#: plinth/modules/i2p/views.py:70
+#: plinth/modules/i2p/views.py:19
 msgid ""
 "By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
 "tunnels may be configured using the tunnel configuration interface."
@@ -2227,11 +2243,7 @@ msgstr ""
 "Som standard är HTTP-, HTTPS- och IRC-proxyer tillgängliga. Ytterligare "
 "proxyer och tunnlar kan konfigureras med tunnel-konfigurations-gränssnittet."
 
-#: plinth/modules/i2p/views.py:79
-msgid "Anonymous Torrents"
-msgstr "Anonyma torrenter"
-
-#: plinth/modules/i2p/views.py:82
+#: plinth/modules/i2p/views.py:24
 msgid ""
 "I2P provides an application to download files anonymously in a peer-to-peer "
 "network. Download files by adding torrents or create a new torrent to share "
@@ -2321,41 +2333,41 @@ msgstr ""
 "Den här åtgärden tar bort alla inlägg, sidor och kommentarer, även "
 "versionshistorik.  Ta bort denna wiki eller blogg permanent?"
 
-#: plinth/modules/ikiwiki/views.py:73
+#: plinth/modules/ikiwiki/views.py:72
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "Skapade wiki {name}."
 
-#: plinth/modules/ikiwiki/views.py:76
+#: plinth/modules/ikiwiki/views.py:75
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Kunde inte skapa wiki: {error}"
 
-#: plinth/modules/ikiwiki/views.py:86
+#: plinth/modules/ikiwiki/views.py:85
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "Blogg skapad {name}."
 
-#: plinth/modules/ikiwiki/views.py:89
+#: plinth/modules/ikiwiki/views.py:88
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Kunde inte skapa blogg: {error}"
 
-#: plinth/modules/ikiwiki/views.py:104
+#: plinth/modules/ikiwiki/views.py:103
 #, python-brace-format
 msgid "{title} deleted."
 msgstr "{title} borttagen."
 
-#: plinth/modules/ikiwiki/views.py:108
+#: plinth/modules/ikiwiki/views.py:107
 #, python-brace-format
 msgid "Could not delete {title}: {error}"
 msgstr "Kunde inte ta bort {title}: {error}"
 
-#: plinth/modules/infinoted/__init__.py:26
+#: plinth/modules/infinoted/__init__.py:25
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "infinoted är en server för Gobby, en kollaborativ textredigerare."
 
-#: plinth/modules/infinoted/__init__.py:28
+#: plinth/modules/infinoted/__init__.py:27
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -2366,11 +2378,11 @@ msgstr ""
 "</a>, desktop client och installera det. Starta sedan Gobby och välj "
 "\"Anslut till server\" och ange ditt {box_name} domännamn."
 
-#: plinth/modules/infinoted/__init__.py:48
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted"
 msgstr "Infinoted"
 
-#: plinth/modules/infinoted/__init__.py:49
+#: plinth/modules/infinoted/__init__.py:48
 msgid "Gobby Server"
 msgstr "Gobby-Server"
 
@@ -2408,7 +2420,7 @@ msgid "Chat Client"
 msgstr "Chat klient"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:125
-#: plinth/templates/base.html:238
+#: plinth/templates/base.html:237
 msgid "JavaScript license information"
 msgstr "JavaScript-licensinformation"
 
@@ -2769,27 +2781,27 @@ msgstr ""
 "Välj ett standardskal för din MediaWiki-installation. Användare har "
 "möjlighet att välja önskad utseendet."
 
-#: plinth/modules/mediawiki/views.py:54
+#: plinth/modules/mediawiki/views.py:53
 msgid "Password updated"
 msgstr "Lösenord uppdaterad"
 
-#: plinth/modules/mediawiki/views.py:73
+#: plinth/modules/mediawiki/views.py:72
 msgid "Public registrations enabled"
 msgstr "Offentliga registreringar aktiverade"
 
-#: plinth/modules/mediawiki/views.py:82
+#: plinth/modules/mediawiki/views.py:81
 msgid "Public registrations disabled"
 msgstr "Offentliga registreringar avaktiverad"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:86
 msgid "Private mode enabled"
 msgstr "Privat läge aktiverat"
 
-#: plinth/modules/mediawiki/views.py:94
+#: plinth/modules/mediawiki/views.py:93
 msgid "Private mode disabled"
 msgstr "Privat läge inaktiverat"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:101
 msgid "Default skin changed"
 msgstr "Standardskal ändrat"
 
@@ -2866,19 +2878,19 @@ msgstr "Adress"
 msgid "Port"
 msgstr "Port"
 
-#: plinth/modules/minetest/views.py:50
+#: plinth/modules/minetest/views.py:49
 msgid "Maximum players configuration updated"
 msgstr "Maximal spelarkonfiguration uppdaterad"
 
-#: plinth/modules/minetest/views.py:57
+#: plinth/modules/minetest/views.py:56
 msgid "Creative mode configuration updated"
 msgstr "Kreativ-modus konfiguration uppdaterad"
 
-#: plinth/modules/minetest/views.py:63
+#: plinth/modules/minetest/views.py:62
 msgid "PVP configuration updated"
 msgstr "PVP-konfiguration uppdaterad"
 
-#: plinth/modules/minetest/views.py:69
+#: plinth/modules/minetest/views.py:68
 msgid "Damage configuration updated"
 msgstr "Skadekonfiguration uppdaterad"
 
@@ -3240,7 +3252,7 @@ msgstr "Alla"
 msgid "All web apps"
 msgstr "Alla webbappar"
 
-#: plinth/modules/networks/__init__.py:35
+#: plinth/modules/networks/__init__.py:40
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3248,7 +3260,7 @@ msgstr ""
 "Konfigurera nätverksenheter. Anslut till Internet via Ethernet, Wi-Fi eller "
 "PPPoE. Dela den anslutningen med andra enheter i nätverket."
 
-#: plinth/modules/networks/__init__.py:37
+#: plinth/modules/networks/__init__.py:42
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -3256,11 +3268,11 @@ msgstr ""
 "Enheter som administreras via andra metoder kanske inte är tillgängliga för "
 "konfiguration här."
 
-#: plinth/modules/networks/__init__.py:58
+#: plinth/modules/networks/__init__.py:64
 msgid "Networks"
 msgstr "Nätverk"
 
-#: plinth/modules/networks/__init__.py:151
+#: plinth/modules/networks/__init__.py:157
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "Använder DNSSEC på IPv{kind}"
@@ -3514,10 +3526,46 @@ msgid "Open"
 msgstr "Öppet"
 
 #: plinth/modules/networks/forms.py:297
-msgid "Choose your internet connection type"
+#, fuzzy, python-brace-format
+#| msgid "Use upstream bridges to connect to Tor network"
+msgid "Choose how your {box_name} is connected to your network"
+msgstr "Använda uppströms broar för att ansluta till Tor-nätverket"
+
+#: plinth/modules/networks/forms.py:304
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Your %(box_name)s gets its internet connection from your router via Wi-Fi "
+#| "or Ethernet cable. This is a typical home setup."
+msgid ""
+"Connected to a router <p class=\"help-block\">Your {box_name} gets its "
+"Internet connection from your router via Wi-Fi or Ethernet cable. This is a "
+"typical home setup.</p>"
+msgstr ""
+"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
+"Ethernet-kabel. Detta är en typisk hem inställning."
+
+#: plinth/modules/networks/forms.py:311
+#, python-brace-format
+msgid ""
+"{box_name} is your router <p class=\"help-block\">Your {box_name} has "
+"multiple network interfaces such as multiple Ethernet ports or a Wi-Fi "
+"adapter. {box_name} is directly connected to the Internet and all your "
+"devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:301
+#: plinth/modules/networks/forms.py:320
+#, python-brace-format
+msgid ""
+"Directly connected to the Internet <p class=\"help-block\">Your Internet "
+"connection is directly attached to your {box_name} and there are no other "
+"devices on the network. This can happen on community or cloud setups.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:339
+msgid "Choose your internet connection type"
+msgstr "Välj din internetanslutningstyp"
+
+#: plinth/modules/networks/forms.py:343
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-block"
 "\">This means that devices on the Internet can reach you when you are "
@@ -3527,8 +3575,15 @@ msgid ""
 "connectivity. If you have a public IP address but are unsure if it changes "
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
+"Jag har en offentlig IP-adress som kan ändras med tiden<p class=\"help-block"
+"\">Det innebär att enheter på Internet kan nå dig när du är ansluten till "
+"Internet. Varje gång du ansluter till Internet med Internet-leverantören kan "
+"du få en annan IP-adress, särskilt efter lite offlinetid. Många "
+"Internetleverantörer erbjuder den här typen av anslutning. Om du har en "
+"offentlig IP-adress men är osäker på om den ändras med tiden eller inte, är "
+"det säkrare att välja det här alternativet.</p>"
 
-#: plinth/modules/networks/forms.py:313
+#: plinth/modules/networks/forms.py:355
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change overtime (recommended)<p "
@@ -3539,8 +3594,15 @@ msgid ""
 "but very few ISPs offer this. You may be able to get this service from your "
 "ISP by making an additional payment.</p>"
 msgstr ""
+"Jag har en offentlig IP-adress som inte ändrar övertid (rekommenderas)<p "
+"class=\"help-block\">Det innebär att enheter på Internet kan nå dig när du "
+"är ansluten till Internet. Varje gång du ansluter till Internet med Internet-"
+"leverantören får du alltid samma IP-adress. Detta är den mest problemfria "
+"installationen för många {box_name} tjänster men mycket få "
+"Internetleverantörer erbjuder detta. Du kanske kan få den här tjänsten från "
+"internetleverantören genom att göra en extra betalning.</p>"
 
-#: plinth/modules/networks/forms.py:326
+#: plinth/modules/networks/forms.py:368
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -3551,20 +3613,26 @@ msgid ""
 "troublesome situation for hosting services at home. {box_name} provides many "
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
+"Jag har ingen offentlig IP-adress<p class=\"help-block\">Det innebär att "
+"enheter på Internet <b> inte kan</b> nå dig när du är ansluten till "
+"Internet. Varje gång du ansluter till Internet med Internet-leverantören får "
+"du en IP-adress som endast är relevant för lokala nätverk. Många "
+"Internetleverantörer erbjuder den här typen av anslutning. Detta är den mest "
+"besvärliga situationen för hosting tjänster hemma. {box_name} innehåller "
+"många lösningar men varje lösning har vissa begränsningar.</p>"
 
-#: plinth/modules/networks/forms.py:351
+#: plinth/modules/networks/forms.py:381
+msgid ""
+"I do not know the type of connection my ISP provides <p class=\"help-block"
+"\">You will be suggested the most conservative actions.</p>"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:398
 msgid "Preferred router configuration"
 msgstr "Önskad routerkonfiguration"
 
-#: plinth/modules/networks/forms.py:356
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Use DMZ feature to forward all traffic<p class=\"help-block\">Most "
-#| "routers provide a configuration setting called DMZ. This will allow the "
-#| "router to forward all incoming traffic from the internet to a single IP "
-#| "address such as the {box_name}'s address. First remember to configure a "
-#| "static local IP address for your {box_name} in your router's "
-#| "configuration.</p>"
+#: plinth/modules/networks/forms.py:403
+#, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
 "\">Most routers provide a configuration setting called DMZ. This will allow "
@@ -3578,9 +3646,9 @@ msgstr ""
 "DMZ. Detta gör det möjligt för routern att vidarebefordra all inkommande "
 "trafik från Internet till en enda IP-adress, till exempel {box_name}-"
 "adressen. Kom först ihåg att konfigurera en statisk lokal IP-adress för din "
-"{box_name} i routerns configuration.</p>"
+"{box_name} i routerns konfiguration.</p>"
 
-#: plinth/modules/networks/forms.py:368
+#: plinth/modules/networks/forms.py:415
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Forward Specific Traffic as needed by each application<p class=\"help-"
@@ -3609,7 +3677,7 @@ msgstr ""
 "ansökningarna kommer att föreslå vilka portar som måste vidarebefordras för "
 "att programmet ska fungera.</p>"
 
-#: plinth/modules/networks/forms.py:382
+#: plinth/modules/networks/forms.py:429
 #, fuzzy
 #| msgid ""
 #| "Router is currently unconfigured<p class=\"help-block\">Choose this if "
@@ -3626,111 +3694,6 @@ msgstr ""
 "och vill bli påmind senare. Vissa av de andra konfigurationsstegen kan "
 "misslyckas.</p>"
 
-#: plinth/modules/networks/networks.py:32
-msgid "Network Connections"
-msgstr "Nätverksanslutningar"
-
-#: plinth/modules/networks/networks.py:46
-msgid "Cannot show connection: Connection not found."
-msgstr "Kan inte visa anslutning: Ingen anslutning hittades."
-
-#: plinth/modules/networks/networks.py:81
-msgid "Connection Information"
-msgstr "Anslutningsinformation"
-
-#: plinth/modules/networks/networks.py:95
-msgid "Cannot edit connection: Connection not found."
-msgstr "Kan inte redigera anslutning: Ingen anslutning hittades."
-
-#: plinth/modules/networks/networks.py:101
-msgid "This type of connection is not yet understood."
-msgstr "Denna typ av anslutning är inte förstådd ännu."
-
-#: plinth/modules/networks/networks.py:123
-#: plinth/modules/networks/networks.py:207
-#: plinth/modules/networks/templates/connections_edit.html:20
-msgid "Edit Connection"
-msgstr "Redigera Anslutning"
-
-#: plinth/modules/networks/networks.py:219
-#, python-brace-format
-msgid "Activated connection {name}."
-msgstr "Aktiverad anslutning {name}."
-
-#: plinth/modules/networks/networks.py:223
-msgid "Failed to activate connection: Connection not found."
-msgstr "Det gick inte att aktivera anslutning: Ingen anslutning hittades."
-
-#: plinth/modules/networks/networks.py:229
-#, python-brace-format
-msgid "Failed to activate connection {name}: No suitable device is available."
-msgstr ""
-"Det gick inte att aktivera anslutningen {name}: Ingen lämplig enhet är "
-"tillgänglig."
-
-#: plinth/modules/networks/networks.py:242
-#, python-brace-format
-msgid "Deactivated connection {name}."
-msgstr "Inaktiverade anslutning {name}."
-
-#: plinth/modules/networks/networks.py:246
-msgid "Failed to de-activate connection: Connection not found."
-msgstr "Kunde inte de-aktivera anslutning: Anslutning hittades inte."
-
-#: plinth/modules/networks/networks.py:256
-#: plinth/modules/networks/templates/connections_list.html:12
-#: plinth/modules/networks/templates/connections_list.html:14
-msgid "Nearby Wi-Fi Networks"
-msgstr "Wi-Fi-nätverk i närheten"
-
-#: plinth/modules/networks/networks.py:280
-#: plinth/modules/networks/templates/connections_list.html:17
-#: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/wireguard/templates/wireguard_add_server.html:19
-msgid "Add Connection"
-msgstr "Lägg till Anslutning"
-
-#: plinth/modules/networks/networks.py:298
-msgid "Adding New Generic Connection"
-msgstr "Lägga till ny generiska anslutning"
-
-#: plinth/modules/networks/networks.py:316
-msgid "Adding New Ethernet Connection"
-msgstr "Lägg Till Ny Ethernet-Anslutning"
-
-#: plinth/modules/networks/networks.py:334
-msgid "Adding New PPPoE Connection"
-msgstr "Lägg Till Ny PPPoE-Anslutning"
-
-#: plinth/modules/networks/networks.py:369
-msgid "Adding New Wi-Fi Connection"
-msgstr "Lägg Till Ny Wi-Fi-Anslutning"
-
-#: plinth/modules/networks/networks.py:384
-#, python-brace-format
-msgid "Connection {name} deleted."
-msgstr "Anslutning {name} borttagen."
-
-#: plinth/modules/networks/networks.py:388
-#: plinth/modules/networks/networks.py:398
-msgid "Failed to delete connection: Connection not found."
-msgstr "Det gick inte att ta bort anslutning: Anslutning hittades inte."
-
-#: plinth/modules/networks/networks.py:403
-#: plinth/modules/networks/templates/connections_delete.html:11
-msgid "Delete Connection"
-msgstr "Ta Bort Anslutning"
-
-#: plinth/modules/networks/networks.py:428
-msgid "Router configuration type saved."
-msgstr "Routerkonfigurationstyp sparade."
-
-#: plinth/modules/networks/networks.py:474
-#, fuzzy
-#| msgid "Router configuration type saved."
-msgid "Internet connection type saved."
-msgstr "Routerkonfigurationstyp sparade."
-
 #: plinth/modules/networks/templates/connection_show.html:28
 msgid "Edit connection"
 msgstr "Redigera anslutning"
@@ -3738,7 +3701,7 @@ msgstr "Redigera anslutning"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:152 plinth/templates/base.html:153
+#: plinth/templates/base.html:151 plinth/templates/base.html:152
 msgid "Edit"
 msgstr "Redigera"
 
@@ -3920,6 +3883,11 @@ msgstr ""
 msgid "Create Connection"
 msgstr "Skapa anslutning"
 
+#: plinth/modules/networks/templates/connections_delete.html:11
+#: plinth/modules/networks/views.py:408
+msgid "Delete Connection"
+msgstr "Ta Bort Anslutning"
+
 #: plinth/modules/networks/templates/connections_delete.html:14
 #, python-format
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
@@ -3960,9 +3928,27 @@ msgstr "Visa anslutning %(name)s"
 msgid "Computer"
 msgstr "Dator"
 
+#: plinth/modules/networks/templates/connections_edit.html:20
+#: plinth/modules/networks/views.py:128 plinth/modules/networks/views.py:212
+msgid "Edit Connection"
+msgstr "Redigera Anslutning"
+
 #: plinth/modules/networks/templates/connections_list.html:8
 msgid "Connections"
 msgstr "Anslutningar"
+
+#: plinth/modules/networks/templates/connections_list.html:12
+#: plinth/modules/networks/templates/connections_list.html:14
+#: plinth/modules/networks/views.py:261
+msgid "Nearby Wi-Fi Networks"
+msgstr "Wi-Fi-nätverk i närheten"
+
+#: plinth/modules/networks/templates/connections_list.html:17
+#: plinth/modules/networks/templates/connections_list.html:19
+#: plinth/modules/networks/views.py:285
+#: plinth/modules/wireguard/templates/wireguard_add_server.html:19
+msgid "Add Connection"
+msgstr "Lägg till Anslutning"
 
 #: plinth/modules/networks/templates/connections_list.html:29
 #, python-format
@@ -3999,15 +3985,17 @@ msgstr ""
 "här informationen används bara för att föreslå nödvändiga "
 "konfigurationsåtgärder."
 
-#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:18
-#: plinth/modules/networks/templates/router_configuration_firstboot.html:18
+#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
+#: plinth/modules/networks/templates/network_topology_firstboot.html:19
+#: plinth/modules/networks/templates/router_configuration_firstboot.html:19
 #, fuzzy
 #| msgid "skip this step"
 msgid "Skip this step"
 msgstr "hoppa över det här steget"
 
-#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
-#: plinth/modules/networks/templates/router_configuration_firstboot.html:19
+#: plinth/modules/networks/templates/internet_connectivity_firstboot.html:21
+#: plinth/modules/networks/templates/network_topology_firstboot.html:21
+#: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 msgid "Next"
 msgstr "Nästa"
 
@@ -4044,10 +4032,77 @@ msgstr ""
 msgid "My ISP does not provide a public IP address."
 msgstr ""
 
-#: plinth/modules/networks/templates/internet_connectivity_main.html:37
-#: plinth/modules/networks/templates/router_configuration_main.html:29
+#: plinth/modules/networks/templates/internet_connectivity_main.html:35
+msgid "I do not know the type of connection my ISP provides."
+msgstr ""
+
+#: plinth/modules/networks/templates/internet_connectivity_main.html:41
+#: plinth/modules/networks/templates/network_topology_main.html:41
 msgid "Update..."
 msgstr "Uppdatering..."
+
+#: plinth/modules/networks/templates/network_topology_content.html:10
+#, fuzzy, python-format
+#| msgid "Direct connection to the Internet."
+msgid "How is Your %(box_name)s Connected to the Internet?"
+msgstr "Direktanslutning till Internet."
+
+#: plinth/modules/networks/templates/network_topology_content.html:16
+#, fuzzy, python-format
+#| msgid ""
+#| "The following best describes how your %(box_name)s is connected in your "
+#| "network. This information is used only to suggest necessary configuration "
+#| "actions."
+msgid ""
+"Select an option that best describes how your %(box_name)s is connected in "
+"your network. This information is used to guide you with further setup. It "
+"can be changed later."
+msgstr ""
+"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
+"här informationen används bara för att föreslå nödvändiga "
+"konfigurationsåtgärder."
+
+#: plinth/modules/networks/templates/network_topology_main.html:9
+#, python-format
+msgid "%(box_name)s Internet Connectivity"
+msgstr "%(box_name)s internet-anslutning"
+
+#: plinth/modules/networks/templates/network_topology_main.html:15
+#, python-format
+msgid ""
+"The following best describes how your %(box_name)s is connected in your "
+"network. This information is used only to suggest necessary configuration "
+"actions."
+msgstr ""
+"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
+"här informationen används bara för att föreslå nödvändiga "
+"konfigurationsåtgärder."
+
+#: plinth/modules/networks/templates/network_topology_main.html:24
+#, fuzzy, python-format
+#| msgid ""
+#| "Your %(box_name)s gets its internet connection from your router via Wi-Fi "
+#| "or Ethernet cable. This is a typical home setup."
+msgid ""
+"Your %(box_name)s gets its Internet connection from your router via Wi-Fi or "
+"Ethernet cable. This is a typical home setup."
+msgstr ""
+"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
+"Ethernet-kabel. Detta är en typisk hem inställning."
+
+#: plinth/modules/networks/templates/network_topology_main.html:29
+#, python-format
+msgid ""
+"Your %(box_name)s is directly connected to the Internet and all your devices "
+"connect to %(box_name)s for their Internet connectivity."
+msgstr ""
+
+#: plinth/modules/networks/templates/network_topology_main.html:34
+#, python-format
+msgid ""
+"Your Internet connection is directly attached to your %(box_name)s and there "
+"are no other devices on the network."
+msgstr ""
 
 #: plinth/modules/networks/templates/router_configuration_content.html:10
 #, python-format
@@ -4119,33 +4174,75 @@ msgstr ""
 "din router modellnummer och sök online för routerns manual. Detta ger "
 "fullständiga instruktioner om hur du utför den här uppgiften."
 
-#: plinth/modules/networks/templates/router_configuration_main.html:9
-#, python-format
-msgid "%(box_name)s Internet Connectivity"
-msgstr "%(box_name)s internet-anslutning"
+#: plinth/modules/networks/views.py:36
+msgid "Network Connections"
+msgstr "Nätverksanslutningar"
 
-#: plinth/modules/networks/templates/router_configuration_main.html:15
-#, python-format
-msgid ""
-"The following best describes how your %(box_name)s is connected in your "
-"network. This information is used only to suggest necessary configuration "
-"actions."
-msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+#: plinth/modules/networks/views.py:51
+msgid "Cannot show connection: Connection not found."
+msgstr "Kan inte visa anslutning: Ingen anslutning hittades."
 
-#: plinth/modules/networks/templates/router_configuration_main.html:23
-#, fuzzy, python-format
-#| msgid ""
-#| "Your %(box_name)s gets its internet from your Router via WiFi or Ethernet "
-#| "cable. This is a typical home setup."
-msgid ""
-"Your %(box_name)s gets its Internet from your Router via Wi-Fi or Ethernet "
-"cable. This is a typical home setup."
+#: plinth/modules/networks/views.py:86
+msgid "Connection Information"
+msgstr "Anslutningsinformation"
+
+#: plinth/modules/networks/views.py:100
+msgid "Cannot edit connection: Connection not found."
+msgstr "Kan inte redigera anslutning: Ingen anslutning hittades."
+
+#: plinth/modules/networks/views.py:106
+msgid "This type of connection is not yet understood."
+msgstr "Denna typ av anslutning är inte förstådd ännu."
+
+#: plinth/modules/networks/views.py:224
+#, python-brace-format
+msgid "Activated connection {name}."
+msgstr "Aktiverad anslutning {name}."
+
+#: plinth/modules/networks/views.py:228
+msgid "Failed to activate connection: Connection not found."
+msgstr "Det gick inte att aktivera anslutning: Ingen anslutning hittades."
+
+#: plinth/modules/networks/views.py:234
+#, python-brace-format
+msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
-"Dina %(box_name)s får sitt internet från routern via WiFi eller Ethernet-"
-"kabel. Detta är en typisk hem inställning."
+"Det gick inte att aktivera anslutningen {name}: Ingen lämplig enhet är "
+"tillgänglig."
+
+#: plinth/modules/networks/views.py:247
+#, python-brace-format
+msgid "Deactivated connection {name}."
+msgstr "Inaktiverade anslutning {name}."
+
+#: plinth/modules/networks/views.py:251
+msgid "Failed to de-activate connection: Connection not found."
+msgstr "Kunde inte de-aktivera anslutning: Anslutning hittades inte."
+
+#: plinth/modules/networks/views.py:303
+msgid "Adding New Generic Connection"
+msgstr "Lägga till ny generiska anslutning"
+
+#: plinth/modules/networks/views.py:321
+msgid "Adding New Ethernet Connection"
+msgstr "Lägg Till Ny Ethernet-Anslutning"
+
+#: plinth/modules/networks/views.py:339
+msgid "Adding New PPPoE Connection"
+msgstr "Lägg Till Ny PPPoE-Anslutning"
+
+#: plinth/modules/networks/views.py:374
+msgid "Adding New Wi-Fi Connection"
+msgstr "Lägg Till Ny Wi-Fi-Anslutning"
+
+#: plinth/modules/networks/views.py:389
+#, python-brace-format
+msgid "Connection {name} deleted."
+msgstr "Anslutning {name} borttagen."
+
+#: plinth/modules/networks/views.py:393 plinth/modules/networks/views.py:403
+msgid "Failed to delete connection: Connection not found."
+msgstr "Det gick inte att ta bort anslutning: Anslutning hittades inte."
 
 #: plinth/modules/openvpn/__init__.py:26
 #, python-brace-format
@@ -4248,11 +4345,11 @@ msgstr ""
 msgid "Download my profile"
 msgstr "Ladda ner min profil"
 
-#: plinth/modules/openvpn/views.py:114
+#: plinth/modules/openvpn/views.py:113
 msgid "Setup completed."
 msgstr "Installationen har slutförts."
 
-#: plinth/modules/openvpn/views.py:116
+#: plinth/modules/openvpn/views.py:115
 msgid "Setup failed."
 msgstr "Installationen misslyckades."
 
@@ -4603,7 +4700,7 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Stäng av nu"
 
-#: plinth/modules/privoxy/__init__.py:29
+#: plinth/modules/privoxy/__init__.py:28
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -4613,7 +4710,7 @@ msgstr ""
 "för att förbättra sekretessen, ändra webbsidan data och HTTP-huvuden, "
 "kontrollera åtkomst och ta bort annonser och andra avskyvärda Internet Junk. "
 
-#: plinth/modules/privoxy/__init__.py:34
+#: plinth/modules/privoxy/__init__.py:33
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -4628,15 +4725,15 @@ msgstr ""
 "\"http://config.privoxy.org\">http://config.privoxy.org/</a> eller <a href="
 "\"http://p.p\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:57
+#: plinth/modules/privoxy/__init__.py:56
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:58
+#: plinth/modules/privoxy/__init__.py:57
 msgid "Web Proxy"
 msgstr "Webbproxy"
 
-#: plinth/modules/privoxy/__init__.py:121
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Åtkomst till {url} med proxy {proxy} på TCP {kind}"
@@ -5055,8 +5152,8 @@ msgstr "Tillåt offentlig åtkomst"
 msgid "Allow this application to be used by anyone who can reach it."
 msgstr "Tillåt att det här programmet används av alla som kan nå det."
 
-#: plinth/modules/searx/views.py:39 plinth/modules/searx/views.py:50
-#: plinth/modules/tor/views.py:130 plinth/modules/tor/views.py:157
+#: plinth/modules/searx/views.py:38 plinth/modules/searx/views.py:49
+#: plinth/modules/tor/views.py:129 plinth/modules/tor/views.py:156
 msgid "Configuration updated."
 msgstr "Konfiguration uppdaterad."
 
@@ -5569,7 +5666,7 @@ msgstr "Skapade ögonblicksbild."
 msgid "Storage snapshots configuration updated"
 msgstr "Lagring ögonblicksbildkonfiguration uppdaterad"
 
-#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Åtgärdsfel: {0} [{1}] [{2}]"
@@ -5833,7 +5930,7 @@ msgstr ""
 
 #: plinth/modules/storage/templates/storage.html:87
 #: plinth/modules/storage/templates/storage_expand.html:24
-#: plinth/modules/storage/views.py:58
+#: plinth/modules/storage/views.py:57
 msgid "Expand Root Partition"
 msgstr "Utöka root-partitionen"
 
@@ -5848,25 +5945,25 @@ msgstr ""
 "åtgärden kommer %(expandable_root_size)s av ytterligare ledigt utrymme att "
 "vara tillgängligt i rotpartitionen."
 
-#: plinth/modules/storage/views.py:70
+#: plinth/modules/storage/views.py:69
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Fel vid utökning av partitionen: {exception}"
 
-#: plinth/modules/storage/views.py:73
+#: plinth/modules/storage/views.py:72
 msgid "Partition expanded successfully."
 msgstr "Partitionsutökning genomförd."
 
-#: plinth/modules/storage/views.py:91
+#: plinth/modules/storage/views.py:90
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor} {drive_model} kan kopplas ur på ett säkert sätt."
 
-#: plinth/modules/storage/views.py:95
+#: plinth/modules/storage/views.py:94
 msgid "Device can be safely unplugged."
 msgstr "Enheten kan kopplas ur på ett säkert sätt."
 
-#: plinth/modules/storage/views.py:105
+#: plinth/modules/storage/views.py:104
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Fel mata ut enhet: {error_message}"
@@ -6305,32 +6402,32 @@ msgstr "Växla senaste uppdateringsloggar"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:88
 msgid "Manual update"
 msgstr "Manuell uppdatering"
 
-#: plinth/modules/upgrades/views.py:48
+#: plinth/modules/upgrades/views.py:47
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Fel vid konfigurering av obevakad uppgraderingar: {error}"
 
-#: plinth/modules/upgrades/views.py:52
+#: plinth/modules/upgrades/views.py:51
 msgid "Automatic upgrades enabled"
 msgstr "Automatiska uppgraderingar aktiverade"
 
-#: plinth/modules/upgrades/views.py:55
+#: plinth/modules/upgrades/views.py:54
 msgid "Automatic upgrades disabled"
 msgstr "Automatiska uppgraderingar inaktiverade"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:56
 msgid "Settings unchanged"
 msgstr "Inställningarna är oförändrade"
 
-#: plinth/modules/upgrades/views.py:83
+#: plinth/modules/upgrades/views.py:82
 msgid "Upgrade process started."
 msgstr "Uppgraderingsprocessen påbörjades."
 
-#: plinth/modules/upgrades/views.py:86
+#: plinth/modules/upgrades/views.py:85
 msgid "Starting upgrade failed."
 msgstr "Det gick inte att starta uppgraderingen."
 
@@ -6482,7 +6579,7 @@ msgid "Create User"
 msgstr "Skapa användare"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:121
+#: plinth/modules/users/views.py:120
 msgid "Delete User"
 msgstr "Ta bort användare"
 
@@ -6548,29 +6645,29 @@ msgstr "Spara ändringar"
 msgid "User %(username)s created."
 msgstr "Användaren %(username)s skapades."
 
-#: plinth/modules/users/views.py:75
+#: plinth/modules/users/views.py:74
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Användaren %(username)s har uppdaterats."
 
-#: plinth/modules/users/views.py:76
+#: plinth/modules/users/views.py:75
 msgid "Edit User"
 msgstr "Redigera användar"
 
-#: plinth/modules/users/views.py:131
+#: plinth/modules/users/views.py:130
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Användare {user} borttagen."
 
-#: plinth/modules/users/views.py:138
+#: plinth/modules/users/views.py:137
 msgid "Deleting LDAP user failed."
 msgstr "Det gick inte att ta bort LDAP-användare."
 
-#: plinth/modules/users/views.py:147
+#: plinth/modules/users/views.py:146
 msgid "Change Password"
 msgstr "Ändra lösenord"
 
-#: plinth/modules/users/views.py:148
+#: plinth/modules/users/views.py:147
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats."
 
@@ -6736,7 +6833,7 @@ msgid "Add a new peer"
 msgstr "Lägga till en ny peer"
 
 #: plinth/modules/wireguard/templates/wireguard.html:61
-#: plinth/modules/wireguard/views.py:51
+#: plinth/modules/wireguard/views.py:50
 msgid "Add Allowed Client"
 msgstr "Lägga till tillåten klient"
 
@@ -6763,7 +6860,7 @@ msgid "Add a new server"
 msgstr "Lägga till en ny server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:108
-#: plinth/modules/wireguard/views.py:160
+#: plinth/modules/wireguard/views.py:159
 msgid "Add Connection to Server"
 msgstr "Lägga till anslutning till server"
 
@@ -6856,59 +6953,59 @@ msgstr "Offentlig nyckel för denna maskin:"
 msgid "IP address of this machine:"
 msgstr "IP-adressen för denna maskin:"
 
-#: plinth/modules/wireguard/views.py:46
+#: plinth/modules/wireguard/views.py:45
 msgid "Added new client."
 msgstr "Lade till ny klient."
 
-#: plinth/modules/wireguard/views.py:61 plinth/modules/wireguard/views.py:120
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:119
 msgid "Client with public key already exists"
 msgstr "Klient med offentlig nyckel finns redan"
 
-#: plinth/modules/wireguard/views.py:74
+#: plinth/modules/wireguard/views.py:73
 msgid "Allowed Client"
 msgstr "Tillåten klient"
 
-#: plinth/modules/wireguard/views.py:96
+#: plinth/modules/wireguard/views.py:95
 msgid "Updated client."
 msgstr "Uppdaterad klient."
 
-#: plinth/modules/wireguard/views.py:101
+#: plinth/modules/wireguard/views.py:100
 msgid "Modify Client"
 msgstr "Ändra klienten"
 
-#: plinth/modules/wireguard/views.py:134
+#: plinth/modules/wireguard/views.py:133
 msgid "Delete Allowed Client"
 msgstr "Ta bort tillåten klient"
 
-#: plinth/modules/wireguard/views.py:143
+#: plinth/modules/wireguard/views.py:142
 msgid "Client deleted."
 msgstr "Klienten har tagits bort."
 
-#: plinth/modules/wireguard/views.py:145
+#: plinth/modules/wireguard/views.py:144
 msgid "Client not found"
 msgstr "Klienten hittades inte"
 
-#: plinth/modules/wireguard/views.py:155
+#: plinth/modules/wireguard/views.py:154
 msgid "Added new server."
 msgstr "Lade till ny server."
 
-#: plinth/modules/wireguard/views.py:176
+#: plinth/modules/wireguard/views.py:175
 msgid "Connection to Server"
 msgstr "Anslutning till server"
 
-#: plinth/modules/wireguard/views.py:194
+#: plinth/modules/wireguard/views.py:193
 msgid "Updated server."
 msgstr "Uppdaterad server."
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:198
 msgid "Modify Connection to Server"
 msgstr "Ändra Anslutningen till Servern"
 
-#: plinth/modules/wireguard/views.py:236
+#: plinth/modules/wireguard/views.py:235
 msgid "Delete Connection to Server"
 msgstr "Ta bort anslutning till server"
 
-#: plinth/modules/wireguard/views.py:256
+#: plinth/modules/wireguard/views.py:255
 msgid "Server deleted."
 msgstr "Servern har tagits bort."
 
@@ -6991,12 +7088,7 @@ msgstr ""
 msgid "Installation"
 msgstr "Installation"
 
-#: plinth/templates/app.html:32
-#, python-format
-msgid "Service <em>%(service_name)s</em> is running."
-msgstr "Tjänsten <em> %(service_name)s </em> körs."
-
-#: plinth/templates/app.html:37
+#: plinth/templates/app.html:29
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Tjänsten <em> %(service_name)s </em> körs inte."
@@ -7006,44 +7098,44 @@ msgstr "Tjänsten <em> %(service_name)s </em> körs inte."
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Kärnfunktioner och webbgränssnitt för %(box_name)s"
 
-#: plinth/templates/base.html:81
+#: plinth/templates/base.html:80
 msgid "Toggle navigation"
 msgstr "Växla navigation"
 
-#: plinth/templates/base.html:105 plinth/templates/base.html:108
+#: plinth/templates/base.html:104 plinth/templates/base.html:107
 msgid "Home"
 msgstr "Hem"
 
-#: plinth/templates/base.html:113 plinth/templates/base.html:117
+#: plinth/templates/base.html:112 plinth/templates/base.html:116
 msgid "Apps"
 msgstr "Appar"
 
-#: plinth/templates/base.html:122 plinth/templates/base.html:126
+#: plinth/templates/base.html:121 plinth/templates/base.html:125
 msgid "System"
 msgstr "System"
 
-#: plinth/templates/base.html:158 plinth/templates/base.html:159
+#: plinth/templates/base.html:157 plinth/templates/base.html:158
 msgid "Change password"
 msgstr "Ändra lösenord"
 
-#: plinth/templates/base.html:166 plinth/templates/base.html:167
+#: plinth/templates/base.html:165 plinth/templates/base.html:166
 msgid "Restart"
 msgstr "Starta om"
 
-#: plinth/templates/base.html:172 plinth/templates/base.html:173
+#: plinth/templates/base.html:171 plinth/templates/base.html:172
 msgid "Shut down"
 msgstr "Stänga ner"
 
-#: plinth/templates/base.html:180 plinth/templates/base.html:181
-#: plinth/templates/base.html:205 plinth/templates/base.html:207
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
+#: plinth/templates/base.html:204 plinth/templates/base.html:206
 msgid "Log out"
 msgstr "Logga ut"
 
-#: plinth/templates/base.html:189 plinth/templates/base.html:192
+#: plinth/templates/base.html:188 plinth/templates/base.html:191
 msgid "Select language"
 msgstr "Välj språk"
 
-#: plinth/templates/base.html:197 plinth/templates/base.html:199
+#: plinth/templates/base.html:196 plinth/templates/base.html:198
 msgid "Log in"
 msgstr "Logga in"
 
@@ -7256,17 +7348,51 @@ msgstr "Starta webbklient"
 msgid "Client Apps"
 msgstr "Klientappar"
 
-#: plinth/views.py:189
+#: plinth/views.py:182
 msgid "Application enabled"
 msgstr "Program aktiverat"
 
-#: plinth/views.py:192
+#: plinth/views.py:185
 msgid "Application disabled"
 msgstr "Programmet är inaktiverat"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Custom Section"
+#~ msgstr "Anpassat avsnitt"
+
+#~ msgid "Custom paragraph content."
+#~ msgstr "Anpassat styckeinnehåll."
+
+#~ msgid "Proxies"
+#~ msgstr "Proxyservrar"
+
+#~ msgid "Anonymous torrents"
+#~ msgstr "Anonyma torrenter"
+
+#~ msgid "Router configuration type saved."
+#~ msgstr "Routerkonfigurationstyp sparade."
+
+#, fuzzy
+#~| msgid "Router configuration type saved."
+#~ msgid "Internet connection type saved."
+#~ msgstr "Routerkonfigurationstyp sparade."
+
+#, fuzzy
+#~| msgid ""
+#~| "Your %(box_name)s gets its internet from your Router via WiFi or "
+#~| "Ethernet cable. This is a typical home setup."
+#~ msgid ""
+#~ "Your %(box_name)s gets its Internet from your Router via Wi-Fi or "
+#~ "Ethernet cable. This is a typical home setup."
+#~ msgstr ""
+#~ "Dina %(box_name)s får sitt internet från routern via WiFi eller Ethernet-"
+#~ "kabel. Detta är en typisk hem inställning."
+
+#~ msgid "Service <em>%(service_name)s</em> is running."
+#~ msgstr "Tjänsten <em> %(service_name)s </em> körs."
 
 #~ msgid "Physical Interface"
 #~ msgstr "Fysiskt gränssnitt"

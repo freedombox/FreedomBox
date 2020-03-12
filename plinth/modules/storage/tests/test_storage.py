@@ -250,45 +250,25 @@ class TestActions:
             assert output == error
 
     @pytest.mark.usefixtures('needs_not_root')
-    @pytest.mark.parametrize('directory', [{
-        'path': '/missing',
-        'error': '1'
-    }, {
-        'path': '/etc/os-release',
-        'error': '2'
-    }, {
-        'path': '/root',
-        'error': '3'
-    }, {
-        'path': '/',
-        'error': ''
-    }])
-    def test_validate_directory(self, directory):
+    @pytest.mark.parametrize('path,error', [('/missing', '1'),
+                                            ('/etc/os-release', '2'),
+                                            ('/root', '3'), ('/', ''),
+                                            ('/etc/..', '')])
+    def test_validate_directory(self, path, error):
         """Test that directory validation returns expected output."""
-        self.assert_validate_directory(directory['path'], directory['error'])
+        self.assert_validate_directory(path, error)
 
     @pytest.mark.usefixtures('needs_not_root')
-    @pytest.mark.parametrize('directory', [{
-        'path': '/',
-        'error': '4'
-    }, {
-        'path': '/tmp',
-        'error': ''
-    }])
-    def test_validate_directory_writable(self, directory):
+    @pytest.mark.parametrize('path,error', [('/', '4'), ('/tmp', '')])
+    def test_validate_directory_writable(self, path, error):
         """Test that directory writable validation returns expected output."""
-        self.assert_validate_directory(directory['path'], directory['error'],
-                                       check_writable=True)
+        self.assert_validate_directory(path, error, check_writable=True)
 
     @pytest.mark.usefixtures('needs_not_root')
-    @pytest.mark.parametrize('directory', [{
-        'path': '/var/lib/plinth_storage_test_not_exists',
-        'error': '4'
-    }, {
-        'path': '/tmp/plint_storage_test_not_exists',
-        'error': ''
-    }])
-    def test_validate_directory_creatable(self, directory):
+    @pytest.mark.parametrize(
+        'path,error', [('/var/lib/plinth_storage_test_not_exists', '4'),
+                       ('/tmp/plint_storage_test_not_exists', ''),
+                       ('/var/../tmp/plint_storage_test_not_exists', '')])
+    def test_validate_directory_creatable(self, path, error):
         """Test that directory creatable validation returns expected output."""
-        self.assert_validate_directory(directory['path'], directory['error'],
-                                       check_creatable=True)
+        self.assert_validate_directory(path, error, check_creatable=True)

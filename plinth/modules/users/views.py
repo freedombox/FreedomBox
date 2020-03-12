@@ -58,7 +58,6 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
     template_name = 'users_list.html'
     title = ugettext_lazy('Users')
     app_id = 'users'
-    show_status_block = False
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserList, self).get_context_data(*args, **kwargs)

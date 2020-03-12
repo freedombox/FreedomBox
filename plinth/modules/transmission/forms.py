@@ -15,8 +15,8 @@ class TransmissionForm(DirectorySelectForm):
 
     def __init__(self, *args, **kw):
         validator = DirectoryValidator(
-            username=reserved_usernames[0], check_writable=True)
+            username=reserved_usernames[0], check_creatable=True)
         super(TransmissionForm, self).__init__(
             title=_('Download directory'),
-            default='/var/lib/transmission-daemon/downloads/',
+            default='/var/lib/transmission-daemon/downloads',
             validator=validator, *args, **kw)

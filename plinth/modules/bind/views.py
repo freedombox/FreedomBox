@@ -17,7 +17,6 @@ from .forms import BindForm
 class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring Bind."""
     app_id = 'bind'
-    show_status_block = True
     form_class = BindForm
     template_name = 'bind.html'
     port_forwarding_info = port_forwarding_info

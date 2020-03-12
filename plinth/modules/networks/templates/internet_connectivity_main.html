@@ -27,12 +27,16 @@
     {% blocktrans trimmed %}
       My ISP provides a public IP address that may change over time.
     {% endblocktrans %}
-  {% else %}
+  {% elif internet_connectivity_type == "private_ip" %}
     {% blocktrans trimmed %}
       My ISP does not provide a public IP address.
     {% endblocktrans %}
+  {% else %}
+    {% blocktrans trimmed %}
+      I do not know the type of connection my ISP provides.
+    {% endblocktrans %}
   {% endif %}
-  <a href="{% url 'networks:internet_connection_type_setup' %}" class="btn btn-default"
+  <a href="{% url 'networks:internet-connection-type' %}" class="btn btn-default"
      role="button">
     {% trans 'Update...' %}
   </a>

@@ -17,7 +17,6 @@ class SearxAppView(views.AppView):
     """Serve configuration page."""
     app_id = 'searx'
     form_class = SearxForm
-    show_status_block = False
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""

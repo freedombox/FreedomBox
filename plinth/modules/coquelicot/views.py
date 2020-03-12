@@ -17,7 +17,6 @@ class CoquelicotAppView(views.AppView):
     """Serve configuration page."""
     app_id = 'coquelicot'
     form_class = CoquelicotForm
-    show_status_block = True
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""

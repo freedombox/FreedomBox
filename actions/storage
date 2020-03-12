@@ -333,6 +333,9 @@ def subcommand_usage_info(_):
 
 def subcommand_validate_directory(arguments):
     """Validate a directory"""
+    if os.geteuid() == 0:
+        raise RuntimeError('You must not be root to run this command')
+
     directory = arguments.path
 
     def part_exists(path):
@@ -349,14 +352,15 @@ def subcommand_validate_directory(arguments):
         if not os.path.exists(directory):
             # doesn't exist
             print('ValidationError: 1')
+            return
 
     if not os.path.isdir(directory):
         # is not a directory
         print('ValidationError: 2')
-    if not os.access(directory, os.R_OK):
+    elif not os.access(directory, os.R_OK):
         # is not readable
         print('ValidationError: 3')
-    if arguments.check_writable or arguments.check_creatable:
+    elif arguments.check_writable or arguments.check_creatable:
         if not os.access(directory, os.W_OK):
             # is not writable
             print('ValidationError: 4')

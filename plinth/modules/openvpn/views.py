@@ -48,7 +48,6 @@ def index(request):
             'port_forwarding_info': openvpn.port_forwarding_info,
             'status': status,
             'form': form,
-            'show_status_block': True,
             'is_running': status['is_running'],
             'has_diagnostics': True,
             'is_enabled': status['enabled'],

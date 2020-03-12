@@ -14,7 +14,6 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed, post_hostname_change
 from plinth.utils import format_lazy
-from plinth.views import AppView
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -109,7 +108,3 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
                                name=old_hostname + '.local')
     domain_added.send_robust(sender='avahi', domain_type='domain-type-local',
                              name=new_hostname + '.local', services='__all__')
-
-
-class AvahiAppView(AppView):
-    app_id = 'avahi'

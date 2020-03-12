@@ -24,4 +24,5 @@ class QuasselForm(AppForm):
         help_text=_(
             'Select a domain to use TLS with. If the list is empty, please '
             'configure at least one domain with certificates.'),
+        required=False,
     )

@@ -8,7 +8,5 @@ from django.conf.urls import url
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/shaarli/$',
-        AppView.as_view(app_id='shaarli', show_status_block=False),
-        name='index'),
+    url(r'^apps/shaarli/$', AppView.as_view(app_id='shaarli'), name='index')
 ]

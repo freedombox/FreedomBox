@@ -1153,13 +1153,13 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       <section>
         <title>Screenshot</title>
         <para>
-          <remark>Add when/if an interface is made for Plinth</remark>
+          <remark>Add when/if an interface is made for <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink></remark>
         </para>
       </section>
       <section>
         <title>Using User websites</title>
-        <para>The module is always enabled and offers no configuration from the Plinth web interface. Currently its existence is not even visible in the Plinth web interface. </para>
-        <para>Using the modules capability to serve documents requires just to place the documents in the designated directory in a Plinth user's home directory in the filesystem. </para>
+        <para>The module is always enabled and offers no configuration from the FreedomBox web interface. There is no configuration or status page shown for this module in the FreedomBox web interface. </para>
+        <para>To serve documents, place the files in the designated directory in a FreedomBox user's home directory in the filesystem. </para>
         <para>This directory is: <emphasis role="strong">public_html</emphasis> </para>
         <para>Thus the absolute path for the directory of a user named fbx with home directory in /home/fbx will be <emphasis role="strong">/home/fbx/public_html</emphasis>. User websites will serve documents placed in this directory when requests for documents with the URI path "~fbx" are received. For the the example.org domain thus a request for the document example.org/~fbx/index.html will transfer the file in /home/fbx/public_html/index.html. </para>
       </section>
@@ -10094,6 +10094,68 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.4 (2020-03-09)</title>
+        <itemizedlist>
+          <listitem>
+            <para>apache: Handle transition to php 7.4 </para>
+          </listitem>
+          <listitem>
+            <para>app: Fix showing app name in port forwarding information </para>
+          </listitem>
+          <listitem>
+            <para>apps: Do not show status block if service is running </para>
+          </listitem>
+          <listitem>
+            <para>i2p: New style app page layout </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for French, Telugu, Spanish, and Swedish </para>
+          </listitem>
+          <listitem>
+            <para>networks: Add first boot step for network topology wizard </para>
+          </listitem>
+          <listitem>
+            <para>networks: Add form for network topology </para>
+          </listitem>
+          <listitem>
+            <para>networks: Don't show router wizard if not behind a router </para>
+          </listitem>
+          <listitem>
+            <para>networks, firewall: Support newer version of policykit </para>
+          </listitem>
+          <listitem>
+            <para>networks: Fixes for networks wizards access and user experience </para>
+          </listitem>
+          <listitem>
+            <para>networks: If topology wizard is skipped, skip router wizard too </para>
+          </listitem>
+          <listitem>
+            <para>networks: Show router wizard before Internet connection type wizard </para>
+          </listitem>
+          <listitem>
+            <para>plinth: Increase sqlite busy timeout from default 5s to 30s </para>
+          </listitem>
+          <listitem>
+            <para>quassel: Fix unable to disable application without choosing a domain name </para>
+          </listitem>
+          <listitem>
+            <para>shadowsocks: Move user settings to state directory </para>
+          </listitem>
+          <listitem>
+            <para>storage: Directory selection form improvements </para>
+          </listitem>
+          <listitem>
+            <para>transmission: Allow to submit download directory if it is creatable </para>
+          </listitem>
+          <listitem>
+            <para>upgrades: Clean apt cache every week </para>
+          </listitem>
+          <listitem>
+            <para>views: Improve template security </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.3 (2020-02-24)</title>
         <itemizedlist>

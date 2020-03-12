@@ -7,12 +7,15 @@ Helper script for configuring Shadowsocks.
 import argparse
 import json
 import os
+import subprocess
 import sys
 
 from plinth import action_utils
 from plinth.modules import shadowsocks
 
-SHADOWSOCKS_CONFIG = '/etc/shadowsocks-libev/freedombox.json'
+SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/freedombox.json'
+SHADOWSOCKS_CONFIG_ACTUAL = \
+    '/var/lib/private/shadowsocks-libev/freedombox/freedombox.json'
 
 
 def parse_arguments():
@@ -26,6 +29,11 @@ def parse_arguments():
     subparsers.add_parser('merge-config',
                           help='Merge JSON config from stdin with existing')
 
+    # Migrations
+    subparsers.add_parser(
+        'migrate-1-2',
+        help='Move shadowsocks config file to a secure location')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -35,23 +43,25 @@ def subcommand_setup(_):
     # Only client socks5 proxy is supported for now. Disable the
     # server component.
     action_utils.service_disable('shadowsocks-libev')
+    if not os.path.islink(SHADOWSOCKS_CONFIG_SYMLINK):
+        os.symlink(SHADOWSOCKS_CONFIG_ACTUAL, SHADOWSOCKS_CONFIG_SYMLINK)
 
 
-def subcommand_get_config(arguments):
+def subcommand_get_config(_):
     """Read and print Shadowsocks configuration."""
     try:
-        print(open(SHADOWSOCKS_CONFIG, 'r').read())
+        print(open(SHADOWSOCKS_CONFIG_SYMLINK, 'r').read())
     except Exception:
         sys.exit(1)
 
 
-def subcommand_merge_config(arguments):
+def subcommand_merge_config(_):
     """Configure Shadowsocks."""
     config = sys.stdin.read()
     config = json.loads(config)
 
     try:
-        current_config = open(SHADOWSOCKS_CONFIG, 'r').read()
+        current_config = open(SHADOWSOCKS_CONFIG_SYMLINK, 'r').read()
         current_config = json.loads(current_config)
     except (OSError, json.JSONDecodeError):
         current_config = {}
@@ -59,16 +69,20 @@ def subcommand_merge_config(arguments):
     new_config = current_config
     new_config.update(config)
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
+    open(SHADOWSOCKS_CONFIG_SYMLINK, 'w').write(new_config)
 
-    # XXX: Config file with password is world-readable. This is the
-    # same as the default config file, but find a way to avoid this.
-    # See https://salsa.debian.org/freedombox-team/plinth/-/merge_requests/1724
-    old_umask = os.umask(0o022)
-    try:
-        open(SHADOWSOCKS_CONFIG, 'w').write(new_config)
-    finally:
-        os.umask(old_umask)
+    action_utils.service_restart(shadowsocks.managed_services[0])
 
+
+def subcommand_migrate_1_2(_):
+    """Move shadowsocks config file to a secure location."""
+    if os.path.isfile(SHADOWSOCKS_CONFIG_SYMLINK):  # ignoring symlinks
+        os.makedirs('/var/lib/private/shadowsocks-libev/freedombox/',
+                    exist_ok=True)
+        os.replace(SHADOWSOCKS_CONFIG_SYMLINK, SHADOWSOCKS_CONFIG_ACTUAL)
+        os.symlink(SHADOWSOCKS_CONFIG_ACTUAL, SHADOWSOCKS_CONFIG_SYMLINK)
+
+    subprocess.check_call(['systemctl', 'daemon-reload'])
     action_utils.service_restart(shadowsocks.managed_services[0])
 
 

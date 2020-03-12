@@ -12,7 +12,6 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
-from plinth.views import AppView
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -81,11 +80,6 @@ def init():
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
         app.set_enabled(True)
-
-
-class InfinotedAppView(AppView):
-    app_id = 'infinoted'
-    port_forwarding_info = port_forwarding_info
 
 
 def setup(helper, old_version=None):

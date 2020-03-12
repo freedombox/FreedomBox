@@ -117,9 +117,6 @@ class AppView(FormView):
     'form_class' is the Django form class that is used by this view. By default
     the AppForm class is used.
 
-    'show_status_block' is a boolean to determine if the status section must be
-    shown in this app's page.
-
     'template_name' is the template used to render this view. By default it is
     app.html. It may be overridden with a template that derives from app.html
     to customize the appearance of the app to achieve more complex presentation
@@ -131,10 +128,6 @@ class AppView(FormView):
 
     """
     form_class = forms.AppForm
-    # Display the 'status' block of the app.html template
-    # This block uses information from service.is_running. This method is
-    # optional, so allow not showing this block here.
-    show_status_block = True
     app_id = None
     template_name = 'app.html'
     port_forwarding_info = None
@@ -197,12 +190,10 @@ class AppView(FormView):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context.update(self._get_common_status())
-        context['app'] = self.app  # XXX: Remove this for template security
         context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
-        context['show_status_block'] = self.show_status_block
         context['port_forwarding_info'] = self.port_forwarding_info
 
         from plinth.modules.firewall.components import Firewall

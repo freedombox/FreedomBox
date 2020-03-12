@@ -8,6 +8,5 @@ from django.conf.urls import url
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/ttrss/$',
-        AppView.as_view(app_id='ttrss', show_status_block=True), name='index'),
+    url(r'^apps/ttrss/$', AppView.as_view(app_id='ttrss'), name='index')
 ]

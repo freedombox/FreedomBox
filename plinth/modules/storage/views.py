@@ -26,7 +26,6 @@ class StorageAppView(views.AppView):
     """Show storage information."""
     app_id = 'storage'
     template_name = 'storage.html'
-    show_status_block = False
 
     def get_context_data(self, *args, **kwargs):
         """Return template context data."""

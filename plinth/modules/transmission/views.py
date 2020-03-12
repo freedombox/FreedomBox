@@ -5,7 +5,6 @@ FreedomBox app for configuring Transmission Server.
 
 import json
 import logging
-import os
 import socket
 
 from django.contrib import messages
@@ -29,8 +28,7 @@ class TransmissionAppView(views.AppView):
         configuration = actions.superuser_run('transmission',
                                               ['get-configuration'])
         configuration = json.loads(configuration)
-        status['storage_path'] = os.path.normpath(
-            configuration['download-dir'])
+        status['storage_path'] = configuration['download-dir']
         status['hostname'] = socket.gethostname()
 
         return status
