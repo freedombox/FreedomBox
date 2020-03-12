@@ -79,6 +79,16 @@ class PagekiteApp(app_module.App):
         daemon = Daemon('daemon-pagekite', managed_services[0])
         self.add(daemon)
 
+    def enable(self):
+        """Send domain signals after enabling the app."""
+        super().enable()
+        utils.update_names_module(is_enabled=True)
+
+    def disable(self):
+        """Send domain signals before disabling the app."""
+        utils.update_names_module(is_enabled=False)
+        super().disable()
+
 
 def init():
     """Initialize the PageKite module"""
