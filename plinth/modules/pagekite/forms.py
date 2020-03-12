@@ -69,26 +69,30 @@ class ConfigurationForm(AppForm):
 
     def save(self, request):
         """Save the form on submission after validation."""
-        old = self.initial
-        new = self.cleaned_data
-        LOGGER.info('New status is - %s', new)
+        def _filter(data):
+            return {
+                key: str(value)
+                for key, value in data.items() if key in
+                ['kite_name', 'kite_secret', 'server_domain', 'server_port']
+            }
+
+        if not self.cleaned_data['server_domain']:
+            self.cleaned_data['server_domain'] = 'pagekite.net'
+
+        if not self.cleaned_data['server_port']:
+            self.cleaned_data['server_port'] = '80'
+
+        old = _filter(self.initial)
+        new = _filter(self.cleaned_data)
 
         if old != new:
-            config_changed = False
-
-            if old['kite_name'] != new['kite_name'] or \
-               old['kite_secret'] != new['kite_secret']:
-                utils.run(['set-kite', '--kite-name', new['kite_name']],
-                          input=new['kite_secret'].encode())
-                messages.success(request, _('Kite details set'))
-                config_changed = True
-
-            if old['server_domain'] != new['server_domain'] or \
-               old['server_port'] != new['server_port']:
-                server = "%s:%s" % (new['server_domain'], new['server_port'])
-                utils.run(['set-frontend', server])
-                messages.success(request, _('Pagekite server set'))
-                config_changed = True
+            frontend = f"{new['server_domain']}:{new['server_port']}"
+            utils.run([
+                'set-config', '--kite-name', new['kite_name'], '--frontend',
+                frontend
+            ], input=new['kite_secret'].encode())
+            messages.success(request, _('Configuration updated'))
+            config_changed = True
 
             if old['is_enabled'] != new['is_enabled']:
                 if new['is_enabled']:

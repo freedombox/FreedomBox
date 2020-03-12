@@ -44,18 +44,13 @@ def parse_arguments():
 
     # Configuration
     subparsers.add_parser('get-config', help='Return current configuration')
-
-    # Frontend
-    set_frontend = subparsers.add_parser('set-frontend',
-                                         help='Set pagekite frontend')
-    set_frontend.add_argument('url', help='frontend url')
-
-    # Kite details (name + secret)
-    set_kite = subparsers.add_parser(
-        'set-kite',
-        help='Configure kite name and its secret. Secret is read from stdin.')
-    set_kite.add_argument('--kite-name',
-                          help='Name of the kite (eg: mybox.pagekite.me)')
+    set_config = subparsers.add_parser(
+        'set-config',
+        help='Configure kite name, its secret and frontend. Secret is read '
+        'from stdin.')
+    set_config.add_argument('--kite-name',
+                            help='Name of the kite (eg: mybox.pagekite.me)')
+    set_config.add_argument('--frontend', help='Frontend url')
 
     # Add/remove pagekite services (service_on entries)
     add_service = subparsers.add_parser('add-service',
@@ -76,8 +71,6 @@ def subcommand_restart(_):
 
 
 def subcommand_start_and_enable(_):
-    aug.remove(PATHS['abort_not_configured'])
-    aug.save()
     # 'start' alone sometimes fails, even if the service is not running
     action_utils.service_restart('pagekite')
     print('enabled')
@@ -85,8 +78,6 @@ def subcommand_start_and_enable(_):
 
 def subcommand_stop_and_disable(_):
     action_utils.service_stop('pagekite')
-    aug.set(PATHS['abort_not_configured'], '')
-    aug.save()
     print('disabled')
 
 
@@ -144,26 +135,22 @@ def subcommand_get_config(_):
     print(json.dumps(status))
 
 
-def subcommand_set_frontend(arguments):
-    """Set pagekite frontend url, taking care of defaults and pagekite.net"""
-    frontend_domain = arguments.url.split(':')[0]
+def subcommand_set_config(arguments):
+    """Set pagekite kite name, secret and frontend URL."""
+    aug.remove(PATHS['abort_not_configured'])
+
+    aug.set(PATHS['kitename'], arguments.kite_name)
+    aug.set(PATHS['kitesecret'], sys.stdin.read())
+
+    frontend_domain = arguments.frontend.split(':')[0]
     if frontend_domain in ('pagekite.net', 'defaults', 'default'):
-        enable_pagekitenet_frontend()
+        aug.set(PATHS['defaults'], '')
+        aug.remove(PATHS['frontend'])
     else:
         aug.remove(PATHS['defaults'])
-        aug.set(PATHS['frontend'], arguments.url)
-        aug.save()
+        aug.set(PATHS['frontend'], arguments.frontend)
 
-
-def enable_pagekitenet_frontend():
-    """Enable using default pageket.net frontend
-
-    This disables any other frontends.
-    """
-    aug.set(PATHS['defaults'], '')
-    aug.remove(PATHS['frontend'])
     aug.save()
-    print("enabled")
 
 
 def subcommand_remove_service(arguments):
@@ -238,13 +225,6 @@ def get_new_service_path(protocol):
     root = utils.get_augeas_servicefile_path(protocol)
     new_index = len(aug.match(root + '/*')) + 1
     return os.path.join(root, str(new_index))
-
-
-def subcommand_set_kite(arguments):
-    """Set details of the kite"""
-    aug.set(PATHS['kitename'], arguments.kite_name)
-    aug.set(PATHS['kitesecret'], sys.stdin.read())
-    aug.save()
 
 
 def augeas_load():
