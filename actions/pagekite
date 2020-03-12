@@ -37,11 +37,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Enable/disable the pagekite service
-    subparsers.add_parser('start-and-enable', help='Enable PageKite service')
-    subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
-    subparsers.add_parser('restart', help='Restart PageKite service')
-
     # Configuration
     subparsers.add_parser('get-config', help='Return current configuration')
     set_config = subparsers.add_parser(
@@ -62,23 +57,6 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
-
-
-def subcommand_restart(_):
-    """Restart the pagekite service"""
-    action_utils.service_restart('pagekite')
-    print('restarted')
-
-
-def subcommand_start_and_enable(_):
-    # 'start' alone sometimes fails, even if the service is not running
-    action_utils.service_restart('pagekite')
-    print('enabled')
-
-
-def subcommand_stop_and_disable(_):
-    action_utils.service_stop('pagekite')
-    print('disabled')
 
 
 def subcommand_get_config(_):
@@ -152,16 +130,28 @@ def subcommand_set_config(arguments):
 
     aug.save()
 
+    for service_name in utils.PREDEFINED_SERVICES.keys():
+        service = utils.PREDEFINED_SERVICES[service_name]['params']
+        try:
+            _add_service(service)
+        except RuntimeError:
+            pass
+
+    # Immediately after install, pagekite is enabled but not running. Restart
+    # based on enabled state instead of try-restart.
+    if action_utils.service_is_enabled('pagekite'):
+        action_utils.service_restart('pagekite')
+
 
 def subcommand_remove_service(arguments):
     """Searches and removes the service(s) that match all given parameters"""
     service = utils.load_service(arguments.service)
-    paths = get_existing_service_paths(service)
+    paths = _get_existing_service_paths(service)
     # TODO: theoretically, everything to do here is:
     # [aug.remove(path) for path in paths]
     # but augeas won't let you save the changed files and doesn't say why
     for path in paths:
-        filepath = convert_augeas_path_to_filepath(path)
+        filepath = _convert_augeas_path_to_filepath(path)
         service_found = False
         with open(filepath, 'r') as file:
             lines = file.readlines()
@@ -179,7 +169,7 @@ def subcommand_remove_service(arguments):
     action_utils.service_restart('pagekite')
 
 
-def get_existing_service_paths(service):
+def _get_existing_service_paths(service):
     """Return paths of existing services that match the given service params"""
     # construct an augeas query path with patterns like:
     #     */service_on/*[protocol='http']
@@ -189,25 +179,30 @@ def get_existing_service_paths(service):
     return aug.match(path)
 
 
-def subcommand_add_service(arguments):
-    """Add one service"""
-    service = utils.load_service(arguments.service)
-    if get_existing_service_paths(service):
+def _add_service(service):
+    """Add a new service into configuration."""
+    if _get_existing_service_paths(service):
         msg = "Service with the parameters %s already exists"
         raise RuntimeError(msg % service)
 
-    root = get_new_service_path(service['protocol'])
+    root = _get_new_service_path(service['protocol'])
     # TODO: after adding a service, augeas fails writing the config;
     # so add the service_on entry manually instead
-    path = convert_augeas_path_to_filepath(root)
+    path = _convert_augeas_path_to_filepath(root)
     with open(path, 'a') as servicefile:
         line = "\nservice_on = %s\n" % utils.convert_service_to_string(service)
         servicefile.write(line)
-    action_utils.service_restart('pagekite')
 
 
-def convert_augeas_path_to_filepath(augpath, prefix='/files',
-                                    suffix='service_on'):
+def subcommand_add_service(arguments):
+    """Add one service"""
+    service = utils.load_service(arguments.service)
+    _add_service(service)
+    action_utils.service_try_restart('pagekite')
+
+
+def _convert_augeas_path_to_filepath(augpath, prefix='/files',
+                                     suffix='service_on'):
     """Convert an augeas service_on path to the actual file path"""
     if augpath.startswith(prefix):
         augpath = augpath.replace(prefix, "", 1)
@@ -218,7 +213,7 @@ def convert_augeas_path_to_filepath(augpath, prefix='/files',
     return augpath.rstrip('/')
 
 
-def get_new_service_path(protocol):
+def _get_new_service_path(protocol):
     """Get the augeas path of a new service for a protocol
 
     This takes care of existing services using a /service_on/*/ query"""

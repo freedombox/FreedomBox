@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.daemon import Daemon
 from plinth.modules.names.components import DomainType
 from plinth.utils import format_lazy
 
@@ -75,7 +76,8 @@ class PagekiteApp(app_module.App):
                                  'pagekite:index', can_have_certificate=True)
         self.add(domain_type)
 
-        # XXX: Add pagekite daemon component and simplify action script
+        daemon = Daemon('daemon-pagekite', managed_services[0])
+        self.add(daemon)
 
 
 def init():

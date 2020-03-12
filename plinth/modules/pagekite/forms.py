@@ -2,7 +2,6 @@
 
 import copy
 import json
-import logging
 
 from django import forms
 from django.contrib import messages
@@ -14,8 +13,6 @@ from plinth.errors import ActionError
 from plinth.forms import AppForm
 
 from . import utils
-
-LOGGER = logging.getLogger(__name__)
 
 
 class TrimmedCharField(forms.CharField):
@@ -92,38 +89,6 @@ class ConfigurationForm(AppForm):
                 frontend
             ], input=new['kite_secret'].encode())
             messages.success(request, _('Configuration updated'))
-            config_changed = True
-
-            if old['is_enabled'] != new['is_enabled']:
-                if new['is_enabled']:
-                    utils.run(['start-and-enable'])
-                    # Ensure all standard/predefined services are enabled
-                    for service_name in utils.PREDEFINED_SERVICES.keys():
-                        service = \
-                            utils.PREDEFINED_SERVICES[service_name]['params']
-                        service = json.dumps(service)
-
-                        # Probably should keep track of which services
-                        # are enabled since adding the service produces
-                        # an error if it is already added. But this works
-                        # too.
-
-                        try:
-                            utils.run(['add-service', '--service', service])
-                        except ActionError as exception:
-                            if "already exists" in str(exception):
-                                pass
-                            else:
-                                raise
-                    messages.success(request, _('PageKite enabled'))
-                else:
-                    utils.run(['stop-and-disable'])
-                    messages.success(request, _('PageKite disabled'))
-
-            # Restart the service if the config was changed while the service
-            # was running, so changes take effect immediately.
-            elif config_changed and new['is_enabled']:
-                utils.run(['restart'])
 
             # Update kite name registered with Name Services module.
             utils.update_names_module(enabled=new['is_enabled'],
