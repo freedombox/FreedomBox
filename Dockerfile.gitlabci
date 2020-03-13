@@ -2,15 +2,15 @@
 
 # This is an IaC pattern called "reheating a server template".
 # This is very fast but can accumulate cruft over time.
-# Use debian:unstable if you want to build a fresh image.
+# Use debian:testing if you want to build a fresh image.
 FROM registry.salsa.debian.org/freedombox-team/plinth:gitlabci
 
 USER root
 COPY . /plinth
 WORKDIR /plinth
 
-RUN echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian unstable main" >> /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian testing main" > /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian testing main" >> /etc/apt/sources.list
 
 ENV DEBIAN_FRONTEND=noninteractive
 
