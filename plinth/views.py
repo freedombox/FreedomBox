@@ -7,7 +7,7 @@ import time
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.http import is_safe_url
@@ -114,8 +114,8 @@ class AppView(FormView):
     retrieve the App instance for the app that is needed for basic information
     and operations such as enabling/disabling the app.
 
-    'form_class' is the Django form class that is used by this view. By default
-    the AppForm class is used.
+    'form_class' is the Django form class that is used by this view. It may be
+    None if the app does not have a configuration form. Default is None.
 
     'template_name' is the template used to render this view. By default it is
     app.html. It may be overridden with a template that derives from app.html
@@ -127,7 +127,7 @@ class AppView(FormView):
     forward ports on their router for this app to work properly.
 
     """
-    form_class = forms.AppForm
+    form_class = None
     app_id = None
     template_name = 'app.html'
     port_forwarding_info = None
@@ -136,6 +136,17 @@ class AppView(FormView):
         """Initialize the view."""
         super().__init__(*args, **kwargs)
         self._common_status = None
+
+    def post(self, request, *args, **kwargs):
+        """Handle app enable/disable button separately."""
+        if 'app_enable_disable_button' not in request.POST:
+            return super().post(request, *args, **kwargs)
+
+        form = forms.AppEnableDisableForm(data=self.request.POST)
+        if form.is_valid():
+            return self.enable_disable_form_valid(form)
+
+        return HttpResponseBadRequest('Invalid form submission')
 
     @property
     def success_url(self):
@@ -148,6 +159,17 @@ class AppView(FormView):
             raise ImproperlyConfigured('Missing attribute: app_id')
 
         return app.App.get(self.app_id)
+
+    def get_form(self, *args, **kwargs):
+        """Return an instance of this view's form.
+
+        Also the form_class for this view to be None.
+
+        """
+        if not self.form_class:
+            return None
+
+        return super().get_form(*args, **kwargs)
 
     def _get_common_status(self):
         """Return the status needed for form and template.
@@ -170,23 +192,35 @@ class AppView(FormView):
 
     def form_valid(self, form):
         """Enable/disable a service and set messages."""
-        old_status = form.initial
-        new_status = form.cleaned_data
-
-        if old_status['is_enabled'] == new_status['is_enabled']:
-            # TODO: find a more reliable/official way to check whether the
-            # request has messages attached.
-            if not self.request._messages._queued_messages:
-                messages.info(self.request, _('Setting unchanged'))
-        else:
-            if new_status['is_enabled']:
-                self.app.enable()
-                messages.success(self.request, _('Application enabled'))
-            else:
-                self.app.disable()
-                messages.success(self.request, _('Application disabled'))
+        if not self.request._messages._queued_messages:
+            messages.info(self.request, _('Setting unchanged'))
 
         return super().form_valid(form)
+
+    def get_enable_disable_form(self):
+        """Return an instance of the app enable/disable form.
+
+        If the app can't be disabled by the user, return None.
+
+        """
+        if not self.app.can_be_disabled:
+            return None
+
+        initial = {
+            'should_enable': not self._get_common_status()['is_enabled']
+        }
+        return forms.AppEnableDisableForm(initial=initial)
+
+    def enable_disable_form_valid(self, form):
+        """Form handling for enabling / disabling apps."""
+        should_enable = form.cleaned_data['should_enable']
+        if should_enable != self.app.is_enabled():
+            if should_enable:
+                self.app.enable()
+            else:
+                self.app.disable()
+
+        return HttpResponseRedirect(self.request.path)
 
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
@@ -197,6 +231,7 @@ class AppView(FormView):
         context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
         context['port_forwarding_info'] = self.port_forwarding_info
+        context['app_enable_disable_form'] = self.get_enable_disable_form()
 
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)

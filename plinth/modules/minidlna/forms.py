@@ -6,10 +6,8 @@ FreedomBox configuration form for MiniDLNA server.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 
-
-class MiniDLNAServerForm(AppForm):
+class MiniDLNAServerForm(forms.Form):
     """MiniDLNA server configuration form."""
     media_dir = forms.CharField(
         label=_('Media Files Directory'),

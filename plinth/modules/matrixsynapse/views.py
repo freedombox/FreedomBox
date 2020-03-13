@@ -74,20 +74,8 @@ class MatrixSynapseAppView(AppView):
         """Handle valid form submission."""
         old_config = self.get_initial()
         new_config = form.cleaned_data
-        app_same = old_config['is_enabled'] == new_config['is_enabled']
         pubreg_same = old_config['enable_public_registration'] == \
             new_config['enable_public_registration']
-
-        if app_same and pubreg_same:
-            # TODO: find a more reliable/official way to check whether the
-            # request has messages attached.
-            if not self.request._messages._queued_messages:
-                messages.info(self.request, _('Setting unchanged'))
-        elif not app_same:
-            if new_config['is_enabled']:
-                self.app.enable()
-            else:
-                self.app.disable()
 
         if not pubreg_same:
             # note action public-registration restarts, if running now

@@ -6,10 +6,8 @@ Forms for minetest module.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 
-
-class MinetestForm(AppForm):
+class MinetestForm(forms.Form):
     """Minetest configuration form"""
     max_players = forms.IntegerField(
         label=_('Maximum number of players'), required=True, min_value=1,

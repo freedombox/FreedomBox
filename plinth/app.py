@@ -14,14 +14,21 @@ class App:
     variation their behavior by choosing which components to have and by
     customizing the components themselves.
 
-    'app_id' property of the app must string that is a globally unique ID. This
-    is typically also the name of the python module handling the app. So, it
-    should be all lower-case English alphabet and digits without any special
+    'app_id' property of the app must be a string that is a globally unique ID.
+    This is typically also the name of the python module handling the app. So,
+    it should be all lower-case English alphabet and digits without any special
     characters.
+
+    'can_be_disabled' is a boolean indicating whether an app can be disabled by
+    the user. Enable/disable button for this app will not be shown. Default
+    value is True, so the app can be disabled.
 
     """
 
     app_id = None
+
+    can_be_disabled = True
+
     _all_apps = collections.OrderedDict()
 
     def __init__(self):

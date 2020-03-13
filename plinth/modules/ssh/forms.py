@@ -6,10 +6,8 @@ FreedomBox configuration form for OpenSSH server.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 
-
-class SSHServerForm(AppForm):
+class SSHServerForm(forms.Form):
     """SSH server configuration form."""
     password_auth_disabled = forms.BooleanField(
         label=_('Disable password authentication'),

@@ -36,21 +36,8 @@ class EjabberdAppView(AppView):
         """Enable/disable a service and set messages."""
         old_status = form.initial
         new_status = form.cleaned_data
-        app_same = old_status['is_enabled'] == new_status['is_enabled']
-        mam_same = old_status['MAM_enabled'] == new_status['MAM_enabled']
 
-        if app_same and mam_same:
-            # TODO: find a more reliable/official way to check whether the
-            # request has messages attached.
-            if not self.request._messages._queued_messages:
-                messages.info(self.request, _('Setting unchanged'))
-        elif not app_same:
-            if new_status['is_enabled']:
-                self.app.enable()
-            else:
-                self.app.disable()
-
-        if not mam_same:
+        if old_status['MAM_enabled'] != new_status['MAM_enabled']:
             # note ejabberd action "enable" or "disable" restarts, if running
             if new_status['MAM_enabled']:
                 actions.superuser_run('ejabberd', ['mam', 'enable'])

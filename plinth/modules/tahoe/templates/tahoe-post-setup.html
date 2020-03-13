@@ -24,17 +24,7 @@
 {% endblock %}
 
 {% block configuration %}
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form form-configuration" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-  <br/>
+  {{ block.super }}
 
   <h4>{% trans "Local introducer" %}</h4>
   <table class="table table-bordered local-introducers">

@@ -28,15 +28,17 @@
           {% endif %}
         </div>
       {% endblock %}
-      <div id='app-toggle-container' class="app-toggle-container">
-        {% if is_enabled %}
-          <button id="app-toggle-button" value="False"
-                  class="btn toggle-button toggle-button--toggled"></button>
-        {% else %}
-          <button id="app-toggle-button" value="True"
-                  class="btn toggle-button"></button>
-        {% endif %}
-      </div>
+      {% if app_enable_disable_form %}
+        <form class="form form-app-enable-disable" method="post">
+          {% csrf_token %}
+
+          {{ app_enable_disable_form }}
+
+          <button name="app_enable_disable_button" type="submit"
+            class="btn toggle-button {{ is_enabled|yesno:'toggle-button--toggled,' }}">
+          </button>
+        </form>
+      {% endif %}
     </section>
 
     {% block description %}

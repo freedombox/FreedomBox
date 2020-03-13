@@ -31,6 +31,8 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
+    can_be_disabled = False
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

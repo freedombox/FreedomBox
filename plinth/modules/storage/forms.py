@@ -11,7 +11,6 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions, module_loader
-from plinth.forms import AppForm
 from plinth.modules import storage
 
 
@@ -78,8 +77,8 @@ class DirectoryValidator:
         if 'ValidationError' in output:
             error_nr = int(output.strip().split()[1])
             if error_nr == 1:
-                raise ValidationError(
-                    _('Directory does not exist.'), 'invalid')
+                raise ValidationError(_('Directory does not exist.'),
+                                      'invalid')
             elif error_nr == 2:
                 raise ValidationError(_('Path is not a directory.'), 'invalid')
             elif error_nr == 3:
@@ -90,12 +89,12 @@ class DirectoryValidator:
                     _('Directory is not writable by the user.'), 'invalid')
 
 
-class DirectorySelectForm(AppForm):
+class DirectorySelectForm(forms.Form):
     """Directory selection form."""
     storage_dir = forms.ChoiceField(choices=[], label=_('Directory'),
                                     required=True)
-    storage_subdir = forms.CharField(
-        label=_('Subdirectory (optional)'), required=False)
+    storage_subdir = forms.CharField(label=_('Subdirectory (optional)'),
+                                     required=False)
 
     def __init__(self, title=None, default='/', validator=DirectoryValidator,
                  *args, **kwargs):
@@ -108,16 +107,15 @@ class DirectorySelectForm(AppForm):
 
     def clean(self):
         """Clean and validate form data."""
-        if self.cleaned_data['is_enabled'] or not self.initial['is_enabled']:
-            storage_dir = self.cleaned_data['storage_dir']
-            storage_subdir = self.cleaned_data['storage_subdir']
-            if storage_dir != '/':
-                storage_subdir = storage_subdir.lstrip('/')
-            storage_path = os.path.realpath(
-                os.path.join(storage_dir, storage_subdir))
-            if self.validator:
-                self.validator(storage_path)
-            self.cleaned_data.update({'storage_path': storage_path})
+        storage_dir = self.cleaned_data['storage_dir']
+        storage_subdir = self.cleaned_data['storage_subdir']
+        if storage_dir != '/':
+            storage_subdir = storage_subdir.lstrip('/')
+        storage_path = os.path.realpath(
+            os.path.join(storage_dir, storage_subdir))
+        if self.validator:
+            self.validator(storage_path)
+        self.cleaned_data.update({'storage_path': storage_path})
 
     def get_initial(self, choices):
         """Get initial form data."""

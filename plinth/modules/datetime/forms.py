@@ -9,12 +9,10 @@ import subprocess
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
-
 logger = logging.getLogger(__name__)
 
 
-class DateTimeForm(AppForm):
+class DateTimeForm(forms.Form):
     """Date/time configuration form."""
     time_zone = forms.ChoiceField(
         label=_('Time Zone'),

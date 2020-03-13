@@ -6,7 +6,6 @@ Forms for Quassel app.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 from plinth.modules import quassel
 
 
@@ -15,7 +14,7 @@ def get_domain_choices():
     return ((domain, domain) for domain in quassel.get_available_domains())
 
 
-class QuasselForm(AppForm):
+class QuasselForm(forms.Form):
     """Form to select a TLS domain for Quassel."""
 
     domain = forms.ChoiceField(

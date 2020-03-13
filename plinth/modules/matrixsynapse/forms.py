@@ -6,10 +6,8 @@ Forms for the Matrix Synapse module.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 
-
-class MatrixSynapseForm(AppForm):
+class MatrixSynapseForm(forms.Form):
     enable_public_registration = forms.BooleanField(
         label=_('Enable Public Registration'), required=False, help_text=_(
             'Enabling public registration means that anyone on the Internet '

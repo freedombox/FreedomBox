@@ -8,8 +8,6 @@ import pathlib
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
-
 
 def get_skins():
     """Return a list of available skins as choice field values."""
@@ -21,7 +19,7 @@ def get_skins():
             if skin.is_dir()]
 
 
-class MediaWikiForm(AppForm):  # pylint: disable=W0232
+class MediaWikiForm(forms.Form):  # pylint: disable=W0232
     """MediaWiki configuration form."""
     password = forms.CharField(
         label=_('Administrator Password'), help_text=_(

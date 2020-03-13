@@ -56,6 +56,8 @@ class FirewallApp(app_module.App):
 
     app_id = 'firewall'
 
+    can_be_disabled = False
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
