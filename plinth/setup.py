@@ -483,18 +483,20 @@ class ForceUpgrader():
             raise self.TemporaryFailure('Package manager is busy')
 
         apps = self._get_list_of_apps_to_force_upgrade()
-        logger.info('Apps needing conffile upgrades: %s',
-                    ', '.join([str(app.name) for app in apps]) or 'None')
+        logger.info(
+            'Apps needing conffile upgrades: %s',
+            ', '.join([str(app.app.info.name) for app in apps]) or 'None')
 
         need_retry = False
         for app, packages in apps.items():
             try:
-                logger.info('Force upgrading app: %s', app.name)
+                logger.info('Force upgrading app: %s', app.app.info.name)
                 if app.force_upgrade(app.setup_helper, packages):
                     logger.info('Successfully force upgraded app: %s',
-                                app.name)
+                                app.app.info.name)
                 else:
-                    logger.info('Ignored force upgrade for app: %s', app.name)
+                    logger.info('Ignored force upgrade for app: %s',
+                                app.app.info.name)
             except Exception as exception:
                 logger.exception('Error running force upgrade: %s', exception)
                 need_retry = True
