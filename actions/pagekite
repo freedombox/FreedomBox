@@ -172,19 +172,19 @@ def subcommand_remove_service(arguments):
     action_utils.service_restart('pagekite')
 
 
-def _get_existing_service_paths(service):
+def _get_existing_service_paths(service, keys=None):
     """Return paths of existing services that match the given service params"""
     # construct an augeas query path with patterns like:
     #     */service_on/*[protocol='http']
     path = PATHS['service_on']
-    for param, value in service.items():
-        path += "[%s='%s']" % (param, value)
+    for param in (keys or service.keys()):
+        path += "[%s='%s']" % (param, service[param])
     return aug.match(path)
 
 
 def _add_service(service):
     """Add a new service into configuration."""
-    if _get_existing_service_paths(service):
+    if _get_existing_service_paths(service, ['protocol', 'kitename']):
         msg = "Service with the parameters %s already exists"
         raise RuntimeError(msg % service)
 
