@@ -89,11 +89,6 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-
-    if old_version == 1:
-        helper.call('migration', actions.superuser_run, 'shadowsocks',
-                    ['migrate-1-2'])
-
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'shadowsocks', ['setup'])
     helper.call('post', app.enable)

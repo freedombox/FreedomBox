@@ -7,8 +7,10 @@ Helper script for configuring Shadowsocks.
 import argparse
 import json
 import os
-import subprocess
 import sys
+from shutil import move
+import random
+import string
 
 from plinth import action_utils
 from plinth.modules import shadowsocks
@@ -29,11 +31,6 @@ def parse_arguments():
     subparsers.add_parser('merge-config',
                           help='Merge JSON config from stdin with existing')
 
-    # Migrations
-    subparsers.add_parser(
-        'migrate-1-2',
-        help='Move shadowsocks config file to a secure location')
-
     subparsers.required = True
     return parser.parse_args()
 
@@ -43,6 +40,33 @@ def subcommand_setup(_):
     # Only client socks5 proxy is supported for now. Disable the
     # server component.
     action_utils.service_disable('shadowsocks-libev')
+
+    os.makedirs('/var/lib/private/shadowsocks-libev/freedombox/',
+                exist_ok=True)
+
+    # if existing configuration from version 1 which is normal file
+    # move it to new location.
+    if (
+            not os.path.islink(SHADOWSOCKS_CONFIG_SYMLINK) and
+            os.path.isfile(SHADOWSOCKS_CONFIG_SYMLINK)
+    ):
+        move(SHADOWSOCKS_CONFIG_SYMLINK, SHADOWSOCKS_CONFIG_ACTUAL)
+    else:
+        # new install
+        if not os.path.isfile(SHADOWSOCKS_CONFIG_ACTUAL):
+            initial_config = {
+                "server": "127.0.0.1",
+                "mode": "tcp_and_udp",
+                "server_port": 8388,
+                "local_port": 1080,
+                "password": ''.join(
+                    random.choice(string.ascii_letters) for i in range(20)),
+                "timeout": 60,
+                "method": "chacha20-ietf-poly1305"
+            }
+            open(SHADOWSOCKS_CONFIG_ACTUAL, 'w').write(
+                json.dumps(initial_config))
+
     if not os.path.islink(SHADOWSOCKS_CONFIG_SYMLINK):
         os.symlink(SHADOWSOCKS_CONFIG_ACTUAL, SHADOWSOCKS_CONFIG_SYMLINK)
 
@@ -71,18 +95,6 @@ def subcommand_merge_config(_):
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
     open(SHADOWSOCKS_CONFIG_SYMLINK, 'w').write(new_config)
 
-    action_utils.service_restart(shadowsocks.managed_services[0])
-
-
-def subcommand_migrate_1_2(_):
-    """Move shadowsocks config file to a secure location."""
-    if os.path.isfile(SHADOWSOCKS_CONFIG_SYMLINK):  # ignoring symlinks
-        os.makedirs('/var/lib/private/shadowsocks-libev/freedombox/',
-                    exist_ok=True)
-        os.replace(SHADOWSOCKS_CONFIG_SYMLINK, SHADOWSOCKS_CONFIG_ACTUAL)
-        os.symlink(SHADOWSOCKS_CONFIG_ACTUAL, SHADOWSOCKS_CONFIG_SYMLINK)
-
-    subprocess.check_call(['systemctl', 'daemon-reload'])
     action_utils.service_restart(shadowsocks.managed_services[0])
 
 
