@@ -23,6 +23,8 @@ version = 1
 
 is_essential = True
 
+depends = ['names']
+
 managed_services = ['avahi-daemon']
 
 managed_packages = ['avahi-daemon', 'avahi-utils']
