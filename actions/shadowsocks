@@ -107,7 +107,11 @@ def subcommand_merge_config(_):
     config = sys.stdin.read()
     config = json.loads(config)
     _merge_config(config)
-    action_utils.service_restart(shadowsocks.managed_services[0])
+
+    # Don't try_restart because initial configuration may not be valid so
+    # shadowsocks will not be running even when enabled.
+    if action_utils.service_is_enabled(shadowsocks.managed_services[0]):
+        action_utils.service_restart(shadowsocks.managed_services[0])
 
 
 def main():
