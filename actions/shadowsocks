@@ -7,6 +7,7 @@ Helper script for configuring Shadowsocks.
 import argparse
 import json
 import os
+import pathlib
 import random
 import string
 import sys
@@ -64,6 +65,19 @@ def subcommand_setup(_):
             'method': 'chacha20-ietf-poly1305'
         }
         _merge_config(initial_config)
+
+    # Commit 50e5608331330b37c0b9cce846e34ccc193d1b0d incorrectly sets the
+    # StateDirectory without setting DynamicUser. Buster's shadowsocks will
+    # then create directory /var/lib/shadowsocks-libev/freedombox/ and refuse
+    # to delete is in later versions when DynamicUser=yes needs it to be a
+    # symlink.
+    action_utils.service_daemon_reload()
+    wrong_state_dir = pathlib.Path('/var/lib/shadowsocks-libev/freedombox/')
+    if not wrong_state_dir.is_symlink() and wrong_state_dir.is_dir():
+        wrong_state_dir.rmdir()
+
+    if action_utils.service_is_enabled(shadowsocks.managed_services[0]):
+        action_utils.service_restart(shadowsocks.managed_services[0])
 
 
 def subcommand_get_config(_):

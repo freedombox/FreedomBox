@@ -15,7 +15,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 2
+version = 3
 
 managed_services = ['shadowsocks-libev-local@freedombox']
 
