@@ -7,10 +7,10 @@ Helper script for configuring Shadowsocks.
 import argparse
 import json
 import os
-import sys
-from shutil import move
 import random
 import string
+import sys
+from shutil import move
 
 from plinth import action_utils
 from plinth.modules import shadowsocks
@@ -46,29 +46,24 @@ def subcommand_setup(_):
 
     # if existing configuration from version 1 which is normal file
     # move it to new location.
-    if (
-            not os.path.islink(SHADOWSOCKS_CONFIG_SYMLINK) and
-            os.path.isfile(SHADOWSOCKS_CONFIG_SYMLINK)
-    ):
+    if (not os.path.islink(SHADOWSOCKS_CONFIG_SYMLINK)
+            and os.path.isfile(SHADOWSOCKS_CONFIG_SYMLINK)):
         move(SHADOWSOCKS_CONFIG_SYMLINK, SHADOWSOCKS_CONFIG_ACTUAL)
-    else:
-        # new install
-        if not os.path.isfile(SHADOWSOCKS_CONFIG_ACTUAL):
-            initial_config = {
-                "server": "127.0.0.1",
-                "mode": "tcp_and_udp",
-                "server_port": 8388,
-                "local_port": 1080,
-                "password": ''.join(
-                    random.choice(string.ascii_letters) for i in range(20)),
-                "timeout": 60,
-                "method": "chacha20-ietf-poly1305"
-            }
-            open(SHADOWSOCKS_CONFIG_ACTUAL, 'w').write(
-                json.dumps(initial_config))
 
     if not os.path.islink(SHADOWSOCKS_CONFIG_SYMLINK):
         os.symlink(SHADOWSOCKS_CONFIG_ACTUAL, SHADOWSOCKS_CONFIG_SYMLINK)
+
+    if not os.path.isfile(SHADOWSOCKS_CONFIG_ACTUAL):
+        password = ''.join(
+            random.choice(string.ascii_letters) for _ in range(12))
+        initial_config = {
+            'server': '127.0.0.1',
+            'server_port': 8388,
+            'local_port': 1080,
+            'password': password,
+            'method': 'chacha20-ietf-poly1305'
+        }
+        _merge_config(initial_config)
 
 
 def subcommand_get_config(_):
@@ -79,11 +74,8 @@ def subcommand_get_config(_):
         sys.exit(1)
 
 
-def subcommand_merge_config(_):
-    """Configure Shadowsocks."""
-    config = sys.stdin.read()
-    config = json.loads(config)
-
+def _merge_config(config):
+    """Write merged configuration into file."""
     try:
         current_config = open(SHADOWSOCKS_CONFIG_SYMLINK, 'r').read()
         current_config = json.loads(current_config)
@@ -95,6 +87,12 @@ def subcommand_merge_config(_):
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
     open(SHADOWSOCKS_CONFIG_SYMLINK, 'w').write(new_config)
 
+
+def subcommand_merge_config(_):
+    """Configure Shadowsocks."""
+    config = sys.stdin.read()
+    config = json.loads(config)
+    _merge_config(config)
     action_utils.service_restart(shadowsocks.managed_services[0])
 
 
