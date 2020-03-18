@@ -37,12 +37,20 @@
           {% endfor %}
         {% endblock %}
 
-        {% include "clients.html" with clients=selected_shortcut.clients enabled=True %}
+        <section class="toolbar">
+          <div class="btn-toolbar" role="toolbar">
+            {% include "clients-button.html" with clients=selected_shortcut.clients enabled=True %}
 
-        {% if user.is_authenticated and user_is_admin and selected_shortcut.configure_url %}
-          <a class="btn btn-primary" href="{{ selected_shortcut.configure_url }}">
-            {% trans "Configure &raquo;" %}</a>
-        {% endif %}
+            {% if user.is_authenticated and user_is_admin and selected_shortcut.configure_url %}
+              <a class="btn btn-primary" href="{{ selected_shortcut.configure_url }}">
+                {% trans "Configure &raquo;" %}</a>
+            {% endif %}
+          </div>
+
+          <div class="toolbar-collapsed-content">
+            {% include "clients.html" with clients=selected_shortcut.clients enabled=True %}
+          </div>
+        </section>
       {% endif %}
 
     </div>
