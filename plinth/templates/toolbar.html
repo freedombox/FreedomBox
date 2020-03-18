@@ -2,38 +2,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
-{% load bootstrap %}
 {% load i18n %}
-{% load plinth_extras %}
-{% load static %}
 
 {% block toolbar %}
 
   <section class="toolbar">
     <div class="btn-toolbar" role="toolbar">
 
-        {% if app_info.clients %}
-          {% with client_platforms=app_info.clients|clients_get_platforms %}
-            {% if client_platforms.web|length == 1 %}
-              <a target='_blank' rel="noopener noreferrer"
-                 class="btn btn-primary" role="button" data-turbolinks="false"
-                 {% if not enabled %} disabled="disabled"
-                 {% else %} href="{{ client_platforms.web.0.url }}"
-                 {% endif %} data-turbolinks="false">
-                {% trans "Launch web client" %}
-                <span class="fa fa-external-link"></span>
-              </a>
-            {% endif %}
-
-            {% if client_platforms.web|length > 1 or client_platforms.other %}
-              <button type="button" data-toggle="collapse" data-target="#clients"
-                      class="btn btn-default collapsed collapsible-button">
-                <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
-                {% trans "Client Apps" %}
-              </button>
-            {% endif %}
-          {% endwith %}
-        {% endif %}
+        {% include "clients-button.html" with clients=app_info.clients enabled=is_enabled %}
 
         {% if has_diagnostics %}
           <!-- Single button -->
