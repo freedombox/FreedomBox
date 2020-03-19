@@ -13,7 +13,7 @@ from plinth import menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 is_essential = True
 
@@ -86,7 +86,14 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
+
+    # Enable automatic upgrades but only on first install
+    if not old_version:
+        helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
+
+    # Update apt preferences whenever on first install and on version
+    # increment.
+    helper.call('post', actions.superuser_run, 'upgrades', ['setup'])
 
 
 def is_enabled():
