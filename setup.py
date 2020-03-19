@@ -7,6 +7,7 @@ FreedomBox Service setup file.
 import collections
 import glob
 import os
+import pathlib
 import re
 import shutil
 import subprocess
@@ -42,6 +43,12 @@ DISABLED_APPS_TO_REMOVE = [
     'xmpp',
     'disks',
     'udiskie',
+    'restore',
+    'repro',
+]
+
+REMOVED_FILES = [
+    '/etc/apt/preferences.d/50freedombox3.pref',
 ]
 
 LOCALE_PATHS = ['plinth/locale']
@@ -121,11 +128,16 @@ class CustomClean(clean):
 class CustomInstall(install):
     """Override install command."""
     def run(self):
-        log.info("Removing disabled apps")
         for app in DISABLED_APPS_TO_REMOVE:
-            file_path = os.path.join(ENABLED_APPS_PATH, app)
-            log.info("removing '%s'", file_path)
-            subprocess.check_call(['rm', '-f', file_path])
+            file_path = pathlib.Path(ENABLED_APPS_PATH) / app
+            if file_path.exists():
+                log.info("removing '%s'", str(file_path))
+                subprocess.check_call(['rm', '-f', str(file_path)])
+
+        for path in REMOVED_FILES:
+            if pathlib.Path(path).exists():
+                log.info('removing %s', path)
+                subprocess.check_call(['rm', '-f', path])
 
         install.run(self)
 
