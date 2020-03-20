@@ -12,7 +12,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import Version, format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -39,8 +39,6 @@ _description = [
           '/tt-rss-app</a> for connecting.'))
 ]
 
-group = ('feed-reader', _('Read and subscribe to news feeds'))
-
 app = None
 
 
@@ -52,6 +50,9 @@ class TTRSSApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {'feed-reader': _('Read and subscribe to news feeds')}
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Tiny Tiny RSS'), icon_filename='ttrss',
                                short_description=_('News Feed Reader'),
@@ -69,7 +70,7 @@ class TTRSSApp(app_module.App):
                                       icon=info.icon_filename, url='/tt-rss',
                                       clients=info.clients,
                                       login_required=True,
-                                      allowed_groups=[group[0]])
+                                      allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-ttrss', info.name,
@@ -83,6 +84,10 @@ class TTRSSApp(app_module.App):
         daemon = Daemon('daemon-ttrss', managed_services[0])
         self.add(daemon)
 
+        users_and_groups = UsersAndGroups('users-and-groups-ttrss',
+                                          groups=groups)
+        self.add(users_and_groups)
+
     def enable(self):
         """Enable components and API access."""
         super().enable()
@@ -93,7 +98,6 @@ def init():
     """Initialize the module."""
     global app
     app = TTRSSApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

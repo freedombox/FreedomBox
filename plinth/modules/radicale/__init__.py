@@ -17,6 +17,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy, Version
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -38,8 +39,6 @@ _description = [
       'new calendars and addressbooks. It does not support adding events or '
       'contacts, which must be done using a separate client.'),
 ]
-
-reserved_usernames = ['radicale']
 
 logger = logging.getLogger(__name__)
 
@@ -90,6 +89,10 @@ class RadicaleApp(app_module.App):
 
         daemon = RadicaleDaemon('daemon-radicale', managed_services[0])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-radicale',
+                                          reserved_usernames=['radicale'])
+        self.add(users_and_groups)
 
 
 class RadicaleWebserver(Webserver):

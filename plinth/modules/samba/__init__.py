@@ -17,7 +17,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -44,8 +44,6 @@ _description = [
       'own private space.'),
 ]
 
-group = ('freedombox-share', _('Access to the private shares'))
-
 app = None
 
 
@@ -57,6 +55,9 @@ class SambaApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {'freedombox-share': _('Access to the private shares')}
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Samba'), icon_filename='samba',
                                short_description=_('File Sharing'),
@@ -74,7 +75,7 @@ class SambaApp(app_module.App):
             short_description=info.short_description, icon=info.icon_filename,
             description=info.description,
             configure_url=reverse_lazy('samba:index'), clients=info.clients,
-            login_required=True, allowed_groups=[group[0]])
+            login_required=True, allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-samba', info.name, ports=['samba'])
@@ -92,12 +93,15 @@ class SambaApp(app_module.App):
 
         self.add(daemon_nmbd)
 
+        users_and_groups = UsersAndGroups('users-and-groups-samba',
+                                          groups=groups)
+        self.add(users_and_groups)
+
 
 def init():
     """Initialize the module."""
     global app
     app = SambaApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

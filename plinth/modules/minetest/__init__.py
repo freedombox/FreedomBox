@@ -12,6 +12,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -42,8 +43,6 @@ _description = [
 ]
 
 port_forwarding_info = [('UDP', 30000)]
-
-reserved_usernames = ['Debian-minetest']
 
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
@@ -86,6 +85,11 @@ class MinetestApp(app_module.App):
         daemon = Daemon('daemon-minetest', managed_services[0],
                         listen_ports=[(30000, 'udp4')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups(
+            'users-and-groups-minetest',
+            reserved_usernames=['Debian-minetest'])
+        self.add(users_and_groups)
 
 
 def init():

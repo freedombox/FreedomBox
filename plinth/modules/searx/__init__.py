@@ -12,7 +12,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unused-import
                        backup, clients)
@@ -28,8 +28,6 @@ _description = [
       'It stores no cookies by default.')
 ]
 
-group = ('web-search', _('Search the web'))
-
 manual_page = 'Searx'
 
 app = None
@@ -43,6 +41,9 @@ class SearxApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {'web-search': _('Search the web')}
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Searx'), icon_filename='searx',
                                short_description=_('Web Search'),
@@ -60,7 +61,7 @@ class SearxApp(app_module.App):
             short_description=info.short_description, icon=info.icon_filename,
             url='/searx/', clients=info.clients,
             login_required=(not is_public_access_enabled()),
-            allowed_groups=[group[0]])
+            allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-searx', info.name,
@@ -77,6 +78,10 @@ class SearxApp(app_module.App):
 
         uwsgi = Uwsgi('uwsgi-searx', 'searx')
         self.add(uwsgi)
+
+        users_and_groups = UsersAndGroups('users-and-groups-searx',
+                                          groups=groups)
+        self.add(users_and_groups)
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
@@ -101,7 +106,6 @@ def init():
     """Initialize the module."""
     global app
     app = SearxApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

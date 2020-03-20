@@ -163,11 +163,19 @@ with the FreedomBox framework in ``__init.py__``.
 
 .. code-block:: python3
 
-  group = ('bit-torrent', 'Download files using BitTorrent applications')
+  from plinth.modules.users.components import UsersAndGroups
 
-  def init():
+  class TransmissionApp(app_module.App):
       ...
-      register_group(group)
+
+      def __init__(self):
+          ...
+
+          groups = { 'bit-torrent': _('Download files using BitTorrent applications') }
+          users_and_groups = UsersAndGroups('users-and-groups-transmission',
+                                            groups=groups)
+          self.add(users_and_groups)
+
 
 Then in the Apache configuration snippet, we can mandate that only users of this
 group (and, of course, admin users) should be allowed to access our app. In the

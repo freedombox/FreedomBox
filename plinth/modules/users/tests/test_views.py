@@ -13,6 +13,8 @@ from django.core.exceptions import PermissionDenied
 from plinth import module_loader
 from plinth.modules.users import views
 
+from ..components import UsersAndGroups
+
 # For all tests, plinth.urls instead of urls configured for testing, and
 # django database
 pytestmark = [pytest.mark.urls('plinth.urls'), pytest.mark.django_db]
@@ -43,15 +45,16 @@ def action_run(action, options, **kwargs):
 @pytest.fixture(autouse=True)
 def module_patch():
     """Patch users module."""
-    loaded_modules = [('minetest',
-                       Mock(reserved_usernames=['Debian-minetest']))]
     pwd_users = [Mock(pw_name='root'), Mock(pw_name='plinth')]
 
-    with patch('pwd.getpwall', return_value=pwd_users),\
-        patch('plinth.actions.superuser_run', side_effect=action_run),\
-        patch('plinth.module_loader.loaded_modules.items',
-              return_value=loaded_modules):
+    UsersAndGroups._all_components = set()
+    UsersAndGroups('test-users-and-groups',
+                   groups={'admin': 'The admin group'})
+    UsersAndGroups('users-and-groups-minetest',
+                   reserved_usernames=['debian-minetest'])
 
+    with patch('pwd.getpwall', return_value=pwd_users),\
+            patch('plinth.actions.superuser_run', side_effect=action_run):
         yield
 
 

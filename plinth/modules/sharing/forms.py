@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules import sharing
-from plinth.modules.users.forms import get_group_choices
+from plinth.modules.users.components import UsersAndGroups
 
 
 class AddShareForm(forms.Form):
@@ -29,6 +29,7 @@ class AddShareForm(forms.Form):
             'Make files in this folder available to anyone with the link.'))
 
     groups = forms.MultipleChoiceField(
+        choices=UsersAndGroups.get_group_choices,
         widget=forms.CheckboxSelectMultiple, required=False,
         label=_('User groups that can read the files in the share'),
         help_text=_(
@@ -38,7 +39,6 @@ class AddShareForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Initialize the form with extra request argument."""
         super().__init__(*args, **kwargs)
-        self.fields['groups'].choices = get_group_choices()
         self.fields['name'].widget.attrs.update({'autofocus': 'autofocus'})
 
     def clean_name(self):

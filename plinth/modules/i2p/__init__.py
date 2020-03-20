@@ -12,7 +12,7 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -34,8 +34,6 @@ _description = [
     _('The first visit to the provided web interface will initiate the '
       'configuration process.')
 ]
-
-group = ('i2p', _('Manage I2P application'))
 
 port_forwarding_info = [
     ('TCP', 4444),
@@ -60,6 +58,9 @@ class I2PApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {'i2p': _('Manage I2P application')}
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('I2P'), icon_filename='i2p',
                                short_description=_('Anonymity Network'),
@@ -77,7 +78,7 @@ class I2PApp(app_module.App):
                                       icon=info.icon_filename, url='/i2p/',
                                       clients=info.clients,
                                       login_required=True,
-                                      allowed_groups=[group[0]])
+                                      allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-i2p-web', info.name,
@@ -97,12 +98,15 @@ class I2PApp(app_module.App):
                         listen_ports=[(7657, 'tcp6')])
         self.add(daemon)
 
+        users_and_groups = UsersAndGroups('users-and-groups-i2p',
+                                          groups=groups)
+        self.add(users_and_groups)
+
 
 def init():
     """Initialize the module."""
     global app
     app = I2PApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

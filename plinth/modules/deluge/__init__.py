@@ -11,7 +11,8 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import add_user_to_share_group, register_group
+from plinth.modules.users import add_user_to_share_group
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -27,11 +28,9 @@ _description = [
       'change it immediately after enabling this service.')
 ]
 
-group = ('bit-torrent', _('Download files using BitTorrent applications'))
-
-reserved_usernames = ['debian-deluged']
-
 app = None
+
+SYSTEM_USER = 'debian-deluged'
 
 
 class DelugeApp(app_module.App):
@@ -42,6 +41,11 @@ class DelugeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {
+            'bit-torrent': _('Download files using BitTorrent applications')
+        }
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Deluge'), icon_filename='deluge',
                                short_description=_('BitTorrent Web Client'),
@@ -59,7 +63,7 @@ class DelugeApp(app_module.App):
                                       url='/deluge', icon=info.icon_filename,
                                       clients=info.clients,
                                       login_required=True,
-                                      allowed_groups=[group[0]])
+                                      allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-deluge', info.name,
@@ -78,12 +82,16 @@ class DelugeApp(app_module.App):
                             listen_ports=[(8112, 'tcp4')])
         self.add(daemon_web)
 
+        users_and_groups = UsersAndGroups('users-and-groups-deluge',
+                                          reserved_usernames=[SYSTEM_USER],
+                                          groups=groups)
+        self.add(users_and_groups)
+
 
 def init():
     """Initialize the Deluge module."""
     global app
     app = DelugeApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
@@ -94,5 +102,5 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'deluge', ['setup'])
-    add_user_to_share_group(reserved_usernames[0])
+    add_user_to_share_group(SYSTEM_USER)
     helper.call('post', app.enable)

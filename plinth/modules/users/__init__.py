@@ -14,6 +14,8 @@ from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.utils import format_lazy
 
+from .components import UsersAndGroups
+
 version = 3
 
 is_essential = True
@@ -45,9 +47,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-# All FreedomBox user groups
-groups = dict()
-
 app = None
 
 
@@ -74,6 +73,12 @@ class UsersApp(app_module.App):
         daemon = Daemon('daemon-users', managed_services[0],
                         listen_ports=[(389, 'tcp4'), (389, 'tcp6')])
         self.add(daemon)
+
+        # Add the admin group
+        groups = {'admin': _('Access to all services and system settings')}
+        users_and_groups = UsersAndGroups('users-and-groups-admin',
+                                          groups=groups)
+        self.add(users_and_groups)
 
     def diagnose(self):
         """Run diagnostics and return the results."""
@@ -127,10 +132,6 @@ def create_group(group):
 def remove_group(group):
     """Remove an LDAP group."""
     actions.superuser_run('users', options=['remove-group', group])
-
-
-def register_group(group):
-    groups[group[0]] = group[1]
 
 
 def get_last_admin_user():

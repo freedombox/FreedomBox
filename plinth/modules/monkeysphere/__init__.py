@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import menu
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -33,8 +34,6 @@ _description = [
       'website</a>.')
 ]
 
-reserved_usernames = ['monkeysphere']
-
 app = None
 
 
@@ -56,6 +55,10 @@ class MonkeysphereApp(app_module.App):
                               'monkeysphere:index', parent_url_name='system',
                               advanced=True)
         self.add(menu_item)
+
+        users_and_groups = UsersAndGroups('users-and-groups-monkeysphere',
+                                          reserved_usernames=['monkeysphere'])
+        self.add(users_and_groups)
 
 
 def init():

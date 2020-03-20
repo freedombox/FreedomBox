@@ -15,6 +15,7 @@ from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed
+from plinth.modules.users.components import UsersAndGroups
 
 from . import utils
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -37,8 +38,6 @@ _description = [
       '<a href="https://www.torproject.org/download/download-easy.html.en">'
       'Tor Browser</a>.')
 ]
-
-reserved_usernames = ['debian-tor']
 
 app = None
 
@@ -81,6 +80,10 @@ class TorApp(app_module.App):
             listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
                           (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-tor',
+                                          reserved_usernames=['debian-tor'])
+        self.add(users_and_groups)
 
     def diagnose(self):
         """Run diagnostics and return the results."""
