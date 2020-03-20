@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-09 19:13-0400\n"
-"PO-Revision-Date: 2020-03-08 17:32+0000\n"
+"PO-Revision-Date: 2020-03-23 03:47+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -398,32 +398,25 @@ msgid "Submit"
 msgstr "Sänd"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
-#, fuzzy
-#| msgid "Existing repository is not encrypted."
 msgid "This repository is encrypted"
-msgstr "Befintlig respository är inte krypterad."
+msgstr "Den här databasen är krypterad"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
-#, fuzzy
-#| msgid "Remove Location"
 msgid "Unmount Location"
-msgstr "Ta bort plats"
+msgstr "Avmontera plats"
 
 #: plinth/modules/backups/templates/backups_repository.html:45
-#, fuzzy
-#| msgid "Mount Point"
 msgid "Mount Location"
-msgstr "Monteringspunkt"
+msgstr "Montera plats"
 
 #: plinth/modules/backups/templates/backups_repository.html:56
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
+"Ta bort säkerhetskopieringsplatsen. Fjärrsäkerhetskopieringen tas inte bort."
 
 #: plinth/modules/backups/templates/backups_repository.html:77
-#, fuzzy
-#| msgid "downloading"
 msgid "Download"
-msgstr "ladda ner"
+msgstr "Ladda ner"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
@@ -432,10 +425,8 @@ msgid "Restore"
 msgstr "Återställa"
 
 #: plinth/modules/backups/templates/backups_repository.html:103
-#, fuzzy
-#| msgid "No shares currently configured."
 msgid "No archives currently exist."
-msgstr "Inga shares har konfigurerats."
+msgstr "Det finns för närvarande inga arkiv."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
@@ -3526,23 +3517,20 @@ msgid "Open"
 msgstr "Öppet"
 
 #: plinth/modules/networks/forms.py:297
-#, fuzzy, python-brace-format
-#| msgid "Use upstream bridges to connect to Tor network"
+#, python-brace-format
 msgid "Choose how your {box_name} is connected to your network"
-msgstr "Använda uppströms broar för att ansluta till Tor-nätverket"
+msgstr "Välj hur ditt {box_name} är anslutet till ditt nätverk"
 
 #: plinth/modules/networks/forms.py:304
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Your %(box_name)s gets its internet connection from your router via Wi-Fi "
-#| "or Ethernet cable. This is a typical home setup."
+#, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
 "Internet connection from your router via Wi-Fi or Ethernet cable. This is a "
 "typical home setup.</p>"
 msgstr ""
-"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
-"Ethernet-kabel. Detta är en typisk hem inställning."
+"Ansluten till en router <p class=\"help-block\">Din {box_name} får sin "
+"Internetanslutning från routern via Wi-Fi- eller Ethernet-kabel. Detta är en "
+"typisk hem setup.</p>"
 
 #: plinth/modules/networks/forms.py:311
 #, python-brace-format
@@ -3552,6 +3540,10 @@ msgid ""
 "adapter. {box_name} is directly connected to the Internet and all your "
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
+"{box_name} är routern <p class=\"help-block\">Din {box_name} har flera "
+"nätverksgränssnitt, till exempel flera Ethernet-portar eller ett Wi-Fi-kort. "
+"{box_name} är direkt ansluten till Internet och alla dina enheter ansluter "
+"till {box_name} för sin Internetanslutning.</p>"
 
 #: plinth/modules/networks/forms.py:320
 #, python-brace-format
@@ -3560,6 +3552,9 @@ msgid ""
 "connection is directly attached to your {box_name} and there are no other "
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
+"Direkt ansluten till Internet <p class=\"help-block\">Din Internetanslutning "
+"är direkt ansluten till {box_name} och det finns inga andra enheter i "
+"nätverket. Detta kan inträffa på community- eller molninställningar.</p>"
 
 #: plinth/modules/networks/forms.py:339
 msgid "Choose your internet connection type"
@@ -3626,6 +3621,9 @@ msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-block"
 "\">You will be suggested the most conservative actions.</p>"
 msgstr ""
+"Jag vet inte vilken typ av anslutning internetleverantören tillhandahåller <"
+"p class=\"help-block\">Du kommer att föreslås de mest konservativa "
+"åtgärderna.</p>"
 
 #: plinth/modules/networks/forms.py:398
 msgid "Preferred router configuration"
@@ -3649,16 +3647,7 @@ msgstr ""
 "{box_name} i routerns konfiguration.</p>"
 
 #: plinth/modules/networks/forms.py:415
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Forward Specific Traffic as needed by each application<p class=\"help-"
-#| "block\">You may alternatively choose to forward only specific traffic to "
-#| "your {box_name}. This is ideal if you have other servers like {box_name} "
-#| "in your network or if your router does not support DMZ feature. All "
-#| "applications that provide a web interface need you to forward traffic "
-#| "from ports 80 and 443 to work. Each of the other applications will "
-#| "suggest which port(s) need to be forwarded for that application to work.</"
-#| "p>"
+#, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
 "\">You may alternatively choose to forward only specific traffic to your "
@@ -3668,31 +3657,25 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
-"Vidarebefordra specifik trafik efter behov av varje program<p class=\"help-"
-"block\">Du kan alternativt välja att vidarebefordra endast specifik trafik "
-"till din {box_name}. Detta är idealiskt om du har andra servrar som "
+"Vidarebefordra specifik trafik efter behov av varje program <p class=\"help-"
+"block\">Du kan alternativt välja att endast vidarebefordra specifik trafik "
+"till dina {box_name}. Detta är idealiskt om du har andra servrar som "
 "{box_name} i nätverket eller om routern inte stöder DMZ-funktionen. Alla "
-"program som tillhandahåller ett webbgränssnitt behöver du vidarebefordra "
-"trafik från portar 80 och 443 för att fungera. Var och en av de andra "
-"ansökningarna kommer att föreslå vilka portar som måste vidarebefordras för "
-"att programmet ska fungera.</p>"
+"program som tillhandahåller ett webbgränssnitt måste du vidarebefordra "
+"trafik från portarna 80 och 443 för att fungera. Var och en av de andra "
+"ansökningarna kommer att föreslå vilken eller vilka portar som behöver "
+"vidarebefordras för att ansökan ska fungera.</p>"
 
 #: plinth/modules/networks/forms.py:429
-#, fuzzy
-#| msgid ""
-#| "Router is currently unconfigured<p class=\"help-block\">Choose this if "
-#| "you have not configured or are unable to configure the router currently "
-#| "and wish to be reminded later. Some of the other configuration steps may "
-#| "fail.</p>"
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
-"Routern är för närvarande okonfigurerad<p class=\"help-block\">Välj detta om "
-"du inte har konfigurerat eller inte kan konfigurera routern för närvarande "
-"och vill bli påmind senare. Vissa av de andra konfigurationsstegen kan "
-"misslyckas.</p>"
+"Routern är för närvarande okonfigurerad <p class=\"help-block\">Välj det här "
+"alternativet om du inte har konfigurerat eller inte kan konfigurera routern "
+"för tillfället och vill bli påmind senare. Vissa andra konfigurationssteg "
+"kan misslyckas.</p>"
 
 #: plinth/modules/networks/templates/connection_show.html:28
 msgid "Edit connection"
@@ -3969,29 +3952,21 @@ msgstr "Skaffa..."
 
 #: plinth/modules/networks/templates/internet_connectivity_content.html:10
 msgid "What Type Of Internet Connection Do You Have?"
-msgstr ""
+msgstr "Vilken typ av Internet-anslutning har du?"
 
 #: plinth/modules/networks/templates/internet_connectivity_content.html:16
-#, fuzzy
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
 msgid ""
 "Select an option that best describes the type of Internet connection. This "
 "information is used only to guide you with further setup."
 msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+"Välj ett alternativ som bäst beskriver typen av Internetanslutning. Den här "
+"informationen används endast för att guida dig med ytterligare inställningar."
 
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
 #: plinth/modules/networks/templates/network_topology_firstboot.html:19
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:19
-#, fuzzy
-#| msgid "skip this step"
 msgid "Skip this step"
-msgstr "hoppa över det här steget"
+msgstr "Hoppa över det här steget"
 
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:21
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
@@ -4000,41 +3975,36 @@ msgid "Next"
 msgstr "Nästa"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:9
-#, fuzzy
-#| msgid "Connection Type"
 msgid "Your Internet Connection Type"
-msgstr "Anslutningstyp"
+msgstr "Din Internet-anslutningstyp"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:14
-#, fuzzy
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
 msgid ""
 "The following best describes the type of Internet connection provided by "
 "your ISP. This information is only used to suggest you necessary "
 "configuration actions."
 msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+"Följande beskriver bäst vilken typ av Internetanslutning som tillhandahålls "
+"av Internet-leverantören. Den här informationen används bara för att föreslå "
+"dig nödvändiga konfigurationsåtgärder."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:23
 msgid "My ISP provides a public IP address that does not change over time."
 msgstr ""
+"Min ISP tillhandahåller en offentlig IP-adress som inte ändras med tiden."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:27
 msgid "My ISP provides a public IP address that may change over time."
 msgstr ""
+"Min ISP tillhandahåller en offentlig IP-adress som kan ändras med tiden."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:31
 msgid "My ISP does not provide a public IP address."
-msgstr ""
+msgstr "Min internetleverantör ger inte någon offentlig IP-adress."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:35
 msgid "I do not know the type of connection my ISP provides."
-msgstr ""
+msgstr "Jag vet inte vilken typ av anslutning min IsP ger."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:41
 #: plinth/modules/networks/templates/network_topology_main.html:41
@@ -4042,25 +4012,20 @@ msgid "Update..."
 msgstr "Uppdatering..."
 
 #: plinth/modules/networks/templates/network_topology_content.html:10
-#, fuzzy, python-format
-#| msgid "Direct connection to the Internet."
+#, python-format
 msgid "How is Your %(box_name)s Connected to the Internet?"
-msgstr "Direktanslutning till Internet."
+msgstr "Hur är din% (box_name) s ansluten till Internet?"
 
 #: plinth/modules/networks/templates/network_topology_content.html:16
-#, fuzzy, python-format
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
+#, python-format
 msgid ""
 "Select an option that best describes how your %(box_name)s is connected in "
 "your network. This information is used to guide you with further setup. It "
 "can be changed later."
 msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+"Välj ett alternativ som bäst beskriver hur %(box_name)s är anslutet i "
+"nätverket. Den här informationen används för att guida dig med ytterligare "
+"inställningar. Det kan ändras senare."
 
 #: plinth/modules/networks/templates/network_topology_main.html:9
 #, python-format
@@ -4079,16 +4044,13 @@ msgstr ""
 "konfigurationsåtgärder."
 
 #: plinth/modules/networks/templates/network_topology_main.html:24
-#, fuzzy, python-format
-#| msgid ""
-#| "Your %(box_name)s gets its internet connection from your router via Wi-Fi "
-#| "or Ethernet cable. This is a typical home setup."
+#, python-format
 msgid ""
 "Your %(box_name)s gets its Internet connection from your router via Wi-Fi or "
 "Ethernet cable. This is a typical home setup."
 msgstr ""
-"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
-"Ethernet-kabel. Detta är en typisk hem inställning."
+"%(box_name)s får sin Internetanslutning från routern via Wi-Fi- eller "
+"Ethernet-kabel. Detta är en typisk hem setup."
 
 #: plinth/modules/networks/templates/network_topology_main.html:29
 #, python-format
@@ -4096,6 +4058,8 @@ msgid ""
 "Your %(box_name)s is directly connected to the Internet and all your devices "
 "connect to %(box_name)s for their Internet connectivity."
 msgstr ""
+"%(box_name)s är direkt ansluten till Internet och alla dina enheter ansluter "
+"till %(box_name)s för sin Internetanslutning."
 
 #: plinth/modules/networks/templates/network_topology_main.html:34
 #, python-format
@@ -4103,6 +4067,8 @@ msgid ""
 "Your Internet connection is directly attached to your %(box_name)s and there "
 "are no other devices on the network."
 msgstr ""
+"Din Internetanslutning är direkt kopplad till dina %(box_name)s och det "
+"finns inga andra enheter i nätverket."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:10
 #, python-format
@@ -4132,19 +4098,14 @@ msgstr ""
 "tjänsterna."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options, to overcome this limitation, choose 'no public address' "
-#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'no public address' option "
 "in Internet connection type selection."
 msgstr ""
 "Om du inte har kontroll över routern väljer du att inte konfigurera den. Om "
-"du vill visa alternativ väljer du alternativet \"ingen offentlig adress\" i "
-"valet av internetanslutningstyp för internetanslutning."
+"du vill se alternativ för att övervinna denna begränsning väljer du "
+"alternativet \"ingen offentlig adress\" i valet av internetanslutningstyp."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -4282,10 +4243,8 @@ msgid "Enable OpenVPN server"
 msgstr "Aktivera OpenVPN server"
 
 #: plinth/modules/openvpn/manifest.py:48
-#, fuzzy
-#| msgid "TunnelBlick"
 msgid "Tunnelblick"
-msgstr "TunnelBlick"
+msgstr "Tunnelblick"
 
 #: plinth/modules/openvpn/templates/openvpn.html:27
 #, python-format
