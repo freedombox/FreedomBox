@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
 "PO-Revision-Date: 2019-09-13 05:23+0000\n"
 "Last-Translator: Anxin YI <2732146152@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -114,7 +114,7 @@ msgstr "在 tcp {kind} 访问 URL {url}"
 msgid "Access URL {url}"
 msgstr "访问 URL {url}"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -129,11 +129,11 @@ msgstr ""
 "在内部网络上运行。可以禁用以提高安全性，尤其是当连接到一个充满敌意的本地网"
 "络。"
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
 msgstr "服务发现"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr "本地网络领域"
 
@@ -387,7 +387,7 @@ msgstr "删除名为 %(name)s 的存档"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "提交"
@@ -710,7 +710,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "配置已更新"
@@ -1156,7 +1156,7 @@ msgstr "更新安装程序"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "设置未改变"
 
@@ -1855,7 +1855,7 @@ msgstr "文档"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "手册"
 
@@ -2705,7 +2705,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr ""
 
@@ -4215,7 +4215,7 @@ msgstr "安装已完成。"
 msgid "Setup failed."
 msgstr "安装失败。"
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4226,23 +4226,23 @@ msgstr ""
 "PageKite 是一种在您没有直接连接到互联网时暴露 {box_name} 服务的系统。 如果您"
 "的 {box_name} 服务无法从互联网访问，您只需要设置 PageKite。这包括以下情况："
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} 位于受限的防火墙的后面。"
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr "{box_name} 已连接到非你控制的（无线）路由器。"
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
 msgstr "您的 ISP 没有提供外部的 IP 地址而是通过提供 NAT 连接互联网。"
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 #, fuzzy
 #| msgid ""
 #| "Your ISP does not provide you a static IP address and your IP address "
@@ -4253,11 +4253,11 @@ msgid ""
 msgstr ""
 "您的 ISP 不提供你一个静态的 IP 地址且你连接到互联网的 IP 地址每次会更改。"
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "您的 ISP 限制传入的连接。"
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4275,29 +4275,29 @@ msgstr ""
 "使用任何 pagekite 服务提供商，例如<a href=\"https://pagekite.net\">pagekite."
 "net</a>。将来，您甚至可以使用好友的 {box_name}。"
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 #, fuzzy
 #| msgid "Pagekite"
 msgid "PageKite"
 msgstr "Pagekite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 #, fuzzy
 #| msgid "Public Visibility (PageKite)"
 msgid "Public Visibility"
 msgstr "公开可见性（PageKite）"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 #, fuzzy
 #| msgid "PageKite Account"
 msgid "PageKite Domain"
 msgstr "PageKite 帐户"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "服务器域"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4305,117 +4305,100 @@ msgstr ""
 "选择您的 pagekite 服务器。设置\"pagekite.net\"以便使用默认的 pagekite.net 服"
 "务器。"
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "服务器端口"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "你 pagekite 服务器的端口 (默认: 80)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "Kite 名字"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "示例: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "无效的 Kite 名称"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "Kite 密码"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
 msgstr "为 kite 设置的密码，如果没有为 kite 设置密码则会使用你账号的默认密码。"
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "Kite 详细信息设置"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "Pagekite 服务器设置"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "PageKite 已启用"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "PageKite 已禁用"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "协议"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "外网（前端）端口"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "内网（freedombox）端口"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "启用子域"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "删除自定义服务"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr "这项服务是可作为标准的服务。请使用\"标准服务\"页启用它。"
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "已添加的自定义服务"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "此服务已存在"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "定制服务"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 #, fuzzy
 #| msgid "Custom Services"
 msgid "Add Custom Service"
 msgstr "定制服务"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "现有的自定义服务"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "连接到 %(backend_host)s:%(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "删除此服务"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Add custom PageKite service"
 msgstr "已添加的自定义服务"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4423,47 +4406,6 @@ msgid ""
 msgstr ""
 "<b>警告：</b><br>您的 PageKite 前端服务器可能不支持您在此处定义的所有协议/端"
 "口组合。例如，已知443以外的端口上的HTTPS会导致问题。"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "使用你的凭证安装一个 freedombox.me 子域名"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"<a href=\"%(finish_firstboot_url)s\">跳过这一步</a> 如果你没有凭证或想一会使"
-"用不同的域名或认证来配置 PageKite。"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr "可以使用已兑换的凭证但只能在初始注册子域名时可用。"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "注册"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "跳过注册"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>警告：</b> <br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr "已发布的服务可从互联网访问并受到邪恶攻击。"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "保存服务"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6249,7 +6191,7 @@ msgstr ""
 msgid "Update"
 msgstr "更新"
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Updated"
@@ -7108,6 +7050,16 @@ msgstr "语言"
 msgid "Log in"
 msgstr "登录"
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "启动 web 客户端"
+
+#: plinth/templates/clients-button.html:25
+#, fuzzy
+#| msgid "Quassel IRC Client"
+msgid "Client Apps"
+msgstr "Quassel IRC 客户端"
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr ""
@@ -7189,11 +7141,11 @@ msgid ""
 msgstr ""
 "启用一些<a href=\"%(apps_url)s\">应用程序</a>来将其快捷方式放到此页面。"
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr "配置 &raquo；"
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7203,7 +7155,7 @@ msgstr ""
 "%(box_name)s 是一个基于 Debian 并完全使用自由软件来自托管部署社交应用的小机"
 "器。它提供在线交流工具以尊重您的隐私和数据所有权。"
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, fuzzy, python-format
 #| msgid ""
 #| "This portal is a part of Plinth, the %(box_name)s web interface. Plinth "
@@ -7217,29 +7169,29 @@ msgstr ""
 "此页面是 Plinth 的一部分，%(box_name)s 的 Web 接口。Plinth 是自由软件，以 "
 "GNU Affero 通用许可证第 3 版或更高版发布。"
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr "主页"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr "源代码"
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr "捐赠"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr ""
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr "邮件列表"
 
@@ -7320,27 +7272,64 @@ msgstr "正在安装 %(package_names)s：%(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "已完成 %(percentage)s%%"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "启动 web 客户端"
-
-#: plinth/templates/toolbar.html:32
-#, fuzzy
-#| msgid "Quassel IRC Client"
-msgid "Client Apps"
-msgstr "Quassel IRC 客户端"
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "应用程序已启用"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "应用程序已禁用"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid "Kite details set"
+#~ msgstr "Kite 详细信息设置"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "Pagekite 服务器设置"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "PageKite 已启用"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "PageKite 已禁用"
+
+#~ msgid "Existing custom services"
+#~ msgstr "现有的自定义服务"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "使用你的凭证安装一个 freedombox.me 子域名"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "<a href=\"%(finish_firstboot_url)s\">跳过这一步</a> 如果你没有凭证或想一会"
+#~ "使用不同的域名或认证来配置 PageKite。"
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr "可以使用已兑换的凭证但只能在初始注册子域名时可用。"
+
+#~ msgid "Register"
+#~ msgstr "注册"
+
+#~ msgid "Skip Registration"
+#~ msgstr "跳过注册"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>警告：</b> <br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr "已发布的服务可从互联网访问并受到邪恶攻击。"
+
+#~ msgid "Save Services"
+#~ msgstr "保存服务"
 
 #, fuzzy
 #~| msgid "Custom Services"

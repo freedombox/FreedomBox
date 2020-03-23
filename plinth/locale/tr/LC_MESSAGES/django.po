@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
 "PO-Revision-Date: 2019-08-08 00:22+0000\n"
 "Last-Translator: Mesut Akcan <makcan@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -115,7 +115,7 @@ msgstr "tcp{kind} üzerinden {url} bağlantısına eriş"
 msgid "Access URL {url}"
 msgstr "{url} bağlantısına eriş"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -132,11 +132,11 @@ msgstr ""
 "çalışır. Özellikle düşman bir yerel ağa bağlanıldığında güvenliği arttırmak "
 "için devre dışı bırakılabilir."
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
 msgstr "Servis Keşfi"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr ""
 
@@ -396,7 +396,7 @@ msgstr "%(name)s arşivini sil"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "İbraz Et"
@@ -722,7 +722,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Kurulum güncellendi"
@@ -1184,7 +1184,7 @@ msgstr "Kurulumu güncelle"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "Ayar değiştirilmedi"
 
@@ -1912,7 +1912,7 @@ msgstr "Belgelendirme"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "Kullanım Kılavuzu"
 
@@ -2801,7 +2801,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "Viki"
 
@@ -4325,7 +4325,7 @@ msgstr "Kurulum tamamlandı."
 msgid "Setup failed."
 msgstr "Kurulum başarısız oldu."
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4337,19 +4337,19 @@ msgstr ""
 "erişmek için bir sistemdir. Buna sadece {box_name} servislerine İnternet'ten "
 "erişmek mümkün değilse ihtiyaç duyarsınız. Bu, şu durumları kapsar:"
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} kısıtlı bir güvenlik duvarının arkasında olduğunda."
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} kontrolünüzde olmayan bir (kablosuz) yönlendiriciye bağlı "
 "olduğunda."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4357,7 +4357,7 @@ msgstr ""
 "İnternet Erişim Sağlayıcınız size harici bir IP adresi sunmadığında ve bunun "
 "yerine İnternet bağlantısını NAT vasıtasıyla sağladığında."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 #, fuzzy
 #| msgid ""
 #| "Your ISP does not provide you a static IP address and your IP address "
@@ -4369,11 +4369,11 @@ msgstr ""
 "İnternet Erişim Sağlayıcınız size statik bir IP adresi sağlamadığında ve IP "
 "adresiniz İnternet'e her bağlandığınızda değiştiğinde."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "İnternet Erişim Sağlayıcınız içeri gelen bağlantıları kısıtladığında."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4393,25 +4393,25 @@ msgstr ""
 "pagekite.net\">pagekite.net</a>. Gelecekte bunun için arkadaşlarınızın "
 "{box_name} kutusunu kullanmanız mümkün olacaktır."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "Public Visibility"
 msgstr "Herkese Açık Görünülürlük"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 #, fuzzy
 #| msgid "PageKite Account"
 msgid "PageKite Domain"
 msgstr "PageKite Hesabı"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "Sunucu alanı"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4419,31 +4419,31 @@ msgstr ""
 "PageKite sunucunuzu seçin. Varsayılan pagekite.net sunucusunu kullanmak için "
 "\"pagekite.net\" değerini kullanın."
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "Sunucu portu"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "PageKite sunucunuzun portu (varsayılan: 80)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "Kite ismi"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "Örnek: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "Geçersiz kite ismi"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "Kite sırrı"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
@@ -4451,89 +4451,72 @@ msgstr ""
 "Kite ile ilişkilendirilmiş bir sır ya da kite üzerinde hiçbir sır "
 "ayarlanmamışsa hesabınız için varsayılan sır."
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "Kite detayları ayarlandı"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "Pagekite sunucusu ayarlandı"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "PageKite etkinleştirildi"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "PageKite devre dışı"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "protokol"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "harici (ön arayüz) port"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "dahili (freedombox) port"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "Alt Alanları Etkinleştir"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "Özel servis silindi"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr ""
 "Bu servis standart bir servis olarak mevcuttur. Etkinleştirmek için lütfen "
 "\"Standart Servisler\" sayfasını kullanın."
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "Özel servis eklendi"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "Bu servis zaten mevcuttur"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "Özel Servisler"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 #, fuzzy
 #| msgid "Custom Services"
 msgid "Add Custom Service"
 msgstr "Özel Servisler"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "Mevcut özel servisler"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "%(backend_host)s:%(backend_port)s unsuruna bağlandı"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "Bu servisi sil"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Add custom PageKite service"
 msgstr "Özel servis eklendi"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4543,50 +4526,6 @@ msgstr ""
 "protokol/bağlantı noktası (port) tertiplerini desteklemeyebilir. Mesela 443 "
 "bağlantı noktasından değişik bağlantı noktalarında HTTPS protokolünün sorun "
 "çıkardığı bilinir."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "Fişinizle bir freedombox.me alt alanı kurun"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"Fişiniz yoksa ya da PageKite'ı daha sonra başka bir alan ya da giriş "
-"bilgileri ile yapılandırmak istiyorsanız <a href=\"%(finish_firstboot_url)s"
-"\">bu adımı atlayın</a>."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr ""
-"Zaten itfa edilmiş bir fişi kullanabilirsiniz ancak bu sadece başlangıçta "
-"kaydedilen alt alan ile çalışacaktır."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "Kaydet"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "Kaydı Atla"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>İkaz:</b><br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr "Yayınlanan servislere İnternet'ten erişim ve saldırı mümkündür."
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "Servisleri Kaydet"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6444,7 +6383,7 @@ msgstr ""
 msgid "Update"
 msgstr "Güncelle"
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -7294,6 +7233,14 @@ msgstr "Lisan"
 msgid "Log in"
 msgstr "Giriş yap"
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "Ağ istemcisini başlat"
+
+#: plinth/templates/clients-button.html:25
+msgid "Client Apps"
+msgstr "İstemci Uygulamalar"
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr "Web"
@@ -7364,11 +7311,11 @@ msgstr ""
 "Bu sayfaya kısayol eklemek için <a href=\"%(apps_url)s\">uygulama</a> "
 "etkinleştiriniz."
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr "Yapılandır &raquo;"
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7380,7 +7327,7 @@ msgstr ""
 "sunucusudur. Veri sahipliğinize ve gizliliğinize saygı gösteren çevrimiçi "
 "iletişim araçları sunar."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, fuzzy, python-format
 #| msgid ""
 #| "This portal is a part of Plinth, the %(box_name)s web interface. Plinth "
@@ -7395,27 +7342,27 @@ msgstr ""
 "Plinth özgür yazılımdır ve GNU Affero Genel Kamu Lisansının 3. ya da daha "
 "sonraki sürümleri kapsamında yayınlanmıştır."
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr "Ana sayfa"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr "Kaynak kod"
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr "Bağış"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Vakfı"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr "IRC sohbet odası"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr "E-posta listesi"
 
@@ -7498,25 +7445,67 @@ msgstr "%(package_names)s kuruluyor: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% tamamlandı"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "Ağ istemcisini başlat"
-
-#: plinth/templates/toolbar.html:32
-msgid "Client Apps"
-msgstr "İstemci Uygulamalar"
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "Uygulama etkinleştirildi"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "Uygulama devre dışı bırakıldı"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Kite details set"
+#~ msgstr "Kite detayları ayarlandı"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "Pagekite sunucusu ayarlandı"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "PageKite etkinleştirildi"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "PageKite devre dışı"
+
+#~ msgid "Existing custom services"
+#~ msgstr "Mevcut özel servisler"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "Fişinizle bir freedombox.me alt alanı kurun"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "Fişiniz yoksa ya da PageKite'ı daha sonra başka bir alan ya da giriş "
+#~ "bilgileri ile yapılandırmak istiyorsanız <a href="
+#~ "\"%(finish_firstboot_url)s\">bu adımı atlayın</a>."
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr ""
+#~ "Zaten itfa edilmiş bir fişi kullanabilirsiniz ancak bu sadece başlangıçta "
+#~ "kaydedilen alt alan ile çalışacaktır."
+
+#~ msgid "Register"
+#~ msgstr "Kaydet"
+
+#~ msgid "Skip Registration"
+#~ msgstr "Kaydı Atla"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>İkaz:</b><br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr "Yayınlanan servislere İnternet'ten erişim ve saldırı mümkündür."
+
+#~ msgid "Save Services"
+#~ msgstr "Servisleri Kaydet"
 
 #, fuzzy
 #~| msgid "Custom Services"
