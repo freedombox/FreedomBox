@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.firewall.components import Firewall
+from plinth.web_server import StaticFiles
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -57,6 +58,16 @@ class JSXCApp(app_module.App):
         firewall = Firewall('firewall-jsxc', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
+
+        directory_map = {
+            '/static/jsxc/img': '/usr/share/libjs-jsxc/img/',
+            '/static/jsxc/libjs-jsxc/lib': '/usr/share/javascript/jsxc/lib/',
+            '/static/jsxc/libjs-jsxc/sound': '/usr/share/libjs-jsxc/sound/',
+            '/static/jsxc/libjs-jsxc/': '/usr/share/libjs-jsxc/css/',
+        }
+        static_files = StaticFiles('static-files-jsxc',
+                                   directory_map=directory_map)
+        self.add(static_files)
 
 
 def init():
