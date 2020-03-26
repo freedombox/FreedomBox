@@ -9,11 +9,11 @@ from django.utils.translation import ugettext_noop
 import plinth
 from plinth import actions
 from plinth import app as app_module
-from plinth import menu
+from plinth import cfg, glib, menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 is_essential = True
 
@@ -45,6 +45,11 @@ class UpgradesApp(app_module.App):
         self.add(menu_item)
 
         self._show_new_release_notification()
+
+        # Check every day for setting up apt backport sources, every 3 minutes
+        # in debug mode.
+        interval = 180 if cfg.develop else 24 * 3600
+        glib.schedule(interval, _setup_repositories)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
@@ -86,7 +91,18 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
+
+    # Enable automatic upgrades but only on first install
+    if not old_version:
+        helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
+
+    # Update apt preferences whenever on first install and on version
+    # increment.
+    helper.call('post', actions.superuser_run, 'upgrades', ['setup'])
+
+    # Try to setup apt repositories, if needed, if possible, on first install
+    # and on version increment.
+    helper.call('post', _setup_repositories, None)
 
 
 def is_enabled():
@@ -103,3 +119,8 @@ def enable():
 def disable():
     """Disable the module."""
     actions.superuser_run('upgrades', ['disable-auto'])
+
+
+def _setup_repositories(data):
+    """Setup apt backport repositories."""
+    actions.superuser_run('upgrades', ['setup-repositories'])

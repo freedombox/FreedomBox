@@ -1,4 +1,4 @@
-{% extends "pagekite_base.html" %}
+{% extends "app.html" %}
 {% comment %}
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
@@ -6,73 +6,62 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
-{% load pagekite_extras %}
 
 {% block page_head %}
   <style type="text/css">
-   div.custom-services span.service {
-       display: inline-block;
-       padding-top: 6px;
-   }
-   form.pull-right button {
-       margin: 10px 5px;
-   }
-   .add-service input.btn {
-       margin: 10px 0px;
-   }
+    div.custom-services span.service {
+        display: inline-block;
+        padding-top: 6px;
+    }
+    form.pull-right button {
+        margin: 10px 5px;
+    }
   </style>
-
 {% endblock %}
 
 {% block configuration %}
   {{ block.super }}
 
-  <hr/>
+  <h3>{% trans "Custom Services" %}</h3>
 
-  <h4>{% trans "Custom Services" %}</h4>
-
-  <a href="{% url 'pagekite:add-custom-service' %}" class="btn btn-primary"
-     role="button" title="{% trans 'Add Custom Service' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Add Custom Service' %}
-  </a>
+  <p>
+    <a href="{% url 'pagekite:add-custom-service' %}" class="btn btn-default"
+       role="button" title="{% trans 'Add Custom Service' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Add Custom Service' %}
+    </a>
+  </p>
 
   {% if custom_services %}
-    <div>
-      <h5>{% trans "Existing custom services" %}</h5>
-
-      <div class="list-group">
-        {% for service in custom_services %}
-          {% create_pagekite_service_url service kite_name as service_url %}
-          <div class="list-group-item clearfix">
-            <span class="service">
-              <span title="Connects {{ service_url }} to {{ service.backend_host }}:{{ service.backend_port }}">
-                {% if service_url|slice:":4" == "http" %}
-                  <a href="{{ service_url }}">{{ service_url }}</a>
-                {% else %}
-                  {{ service_url }}
-                {% endif %}
-                <br>
-                {% blocktrans trimmed with backend_host=service.backend_host backend_port=service.backend_port %}
-                  connected to {{ backend_host }}:{{ backend_port }}
-                {% endblocktrans %}
-              </span>
+    <div class="list-group custom-services">
+      {% for service in custom_services %}
+        <div class="list-group-item clearfix">
+          <span class="service">
+            <span title="Connects {{ service.url }} to {{ service.backend_host }}:{{ service.backend_port }}">
+              {% if service.url|slice:":4" == "http" %}
+                <a href="{{ service.url }}">{{ service.url }}</a>
+              {% else %}
+                {{ service.url }}
+              {% endif %}
+              <br>
+              {% blocktrans trimmed with backend_host=service.backend_host backend_port=service.backend_port %}
+                connected to {{ backend_host }}:{{ backend_port }}
+              {% endblocktrans %}
             </span>
-            <form class="form pull-right" method="post"
-                  action="{% url 'pagekite:delete-custom-service' %}">
-              <div style='display:none'>
-                {% csrf_token %}
-                {{ service.form.as_p }}
-              </div>
-              <button type="submit" class="btn btn-default"
-                      title="{% trans "Delete this service" %}">
-                <span class="fa fa-trash-o" aria-hidden="true">
-                </span>
-              </button>
-            </form>
-          </div>
-        {% endfor %}
-      </div>
+          </span>
+          <form class="form pull-right" method="post"
+                action="{% url 'pagekite:delete-custom-service' %}">
+            <div style='display:none'>
+              {% csrf_token %}
+              {{ service.delete_form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-default"
+                    title="{% trans "Delete this service" %}">
+              <span class="fa fa-trash-o" aria-hidden="true"></span>
+            </button>
+          </form>
+        </div>
+      {% endfor %}
     </div>
   {% endif %}
 

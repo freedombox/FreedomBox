@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
 "PO-Revision-Date: 2019-10-26 17:53+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -116,7 +116,7 @@ msgstr "Přístup na URL adrese {url} na tcp{kind}"
 msgid "Access URL {url}"
 msgstr "Přístup na URL adrese {url}"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -132,11 +132,11 @@ msgstr ""
 "nutné a funguje pouze na vnitřních sítích. Je možné ho vypnout a posílit tak "
 "zabezpečení, hlavně v případě připojení na hostilní místní síť."
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
 msgstr "Zjišťování služby"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr "Doména místní sítě"
 
@@ -393,7 +393,7 @@ msgstr "Smazat archiv %(name)s"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "Potvrdit"
@@ -718,7 +718,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
@@ -1197,7 +1197,7 @@ msgstr "Aktualizovat nastavení"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
 
@@ -1907,7 +1907,7 @@ msgstr "Dokumentace"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "Příručka"
 
@@ -2797,7 +2797,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -4312,7 +4312,7 @@ msgstr "Nastavování dokončeno."
 msgid "Setup failed."
 msgstr "Nastavování se nezdařilo."
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4324,19 +4324,19 @@ msgstr ""
 "němu nejste připojení napřímo. Potřebujete ho pouze když jsou služby služby "
 "vašeho {box_name} nedostupné z Internetu. To zahrnuje následující situace:"
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} se nachází za omezující bránou firewall."
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} je připojený k (bezdrátovému) směrovači, který není ve vaší "
 "správě."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4344,7 +4344,7 @@ msgstr ""
 "Váš poskytovatel připojení vám neposkytuje vnější (veřejnou) IP adresu a "
 "namísto toho poskytuje připojení prostřednictvím NAT překladu."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4352,11 +4352,11 @@ msgstr ""
 "Váš poskytovatel připojení vám neposkytuje pevnou IP adresu a ta se proto "
 "mění pokaždé, když se připojíte k Internetu."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "Váš poskytovatel připojení k Internetu omezuje příchozí spojení."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4376,23 +4376,23 @@ msgstr ""
 "\">pagekite.net</a>. V budoucnu si pro toto může být možné s kamarádem "
 "smluvit využití jeho {box_name}."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "Public Visibility"
 msgstr "Viditelnost na veřejnosti"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 msgid "PageKite Domain"
 msgstr "PageKite doména"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "Doména serveru"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4400,31 +4400,31 @@ msgstr ""
 "Vyberte pagekite server, který chcete používat. Pokud to má být ten výchozí, "
 "zadejte „pagekite.net“."
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "Port serveru"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "Port pagekite serveru (výchozí: 80)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "Kite název"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "Příklad: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "Neplatný kite název"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "Kite heslo"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
@@ -4432,89 +4432,72 @@ msgstr ""
 "Heslo přiřazené ke kite nebo výchozí heslo pro váš  účet pokud není na kite "
 "žádné nastavené."
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "Nastavit podrobnosti Kite"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "Nastavení pagekite serveru"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "PageKite zapnuto"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "PageKite vypnuto"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "protokol"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "vnější (frontend) port"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "vnitřní (freedombox) port"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "Zapnout podřízené domény"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "Uživatelem určená služba smazána"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr ""
 "Tato služba je k dispozici jako standardní služba. Zapněte ji na stránce "
 "„Standardní služby“."
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "Uživatelem určená služba přidána"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "Tato služba už existuje"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "Uživatelem určené služby"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 #, fuzzy
 #| msgid "Custom Services"
 msgid "Add Custom Service"
 msgstr "Uživatelem určené služby"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "Stávají uživatelem určené služby"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "připojeno na %(backend_host)s:%(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "Smazat tuto službu"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Add custom PageKite service"
 msgstr "Uživatelem určená služba přidána"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4523,51 +4506,6 @@ msgstr ""
 "<b>Varování:</b><br>Váš PageKite frontend server nemusí podporovat všechny "
 "kombinace protokol/port, které zde můžete určit. Například o HTTPS na portu "
 "jiném, než 443 je známo, že způsobuje problémy."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "Nastavit podřízenou doménu freedombox.me pomocí vašeho kuponu"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"<a href=\"%(finish_firstboot_url)s\">Tento krok přeskočte</a> pokud nemáte "
-"kupon nebo chcete nastavit PageKite později s jinou doménou nebo "
-"přihlašovacími údaji."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr ""
-"Je možné použít i už použitý kupon ale ten bude fungovat jen pro jím původně "
-"zaregistrovanou podřízenou doménu."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "Zaregistrovat"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "Přeskočit registraci"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>Varování:</b><br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr ""
-"Zveřejněné služby jsou přístupné a ohrozitelné z nehostinného Internetu."
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "Uložit služby"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6361,7 +6299,7 @@ msgstr ""
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -7194,6 +7132,14 @@ msgstr "Vyberte jazyk"
 msgid "Log in"
 msgstr "Přihlásit"
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "Spustit webového klienta"
+
+#: plinth/templates/clients-button.html:25
+msgid "Client Apps"
+msgstr "Klientské aplikace"
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr "Web"
@@ -7264,11 +7210,11 @@ msgstr ""
 "Odkazy na této stránce se objeví až po zapnutí nějakých <a href="
 "\"%(apps_url)s\">aplikací</a>."
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr "Nastavit &raquo;"
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7280,7 +7226,7 @@ msgstr ""
 "aplikací na malých strojích. Poskytuje nástroje pro online komunikaci, "
 "respektující vaše soukromí a vlastnictví dat."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -7291,27 +7237,27 @@ msgstr ""
 "svobodný software, šířený pod licencí GNU Affero General Public License, "
 "verze 3 a novějších."
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr "Zdrojové kódy"
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr "Podpořit darem"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 msgid "FreedomBox Foundation"
 msgstr "Nadace FreedomBox"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr "Chatovací místnost na IRC"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr "Poštovní konference"
 
@@ -7399,25 +7345,68 @@ msgstr "Instalace %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% dokončeno"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "Spustit webového klienta"
-
-#: plinth/templates/toolbar.html:32
-msgid "Client Apps"
-msgstr "Klientské aplikace"
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Kite details set"
+#~ msgstr "Nastavit podrobnosti Kite"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "Nastavení pagekite serveru"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "PageKite zapnuto"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "PageKite vypnuto"
+
+#~ msgid "Existing custom services"
+#~ msgstr "Stávají uživatelem určené služby"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "Nastavit podřízenou doménu freedombox.me pomocí vašeho kuponu"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Tento krok přeskočte</a> pokud "
+#~ "nemáte kupon nebo chcete nastavit PageKite později s jinou doménou nebo "
+#~ "přihlašovacími údaji."
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr ""
+#~ "Je možné použít i už použitý kupon ale ten bude fungovat jen pro jím "
+#~ "původně zaregistrovanou podřízenou doménu."
+
+#~ msgid "Register"
+#~ msgstr "Zaregistrovat"
+
+#~ msgid "Skip Registration"
+#~ msgstr "Přeskočit registraci"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>Varování:</b><br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr ""
+#~ "Zveřejněné služby jsou přístupné a ohrozitelné z nehostinného Internetu."
+
+#~ msgid "Save Services"
+#~ msgstr "Uložit služby"
 
 #, fuzzy
 #~| msgid "Custom Services"

@@ -7,12 +7,9 @@
 {% load i18n %}
 {% load static %}
 
-{% load pagekite_extras %}
-
-
-
 {% block content %}
   <h3>{% trans 'Add custom PageKite service' %}</h3>
+
   <div class="alert alert-warning" role="alert">
     {% blocktrans trimmed %}
     <b>Warning:</b><br>Your PageKite frontend server may not support
@@ -21,7 +18,6 @@
     cause problems.
     {% endblocktrans %}
   </div>
- 
 
   <form class="form" method="post">
       {% csrf_token %}
@@ -31,7 +27,4 @@
       <input type="submit" class="btn btn-primary"
              value="{% trans "Submit" %}"/>
   </form>
-
 {% endblock %}
-
-

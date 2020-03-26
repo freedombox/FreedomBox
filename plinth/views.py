@@ -164,7 +164,9 @@ class AppView(FormView):
 
     def get_initial(self):
         """Return the status of the app to fill in the form."""
-        return self._get_common_status()
+        initial = super().get_initial()
+        initial.update(self._get_common_status())
+        return initial
 
     def form_valid(self, form):
         """Enable/disable a service and set messages."""

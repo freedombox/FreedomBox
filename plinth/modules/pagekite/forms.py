@@ -2,7 +2,6 @@
 
 import copy
 import json
-import logging
 
 from django import forms
 from django.contrib import messages
@@ -14,8 +13,6 @@ from plinth.errors import ActionError
 from plinth.forms import AppForm
 
 from . import utils
-
-LOGGER = logging.getLogger(__name__)
 
 
 class TrimmedCharField(forms.CharField):
@@ -69,61 +66,32 @@ class ConfigurationForm(AppForm):
 
     def save(self, request):
         """Save the form on submission after validation."""
-        old = self.initial
-        new = self.cleaned_data
-        LOGGER.info('New status is - %s', new)
+        def _filter(data):
+            return {
+                key: str(value)
+                for key, value in data.items() if key in
+                ['kite_name', 'kite_secret', 'server_domain', 'server_port']
+            }
+
+        if not self.cleaned_data['server_domain']:
+            self.cleaned_data['server_domain'] = 'pagekite.net'
+
+        if not self.cleaned_data['server_port']:
+            self.cleaned_data['server_port'] = '80'
+
+        old = _filter(self.initial)
+        new = _filter(self.cleaned_data)
 
         if old != new:
-            config_changed = False
-
-            if old['kite_name'] != new['kite_name'] or \
-               old['kite_secret'] != new['kite_secret']:
-                utils.run(['set-kite', '--kite-name', new['kite_name']],
-                          input=new['kite_secret'].encode())
-                messages.success(request, _('Kite details set'))
-                config_changed = True
-
-            if old['server_domain'] != new['server_domain'] or \
-               old['server_port'] != new['server_port']:
-                server = "%s:%s" % (new['server_domain'], new['server_port'])
-                utils.run(['set-frontend', server])
-                messages.success(request, _('Pagekite server set'))
-                config_changed = True
-
-            if old['is_enabled'] != new['is_enabled']:
-                if new['is_enabled']:
-                    utils.run(['start-and-enable'])
-                    # Ensure all standard/predefined services are enabled
-                    for service_name in utils.PREDEFINED_SERVICES.keys():
-                        service = \
-                            utils.PREDEFINED_SERVICES[service_name]['params']
-                        service = json.dumps(service)
-
-                        # Probably should keep track of which services
-                        # are enabled since adding the service produces
-                        # an error if it is already added. But this works
-                        # too.
-
-                        try:
-                            utils.run(['add-service', '--service', service])
-                        except ActionError as exception:
-                            if "already exists" in str(exception):
-                                pass
-                            else:
-                                raise
-                    messages.success(request, _('PageKite enabled'))
-                else:
-                    utils.run(['stop-and-disable'])
-                    messages.success(request, _('PageKite disabled'))
-
-            # Restart the service if the config was changed while the service
-            # was running, so changes take effect immediately.
-            elif config_changed and new['is_enabled']:
-                utils.run(['restart'])
+            frontend = f"{new['server_domain']}:{new['server_port']}"
+            utils.run([
+                'set-config', '--kite-name', new['kite_name'], '--frontend',
+                frontend
+            ], input=new['kite_secret'].encode())
+            messages.success(request, _('Configuration updated'))
 
             # Update kite name registered with Name Services module.
-            utils.update_names_module(enabled=new['is_enabled'],
-                                      kite_name=new['kite_name'])
+            utils.update_names_module()
 
 
 class BaseCustomServiceForm(forms.Form):
@@ -204,8 +172,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
         except KeyError:
             is_predefined = False
         if is_predefined:
-            msg = _('This service is available as a standard service. Please '
-                    'use the "Standard Services" page to enable it.')
+            msg = _('This service is already available as a standard service.')
             raise forms.ValidationError(msg)
         return cleaned_data
 

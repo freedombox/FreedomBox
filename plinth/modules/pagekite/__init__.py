@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.daemon import Daemon
 from plinth.modules.names.components import DomainType
 from plinth.utils import format_lazy
 
@@ -75,7 +76,18 @@ class PagekiteApp(app_module.App):
                                  'pagekite:index', can_have_certificate=True)
         self.add(domain_type)
 
-        # XXX: Add pagekite daemon component and simplify action script
+        daemon = Daemon('daemon-pagekite', managed_services[0])
+        self.add(daemon)
+
+    def enable(self):
+        """Send domain signals after enabling the app."""
+        super().enable()
+        utils.update_names_module(is_enabled=True)
+
+    def disable(self):
+        """Send domain signals before disabling the app."""
+        utils.update_names_module(is_enabled=False)
+        super().disable()
 
 
 def init():
@@ -87,8 +99,8 @@ def init():
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
         app.set_enabled(True)
 
-    # Register kite name with Name Services module.
-    utils.update_names_module(initial_registration=True)
+        # Register kite name with Name Services module.
+        utils.update_names_module(is_enabled=True)
 
 
 def setup(helper, old_version=None):

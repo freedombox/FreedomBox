@@ -20,6 +20,12 @@ def is_systemd_running():
     return os.path.exists('/run/systemd')
 
 
+def service_daemon_reload():
+    """Reload systemd to ensure that newer unit files are read."""
+    subprocess.run(['systemctl', 'daemon-reload'], check=True,
+                   stdout=subprocess.DEVNULL)
+
+
 def service_is_running(servicename):
     """Return whether a service is currently running.
 

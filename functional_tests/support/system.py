@@ -271,7 +271,7 @@ def pagekite_configure(browser, host, port, kite_name, kite_secret):
     browser.fill('pagekite-server_port', str(port))
     browser.fill('pagekite-kite_name', kite_name)
     browser.fill('pagekite-kite_secret', kite_secret)
-    submit(browser)
+    submit(browser, form_class='form-configuration')
 
 
 def pagekite_get_configuration(browser):

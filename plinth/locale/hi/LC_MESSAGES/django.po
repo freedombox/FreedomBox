@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
 "PO-Revision-Date: 2018-08-09 20:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -115,7 +115,7 @@ msgstr "इस यूआरएल का अपयोग करें {url} ट�
 msgid "Access URL {url}"
 msgstr "इस यूआरएल का अपयोग करें {url}"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -131,11 +131,11 @@ msgstr ""
 "सुरक्षा के लिये, ख़ास तौर पर एक अनजान नेटवर्क से जोड़ करके समय, सर्विस डिस्कोवरि बंद कर "
 "सकते हैं."
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
 msgstr "सर्विस डिस्कोवरि"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr ""
 
@@ -414,7 +414,7 @@ msgstr "पुरालेख हटाईये %(name)s"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "जमा करें"
@@ -726,7 +726,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "कॉन्फ़िगरेशन अपडेट करें"
@@ -1202,7 +1202,7 @@ msgstr "सेटअप अपडेट"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "सेटिंग स्थिर है"
 
@@ -1913,7 +1913,7 @@ msgstr "प्रलेखन"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "मैन्युअल"
 
@@ -2752,7 +2752,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "मीडियाविकी"
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "विकी"
 
@@ -4242,7 +4242,7 @@ msgstr "सेटअप पूरा हो गया."
 msgid "Setup failed."
 msgstr "सेटअप विफल."
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4254,17 +4254,17 @@ msgstr ""
 "सीधा कनेक्शन नहीं है. इसके जरूरत है सिर्फ आपके {box_name} के सर्विसस बाकी इंटरनेट से पहुँच "
 "योग्य नहीं. इसमें इन स्थितियों को शामिल किया गया है:"
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} एक प्रतिबंधित फ़ायरवॉल के पीछे है."
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr "{box_name} एक (वायरलेस) रूटर से कनेक्टेड है जिसे आप नियंत्रित नहीं करते हैं."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4272,7 +4272,7 @@ msgstr ""
 "आपका ISP आपको एक बाहरी IP एड्रेस नहीं दता लेकिन NAT के माध्यम से  इंटरनेट कनेक्शन प्रदान "
 "करता है."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4280,11 +4280,11 @@ msgstr ""
 "आपके ISP आपको एक स्थिर IP एड्रेस प्रदान नहीं करता है और आपके IP एड्रेस बदलाएग जब आप "
 "इंटरनेट से कनेक्ट होते हैं."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "आपके ISP आने वाले कनेक्शंसस को सीमित करता है."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4303,25 +4303,25 @@ msgstr ""
 "<a href=\"https://pagekite.net\">pagekite.net</a>. भविष्य में अापका दोस्त का "
 "{box_name} इसके लिये उपयोग कर सकते हैं."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 msgid "PageKite"
 msgstr "पेजकइट"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "Public Visibility"
 msgstr "सार्वजनिक विसिबिलिटी"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 #, fuzzy
 #| msgid "PageKite Account"
 msgid "PageKite Domain"
 msgstr "पेजकईट अकाउंट"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "सर्वर डोमेन"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4329,120 +4329,103 @@ msgstr ""
 "अपने पेजकईटसर्वर चूनें.  \"pagekite.net\" सेट करें डिफ़ॉल्ट pagekite.net सर्वर उपयोग करने "
 "के लिए."
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "सर्वर पोर्ट"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "अपने पेजकईट सर्वर का पोर्ट (डिफ़ॉल्ट: ८०)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "कईट नाम"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "उदाहरण: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "अमान्य कईट नाम"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "कईट गुप्त"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
 msgstr ""
 "एक कोई का सम्बंधित गुप्त या अपना अकाउंट का डिफ़ॉल्ट गुप्त अगर कोई रहस्य कईट पर सेट है."
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "कईट विवरण सेट"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "पेजकईट सर्वर सेट"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "पेजकईट सक्षम किया गया"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "पेजकईट अक्षम किया गया"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "प्रोटोकॉल"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "बाहरी (फ्रंटेंड) पोर्ट"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "आंतरिक (फ्रीडमबॉकस) पोर्ट"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "सबडोमेन सक्षम करें"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "हटाई गई कस्टम सर्विस"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr ""
 "यह सर्विस एक मानक सर्विस  के रूप में उपलब्ध है. इसे सक्षम करने के लिए \"मानक सर्विस\" पेज "
 "का उपयोग करें."
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "जोड़ा गया कस्टम सर्विस"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "यह सर्विस पहले से मौजूद है"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "कस्टम सर्विसस"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 #, fuzzy
 #| msgid "Custom Services"
 msgid "Add Custom Service"
 msgstr "कस्टम सर्विसस"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "मौजूदा कस्टम सर्विसस"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "%(backend_host)s से कनेक्टेड:%(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "यह सर्विस हटाएं"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Add custom PageKite service"
 msgstr "जोड़ा गया कस्टम सर्विस"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4451,49 +4434,6 @@ msgstr ""
 "<b>वार्निंग:</b><br> अपने पेजकइट फ्रंटेंड सर्वर कि आप यहां परिभाषित करते सब प्रोटोकॉल/"
 "पोर्ट संयोजन का समर्थन नहीं कर सकते है. उदाहरण के लिए, ४४३ के अलावा पोर्ट पर HTTPS "
 "समस्याओं का कारण बनता है."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "अपने वाउचर उपयोग कर freedombox.me सबडोमेन सेटअप करें"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"<a href=\"%(finish_firstboot_url)s\"> यह स्टेप छोड़ें </a> अगर आपके पास कोई वाउचर "
-"नहीं है या किसी और डोमेन या क्रेडेंशियल्स के साथ पेजकइट कॉन्फ़िगर करना चाहते हैं."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr ""
-"आप पहले से रिडीम किया गया वाउचर का उपयोग कर सकते हैं, लेकिन यह सिर्फ प्रारंभ में "
-"रजिस्टर्ड सबडोमेन के साथ चलेगा."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "रजिस्टर"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "रजिस्ट्रेशन छोड़ें"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>वार्निंग:</b><br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr "प्रकाशित सर्विसस बुरे इंटरनेट से सुलभ और आक्रमणीय है."
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "सर्विसस सहेजें"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6269,7 +6209,7 @@ msgstr ""
 msgid "Update"
 msgstr "अपडेट"
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -7100,6 +7040,14 @@ msgstr "भाषा चुनें"
 msgid "Log in"
 msgstr "लॉग इन"
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "वेब क्लाइंट लॉंच"
+
+#: plinth/templates/clients-button.html:25
+msgid "Client Apps"
+msgstr "क्लाइंट ऐप्स"
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr "वेब"
@@ -7169,11 +7117,11 @@ msgid ""
 msgstr ""
 "कुछ<a href=\"%(apps_url)s\">एप्लिकेशनस</a> सक्षम करें, इस पेज पर शॉर्टकटस जोड़ने के लिए."
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr "कॉंफ़िगर &raquo;"
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7184,7 +7132,7 @@ msgstr ""
 "छोटी मशीनों पर सामाजिक एप्लिकेशनस काम में तैनात करने के लिये. यह आपकी गोपनीयता और डेटा "
 "स्वामित्व का संमान ऑनलाइन संचार टूल्स प्रदान करता है."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -7194,27 +7142,27 @@ msgstr ""
 "यह पोर्टल %(box_name)s का वेब इंटरफ़ेस का एक भाग है. %(box_name)s एक मुक्त सॉफ्टवेयर "
 "है, जो ग्नू एफेरो जनरल पब्लिक लाइसेंस संस्करण 3 या बाद के तहत वितरित है."
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr "होमपेज"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr "सोर्स कोड"
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr "दान करें"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 msgid "FreedomBox Foundation"
 msgstr "फ्रीडमबाक्स फाउंडेशन"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr "आईआरसी चैटरूम"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr "मेलिंग सूची"
 
@@ -7293,25 +7241,66 @@ msgstr "%(package_names)s:%(status)s इंस्टॉलेशन किया
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% पूर्ण"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "वेब क्लाइंट लॉंच"
-
-#: plinth/templates/toolbar.html:32
-msgid "Client Apps"
-msgstr "क्लाइंट ऐप्स"
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "एप्लीकेशन सक्षम किया गया है"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "एप्लीकेशन अक्षम किया गया है"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Kite details set"
+#~ msgstr "कईट विवरण सेट"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "पेजकईट सर्वर सेट"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "पेजकईट सक्षम किया गया"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "पेजकईट अक्षम किया गया"
+
+#~ msgid "Existing custom services"
+#~ msgstr "मौजूदा कस्टम सर्विसस"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "अपने वाउचर उपयोग कर freedombox.me सबडोमेन सेटअप करें"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "<a href=\"%(finish_firstboot_url)s\"> यह स्टेप छोड़ें </a> अगर आपके पास कोई "
+#~ "वाउचर नहीं है या किसी और डोमेन या क्रेडेंशियल्स के साथ पेजकइट कॉन्फ़िगर करना चाहते हैं."
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr ""
+#~ "आप पहले से रिडीम किया गया वाउचर का उपयोग कर सकते हैं, लेकिन यह सिर्फ प्रारंभ में "
+#~ "रजिस्टर्ड सबडोमेन के साथ चलेगा."
+
+#~ msgid "Register"
+#~ msgstr "रजिस्टर"
+
+#~ msgid "Skip Registration"
+#~ msgstr "रजिस्ट्रेशन छोड़ें"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>वार्निंग:</b><br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr "प्रकाशित सर्विसस बुरे इंटरनेट से सुलभ और आक्रमणीय है."
+
+#~ msgid "Save Services"
+#~ msgstr "सर्विसस सहेजें"
 
 #, fuzzy
 #~| msgid "Custom Services"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
 "PO-Revision-Date: 2020-02-24 21:32+0000\n"
 "Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -117,7 +117,7 @@ msgstr "URL d'accesso {url}  su TCP {kind}"
 msgid "Access URL {url}"
 msgstr "URL d'accesso {url}"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -135,12 +135,12 @@ msgstr ""
 "migliorare la sicurezza specialmente quando si è connessi in una rete locale "
 "ostile."
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 #, fuzzy
 msgid "Service Discovery"
 msgstr "Servizio Scoperta"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr "Dominio rete locale"
 
@@ -421,7 +421,7 @@ msgstr "Cancella archivio %(name)s"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 #, fuzzy
 msgid "Submit"
@@ -743,7 +743,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Configurazione caricata"
@@ -1226,7 +1226,7 @@ msgstr "Aggiorna impostazioni"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "Impostazioni invariate"
 
@@ -1933,7 +1933,7 @@ msgstr "Documentazione"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "Manuale"
 
@@ -2837,7 +2837,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -4352,7 +4352,7 @@ msgstr "Setup completato."
 msgid "Setup failed."
 msgstr "Setup fallito."
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4365,18 +4365,18 @@ msgstr ""
 "il tuo {box_name} non è raggiungibile dall'esterno. Questo include le "
 "situazioni seguenti:"
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} è valle di un firewall ristretto."
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} è connesso ad un router (wireless) di cui non hai il controllo."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4384,7 +4384,7 @@ msgstr ""
 "Il tuo ISP non ti assegna un IP pubblico ma ti fornisce una connessione "
 "tramite NAT."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4392,11 +4392,11 @@ msgstr ""
 "Il tuo ISP non ti fornisce un IP statico e il tuo IP cambia ogni volta che "
 "ti connetti a Internet."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "Il tuo ISP limita le connessioni in entrata."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4415,25 +4415,25 @@ msgstr ""
 "pagekite, per esempio <a href=\"https://pagekite.net\">pagekite.net</a>. In "
 "futuro potrebbe essere usare il {box_name} del tuo amico."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "Public Visibility"
 msgstr "Visibilità Pubblica"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 #, fuzzy
 #| msgid "PageKite Account"
 msgid "PageKite Domain"
 msgstr "Profilo PageKite"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "Dominio server"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4441,31 +4441,31 @@ msgstr ""
 "Selezione il tuo server pagekite. Imposta \"pagekite.net\" per usare il "
 "server predefinito di pagekite.net."
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "Porta server"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "Porta del tuo server pagekite (predefinita: 80)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "Nome Kite"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "Esempio: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "Nome Kite invalido"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "Segreto Kite"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
@@ -4473,89 +4473,72 @@ msgstr ""
 "Un segreto associate col kite o il segreto predefinito del tuo profile nel "
 "caso non sia state impostato nel kite."
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "Dettagli kite configurati"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "Server PageKite configurato"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "PageKite abilitato"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "PageKite disabilitato"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "protocollo"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "porta esterna (frontend)"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "porta interna (freedombox)"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "Abilita Sottodomini"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "Cancella servizio personalizzato"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr ""
 "Questo servizio è disponibile come servizio standard. Prego, usa la pagina "
 "\"Servizi Standard\" per abilitarli."
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "Servizio personalizzato aggiunto"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "Questo servizio è già presente"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "Servizi personalizzati"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 #, fuzzy
 #| msgid "Custom Services"
 msgid "Add Custom Service"
 msgstr "Servizi personalizzati"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "Servizi personalizzati esistenti"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "connesso a %(backend_host)s: %(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "Cancella questo servizio"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Add custom PageKite service"
 msgstr "Servizio personalizzato aggiunto"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4565,52 +4548,6 @@ msgstr ""
 "supportare tutte le combinazioni protocollo/porta che è possibile definire. "
 "Per esempio, è noto che HTTPS, in porte diverse dalla 443, può causare "
 "problemi."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "Configura un sottodominio freedombox.me con il tuo voucher"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"<a href=\"%(finish_firstboot_url)s\"> Salta questo passaggio</a> se non hai "
-"un voucher o vuoi configurare PageKite in un secondo momento con un dominio "
-"o credenziali diverse."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr ""
-"Puoi sempre usare un voucher riscattato, ma funzionerà solo con il dominio "
-"registrato inizialmente."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "Registra"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "Salta Registrazione"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>Attenzione:</b><br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr ""
-"I servizi pubblicati sono accessibili attaccabili dalla parte cattiva "
-"dell'Internet."
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "Salva Servizi"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6219,7 +6156,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Updated"
@@ -6997,6 +6934,14 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "Avvia client web"
+
+#: plinth/templates/clients-button.html:25
+msgid "Client Apps"
+msgstr ""
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr ""
@@ -7063,11 +7008,11 @@ msgid ""
 "this page."
 msgstr ""
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr ""
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7075,7 +7020,7 @@ msgid ""
 "communication tools respecting your privacy and data ownership."
 msgstr ""
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -7083,27 +7028,27 @@ msgid ""
 "Version 3 or later."
 msgstr ""
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr ""
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr ""
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr ""
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 msgid "FreedomBox Foundation"
 msgstr ""
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr ""
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr ""
 
@@ -7181,25 +7126,69 @@ msgstr ""
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% completata"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "Avvia client web"
-
-#: plinth/templates/toolbar.html:32
-msgid "Client Apps"
-msgstr ""
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "Applicazione abilitata"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "Applicazione disabilitata"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Kite details set"
+#~ msgstr "Dettagli kite configurati"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "Server PageKite configurato"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "PageKite abilitato"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "PageKite disabilitato"
+
+#~ msgid "Existing custom services"
+#~ msgstr "Servizi personalizzati esistenti"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "Configura un sottodominio freedombox.me con il tuo voucher"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "<a href=\"%(finish_firstboot_url)s\"> Salta questo passaggio</a> se non "
+#~ "hai un voucher o vuoi configurare PageKite in un secondo momento con un "
+#~ "dominio o credenziali diverse."
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr ""
+#~ "Puoi sempre usare un voucher riscattato, ma funzionerà solo con il "
+#~ "dominio registrato inizialmente."
+
+#~ msgid "Register"
+#~ msgstr "Registra"
+
+#~ msgid "Skip Registration"
+#~ msgstr "Salta Registrazione"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>Attenzione:</b><br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr ""
+#~ "I servizi pubblicati sono accessibili attaccabili dalla parte cattiva "
+#~ "dell'Internet."
+
+#~ msgid "Save Services"
+#~ msgstr "Salva Servizi"
 
 #, fuzzy
 #~| msgid "Custom Services"

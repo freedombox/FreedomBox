@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
 "PO-Revision-Date: 2020-02-17 20:32+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -123,7 +123,7 @@ msgstr "Kontakt nettadressen {url} på tcp{kind}"
 msgid "Access URL {url}"
 msgstr "Kontakt nettadressen {url}"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -140,11 +140,11 @@ msgstr ""
 "kan slås av for å bedre sikkerheten, spesielt ved tilkobling til et "
 "fiendtlig/fremmed lokalt nettverk."
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
 msgstr "Tjenesteoppdagelse"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr "Lokalt nettverksdomene"
 
@@ -403,7 +403,7 @@ msgstr "Slett arkiv %(name)s"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "Send inn"
@@ -736,7 +736,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Oppsett oppdatert"
@@ -1213,7 +1213,7 @@ msgstr "Oppdater oppsett"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
@@ -1959,7 +1959,7 @@ msgstr "Dokumentasjon"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "Manual"
 
@@ -2866,7 +2866,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -4394,7 +4394,7 @@ msgstr "Oppsettet fullført."
 msgid "Setup failed."
 msgstr "Oppsettet mislyktes."
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4407,17 +4407,17 @@ msgstr ""
 "{box_name}-tjenester ikke nås fra resten av nettet. Dette omfatter de "
 "følgende situasjoner:"
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} er bak en begrensende brannmur."
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr "{box_name} er koblet til en (trådløs) ruter du ikke kan kontrollere."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4425,7 +4425,7 @@ msgstr ""
 "Din Internett-leverandør gir deg ikke en ekstern IP-adresse, og gir i stedet "
 "en NAT-et Internett-tilkobling."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4433,11 +4433,11 @@ msgstr ""
 "Internett-leverandøren gir deg ikke en statisk IP-adresse, og IP-adressen "
 "endres hver gang du kobler deg til Internett."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "Din Internett-leverandør begrenser innkommende oppkoblinger."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4457,23 +4457,23 @@ msgstr ""
 "\"https://pagekite.net\">pagekite.net</a>.  I fremtiden kan det bli mulig å "
 "bruke kameratens  {box_name} til dette."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "Public Visibility"
 msgstr "Offentlig synlighet"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 msgid "PageKite Domain"
 msgstr "PageKite-domene"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "Tjenerdomene"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4481,31 +4481,31 @@ msgstr ""
 "Velg din PageKite-tjener. Sett «pagekite.net» for å bruke den forvalgte "
 "pagekite.net-tjeneren."
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "Tjenerport"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "Port for din PageKite-tjener (default: 80)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "«Kite»-navn"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "Eksempel: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "Ugyldig «kite»-navn"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "«Kite»-hemmelig"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
@@ -4513,89 +4513,72 @@ msgstr ""
 "En hemmelighet knyttet til «Kite»-en, eller den forvalgte hemmeligheten for "
 "din konto hvis ingen hemmelighet er satt for «Kite»-en."
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "«Kite»-detaljer satt"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "PageKite-tjener satt"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "PageKite aktivert"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "PageKite deaktivert"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "protokoll"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "Ekstern (frontend) port"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "intern (FreedomBox) port"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "Tillat underdomener (Subdomains)"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "Deaktivert selvvalgt (tilpasset) tjeneste"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr ""
 "Denne tjenesten er tilgjengelig som en standard tjeneste. Vennligst bruk "
 "«Standard Services»-siden for å aktivere den."
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "Lagt til selvvalgt tjeneste"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "Denne tjenesten finnes allerede"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "Tilpassede tjenester"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 #, fuzzy
 #| msgid "Custom Services"
 msgid "Add Custom Service"
 msgstr "Tilpassede tjenester"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "Eksisterende selvvalgte tjenester"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "koblet til %(backend_host)s:%(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "Slett denne tjenesten"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Add custom PageKite service"
 msgstr "Lagt til selvvalgt tjeneste"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4604,52 +4587,6 @@ msgstr ""
 "<b>Warning:</b><br>Your PageKite frontend-tjener kan muligens ikke støtte "
 "alle protokoll-/portkombinasjoner som du kan definere her. For eksempel, "
 "HTTPS på andre ting enn 443 er kjent for å forårsake problemer."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "Sett opp et freedombox.me -underdomene med din kupong"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"<a href=\"%(finish_firstboot_url)s\">Hopp over dette trinnet</a> hvis du "
-"ikke har en kupong, eller ønsker å sette opp PageKite senere med et annet "
-"domene eller legitimasjon."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr ""
-"Du kan bruke en innløst kupong, men det vil kun fungere med det opprinnelig "
-"registrerte underdomenet."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "Registrer"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "Sløyf registering (Registration)"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>Advarsel:</b><br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr ""
-"Publiserte tjenester er tilgjengelige, og kan angripes fra det onde "
-"Internettet."
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "Lagre tjenester"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6472,7 +6409,7 @@ msgstr "Sjekk og legg til siste programvare- og sikkerhetsoppdateringer."
 msgid "Update"
 msgstr "Oppdater"
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -7325,6 +7262,14 @@ msgstr "Velg språk"
 msgid "Log in"
 msgstr "Logg inn"
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "Sette i gang en web-klient"
+
+#: plinth/templates/clients-button.html:25
+msgid "Client Apps"
+msgstr "Klientprogrammer"
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr "Web"
@@ -7395,11 +7340,11 @@ msgstr ""
 "Aktiver noen <a href=\"%(apps_url)s\">programmer</a> for å legge til "
 "snarveier på denne siden."
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr "Sette opp &raquo;"
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7411,7 +7356,7 @@ msgstr ""
 "applikasjoner på små maskiner.  Den tilbyr nettbaserte kommunikasjonsverktøy "
 "som respekterer din privatsfære og ditt dataeierskap."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -7422,27 +7367,27 @@ msgstr ""
 "programvare, og distribuert i henhold til GNU Affero General Public License "
 "versjon 3 eller senere."
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr "Hjemmeside"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr "Kildekode"
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr "Donere"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Foundation"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr "IRC-nettpratrom"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr "Adresseliste"
 
@@ -7527,25 +7472,69 @@ msgstr "Installere %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% fullført"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "Sette i gang en web-klient"
-
-#: plinth/templates/toolbar.html:32
-msgid "Client Apps"
-msgstr "Klientprogrammer"
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "Programmet er aktivert"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "Programmet er deaktivert"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Kite details set"
+#~ msgstr "«Kite»-detaljer satt"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "PageKite-tjener satt"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "PageKite aktivert"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "PageKite deaktivert"
+
+#~ msgid "Existing custom services"
+#~ msgstr "Eksisterende selvvalgte tjenester"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "Sett opp et freedombox.me -underdomene med din kupong"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Hopp over dette trinnet</a> hvis du "
+#~ "ikke har en kupong, eller ønsker å sette opp PageKite senere med et annet "
+#~ "domene eller legitimasjon."
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr ""
+#~ "Du kan bruke en innløst kupong, men det vil kun fungere med det "
+#~ "opprinnelig registrerte underdomenet."
+
+#~ msgid "Register"
+#~ msgstr "Registrer"
+
+#~ msgid "Skip Registration"
+#~ msgstr "Sløyf registering (Registration)"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>Advarsel:</b><br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr ""
+#~ "Publiserte tjenester er tilgjengelige, og kan angripes fra det onde "
+#~ "Internettet."
+
+#~ msgid "Save Services"
+#~ msgstr "Lagre tjenester"
 
 #, fuzzy
 #~| msgid "Custom Services"

@@ -18,6 +18,37 @@ LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 BUSTER_BACKPORTS_RELEASE_FILE_URL = \
     'https://deb.debian.org/debian/dists/buster-backports/Release'
 
+# Whenever these preferences needs to change, increment the version number
+# upgrades app. This ensures that setup is run again and the new contents are
+# overwritten on the old file.
+APT_PREFERENCES = '''Explanation: This file is managed by FreedomBox, do not edit.
+Explanation: Allow carefully selected updates to 'freedombox' from backports.
+Package: freedombox
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse 0.99.5 introduces room version 4. Older version
+Explanation: 0.99.2 in buster won't be able join newly created rooms.
+Package: matrix-synapse
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse >= 1.2 requires python3-service-identity >= 18.1
+Package: python3-service-identity
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse >= 1.5 requires python3-typing-extensions >= 3.7.4
+Package: python3-typing-extensions
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse >= 1.11 requires python3-signedjson >= 1.1.0
+Package: python3-signedjson
+Pin: release a=buster-backports
+Pin-Priority: 500
+'''
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
@@ -31,6 +62,7 @@ def parse_arguments():
     subparsers.add_parser('disable-auto', help='Disable automatic upgrades.')
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
 
+    subparsers.add_parser('setup', help='Setup apt preferences')
     subparsers.add_parser('setup-repositories',
                           help='Setup software repositories for FreedomBox')
 
@@ -156,10 +188,22 @@ def _check_and_backports_sources():
 
 def _add_apt_preferences():
     """Setup APT preferences to upgrade selected packages from backports."""
+    base_path = pathlib.Path('/etc/apt/preferences.d')
     for file_name in ['50freedombox.pref', '50freedombox2.pref']:
-        full_path = pathlib.Path('/etc/apt/preferences.d') / file_name
+        full_path = base_path / file_name
         if full_path.exists():
             full_path.unlink()
+
+    # Don't try to remove 50freedombox3.pref as this file is shipped with the
+    # Debian package and is removed using maintainer scripts.
+
+    with open(base_path / '50freedombox4.pref', 'w') as file_handle:
+        file_handle.write(APT_PREFERENCES)
+
+
+def subcommand_setup(_):
+    """Setup apt preferences."""
+    _add_apt_preferences()
 
 
 def subcommand_setup_repositories(_):
@@ -170,7 +214,6 @@ def subcommand_setup_repositories(_):
 
     """
     _check_and_backports_sources()
-    _add_apt_preferences()
 
 
 def main():

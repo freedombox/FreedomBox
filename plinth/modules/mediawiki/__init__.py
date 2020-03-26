@@ -16,7 +16,7 @@ from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 7
+version = 8
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 

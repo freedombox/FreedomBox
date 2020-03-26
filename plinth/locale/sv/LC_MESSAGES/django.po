@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:13-0400\n"
-"PO-Revision-Date: 2020-03-08 17:32+0000\n"
-"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
+"POT-Creation-Date: 2020-03-23 18:54-0400\n"
+"PO-Revision-Date: 2020-03-23 21:41+0000\n"
+"Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
 "Language: sv\n"
@@ -115,7 +115,7 @@ msgstr "Ansluter till adress {url} on tcp{kind}"
 msgid "Access URL {url}"
 msgstr "Ansluter till adress {url}"
 
-#: plinth/modules/avahi/__init__.py:32
+#: plinth/modules/avahi/__init__.py:34
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -132,11 +132,11 @@ msgstr ""
 "nätverk. Du kan låta den vara inaktiverad för att förbättra din säkerhet, "
 "särskilt om du ansluter till ett osäkert lokalt nätverk."
 
-#: plinth/modules/avahi/__init__.py:56
+#: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
 msgstr "Identifiera tjänster"
 
-#: plinth/modules/avahi/__init__.py:66
+#: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
 msgstr "Lokalt nätverksdomän"
 
@@ -392,38 +392,31 @@ msgstr "Ta bort arkiv %(name)s"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:32
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
 msgstr "Sänd"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
-#, fuzzy
-#| msgid "Existing repository is not encrypted."
 msgid "This repository is encrypted"
-msgstr "Befintlig respository är inte krypterad."
+msgstr "Den här databasen är krypterad"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
-#, fuzzy
-#| msgid "Remove Location"
 msgid "Unmount Location"
-msgstr "Ta bort plats"
+msgstr "Avmontera plats"
 
 #: plinth/modules/backups/templates/backups_repository.html:45
-#, fuzzy
-#| msgid "Mount Point"
 msgid "Mount Location"
-msgstr "Monteringspunkt"
+msgstr "Montera plats"
 
 #: plinth/modules/backups/templates/backups_repository.html:56
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
+"Ta bort säkerhetskopieringsplatsen. Fjärrsäkerhetskopieringen tas inte bort."
 
 #: plinth/modules/backups/templates/backups_repository.html:77
-#, fuzzy
-#| msgid "downloading"
 msgid "Download"
-msgstr "ladda ner"
+msgstr "Ladda ner"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
@@ -432,10 +425,8 @@ msgid "Restore"
 msgstr "Återställa"
 
 #: plinth/modules/backups/templates/backups_repository.html:103
-#, fuzzy
-#| msgid "No shares currently configured."
 msgid "No archives currently exist."
-msgstr "Inga shares har konfigurerats."
+msgstr "Det finns för närvarande inga arkiv."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
@@ -700,7 +691,7 @@ msgstr "Uppdatera IP-adress och domäner"
 
 #: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:44
 #: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:91 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:50
 msgid "Configuration updated"
 msgstr "Konfiguration uppdaterad"
@@ -1158,7 +1149,7 @@ msgstr "Uppdatera inställningar"
 #: plinth/modules/diaspora/views.py:76 plinth/modules/ejabberd/views.py:46
 #: plinth/modules/matrixsynapse/views.py:85
 #: plinth/modules/mediawiki/views.py:58 plinth/modules/openvpn/views.py:135
-#: plinth/modules/tor/views.py:136 plinth/views.py:178
+#: plinth/modules/tor/views.py:136 plinth/views.py:180
 msgid "Setting unchanged"
 msgstr "Instänllningar oförändrade"
 
@@ -1848,7 +1839,7 @@ msgstr "Dokumentation"
 
 #: plinth/modules/help/__init__.py:33 plinth/modules/networks/forms.py:47
 #: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgid "Manual"
 msgstr "Manual"
 
@@ -2728,7 +2719,7 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -3526,23 +3517,20 @@ msgid "Open"
 msgstr "Öppet"
 
 #: plinth/modules/networks/forms.py:297
-#, fuzzy, python-brace-format
-#| msgid "Use upstream bridges to connect to Tor network"
+#, python-brace-format
 msgid "Choose how your {box_name} is connected to your network"
-msgstr "Använda uppströms broar för att ansluta till Tor-nätverket"
+msgstr "Välj hur ditt {box_name} är anslutet till ditt nätverk"
 
 #: plinth/modules/networks/forms.py:304
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Your %(box_name)s gets its internet connection from your router via Wi-Fi "
-#| "or Ethernet cable. This is a typical home setup."
+#, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
 "Internet connection from your router via Wi-Fi or Ethernet cable. This is a "
 "typical home setup.</p>"
 msgstr ""
-"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
-"Ethernet-kabel. Detta är en typisk hem inställning."
+"Ansluten till en router <p class=\"help-block\">Din {box_name} får sin "
+"Internetanslutning från routern via Wi-Fi- eller Ethernet-kabel. Detta är en "
+"typisk hem setup.</p>"
 
 #: plinth/modules/networks/forms.py:311
 #, python-brace-format
@@ -3552,6 +3540,10 @@ msgid ""
 "adapter. {box_name} is directly connected to the Internet and all your "
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
+"{box_name} är routern <p class=\"help-block\">Din {box_name} har flera "
+"nätverksgränssnitt, till exempel flera Ethernet-portar eller ett Wi-Fi-kort. "
+"{box_name} är direkt ansluten till Internet och alla dina enheter ansluter "
+"till {box_name} för sin Internetanslutning.</p>"
 
 #: plinth/modules/networks/forms.py:320
 #, python-brace-format
@@ -3560,6 +3552,9 @@ msgid ""
 "connection is directly attached to your {box_name} and there are no other "
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
+"Direkt ansluten till Internet <p class=\"help-block\">Din Internetanslutning "
+"är direkt ansluten till {box_name} och det finns inga andra enheter i "
+"nätverket. Detta kan inträffa på community- eller molninställningar.</p>"
 
 #: plinth/modules/networks/forms.py:339
 msgid "Choose your internet connection type"
@@ -3626,6 +3621,9 @@ msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-block"
 "\">You will be suggested the most conservative actions.</p>"
 msgstr ""
+"Jag vet inte vilken typ av anslutning internetleverantören tillhandahåller "
+"<p class=\"help-block\">Du kommer att föreslås de mest konservativa "
+"åtgärderna.</p>"
 
 #: plinth/modules/networks/forms.py:398
 msgid "Preferred router configuration"
@@ -3649,16 +3647,7 @@ msgstr ""
 "{box_name} i routerns konfiguration.</p>"
 
 #: plinth/modules/networks/forms.py:415
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Forward Specific Traffic as needed by each application<p class=\"help-"
-#| "block\">You may alternatively choose to forward only specific traffic to "
-#| "your {box_name}. This is ideal if you have other servers like {box_name} "
-#| "in your network or if your router does not support DMZ feature. All "
-#| "applications that provide a web interface need you to forward traffic "
-#| "from ports 80 and 443 to work. Each of the other applications will "
-#| "suggest which port(s) need to be forwarded for that application to work.</"
-#| "p>"
+#, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
 "\">You may alternatively choose to forward only specific traffic to your "
@@ -3668,31 +3657,25 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
-"Vidarebefordra specifik trafik efter behov av varje program<p class=\"help-"
-"block\">Du kan alternativt välja att vidarebefordra endast specifik trafik "
-"till din {box_name}. Detta är idealiskt om du har andra servrar som "
+"Vidarebefordra specifik trafik efter behov av varje program <p class=\"help-"
+"block\">Du kan alternativt välja att endast vidarebefordra specifik trafik "
+"till dina {box_name}. Detta är idealiskt om du har andra servrar som "
 "{box_name} i nätverket eller om routern inte stöder DMZ-funktionen. Alla "
-"program som tillhandahåller ett webbgränssnitt behöver du vidarebefordra "
-"trafik från portar 80 och 443 för att fungera. Var och en av de andra "
-"ansökningarna kommer att föreslå vilka portar som måste vidarebefordras för "
-"att programmet ska fungera.</p>"
+"program som tillhandahåller ett webbgränssnitt måste du vidarebefordra "
+"trafik från portarna 80 och 443 för att fungera. Var och en av de andra "
+"ansökningarna kommer att föreslå vilken eller vilka portar som behöver "
+"vidarebefordras för att ansökan ska fungera.</p>"
 
 #: plinth/modules/networks/forms.py:429
-#, fuzzy
-#| msgid ""
-#| "Router is currently unconfigured<p class=\"help-block\">Choose this if "
-#| "you have not configured or are unable to configure the router currently "
-#| "and wish to be reminded later. Some of the other configuration steps may "
-#| "fail.</p>"
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
-"Routern är för närvarande okonfigurerad<p class=\"help-block\">Välj detta om "
-"du inte har konfigurerat eller inte kan konfigurera routern för närvarande "
-"och vill bli påmind senare. Vissa av de andra konfigurationsstegen kan "
-"misslyckas.</p>"
+"Routern är för närvarande okonfigurerad <p class=\"help-block\">Välj det här "
+"alternativet om du inte har konfigurerat eller inte kan konfigurera routern "
+"för tillfället och vill bli påmind senare. Vissa andra konfigurationssteg "
+"kan misslyckas.</p>"
 
 #: plinth/modules/networks/templates/connection_show.html:28
 msgid "Edit connection"
@@ -3969,29 +3952,21 @@ msgstr "Skaffa..."
 
 #: plinth/modules/networks/templates/internet_connectivity_content.html:10
 msgid "What Type Of Internet Connection Do You Have?"
-msgstr ""
+msgstr "Vilken typ av Internet-anslutning har du?"
 
 #: plinth/modules/networks/templates/internet_connectivity_content.html:16
-#, fuzzy
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
 msgid ""
 "Select an option that best describes the type of Internet connection. This "
 "information is used only to guide you with further setup."
 msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+"Välj ett alternativ som bäst beskriver typen av Internetanslutning. Den här "
+"informationen används endast för att guida dig med ytterligare inställningar."
 
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
 #: plinth/modules/networks/templates/network_topology_firstboot.html:19
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:19
-#, fuzzy
-#| msgid "skip this step"
 msgid "Skip this step"
-msgstr "hoppa över det här steget"
+msgstr "Hoppa över det här steget"
 
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:21
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
@@ -4000,41 +3975,36 @@ msgid "Next"
 msgstr "Nästa"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:9
-#, fuzzy
-#| msgid "Connection Type"
 msgid "Your Internet Connection Type"
-msgstr "Anslutningstyp"
+msgstr "Din Internet-anslutningstyp"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:14
-#, fuzzy
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
 msgid ""
 "The following best describes the type of Internet connection provided by "
 "your ISP. This information is only used to suggest you necessary "
 "configuration actions."
 msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+"Följande beskriver bäst vilken typ av Internetanslutning som tillhandahålls "
+"av Internet-leverantören. Den här informationen används bara för att föreslå "
+"dig nödvändiga konfigurationsåtgärder."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:23
 msgid "My ISP provides a public IP address that does not change over time."
 msgstr ""
+"Min ISP tillhandahåller en offentlig IP-adress som inte ändras med tiden."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:27
 msgid "My ISP provides a public IP address that may change over time."
 msgstr ""
+"Min ISP tillhandahåller en offentlig IP-adress som kan ändras med tiden."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:31
 msgid "My ISP does not provide a public IP address."
-msgstr ""
+msgstr "Min internetleverantör ger inte någon offentlig IP-adress."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:35
 msgid "I do not know the type of connection my ISP provides."
-msgstr ""
+msgstr "Jag vet inte vilken typ av anslutning min IsP ger."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:41
 #: plinth/modules/networks/templates/network_topology_main.html:41
@@ -4042,25 +4012,20 @@ msgid "Update..."
 msgstr "Uppdatering..."
 
 #: plinth/modules/networks/templates/network_topology_content.html:10
-#, fuzzy, python-format
-#| msgid "Direct connection to the Internet."
+#, python-format
 msgid "How is Your %(box_name)s Connected to the Internet?"
-msgstr "Direktanslutning till Internet."
+msgstr "Hur är din %(box_name)s ansluten till Internet?"
 
 #: plinth/modules/networks/templates/network_topology_content.html:16
-#, fuzzy, python-format
-#| msgid ""
-#| "The following best describes how your %(box_name)s is connected in your "
-#| "network. This information is used only to suggest necessary configuration "
-#| "actions."
+#, python-format
 msgid ""
 "Select an option that best describes how your %(box_name)s is connected in "
 "your network. This information is used to guide you with further setup. It "
 "can be changed later."
 msgstr ""
-"Följande beskriver bäst hur dina %(box_name)s är anslutna i nätverket. Den "
-"här informationen används bara för att föreslå nödvändiga "
-"konfigurationsåtgärder."
+"Välj ett alternativ som bäst beskriver hur %(box_name)s är anslutet i "
+"nätverket. Den här informationen används för att guida dig med ytterligare "
+"inställningar. Det kan ändras senare."
 
 #: plinth/modules/networks/templates/network_topology_main.html:9
 #, python-format
@@ -4079,16 +4044,13 @@ msgstr ""
 "konfigurationsåtgärder."
 
 #: plinth/modules/networks/templates/network_topology_main.html:24
-#, fuzzy, python-format
-#| msgid ""
-#| "Your %(box_name)s gets its internet connection from your router via Wi-Fi "
-#| "or Ethernet cable. This is a typical home setup."
+#, python-format
 msgid ""
 "Your %(box_name)s gets its Internet connection from your router via Wi-Fi or "
 "Ethernet cable. This is a typical home setup."
 msgstr ""
-"Dina %(box_name)s får sin internetuppkoppling från routern via Wi-Fi eller "
-"Ethernet-kabel. Detta är en typisk hem inställning."
+"%(box_name)s får sin Internetanslutning från routern via Wi-Fi- eller "
+"Ethernet-kabel. Detta är en typisk hem setup."
 
 #: plinth/modules/networks/templates/network_topology_main.html:29
 #, python-format
@@ -4096,6 +4058,8 @@ msgid ""
 "Your %(box_name)s is directly connected to the Internet and all your devices "
 "connect to %(box_name)s for their Internet connectivity."
 msgstr ""
+"%(box_name)s är direkt ansluten till Internet och alla dina enheter ansluter "
+"till %(box_name)s för sin Internetanslutning."
 
 #: plinth/modules/networks/templates/network_topology_main.html:34
 #, python-format
@@ -4103,6 +4067,8 @@ msgid ""
 "Your Internet connection is directly attached to your %(box_name)s and there "
 "are no other devices on the network."
 msgstr ""
+"Din Internetanslutning är direkt kopplad till dina %(box_name)s och det "
+"finns inga andra enheter i nätverket."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:10
 #, python-format
@@ -4132,19 +4098,14 @@ msgstr ""
 "tjänsterna."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options, to overcome this limitation, choose 'no public address' "
-#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'no public address' option "
 "in Internet connection type selection."
 msgstr ""
 "Om du inte har kontroll över routern väljer du att inte konfigurera den. Om "
-"du vill visa alternativ väljer du alternativet \"ingen offentlig adress\" i "
-"valet av internetanslutningstyp för internetanslutning."
+"du vill se alternativ för att övervinna denna begränsning väljer du "
+"alternativet \"ingen offentlig adress\" i valet av internetanslutningstyp."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -4282,10 +4243,8 @@ msgid "Enable OpenVPN server"
 msgstr "Aktivera OpenVPN server"
 
 #: plinth/modules/openvpn/manifest.py:48
-#, fuzzy
-#| msgid "TunnelBlick"
 msgid "Tunnelblick"
-msgstr "TunnelBlick"
+msgstr "Tunnelblick"
 
 #: plinth/modules/openvpn/templates/openvpn.html:27
 #, python-format
@@ -4353,7 +4312,7 @@ msgstr "Installationen har slutförts."
 msgid "Setup failed."
 msgstr "Installationen misslyckades."
 
-#: plinth/modules/pagekite/__init__.py:26
+#: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4366,18 +4325,18 @@ msgstr ""
 "tjänster inte kan nås från resten av Internet. Detta inkluderar följande "
 "situationer:"
 
-#: plinth/modules/pagekite/__init__.py:31
+#: plinth/modules/pagekite/__init__.py:32
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} är bakom en begränsad brandvägg."
 
-#: plinth/modules/pagekite/__init__.py:34
+#: plinth/modules/pagekite/__init__.py:35
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} är anslutet till en (trådlös) router som du inte kontrollerar."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4385,7 +4344,7 @@ msgstr ""
 "Din ISP ger dig inte en extern IP-adress och ger istället Internet "
 "uppkoppling via NAT."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4393,11 +4352,11 @@ msgstr ""
 "Din ISP ger dig inte en statisk IP-adress och din IP-adress ändras varje "
 "gång du ansluter till Internet."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid "Your ISP limits incoming connections."
 msgstr "Din ISP begränsar inkommande anslutningar."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP address limitations by using a "
@@ -4411,23 +4370,23 @@ msgstr ""
 "pagekite. net </a>. I framtiden kan det vara möjligt att använda din kompis "
 "{box_name} för detta."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:63
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "Public Visibility"
 msgstr "Offentlig Synlighet"
 
-#: plinth/modules/pagekite/__init__.py:74
+#: plinth/modules/pagekite/__init__.py:75
 msgid "PageKite Domain"
 msgstr "PageKite domän"
 
-#: plinth/modules/pagekite/forms.py:51
+#: plinth/modules/pagekite/forms.py:48
 msgid "Server domain"
 msgstr "Server-domän"
 
-#: plinth/modules/pagekite/forms.py:53
+#: plinth/modules/pagekite/forms.py:50
 msgid ""
 "Select your pagekite server. Set \"pagekite.net\" to use the default "
 "pagekite.net server."
@@ -4435,31 +4394,31 @@ msgstr ""
 "Välj din pagekite-Server. Ange \"pagekite.net\" om du vill använda "
 "standardservern pagekite.net."
 
-#: plinth/modules/pagekite/forms.py:56 plinth/modules/shadowsocks/forms.py:40
+#: plinth/modules/pagekite/forms.py:53 plinth/modules/shadowsocks/forms.py:40
 msgid "Server port"
 msgstr "Server Port"
 
-#: plinth/modules/pagekite/forms.py:57
+#: plinth/modules/pagekite/forms.py:54
 msgid "Port of your pagekite server (default: 80)"
 msgstr "Port på din pagekite Server (standard: 80)"
 
-#: plinth/modules/pagekite/forms.py:59
+#: plinth/modules/pagekite/forms.py:56
 msgid "Kite name"
 msgstr "Kite namn"
 
-#: plinth/modules/pagekite/forms.py:60
+#: plinth/modules/pagekite/forms.py:57
 msgid "Example: mybox.pagekite.me"
 msgstr "Exempel: mybox.pagekite.me"
 
-#: plinth/modules/pagekite/forms.py:62
+#: plinth/modules/pagekite/forms.py:59
 msgid "Invalid kite name"
 msgstr "Ogiltigt kite-namn"
 
-#: plinth/modules/pagekite/forms.py:66
+#: plinth/modules/pagekite/forms.py:63
 msgid "Kite secret"
 msgstr "Kite hemlighet"
 
-#: plinth/modules/pagekite/forms.py:67
+#: plinth/modules/pagekite/forms.py:64
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
@@ -4467,85 +4426,68 @@ msgstr ""
 "En hemlighet som är associerad med draken eller standard hemligheten för "
 "ditt konto om ingen hemlighet är inställd på draken."
 
-#: plinth/modules/pagekite/forms.py:83
-msgid "Kite details set"
-msgstr "Kite Detaljer set"
-
-#: plinth/modules/pagekite/forms.py:90
-msgid "Pagekite server set"
-msgstr "Pagekite Server uppsättning"
-
-#: plinth/modules/pagekite/forms.py:114
-msgid "PageKite enabled"
-msgstr "PageKite aktiverat"
-
-#: plinth/modules/pagekite/forms.py:117
-msgid "PageKite disabled"
-msgstr "PageKite inaktiverat"
-
-#: plinth/modules/pagekite/forms.py:133
+#: plinth/modules/pagekite/forms.py:101
 msgid "protocol"
 msgstr "Protokollet"
 
-#: plinth/modules/pagekite/forms.py:136
+#: plinth/modules/pagekite/forms.py:104
 msgid "external (frontend) port"
 msgstr "extern port (frontend)"
 
-#: plinth/modules/pagekite/forms.py:139
+#: plinth/modules/pagekite/forms.py:107
 msgid "internal (freedombox) port"
 msgstr "intern port (freedombox)"
 
-#: plinth/modules/pagekite/forms.py:140
+#: plinth/modules/pagekite/forms.py:108
 msgid "Enable Subdomains"
 msgstr "Aktivera underdomäner"
 
-#: plinth/modules/pagekite/forms.py:174
+#: plinth/modules/pagekite/forms.py:142
 msgid "Deleted custom service"
 msgstr "Borttagen anpassad tjänst"
 
-#: plinth/modules/pagekite/forms.py:207
-msgid ""
-"This service is available as a standard service. Please use the \"Standard "
-"Services\" page to enable it."
+#: plinth/modules/pagekite/forms.py:175
+#, fuzzy
+#| msgid ""
+#| "This service is available as a standard service. Please use the "
+#| "\"Standard Services\" page to enable it."
+msgid "This service is already available as a standard service."
 msgstr ""
 "Denna tjänst är tillgänglig som standardtjänst. Använd sidan \"standard "
 "tjänster\" för att aktivera den."
 
-#: plinth/modules/pagekite/forms.py:216
+#: plinth/modules/pagekite/forms.py:183
 msgid "Added custom service"
 msgstr "Lade till anpassad service"
 
-#: plinth/modules/pagekite/forms.py:219
+#: plinth/modules/pagekite/forms.py:186
 msgid "This service already exists"
 msgstr "Den här tjänsten finns redan"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:32
+#: plinth/modules/pagekite/templates/pagekite_configure.html:25
 msgid "Custom Services"
 msgstr "Anpassade tjänster"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
-#: plinth/modules/pagekite/templates/pagekite_configure.html:37
+#: plinth/modules/pagekite/templates/pagekite_configure.html:29
+#: plinth/modules/pagekite/templates/pagekite_configure.html:31
 msgid "Add Custom Service"
 msgstr "Lägg till anpassad tjänst"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:42
-msgid "Existing custom services"
-msgstr "Befintliga anpassade tjänster"
-
-#: plinth/modules/pagekite/templates/pagekite_configure.html:56
+#: plinth/modules/pagekite/templates/pagekite_configure.html:47
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "ansluten till %(backend_host)s:%(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:68
+#: plinth/modules/pagekite/templates/pagekite_configure.html:59
 msgid "Delete this service"
 msgstr "Ta bort den här tjänsten"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:15
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/views.py:33
 msgid "Add custom PageKite service"
 msgstr "Lägg till anpassad PageKite-tjänst"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:14
 msgid ""
 "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
 "protocol/port combinations that you are able to define here. For example, "
@@ -4554,51 +4496,6 @@ msgstr ""
 "<b> Varning: </b> <br> din PageKite frontend-Server kanske inte stöder alla "
 "de protokoll/port kombinationer som du kan definiera här. Till exempel, "
 "HTTPS på andra portar än 443 är kända för att orsaka problem."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:11
-msgid "Setup a freedombox.me subdomain with your voucher"
-msgstr "Ställ in ett underdomän till frihetbox.me med din kupong"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:15
-#, python-format
-msgid ""
-"<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
-"voucher or want to configure PageKite later with a different domain or "
-"credentials."
-msgstr ""
-"<a href =\"%(finish_firstboot_url)s\">hoppa över det här steget </a> om du "
-"inte har en verifikation eller vill konfigurera PageKite senare med en annan "
-"domän eller autentiseringsuppgifter."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:23
-msgid ""
-"You can use an already redeemed voucher but it will only work with the "
-"initially registered subdomain."
-msgstr ""
-"Du kan använda en redan inlösta verifikation men den fungerar bara med den "
-"ursprungligen registrerade underdomänen."
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:37
-msgid "Register"
-msgstr "Registrera dig"
-
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:41
-msgid "Skip Registration"
-msgstr "Hoppa över registrering"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:25
-msgid "<b>Warning:</b><br/>"
-msgstr "<b>Varning:</b> <br/>"
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:28
-msgid ""
-"Published services are accessible and attackable from the evil Internet."
-msgstr ""
-"Publicerade tjänster är tillgängliga och attackerbara från det onda Internet."
-
-#: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-msgid "Save Services"
-msgstr "Spara tjänster"
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -6345,7 +6242,7 @@ msgstr ""
 msgid "Update"
 msgstr "Uppdatera"
 
-#: plinth/modules/upgrades/__init__.py:71
+#: plinth/modules/upgrades/__init__.py:76
 msgid "FreedomBox Updated"
 msgstr "FreedomBox uppdaterad"
 
@@ -7139,6 +7036,14 @@ msgstr "Välj språk"
 msgid "Log in"
 msgstr "Logga in"
 
+#: plinth/templates/clients-button.html:16
+msgid "Launch web client"
+msgstr "Starta webbklient"
+
+#: plinth/templates/clients-button.html:25
+msgid "Client Apps"
+msgstr "Klientappar"
+
 #: plinth/templates/clients.html:17
 msgid "Web"
 msgstr "Webb"
@@ -7209,11 +7114,11 @@ msgstr ""
 "Aktivera vissa <a href=\"%(apps_url)s\">applicationer</a> för att lägga till "
 "genvägar till den här sidan."
 
-#: plinth/templates/index.html:44
+#: plinth/templates/index.html:46
 msgid "Configure &raquo;"
 msgstr "Konfigurera &raquo;"
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:108
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7225,7 +7130,7 @@ msgstr ""
 "maskiner. Det tillhandahåller online-kommunikationsverktyg som respekterar "
 "din integritet och ägandet av data."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:117
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -7236,27 +7141,27 @@ msgstr ""
 "är fri programvara, distribueras under GNU Affero General Public License, "
 "version 3 eller senare."
 
-#: plinth/templates/index.html:129
+#: plinth/templates/index.html:137
 msgid "Homepage"
 msgstr "Hemsida"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:140
 msgid "Source Code"
 msgstr "Källkoden"
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:143
 msgid "Donate"
 msgstr "Donera"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:147
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Foundation"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:154
 msgid "IRC Chatroom"
 msgstr "IRC chatrum"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:159
 msgid "Mailing list"
 msgstr "E-postlista"
 
@@ -7340,25 +7245,69 @@ msgstr "Installerar %(package_names)s:%(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% färdigt"
 
-#: plinth/templates/toolbar.html:23
-msgid "Launch web client"
-msgstr "Starta webbklient"
-
-#: plinth/templates/toolbar.html:32
-msgid "Client Apps"
-msgstr "Klientappar"
-
-#: plinth/views.py:182
+#: plinth/views.py:184
 msgid "Application enabled"
 msgstr "Program aktiverat"
 
-#: plinth/views.py:185
+#: plinth/views.py:187
 msgid "Application disabled"
 msgstr "Programmet är inaktiverat"
 
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Kite details set"
+#~ msgstr "Kite Detaljer set"
+
+#~ msgid "Pagekite server set"
+#~ msgstr "Pagekite Server uppsättning"
+
+#~ msgid "PageKite enabled"
+#~ msgstr "PageKite aktiverat"
+
+#~ msgid "PageKite disabled"
+#~ msgstr "PageKite inaktiverat"
+
+#~ msgid "Existing custom services"
+#~ msgstr "Befintliga anpassade tjänster"
+
+#~ msgid "Setup a freedombox.me subdomain with your voucher"
+#~ msgstr "Ställ in ett underdomän till frihetbox.me med din kupong"
+
+#~ msgid ""
+#~ "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not "
+#~ "have a voucher or want to configure PageKite later with a different "
+#~ "domain or credentials."
+#~ msgstr ""
+#~ "<a href =\"%(finish_firstboot_url)s\">hoppa över det här steget </a> om "
+#~ "du inte har en verifikation eller vill konfigurera PageKite senare med en "
+#~ "annan domän eller autentiseringsuppgifter."
+
+#~ msgid ""
+#~ "You can use an already redeemed voucher but it will only work with the "
+#~ "initially registered subdomain."
+#~ msgstr ""
+#~ "Du kan använda en redan inlösta verifikation men den fungerar bara med "
+#~ "den ursprungligen registrerade underdomänen."
+
+#~ msgid "Register"
+#~ msgstr "Registrera dig"
+
+#~ msgid "Skip Registration"
+#~ msgstr "Hoppa över registrering"
+
+#~ msgid "<b>Warning:</b><br/>"
+#~ msgstr "<b>Varning:</b> <br/>"
+
+#~ msgid ""
+#~ "Published services are accessible and attackable from the evil Internet."
+#~ msgstr ""
+#~ "Publicerade tjänster är tillgängliga och attackerbara från det onda "
+#~ "Internet."
+
+#~ msgid "Save Services"
+#~ msgstr "Spara tjänster"
 
 #~ msgid "Custom Section"
 #~ msgstr "Anpassat avsnitt"

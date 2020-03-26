@@ -132,7 +132,7 @@ def force_upgrade(helper, packages):
 
     # Allow any lower version to upgrade to 1.8.*
     package = packages['matrix-synapse']
-    if Version(package['new_version']) > Version('1.9~'):
+    if Version(package['new_version']) > Version('1.12~'):
         return False
 
     public_registration_status = get_public_registration_status()
