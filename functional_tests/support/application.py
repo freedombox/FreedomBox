@@ -41,13 +41,6 @@ def get_app_module(app_name):
     return module
 
 
-def get_app_checkbox_id(app_name):
-    checkbox_id = 'app-toggle-input'
-    if app_name in app_checkbox_id:
-        checkbox_id = app_checkbox_id[app_name]
-    return checkbox_id
-
-
 def _find_install_button(browser, app_name):
     interface.nav_to_module(browser, get_app_module(app_name))
     return browser.find_by_css('.form-install input[type=submit]')
@@ -101,7 +94,7 @@ def _change_app_status(browser, app_name, change_status_to='enabled'):
                     and change_status_to == 'enabled'):
             interface.submit(browser, element=button)
     else:
-        checkbox_id = get_app_checkbox_id(app_name)
+        checkbox_id = app_checkbox_id[app_name]
         _change_status(browser, app_name, checkbox_id, change_status_to)
 
     if app_name in apps_with_loaders:
