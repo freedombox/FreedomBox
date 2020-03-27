@@ -32,7 +32,7 @@
         </a>
 
         {% if connection.is_active %}
-          <form class="form pull-right" method="post"
+          <form class="form form-action pull-right" method="post"
                 action="{% url 'networks:deactivate' connection.uuid %}">
             {% csrf_token %}
 
@@ -40,7 +40,7 @@
               {% trans "Deactivate" %}</button>
           </form>
         {% else %}
-          <form class="form pull-right" method="post"
+          <form class="form form-action pull-right" method="post"
                 action="{% url 'networks:activate' connection.uuid %}">
             {% csrf_token %}
 
