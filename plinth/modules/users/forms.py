@@ -25,7 +25,7 @@ from . import get_last_admin_user
 from .components import UsersAndGroups
 
 
-class ValidNewUsernameCheckMixin(object):
+class ValidNewUsernameCheckMixin:
     """Mixin to check if a username is valid for created new user."""
 
     def clean_username(self):

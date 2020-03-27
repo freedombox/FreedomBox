@@ -92,6 +92,7 @@ class SearxApp(app_module.App):
 
 class SearxWebserverAuth(Webserver):
     """Component to handle Searx authentication webserver configuration."""
+
     def is_enabled(self):
         """Return if configuration is enabled or public access is enabled."""
         return is_public_access_enabled() or super().is_enabled()

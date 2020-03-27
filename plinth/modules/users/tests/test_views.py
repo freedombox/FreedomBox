@@ -10,6 +10,7 @@ from django import urls
 from django.contrib.auth.models import User
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.exceptions import PermissionDenied
+
 from plinth import module_loader
 from plinth.modules.users import views
 

@@ -180,8 +180,10 @@ class Component:
 
     def enable(self):
         """Run operations to enable the component."""
+
     def disable(self):
         """Run operations to disable the component."""
+
     @staticmethod
     def diagnose():
         """Run diagnostics and return results.
@@ -258,6 +260,7 @@ class LeaderComponent(Component):
 
 class Info(FollowerComponent):
     """Component to capture basic information about an app."""
+
     def __init__(self, app_id, version, is_essential=False, depends=None,
                  name=None, icon=None, icon_filename=None,
                  short_description=None, description=None, manual_page=None,

@@ -97,6 +97,7 @@ class RadicaleApp(app_module.App):
 
 class RadicaleWebserver(Webserver):
     """Webserver enable/disable behavior specific for radicale."""
+
     @property
     def web_name(self):
         """Return web configuration name based on radicale version."""
@@ -113,6 +114,7 @@ class RadicaleWebserver(Webserver):
 
 class RadicaleUwsgi(Uwsgi):
     """uWSGI enable/disable behavior specific for radicale."""
+
     def is_enabled(self):
         """Return whether the uWSGI configuration is enabled if version>=2."""
         package_version = get_package_version()
@@ -137,6 +139,7 @@ class RadicaleUwsgi(Uwsgi):
 
 class RadicaleDaemon(Daemon):
     """Daemon enable/disable behavior specific for radicale."""
+
     @staticmethod
     def _is_old_radicale():
         """Return whether radicale is less than version 2."""

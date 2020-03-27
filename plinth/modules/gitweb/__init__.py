@@ -147,6 +147,7 @@ class GitwebApp(app_module.App):
 
 class GitwebWebserverAuth(Webserver):
     """Component to handle Gitweb authentication webserver configuration."""
+
     def is_conf_enabled(self):
         """Check whether Gitweb authentication configuration is enabled."""
         return super().is_enabled()
