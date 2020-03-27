@@ -11,7 +11,7 @@ class App:
 
     An app is composed of components which actually performs various tasks. App
     itself delegates tasks for individual components. Applications can show a
-    variation their behavior by choosing which components to have and by
+    variation in their behavior by choosing which components to have and by
     customizing the components themselves.
 
     'app_id' property of the app must be a string that is a globally unique ID.
