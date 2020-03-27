@@ -34,7 +34,8 @@ _description = [
           'instance of Syncthing that may be used by multiple users.  Each '
           'user\'s set of devices may be synchronized with a distinct set of '
           'folders.  The web interface on {box_name} is only available for '
-          'users belonging to the "admin" group.'), box_name=_(cfg.box_name)),
+          'users belonging to the "admin" or "syncthing" group.'),
+        box_name=_(cfg.box_name)),
 ]
 
 app = None
