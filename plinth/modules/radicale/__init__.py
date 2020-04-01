@@ -17,7 +17,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, Version
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -204,6 +204,27 @@ def setup(helper, old_version=None):
         helper.call('post', actions.superuser_run, 'radicale', ['setup'])
 
     helper.call('post', app.enable)
+
+
+def force_upgrade(helper, packages):
+    """Force upgrade radicale to resolve conffile prompt."""
+    if 'radicale' not in packages:
+        return False
+
+    # Allow upgrade from 2.* to newer 2.*
+    current_version = get_package_version()
+    if not current_version or current_version < VERSION_2:
+        return False
+
+    package = packages['radicale']
+    if Version(package['new_version']) > Version('3~'):
+        return False
+
+    rights = get_rights_value()
+    helper.install(['radicale'], force_configuration='new')
+    actions.superuser_run('radicale', ['configure', '--rights_type', rights])
+
+    return True
 
 
 def get_package_version():
