@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 18:54-0400\n"
-"PO-Revision-Date: 2020-04-02 02:19+0000\n"
+"PO-Revision-Date: 2020-04-02 15:08+0000\n"
 "Last-Translator: Coucouf <zecoucou@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -189,7 +189,7 @@ msgstr "Nom d'utilisateur invalide : {username}"
 #: plinth/modules/backups/forms.py:105
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Nom d'hôte invalide : {hostname}"
+msgstr "Nom de serveur invalide : {hostname}"
 
 #: plinth/modules/backups/forms.py:109
 #, python-brace-format
@@ -250,8 +250,8 @@ msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
 msgstr ""
-"Chemin d'un dépôt nouveau ou existant. Exemple: <i>utilisateur@hôte:~/chemin/"
-"vers/dépôt/</i>"
+"Chemin d'un dépôt nouveau ou existant. Exemple: <i>utilisateur@machine:~/"
+"chemin/vers/le/dépôt/</i>"
 
 #: plinth/modules/backups/forms.py:189
 msgid "SSH server password"
@@ -500,8 +500,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
-"Impossible de joindre l’hôte SSH %(hostname)s. Veuillez vérifier que l’hôte "
-"est démarré et qu’il accepte les connexions."
+"Impossible de joindre le serveur SSH %(hostname)s. Veuillez vérifier que la "
+"machine est démarrée et qu’elle accepte les connexions."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
 #, python-format
@@ -509,7 +509,7 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
-"L’authenticité de l’hôte SSH %(hostname)s n’a pu être établie. L’hôte "
+"L’authenticité du serveur SSH %(hostname)s n’a pu être établie. Le serveur "
 "présente les clés publiques SSH suivantes. Veuillez les vérifier."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
@@ -753,8 +753,8 @@ msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
-"Vous pouvez ici configurer quelques options comme le nom d’hôte, le nom de "
-"domaine, la page d’accueil du serveur web, etc."
+"Vous pouvez ici configurer quelques options générales comme le nom de "
+"machine, le nom de domaine, la page d’accueil du serveur web, etc."
 
 #: plinth/modules/config/__init__.py:50
 msgid "General Configuration"
@@ -839,17 +839,17 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
-"Sélectionnez la page par défaut qui sera affichée lorsque quelqu’un visitera "
-"votre {box_name} sur le web. Un cas d’usage classique est de mettre votre "
+"Sélectionnez la page qui sera affichée par défaut lorsque quelqu’un visite "
+"votre {box_name} sur le Web. Une utilisation classique est de mettre votre "
 "blog ou votre wiki en page d’accueil lorsque quelqu’un visite le nom de "
-"domaine. Veuillez noter que dès que la page d’accueil est paramétrée sur "
-"autre chose que « Service {box_name} (Plinth) », vos utilisateurs devront "
-"explicitement taper /plinth ou /freedombox pour atteindre l’interface de "
-"service (Plinth) de la {box_name}."
+"domaine. Veuillez noter qu’en sélectionnant une page d’accueil différente de "
+"« Service {box_name} (Plinth) », vos utilisateurs devront explicitement "
+"taper /plinth ou /freedombox pour atteindre l’interface de service (Plinth) "
+"de la {box_name}."
 
 #: plinth/modules/config/forms.py:91
 msgid "Show advanced apps and features"
-msgstr "Montrer les applications et fonctionnalités avancées"
+msgstr "Afficher les applications et fonctionnalités avancées"
 
 #: plinth/modules/config/forms.py:92
 msgid "Show apps and features that require more technical knowledge."
@@ -864,7 +864,7 @@ msgstr "Erreur lors de la définition du nom de machine : {exception}"
 
 #: plinth/modules/config/views.py:49
 msgid "Hostname set"
-msgstr "Nom de machine défini"
+msgstr "Nom de machine paramétré"
 
 #: plinth/modules/config/views.py:58
 #, python-brace-format
@@ -873,18 +873,17 @@ msgstr "Erreur lors de la définition du nom de domaine : {exception}"
 
 #: plinth/modules/config/views.py:61
 msgid "Domain name set"
-msgstr "Nom de domaine défini"
+msgstr "Nom de domaine paramétré"
 
 #: plinth/modules/config/views.py:69
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr ""
-"Erreur lors de la définition de la page d’accueil du serveur web : "
-"{exception}"
+"Erreur lors du changement de page d’accueil du serveur web : {exception}"
 
 #: plinth/modules/config/views.py:72
 msgid "Webserver home page set"
-msgstr "Page d’accueil du serveur web configurée"
+msgstr "Page d’accueil du serveur web modifiée"
 
 #: plinth/modules/config/views.py:80
 #, python-brace-format
@@ -997,12 +996,12 @@ msgid ""
 "Set your time zone to get accurate timestamps. This will set the system-wide "
 "time zone."
 msgstr ""
-"Paramétrez votre fuseau horaire pour obtenir des horodatages appropriés. "
-"Cela définira le fuseau horaire pour tout le système."
+"Renseignez votre fuseau horaire pour obtenir les horodatages appropriés. Ce "
+"paramètre s’appliquera à l’ensemble du système."
 
 #: plinth/modules/datetime/forms.py:32
 msgid "-- no time zone set --"
-msgstr "-- pas de fuseau horaire défini --"
+msgstr "-- fuseau horaire non renseigné --"
 
 #: plinth/modules/datetime/views.py:45
 #, python-brace-format
@@ -1142,12 +1141,13 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
-"Le domaine du pod diaspora* (noeud) est défini sur <b>%(domain_name)s</b>. "
-"L'ID utilisateur ressemblera à <i>username@diaspora.%(domain_name)s</i><br/> "
-"Si le nom de domaine FreedomBox est modifié, toutes les données des "
-"utilisateurs enregistrés auprès du pod précédent ne serong plus accessibles."
-"<br/> Vous pouvez accéder au pod diaspora* à <a href=\"https://diaspora."
-"%(domain_name)s\"> diaspora.%(domain_name)s</a>"
+"Le domaine du nœud diaspora* (pod) est défini comme <b>%(domain_name)s</b>. "
+"Les identifiants utilisateur seront du type "
+"<i>username@diaspora.%(domain_name)s</i><br/> Si le nom de domaine de la "
+"FreedomBox est modifié, toutes les données des utilisateurs enregistrés "
+"auprès du nœud avec l’ancien nom seront rendues inaccessibles.<br/> Vous "
+"pouvez accéder au nœud diaspora* à l’adresse <a href=\""
+"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:43
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
@@ -1265,9 +1265,7 @@ msgstr ""
 
 #: plinth/modules/dynamicdns/forms.py:49
 msgid "Leave this field empty if you want to keep your current password."
-msgstr ""
-"Laissez ce champ vide si vous ne désirez pas changer le mot de passe entré "
-"précédemment."
+msgstr "Laissez ce champ vide pour conserver le mot de passe précédent."
 
 #: plinth/modules/dynamicdns/forms.py:52
 #, python-brace-format
@@ -1327,7 +1325,7 @@ msgstr "Mot de passe"
 
 #: plinth/modules/dynamicdns/forms.py:108 plinth/modules/networks/forms.py:202
 msgid "Show password"
-msgstr "Montrer le mot de passe"
+msgstr "Afficher le mot de passe"
 
 #: plinth/modules/dynamicdns/forms.py:112
 msgid "URL to look up public IP"
@@ -1548,10 +1546,10 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
-"Le domaine de votre serveur XMPP est réglé sur <b>%(domainname)s</b>. Les "
-"identités utilisateur ressembleront à ceci : <i>username@%(domainname)s</i>. "
-"Vous pouvez configurer le domaine de votre système sur la page <a href="
-"\"%(index_url)s\">Configurer</a>."
+"Le domaine de votre serveur XMPP est défini comme <b>%(domainname)s</b>. Les "
+"identifiants utilisateur seront du type : <i>username@%(domainname)s</i>. "
+"Vous pouvez configurer le domaine de votre système sur la page <a href=\""
+"%(index_url)s\">Configurer</a>."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:35
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -1849,7 +1847,7 @@ msgstr "Dépôt modifié."
 
 #: plinth/modules/gitweb/views.py:84
 msgid "Edit repository"
-msgstr "Modifier un dépôt"
+msgstr "Modifier le dépôt"
 
 #: plinth/modules/gitweb/views.py:112 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:158
@@ -2217,8 +2215,8 @@ msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p.net"
 "\" target=\"_blank\">homepage</a>."
 msgstr ""
-"Vous trouverez plus d'informations à propos d'I2P sur la <a href=\"https://"
-"geti2p.net\" target=\"_blank\">page principale</a> de leur projet."
+"Vous trouverez plus d’informations à propos d'I2P sur le <a href=\""
+"https://geti2p.net\" target=\"_blank\">site web</a> de leur projet."
 
 #: plinth/modules/i2p/__init__.py:34
 msgid ""
@@ -2665,10 +2663,10 @@ msgid ""
 "servers will be able to reach users on this server using this domain name. "
 "Matrix user IDs will look like <em>@username:domainname</em>."
 msgstr ""
-"Le service Matrix doit être configuré pour un domaine. Les utilisateurs sur "
-"d’autres serveurs Matrix seront en mesure de joindre les utilisateurs de ce "
-"serveur grâce à ce nom de domaine. L'ID utilisateur Matrix ressemblera à "
-"<em>@identifiant:nomdedomaine</em>."
+"Le service Matrix doit être configuré pour un domaine défini. Les "
+"utilisateurs sur d’autres serveurs Matrix seront en mesure de joindre les "
+"utilisateurs de ce serveur grâce à ce nom de domaine. Les identifiants "
+"utilisateur Matrix seront du type <em>@identifiant:nomdedomaine</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
 msgid ""
@@ -2699,10 +2697,10 @@ msgid ""
 "look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
 "the initial setup is currently not supported."
 msgstr ""
-"Le domaine de votre serveur Matrix est configuré sur <em>%(domain_name)s</"
-"em>. Les identités utilisateur ressembleront à : <em>%(domain_name)s</em>. "
-"Changer le nom de domaine après la configuration initiale n'est actuellement "
-"pas prise en charge."
+"Le domaine de votre serveur Matrix est défini comme <em>%(domain_name)s</em>"
+". Les identifiants utilisateur seront du type "
+"<em>@identifiant:%(domain_name)s</em>. Changer le nom de domaine après la "
+"configuration initiale n’est actuellement pas prise en charge."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:21
 msgid ""
@@ -3142,7 +3140,7 @@ msgstr "Autre"
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:112
 #, python-format
 msgid "Show details for key %(fingerprint)s"
-msgstr "Montrer les détails de la clé %(fingerprint)s"
+msgstr "Afficher les détails de la clé %(fingerprint)s"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:118
 msgid "-"
@@ -3291,8 +3289,8 @@ msgid ""
 msgstr ""
 "La page des services de nommage affiche un résumé des manières dont la "
 "{box_name} peut être jointe depuis l'Internet public : nom de domaine, "
-"service onion Tor et Pagekite. Pour chaque type de nom, il est indiqué si "
-"les services HTTP, HTTPS et SSH sont activés ou non pour les connexions "
+"service onion Tor, et Pagekite. Pour chaque type de nom, il est indiqué si "
+"les services HTTP, HTTPS et SSH sont activés ou pas pour les connexions "
 "entrantes via le nom en question."
 
 #: plinth/modules/names/__init__.py:46
@@ -3974,12 +3972,12 @@ msgstr "Wi-Fi"
 #: plinth/modules/networks/templates/connections_diagram.html:74
 #, python-format
 msgid "Show connection %(connection.name)s"
-msgstr "Montrer la connexion %(connection.name)s"
+msgstr "Détails de la connexion %(connection.name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:104
 #, python-format
 msgid "Show connection %(name)s"
-msgstr "Montrer la connexion %(name)s"
+msgstr "Détails de la connexion %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:116
 msgid "Computer"
@@ -4195,8 +4193,8 @@ msgid ""
 "You will need to login to your router's administration console provided by "
 "the router. This may look like one of the following:"
 msgstr ""
-"Vous devrez vous connecter à la console d'administration de votre routeur. "
-"Cela peut ressembler à l'un des cas suivants :"
+"Vous devrez vous connecter à la console d’administration de votre routeur. "
+"Cela se présente en général de la manière suivante :"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:54
 msgid ""
@@ -4207,21 +4205,23 @@ msgid ""
 "model number and search online for the router's manual. This will provide "
 "full instructions on how to perform this task."
 msgstr ""
-"Vous avez configuré le compte et le mot de passe quand vous avez configuré "
-"le routeur. Dans bien des cas, cette information est imprimée sur le dos du "
-"routeur. Si vous ne vous rappelez pas ces données de connexion ou l'adresse "
-"IP du routeur, vous pourriez décider de le ré-initialiser et de le re-"
-"configurer de zéro. Recherchez votre modèle de routeur et cherchez sa notice "
-"en ligne sur Internet. Cela vous donnera toutes les instructions nécessaires "
-"pour accomplir cette opération."
+"Vous avez défini un identifiant et un mot de passe lors de la mise en "
+"service du routeur. Pour de nombreux appareils, cette information est "
+"imprimée au dos du routeur. Si vous ne vous rappelez pas ces informations de "
+"connexion ou de l’adresse IP du routeur, une option à votre disposition est "
+"de le réinitialiser et de le reconfigurer de zéro. Déterminez le modèle de "
+"votre routeur et recherchez sa notice d’utilisation en ligne sur Internet. "
+"Elle vous donnera les instructions détaillées sur comment réaliser cette "
+"opération."
 
 #: plinth/modules/networks/views.py:36
 msgid "Network Connections"
-msgstr "Connexions Réseau"
+msgstr "Connexions réseau"
 
 #: plinth/modules/networks/views.py:51
 msgid "Cannot show connection: Connection not found."
-msgstr "Impossible de montrer la connexion : connexion introuvable."
+msgstr ""
+"Impossible d’afficher les détails de la connexion : connexion introuvable."
 
 #: plinth/modules/networks/views.py:86
 msgid "Connection Information"
@@ -4575,9 +4575,9 @@ msgid ""
 "HTTPS on ports other than 443 is known to cause problems."
 msgstr ""
 "<b>Avertissement :</b><br>le serveur frontal PageKite peut ne pas être "
-"compatible avec toutes le combinaisons protocole/port en cours de "
-"définition. Par exemple, le protocole HTTPS sur les ports autres que 443 est "
-"connu pour causer un problème."
+"compatible avec toutes les combinaisons de protocole et de port en cours de "
+"définition. Par exemple, l’utilisation de ports autre que 443 pour le "
+"protocole HTTPS est connu pour causer des problèmes."
 
 #: plinth/modules/pagekite/utils.py:42
 msgid "Web Server (HTTP)"
@@ -4841,9 +4841,10 @@ msgid ""
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Entrez l'URL de votre serveur Radicale (par exemple https://<votre."
-"freedombox>) et votre compte. DAVx5 vous affichera tous les calendriers et "
-"carnet d'adresses existants et vous pourrez en créer de nouveaux."
+"Entrez l'URL de votre serveur Radicale (par exemple "
+"https://<votre.freedombox>) et votre identifiant. DAVx5 vous affichera tous "
+"les calendriers et carnets d’adresses existants et vous pourrez en créer de "
+"nouveaux."
 
 #: plinth/modules/radicale/manifest.py:29
 msgid "GNOME Calendar"
@@ -4953,7 +4954,7 @@ msgid ""
 "\\{hostname} (on Windows) or smb://{hostname}.local (on Linux and Mac). "
 "There are three types of shares you can choose from: "
 msgstr ""
-"Après l’installation, vous pouvez choisir quels disques utiliser pour le "
+"Après l’installation, vous pourrez choisir quels disques utiliser pour le "
 "partage. Les partages activés sont accessibles dans le gestionnaire de "
 "fichier de votre ordinateur à l’emplacement \\\\{hostname} (sur Windows) ou "
 "smb://{hostname}.local (sur Linux et Mac). Vous pouvez choisir parmi trois "
@@ -5026,15 +5027,18 @@ msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:94
 msgid "Users who can currently access group and home shares"
-msgstr "Utilisateurs pouvant accéder aux partages de groupe et domestiques"
+msgstr ""
+"Utilisateurs pouvant accéder aux partages de groupe et aux partages "
+"domestiques"
 
 #: plinth/modules/samba/templates/samba.html:98
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
-"Utilisateurs devant ré-entrer leur mot de passe sur la page de changement de "
-"mot de passe pour accéder aux partages de groupe et domestiques"
+"Utilisateurs devant saisir à nouveau leur mot de passe sur la page de "
+"changement de mot de passe pour accéder aux partages de groupe et aux "
+"partages domestiques"
 
 #: plinth/modules/samba/templates/samba.html:103
 msgid "Unavailable Shares"
@@ -5105,7 +5109,7 @@ msgstr ""
 
 #: plinth/modules/searx/__init__.py:31
 msgid "Search the web"
-msgstr "Rechercher sur le web"
+msgstr "Rechercher sur le Web"
 
 #: plinth/modules/searx/__init__.py:47 plinth/modules/searx/manifest.py:9
 msgid "Searx"
@@ -5183,7 +5187,7 @@ msgstr ""
 #: plinth/modules/security/templates/security.html:11
 #: plinth/modules/security/templates/security.html:13
 msgid "Show security report"
-msgstr "Montrer le rapport de sécurité"
+msgstr "Afficher le rapport de sécurité"
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:71
@@ -5214,9 +5218,9 @@ msgid ""
 "potentially compromised app to the rest of the system."
 msgstr ""
 "Pour les applications fournissant des services, la colonne « Isolé » montre "
-"si les fonctionnalités d’isolation (sandboxing) sont utilisées. L’isolation "
-"limite l’impact sur le reste du système d’une application potentiellement "
-"compromise."
+"si les fonctionnalités d’isolation (sandboxing) sont actives. Dans l’"
+"éventualité où une application serait compromise, l’isolation limite les "
+"impacts sur le reste du système."
 
 #: plinth/modules/security/templates/security_report.html:31
 msgid ""
@@ -5226,7 +5230,7 @@ msgid ""
 msgstr ""
 "« Couverture de l’isolation » est un score indiquant avec quelle efficacité "
 "le service est isolé du reste du système. Il n’est affiché que lorsque le "
-"service est lancé."
+"service est actif."
 
 #: plinth/modules/security/templates/security_report.html:40
 msgid "App Name"
@@ -5373,8 +5377,8 @@ msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
 "web with chosen groups of users."
 msgstr ""
-"Sharing vous permet de partager des fichiers et répertoires de votre "
-"{box_name} sur Internet avec un groupe d’utilisateurs choisis."
+"« Sharing » vous permet de partager des fichiers et répertoires de votre "
+"{box_name} sur Internet avec les groupe d’utilisateurs choisis."
 
 #: plinth/modules/sharing/__init__.py:38
 msgid "Sharing"
@@ -5449,7 +5453,7 @@ msgstr "Partagé sur"
 
 #: plinth/modules/sharing/templates/sharing.html:40
 msgid "With Groups"
-msgstr "Au moyen de groupes"
+msgstr "Accessible aux groupes"
 
 #: plinth/modules/sharing/templates/sharing.html:58
 msgid "public access"
@@ -5469,7 +5473,7 @@ msgstr "Partage modifié."
 
 #: plinth/modules/sharing/views.py:64
 msgid "Edit Share"
-msgstr "Modifier un partage"
+msgstr "Modifier le partage"
 
 #: plinth/modules/sharing/views.py:95
 msgid "Share deleted."
@@ -6061,10 +6065,11 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
-"Le domaine du serveur Tahoe-LAFS est défini sur <b>%(domain_name)s</b>."
-"Changer le nom de domaine de FreedomBox nécessite la ré-installation de "
-"Tahoe-LAFS et vous PERDREZ DES DONNÉES. Vous pouvez accéder à Tahoe-LAFS à "
-"<a href=\"https://%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
+"Le domaine du serveur Tahoe-LAFS est défini comme <b>%(domain_name)s</b>. "
+"Changer le nom de domaine de la FreedomBox nécessite la réinstallation de "
+"Tahoe-LAFS et vous PERDREZ LES DONNÉES. Vous pouvez accéder à Tahoe-LAFS à l’"
+"adresse <a href=\"https://%(domain_name)s:5678\""
+">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:39
 msgid "Local introducer"
@@ -6407,11 +6412,10 @@ msgid ""
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
-"<strong>Cette opération peut prendre du temps</strong>. Pendant que les "
-"mises à niveau seront en cours d'installation, vous ne pourrez pas installer "
-"d'autres paquets. Durant la mise à niveau, cette interface web peut être "
-"temporairement indisponible et afficher une erreur. Dans ce cas, "
-"rafraîchissez la page pour continuer."
+"<strong>Cette opération peut prendre du temps</strong>. Pendant la durée des "
+"mises à jour, vous ne pouvez pas installer d’autre appli. Cette interface "
+"web pourrait aussi être temporairement indisponible ou afficher une erreur. "
+"Si cela se produit, rafraîchissez la page pour continuer."
 
 #: plinth/modules/upgrades/templates/upgrades.html:58
 msgid "Toggle recent update logs"
@@ -6467,7 +6471,7 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 "N’importe quel utilisateur peut se connecter à l’interface web de la "
-"{box_name} pour consulter la liste d’applications disponibles sur la page "
+"{box_name} pour consulter la liste d’applications disponibles depuis la page "
 "principale. En revanche, seuls les utilisateurs du groupe <em>admin</em> "
 "pourront modifier ces applications ou les paramètres système."
 
@@ -6537,10 +6541,10 @@ msgid ""
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
-"La définition d'une clef publique SSH permettra à cet utilisateur d'ouvrir "
-"une session sécurisée sans utiliser de mot de passe. Vous pouvez entrer des "
-"clefs multiples, une sur chaque ligne. Les lignes vides et celles commençant "
-"par # seront ignorées."
+"L’ajout d’une clef publique SSH permettra à cet utilisateur d’ouvrir une "
+"session sécurisée sans utiliser de mot de passe. Vous pouvez ajouter "
+"plusieurs clefs, une sur chaque ligne. Les lignes vides et celles commençant "
+"par # sont ignorées."
 
 #: plinth/modules/users/forms.py:244
 msgid "Renaming LDAP user failed."
@@ -6556,7 +6560,7 @@ msgstr "Échec de l'ajout de l'utilisateur au groupe."
 
 #: plinth/modules/users/forms.py:276
 msgid "Unable to set SSH keys."
-msgstr "Impossible de définir les clés SSH."
+msgstr "Échec du paramétrage des clefs SSH."
 
 #: plinth/modules/users/forms.py:291
 msgid "Failed to change user status."
@@ -6585,7 +6589,7 @@ msgstr "Compte utilisateur créé, vous êtes maintenant connecté."
 #: plinth/modules/users/templates/users_change_password.html:11
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
-msgstr "Changer le mot de passe pour <em>%(username)s</em>"
+msgstr "Changer le mot de passe de <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_change_password.html:21
 msgid "Save Password"
@@ -6673,7 +6677,7 @@ msgstr "Utilisateur %(username)s mis à jour."
 
 #: plinth/modules/users/views.py:75
 msgid "Edit User"
-msgstr "Modifier Utilisateur"
+msgstr "Modification de l’utilisateur"
 
 #: plinth/modules/users/views.py:130
 #, python-brace-format
@@ -6702,9 +6706,9 @@ msgid ""
 "It can be used to connect to a VPN provider which supports WireGuard, and to "
 "route all outgoing traffic from {box_name} through the VPN."
 msgstr ""
-"Il peut être utilisé pour se connecter à un fournisseur de VPN qui gère "
-"WireGuard, et pour router tout le trafic sortant de la {box_name} à travers "
-"ce VPN."
+"Il peut être utilisé pour se connecter à un fournisseur de VPN proposant "
+"WireGuard pour router tout le trafic sortant de la {box_name} à travers ce "
+"VPN."
 
 #: plinth/modules/wireguard/__init__.py:30
 #, python-brace-format
@@ -6713,9 +6717,10 @@ msgid ""
 "travelling. While connected to a public Wi-Fi network, all traffic can be "
 "securely relayed through {box_name}."
 msgstr ""
-"Un autre cas d’usage est de connecter un périphérique mobile à votre "
-"{box_name} pendant un voyage. Bien que connecté à un réseau Wi-Fi public, "
-"tout votre trafic sera relayé via votre {box_name} de manière sécurisée."
+"Une autre utilisation possible est de connecter un périphérique mobile à "
+"votre {box_name} pendant un voyage. Bien que connecté à un réseau Wi-Fi "
+"public, tout votre trafic sera relayé via votre {box_name} de manière "
+"sécurisée."
 
 #: plinth/modules/wireguard/__init__.py:52
 #: plinth/modules/wireguard/manifest.py:14
@@ -6743,7 +6748,7 @@ msgstr ""
 
 #: plinth/modules/wireguard/forms.py:70
 msgid "Endpoint of the server"
-msgstr "Point d'accès du serveur"
+msgstr "Point d’entrée du serveur"
 
 #: plinth/modules/wireguard/forms.py:71
 msgid ""
@@ -6775,8 +6780,8 @@ msgid ""
 "endpoint. This value is usually provided by the server operator. Example: "
 "192.168.0.10."
 msgstr ""
-"Adresse IP de cette machine sur le VPN une fois connecté au distant. Cette "
-"valeur est généralement fournie par le gestionnaire du serveur. Par "
+"Adresse IP de cette machine sur le VPN une fois connecté au serveur distant. "
+"Cette valeur est généralement fournie par le gestionnaire du serveur. Par "
 "exemple : 192.18.0.10."
 
 #: plinth/modules/wireguard/forms.py:89
@@ -6874,7 +6879,7 @@ msgstr "Serveurs auxquels la %(box_name)s va se connecter :"
 #: plinth/modules/wireguard/templates/wireguard.html:73
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:19
 msgid "Endpoint"
-msgstr "Endpoint"
+msgstr "Serveur distant"
 
 #: plinth/modules/wireguard/templates/wireguard.html:96
 msgid "No connections to remote servers are configured yet."
@@ -6887,7 +6892,7 @@ msgstr "Ajouter un nouveau serveur"
 #: plinth/modules/wireguard/templates/wireguard.html:108
 #: plinth/modules/wireguard/views.py:159
 msgid "Add Connection to Server"
-msgstr "Ajouter connexion au serveur"
+msgstr "Ajouter une connexion à un serveur"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:19
 msgid "Add Client"
@@ -6933,7 +6938,7 @@ msgstr "clé pré-partagée :"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:32
 msgid "Server endpoints:"
-msgstr "Endpoints du serveur :"
+msgstr "Serveurs distants :"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:40
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:27
@@ -6962,13 +6967,13 @@ msgid ""
 "information. Ensure that the server is configured to allow %(box_name)s's "
 "public key and IP address."
 msgstr ""
-"La %(box_name)s va tenter de joindre un serveur WireGuard avec les "
+"La %(box_name)s va tenter de joindre le serveur WireGuard avec les "
 "informations suivantes. Assurez-vous que ce serveur est configuré pour "
-"autoriser la clé publique et l’adresse IP de votre %(box_name)s."
+"accepter la clé publique et l’adresse IP de votre %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:23
 msgid "Server endpoint:"
-msgstr "Point d'accès du serveur :"
+msgstr "Serveur distant :"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:35
 msgid "Public key of this machine:"
@@ -6996,7 +7001,7 @@ msgstr "Client mis à jour."
 
 #: plinth/modules/wireguard/views.py:100
 msgid "Modify Client"
-msgstr "Modifier un client"
+msgstr "Modifier le client"
 
 #: plinth/modules/wireguard/views.py:133
 msgid "Delete Allowed Client"
@@ -7024,11 +7029,11 @@ msgstr "Serveur mis à jour."
 
 #: plinth/modules/wireguard/views.py:198
 msgid "Modify Connection to Server"
-msgstr "Modifier la connexion à un Serveur"
+msgstr "Modifier la connexion à un serveur"
 
 #: plinth/modules/wireguard/views.py:235
 msgid "Delete Connection to Server"
-msgstr "Supprimer la Connexion à un Serveur"
+msgstr "Supprimer la connexion à un serveur"
 
 #: plinth/modules/wireguard/views.py:255
 msgid "Server deleted."
@@ -7126,7 +7131,7 @@ msgstr "Fonctions de base et interface web de la %(box_name)s"
 
 #: plinth/templates/base.html:80
 msgid "Toggle navigation"
-msgstr "Basculer Navigation"
+msgstr "Afficher/masquer le menu de navigation"
 
 #: plinth/templates/base.html:104 plinth/templates/base.html:107
 msgid "Home"
@@ -7272,7 +7277,7 @@ msgstr ""
 
 #: plinth/templates/index.html:137
 msgid "Homepage"
-msgstr "Page d'accueil"
+msgstr "Page d’accueil"
 
 #: plinth/templates/index.html:140
 msgid "Source Code"
