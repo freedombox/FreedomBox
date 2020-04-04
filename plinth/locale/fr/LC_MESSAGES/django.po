@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 18:54-0400\n"
-"PO-Revision-Date: 2020-04-03 20:11+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2020-04-05 13:06+0000\n"
+"Last-Translator: Coucouf <zecoucou@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
 "Language: fr\n"
@@ -125,12 +125,13 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
-"Le service Découverte permet aux autres machines du réseau de découvrir "
-"votre {box_name} et les services qu'il propose. Il permet aussi à la "
-"{box_name} de découvrir d'autres machines et services opérant sur votre "
-"réseau local. Le service Découverte n'est pas essentiel et fonctionne "
-"seulement sur les réseaux internes. Il peut être désactiver pour améliorer "
-"la sécurité particulièrement lors d'une connexion à un réseau local hostile."
+"La découverte de services permet aux autres machines du réseau de découvrir "
+"votre {box_name} et les services qu’elle propose. Elle permet aussi à la "
+"{box_name} de découvrir d’autres machines et services opérant sur votre "
+"réseau local. La découverte de services n’est pas essentielle et fonctionne "
+"uniquement sur les réseaux internes. Elle peut être désactivée pour "
+"améliorer la sécurité en particulier dans le cas d’une connexion à un réseau "
+"local hostile."
 
 #: plinth/modules/avahi/__init__.py:58
 msgid "Service Discovery"
@@ -215,7 +216,8 @@ msgstr "Phrase secrète"
 #: plinth/modules/backups/forms.py:121
 msgid "Passphrase; Only needed when using encryption."
 msgstr ""
-"Phrase secrète ; nécessaire uniquement lors de l'utilisation du chiffrement."
+"Phrase secrète ; nécessaire uniquement dans le cas où le chiffrement est "
+"utilisé."
 
 #: plinth/modules/backups/forms.py:124
 msgid "Confirm Passphrase"
@@ -231,7 +233,7 @@ msgstr "Les phrases secrètes de chiffrement entrées ne correspondent pas"
 
 #: plinth/modules/backups/forms.py:139
 msgid "Passphrase is needed for encryption."
-msgstr "La phrase de passe est nécessaire pour le chiffrement."
+msgstr "La phrase secrète est nécessaire pour le chiffrement."
 
 #: plinth/modules/backups/forms.py:174
 msgid "Select Disk or Partition"
@@ -262,24 +264,24 @@ msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
-"Mot de passe du serveur SSH.<br/>L'authentification par clé SSH n'est pas "
-"encore possible."
+"Mot de passe du serveur SSH.<br/>L’authentification par clé SSH n'est pas "
+"encore supportée."
 
 #: plinth/modules/backups/forms.py:209
 msgid "Remote backup repository already exists."
-msgstr "Un dépôt de sauvegarde distant existe déjà."
+msgstr "Ce dépôt de sauvegarde distant existe déjà."
 
 #: plinth/modules/backups/forms.py:215
 msgid "Select verified SSH public key"
-msgstr "Sélectionnez une clé SS publique vérifiée"
+msgstr "Sélectionnez une clé publique SSH vérifiée"
 
 #: plinth/modules/backups/repository.py:33
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
-"Connexion refusée - assurez-vous que vous avez fourni les informations "
-"d'identification correctes et que le serveur est en cours d'exécution."
+"Connexion refusée – assurez-vous que vous avez fourni les informations d’"
+"identification correctes et que le serveur est démarré."
 
 #: plinth/modules/backups/repository.py:40
 msgid "Connection refused"
@@ -356,10 +358,10 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
-"Les informations d'identification de ce dépôt sont stockées sur votre "
-"%(box_name)s.<br />Pour restaurer une sauvegarde sur une nouvelle "
-"%(box_name)s, vous devez disposer des informations d'identification SSH et, "
-"le cas échéant, de la phrase secrète de chiffrement."
+"Les informations d’identification pour ce dépôt sont stockées sur votre "
+"%(box_name)s.<br />Pour restaurer une sauvegarde sur une nouvelle %(box_name)"
+"s, vous devrez disposer des informations d’identification SSH et, le cas "
+"échéant, de la phrase secrète de chiffrement."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
 msgid "Create Location"
@@ -420,7 +422,7 @@ msgstr ""
 
 #: plinth/modules/backups/templates/backups_repository.html:77
 msgid "Download"
-msgstr "télécharger"
+msgstr "Télécharger"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
@@ -430,7 +432,7 @@ msgstr "Restaurer"
 
 #: plinth/modules/backups/templates/backups_repository.html:103
 msgid "No archives currently exist."
-msgstr "Aucune archive n'existe actuellement."
+msgstr "Aucune archive existante."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
@@ -522,14 +524,14 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
-"Lancez la commande suivante sur la machine hôte SSH. Sa sortie devrait "
-"correspondre à l’une des options fournies. Vous pouvez également utiliser "
-"dsa, ecdsa, ed25519, etc., à la place de rsa, en sélectionnant le fichier "
-"correspondant."
+"Lancez la commande suivante sur la machine hébergeant le serveur SSH. La "
+"sortie devrait correspondre à l’une des valeurs affichées ci-dessus. Vous "
+"pouvez également utiliser dsa, ecdsa, ed25519, etc. à la place de rsa en "
+"sélectionnant le fichier correspondant dans la commande."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
-msgstr "Vérifier l’hôte"
+msgstr "Vérifier le serveur"
 
 #: plinth/modules/backups/views.py:55
 msgid "Archive created."
@@ -577,19 +579,19 @@ msgstr "Ajouter un nouveau dépôt SSH distant."
 
 #: plinth/modules/backups/views.py:310
 msgid "Verify SSH hostkey"
-msgstr "Vérifier la clé SSH de l’hôte"
+msgstr "Vérifier la clé d’authenticité du serveur SSH"
 
 #: plinth/modules/backups/views.py:336
 msgid "SSH host already verified."
-msgstr "Hôte SSH déjà vérifié."
+msgstr "Serveur SSH déjà vérifié."
 
 #: plinth/modules/backups/views.py:346
 msgid "SSH host verified."
-msgstr "Hôte SSH vérifié."
+msgstr "Serveur SSH vérifié."
 
 #: plinth/modules/backups/views.py:360
 msgid "SSH host public key could not be verified."
-msgstr "La clé publique de l'hôte SSH n'a pas pu être vérifiée."
+msgstr "La clé publique d’authenticité du serveur SSH n’a pu être vérifiée."
 
 #: plinth/modules/backups/views.py:362
 msgid "Authentication to remote server failed."
@@ -635,8 +637,8 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
-"Actuellement sur la {box_name} BIND est utilisé uniquement pour résoudre les "
-"requêtes DNS des autres appareils du réseau local. Il est également "
+"Actuellement sur la {box_name}, BIND est utilisé uniquement pour résoudre "
+"les requêtes DNS des autres appareils du réseau local. Il est également "
 "incompatible avec le partage de connexion Internet par la {box_name}."
 
 #: plinth/modules/bind/__init__.py:82
@@ -864,7 +866,7 @@ msgstr "Erreur lors de la définition du nom de machine : {exception}"
 
 #: plinth/modules/config/views.py:49
 msgid "Hostname set"
-msgstr "Nom de machine paramétré"
+msgstr "Nom de machine configuré"
 
 #: plinth/modules/config/views.py:58
 #, python-brace-format
@@ -957,7 +959,7 @@ msgstr "coquelicot"
 
 #: plinth/modules/coquelicot/views.py:36
 msgid "Upload password updated"
-msgstr "Mot de passe de téléversement mis à jour"
+msgstr "Mot de passe de téléversement modifié"
 
 #: plinth/modules/coquelicot/views.py:39
 msgid "Failed to update upload password"
@@ -1240,7 +1242,7 @@ msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
-"Veuillez ne pas entrer une URL (comme \"https://example.com/\"), mais "
+"Vous ne devez pas saisir une URL (comme \"https://example.com/\"), mais "
 "seulement le nom de machine du serveur GnuDIP (comme \"example.com\")."
 
 #: plinth/modules/dynamicdns/forms.py:40
@@ -2302,11 +2304,12 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"{users_url}\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
-"Seuls les utilisateurs de la {box_name} du groupe <b>admin</b> peuvent "
-"<i>créer</i> et <i>gérer</i> les blogs et les wikis mais tout utilisateur du "
-"groupe <b>wiki</b> peut <i>éditer</i> ceux déjà existants. Vous pouvez "
-"modifier ces autorisations ou ajouter de nouveaux utilisateurs dans la <a "
-"href=\"{users_url}\">configuration des utilisateurs</a>."
+"Seuls les utilisateurs de la {box_name} membres du groupe <b>admin</b> "
+"peuvent <i>créer</i> et <i>gérer</i> les blogs et les wikis mais tout "
+"utilisateur du groupe <b>wiki</b> peut <i>éditer</i> ceux précédemment "
+"créés. Vous pouvez modifier ces autorisations ou ajouter de nouveaux "
+"utilisateurs dans la <a href=\"{users_url}\">configuration des "
+"utilisateurs</a>."
 
 #: plinth/modules/ikiwiki/__init__.py:39
 msgid "View and edit wiki applications"
@@ -2737,9 +2740,9 @@ msgid ""
 "website. You can use MediaWiki to host a wiki-like website, take notes or "
 "collaborate with friends on projects."
 msgstr ""
-"MediaWiki est l'outil collaboratif utilisé par Wikipedia et d'autres projets "
-"WikiMedia. Un wiki permet à plusieurs utilisateurs de modifier le contenu "
-"d'un site web. Vous pouvez utiliser MediaWiki pour héberger un site web "
+"MediaWiki est l’outil collaboratif utilisé par Wikipedia et d'autres projets "
+"WikiMedia. Un wiki permet à plusieurs utilisateurs de modifier le contenu d’"
+"un site web. Vous pouvez utiliser MediaWiki pour héberger un site web "
 "contenant un wiki, prendre des notes ou collaborer entre amis sur des "
 "projets."
 
@@ -2754,17 +2757,17 @@ msgstr ""
 "Cette instance MediaWiki est livrée avec un mot de passe administrateur "
 "généré aléatoirement. Vous pouvez changer ce mot de passe dans la section « "
 "Configuration », en se connectant avec le compte « admin ». Vous pourrez "
-"ensuite créer d'autres comptes utilisateur directement dans MediaWiki en "
-"allant sur la page <a href=\"/mediawiki/index.php/Special:CreateAccount\""
-">Special:CreateAccount</a>."
+"ensuite créer d’autres comptes utilisateur directement dans MediaWiki en "
+"vous rendant sur la page <a href=\"/mediawiki/index.php/Special:"
+"CreateAccount\">Special:CreateAccount</a>."
 
 #: plinth/modules/mediawiki/__init__.py:36
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
 msgstr ""
-"N'importe qui ayant un lien vers ce wiki peut le lire. Seuls les "
-"utilisateurs connectés peuvent faire des changements dans son contenu."
+"Toute personne ayant le lien vers ce wiki peut le consulter. Seuls les "
+"utilisateurs connectés avec leur compte peuvent y apporter des modifications."
 
 #: plinth/modules/mediawiki/__init__.py:54
 #: plinth/modules/mediawiki/manifest.py:9
@@ -2785,7 +2788,7 @@ msgid ""
 "field blank to keep the current password."
 msgstr ""
 "Définir un nouveau mot de passe pour le compte d'administration de MediaWiki "
-"(admin). Laissez ce champ vide pour garder le mot de passe actuel."
+"(admin). Laissez ce champ vide pour conserver le mot de passe actuel."
 
 #: plinth/modules/mediawiki/forms.py:33
 msgid "Enable public registrations"
@@ -2796,7 +2799,7 @@ msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
-"Permet à n'importe qui depuis Internet de créer un compte sur votre instance "
+"Permet à n’importe qui depuis Internet de créer un compte sur votre instance "
 "MediaWiki."
 
 #: plinth/modules/mediawiki/forms.py:38
@@ -2808,7 +2811,7 @@ msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
-"Verrouille l'accès. Seuls les utilisateurs avec un compte existant pourront "
+"Verrouille l’accès. Seuls les utilisateurs avec un compte existant pourront "
 "lire/écrire sur ce wiki. Les inscriptions publiques sont également "
 "désactivées."
 
@@ -2826,7 +2829,7 @@ msgstr ""
 
 #: plinth/modules/mediawiki/views.py:53
 msgid "Password updated"
-msgstr "Mot de passe mis à jour"
+msgstr "Mot de passe modifié"
 
 #: plinth/modules/mediawiki/views.py:72
 msgid "Public registrations enabled"
@@ -2846,7 +2849,7 @@ msgstr "Mode privé désactivé"
 
 #: plinth/modules/mediawiki/views.py:101
 msgid "Default skin changed"
-msgstr "Thème par défaut changé"
+msgstr "Thème par défaut modifié"
 
 #: plinth/modules/minetest/__init__.py:37
 #, python-brace-format
@@ -3070,14 +3073,14 @@ msgid ""
 "for more details."
 msgstr ""
 "Avec Monkeysphere, une clef OpenPGP peut être générée pour chaque domaine "
-"configuré sous SSH. La clef publique OpenPGP peut alors être téléversé sur "
-"les serveurs de clefs OpenPGP. Les utilisateurs se connectant à cette "
-"machine via SSH peuvent ainsi vérifier qu'ils se connectent au bon hôte. "
-"Pour que les utilisateurs puissent faire confiance à la clef, au moins une "
-"personne (habituellement le propriétaire de la machine) doit la signer en "
-"utilisant le processus habituel de signature de clef OpenPGP. Pour plus de "
-"détails, voir la <a href=\"http://web.monkeysphere.info/getting-started-ssh/"
-"\"> documentation SSH de Monkeysphere</a>."
+"configuré pour les connexions SSH. La clef publique OpenPGP peut alors être "
+"téléversée sur les serveurs de clefs OpenPGP. Les utilisateurs se connectant "
+"à cette machine via SSH peuvent ainsi vérifier qu’ils se connectent au bon "
+"serveur. Pour que les utilisateurs puissent faire confiance à la clef, au "
+"moins une personne (habituellement le propriétaire de la machine) doit la "
+"signer en utilisant le processus habituel de signature de clef OpenPGP. Pour "
+"plus de détails, voir la <a href=\"http://web.monkeysphere.info/"
+"getting-started-ssh/\"> documentation SSH de Monkeysphere</a>."
 
 #: plinth/modules/monkeysphere/__init__.py:26
 msgid ""
@@ -3093,9 +3096,10 @@ msgstr ""
 "de serveur web sécurisé (HTTPS) installé sur cette machine. La clé publique "
 "OpenPGP peut ensuite être téléversée sur les serveurs de clés OpenPGP. Les "
 "utilisateurs accédant au serveur web avec une adresse HTTPS pourront ainsi "
-"s'assurer qu'ils se connectent bien au bon hôte. Pour valider le certificat, "
-"l'utilisateur aura besoin d'installer une série de programmes depuis le <a "
-"href=\"https://web.monkeysphere.info/download/\">site Monkeysphere</a>."
+"s'assurer qu'ils se connectent bien au bon serveur. Pour valider le "
+"certificat, l'utilisateur aura besoin d'installer une série de programmes "
+"depuis le <a href=\"https://web.monkeysphere.info/download/\">site "
+"Monkeysphere</a>."
 
 #: plinth/modules/monkeysphere/__init__.py:50
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:11
@@ -3172,7 +3176,7 @@ msgstr "Type de clé SSH"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:32
 msgid "SSH Key Size"
-msgstr "Taille Clé SSH"
+msgstr "Taille de clé SSH"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:36
 msgid "SSH Fingerprint"
@@ -3558,9 +3562,9 @@ msgid ""
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
-"Valeur facultative. Identifiant unique pour le point d'accès. Lors de la "
-"connexion à un point d'accès, connectez-vous seulement si la BSSID du point "
-"d'accès correspond à celle fournie. Exemple : 00:11:22:aa:bb:cc."
+"Valeur facultative. Identifiant unique pour le point d’accès. Lors de la "
+"connexion à un point d'accès, ne se connecter que si le BSSID du point d’"
+"accès correspond à celui saisi ici. Exemple : 00:11:22:aa:bb:cc."
 
 #: plinth/modules/networks/forms.py:258
 msgid "Authentication Mode"
@@ -3681,11 +3685,11 @@ msgstr ""
 "Je n’ai d’adresse IP publique<p class=\"help-block\">Cela signifie que les "
 "appareils sur Internet <b>ne peuvent pas</b> vous joindre quand vous êtes "
 "connecté à Internet. À chaque connexion avec votre fournisseur d’accès à "
-"Internet (FAI), vous n’obtenez qu’une adresse IP utilisable localement sur "
-"son propre réseau. De nombreux FAI proposent ce type de connectivité. Il s’"
-"agit de la situation la plus problématique pour héberger des services à "
-"domicile. La {box_name} fournit plusieurs solutions de contournement mais "
-"chaque solution a des limitations.</p>"
+"Internet (FAI), vous obtenez une adresse IP qui n’est utilisable que "
+"localement sur son réseau. De nombreux FAI proposent ce type de "
+"connectivité. Il s’agit de la situation la plus problématique pour héberger "
+"des services à domicile. La {box_name} fournit plusieurs solutions de "
+"contournement mais chaque solution a des limitations.</p>"
 
 #: plinth/modules/networks/forms.py:381
 msgid ""
@@ -3729,14 +3733,14 @@ msgid ""
 "to be forwarded for that application to work.</p>"
 msgstr ""
 "Rediriger spécifiquement le trafic en fonction des besoins de chaque "
-"application <p class=\"help-block\">Vous pouvez aussi choisir de transférer "
-"uniquement un trafic spécifique vers votre {box_name}. Cette option est "
-"idéale si vous avez d’autres serveurs similaires à la {box_name} sur votre "
-"réseau ou si votre routeur ne gère pas les fonctions de DMZ. Toutes les "
-"applications qui fournissent une interface web ont besoin que vous "
-"redirigiez le trafic des ports 80 et 443 pour fonctionner. Chacune des "
-"autres applications suggérera quel(s) port(s) rediriger pour qu’elle puisse "
-"fonctionner.</p>"
+"application <p class=\"help-block\">Vous pouvez aussi choisir de ne "
+"transférer qu’une partie spécifique du trafic vers votre {box_name}. C’est l’"
+"option idéale si vous avez d’autres serveurs similaires à la {box_name} sur "
+"votre réseau ou si votre routeur ne gère pas les fonctions de DMZ. Toutes "
+"les applications dotées d’une interface web nécessitent la redirection des "
+"ports 80 et 443 pour fonctionner. Les autres applications suggéreront pour "
+"chacune d’entre elles le(s) port(s) à rediriger pour les rendre "
+"opérationnelles.</p>"
 
 #: plinth/modules/networks/forms.py:429
 msgid ""
@@ -3906,10 +3910,10 @@ msgid ""
 "connect this interface to a public network, services meant to be available "
 "only internally will become available externally.  This is a security risk."
 msgstr ""
-"L'interface doit être connectée à une machine ou réseau locaux. Si vous "
-"connectez cette interface au réseau public, les services destinés à une "
-"accessibilité en interne deviendront accessible depuis l'extérieur. C'est "
-"une faille de sécurité."
+"Cette interface doit être connectée à une machine ou à un réseau local. Si "
+"vous connectez cette interface à un réseau public, les services conçus pour "
+"un usage interne seront rendus accessibles à l’extérieur. Ceci constitue une "
+"faille de sécurité."
 
 #: plinth/modules/networks/templates/connection_show.html:285
 msgid ""
@@ -3917,9 +3921,9 @@ msgid ""
 "a local network/machine, many services meant to available only internally "
 "will not be available."
 msgstr ""
-"Cette interface doit recevoir votre connexion internet. Si vous la connectez "
-"à une machine ou un réseau locaux, beaucoup de services conçus pour un usage "
-"interne ne seront pas disponibles."
+"Cette interface doit recevoir votre connexion Internet. Si vous la connectez "
+"à une machine ou à un réseau local, de nombreux services conçus pour un "
+"usage interne ne seront pas disponibles."
 
 #: plinth/modules/networks/templates/connection_show.html:304
 #, python-format
@@ -4031,7 +4035,7 @@ msgid ""
 "Select an option that best describes the type of Internet connection. This "
 "information is used only to guide you with further setup."
 msgstr ""
-"Choisissez une option qui décrit au mieux le type de connexion à Internet. "
+"Choisissez l’option qui décrit au mieux votre type de connexion à Internet. "
 "Cette information n’est utilisée que pour vous guider avec la configuration "
 "qui suit."
 
@@ -4057,9 +4061,9 @@ msgid ""
 "your ISP. This information is only used to suggest you necessary "
 "configuration actions."
 msgstr ""
-"Les informations suivantes décrivent au mieux le type de connexion à "
-"Internet fourni par votre FAI. Ces informations ne sont utilisées que pour "
-"vous suggérer des actions de configuration nécessaires."
+"La description suivante résume le mieux le type de connexion à Internet "
+"fourni par votre FAI. Ces informations ne sont utilisées que pour suggérer d’"
+"autres actions de configuration nécessaires."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:23
 msgid "My ISP provides a public IP address that does not change over time."
@@ -4115,8 +4119,8 @@ msgid ""
 "network. This information is used only to suggest necessary configuration "
 "actions."
 msgstr ""
-"Les informations suivantes décrivent le mieux comment votre %(box_name)s est "
-"connectée à votre réseau. Ces informations sont utilisées uniquement pour "
+"La description suivante résume le mieux la manière dont votre %(box_name)s "
+"est connectée à votre réseau. Ces informations ne sont utilisées que pour "
 "suggérer d’autres actions de configuration nécessaires."
 
 #: plinth/modules/networks/templates/network_topology_main.html:24
@@ -4599,15 +4603,15 @@ msgstr "Le site sera accessible sur <a href=\"https://{0}\">https://{0}</a>"
 
 #: plinth/modules/pagekite/utils.py:70
 msgid "Secure Shell (SSH)"
-msgstr "Shell Sécurisé (SSH)"
+msgstr "Shell sécurisé (SSH)"
 
 #: plinth/modules/pagekite/utils.py:72
 msgid ""
 "See SSH client setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions</a>"
 msgstr ""
-"Voir comment configurer le client SSH sur le <a href=\"https://pagekite.net/"
-"wiki/Howto/SshOverPageKite/\">wiki pagekite</a> (en anglais)"
+"Voir comment configurer un client SSH sur le <a href=\"https://pagekite.net/"
+"wiki/Howto/SshOverPageKite/\">wiki PageKite</a> (en anglais)"
 
 #: plinth/modules/power/__init__.py:16
 msgid "Restart or shut down the system."
@@ -4792,8 +4796,8 @@ msgid ""
 "which must be done using a separate client."
 msgstr ""
 "Radicale fournit une interface web très sommaire, qui ne permet que la "
-"création de nouveaux calendriers et carnets d'adresses. Elle ne permet pas "
-"l'ajout d'événements ou de contacts, qui doivent être faits avec un client "
+"création de nouveaux calendriers et carnets d’adresses. Elle ne permet pas l’"
+"ajout d'événements ou de contacts, qui doivent être réalisés avec un client "
 "dédié."
 
 #: plinth/modules/radicale/__init__.py:62
@@ -4803,13 +4807,13 @@ msgstr "Radicale"
 
 #: plinth/modules/radicale/__init__.py:63
 msgid "Calendar and Addressbook"
-msgstr "Agenda et carnet d'adresses"
+msgstr "Agenda et carnet d’adresses"
 
 #: plinth/modules/radicale/forms.py:15
 msgid "Only the owner of a calendar/addressbook can view or make changes."
 msgstr ""
-"Seul le propriétaire du calendrier/carnet d'adresses peut les visualiser ou "
-"effectuer des modifications."
+"Seul le propriétaire de l’agenda/du carnet d’adresses peut le visualiser ou "
+"le modifier."
 
 #: plinth/modules/radicale/forms.py:19
 #, python-brace-format
@@ -4818,8 +4822,8 @@ msgid ""
 "the owner can make changes."
 msgstr ""
 "N’importe quel utilisateur disposant d’un compte sur la {box_name} peut "
-"afficher n’importe quel calendrier/carnet d’adresses, mais seul le "
-"propriétaire peut effectuer des modifications."
+"afficher n’importe quel agenda/carnet d’adresses, mais seul le propriétaire "
+"peut effectuer des modifications."
 
 #: plinth/modules/radicale/forms.py:24
 #, python-brace-format
@@ -4828,8 +4832,7 @@ msgid ""
 "addressbook."
 msgstr ""
 "N’importe quel utilisateur disposant d’un compte sur la {box_name} peut "
-"afficher et effectuer des modifications sur n’importe quel calendrier/carnet "
-"d’adresses."
+"visualiser et modifier n’importe quel agenda/carnet d’adresses."
 
 #: plinth/modules/radicale/manifest.py:10
 msgid "DAVx5"
@@ -4841,9 +4844,9 @@ msgid ""
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Entrez l'URL de votre serveur Radicale (par exemple "
+"Entrez l’URL de votre serveur Radicale (par exemple "
 "https://<votre.freedombox>) et votre identifiant. DAVx5 vous affichera tous "
-"les calendriers et carnets d’adresses existants et vous pourrez en créer de "
+"les agendas et carnets d’adresses existants et vous pourrez en créer de "
 "nouveaux."
 
 #: plinth/modules/radicale/manifest.py:29
@@ -4863,8 +4866,8 @@ msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
 msgstr ""
-"Évolution est une application de gestion d'informations personnelles qui "
-"intègre une messagerie électronique, un calendrier et un carnet d'adresses."
+"Evolution est une application de gestion d’informations personnelles qui "
+"intègre une messagerie électronique, un agenda et un carnet d’adresses."
 
 #: plinth/modules/radicale/manifest.py:63
 msgid ""
@@ -4873,14 +4876,15 @@ msgid ""
 "address>) and your user name. Clicking on the search button will list the "
 "existing calendars and address books."
 msgstr ""
-"Dans Evolution, ajoutez un nouveau calendrier ou un nouveau carnet "
-"d'adresses avec WebDAV. Entrez l'URL du serveur Radicale (par exemple "
+"Dans Evolution, ajoutez un nouvel agenda ou un nouveau carnet d’adresses "
+"avec WebDAV. Entrez l’URL du serveur Radicale (par exemple "
 "https://<votre.freedombox>) et votre compte-utilisateur. Cliquer sur le "
-"bouton de recherche listera les calendriers et carnets d'adresses existants."
+"bouton de recherche affichera la liste d’agendas et de carnets d’adresses "
+"existants."
 
 #: plinth/modules/radicale/views.py:35
 msgid "Access rights configuration updated"
-msgstr "Configuration des droits d'accès mise à jour"
+msgstr "Configuration des droits d’accès modifiée"
 
 #: plinth/modules/roundcube/__init__.py:21
 msgid ""
@@ -4969,8 +4973,8 @@ msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
-"Partage de groupe : accessible uniquement aux utilisateurs FreedomBox qui "
-"sont dans le groupe freedombox-share."
+"Partage de groupe : accessible uniquement aux utilisateurs de la FreedomBox "
+"qui sont membres du groupe freedombox-share."
 
 #: plinth/modules/samba/__init__.py:43
 msgid ""
@@ -5166,7 +5170,7 @@ msgid ""
 "services without further authorization."
 msgstr ""
 "Lorsque cette option est activée, seuls les utilisateurs du groupe « admin » "
-"pourront ouvrir une session via la console ou le SSH. Les utilisateurs de la "
+"pourront ouvrir une session via la console ou en SSH. Les utilisateurs de la "
 "console pourraient avoir accès à certains services sans autorisation "
 "supplémentaire."
 
@@ -5378,7 +5382,7 @@ msgid ""
 "web with chosen groups of users."
 msgstr ""
 "« Sharing » vous permet de partager des fichiers et répertoires de votre "
-"{box_name} sur Internet avec les groupe d’utilisateurs choisis."
+"{box_name} sur Internet avec des groupes d’utilisateurs choisis."
 
 #: plinth/modules/sharing/__init__.py:38
 msgid "Sharing"
@@ -5416,7 +5420,7 @@ msgstr ""
 
 #: plinth/modules/sharing/forms.py:33
 msgid "User groups that can read the files in the share"
-msgstr "Groupe d'utilisateurs qui peuvent lire les fichiers du partage"
+msgstr "Groupes d’utilisateurs autorisés à consulter les fichiers du partage"
 
 #: plinth/modules/sharing/forms.py:35
 msgid ""
@@ -5432,7 +5436,8 @@ msgstr "Un partage existe déjà avec ce nom."
 
 #: plinth/modules/sharing/forms.py:63
 msgid "Shares should be either public or shared with at least one group"
-msgstr "Les partages peuvent être publics ou restreints à au moins un groupe"
+msgstr ""
+"Les partages peuvent être soit publics soit partagés avec au moins un groupe"
 
 #: plinth/modules/sharing/templates/sharing.html:24
 #: plinth/modules/sharing/templates/sharing.html:27
@@ -5756,11 +5761,11 @@ msgstr "Empreinte"
 
 #: plinth/modules/ssh/views.py:48
 msgid "SSH authentication with password disabled."
-msgstr "Authentification SSH avec mot de passe désactivée."
+msgstr "Authentification SSH par mot de passe désactivée."
 
 #: plinth/modules/ssh/views.py:51
 msgid "SSH authentication with password enabled."
-msgstr "Authentification SSH avec mot de passe activée."
+msgstr "Authentification SSH par mot de passe activée."
 
 #: plinth/modules/sso/__init__.py:33
 msgid "Single Sign On"
@@ -6011,7 +6016,7 @@ msgstr ""
 "plusieurs utilisateurs.  Chaque utilisateur peut choisir un ensemble de "
 "dossiers qui lui est propre, à synchroniser entre ses périphériques.  "
 "L'interface web sur la {box_name} est accessible uniquement aux utilisateurs "
-"appartenant au groupe \"admin\"."
+"membres du groupe \"admin\"."
 
 #: plinth/modules/syncthing/__init__.py:40
 msgid "Administer Syncthing application"
@@ -6458,10 +6463,10 @@ msgid ""
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
-"Crée et gère les comptes utilisateur. Ces comptes servent de mécanisme "
-"central d’authentification pour la plupart des applications. Certaines "
-"applis nécessitent de plus qu’un compte fasse partie d’un groupe spécifique "
-"pour autoriser l’utilisateur à accéder à l'application."
+"Création et gestion des comptes utilisateur. Ces comptes servent de "
+"mécanisme central d’authentification pour la plupart des applications. "
+"Certaines applis nécessitent également qu’un compte fasse partie d’un groupe "
+"spécifique pour que l’utilisateur puisse accéder à l'application."
 
 #: plinth/modules/users/__init__.py:42
 #, python-brace-format
@@ -6515,12 +6520,12 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
-"Sélectionnez les services devant être accessibles à un nouvel utilisateur. "
-"L'utilisateur pourra se connecter aux services compatibles avec une session "
-"unique via LDAP, s'ils appartiennent au groupe approprié.<br /><br />Les "
-"utilisateurs du groupe admin pourront se connecter à tous les services. Ils "
-"peuvent également se connecter au système avec Secure Shell (SSH) et se voir "
-"accorder le mode superutilisateur (sudo)."
+"Sélectionnez les services auxquels le nouvel utilisateur doit avoir accès. L’"
+"utilisateur pourra se connecter aux services compatibles avec une session "
+"unique via LDAP s’il est membre des groupes correspondants.<br /><br />Les "
+"utilisateurs du groupe admin peuvent se connecter à tous les services. Ils "
+"peuvent également se connecter au système avec Secure Shell (SSH) et obtenir "
+"les privilèges de superutilisateur (sudo)."
 
 #: plinth/modules/users/forms.py:133 plinth/modules/users/forms.py:357
 msgid "Creating LDAP user failed."
@@ -6576,7 +6581,7 @@ msgstr "Le changement de mot de passe pour l'utilisateur LDAP a échoué."
 
 #: plinth/modules/users/forms.py:366
 msgid "Failed to add new user to admin group."
-msgstr "L'ajout du nouvel utilisateur au groupe administrateur n'a pas abouti."
+msgstr "L'ajout du nouvel utilisateur au groupe admin a échoué."
 
 #: plinth/modules/users/forms.py:383
 msgid "Failed to restrict console access."
@@ -6743,7 +6748,7 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"Clé publique du distant. Exemple : "
+"Clé publique du serveur. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:70
