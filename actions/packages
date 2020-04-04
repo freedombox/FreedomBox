@@ -58,10 +58,14 @@ def parse_arguments():
 @contextmanager
 def _apt_hold():
     """Do not allow freedombox package to be removed during package install."""
+    current_hold = subprocess.check_output(
+        ['apt-mark', 'showhold', 'freedombox'])
     try:
-        yield subprocess.run(['apt-mark', 'hold', 'freedombox'], check=True)
+        yield current_hold or subprocess.run(
+            ['apt-mark', 'hold', 'freedombox'], check=True)
     finally:
-        subprocess.run(['apt-mark', 'unhold', 'freedombox'], check=True)
+        if not current_hold:
+            subprocess.run(['apt-mark', 'unhold', 'freedombox'], check=True)
 
 
 def _run_apt_command(arguments):
