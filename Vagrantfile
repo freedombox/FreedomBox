@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
     apt-get update
     # In case new dependencies conflict with old dependencies
     apt-mark hold freedombox
-    DEBIAN_FRONTEND=noninteractive apt-get install -y $(plinth --list-dependencies)
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade -y $(plinth --list-dependencies)
     apt-mark unhold freedombox
     # Install ncurses-term
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
