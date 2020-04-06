@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 18:54-0400\n"
-"PO-Revision-Date: 2020-04-06 02:28+0000\n"
+"PO-Revision-Date: 2020-04-06 23:58+0000\n"
 "Last-Translator: Coucouf <zecoucou@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
 "fr/>\n"
@@ -30,17 +30,17 @@ msgstr "FreedomBox"
 #: plinth/daemon.py:70
 #, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Le service {service_name} est en fonctionnement."
+msgstr "Le service {service_name} est actif"
 
 #: plinth/daemon.py:96
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
-msgstr "Écoute sur le port {listen_address}:{port} ({kind})"
+msgstr "Écoute sur le port {kind} {listen_address}:{port}"
 
 #: plinth/daemon.py:99
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
-msgstr "Écoute sur le port {port}, type {kind}"
+msgstr "Écoute sur le port {kind} {port}"
 
 #: plinth/daemon.py:167
 #, python-brace-format
@@ -66,7 +66,7 @@ msgid ""
 "later."
 msgstr ""
 "Attention ! Cette application peut ne peut pas fonctionner correctement si "
-"le nom de domaine est modifié plus tard."
+"le nom de domaine est modifié ultérieurement."
 
 #: plinth/forms.py:49
 msgid "Language"
@@ -252,7 +252,7 @@ msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
 msgstr ""
-"Chemin d'un dépôt nouveau ou existant. Exemple : <i>utilisateur@machine:~/"
+"Chemin d'un dépôt, nouveau ou existant. Exemple : <i>utilisateur@machine:~/"
 "chemin/vers/le/dépôt/</i>"
 
 #: plinth/modules/backups/forms.py:189
@@ -312,7 +312,7 @@ msgstr "Le dépôt existant n’est pas chiffré."
 #: plinth/modules/backups/repository.py:322
 #, python-brace-format
 msgid "{box_name} storage"
-msgstr "Stockage {box_name}"
+msgstr "Stockage de la {box_name}"
 
 #: plinth/modules/backups/templates/backups.html:30
 #: plinth/modules/backups/views.py:60
@@ -457,7 +457,7 @@ msgstr "Restaurer les données depuis"
 
 #: plinth/modules/backups/templates/backups_restore.html:32
 msgid "Restoring"
-msgstr "Restauration"
+msgstr "Restauration en cours"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
@@ -489,8 +489,8 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
-"Vous avez %(max_filesize)s disponible pour restaurer les données. Dépasser "
-"cette limite peut rendre votre %(box_name)s inutilisable."
+"Vous avez %(max_filesize)s disponibles pour la restauration de données. Un "
+"dépassement de cette limite peut rendre votre %(box_name)s inutilisable."
 
 #: plinth/modules/backups/templates/backups_upload.html:41
 msgid "Upload file"
@@ -595,11 +595,11 @@ msgstr "La clé publique d’authenticité du serveur SSH n’a pu être vérifi
 
 #: plinth/modules/backups/views.py:362
 msgid "Authentication to remote server failed."
-msgstr "Échec de l'authentification sur le serveur distant."
+msgstr "L'authentification sur le serveur distant a échoué."
 
 #: plinth/modules/backups/views.py:364
 msgid "Error establishing connection to server: {}"
-msgstr "Erreur en établissant la connexion au serveur : {}"
+msgstr "Erreur lors de la connexion au serveur : {}"
 
 #: plinth/modules/backups/views.py:375
 msgid "Repository removed."
@@ -1106,8 +1106,8 @@ msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
 msgstr ""
-"diaspora* est un réseau social décentralisé où vous pouvez enregistrer et "
-"contrôler les donnés qui vous appartiennent."
+"diaspora* est un réseau social décentralisé avec lequel vous pouvez vous-"
+"même stocker et contrôler vos donnés personnelles."
 
 #: plinth/modules/diaspora/__init__.py:69
 #: plinth/modules/diaspora/manifest.py:23
@@ -1490,11 +1490,11 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
-"Si activé, votre {box_name} stockera historique des messages de chat. Cela "
-"permet la synchronisation des conversations entre plusieurs clients et lire "
-"l’historique d’un salon de chat multi-utilisateur. Cela dépend des "
-"paramètres du client si les historiques sont stockés en texte clair ou "
-"crypté."
+"Si activé, votre {box_name} conservera historique des messages de tchat. "
+"Cela permet la synchronisation des conversations entre plusieurs clients et "
+"la consultation de l’historique d’un salon de tchat multi-utilisateur. Le "
+"choix du stockage de l’historique en texte clair ou chiffré dépend de la "
+"configuration du client."
 
 #: plinth/modules/ejabberd/manifest.py:11
 msgid "Conversations"
@@ -2272,7 +2272,7 @@ msgid ""
 "By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
 "tunnels may be configured using the tunnel configuration interface."
 msgstr ""
-"Par défaut, des mandataires HTTP, HTTPS et IRC sont disponibles. Des "
+"Par défaut des mandataires HTTP, HTTPS et IRC sont disponibles. Des "
 "mandataires et tunnels additionnels peuvent être configurés grâce à "
 "l'interface de configuration des tunnels."
 
@@ -2829,7 +2829,7 @@ msgstr ""
 
 #: plinth/modules/mediawiki/views.py:53
 msgid "Password updated"
-msgstr "Mot de passe modifié"
+msgstr "Mot de passe mis à jour"
 
 #: plinth/modules/mediawiki/views.py:72
 msgid "Public registrations enabled"
@@ -3236,7 +3236,7 @@ msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
 msgstr ""
-"Mumble est un logiciel de chat vocal de haute qualité, open source, crypté "
+"Mumble est un logiciel de tchat vocal de haute qualité, open source, crypté "
 "et à faible temps de latence."
 
 #: plinth/modules/mumble/__init__.py:25
@@ -3256,7 +3256,7 @@ msgstr "Mumble"
 
 #: plinth/modules/mumble/__init__.py:50
 msgid "Voice Chat"
-msgstr "Chat vocal"
+msgstr "Tchat vocal"
 
 #: plinth/modules/mumble/forms.py:16
 msgid "Set SuperUser Password"
@@ -3748,10 +3748,10 @@ msgid ""
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
-"Le routeur n’est pas configuré actuellement <p class=\"help-block"
-"\">Choisissez ceci si vous n’avez pas configuré le routeur ou si vous n’en "
-"êtes pas capable et souhaitez vous le rappeler plus tard. Certaines des "
-"autres étapes de configuration pourraient échouer.</p>"
+"Le routeur n’est pas configuré actuellement <p class=\"help-block\">"
+"Choisissez cette option si vous n’avez pas encore pu configurer le routeur "
+"et souhaitez vous faire rappeler de le configurer plus tard. Il se peut que "
+"d’autres étapes de configuration échouent.</p>"
 
 #: plinth/modules/networks/templates/connection_show.html:28
 msgid "Edit connection"
@@ -4246,13 +4246,13 @@ msgstr "Connexion {name} activée."
 
 #: plinth/modules/networks/views.py:228
 msgid "Failed to activate connection: Connection not found."
-msgstr "Échec de l'activation de la connexion : connexion introuvable."
+msgstr "Échec d’activation de la connexion : connexion introuvable."
 
 #: plinth/modules/networks/views.py:234
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
-"Échec de l'activation de la connexion {name} : pas d'appareil adéquat "
+"Échec d’activation de la connexion {name} : pas de périphérique adéquat "
 "disponible."
 
 #: plinth/modules/networks/views.py:247
@@ -4262,7 +4262,7 @@ msgstr "Connexion {name} désactivée."
 
 #: plinth/modules/networks/views.py:251
 msgid "Failed to de-activate connection: Connection not found."
-msgstr "Échec de la désactivation de la connexion : connexion introuvable."
+msgstr "Échec de désactivation de la connexion : connexion introuvable."
 
 #: plinth/modules/networks/views.py:303
 msgid "Adding New Generic Connection"
@@ -4287,7 +4287,7 @@ msgstr "Connexion {name} supprimée."
 
 #: plinth/modules/networks/views.py:393 plinth/modules/networks/views.py:403
 msgid "Failed to delete connection: Connection not found."
-msgstr "Échec de la suppression de la connexion : connexion introuvable."
+msgstr "Échec de suppression de la connexion : connexion introuvable."
 
 #: plinth/modules/openvpn/__init__.py:26
 #, python-brace-format
@@ -4398,7 +4398,7 @@ msgstr "Installation terminée."
 
 #: plinth/modules/openvpn/views.py:115
 msgid "Setup failed."
-msgstr "Échec de l'installation."
+msgstr "Échec de l’installation."
 
 #: plinth/modules/pagekite/__init__.py:27
 #, python-brace-format
@@ -4884,7 +4884,7 @@ msgstr ""
 
 #: plinth/modules/radicale/views.py:35
 msgid "Access rights configuration updated"
-msgstr "Configuration des droits d’accès modifiée"
+msgstr "Configuration des droits d’accès mise à jour"
 
 #: plinth/modules/roundcube/__init__.py:21
 msgid ""
@@ -5109,7 +5109,7 @@ msgid ""
 "stores no cookies by default."
 msgstr ""
 "Searx peut être utilisé pour éviter le pistage et le profilage fait par les "
-"moteurs de recherche. Il ne stocke aucun cookie par défaut."
+"moteurs de recherche. Par défaut il ne stocke aucun cookie."
 
 #: plinth/modules/searx/__init__.py:31
 msgid "Search the web"
@@ -5157,7 +5157,7 @@ msgstr ""
 #: plinth/modules/searx/views.py:38 plinth/modules/searx/views.py:49
 #: plinth/modules/tor/views.py:129 plinth/modules/tor/views.py:156
 msgid "Configuration updated."
-msgstr "Configuration actualisée."
+msgstr "Configuration mise à jour."
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
@@ -5176,7 +5176,7 @@ msgstr ""
 
 #: plinth/modules/security/forms.py:19
 msgid "Fail2Ban (recommended)"
-msgstr "Fail2ban (recommandé)"
+msgstr "Fail2Ban (recommandé)"
 
 #: plinth/modules/security/forms.py:20
 msgid ""
@@ -5186,7 +5186,7 @@ msgid ""
 msgstr ""
 "Lorsque cette option est activée, Fail2Ban limitera les tentatives "
 "d'intrusion par force brute sur le serveur SSH ainsi que sur les autres "
-"services Internet protégés par mot de passe et activés."
+"services Internet protégés par mot de passe et actifs."
 
 #: plinth/modules/security/templates/security.html:11
 #: plinth/modules/security/templates/security.html:13
@@ -5204,16 +5204,17 @@ msgid ""
 "The installed version of FreedomBox has %(count)s reported security "
 "vulnerabilities."
 msgstr ""
-"La version installée de FreedomBox comporte %(count)s faille(s) de sécurité "
-"connue(s)."
+"La version installée de la FreedomBox souffre de %(count)s faille(s) de "
+"sécurité identifiée(s)."
 
 #: plinth/modules/security/templates/security_report.html:18
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app."
 msgstr ""
-"La table suivante liste le nombre de failles de sécurité actuelles et "
-"passées de chaque application installée."
+"Le tableau suivant liste le nombre de failles de sécurité actuellement "
+"identifiées ainsi que le décompte historique, pour chaque application "
+"installée."
 
 #: plinth/modules/security/templates/security_report.html:24
 msgid ""
@@ -5242,7 +5243,7 @@ msgstr "Application"
 
 #: plinth/modules/security/templates/security_report.html:41
 msgid "Current Vulnerabilities"
-msgstr "failles actuelles"
+msgstr "Failles actuelles"
 
 #: plinth/modules/security/templates/security_report.html:42
 msgid "Past Vulnerabilities"
@@ -5513,8 +5514,8 @@ msgid ""
 msgstr ""
 "Les instantanés ne fonctionnent actuellement que sur des systèmes de "
 "fichiers btrfs et sur la partition racine uniquement. Les instantanés ne "
-"remplacent pas les <a href=\"/plinth/sys/backups\">sauvegardes</a> car ils "
-"ne peuvent être enregistrés que sur la même partition. "
+"peuvent pas remplacent pas les <a href=\"/plinth/sys/backups\""
+">sauvegardes</a> car ils sont forcément conservés sur la même partition. "
 
 #: plinth/modules/snapshot/__init__.py:52
 msgid "Storage Snapshots"
@@ -5677,7 +5678,7 @@ msgstr "Instantané créé."
 
 #: plinth/modules/snapshot/views.py:135
 msgid "Storage snapshots configuration updated"
-msgstr "Configuration du stockage des instantanés mise à jour"
+msgstr "Configuration des instantanés de disque mise à jour"
 
 #: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
 #, python-brace-format
@@ -5694,7 +5695,8 @@ msgstr "Supprimer les instantanés sélectionnés"
 
 #: plinth/modules/snapshot/views.py:163
 msgid "Snapshot is currently in use. Please try again later."
-msgstr "L'instantané est utilisé actuellement. Veuillez ré-essayer plus tard."
+msgstr ""
+"L’instantané est en cours d’utilisation. Veuillez réessayer ultérieurement."
 
 #: plinth/modules/snapshot/views.py:186
 #, python-brace-format
@@ -5783,8 +5785,8 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 "Ce module vous permet de gérer les médias de stockage connectés à votre "
-"{box_name}. Vous pouvez visualiser les médias de stockage utilisés "
-"actuellement, monter et démonter des médias amovibles, étendre la partition "
+"{box_name}. Vous pouvez visualiser les médias de stockage en cours d’"
+"utilisation, monter et démonter des médias amovibles, étendre la partition "
 "racine, etc."
 
 #: plinth/modules/storage/__init__.py:52 plinth/modules/storage/__init__.py:318
@@ -6041,7 +6043,8 @@ msgstr ""
 "Tahoe-LAFS est un système de stockage de fichiers décentralisé sécurisé. Il "
 "utilise une sécurité indépendante du fournisseur pour stocker des fichiers "
 "sur un réseau distribué de nœuds de stockage. Même si certains des nœuds "
-"échouent, vos fichiers peuvent être retrouvés depuis les nœuds restants."
+"deviennent indisponibles, vos fichiers pourront être récupérés depuis les "
+"nœuds restants."
 
 #: plinth/modules/tahoe/__init__.py:35
 #, python-brace-format
@@ -6266,7 +6269,7 @@ msgstr "Orbot : Mandataire utilisant Tor"
 
 #: plinth/modules/tor/templates/tor.html:26
 msgid "Tor configuration is being updated"
-msgstr "La configuration de Tor est en cours d'actualisation"
+msgstr "La configuration de Tor est en cours de mise à jour"
 
 #: plinth/modules/tor/templates/tor.html:35
 msgid "Onion Service"
@@ -6455,7 +6458,7 @@ msgstr "Mise à niveau initiée."
 
 #: plinth/modules/upgrades/views.py:85
 msgid "Starting upgrade failed."
-msgstr "Échec du démarrage de la mise à niveau."
+msgstr "Le lancement de la mise à niveau a échoué."
 
 #: plinth/modules/users/__init__.py:37
 msgid ""
@@ -6529,12 +6532,12 @@ msgstr ""
 
 #: plinth/modules/users/forms.py:133 plinth/modules/users/forms.py:357
 msgid "Creating LDAP user failed."
-msgstr "La création de l'utilisateur LDAP n'a pas abouti."
+msgstr "La création de l’utilisateur LDAP a échoué."
 
 #: plinth/modules/users/forms.py:144
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
-msgstr "Échec de l'ajout d'un nouvel utilisateur au groupe {group}."
+msgstr "Échec de l’ajout du nouvel utilisateur au groupe {group}."
 
 #: plinth/modules/users/forms.py:158
 msgid "Authorized SSH Keys"
@@ -6581,7 +6584,7 @@ msgstr "Le changement de mot de passe pour l'utilisateur LDAP a échoué."
 
 #: plinth/modules/users/forms.py:366
 msgid "Failed to add new user to admin group."
-msgstr "L'ajout du nouvel utilisateur au groupe admin a échoué."
+msgstr "Échec de l'ajout du nouvel utilisateur au groupe admin."
 
 #: plinth/modules/users/forms.py:383
 msgid "Failed to restrict console access."
@@ -6633,9 +6636,9 @@ msgid ""
 "Other users can be added later."
 msgstr ""
 "Choisir un nom d’utilisateur et un mot de passe pour accéder à l’interface "
-"web. Le mot de passe peut être modifié plus tard. Cet utilisateur disposera "
-"de privilèges administrateur. D’autres utilisateurs peuvent être créés par "
-"la suite."
+"web. Le mot de passe peut être modifié par la suite. Cet utilisateur "
+"disposera de privilèges administrateur. D’autres utilisateurs pourront être "
+"créés ultérieurement."
 
 #: plinth/modules/users/templates/users_firstboot.html:27
 msgid "Create Account"
@@ -7298,7 +7301,7 @@ msgstr "Fondation FreedomBox"
 
 #: plinth/templates/index.html:154
 msgid "IRC Chatroom"
-msgstr "Chat IRC"
+msgstr "Canal de tchat IRC"
 
 #: plinth/templates/index.html:159
 msgid "Mailing list"
