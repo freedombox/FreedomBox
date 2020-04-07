@@ -47,8 +47,9 @@ def _run():
     logger.info('Glib main loop thread exited.')
 
 
-def schedule(interval, method, data=None, in_thread=True):
+def schedule(interval, method, data=None, in_thread=True, repeat=True):
     """Schedule a recurring call to a method with fixed interval."""
+
     def _runner():
         """Run the target method and log and exceptions."""
         try:
@@ -64,6 +65,6 @@ def schedule(interval, method, data=None, in_thread=True):
 
         thread = threading.Thread(target=_runner)
         thread.start()
-        return True
+        return repeat
 
     glib.timeout_add(int(interval * 1000), _run_bare_or_thread, None)
