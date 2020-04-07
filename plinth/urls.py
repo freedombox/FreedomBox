@@ -32,6 +32,6 @@ urlpatterns = [
     url(r'locked/$', public(CaptchaLoginView.as_view()), name='locked_out'),
 
     # Notifications
-    url(r'^notification/(?P<id>[a-z0-9-]+)/dismiss/$',
+    url(r'^notification/(?P<id>[A-Za-z0-9-=]+)/dismiss/$',
         views.notification_dismiss, name='notification_dismiss')
 ]

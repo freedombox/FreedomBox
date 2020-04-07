@@ -70,7 +70,9 @@ class Notification(models.StoredNotification):
     following fields are present in the model:
 
     'id' is a unique string identifier for the notification and acts as the
-    primary key for the stored database table.
+    primary key for the stored database table. Only the following chars are
+    currently allowed: A-Z, a-z, 0-9, - and =. If other chars must be used, it
+    is recommended to use base32 encoding.
 
     'app_id' is the unique ID of the app showing the notification.
 
@@ -154,6 +156,7 @@ class Notification(models.StoredNotification):
     been dismissed by the user.
 
     """
+
     class Meta:  # pylint: disable=too-few-public-methods
         """Meta properties of the Notification model."""
         proxy = True
