@@ -34,6 +34,10 @@ def parse_arguments():
     subparser.add_argument('device',
                            help='Partition which needs to be resized')
 
+    subparser = subparsers.add_parser('mount', help='Mount a filesystem')
+    subparser.add_argument('--block-device',
+                           help='Block device of the filesystem to mount')
+
     subparser = subparsers.add_parser('eject', help='Eject a storage device')
     subparser.add_argument('device', help='Path of the device to eject')
 
@@ -230,6 +234,26 @@ def _interpret_unit(value):
     """Return value in bytes after understanding parted unit."""
     value = value.rstrip('B')  # For now, we only need to understand bytes
     return int(value)
+
+
+def subcommand_mount(arguments):
+    """Mount a disk are root user.
+
+    XXX: This is primarily to provide compatibility with older code that used
+    udiskie to auto-mount all partitions as root user under /media/root/
+    directory. We are setting special permissions for the directory /media/root
+    and users have set shared folders using this path. This can be removed in
+    favor of using DBus API once we have a migration plan in place. Disks can
+    be mounted directly /mount without ACL restrictions that apply to
+    /mount/<user> directories. This can be done by setting udev flag
+    UDISKS_FILESYSTEM_SHARED=1 by writing a udev rule.
+
+    """
+    process = subprocess.run([
+        'udisksctl', 'mount', '--block-device', arguments.block_device,
+        '--no-user-interaction'
+    ])
+    sys.exit(process.returncode)
 
 
 def subcommand_eject(arguments):
