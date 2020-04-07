@@ -82,6 +82,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         choices=UsersAndGroups.get_group_choices,
         label=ugettext_lazy('Permissions'), required=False,
         widget=forms.CheckboxSelectMultiple, help_text=ugettext_lazy(
+            'Select which services should be available to the new '
             'user. The user will be able to log in to services that '
             'support single sign-on through LDAP, if they are in the '
             'appropriate group.<br /><br />Users in the admin group '
