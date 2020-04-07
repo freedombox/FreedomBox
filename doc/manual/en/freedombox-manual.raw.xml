@@ -6714,13 +6714,13 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
         <title>Setting Up A User Account</title>
         <section>
           <title>Plinth First Log In: Admin Account</title>
-          <para>When creating an account in Plinth for the first time, this user will automatically have administrator capabilities. <code>Admin</code> users are able to log in using ssh (see Logging In below) and have superuser privileges via sudo. </para>
+          <para>When creating an account in FreedomBox's web interface for the first time, this user will automatically have administrator capabilities. <code>Admin</code> users are able to log in using ssh (see Logging In below) and have superuser privileges via sudo. </para>
         </section>
         <section>
           <title>Default User Account</title>
           <itemizedlist>
             <listitem>
-              <para>Note: If you can access Plinth, then you don't need to do this. You can use the user account created in Plinth to connect to SSH. </para>
+              <para>Note: If you can access FreedomBox's web interface, then you don't need to do this. You can use the user account created in FreedomBox's web interface to connect to SSH. </para>
             </listitem>
           </itemizedlist>
           <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
@@ -6772,7 +6772,7 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
       </section>
       <section>
         <title>Changing Password</title>
-        <para>To change the password of a user managed by Plinth, use the change password page.  However, the <code>fbx</code> default user is not managed by Plinth and its password cannot be changed in the web interface. </para>
+        <para>To change the password of a user managed by FreedomBox's web interface, use the change password page.  However, the <code>fbx</code> default user is not managed by FreedomBox's web interface and its password cannot be changed through it. </para>
         <para>To change password on the terminal, log in to your FreedomBox as the user whose password you want to change. Then, run the following command: </para>
         <screen><![CDATA[$ passwd]]></screen>
         <para>This will ask you for your current password before giving you the opportunity to set a new one. </para>
@@ -10096,6 +10096,67 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.6 (2020-04-06)</title>
+        <itemizedlist>
+          <listitem>
+            <para>app: Ensure toggle buttons work independently of configuration form </para>
+          </listitem>
+          <listitem>
+            <para>networks, monkeysphere: Make styling more specific to avoid interference </para>
+          </listitem>
+          <listitem>
+            <para>syncthing: Update description to mention 'syncthing' group </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Support upgrade up to any 2.x version </para>
+          </listitem>
+          <listitem>
+            <para>packages: Hold freedombox package during package installs </para>
+          </listitem>
+          <listitem>
+            <para>users: Add component for managing users and groups </para>
+          </listitem>
+          <listitem>
+            <para>app: Fix grammar in developer documentation string </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Disable public edits of blog pages </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Add moderation of blog comments </para>
+          </listitem>
+          <listitem>
+            <para>firewalld: Support upgrade up to any 0.8.x version </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Fix permissions of sync directory </para>
+          </listitem>
+          <listitem>
+            <para>locale: Added Serbian translation </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Russian, French, German, Czech, Italian, Hindi, Telugu, and Spanish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 20.5.1 (2020-03-26)</title>
+        <itemizedlist>
+          <listitem>
+            <para>networks: Update label wording in topology form </para>
+          </listitem>
+          <listitem>
+            <para>jsxc: Fix issue with serving static files </para>
+          </listitem>
+          <listitem>
+            <para>debian: Separate binary packages for each language manual </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Norwegian Bokmål and German </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.5 (2020-03-23)</title>
         <itemizedlist>
