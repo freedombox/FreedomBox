@@ -156,8 +156,11 @@ def _clone_with_progress_report(url, repo_dir):
         if currenttime - starttime > 1:
             elapsed = _clone_status_line_to_percent(line)
             if elapsed is not None:
-                with open(status_file, 'w') as file_handle:
-                    file_handle.write(elapsed)
+                try:
+                    with open(status_file, 'w') as file_handle:
+                        file_handle.write(elapsed)
+                except OSError as error:
+                    errors.append(str(error))
 
             starttime = currenttime
 
@@ -183,12 +186,15 @@ def _prepare_clone_repo(arguments):
     repo_dir = os.path.join(GIT_REPO_PATH, repo_name)
     os.mkdir(repo_dir)
 
-    if arguments.is_private:
-        _set_access_status(repo_name, 'private')
-
     status_file = os.path.join(repo_dir, 'clone_progress')
-    with open(status_file, 'w') as file_handle:
-        file_handle.write('0')
+    try:
+        if arguments.is_private:
+            _set_access_status(repo_name, 'private')
+        with open(status_file, 'w') as file_handle:
+            file_handle.write('0')
+    except OSError:
+        shutil.rmtree(repo_dir)
+        raise
 
 
 def _clone_status_line_to_percent(line):
@@ -238,14 +244,21 @@ def _clone_repo(arguments):
 def _create_repo(arguments):
     """Create an empty repository."""
     repo = arguments.name
-    subprocess.check_call(['git', 'init', '--bare', repo], cwd=GIT_REPO_PATH)
-    if not arguments.keep_ownership:
-        subprocess.check_call(['chown', '-R', 'www-data:www-data', repo],
+    try:
+        subprocess.check_call(['git', 'init', '--bare', repo],
                               cwd=GIT_REPO_PATH)
-    _set_repo_description(repo, arguments.description)
-    _set_repo_owner(repo, arguments.owner)
-    if arguments.is_private:
-        _set_access_status(repo, 'private')
+        if not arguments.keep_ownership:
+            subprocess.check_call(['chown', '-R', 'www-data:www-data', repo],
+                                  cwd=GIT_REPO_PATH)
+        _set_repo_description(repo, arguments.description)
+        _set_repo_owner(repo, arguments.owner)
+        if arguments.is_private:
+            _set_access_status(repo, 'private')
+    except (subprocess.CalledProcessError, OSError):
+        repo_path = os.path.join(GIT_REPO_PATH, repo)
+        if os.path.isdir(repo_path):
+            shutil.rmtree(repo_path)
+        raise
 
 
 def _get_repo_description(repo):
