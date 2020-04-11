@@ -28,18 +28,3 @@
   </p>
 
 {% endblock %}
-
-
-{% block configuration %}
-
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form id="app-form" class="form form-configuration" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-{% endblock %}

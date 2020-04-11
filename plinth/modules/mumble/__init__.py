@@ -10,6 +10,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -26,8 +27,6 @@ _description = [
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
       'from your desktop and Android devices are available.')
 ]
-
-reserved_usernames = ['mumble-server']
 
 port_forwarding_info = [
     ('TCP', 64738),
@@ -72,6 +71,10 @@ class MumbleApp(app_module.App):
             listen_ports=[(64738, 'tcp4'), (64738, 'tcp6'), (64738, 'udp4'),
                           (64738, 'udp6')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-mumble',
+                                          reserved_usernames=['mumble-server'])
+        self.add(users_and_groups)
 
 
 def init():

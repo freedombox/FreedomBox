@@ -9,7 +9,7 @@ from plinth import actions, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa
 
@@ -30,8 +30,6 @@ _description = [
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
 ]
 
-group = ('minidlna', _('Media streaming server'))
-
 app = None
 
 
@@ -42,6 +40,9 @@ class MiniDLNAApp(app_module.App):
     def __init__(self):
         """Initialize the app components"""
         super().__init__()
+
+        groups = {'minidlna': _('Media streaming server')}
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name='minidlna', icon_filename='minidlna',
                                short_description=_('Simple Media Server'),
@@ -60,16 +61,12 @@ class MiniDLNAApp(app_module.App):
                             is_external=False)
         webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
                               urls=['http://localhost:8200/'])
-        shortcut = frontpage.Shortcut(
-            'shortcut-minidlna',
-            info.name,
-            short_description=info.short_description,
-            description=info.description,
-            icon=info.icon_filename,
-            url='/_minidlna/',
-            login_required=True,
-            allowed_groups=[group[0]],
-        )
+        shortcut = frontpage.Shortcut('shortcut-minidlna', info.name,
+                                      short_description=info.short_description,
+                                      description=info.description,
+                                      icon=info.icon_filename,
+                                      url='/_minidlna/', login_required=True,
+                                      allowed_groups=list(groups))
         daemon = Daemon('daemon-minidlna', managed_services[0])
 
         self.add(menu_item)
@@ -78,12 +75,15 @@ class MiniDLNAApp(app_module.App):
         self.add(shortcut)
         self.add(daemon)
 
+        users_and_groups = UsersAndGroups('users-and-groups-minidlna',
+                                          groups=groups)
+        self.add(users_and_groups)
+
 
 def init():
     """Initialize the module."""
     global app
     app = MiniDLNAApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

@@ -294,7 +294,7 @@ class NetworkTopologyForm(forms.Form):
     """
     network_topology = forms.ChoiceField(
         label=format_lazy(
-            _('Choose how your {box_name} is connected to your network'),
+            _('Specify how your {box_name} is connected to your network'),
             box_name=cfg.box_name),
         required=True,
         widget=forms.RadioSelect,

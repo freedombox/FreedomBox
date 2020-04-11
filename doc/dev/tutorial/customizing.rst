@@ -63,10 +63,8 @@ provide options to the user. Add the following to ``forms.py``.
 
   from django import forms
 
-  from plinth.forms import AppForm
 
-
-  class TransmissionForm(AppForm):  # pylint: disable=W0232
+  class TransmissionForm(forms.Form):  # pylint: disable=W0232
       """Transmission configuration form"""
       download_dir = forms.CharField(
           label='Download directory',

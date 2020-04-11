@@ -14,7 +14,7 @@ from plinth import frontpage, menu
 from plinth.errors import ActionError
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 
 from .forms import is_repo_url
 from .manifest import (GIT_REPO_PATH,  # noqa, pylint: disable=unused-import
@@ -36,8 +36,6 @@ _description = [
       '<a href="https://git-scm.com/docs/gittutorial">Git tutorial</a>.')
 ]
 
-group = ('git-access', _('Read-write access to Git repositories'))
-
 app = None
 
 
@@ -49,6 +47,8 @@ class GitwebApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {'git-access': _('Read-write access to Git repositories')}
 
         self.repos = []
 
@@ -69,7 +69,7 @@ class GitwebApp(app_module.App):
                                       icon=info.icon_filename, url='/gitweb/',
                                       clients=info.clients,
                                       login_required=True,
-                                      allowed_groups=[group[0]])
+                                      allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-gitweb', info.name,
@@ -83,6 +83,10 @@ class GitwebApp(app_module.App):
         self.auth_webserver = GitwebWebserverAuth('webserver-gitweb-auth',
                                                   'gitweb-freedombox-auth')
         self.add(self.auth_webserver)
+
+        users_and_groups = UsersAndGroups('users-and-groups-gitweb',
+                                          groups=groups)
+        self.add(users_and_groups)
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
@@ -143,6 +147,7 @@ class GitwebApp(app_module.App):
 
 class GitwebWebserverAuth(Webserver):
     """Component to handle Gitweb authentication webserver configuration."""
+
     def is_conf_enabled(self):
         """Check whether Gitweb authentication configuration is enabled."""
         return super().is_enabled()
@@ -163,7 +168,6 @@ def init():
     """Initialize the module."""
     global app
     app = GitwebApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':

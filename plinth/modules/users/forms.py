@@ -3,7 +3,6 @@
 import pwd
 import re
 
-import plinth.forms
 from django import forms
 from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
@@ -13,26 +12,20 @@ from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-from plinth import actions, module_loader
+
+import plinth.forms
+from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules import first_boot, users
+from plinth.modules import first_boot
 from plinth.modules.security import set_restricted_access
 from plinth.translation import set_language
 from plinth.utils import is_user_admin
 
 from . import get_last_admin_user
+from .components import UsersAndGroups
 
 
-def get_group_choices():
-    """Return localized group description and group name in one string."""
-    admin_group = ('admin', _('Access to all services and system settings'))
-    users.register_group(admin_group)
-    choices = [(k, ('{} ({})'.format(users.groups[k], k)))
-               for k in users.groups]
-    return sorted(choices, key=lambda g: g[0])
-
-
-class ValidNewUsernameCheckMixin(object):
+class ValidNewUsernameCheckMixin:
     """Mixin to check if a username is valid for created new user."""
 
     def clean_username(self):
@@ -40,8 +33,8 @@ class ValidNewUsernameCheckMixin(object):
         username = self.cleaned_data['username']
         if self.instance.username != username and \
                 not self.is_valid_new_username():
-            raise ValidationError(
-                _('Username is taken or is reserved.'), code='invalid')
+            raise ValidationError(_('Username is taken or is reserved.'),
+                                  code='invalid')
 
         return username
 
@@ -52,10 +45,8 @@ class ValidNewUsernameCheckMixin(object):
         if username.lower() in existing_users:
             return False
 
-        for module_name, module in module_loader.loaded_modules.items():
-            for reserved_username in getattr(module, 'reserved_usernames', []):
-                if username.lower() == reserved_username.lower():
-                    return False
+        if UsersAndGroups.is_username_reserved(username.lower()):
+            return False
 
         return True
 
@@ -88,9 +79,9 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
     """
     username = USERNAME_FIELD
     groups = forms.MultipleChoiceField(
-        choices=get_group_choices(), label=ugettext_lazy('Permissions'),
-        required=False, widget=forms.CheckboxSelectMultiple,
-        help_text=ugettext_lazy(
+        choices=UsersAndGroups.get_group_choices,
+        label=ugettext_lazy('Permissions'), required=False,
+        widget=forms.CheckboxSelectMultiple, help_text=ugettext_lazy(
             'Select which services should be available to the new '
             'user. The user will be able to log in to services that '
             'support single sign-on through LDAP, if they are in the '
@@ -109,7 +100,6 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         """Initialize the form with extra request argument."""
         self.request = request
         super(CreateUserForm, self).__init__(*args, **kwargs)
-        self.fields['groups'].choices = get_group_choices()
         self.fields['username'].widget.attrs.update({
             'autofocus': 'autofocus',
             'autocapitalize': 'none',
@@ -175,7 +165,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
 
     def __init__(self, request, username, *args, **kwargs):
         """Initialize the form with extra request argument."""
-        group_choices = dict(get_group_choices())
+        group_choices = dict(UsersAndGroups.get_group_choices())
         for group in group_choices:
             Group.objects.get_or_create(name=group)
 
@@ -313,9 +303,8 @@ class UserChangePasswordForm(SetPasswordForm):
         """Initialize the form with extra request argument."""
         self.request = request
         super(UserChangePasswordForm, self).__init__(*args, **kwargs)
-        self.fields['new_password1'].widget.attrs.update({
-            'autofocus': 'autofocus'
-        })
+        self.fields['new_password1'].widget.attrs.update(
+            {'autofocus': 'autofocus'})
 
     def save(self, commit=True):
         """Save the user model and change LDAP password as well."""
@@ -366,7 +355,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
                                _('Failed to add new user to admin group.'))
 
             # Create initial Django groups
-            for group_choice in get_group_choices():
+            for group_choice in UsersAndGroups.get_group_choices():
                 auth.models.Group.objects.get_or_create(name=group_choice[0])
 
             admin_group = auth.models.Group.objects.get(name='admin')

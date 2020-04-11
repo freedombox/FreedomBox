@@ -14,6 +14,7 @@ Components
    frontpage
    domain
    letsencrypt
+   staticfiles
 
 Base Classes
 ^^^^^^^^^^^^

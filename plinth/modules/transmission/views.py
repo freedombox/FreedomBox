@@ -37,16 +37,13 @@ class TransmissionAppView(views.AppView):
         """Apply the changes submitted in the form."""
         old_status = form.initial
         new_status = form.cleaned_data
+        if old_status['storage_path'] != new_status['storage_path']:
+            new_configuration = {
+                'download-dir': new_status['storage_path'],
+            }
 
-        if new_status['is_enabled'] or not old_status['is_enabled']:
-            if old_status['storage_path'] != new_status['storage_path']:
-                new_configuration = {
-                    'download-dir': new_status['storage_path'],
-                }
-
-                actions.superuser_run(
-                    'transmission', ['merge-configuration'],
-                    input=json.dumps(new_configuration).encode())
-                messages.success(self.request, _('Configuration updated'))
+            actions.superuser_run('transmission', ['merge-configuration'],
+                                  input=json.dumps(new_configuration).encode())
+            messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

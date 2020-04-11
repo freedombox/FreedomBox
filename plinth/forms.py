@@ -17,11 +17,10 @@ from django.utils.translation import ugettext_lazy as _
 import plinth
 
 
-class AppForm(forms.Form):
-    """Generic configuration form for an app."""
-    is_enabled = forms.BooleanField(
-        widget=CheckboxInput(attrs={'id': 'app-toggle-input'}),
-        label=_('Enable application'), required=False)
+class AppEnableDisableForm(forms.Form):
+    """Form to enable / disable an app."""
+    should_enable = forms.BooleanField(widget=forms.HiddenInput,
+                                       required=False)
 
 
 class DomainSelectionForm(forms.Form):

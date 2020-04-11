@@ -6,10 +6,8 @@ Django form for configuring Searx.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 
-
-class SearxForm(AppForm):
+class SearxForm(forms.Form):
     """Searx configuration form."""
     safe_search = forms.ChoiceField(
         label=_('Safe Search'), help_text=_(

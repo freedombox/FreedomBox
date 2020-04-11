@@ -11,7 +11,7 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -36,8 +36,6 @@ _description = [
         users_url=reverse_lazy('users:index'))
 ]
 
-group = ('wiki', _('View and edit wiki applications'))
-
 app = None
 
 
@@ -49,6 +47,7 @@ class IkiwikiApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('ikiwiki'), icon_filename='ikiwiki',
                                short_description=_('Wiki and Blog'),
@@ -70,6 +69,11 @@ class IkiwikiApp(app_module.App):
         webserver = Webserver('webserver-ikiwiki', 'ikiwiki-plinth',
                               urls=['https://{host}/ikiwiki'])
         self.add(webserver)
+
+        groups = {'wiki': _('View and edit wiki applications')}
+        users_and_groups = UsersAndGroups('users-and-groups-ikiwiki',
+                                          groups=groups)
+        self.add(users_and_groups)
 
     def add_shortcut(self, site, title):
         """Add an ikiwiki shortcut to frontpage."""
@@ -101,7 +105,6 @@ def init():
     """Initialize the ikiwiki module."""
     global app
     app = IkiwikiApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

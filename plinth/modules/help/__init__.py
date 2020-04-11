@@ -3,10 +3,12 @@
 FreedomBox app for help pages.
 """
 
+import os
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
-from plinth import menu
+from plinth import cfg, menu, web_server
 
 version = 1
 
@@ -50,6 +52,17 @@ class HelpApp(app_module.App):
                               'help:about', parent_url_name='help:index',
                               order=100)
         self.add(menu_item)
+
+        directory_map = {}
+        langs = os.listdir(os.path.join(cfg.doc_dir, 'manual'))
+        for lang in langs:
+            manual_dir = os.path.join(cfg.doc_dir, 'manual', lang, 'images')
+            manual_url = f'/help/manual/{lang}/images'
+            directory_map[manual_url] = manual_dir
+
+        static_files = web_server.StaticFiles('static-files-help',
+                                              directory_map)
+        self.add(static_files)
 
 
 def init():

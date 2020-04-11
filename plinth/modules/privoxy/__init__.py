@@ -13,6 +13,7 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -38,8 +39,6 @@ _description = [
           'or <a href="http://p.p">http://p.p</a>.'),
         box_name=_(cfg.box_name)),
 ]
-
-reserved_usernames = ['privoxy']
 
 app = None
 
@@ -77,6 +76,10 @@ class PrivoxyApp(app_module.App):
         daemon = Daemon('daemon-privoxy', managed_services[0],
                         listen_ports=[(8118, 'tcp4'), (8118, 'tcp6')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-privoxy',
+                                          reserved_usernames=['privoxy'])
+        self.add(users_and_groups)
 
     def diagnose(self):
         """Run diagnostics and return the results."""

@@ -21,6 +21,7 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.signals import (domain_added, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -44,8 +45,6 @@ _description = [
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'),
         jsxc_url=reverse_lazy('jsxc:index'))
 ]
-
-reserved_usernames = ['ejabberd']
 
 port_forwarding_info = [
     ('TCP', 5222),
@@ -109,6 +108,10 @@ class EjabberdApp(app_module.App):
             listen_ports=[(5222, 'tcp4'), (5222, 'tcp6'), (5269, 'tcp4'),
                           (5269, 'tcp6'), (5443, 'tcp4'), (5443, 'tcp6')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-ejabberd',
+                                          reserved_usernames=['ejabberd'])
+        self.add(users_and_groups)
 
 
 def init():

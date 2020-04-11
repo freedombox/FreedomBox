@@ -56,6 +56,8 @@ class FirewallApp(app_module.App):
 
     app_id = 'firewall'
 
+    can_be_disabled = False
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -104,7 +106,7 @@ def force_upgrade(helper, packages):
 
     # firewalld 0.6.x -> 0.7.x, 0.6.x -> 0.8.x, 0.7.x -> 0.8.x
     package = packages['firewalld']
-    if Version(package['current_version']) >= Version('0.8') or \
+    if Version(package['current_version']) >= Version('0.9') or \
        Version(package['new_version']) < Version('0.7'):
         return False
 

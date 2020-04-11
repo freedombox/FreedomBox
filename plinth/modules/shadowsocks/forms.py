@@ -6,7 +6,6 @@ FreedomBox app for configuring Shadowsocks.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 from plinth.utils import format_lazy
 
 METHODS = [('chacha20-ietf-poly1305',
@@ -32,7 +31,7 @@ class TrimmedCharField(forms.CharField):
         return super(TrimmedCharField, self).clean(value)
 
 
-class ShadowsocksForm(AppForm):
+class ShadowsocksForm(forms.Form):
     """Shadowsocks configuration form"""
     server = TrimmedCharField(label=_('Server'),
                               help_text=_('Server hostname or IP address'))

@@ -13,7 +13,8 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import add_user_to_share_group, register_group
+from plinth.modules.users import add_user_to_share_group
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -29,11 +30,9 @@ _description = [
       'BitTorrent is not anonymous.'),
 ]
 
-reserved_usernames = ['debian-transmission']
-
-group = ('bit-torrent', _('Download files using BitTorrent applications'))
-
 app = None
+
+SYSTEM_USER = 'debian-transmission'
 
 
 class TransmissionApp(app_module.App):
@@ -44,6 +43,10 @@ class TransmissionApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {
+            'bit-torrent': _('Download files using BitTorrent applications')
+        }
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Transmission'),
                                icon_filename='transmission',
@@ -61,7 +64,7 @@ class TransmissionApp(app_module.App):
             'shortcut-transmission', info.name,
             short_description=info.short_description, icon=info.icon_filename,
             url='/transmission', clients=info.clients, login_required=True,
-            allowed_groups=[group[0]])
+            allowed_groups=list(groups))
         self.add(shortcut)
 
         firewall = Firewall('firewall-transmission', info.name,
@@ -76,12 +79,16 @@ class TransmissionApp(app_module.App):
                         listen_ports=[(9091, 'tcp4')])
         self.add(daemon)
 
+        users_and_groups = UsersAndGroups('users-and-groups-transmission',
+                                          reserved_usernames=[SYSTEM_USER],
+                                          groups=groups)
+        self.add(users_and_groups)
+
 
 def init():
     """Initialize the Transmission module."""
     global app
     app = TransmissionApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
@@ -99,5 +106,5 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'transmission',
                 ['merge-configuration'],
                 input=json.dumps(new_configuration).encode())
-    add_user_to_share_group(reserved_usernames[0], managed_services[0])
+    add_user_to_share_group(SYSTEM_USER, managed_services[0])
     helper.call('post', app.enable)

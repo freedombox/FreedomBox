@@ -257,12 +257,6 @@ def download_file_logged_in(browser, url, suffix=''):
     return temp_file.name
 
 
-def pagekite_is_enabled(browser):
-    """Return whether pagekite is enabled."""
-    nav_to_module(browser, 'pagekite')
-    return browser.find_by_id('app-toggle-input').checked
-
-
 def pagekite_configure(browser, host, port, kite_name, kite_secret):
     """Configure pagekite basic parameters."""
     nav_to_module(browser, 'pagekite')

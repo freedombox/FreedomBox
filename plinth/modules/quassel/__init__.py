@@ -16,6 +16,7 @@ from plinth.modules import names
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.utils import format_lazy
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -42,8 +43,6 @@ _description = [
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
       'are available.'),
 ]
-
-reserved_usernames = ['quasselcore']
 
 port_forwarding_info = [('TCP', 4242)]
 
@@ -94,6 +93,10 @@ class QuasselApp(app_module.App):
         daemon = Daemon('daemon-quassel', managed_services[0],
                         listen_ports=[(4242, 'tcp4'), (4242, 'tcp6')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-quasselcore',
+                                          reserved_usernames=['quasselcore'])
+        self.add(users_and_groups)
 
 
 def init():

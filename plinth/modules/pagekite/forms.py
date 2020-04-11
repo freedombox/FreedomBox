@@ -10,7 +10,6 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
 from plinth.errors import ActionError
-from plinth.forms import AppForm
 
 from . import utils
 
@@ -41,7 +40,7 @@ class SubdomainWidget(forms.widgets.TextInput):
                </div>""".format(inputfield, self.domain)
 
 
-class ConfigurationForm(AppForm):
+class ConfigurationForm(forms.Form):
     """Configure PageKite credentials and frontend"""
 
     server_domain = forms.CharField(

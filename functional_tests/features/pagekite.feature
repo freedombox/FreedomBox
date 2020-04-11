@@ -11,7 +11,7 @@ Background:
 Scenario: Enable pagekite application
   Given the pagekite application is disabled
   When I enable the pagekite application
-  Then pagekite should be enabled
+  Then the pagekite service should be running
 
 Scenario: Configure pagekite application
   Given the pagekite application is enabled
@@ -24,10 +24,10 @@ Scenario: Backup and restore pagekite
   And I create a backup of the pagekite app data
   And I configure pagekite with host afterbackup.example.com, port 8082, kite name afterbackup.example.com and kite secret afterbackupsecret
   And I restore the pagekite app data backup
-  Then pagekite should be enabled
+  Then the pagekite service should be running
   And pagekite should be configured with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
 
 Scenario: Disable pagekite application
   Given the pagekite application is enabled
   When I disable the pagekite application
-  Then pagekite should be disabled
+  Then the pagekite service should not be running

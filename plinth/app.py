@@ -11,17 +11,24 @@ class App:
 
     An app is composed of components which actually performs various tasks. App
     itself delegates tasks for individual components. Applications can show a
-    variation their behavior by choosing which components to have and by
+    variation in their behavior by choosing which components to have and by
     customizing the components themselves.
 
-    'app_id' property of the app must string that is a globally unique ID. This
-    is typically also the name of the python module handling the app. So, it
-    should be all lower-case English alphabet and digits without any special
+    'app_id' property of the app must be a string that is a globally unique ID.
+    This is typically also the name of the python module handling the app. So,
+    it should be all lower-case English alphabet and digits without any special
     characters.
+
+    'can_be_disabled' is a boolean indicating whether an app can be disabled by
+    the user. Enable/disable button for this app will not be shown. Default
+    value is True, so the app can be disabled.
 
     """
 
     app_id = None
+
+    can_be_disabled = True
+
     _all_apps = collections.OrderedDict()
 
     def __init__(self):
@@ -173,8 +180,10 @@ class Component:
 
     def enable(self):
         """Run operations to enable the component."""
+
     def disable(self):
         """Run operations to disable the component."""
+
     @staticmethod
     def diagnose():
         """Run diagnostics and return results.
@@ -251,6 +260,7 @@ class LeaderComponent(Component):
 
 class Info(FollowerComponent):
     """Component to capture basic information about an app."""
+
     def __init__(self, app_id, version, is_essential=False, depends=None,
                  name=None, icon=None, icon_filename=None,
                  short_description=None, description=None, manual_page=None,

@@ -42,16 +42,18 @@
   {% endblock %}
 
   {% block configuration %}
-    <h3>{% trans "Configuration" %}</h3>
-    <form id="app-form" class="form form-configuration" method="post">
-      {% csrf_token %}
+    {% if form %}
+      <h3>{% trans "Configuration" %}</h3>
 
-      {{ form|bootstrap }}
+      <form id="app-form" class="form form-configuration" method="post">
+        {% csrf_token %}
 
-      <input type="submit" class="btn btn-primary"
-            value="{% trans "Update setup" %}"/>
-    </form>
+        {{ form|bootstrap }}
+
+        <input type="submit" class="btn btn-primary"
+              value="{% trans "Update setup" %}"/>
+      </form>
+    {% endif %}
   {% endblock %}
 
-  <script src="{% static 'theme/js/app.template.js' %}"></script>
 {% endblock %}

@@ -54,12 +54,10 @@ def create(request):
     else:
         form = IkiwikiCreateForm(prefix='ikiwiki')
 
-    return TemplateResponse(
-        request, 'ikiwiki_create.html', {
-            'title': ikiwiki.app.info.name,
-            'form': form,
-            'is_enabled': ikiwiki.app.is_enabled(),
-        })
+    return TemplateResponse(request, 'ikiwiki_create.html', {
+        'title': ikiwiki.app.info.name,
+        'form': form
+    })
 
 
 def _create_wiki(request, name, admin_name, admin_password):

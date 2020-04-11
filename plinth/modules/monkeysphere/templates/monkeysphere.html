@@ -25,11 +25,11 @@
         padding: 0;
     }
 
-    .form.pull-right {
+    .form-action.pull-right {
         margin-right: 10px;
     }
 
-    .form button {
+    .form-action button {
         width: 9em;
     }
   </style>
@@ -120,7 +120,8 @@
           </td>
           <td>
             {% if not key.openpgp_fingerprint %}
-              <form class="form pull-right form-import" method="post"
+              <form class="form pull-right form-action form-import"
+                    method="post"
                     action="{% url 'monkeysphere:import' key.ssh_fingerprint %}">
                 {% csrf_token %}
 
@@ -129,7 +130,8 @@
               </form>
             {% else %}
               {% if not running %}
-                <form class="form pull-right form-publish" method="post"
+                <form class="form pull-right form-action form-publish"
+                      method="post"
                       action="{% url 'monkeysphere:publish' key.openpgp_fingerprint %}">
                   {% csrf_token %}
 
@@ -138,7 +140,8 @@
                 </form>
               {% endif %}
               {% if key.importable_domains %}
-                <form class="form pull-right form-add-domain" method="post"
+                <form class="form pull-right form-action form-add-domain"
+                      method="post"
                       action="{% url 'monkeysphere:import' key.ssh_fingerprint %}">
                   {% csrf_token %}
 

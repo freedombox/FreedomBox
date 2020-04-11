@@ -7,7 +7,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
-from plinth.forms import AppForm
 from plinth.utils import format_lazy
 
 CHOICES = [
@@ -26,7 +25,7 @@ CHOICES = [
 ]
 
 
-class RadicaleForm(AppForm):
+class RadicaleForm(forms.Form):
     """Specialized configuration form for radicale service."""
     access_rights = forms.ChoiceField(choices=CHOICES, required=True,
                                       widget=forms.RadioSelect())

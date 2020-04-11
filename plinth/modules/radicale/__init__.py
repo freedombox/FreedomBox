@@ -17,7 +17,8 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.utils import format_lazy
+from plinth.modules.users.components import UsersAndGroups
+from plinth.utils import format_lazy, Version
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -38,8 +39,6 @@ _description = [
       'new calendars and addressbooks. It does not support adding events or '
       'contacts, which must be done using a separate client.'),
 ]
-
-reserved_usernames = ['radicale']
 
 logger = logging.getLogger(__name__)
 
@@ -91,9 +90,14 @@ class RadicaleApp(app_module.App):
         daemon = RadicaleDaemon('daemon-radicale', managed_services[0])
         self.add(daemon)
 
+        users_and_groups = UsersAndGroups('users-and-groups-radicale',
+                                          reserved_usernames=['radicale'])
+        self.add(users_and_groups)
+
 
 class RadicaleWebserver(Webserver):
     """Webserver enable/disable behavior specific for radicale."""
+
     @property
     def web_name(self):
         """Return web configuration name based on radicale version."""
@@ -110,6 +114,7 @@ class RadicaleWebserver(Webserver):
 
 class RadicaleUwsgi(Uwsgi):
     """uWSGI enable/disable behavior specific for radicale."""
+
     def is_enabled(self):
         """Return whether the uWSGI configuration is enabled if version>=2."""
         package_version = get_package_version()
@@ -134,6 +139,7 @@ class RadicaleUwsgi(Uwsgi):
 
 class RadicaleDaemon(Daemon):
     """Daemon enable/disable behavior specific for radicale."""
+
     @staticmethod
     def _is_old_radicale():
         """Return whether radicale is less than version 2."""
@@ -204,6 +210,27 @@ def setup(helper, old_version=None):
         helper.call('post', actions.superuser_run, 'radicale', ['setup'])
 
     helper.call('post', app.enable)
+
+
+def force_upgrade(helper, packages):
+    """Force upgrade radicale to resolve conffile prompt."""
+    if 'radicale' not in packages:
+        return False
+
+    # Allow upgrade from 2.* to newer 2.*
+    current_version = get_package_version()
+    if not current_version or current_version < VERSION_2:
+        return False
+
+    package = packages['radicale']
+    if Version(package['new_version']) > Version('3~'):
+        return False
+
+    rights = get_rights_value()
+    helper.install(['radicale'], force_configuration='new')
+    actions.superuser_run('radicale', ['configure', '--rights_type', rights])
+
+    return True
 
 
 def get_package_version():

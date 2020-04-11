@@ -197,16 +197,6 @@ def backup_restore_from_upload(session_browser, app_name,
         os.remove(path)
 
 
-@then('pagekite should be enabled')
-def pagekite_assert_enabled(session_browser):
-    assert system.pagekite_is_enabled(session_browser)
-
-
-@then('pagekite should be disabled')
-def pagekite_assert_disabled(session_browser):
-    assert not system.pagekite_is_enabled(session_browser)
-
-
 @when(
     parsers.parse(
         'I configure pagekite with host {host:S}, port {port:d}, kite name {kite_name:S} and kite secret {kite_secret:w}'

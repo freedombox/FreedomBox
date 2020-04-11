@@ -493,24 +493,11 @@
     <title>FreedomBox: take your online privacy back</title>
     <para>FreedomBox is a ready made personal server, designed with privacy and data ownership in mind. It is a subset of the <ulink url="https://www.debian.org/">Debian universal operating system</ulink> and includes free software only. You can run it on a small, inexpensive and power-efficient computer box in your home that is dedicated for that use. It can also be installed on any computer running Debian or in a virtual machine.</para>
     <para>In order to replace third-party communication services that are data mining your entire life, you will be able to host services yourself and use them at home or over the Internet through a browser or specialized apps. These services include chat and voice calls, webmail, file sharing and calendar, address book and news feed synchronization. For example, to start using a private chat service, activate the service from the administration interface and add your friends as authorized users of the service. They will be able to connect to the service hosted on your FreedomBox, using XMPP chat clients such as Conversations on Android, Pidgin on Windows and Linux, or Messages on Mac OS, for encrypted communications.</para>
-    <para>FreedomBox can also host a Wi-Fi access point, ad blocking proxy and a virtual private network (VPN). More advanced users can replace their router with a FreedomBox. </para>
-    <para>To set up FreedomBox at home on a specific hardware or on your computer running Debian may require a bit of technical expertise or help from the community. Once installed the interface is easy to use, similar to a smart phone. </para>
-    <para>Related documentation: </para>
+    <para>FreedomBox is a product you can just <ulink url="https://freedomboxfoundation.org/buy/">buy</ulink>, set up and use. Once installed the interface is easy to use, similar to a smart phone. </para>
+    <para>User documentation: </para>
     <itemizedlist>
       <listitem>
-        <para>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Features#">FreedomBox applications</ulink>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware#">Machines that support FreedomBox</ulink>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">Download and Install</ulink>
-        </para>
+        <para>List of <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Features#">applications</ulink> offered by FreedomBox. </para>
       </listitem>
       <listitem>
         <para>
@@ -520,6 +507,21 @@
       <listitem>
         <para>
           <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Support#">Live Help from the community</ulink>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>FreedomBox can also host a Wi-Fi access point, ad blocking proxy and a virtual private network (VPN). More advanced users can replace their router with a FreedomBox. </para>
+    <para>Setting up FreedomBox on a specific hardware or on your computer running Debian may require a bit of technical expertise or help from the community. </para>
+    <para>Related technical documentation: </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware#">Machines that support FreedomBox</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">Download and Install</ulink>
         </para>
       </listitem>
       <listitem>
@@ -6714,13 +6716,13 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
         <title>Setting Up A User Account</title>
         <section>
           <title>Plinth First Log In: Admin Account</title>
-          <para>When creating an account in Plinth for the first time, this user will automatically have administrator capabilities. <code>Admin</code> users are able to log in using ssh (see Logging In below) and have superuser privileges via sudo. </para>
+          <para>When creating an account in FreedomBox's web interface for the first time, this user will automatically have administrator capabilities. <code>Admin</code> users are able to log in using ssh (see Logging In below) and have superuser privileges via sudo. </para>
         </section>
         <section>
           <title>Default User Account</title>
           <itemizedlist>
             <listitem>
-              <para>Note: If you can access Plinth, then you don't need to do this. You can use the user account created in Plinth to connect to SSH. </para>
+              <para>Note: If you can access FreedomBox's web interface, then you don't need to do this. You can use the user account created in FreedomBox's web interface to connect to SSH. </para>
             </listitem>
           </itemizedlist>
           <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
@@ -6772,7 +6774,7 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
       </section>
       <section>
         <title>Changing Password</title>
-        <para>To change the password of a user managed by Plinth, use the change password page.  However, the <code>fbx</code> default user is not managed by Plinth and its password cannot be changed in the web interface. </para>
+        <para>To change the password of a user managed by FreedomBox's web interface, use the change password page.  However, the <code>fbx</code> default user is not managed by FreedomBox's web interface and its password cannot be changed through it. </para>
         <para>To change password on the terminal, log in to your FreedomBox as the user whose password you want to change. Then, run the following command: </para>
         <screen><![CDATA[$ passwd]]></screen>
         <para>This will ask you for your current password before giving you the opportunity to set a new one. </para>
@@ -7164,7 +7166,23 @@ Password: <enter user password here>
                   <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/BananaPro#">Banana Pro</ulink>
                 </para>
               </entry>
-              <entry colsep="1" rowsep="1"/>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/OrangePiZero#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=orange-pi-zero_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Orange Pi Zero</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/OrangePiZero#">Orange Pi Zero</ulink>
+                </para>
+              </entry>
             </row>
           </tbody>
         </tgroup>
@@ -7826,7 +7844,45 @@ Password: <enter user password here>
                   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
-                  <para>10/100/1000  </para>
+                  <para>1000  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Orange Pi Zero          </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>?x4  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>¼,½</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
@@ -10096,6 +10152,84 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.6.1 (2020-04-11)</title>
+        <itemizedlist>
+          <listitem>
+            <para>users: Restore line of help text that was accidentally dropped </para>
+          </listitem>
+          <listitem>
+            <para>debian: Add firmware-ath9k-htc to Recommends </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Use proper ellipsis char when showing clone progress </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Norwegian Bokmål, German, French, Portuguese, Italian, Russian, and Serbian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 20.6 (2020-04-06)</title>
+        <itemizedlist>
+          <listitem>
+            <para>app: Ensure toggle buttons work independently of configuration form </para>
+          </listitem>
+          <listitem>
+            <para>networks, monkeysphere: Make styling more specific to avoid interference </para>
+          </listitem>
+          <listitem>
+            <para>syncthing: Update description to mention 'syncthing' group </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Support upgrade up to any 2.x version </para>
+          </listitem>
+          <listitem>
+            <para>packages: Hold freedombox package during package installs </para>
+          </listitem>
+          <listitem>
+            <para>users: Add component for managing users and groups </para>
+          </listitem>
+          <listitem>
+            <para>app: Fix grammar in developer documentation string </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Disable public edits of blog pages </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Add moderation of blog comments </para>
+          </listitem>
+          <listitem>
+            <para>firewalld: Support upgrade up to any 0.8.x version </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Fix permissions of sync directory </para>
+          </listitem>
+          <listitem>
+            <para>locale: Added Serbian translation </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Russian, French, German, Czech, Italian, Hindi, Telugu, and Spanish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 20.5.1 (2020-03-26)</title>
+        <itemizedlist>
+          <listitem>
+            <para>networks: Update label wording in topology form </para>
+          </listitem>
+          <listitem>
+            <para>jsxc: Fix issue with serving static files </para>
+          </listitem>
+          <listitem>
+            <para>debian: Separate binary packages for each language manual </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Norwegian Bokmål and German </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.5 (2020-03-23)</title>
         <itemizedlist>

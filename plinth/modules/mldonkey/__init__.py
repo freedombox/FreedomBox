@@ -11,7 +11,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users import register_group
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -35,10 +35,6 @@ _description = [
           'directory.'), box_name=cfg.box_name)
 ]
 
-reserved_usernames = ['mldonkey']
-
-group = ('ed2k', _('Download files using eDonkey applications'))
-
 app = None
 
 
@@ -50,6 +46,9 @@ class MLDonkeyApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        groups = {'ed2k': _('Download files using eDonkey applications')}
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('MLDonkey'),
             icon_filename='mldonkey',
@@ -66,7 +65,7 @@ class MLDonkeyApp(app_module.App):
             'shortcut-mldonkey', info.name,
             short_description=info.short_description, icon=info.icon_filename,
             url='/mldonkey/', login_required=True, clients=info.clients,
-            allowed_groups=[group[0]])
+            allowed_groups=list(groups))
         self.add(shortcuts)
 
         firewall = Firewall('firewall-mldonkey', info.name,
@@ -81,12 +80,16 @@ class MLDonkeyApp(app_module.App):
                         listen_ports=[(4080, 'tcp4')])
         self.add(daemon)
 
+        users_and_groups = UsersAndGroups('users-and-groups-mldonkey',
+                                          reserved_usernames=['mldonkey'],
+                                          groups=groups)
+        self.add(users_and_groups)
+
 
 def init():
     """Initialize the MLDonkey module."""
     global app
     app = MLDonkeyApp()
-    register_group(group)
 
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and app.is_enabled():

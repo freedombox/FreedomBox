@@ -7,11 +7,10 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
-from plinth.forms import AppForm
 from plinth.utils import format_lazy
 
 
-class EjabberdForm(AppForm):
+class EjabberdForm(forms.Form):
     """Ejabberd configuration form."""
     MAM_enabled = forms.BooleanField(
         label=_('Enable Message Archive Management'), required=False,

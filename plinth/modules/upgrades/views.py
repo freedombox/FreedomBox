@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.views.generic.edit import FormView
 
 from plinth import actions
 from plinth.errors import ActionError
@@ -52,10 +51,8 @@ class UpgradesConfigurationView(AppView):
             else:
                 messages.success(self.request,
                                  _('Automatic upgrades disabled'))
-        else:
-            messages.info(self.request, _('Settings unchanged'))
 
-        return FormView.form_valid(self, form)
+        return super().form_valid(form)
 
 
 def is_package_manager_busy():

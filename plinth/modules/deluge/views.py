@@ -32,15 +32,13 @@ class DelugeAppView(views.AppView):
         old_status = form.initial
         new_status = form.cleaned_data
 
-        # don't change the configuration if the application was disabled
-        if new_status['is_enabled'] or not old_status['is_enabled']:
-            if old_status['storage_path'] != new_status['storage_path']:
-                new_configuration = [
-                    'download_location', new_status['storage_path']
-                ]
+        if old_status['storage_path'] != new_status['storage_path']:
+            new_configuration = [
+                'download_location', new_status['storage_path']
+            ]
 
-                actions.superuser_run('deluge', ['set-configuration'] +
-                                      new_configuration)
-                messages.success(self.request, _('Configuration updated'))
+            actions.superuser_run('deluge',
+                                  ['set-configuration'] + new_configuration)
+            messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

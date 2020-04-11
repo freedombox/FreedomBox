@@ -6,10 +6,8 @@ Forms for configuring diaspora*
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.forms import AppForm
 
-
-class DiasporaAppForm(AppForm):
+class DiasporaAppForm(forms.Form):
     """Service Form with additional fields for diaspora*"""
     is_user_registrations_enabled = forms.BooleanField(
         label=_('Enable new user registrations'), required=False)

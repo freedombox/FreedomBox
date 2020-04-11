@@ -5,18 +5,19 @@ FreedomBox app for configuring Transmission.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.transmission import reserved_usernames
 from plinth.modules.storage.forms import (DirectorySelectForm,
                                           DirectoryValidator)
+
+from . import SYSTEM_USER
 
 
 class TransmissionForm(DirectorySelectForm):
     """Transmission configuration form"""
 
     def __init__(self, *args, **kw):
-        validator = DirectoryValidator(
-            username=reserved_usernames[0], check_creatable=True)
-        super(TransmissionForm, self).__init__(
-            title=_('Download directory'),
-            default='/var/lib/transmission-daemon/downloads',
-            validator=validator, *args, **kw)
+        validator = DirectoryValidator(username=SYSTEM_USER,
+                                       check_creatable=True)
+        super(TransmissionForm,
+              self).__init__(title=_('Download directory'),
+                             default='/var/lib/transmission-daemon/downloads',
+                             validator=validator, *args, **kw)

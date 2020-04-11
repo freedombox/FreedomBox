@@ -11,6 +11,7 @@ from plinth import cfg, menu
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added
 from plinth.utils import format_lazy
+from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -38,8 +39,6 @@ _description = [
       'name, they will get a response with your current IP address.')
 ]
 
-reserved_usernames = ['ez-ipupd']
-
 app = None
 
 
@@ -66,6 +65,10 @@ class DynamicDNSApp(app_module.App):
                                  _('Dynamic Domain Name'), 'dynamicdns:index',
                                  can_have_certificate=True)
         self.add(domain_type)
+
+        users_and_groups = UsersAndGroups('users-and-groups-dynamicdns',
+                                          reserved_usernames=['ez-ipupd'])
+        self.add(users_and_groups)
 
 
 def init():

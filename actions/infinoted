@@ -16,9 +16,10 @@ from plinth import action_utils
 
 DATA_DIR = '/var/lib/infinoted'
 KEY_DIR = '/etc/infinoted'
+SYNC_DIR = os.path.join(DATA_DIR, 'sync')
 
 CONF_PATH = '/etc/xdg/infinoted.conf'
-CONF = '''
+CONF = f'''
 [infinoted]
 
 # Possible values : no-tls, allow-tls, require-tls
@@ -48,7 +49,7 @@ interval=60
 [directory-sync]
 
 # Directory to sync plain text files
-directory=/var/lib/infinoted/sync
+directory={SYNC_DIR}
 
 # Synchronize seconds
 interval=60
@@ -153,13 +154,10 @@ def subcommand_setup(_):
             'infinoted'
         ], check=True)
 
-    if not os.path.exists(DATA_DIR):
-        os.makedirs(DATA_DIR, mode=0o750)
-        shutil.chown(DATA_DIR, user='infinoted', group='infinoted')
-
-    if not os.path.exists(KEY_DIR):
-        os.makedirs(KEY_DIR, mode=0o750)
-        shutil.chown(KEY_DIR, user='infinoted', group='infinoted')
+    for directory in (DATA_DIR, KEY_DIR, SYNC_DIR):
+        if not os.path.exists(directory):
+            os.makedirs(directory, mode=0o750)
+        shutil.chown(directory, user='infinoted', group='infinoted')
 
     if not os.path.exists(KEY_DIR + '/infinoted-cert.pem'):
         old_umask = os.umask(0o027)

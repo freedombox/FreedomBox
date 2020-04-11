@@ -5,18 +5,18 @@ Forms for Deluge app.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.deluge import reserved_usernames
 from plinth.modules.storage.forms import (DirectorySelectForm,
                                           DirectoryValidator)
+
+from . import SYSTEM_USER
 
 
 class DelugeForm(DirectorySelectForm):
     """Deluge configuration form"""
 
     def __init__(self, *args, **kw):
-        validator = DirectoryValidator(username=reserved_usernames[0],
+        validator = DirectoryValidator(username=SYSTEM_USER,
                                        check_creatable=True)
-        super(DelugeForm, self).__init__(
-            title=_('Download directory'),
-            default='/var/lib/deluged/Downloads', validator=validator, *args,
-            **kw)
+        super(DelugeForm, self).__init__(title=_('Download directory'),
+                                         default='/var/lib/deluged/Downloads',
+                                         validator=validator, *args, **kw)

@@ -5,6 +5,12 @@
     <title>es/FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>60</revnumber>
+        <date>2020-04-04 12:31:29</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Enlace a página traducida.</revremark>
+      </revision>
+      <revision>
         <revnumber>59</revnumber>
         <date>2020-02-21 15:55:40</date>
         <authorinitials>JosephNuthalapati</authorinitials>
@@ -359,25 +365,14 @@
   </articleinfo>
   <section>
     <title>FreedomBox: recupera tu privacidad online</title>
-    <para>FreedomBox es un servidor personal diseñado tomando en cuenta la privacidad y la propiedad de los datos. Es un subconjunto del <ulink url="https://www.debian.org/">sistema operativo universal Debian</ulink> e incluye solo software libre. Puedes ejecutarlo en casa en un ordenador pequeño, barato y energéticamente eficiente dedicado a tal uso. También se puede instalar en cualquier ordenador que ejecute Debian o en una máquina virtual.</para>
-    <para>Para reeemplazar servicios de comunicaciones de terceros que están espiando toda tu vida, podrás alojar servicios por ti mismo y usarlos en casa o a través de Internet mediante un navegador o aplicaciones especializadas. Estos servicios incluyen chat y audioconferencias, correo electrónico web, compartición de ficheros y calendario, libreta de direcciones y sincronización de feeds de noticias. Por ejemplo, para comenzar a usar un servicio de chat privado activa el servicio desde el interfaz de administración y agrega a tus amistades como usuarios autorizados del servicio. Podrán conectarse al servicio alojado en tu FreedomBox usando clientes de chat XMPP como <emphasis>Conversations</emphasis> para Android, <emphasis>Pidgin</emphasis> para Windows y Linux, o <emphasis>Messages</emphasis> para Mac OS, y acceder a comunicaciones cifradas.</para>
-    <para>FreedomBox también puede alojar un punto de acceso Wi-Fi, un proxy para bloquear anuncios y una red privada virtual (VPN). Los usuarios más avanzados pueden reemplazar su router por un FreedomBox.</para>
-    <para>Configurar FreedomBox en casa sobre un hardware específico o en tu ordenador con Debian podría requerir cierto conocimiento técnico o ayuda de la comunidad. Una vez instalado el interfaz es fácil de usar, parecido a un teléfono inteligente.</para>
-    <para>Documentación relacionada: </para>
+    <para>FreedomBox es un servidor personal diseñado tomando en cuenta la privacidad y la propiedad de los datos. Es un subconjunto del <ulink url="https://www.debian.org/">sistema operativo universal Debian</ulink> e incluye solo software libre. Puedes ejecutarlo en casa en un ordenador pequeño, barato y energéticamente eficiente dedicado a tal uso. También se puede instalar en cualquier ordenador que ejecute Debian o en una máquina virtual. </para>
+    <para>Para reeemplazar servicios de comunicaciones de terceros que están espiando toda tu vida, podrás alojar servicios por ti mismo y usarlos en casa o a través de Internet mediante un navegador o aplicaciones especializadas. Estos servicios incluyen chat y audioconferencias, correo electrónico web, compartición de ficheros y calendario, libreta de direcciones y sincronización de feeds de noticias. Por ejemplo, para comenzar a usar un servicio de chat privado activa el servicio desde el interfaz de administración y agrega a tus amistades como usuarios autorizados del servicio. Podrán conectarse al servicio alojado en tu FreedomBox usando clientes de chat XMPP como <emphasis>Conversations</emphasis> para Android, <emphasis>Pidgin</emphasis> para Windows y Linux, o <emphasis>Messages</emphasis> para Mac OS, y acceder a comunicaciones cifradas. </para>
+    <para>FreedomBox es un producto que puedes <ulink url="https://freedomboxfoundation.org/buy/">comprar</ulink>, instalar y queda lista para usar. Una vez instalado el interfaz es fácil de usar, parecido a un teléfono inteligente. </para>
+    <para>Documentación de usuario: </para>
     <itemizedlist>
       <listitem>
         <para>
           <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Features#">Aplicaciones de FreedomBox</ulink>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware#">Máquinas que soportan FreedomBox</ulink>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Download#">Desgarga e Instalación</ulink>
         </para>
       </listitem>
       <listitem>
@@ -388,6 +383,21 @@
       <listitem>
         <para>
           <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Support#">Ayuda en directo de la comunidad</ulink>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>FreedomBox también puede alojar un punto de acceso Wi-Fi, un proxy para bloquear anuncios y una red privada virtual (VPN). Los usuarios más avanzados pueden reemplazar su router por un FreedomBox. </para>
+    <para>Configurar FreedomBox en casa sobre un hardware específico o en tu ordenador con Debian podría requerir cierto conocimiento técnico o ayuda de la comunidad. </para>
+    <para>Documentación técnica relacionada: </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware#">Máquinas que soportan FreedomBox</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Download#">Desgarga e Instalación</ulink>
         </para>
       </listitem>
       <listitem>
@@ -1668,7 +1678,9 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
       </section>
       <section>
         <title>Configurar Matrix Synapse en tu FreedomBox</title>
-        <para>Para habilitar Matrix, primero navega a la página de tu servidor de chat (Matrix Synapse) e instálalo. Matrix necesita un nombre de dominio válido configurado.  Tras la instalación, se te pedirá que lo configures seleccionandolo de entre un menú desplegable con dominios disponibles.  Los dominios se configuran en la página Sistema -&gt; Configuración.  Tras configurar un dominio verás que el servicio se está ejecutando. El servicio estará accesible en el dominio de FreedomBox configurado. Todos los usuarios registrados tendrán sus IDs Matrix  <code>@usuario:dominio</code>. <emphasis role="strong">Actualmente no podrás cambiar el dominio</emphasis> una vez esté configurado. </para>
+        <para>Para habilitar Matrix, primero navega a la página de tu servidor de chat (Matrix Synapse) e instálalo. Matrix necesita un nombre de dominio válido configurado.  Tras la instalación, se te pedirá que lo configures seleccionandolo de entre un menú desplegable con dominios disponibles.  Los dominios se configuran en la página Sistema -&gt; Configuración y <emphasis role="strong">actualmente no podrás cambiar el dominio</emphasis> una vez esté configurado.  Tras configurar un dominio verás que el servicio se está ejecutando. El servicio estará accesible en el dominio de FreedomBox configurado. </para>
+        <para>Tendrás que configurar tu router para que reenvíe el puerto 8448 a tu FreedomBox. </para>
+        <para>Todos los usuarios registrados en tu FreedomBox tendrán sus IDs Matrix  <code>@usuario:dominio</code>. Si está habilitado el registro público tu cliente se puede usar también para registrar una cuenta de usuario nueva. </para>
       </section>
       <section>
         <title>Federarse con otras instancias Matrix</title>
@@ -3097,31 +3109,22 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
       </section>
     </section>
     <section>
-      <title>Simple Git Hosting (GitWeb)</title>
-      <para>Git is a distributed version-control system for tracking changes in source code during software development. GitWeb provides a web interface to Git repositories. You can browse history and content of source code, use search to find relevant commits and code. You can also clone repositories and upload code changes with a command-line Git client or with multiple available graphical clients. And you can share your code with people around the world. </para>
-      <para>To learn more on how to use Git visit <ulink url="https://git-scm.com/docs/gittutorial">Git tutorial</ulink>. </para>
-      <para><emphasis role="strong">Available since version:</emphasis> 19.19 </para>
+      <title>Alojamiento Git Simple (GitWeb)</title>
+      <para>GitWeb proporciona alojamiento Git en FreedomBox. Proporciona un interfaz web simple para realizar acciones comunes como ver archivos, diferencias, descripciones de cambio, etc. </para>
+      <para><emphasis role="strong">Disponible desde versión:</emphasis> 19.19 </para>
       <section>
-        <title>Managing the repositories</title>
-        <para>After installation of GitWeb, a new repository can be created. It can be marked as <emphasis>private</emphasis> to limit access. </para>
-      </section>
-      <section>
-        <title>Access</title>
-        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my_freedombox_name&gt;/gitweb"/> </para>
-      </section>
-      <section>
-        <title>HTTP basic auth</title>
-        <para>GitWeb on FreedomBox currently supports HTTP remotes only. To avoid having to enter the password each time you pull/push to the repository, you can edit your remote to include the credentials. </para>
+        <title>Autenticación básica HTTP</title>
+        <para>Actualmente el GitWeb de FreedomBox solo soporta remotos HTTP. Para evitar tener que introducir la contraseña cada vez que haces pull/push al repositorio puedes editar tu remoto para incluír credenciales. </para>
         <para>
-          <emphasis>Example:</emphasis>
-          <ulink url="https://username:password@my.freedombox.rocks/gitweb/myrepo"/>
+          <emphasis>Ejemplo:</emphasis>
+          <ulink url="https://usuario:contrasena@mi.freedombox.mola/gitweb/mirepo"/>
         </para>
-        <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a FreedomBox user who has only access to the gitweb and never use an admin account. </para>
+        <para>Tu nombre de usuario y contraseña se cifrarán. Quien monitorize el tráfico de la red solo apreciará el nombre de dominio.</para>
+        <para><emphasis role="strong">Nota:</emphasis> Al usar este método tu contraseña se almacenará en claro en el fichero <code>.git/config</code> del repositorio local. Por este motivo debes crear un usuario FreedomBox que solo tenga acceso a gitweb y no usar nunca una cuenta de administrador. </para>
       </section>
       <section>
-        <title>Mirroring</title>
-        <para>Though your repositories are primarily hosted on your own FreedomBox, you can configure a repository on another Git hosting system like <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/GitLab#">GitLab</ulink> as a mirror. </para>
+        <title>Réplicas Espejo</title>
+        <para>Aunque tus repositorios se albergan principalmente en tu propia FreedomBox puedes configurar un repositorio en otro servicio de alojamiento Git como <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/GitLab#">GitLab</ulink> a modo de copia espejo. </para>
       </section>
     </section>
   </section>
@@ -3131,7 +3134,7 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
       <title>Copias de respaldo (backups)</title>
       <para>FreedomBox incluye la posibilidad de copiar y restaurar datos, preferencias, configuración y secretos de la mayoría de las aplicaciones. La funcionalidad de <emphasis>Backups</emphasis> se resuelve con el software de <emphasis>backup</emphasis> <emphasis>Borg</emphasis>. <emphasis>Borg</emphasis> es un programa de <emphasis>backup</emphasis> con deduplicación y compresión. Está diseñado para hacer <emphasis>backups</emphasis> eficientes y seguros. Esta funcionalidad de <emphasis>backups</emphasis> se puede emplear para respaldar y recuperar datos aplicación por aplicación. Las copias de respaldado se pueden almacenar en la propia máquina FreedomBox o en un servidor remoto. Cualquier servidor remoto con acceso por SSH se puede emplear como almacenamiento para los <emphasis>backups</emphasis> de la FreedomBox. Las copias remotas se pueden cifrar para que el servidor remoto no pueda leer los datos que alberga. </para>
       <section>
-        <title>Funcionalidad de Estatdos de los Backups</title>
+        <title>Estados de la Funcionalidad de Backups</title>
         <informaltable>
           <tgroup cols="3">
             <colspec colname="col_0"/>
@@ -3635,12 +3638,12 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
       <section>
         <title>Cómo instalar y usar Backups</title>
         <para>
-          <emphasis role="strong">Paso 1</emphasis>
+          <emphasis role="strong">Paso 1: Ir a la página de Copias de Seguridad</emphasis>
         </para>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step1_v49.png" width="800"/>
+              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step1_es_v02.png" width="800"/>
             </imageobject>
             <textobject>
               <phrase>Backups: Paso 1</phrase>
@@ -3648,7 +3651,7 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           </inlinemediaobject>
         </para>
         <para>
-          <emphasis role="strong">Paso 2</emphasis>
+          <emphasis role="strong">Paso 2: Pulsar el botón Instalar</emphasis>
         </para>
         <para>
           <inlinemediaobject>
@@ -3661,12 +3664,12 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           </inlinemediaobject>
         </para>
         <para>
-          <emphasis role="strong">Paso 3</emphasis>
+          <emphasis role="strong">Paso 3: Esperar a que se instalen todos los componentes de la aplicación</emphasis>
         </para>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step3_v49.png" width="800"/>
+              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step3_es_v01.png" width="800"/>
             </imageobject>
             <textobject>
               <phrase>Backups: Paso 3</phrase>
@@ -3674,12 +3677,12 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           </inlinemediaobject>
         </para>
         <para>
-          <emphasis role="strong">Paso 4</emphasis>
+          <emphasis role="strong">Paso 4: Pulsar el botón de Crear Copia de Seguridad</emphasis>
         </para>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step4_v49.png" width="800"/>
+              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step4_es_v02.png" width="800"/>
             </imageobject>
             <textobject>
               <phrase>Backups: Paso 4</phrase>
@@ -3687,12 +3690,12 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           </inlinemediaobject>
         </para>
         <para>
-          <emphasis role="strong">Paso 5</emphasis>
+          <emphasis role="strong">Paso 5: Seleccionar las aplicaciones a respaldar y pulsar Enviar</emphasis>
         </para>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step5_v49.png" width="800"/>
+              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step5_es_v02.png" width="800"/>
             </imageobject>
             <textobject>
               <phrase>Backups: Paso 5</phrase>
@@ -3700,28 +3703,15 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
           </inlinemediaobject>
         </para>
         <para>
-          <emphasis role="strong">Paso 6</emphasis>
+          <emphasis role="strong">Paso 6: Pulsar en el botón Descargar</emphasis>
         </para>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step6_v49.png" width="800"/>
+              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step6_es_v02.png" width="800"/>
             </imageobject>
             <textobject>
               <phrase>Backups: Paso 6</phrase>
-            </textobject>
-          </inlinemediaobject>
-        </para>
-        <para>
-          <emphasis role="strong">Paso 7</emphasis>
-        </para>
-        <para>
-          <inlinemediaobject>
-            <imageobject>
-              <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Backups?action=AttachFile&amp;do=get&amp;target=Backups_Step7_v49.png" width="800"/>
-            </imageobject>
-            <textobject>
-              <phrase>Backups: Paso 7</phrase>
             </textobject>
           </inlinemediaobject>
         </para>
@@ -4020,10 +4010,10 @@ https://exampletorhs.onion/cockpit/]]></screen>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/DateTime?action=AttachFile&amp;do=get&amp;target=DateTime.png"/>
+            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/DateTime?action=AttachFile&amp;do=get&amp;target=DateTime_es_v01.png"/>
           </imageobject>
           <textobject>
-            <phrase>DateTime.png</phrase>
+            <phrase>DateTime_es_v01.png</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -4173,7 +4163,7 @@ https://exampletorhs.onion/cockpit/]]></screen>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Firewall?action=AttachFile&amp;do=get&amp;target=Firewall.png" width="800"/>
+            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Firewall?action=AttachFile&amp;do=get&amp;target=Firewall_es_v01.png" width="500"/>
           </imageobject>
           <textobject>
             <phrase>Firewall</phrase>
@@ -4185,7 +4175,7 @@ https://exampletorhs.onion/cockpit/]]></screen>
         <title>Interfaces</title>
         <para>Cada interfaz de red necesita asignarse a 1 (y sólo 1) zona. Las reglas que tenga activas la zona se aplicarán al interfaz. Por ejemplo, si se permite el trafico HTTP en una zona en particular las peticiones web se acceptarán en todas las direcciones configuradas para todos los interfaces asignados a esa zona. </para>
         <para>Principalmente se emplean 2 zonas de cortafuegos. La zona <code>interna</code> está pensada para servicios ofrecidos a todas las máquinas de la red local.  Esto podría incluir servicios como <emphasis>streaming</emphasis> multimedia o compartición simple de archivos.  La zona <code>externa</code> está pensada para servicios  públicamente expuestos a Internet.  Esto podría incluir servicios como blog, sitio web, cliente web de correo electrónico etc. </para>
-        <para>Para más detalles acerca de como se configuran por defecto los interfaces de red mira la sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Manual/Networks#">Networks</ulink>. </para>
+        <para>Para más detalles acerca de como se configuran por defecto los interfaces de red mira la sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Networks#">Redes</ulink>. </para>
       </section>
       <section>
         <title>Puertos/Servicios</title>
@@ -6022,7 +6012,7 @@ firewall-cmd --permanent --zone=internal --add-port=<port>/<protocol>]]></screen
 firewall-cmd --permanent --zone=internal --add-port=5353/udp]]></screen>
         </section>
         <section>
-          <title>Modificar la zona de interfaces</title>
+          <title>Modificar la zona de los interfaces</title>
           <para>Puedes cambiar la asignación de zona de cada interfaz de red manualmente tras la asignación automática del proceso de primer arranque. </para>
           <para>Para ver la asignación actual de interfaces de red a las zonas. </para>
           <screen><![CDATA[firewall-cmd --list-all-zones]]></screen>
@@ -6075,7 +6065,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
             <para>Verifica que se aceptó tu nombre de dominio </para>
             <itemizedlist>
               <listitem>
-                <para>Comprueba que está habilitado en <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/NameServices">Nombres de Servicio</ulink> </para>
+                <para>Comprueba que está habilitado en <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/NameServices">Servicio de Nombres</ulink> </para>
                 <para>
                   <inlinemediaobject>
                     <imageobject>
@@ -6136,7 +6126,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
     <section>
       <title>Monkeysphere</title>
       <para>Con Monkeysphere se puede generar una clave <emphasis>OpenPGP</emphasis> para cada dominio configurado para servir SSH. La clave pública OpenPGP se puede subir entonces a los servidores de claves OpenPGP. Los usuarios que se conecten mediante SSH podrán verificar que se están conectando a la máquina correcta. Para que los usuarios puedan confiar en la clave alguien (generalmente el dueño de la máquina) tiene que firmarla siguiendo el proceso normal de firmado de claves OpenPGP. Para más detalles, ver la <ulink url="http://web.monkeysphere.info/getting-started-ssh/">documentación de Monkeysphere SSH</ulink>. </para>
-      <para>Monkeysphere también puede generar una clave OpenPGP para cada certificado de servidor web seguro (HTTPS) instalado en esta máquina. La clave pública OpenPGP se puede subir entonces a los servidores de claves OpenPGP. Los usuarios que se conecten mediante SSH podrán verificar que se están conectando a la máquina correcta. Para validar el certificado el usuario deberá instalar cierto software disponible en el <ulink url="https://web.monkeysphere.info/download/">sitio web de Monkeysphere</ulink>. </para>
+      <para>Monkeysphere también puede generar una clave OpenPGP para cada certificado de servidor web seguro (HTTPS) instalado en esta máquina. La clave pública OpenPGP se puede subir entonces a los servidores de claves OpenPGP. Los usuarios que se conecten mediante HTTPS podrán verificar que se están conectando a la máquina correcta. Para validar el certificado el usuario deberá instalar cierto software disponible en el <ulink url="https://web.monkeysphere.info/download/">sitio web de Monkeysphere</ulink>. </para>
     </section>
     <section>
       <title>Servicios de Nombre</title>
@@ -6147,7 +6137,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
       <para>Esta sección describe como se configura por defecto la red en FreedomBox y como se puede adaptar.  Ver también la sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Firewall#">Cortafuegos</ulink> para más información acerca de cómo funciona éste. </para>
       <section>
         <title>Configuración por defecto</title>
-        <para>En una imágen fresca de FreedomBox la red no está configurada. La configuración se realiza cuando la imágen se graba en una tarjeta SD y el dispositivo arranca.  Durante el primer arranque el paquete FreedomBox <code>setup</code> detecta los interfaces (tarjetas) de red e intenta configurarlos automáticamente de modo que la FreedomBox quede disponible para seguir configurandola a través del interfaz web de otra máquina, sin necesidad de conectar un monitor a la FreedomBox.  La configuración automática también procura dejar la FreedomBox operativa para sus escenarios de uso más importantes. </para>
+        <para>En una imágen fresca de FreedomBox la red no está configurada. La configuración se realiza cuando la imágen se graba en una tarjeta SD y el dispositivo arranca.  Durante el primer arranque el paquete FreedomBox <code>setup</code> detecta los interfaces (tarjetas) de red e intenta configurarlos automáticamente de modo que la FreedomBox quede disponible para seguir configurandola a través del interfaz web desde otra máquina, sin necesidad de conectar un monitor a la FreedomBox.  La configuración automática también procura dejar la FreedomBox operativa para sus escenarios de uso más importantes. </para>
         <para>Trata 2 escenarios: </para>
         <itemizedlist>
           <listitem>
@@ -6176,10 +6166,10 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0]]></screen>
           <para>Cuando el dispositivo hardware tiene múltiples interfaces (tarjetas) ethernet el dispositivo puede actuar como router.  Entonces los interfaces se configuran para ejecutar esta función. </para>
           <itemizedlist>
             <listitem>
-              <para>El <emphasis role="strong">primer</emphasis> interfaz (tarjeta) de red se configura para ser una WAN o interfaz <emphasis>externo</emphasis> en modo de configuración <emphasis>automático</emphasis>. Esto significa que se conecta a Internet empleando la configuración provista por el proveedor de servicio de internet (ISP). En este interfaz solo se expondrán los servicios concebidos para cosumo desde Internet (servicios externos).  Tu conexión a Internet tiene que llegar por el puerto de este interfaz (tarjeta) <emphasis>ethernet</emphasis>.  Si quieres que tu router de siempre siga administrando tu conexión por tí conecta un cable desde tu router al puerto de este interfaz. </para>
+              <para>El <emphasis role="strong">primer</emphasis> interfaz (tarjeta) de red se configura para ser una WAN o interfaz <emphasis>externo</emphasis> en modo de configuración <emphasis>automático</emphasis>. Esto significa que se conecta a Internet empleando la configuración provista por el proveedor de servicio de internet (ISP). En este interfaz solo se expondrán los servicios concebidos para consumo desde Internet (servicios externos).  Tu conexión a Internet tiene que llegar por el puerto de este interfaz (tarjeta) <emphasis>ethernet</emphasis>.  Si quieres que tu router de siempre siga administrando tu conexión por tí conecta un cable desde tu router al puerto de este interfaz. </para>
             </listitem>
             <listitem>
-              <para>Los <emphasis role="strong">demás</emphasis> interfaces de red se configuran como clientes de router, como LAN o interfaces <emphasis>internos</emphasis> en modo de configuración <emphasis>compartido</emphasis>.  Esto significa que todos sus servicios (internos y externos) se exponen a todos los clientes que entren desde esta red. <emphasis>Compartido</emphasis> implica además que los clientes podrán recibir detalles conexión automática a la red.  En concreto, la configuración DHCP y los servidores DNS se exponen en este interfaz.  La conexión a Internet disponible para el dispositivo a través del primer interfaz se compartirá con los clintes que usen este interfaz.  Todo esto implica que puedes conectar tus ordenadores a esta interfaz (tarjeta) de red y se configurarán automáticamente pudiendo acceder a Internet a través de tu FreedomBox. </para>
+              <para>Los <emphasis role="strong">demás</emphasis> interfaces de red se configuran como clientes de router, como LAN o interfaces <emphasis>internos</emphasis> en modo de configuración <emphasis>compartido</emphasis>.  Esto significa que todos sus servicios (internos y externos) se exponen a todos los clientes que entren desde esta red. <emphasis>Compartido</emphasis> implica además que los clientes podrán recibir detalles para conexión automática a la red.  En concreto, la configuración DHCP y los servidores DNS se exponen en este interfaz.  La conexión a Internet disponible para el dispositivo a través del primer interfaz se compartirá con los clientes que usen este interfaz.  Todo esto implica que puedes conectar tus ordenadores a esta interfaz (tarjeta) de red y se configurarán automáticamente pudiendo acceder a Internet a través de tu FreedomBox. </para>
             </listitem>
           </itemizedlist>
           <para>Aunque el proceso de asignación es determinista actualmente no está muy claro qué interfaz será WAN (los demás serán LAN). Así que averiguar cual es cual conllevará un poco de prueba y error. En el futuro esto estará bien documentado para cada dispositivo. </para>
@@ -6583,7 +6573,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
             </itemizedlist>
           </listitem>
           <listitem>
-            <para>En la página <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Manual/LetsEncrypt#">Certificados (Let's Encrypt)</ulink> puedes obtener un certificado <emphasis>Let's Encrypt</emphasis> para el nombre de tu cometa. </para>
+            <para>En la página <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/LetsEncrypt#">Certificados (Let's Encrypt)</ulink> puedes obtener un certificado <emphasis>Let's Encrypt</emphasis> para el nombre de tu cometa. </para>
           </listitem>
         </orderedlist>
       </section>
@@ -6592,7 +6582,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
       <title>Shell Segura</title>
       <section>
         <title>¿Qué es Shell Segura?</title>
-        <para>FreedomBox ejecuta el servidor <code>openssh-server</code> por defecto permitiendo así accesos remotos desde todos los interfaces.  Si tu dispositivo hardware está connectado a un monitor y un teclado, también puedes ingresar directamente.  Para la operación habitual de FreedomBox no necesitas usar la shell.  No obstante, algunas tareas o identificación de algún problema podrían requerirlo. </para>
+        <para>FreedomBox ejecuta el servidor <code>openssh-server</code> por defecto permitiendo así accesos remotos desde todos los interfaces.  Si tu dispositivo hardware está conectado a un monitor y un teclado, también puedes ingresar directamente. Para la operación habitual de FreedomBox no necesitas usar la shell. No obstante, algunas tareas o identificación de algún problema podrían requerirlo. </para>
       </section>
       <section>
         <title>Configurando una Cuenta de Usuario</title>
@@ -6604,7 +6594,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
           <title>Cuenta de Usuario por Defecto</title>
           <itemizedlist>
             <listitem>
-              <para>Nota: Si puedes acceder a Plinth es que no necesitas hacer esto. Puedes usar la cuenta de usuario de Plinth para conectar por SSH. </para>
+              <para>Nota: Si puedes acceder al interfaz web de FreedomBox es que no necesitas hacer esto. Puedes usar la cuenta de usuario del interfaz web de FreedomBox para conectar por SSH. </para>
             </listitem>
           </itemizedlist>
           <para>Las imagenes precompiladas FreedomBox tienen una cuenta de usuario llamada <code>fbx</code> pero no tiene contraseña establecida, así que no se puede ingresar con esta cuenta. </para>
@@ -6648,7 +6638,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
   user USUARIO
   port 22
   ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p]]></screen>
-          <para>Replace USUARIO por un usuario del grupo <code>admin</code> (ver arriba). </para>
+          <para>Reemplaza USUARIO por un usuario del grupo <code>admin</code> (ver arriba). </para>
           <para>En algunos casos podrías necesitar reemplazar 9050 por 9150. </para>
           <para>Ahora, para conectar a la FreedomBox abre un terminal y teclea: </para>
           <screen><![CDATA[$ ssh USUARIO@DIRECCION.onion]]></screen>
@@ -6666,24 +6656,24 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
       </section>
       <section>
         <title>Cambiar Contraseñas</title>
-        <para>Para cambiar la contraseña de un usuario administrado en Plinth usa la página Cambiar contraseña.  El usuario por debecto <code>fbx</code> no se administra en Plinth y su contraseña no se puede cambiar desde la interfaz web. </para>
+        <para>Para cambiar la contraseña de un usuario administrado en el interfaz web de FreedomBox usa la página Cambiar clave de acceso.  El usuario por debecto <code>fbx</code> no se administra en el interfaz web de FreedomBox y su contraseña no se puede cambiar desde él. </para>
         <para>Para cambiar la contraseña en el terminal ingresa a tu FreedomBox con el usuario cuya contraseña quieres cambiar y ejecuta el siguiente comando: </para>
         <screen><![CDATA[$ passwd]]></screen>
         <para>Esto te preguntará tu contraseña actual antes de darte la oportunidad de establecer la nueva. </para>
       </section>
     </section>
     <section>
-      <title>Seguridad</title>
+      <title>Protección</title>
       <para>Cuando se habilita esta opción sólo los usuarios del grupo "admin" podrán entrar a la consola o mediante SSH. Los usuarios de consola podrán acceder a algunos servicios sin más autorización.  </para>
       <para>La sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Users#">Usuarios</ulink> explica cómo definir grupos de usuarios. </para>
-      <para>Cuando la opción <emphasis>Restringir ingresos por consola</emphasis> está habilitada, sólo los usuarios del grupo <emphasis>admin</emphasis> podrán ingresar via consola, shell segura (SSH) o interfaz gráfico. Al desactivar esta funcionalidad cualquier usuario con cuenta en FreedomBox podrá ingresar y quizá tener acceso a ciertos servicios sin más autorización. Esta opción solo debería desactivarse si se confía plenamente en todos los usuarios del sistema. Si quieres usar tu máquina FreedomBox también como escritorio y admitir que usuarios no-admin ingresen mediante interfáz gráfica esta opción debe estar desactivada. Puedes determinar la lista de usuarios <emphasis>admin</emphasis> en la sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Users#">Users</ulink>. </para>
+      <para>Cuando la opción <emphasis>Acceso a consola restringido</emphasis> está habilitada, sólo los usuarios del grupo <emphasis>admin</emphasis> podrán ingresar via consola, shell segura (SSH) o interfaz gráfico. Al desactivar esta funcionalidad cualquier usuario con cuenta en FreedomBox podrá ingresar y quizá tener acceso a ciertos servicios sin más autorización. Esta opción solo debería desactivarse si se confía plenamente en todos los usuarios del sistema. Si quieres usar tu máquina FreedomBox también como escritorio y admitir que usuarios no-admin ingresen mediante interfáz gráfica esta opción debe estar desactivada. Puedes determinar la lista de usuarios <emphasis>admin</emphasis> en la sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Users#">Users</ulink>. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Security?action=AttachFile&amp;do=get&amp;target=Security.png"/>
+            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Security?action=AttachFile&amp;do=get&amp;target=Security_es_v01.png"/>
           </imageobject>
           <textobject>
-            <phrase>Security.png</phrase>
+            <phrase>Security_es_v01.png</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -6699,7 +6689,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
       <para>Las <emphasis>Instantáneas</emphasis> te permiten crear instantáneas del sistema de archivos y devolver al sistema a un estado anterior. </para>
       <itemizedlist>
         <listitem>
-          <para>Nota: Esta funcionalidad requier un sistema de archivos <emphasis>Btrfs</emphasis>. Todas las imágenes de disco de FreedomBox estables usan <emphasis>Btrfs</emphasis>. </para>
+          <para>Nota: Esta funcionalidad requiere un sistema de archivos <emphasis>Btrfs</emphasis>. Todas las imágenes de disco de FreedomBox estables usan <emphasis>Btrfs</emphasis>. </para>
         </listitem>
       </itemizedlist>
       <para>
@@ -6731,16 +6721,16 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
     </section>
     <section>
       <title>Actualizaciones de Software</title>
-      <para>FreedomBox puede instalar actualizaciones de seguridad automaticamente.  Esta funcionalidad viene activada por defecto y no hace falta ninguna acción manual.  Puedes activar las actualizaciones automaticas desde Plinth en en la página <emphasis>Actualizaciones</emphasis> de la sección <emphasis>Preferencias</emphasis>.  Se recomienda encarecidamente que tengas esta opción habilitada para mantener tu FreedomBox segura. </para>
-      <para>Las actualizaciones se efectúan cada noche.  Si quieres apagar tu FreedomBox cada día después de usarla, déjala ejecutando una noche a la semana más o menos para permitir que ocurran las actualizaciones automaticas.  Otra posibilidad es ejecutar actualizaciones manuales como se describe más adelante. </para>
+      <para>FreedomBox puede instalar actualizaciones de seguridad automaticamente. Esta funcionalidad viene activada por defecto y no hace falta ninguna acción manual.  Puedes activar las actualizaciones automaticas desde el interfaz web de FreedomBox en la página <emphasis>Actualización</emphasis> de la sección <emphasis>Sistema</emphasis>. Se recomienda encarecidamente que tengas esta opción habilitada para mantener tu FreedomBox segura. </para>
+      <para>Las actualizaciones se efectúan cada noche. Si quieres apagar tu FreedomBox cada día después de usarla, déjala ejecutando una noche a la semana más o menos para permitir que ocurran las actualizaciones automaticas. Otra posibilidad es ejecutar actualizaciones manuales como se describe más adelante. </para>
       <para>Nota que una vez comiencen las actualizaciones podría llevarles mucho tiempo completarse. Durante el proceso de actualización (ya sea el automático nocturno o el manual), no podrás instalar aplicaciones desde el interfaz web de FreedomBox. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Upgrades?action=AttachFile&amp;do=get&amp;target=upgrades.png"/>
+            <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Upgrades?action=AttachFile&amp;do=get&amp;target=upgrades_es_v01.png"/>
           </imageobject>
           <textobject>
-            <phrase>upgrades.png</phrase>
+            <phrase>upgrades_es_v01.png</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -6761,7 +6751,7 @@ nmcli con modify "<nombre_de_la_conexión>" connection.zone internal]]></screen>
       </section>
       <section>
         <title>Actualizaciones Manuales desde el Terminal</title>
-        <para>Algunos paquetes de software podrían requerir intervención manual para actualizarlos, generalmente por razones de configuración. En tales casos  FreedomBox se actualiza a sí mismo y solicita información nueva necesaria para la actualización del paquete. Después de autoactualizarse FreedomBox actúa en nombre del usuario y actualiza los paquetes con la información recabada. Estos paquetes no se deben actualizar manualmente hasta que FreedomBox tenga a posibilidad de actualizarlos. La actualización que se dispara manualmente desde el interfaz web ya es consciente de estos paquetes y no los actualiza. </para>
+        <para>Algunos paquetes de software podrían requerir intervención manual para actualizarlos, generalmente por razones de configuración. En tales casos  FreedomBox se actualiza a sí mismo y solicita información nueva necesaria para la actualización del paquete. Después de autoactualizarse FreedomBox actúa en nombre del usuario y actualiza los paquetes con la información recabada. Estos paquetes no se deben actualizar manualmente hasta que FreedomBox tenga la posibilidad de actualizarlos. La actualización que se dispara manualmente desde el interfaz web ya es consciente de estos paquetes y no los actualiza. </para>
         <para>En situaciones muy extrañas, FreedomBox podría fallar o quedar a expensas de una intervención manual desde el terminal. Para esto, entra a FreedomBox por un terminal, ya sea físico, web (empleando <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Cockpit#">Cockpit</ulink>) o mediante SSH (ver sección <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/SecureShell#">Shell Segura</ulink>) y ejecuta los siguientes comandos: </para>
         <screen><![CDATA[$ sudo su -
 Password: <introduce la contraseña aquí>
@@ -6817,13 +6807,13 @@ Password: <introduce la contraseña aquí>
             <row rowsep="1">
               <entry align="center" colsep="1" rowsep="1">
                 <para>
-                  <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/PioneerEdition#">
+                  <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware/PioneerEdition#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="257" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pioneer-edition_thumb.jpg" width="320"/>
+                        <imagedata depth="257" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pioneer-edition_thumb.jpg" width="320"/>
                       </imageobject>
                       <textobject>
-                        <phrase>Pioneer Edition FreedomBox Home Server Kits</phrase>
+                        <phrase>Kits de Servidor Casero FreedomBox Pioneer Edition</phrase>
                       </textobject>
                     </inlinemediaobject>
                   </ulink>
@@ -6852,7 +6842,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-Lime2#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="159" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-lime2_thumb.jpg" width="235"/>
+                        <imagedata depth="159" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-lime2_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>A20 OLinuXino Lime2</phrase>
@@ -6869,7 +6859,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/A20-OLinuXino-MICRO#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="132" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-micro_thumb.jpg" width="235"/>
+                        <imagedata depth="132" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=a20-olinuxino-micro_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>A20 OLinuXino MICRO</phrase>
@@ -6886,7 +6876,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/APU#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="157" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=apu1d_thumb.jpg" width="235"/>
+                        <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=apu1d_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>PC Engines APU</phrase>
@@ -6905,7 +6895,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/Cubietruck#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="206" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=danube_thumb.png" width="235"/>
+                        <imagedata depth="206" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=danube_thumb.png" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Cubietruck</phrase>
@@ -6922,7 +6912,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/Cubieboard2#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="156" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=cubieboard2_thumb.jpg" width="235"/>
+                        <imagedata depth="156" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=cubieboard2_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Cubieboard 2</phrase>
@@ -6939,7 +6929,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/BeagleBone#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="157" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=beagleboard_thumb.jpg" width="235"/>
+                        <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=beagleboard_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>BeagleBone Black</phrase>
@@ -6958,7 +6948,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/pcDuino3#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="107" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pcduino3s_thumb.jpg" width="235"/>
+                        <imagedata depth="107" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pcduino3s_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>pcDuino3</phrase>
@@ -6975,7 +6965,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware/Debian#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="201" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=debian_thumb.png" width="156"/>
+                        <imagedata depth="201" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=debian_thumb.png" width="156"/>
                       </imageobject>
                       <textobject>
                         <phrase>Debian</phrase>
@@ -7011,7 +7001,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/PineA64+#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="213" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pine64-plus_thumb.jpg" width="235"/>
+                        <imagedata depth="213" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=pine64-plus_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Pine A64+</phrase>
@@ -7028,7 +7018,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/BananaPro#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=banana-pro_thumb.jpg" width="235"/>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=banana-pro_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Banana Pro</phrase>
@@ -7040,7 +7030,23 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/BananaPro#">Banana Pro</ulink>
                 </para>
               </entry>
-              <entry colsep="1" rowsep="1"/>
+              <entry align="center" colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware/OrangePiZero#">
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=orange-pi-zero_thumb.jpg" width="235"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>Orange Pi Zero</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </ulink>
+                </para>
+                <para>
+                  <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware/OrangePiZero#">Orange Pi Zero</ulink>
+                </para>
+              </entry>
             </row>
           </tbody>
         </tgroup>
@@ -7702,7 +7708,45 @@ Password: <introduce la contraseña aquí>
                   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
-                  <para>10/100/1000  </para>
+                  <para>1000  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="16" fileref="https://wiki.debian.org/htdocs/debwiki/img/icon-error.png" width="16"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>Orange Pi Zero          </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>?x4  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>armhf/sunxi     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>¼,½</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>-     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para> -     </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>100   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
@@ -7737,7 +7781,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi2#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="157" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry2_thumb.jpg" width="235"/>
+                        <imagedata depth="157" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry2_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Raspberry Pi 2</phrase>
@@ -7754,7 +7798,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="155" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3b_thumb.jpg" width="235"/>
+                        <imagedata depth="155" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3b_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Raspberry Pi 3 Model B</phrase>
@@ -7771,7 +7815,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi3B+#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="153" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3bplus_thumb.jpg" width="235"/>
+                        <imagedata depth="153" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberrypi3bplus_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Raspberry Pi 3 Model B+</phrase>
@@ -7802,7 +7846,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/DreamPlug#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="156" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=dreamplug_thumb.jpg" width="235"/>
+                        <imagedata depth="156" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=dreamplug_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>DreamPlug</phrase>
@@ -7819,7 +7863,7 @@ Password: <introduce la contraseña aquí>
                   <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Hardware/RaspberryPi#">
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata depth="158" fileref="https://wiki.debian.org/es/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry_thumb.jpg" width="235"/>
+                        <imagedata depth="158" fileref="https://wiki.debian.org/FreedomBox/Hardware?action=AttachFile&amp;do=get&amp;target=raspberry_thumb.jpg" width="235"/>
                       </imageobject>
                       <textobject>
                         <phrase>Raspberry Pi</phrase>
@@ -7840,7 +7884,7 @@ Password: <introduce la contraseña aquí>
     <section>
       <title>Añadir Soporte a más Hardware</title>
       <para>Aunque el proyecto se enfoque en soportar determinados dispositivos queremos soportar la mayor cantidad de hardware posible, mientras se adecúe a las necesidades de FreedomBox.  Echa un vistazo a la lista de <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/CheapServerBoxHardware#">objetivos hardware</ulink> para más información. </para>
-      <para>Si eres desarrollador, considera añadir soporte a hardware para tu dispositivo modificando <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Maker#">Freedom Maker</ulink>. Si tienes acceso a algún dispositivo de <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/CheapServerBoxHardware#">hardware objeto</ulink> y quisieras trabajar con nosotros para hacer que funcione con FreedomBox ¡contactanos, por favor! </para>
+      <para>Si eres desarrollador, considera la posibilidad de añadir soporte a hardware para tu dispositivo modificando <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Maker#">Freedom Maker</ulink>. Si tienes acceso a algún dispositivo de <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/CheapServerBoxHardware#">hardware objeto</ulink> y quisieras trabajar con nosotros para hacer que funcione con FreedomBox ¡contactanos, por favor! </para>
     </section>
     <section>
       <title>FreedomBox Pioneer Edition</title>
@@ -9975,6 +10019,84 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.6.1 (2020-04-11)</title>
+        <itemizedlist>
+          <listitem>
+            <para>users: Restore line of help text that was accidentally dropped </para>
+          </listitem>
+          <listitem>
+            <para>debian: Add firmware-ath9k-htc to Recommends </para>
+          </listitem>
+          <listitem>
+            <para>gitweb: Use proper ellipsis char when showing clone progress </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Norwegian Bokmål, German, French, Portuguese, Italian, Russian, and Serbian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 20.6 (2020-04-06)</title>
+        <itemizedlist>
+          <listitem>
+            <para>app: Ensure toggle buttons work independently of configuration form </para>
+          </listitem>
+          <listitem>
+            <para>networks, monkeysphere: Make styling more specific to avoid interference </para>
+          </listitem>
+          <listitem>
+            <para>syncthing: Update description to mention 'syncthing' group </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Support upgrade up to any 2.x version </para>
+          </listitem>
+          <listitem>
+            <para>packages: Hold freedombox package during package installs </para>
+          </listitem>
+          <listitem>
+            <para>users: Add component for managing users and groups </para>
+          </listitem>
+          <listitem>
+            <para>app: Fix grammar in developer documentation string </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Disable public edits of blog pages </para>
+          </listitem>
+          <listitem>
+            <para>ikiwiki: Add moderation of blog comments </para>
+          </listitem>
+          <listitem>
+            <para>firewalld: Support upgrade up to any 0.8.x version </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Fix permissions of sync directory </para>
+          </listitem>
+          <listitem>
+            <para>locale: Added Serbian translation </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Russian, French, German, Czech, Italian, Hindi, Telugu, and Spanish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>FreedomBox 20.5.1 (2020-03-26)</title>
+        <itemizedlist>
+          <listitem>
+            <para>networks: Update label wording in topology form </para>
+          </listitem>
+          <listitem>
+            <para>jsxc: Fix issue with serving static files </para>
+          </listitem>
+          <listitem>
+            <para>debian: Separate binary packages for each language manual </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Norwegian Bokmål and German </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.5 (2020-03-23)</title>
         <itemizedlist>

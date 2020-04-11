@@ -10,7 +10,7 @@ MANUAL_URL_RAW="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=
 MANUAL_PAGE_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual/{page}?action=show&mimetype=text%2Fdocbook"
 
 DESTDIR=
-INSTALL_DIR=$(DESTDIR)/usr/share/doc/freedombox
+INSTALL_DIR=$(DESTDIR)/usr/share/freedombox
 SCRIPTS_DIR=scripts
 
 manual-pdfs=$(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.pdf)
