@@ -5,6 +5,7 @@ Setup CherryPy web server.
 
 import logging
 import os
+import warnings
 
 import cherrypy
 
@@ -73,7 +74,16 @@ def init():
 
 def run(on_web_server_stop):
     """Start the web server and block it until exit."""
-    cherrypy.engine.start()
+    with warnings.catch_warnings():
+        # Suppress warning that some of the static directories don't exist.
+        # Since there is no way to add/remove those tree mounts at will, we
+        # need to add them all before hand even if they don't exist now. If the
+        # directories becomes available later, CherryPy serves them just fine.
+        warnings.filterwarnings(
+            'ignore', '(.|\n)*is not an existing filesystem path(.|\n)*',
+            UserWarning)
+        cherrypy.engine.start()
+
     cherrypy.engine.subscribe('stop', on_web_server_stop)
     cherrypy.engine.block()
 
