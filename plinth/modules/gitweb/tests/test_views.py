@@ -146,8 +146,10 @@ def test_create_repo_invalid_name_view(rf):
 
 def test_create_repo_failed_view(rf):
     """Test that repo creation failure sends correct error message."""
-    with patch('plinth.modules.gitweb.create_repo',
-               side_effect=ActionError('Error')):
+    general_error_message = "An error occurred while creating the repository."
+    error_description = 'some error'
+    with patch('plinth.modules.gitweb.create_repo', side_effect=ActionError(
+            'gitweb', '', error_description)):
         form_data = {
             'gitweb-name': 'something_other',
             'gitweb-description': '',
@@ -157,8 +159,8 @@ def test_create_repo_failed_view(rf):
         view = views.CreateRepoView.as_view()
         response, messages = make_request(request, view)
 
-        assert list(messages)[
-            0].message == 'An error occurred while creating the repository.'
+        assert list(messages)[0].message == '{0} {1}'.format(
+            general_error_message, error_description)
         assert response.status_code == 302
 
 

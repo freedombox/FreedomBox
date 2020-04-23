@@ -60,11 +60,15 @@ class CreateRepoView(SuccessMessageMixin, FormView):
         try:
             gitweb.create_repo(form_data['name'], form_data['description'],
                                form_data['owner'], form_data['is_private'])
-        except ActionError:
+        except ActionError as error:
+            self.success_message = ''
+            error_text = error.args[2].split('\n')[0]
             messages.error(
-                self.request,
-                _('An error occurred while creating the repository.'))
-        gitweb.app.update_service_access()
+                self.request, "{0} {1}".format(
+                    _('An error occurred while creating the repository.'),
+                    error_text))
+        else:
+            gitweb.app.update_service_access()
 
         return super().form_valid(form)
 
