@@ -29,10 +29,12 @@ _description = [
 app = None
 
 
-class DateTimeApp(app_module.App):
-    """FreedomBox app for date and time."""
+class UnmanagedDateTimeApp(app_module.App):
+    """FreedomBox app for date and time if time syncronization is unmanaged."""
 
     app_id = 'datetime'
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -48,6 +50,16 @@ class DateTimeApp(app_module.App):
                               'datetime:index', parent_url_name='system')
         self.add(menu_item)
 
+
+class ManagedDateTimeApp(UnmanagedDateTimeApp):
+    """FreedomBox app for date and time if time syncronization is managed."""
+
+    can_be_disabled = True
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+
         daemon = Daemon('daemon-datetime', managed_services[0])
         self.add(daemon)
 
@@ -61,7 +73,12 @@ class DateTimeApp(app_module.App):
 def init():
     """Initialize the date/time module."""
     global app
-    app = DateTimeApp()
+
+    if _is_time_managed():
+        app = ManagedDateTimeApp()
+    else:
+        app = UnmanagedDateTimeApp()
+
     if app.is_enabled():
         app.set_enabled(True)
 
@@ -83,3 +100,17 @@ def _diagnose_time_synchronized():
         pass
 
     return [_('Time synchronized to NTP server'), result]
+
+
+def _is_time_managed():
+    """Check whether time should be syncronized by the systemd-timesyncd.
+
+    systemd-timesyncd does not run if we have another NTP daemon installed or
+    FreedomBox runs inside a container where the host manages the time.
+
+    """
+    output = subprocess.check_output([
+        'systemctl', 'show', '--property=ConditionResult', '--value',
+        'systemd-timesyncd'
+    ])
+    return 'yes' in output.decode()

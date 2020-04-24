@@ -33,6 +33,12 @@ def ntp_is_disabled(session_browser):
     application.disable(session_browser, 'ntp')
 
 
+@given(parsers.parse('the network time application can be disabled'))
+def ntp_can_be_disabled(session_browser):
+    if not application.can_be_disabled(session_browser, 'ntp'):
+        pytest.skip(f'network time application can\'t be disabled')
+
+
 @when(parsers.parse('I set the time zone to {time_zone:S}'))
 def time_zone_set(session_browser, time_zone):
     application.time_zone_set(session_browser, time_zone)
