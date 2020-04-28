@@ -47,7 +47,7 @@ def subcommand_setup(arguments):
     aug.set('/files/etc/sysctl.conf/fs.inotify.max_user_watches', '100000')
     aug.save()
 
-    subprocess.run(['sysctl', '--system'], check=True)
+    subprocess.run(['systemctl', 'restart', 'systemd-sysctl'], check=True)
 
 
 def subcommand_get_media_dir(arguments):
