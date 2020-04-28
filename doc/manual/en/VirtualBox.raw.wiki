@@ -1,0 +1,214 @@
+== VirtualBox ==
+
+{{attachment:virtualbox.png|VirtualBox|width=726,height=475}}
+
+This page will help you get started with using !FreedomBox on a [[https://en.wikipedia.org/wiki/Virtual_machine|virtual machine]] using !VirtualBox.  While !VirtualBox images are primarily used for testing and development, they can also be used for regular use if you have spare resources on one of your machines.  This setup is useful if:
+
+ * You don't own one of the [[FreedomBox/Hardware|supported hardware]] devices.
+ * You don't use Debian GNU/Linux as your operating system.
+ * You don't want to disturb your Debian installation to try out !FreedomBox.
+
+Prebuilt !FreedomBox images for !VirtualBox are routinely made available in !VirtualBox's own [[https://www.virtualbox.org/manual/ch05.html#vdidetails|VDI image file format]]. They contain a Debian GNU/Linux operating system and an installation of !FreedomBox with all dependencies ready to run on any OS supported by !VirtualBox (Windows, Linux, Macintosh, and Solaris).
+
+A more adventurous alternative to downloading one of these images is to [[InstallingDebianOn|install Debian]] on !VirtualBox and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+!VirtualBox itself is available from https://www.virtualbox.org/ (or your distribution's package manager).
+
+=== Download ===
+
+Follow the instructions on the [[FreedomBox/Download|download]] page to download and verify a !VirtualBox image. The latest images are available on [[https://freedombox.org/download/|freedombox.org]].
+
+=== Creating a Virtual Machine ===
+
+ 1. Decompress the downloaded VDI image (tool for [[http://www.7-zip.org/|Windows]], [[http://unarchiver.c3.cx/unarchiver|Mac]]).
+
+ 1. Create a new VM in the !VirtualBox UI with OS type ''Linux'' and Version ''Debian'' (32/64-bit according to the downloaded image).
+{{attachment:virtualbox_os_type.png|VirtualBox Name and OS dialog}}
+
+ 1. In the ''Hard disk'' dialog choose ''Use an existing virtual hard disk file'' and select the .vdi file you extracted in step 1.
+
+{{attachment:virtualbox_harddisk_file.png|VirtualBox Hard disk dialog}}
+
+ 1. When created, go to the virtual machine's Settings -> [Network] -> [Adapter 1]->[Attached to:] and choose the network type your want the machine to use according to the explanation in Network Configuration below. The recommended type is the ''Bridged adapter'' option, but be aware that this exposes the !FreedomBox's services to your entire local network.
+
+{{attachment:virtualbox_network_type.png|VirtualBox recommended network setting}}
+
+'''Note:''' It is important to make sure that you have provided the correct network interface in the above step. For example, if the virtual machine is running on a laptop connected to a Wi-Fi network, then the wireless interface (starts with ''wlp'') must be chosen as shown in the screenshot.
+
+=== First Boot ===
+
+When satisfied with the VM settings click the start button in the !VirtualBox UI and your new !FreedomBox will boot.
+
+The console of the VM will show the textual screen below when finished booting, from here most interaction with !FreedomBox will be through the [[FreedomBox/Plinth|web interface]] in a browser.
+
+{{attachment:virtualbox_console_after_boot.png|FreedomBox console after booting successfully}}
+
+If everything went well so far, you should be able to access the web interface of !FreedomBox by pointing a browser on the host machine to https://freedombox.local.
+
+In case freedombox.local cannot be resolved, you need to find out your !FreedomBox's IP address as described in [[#finding-ip-address-of-vm|Finding out the IP address of the virtual machine]]. Then access this IP from a web browser which is on the same network as the VM (for example, the host). If all is well, you are now presented with a welcome message and invited to complete the ''first boot'' process.
+
+{{attachment:plinth_first_boot.png|FreedomBox welcomes you to the first boot}}
+
+This mainly consist of creating an administrative user for the system.
+
+=== Using ===
+
+See the !FreedomBox [[FreedomBox/Manual/QuickStart|usage]] page for more details. 
+
+You can log in to the Debian GNU/Linux system as the user created during !FreedomBox first boot on the !VirtualBox console or remotely via ssh.
+
+After logging in, you can become root with the command `sudo su`.
+ 
+=== Build Image ===
+
+If you wish to build your own images instead of downloading available images, it can be done using [[FreedomBox/Maker|Freedom Maker]]. 
+
+=== Tips & Troubleshooting ===
+
+==== Network Configuration ====
+
+!VirtualBox provides many types of networking options.  Each has its
+advantages and disadvantages.  For more information about how various
+networking types work in !VirtualBox, see !VirtualBox's networking
+documentation. https://www.virtualbox.org/manual/ch06.html
+
+For a simple setup, it is recommended that you use a single network
+interface in your guest machine.  This will make the first boot script
+automatically configure that interface as an `internal` network with
+`automatic` network configuration.  Inside the guest machine, the
+networking is configured automatically and all the services are made
+available on this network interface.  For more information on how
+networks are configured by default in !FreedomBox, see
+[[FreedomBox/Manual/Networks|Networks]] section.
+
+What remains is to make those services available to the host machine
+or to other machines in the network.  You must then choose one of the
+following types of networking for the network interface on your guest
+machine.  To set a particular type of network for the guest's network
+adapter, go to the guest VM's settings then the network options and
+then select the adapter you wish to configure.  There, set the network
+type from the available list of networks.
+
+ 1. First and the recommended option is to use the ''Bridged'' type of
+ network.  This option exposes the guest machine to the same network
+ that host network is connected to.  The guest obtains network
+ configuration information from a router or DHCP server on the
+ network.  The guest will appear as just another machine in the
+ network.  A major advantage of this of setup is that the host and all
+ other machines in the network will be able to access the services
+ provided by guest without requiring any further setup.
+
+ The only drawback of this approach is that if the host is not
+ connected to any network, the guest's network will remain
+ unconfigured making it inaccessible even from the host.
+
+ 1. Second method is ''Host only'' type of networking.  With a
+ guest's network interface configured in this manner, it will only be
+ accessible from the host machine.  The guest will not able access any
+ other machine but the host, so you do not have internet access on the guest.
+ All services on the guest are available to the host machine without any
+ configuration such as port forwarding.
+
+ 1. The third option is to use the ''NAT'' type of network.  This the
+ networking type that !VirtualBox assigns to a freshly created virtual
+ machine.  This option works even when host is not connected to any
+ network.  The guest is automatically configured and is able to access
+ the internet and local networks that host is able to connect to.
+ However, the services provided by the guest require port forwarding
+ configuration setup to be available outside.
+
+ To configure this go to VM settings -> [Network] -> [Adapter] ->
+ [Port Forwarding].  Map a port such as 2222 from host to guest port
+ 22 and you will be able to ssh into !FreedomBox from host machine as
+ follows:
+
+ {{{
+ ssh -p 2222 fbx@localhost
+ }}}
+
+ Map 4443 on host to 443 on the guest.  This make !FreedomBox HTTPS
+ service available on host using the URL https://localhost:4443/
+
+ You will need to add a mapping for each such services from host to
+ guest.
+
+ 1. The final option is to create two network interfaces, one ''host only''
+ and one ''NAT'' type.  This way you can access the guest without
+ any additional configuration, and you have internet access on the guest.
+ The guest will be invisible to any other machines on the network.
+
+
+Summary of various network types:
+
+|| - ||'''Guest accessible from other machines'''||'''Guest accessible from host'''||'''Works without port forwarding'''||'''Works without host connected to network'''||'''Guest has internet access'''||
+|| '''Bridged''' || (./) || (./) || (./) || {X} || (./) ||
+|| '''Host only''' || {X} || (./) || (./)  || (./) || {X} ||
+|| '''NAT''' || (./) || (./) || {X} || (./) || (./) ||
+|| '''NAT and Host || {X} || (./) || (./) || (./) || (./) ||
+
+<<Anchor(finding-ip-address-of-vm)>>
+==== Finding out the IP address of the virtual machine ====
+
+This depends on the network configuration you chose. With a ''bridged adapter'',
+your virtual machine gets its IP address from the DHCP server of your network, most likely of your Router. You can try the first couple of IP addresses or check your router web interface for a list of connected devices.
+
+If you chose ''host-only adapter'', the IP address is assigned by the DHCP server of your !VirtualBox network. In the !VirtualBox Manager, go to File -> Preferences -> Network -> Host-only Networks. You can see and edit the DHCP address range there, typically you get assigned addresses close to the ''Lower Address Bound''.
+
+Another possibility of finding the IP address is to login via the !VirtualBox Manager (or similar software). The !FreedomBox images do not have any default user accounts, so you need to set an initial user and password using the [[https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/bin/passwd-in-image|passwd-in-image script]].
+
+See also [[FreedomBox/Manual/QuickStart|QuickStart]] for instructions on how to scan your network to discover the IP of the VM.
+
+==== Networking Problems with macchanger ====
+
+The package `macchanger` can cause network problems with !VirtualBox.  If you have a valid IP address on your guest's host network adapter (like 192.168.56.101) but are not able to ping or access the host (like 192.168.56.1), try uninstalling `macchanger`:
+
+{{{
+$ dpkg --ignore-depends=freedombox-setup --remove macchanger 
+}}}
+
+You might have to manually remove the script `/etc/network/if-prep-up/macchanger`.
+If Debian complains about unmet dependencies when you use a package manager (apt-get, aptitude, dpkg), try to remove 'macchanger' from the dependencies of 'freedombox-setup' in the file `/var/lib/dpkg/status`.
+
+==== Mounting Images Locally ====
+
+If you want to mount images locally, use the following to copy built images off the !VirtualBox:
+
+{{{
+$ mkdir /tmp/vbox-img1 /tmp/vbox-root1
+$ vdfuse -f freedombox-unstable_2013.0519_virtualbox-i386-hdd.vdi /tmp/vbox-img1/
+$ sudo mount -o loop /tmp/vbox-img1/Partition1 /tmp/vbox-root1
+$ cp /tmp/vbox-root1/home/fbx/freedom-maker/build/freedom*vdi ~/
+$ sudo umount /tmp/vbox-root1
+# $ sudo umount /tmp/vbox-img1 # corruption here.
+}}}
+
+==== Fixing the time after suspend and resume ====
+
+The virtual machine loses the correct time/date after suspending and resuming. One way to fix this is to create a cron-job that restarts the time service `ntp`. You can add a crontab entry as root to restart ntp every 15 minutes by typing
+`'crontab -e'` and adding this line:
+{{{
+*/15 * *   *   *     /etc/init.d/ntp restart
+}}}
+
+Do not restart this service too often as this increases the load of publicly and freely available NTP servers.
+
+==== UUID collision in VB ====
+
+Whenever this happens !VirtualBox shows following error message: ''Cannot register the hard disk A with UUID ... because a hard disk B with UUID ... already exists in the media registry''
+
+Creating several VMs from the same image causes collisions due to ID's (hostname, IP, UUID, etc) that are expected to be universally unique.
+Most can be handeled operating the running VM. But !VirtualBox complains before that (at the very creation of the VM) about the hard disk's UUID. This is usual stuff when you develop/test e.g. !FreedomBox.
+
+You can change a clone's UUID in the terminal as follows:
+{{{
+$ VBoxManage internalcommands sethduuid path/to/the/hd/vdi/file
+}}}
+
+
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

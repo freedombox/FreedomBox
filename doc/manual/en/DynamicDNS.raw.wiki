@@ -1,0 +1,89 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/DynamicDNS|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Dynamic DNS Client ==
+
+=== What is Dynamic DNS? ===
+
+In order to reach a server on the Internet, the server needs to have permanent address also known as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server.
+
+Dynamic DNS service providers assist in working around a problem.  First they provide you with a domain name, such as 'myhost.example.org'.  Then they associate your IP address, whenever it changes, with this domain name.  Then anyone intending to reach the server will be to contact the server using the domain name 'myhost.example.org' which always points to the latest IP address of the server.
+
+For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in !FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on !FreedomBox, such as ownCloud, to the Internet.
+
+=== GnuDIP vs. Update URL ===
+
+There are two main mechanism to notify the Dynamic DNS server of your new IP address; using the ''GnuDIP'' protocol and using the ''Update URL'' mechanism.
+
+If a service provided using update URL is not properly secured using HTTPS, your credentials may be visible to an adversary.  Once an adversary gains your credentials, they will be able to replay your request your server and hijack your domain.
+
+On the other hand, the GnuDIP protocol will only transport a salted MD5 value of your password, in a way that is secure against replay attacks. 
+
+=== Using the GnuDIP protocol ===
+
+ 1. Register an account with any Dynamic DNS service provider.  A free service provided by the !FreedomBox community is available at https://gnudip.datasystems24.net .
+
+ 1. In !FreedomBox UI, enable the Dynamic DNS Service.
+
+ 1. Select ''GnuDIP'' as ''Service type'', enter your Dynamic DNS service provider address (for example, gnudip.datasystems24.net) into ''GnuDIP Server Address'' field.
+
+ {{attachment:DynamicDNS-Settings.png|Dynamic DNS Settings|width=800}}
+
+ 1. Fill ''Domain Name'', ''Username'', ''Password'' information given by your provider into the corresponding fields.
+
+=== Using an Update URL ===
+
+This feature is implemented because the most popular Dynamic DNS providers are using Update URLs mechanism.
+
+ 1. Register an account with a Dynamic DNS service provider providing their service using Update URL mechanism.  Some example providers are listed in the configuration page itself.
+
+ 1. In !FreedomBox UI, enable the Dynamic DNS service.
+
+ 1. Select ''other Update URL'' as ''Service type'', enter the update URL given by your provider into ''Update URL'' field.
+
+ 1. If you browse the update URL with your Internet browser and a warning message about untrusted certificate appears, then enable ''accept all SSL certificates''.  WARNING: your credentials may be readable here because man-in-the-middle attacks are possible!  Consider choosing a better service provider instead.
+
+ 1. If you browse the update URL with your Internet browser and the username/password box appears, enable ''use HTTP basic authentication'' checkbox and provide the ''Username'' and ''Password''. 
+
+ 1. If the update URL contains your current IP address, replace the IP address with the string ''<Ip>''.
+
+=== Checking If It Works ===
+
+ 1. Make sure that external services you have enabled such as /jwchat, /roundcube and /ikiwiki are available on your domain address.
+
+ 1. Go to the ''Status'' page, make sure that the NAT type is detected correctly. If your !FreedomBox is behind a NAT device, this should be detected over there (Text: ''Behind NAT'').  If your !FreedomBox has a public IP address assigned, the text should be "Direct connection to the Internet".
+
+ 1. Check that the last update status is not ''failed''.
+
+=== Recap: How to create a DNS name with GnuDIP ===
+/* to delete or to replace the old text */
+ 1. Access to [[https://gnudip.datasystems24.net|GnuIP login page]] (answer Yes to all pop ups)
+ 1. Click on "Self Register"
+ 1. Fill the registration form (Username and domain will form the public IP address [username.domain])
+ 1. Take note of the username/hostname and password that will be used on the !FreedomBox app.
+ 1. Save and return to the GnuDIP login page to verify your username, domain and password (enter the datas, click login).
+ 1. Login output should display your new domain name along with your current public IP address (this is a unique address provided by your router for all your local devices).
+ 1. Leave the GnuDIP interface and open the Dynamic DNS Client app page in your !FreedomBox.
+ 1. Click on "Set Up" in the top menu.
+ 1. Activate Dynamic DNS
+ 1. Choose GnuDIP service.
+ 1. Add server address (gnudip.datasystems24.net)
+ 1. Add your fresh domain name (username.domain, ie [username].freedombox.rocks)
+ 1. Add your fresh username (the one used in your new IP address) and password
+ 1. Add your GnuDIP password
+ 1. Fill the option with http://myip.datasystems24.de (try this url in your browser, you will figure out immediately)
+
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>> 
+
+----
+CategoryFreedomBox

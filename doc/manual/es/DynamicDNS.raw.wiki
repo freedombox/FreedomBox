@@ -1,0 +1,89 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/DynamicDNS|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Cliente de DNS Dinamico ==
+
+=== ¿Qué es DNS Dinamico? ===
+
+Para que se pueda llegar a un servidor desde Internet este necesita tener una dirección pública permanente, también conocida como dirección IP estática o fija.  Muchos proveedores de servicio de Internet no otorgan IP fija a sus usuarios normales o la cobran.  En su lugar les otorgan una IP temporal diferente cada vez que el usuario se conecta a internet. O una que cambia de vez en cuando. Si es tu caso los clientes que quieran contactar con tu servidor tendrán dificultades.
+
+Los proveedores de servicio de DNS Dinamico ayudan a solventar este problema.  Primero te dan un nombre de dominio, como 'miservidor.ejemplo.org' y te permiten asociar tu dirección IP temporal a este nombre de dominio cada vez que esta cambia.  De este modo quien quiera llegar a tu servidor empleará el nombre de dominio 'miservidor.ejemplo.org' que siempre apuntará a la última dirección IP de tu servidor.
+
+Para que esto funcione cada vez que te conectes a Internet tendrás que decirle a tu proveedor de servicio de DNS Dinamico cual es tu dirección IP provisional actual.  Por esto necesitas tener un software especial en tu servidor que haga esto. La funcionalidad DNS Dinamico de tu !FreedomBox permite a los usuarios sin dirección IP pública fija mantener su dirección IP pública temporal actualizada en el servicio de DNS Dinamico.  Esto te permite exponer servicios de tu !FreedomBox, como ownCloud, a Internet.
+
+=== GnuDIP vs. Update URL ===
+
+Eisten 2 mecanismos principales para notificar al the servicio de DNS Dinamico cual es tu dirección IP provisional actual: empleando el protocolo ''GnuDIP'' o empleando el mecanismo ''URL de actualización''.
+
+Si un servicio expuesto usando URL de actualización no se securiza apropiadamente mediante HTTPS, tus credenciales podrían quedar expuestas.  Una vez que un atacante accede a tus credenciales podrá reproducir tus comunicaciones con el servicio de DNS Dinamico y suplantar tu dominio.
+
+Por otra parte el protocolo GnuDIP solo transportará un valor MD5 salpimentado de tu contraseña de tal forma que es seguro contra ataques de este tipo. 
+
+=== Emplear el protocolo GnuDIP ===
+
+ 1. Registra una cuenta en cualquier proveedor de servicio de DNS Dinamico.  Hay un servicio gratuito provisto por la comunidad !FreedomBox  disponible en https://gnudip.datasystems24.net .
+
+ 1. Habilita el Servicio de DNS Dinamico en el interfaz de usuario de !FreedomBox.
+
+ 1. Selecciona ''GnuDIP'' como ''tipo de servicio'', introduce la dirección de tu proveedor de servicio de DNS Dinamico (por ejemplo, gnudip.datasystems24.net) en el campo ''Dirección del servidor GnuDIP''.
+
+ {{attachment:DynamicDNS-Settings.png|Dynamic DNS Settings|width=800}}
+
+ 1. Completa la información que te ha dado tu proveedor en los campos correspondientes ''Nombre de Dominio'', ''Usuario'' y ''Contraseña''.
+
+=== Emplear URL de actualización ===
+
+Se implementa esta funcionalidad porque los proveedores de servicio de DNS Dinamico más populares están empleando el mecanismo URL de actualización.
+
+ 1. Registra una cuenta en el proveedor de servicio de DNS Dinamico que emplea el mecanismo Update URL.  Se listan algunos proveedores de ejemplo en la propia página de configuración.
+
+ 1. Habilita el Servicio de DNS Dinamico en el interfaz de usuario de !FreedomBox.
+
+ 1. Selecciona ''URL de actualización'' como ''tipo de servicio'', introduce la URL de actualización que te ha dado tu proveedor de servicio de DNS Dinamico en el campo ''URL de actualización''.
+
+ 1. Si vas a la URL de actualización con tu navegador de Internet y te muestra un aviso acerca de un certificado no confiable, activa ''aceptar todos los certificados SSL''.  AVISO: ¡Tus credenciales podrían quedar expuestas en este punto a un ataque MIM (man-in-the-middle)!  Valora la posibilidad de elegir otro proveedor de servicio mejor.
+
+ 1. Si vas a la URL de actualización con tu navegador de Internet y te muestra la caja de usuario/contraseña, selecciona ''usar autenticación HTTP basica'' e introduce el usuario y la contraseña. 
+
+ 1. Si la URL de actualización contiene tu dirección IP temporal actual reemplaza la dirección IP por la cadena de texto ''<Ip>''.
+
+=== Comprobar si funciona ===
+
+ 1. Asegúrate de que los servicios externos que has habilitado como /jwchat, /roundcube o /ikiwiki están disponibles en tu dirección de dominio.
+
+ 1. Ve a la página ''Estado'' y asegúrate de que el tipo de NAT se detecta correctamente. Si tu !FreedomBox está detrás de un dispositivo NAT debería detectarse en este punto (Texto: ''Detrás de NAT'').  Si tu !FreedomBox tiene una dirección IP pública asignada el texto debería ser "Conexión directa a Internet".
+
+ 1. Comprueba que el último estado de actualización no sea ''fallida''.
+
+=== Recap: How to create a DNS name with GnuDIP ===
+/* to delete or to replace the old text */
+ 1. Access to [[https://gnudip.datasystems24.net|GnuIP login page]] (answer Yes to all pop ups)
+ 1. Click on "Self Register"
+ 1. Fill the registration form (Username and domain will form the public IP address [username.domain])
+ 1. Take note of the username/hostname and password that will be used on the !FreedomBox app.
+ 1. Save and return to the GnuDIP login page to verify your username, domain and password (enter the datas, click login).
+ 1. Login output should display your new domain name along with your current public IP address (this is a unique address provided by your router for all your local devices).
+ 1. Leave the GnuDIP interface and open the Dynamic DNS Client app page in your !FreedomBox.
+ 1. Click on "Set Up" in the top menu.
+ 1. Activate Dynamic DNS
+ 1. Choose GnuDIP service.
+ 1. Add server address (gnudip.datasystems24.net)
+ 1. Add your fresh domain name (username.domain, ie [username].freedombox.rocks)
+ 1. Add your fresh username (the one used in your new IP address) and password
+ 1. Add your GnuDIP password
+ 1. Fill the option with http://myip.datasystems24.de (try this url in your browser, you will figure out immediately)
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>> 
+
+----
+CategoryFreedomBox

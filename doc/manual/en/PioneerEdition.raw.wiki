@@ -1,0 +1,176 @@
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Pioneer Edition FreedomBox ==
+
+Pioneer !FreedomBox Home Servers are produced and sold by Olimex, a company which specializes in Open Source Hardware (OSHW). The kit includes pocket-sized server hardware, an SD card with the operating system pre-installed, and a backup battery which can power the hardware for 4-5 hours in case of outages. It sells for 69 euro. An optional storage add-on for high capacity hard disk (HDD) or solid-state drive (SSD) is also available from Olimex.  By purchasing this product, you also support the !FreedomBox Foundation's efforts to create and promote its free and open source server software.
+
+
+{{attachment:pioneer-edition.jpg|Pioneer Edition FreedomBox Home Server Kit|width=320,height=257}}
+
+=== Product Features ===
+
+The [[https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/|Pioneer Edition FreedomBox Home Server Kit]] includes all the hardware needed for launching a !FreedomBox home server on an Olimex [[FreedomBox/Hardware/A20-OLinuXino-Lime2|A20-OLinuXino-LIME2]] board:
+ * the A20-!OlinuXino-LIME2,
+ * a custom metal case with a laser-engraved !FreedomBox logo,
+ * a high-speed 32GB micro SD card with the !FreedomBox software pre-installed,
+ * a backup battery,
+ * a power adapter, and
+ * an Ethernet cable.
+ * an optional storage add-on for hard disk (HDD) or solid-state drive (SSD)
+
+=== Recommended Hardware ===
+This is the hardware recommended for all users who just want a turn-key !FreedomBox, and '''don't''' want to '''build''' their own one.
+
+(Building your own !FreedomBox means some technical stuff like choosing and buying the right components, downloading the image and preparing the SD card).
+
+=== Availability ===
+
+The Pioneer Edition !FreedomBox Home Server is the first commercially available version of !FreedomBox.
+ 
+ * Price: 69 EUR
+ * [[https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/|Olimex Store]]
+ * The US version is also available through [[https://www.mouser.com/ProductDetail/Olimex-Ltd/Pioneer-FreedomBox-HSK-US?qs=TiOZkKH1s2S0e0CDanQrkw%3D%3D|Mouser Electronics]].
+
+=== Hardware Specifications ===
+
+Pioneer Edition !FreedomBox Home Server is based on A20-OLinuXino-LIME2 Rev.G.
+
+ * Open Source Hardware (OSHW): [[https://github.com/OLIMEX/OLINUXINO/tree/master/HARDWARE|Yes]]
+ * CPU: Allwinner A20, ARM Cortex-A7 @ 1GHz dual-core
+ * RAM: 1 GiB DDR3
+ * Storage: 32GB class 10+ microSD card pre-loaded with !FreedomBox
+ * SATA: 1 SATA port 2.6 compliant 3Gb/s
+ * USB: 2 USB 2.0 Hi-Speed host ports
+ * Battery: 3.3V Li-Po, 1400mAh (4-5 hours of backup without additional devices connected via USB)
+ * Ethernet: 10/100/1000, RJ45 (1 meter cable included)
+ * Power adapter: 110-220 V input, 5V output, EU style (with optional UK or US sockets)
+ * Power consumption: 1.5W and 5W depending on load (0.3A to 1A current)
+ * Box: Custom metallic box with !FreedomBox decal
+
+Further information:
+ * [[https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware|Quick start leaflet]]
+ * [[https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware|Hardware source files]]
+ * [[https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware|A20-OLinuXino-LIME2 rev.G schematic]]
+ * [[http://dl.linux-sunxi.org/A20/A20%20Brief%202013-02-27.pdf|A20 SOC datasheet]]
+
+The kits run entirely on Free Software. They work with Kernel and u-boot from Debian repositories. Even the boot firmware in ROM called [[https://linux-sunxi.org/BROM|BROM]] is free software (GPLV2+).
+
+=== Storage Add-on ===
+
+You can order a storage add-on along with the Pioneer Edition !FreedomBox Home Server. The storage add-on is a SATA disk drive enclosure case optionally with a hard disk or solid-state drive of size 128GB to 2000GB. If you have already purchased the Home Server without the add-on, you can order the add-on separately.
+
+ * [[https://www.olimex.com/Products/OLinuXino/Home-Server/BAY-HDD-1000GB/|Olimex Store]]
+ * Price: 9 EUR (without the hard disk, only for the case, you need to add your own HDD/SSD to it)
+ * Price: 42 EUR (with 128GB Solid-State Drive)
+ * Price: 69 EUR (with 512GB Solid-State Drive)
+ * Price: 42 EUR (with 320GB Hard Disk)
+ * Price: 53 EUR (with 500GB Hard Disk)
+ * Price: 64 EUR (with 1000GB Hard Disk)
+ * Price: 86 EUR (with 2000GB Hard Disk)
+
+=== Download ===
+
+The kits come with an SD card pre-loaded with !FreedomBox. There's '''NO need to download images'''.
+
+However, if you wish to reset your devices to a pristine state, then you can do so with the image provided. Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox SD card and boot the device. Make sure to download the [[https://ftp.freedombox.org/pub/freedombox/pioneer/|Pioneer Edition]] images. These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB. 
+
+An alternative to downloading these images is to [[InstallingDebianOn/Allwinner|install Debian]] on the device and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+=== Build Image ===
+
+!FreedomBox images for this hardware can be built using [[FreedomBox/Maker|Freedom Maker]].
+
+=== Known Issues ===
+
+ * The image that shipped with the kits uses a [[https://salsa.debian.org/freedombox-team/u-boot|slightly modified u-boot]] from Debian and not stock Debian like the rest of !FreedomBox. So, if you wish to get the source code, please use the !FreedomBox team's [[https://salsa.debian.org/freedombox-team/u-boot|u-boot repository]].
+
+=== Obtaining Source Code ===
+
+After you purchase and receive your Pioneer Edition FreedomBox, you may want to obtain the source code of the software running in it. Continue reading this section for instructions.
+
+!FreedomBox is fully [[https://www.gnu.org/philosophy/free-sw.html|free software]] and you can obtain the source code to study, modify and distribute improvements.
+
+==== From within FreedomBox ====
+
+!FreedomBox is made up of several software programs and you can obtain the source code to any of them. These instructions are similar to obtaining and [[https://www.debian.org/doc/manuals/maint-guide/build.en.html|building]] [[https://www.debian.org/doc/manuals/apt-howto/ch-sourcehandling.en.html|source code]] [[https://wiki.debian.org/BuildingTutorial|for Debian]] since !FreedomBox is a pure blend of Debian. Using this process you can obtain the source code to the exact version of the package you are currently using in !FreedomBox.
+
+ 1. To see the list of software packages installed on your !FreedomBox, run the following in a terminal:
+ {{{
+dpkg -l
+}}}
+ 1. To obtain the source code for any of those programs, then run:
+ {{{
+apt source <package_name>
+}}}
+ This requires that the file [[https://www.debian.org/doc/manuals/apt-howto/ch-basico.en.html|/etc/apt/sources.list]] file contains the information about the source code repositories. These are present by default on all !FreedomBox images. If you have installed !FreedomBox using a package from Debian, you need to ensure that source repositories are added in the file.
+ 1. To build the package from source code, first install its dependencies
+ {{{
+apt build-dep <package_name>
+}}}
+ Switch to the source directory created by the ''apt source'' command:
+ {{{
+cd <source_directory>
+}}}
+ Then build the package
+ {{{
+ dpkg-buildpackage -rfakeroot -uc
+}}}
+ 1. Install the package:
+ {{{
+ dpkg -i ../<built_package>.deb
+}}}
+
+==== Other Ways to Obtain Source Code ====
+
+ 1. Source code for any of the packages can be browsed and searched using the web interface at [[https://sources.debian.org/|sources.debian.org]]. For example, see the [[https://sources.debian.org/src/plinth/|plinth]] package.
+
+ 1. Source code and pre-built binary package for any version of a package including historic versions can be obtained from [[https://snapshot.debian.org/|snapshot.debian.org]]. For example, see the [[https://snapshot.debian.org/package/plinth/|plinth]] package.
+
+ 1. You can also obtain the links to upstream project homepage, upstream version control, Debian's version control, changelog, etc. from the Debian tracker page for a project at [[https://tracker.debian.org/|tracker.debian.org]]. For example, see the tracker page for [[https://tracker.debian.org/pkg/plinth|plinth]] package.
+ 
+ 1. You can build and install a package from its Debian's version control repository. For example,
+ {{{
+ git clone https://salsa.debian.org/freedombox-team/freedombox.git
+ cd freedombox
+ apt build-dep .
+ dpkg-buildpackage -rfakeroot -uc
+ dpkg -i ../freedombox*.deb
+}}}
+
+==== Building Disk Images ====
+
+You can also build !FreedomBox disk images for various hardware platforms using the freedom-maker tool. This is also available as a Debian package and source code for it may be obtained using the above methods. [[https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/README.md|Build instructions]] for creating disk images are available as part of the source code for freedom-maker package.
+
+!FreedomBox disk images are built and uploaded to official servers using automated Continuous Integration infrastructure. This infrastructure is available as [[https://salsa.debian.org/freedombox-team/infrastructure|source code]] too and provides accurate information on how !FreedomBox images are built.
+
+==== U-boot on Pioneer Edition Images ====
+
+There is one minor exception to the u-boot package present on the hardware sold as !FreedomBox Home Server Kits Pioneer Edition. It contains an small but important fix that is not part of Debian sources. The fork of the Debian u-boot source repository along with the minor change done by the !FreedomBox is available as a [[https://salsa.debian.org/freedombox-team/u-boot|separate repository]]. We expect this change to be available in upstream u-boot eventually and this repository will not be needed. This package can be built on a Debian armhf machine as follows (cross compiling is also possible, simply follow instructions for cross compiling Debian packages):
+
+{{{
+apt install git git-buildpackage
+git clone https://salsa.debian.org/freedombox-team/u-boot.git
+cd u-boot
+pbuilder create --distribution=buster
+gbp buildpackage --git-pbuilder
+}}}
+
+The u-boot Debian package will be available in ''u-boot-sunxi*.deb''. This package will contain 
+
+{{{
+mkdir temp
+dpkg -x u-boot-suxi*.deb temp
+unxz <lime2_image_built_with_freedom_maker>
+dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime2.img> seek=8 bs=1k conv=notrunc
+}}}
+
+The resulting image will have the modified u-boot in it. 
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

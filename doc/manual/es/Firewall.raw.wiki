@@ -1,0 +1,208 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Firewall|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Cortafuegos ==
+
+Un cortafuegos es un sistema de seguridad de red que controla el tráfico de entrada y salida desde/a la red. Mantener un cortafuegos habilitado y apropiadamente configurado reduce el riesgo de amenazas a la seguridad desde Internet.
+
+La operación del cortafuegos desde el interfaz web de !FreedomBox es automática. Cuando habilitas un servicio se le abre automáticamente  el cortafuegos y cuando lo deshabilitas se le cierra también automáticamente. Para servicios habilitados por defecto en !FreedomBox los puertos se abren en el cortafuegos por defecto durante el proceso de la primera ejecución.
+
+{{attachment:Firewall_es_v01.png|Firewall|width=500}}
+
+La administración del cortafuegos en !FreedomBox se hace empleando [[https://fedoraproject.org/wiki/FirewallD|FirewallD]].
+
+=== Interfaces ===
+
+Cada interfaz de red necesita asignarse a 1 (y sólo 1) zona. Si no se le establece zona, automáticamente se le asigna la zona `externa`. Las reglas que tenga activas la zona se aplicarán al interfaz. Por ejemplo, si se permite el trafico HTTP en una zona en particular las peticiones web se acceptarán en todas las direcciones configuradas para todos los interfaces asignados a esa zona.
+
+Principalmente se emplean 2 zonas de cortafuegos. La zona `interna` está pensada para servicios ofrecidos a todas las máquinas de la red local.  Esto podría incluir servicios como ''streaming'' multimedia o compartición simple de archivos.  La zona `externa` está pensada para servicios  públicamente expuestos a Internet.  Esto podría incluir servicios como blog, sitio web, cliente web de correo electrónico etc.
+
+Para más detalles acerca de como se configuran por defecto los interfaces de red mira la sección [[es/FreedomBox/Manual/Networks|Redes]].
+
+=== Abrir Puertos Propios ===
+
+Cockpit proporciona administración avanzada de cortafuegos. Ambos, !FreedomBox y Cockpit operan sobre firewalld y son por tanto compatibles entre sí. En particular, Cockpit se puede usar en !FreedomBox para abrir servicios o puertos. Esto resulta útil si además de los servicios proporcionados por !FreedomBox estás ejecutando manualmente tus propios servicios en la misma máquina.
+
+{{attachment:firewalld-cockpit.png}}
+
+=== Puertos/Servicios de FreedomBox ===
+
+La siguiente tabla trata de documentar los puertos, servicios y sus estados por defecto en !FreedomBox. Si encuentras esta página desactualizada mira la página de estado del cortafuegos en el interfaz web de !FreedomBox.
+
+||'''Servicio'''||'''Puerto'''      ||'''Externo'''||'''Habilitado por defecto'''||'''Estado mostrado en !FreedomBox'''||'''Administrado por !FreedomBox'''||
+|| Minetest    || 30000/udp      || {*}          || {X}                    || (./)                       || (./)                  ||
+|| XMPP Client || 5222/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| XMPP Server || 5269/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| XMPP Bosh   || 5280/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| NTP         || 123/udp        || {o}          || (./)                   || (./)                       || (./)                  ||
+|| Interfaz web de !FreedomBox || 443/tcp        || {*}          || (./)                   || (./)                       || {X}                   ||
+|| Quassel     || 4242/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP         || 5060/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP         || 5060/udp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP-TLS     || 5061/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP-TLS     || 5061/udp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| RTP         || 1024-65535/udp || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SSH         || 22/tcp         || {*}          || (./)                   || (./)                       || {X}                   ||
+|| mDNS        || 5353/udp       || {o}          || (./)                   || (./)                       || (./)                  ||
+|| Tor (Socks) || 9050/tcp       || {o}          || {X}                    || (./)                       || (./)                  ||
+|| Obfsproxy   || <random>/tcp   || {*}          || {X}                    || (./)                       || (./)                  ||
+|| OpenVPN     || 1194/udp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| Mumble      || 64378/tcp      || {*}          || {X}                    || (./)                       || (./)                  ||
+|| Mumble      || 64378/udp      || {*}          || {X}                    || (./)                       || (./)                  ||
+|| Privoxy     || 8118/tcp       || {o}          || {X}                    || (./)                       || (./)                  ||
+|| JSXC        || 80/tcp         || {*}          || {X}                    || {X}                        || {X}                   ||
+|| JSXC        || 443/tcp        || {*}          || {X}                    || {X}                        || {X}                   ||
+|| DNS         || 53/tcp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| DNS         || 53/udp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| DHCP        || 67/udp         || {o}          || (./)                   || {X}                        || {X}                   ||
+|| Bootp       || 67/tcp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| Bootp       || 67/udp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| Bootp       || 68/tcp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| Bootp       || 68/udp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| LDAP        || 389/tcp        || {o}          || {X}                    || {X}                        || {X}                   ||
+|| LDAPS       || 636/tcp        || {o}          || {X}                    || {X}                        || {X}                   ||
+
+=== Operación Manual ===
+
+Para completar información acerca de los conceptos basicos o más allá, mira la documentación de [[https://fedoraproject.org/wiki/FirewallD|FirewallD]].
+
+==== Habilitar/deshabilitar el cortafuegos ====
+
+Para deshabilitar el cortafuegos
+{{{
+service firewalld stop
+}}}
+
+o con systemd
+{{{
+systemctl stop firewalld
+}}}
+
+Para vover a habilitar el cortafuegos
+{{{
+service firewalld start
+}}}
+
+o con systemd
+{{{
+systemctl start firewalld
+}}}
+
+==== Modificar servicios/puertos ====
+
+Puedes añadir o eliminar un servicio de una zona manualmente.
+
+Para ver la lista de servicios habilitados:
+{{{
+firewall-cmd --zone=<zone> --list-services
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --list-services
+}}}
+
+Para ver la lista de puertos habilitados:
+{{{
+firewall-cmd --zone=<zone> --list-ports
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --list-ports
+}}}
+
+Para eliminar un servicio de una zona:
+{{{
+firewall-cmd --zone=<zone> --remove-service=<service>
+firewall-cmd --permanent --zone=<zone> --remove-service=<interface>
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --remove-service=xmpp-bosh
+firewall-cmd --permanent --zone=internal --remove-service=xmpp-bosh
+}}}
+
+Para eliminar un puerto de una zona:
+{{{
+firewall-cmd --zone=internal --remove-port=<port>/<protocol>
+firewall-cmd --permanent --zone=internal --remove-port=<port>/<protocol>
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --remove-port=5353/udp
+firewall-cmd --permanent --zone=internal --remove-port=5353/udp
+}}}
+
+Para añadir un servicio a una zona:
+{{{
+firewall-cmd --zone=<zone> --add-service=<service>
+firewall-cmd --permanent --zone=<zone> --add-service=<interface>
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --add-service=xmpp-bosh
+firewall-cmd --permanent --zone=internal --add-service=xmpp-bosh
+}}}
+
+Para añadir un puerto a una zona:
+{{{
+firewall-cmd --zone=internal --add-port=<port>/<protocol>
+firewall-cmd --permanent --zone=internal --add-port=<port>/<protocol>
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --add-port=5353/udp
+firewall-cmd --permanent --zone=internal --add-port=5353/udp
+}}}
+
+==== Modificar la zona de los interfaces ====
+
+Puedes cambiar la asignación de zona de cada interfaz de red manualmente tras la asignación automática del proceso de primer arranque.
+
+Para ver la asignación actual de interfaces de red a las zonas.
+{{{
+firewall-cmd --list-all-zones
+}}}
+
+Para eliminar un interfaz de una zona:
+{{{
+firewall-cmd --zone=<zone> --remove-interface=<interface>
+firewall-cmd --permanent --zone=<zone> --remove-interface=<interface>
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=external --remove-interface=eth0
+firewall-cmd --permanent --zone=external --remove-interface=eth0
+}}}
+
+Para añadir un interfaz a una zona:
+{{{
+firewall-cmd --zone=<zone> --add-interface=<interface>
+firewall-cmd --permanent --zone=<zone> --add-interface=<interface>
+}}}
+
+Ejemplo:
+{{{
+firewall-cmd --zone=internal --add-interface=eth0
+firewall-cmd --permanent --zone=internal --add-interface=eth0
+}}}
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

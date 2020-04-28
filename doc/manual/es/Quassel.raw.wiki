@@ -1,0 +1,96 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Power|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Quassel (Cliente IRC) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Quassel/Quassel-icon_en_V02.png|icono de Quassel}} ||
+
+'''Disponible desde''': versión 0.8
+
+''Quassel'' es una aplicación IRC separada en 2 partes: un "núcleo" y un "cliente". Esto permite que el núcleo permanezca conectado a los servidores IRC recibiendo mensajes aunque el cliente esté desconectado. Ejecutando el servicio nucleo de Quassel !FreedomBox puede mantenerte siempre en línea. Se pueden usar uno o varios clentes Quassel para conectarse intermitentemente desde escritorios o dispositivos móviles.
+
+
+=== ¿Para qué ejecutar Quassel? ===
+
+Muchos debates acerca de !FreedomBox tienen lugar en el canal IRC `irc://irc.debian.org/freedombox`. Si tu !FreedomBox ejecuta ''Quassel'' recolectará todos ellos mientras estás ausente, capturando las respuestas a tus preguntas. Recuerda que el proyecto !FreedomBox es mundial y participa gente de casi todos los husos horarios. Usarás tu ''cliente'' para conectar al núcleo de ''Quassel'' y leer y/o responder cuando tengas tiempo y disponibilidad.
+
+=== ¿Cómo activar Quassel? ===
+ * En el interfaz web de !FreedomBox
+  1. selecciona ''Aplicaciones''
+  1. ve a ''Cliente IRC (Quassel)'' e 
+  1. instala la aplicación y asegúrate de que está habilitada
+  {{attachment:Quassel_Installation_es_v01.png|Quassel Installation|width=800}}
+  1. tu núcleo de Quassel se está ejecutando
+
+=== Redirección de Puertos ===
+
+Si tu !FreedomBox está detras de un router necesitarás configurar la redirección de puertos en tu router. Redirije los siguientes puertos de Quassel:
+ * TCP 4242
+
+ * Ejemplo de configuración en el router:
+  {{attachment:Quassel_PortForwarding_es_v01.png}}
+
+=== Clientes ===
+
+Hay disponibles clientes para [[http://quassel-irc.org/downloads|escritorio]] y [[https://quasseldroid.info/|dispositivos móviles]] para conectar a Quassel.
+
+==== Escritorio ====
+
+En un sistema Debian puedes, p. ej. usar [[https://packages.debian.org/search?keywords=quassel-client|quassel-client]]. Los siguientes pasos describen cómo conectar el Cliente Quassel con el Núcleo de Quassel de tu !FreedomBox. La primera vez que te conectes el Núcleo de Quassel se inicializará también.
+
+ 1. Abre el Cliente Quassel. Te guiará paso a paso para `Conectarse al núcleo`.
+   {{attachment:quassel-client-1-connect-to-core_es_v01.png|Connect to Core|width=394}}
+ 1. Haz clic en el botón `Añadir` para abrir el diálogo `Añadir cuenta de núcleo`.
+   {{attachment:quassel-client-2-add-core-account_es_v01.png|Add Core Account|width=382}}
+ 1. Rellena cualquier cosa en el campo `Nombre de la cuenta`. Introduce el ''hostname DNS'' de tu !FreedomBox en el campo `Servidor`. El campo `Puerto` debe tener el valor `4242`. Pon el usuario y la contraseña de la cuenta que quieres crear para conectar con el Núcleo de Quassel en los campos `Usuario` y `Contraseña`. Si no quieres que se te pida la contraseña cada vez que arranques el cliente de Quassel marca la opción `Recordar`.
+ 1. Tras pulsar `OK` en el diálogo `Añadir cuenta de núcleo` deberías ver la cuenta en el diálogo `Conectarse al núcleo`.
+   {{attachment:quassel-client-3-connect-to-core_es_v01.png|Connect to Core|width=394}}
+ 1. Selecciona la cuenta del núcleo recién creada y dale a `OK` para conectar con él.
+ 1. Si es la primera vez que te conectas a este núcleo verás un aviso de `Certificado de seguridad no confiable` y necesitarás aceptar el certificado del servidor.
+   {{attachment:quassel-client-4-untrusted-security-certficate_es_v01.png|Untrusted Security Certificate|width=504}}
+ 1. Selecciona `Continuar`. Se te preguntará si quieres aceptar el certificado permanentemente. Selecciona `Para siempre`.
+   {{attachment:quassel-client-5-untrusted-security-certificate_es_v01.png|Untrusted Security Certificate|width=434}}
+ 1. Si nadie se ha conectado nunca antes a este Núcleo Quassel antes verás un diálogo por pasos `Asistente de configuración del núcleo`. Selecciona `Siguiente`.
+   {{attachment:quassel-client-6-core-configuration-wizard_es_v01.png|Core Configuration Wizard|width=504}}
+ 1. En la página `Crear usuario administrador` introduce el usuario y la contraseña que has usado antes para crear la conexión al núcleo. Selecciona `Recordar la contraseña` para que recuerde la contraseña para futuras sesiones. Haz clic en `Siguiente`.
+   {{attachment:quassel-client-7-create-admin-user_es_v01.png|Create Admin User Page|width=504}}
+ 1. En la página `Seleccionar un motor de almacenamiento` selecciona `SQLite` y haz clic en `Enviar`.
+   {{attachment:quassel-client-8-select-storage-backend_es_v01.png|Select Storage Backend|width=504}}
+ 1. La configuración del núcleo está completa y verás un asistente `Quassel IRC` para configurar tus conexiones IRC. Haz clic en `Siguiente`.
+   {{attachment:quassel-client-9-welcome-wizard_es_v01.png|Welcome Wizard|width=504}}
+ 1. A continuación en la página de `Configurar identidad` pon un nombre y múltiples pseudónimos. Te presentarás con estos a otros usuarios de IRC. No es necesario dar tu nombre real. Los pseudónimos múltipes son útiles como suplentes cuando el primero no se pueda usar por cualquier motivo. Tras aportar la información haz clic en `Siguiente`.
+   {{attachment:quassel-client-10-setup-identity_es_v01.png|Setup Identity|width=504}}
+ 1. A continuación en la página de `Configurar conexión de red` pon el nombre de red que quieras y una lista de servidores a los que se deba conectar el Núcleo de Quassel para unirte a esa red IRC (por ejemplo `irc.debian.org:6667`).
+   {{attachment:quassel-client-11-setup-network-connection_es_v02.png|Setup Network Connection|width=504}}
+ 1. Selecciona un servidor de la lista y dale a `Editar`. En el diálogo `Información del servidor` pon el puerto `6697` (consulta la lista real de servidores y sus puertos seguros en la documentación de tu red) y haz clic en `Usar conexión cifrada`. Clic en `OK`. Esto es para asegurar que la comunicación entre tu !FreedomBox y el servidor de la red IRC va cifrada.
+   {{attachment:quassel-client-12-server-info_es_v01.png|Server Info|width=390}}
+   {{attachment:quassel-client-13-server-info-ssl_es_v01.png|Server Info SSL|width=390}}
+ 1. Ya de vuelta en el diálogo `Configuración de Conexión de Red` proporciona una lista de canales IRC (como #freedombox) a los que unirte al conectarte a la red. Dale a `Grabar y Conectar`.
+   {{attachment:quassel-client-14-setup-network-connection_es_v01.png|Setup Network Connection|width=504}}
+ 1. Deberías conectar con la red y ver la lista de canales a los que te has unido en el panel `Todas las conversaciones` de la izquierda de la ventana principal del Cliente Quassel.
+   {{attachment:quassel-client-15-quassel-main_es_v01.png|Quassel Main Window|width=644}}
+ 1. Selecciona un canal y empieza a recibir mensajes de otros participantes del canal y a enviar los tuyos.
+
+==== Android ====
+
+Para dispositivos Android puedes usar p.ej. ''Quasseldroid'' obtenido desde [[https://f-droid.org/es/packages/com.iskrembilen.quasseldroid/|F-Droid]]
+
+ * introduce el núcleo, usuario, etc.
+   {{attachment:Quasseldroid.png}}
+
+
+Por cierto el verbo alemán ''quasseln'' significa ''hablar mucho'', ''rajar''.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

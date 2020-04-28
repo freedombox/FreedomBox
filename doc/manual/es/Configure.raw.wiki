@@ -1,0 +1,39 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Configure|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Configurar ==
+
+Configurar tiene algunas opciones generales de configuración:
+
+=== Hostname ===
+    . ''Hostname'' es el nombre local por el que otros dispositivos pueden alcanzar tu !FreedomBox desde la red local. El ''hostname'' por defecto es ''freedombox''.
+
+=== Nombre de Dominio ===
+    . El Nombre de Dominio es el nombre global por el que otros dispositivos pueden alcanzar tu !FreedomBox desde la Internet. El valor que se asigne aquí es el que usarán [[FreedomBox/Manual/ejabberd|Chat Server (XMPP)]], [[FreedomBox/Manual/MatrixSynapse|Matrix Synapse]], [[FreedomBox/Manual/LetsEncrypt|Certificates (Let's Encrypt)]], y [[FreedomBox/Manual/Monkeysphere|Monkeysphere]].
+
+=== Página Principal (home) del Servidor Web ===
+    . Esta es una opción avanzada que te permite establecer como ''home'' algo diferente al servicio !FreedomBox para que se sirva a quien acceda con el navegador al nombre de dominio de !FreedomBox. Por ejemplo, si el nombre de dominio de tu !FreedomBox es https://myfreedombox.rocks y estableces a !MediaWiki como ''home'', al visitar https://mifreedombox.mola te llevará a https://myfreedombox.rocks/mediawiki/ en vez de a https://mifreedombox.mola/plinth/. Puedes asignar la ''home'' a cualquier aplicación web, los wikis y blogs de Ikiwiki o la página index.html por defecto de Apache.
+
+{{{#!wiki caution
+
+Una vez asignada como ''home'' otra aplicación, ya solo puedes navegar al servicio !FreedomBox tecleando en el navegador https://mifreedombox.mola/plinth/. <<BR>>
+''/freedombox'' también se puede usar como alias para ''/plinth''
+}}}
+
+
+    . ''Consejo:'' Guarda la URL del servicio !FreedomBox antes de asignar la ''home'' a otra app.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

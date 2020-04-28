@@ -1,0 +1,61 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Searx|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Searx (Web Search) ==
+||<tablestyle="float: right;"> {{attachment:Searx-icon_en_V01.png|Searx icon}} ||
+
+'''Available since''':  version 0.24.0
+
+=== About Searx ===
+
+Searx is a [[https://en.wikipedia.org/wiki/Metasearch_engine|metasearch engine]]. A metasearch engine aggregates the results from various search engines and presents them in a unified interface.
+
+Read more about Searx on their [[https://asciimoo.github.io/searx/|official website]].
+
+=== Screenshot ===
+{{attachment:searx-screenshot.png|Searx Screenshot|width=800}}
+
+=== Screencast ===
+[[attachment:Searx.webm|Searx installation and first steps|&do=get]] (14 MB)
+
+=== Why use Searx? ===
+
+==== Personalization and Filter Bubbles ====
+
+Search engines have the ability to profile users and serve results most relevant to them, putting people into [[https://en.wikipedia.org/wiki/Filter_bubble|filter bubbles]], thus distorting people's view of the world. Search engines have a financial incentive to serve interesting advertisements to their users, increasing their chances of clicking on the advertisements.
+
+A metasearch engine is a possible solution to this problem, as it aggregates results from multiple search engines thus bypassing personalization attempts by search engines. 
+
+Searx avoids storing cookies from search engines as a means of preventing tracking and profiling by search engines.
+
+==== Advertisement filtering ====
+
+Searx filters out advertisements from the search results before serving the results, thus increasing relevance the of your search results and saving you from distractions.
+
+==== Privacy ====
+
+Searx uses HTTP POST instead of GET by default to send your search queries to the [[https://en.wikipedia.org/wiki/Web_search_engine|search engines]], so that anyone snooping your traffic wouldn't be able to read your queries. The search queries wouldn't stored in browser history either. 
+
+'''Note:''' Searx used from Chrome browser's omnibar would make GET requests instead of POST.
+
+=== Searx on FreedomBox ===
+
+
+ * Searx on !FreedomBox uses Single Sign On. This means that you should be logged in into your !FreedomBox in the browser that you're using Searx. 
+ * SearX is easily accessible via Tor.
+ * Searx can be added as a search engine to the Firefox browser's search bar. See [[https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox|Firefox Help]] on this topic. Once Searx is added, you can also set it as your default search engine.
+ * Searx also offers search results in csv, json and rss formats, which can be used with scripts to automate some tasks.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

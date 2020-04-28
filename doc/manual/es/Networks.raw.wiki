@@ -1,0 +1,235 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Networks|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Redes ==
+
+Esta sección describe como se configura por defecto la red en !FreedomBox y como se puede adaptar.  Ver también la sección [[es/FreedomBox/Manual/Firewall|Cortafuegos]] para más información acerca de cómo funciona éste.
+
+=== Configuración por defecto ===
+
+En una imágen fresca de !FreedomBox la red no está configurada. La configuración se realiza cuando la imágen se graba en una tarjeta SD y el
+dispositivo arranca.  Durante el primer arranque el paquete !FreedomBox `setup` detecta los interfaces (tarjetas) de red e intenta
+configurarlos automáticamente de modo que la !FreedomBox quede disponible para seguir configurandola a través del interfaz web desde otra
+máquina, sin necesidad de conectar un monitor a la !FreedomBox.  La configuración automática también procura dejar la !FreedomBox operativa
+para sus escenarios de uso más importantes.
+
+Trata 2 escenarios:
+ * cuando hay '''1 único''' interfaz (tarjeta) ''ethernet''
+ * cuando hay '''múltiples''' interfaces (tarjetas) ''ethernet''
+
+==== Interfaz (tarjeta) ethernet único ====
+
+Cuando el dispositivo hardware solo tiene 1 único interfaz (tarjeta) ''ethernet'' hay poco margen para que haga de router.
+En tal caso se asume que el dispositivo es solo una máquina más en la red.  En consecuencia el único interfaz (tarjeta) disponible
+se configura para ser un interfaz ''interno'' en modo de ''configuración automática''.  Esto significa que se conecta a Internet
+empleando la configuración provista por un router de la red y que hace todos sus servicios (internos y externos) accesibles a todos
+los clientes que haya en esta red.
+
+{{attachment:network_single.png}}
+
+==== Múltiples interfaces (tarjetas) ethernet ====
+
+Cuando el dispositivo hardware tiene múltiples interfaces (tarjetas) ethernet el dispositivo puede actuar como router.  Entonces
+los interfaces se configuran para ejecutar esta función.
+
+ * El '''primer''' interfaz (tarjeta) de red se configura para ser una WAN o interfaz ''externo'' en modo de configuración ''automático''. Esto significa que se conecta a Internet empleando la configuración provista por el proveedor de servicio de internet (ISP). En este interfaz solo se expondrán los servicios concebidos para consumo desde Internet (servicios externos).  Tu conexión a Internet tiene que llegar por el puerto de este interfaz (tarjeta) ''ethernet''.  Si quieres que tu router de siempre siga administrando tu conexión por tí conecta un cable desde tu router al puerto de este interfaz.
+
+ * Los '''demás''' interfaces de red se configuran como clientes de router, como LAN o interfaces ''internos'' en modo de configuración ''compartido''.  Esto significa que todos sus servicios (internos y externos) se exponen a todos los clientes que entren desde esta red. ''Compartido'' implica además que los clientes podrán recibir detalles para conexión automática a la red.  En concreto, la configuración DHCP y los servidores DNS se exponen en este interfaz.  La conexión a Internet disponible para el dispositivo a través del primer interfaz se compartirá con los clientes que usen este interfaz.  Todo esto implica que puedes conectar tus ordenadores a esta interfaz (tarjeta) de red y se configurarán automáticamente pudiendo acceder a Internet a través de tu !FreedomBox.
+
+Aunque el proceso de asignación es determinista actualmente no está muy claro qué interfaz será WAN (los demás serán LAN).
+Así que averiguar cual es cual conllevará un poco de prueba y error. En el futuro esto estará bien documentado para cada
+dispositivo.
+
+
+==== Configuración de la Wi-Fi ====
+
+Todos los interfaces Wi-Fi se configuran para ser LAN o interfaces ''internos'' en modo de configuración ''compartido''.  También se configuran para ser puntos de acceso Wi-Fi con los siguientes datos:
+
+ * El nombre de cada punto de acceso será `FreedomBox` más el nombre del interfaz (para tratar el caso de que haya varios).
+ * La contraseña para conectar a los interfaces será `freedombox123`.
+
+=== Compartición de la Conexión a Internet  ===
+
+Aunque la principal obligación de !FreedomBox es proporcionar servicios descentralizados también puede ejercer como router casero.  Por tanto en la mayoría de los casos !FreedomBox se conecta a Internet y proporciona a otras máquinas de la red la posibilidad de usar esa conexión a Internet.  !FreedomBox puede hacer esto de 2 formas: usando un modo de conexión ''compartido'' o empleando una conexión ''interna''.
+
+Cuando se configura un interfaz en modo ''compartido'' puedes conectarle tu máquina directamente, sea por cable desde este interfaz a tu máquina o conectando a través del punto de acceso Wi-Fi.  Este caso es el más facil de usar porque !FreedomBox automáticamente proporciona a tu máquina la configuración de red necesaria.  Tu máquina conectará automáticamente a la red proporcionada por !FreedomBox y podrá conectar a Internet ya que !FreedomBox puede a su vez conectarse a Internet.
+
+En ocasiones la configuración anterior podría no ser posible porque el dispositivo ''hardware'' tenga un único interfaz de red o por otros motivos.  Incluso en este caso tu máquina puede todavía conectarse a Internet a través de la !FreedomBox.  Para que esto funcione asegúrate de que el interfaz de red al que se está conectando tu máquina esté en modo ''interno''.  Entonces conecta tu máquina a la red en la que está la  !FreedomBox.  Después de esto configura la red de tu máquina indicando como puerta de enlace la dirección IP de la !FreedomBox.  !FreedomBox aceptará entonces el tráfico de red de tu maquina y lo enviará a Internet.  Esto funciona porque los interfaces de red en modo ''interno'' están configurados para ''enmascarar'' hacia Internet los paquetes que lleguen desde máquinas locales, así como para recibir paquetes desde Internet y reenviarlos hacia las máquinas locales.
+
+=== Adaptaciones ===
+
+La configuración por defecto anterior podría no servir para tu caso.  Puedes adecuar la configuración para ajustarla a tus necesidades desde el área ''Redes'' de la sección ''Configuración'' del interfaz web de tu !FreedomBox.
+
+==== Conexiones PPPoE ====
+
+Si tu ISP no proporciona configuración de red automática via DHCP y te obliga a conectar por PPPoE, para configurarlo elimina toda conexión de red existente en el interfaz y añade una de tipo PPPoE.  Aquí, si procede, indica el usuario y la contraseña que te ha dado tu ISP y activa la conexión.
+
+==== Conectar a Internet mediante Wi-Fi ====
+
+Por defecto durante el primer arranque los dispositivos Wi-Fi se configurarán como puntos de acceso.  Sin embargo se pueden reconfigurar como dispositivos Wi-Fi normales para conectar a la red local o a un router WiFi existente.
+Para hacer esto haz clic en la conexión Wi-Fi para editarla.  Cambia el modo a ''Infraestructura'' en vez de ''Punto de Acceso'' y ''Método de direccionamiento IPv4'' a ''Automático (DHCP)'' en vez de ''Modo compartido''.
+''SSID proporcionado'' significa el nombre de la red Wi-Fi a la que quieres conectar. Rellena la ''frase clave''.
+
+===== Problemas con la Funcionalidad de Privacidad =====
+
+El gestor de red que emplea !FreedomBox para conectar con las redes Wi-Fi tienen una funcionalidad de privacidad que usa una identidad para buscar redes diferente de la que emplea para conectar con el punto de acceso Wi-Fi. Desafortunadamente esto causa [[https://askubuntu.com/questions/910185/rosewill-rnx-n600ube-connectivity-issue-on-ubuntu-17-04|problemas]] con algunos routers que rechazan estas conexiones. Tu conexión no se activará con éxito y se desconectará. Si tienes control sobre el comportamiento del router puedes desactivar esta funcionalidad. Si no la solución es desactivar la funcionalidad de privacidad:
+
+Entra a la !FreedomBox por [[es/FreedomBox/Manual/SecureShell|SSH]] o [[es/FreedomBox/Manual/Cockpit|Cockpit]].
+
+Edita el fichero `/etc/NetworkManager/NetworkManager.conf`:
+{{{
+$ sudo nano /etc/NetworkManager/NetworkManager.conf
+}}}
+
+Añade la linea `wifi.scan-rand-mac-address=no` en la sección `[device]`:
+{{{
+[device]
+wifi.scan-rand-mac-address=no
+}}}
+
+Luego reinicia la !FreedomBox.
+
+==== Añadir un nuevo dispositivo de red ====
+
+Al añadir un nuevo dispositivo de red `network manager` lo configurará automáticamente.  En la mayoría de los casos esto no funcionará.
+Borra la configuración creada automáticamente en el interfaz y crea una conexión de red nueva.  Selecciona tu interfaz recién creado en la página "añadir conexión".
+
+ * Configura la zona del cortafuegos como corresponda.
+ * Puedes configurar los interfaces para conectar a la red o proporcionar configuración de red a cualquier máquina que se le conecte.
+ * De modo similar, si es un interfaz Wi-Fi puedes configurarlo para ser un punto de acceso Wi-FI o para conectarse a puntos de acceso existentes en la red.
+
+==== Configurar una red Mesh ====
+
+!FreedomBox tiene un soporte rudimentario para participar en redes ''mesh'' basadas en ''BATMAN-Adv''.  Es posible unirse a una red existe en tu zona o crear una red ''mesh'' nueva y compartir tu conexión a Internet con el resto de nodos que se unan a tu red.  Tanto para unirte a una red ''mesh'' como para crear otra, actualmente hay que crear 2 conexiones y activarlas manualmente.
+
+===== Unirse a una red Mesh =====
+
+Para unirse a una red ''mesh'' existente en tu zona primero consulta a sus organizadores y obtén información acerca de la red.
+
+ 1. Crea una conexión nueva y selecciona el tipo de conexión ''Wi-Fi''.  En el siguiente diálogo rellena los valores como se indica:
+ ||'''Nombre del campo'''||'''Valor de ejemplo'''||'''Explicación'''||
+ || ''Nombre de la Conexión'' || Mesh Join - BATMAN || El nombre tiene que acabar en `BATMAN` (con mayúsculas). ||
+ || ''Interfaz físico'' || wlan0 || El dispositivo Wi-Fi que quieres usar para conectar a la red ''mesh''. ||
+ || ''Zona del cortafuegos'' || Externa || Ya que no quieres que los participantes en la red ''mesh'' usen dispositivos internos de tu !FreedomBox. ||
+ || ''SSID'' || ch1.freifunk.net || Tal como te lo hayan dado los operadores de la red ''mesh''.  Esta red debería mostrarse en ''Redes Wi-Fi accesibles''. ||
+ || ''Modo'' || Ad-hoc || Porque esta red es una red de pares (''peer-to-peer''). ||
+ || ''Banda de Frecuencia'' || 2.4Ghz || Tal como te lo hayan dado los operadores de la red ''mesh''. ||
+ || ''Canal'' || 1 || Tal como te lo hayan dado los operadores de la red ''mesh''. ||
+ || ''BSSID'' || 12:CA:FF:EE:BA:BE || Tal como te lo hayan dado los operadores de la red ''mesh''. ||
+ || ''Autenticación'' || Abierta || Déjala abierta salvo que sepas que tu red ''mesh'' necesite otro valor. ||
+ || ''Contraseña'' || || Déjala en blanco salvo que sepas el valor que necesite tu red ''mesh''. ||
+ || ''Método de direccionamiento IPv4'' || Deshabilitado || Todavía no queremos pedir una configuración IP. ||
+
+ Graba la conexión y únete a la red ''mesh'' activándola.
+
+ 1. Crea una segunda conexión nueva y selecciona el tipo ''Genérica''.  En el siguiente diálogo rellena los valores como se indica:
+ ||'''Nombre del campo'''||'''Valor de ejemplo'''||'''Explicación'''||
+ || ''Nombre de la Conexión'' || Mesh Connect || Cualquier nombre para identificar ésta conexión. ||
+ || ''Interfaz físico'' || bat0 || Este interfaz solo aparecerá tras activar con éxito la conexión del paso anterior. ||
+ || ''Zona del cortafuegos'' || Externa || Ya que no quieres que los participantes en la red ''mesh'' usen dispositivos internos de tu !FreedomBox. ||
+ || ''Método de direccionamiento IPv4'' || Auto || Generalmente las redes ''mesh'' tienen un servidor DHCP en algún sitio que le proporciona una configuración IP a tu máquina. Si no, consulta al operador y configura la dirección IP como te diga por el método ''manual''. ||
+
+ Graba la conexión.  Configura tu maquina para participar en la red activando esta conexión.  Actualmente hay que activarla manualmente cada vez que quieras unirte a la red.  En el futuro !FreedomBox lo hará automáticamente.
+
+Ahora debieras poder llegar a otros nodos de la red.  También podrás conectar a Internet a través de la red ''mesh'' si los operadores han instalado algúna puerta de enlace.
+
+===== Crear una red Mesh =====
+
+Para crear tu propia red ''mesh'' y compartir tu conexión a Internet con el resto de los nodos de la red:
+
+ 1. Sigue las instrucciones del paso 1 de ''Unirse a una red Mesh'' empleando los valores válidos para tu red en ''SSID'' (un nombre para tu red Mesh), ''Banda de Frecuencia'' (generalmente 2.4Ghz), ''Canal'' (entre 1 y 11 para la banda de 2.4Ghz) y ''BSSID'' (una secuencia hexadecimal como 12:CA:DE:AD:BE:EF).  Crea esta conexión y actívala.
+ 2. Sigue las instrucciones del paso  2 de ''Unirse a una red Mesh'' seleccionando ''Compartido'' para ''Método de direccionamiento IPv4d''.  Esto proporcionará automáticamente una configuración IP a otros nodos de la red y compartirá la conexión a Internet de tu maquina (ya sea mediante un segudo interfaz Wi-Fi, Ethernet, etc.) con el otros nodos de la red ''mesh''.
+
+Corre la voz entre tus vecinos acerca de tu red ''mesh'' y pásales los parámetros que has empleado al crearla.  Cuando otros nodos se conecten a esta red ''mesh'' tendrán que seguir las instrucciones del paso 1 de ''Unirse a una red Mesh'' empleando en ''SSID'', ''Banda de Frecuencia'' y ''Canal'' los valores que has elegido para tu red ''mesh'' al crearla.
+
+=== Operación avanzada de Red ===
+
+Cockpit proporciona muchas funcionalidades de red más avanzadas que las de !FreedomBox. Ambos, !FreedomBox y Cockpit, operan sobre Network Manager y son por ello compatibles entre sí. Entre las funciones de Cockpit se incluyen:
+
+ * Establer de la unidad máxima de transmisión (MTU) para una conexión de red.
+ * Cambiar de la dirección hardware (MAC) de un interfaz de red.
+ * Añadir más servidores DNS y configurar el enrutado de una conexión de red.
+ * Crear dispositivos coordinados para interfaces de red de alta disponibilidad.
+ * Crear dispositivos en puente para agregar redes diferentes en un mismo interfaz de red.
+ * Administrar VLAN para crear particiones virtuales en la red física.
+
+{{attachment:networks-cockpit.png}}
+
+=== Operación manual de Red ===
+
+!FreedomBox configura redes automáticamente por defecto y proporciona un interfaz simplificado para personalizar la configuración a necesidades específicas.  En la mayoría de los casos la operación manual no es necesaria.  Los siguientes pasos describen cómo operar la configuración de red a mano en caso de que el interfaz de !FreedomBox le resulte insuficiente a un usuario para realizar una tarea o para diagnosticar un problema que  !FreedomBox no identifique.
+
+En el interfaz de línea de comandos:
+
+Para acceder a un interfaz de configuración de conexiones de red basado en texto:
+
+{{{
+nmtui
+}}}
+
+Para ver la lista de dispositivos de red disponibles:
+
+{{{
+nmcli device
+}}}
+
+Para ver la lista de conexiones configuradas:
+
+{{{
+nmcli connection
+}}}
+
+Para ver el estado actual de una conexión:
+
+{{{
+nmcli connection show '<nombre_de_la_conexión>'
+}}}
+
+
+Para ver la zona asignada actualmente en el cortafuegos a un interfaz de red:
+
+{{{
+nmcli connection show '<nombre_de_la_conexión>' | grep zone
+}}}
+
+o
+
+{{{
+firewall-cmd --zone=internal --list-all
+firewall-cmd --zone=external --list-all
+}}}
+
+Para crear una conexión nueva:
+
+{{{
+nmcli con add con-name "<nombre_de_la_conexión>" ifname "<interfaz>" type ethernet
+nmcli con modify "<nombre_de_la_conexión>" connection.autoconnect TRUE
+nmcli con modify "<nombre_de_la_conexión>" connection.zone internal
+}}}
+
+Para cambiarle la zona a una conexión en el cortafuegos:
+
+{{{
+nmcli con modify "<nombre_de_la_conexión>" connection.zone "<internal|external>"
+}}}
+
+Para más información acerca del uso del comando `nmcli` mira su página man.
+Para obtener una lista completa de configuraciones y tipos de conexión que acepta `Network Manager` mira:
+
+https://developer.gnome.org/NetworkManager/stable/ref-settings.html
+
+Para ver el estado actual del cortafuegos y operarlo manualmente lee la sección [[es/FreedomBox/Manual/Firewall|Cortafuegos]].
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

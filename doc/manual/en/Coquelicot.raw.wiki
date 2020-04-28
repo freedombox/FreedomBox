@@ -1,0 +1,54 @@
+== File Sharing (Coquelicot) ==
+
+=== About Coquelicot ===
+
+Coquelicot is a "one-click" file sharing web application with a focus on protecting users' privacy. The basic principle is simple: users can upload a file to the server, in return they get a unique URL which can be shared with others in order to download the file. A download password can be defined.
+
+
+After the upload you get a unique link that can be shared to your partners in order to 
+
+Read more about Coquelicot at [[https://coquelicot.potager.org/README|the Coquelicot README]]
+
+'''Available since:'''  version 0.24.0
+
+=== When to use Coquelicot ===
+
+Coquelicot is best used to quickly share a single file. 
+If you want to share a folder, 
+
+ 1. for a single use, compress the folder and share it over Coquelicot
+ 2. which must be kept synchronized between computers, use [[../Syncthing|Syncthing]] instead
+
+
+Coquelicot can only provide a reasonable degree of privacy. If anonymity is required, you should consider using the desktop application [[https://onionshare.org/|Onionshare]] instead.
+
+Since Coquelicot fully uploads the file to the server, your !FreedomBox will incur both upload and download bandwidth costs. For very large files, consider sharing them using !BitTorrent by creating a private torrent file. If anonymity is required, use Onionshare. It is P2P and doesn't require a server. 
+
+=== Coquelicot on FreedomBox ===
+
+With Coquelicot installed, you can upload files to your !FreedomBox server and privately share them. 
+
+Post installation, the Coquelicot page offers two settings.
+
+ 1. '''Upload Password''': Coquelicot on !FreedomBox is currently configured to use simple password authentication for ease of use. Remember that it's one global password for this Coquelicot instance and not your user password for !FreedomBox. You need not remember this password. You can set a new one from the Plinth interface anytime. 
+ 2. '''Maximum File Size''': You can alter the maximum size of the file that can be transferred through Coquelicot using this setting. The size is in [[https://en.wikipedia.org/wiki/Mebibyte|Mebibytes]]. The maximum file size is only limited by the disk size of your !FreedomBox. 
+
+=== Privacy ===
+Someone monitoring your network traffic might find out that some file is being transferred through your !FreedomBox and also possibly its size, but will not know the file name. Coquelicot encrypts files on the server and also fills the file contents with 0s when deleting them. This eliminates the risk of file contents being revealed in the event of your !FreedomBox being confiscated or stolen. The real risk to mitigate here is a third-party also downloading your file along with the intended recipient.
+
+==== Sharing over instant messengers ====
+Some instant messengers which have previews for websites might download your file in order to show a preview in the conversation. If you set the option of one-time download  on a file, you might notice that the one download will be used up by the instant messenger. If sharing over such messengers, please use a download password in combination with a one-time download option. 
+
+==== Sharing download links privately ====
+
+It is recommended to share your file download links and download passwords over encrypted channels. You can simply avoid all the above problems with instant messenger previews by using instant messengers that support encrypted conversations like Riot with [[../MatrixSynapse| Matrix Synapse]] or [[../ejabberd|XMPP]] (ejabberd server on !FreedomBox) with clients that support end-to-end encryption. Send the download link and the download password in two separate messages (helps if your messenger supports perfect forward secrecy like XMPP with OTR). You can also share your links over PGP-encrypted email using [[https://securityinabox.org/en/guide/thunderbird/linux/|Thunderbird]]. 
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

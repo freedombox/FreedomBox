@@ -1,0 +1,125 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/SecureShell|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Shell Segura ==
+
+=== ¿Qué es Shell Segura? ===
+
+!FreedomBox ejecuta el servidor `openssh-server` por defecto permitiendo así accesos remotos desde todos los interfaces.  Si tu dispositivo hardware está conectado a un monitor y un teclado, también puedes ingresar directamente. Para la operación habitual de !FreedomBox no necesitas usar la shell. No obstante, algunas tareas o identificación de algún problema podrían requerirlo.
+
+=== Configurando una Cuenta de Usuario ===
+
+==== Primer ingreso a FreedomBox: Cuenta de Admin ====
+
+Al crear una cuenta en !FreedomBox por primera vez, el usuario tendrá automaticamente privilegios de administrador. Los usuarios `Admin` pueden ingresar mediante ssh (abajo se explica cómo) y escalar sus privilegios a superusuario mediante ``sudo``.
+
+==== Cuenta de Usuario por Defecto ====
+
+ * Nota: Si puedes acceder al interfaz web de !FreedomBox es que no necesitas hacer esto. Puedes usar la cuenta de usuario del interfaz web de !FreedomBox para conectar por SSH.
+
+Las imagenes precompiladas !FreedomBox tienen una cuenta de usuario llamada `fbx` pero no tiene contraseña establecida, así que no se puede ingresar con esta cuenta.
+
+Hay un script incluído en el programa `freedom-maker` que permite establecer la contraseña de esta cuenta si fuera necesario:
+
+ 1. Descomprime la imagen.
+
+ 1. Obtén una copia de `freedom-maker` en https://salsa.debian.org/freedombox-team/freedom-maker/.
+
+ 1. Ejecuta {{{sudo ./bin/passwd-in-image <archivo_de_imagen> fbx}}}.
+
+ 1. Copia el archivo de la imagen a la tarjeta SD e inicia el dispositivo.
+
+El usuario "fbx" también tiene privilegios de superusuario mediante ``sudo``.
+
+=== Ingresando ===
+
+==== Local ====
+
+Para ingresar mediante SSH a tu !FreedomBox:
+
+{{{
+$ ssh fbx@freedombox
+}}}
+
+Reemplaza `fbx` por el usuario con el que quieres ingresar.  Hay que reemplazar `freedombox` por el hostname o dirección IP de tu dispositivo !FreedomBox como se indica en el proceso de [[es/FreedomBox/Manual/QuickStart|Inicio rápido]].
+
+`fbx` es el usuario de !FreedomBox con privilegios de superusuario por defecto.  Cualquier otro usuario creado con !FreedomBox que pertenezca al grupo `admin` podrá ingresar.  La cuenta `root` no tiene contraseña configurada y no podrá ingresar.  A todos los demás usuarios se les denegará el acceso.
+
+`fbx` y los otros usuarios del grupo `admin` podrán ingresar directamente por el terminal.  A todos los demás usuarios se les denegará el acceso.
+
+Si fallas repetidamente intentando ingresar se te bloqueará el acceso por algún tiempo.  Esto se debe al paquete `libpam-abl` que !FreedomBox instala por defecto.  Para controlar este comportamiento consulta la documentación de `libpam-abl`.
+
+==== SSH via Tor ====
+
+Si tienes habilitados en !FreedomBox los servicios Tor Onion puedes acceder a tu !FreedomBox mediante ssh sobre Tor. Instala `netcat-openbsd`.
+
+{{{
+$ sudo apt-get install netcat-openbsd
+}}}
+
+Edita `~/.ssh/config` para habilitar conexiones sobre Tor.
+
+{{{
+$ nano ~/.ssh/config
+}}}
+
+Añade lo siguiente:
+
+{{{
+Host *.onion
+  user USUARIO
+  port 22
+  ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p
+}}}
+
+Reemplaza USUARIO por un usuario del grupo `admin` (ver arriba).
+
+En algunos casos podrías necesitar reemplazar 9050 por 9150.
+
+Ahora, para conectar a la !FreedomBox abre un terminal y teclea:
+
+{{{
+$ ssh USUARIO@DIRECCION.onion
+}}}
+
+Reemplaza USUARIO por un usuario del grupo `admin` y DIRECCION por la dirección del servicio Tor Onion para SSH de tu !FreedomBox.
+
+=== Escalar a Superusuario ===
+
+Si después de ingresar quieres volverte superusuario para realizar actividades administrativas:
+
+{{{
+$ sudo su
+}}}
+
+Habitúate a ingresar como `root` ''solo cuando sea estrictamente necesario''.  Si no ingresas como `root` no puedes romperlo todo accidentalmente.
+
+
+<<Anchor(changingpassword)>>
+=== Cambiar Contraseñas ===
+
+Para cambiar la contraseña de un usuario administrado en el interfaz web de !FreedomBox usa la página Cambiar clave de acceso.  El usuario por debecto `fbx` no se administra en el interfaz web de !FreedomBox y su contraseña no se puede cambiar desde él.
+
+Para cambiar la contraseña en el terminal ingresa a tu !FreedomBox con el usuario cuya contraseña quieres cambiar y ejecuta el siguiente comando:
+
+{{{
+$ passwd
+}}}
+
+Esto te preguntará tu contraseña actual antes de darte la oportunidad de establecer la nueva.
+
+
+## END_INCLUDE
+
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

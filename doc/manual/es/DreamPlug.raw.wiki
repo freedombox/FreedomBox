@@ -1,0 +1,69 @@
+== DreamPlug ==
+
+{{attachment:dreamplug.jpg|DreamPlug|width=640,height=425}}
+
+<<Include(FreedomBox/Hardware/Deprecated)>>
+
+[[https://www.globalscaletechnologies.com/t-dreamplugdetails.aspx|DreamPlug]] is the hardware for which !FreedomBox has been originally targeted.  !FreedomBox images are built and tested for it.  For using this device as !FreedomBox, a [[FreedomBox/Hardware/USBWiFi|USB WiFi device]] that does not require non-free firmware is recommended.
+
+You can find more support and discussion for !DreamPlug on the [[http://www.plugcomputer.org/plugforum/|official forum]].
+
+'''Recommendation:''' If you are using a board that uses SD cards, when you flash the FreedomBox image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space. 
+
+=== Download ===
+
+!FreedomBox SD card [[FreedomBox/Download|images]] for this hardware are available.  Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox SD card and boot into !FreedomBox.  See also instructions for using an [[FreedomBox/Hardware/DreamPlug/InternalMicroSD|internal micro-SD]] with !DreamPlug.
+
+An alternative to downloading these images is to [[InstallingDebianOn/DreamPlug|install Debian]] on !DreamPlug and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+=== Networking ===
+
+The network port towards the middle of the box, is configured by !FreedomBox to be an upstream Internet link. The remaining port is configured for a local computer to connect to.
+
+=== Firmware ===
+
+Note that the factory firmware configurations may vary between revisions of the hardware, and render some images incompatible.  See the !DreamPlug [[InstallingDebianOn/DreamPlug/U-bootUpgradeFromUSB|firmware]] page for information on what images are compatible and how to update your !DreamPlug firmware.
+
+=== Build Image ===
+
+!FreedomBox images for this hardware can be built using [[FreedomBox/Maker|Freedom Maker]].
+
+=== Testing ===
+
+Instructions on how to [[FreedomBox/Hardware/DreamPlug/Testing|test]] this hardware are available.
+
+=== Availability ===
+
+ * Price: 159 USD
+ * [[http://www.globalscaletechnologies.com/p-54-dreamplug-devkit.aspx|DreamPlug manufacturer]]
+ * Reseller [[http://www.spinifex.com.au/shop/|Spinifex]] in Australia
+
+=== Hardware ===
+
+ * Open Hardware: No
+ * CPU: Marvell Kirkwood 88F6281 @ 1.2GHz
+ * RAM: 512MB 16bit DDR2-800 MHz
+ * Storage: 4 GB on board micro-SD
+ * Architecture: armel
+ * Ethernet: 2x 10/100/1000, RJ45
+ * !WiFi: [[https://origin-www.marvell.com/wireless/assets/8787.pdf|SD8787]], 802.11 b/g/n
+ * SATA: eSATA 2.0 port
+
+=== Non-Free Status ===
+
+ * Non-free blobs required: built-in !WiFi
+ * !WiFi: no free !WiFi drivers + firmware available 
+ * Works with stock Debian kernel: yes
+
+=== Known Issues ===
+
+ * !WiFi does not work with free software. A separate [[FreedomBox/Hardware/USBWiFi|USB WiFi device]] is recommended.
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
+
+!DreamPlug image is licensed under Creative Commons Attribution 2.5 Generic License by [[https://commons.wikimedia.org/wiki/File:Globalscale_DreamPlug_n01.jpg|Marie-Lan Nguyen]].

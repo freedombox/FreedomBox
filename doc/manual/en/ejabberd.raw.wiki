@@ -1,0 +1,63 @@
+## page was renamed from FreedomBox/Manual/XMPP
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/ejabberd|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Ejabberd (Chat Server) ==
+||<tablestyle="float: right;"> {{attachment:ejabberd-icon_en_V01.png|ejabberd icon}} ||
+
+'''Available since''': version 0.3
+
+=== What is XMPP? ===
+
+XMPP is a federated server-client protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server.
+
+XMPP can also be used for voice and video calls, if supported by the clients.
+
+Currently !FreedomBox offers both, a server (ejabberd) and a web client ([[FreedomBox/Manual/JSXC|JSXC]]) from its web interface.
+
+=== Privacy ===
+With XMPP, there are two ways that conversations can be secured:
+ 1. TLS: This secures the connection between the client and server, or between two servers. This should be supported by all clients and is highly recommended.
+ 1. End-to-end: This secures the messages sent from one client to another, so that even the server cannot see the contents. The latest and most convenient protocol is called OMEMO, but it is only supported by a few clients. There is another protocol called OTR that may be supported by some clients that lack OMEMO support. Both clients must support the same protocol for it to work.
+
+=== Setting the Domain Name ===
+
+For XMPP to work, your !FreedomBox needs to have a Domain Name that can be accessed over the network.
+
+If you only need the local network (LAN) users to chat with each other you can invent your domain name, but if you want users from the internet to join your rooms you need a public domain name. You can read more about obtaining a Domain Name in the [[../DynamicDNS|Dynamic DNS section of this manual]].
+
+Once you have a Domain Name, you can tell your !FreedomBox to use it by setting the Domain Name in the System [[../Configure|Configuration]].
+
+'''Note''': After changing your Domain Name, the Chat Server (XMPP) page may show that the service is not running. After a minute or so, it should be up and running again.
+
+Please note that [[FreedomBox/Manual/PageKite|PageKite]] does not support the XMPP protocol at this time.
+
+=== Registering FreedomBox users to use XMPP ===
+
+Currently, all users created through !FreedomBox will be able to login to the XMPP server. You can add new users through the System Users and Groups module. It does not matter which Groups are selected for the new user.
+
+=== Port Forwarding ===
+
+If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for XMPP:
+ * TCP 5222 (client-to-server)
+ * TCP 5269 (server-to-server)
+ * TCP 5280 (?)
+
+=== Compatible clients ===
+
+ * !FreedomBox provides a web client: [[FreedomBox/Manual/JSXC|JSXC]].
+ * [[https://xmpp.org/software/clients.html|XMPP clients]] are available for various desktop and mobile platforms.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -1,0 +1,37 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Roundcube|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Roundcube (Email Client) ==
+||<tablestyle="float: right;"> {{attachment:Roundcube-icon_en_V01.png|Roundcube icon}} ||
+
+'''Available since''': version 0.5
+
+=== What is Roundcube? ===
+
+Roundcube is a browser-based multilingual email client with an application-like user interface. Roundcube is using the Internet Message Access Protocol (IMAP) to access e-mail on a remote mail server. It supports MIME to send files, and provides particularly address book, folder management, message searching and spell checking.
+
+=== Using Roundcube ===
+
+After Roundcube is installed, it can be accessed at {{{https://<your freedombox>/roundcube}}}. Enter your username and password. The username for many mail services will be the full email address such as ''exampleuser@example.org'' and not just the username like ''exampleuser''. Enter the address of your email service's IMAP server address in the ''Server'' field. You can try providing your domain name here such as ''example.org'' for email address ''exampleuser@example.org'' and if this does not work, consult your email provider's documentation for the address of the IMAP server. Using encrypted connection to your IMAP server is strongly recommended. To do this, prepend 'imaps://' at the beginning of your IMAP server address. For example, ''imaps://imap.example.org''.
+
+{{attachment:roundcube-riseup.png|Logging into your IMAP server|width=606}}
+
+=== Using Gmail with Roundcube ===
+
+If you wish to use Roundcube with your Gmail account, you need to first enable support for password based login in your Google account preferences. This is because Gmail won't allow applications to login with a password by default. To do this, visit [[https://www.google.com/settings/security/lesssecureapps|Google Account preferences]] and enable ''Less Secure Apps''. After this, login to Roundcube by providing your Gmail address as ''Username'', your password and in the server field use ''imaps://imap.gmail.com''.
+
+{{attachment:roundcube-gmail.png|Logging into Gmail|width=606}}
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

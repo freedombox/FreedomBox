@@ -1,0 +1,54 @@
+== Raspberry Pi 4 Model B ==
+
+{{attachment:raspberrypi4b.jpg|Raspberry Pi 4 Model B|width=640,height=424}}
+
+[[https://www.raspberrypi.org/products/raspberry-pi-4-model-b/|Raspberry Pi 4 Model B]] is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 3 Model B+ with better processor and ability to drive multiple displays.  A !FreedomBox "testing" image is available for Raspberry Pi 4 Model B.
+
+Please do not expect any output on a monitor connected via HDMI to this device as it does not display anything beyond the message 'Starting kernel...'. See the [[FreedomBox/Manual/QuickStart|Quick Start page]] to access and control your !FreedomBox from network.
+
+'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this single board computer.
+
+=== Download ===
+
+Before downloading and using !FreedomBox you need to ensure that latest [[https://github.com/pftf/RPi4|Raspberry Pi 4 UEFI Firmware]] is available on an SD card. See [[https://github.com/pftf/RPi4#installation|instructions]] on how to create an SD card with this firmware. The gist is that you download the firmware zip files, erase the SD card, create a FAT partition, unzip the files to SD card and finally insert the SD card into the board.
+
+!FreedomBox images meant for all "arm64" hardware work well for this device. Currently only "testing" images work and "stable" images. However, the firmware must present in SD card. This means that !FreedomBox itself must be present on a different disk such as a USK flash disk or USB SATA disk. Follow the instructions on the download page to create a !FreedomBox USB disk and boot the device. These images also work well for USB 2.0 and USB 3.0 disk drives and the process for preparing them is same as for an SD card.
+
+An alternative to downloading these images is to install Debian on the device and then install !FreedomBox on it. 
+
+=== Build Image ===
+
+!FreedomBox images for this hardware can be built using [[FreedomBox/Maker|Freedom Maker]].  Use the target 'arm64' with distribution 'testing' to build the image for this board.
+
+=== Availability ===
+
+ * Price: 35 USD (2GB RAM)
+ * Price: 50 USD (4GB RAM)
+ * Price: 75 USD (8GB RAM)
+ * [[https://www.raspberrypi.org/products/raspberry-pi-4-model-b/|List of official distributors]]
+
+=== Hardware ===
+
+ * Open Hardware: No
+ * CPU: Broadcom BCM2711 SOC (4x Cortex-A72``@1.5GHz)
+ * RAM: 2 GB or 4GB or 8 GB
+ * Storage: MicroSD card slot
+ * USB: 2x USB 2.0, 2x USB 3.0, USB Type-C power supply
+ * Architecture: arm64
+ * Ethernet: 10/100/1000, RJ45
+ * !WiFi: 802.11ac but requires non-free firmware, instead use a [[FreedomBox/Hardware/USBWiFi|USB WiFi device]]
+ * SATA: None
+
+=== Non-Free Status ===
+
+ * Non-free blobs required: boot firmware
+ * !WiFi: Requires non-free firmware
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
+
+Raspberry Pi 4 Model B image is licensed under Creative Commons Attribution-!ShareAlike 4.0 license by [[https://commons.wikimedia.org/wiki/File:Raspberry_Pi_4_Model_B_-_Top.jpg|Michael Henzler]].

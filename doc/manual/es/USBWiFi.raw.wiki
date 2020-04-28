@@ -1,0 +1,31 @@
+== USB Wi-Fi ==
+!FreedomBox works on many single board computers.  However, many of these boards do not have built-in Wi-Fi capabilities.  Even when Wi-Fi capability is available, non-free proprietary firmware is required to make them work.
+
+A solution to the problem is to plug-in a USB Wi-Fi device into one of the available USB ports.  There are many such devices available which do not require non-free firmware to work.  The following is a list of such devices that work with !FreedomBox devices.  Some devices based on these chips have tested to work well with !FreedomBox including functions such as access point mode.
+
+ * [[https://wikidevi.com/wiki/AR7010|Devices with Atheros AR7010 chip]]
+ * [[https://wikidevi.com/wiki/AR9271|Devices with Atheros AR9271 chip]]
+
+=== Firmware Installation ===
+
+The free firmware for these devices is not packaged in Debian yet. You can manually download and install the firmware as follows:
+
+{{{
+sudo su [enter password]
+cd /lib/firmware
+wget https://www.thinkpenguin.com/files/ath9k-htc/version-1.4-beta/htc_9271.fw
+wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw
+}}}
+
+=== Resources ===
+
+ * [[WiFi#USB_Devices|Debian Wiki on WiFi drivers]]
+ * [[https://en.wikipedia.org/wiki/Comparison_of_open-source_wireless_drivers#Linux_drivers_for_802.11_.22wireless.22|Wikipedia: Comparison of open-source Linux wireless network drivers]]
+ * [[https://wikidevi.com/wiki/Main_Page|WikiDevi: database of computer hardware]]
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

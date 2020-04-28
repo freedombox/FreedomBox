@@ -1,0 +1,186 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Radicale|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Radicale (Calendar and Addressbook) ==
+||<tablestyle="float: right;"> {{attachment:Radicale-icon_en_V01.png|Radicale icon}} ||
+
+'''Available since''': version 0.9
+
+With Radicale, you can synchronize your personal calendars, !ToDo lists, and addressbooks with your various computers, tablets, and smartphones, and share them with friends, without letting third parties know your personal schedule or contacts.
+
+=== Why should I run Radicale? ===
+
+Using Radicale, you can get rid of centralized services like Google Calendar or Apple Calendar (iCloud) data mining your events and social connections. 
+
+=== How to setup Radicale? ===
+
+First, the Radicale server needs to be activated on your box. 
+
+ * Within !FreedomBox Service:
+  1. select ''Apps''
+  2. go to ''Radicale (Calendar and Addressbook)'' and 
+  3. install the application. After the installation is complete, make sure the application is marked "enabled" in the !FreedomBox interface. Enabling the application launches the Radicale CalDAV/CardDAV server. 
+  4. define the access rights:
+   * Only the owner of a calendar/addressbook can view or make changes
+   * Any user can view any calendar/addressbook, but only the owner can make changes
+   * Any user can view or make changes to any calendar/addressbook
+
+Note, that only users with a !FreedomBox login can access Radicale.
+
+{{attachment:Radicale-Plinth.png}}
+
+If you want to share a calendar with only some users, the simplest approach is to create an additional user-name for these users and to share that user-name and password with them.
+
+Radicale provides a basic web interface, which only supports creating new calendars and addressbooks. To add events or contacts, an external [[https://radicale.org/master.html#documentation/supported-clients|supported client application]] is needed.
+
+{{attachment:radicale_web.png}}
+
+ * Creating addressbook/calendar using the web interface
+   * Visit `https://`''IP-address-or-domain-for-your-server''`/radicale/`
+   * Log in with your !FreedomBox account
+   * Select "Create new addressbook or calendar"
+   * Provide a title and select the type
+   * Optionally, provide a description or select a color
+   * Click "Create"
+   * The page will show the URL for your newly created addressbook or calendar
+
+Now open your client application to create new calendar and address books that will use your !FreedomBox and Radicale server. The Radicale website provides [[https://radicale.org/master.html#documentation/supported-clients|an overview of supported clients]], but do ''not'' use the URLs described there; !FreedomBox uses another setup, follow this manual. Below are the steps for two examples:
+
+ * Example of setup with Evolution client:
+  * Calendar
+   1. Create a new calendar
+   1. For "Type," select "CalDAV"
+   1. When "CalDAV" is selected, additional options will appear in the dialogue window.
+   1. URL: `https://`''IP-address-or-domain-for-your-server''`/radicale/`''user''`/`''calendar-name''`.ics/`. Items in ''italics'' need to be changed to match your settings.
+    * note the trailing `/` in the path, it is important.
+   1. Enable "Use a secure connection."    
+   1. Name the calendar
+   {{attachment:Radicale-Evolution-Docu.png}}
+  * TODO/Tasks list: Adding a TODO/Tasks list is basically the same as a calendar.
+  * Contacts
+   * Follow the same steps described above and replace CalDAV with WebDAV.  The extension of the address book will be .vcf.
+
+=== Synchronizing over Tor ===
+
+In !FreedomBox, setting up a calendar with Radicale over Tor is the same as over the clear net. Here is a short summary:
+
+   1. When logged in to !FreedomBox interface over Tor, click on Radicale, and at the prompt provide your !FreedomBox user name and password. 
+   1. In the Radicale web interface, log in using your !FreedomBox user name and password.
+   1. Click on "Create new address book or calendar", provide a title, select a type, and click "Create".
+   1. Save the URL, e.g., `https://`''ONION-ADDRESS-FOR-YOUR-SERVER''`.onion/radicale/`''USERNAME''`/`''CALENDAR-CODE''`/`. Items in ''italics'' need to be changed to match your settings.
+
+These instructions are for Thunderbird/Lightning. Note that you will need to be connected to Tor with the Tor Browser Bundle. 
+
+   1. Open Thunderbird, install the Torbirdy add-on, and restart Thunderbird. (This may not be necessary.)
+   1. In the Lightning interface, under Calendar/Home in the left panel right click with the mouse and select "New calendar".
+   1. Select the location of your calendar as "On the Network".
+   1. Select CalDAV and for the location copy the URL, e.g., `https://`''ONION-ADDRESS-FOR-YOUR-SERVER''`.onion/radicale/`''USERNAME''`/`''CALENDAR-CODE''`/`. Items in ''italics'' need to be changed to match your settings.
+   1. Provide a name, etc. Click "Next". Your calendar is now syncing with your !FreedomBox over Tor.
+   1. If you have not generated a certificate for your !FreedomBox with "Let's Encrypt", you may need to select "Confirm Security Exception" when prompted.
+
+=== Synchronizing with your Android phone ===
+
+There are various Apps that allow integration with the Radicale server. This example uses DAVx5, which is available e.g. on [[https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid|F-Droid]].  
+If you intend to use !ToDo-Lists as well, the compatible app [[https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks|OpenTasks]] has to be installed first.
+
+Follow these steps for setting up your account with the Radicale server running on your !FreedomBox.
+
+  1. Install DAVx5
+  1. Create a new account on DAVx5 by clicking on the floating + button.
+  1. Select the second option as shown in the first figure below and enter the base url as ''https://<your.freedombox.address>/radicale/username/'' (don't miss the `/` at the end). DAVx5 will be able to discover both CalDAV and WebDAV accounts for the user. 
+  1. Follow this video from [[https://www.davdroid.com/faq/existing-contacts-are-not-synced|DAVx5 FAQ]] to learn how to migrate your existing contacts to Radicale.
+
+'''Synchronizing contacts''' 
+  1. Click on the hamburger menus of CalDAV and CardDAV and select either "Refresh ..." in case of existing accounts or "Create ..." in case of new accounts (see the second screenshot below).
+  1. Check the checkboxes for the address books and calendars you want to synchronize and click on the sync button in the header. (see the third screenshot below)
+
+{{attachment:DAVdroid-setup-account.png|DAVx5 account setup|width=288}}
+{{attachment:DAVdroid-refresh.png|DAVx5 refresh|width=288}}
+{{attachment:DAVdroid-sync-account.png|DAVx5 account sync|width=288}}
+
+
+=== Advanced Users ===
+
+==== Sharing resources ====
+Above was shown an easy way to create a resource for a group of people by creating a dedicated account for all. Here will be described an alternative method where two users `User1` and `User2` are granted access to a calendar. This requires SSH-access to the !FreedomBox.
+
+ 1. create a file `/etc/radicale/rights`
+  {{{
+[friends_calendar]
+user: ^(User1|User2)$
+collection: ^.*/calendar_of_my_friends.ics$
+permission: rw
+
+# Give write access to owners
+[owner-write]
+user: .+
+collection: ^%(login)s/.+$
+permission: rw
+  }}}
+  * `[friends_calendar]` is just an identifier, can be any name.
+  * The `[owner-write]` section makes sure that owners have access to their own files
+ 1. edit file `/etc/radicale/config` and make the following changes in section `[rights]`
+
+  {{{
+[rights]
+type = from_file
+file = /etc/radicale/rights
+  }}}
+ 1. Restart the radicale server or the !FreedomBox
+
+==== Importing files ====
+If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/''user''/''contact file name''.vcf.
+
+=== Migrating from Radicale Version 1.x to Version 2.x ===
+
+During the month of February 2019, radicale in Debian testing was upgraded from version 1.x to version 2.x. Version 2.x is a better version but is incompatible with data and configuration used with 1.x. Automatic upgrade mechanism in !FreedomBox, handled by unattended-upgrades does not automatically upgrade radicale to version 2.x due to changes in configuration files. However, !FreedomBox version 19.1, which is available on February 23rd, 2019 in testing will perform data and configuration migration to radicale version 2.x. Typical users require no action, this will happen automatically.
+
+If for some reason, you need to manually run `apt dist-upgrade` on your machine, then radicale will be upgraded to 2.x and then !FreedomBox will not be able to perform its upgrade (due to upstream project deciding to remove migration tools in radicale 2.x version). To avoid this situation, the following process is recommended if you wish to perform an upgrade.
+
+{{{
+sudo su -
+apt hold radicale
+apt dist-upgrade
+apt unhold radicale
+}}}
+
+However, if you already happen to perform an upgrade to radicale 2.x without help from !FreedomBox, you need to perform data and configuration migration yourself. Follow this procedure:
+
+{{{
+sudo su -
+tar -cvzf /root/radicale_backup.tgz /var/lib/radicale/ /etc/radicale/ /etc/default/radicale
+apt install -y python-radicale
+python -m radicale --export-storage=/root/radicale-migration
+cp -dpR /root/radicale-migration/collection-root /var/lib/radicale/collections/collection-root/
+(remove this directory if it already exists. Or perhaps merge the contents.)
+chown -R radicale:radicale /var/lib/radicale/collections/collection-root/
+apt remove -y python-radicale
+if [ -f /etc/radicale/config.dpkg-dist ] ; then cp /etc/radicale/config.dpkg-dist /etc/radicale/config ; fi
+if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-dist /etc/default/radicale ; fi
+(After FreedomBox 19.1 is available, goto FreedomBox web interface and set your preference for calendar sharing again, if it is not the default option, as it will have been lost.)
+}}}
+
+Notes:
+ * python-radicale is an old package from radicale 1.x version that is still available in testing. This is a hack to use the `--export-storage` feature that is responsible for data migration. This feature is not available in radicale 2.x unfortunately.
+ * Files ending with .dpkg-dist will exist only if you have chosen 'Keep your currently-installed version' when prompted for configuration file override during radicale 2.x upgrade. The above process will overwrite the old configuration with new fresh configuration. No changes are necessary to the two configuration files unless you have changed the setting for sharing calendars.
+ * Note that during the migration, your data is safe in /var/lib/radicale/collections directory. New data will be created and used in /var/lib/radicale/collections/collections-root/ directory.
+ * The tar command takes a backup your configuration and data in /root/radicale_backup.tgz in case you do something goes wrong and you want to undo the changes.
+
+=== Troubleshooting ===
+
+1. If you are using !FreedomBox Pioneer Edition or installing !FreedomBox on Debian Buster, then radicale may not be usable immediately after installation. This is due to a bug which has been fixed later. To overcome the problem, upgrade !FreedomBox by clicking on 'Manual Update' from 'Updates' app. Otherwise, simply wait a day or two and let !FreedomBox upgrade itself. After that install radicale. If radicale is already installed, disable and re-enable it after the update is completed. This will fix the problem and get radicale working properly.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

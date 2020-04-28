@@ -1,0 +1,65 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Samba|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Samba (Network File Storage) ==
+||<tablestyle="float: right;"> {{attachment:Samba-icon_en_V01.png|Samba icon}} ||
+
+'''Available since''': version 19.22
+
+Samba lets you have shared folders over the local network that can be
+used from multiple computers running different operating systems. We refer to these shared folders as "shares". 
+
+You can have a personal folder shared between your own devices (Home share), a folder shared with a trusted group (Group share) or one that is shared with every device on the network (Open share).
+
+Samba lets you to treat a share as if it's a local folder on your computer. However, shares are available only on the local network.
+
+To learn more about Samba, please refer to the [[https://wiki.samba.org/index.php/User_Documentation|user documentation]] on their wiki.
+
+=== Using Samba ===
+
+After installation, you can choose which disks to use for sharing. Enabled shares are accessible in the file manager on your computer at location \\freedombox (on Windows) or smb://freedombox.local (on Linux and Mac). There are three types of shares you can choose from:
+
+'''Open share''' - accessible to everyone in your local network.<<BR>>
+'''Group share''' - accessible only to !FreedomBox users who are in the ''freedombox-share'' group.<<BR>>
+'''Home share''' - every user in the ''freedombox-share group'' can have their own private space.
+
+==== On Android ====
+
+To access Samba shares on an Android device, install "Android Samba Client" from F-Droid or Google Play. Enter ''smb://freedombox.local/<disk>'' as the share path in the app. Your shared folders should then be visible in the file manager app. Samba shares can also be used by VLC for Android which automatically discovers them.
+
+=== Integration with other apps ===
+
+Transmission app on !FreedomBox provides a setting to allow downloads to be saved directly to a Samba share.
+
+If you want to make available files synchronized with Syncthing through Samba you need to make sure you synchronize in a Samba share folder. Additionally in order to make Syncthing shares available in Samba Open share or Group share you will need to ensure you click "Permissions > Ignore" button under the "Advanced" tab in folder you wish in the Syncthing web UI. This will ensure that the files will be writable through Samba.
+
+=== Comparison with other apps ===
+
+==== Syncthing ====
+
+[[FreedomBox/Manual/Syncthing|Syncthing]] maintains a copy of the shared folder
+on each device that it is shared with. Samba maintains only one copy on your
+!FreedomBox device.
+
+Syncthing can synchronize your shared folders between devices over the Internet.
+Samba shares are only available on the local network.
+
+Since Syncthing is primarily a synchronization solution, it has features like
+conflict resolution and versioning. Samba has only copy of the file, so it
+doesn't need such features. For example, if two people are editing a spreadsheet
+stored on a Samba share, the last one to save the file wins.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

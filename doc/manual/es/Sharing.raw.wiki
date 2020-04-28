@@ -1,0 +1,53 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Sharing|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Sharing (Publicación de Archivos) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Sharing/Sharing-icon_en_V01.png|Sharing icon}} ||
+
+'''Disponible desde''': versión 0.25
+
+=== ¿Qué es la app Sharing? ===
+
+'''Sharing''' es una aplicación que te permite compartir contenido via web. El contenido compartido pueden ser archivos individuales o directorios completos.
+
+El contenido se puede compartir públicamente o restringido a usuarios de una lista de grupos autorizados. Los usuarios autorizados podrán acceder al contenido compartido desde su navegador web en {{{https://tu_freedombox/share/nombre_del_contenido}}}. Los usuarios que no pertenezcan a ninguno de los grupos autorizados no verán ni accederán al contenido mediante este mecanismo.
+
+=== Editando comparticiones ===
+
+Para que los usuarios accedan al contenido mediante su navegador debe existir y tener una compartición. Una compartición es una entrada en la aplicación Sharing que relaciona:
+ * El Nombre (y por tanto la URL) que usarán los usuarios para solicitar el contenido,
+ * el Ruta de acceso al contenido a servir y
+ * el modo de compartición. Si es restringido, también contendrá la lista de grupos autorizados.
+En el mismo servidor pueden coexistir múltiples comparticiones.
+
+Sólo los administradores pueden crear, editar o eliminar comparticiones. Encontrarán la aplicación ''Sharing'' en la sección Aplicacions del interfaz web de !FreedomBox. La aplicación ''Sharing'' es una aplicación web fácil de usar y con un interfaz evidente.
+
+Cada compartición tiene su priopio ajuste de modo de compartición (pública o restrigida). Sólo los grupos que reconoce el servicio !FreedomBox se pueden combinar en la lista de grupos autorizados. La aplicación ''Sharing'' no ofrecerá los grupos creados en el interfaz de línea de órdenes. 
+
+=== Provisionar/actualizar el contenido ===
+
+El contenido se puede crear antes o después de crear la compartición y se pueden actualizar independientemente.
+
+No hay que ser administrador para provisionar el contenido. Cualquier usuario con acceso de escritura en la ruta de acceso a la compartición puede crearlo o actualizarlo.
+
+Varias comparticiones podrían apuntar al mismo contenido.
+
+Si eres usuario de !FreedomBox y tu administrador se niega a crearte comparticiones, y no necesitas restringir el acceso a tu contenido, todavía puedes recurrir al mecanismo de  [[es/FreedomBox/Manual/Apache_userdir|Sitios web de Usuario]] o a las redes entre pares (P2P) ([[es/FreedomBox/Manual/Deluge|Deluge]] o [[es/FreedomBox/Manual/Transmission|Transmission]] para Torrent, o [[es/FreedomBox/Manual/MLDonkey|MLDonkey]]) para publicar tus archivos.
+
+=== Tecnicismos ===
+''Sharing'' compartirá el contenido usando el servidor web Apache que viene de serie.
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

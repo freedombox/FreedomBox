@@ -1,0 +1,58 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/LetsEncrypt|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Let's Encrypt (Certificados) ==
+
+Un certificado digital permite a los usuarios de un servicio web verificar la identidad del servicio y comunicar con él de modo seguro. !FreedomBox puede obtener y configurar automaticamente certificados digitales para cada dominio disponible. Lo hace probando a Let's Encrypt, una authoridad de certificación (CA) ser el dueño de un dominio.
+
+Let's Encrypt es una autoridad de certificación abierta, automatizada, libre y gratuita administrada para beneficio público por el Internet Security Research Group (ISRG). Por favor, lee y acepta los términos del Acuerdo de Suscripción de Let's Encrypt antes de usar este servicio.
+
+=== Por Qué Usar Certificados ===
+
+La comunicación con tu !FreedomBox se puede asegurar de modo que se imposibilite interceptar los contenidos que tus servicios intercambian con sus usuarios. 
+
+=== Cómo configurar ===
+
+ 1. Si tu !FreedomBox está detrás de un router, necesitarás configurar la redirección de puertos en tu router. Debes redirigir los siguientes puertos:
+  * TCP 80 (http)
+  * TCP 443 (https)
+
+ 1. Publica tu nombre de dominio:
+  * En [[https://wiki.debian.org/es/FreedomBox/Manual/Configure|Configurar]] inserta tu ''nombre de dominio'', p.ej. ''`MiWeb.com`''
+  {{attachment:LetsEncrypt-Configure.png|Let's Encrypt|width=800}}
+
+ 1. Verifica que se aceptó tu nombre de dominio
+  * Comprueba que está habilitado en [[https://wiki.debian.org/es/FreedomBox/Manual/NameServices|Servicio de Nombres]]
+
+  {{attachment:LetsEncrypt-NameServices.png|Let's Encrypt Name Services|width=800}}
+
+ 1. Ve a la página de los Certificados (Let's Encrypt) y completa la instalación del modulo si hace falta. Entonces haz clic en el botón "Obtain" de tu nombre de dominio.
+  * Tras algunos minutos estará disponible un certificado válido
+  {{attachment:LetsEncrypt.png|Let's Encrypt|width=800}}
+
+ 1. Verifica en tu navegador comprobando ''`https://MiWeb.com`''
+  {{attachment:LetsEncrypt-Certificate.png|Let's Encrypt Certificate|width=800}}
+
+'''Screencast''': [[attachment:Let's Encrypt.webm|Let's Encrypt|&do=get]]
+
+=== Usar ===
+
+El certificado es válido por 3 meses. Se renueva automáticamente y también se puede volcer a obtener o revocar manualmente.
+
+Ejecutando ''diagnostics'' se puede también verificar el certificado.
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

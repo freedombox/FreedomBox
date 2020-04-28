@@ -1,0 +1,56 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Mumble|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Servidor Mumble (Chat de voz) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Mumble/Mumble-icon_en_V01.png|Mumble icon}} ||
+
+'''Disponible desde''': versión 0.5
+
+=== ¿Qué es Mumble? ===
+
+''Mumble'' es un software de conversaciones de voz. Principalmente diseñado para uso con juegos multijugador por red, sirve para hablar con alta calidad de audio, cancelación de ruido, comunicación cifrada, autenticación de interlocutores por defecto mediante par de claves pública/privada, y "asistentes" para configurar tu micrófono, por ejemplo. Se puede marcar a un usuario dentro de un canal como "interlocutor prioritario".
+
+=== Usar Mumble ===
+
+!FreedomBox incluye el servidor Mumble. Para conectar con el servidor los usuarios pueden descargar algún cliente de entre los [[https://wiki.mumble.info/wiki/Main_Page|disponibles]] para plataformas de escritorio y móviles.
+
+=== Redirección de Puertos ===
+
+Si tu !FreedomBox está detrás de un router necesitarás configurar la redirección de puertos de tu router. Deberías redirigir los siguientes puertos para  Mumble:
+ * TCP 64738
+ * UDP 64738
+
+=== Administrar Permisos ===
+
+En Mumble un superusuario puede crear cuentas de administrador que a su vez pueden administrar permisos a grupos y canales. Esto se puede hacer tras ingresar con el usuario "!SuperUser" y la contraseña de superusuario. Ver la [[https://wiki.mumble.info/wiki/Murmurguide|Guía de Mumble]] para obtener información respecto a cómo hacer esto. Actualmente !FreedomBox no ofrece una interfaz gráfica para obtener o establecer la contraseña de superusuario en Mumble. Se genera una contraseña de superusuario automáticamente durante la instalación de Mumble. Para obtenerla ingresa en el terminal como `admin` usando [[es/FreedomBox/Manual/Cockpit|Cockpit]] , la [[es/FreedomBox/Manual/SecureShell|Shell Segura]] o la consola. Y ejecuta el siguiente comando:
+
+{{{
+sudo grep SuperUser /var/log/mumble-server/mumble-server.log
+}}}
+
+Deberás ver una salida como esta:
+{{{
+<W>2019-11-06 02:47:41.313 1 => Password for 'SuperUser' set to 'noo8Dahwiesh'
+}}}
+
+O puedes establecer una contraseña nueva así:
+
+{{{
+sudo su -
+echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc/mumble-server.ini --readsupw"
+}}}
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

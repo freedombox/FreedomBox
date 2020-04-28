@@ -1,0 +1,209 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Firewall|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Firewall ==
+
+Firewall is a network security system that controls the incoming and outgoing network traffic. Keeping a firewall enabled and properly configured reduces risk of security threat from the Internet.
+
+The operation of the firewall in !FreedomBox web interface is automatic. When you enable a service it is automatically permitted in the firewall and when you disable a service it is automatically disabled in the firewall. For services which are enabled by default on !FreedomBox, firewall ports are also enabled by default during the first run process.
+
+{{attachment:Firewall.png|Firewall|width=800}}
+
+Firewall management in !FreedomBox is done using [[https://fedoraproject.org/wiki/FirewallD|FirewallD]].
+
+=== Interfaces ===
+
+Each interface is needs to be assigned to one (and only one) zone. If an interface is not assigned any zone, it is automatically assigned `external` zone. Whatever rules are in effect for a zone, those rules start to apply for that interface. For example, if HTTP traffic is allowed in a particular zone, then web requests will be accepted on all the addresses configured for all the interfaces assigned to that zone.
+
+There are primarily two firewall zones used. The `internal` zone is meant for services that are provided to all machines on the local network.  This may include services such as streaming media and simple file sharing.  The `external` zone is meant for services that are provided publicly on the Internet.  This may include services such as blog, website, email web client etc.
+
+For details on how network interfaces are configured by default, see the [[FreedomBox/Manual/Networks|Networks]] section.
+
+=== Opening Custom Ports ===
+
+Cockpit app provides advanced management of firewall. Both !FreedomBox and Cockpit operate over firewalld and are hence compatible with each other. In particular, Cockpit can be used to open custom services or ports on !FreedomBox. This is useful if you are manually running your own services in addition to the services provided by !FreedomBox on the same machine.
+
+{{attachment:firewalld-cockpit.png}}
+
+=== FreedomBox Ports/Services ===
+
+The following table attempts to document the ports, services and their default statuses in !FreedomBox. If you find this page outdated, see the Firewall status page in !FreedomBox interface.
+
+||'''Service'''||'''Port'''      ||'''External'''||'''Enabled by default'''||'''Status shown in !FreedomBox'''||'''Managed by !FreedomBox'''||
+|| Minetest    || 30000/udp      || {*}          || {X}                    || (./)                       || (./)                  ||
+|| XMPP Client || 5222/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| XMPP Server || 5269/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| XMPP Bosh   || 5280/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| NTP         || 123/udp        || {o}          || (./)                   || (./)                       || (./)                  ||
+|| !FreedomBox Web Interface (Plinth)      || 443/tcp        || {*}          || (./)                   || (./)                       || {X}                   ||
+|| Quassel     || 4242/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP         || 5060/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP         || 5060/udp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP-TLS     || 5061/tcp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SIP-TLS     || 5061/udp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| RTP         || 1024-65535/udp || {*}          || {X}                    || (./)                       || (./)                  ||
+|| SSH         || 22/tcp         || {*}          || (./)                   || (./)                       || {X}                   ||
+|| mDNS        || 5353/udp       || {o}          || (./)                   || (./)                       || (./)                  ||
+|| Tor (Socks) || 9050/tcp       || {o}          || {X}                    || (./)                       || (./)                  ||
+|| Obfsproxy   || <random>/tcp   || {*}          || {X}                    || (./)                       || (./)                  ||
+|| OpenVPN     || 1194/udp       || {*}          || {X}                    || (./)                       || (./)                  ||
+|| Mumble      || 64378/tcp      || {*}          || {X}                    || (./)                       || (./)                  ||
+|| Mumble      || 64378/udp      || {*}          || {X}                    || (./)                       || (./)                  ||
+|| Privoxy     || 8118/tcp       || {o}          || {X}                    || (./)                       || (./)                  ||
+|| JSXC        || 80/tcp         || {*}          || {X}                    || {X}                        || {X}                   ||
+|| JSXC        || 443/tcp        || {*}          || {X}                    || {X}                        || {X}                   ||
+|| DNS         || 53/tcp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| DNS         || 53/udp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| DHCP        || 67/udp         || {o}          || (./)                   || {X}                        || {X}                   ||
+|| Bootp       || 67/tcp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| Bootp       || 67/udp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| Bootp       || 68/tcp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| Bootp       || 68/udp         || {o}          || {X}                    || {X}                        || {X}                   ||
+|| LDAP        || 389/tcp        || {o}          || {X}                    || {X}                        || {X}                   ||
+|| LDAPS       || 636/tcp        || {o}          || {X}                    || {X}                        || {X}                   ||
+
+=== Manual operation ===
+
+See [[https://fedoraproject.org/wiki/FirewallD|FirewallD]] documentation for more information on the basic concepts and comprehensive documentation.
+
+==== Enable/disable firewall ====
+
+To disable firewall
+{{{
+service firewalld stop
+}}}
+
+or with systemd
+{{{
+systemctl stop firewalld
+}}}
+
+To re-enable firewall
+{{{
+service firewalld start
+}}}
+
+or with systemd
+{{{
+systemctl start firewalld
+}}}
+
+==== Modifying services/ports ====
+
+You can manually add or remove a service from a zone.
+
+To see list of services enabled:
+{{{
+firewall-cmd --zone=<zone> --list-services
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --list-services
+}}}
+
+To see list of ports enabled:
+{{{
+firewall-cmd --zone=<zone> --list-ports
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --list-ports
+}}}
+
+To remove a service from a zone:
+{{{
+firewall-cmd --zone=<zone> --remove-service=<service>
+firewall-cmd --permanent --zone=<zone> --remove-service=<interface>
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --remove-service=xmpp-bosh
+firewall-cmd --permanent --zone=internal --remove-service=xmpp-bosh
+}}}
+
+To remove a port from a zone:
+{{{
+firewall-cmd --zone=internal --remove-port=<port>/<protocol>
+firewall-cmd --permanent --zone=internal --remove-port=<port>/<protocol>
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --remove-port=5353/udp
+firewall-cmd --permanent --zone=internal --remove-port=5353/udp
+}}}
+
+To add a service to a zone:
+{{{
+firewall-cmd --zone=<zone> --add-service=<service>
+firewall-cmd --permanent --zone=<zone> --add-service=<interface>
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --add-service=xmpp-bosh
+firewall-cmd --permanent --zone=internal --add-service=xmpp-bosh
+}}}
+
+To add a port to a zone:
+{{{
+firewall-cmd --zone=internal --add-port=<port>/<protocol>
+firewall-cmd --permanent --zone=internal --add-port=<port>/<protocol>
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --add-port=5353/udp
+firewall-cmd --permanent --zone=internal --add-port=5353/udp
+}}}
+
+==== Modifying the zone of interfaces ====
+
+You can manually change the assignment of zones of each interfaces after they have been autuomatically assigned by the first boot process.
+
+To see current assignment of interfaces to zones:
+{{{
+firewall-cmd --list-all-zones
+}}}
+
+To remove an interface from a zone:
+{{{
+firewall-cmd --zone=<zone> --remove-interface=<interface>
+firewall-cmd --permanent --zone=<zone> --remove-interface=<interface>
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=external --remove-interface=eth0
+firewall-cmd --permanent --zone=external --remove-interface=eth0
+}}}
+
+To add an interface to a zone:
+{{{
+firewall-cmd --zone=<zone> --add-interface=<interface>
+firewall-cmd --permanent --zone=<zone> --add-interface=<interface>
+}}}
+
+Example:
+{{{
+firewall-cmd --zone=internal --add-interface=eth0
+firewall-cmd --permanent --zone=internal --add-interface=eth0
+}}}
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

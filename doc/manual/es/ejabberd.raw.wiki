@@ -1,0 +1,64 @@
+## page was renamed from FreedomBox/Manual/XMPP
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/ejabberd|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Ejabberd (Servidor de Mensajería Instantánea) ==
+||<tablestyle="float: right;"> {{attachment:ejabberd-icon_es_V01.png|icono de ejabberd}} ||
+
+'''Disponble desde''': versión 0.3
+
+=== ¿Qué es XMPP? ===
+
+''XMPP'' es un protocolo cliente-servidor federado para Mensajería Instantánea. Esto significa que los usuarios que tengan cuenta en un servidor XMPP pueden conversar con los usuarios que estén en el mismo u otros servidores XMPP.
+
+XMPP se puede usar también para llamadas de voz y vídeo si los clientes las soportan.
+
+Actualmente !FreedomBox ofrece ambas partes desde su interfaz web: un servidor (ejabberd) y un cliente web ([[es/FreedomBox/Manual/JSXC|JSXC]]).
+
+=== Privacidad ===
+
+Con XMPP las conversaciones se pueden securizar de 2 maneras:
+ 1. TLS: Esto securiza la conexión entre el cliente y el servidor o entre 2 servidores. Esto está áltamente recomendado y ya debería estar soportado por todos los clientes.
+ 1. Punto a punto: Esto securiza los mensajes enviados entre los clientes de modo que ni siquiera el servidor pueda ver los contenidos. El último protocolo y también el más cómodo se llama ''OMEMO'' pero solo lo soportan algunos clientes. Algunos clientes que no soportan OMEMO podrían soportar otro protocolo llamado OTR. Para que funcione ambos clientes tienen que ser compatibles con el mismo protocolo.
+
+=== Establer un Nombre de Dominio ===
+
+Para que funcione XMPP tu !FreedomBox necesita tener Nombre de Dominio accesible desde la red.
+
+Si sólo necesitas que los usuarios de tu red local (LAN) conversen entre sí, puedes inventarte un nombre de dominio. Pero si quieres que participen usuarios de internet en tus salas necesitas un nombre de dominio público. Puedes leer acerca de la obtención de un Nombre de Dominio en la [[../DynamicDNS|sección DNS Dinámico de este manual]].
+
+Una vez tengas ya tu Nombre de Dominio puedes decirle a tu !FreedomBox que lo use dándolo de alta en la [[../Configure|configuración]] del sistema.
+
+'''Nota''': Tras cambiar tu Nombre de Dominio la página del servidor (XMPP) de mensajería instantánea podría mostrar que el servicio no está funcionando. En un minuto más o menos se actualizará y lo volverá a mostrar operativo.
+
+Ten en cuenta que de momento [[es/FreedomBox/Manual/PageKite|PageKite]] no soporta el protocolo XMPP.
+
+=== Habilitar a usuarios para usar XMPP ===
+
+Actualmente todos los usuarios creados con !FreedomBox podrán ingresar al servidor XMPP. Puedes añadir usuarios nuevos con el módulo de "Usuarios y Grupos del Sistema". Los grupos seleccionados para el usuario nuevo no importan.
+
+=== Enrutado de Puertos ===
+
+Si tu !FreedomBox está detrás de un router tendrás que configurar en él la redirección de puertos. Redirije los siguientes puertos de XMPP:
+ * TCP 5222 (cliente-a-servidor)
+ * TCP 5269 (servidor-a-servidor)
+ * TCP 5280 (?)
+
+=== Clientes compatibles ===
+
+ * !FreedomBox proporciona un cliente web: [[es/FreedomBox/Manual/JSXC|JSXC]].
+ * Hay [[https://xmpp.org/software/clients.html|clientes XMPP]] disponibles para varias platformas de escritorio y móviles.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

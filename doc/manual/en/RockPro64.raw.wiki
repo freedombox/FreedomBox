@@ -1,0 +1,49 @@
+== RockPro64 ==
+
+{{attachment:rockpro64.jpg|RockPro64|width=640,height=385}}
+
+Pine64's [[https://www.pine64.org/rockpro64/|RockPro64]] is a powerful single board computer.  It uses the Rockchip RK3399 Hexa Core ARM64 processor.  !FreedomBox images are built and tested for this device.
+
+'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this single board computer.
+
+=== Download ===
+
+Before downloading and using !FreedomBox you need to ensure that latest u-boot based firmware is installed into the SPI flash chip. See instructions on how to [[https://github.com/sigmaris/u-boot/wiki/Flashing-U-Boot-to-SPI|write u-boot firmware into SPI flash]]. The gist is that you download and write an image to an SD card. Boot with SD card and wait for white LED blinking to stop. After that power off, remove the SD card and proceed with !FreedomBox download.
+
+!FreedomBox [[FreedomBox/Download|images]] meant for all "arm64" hardware work well for this device.  However, u-boot firmware must present in SPI flash (or on a separate SD card, which is not explained here).  Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox SD card and boot the device.  These images also work well for USB 2.0 and USB 3.0 disk drives and the process for preparing them is same as for an SD card.
+
+An alternative to downloading these images is to [[InstallingDebianOn|install Debian]] on the device and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+=== Availability ===
+
+ * Price: 60 USD ([[https://store.pine64.org/product/rockpro64-2gb-single-board-computer/|RockPro64 2GB]])
+ * Price: 80 USD ([[https://store.pine64.org/product/rockpro64-4gb-single-board-computer/|RockPro64 4GB]])
+
+=== Hardware ===
+
+ * Open Source Hardware (OSHW): No
+ * CPU: Rockchip RK3399 SOC (2x Cortex A72@1.8Ghz, 4x Cortex A53@1.4Ghz)
+ * GPU: Mali T860 MP4 GPU
+ * RAM: 2 GiB or 4 GiB LPDDR4
+ * Storage: eMMC module slot, microSD slot, 16 MiB SPI Flash
+ * USB: 2x USB 2.0, 1x USB 3.0, 1x USB-C
+ * Expansion slot: 1x PCIe 4x slot (NVMe disks, etc.)
+ * Architecture: arm64
+ * Ethernet: 10/100/1000, RJ45
+ * !WiFi: None, use a [[FreedomBox/Hardware/USBWiFi|USB WiFi device]]
+
+=== Non-Free Status ===
+
+ * Non-free blobs required: No
+ * !WiFi: Not available
+
+=== Known Issues ===
+
+ * !FreedomBox does not work when booted from eMMC module (but works from SD card, USB 2.0 disk or USB 3.0 disk). !FreedomBox on NMVe disk has not been tested.
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

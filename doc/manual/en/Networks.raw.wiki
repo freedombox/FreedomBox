@@ -1,0 +1,292 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Networks|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Networks ==
+
+This section describes how networking is setup by default in
+!FreedomBox and how you can customize it.  See also the [[FreedomBox/Manual/Firewall|Firewall]]
+section for more information on how firewall works.
+
+=== Default setup ===
+
+In a fresh image of !FreedomBox, network is not configured at all.
+When the image is written to an SD card and the device boots,
+configuration is done.  During first boot, !FreedomBox setup package
+detects the networks interfaces and tries to automatically configure
+them so that !FreedomBox is available for further configuration via
+the web interface from another machine without the need to connect a
+monitor.  Automatic configuration also tries to make !FreedomBox
+useful, out of the box, for the most important scenarios !FreedomBox
+is used for.
+
+There are two scenarios it handles: when is a single ethernet
+interface and when there are multiple ethernet interfaces.
+
+==== Single ethernet interface ====
+
+When there is only single ethernet interface available on the hardware
+device, there is not much scope for it to play the role of a router.
+In this case, the device is assumed to be just another machine in the
+network.  Accordingly, the only available interface is configured to
+be an `internal` interface in `automatic` configuration mode.  This
+means that it connects to the Internet using the configuration
+provided by a router in the network and also makes all (internal and
+external) of its services available to all the clients on this
+network.
+
+{{attachment:network_single.png}}
+
+==== Multiple ethernet interface ====
+
+When there are multiple ethernet interfaces available on the hardware
+device, the device can act as a router.  The interfaces are then
+configured to perform this function.
+
+The first network interface is configured to be an WAN or `external`
+interface in automatic configuration mode.  This means that it
+connects to the Internet using network configuration provided by the
+Internet Service Provider (ISP).  Only services that are meant to be
+provided across the entire Internet (external services) will be
+exposed on this interface.  You must plug your Internet connection
+into the port of this ethernet interface.  If you wish to continue to
+have your existing router manage the Internet connection for you, then
+plug a connection from your router to the port on this interface.
+
+The remaining network interfaces are configured for the clients of a
+router.  They are configured as LAN or `internal` interfaces in
+`shared` configuration mode.  This means that all the services (both
+external and internal) services are provided to who ever connects on
+this interface.  Further, the `shared` mode means that clients will be
+able to receive details of automatic network connection on this
+interface.  Specifically, DHCP configuration and DNS servers are
+provided on this interface.  The Internet connection available to the
+device using the first network interface will be `shared` with clients
+using this interface.  This all means that you can connect your
+computers to this network interface and they will get automatically
+configured and will be able to access the Internet via the
+!FreedomBox.
+
+Currently, it is not very clear which interface will be come the WAN
+interface (and the remaining being LAN interfaces) although the
+assignment process is deterministic.  So, it take a bit of trail and
+error to figure out which one is which.  In future, for each device,
+this will be well documented.
+
+==== Wi-Fi configuration ====
+
+All Wi-Fi interfaces are configured to be LAN or `internal` interfaces
+in `shared` configuration mode.  They are also configured to become
+Wi-Fi access points with following details.
+
+ * Name of the access point will be `FreedomBox` plus the name of the
+ interface (to handle the case where there are multiple of them).
+ * Password for connecting to the interface will be `freedombox123`.
+
+=== Internet Connection Sharing ===
+
+Although the primary duty of !FreedomBox is to provide decentralized services, it can also act like a home router.  Hence, in most cases, !FreedomBox connects to the Internet and provides other machines in the network the ability to use that Internet connection.  !FreedomBox can do this in two ways: using a `shared` mode connection or using an `internal` connection.
+
+When an interface is set in `shared` mode, you may connect your machine directly to it.  This is either by plugging in an ethernet cable from this interface to your machine or by connecting to a Wi-Fi access point.  This case is the simplest to use, as !FreedomBox automatically provides your machine with the necessary network configuration.  Your machine will automatically connect to !FreedomBox provided network and will be able to connect to the Internet given that !FreedomBox can itself connect to the Internet.
+
+Sometimes the above setup may not be possible because the hardware device may have only one network interface or for other reasons.  Even in this case, your machine can still connect to the Internet via !FreedomBox.  For this to work, make sure that the network interface that your machine is connecting to is in `internal` mode.  Then, connect your machine to network in which !FreedomBox is present.  After this, in your machine's network configuration, set !FreedomBox's IP address as the gateway.  !FreedomBox will then accept your network traffic from your machine and send it over to the Internet.  This works because network interfaces in `internal` mode are configured to `masquerade` packets from local machines to the Internet and receive packets from Internet and forward them back to local machines.
+
+=== Customization ===
+
+The above default configuration may not be fit for your setup.  You
+can customize the configuration to suit your needs from the `Networks`
+area in the 'setup' section of the !FreedomBox web interface.
+
+==== PPPoE connections ====
+
+If your ISP does not provide automatic network configuration via DHCP
+and requires you to connection via PPPoE.  To configure PPPoE, remove
+any network connection existing on an interface and add a PPPoE
+connection.  Here, optionally, provide the account username and
+password given by your ISP and activate the connection.
+
+==== Connect to Internet via Wi-Fi ====
+
+By default Wi-Fi devices attached during first boot will be configured
+as access points.  They can be configured as regular Wi-Fi devices
+instead to connection to a local network or an existing Wi-Fi router.
+To do this, click on the Wi-Fi connection to edit it.  Change the mode
+to `Infrastructure` instead of `Access Point` mode and `IPv4 Addressing Method`
+to `Automatic (DHCP)` instead of `Shared` mode.
+Then the SSID provided will mean the Wi-Fi network name you wish to
+connect to and passphrase will be the used to while making the
+connection.
+
+===== Problems with Privacy Feature =====
+
+!NetworkManager used by !FreedomBox to connect to the Wi-Fi networks has a privacy feature that uses a different identity when scanning for networks and when actually connecting to the Wi-Fi access point. Unfortunately, this causes [[https://askubuntu.com/questions/910185/rosewill-rnx-n600ube-connectivity-issue-on-ubuntu-17-04|problems]] with some routers that reject connections from such devices. Your connection won't successfully activate and disconnect after trying to activate. If you have control over the router's behaviour, you could also turn off the feature causing problem. Otherwise, the solution is to connect with a remote shell using [[FreedomBox/Manual/SecureShell|SSH]] or [[FreedomBox/Manual/Cockpit|Cockpit]], editing a file `/etc/NetworkManager/NetworkManager.conf` and adding the line `wifi.scan-rand-mac-address=no` in the `[device]` section. This turns off the privacy feature.
+
+Edit a file:
+{{{
+$ sudo nano /etc/NetworkManager/NetworkManager.conf
+}}}
+
+Add the following:
+{{{
+[device]
+wifi.scan-rand-mac-address=no
+}}}
+
+Then reboot the machine.
+
+==== Adding a new network device ====
+
+When a new network device is added, network manager will automatically
+configure it.  In most cases this will not work to your liking.
+Delete the automatic configuration created on the interface and create
+a new network connection.  Select your newly added network interface
+in the add connection page.
+
+ * Then set firewall zone to `internal` and `external` appropriately.
+ * You can configure the interface to connect to a network or provide
+ network configuration to whatever machine connects to it.
+ * Similarly, if it is a Wi-Fi interface, you can configure it to
+ become a Wi-FI access point or to connect to an existing access
+ points in the network.
+
+==== Configuring a mesh network ====
+
+!FreedomBox has rudimentary support for participating in BATMAN-Adv based mesh networks.  It is possible to either join an existing network in your area or create a new mesh network and share your Internet connection with the rest of the nodes that join the network.  Currently, two connections have to be created and activated manually to join or create a mesh network.
+
+===== Joining a mesh network =====
+
+To join an existing mesh network in your area, first consult the organizers and get information about the mesh network.
+
+ 1. Create a new connection, then select the connection type as ''Wi-Fi''.  In the following dialog, provide the following values:
+ ||'''Field Name'''||'''Example Value'''||'''Explanation'''||
+ || ''Connection Name'' || Mesh Join - BATMAN || The name must end with 'BATMAN' (uppercase) ||
+ || ''Physical Interface'' || wlan0 || The Wi-Fi device you wish to use for joining the mesh network ||
+ || ''Firewall Zone'' || External || Since you don't wish that participants in mesh network to use internal services of !FreedomBox ||
+ || ''SSID'' || ch1.freifunk.net || As provided to you by the operators of the mesh network.  You should see this as a network in ''Nearby Wi-Fi Networks'' ||
+ || ''Mode'' || Ad-hoc || Because this is a peer-to-peer network ||
+ || ''Frequency Band'' || 2.4Ghz || As provided to you by the operators of the mesh network ||
+ || ''Channel'' || 1 || As provided to you by the operators of the mesh network ||
+ || ''BSSID'' || 12:CA:FF:EE:BA:BE || As provided to you by the operators of the mesh network ||
+ || ''Authentication'' || Open || Leave this as open, unless you know your mesh network needs it be otherwise ||
+ || ''Passphrase'' || || Leave empty unless you know your mesh network requires one ||
+ || ''IPv4 Addressing Method'' || Disabled || We don't want to request IP configuration information yet ||
+
+ Save the connection.  Join the mesh network by activating this newly created connection.
+
+ 1. Create a second new connection, then select the connection type as ''Generic''.  In the following dialog, provide this following values:
+ ||'''Field Name'''||'''Example Value'''||'''Explanation'''||
+ || ''Connection Name'' || Mesh Connect || Any name to identify this connection ||
+ || ''Physical Interface'' || bat0 || This interface will only show up after you successfully activate the connection in first step ||
+ || ''Firewall Zone'' || External || Since you don't wish that participants in mesh network to use internal services of !FreedomBox ||
+ || ''IPv4 Addressing Method'' || Auto || Mesh networks usually have a DHCP server somewhere that provide your machine with IP configuration. If not, consult the operator and configure IP address setting accordingly with ''Manual'' method ||
+
+ Save the connection.  Configure your machine for participation in the network by activating this connection.  Currently, this connection has to be manually activated every time you need to join the network.  In future, !FreedomBox will do this automatically.
+
+ You will now be able reach other nodes in the network.  You will also be able to connect to the Internet via the mesh network if there is an Internet connection point somewhere in mesh as setup by the operators.
+
+===== Creating a mesh network =====
+
+To create your own mesh network and share your Internet connection with the rest of the nodes in the network:
+
+ 1. Follow the instructions as provided above in step 1 of ''Joining a mesh network'' but choose and fix upon your own valid values for ''SSID'' (a name for you mesh network), ''Frequency Band'' (usually 2.4Ghz), ''Channel'' (1 to 11 in 2.4Ghz band) and ''BSSID'' (a hex value like 12:CA:DE:AD:BE:EF).  Create this connection and activate it.
+ 2. Follow the instructions as provided above in step 2 of ''Joining a mesh network'' but select ''IPv4 Addressing Method'' as ''Shared''.  This will provide automatic IP configuration to other nodes in the network as well as share the Internet connection on your machine (achieved using a second Wi-Fi interface, using Ethernet, etc.) with other nodes in the mesh network.
+
+Spread the word about your mesh network to your neighbors and let them know the parameters you have provided when creating the network.  When other nodes connect to this mesh network, they have to follow steps in ''Joining a mesh network'' but use the values for ''SSID'', ''Frequency Band'' and ''Channel'' that you have chosen when you created the mesh network.
+
+=== Advanced Network Operations ===
+
+Cockpit provides many advanced networking features over those offered by !FreedomBox. Both !FreedomBox and Cockpit operate over Network Manager and are hence compatible with each other. Some of the functions provided by Cockpit include:
+
+ * Set the maximum transmission unit (MTU) for a network connection
+ * Change the hardware address (MAC address) of a network interface
+ * Add more DNS servers and configure routing of a network connection
+ * Creating bonded devices for highly available network interfaces
+ * Creating bridge devices to join network interfaces for aggregating separate networks
+ * Manage VLAN for creating virtual partitions in the physical network
+
+{{attachment:networks-cockpit.png}}
+
+=== Manual Network Operation ===
+
+!FreedomBox automatically configures networks by default and provides
+a simplified interface to customize the configuration to specific
+needs.  In most cases, manual operation is not necessary.  The
+following steps describe how to manually operate network configuration
+in the event that a user finds !FreedomBox interface to insufficient
+for task at hand or to diagnose a problem that !FreedomBox does not
+identify.
+
+On the command line interface:
+
+For text based user interface for configuring network connections:
+
+{{{
+nmtui
+}}}
+
+To see the list of available network devices:
+
+{{{
+nmcli device
+}}}
+
+To see the list of configured connections:
+
+{{{
+nmcli connection
+}}}
+
+To see the current status of a connection:
+
+{{{
+nmcli connection show '<connection_name>'
+}}}
+
+To see the current firewall zone assigned to a network interface:
+
+{{{
+nmcli connection show '<connection_name>' | grep zone
+}}}
+
+or
+
+{{{
+firewall-cmd --zone=internal --list-all
+firewall-cmd --zone=external --list-all
+}}}
+
+To create a new network connection:
+
+{{{
+nmcli con add con-name "<connection_name>" ifname "<interface>" type ethernet
+nmcli con modify "<connection_name>" connection.autoconnect TRUE
+nmcli con modify "<connection_name>" connection.zone internal
+}}}
+
+To change the firewall zone for a connection:
+
+{{{
+nmcli con modify "<connection_name>" connection.zone "<internal|external>"
+}}}
+
+For more information on how to use `nmcli` command, see its man page.
+Also for a full list of configuration settings and type of connections
+accepted by Network Manager see:
+
+https://developer.gnome.org/NetworkManager/stable/ref-settings.html
+
+To see the current status of the firewall and manually operate it, see
+the [[FreedomBox/Manual/Firewall|Firewall]] section.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

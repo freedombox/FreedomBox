@@ -1,0 +1,63 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Coturn|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Coturn (Asistente para VoIP) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Coturn/Coturn-icon_en_V01.png|icono de Coturn}} ||
+
+'''Disponible desde''': versión 20.8
+
+Coturn es un servidor para facilitar llamadas y conferencias de audio/video proporcionando una implementación de los protocolos TURN y STUN. Los servidores de comunicación por WebRTC, SIP y otros pueden usarlo para establecer una llamada entre partes que de otro modo no podrían conectarse entre si.
+
+No está pensado para que lo usen diréctamente los usuarios. Los servidores como Matrix Synapse necesitan configurarse con los datos proporcionados en la página de app de Coturn. Además de Matrix Synapse, Jitsi, Ejabberd, Nextcloud Talk, etc. pueden usar el servidor Coturn para llamadas y conferencias de audio/video. No hace falta que los servidores se ejecuten en la misma máquina que !FreedomBox. Los servidores externos pueden usar un Coturn ejecutado en !FreedomBox.
+
+Coturn está configurada en !FreedomBox como app avanzada. Esto implica que para ver el icono de Coturn en la sección "Apps" necesitas marcar en "Mostrar apps y funcionalidades avanzadas" en "Configuración General".
+
+=== Cómo funciona ===
+
+Al hacer una llamada de audio/video lo mejor es enrutar los flujos multimedia directamente entre los pares porque minimiza la latencia (mejor calidad de señal) y evita depender de un servidor centralizado (privacidad). Esto escala bien porque un servidor de chat simple puede albergar miles de llamadas sin involucrarse de ningún otro modo que para establecer la llamada. Sin embargo este enfoque no suele funcionar la mayoría de las veces por cómo se configuran las redes. La mayoría de los pares de la red carecen de una dirección IP propia reservada para ellos y suelen operar detrás de un dispositivo de red que les traduce las direcciones de red (NAT: ''"Network Address Translation"''). Esto significa que en realidad estos pares no tienen modo de alcanzarse entre sí directamente.
+
+Para abordar este problema se introdujo una técnica simple conocida como STUN. Con ayuda de un servidor STUN los pares pueden prescindir de los dispositivos NAT para transmitir entre ellos. Desafortunadamente este truco solo funciona un 80% de las ocasiones. Así que si STUN falla, los pares no tienen más opción que enrutar su comunicación a través de un intermediario llamado servidor TURN. Todo el mecanismo de intentar primero con STUN y recaer en TURN se describe en un protocolo llamado ICE.
+
+En !FreedomBox, Coturn proporciona servidores STUN y TURN. Ambos servicios se proporcionan tanto sobre TCP como sobre UDP y tanto en canales cifrados (que tienen mayor probabilidad de éxito) como sin cifrar. Como los servidores STUN son baratos y no consumen muchos recursos no se necesita autenticación para usarlos. Por otra parte los servidores TURN sí la necesitan. Esta autenticación está altamente simplificada y no requiere mantener una base de datos de usuarios. Un servidor como matrix-synapse que vaya a establecer una llamada de audio/video entre dos pares generará un nombre de usuario y contraseña empleando un secreto compartido. Cuando los pares usen el servidor TURN se les validará usando estas credenciales porque el servidor TURN conoce este secreto.
+
+En resumen, un servidor de comunicaciones necesita saber las URLs de los servidores STUN/TURN junto con el secreto de autenticación para TURN. Después, durante el establecimiento de la llamada de audio/video guiarán a los pares a usar los servidores STUN/TURN. La app Coturn de !FreedomBox proporciona exactamente ésta información, que se puede usar para configurar un servidor de comunicaciones independientemente de que se ejecute en la misma máquina que !FreedomBox o en otro servidor.
+
+=== Configurar Matrix Synapse ===
+
+El servidor de Matrix Synapse de !FreedomBox se puede configurar para que use el servidor de TURN/STUN Coturn. En el futuro, cuando instales Matrix Synapse !FreedomBox instalará Coturn automáticamente y configurará sus parámetros en Matrix Synapse. Para configurar Matrix Synapse, edita el fichero ''/etc/matrix-synapse/homeserver.yaml'' con las siguientes líneas:
+
+{{{
+turn_uris: [ "stun:myfreedombox.example.org:3478?transport=udp", "stun:myfreedombox.example.org:3478?transport=tcp", "turn:myfreedombox.example.org:3478?transport=udp", "turn:myfreedombox.example.org:3478?transport=tcp" ]
+turn_shared_secret: "my-freedombox-provided-secret"
+turn_user_lifetime: 86400000
+turn_allow_guests: True
+}}}
+
+Y luego reinicia el servidor matrix-synapse deshabilitando y rehabilitando la app de matrix-synapse.
+
+=== Redirección de Puertos ===
+
+Si tu !FreedomBox está detrás de un router, necesitarás configurar la redirección de los siguientes puertos para Coturn:
+ * UDP 3478
+ * TCP 3478
+ * UDP 3479
+ * TCP 3479
+ * UDP 5349
+ * TCP 5349
+ * UDP 5350
+ * TCP 5350
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

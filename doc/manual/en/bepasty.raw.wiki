@@ -1,0 +1,77 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/bepasty|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Bepasty (File & Snippet Sharing) ==
+||<tablestyle="float: right;"> {{attachment:bepasty-icon_en_V01.png|bepasty icon}} ||
+
+'''Available since''': version 20.14
+
+=== What is bepasty? ===
+
+bepasty is a web application that allows large files to be uploaded and shared. Text and code snippets can also be pasted and shared. Text, image, audio, video and PDF documents can be previewed in the browser. Shared files can be set to expire after a time period.
+
+=== Screenshot ===
+
+{{attachment:bepasty_logged_in_page.png|Screenshot of bepasty|width=800}}
+
+=== Passwords and Permissions ===
+
+bepasty uses only passwords (without usernames) to control access. Depending on which password is used to login to bepasty, the user will have different permissions. They can have any combination of the following permissions:
+ * '''read''': Read a file, if they know the URL.
+ * '''list''': List all files.
+ * '''create''': Paste or upload a new file.
+ * '''delete''': Delete a file.
+ * '''admin''': Can lock and unlock files.
+
+After bepasty is installed, it comes pre-configured for the following roles:
+ * Viewer: can view and list files
+ * Editor: can view, list, create, and delete files
+ * Administrator: has all permissions
+
+These roles support a use-case of file sharing between known, authorized users. If needed, you can re-configure bepasty to support other roles and use-cases.
+
+=== Distributing passwords ===
+
+By default, the Public Access configuration is set to ''None'', so a password is required for any use of bepasty. This means that you will need to distribute the passwords to the appropriate users, through any communication channels that you have.
+
+Note that you may want to create multiple passwords with the same permissions. This allows you to distribute a unique password to each user (or to a group of users). Then if you want to revoke access to one user, you can simply delete their password. The other users with their own passwords will not be affected.
+
+=== Using bepasty ===
+
+After logging in to bepasty, if you have the Create permission, you will see a large text box where you can paste any text. Optionally, you can provide a filename or Content-Type for the data. After clicking Submit, the file is created.
+
+You can also drag and drop files in the area at the bottom. They are uploaded immediate after dropping them in this area. You can also create a list to track a collection of uploaded files.
+
+For either case, you can set a maximum lifetime value. After this time expires, the file will be deleted.
+
+If you have the List permission, then you will see a link ''List all Items'' at the top of the page. This will show all files that have been created or uploaded.
+
+If you have the Delete or Admin permission, you will see extra actions shown next to each file on the list page.
+
+If you only have the Read permission, then to read files, you will need to have both a password and one or more URLs for existing files.
+
+=== Managing passwords ===
+
+The bepasty configuration page in !FreedomBox interface allows you to create new passwords, or to remove a password. When you create a password, you can choose any combination of the permissions described above. Note that a typical Administrator should have all of the permissions (not just "Admin").
+
+You can also set a Comment. This is recommended, and you should use the comment to help yourself remember the purpose of the password, or who will be using the password.
+
+You can also configure Public Access, which sets the default permissions that are available even without logging in with a password. You can set this to allow reading files by their URL, or reading and listing all files.
+
+=== External links ===
+
+https://bepasty-server.readthedocs.io/en/latest/user.html
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

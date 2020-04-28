@@ -1,0 +1,172 @@
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+!FreedomBox está diseñado para ser el software de un dispositivo electrónico de consumo que sea fácil de configurar, mantener y usar.  El proyecto no pretende crear un dispositivo hardware propio, sino asociarse con fabricantes de hardware para construir dispositivos !FreedomBox y también soportar hardware existente.
+
+Además de soportar varios SBC's (single board computers) y otros dispositivos, !FreedomBox también contempla ser instalado en una máquina virtual.  Y cualquier máquina Debian se puede convertir en !FreedomBox instalando el paquete `freedombox`.  Para más detalles acerca de la instalación sobre Debian, ver el [[es/FreedomBox/Hardware/Debian|manual]].
+
+== Hardware Recomendado ==
+
+El 22 de Abril de 2019, la ''!FreedomBox Foundation'' anunció que los kits ''Pioneer Edition !FreedomBox Home Server'' salían a la [[https://freedomboxfoundation.org/buy/|venta]]. Este es el hardware preinstalado recomendado para todos los usuarios que no quieran construirse su propia (máquina) !FreedomBox eligiendo los componentes adecuados, descargando la imagen y preparando una tarjeta SD con (el software) !FreedomBox.
+
+El kit incluye todo el hardware necesario para arrancar un servidor casero !FreedomBox sobre una placa ''Olimex A20-OLinuXino-LIME2''. Este producto proporciona la combinación perfecta de hardware de fuentes abiertas y software libre. Al comprar este producto, soportas también los esfuerzos de la ''!FreedomBox Foundation'' para crear y promover su software de servidor libre.
+
+||<style="text-align: center;"> [[es/FreedomBox/Hardware/PioneerEdition|{{attachment:FreedomBox/Hardware/pioneer-edition_thumb.jpg|Kits de Servidor Casero FreedomBox Pioneer Edition|width=320,height=257}}]]<<BR>> [[es/FreedomBox/Hardware/PioneerEdition|Kits de Servidor Casero FreedomBox Pioneer Edition]] ||
+
+== Hardware Soportado ==
+
+Usa este hardware si quieres y eres capaz de descargar imágenes !FreedomBox y preparar una tarjeta SD siguiendo el manual. Si quieres un proceso más simple de configuración compra por favor los kits !FreedomBox con el hardware recomendado. Si usas una placa con tarjetas SD te recomendamos que al grabar la imagen de !FreedomBox en tu tarjeta, ésta tenga al menos una capacidad de 8GB.
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/A20-OLinuXino-Lime2|{{attachment:FreedomBox/Hardware/a20-olinuxino-lime2_thumb.jpg|A20 OLinuXino Lime2|width=235,height=159}}]]<<BR>> [[FreedomBox/Hardware/A20-OLinuXino-Lime2|A20 OLinuXino Lime2]] ||<style="text-align: center;"> [[FreedomBox/Hardware/A20-OLinuXino-MICRO|{{attachment:FreedomBox/Hardware/a20-olinuxino-micro_thumb.jpg|A20 OLinuXino MICRO|width=235,height=132}}]]<<BR>> [[FreedomBox/Hardware/A20-OLinuXino-MICRO|A20 OLinuXino MICRO]] ||<style="text-align: center;"> [[FreedomBox/Hardware/APU|{{attachment:FreedomBox/Hardware/apu1d_thumb.jpg|PC Engines APU|width=235,height=157}}]]<<BR>> [[FreedomBox/Hardware/APU|PC Engines APU]] ||
+||<style="text-align: center;"> [[FreedomBox/Hardware/Cubietruck|{{attachment:FreedomBox/Hardware/danube_thumb.png|Cubietruck|width=235,height=206}}]] <<BR>> [[FreedomBox/Hardware/Cubietruck|Cubietruck]] <<BR>> ||<style="text-align: center;"> [[FreedomBox/Hardware/Cubieboard2|{{attachment:FreedomBox/Hardware/cubieboard2_thumb.jpg|Cubieboard 2|width=235,height=156}}]]<<BR>> [[FreedomBox/Hardware/Cubieboard2|Cubieboard2]] ||<style="text-align: center;"> [[FreedomBox/Hardware/BeagleBone|{{attachment:FreedomBox/Hardware/beagleboard_thumb.jpg|BeagleBone Black|width=235,height=157}}]]<<BR>> [[FreedomBox/Hardware/BeagleBone|BeagleBone Black]] ||
+||<style="text-align: center;"> [[FreedomBox/Hardware/pcDuino3|{{attachment:FreedomBox/Hardware/pcduino3s_thumb.jpg|pcDuino3|width=235,height=107}}]] <<BR>> [[FreedomBox/Hardware/pcDuino3|pcDuino3]]||<style="text-align: center;"> [[es/FreedomBox/Hardware/Debian|{{attachment:FreedomBox/Hardware/debian_thumb.png|Debian|width=156,height=201}}]] <<BR>> [[es/FreedomBox/Hardware/Debian|Debian]]||<style="text-align: center;"> [[es/FreedomBox/Hardware/VirtualBox|{{attachment:virtualbox_thumb.png|VirtualBox|width=235,height=154}}]] <<BR>> [[es/FreedomBox/Hardware/VirtualBox|VirtualBox]]||
+||<style="text-align: center;"> [[FreedomBox/Hardware/PineA64+|{{attachment:FreedomBox/Hardware/pine64-plus_thumb.jpg|Pine A64+|width=235,height=213}}]] <<BR>> [[FreedomBox/Hardware/PineA64+|Pine A64+]] ||<style="text-align: center;"> [[FreedomBox/Hardware/BananaPro|{{attachment:FreedomBox/Hardware/banana-pro_thumb.jpg|Banana Pro|width=235}}]] <<BR>> [[FreedomBox/Hardware/BananaPro|Banana Pro]]||<style="text-align: center;"> [[es/FreedomBox/Hardware/OrangePiZero|{{attachment:FreedomBox/Hardware/orange-pi-zero_thumb.jpg|Orange Pi Zero|width=235}}]] <<BR>> [[es/FreedomBox/Hardware/OrangePiZero|Orange Pi Zero]] ||
+||<style="text-align: center;"> [[FreedomBox/Hardware/RockPro64|{{attachment:FreedomBox/Hardware/rockpro64_thumb.jpg|RockPro64|width=235,height=142}}]] <<BR>> [[FreedomBox/Hardware/RockPro64|RockPro64]] ||<style="text-align: center;"> [[FreedomBox/Hardware/Rock64|{{attachment:FreedomBox/Hardware/rock64_thumb.jpg|Rock64|width=235,height=154}}]] <<BR>> [[FreedomBox/Hardware/Rock64|Rock64]]||||
+
+=== Comparativa de Hardware ===
+
+||'''Nombre'''||'''Velocidad CPU (GHz)'''||'''Arquitectura'''||'''RAM (GB)'''||'''disco (GB)'''||'''batería'''||'''SATA'''||'''Velocidad Ethernet'''||'''[[OpenSourceHardware|OSHW]]'''||
+||APU.1D                ||1x2        ||amd64      ||2    ||-           ||-   ||(./)||1000x3||{X} ||
+||APU.1D4               ||1x2        ||amd64      ||4    ||-           ||-   ||(./)||1000x3||{X} ||
+||!BeagleBone Black C   ||1          ||armhf/omap ||½    ||4           ||-   ||-   ||100   ||(./)||
+||Cubieboard2           ||1x2        ||armhf/sunxi||1    ||4           ||(./)||(./)||100   ||{X} ||
+||Cubieboard2-Dual      ||1x2        ||armhf/sunxi||1    ||-           ||(./)||(./)||100   ||{X} ||
+||Cubieboard3/Cubietruck||1x2        ||armhf/sunxi||2    ||8           ||(./)||(./)||1000  ||{X} ||
+||OLinuXino A20 LIME    ||1x2        ||armhf/sunxi||½    ||-           ||(./)||(./)||100   ||(./)||
+||OLinuXino A20 LIME2   ||1x2        ||armhf/sunxi||1    ||-           ||(./)||(./)||1000  ||(./)||
+||OLinuXino A20 MICRO   ||1x2        ||armhf/sunxi||1    ||-           ||(./)||(./)||100   ||(./)||
+||pcDunino3             ||1x2        ||armhf/sunxi||1    ||4           ||(./)||(./)||100   ||{X} ||
+||Pine A64+             ||1.2x4      ||arm64/sunxi||½,1,2||-           ||-   ||-   ||1000  ||{X} ||
+||Banana Pro            ||1.2x2      ||armhf/sunxi||1    ||-           ||-   ||(./)||1000  ||{X} ||
+||Orange Pi Zero        ||?x4        ||armhf/sunxi||¼,½  ||-           ||-   ||-   ||100   ||{X} ||
+||!RockPro64            ||1.4x4+1.8x2||arm64      ||2,4  ||16,32,64,128||-   ||(./)||1000  ||{X} ||
+||Rock64                ||1.5x4      ||arm64      ||1,2,4||16,32,64,128||-   ||(./)||1000  ||{X} ||
+
+
+== Más Hardware ==
+
+=== Más Hardware Operativo ===
+
+Freedombox funciona en este hardware. Pero no se recomienda porque (el hardware) no funciona empleando únicamante [[https://www.gnu.org/philosophy/free-sw.en.html|software libre]]:
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi2|{{attachment:FreedomBox/Hardware/raspberry2_thumb.jpg|Raspberry Pi 2|width=235,height=157}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi2|Raspberry Pi 2]] ||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi3B|{{attachment:FreedomBox/Hardware/raspberrypi3b_thumb.jpg|Raspberry Pi 3 Model B|width=235,height=155}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi3B|Raspberry Pi 3 Model B]] ||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi3B+|{{attachment:FreedomBox/Hardware/raspberrypi3bplus_thumb.jpg|Raspberry Pi 3 Model B+|width=235,height=153}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi3B+|Raspberry Pi 3 Model B+]]||
+||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi4B|{{attachment:FreedomBox/Hardware/raspberrypi4b_thumb.jpg|Raspberry Pi 4 B|width=235,height=156}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi4B|Raspberry Pi 4 B]] || || ||
+
+=== Hardware Soportado mediante Imágenes Genéricas ===
+Si ya tienes un hardware que quieres convertir en una !FreedomBox, no dejes que la corta lista de hardware soportado te desanime. Si estás usando máquinas de arquitectura AMD o Intel puedes descargar las imágenes genéricas de tu arquitectura y funcionarán en cualquier máquina. Para arquitecturas ARM de 32 o 64 bits, tenemos una solución similar.
+
+A partir de Agosto de 2020 comenzamos a compiler imágenes genéricas que funcionan para todas las computadoras monoplaca basadas en una solución que involucra a los estándares UEFI y al firmware  u-boot. Con este enfoque un pequeño firmware específico de la placa residente en una flash SPI o en una tarjeta SD es responsable de cargar una imágen genérica de !FreedomBox puesta en una tarjeta SD, un disco USB, SATA o NVMe. De este modo, busca y obtén un firmware basado en u-boot del fabricante de tu hardware y ponlo en una flash SPI o una tarjeta SD. A continuación, asegúrate de que el kernel de !FreedomBox soporta tu placa y ponlo en cualquiera de los otros discos de almacenamiento. Este enfoque debería funcionar bien para montones de placas que no están listadas específicamente como soportadas. Mira la sección firmware para más detalles.
+
+Nosotros continuamos compilando imágenes especificas para algún hardware como hacíamos antes. Éstas imágenes tienen la ligera ventaja de que son más fáciles de montar porque conllevan menos pasos. Sin embargo intentamos descontinuarlas porque no arrancan desde todos los dispositivos de almacenamiento y consumen nuestro tiempo, limitando así la cantidad de placas que soportamos.
+
+=== Añadir Soporte a Hardware ===
+
+Si tu hardware no esta en la lista anterior pero fuiste capaz de hacerlo funcionar usando el método descrito anteriormente de usar una imágen genérica, escríbenos y lo incluiremos en la lista. Es más, mira la lista de [[CheapServerBoxHardware|hardware objetivo]] con las placas que queremos soportar.
+
+
+== Hardware Obsoleto ==
+
+Este hardware estuvo soportado anteriormente pero ya no.  Si descargaste una imagen anterior y ejecutas !FreedomBox sobre algún hardware de estos, seguirás obteniendo actualizaciones de software.  Sin embargo, no se publicarán imagenes nuevas.  Se recomienda que migres a hardware nuevo y soportado generando una copia de seguridad y restaurándola.
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/DreamPlug|{{attachment:FreedomBox/Hardware/dreamplug_thumb.jpg|DreamPlug|width=235,height=156}}]] <<BR>> [[FreedomBox/Hardware/DreamPlug|DreamPlug]] ||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi|{{attachment:FreedomBox/Hardware/raspberry_thumb.jpg|Raspberry Pi|width=235,height=158}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi|Raspberry Pi]] ||
+
+''Nota'': ''Hardware soportado'' significa que las imágenes de !FreedomBox se construyen para este hardware y al menos un desarrollador ha informado que las funciones básicas funcionan.
+
+
+== Información común sobre Hardware ==
+
+Las siguientes secciones documentan consejos comunes relativos al hardware y periféricos cuando se usan con !FreedomBox.
+
+=== Wi-Fi ===
+
+!FreedomBox puede usar hardware Wi-Fi para 2 propósitos distintos: proporcionar conectividad a internet o compartir conectividad a internet previamente disponible a !FreedomBox (a través de Ethernet, 3G/4G u otro interfaz Wi-Fi) con otros dispositivos de la red. Ver instrucciones sobre cómo configurar !FreedomBox para ambos casos en la página del manual [[es/FreedomBox/Manual/Networks|Redes]].
+
+Desafortunadamente la mayoría de los adaptadores Wi-Fi requieren firmware que no es software libre, por lo que !FreedomBox recomienda conectar [[FreedomBox/Hardware/USBWiFi|dispositivos Wi-Fi USB]] que not requieran firmware privativo. Al configurar las redes, los dispositivos soportados se muestran automáticamente en la lista de intefaces de red.
+
+Si tienes un dispositivo Wi-Fi que requiera firmware privativo y quieres instalarlo para hacerlo funcionar, consulta la [[WiFi|página del wiki]] de Debian. Una vez el  firmware está instalado y se muestra el dispositivo se puede configurar y usar en !FreedomBox.
+
+=== Alimentación eléctrica ===
+
+En computadoras monoplaca uno puede toparse con facilidad con situaciones en las que la placa y sus periféricos no reciban suficiente potencia y fallen de modo impredecible. Para evitarlo, use un adaptador de corriente que suministre la corriente mínima recomendada por el fabricante del hardware. Cuando se conectan periféricos adicionales como  dispositivos Wi-Fi, o discos USB, SATA o NVMe los requisitos de potencia aumentan. Sería preferible una fuente de alimentación que pueda proporcionar más corriente de la necesaria pero el voltaje debe coincidir con exactitud a la especificación del fabricante. Recuerda que algunas fuentes de alimentación baratas no proporcionan la corriente que prometen.
+
+=== Firmware ===
+
+Los ordenadores normales tienen un software que se ejecuta al arranque llamado UEFI/BIOS. Cuando este software, a veces llamado firmware, se encuentra en algúno de los dispositivos de almacenamiento puede cargar el sistema operativo (en nuestro caso !FreedomBox) y pasarle el control. Con la mayoría de las computadoras monoplaca no es así.
+
+Las computadoras monoplaca se suministran con muy poco software que típicamente se limita a cargar un sistema operativo desde tarjetas SD o eMMCs. Normalmente no pueden arrancar desde discos USB, SATA o NVMe. Para remediar esta situación, los fabricantes de hardware empezaron a añadir un dispositivo especial de almacenamiento de unos pocos MiB de tamaño llamado flash SPI con un software especial, típicamente basado en un cargador de arranque libre y de código abierto llamado u-boot, y que aquí llamaremos firmware. Cuando se enciende la computadora arranca el cargador de la flash SPI que a su vez cargará el sistema operativo. Como el firmware es mucho más potente, puede cargar el sistema operativo desde cualquier dispositivo de almacenamiento. Entre los ejemplos de computadoras monoplaca con flash SPI se incluyen la A20-OLinuXino-Lime2 y la !RockPro64.
+
+Este enfoque de firmware se puede usar incluso sin flash SPI. Pongamos que uno quiere arrancar desde un disco USB pero la placa no lo soporta. Se puede instalar el firmware en una tarjeta SD (basta una muy pequeña) e insertarla en la placa. El disco USB contendrá a !FreedomBox. Al encender la placa arranca el firmware desde la tarjeta SD y este inicia el sistema operativo desde el disco USB o cualquier otra unidad de almacenamiento.
+
+Este enfoque de firmware también nos permite usar imágenes genéricas que funcionan para una gran cantidad de placas. Aunque aumentan un poco el esfuerzo del usuario tiene la ventaja de permitirnos dar soporte a mucho más hardware y permiten poner el sistema operativo en cualquier unidad de almacenamiento.
+
+Cuando se necesite un firmware especial para alguna computadora monoplaca el manual de !FreedomBox para esa placa detallará cómo obtenerlo e instalarlo antes de proceder a la installación de !FreedomBox.
+
+=== Almacenamiento ===
+
+!FreedomBox puede ejecutarse desde varios medios de almacenamiento que soporte tu computadora. Elegir el medio consiste en equilibrar fiabilidad, capacidad y velocidad vs.  coste. Para ejecutar !FreedomBox se recomienda una capacidad mínima de almacenamiento de 8GB.
+
+==== Tarjeta Digital Segura (SD) ====
+
+Las tarjetas SD son habituales en las computadoras monoplaca. La mayoría de computadoras monoplaca pueden arrancar directamente desde una tarjeta SD sin necesidad de preparativos adicionales.
+
+Las tarjetas SD suelen ser el medio de almacenamiento más lento de entre los disponibles. !FreedomBox será más lento ejecutando ciertas operaciones en estos discos. No todas las tarjetas SD tienen rendimientos similares; las hay mucho más rápidas que otras. Al comprar una tarjeta SD elije una de clase 10 o mayor (suele figurar escrita sobre la tarjeta como un número inscrito en un círculo) o una de clase UHS 1 (escrita sobre la tarjeta como un 1 dentro de un cubo). Las clases UHS 3 (escrita sobre la tarjeta como un 3 dentro de un cubo) o application speed class 1 o superior (escrita como A1 o A2) irán mucho mejor. Finalmente los usuarios de !FreedomBox han informado casos en los que algunas tarjetas SD han fallado, por lo que para mayor fiabilidad serían preferibles otros medios de almacenamiento.
+
+==== Tarjeta MultiMedia Empotrada (eMMC) ====
+
+Muchas computadoras monoplaca de nuevo cuño soportan tarjetas eMMC. La mayoría de computadoras monoplaca pueden arrancar directamente desde una tarjeta eMMC sin necesidad de preparativos adicionales.
+
+A veces la eMMC viene soldada a la placa y tendrás que elegir su tamaño al comprar la placa; por ejemplo con la Olimex's A20-OLinuXino-Lime2. Otras veces el fabricante las proporcionará como periférico insertable y en tal caso puedes elegir la eMMC a posteriori o sustituir la que haya por otra de capacidad superior. No andes poniendo y quitandolas demasiado. Tienen un número muy limitado (< 100) de ciclos de reinicio.
+
+Las eMMC son mucho más veloces que las SD o los HDDs de discos rotatorios pero son significativamente más lentas que los SSDs. Estas tiene velocidades de escritura aleatoria  mucho mejores, lo que es necesario en muchas operaciones de !FreedomBox. En general son preferibles a las SD.
+
+La imágen de !FreedomBox se puede montar en una eMMC de 2 maneras. Para eMMC insertables hay disponibles conversores de eMMC a USB. Suelta la eMMC de la placa, insertala en un conversor USB y este en tu máquina, y escribe !FreedomBox en ella como harías con una SD. Si la eMMC viene integrada arranca la computadora desde otra unidad, como una  SD o un disco USB. Da igual el sistema operativo. Tras arrancar la eMMC se mostrará como disco adicional. [[es/FreedomBox/Download|Descarga]] y escribe la imágen de !FreedomBox  en la eMMC como harías con una SD.
+
+==== Unidad de disco USB ====
+
+La mayoría de ordenadores y computadoras monoplaca tienen puertos USB que aceptan medios de almacenamiento como unidades flash USB, SSDs o HDDs.
+
+Una unidad flash USB puede también servir para ejecutar !FreedomBox. Las unidades flash USB 2.0 son mucho más lentas y de rendimiento comparable a las tarjetas SD. Las USB 3.0 rinden mucho mejor. Las unidades flash USB y las tarjetas SD usan una tecnología similar de modo que sus ciclos de lectoescritura y por tanto su fiabilidad adolecen de las mismas limitaciones.
+
+Aparte de unidades flash USB, se pueden insertar discos de estado sólido (SSDs) y discos duros (HDDs) en los puertos USB, ya sea comprando unidades con interfaz USB o usando adaptadores como de USB a SATA o de USB a interfaz M.2. Tanto los SSDs como los HDDs tienen una fiabilidad mucho mayor que las tarjetas SD, eMMC o las unidades flash USB por lo que son preferibles cuando se pueda elegir. Además, las SSDs proporcionan un rendimiento excelente conectadas a través de interfaces USB 3.0.
+
+Al conectar SSDs y HDDs a puertos USB de computadoras monoplaca hay que prestar atención al suministro eléctrico de la unidad de almacenamiento. Si la unidad viene con alimentador propio no hay problema pero si no es así asegúrate de que la monoplaca es capaz de alimentarla comprobando las especificaciones de alimentación de ambas. Usa siempre un adaptador de corriente para la placa que pueda suministrarle siempre la intensidad de corriente mínima recomendada por su fabricante. Son preferibles los adaptadores que puedan suministrar mayor intensidad pero el voltaje debe coincidir exáctamente con la especificación del fabricante. Recuerda que algunas fuentes de alimentación baratas no suministran la intensidad de corriente que prometen.
+
+Montar la imágen de !FreedomBox en una unidad USB (flash, SSD o HDD) puede resultar sencillo dado que la mayoría de los ordenadores tienen puertos USB. Inserta la unidad USB en tu ordenador, [[es/FreedomBox/Download|descarga]] y escribe la imágen de !FreedomBox en la unidad USB. A diferencia de los ordenadores portátiles, los de sobremesa, y las máquinas virtuales, que pueden arrancar desde discos USB, muchas computadoras monoplaca no pueden. Para solucionarlo se necesita un firmware adicional. Consulta la sección ''firmware''.
+
+==== Unidad de disco SATA ====
+
+Algunos ordenadores soportan el interfaz SATA para conectar unidades de estado sólido (SSD) o de disco duro (HDD). La Olimex's A20-OLinuXino-Lime2 es un ejemplo de computadora monoplaca con soporte SATA. El protocolo SATA se usa también para puertos mSATA o ranuras M.2 (con llaves B o M). Tanto las SSDs como los HDDs tienen una fiabilidad muy superior a la de las tarjetas SD, eMMC o unidades flash USB. El interfaz SATA proporciona ratios de transferencia de datos muy buenos (aunque no tanto como las unidaes NVMe basadas en PCIe), por lo que cuando se pueda elegir son preferibles a las tarjetas SD, eMMC o unidades flash USB. 
+
+Al conectar SSDs y HDDs a puertos SATA de computadoras monoplaca hay que prestar atención al suministro eléctrico de la unidad de almacenamiento. Si la unidad viene con alimentador propio no hay problema pero si no es así asegúrate de que la monoplaca es capaz de alimentarla comprobando las especificaciones de alimentación de ambas. Usa siempre un adaptador de corriente para la placa que pueda suministrarle siempre la intensidad de corriente mínima recomendada por su fabricante. Son preferibles los adaptadores que puedan suministrar mayor intensidad pero el voltaje debe coincidir exáctamente con la especificación del fabricante. Recuerda que algunas fuentes de alimentación baratas no suministran la intensidad de corriente que prometen.
+
+Para montar la imágen de !FreedomBox en una unidad SATA arranca la computadora con otro medio que no sea el disco SATA, como una tarjeta SD. Da igual el sistema operativo. Tras arrancar el disco SATA se mostrará como disco adicional. [[FreedomBox/Download|Descarga]] y escribe la imágen de !FreedomBox en él como harías con una SD. A diferencia de los ordenadores portátiles, los de sobremesa, y las máquinas virtuales, que pueden arrancar directamente desde discos SATA, muchas computadoras monoplaca no pueden. Para solucionarlo se necesita un firmware adicional. Consulta la sección ''firmware''.
+
+==== Unidad de disco NVMe ====
+
+La mayoría de ordenadores portátiles y de sobreesa, y algunas computadoras monoplaca soportan el interfaz NVMe para conectar una unidad de estado sólido (SSD)ya sea mediante una ranura M.2 (con llave B o M) o una PCIe. Si viene con ranura PCIe se puede emplear un adaptador PCIe a M.2 para acomodar una unidad NVMe. La placa Radxa's Rock Pi 4 es un ejemplo de computadora monoplaca con ranura M.2. Un ejemplo de computadora monoplaca con ranura PCIe es la !RockPro64 de Pine64. Las SSD basadas en NVMe tienen una fiabilidad muy superior a las tarjetas SD, eMMC o unidades flash USB. Las unidades NVMe proporcionan los mejores ratios de transferencia de datos, por lo que cuando se pueda elegir son preferibles a cualquier otra alternativa.
+
+
+Al conectar unidades NVMe a computadoras monoplaca hay que prestar atención al suministro eléctrico de la unidad de almacenamiento. Asegúrate de que la monoplaca es capaz de alimentarla comprobando las especificaciones de alimentación de ambas. Usa siempre un adaptador de corriente para la placa que pueda suministrarle siempre la intensidad de corriente mínima recomendada por su fabricante. Son preferibles los adaptadores que puedan suministrar mayor intensidad pero el voltaje debe coincidir exáctamente con la especificación del fabricante. Recuerda que algunas fuentes de alimentación baratas no suministran la intensidad de corriente que prometen.
+
+Para montar la imágen de !FreedomBox en una unidad NVMe arranca la computadora con otro medio que no sea el disco NVMe, como una tarjeta SD. Da igual el sistema operativo. Tras arrancar el disco NVMe se mostrará como disco adicional. [[FreedomBox/Download|Descarga]] y escribe la imágen de !FreedomBox en él como harías con una SD. A diferencia de los ordenadores portátiles, los de sobremesa, y las máquinas virtuales, que pueden arrancar directamente desde unidades NVMe, muchas computadoras monoplaca no pueden. Para solucionarlo se necesita un firmware adicional. Consulta la sección ''firmware''.
+
+== Compilar tus propias imágenes ==
+
+Todas las imágenes de disco de !FreedomBox para hardware diferente las compila el proyecto usando una herramienta conocida como [[FreedomBox/Maker|Freedom Maker]]. Si por algún motivo quieres compilar tus propias imágenes en vez de descargar las disponibles emplea esta herramienta. El archivo README del proyecto proporciona información acerca de la lista de objetivos de compilación hardware disponibles y cómo compilar imágenes.
+
+=== Estado del software empleado ===
+
+ * Todo el software de las imágenes !FreedomBox viene de los repositorios Debian. El script [[FreedomBox/Maker|Freedom Maker]] realiza ajustes menores.
+ * Todo el software de las imágenes es software libre que cumple la DFSG excepto en el caso de las imágenes para la Raspberry Pi en las que el paquete de firmware no es software libre.
+ * Todas las imágenes usan el kernel Linux de Debian que a su vez se basa en el kernel Linux principal.
+
+
+## END_INCLUDE
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
+
+Las imágenes están licenciadas bajo varias licencias creative commons.  Más información de autoría en cada página enlazada.

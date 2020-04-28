@@ -1,0 +1,44 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Apache_userdir|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Sitios Web de Usuario (User websites) ==
+
+=== ¿Qué es User websites? ===
+
+''User websites'' es un módulo del servidor web ''Apache'' habilitado para permitir a los usuarios definidos en el sistema !FreedomBox exponer un conjunto de archivos del sistema de ficheros de !FreedomBox como sitio web a la red local y/o a internet de acuerdo a la configuración de la red y el cortafuegos.
+
+||||<tablestyle="border:1px solid black;width: 80%">'''Datos básicos de la aplicación'''||
+||Categoría|| Compartición de archivos ||
+||Disponible desde la versión || 0.9.4||
+||Sitio web del proyecto original || https://httpd.apache.org/docs/2.4/mod/mod_userdir.html||
+||Documentación original de usuario || https://httpd.apache.org/docs/2.4/howto/public_html.html||
+
+=== Captura de pantalla ===
+
+/* Añadir cuando/si se crea un interfaz para FreedomBox */
+
+=== Usar User websites ===
+
+El módulo está siempre activado y el interfaz web de !FreedomBox no ofrece configuración ni página de estado para este módulo.
+Para servir documentos con el módulo solo se necesita poner los documentos en un subdirectorio designado '''`/home/<un_usuario_de_plinth>/public_html`'''.
+
+`User websites` servirá los archivos que haya en este directorio cuando se reciban peticiones con la URI `~<un_usuario_de_freedombox>`. Por tanto para un dominio `ejemplo.org` con un usuario `pepe` una petición `ejemplo.org/~pepe/index.html` transferirá el fichero `/home/pepe/public_html/index.html`.
+
+
+=== Usar SFTP para crear public_html y subir archivos ===
+
+/* Pendiente de redactar */
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

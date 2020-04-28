@@ -1,0 +1,134 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/OpenVPN|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== OpenVPN (Red Privada Virtual) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/OpenVPN/OpenVPN-icon_en_V01.png|icono de OpenVPN}} ||
+
+'''Disponible desde''': versión 0.7
+
+=== ¿Qué es OpenVPN? ===
+
+''OpenVPN'' proporciona un servicio de red privada virtual a tu !FreedomBox. Puedes usar este software para acceso remoto, VPNs punto-a-punto y seguridad Wi-Fi. OpenVPN incluye soporte para direcciones IP dinámicas y NAT.
+
+=== Redirección de puertos ===
+
+Si tu !FreedomBox está detrás de un router necesitarás configurar la redirección de puertos en tu router. Debes redirigir los siguientes puertos para OpenVPN:
+ * UDP 1194
+
+=== Configurar ===
+
+ 1. En el menú de apps de !FreedomBox selecciona ''Red Privada Virtual (OpenVPN)'' y haz clic en Instalar.
+
+ 1. Tras instalar el módulo todavía queda un paso de configuración que puede llevar largo tiempo completar. Haz clic en "Iniciar configuración" para empezar.
+
+ {{attachment:plinth_openvpn.png|OpenVPN service page|width=800}}
+	
+ 1. Espera a que termine la configuración. Puede tardar un rato.
+
+ 1. Una vez completada la configuración del servidor OpenVPN puedes descargar tu perfil. Esto descargará un archivo llamado `<usuario>.ovpn`, siendo <usuario> un usuario de !FreedomBox. Todos los usuarios de !FreedomBox podrán descargar un perfil propio y diferente. Los usuarios que no sean administradores pueden descargar el perfil desde la portada después de ingresar.
+ 
+ 1. El archivo ovpn contiene toda la información que necesita un cliente vpn para conectar con un servidor.
+ 
+ 1. El perfil descargado contiene el nombre de dominio de !FreedomBox al que debe conectarse el cliente. Este se obtiene del dominio configurado en la sección 'Configuración' de la página de 'Sistema'. En caso de que tu dominio no esté configurado adecuadamente quizá necesites cambiar este valor después de descargar el perfil. Si tu cliente OpenVPN lo permite puedes hacer esto después de importar el perfil OpenVPN. De lo contrario puedes editar el perfil .ovpn con un editor de texto y cambiar la línea 'remote' para que contenga la dirección IP WAN o el hostname de tu !FreedomBox como se indica aquí.
+
+ {{{ 
+client
+remote tu.freedombox.org 1194
+proto udp
+}}}
+
+=== Navegar por Internet tras conectar a una VPN ===
+
+Tras conectar a la VPN el dispositivo cliente podrá navegar por Internet sin más configuración adicional. No obstante una pre-condición para que esto funcione es que necesitas tener al menos 1 interfaz (tarjeta) de red conectado a Internet en la zona ''Externa'' del cortafuegos. Usa la página de configuración de redes para editar la zona del cortafuegos con los interfaces (tarjetas) de red del dispositivo.
+
+=== Uso ===
+
+==== En Android/LineageOS ====
+
+ 1. Visita la página principal de !FreedomBox. Ingresa con tu cuenta de usuario. Desde la página principal descarga el perfil OpenVPN. El archivo se llamará `<usuario>.ovpn`.
+
+  {{attachment:openvpn_download_profile.png|OpenVPN Download Profile|width=324}}
+
+ 1. Descarga un cliente OpenVPN como ''OpenVPN for Android''. Se recomienda el repositorio [[https://f-droid.org|F-Droid]]. En la app, selecciona ''Importar perfil''.
+
+  {{attachment:openvpn_install_app.png|OpenVPN App|width=324}}
+
+ 1. En el diálogo ''Seleccionar perfil'' elige el archivo `<usuario>.opvn` que acabas de descargar. Pon un nombre a la conexión y graba el perfil.
+
+  {{attachment:openvpn_import_profile.png|OpenVPN import profile|width=324}}
+
+ 1. El perfil recién creado aparecera. Si hace falta edita el perfil y pon el nombre de dominio de tu !FreedomBox como dirección de servidor.
+
+  {{attachment:openvpn_profile_created.png|OpenVPN profile created|width=324}}
+
+  {{attachment:openvpn_edit_domain_name.png|OpenVPN edit domain name|width=324}}
+
+ 1. Conecta haciendo clic sobre el perfil.
+
+  {{attachment:openvpn_connect.png|OpenVPN connect|width=324}}
+
+  {{attachment:openvpn_connected.png|OpenVPN connected|width=324}}
+
+ 1. Cuando esté desconecta haciendo clic sobre el perfil.
+
+  {{attachment:openvpn_disconnect.png|OpenVPN disconnect|width=324}}
+
+==== En Debian ====
+
+Instala un cliente OpenVPN para tu sistema
+{{{
+$ sudo apt install openvpn
+}}}
+Abre el archivo ovpn con el cliente OpenVPN.
+{{{
+$ sudo openvpn --config /ruta/a/<usuario>.ovpn
+}}}
+Si te sale un error como `configuration error: invalid 1th argument to “proto” (line 5)` edita el fichero .ovpn y elimina la línea `proto udp6`.
+
+=== Comprobar si estás conectado ===
+
+==== En Debian ====
+
+  1. Trata de hacer ping a tu !FreedomBox u otros dispositivos de tu red.
+  1. El comando `ip addr` debe mostrar una conexión `tun0`.
+  1. El comando `traceroute freedombox.org` debiera mostrar la dirección IP del servidor VPN como primer salto.
+
+Si usas `Network Manager` puedes crear una conexión nueva importando el fichero:
+{{{
+$ sudo apt install network-manager-openvpn-gnome
+$ sudo nmcli connection import type openvpn file /ruta/a/<USUARIO>.ovpn
+}}}
+
+=== Acceso a servicios internos ===
+
+Tras conectar por OpenVPN, podrás acceder a algunos servicios !FreedomBox restringidos a acceso interno, además de a los de acceso externo. Esto se puede hacer usando la dirección IP 10.91.0.1 como hostname para esos servicios.
+
+Los siguientes servicios '''funcionan''' con OpenVPN:
+ * [[es/FreedomBox/Manual/Privoxy|Privoxy]],
+ * [[es/FreedomBox/Manual/Tor|Tor Socks]],
+ * [[es/FreedomBox/Manual/Shadowsocks|Shadowsocks]],
+ * [[es/FreedomBox/Manual/I2P|I2P Proxy]] and
+ * [[FreedomBox/Manual/Samba|Samba]].
+
+Algunos servicios '''no''' funcionan aún con OpenVPN:
+ * Avahi,
+ * [[es/FreedomBox/Manual/Bind|bind]] and
+ * [[es/FreedomBox/Manual/MiniDLNA|MiniDLNA]].
+
+=== Enlaces Externos ===
+
+https://community.openvpn.net/openvpn
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -1,0 +1,93 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/TinyTinyRSS|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Tiny Tiny RSS (News Feed Reader) ==
+||<tablestyle="float: right;"> {{attachment:TinyTinyRSS-icon_en_V01.png|Tiny Tiny RSS icon}} ||
+
+'''Available since''': version 0.9
+
+Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to allow reading news from any location, while feeling as close to a real desktop application as possible.
+
+Any user created through !FreedomBox web interface will be able to login and use this app.  Each user has their own feeds, state and preferences.
+
+=== Using the Web Interface ===
+
+When enabled, Tiny Tiny RSS will be available from ''/tt-rss'' path on the web server. Any user created through !FreedomBox will be able to login and use this app. 
+
+{{attachment:ttrss.png|Tiny Tiny RSS|width=800}}
+
+==== Adding a new feed ====
+
+1. Go to the website you want the RSS feed for and copy the RSS/Atom feed link from it.
+
+{{attachment:Select-RSS-feed.png|Selecting feeds|width=800}}
+
+2. Select "Subscribe to feed.." from the Actions dropdown.
+
+{{attachment:Subscribe-to-feed.png|Subscribe to feed}}
+
+3. In the dialog box that appears, paste the URL for copied in step 1 and click the '''Subscribe''' button.
+
+{{attachment:Subscribe-dialog.png|Subscription dialog box|width=800}}
+
+Give the application a minute to fetch the feeds after clicking Subscribe.
+
+In some websites, the RSS feeds button isn't clearly visible. In that case, you can simply paste the website URL into the Subscribe dialog (step 3) and let TT-RSS automatically detect the RSS feeds on the page. 
+
+You can try this now with the homepage of [[https://en.wikinews.org/wiki/Main_Page|WikiNews]]
+
+As you can see in the image below, TT-RSS detected and added the Atom feed of !WikiNews to our list of feeds.
+
+{{attachment:WikiNews-feed.png|WikiNews feed added}}
+
+If you don't want to keep this feed, right click on the feed shown in the above image, select '''Edit feed''' and click '''Unsubscribe''' in the dialog box that appears.
+
+{{attachment:Unsubscribe.png|Unsubscribe from a feed|width=800}}
+
+
+==== Importing your feeds from another feed reader ====
+
+In your existing feed reader, find an option to ''Export'' your feeds to a file. Prefer the OPML file format if you have to choose between multiple formats. Let's say your exported feeds file is called Subscriptions.opml
+
+Click on the ''Actions'' menu at the top left corner and select ''Preferences''. You will be taken to another page.
+
+Select the second tab called ''Feeds'' in the top header. Feeds has several sections. The second one is called ''OPML''. Select it.
+
+{{attachment:OPML.png| OPML feeds page|width=960}}
+
+To import your Subscriptions.opml file into TT-RSS,
+ 1. Click ''Browse'' and select the file from your file system
+ 2. Click ''Import my OPML''
+
+After importing, you'll be taken to the '''Feeds''' section that's above the OPML section in the page. You can see that the feeds from your earlier feed reader are now imported into Tiny Tiny RSS. You can now start using Tiny Tiny RSS as your primary feed reader. 
+
+In the next section, we will discuss setting up the mobile app, which can let you read your feeds on the go.
+
+=== Using the Mobile App ===
+
+The official Android app from the Tiny Tiny RSS project works with !FreedomBox's Tiny Tiny RSS Server. The older TTRSS-Reader application is known '''not''' to work. 
+
+The official Android app is unfortunately only available on the Google Play Store and not on F-Droid. You can still obtain the source code and build the apk file yourself.
+
+To configure, first install the application, then in the setting page, set URL as ''https://<your.freedombox.address>/tt-rss-app/''.  Set your user name and password in the Login details as well as HTTP Authentication details.  If your !FreedomBox does not have a valid HTTPS certificate, then in settings request allowing any SSL certificate and any host.
+
+{{attachment:ttrssapp1.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp2.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp3.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp4.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp5.png|Tiny Tiny RSS|width=288}}
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

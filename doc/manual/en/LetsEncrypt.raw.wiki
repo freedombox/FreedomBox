@@ -1,0 +1,58 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/LetsEncrypt|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Let's Encrypt (Certificates) ==
+
+A digital certificate allows users of a web service to verify the identity of the service and to securely communicate with it. !FreedomBox can automatically obtain and setup digital certificates for each available domain. It does so by proving itself to be the owner of a domain to Let's Encrypt, a certificate authority (CA).
+
+Let's Encrypt is a free, automated, and open certificate authority, run for the public's benefit by the Internet Security Research Group (ISRG). Please read and agree with the Let's Encrypt Subscriber Agreement before using this service.
+
+=== Why using Certificates ===
+
+The communication with your !FreedomBox can be secured so that it is not possible to intercept the content of the web pages viewed and about the content exchanged. 
+
+=== How to setup ===
+
+ 1. If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports:
+  * TCP 80 (http)
+  * TCP 443 (https)
+
+ 1. Make the domain name known:
+  * In [[../Configure|Configure]] insert your ''domain name'', e.g. ''`MyWebName.com`''
+
+  {{attachment:LetsEncrypt-Configure.png|Let's Encrypt|width=800}}
+
+ 1. Verify the domain name was accepted
+  * Check that it is enabled in [[../NameServices|Name Services]]
+
+  {{attachment:LetsEncrypt-NameServices.png|Let's Encrypt Name Services|width=800}}
+
+ 1. Go to the Certificates (Let's Encrypt) page, and complete the module install if needed. Then click the "Obtain" button for your domain name.
+  * After some minutes a valid certificate is available
+  {{attachment:LetsEncrypt.png|Let's Encrypt|width=800}}
+
+ 1. Verify in your browser by checking ''`https://MyWebName.com`''
+  {{attachment:LetsEncrypt-Certificate.png|Let's Encrypt Certificate|width=800}}
+
+'''Screencast''': [[attachment:Let's Encrypt.webm|Let's Encrypt|&do=get]]
+
+=== Using ===
+
+The certificate is valid for 3 months. It is renewed automatically and can also be re-obtained or revoked manually.
+
+With running ''diagnostics'' the certificate can also be verified.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

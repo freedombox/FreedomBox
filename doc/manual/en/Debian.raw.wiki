@@ -1,0 +1,87 @@
+#language en
+#pragma section-numbers 2
+~-[[DebianWiki/EditorGuide#translation|Translation(s)]]:  [[de/FreedomBox/Hardware/Debian|Deutsch]] - English - [[es/FreedomBox/Hardware/Debian|Español]]-~
+
+## BEGIN_INCLUDE
+
+== Debian ==
+
+##{{attachment:debian.png|Debian|width=425,height=546}}
+
+!FreedomBox is a [[DebianPureBlends|pure blend]] of Debian.  This means that all the work on !FreedomBox is available in Debian as packages.  It also means that any machine running Debian can be turned into a !FreedomBox.
+
+This page describes the process of installing !FreedomBox on a Debian system. Currently, !FreedomBox works in Debian Stable (Buster), Testing (Bullseye), and Unstable (Sid).
+
+'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this approach.
+
+{{{#!wiki caution
+'''Use a fresh Debian installation'''
+
+Installing !FreedomBox changes your Debian system in many important ways.  This includes installing a firewall and regenerating server certificates.  It is hence recommended that you install !FreedomBox on a fresh Debian installation instead of an existing setup.
+}}}
+
+{{{#!wiki caution
+'''Console/GUI logins for non-admin users will be disabled'''
+
+After !FreedomBox is fully setup, your system will no longer allow users not belonging to the ''admin'' group to log in to the system via console, secure shell (SSH) or graphical login. This behaviour can be disabled from the [[FreedomBox/Manual/Security|Security]] page. Use the administrator account created during !FreedomBox first boot for console logins and add further user accounts to ''admin'' group, if necessary.
+}}}
+
+=== Installing on Debian 10.0 (Buster) or newer ===
+
+Check the Troubleshooting section below, for any tips or workarounds that might help during the install.
+
+ 1. [[InstallingDebianOn|Install Debian]] 10.0 (Buster), or Unstable (Sid) on your hardware.
+
+ 1. Update your package list.
+
+ {{{
+$ sudo apt-get update
+ }}}
+
+ 1. Install `freedombox` package.
+
+ {{{
+$ sudo DEBIAN_FRONTEND=noninteractive apt-get install freedombox
+ }}}
+
+  * The "DEBIAN_FRONTEND=noninteractive" will avoid several configuration prompts that would otherwise appear during the install.
+
+ 1. During the installation, you will be provided a secret key that needs to be entered during the initial configuration process. Note this down. The secret can also be read at a later time from the file `/var/lib/plinth/firstboot-wizard-secret`.
+
+ 1. You can start [[FreedomBox/Manual/QuickStart|using]] !FreedomBox. During initial wizard, you will need to enter the secret noted above.
+
+=== Tips and Troubleshooting ===
+
+ 1. !FreedomBox uses !NetworkManager to manage network configuration. If you have configured your network interfaces using Debian installer or by editing `/etc/network/interfaces`, !FreedomBox will not manage those interfaces. (See [[https://bugs.debian.org/797614|bug #797614]].)  To let !FreedomBox/NetworkManager manage your network interfaces, edit the `/etc/network/interfaces` manually and ensure that it contains only the following:
+
+ {{{
+auto lo
+iface lo inet loopback
+}}}
+
+ If you have already completed the setup process without doing this step, you will need to clear out the `/etc/network/interfaces` file keeping only the above lines.  Then perform a reboot.  On Debian 9 (Stretch), after this network connections configured by the `setup` step above will configure your network.  Network interfaces will then be in the `internal` or `external` firewall zone.  This is essential for the !FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the `nmtui` command if you wish. 
+
+ 1. !FreedomBox will use an automatically configured IP address by default. You can assign a static IP address if necessary. Network configuration changes can be done using !FreedomBox web interface or by using the `nmtui` or `nmcli` commands. `nmcli` can be used as follows:
+
+ {{{
+  nmcli con mod "Ethernet connection 1"  \
+  ipv4.addresses A.A.A.A/X  \
+  ipv4.gateway G.G.G.G  \
+  ipv4.dns N.N.N.N  \
+  ipv4.dns-search somedomain.com  \
+  ipv4.method "manual"  \
+  ipv4.ignore-auto-dns yes  \
+  ipv6.method ignore
+}}}
+
+ ...with the block capitals and somedomain.com replaced with your actual address, mask description, gateway and dns server details.
+
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
+
+See the [[https://www.debian.org/logos/|Debian logo]] page for information on its copyright.
