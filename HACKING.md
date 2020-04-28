@@ -14,6 +14,14 @@ can install latest versions of Git, Vagrant and VirtualBox.
    ```bash
    $ sudo apt install git virtualbox vagrant
    ```
+   
+   For some distro you might need to add Oracle's VirtualBox source
+   (https://download.virtualbox.org/virtualbox/debian) to apt's sources list
+   (typically in /etc/apt/sources.list file) and its key:
+   
+   ```bash
+   $ sudo wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+   ```
 
 ### For Other GNU/Linux Distributions or *BSDs
 
