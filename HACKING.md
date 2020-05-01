@@ -15,12 +15,37 @@ can install latest versions of Git, Vagrant and VirtualBox.
    $ sudo apt install git virtualbox vagrant
    ```
 
-   For some distro you might need to add Oracle's VirtualBox source
-   (https://download.virtualbox.org/virtualbox/debian) to apt's sources list
-   (typically in /etc/apt/sources.list file) and its key:
+#### Installing VirtualBox manually
+
+1. Add Oracle's key to apt's list of accepted keys.
 
    ```bash
    $ sudo wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+   ```
+
+2. Create a file under /etc/apt/sources.list.d/ for virtualbox package.
+
+
+   ```bash
+   $ sudo touch /etc/apt/sources.list.d/virtualbox.list
+   ```
+
+3. Add the relevant source for your Debian/derivative distribution into the above file.
+
+Example for Buster:
+   ```
+   deb https://download.virtualbox.org/virtualbox/debian buster contrib
+   ```
+
+4. Search and install the latest virtualbox package.
+
+   ```bash
+   $ apt search virtualbox
+
+       # virtualbox-6.1
+       # virtualbox-6.0
+
+   $ sudo apt install virtualbox-6.1
    ```
 
 ### For Other GNU/Linux Distributions or *BSDs
