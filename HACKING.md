@@ -54,14 +54,14 @@ Example for Buster:
 
 ### For macOS
 
-1. Install [Brew](https://brew.sh/).
+1. Install [Homebrew](https://brew.sh/).
 
-2. Install Git, Vagrant and VirtualBox using Brew.
+2. Install Git, VirtualBox and Vagrant using Homebrew.
 
    ```bash
    $ brew install git
-   $ brew cask install vagrant
    $ brew cask install virtualbox
+   $ brew cask install vagrant
    ```
 
 ### For Windows
