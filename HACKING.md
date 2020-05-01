@@ -66,7 +66,7 @@ and requires about 4.5 GB of disk space.
 1.  Checkout FreedomBox Service (Plinth) source code using Git.
 
     ```bash
-    host$ git clone https://salsa.debian.org/freedombox-team/plinth.git
+    host$ git clone https://salsa.debian.org/freedombox-team/freedombox.git
     host$ cd plinth
     ```
 
@@ -265,12 +265,12 @@ vm$ make -C doc
 ## Repository
 
 FreedomBox Service (Plinth) is available from
-[salsa.debian.org](https://salsa.debian.org/freedombox-team/plinth).
+[salsa.debian.org](https://salsa.debian.org/freedombox-team/freedombox).
 
 ## Bugs & TODO
 
 You can report bugs on FreedomBox Service's (Plinth's) [issue
-tracker](https://salsa.debian.org/freedombox-team/plinth/issues).
+tracker](https://salsa.debian.org/freedombox-team/freedombox/issues).
 
 See CONTRIBUTING.md for information how to best contribute code.
 
