@@ -55,6 +55,15 @@ clients = validate([{
         'store_name': 'app-store',
         'url': 'https://itunes.apple.com/dk/app/mumblefy/id858752232'
     }]
+}, {
+    'name':
+        _('Mumla'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', 'se.lublin.mumla')
+    }]
 }])
 
 backup = validate_backup({'data': {'directories': ['/var/lib/mumble-server']}})
