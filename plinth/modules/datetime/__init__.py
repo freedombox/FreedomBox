@@ -82,7 +82,9 @@ class DateTimeApp(app_module.App):
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(_diagnose_time_synchronized())
+        if self._is_time_managed():
+            results.append(_diagnose_time_synchronized())
+
         return results
 
 
