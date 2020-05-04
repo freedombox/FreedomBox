@@ -62,7 +62,7 @@ def index(request):
     return TemplateResponse(
         request, 'snapshot.html', {
             'app_info': snapshot_module.app.info,
-            'title': snapshot_module.app.info,
+            'title': snapshot_module.app.info.name,
             'subsubmenu': subsubmenu,
             'form': form
         })
