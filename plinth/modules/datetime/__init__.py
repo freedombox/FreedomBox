@@ -87,6 +87,10 @@ class DateTimeApp(app_module.App):
 
         return results
 
+    def has_diagnostics(self):
+        """Return that app has diagnostics only when time is managed."""
+        return self._is_time_managed()
+
 
 def init():
     """Initialize the date/time module."""
