@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-20 17:53-0400\n"
+"POT-Creation-Date: 2020-05-04 19:59-0400\n"
 "PO-Revision-Date: 2020-04-25 14:11+0000\n"
 "Last-Translator: Joseph Nuthalapati <njoseph@riseup.net>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -701,10 +701,10 @@ msgstr "IP చిరునామా"
 msgid "Refresh IP address and domains"
 msgstr "IP చిరునామా మరియు డొమైన్‌లను రిఫ్రెష్ చేయండి"
 
-#: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:42
-#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/openvpn/views.py:133 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:30 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
@@ -969,6 +969,52 @@ msgstr "గరిష్ట ఫైలు పరిమాణం నవీకరి
 msgid "Failed to update maximum file size"
 msgstr "గరిష్ట ఫైలు పరిమాణము మార్చుట విఫలమయ్యెను"
 
+#: plinth/modules/coturn/__init__.py:31
+msgid ""
+"Coturn is a server to facilitate audio/video calls and conferences by "
+"providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
+"other communication servers can use it to establish a call between parties "
+"who are otherwise unable connect to each other."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:35
+msgid ""
+"It is not meant to be used directly by users. Servers such as matrix-synapse "
+"need to be configured with the details provided here."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:64
+msgid "Coturn"
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:65
+msgid "VoIP Helper"
+msgstr ""
+
+#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "ఉప డోమైన్ పేరు"
+
+#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+"TLS ఉపయోగించడం కొరకు ఒక డొమైన్ ఎంచుకోండి. ఒకవేళ జాబితా ఖాళీగా ఉన్నట్లయితే, దయచేసి సర్టిఫికేట్ లతో కనీసం "
+"ఒక డొమైన్ ని కాన్ఫిగర్ చేయండి."
+
+#: plinth/modules/coturn/templates/coturn.html:15
+msgid "Use the following URLs to configure your communication server:"
+msgstr ""
+
+#: plinth/modules/coturn/templates/coturn.html:26
+#, fuzzy
+#| msgid "The following disks are in use:"
+msgid "Use the following shared authentication secret:"
+msgstr "క్రింది డిస్కులు ఉపయోగంలో ఉన్నాయి:"
+
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
 "Network time server is a program that maintains the system time in "
@@ -977,11 +1023,11 @@ msgstr ""
 "నెట్‌వర్క్ టైమ్ సర్వర్ మీ కంప్యూటర్ లోని సమయాన్ని ఇంటర్నెట్లో ఉన్న సమయానికి సమకాలీకరించడానికి ఉపయోగపడే ఒక "
 "ప్రోగ్రాం."
 
-#: plinth/modules/datetime/__init__.py:42
+#: plinth/modules/datetime/__init__.py:69
 msgid "Date & Time"
 msgstr "తేదీ & సమయం"
 
-#: plinth/modules/datetime/__init__.py:85
+#: plinth/modules/datetime/__init__.py:120
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -2024,9 +2070,9 @@ msgstr ""
 #: plinth/modules/help/templates/help_feedback.html:26
 msgid ""
 "If you find any bugs or issues, please use the <a href=\"https://salsa."
-"debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue tracker</"
-"a> to let our developers know. To report, first check if the issue is "
-"already reported and then use the \"New issue\" button."
+"debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">issue "
+"tracker</a> to let our developers know. To report, first check if the issue "
+"is already reported and then use the \"New issue\" button."
 msgstr ""
 
 #: plinth/modules/help/templates/help_feedback.html:36
@@ -2118,8 +2164,8 @@ msgstr "స్థితి లాగ్"
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and attach "
-"this status log to the bug report."
+"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+"attach this status log to the bug report."
 msgstr ""
 "ఈ చివరి% (num_lines) లు ఈ వెబ్ ఇంటర్ఫేస్ స్థితి లాగ్ 1 రేఖలు. మీరు ఒక బగ్ను నివేదించి అనుకుంటే, "
 "దయచేసి <a href=\"https://github.com/freedombox/Plinth/issues\"> 2bug ట్రాకర్ "
@@ -3187,6 +3233,10 @@ msgstr "ప్లంబుల్"
 #: plinth/modules/mumble/manifest.py:51
 msgid "Mumblefly"
 msgstr "ముంబుల్ ఫ్లై"
+
+#: plinth/modules/mumble/manifest.py:60
+msgid "Mumla"
+msgstr ""
 
 #: plinth/modules/mumble/views.py:29
 #, fuzzy
@@ -4568,20 +4618,6 @@ msgstr "క్వాసెల్"
 msgid "IRC Client"
 msgstr "IRC క్లయింట్"
 
-#: plinth/modules/quassel/forms.py:22
-#, fuzzy
-#| msgid "Subdomain"
-msgid "TLS domain"
-msgstr "ఉప డోమైన్ పేరు"
-
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-"TLS ఉపయోగించడం కొరకు ఒక డొమైన్ ఎంచుకోండి. ఒకవేళ జాబితా ఖాళీగా ఉన్నట్లయితే, దయచేసి సర్టిఫికేట్ లతో కనీసం "
-"ఒక డొమైన్ ని కాన్ఫిగర్ చేయండి."
-
 #: plinth/modules/quassel/manifest.py:34
 msgid "Quasseldroid"
 msgstr "క్వాసెల్ డ్రొఇడ్"
@@ -5439,7 +5475,7 @@ msgstr "స్నాప్షాట్కు రోల్బ్యాక్ చ�
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:11
 #, python-format
 msgid ""
-"Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
+"You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
 
@@ -5792,7 +5828,7 @@ msgstr "పరికరాన్ని సురక్షితంగా తొ�
 msgid "Error ejecting device: {error_message}"
 msgstr "పరికరాన్ని తొలగించడంలో లోపం: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:26
+#: plinth/modules/syncthing/__init__.py:27
 #, fuzzy
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
@@ -5804,7 +5840,7 @@ msgstr ""
 "ఒక ఉపకరణంలో ఒక ఫైలు యొక్క తయారీ,మార్పులు, లేదా నిర్మూలిస్తే అది మిగిలిన అన్ని ఉపకరణాలలో దానికి "
 "సంబందించిన మార్పులు చెయ్యడం సమకాలీకరించడం"
 
-#: plinth/modules/syncthing/__init__.py:31
+#: plinth/modules/syncthing/__init__.py:32
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -5816,18 +5852,18 @@ msgid ""
 "\"syncthing\" group."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:53
+#: plinth/modules/syncthing/__init__.py:56
 #, fuzzy
 #| msgid "Install this application?"
 msgid "Administer Syncthing application"
 msgstr "ఈ అనువర్తనాన్ని నిక్షిప్తం చేయాలా?"
 
-#: plinth/modules/syncthing/__init__.py:56
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:13
 msgid "Syncthing"
 msgstr "సింక్ తింగ్"
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "ఫైళ్ళ సమకాలీకరణ"
 
@@ -6890,7 +6926,7 @@ msgstr "అభ్యర్థించిన పేజీ %(request_path)s క�
 msgid ""
 "If you believe this missing page should exist, please file a bug at the "
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">issue tracker</a>."
+"freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
 
 #: plinth/templates/500.html:10
@@ -6898,13 +6934,16 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
-"plinth/issues\">bug tracker</a> so we can fix it. Also, please attach the <a "
-"href=\"%(status_log_url)s\">status log</a> to the bug report."
+"freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
+"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
+"ఈ చివరి% (num_lines) లు ఈ వెబ్ ఇంటర్ఫేస్ స్థితి లాగ్ 1 రేఖలు. మీరు ఒక బగ్ను నివేదించి అనుకుంటే, "
+"దయచేసి <a href=\"https://github.com/freedombox/Plinth/issues\"> 2bug ట్రాకర్ "
+"తప్పుల నివేదిక ఈ స్థితి లాగ్ అటాచ్ </a> 3 మరియు ఉపయోగించడానికి."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-20 17:53-0400\n"
+"POT-Creation-Date: 2020-05-04 19:59-0400\n"
 "PO-Revision-Date: 2020-05-02 08:11+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -685,10 +685,10 @@ msgstr "IP-adresser"
 msgid "Refresh IP address and domains"
 msgstr "Uppdatera IP-adress och domäner"
 
-#: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:42
-#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/openvpn/views.py:133 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:30 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Konfiguration uppdaterad"
@@ -953,6 +953,50 @@ msgstr "Maximal filstorlek uppdaterad"
 msgid "Failed to update maximum file size"
 msgstr "Det gick inte att uppdatera den maximala filstorleken"
 
+#: plinth/modules/coturn/__init__.py:31
+msgid ""
+"Coturn is a server to facilitate audio/video calls and conferences by "
+"providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
+"other communication servers can use it to establish a call between parties "
+"who are otherwise unable connect to each other."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:35
+msgid ""
+"It is not meant to be used directly by users. Servers such as matrix-synapse "
+"need to be configured with the details provided here."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:64
+msgid "Coturn"
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:65
+msgid "VoIP Helper"
+msgstr ""
+
+#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+msgid "TLS domain"
+msgstr "TLS Domän"
+
+#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+"Välj en domän att använda TLS med. Om listan är tom konfigurerar du minst en "
+"domän med certifikat."
+
+#: plinth/modules/coturn/templates/coturn.html:15
+msgid "Use the following URLs to configure your communication server:"
+msgstr ""
+
+#: plinth/modules/coturn/templates/coturn.html:26
+#, fuzzy
+#| msgid "The following storage devices are in use:"
+msgid "Use the following shared authentication secret:"
+msgstr "Följande lagringsenheter används:"
+
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
 "Network time server is a program that maintains the system time in "
@@ -961,11 +1005,11 @@ msgstr ""
 "Network time server är ett program som upprätthåller synkronisering av "
 "systemtiden med servrar på Internet."
 
-#: plinth/modules/datetime/__init__.py:42
+#: plinth/modules/datetime/__init__.py:69
 msgid "Date & Time"
 msgstr "Datum & Tid"
 
-#: plinth/modules/datetime/__init__.py:85
+#: plinth/modules/datetime/__init__.py:120
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkroniserad till NTP-server"
 
@@ -2001,11 +2045,17 @@ msgstr ""
 "\"_blank\"> diskussionsforum</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
+#, fuzzy
+#| msgid ""
+#| "If you find any bugs or issues, please use the <a href=\"https://salsa."
+#| "debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue "
+#| "tracker</a> to let our developers know. To report, first check if the "
+#| "issue is already reported and then use the \"New issue\" button."
 msgid ""
 "If you find any bugs or issues, please use the <a href=\"https://salsa."
-"debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue tracker</"
-"a> to let our developers know. To report, first check if the issue is "
-"already reported and then use the \"New issue\" button."
+"debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">issue "
+"tracker</a> to let our developers know. To report, first check if the issue "
+"is already reported and then use the \"New issue\" button."
 msgstr ""
 "Om du hittar fel eller problem kan du använda <a href=\"https://salsa.debian."
 "org/freedombox-team/plinth/issues\" target=\"_blank\">utföra tracker</a> att "
@@ -2105,12 +2155,17 @@ msgid "Status Log"
 msgstr "Status Log"
 
 #: plinth/modules/help/templates/statuslog.html:13
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and attach "
-"this status log to the bug report."
+"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+"attach this status log to the bug report."
 msgstr ""
 "Dessa är de sista %(num_lines)s rader i statusloggen för detta "
 "webbgränssnitt. Om du vill rapportera ett fel, använd <a href=\"https://"
@@ -3199,6 +3254,10 @@ msgstr "Plumble"
 #: plinth/modules/mumble/manifest.py:51
 msgid "Mumblefly"
 msgstr "Mumblefly"
+
+#: plinth/modules/mumble/manifest.py:60
+msgid "Mumla"
+msgstr ""
 
 #: plinth/modules/mumble/views.py:29
 msgid "SuperUser password successfully updated."
@@ -4657,18 +4716,6 @@ msgstr "Quassel"
 msgid "IRC Client"
 msgstr "IRC-klient"
 
-#: plinth/modules/quassel/forms.py:22
-msgid "TLS domain"
-msgstr "TLS Domän"
-
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-"Välj en domän att använda TLS med. Om listan är tom konfigurerar du minst en "
-"domän med certifikat."
-
 #: plinth/modules/quassel/manifest.py:34
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
@@ -5508,9 +5555,13 @@ msgid "Rollback to snapshot #%(number)s"
 msgstr "Återställning till ögonblicksbild #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:11
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots "
+#| "are currently only available on <strong>%(types_supported)s</strong> "
+#| "filesystems."
 msgid ""
-"Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
+"You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
 "Du har ett filsystem av typen <strong>%(fs_type)s </strong>. "
@@ -5850,7 +5901,7 @@ msgstr "Enheten kan kopplas ur på ett säkert sätt."
 msgid "Error ejecting device: {error_message}"
 msgstr "Fel mata ut enhet: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:26
+#: plinth/modules/syncthing/__init__.py:27
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -5862,7 +5913,7 @@ msgstr ""
 "filer på en enhet kommer att replikeras automatiskt på alla andra enheter "
 "som också kör Syncthing."
 
-#: plinth/modules/syncthing/__init__.py:31
+#: plinth/modules/syncthing/__init__.py:32
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -5878,19 +5929,19 @@ msgstr ""
 "synkronisera oftare.  {box_name} kör en enda instans av Syncthing som kan "
 "användas av flera användare.  Varje användares uppsättning enheter kan "
 "synkroniseras med en särskild uppsättning mappar.  Webbgränssnittet på "
-"{box_name} är endast tillgängligt för användare som tillhör gruppen \"admin\""
-" eller \"syncthing\"."
+"{box_name} är endast tillgängligt för användare som tillhör gruppen \"admin"
+"\" eller \"syncthing\"."
 
-#: plinth/modules/syncthing/__init__.py:53
+#: plinth/modules/syncthing/__init__.py:56
 msgid "Administer Syncthing application"
 msgstr "Administrera Syncthing-program"
 
-#: plinth/modules/syncthing/__init__.py:56
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:13
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Filsynkronisering"
 
@@ -6937,10 +6988,15 @@ msgid "Requested page %(request_path)s was not found."
 msgstr "Begärd sida %(request_path)s hittades inte."
 
 #: plinth/templates/404.html:19
+#, fuzzy
+#| msgid ""
+#| "If you believe this missing page should exist, please file a bug at the "
+#| "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
+#| "freedombox-team/plinth/issues\">issue tracker</a>."
 msgid ""
 "If you believe this missing page should exist, please file a bug at the "
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">issue tracker</a>."
+"freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
 "Om du tror att denna saknade sida bör finnas, vänligen skicka en bugg på "
 "FreedomBox service (Plinth) projekt <a href =\"https://salsa.debian.org/"
@@ -6951,12 +7007,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/plinth/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
-"plinth/issues\">bug tracker</a> so we can fix it. Also, please attach the <a "
-"href=\"%(status_log_url)s\">status log</a> to the bug report."
+"freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
+"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Detta är ett internt fel och inte något du orsakat eller kan fixa. Vänligen "
 "rapportera felet på <a href=\"https://salsa.debian.org/freedombox-team/"

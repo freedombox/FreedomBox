@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-20 17:53-0400\n"
+"POT-Creation-Date: 2020-05-04 19:59-0400\n"
 "PO-Revision-Date: 2020-04-25 14:11+0000\n"
 "Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.0.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
@@ -750,10 +750,10 @@ msgstr "IP-адрес"
 msgid "Refresh IP address and domains"
 msgstr "Обновите IP-адреса и домены"
 
-#: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:42
-#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/openvpn/views.py:133 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:30 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Конфигурация обновлена"
@@ -1033,6 +1033,50 @@ msgstr "Максимальный размер файла обновлен"
 msgid "Failed to update maximum file size"
 msgstr "Не удалось обновить максимальный размер файла"
 
+#: plinth/modules/coturn/__init__.py:31
+msgid ""
+"Coturn is a server to facilitate audio/video calls and conferences by "
+"providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
+"other communication servers can use it to establish a call between parties "
+"who are otherwise unable connect to each other."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:35
+msgid ""
+"It is not meant to be used directly by users. Servers such as matrix-synapse "
+"need to be configured with the details provided here."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:64
+msgid "Coturn"
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:65
+msgid "VoIP Helper"
+msgstr ""
+
+#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "Субдомен"
+
+#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+
+#: plinth/modules/coturn/templates/coturn.html:15
+msgid "Use the following URLs to configure your communication server:"
+msgstr ""
+
+#: plinth/modules/coturn/templates/coturn.html:26
+#, fuzzy
+#| msgid "The following storage devices are in use:"
+msgid "Use the following shared authentication secret:"
+msgstr "Используются следующие устройства хранения:"
+
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
 "Network time server is a program that maintains the system time in "
@@ -1041,11 +1085,11 @@ msgstr ""
 "Сервер сетевого времени это программа позволяющая системе синхронизировать "
 "время с серверами в Интернете."
 
-#: plinth/modules/datetime/__init__.py:42
+#: plinth/modules/datetime/__init__.py:69
 msgid "Date & Time"
 msgstr "Дата и Время"
 
-#: plinth/modules/datetime/__init__.py:85
+#: plinth/modules/datetime/__init__.py:120
 msgid "Time synchronized to NTP server"
 msgstr "Время синхронизируется с NTP сервером"
 
@@ -2123,11 +2167,17 @@ msgstr ""
 "\" target=\"_blank\"> discussion forum</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
+#, fuzzy
+#| msgid ""
+#| "If you find any bugs or issues, please use the <a href=\"https://salsa."
+#| "debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue "
+#| "tracker</a> to let our developers know. To report, first check if the "
+#| "issue is already reported and then use the \"New issue\" button."
 msgid ""
 "If you find any bugs or issues, please use the <a href=\"https://salsa."
-"debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue tracker</"
-"a> to let our developers know. To report, first check if the issue is "
-"already reported and then use the \"New issue\" button."
+"debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">issue "
+"tracker</a> to let our developers know. To report, first check if the issue "
+"is already reported and then use the \"New issue\" button."
 msgstr ""
 "Если вы обнаружили ошибку или проблему, используйте, пожалуйста: <a href="
 "\"https://salsa.debian.org/freedombox-team/plinth/issues\" target=\"_blank"
@@ -2225,12 +2275,17 @@ msgid "Status Log"
 msgstr "Лог состояния"
 
 #: plinth/modules/help/templates/statuslog.html:13
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and attach "
-"this status log to the bug report."
+"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+"attach this status log to the bug report."
 msgstr ""
 "Последняя строка %(num_lines)s это журнал состояния для этого веб-"
 "интерфейса. Если вы хотите отправить отчет об ошибке, пожалуйста, "
@@ -3339,6 +3394,10 @@ msgstr "Plumble"
 #: plinth/modules/mumble/manifest.py:51
 msgid "Mumblefly"
 msgstr "Mumblefly"
+
+#: plinth/modules/mumble/manifest.py:60
+msgid "Mumla"
+msgstr ""
 
 #: plinth/modules/mumble/views.py:29
 #, fuzzy
@@ -4744,18 +4803,6 @@ msgstr "Quassel"
 msgid "IRC Client"
 msgstr "IRC-клиент"
 
-#: plinth/modules/quassel/forms.py:22
-#, fuzzy
-#| msgid "Subdomain"
-msgid "TLS domain"
-msgstr "Субдомен"
-
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-
 #: plinth/modules/quassel/manifest.py:34
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
@@ -5626,9 +5673,13 @@ msgid "Rollback to snapshot #%(number)s"
 msgstr "Откат к снимку #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:11
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots "
+#| "are currently only available on <strong>%(types_supported)s</strong> "
+#| "filesystems."
 msgid ""
-"Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
+"You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
 "Вы имеете файловую систему типа <strong>%(fs_type)s</strong>. Снимки сейчас "
@@ -5984,7 +6035,7 @@ msgstr "Устройство может быть безопасно отсоед
 msgid "Error ejecting device: {error_message}"
 msgstr "Ошибка извлечения устройства: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:26
+#: plinth/modules/syncthing/__init__.py:27
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -5996,7 +6047,7 @@ msgstr ""
 "или удаление файлов на одном устройстве будет автоматически реплицироваться "
 "на все другие устройства, на которых работает Syncthing."
 
-#: plinth/modules/syncthing/__init__.py:31
+#: plinth/modules/syncthing/__init__.py:32
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Running Syncthing on {box_name} provides an extra synchronization point "
@@ -6022,16 +6073,16 @@ msgstr ""
 "собственный набор папок.  Веб-интерфейс доступен только для пользователей, "
 "принадлежащих к группе «admin»."
 
-#: plinth/modules/syncthing/__init__.py:53
+#: plinth/modules/syncthing/__init__.py:56
 msgid "Administer Syncthing application"
 msgstr "Администрирование приложения Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:56
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:13
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Синхронизация файлов"
 
@@ -7142,10 +7193,15 @@ msgid "Requested page %(request_path)s was not found."
 msgstr "Запрошенная страница %(request_path)s не найдена."
 
 #: plinth/templates/404.html:19
+#, fuzzy
+#| msgid ""
+#| "If you believe this missing page should exist, please file a bug at the "
+#| "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
+#| "freedombox-team/plinth/issues\">issue tracker</a>."
 msgid ""
 "If you believe this missing page should exist, please file a bug at the "
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">issue tracker</a>."
+"freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
 "Если вы считаете, что страница должна существовать, пожалуйста, сообщите об "
 "ошибке в службу проекта  FreedomBox (Plinth)<a href=\"https://salsa.debian."
@@ -7156,12 +7212,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/plinth/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
-"plinth/issues\">bug tracker</a> so we can fix it. Also, please attach the <a "
-"href=\"%(status_log_url)s\">status log</a> to the bug report."
+"freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
+"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Это внутренняя ошибка, не Вы были её причиной и вряд ли можете её устранить. "
 "Пожалуйста, сообщите об ошибке на <a href=\"https://salsa.debian.org/"
