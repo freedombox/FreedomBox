@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-04 19:59-0400\n"
-"PO-Revision-Date: 2020-04-07 19:03+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"POT-Creation-Date: 2020-04-20 17:53-0400\n"
+"PO-Revision-Date: 2020-05-06 06:11+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/plinth/nb_NO/>\n"
 "Language: nb\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -36,10 +36,9 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:70
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is running."
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Tjenesten {service_name} kjører."
+msgstr "Tjenesten {service_name} kjører"
 
 #: plinth/daemon.py:96
 #, python-brace-format
@@ -242,7 +241,6 @@ msgid "Select Disk or Partition"
 msgstr "Velg disk eller partisjon"
 
 #: plinth/modules/backups/forms.py:175
-#, fuzzy
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "Sikkerhetskopier vil bli lagret i mappen FreedomBoxBackups"
 
@@ -441,24 +439,12 @@ msgid "Are you sure that you want to remove this repository?"
 msgstr "Er du sikker på at du ønsker å fjerne dette depotet?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:19
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      The remote repository will not be deleted.\n"
-#| "      This just removes the repository from the listing on the backup "
-#| "page, you\n"
-#| "      can add it again later on.\n"
-#| "    "
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
-"\n"
-"      Fjerndepotet vil ikke bli slettet..\n"
-"      Dette fjerner kun depotoppføringen fra listen på sikkerhetskopi-siden, "
-"du\n"
-"      kan legge oppføringen tilbake senere.\n"
-"    "
+"Fjerndepotet vil ikke bli slettet. Dette fjerner kun depotoppføringen fra "
+"listen på sikkerhetskopi-siden, du kan legge oppføringen tilbake senere."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:31
 msgid "Remove Location"
@@ -1634,18 +1620,14 @@ msgid "Firewall"
 msgstr "Brannmur"
 
 #: plinth/modules/firewall/components.py:118
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr ""
-"Tjenesten <em>%(service_name)s</em> er kun tilgjengelig på interne nettverk."
+msgstr "Port {name} ({details}) tilgjengelig på interne nettverk"
 
 #: plinth/modules/firewall/components.py:126
-#, fuzzy, python-brace-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr ""
-"Tjenesten <em>%(service_name)s</em> er kun tilgjengelig på interne nettverk."
+msgstr "Port {name} ({details}) tilgjengelig på eksterne nettverk"
 
 #: plinth/modules/firewall/components.py:131
 #, python-brace-format
@@ -3400,7 +3382,6 @@ msgid "All web apps"
 msgstr "Alle nettprogrammer"
 
 #: plinth/modules/networks/__init__.py:40
-#, fuzzy
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3672,10 +3653,9 @@ msgid "Open"
 msgstr "Åpen"
 
 #: plinth/modules/networks/forms.py:297
-#, fuzzy, python-brace-format
-#| msgid "Choose how your {box_name} is connected to your network"
+#, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
-msgstr "Velg hvordan din {box_name} er koblet til nettverket ditt"
+msgstr "Angi hvordan din {box_name} er tilkoblet ditt nettverket"
 
 #: plinth/modules/networks/forms.py:304
 #, python-brace-format
@@ -3693,6 +3673,10 @@ msgid ""
 "adapter. {box_name} is directly connected to the Internet and all your "
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
+"{box_name} er ruteren din <p class=\"help-block\">Din {box_name} har flere "
+"nettverksgrensesnitt, for eksempel flere Ethernett-innganger eller et Wifi-"
+"kort. {box_name} er koblet direkte til Internet og alle enhetene dine kan "
+"koble seg til {box_name} med Internett-forbindelsen sin.</p>"
 
 #: plinth/modules/networks/forms.py:320
 #, python-brace-format
@@ -3701,6 +3685,9 @@ msgid ""
 "connection is directly attached to your {box_name} and there are no other "
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
+"Koblet direkte til Internett <p class=\"help-block\">Internett-forbindelsen "
+"din er koblet direkte til idn {box_name} og det er ingen andre enheter på "
+"nettverket. Dette kan gjelde fellesbokser eller skyoppsett.</p>"
 
 #: plinth/modules/networks/forms.py:339
 msgid "Choose your internet connection type"
