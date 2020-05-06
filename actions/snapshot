@@ -35,9 +35,6 @@ def parse_arguments():
                                       help='Delete a snapshot by number')
     subparser.add_argument('number', help='Number of snapshot to delete')
 
-    subparser = subparsers.add_parser('delete-all',
-                                      help='Delete all the snapshots')
-
     subparser = subparsers.add_parser('set-config',
                                       help='Configure automatic snapshots')
     subparser.add_argument('config')
@@ -166,25 +163,30 @@ def _add_fstab_entry(mount_point):
         aug.save()
 
 
-def _get_snapper_list():
-    command = ['snapper', 'list']
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    return process.stdout.decode().splitlines()
+def _parse_number(number):
+    """Parse the char following the number and return status of snapshot."""
+    is_default = number[-1] in ('+', '*')
+    is_active = number[-1] in ('-', '*')
+    return number.strip('-+*'), is_default, is_active
 
 
 def subcommand_list(_):
     """List snapshots."""
-    lines = _get_snapper_list()
-    keys = ('number', 'type', 'pre_number', 'date', 'user', 'cleanup',
-            'description')
+    process = subprocess.run(['snapper', 'list'], stdout=subprocess.PIPE,
+                             check=True)
+    lines = process.stdout.decode().splitlines()
+
+    keys = ('number', 'is_default', 'is_active', 'type', 'pre_number', 'date',
+            'user', 'cleanup', 'description')
     snapshots = []
     for line in lines[2:]:
-        parts = [part.strip('* ') for part in line.split('|')]
-        snapshots.append(dict(zip(keys, parts)))
-
-    default = _get_default_snapshot()
-    for snapshot in snapshots:
-        snapshot['is_default'] = (snapshot['number'] == default)
+        parts = [part.strip() for part in line.split('|')]
+        parts = list(_parse_number(parts[0])) + parts[1:]
+        snapshot = dict(zip(keys, parts))
+        # Snapshot 0 always represents the current system, it need not be
+        # listed and cannot be deleted.
+        if snapshot['number'] != '0':
+            snapshots.append(snapshot)
 
     snapshots.reverse()
     print(json.dumps(snapshots))
@@ -229,35 +231,6 @@ def subcommand_delete(arguments):
     """Delete a snapshot by number."""
     command = ['snapper', 'delete', arguments.number]
     subprocess.run(command, check=True)
-
-
-def subcommand_delete_all(_):
-    """Delete all the snapshots (except the active one)."""
-    lines = _get_snapper_list()
-    snapshot_range = [line.split('|')[0].strip() for line in lines[3:]]
-    default_snapshot = _get_default_snapshot()
-    if snapshot_range:
-        if default_snapshot:
-            index = snapshot_range.index(default_snapshot)
-            range_before = snapshot_range[:index]
-            range_after = snapshot_range[index + 1:]
-            to_delete = [range_before, range_after]
-        else:
-            to_delete = [snapshot_range]
-
-        delete_args = filter(None, map(_get_delete_arg, to_delete))
-        for arg in delete_args:
-            subprocess.run(['snapper', 'delete', arg], check=True)
-
-
-def _get_delete_arg(range_list):
-    """Return 'a-b' when given ['a', ..., 'b']."""
-    if not range_list:
-        return None
-    elif len(range_list) == 1:
-        return range_list[0]
-    else:
-        return range_list[0] + '-' + range_list[-1]
 
 
 def subcommand_set_config(arguments):
