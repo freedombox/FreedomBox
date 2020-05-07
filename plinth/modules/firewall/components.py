@@ -51,7 +51,10 @@ class Firewall(app.FollowerComponent):
     def enable(self):
         """Open firewall ports when the component is enabled."""
         super().enable()
+        firewall.try_with_reload(self._enable)
 
+    def _enable(self):
+        """Open firewall ports."""
         internal_enabled_ports = firewall.get_enabled_services(zone='internal')
         external_enabled_ports = firewall.get_enabled_services(zone='external')
 
@@ -66,7 +69,10 @@ class Firewall(app.FollowerComponent):
     def disable(self):
         """Close firewall ports when the component is disabled."""
         super().disable()
+        firewall.try_with_reload(self._disable)
 
+    def _disable(self):
+        """Close firewall ports."""
         internal_enabled_ports = firewall.get_enabled_services(zone='internal')
         external_enabled_ports = firewall.get_enabled_services(zone='external')
 
