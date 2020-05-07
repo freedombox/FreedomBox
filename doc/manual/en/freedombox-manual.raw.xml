@@ -5,6 +5,18 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>83</revnumber>
+        <date>2020-05-04 07:46:54</date>
+        <authorinitials>FredLeMeur</authorinitials>
+        <revremark>manual page entry for Performance (cockpit-pcp)</revremark>
+      </revision>
+      <revision>
+        <revnumber>82</revnumber>
+        <date>2020-05-03 16:44:06</date>
+        <authorinitials>JamesValleroy</authorinitials>
+        <revremark>Fix from markers for Contribute and Developer included pages</revremark>
+      </revision>
+      <revision>
         <revnumber>81</revnumber>
         <date>2020-02-21 15:51:40</date>
         <authorinitials>JosephNuthalapati</authorinitials>
@@ -1070,7 +1082,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
           </listitem>
           <listitem>
             <para>You can build and install a package from its Debian's version control repository. For example, </para>
-            <screen><![CDATA[ git clone https://salsa.debian.org/freedombox-team/plinth
+            <screen><![CDATA[ git clone https://salsa.debian.org/freedombox-team/freedombox.git
  cd plinth
  apt build-dep .
  dpkg-buildpackage -rfakeroot -uc
@@ -1397,7 +1409,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
     </section>
     <section>
       <title>Block Sandbox (Minetest)</title>
-      <para>Minetest is a multiplayer infinite-world block sandbox. This module enables the Minetest server to be run on this FreedomBox, on the default port (30000). To connect to the server, a <ulink url="http://www.minetest.net/downloads/">Minetest client</ulink> is needed. </para>
+      <para>Minetest is a multiplayer infinite-world block sandbox. This module enables the Minetest server to be run on this FreedomBox, on the default port (30000). To connect to the server, a <ulink url="https://www.minetest.net/downloads/">Minetest client</ulink> is needed. </para>
       <section>
         <title>Port Forwarding</title>
         <para>If your FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for Minetest: </para>
@@ -1460,7 +1472,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
           </inlinemediaobject>
         </para>
         <para>If you want to share a calendar with only some users, the simplest approach is to create an additional user-name for these users and to share that user-name and password with them. </para>
-        <para>Radicale provides a basic web interface, which only supports creating new calendars and addressbooks. To add events or contacts, an external <ulink url="http://radicale.org/clients/">supported client application</ulink> is needed. </para>
+        <para>Radicale provides a basic web interface, which only supports creating new calendars and addressbooks. To add events or contacts, an external <ulink url="https://radicale.org/master.html#documentation/supported-clients">supported client application</ulink> is needed. </para>
         <para>
           <inlinemediaobject>
             <imageobject>
@@ -1499,7 +1511,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
             </itemizedlist>
           </listitem>
         </itemizedlist>
-        <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/clients/">an overview of supported clients</ulink>, but do <emphasis>not</emphasis> use the URLs described there; FreedomBox uses another setup, follow this manual. Below are the steps for two examples: </para>
+        <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="https://radicale.org/master.html#documentation/supported-clients">an overview of supported clients</ulink>, but do <emphasis>not</emphasis> use the URLs described there; FreedomBox uses another setup, follow this manual. Below are the steps for two examples: </para>
         <itemizedlist>
           <listitem>
             <para>Example of setup with Evolution client: </para>
@@ -2044,6 +2056,7 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
       <section>
         <title>Integration with other apps</title>
         <para>Transmission app on FreedomBox provides a setting to allow downloads to be saved directly to a Samba share. </para>
+        <para>If you want to make available files synchronized with Syncthing through Samba you need to make sure you synchronize in a Samba share folder. Additionally in order to make Syncthing shares available in Samba Open share or Group share you will need to ensure you click "Permissions &gt; Ignore" button under the "Advanced" tab in folder you wish in the Syncthing web UI. This will ensure that the files will be writable through Samba. </para>
       </section>
       <section>
         <title>Comparison with other apps</title>
@@ -2136,7 +2149,7 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
       </section>
       <section>
         <title>Clients</title>
-        <para>Clients to connect to Quassel from your <ulink url="http://quassel-irc.org/downloads">desktop</ulink> and <ulink url="http://quasseldroid.iskrembilen.com/">mobile</ulink> devices are available. </para>
+        <para>Clients to connect to Quassel from your <ulink url="http://quassel-irc.org/downloads">desktop</ulink> and <ulink url="https://quasseldroid.info/">mobile</ulink> devices are available. </para>
         <section>
           <title>Desktop</title>
           <para>In a Debian system, you can e.g. use <ulink url="https://packages.debian.org/search?keywords=quassel-client">quassel-client</ulink>. The following steps describe how to connect Quassel Client with Quassel Core running on a FreedomBox. The first time you do this connection, Quassel Core will be initialized too. </para>
@@ -2400,7 +2413,7 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
         </section>
         <section>
           <title>Android</title>
-          <para>For Android devices you may use e.g. <emphasis>Quasseldroid</emphasis> from <ulink url="https://f-droid.org/repository/browse/?fdfilter=quassel&amp;fdid=com.iskrembilen.quasseldroid">F-Droid</ulink> </para>
+          <para>For Android devices you may use e.g. <emphasis>Quasseldroid</emphasis> from <ulink url="https://f-droid.org/en/packages/com.iskrembilen.quasseldroid/">F-Droid</ulink> </para>
           <itemizedlist>
             <listitem>
               <para>enter core, username etc. as above </para>
@@ -2926,7 +2939,7 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
     <section>
       <title>Web Proxy (Privoxy)</title>
       <para>A web proxy acts as a filter for incoming and outgoing web traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
-      <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
+      <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="https://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
       <section>
         <title>Screencast</title>
         <para>Watch the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy_Installation.webm">screencast</ulink> on how to setup and use Privoxy in FreedomBox. </para>
@@ -2991,7 +3004,7 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
             <para>Now you find an <code>EDIT</code> button on the configuration screen in <code>http://config.privoxy.org/</code>. </para>
           </listitem>
           <listitem>
-            <para>The <ulink url="http://www.privoxy.org/user-manual/quickstart.html">Quickstart</ulink> is a good starting point to read on how to define own blocking and filtering rules. </para>
+            <para>The <ulink url="https://www.privoxy.org/user-manual/quickstart.html">Quickstart</ulink> is a good starting point to read on how to define own blocking and filtering rules. </para>
           </listitem>
         </orderedlist>
       </section>
@@ -4302,7 +4315,7 @@ https://exampletorhs.onion/_cockpit/]]></screen>
     <section>
       <title>Firewall</title>
       <para>Firewall is a network security system that controls the incoming and outgoing network traffic. Keeping a firewall enabled and properly configured reduces risk of security threat from the Internet. </para>
-      <para>The operation of the firewall in Plinth web interface of FreedomBox is automatic. When you enable a service it is automatically permitted in the firewall and when you disable a service it is automatically disabled in the firewall. For services which are enabled by default on FreedomBox, firewall ports are also enabled by default during the first run process. </para>
+      <para>The operation of the firewall in FreedomBox web interface is automatic. When you enable a service it is automatically permitted in the firewall and when you disable a service it is automatically disabled in the firewall. For services which are enabled by default on FreedomBox, firewall ports are also enabled by default during the first run process. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -4322,7 +4335,7 @@ https://exampletorhs.onion/_cockpit/]]></screen>
       </section>
       <section>
         <title>Ports/Services</title>
-        <para>The following table attempts to document the ports, services and their default statuses in FreedomBox. If you find this page outdated, see the Plinth source for <ulink url="http://sources.debian.net/src/plinth/latest/data/usr/lib/freedombox/first-run.d/90_firewall">lib/freedombox/first-run.d/90_firewall</ulink> and Firewall status page in Plinth UI. </para>
+        <para>The following table attempts to document the ports, services and their default statuses in FreedomBox. If you find this page outdated, see the Firewall status page in FreedomBox interface. </para>
         <informaltable>
           <tgroup cols="6">
             <colspec colname="col_0"/>
@@ -4355,12 +4368,12 @@ https://exampletorhs.onion/_cockpit/]]></screen>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
-                    <emphasis role="strong">Status shown in Plinth</emphasis>
+                    <emphasis role="strong">Status shown in FreedomBox</emphasis>
                   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
-                    <emphasis role="strong">Managed by Plinth</emphasis>
+                    <emphasis role="strong">Managed by FreedomBox</emphasis>
                   </para>
                 </entry>
               </row>
@@ -4646,7 +4659,7 @@ https://exampletorhs.onion/_cockpit/]]></screen>
               </row>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
-                  <para> Plinth      </para>
+                  <para> FreedomBox Web Interface (Plinth)      </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para> 443/tcp        </para>
@@ -6676,6 +6689,28 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
       </section>
     </section>
     <section>
+      <title>Performance (cockpit-pcp)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Cockpit support for reading PCP metrics and loading PCP archives. </para>
+        </listitem>
+        <listitem>
+          <para>Performance Co-Pilot (PCP) is a framework and services to support system-level performance monitoring and performance management. </para>
+        </listitem>
+      </itemizedlist>
+      <para>When this system app is installed and enabled, cockpit's graphs show the past (up to one week). </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Performance?action=AttachFile&amp;do=get&amp;target=one-week.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>one-week.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+    </section>
+    <section>
       <title>Power</title>
       <para>Power provides an easy way to restart or shut down FreedomBox. After you select "Restart" or "Shut Down", you will be asked to confirm. </para>
       <para>"Restart" and "Shut Down" options can also be reached from the user dropdown menu on the top right. </para>
@@ -8181,7 +8216,7 @@ Password: <enter user password here>
             </listitem>
             <listitem>
               <para>You can build and install a package from its Debian's version control repository. For example, </para>
-              <screen><![CDATA[ git clone https://salsa.debian.org/freedombox-team/plinth
+              <screen><![CDATA[ git clone https://salsa.debian.org/freedombox-team/freedombox.git
  cd plinth
  apt build-dep .
  dpkg-buildpackage -rfakeroot -uc
@@ -8243,12 +8278,6 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       </section>
       <section>
         <title>Availability</title>
-        <para>FreedomBox Danube Edition </para>
-        <itemizedlist>
-          <listitem>
-            <para>A limited number of units are planned to be shipped along with the release of FreedomBox.  If you wish to get one, <ulink url="http://projectdanube.org">express your interest</ulink>. </para>
-          </listitem>
-        </itemizedlist>
         <para>Cubietruck / Cubieboard3 </para>
         <itemizedlist>
           <listitem>
@@ -8325,7 +8354,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
           </textobject>
         </inlinemediaobject>
       </para>
-      <para><ulink url="http://beagleboard.org/black">Beagle Bone Black</ulink> (Revision C.1) is an Open Source Hardware (OSHW) single board computer.  This means that the designer is actively helping people using the platform for their own designs, and supports them in adding hardware functionality and production advice. This is a part of freedom that is often overlooked, but very much aligned with the FreedomBox goals.  FreedomBox images are built and tested for this device.  To use this device as a FreedomBox, a separate <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
+      <para><ulink url="https://beagleboard.org/black">Beagle Bone Black</ulink> (Revision C.1) is an Open Source Hardware (OSHW) single board computer.  This means that the designer is actively helping people using the platform for their own designs, and supports them in adding hardware functionality and production advice. This is a part of freedom that is often overlooked, but very much aligned with the FreedomBox goals.  FreedomBox images are built and tested for this device.  To use this device as a FreedomBox, a separate <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
       <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the FreedomBox image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space.  </para>
       <section>
         <title>Download</title>
@@ -8350,7 +8379,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
           </listitem>
           <listitem>
             <para>
-              <ulink url="http://beagleboard.org/black">Full list of suppliers</ulink>
+              <ulink url="https://beagleboard.org/black">Full list of suppliers</ulink>
             </para>
           </listitem>
         </itemizedlist>
@@ -8859,7 +8888,7 @@ esac]]></screen>
           </textobject>
         </inlinemediaobject>
       </para>
-      <para><ulink url="http://www.linksprite.com/linksprite-pcduino3s/">LinkSprite pcDuino3S</ulink> is a single board computer running on Allwinner A20 and sold with a good case.  FreedomBox images are built and tested for this device for images built after June 2017.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
+      <para><ulink url="https://www.linksprite.com/linksprite-pcduino3s/">LinkSprite pcDuino3S</ulink> is a single board computer running on Allwinner A20 and sold with a good case.  FreedomBox images are built and tested for this device for images built after June 2017.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
       <para>Note: The FreedomBox logo is simply a sticker on top of device brought from store. </para>
       <para><emphasis role="strong">Recommendation:</emphasis> If you are using a board that uses SD cards, when you flash the FreedomBox image onto your SD card, we recommend that you use an SD card with at least 8GB of storage space.  </para>
       <section>
@@ -8867,14 +8896,7 @@ esac]]></screen>
         <para>Although untested, the following similar hardware is also likely to work well with FreedomBox. </para>
         <itemizedlist>
           <listitem>
-            <para>
-              <ulink url="http://www.linksprite.com/linksprite-pcduino3/pcDuino3"/>
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <ulink url="http://www.linksprite.com/linksprite-pcduino3/pcDuino3B"/>
-            </para>
+            <para><ulink url="https://www.linksprite.com/linksprite-pcduino3/"/> also covers pcDuino3B </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -10162,6 +10184,68 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.8 (2020-05-04)</title>
+        <itemizedlist>
+          <listitem>
+            <para>syncthing: Add service to freedombox-share group </para>
+          </listitem>
+          <listitem>
+            <para>users: When adding service to sharing group, only restart if already running </para>
+          </listitem>
+          <listitem>
+            <para>datetime: Ignore time synchronization service in containers and virtual machines </para>
+          </listitem>
+          <listitem>
+            <para>minidlna: Make app installable inside unprivileged container </para>
+          </listitem>
+          <listitem>
+            <para>web_server: Suppress warnings that static directories don't exist </para>
+          </listitem>
+          <listitem>
+            <para>debian: Remove unused timer </para>
+          </listitem>
+          <listitem>
+            <para>static: Use SVG logo during first wizard welcome step </para>
+          </listitem>
+          <listitem>
+            <para>static: Reduce the size of the background noise image </para>
+          </listitem>
+          <listitem>
+            <para>setup.py: Don't install/ship .po files </para>
+          </listitem>
+          <listitem>
+            <para>static: Don't ship visual design file and unused images </para>
+          </listitem>
+          <listitem>
+            <para>all: Update links to repository and project page </para>
+          </listitem>
+          <listitem>
+            <para>coturn: Add app to manage Coturn TURN/STUN server </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Partial fix for installing on testing </para>
+          </listitem>
+          <listitem>
+            <para>datetime: Disable diagnostics when no tests are available </para>
+          </listitem>
+          <listitem>
+            <para>data: Print hostname and IP addresses before console login </para>
+          </listitem>
+          <listitem>
+            <para>snapshot: Fix message when not available </para>
+          </listitem>
+          <listitem>
+            <para>snapshot: Fix title </para>
+          </listitem>
+          <listitem>
+            <para>mumble: Add Mumla to the list of clients </para>
+          </listitem>
+          <listitem>
+            <para>locale: Update translations for Spanish, Telugu, Russian, German, French, and Swedish </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>FreedomBox 20.7 (2020-04-20)</title>
         <itemizedlist>
@@ -13213,7 +13297,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       </section>
       <section>
         <title>Bugs</title>
-        <para>List of bugs, feature requests and improvements are tracked on the FreedomBox <ulink url="https://salsa.debian.org/freedombox-team/plinth/issues/">issue tracker</ulink>.  In addition to that, see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Bugs#">list of bugs</ulink> to help out the Debian package we depend on. Also see the FreedomBox <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">packaging team's dashboard</ulink> for status of various packages that we use. </para>
+        <para>List of bugs, feature requests and improvements are tracked on the FreedomBox <ulink url="https://salsa.debian.org/freedombox-team/freedombox/issues/">issue tracker</ulink>.  In addition to that, see <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Bugs#">list of bugs</ulink> to help out the Debian package we depend on. Also see the FreedomBox <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">packaging team's dashboard</ulink> for status of various packages that we use. </para>
       </section>
       <section>
         <title>Code</title>
@@ -13241,7 +13325,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
               <para>Web design for <ulink url="https://freedombox.org">freedombox.org</ulink>, <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">wiki</ulink> pages </para>
             </listitem>
             <listitem>
-              <para>Logo and branding (we currently have <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/static/themes/default">an identity manual and logos</ulink>) </para>
+              <para>Logo and branding (we currently have <ulink url="https://salsa.debian.org/freedombox-team/freedombox/tree/master/static/themes/default">an identity manual and logos</ulink>) </para>
             </listitem>
             <listitem>
               <para>Possible designs for custom FreedomBox cases on single board computers </para>
@@ -13300,7 +13384,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
             <para>Individual applications that FreedomBox exposes to users. </para>
           </listitem>
         </itemizedlist>
-        <para>You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/plinth/locale">Salsa</ulink>. </para>
+        <para>You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://salsa.debian.org/freedombox-team/freedombox/tree/master/plinth/locale">Salsa</ulink>. </para>
         <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discussion forum's <ulink url="https://discuss.freedombox.org/c/development">development category</ulink> to work with others translating for that language. </para>
         <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Translate#">translators</ulink> page. </para>
       </section>
@@ -13336,13 +13420,13 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
             <para>FreedomBox Service (Plinth) comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. Then, you can access FreedomBox Service (Plinth) by visiting the URL <ulink url="http://freedombox/plinth"/> or <ulink url="https://freedombox.local/plinth"/>. </para>
           </listitem>
           <listitem>
-            <para>If you are on a Debian box, you may install FreedomBox Service (Plinth) from Debian package archive.  Currently, only Stretch (stable), Buster (testing), and Sid (unstable) are supported.  To install FreedomBox Service (Plinth) run: </para>
+            <para>If you are on a Debian box, you may install FreedomBox Service (Plinth) from Debian package archive.  Currently, only Buster (stable), Bullseye (testing), and Sid (unstable) are supported.  To install FreedomBox Service (Plinth) run: </para>
           </listitem>
         </itemizedlist>
-        <screen><![CDATA[$ sudo apt-get install plinth]]></screen>
+        <screen><![CDATA[$ sudo apt-get install freedombox]]></screen>
         <itemizedlist>
           <listitem>
-            <para>You can also get FreedomBox Service (Plinth) from its <ulink url="https://salsa.debian.org/freedombox-team/plinth/">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/INSTALL.md">install from source</ulink>. </para>
+            <para>You can also get FreedomBox Service (Plinth) from its <ulink url="https://salsa.debian.org/freedombox-team/freedombox/">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/freedombox/blob/master/INSTALL.md">install from source</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -13469,13 +13553,13 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
             <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>The primary Git repository is hosted at <ulink url="https://salsa.debian.org/freedombox-team/plinth/">FreedomBox Salsa Page</ulink>. </para>
+            <para>The primary Git repository is hosted at <ulink url="https://salsa.debian.org/freedombox-team/freedombox/">FreedomBox Salsa Page</ulink>. </para>
           </listitem>
           <listitem>
-            <para>Instructions for <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/INSTALL.md">installing from source</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/HACKING.md">hacking the source</ulink> are available. </para>
+            <para>Instructions for <ulink url="https://salsa.debian.org/freedombox-team/freedombox/blob/master/INSTALL.md">installing from source</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/freedombox/blob/master/HACKING.md">hacking the source</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://salsa.debian.org/freedombox-team/plinth/issues">issue tracker</ulink>. </para>
+            <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://salsa.debian.org/freedombox-team/freedombox/issues">issue tracker</ulink>. </para>
           </listitem>
           <listitem>
             <para>Before contributing to FreedomBox Service (Plinth) code, you need understand <ulink url="https://www.python.org/">Python</ulink> and <ulink url="https://www.djangoproject.com/">Django</ulink> on top which it is built. </para>
@@ -13488,10 +13572,10 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
           <title>Debian Package</title>
           <itemizedlist>
             <listitem>
-              <para>FreedomBox Service (Plinth) is <ulink url="https://packages.debian.org/plinth#">packaged</ulink> for Debian. FreedomBox Service (Plinth) is a native package and packaging source code is part of the main package source code. </para>
+              <para>FreedomBox Service (Plinth) is <ulink url="https://packages.debian.org/freedombox#">packaged</ulink> for Debian. FreedomBox Service (Plinth) is a native package and packaging source code is part of the main package source code. </para>
             </listitem>
             <listitem>
-              <para>Issues related to packaging are listed on <ulink url="https://bugs.debian.org/plinth#">Debian BTS</ulink>. </para>
+              <para>Issues related to packaging are listed on <ulink url="https://bugs.debian.org/freedombox#">Debian BTS</ulink>. </para>
             </listitem>
           </itemizedlist>
         </section>

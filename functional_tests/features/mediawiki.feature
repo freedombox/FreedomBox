@@ -55,13 +55,13 @@ Scenario: Logged in user can see upload files option
 
 Scenario: Upload images
   Given the mediawiki application is enabled
-  When I upload an image named FreedomBox-logo-lineart.png to mediawiki with credentials admin and whatever123
-  Then there should be FreedomBox-logo-lineart.png image
+  When I upload an image named noise.png to mediawiki with credentials admin and whatever123
+  Then there should be Noise.png image
 
 Scenario: Upload SVG image
   Given the mediawiki application is enabled
-  When I upload an image named FreedomBox-logo-grayscale.svg to mediawiki with credentials admin and whatever123
-  Then there should be FreedomBox-logo-grayscale.svg image
+  When I upload an image named apps-background.svg to mediawiki with credentials admin and whatever123
+  Then there should be Apps-background.svg image
 
 Scenario: Backup and restore mediawiki
   Given the mediawiki application is enabled

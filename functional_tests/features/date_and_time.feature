@@ -8,12 +8,14 @@ Background:
   Given I'm a logged in user
 
 Scenario: Disable network time application
-  Given the network time application is enabled
+  Given the network time application can be disabled
+  And the network time application is enabled
   When I disable the network time application
   Then the network time service should not be running
 
 Scenario: Enable network time application
-  Given the network time application is disabled
+  Given the network time application can be disabled
+  And the network time application is disabled
   When I enable the network time application
   Then the network time service should be running
 

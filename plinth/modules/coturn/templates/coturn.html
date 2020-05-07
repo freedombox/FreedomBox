@@ -1,0 +1,32 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block status %}
+  {{ block.super }}
+
+  <h3>Status</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      Use the following URLs to configure your communication server:
+    {% endblocktrans %}
+
+    <pre>stun:{{ config.realm }}:3478?transport=udp
+stun:{{ config.realm }}:3478?transport=tcp
+turn:{{ config.realm }}:3478?transport=udp
+turn:{{ config.realm }}:3478?transport=tcp</pre>
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      Use the following shared authentication secret:
+    {% endblocktrans %}
+
+    <pre>{{ config.static_auth_secret }}</pre>
+  </p>
+{% endblock %}

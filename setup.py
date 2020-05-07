@@ -305,7 +305,7 @@ setuptools.setup(
         'requests',
     ],
     package_data={
-        '': ['templates/*', 'static/*', 'locale/*/LC_MESSAGES/*.[pm]o']
+        '': ['templates/*', 'static/*', 'locale/*/LC_MESSAGES/*.mo']
     },
     exclude_package_data={'': ['*/data/*']},
     data_files=_gather_data_files() +

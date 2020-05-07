@@ -52,6 +52,28 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def _get_php_command():
+    """Return the PHP command that should be used on CLI.
+
+    This is workaround for /usr/bin/php pointing to a different version than
+    what php-defaults (and php-mbstring, php-xml) point to. See:
+    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=959742
+
+    """
+    version = ''
+
+    try:
+        process = subprocess.run(['dpkg', '-s', 'php'], stdout=subprocess.PIPE,
+                                 check=True)
+        for line in process.stdout.decode().splitlines():
+            if line.startswith('Version:'):
+                version = line.split(':')[-1].split('+')[0].strip()
+    except subprocess.CalledProcessError:
+        pass
+
+    return f'php{version}'
+
+
 def subcommand_setup(_):
     """Run the installer script to create database and configuration file."""
     data_dir = '/var/lib/mediawiki-db/'
@@ -65,10 +87,10 @@ def subcommand_setup(_):
         with tempfile.NamedTemporaryFile() as password_file_handle:
             password_file_handle.write(password.encode())
             subprocess.check_call([
-                'php', install_script, '--confpath=/etc/mediawiki',
-                '--dbtype=sqlite', '--dbpath=' + data_dir,
-                '--scriptpath=/mediawiki', '--passfile',
-                password_file_handle.name, 'Wiki', 'admin'
+                _get_php_command(), install_script,
+                '--confpath=/etc/mediawiki', '--dbtype=sqlite',
+                '--dbpath=' + data_dir, '--scriptpath=/mediawiki',
+                '--passfile', password_file_handle.name, 'Wiki', 'admin'
             ])
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
@@ -125,15 +147,15 @@ def subcommand_change_password(arguments):
                                           'changePassword.php')
 
     subprocess.check_call([
-        'php', change_password_script, '--user', arguments.username,
-        '--password', new_password
+        _get_php_command(), change_password_script, '--user',
+        arguments.username, '--password', new_password
     ])
 
 
 def subcommand_update(_):
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
-    subprocess.check_call(['php', update_script, '--quick'])
+    subprocess.check_call([_get_php_command(), update_script, '--quick'])
 
 
 def subcommand_public_registrations(arguments):

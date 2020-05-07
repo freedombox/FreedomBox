@@ -15,20 +15,53 @@ can install latest versions of Git, Vagrant and VirtualBox.
    $ sudo apt install git virtualbox vagrant
    ```
 
+#### Installing VirtualBox manually
+
+1. Add Oracle's key to apt's list of accepted keys.
+
+   ```bash
+   $ sudo wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+   ```
+
+2. Create a file under /etc/apt/sources.list.d/ for virtualbox package.
+
+
+   ```bash
+   $ sudo touch /etc/apt/sources.list.d/virtualbox.list
+   ```
+
+3. Add the relevant source for your Debian/derivative distribution into the above file.
+
+Example for Buster:
+   ```
+   deb https://download.virtualbox.org/virtualbox/debian buster contrib
+   ```
+
+4. Search and install the latest virtualbox package.
+
+   ```bash
+   $ apt search virtualbox
+
+       # virtualbox-6.1
+       # virtualbox-6.0
+
+   $ sudo apt install virtualbox-6.1
+   ```
+
 ### For Other GNU/Linux Distributions or *BSDs
 
 1. Install Git, Vagrant and VirtualBox using your favourite package manager.
 
 ### For macOS
 
-1. Install [Brew](https://brew.sh/).
+1. Install [Homebrew](https://brew.sh/).
 
-2. Install Git, Vagrant and VirtualBox using Brew.
+2. Install Git, VirtualBox and Vagrant using Homebrew.
 
    ```bash
    $ brew install git
-   $ brew cask install vagrant
    $ brew cask install virtualbox
+   $ brew cask install vagrant
    ```
 
 ### For Windows
@@ -58,7 +91,7 @@ and requires about 4.5 GB of disk space.
 1.  Checkout FreedomBox Service (Plinth) source code using Git.
 
     ```bash
-    host$ git clone https://salsa.debian.org/freedombox-team/plinth.git
+    host$ git clone https://salsa.debian.org/freedombox-team/freedombox.git
     host$ cd plinth
     ```
 
@@ -257,12 +290,12 @@ vm$ make -C doc
 ## Repository
 
 FreedomBox Service (Plinth) is available from
-[salsa.debian.org](https://salsa.debian.org/freedombox-team/plinth).
+[salsa.debian.org](https://salsa.debian.org/freedombox-team/freedombox).
 
 ## Bugs & TODO
 
 You can report bugs on FreedomBox Service's (Plinth's) [issue
-tracker](https://salsa.debian.org/freedombox-team/plinth/issues).
+tracker](https://salsa.debian.org/freedombox-team/freedombox/issues).
 
 See CONTRIBUTING.md for information how to best contribute code.
 

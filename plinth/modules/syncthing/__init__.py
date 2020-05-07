@@ -12,11 +12,12 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.modules.users import add_user_to_share_group
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 2
+version = 3
 
 managed_services = ['syncthing@syncthing']
 
@@ -37,6 +38,8 @@ _description = [
           'users belonging to the "admin" or "syncthing" group.'),
         box_name=_(cfg.box_name)),
 ]
+
+SYSTEM_USER = 'syncthing'
 
 app = None
 
@@ -87,8 +90,8 @@ class SyncthingApp(app_module.App):
         daemon = Daemon('daemon-syncthing', managed_services[0])
         self.add(daemon)
 
-        users_and_groups = UsersAndGroups('users-and-groups-syncthing',
-                                          groups=self.groups)
+        users_and_groups = UsersAndGroups(
+            'users-and-groups-syncthing', [SYSTEM_USER], self.groups)
         self.add(users_and_groups)
 
 
@@ -111,3 +114,5 @@ def setup(helper, old_version=None):
 
     if old_version == 1 and app.is_enabled():
         app.get_component('firewall-syncthing-ports').enable()
+
+    add_user_to_share_group(SYSTEM_USER, managed_services[0])

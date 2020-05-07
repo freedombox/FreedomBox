@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-20 17:53-0400\n"
-"PO-Revision-Date: 2020-04-06 23:58+0000\n"
+"POT-Creation-Date: 2020-05-04 19:59-0400\n"
+"PO-Revision-Date: 2020-05-02 08:11+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -149,7 +149,7 @@ msgstr "Copias de seguridad"
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
 msgid "{app} (No data to backup)"
-msgstr "{app}1 (Sin datos para respaldar)"
+msgstr "{app} (Sin datos que respaldar)"
 
 #: plinth/modules/backups/forms.py:52
 msgid "Included apps"
@@ -400,7 +400,7 @@ msgstr "Enviar"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
 msgid "This repository is encrypted"
-msgstr "Este repositorio no está cifrado."
+msgstr "Este repositorio está cifrado"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
 msgid "Unmount Location"
@@ -690,10 +690,10 @@ msgstr "Direcciones IP"
 msgid "Refresh IP address and domains"
 msgstr "Actualizar direcciones IP y dominios"
 
-#: plinth/modules/bind/views.py:72 plinth/modules/deluge/views.py:42
-#: plinth/modules/dynamicdns/views.py:150 plinth/modules/openvpn/views.py:133
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/openvpn/views.py:133 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:30 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Configuración actualizada"
@@ -962,6 +962,50 @@ msgstr "Tamaño máximo actualizado"
 msgid "Failed to update maximum file size"
 msgstr "Falló al actualizar el tamaño máximo"
 
+#: plinth/modules/coturn/__init__.py:31
+msgid ""
+"Coturn is a server to facilitate audio/video calls and conferences by "
+"providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
+"other communication servers can use it to establish a call between parties "
+"who are otherwise unable connect to each other."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:35
+msgid ""
+"It is not meant to be used directly by users. Servers such as matrix-synapse "
+"need to be configured with the details provided here."
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:64
+msgid "Coturn"
+msgstr ""
+
+#: plinth/modules/coturn/__init__.py:65
+msgid "VoIP Helper"
+msgstr ""
+
+#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+msgid "TLS domain"
+msgstr "Dominio TLS"
+
+#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+"Selecciona un dominio con el que usar TLS. Si la lista está vacía, por "
+"favor, configura al menos un dominio con certificados."
+
+#: plinth/modules/coturn/templates/coturn.html:15
+msgid "Use the following URLs to configure your communication server:"
+msgstr ""
+
+#: plinth/modules/coturn/templates/coturn.html:26
+#, fuzzy
+#| msgid "The following storage devices are in use:"
+msgid "Use the following shared authentication secret:"
+msgstr "Se están usando los siguientes dispositivos de almacenamiento:"
+
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
 "Network time server is a program that maintains the system time in "
@@ -970,11 +1014,11 @@ msgstr ""
 "El servidor de tiempo de red (servicio NTP) mantiene sincronizada la hora "
 "del sistema con servidores de Internet."
 
-#: plinth/modules/datetime/__init__.py:42
+#: plinth/modules/datetime/__init__.py:69
 msgid "Date & Time"
 msgstr "Fecha y hora"
 
-#: plinth/modules/datetime/__init__.py:85
+#: plinth/modules/datetime/__init__.py:120
 msgid "Time synchronized to NTP server"
 msgstr "Hora sincronizada con el servidor NTP"
 
@@ -1542,7 +1586,7 @@ msgstr ""
 
 #: plinth/modules/firewall/__init__.py:65
 msgid "Firewall"
-msgstr "Firewall"
+msgstr "Cortafuegos"
 
 #: plinth/modules/firewall/components.py:118
 #, python-brace-format
@@ -1769,10 +1813,8 @@ msgid "Delete repository %(repo.name)s"
 msgstr "Eliminar repositorio %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:68
-#, fuzzy
-#| msgid "Cloning..."
 msgid "Cloning…"
-msgstr "Clonando..."
+msgstr "Clonando…"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:74
 #, python-format
@@ -2013,11 +2055,17 @@ msgstr ""
 "target=\"_blank\"> foro de debate</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
+#, fuzzy
+#| msgid ""
+#| "If you find any bugs or issues, please use the <a href=\"https://salsa."
+#| "debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue "
+#| "tracker</a> to let our developers know. To report, first check if the "
+#| "issue is already reported and then use the \"New issue\" button."
 msgid ""
 "If you find any bugs or issues, please use the <a href=\"https://salsa."
-"debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue tracker</"
-"a> to let our developers know. To report, first check if the issue is "
-"already reported and then use the \"New issue\" button."
+"debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">issue "
+"tracker</a> to let our developers know. To report, first check if the issue "
+"is already reported and then use the \"New issue\" button."
 msgstr ""
 "Si encuentras defectos o incidencias, por favor usa el <a href=\"https://"
 "salsa.debian.org/freedombox-team/plinth/issues\" target=\"_blank\">gestor de "
@@ -2119,12 +2167,17 @@ msgid "Status Log"
 msgstr "Registro de estado"
 
 #: plinth/modules/help/templates/statuslog.html:13
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and attach "
-"this status log to the bug report."
+"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+"attach this status log to the bug report."
 msgstr ""
 "Éstas son las últimas %(num_lines)s líneas del registro de estado. Si quiere "
 "informar de un defecto, por favor utilice el <a href=\"https://salsa.debian."
@@ -3222,6 +3275,10 @@ msgstr "Plumble"
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
+#: plinth/modules/mumble/manifest.py:60
+msgid "Mumla"
+msgstr ""
+
 #: plinth/modules/mumble/views.py:29
 msgid "SuperUser password successfully updated."
 msgstr "Clave de administración cambiada con éxito."
@@ -3523,10 +3580,9 @@ msgid "Open"
 msgstr "Abierto"
 
 #: plinth/modules/networks/forms.py:297
-#, fuzzy, python-brace-format
-#| msgid "Choose how your {box_name} is connected to your network"
+#, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
-msgstr "Elija cómo conectar su {box_name} a su red"
+msgstr "Especifique cómo su {box_name} está conectada a la red"
 
 #: plinth/modules/networks/forms.py:304
 #, python-brace-format
@@ -4673,18 +4729,6 @@ msgstr "Quassel"
 msgid "IRC Client"
 msgstr "Cliente IRC"
 
-#: plinth/modules/quassel/forms.py:22
-msgid "TLS domain"
-msgstr "Dominio TLS"
-
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-"Selecciona un dominio con el que usar TLS. Si la lista está vacía, por "
-"favor, configura al menos un dominio con certificados."
-
 #: plinth/modules/quassel/manifest.py:34
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
@@ -5537,9 +5581,13 @@ msgid "Rollback to snapshot #%(number)s"
 msgstr "Restaurar a instantánea %(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:11
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots "
+#| "are currently only available on <strong>%(types_supported)s</strong> "
+#| "filesystems."
 msgid ""
-"Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
+"You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
 "Tiene un sistema de archivos del tipo <strong>%(fs_type)s</strong>. Las "
@@ -5879,7 +5927,7 @@ msgstr "El dispositivo ya se puede desconectar con seguridad."
 msgid "Error ejecting device: {error_message}"
 msgstr "Error al expulsar el dispositivo: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:26
+#: plinth/modules/syncthing/__init__.py:27
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -5891,15 +5939,8 @@ msgstr ""
 "modificación o borrado de archivos en uno de los dispositivos se replica "
 "automáticamente en todos los demás que también estén ejecutando Syncthing."
 
-#: plinth/modules/syncthing/__init__.py:31
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" group."
+#: plinth/modules/syncthing/__init__.py:32
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -5911,21 +5952,22 @@ msgid ""
 msgstr ""
 "Ejecutar Syncthing en {box_name} proporciona una sincronización extra para "
 "sus datos permitiendo que sus dispositivos se sincronicen más a menudo. "
-"{box_name} ejecuta una instancia única de Syncthing que puede ser usada por "
-"varios usuarias/os. Cada conjunto de dispositivos de una persona puede "
-"sincronizarse con un conjunto distinto de carpetas. La interfaz web en "
-"{box_name} solo está disponible para quienes pertenezcan al grupo \"admin\"."
+"{box_name} ejecuta una instancia única de Syncthing que puede ser "
+"aprovechada por varios usuarias/os. Cada conjunto de dispositivos de una "
+"persona puede sincronizarse con un conjunto distinto de carpetas. La "
+"interfaz web en {box_name} solo está disponible para quienes pertenezcan a "
+"los grupos \"admin\" o \"syncthing\"."
 
-#: plinth/modules/syncthing/__init__.py:53
+#: plinth/modules/syncthing/__init__.py:56
 msgid "Administer Syncthing application"
 msgstr "Administrar Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:56
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:13
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Sincronización de archivos"
 
@@ -6405,13 +6447,6 @@ msgid "Permissions"
 msgstr "Permisos"
 
 #: plinth/modules/users/forms.py:85
-#, fuzzy
-#| msgid ""
-#| "Select which services should be available to the new user. The user will "
-#| "be able to log in to services that support single sign-on through LDAP, "
-#| "if they are in the appropriate group.<br /><br />Users in the admin group "
-#| "will be able to log in to all services. They can also log in to the "
-#| "system through SSH and have administrative privileges (sudo)."
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -6985,10 +7020,15 @@ msgid "Requested page %(request_path)s was not found."
 msgstr "No se encontró la página %(request_path)s solicitada."
 
 #: plinth/templates/404.html:19
+#, fuzzy
+#| msgid ""
+#| "If you believe this missing page should exist, please file a bug at the "
+#| "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
+#| "freedombox-team/plinth/issues\">issue tracker</a>."
 msgid ""
 "If you believe this missing page should exist, please file a bug at the "
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">issue tracker</a>."
+"freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
 "Si cree que esta página debería existir, por favor informe del error en el "
 "<a href=\"https://salsa.debian.org/freedombox-team/plinth/issues\">sistema "
@@ -6999,12 +7039,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/plinth/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
-"plinth/issues\">bug tracker</a> so we can fix it. Also, please attach the <a "
-"href=\"%(status_log_url)s\">status log</a> to the bug report."
+"freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
+"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Este ha sido un error interno y no algo provocado por usted o que pueda "
 "corregir. Por favor, informe del error en el <a href=\"https://salsa.debian."

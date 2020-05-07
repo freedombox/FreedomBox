@@ -81,6 +81,15 @@ class Disk():
             subprocess.run(command, stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True)
 
+    def _unmount_file_systems(self):
+        """Unmount al partitions if it is mounted by external party."""
+        if not self.file_system_info:
+            return
+
+        for partition, _ in self.file_system_info:
+            device = _get_partition_device(self.device, partition)
+            subprocess.run(['umount', device], check=False)
+
     def _cleanup_loopback(self):
         """Undo the loopback device setup."""
         subprocess.run(['losetup', '--detach', self.device])
@@ -99,6 +108,7 @@ class Disk():
 
     def __exit__(self, *exc):
         """Exit the context, destroy the test disk."""
+        self._unmount_file_systems()
         self._cleanup_loopback()
         self._remove_disk_file()
 
@@ -221,7 +231,7 @@ class TestActions:
     def assert_btrfs_file_system_healthy(self, partition_number):
         """Perform a successful ext4 file system check."""
         device = _get_partition_device(self.device, partition_number)
-        command = ['btrfs', 'check', device]
+        command = ['btrfs', 'check', '--force', device]
         subprocess.run(command, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True)
 

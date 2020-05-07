@@ -121,6 +121,13 @@ def disable(browser, app_name):
     _change_app_status(browser, app_name, 'disabled')
 
 
+def can_be_disabled(browser, app_name):
+    """Return whether the application can be disabled."""
+    interface.nav_to_module(browser, get_app_module(app_name))
+    button = browser.find_by_css('button[name="app_enable_disable_button"]')
+    return bool(button)
+
+
 def wait_for_config_update(browser, app_name):
     while browser.is_element_present_by_css('.running-status.loading'):
         sleep(0.1)
