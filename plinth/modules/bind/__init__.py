@@ -21,7 +21,7 @@ from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 2
 
-managed_services = ['bind9']
+managed_services = ['bind9', 'named']
 
 managed_packages = ['bind9']
 
@@ -97,7 +97,8 @@ class BindApp(app_module.App):
             'daemon-bind', managed_services[0], listen_ports=[(53, 'tcp6'),
                                                               (53, 'udp6'),
                                                               (53, 'tcp4'),
-                                                              (53, 'udp4')])
+                                                              (53, 'udp4')],
+            alias=managed_services[1])
         self.add(daemon)
 
 
