@@ -15,7 +15,7 @@ from plinth import action_utils, actions, app
 class Daemon(app.LeaderComponent):
     """Component to manage a background daemon or any systemd unit."""
     def __init__(self, component_id, unit, strict_check=False,
-                 listen_ports=None):
+                 listen_ports=None, alias=None):
         """Initialize a new daemon component.
 
         'component_id' must be a unique string across all apps and components
@@ -28,12 +28,24 @@ class Daemon(app.LeaderComponent):
         'tcp', 'udp4', 'udp6', 'udp' indicating the protocol that the daemon
         listens on. This information is used to run diagnostic tests.
 
+        'alias' is an alternate name for the same unit file. When a unit file
+        is renamed, the new unit file usually contains an Alias= setting in
+        [Install] section with value of old unit name. When the unit is
+        enabled, a symlink with the name of the alias is created. All
+        operations such as is-enabled, is-running and disable work with the
+        alias along with the primary unit name. However, for the case of
+        enabling the unit file, the alias does not work. To be able to provide
+        management for multiple versions of the unit file with different names,
+        specify an alias. Both the names are taken into consideration when
+        enabling the unit file.
+
         """
         super().__init__(component_id)
 
         self.unit = unit
         self.strict_check = strict_check
         self.listen_ports = listen_ports or []
+        self.alias = alias
 
     def is_enabled(self):
         """Return if the daemon/unit is enabled."""
@@ -43,6 +55,8 @@ class Daemon(app.LeaderComponent):
     def enable(self):
         """Run operations to enable the daemon/unit."""
         actions.superuser_run('service', ['enable', self.unit])
+        if self.alias:
+            actions.superuser_run('service', ['enable', self.alias])
 
     def disable(self):
         """Run operations to disable the daemon/unit."""
