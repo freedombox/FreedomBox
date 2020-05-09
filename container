@@ -1,0 +1,819 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Script to manage systemd-nspawn container for FreedomBox development.
+
+This script creates a simple container using systemd-nspawn for developing
+FreedomBox. It has many advantages over running a VM using Vagrant. RAM is
+allocated to processes in the container as needed without any fixed limit. Also
+RAM does not have to be statically allocated so it is typically much lighter
+than running an VM. There is no hardware emulation when running a container
+with same architecture, so processes run as fast as they would on the host
+machine.
+
+Environment: The script will run only run on hosts having systemd-nspawn and
+network-manager installed, typical GNU/Linux distributions. It has been
+primarily developed and tested on Debian Buster but should work on most modern
+GNU/Linux distributions.
+
+Disk image: systemd-nspawn accepts not only a directory for starting a
+container but also a disk image. This disk image is loop-back mounted and
+container is started from that mounted directory. The partition to use is
+determined by looking at the boot flag in the partition table. This happens to
+work well with all existing FreedomBox images. In future, we may be able to run
+different architectures in this manner.
+
+After downloading, the disk image is expanded along with the partition and file
+system inside so that development can be done without running into disk space
+issues. Expanding the disk does not immediately consume disk space because it
+will be a sparse file. As data is written to the disk, it will occupy more and
+more space but the upper limit is the size to which disk has been expanded.
+
+Downloading images: Images are downloaded from FreedomBox download server using
+fixed URLs for each distribution. Signature is verified for the download
+images. The fingerprint of the allowed signing key is hard-coded in this
+script. Downloaded images are kept even after destroying the extracted raw
+image along with container. This allows for quickly resetting the container
+without downloading again.
+
+Booting: systemd-nspawn is run in 'boot' mode. This means that init process
+(happens to be systemd) is started inside the container. It then spawns all the
+other necessary daemons including openssh-server, firewalld and
+network-manager. A login terminal can be opened using 'machinectl login'
+because container is running systemd. SSH into the container is possible
+because network is up, configured by network-manager, and openssh server is
+running.
+
+Shared folder: Using systemd-nspawn, the project directory is mounted as
+/freedombox inside the container. The project directory is determined as
+directory in which this script resides. The project folder from the container
+point of view will be read-only. Container should be able to write various
+files such as build files, FreedomBox sqlite3 database and session files into
+the /freedombox folder. To enable writing, an additional read-write folder is
+overlayed onto /freedombox folder in the container. This directory can't be
+created under the project folder and is created instead in
+$XDG_DATA_HOME/freedombox-container/overlay/$DISTRIBUTION. If XDG_DATA_HOME is
+not set, it is assumed to be $HOME/.local/shared/. Whenever data is written
+into /freedombox directory inside the container, this directory on the host
+receives the changes. See documentation for Overlay filesystem for further
+details. When container is destroyed, this overlay folder is destroyed to
+ensure clean state after bringing up the container again.
+
+Users: PrivateUsers configuration flag for systemd-nspawn is currently off.
+This means that each user's UID on the host is also the same UID in the
+container as along as there is an entry in the container's password database.
+In future, we may explore using private users inside the container.
+
+'fbx' is the development user and its UID is changed during setup phase to
+10000 hoping it would not match anything on the host system. 'fbx' user has
+full sudo access inside the container without needing a password. Password for
+this user is not set by default, but can be set if needed. If there is no
+access to the container in any way, one can run 'sudo machinectl shell' and
+then run 'passwd fbx' to set the password for the 'fbx' user.
+
+'plinth' user's UID in the container is also changed and set to the UID of
+whichever user owns the project directory. This allows the files to written by
+'plinth' container user in the project directory because UID of the owner of
+the directory is same as the 'plinth' user's UID in container.
+
+Network: A private network is created inside the container using systemd-nspawn
+feature. Network interfaces from the host are not available inside the
+container. A new network interface called 'host0' is configured inside the
+container which is automatically configured by network-manager. On the host a
+new network interface is created. This script creates configuration for a
+'shared' network using network-manager. When bringing up the container, this
+network connection is also brought up. A DHCP server and a DNS server are
+started network-manager on the host side so that DHCP and DNS client functions
+work inside the container. Traffic from the container is also masqueraded so
+that Internet connectivity inside the container works if the host has one.
+
+If necessary, the network interface on host side can be differently configured.
+For example, it can be bridged with another interface to expose the container
+on a network that the host machine participates in.
+
+The network IP address inside the container can be queried using machinectl.
+This script queries that IP address and presents the address in its console
+messages. All ports in the container can be reached from the host using this IP
+address as long as the firewall inside the container allows it. There is no
+need to perform port forwarding or mapping.
+
+SSH: It is assumed that openssh-server is installed inside the container. SSH
+server keys in the container are created if missing. Client side keys are
+created in .container/ssh directory and the public key is installed in the
+authorized keys file of the 'fbx' user. The 'ssh' sub-command to this script is
+simply a convenience mechanism for quick launch of ssh with the right IP
+address, user name and identity file.
+
+Role of machinectl: Most of the work is done by systemd-nspawn. machinectl is
+useful for running systemd-nspawn in the background and querying its current
+state. It also helps with providing the IP address of the container. machinectl
+is made to recognize the container by creating a link in /var/lib/machines/ to
+the image file. systemd-nspawn options are added by creating a temporary file
+in /run/systemd/nspawn. All machinectl commands should work.
+
+"""
+
+import argparse
+import ipaddress
+import itertools
+import json
+import logging
+import os
+import pathlib
+import subprocess
+import sys
+import tempfile
+import time
+import urllib.parse
+
+URLS = {
+    'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+              'amd64/stable/freedombox-stable-free_buster_all-amd64.img.xz',
+    'testing': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+               'amd64/testing/freedombox-testing-free_latest_all-amd64.img.xz',
+}
+
+TRUSTED_KEYS = ['013D86D8BA32EAB4A6691BF85D4153D6FE188FC8']
+KEY_SERVER = 'keys.gnupg.net'
+
+PROVISION_SCRIPT = '''
+set -x
+
+cd /freedombox/
+
+sudo apt-get update
+
+if [ $(lsb_release --release --short) != '10' ]; then
+  sudo DEBIAN_FRONTEND=noninteractive apt-get build-dep \
+  --no-install-recommends --yes .
+fi
+
+sudo ./setup.py install
+sudo systemctl daemon-reload
+
+# In case new dependencies conflict with old dependencies
+sudo apt-mark hold freedombox
+sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
+  $(sudo -u plinth /freedombox/run --develop --list-dependencies)
+sudo apt-mark unhold freedombox
+# Install ncurses-term
+sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term
+
+# Remove FreedomBox database lingering in source directory to start fresh
+sudo rm -f /freedombox/data/var/lib/plinth/plinth.sqlite3
+
+echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' \
+  >> /home/fbx/.bashrc
+'''
+
+logger = logging.getLogger(__name__)
+
+work_directory = None
+systemd_version = None
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Up
+    subparser = subparsers.add_parser('up', help='Bring up the container')
+    subparser.add_argument(
+        '--distribution', choices=['stable', 'testing'], default='testing',
+        help='Distribution of the image to download and setup')
+    subparser.add_argument('--image-size', default='8G',
+                           help='Disk image size to resize to after download')
+
+    # ssh
+    subparser = subparsers.add_parser('ssh', help='SSH into the container')
+    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+                           default='testing',
+                           help='Distribution of the container to SSH into')
+
+    # Stop
+    subparser = subparsers.add_parser('stop', help='Stop the container')
+    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+                           default='testing',
+                           help='Distribution of the container to stop')
+
+    # Destroy
+    subparser = subparsers.add_parser('destroy',
+                                      help='Destroy the container image')
+    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+                           default='testing',
+                           help='Distribution of the image to delete')
+
+    return parser.parse_args()
+
+
+def _check_command(command):
+    """Check that a command is present in PATH."""
+    if command == 'sudo':
+        which = ['which', command]
+    else:
+        which = ['sudo', 'which', command]
+
+    process = subprocess.run(which, stdout=subprocess.DEVNULL)
+    return process.returncode == 0
+
+
+def _verify_dependencies():
+    """Ensure that all the dependencies are present."""
+    if not _check_command('sudo'):
+        logger.info('sudo command is needed. Run `apt install sudo`.')
+        sys.exit(1)
+
+    # Old versions of machinectl can't modprobe loop driver and immediately use
+    # it leading to machinectl start failing first time after boot. See
+    # https://github.com/systemd/systemd/issues/13130 . Workaround for old
+    # versions of machinectl. Ignore errors.
+    subprocess.run(['sudo', 'modprobe', '--all', '--quiet', 'loop'])
+
+    dependencies = {
+        'systemd-nspawn': 'systemd-container',
+        'machinectl': 'systemd-container',
+        'kpartx': 'kpartx',
+        'wget': 'wget',
+        'gpg': 'gpg',
+        'xz': 'xz-utils',
+        'parted': 'parted',
+        'btrfs': 'btrfs-progs',
+        'nmcli': 'network-manager',
+        'ssh': 'openssh-client',
+        'ssh-keygen': 'openssh-client',
+    }
+    missing_commands = []
+    missing_packages = []
+    for command, package in dependencies.items():
+        if not _check_command(command):
+            missing_commands.append(command)
+            missing_packages.append(package)
+
+    if not missing_commands:
+        return
+
+    logger.info('You need to install the following commands: %s',
+                ' '.join(missing_commands))
+
+    process = subprocess.run(['lsb_release', '--id', '--short'],
+                             stdout=subprocess.PIPE)
+    if process.stdout.decode().strip() != 'Debian':
+        sys.exit(1)
+
+    logger.info('Running apt for missing packages: %s',
+                ' '.join(missing_commands))
+    subprocess.run(['sudo', 'apt', 'install'] + missing_packages)
+
+
+def _get_systemd_nspawn_version():
+    """Retrieve and store systemd-nspawn version (same as systemd)."""
+    process = subprocess.run(['systemd', '--version'], stdout=subprocess.PIPE,
+                             check=True)
+    global systemd_version
+    systemd_version = float(process.stdout.decode().split()[1])
+
+
+def _download_file(url, target_file):
+    """Download a file from remote URL."""
+    if target_file.exists():
+        return
+
+    partial_file = target_file.with_suffix(target_file.suffix + '.partial')
+
+    logger.info('Downloading %s', target_file)
+    subprocess.run([
+        'wget', '--quiet', '--show-progress', '--continue',
+        '--output-document',
+        str(partial_file), url
+    ], check=True)
+    partial_file.rename(target_file)
+
+
+def _verify_signature(data_file, signature_file):
+    """Verify the detached signature on a file using GPG."""
+    verified_file = signature_file.with_suffix(signature_file.suffix +
+                                               '.verified')
+    if verified_file.exists():
+        return
+
+    gpg_home = work_directory / 'gpg'
+    gpg_home.mkdir(exist_ok=True)
+    gpg_home.chmod(0o700)
+
+    logger.info('Receiving GPG keys')
+    subprocess.run([
+        'gpg', '--quiet', '--homedir',
+        str(gpg_home), '--keyserver', KEY_SERVER, '--recv-keys'
+    ] + TRUSTED_KEYS, check=True)
+    process = subprocess.run(
+        ['gpg', '--quiet', '--homedir',
+         str(gpg_home), '--armor', '--export'] + TRUSTED_KEYS, check=True,
+        stdout=subprocess.PIPE)
+    exported_keys = process.stdout
+    trusted_keys = gpg_home / 'trustedkeys.gpg'
+    subprocess.run([
+        'gpg', '--quiet', '--homedir',
+        str(gpg_home), '--no-default-keyring', '--keyring',
+        str(trusted_keys), '--import', '-'
+    ], check=True, input=exported_keys)
+
+    logger.info('Verify GPG signature')
+    subprocess.run([
+        'gpgv', '--quiet', '--homedir',
+        str(gpg_home),
+        str(signature_file),
+        str(data_file)
+    ], check=True)
+
+    verified_file.touch()
+
+
+def _extract_image(compressed_file):
+    """Extract the image file."""
+    decompressed_file = compressed_file.with_suffix('')
+    if decompressed_file.exists():
+        return decompressed_file
+
+    logger.info('Decompressing file %s', compressed_file)
+    partial_file = compressed_file.with_suffix('.partial')
+    with partial_file.open('w') as file_handle:
+        subprocess.run([
+            'xz', '--verbose', '--decompress', '--keep', '--to-stdout',
+            str(compressed_file)
+        ], check=True, stdout=file_handle)
+    partial_file.rename(decompressed_file)
+    return decompressed_file
+
+
+def _get_compressed_image_path(distribution):
+    """Return the path of the compressed image."""
+    url = URLS[distribution]
+    result = urllib.parse.urlparse(url)
+
+    return work_directory / pathlib.Path(result.path).name
+
+
+def _get_project_folder():
+    """Return the read-only folder that should be exposed into container."""
+    return work_directory.parent.resolve()
+
+
+def _get_overlay_folder(distribution):
+    """Return the writable folder that should be exposed into container."""
+    default_data_dir = pathlib.Path.home() / '.local' / 'share'
+    data_folder = os.environ.get('XDG_DATA_HOME', default_data_dir)
+    folder = data_folder / 'freedombox-container' / 'overlay' / distribution
+    return folder.resolve()
+
+
+def _download_disk_image(distribution):
+    """Download and unpack FreedomBox disk image."""
+    work_directory.mkdir(exist_ok=True)
+
+    url = URLS[distribution]
+
+    target_file = _get_compressed_image_path(distribution)
+    _download_file(url, target_file)
+
+    signature_file = target_file.with_suffix(target_file.suffix + '.sig')
+    _download_file(url + '.sig', signature_file)
+
+    _verify_signature(target_file, signature_file)
+
+    return _extract_image(target_file)
+
+
+def _resize_disk_image(image_file, new_size):
+    """Resize the disk image if has not already been."""
+    if new_size[-1] != 'G':
+        raise ValueError(f'Invalid size: {new_size}')
+
+    new_size_bytes = int(new_size.strip('G')) * 1024 * 1024 * 1024
+    if image_file.stat().st_size >= new_size_bytes:
+        return
+
+    logger.info('Resizing disk image to %s', new_size)
+    subprocess.run(
+        ['truncate', '--size',
+         str(new_size_bytes),
+         str(image_file)], check=True)
+    subprocess.run([
+        'sudo', 'parted', '--align=optimal', '--script',
+        str(image_file), 'resizepart', '1', '100%'
+    ], check=True)
+    process = subprocess.run(
+        ['sudo', 'kpartx', '-avs', str(image_file)], stdout=subprocess.PIPE,
+        check=True)
+    partition = '/dev/mapper/' + process.stdout.decode().split()[2]
+    with tempfile.TemporaryDirectory(
+            dir=work_directory.resolve()) as mount_point:
+        subprocess.run(['sudo', 'mount', partition, mount_point], check=True)
+        subprocess.run(
+            ['sudo', 'btrfs', 'filesystem', 'resize', 'max', mount_point],
+            check=True, stdout=subprocess.DEVNULL)
+        subprocess.run(['sudo', 'umount', mount_point], check=True)
+
+    subprocess.run(
+        ['sudo', 'kpartx', '-ds', str(image_file)], check=True,
+        stderr=subprocess.DEVNULL)
+
+
+def _get_nspawn_command(image_file):
+    """Return the base nspwan command."""
+    pipe_argument = ['--pipe'] if systemd_version > 241 else []
+    return [
+        'sudo',
+        'systemd-nspawn',
+        '--image',
+        str(image_file),
+    ] + pipe_argument
+
+
+def _runc(image_file, command, **kwargs):
+    """Run a command inside the container."""
+    subprocess.run(
+        _get_nspawn_command(image_file) + ['--quiet'] + command, check=True,
+        **kwargs)
+
+
+def _setup_nm_connection(distribution):
+    """Create a network manager conn. on host for DHCP/DNS with container."""
+    connection_name = f'fbx-{distribution}-shared'
+    process = subprocess.run(
+        ['sudo', 'nmcli', 'connection', 'show', connection_name],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if not process.returncode:
+        return
+
+    logger.info('Creating Network Manager connection in host: %s',
+                connection_name)
+    properties = {
+        'connection.id': connection_name,
+        'connection.type': '802-3-ethernet',
+        'connection.interface-name': f've-fbx-{distribution}',
+        'connection.autoconnect': 'yes',
+        'ipv4.method': 'shared',
+    }
+    subprocess.run(['sudo', 'nmcli', 'connection', 'add'] +
+                   list(itertools.chain(*properties.items())), check=True)
+    subprocess.run(['sudo', 'nmcli', 'connection', 'up', connection_name],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def _setup_users(image_file):
+    """Change UID, GID and password of fbx user in container."""
+    folder = _get_project_folder()
+
+    uid = 10000
+    gid = 10000
+    logger.info('In container: Setting UID/GID of "fbx" to %s/%s', uid, gid)
+    _runc(image_file, ['groupmod', '--gid', str(gid), 'fbx'])
+    _runc(image_file, ['usermod', '--uid',
+                       str(uid), '--gid',
+                       str(gid), 'fbx'], stdout=subprocess.DEVNULL)
+
+    uid = folder.stat().st_uid
+    gid = folder.stat().st_gid
+    logger.info(
+        'In container: Setting UID/GID of "plinth" to %s/%s to match %s/%s',
+        uid, gid, folder.owner(), folder.group())
+    _runc(image_file, ['groupmod', '--gid', str(gid), 'plinth'])
+    _runc(image_file,
+          ['usermod', '--uid',
+           str(uid), '--gid',
+           str(gid), 'plinth'], stdout=subprocess.DEVNULL)
+
+    logger.info('In container: Setting up sudo for users "fbx" and "plinth"')
+    sudo_config = 'plinth    ALL=(ALL:ALL) NOPASSWD:SETENV : ' \
+        '/usr/share/plinth/actions/* , /freedombox/actions/*\n' \
+        'fbx    ALL=(ALL:ALL) NOPASSWD : ALL\n'
+    _runc(image_file, ['tee', '/etc/sudoers.d/01-freedombox-development'],
+          input=sudo_config.encode(), stdout=subprocess.DEVNULL)
+
+
+def _setup_ssh(image_file):
+    """Setup SSH server and client keys."""
+    logger.info('In container: Generating SSH server keys')
+    _runc(image_file, ['dpkg-reconfigure', 'openssh-server'],
+          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    ssh_directory = work_directory / 'ssh'
+    ssh_directory.mkdir(exist_ok=True)
+    ssh_directory.chmod(0o700)
+
+    key_file = ssh_directory / 'id_ed25519'
+    if not key_file.exists():
+        logger.info('Generating SSH client key %s', key_file)
+        subprocess.run(
+            ['ssh-keygen', '-t', 'ed25519', '-N', '', '-f',
+             str(key_file)], stdout=subprocess.DEVNULL)
+
+    public_key_file = key_file.with_suffix('.pub')
+    public_key = public_key_file.read_bytes()
+    if not public_key:
+        logger.error('Unable to read SSH public key from %s', public_key_file)
+        sys.exit(1)
+
+    logger.info(
+        'Adding SSH client key to "fbx" user authorized keys in container')
+    _runc(image_file, ['mkdir', '--parents', '/home/fbx/.ssh'])
+    _runc(image_file, ['tee', '--append', '/home/fbx/.ssh/authorized_keys'],
+          input=public_key, stdout=subprocess.DEVNULL)
+    _runc(image_file, ['chmod', '600', '/home/fbx/.ssh/authorized_keys'])
+    _runc(image_file, ['chown', 'fbx:fbx', '/home/fbx/.ssh/authorized_keys'])
+
+
+def _setup(image_file, distribution):
+    """Prepare the image for execution."""
+    setup_file = image_file.with_suffix(image_file.suffix + '.setup')
+    if setup_file.exists():
+        return
+
+    logger.info('In container: Disabling automatic updates temporarily')
+    _runc(image_file, ['/usr/share/plinth/actions/upgrades', 'disable-auto'])
+
+    logger.info('In container: Disabling FreedomBox service')
+    _runc(image_file, ['systemctl', 'disable', 'plinth'],
+          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    _setup_ssh(image_file)
+
+    _setup_users(image_file)
+
+    _setup_nm_connection(distribution)
+
+    setup_file.touch()
+
+
+def _create_nspawn_machine(image_file, distribution):
+    """Create systemd-nspawn options/image used by machinectl."""
+    machine_name = f'fbx-{distribution}'
+
+    overlay_folder = _get_overlay_folder(distribution)
+    logger.info('Creating overlay folder %s', overlay_folder)
+    overlay_folder.mkdir(parents=True, exist_ok=True)
+
+    nspawn_dir = pathlib.Path('/run/systemd/nspawn/')
+    if not nspawn_dir.exists():
+        subprocess.run(['sudo', 'mkdir', '--mode=700',
+                        str(nspawn_dir)], check=True)
+
+    nspawn_options = f'''[Exec]
+Boot=yes
+PrivateUsers=no
+
+[Files]
+Overlay={_get_project_folder()}:{overlay_folder}:/freedombox
+
+[Network]
+VirtualEthernet=yes
+'''
+    nspawn_file = f'/run/systemd/nspawn/{machine_name}.nspawn'
+    logger.info('Creating systemd-nspawn configuration: %s', nspawn_file)
+    subprocess.run(['sudo', 'rm', '--force', nspawn_file])
+    subprocess.run(['sudo', 'tee', nspawn_file], input=nspawn_options.encode(),
+                   stdout=subprocess.DEVNULL, check=True)
+
+    image_link = pathlib.Path(f'/var/lib/machines/{machine_name}.raw')
+    logger.info('Linking systemd-nspawn image %s -> %s', image_link,
+                image_file)
+    result = subprocess.run(['sudo', 'test', '-e', str(image_link)])
+    if not result.returncode:
+        result = subprocess.run(['sudo', 'test', '-L', str(image_link)])
+        if result.returncode:
+            raise Exception(f'Image file {image_link} is not a symlink.')
+
+        subprocess.run(['sudo', 'rm', '--force', str(image_link)])
+
+    subprocess.run([
+        'sudo', 'ln', '--symbolic',
+        str(image_file.resolve()),
+        str(image_link)
+    ])
+
+
+def _get_machine_status(machine_name):
+    """Return the running status of a container."""
+    process = subprocess.run(['sudo', 'machinectl', 'status', machine_name],
+                             stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL)
+    return process.returncode == 0
+
+
+def _launch(image_file, distribution):
+    """Launch and boot the container."""
+    machine_name = f'fbx-{distribution}'
+
+    _create_nspawn_machine(image_file, distribution)
+
+    logger.info('Running `machinectl start %s`', machine_name)
+    subprocess.run(['sudo', 'machinectl', 'start', machine_name], check=True)
+
+    logger.info('Bringing up host network connection: %s',
+                f'fbx-{distribution}-shared')
+    subprocess.run(
+        ['sudo', 'nmcli', 'connection', 'up', f'fbx-{distribution}-shared'],
+        stdout=subprocess.DEVNULL)
+
+
+def _stop(distribution):
+    """Stop the container."""
+    machine_name = f'fbx-{distribution}'
+    logger.info('Running `machinectl stop %s`', machine_name)
+    subprocess.run(['sudo', 'machinectl', 'stop', machine_name])
+    _wait_for(lambda: not _get_machine_status(machine_name))
+
+
+def _terminate(distribution):
+    """Terminal the container."""
+    machine_name = f'fbx-{distribution}'
+    logger.info('Running `machinectl terminate %s`', machine_name)
+    subprocess.run(['sudo', 'machinectl', 'terminate', machine_name])
+    _wait_for(lambda: not _get_machine_status(machine_name))
+
+
+def _destroy(distribution):
+    """Remove all traces of the machine and its image."""
+    machine_name = f'fbx-{distribution}'
+    image_link = pathlib.Path(f'/var/lib/machines/{machine_name}.raw')
+
+    logger.info('Removing link to systemd-nspawn image %s', image_link)
+    subprocess.run(['sudo', 'rm', '--force', str(image_link)])
+    nspawn_file = f'/run/systemd/nspawn/{machine_name}.nspawn'
+
+    logger.info('Removing systemd-nspawn configuration: %s', nspawn_file)
+    subprocess.run(['sudo', 'rm', '--force', nspawn_file])
+
+    overlay_folder = _get_overlay_folder(distribution)
+    logger.info('Removing overlay folder with container written data: %s',
+                overlay_folder)
+    subprocess.run(['sudo', 'rm', '-r', '--force', overlay_folder])
+
+    compressed_image = _get_compressed_image_path(distribution)
+    image_file = compressed_image.with_suffix('')
+    logger.info('Removing image file %s', image_file)
+    try:
+        image_file.with_suffix(image_file.suffix + '.provisioned').unlink()
+    except FileNotFoundError:
+        pass
+
+    try:
+        image_file.with_suffix(image_file.suffix + '.setup').unlink()
+    except FileNotFoundError:
+        pass
+
+    try:
+        image_file.unlink()
+    except FileNotFoundError:
+        pass
+
+    logger.info('Keeping downloaded image: %s',
+                _get_compressed_image_path(distribution))
+
+
+def _provision(image_file, distribution):
+    """Run app setup inside the container."""
+    provision_file = image_file.with_suffix(image_file.suffix + '.provisioned')
+    if provision_file.exists():
+        return
+
+    ip_address = _wait_for(lambda: _get_ip_address(distribution))
+    ssh_command = _get_ssh_command(ip_address, distribution)
+    subprocess.run(ssh_command + ['bash'], check=True,
+                   input=PROVISION_SCRIPT.encode())
+
+    provision_file.touch()
+
+
+def _print_banner(distribution):
+    """Print a friendly message on how to use."""
+    ip_address = _wait_for(lambda: _get_ip_address(distribution))
+    work_directory.owner()
+    script = sys.argv[0]
+    options = ''
+    if distribution != 'testing':
+        options = f'--distribution={distribution}'
+
+    project_folder = _get_project_folder()
+    overlay_folder = _get_overlay_folder(distribution)
+    message = f'''==== Ready ====
+
+Development user      : fbx
+Plinth user           : (host){project_folder.owner()} -> (container)plinth
+Folder overlay        :    (host, read-only){project_folder}
+                        +  (host, read-write){overlay_folder}
+                        -> (container)/freedombox
+
+SSH easily            : {script} ssh {options}
+Run FreedomBox inside : freedombox-develop
+
+Web access            : https://{ip_address}/
+Ports access          : Any port on {ip_address}
+
+Terminal login        : sudo machinectl login fbx-{distribution}
+Open a root shell     : sudo machinectl shell fbx-{distribution}
+Shutdown              : {script} stop {options}
+Destroy               : {script} destroy {options}
+Reset                 : {script} destroy {options}; {script} up {options}'''
+    logger.info(message)
+
+
+def _get_ip_address(distribution):
+    """Return the first IPv4 address of container or None."""
+    process = subprocess.run(
+        ['machinectl', 'list', '--output=json', '--max-addresses=all'],
+        stdout=subprocess.PIPE, check=True)
+    output = process.stdout.decode()
+    if not output:
+        return None
+
+    machines = json.loads(output)
+    for machine in machines:
+        if (machine['machine'] == f'fbx-{distribution}'
+                and machine['addresses'] not in (None, '-')):
+            for address in machine['addresses'].split():
+                if ipaddress.ip_address(address).version == 4:
+                    return address
+
+    return None
+
+
+def _get_ssh_command(ip_address, distribution):
+    """Exec an SSH command."""
+    public_key = work_directory / 'ssh' / 'id_ed25519'
+    if ipaddress.ip_address(ip_address).is_link_local:
+        ip_address = f'{ip_address}%ve-fbx-{distribution}'
+
+    return [
+        'ssh', '-i',
+        str(public_key), '-o', 'StrictHostKeyChecking=no', '-o',
+        'UserKnownHostsFile=/dev/null', f'fbx@{ip_address}'
+    ]
+
+
+def _wait_for(method):
+    """Wait until a condition is satisfied or finally give up."""
+    for _ in range(10):
+        return_value = method()
+        if return_value:
+            return return_value
+
+        logger.info('Waiting for container')
+        time.sleep(3)
+
+    logger.error('Failed')
+    sys.exit(1)
+
+
+def subcommand_up(arguments):
+    """Download, setup and bring up the container."""
+    machine_name = f'fbx-{arguments.distribution}'
+    if _get_machine_status(machine_name):
+        logger.info('Container is already running')
+        return
+
+    _verify_dependencies()
+    _get_systemd_nspawn_version()
+    image_file = _download_disk_image(arguments.distribution)
+    _resize_disk_image(image_file, arguments.image_size)
+    _setup(image_file, arguments.distribution)
+    _launch(image_file, arguments.distribution)
+    _provision(image_file, arguments.distribution)
+    _print_banner(arguments.distribution)
+
+
+def subcommand_ssh(arguments):
+    """Open an SSH shell into the container."""
+    ip_address = _wait_for(lambda: _get_ip_address(arguments.distribution))
+    command = _get_ssh_command(ip_address, arguments.distribution)
+    logger.info('Running command: %s', ' '.join(command))
+    os.execlp('ssh', *command)
+
+
+def subcommand_stop(arguments):
+    """Stop the container."""
+    _stop(arguments.distribution)
+
+
+def subcommand_destroy(arguments):
+    """Destroy the disk image."""
+    _terminate(arguments.distribution)
+    _destroy(arguments.distribution)
+
+
+def main():
+    """Parse arguments and perform operations."""
+    logging.basicConfig(level='INFO', format='> %(message)s')
+
+    arguments = parse_arguments()
+
+    global work_directory
+    work_directory = pathlib.Path(__file__).parent / '.container'
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

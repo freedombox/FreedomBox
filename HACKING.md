@@ -4,8 +4,70 @@
 
 FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
 install Debian to do development for FreedomBox. FreedomBox development is
-typically done on a Virtual Machine. You can work on any operating system that
-can install latest versions of Git, Vagrant and VirtualBox.
+typically done on a container or a Virtual Machine. For running a container, you
+need systemd containers, Git and Python. This approach is recommended. For
+running a VM, you can work on any operating system that can install latest
+versions of Git, Vagrant and VirtualBox.
+
+## Using Containers
+
+The ./container script shipped with FreedomBox source code can manage the
+development environment inside a systemd-nspawn container.
+
+1.  Checkout FreedomBox Service (Plinth) source code using Git.
+
+    ```bash
+    host$ git clone https://salsa.debian.org/freedombox-team/freedombox.git
+    host$ cd freedombox
+    ```
+
+2.  To download, setup, run, and configure a container for FreedomBox
+    development, simply execute in your FreedomBox Service (Plinth) development
+    folder:
+
+    ```bash
+    host$ ./container up
+    ```
+
+3.  SSH into the running container with the following command:
+
+    ```bash
+    host$ ./container ssh
+    ```
+
+### Using after Setup
+
+After logging into the container, the source code is available in /freedombox
+directory:
+
+```bash
+guest$ cd /freedombox
+```
+
+Run the development version of FreedomBox Service (Plinth) from your source
+directory in the container using the following command. This command
+continuously deploys your code changes into the container providing a
+quick feedback cycle during development.
+
+```bash
+guest$ freedombox-develop
+```
+
+If you have changed any system configuration files during your development,
+you will need to run the following to install those files properly on to the
+system and their changes to reflect properly.
+
+```bash
+guest$ sudo ./setup.py install
+```
+
+Note: This development container has automatic upgrades disabled by default.
+
+## Using Vagrant
+
+Use VirtualBox and Vagrant if for some reason, the container option is not
+suitable such as when you are running non-GNU/Linux machine or a non-systemd
+machine.
 
 ### For Debian GNU/Linux and Derivatives
 
@@ -79,7 +141,7 @@ Example for Buster:
 
 3. Run all the following commands inside Git Bash.
 
-## Setting Up Development Environment Using Vagrant
+### Setting Up Development Environment Using Vagrant
 
 Vagrant is a free software command line utility for managing the life cycle of
 virtual machines. The FreedomBox project provides ready-made virtual machines
@@ -109,9 +171,10 @@ and requires about 4.5 GB of disk space.
     host$ vagrant ssh
     ```
 
-## Using the Virtual Machine
+### Using the Virtual Machine
 
-Once in the virtual machine (vm) the source code is available in /vagrant directory:
+After logging into the virtual machine (VM), the source code is available in
+/vagrant directory:
 
 ```bash
 vm$ cd /vagrant
@@ -139,16 +202,16 @@ default.
 
 ## Running Tests
 
-To run all the tests:
+To run all the tests in the container/VM:
 
 ```bash
-vm$ py.test-3
+guest$ py.test-3
 ```
 
 Another way to run tests (not recommended):
 
 ```bash
-vm$ ./setup.py test
+guest$ ./setup.py test
 ```
 
 To run a specific test function, test class or test module, use pytest filtering
@@ -158,30 +221,30 @@ options. See pytest documentation for further filter options.
 
 ```bash
 # Run tests in a directory
-vm$ py.test-3 plinth/tests
+guest$ py.test-3 plinth/tests
 
 # Run tests in a module
-vm$ py.test-3 plinth/tests/test_actions.py
+guest$ py.test-3 plinth/tests/test_actions.py
 
 # Run tests of one class in test module
-vm$ py.test-3 plinth/tests/test_actions.py::TestActions
+guest$ py.test-3 plinth/tests/test_actions.py::TestActions
 
 # Run one test in a class or module
-vm$ py.test-3 plinth/tests/test_actions.py::TestActions::test_is_package_manager_busy
+guest$ py.test-3 plinth/tests/test_actions.py::TestActions::test_is_package_manager_busy
 ```
 
 ## Running the Test Coverage Analysis
 
-To run the coverage tool:
+To run the coverage tool in the container/VM:
 
 ```bash
-vm$ py.test-3 --cov=plinth
+guest$ py.test-3 --cov=plinth
 ```
 
 To collect HTML report:
 
 ```bash
-vm$ py.test-3 --cov=plinth --cov-report=html
+guest$ py.test-3 --cov=plinth --cov-report=html
 ```
 
 Invoking this command generates a HTML report to the `htmlcov` directory.
@@ -195,6 +258,14 @@ executed (red).
 ## Running Functional Tests
 
 ### Install Dependencies
+
+#### For running tests inside the container
+
+Inside the container run
+
+```bash
+guest$ cd /freedombox ; sudo functional_tests/install.sh
+```
 
 #### For running tests inside the VM
 
@@ -249,31 +320,31 @@ tests will create the required user using FreedomBox's first boot process.
 
 ### Run Functional Tests
 
-**When inside a VM you will need to target the guest VM**
+**When inside a container/VM you will need to target the guest**
 
 ```bash
-vm$ export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SAMBA_PORT=445
+guest$ export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SAMBA_PORT=445
 ```
 
 You will be running `py.test-3`.
 
 ```bash
-vm$ py.test-3 --include-functional
+guest$ py.test-3 --include-functional
 ```
 
 The full test suite can take a long time to run (more than an hour). You can
 also specify which tests to run, by specifying a mark:
 
 ```bash
-vm$ py.test-3 -m essential --include-functional
-vm$ py.test-3 -m mediawiki --include-functional
+guest$ py.test-3 -m essential --include-functional
+guest$ py.test-3 -m mediawiki --include-functional
 ```
 
 If xvfb is installed and you still want to see browser windows, use the
 `--no-xvfb` command-line argument.
 
 ```bash
-vm$ py.test-3 --no-xvfb -m mediawiki --include-functional
+guest$ py.test-3 --no-xvfb -m mediawiki --include-functional
 ```
 
 Tests can also be run in parallel, provided you have the pytest-xdist plugin
@@ -292,7 +363,7 @@ there. Both these are build during the installation process.
 To build the documentation separately, run:
 
 ```bash
-vm$ make -C doc
+guest$ make -C doc
 ```
 
 ## Repository
