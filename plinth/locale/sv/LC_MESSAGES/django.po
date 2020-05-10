@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-04 19:59-0400\n"
-"PO-Revision-Date: 2020-05-02 08:11+0000\n"
+"PO-Revision-Date: 2020-05-11 10:41+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -960,20 +960,26 @@ msgid ""
 "other communication servers can use it to establish a call between parties "
 "who are otherwise unable connect to each other."
 msgstr ""
+"Coturn är en server för att underlätta ljud- / videosamtal och konferenser "
+"genom att tillhandahålla en implementering av TURN- och STUN-protokoll. "
+"WebRTC, SIP och andra kommunikationsservrar kan använda den för att upprätta "
+"ett samtal mellan parter som annars inte kan ansluta till varandra."
 
 #: plinth/modules/coturn/__init__.py:35
 msgid ""
 "It is not meant to be used directly by users. Servers such as matrix-synapse "
 "need to be configured with the details provided here."
 msgstr ""
+"Det är inte avsett att användas direkt av användarna. Servrar som matris-"
+"synaps måste konfigureras med de uppgifter som anges här."
 
 #: plinth/modules/coturn/__init__.py:64
 msgid "Coturn"
-msgstr ""
+msgstr "Coturn"
 
 #: plinth/modules/coturn/__init__.py:65
 msgid "VoIP Helper"
-msgstr ""
+msgstr "VoIP-hjälpare"
 
 #: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
 msgid "TLS domain"
@@ -990,12 +996,11 @@ msgstr ""
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr ""
+"Använd följande webbadresser för att konfigurera din kommunikationsserver:"
 
 #: plinth/modules/coturn/templates/coturn.html:26
-#, fuzzy
-#| msgid "The following storage devices are in use:"
 msgid "Use the following shared authentication secret:"
-msgstr "Följande lagringsenheter används:"
+msgstr "Använd följande delade autentiseringshemligheter:"
 
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
@@ -2045,12 +2050,6 @@ msgstr ""
 "\"_blank\"> diskussionsforum</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
-#, fuzzy
-#| msgid ""
-#| "If you find any bugs or issues, please use the <a href=\"https://salsa."
-#| "debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue "
-#| "tracker</a> to let our developers know. To report, first check if the "
-#| "issue is already reported and then use the \"New issue\" button."
 msgid ""
 "If you find any bugs or issues, please use the <a href=\"https://salsa."
 "debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">issue "
@@ -2058,9 +2057,9 @@ msgid ""
 "is already reported and then use the \"New issue\" button."
 msgstr ""
 "Om du hittar fel eller problem kan du använda <a href=\"https://salsa.debian."
-"org/freedombox-team/plinth/issues\" target=\"_blank\">utföra tracker</a> att "
-"låta våra utvecklare veta. För att rapportera ska du först kontrollera om "
-"problemet redan har rapporterats och sedan använda knappen \"New issue\"."
+"org/freedombox-team/freedombox/issues\" target=\"_blank\">issue tracker</a> "
+"att låta våra utvecklare veta. För att rapportera ska du först kontrollera "
+"om problemet redan har rapporterats och sedan använda knappen \"New issue\"."
 
 #: plinth/modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
@@ -2155,12 +2154,7 @@ msgid "Status Log"
 msgstr "Status Log"
 
 #: plinth/modules/help/templates/statuslog.html:13
-#, fuzzy, python-format
-#| msgid ""
-#| "These are the last %(num_lines)s lines of the status log for this web "
-#| "interface. If you want to report a bug, please use the <a href=\"https://"
-#| "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and "
-#| "attach this status log to the bug report."
+#, python-format
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
@@ -2168,9 +2162,9 @@ msgid ""
 "attach this status log to the bug report."
 msgstr ""
 "Dessa är de sista %(num_lines)s rader i statusloggen för detta "
-"webbgränssnitt. Om du vill rapportera ett fel, använd <a href=\"https://"
-"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> och bifoga "
-"denna statuslogg rapport bug-tracker."
+"webbgränssnitt. Om du vill rapportera ett fel, använd <a href=\""
+"https://salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> "
+"och bifoga denna statuslogg rapport bug-tracker."
 
 #: plinth/modules/help/templates/statuslog.html:24
 msgid ""
@@ -3257,7 +3251,7 @@ msgstr "Mumblefly"
 
 #: plinth/modules/mumble/manifest.py:60
 msgid "Mumla"
-msgstr ""
+msgstr "Mumla"
 
 #: plinth/modules/mumble/views.py:29
 msgid "SuperUser password successfully updated."
@@ -5555,18 +5549,14 @@ msgid "Rollback to snapshot #%(number)s"
 msgstr "Återställning till ögonblicksbild #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:11
-#, fuzzy, python-format
-#| msgid ""
-#| "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots "
-#| "are currently only available on <strong>%(types_supported)s</strong> "
-#| "filesystems."
+#, python-format
 msgid ""
 "You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
-"Du har ett filsystem av typen <strong>%(fs_type)s </strong>. "
-"Ögonblicksbilder är för närvarande endast tillgängliga på <strong> "
-"%(types_supported)s </strong> filsystem."
+"Du har ett filsystem av typen <strong>%(fs_type)s</strong>. Ögonblicksbilder "
+"är för närvarande endast tillgängliga på <strong>%(types_supported)s</strong>"
+" filsystem."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:12
 msgid "Roll back the system to this snapshot?"
@@ -6988,11 +6978,6 @@ msgid "Requested page %(request_path)s was not found."
 msgstr "Begärd sida %(request_path)s hittades inte."
 
 #: plinth/templates/404.html:19
-#, fuzzy
-#| msgid ""
-#| "If you believe this missing page should exist, please file a bug at the "
-#| "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
-#| "freedombox-team/plinth/issues\">issue tracker</a>."
 msgid ""
 "If you believe this missing page should exist, please file a bug at the "
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
@@ -7000,20 +6985,14 @@ msgid ""
 msgstr ""
 "Om du tror att denna saknade sida bör finnas, vänligen skicka en bugg på "
 "FreedomBox service (Plinth) projekt <a href =\"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">issue tracker</a>."
+"freedombox-team/freedombox/issues\">issue tracker</a>."
 
 #: plinth/templates/500.html:10
 msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, fuzzy, python-format
-#| msgid ""
-#| "This is an internal error and not something you caused or can fix. Please "
-#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
-#| "team/plinth/issues\">bug tracker</a> so we can fix it. Also, please "
-#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
-#| "report."
+#, python-format
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
@@ -7022,8 +7001,8 @@ msgid ""
 msgstr ""
 "Detta är ett internt fel och inte något du orsakat eller kan fixa. Vänligen "
 "rapportera felet på <a href=\"https://salsa.debian.org/freedombox-team/"
-"plinth/issues\">bug tracker</a> så att vi kan fixa det. Bifoga också <a href="
-"\"%(status_log_url)s\">status logg</a> till felrapporten."
+"freedombox/issues\">bug tracker</a> så att vi kan fixa det. Bifoga också <a "
+"href=\"%(status_log_url)s\">status logg</a> till felrapporten."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"
