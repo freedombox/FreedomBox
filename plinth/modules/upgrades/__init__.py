@@ -17,7 +17,7 @@ version = 3
 
 is_essential = True
 
-managed_packages = ['unattended-upgrades']
+managed_packages = ['unattended-upgrades', 'needrestart']
 
 _description = [
     _('Check for and apply the latest software and security updates.')
