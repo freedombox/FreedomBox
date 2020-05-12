@@ -85,13 +85,13 @@ def check_language(browser, language_code):
 
 
 def delete_all_snapshots(browser):
-    browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
-    browser.find_by_id('select-all').check()
+    if get_snapshot_count(browser):
+        browser.find_by_id('select-all').check()
+        submit(browser, browser.find_by_name('delete_selected'))
 
-    submit(browser, browser.find_by_name('delete_selected'))
-    confirm_button = browser.find_by_name('delete_confirm')
-    if confirm_button:  # Only if redirected to confirm page
-        submit(browser, confirm_button)
+        confirm_button = browser.find_by_name('delete_confirm')
+        if confirm_button:  # Only if redirected to confirm page
+            submit(browser, confirm_button)
 
 
 def create_snapshot(browser):
