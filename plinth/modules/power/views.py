@@ -29,9 +29,8 @@ def restart(request):
     if request.method == 'POST':
         actions.superuser_run('power', ['restart'], run_in_background=True)
         return redirect(reverse('apps'))
-    else:
-        form = Form(prefix='power')
 
+    form = Form(prefix='power')
     return TemplateResponse(
         request, 'power_restart.html', {
             'title': power.app.info.name,
@@ -48,9 +47,8 @@ def shutdown(request):
     if request.method == 'POST':
         actions.superuser_run('power', ['shutdown'], run_in_background=True)
         return redirect(reverse('apps'))
-    else:
-        form = Form(prefix='power')
 
+    form = Form(prefix='power')
     return TemplateResponse(
         request, 'power_shutdown.html', {
             'title': power.app.info.name,
