@@ -14,3 +14,7 @@ Unattended-Upgrade::Remove-Unused-Dependencies "true";
 Unattended-Upgrade::Origins-Pattern {
         "o=Debian Backports,a=${distro_codename}-backports,l=Debian Backports";
 };
+
+// Automatically reboot *WITHOUT CONFIRMATION* if
+//  the file /var/run/reboot-required is found after the upgrade
+Unattended-Upgrade::Automatic-Reboot "true";
