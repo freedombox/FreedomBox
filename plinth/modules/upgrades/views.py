@@ -8,7 +8,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 
-from plinth import actions
+from plinth import actions, package
 from plinth.errors import ActionError
 from plinth.modules import upgrades
 from plinth.views import AppView
@@ -55,15 +55,6 @@ class UpgradesConfigurationView(AppView):
         return super().form_valid(form)
 
 
-def is_package_manager_busy():
-    """Return whether a package manager is running."""
-    try:
-        actions.superuser_run('packages', ['is-package-manager-busy'])
-        return True
-    except actions.ActionError:
-        return False
-
-
 def get_log():
     """Return the current log for unattended upgrades."""
     return actions.superuser_run('upgrades', ['get-log'])
@@ -71,7 +62,7 @@ def get_log():
 
 def upgrade(request):
     """Serve the upgrade page."""
-    is_busy = is_package_manager_busy()
+    is_busy = package.is_package_manager_busy()
 
     if request.method == 'POST':
         try:
