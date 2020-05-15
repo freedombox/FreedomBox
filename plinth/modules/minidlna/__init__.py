@@ -13,7 +13,7 @@ from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa
 
-version = 1
+version = 2
 
 managed_packages = ['minidlna']
 
@@ -94,4 +94,5 @@ def setup(helper, old_version=None):
     """Install and configure the package"""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
-    helper.call('post', app.enable)
+    if not old_version:
+        helper.call('post', app.enable)
