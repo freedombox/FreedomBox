@@ -4,12 +4,13 @@
 Configuration actions for the minidlna server.
 """
 import argparse
-from tempfile import mkstemp
-from shutil import move
 import subprocess
-from os import fdopen, remove, chmod, stat
+from os import chmod, fdopen, remove, stat
+from shutil import move
+from tempfile import mkstemp
 
 import augeas
+
 from plinth import action_utils
 from plinth.utils import grep
 
