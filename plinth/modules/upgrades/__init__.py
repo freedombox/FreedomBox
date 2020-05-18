@@ -20,7 +20,12 @@ is_essential = True
 managed_packages = ['unattended-upgrades', 'needrestart']
 
 _description = [
-    _('Check for and apply the latest software and security updates.')
+    _('Check for and apply the latest software and security updates.'),
+    _('Updates are run at 06:00 everyday according to local time zone. Set '
+      'your time zone in Date & Time app. Apps are restarted after update '
+      'causing them to be unavailable briefly. If system reboot is deemed '
+      'necessary, it is done automatically at 02:00 causing all apps to be '
+      'unavailable briefly.')
 ]
 
 app = None
