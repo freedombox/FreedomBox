@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-04 19:59-0400\n"
+"POT-Creation-Date: 2020-05-18 18:36-0400\n"
 "PO-Revision-Date: 2020-05-02 08:11+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -27,27 +27,27 @@ msgstr "Code source de la page"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:70
+#: plinth/daemon.py:85
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Le service {service_name} est actif"
 
-#: plinth/daemon.py:96
+#: plinth/daemon.py:111
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Écoute sur le port {kind} {listen_address}:{port}"
 
-#: plinth/daemon.py:99
+#: plinth/daemon.py:114
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Écoute sur le port {kind} {port}"
 
-#: plinth/daemon.py:167
+#: plinth/daemon.py:182
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Connexion à {host}:{port}"
 
-#: plinth/daemon.py:169
+#: plinth/daemon.py:184
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Impossible de se connecter à {host}:{port}"
@@ -732,6 +732,7 @@ msgstr ""
 "fonctionnera pas si vous y accédez en utilisant une adresse IP dans son URL."
 
 #: plinth/modules/cockpit/__init__.py:59 plinth/modules/cockpit/manifest.py:12
+#: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -762,7 +763,7 @@ msgstr "Configuration générale"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:26
+#: plinth/modules/snapshot/views.py:28
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "Configurer"
@@ -924,7 +925,7 @@ msgstr ""
 msgid "Coquelicot"
 msgstr "Coquelicot"
 
-#: plinth/modules/coquelicot/__init__.py:47 plinth/modules/samba/__init__.py:63
+#: plinth/modules/coquelicot/__init__.py:47
 msgid "File Sharing"
 msgstr "Partage de fichiers"
 
@@ -1613,17 +1614,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Pare-feu"
 
-#: plinth/modules/firewall/components.py:118
+#: plinth/modules/firewall/components.py:124
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Port {name} ({details}) disponible pour les réseaux internes"
 
-#: plinth/modules/firewall/components.py:126
+#: plinth/modules/firewall/components.py:132
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Port {name} ({details}) disponible pour les réseaux externes"
 
-#: plinth/modules/firewall/components.py:131
+#: plinth/modules/firewall/components.py:137
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port {name} ({details}) non disponible pour les réseaux externes"
@@ -3875,7 +3876,7 @@ msgstr "Interface"
 
 #: plinth/modules/networks/templates/connection_show.html:95
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:18
-#: plinth/modules/snapshot/templates/snapshot_manage.html:30
+#: plinth/modules/snapshot/templates/snapshot_manage.html:31
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:26
 msgid "Description"
 msgstr "Description"
@@ -4675,6 +4676,17 @@ msgstr ""
 "Regardez comment configurer un client SSH sur le <a href=\"https://pagekite."
 "net/wiki/Howto/SshOverPageKite/\">wiki PageKite</a> (en anglais)"
 
+#: plinth/modules/performance/__init__.py:16
+#: plinth/modules/performance/__init__.py:45
+msgid "Performance"
+msgstr ""
+
+#: plinth/modules/performance/__init__.py:46
+#, fuzzy
+#| msgid "System Configuration"
+msgid "System Monitoring"
+msgstr "Configuration Système"
+
 #: plinth/modules/power/__init__.py:16
 msgid "Restart or shut down the system."
 msgstr "Redémarrer ou éteindre le système."
@@ -5041,6 +5053,12 @@ msgstr "Accès aux partages privés"
 #: plinth/modules/samba/__init__.py:62
 msgid "Samba"
 msgstr "Samba"
+
+#: plinth/modules/samba/__init__.py:63
+#, fuzzy
+#| msgid "Network Time Server"
+msgid "Network File Storage"
+msgstr "Serveur de temps réseau"
 
 #: plinth/modules/samba/templates/samba.html:24
 #: plinth/modules/samba/templates/samba.html:35
@@ -5534,7 +5552,7 @@ msgstr "Modifier le partage"
 msgid "Share deleted."
 msgstr "Partage supprimé."
 
-#: plinth/modules/snapshot/__init__.py:23
+#: plinth/modules/snapshot/__init__.py:25
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -5545,7 +5563,7 @@ msgstr ""
 "utilisés pour ramener le système à un état précédent connu pour être "
 "fonctionnel, dans le cas ou des changements non désirés ont été appliqués."
 
-#: plinth/modules/snapshot/__init__.py:27
+#: plinth/modules/snapshot/__init__.py:29
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -5557,7 +5575,7 @@ msgstr ""
 "instantanés plus anciens peuvent être supprimés automatiquement en fonction "
 "du paramétrage qui suit."
 
-#: plinth/modules/snapshot/__init__.py:30
+#: plinth/modules/snapshot/__init__.py:32
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -5568,7 +5586,7 @@ msgstr ""
 "peuvent pas remplacent pas les <a href=\"/plinth/sys/backups\">sauvegardes</"
 "a> car ils sont forcément conservés sur la même partition. "
 
-#: plinth/modules/snapshot/__init__.py:52
+#: plinth/modules/snapshot/__init__.py:54
 msgid "Storage Snapshots"
 msgstr "Instantanés de disque"
 
@@ -5657,20 +5675,20 @@ msgid "Delete the following snapshots permanently?"
 msgstr "Supprimer définitivement ces instantanés ?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:16
-#: plinth/modules/snapshot/templates/snapshot_manage.html:28
+#: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:24
 msgid "Number"
 msgstr "Numéro"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:17
-#: plinth/modules/snapshot/templates/snapshot_manage.html:29
+#: plinth/modules/snapshot/templates/snapshot_manage.html:30
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:25
 msgid "Date"
 msgstr "Date"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:37
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:175
+#: plinth/modules/snapshot/views.py:189
 msgid "Delete Snapshots"
 msgstr "Supprimer les instantanés"
 
@@ -5678,15 +5696,19 @@ msgstr "Supprimer les instantanés"
 msgid "Create Snapshot"
 msgstr "Créer un instantané"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 msgid "Rollback"
 msgstr "Revenir en arrière"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:42
-msgid "active"
-msgstr "actif"
+msgid "will be used at next boot"
+msgstr ""
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:51
+#: plinth/modules/snapshot/templates/snapshot_manage.html:47
+msgid "in use"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Revenir à l'instantané #%(number)s"
@@ -5724,46 +5746,42 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Revenir à l'instantané  #%(number)s"
 
-#: plinth/modules/snapshot/views.py:30
+#: plinth/modules/snapshot/views.py:32
 msgid "Manage Snapshots"
 msgstr "Gestion des instantanés"
 
-#: plinth/modules/snapshot/views.py:79
+#: plinth/modules/snapshot/views.py:81
 msgid "Created snapshot."
 msgstr "Instantané créé."
 
-#: plinth/modules/snapshot/views.py:135
+#: plinth/modules/snapshot/views.py:144
 msgid "Storage snapshots configuration updated"
 msgstr "Configuration des instantanés de disque mise à jour"
 
-#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
+#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:59
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Erreur sur action : {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:154
-msgid "Deleted all snapshots"
-msgstr "Supprimer tous les instantanés"
-
-#: plinth/modules/snapshot/views.py:158
+#: plinth/modules/snapshot/views.py:176
 msgid "Deleted selected snapshots"
 msgstr "Supprimer les instantanés sélectionnés"
 
-#: plinth/modules/snapshot/views.py:163
+#: plinth/modules/snapshot/views.py:181
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 "L’instantané est en cours d’utilisation. Veuillez réessayer ultérieurement."
 
-#: plinth/modules/snapshot/views.py:186
+#: plinth/modules/snapshot/views.py:200
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Retour vers l'instantané #{number} effectué."
 
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:203
 msgid "The system must be restarted to complete the rollback."
 msgstr "Le système doit être redémarré pour terminer le retour en arrière."
 
-#: plinth/modules/snapshot/views.py:201
+#: plinth/modules/snapshot/views.py:215
 msgid "Rollback to Snapshot"
 msgstr "Revenir à l'instantané"
 
@@ -5833,7 +5851,7 @@ msgstr "Authentification unique"
 msgid "Login"
 msgstr "S’identifier"
 
-#: plinth/modules/storage/__init__.py:30
+#: plinth/modules/storage/__init__.py:29
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -5845,100 +5863,111 @@ msgstr ""
 "d’utilisation, monter et démonter des médias amovibles, étendre la partition "
 "racine, etc."
 
-#: plinth/modules/storage/__init__.py:54 plinth/modules/storage/__init__.py:320
+#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:319
 msgid "Storage"
 msgstr "Stockage"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} octets"
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} Kio"
 
-#: plinth/modules/storage/__init__.py:221
+#: plinth/modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} Mio"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} Gio"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} Tio"
 
-#: plinth/modules/storage/__init__.py:235
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation failed."
 msgstr "L'opération a échoué."
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:236
 msgid "The operation was cancelled."
 msgstr "L'opération a été annulée."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:238
 msgid "The device is already unmounting."
 msgstr "Le périphérique est déjà en train d’être démonté."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:240
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "L’opération n’est pas gérée par manque d'un pilote ou d'un outil adapté."
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:243
 msgid "The operation timed out."
 msgstr "L'opération ne s'est pas terminée."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "L'opération devrait réveiller un disque qui se trouve dans un état "
 "d'endormissement profond."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 msgid "Attempting to unmount a device that is busy."
 msgstr "Tentative de démontage d’un périphérique en cours d’utilisation."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:250
 msgid "The operation has already been cancelled."
 msgstr "L'opération a déjà été annulée."
 
-#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:256
 msgid "Not authorized to perform the requested operation."
 msgstr "Vous n'êtes pas autorisé à effectuer l'opération demandée."
 
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:258
 msgid "The device is already mounted."
 msgstr "Le périphérique est déjà monté."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:260
 msgid "The device is not mounted."
 msgstr "Le périphérique n’est pas monté."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
 msgid "Not permitted to use the requested option."
 msgstr "Vous n'êtes pas autorisé à utiliser l'option demandée."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:266
 msgid "The device is mounted by another user."
 msgstr "Le périphérique est monté par un autre utilisateur."
 
-#: plinth/modules/storage/__init__.py:315
+#: plinth/modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Espace faible sur la partition système : {percent_used}% utilisés, "
 "{free_space} libre."
 
-#: plinth/modules/storage/__init__.py:317
+#: plinth/modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "Espace disque faible"
+
+#: plinth/modules/storage/__init__.py:344
+msgid "Disk failure imminent"
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:346
+#, python-brace-format
+msgid ""
+"Disk {id} is reporting that it is likely to fail in the near future. Copy "
+"any data while you still can and replace the drive."
+msgstr ""
 
 #: plinth/modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -6428,11 +6457,19 @@ msgstr ""
 "Rechercher et installer les dernières mises à jour logicielles et les "
 "correctifs de sécurité."
 
-#: plinth/modules/upgrades/__init__.py:40 plinth/templates/setup.html:74
+#: plinth/modules/upgrades/__init__.py:24
+msgid ""
+"Updates are run at 06:00 everyday according to local time zone. Set your "
+"time zone in Date & Time app. Apps are restarted after update causing them "
+"to be unavailable briefly. If system reboot is deemed necessary, it is done "
+"automatically at 02:00 causing all apps to be unavailable briefly."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:74
 msgid "Update"
 msgstr "Mises à jour"
 
-#: plinth/modules/upgrades/__init__.py:78
+#: plinth/modules/upgrades/__init__.py:83
 msgid "FreedomBox Updated"
 msgstr "FreedomBox mise à jour"
 
@@ -6490,7 +6527,7 @@ msgstr "Basculer les journaux de modification récents"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:76
 msgid "Manual update"
 msgstr "Mise à jour manuelle"
 
@@ -6509,11 +6546,11 @@ msgstr "Mises à niveau automatiques activées"
 msgid "Automatic upgrades disabled"
 msgstr "Mises à niveau automatiques désactivées"
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:70
 msgid "Upgrade process started."
 msgstr "Mise à niveau initiée."
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:73
 msgid "Starting upgrade failed."
 msgstr "Le lancement de la mise à niveau a échoué."
 
@@ -7464,6 +7501,12 @@ msgstr "%(percentage)s%% effectué"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "active"
+#~ msgstr "actif"
+
+#~ msgid "Deleted all snapshots"
+#~ msgstr "Supprimer tous les instantanés"
+
 #~ msgid "Enable application"
 #~ msgstr "Activer l'application"
 
@@ -8232,9 +8275,6 @@ msgstr "Gujarati"
 #~ "messages instantanés, de média social ou de blogue. Il est aussi possible "
 #~ "d'élaborer un portail réunissant plusieurs services sous votre contrôle."
 
-#~ msgid "System Configuration"
-#~ msgstr "Configuration Système"
-
 #~ msgid ""
 #~ "Here you can administrate the underlying system of your %(box_name)s."
 #~ msgstr ""
@@ -8559,9 +8599,6 @@ msgstr "Gujarati"
 
 #~ msgid "Enable service discovery"
 #~ msgstr "Activer la découverte de services"
-
-#~ msgid "Network Time Server"
-#~ msgstr "Serveur de temps réseau"
 
 #~ msgid "BitTorrent (Deluge)"
 #~ msgstr "BitTorrent (Deluge)"

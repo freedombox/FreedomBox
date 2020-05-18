@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-04 19:59-0400\n"
+"POT-Creation-Date: 2020-05-18 18:36-0400\n"
 "PO-Revision-Date: 2019-09-13 05:23+0000\n"
 "Last-Translator: Anxin YI <2732146152@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -27,28 +27,28 @@ msgstr ""
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:70
+#: plinth/daemon.py:85
 #, fuzzy, python-brace-format
 #| msgid "Service discovery server is running"
 msgid "Service {service_name} is running"
 msgstr "服务发现服务正在运行"
 
-#: plinth/daemon.py:96
+#: plinth/daemon.py:111
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "正在侦听 {kind} 端口 {listen_address}:{port}"
 
-#: plinth/daemon.py:99
+#: plinth/daemon.py:114
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "正在侦听 {kind} 端口 {port}"
 
-#: plinth/daemon.py:167
+#: plinth/daemon.py:182
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "连接到主机 {host}:{port}"
 
-#: plinth/daemon.py:169
+#: plinth/daemon.py:184
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "不能连接到主机 {host}:{port}"
@@ -745,6 +745,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/cockpit/__init__.py:59 plinth/modules/cockpit/manifest.py:12
+#: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -775,7 +776,7 @@ msgstr "常规配置"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:26
+#: plinth/modules/snapshot/views.py:28
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "配置"
@@ -925,7 +926,7 @@ msgstr ""
 msgid "Coquelicot"
 msgstr "Coquelicot"
 
-#: plinth/modules/coquelicot/__init__.py:47 plinth/modules/samba/__init__.py:63
+#: plinth/modules/coquelicot/__init__.py:47
 msgid "File Sharing"
 msgstr "文件分享"
 
@@ -1572,19 +1573,19 @@ msgstr ""
 msgid "Firewall"
 msgstr "防火墙"
 
-#: plinth/modules/firewall/components.py:118
+#: plinth/modules/firewall/components.py:124
 #, fuzzy, python-brace-format
 #| msgid "Service discovery server is not running"
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "服务发现服务未运行"
 
-#: plinth/modules/firewall/components.py:126
+#: plinth/modules/firewall/components.py:132
 #, fuzzy, python-brace-format
 #| msgid "Service discovery server is not running"
 msgid "Port {name} ({details}) available for external networks"
 msgstr "服务发现服务未运行"
 
-#: plinth/modules/firewall/components.py:131
+#: plinth/modules/firewall/components.py:137
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -3712,7 +3713,7 @@ msgstr "接口"
 
 #: plinth/modules/networks/templates/connection_show.html:95
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:18
-#: plinth/modules/snapshot/templates/snapshot_manage.html:30
+#: plinth/modules/snapshot/templates/snapshot_manage.html:31
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:26
 msgid "Description"
 msgstr "描述"
@@ -4477,6 +4478,17 @@ msgstr ""
 "请参见 SSH 客户端安装 <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\"> 说明</a>"
 
+#: plinth/modules/performance/__init__.py:16
+#: plinth/modules/performance/__init__.py:45
+msgid "Performance"
+msgstr ""
+
+#: plinth/modules/performance/__init__.py:46
+#, fuzzy
+#| msgid "System Configuration"
+msgid "System Monitoring"
+msgstr "系统配置"
+
 #: plinth/modules/power/__init__.py:16
 msgid "Restart or shut down the system."
 msgstr "重新启动或关闭系统。"
@@ -4819,6 +4831,12 @@ msgstr ""
 #: plinth/modules/samba/__init__.py:62
 msgid "Samba"
 msgstr ""
+
+#: plinth/modules/samba/__init__.py:63
+#, fuzzy
+#| msgid "Network Time Server"
+msgid "Network File Storage"
+msgstr "网络时间服务器"
 
 #: plinth/modules/samba/templates/samba.html:24
 #: plinth/modules/samba/templates/samba.html:35
@@ -5337,7 +5355,7 @@ msgstr "编辑用户"
 msgid "Share deleted."
 msgstr "{name} 已删除。"
 
-#: plinth/modules/snapshot/__init__.py:23
+#: plinth/modules/snapshot/__init__.py:25
 #, fuzzy
 #| msgid ""
 #| "Snapshots allows creating and managing filesystem snapshots. These can be "
@@ -5351,7 +5369,7 @@ msgstr ""
 "快照可以允许创建并管理文件系统快照。这些可以用来回滚系统到前一个已知可用的状"
 "态，以防意外改变系统状态。"
 
-#: plinth/modules/snapshot/__init__.py:27
+#: plinth/modules/snapshot/__init__.py:29
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -5359,14 +5377,14 @@ msgid ""
 "cleaned up according to the settings below."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:30
+#: plinth/modules/snapshot/__init__.py:32
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:52
+#: plinth/modules/snapshot/__init__.py:54
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Storage Snapshots"
@@ -5459,20 +5477,20 @@ msgid "Delete the following snapshots permanently?"
 msgstr "永久删除此快照？"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:16
-#: plinth/modules/snapshot/templates/snapshot_manage.html:28
+#: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:24
 msgid "Number"
 msgstr "编号"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:17
-#: plinth/modules/snapshot/templates/snapshot_manage.html:29
+#: plinth/modules/snapshot/templates/snapshot_manage.html:30
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:25
 msgid "Date"
 msgstr "日期"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:37
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:175
+#: plinth/modules/snapshot/views.py:189
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Delete Snapshots"
@@ -5482,15 +5500,19 @@ msgstr "删除快照"
 msgid "Create Snapshot"
 msgstr "创建快照"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 msgid "Rollback"
 msgstr "回滚"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:42
-msgid "active"
-msgstr "激活"
+msgid "will be used at next boot"
+msgstr ""
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:51
+#: plinth/modules/snapshot/templates/snapshot_manage.html:47
+msgid "in use"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "回滚到快照 #%(number)s"
@@ -5520,53 +5542,47 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "回滚到快照 #%(number)s"
 
-#: plinth/modules/snapshot/views.py:30
+#: plinth/modules/snapshot/views.py:32
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Manage Snapshots"
 msgstr "创建快照"
 
-#: plinth/modules/snapshot/views.py:79
+#: plinth/modules/snapshot/views.py:81
 msgid "Created snapshot."
 msgstr "创建快照。"
 
-#: plinth/modules/snapshot/views.py:135
+#: plinth/modules/snapshot/views.py:144
 #, fuzzy
 #| msgid "Access rights configuration updated"
 msgid "Storage snapshots configuration updated"
 msgstr "访问权配置已更新"
 
-#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
+#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:59
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "操作错误：{0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:154
-#, fuzzy
-#| msgid "Delete Snapshot"
-msgid "Deleted all snapshots"
-msgstr "删除快照"
-
-#: plinth/modules/snapshot/views.py:158
+#: plinth/modules/snapshot/views.py:176
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Deleted selected snapshots"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/views.py:163
+#: plinth/modules/snapshot/views.py:181
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:186
+#: plinth/modules/snapshot/views.py:200
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "回滚到快照 #{number}。"
 
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:203
 msgid "The system must be restarted to complete the rollback."
 msgstr "系统需要重启以完成完全回滚。"
 
-#: plinth/modules/snapshot/views.py:201
+#: plinth/modules/snapshot/views.py:215
 msgid "Rollback to Snapshot"
 msgstr "回滚到快照"
 
@@ -5635,7 +5651,7 @@ msgstr ""
 msgid "Login"
 msgstr "登录"
 
-#: plinth/modules/storage/__init__.py:30
+#: plinth/modules/storage/__init__.py:29
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -5643,107 +5659,118 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:54 plinth/modules/storage/__init__.py:320
+#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:319
 #, fuzzy
 #| msgid "reStore"
 msgid "Storage"
 msgstr "reStore"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} bytes"
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size} bytes"
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:216
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} KiB"
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size} KiB"
 
-#: plinth/modules/storage/__init__.py:221
+#: plinth/modules/storage/__init__.py:220
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} MiB"
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size} MiB"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} GiB"
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size} GiB"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:227
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} TiB"
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size} TiB"
 
-#: plinth/modules/storage/__init__.py:235
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation failed."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:236
 msgid "The operation was cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:238
 #, fuzzy
 #| msgid "repro service is running"
 msgid "The device is already unmounting."
 msgstr "repro 服务正在运行"
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:240
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:243
 msgid "The operation timed out."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 msgid "Attempting to unmount a device that is busy."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:250
 msgid "The operation has already been cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:256
 msgid "Not authorized to perform the requested operation."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:258
 #, fuzzy
 #| msgid "This service already exists"
 msgid "The device is already mounted."
 msgstr "此服务已存在"
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:260
 #, fuzzy
 #| msgid "repro service is not running"
 msgid "The device is not mounted."
 msgstr "repro 服务未运行"
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
 msgid "Not permitted to use the requested option."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:266
 msgid "The device is mounted by another user."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:315
+#: plinth/modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:317
+#: plinth/modules/storage/__init__.py:316
 msgid "Low disk space"
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:344
+msgid "Disk failure imminent"
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:346
+#, python-brace-format
+msgid ""
+"Disk {id} is reporting that it is likely to fail in the near future. Copy "
+"any data while you still can and replace the drive."
 msgstr ""
 
 #: plinth/modules/storage/forms.py:63
@@ -6216,11 +6243,19 @@ msgstr ""
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:40 plinth/templates/setup.html:74
+#: plinth/modules/upgrades/__init__.py:24
+msgid ""
+"Updates are run at 06:00 everyday according to local time zone. Set your "
+"time zone in Date & Time app. Apps are restarted after update causing them "
+"to be unavailable briefly. If system reboot is deemed necessary, it is done "
+"automatically at 02:00 causing all apps to be unavailable briefly."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:74
 msgid "Update"
 msgstr "更新"
 
-#: plinth/modules/upgrades/__init__.py:78
+#: plinth/modules/upgrades/__init__.py:83
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Updated"
@@ -6286,7 +6321,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:76
 #, fuzzy
 #| msgid "Last update"
 msgid "Manual update"
@@ -6305,11 +6340,11 @@ msgstr "已启用自动升级"
 msgid "Automatic upgrades disabled"
 msgstr "已禁用自动升级"
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:70
 msgid "Upgrade process started."
 msgstr "升级过程开始。"
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:73
 msgid "Starting upgrade failed."
 msgstr "开始升级失败。"
 
@@ -7308,6 +7343,14 @@ msgstr "已完成 %(percentage)s%%"
 msgid "Gujarati"
 msgstr "古吉拉特语"
 
+#~ msgid "active"
+#~ msgstr "激活"
+
+#, fuzzy
+#~| msgid "Delete Snapshot"
+#~ msgid "Deleted all snapshots"
+#~ msgstr "删除快照"
+
 #~ msgid "Enable application"
 #~ msgstr "启用应用程序"
 
@@ -7859,9 +7902,6 @@ msgstr "古吉拉特语"
 #~ "点。 还记得门户网站吗？我们也可以是那些之一。 您在 web 上使用的服务和网站"
 #~ "上很快都会在你控制之下！"
 
-#~ msgid "System Configuration"
-#~ msgstr "系统配置"
-
 #, fuzzy
 #~| msgid "Here you can administrate the underlying system of your {box_name}."
 #~ msgid ""
@@ -8160,9 +8200,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "Enable service discovery"
 #~ msgstr "启用服务发现"
-
-#~ msgid "Network Time Server"
-#~ msgstr "网络时间服务器"
 
 #~ msgid "BitTorrent (Deluge)"
 #~ msgstr "BitTorrent 下载（Deluge）"

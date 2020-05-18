@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-20 17:53-0400\n"
+"POT-Creation-Date: 2020-05-18 18:36-0400\n"
 "PO-Revision-Date: 2020-05-06 06:11+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -35,27 +35,27 @@ msgstr "Sidekilde"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:70
+#: plinth/daemon.py:85
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Tjenesten {service_name} kjører"
 
-#: plinth/daemon.py:96
+#: plinth/daemon.py:111
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Lytter på {kind} port {listen_address}:{port}"
 
-#: plinth/daemon.py:99
+#: plinth/daemon.py:114
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Lytter på {kind} port {port}"
 
-#: plinth/daemon.py:167
+#: plinth/daemon.py:182
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Koble til {host}:{port}"
 
-#: plinth/daemon.py:169
+#: plinth/daemon.py:184
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Klarer ikke koble til {host}:{port}"
@@ -750,6 +750,7 @@ msgstr ""
 "det nås ved bruk av en IP-adresse, eller som del av nettadressen."
 
 #: plinth/modules/cockpit/__init__.py:59 plinth/modules/cockpit/manifest.py:12
+#: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
 msgstr "Styrhus"
 
@@ -782,7 +783,7 @@ msgstr "Generelt oppsett"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:26
+#: plinth/modules/snapshot/views.py:28
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "Oppsett"
@@ -941,7 +942,7 @@ msgstr ""
 msgid "Coquelicot"
 msgstr "Coquelicot"
 
-#: plinth/modules/coquelicot/__init__.py:47 plinth/modules/samba/__init__.py:63
+#: plinth/modules/coquelicot/__init__.py:47
 msgid "File Sharing"
 msgstr "Fildeling"
 
@@ -1619,17 +1620,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Brannmur"
 
-#: plinth/modules/firewall/components.py:118
+#: plinth/modules/firewall/components.py:124
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Port {name} ({details}) tilgjengelig på interne nettverk"
 
-#: plinth/modules/firewall/components.py:126
+#: plinth/modules/firewall/components.py:132
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Port {name} ({details}) tilgjengelig på eksterne nettverk"
 
-#: plinth/modules/firewall/components.py:131
+#: plinth/modules/firewall/components.py:137
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port {name} ({details}) er utilgjengelig for eksterne nettverk"
@@ -3836,7 +3837,7 @@ msgstr "Grensesnitt"
 
 #: plinth/modules/networks/templates/connection_show.html:95
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:18
-#: plinth/modules/snapshot/templates/snapshot_manage.html:30
+#: plinth/modules/snapshot/templates/snapshot_manage.html:31
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:26
 msgid "Description"
 msgstr "Beskrivelse"
@@ -4615,6 +4616,17 @@ msgstr ""
 "Se oppsettet for SSH-klienten <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions (instruksjoner)</a>"
 
+#: plinth/modules/performance/__init__.py:16
+#: plinth/modules/performance/__init__.py:45
+msgid "Performance"
+msgstr ""
+
+#: plinth/modules/performance/__init__.py:46
+#, fuzzy
+#| msgid "System Configuration"
+msgid "System Monitoring"
+msgstr "Systemoppsett"
+
 #: plinth/modules/power/__init__.py:16
 msgid "Restart or shut down the system."
 msgstr "Start om igjen, eller slå av systemet."
@@ -4959,6 +4971,12 @@ msgstr "Tilgang til private delinger"
 #: plinth/modules/samba/__init__.py:62
 msgid "Samba"
 msgstr "Samba"
+
+#: plinth/modules/samba/__init__.py:63
+#, fuzzy
+#| msgid "Distributed File Storage"
+msgid "Network File Storage"
+msgstr "Distribuert fillagring"
 
 #: plinth/modules/samba/templates/samba.html:24
 #: plinth/modules/samba/templates/samba.html:35
@@ -5458,7 +5476,7 @@ msgstr "Rediger deling"
 msgid "Share deleted."
 msgstr "Deling slettet."
 
-#: plinth/modules/snapshot/__init__.py:23
+#: plinth/modules/snapshot/__init__.py:25
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -5469,7 +5487,7 @@ msgstr ""
 "en tidligere kjent god tilstand i tilfelle det har skjedd uønskede endringer "
 "på systemet."
 
-#: plinth/modules/snapshot/__init__.py:27
+#: plinth/modules/snapshot/__init__.py:29
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -5480,7 +5498,7 @@ msgstr ""
 "etter programvareinstallasjon. Eldre øyeblikksbilder renskes automatisk i "
 "henhold til innstillingene nedenfor."
 
-#: plinth/modules/snapshot/__init__.py:30
+#: plinth/modules/snapshot/__init__.py:32
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -5490,7 +5508,7 @@ msgstr ""
 "partisjoner. Avbildninger er ikke en erstatning for <a href=\"/plinth/sys/"
 "backups\">sikkerhetskopier</a> i og med at de er lagret på samme partisjon. "
 
-#: plinth/modules/snapshot/__init__.py:52
+#: plinth/modules/snapshot/__init__.py:54
 msgid "Storage Snapshots"
 msgstr "Lagrings-avbildninger"
 
@@ -5576,20 +5594,20 @@ msgid "Delete the following snapshots permanently?"
 msgstr "Slett denne avbildningen for godt?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:16
-#: plinth/modules/snapshot/templates/snapshot_manage.html:28
+#: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:24
 msgid "Number"
 msgstr "Nummer"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:17
-#: plinth/modules/snapshot/templates/snapshot_manage.html:29
+#: plinth/modules/snapshot/templates/snapshot_manage.html:30
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:25
 msgid "Date"
 msgstr "Dato"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:37
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:175
+#: plinth/modules/snapshot/views.py:189
 msgid "Delete Snapshots"
 msgstr "Slett avbildninger"
 
@@ -5597,15 +5615,19 @@ msgstr "Slett avbildninger"
 msgid "Create Snapshot"
 msgstr "Opprett øyeblikksbilde"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 msgid "Rollback"
 msgstr "Rull tilbake"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:42
-msgid "active"
-msgstr "Slått på"
+msgid "will be used at next boot"
+msgstr ""
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:51
+#: plinth/modules/snapshot/templates/snapshot_manage.html:47
+msgid "in use"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Rull tilbake til øyeblikksbilde #%(number)s"
@@ -5643,45 +5665,41 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Rull tilbake til øyeblikksbilde #%(number)s"
 
-#: plinth/modules/snapshot/views.py:30
+#: plinth/modules/snapshot/views.py:32
 msgid "Manage Snapshots"
 msgstr "Behandle avbildninger"
 
-#: plinth/modules/snapshot/views.py:79
+#: plinth/modules/snapshot/views.py:81
 msgid "Created snapshot."
 msgstr "Opprett øyeblikksbilde."
 
-#: plinth/modules/snapshot/views.py:135
+#: plinth/modules/snapshot/views.py:144
 msgid "Storage snapshots configuration updated"
 msgstr "Lagringsavbildings-oppsett oppdatert"
 
-#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
+#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:59
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Handlingsfeil: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:154
-msgid "Deleted all snapshots"
-msgstr "Slettet alle avbildninger"
-
-#: plinth/modules/snapshot/views.py:158
+#: plinth/modules/snapshot/views.py:176
 msgid "Deleted selected snapshots"
 msgstr "Slettet alle valgte avbildninger"
 
-#: plinth/modules/snapshot/views.py:163
+#: plinth/modules/snapshot/views.py:181
 msgid "Snapshot is currently in use. Please try again later."
 msgstr "Øyeblikksbilde i bruk. Prøv igjen senere."
 
-#: plinth/modules/snapshot/views.py:186
+#: plinth/modules/snapshot/views.py:200
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Rullet tilbake til øyeblikksbilde #{number}."
 
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:203
 msgid "The system must be restarted to complete the rollback."
 msgstr "Systemet må startes på nytt for å fullføre tilbakerullingen."
 
-#: plinth/modules/snapshot/views.py:201
+#: plinth/modules/snapshot/views.py:215
 msgid "Rollback to Snapshot"
 msgstr "Rull tilbake til øyeblikksbilde"
 
@@ -5759,7 +5777,7 @@ msgstr "Engangspålogging"
 msgid "Login"
 msgstr "Login"
 
-#: plinth/modules/storage/__init__.py:30
+#: plinth/modules/storage/__init__.py:29
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -5770,89 +5788,89 @@ msgstr ""
 "kan vise lagringsmedia som er i bruk, montere og avmontere flyttbare medium, "
 "utvide rotpartisjonen, osv."
 
-#: plinth/modules/storage/__init__.py:54 plinth/modules/storage/__init__.py:320
+#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:319
 msgid "Storage"
 msgstr "Lager"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:221
+#: plinth/modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:235
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation failed."
 msgstr "Operasjonen mislyktes."
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:236
 msgid "The operation was cancelled."
 msgstr "Operasjonen ble avbrutt."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:238
 msgid "The device is already unmounting."
 msgstr "Enheten avmonteres allerede."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:240
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Denne aktiviteten støttes ikke på grunn av manglende driver-/verktøystøtte."
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:243
 msgid "The operation timed out."
 msgstr "Tidsavbrudd for operasjon."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Operasjonen vil vekke en disk fra en tilstand av dyp søvn."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 msgid "Attempting to unmount a device that is busy."
 msgstr "Prøver å avmontere en opptatt enhet."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:250
 msgid "The operation has already been cancelled."
 msgstr "Operasjonen har allerede blitt avbrutt."
 
-#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:256
 msgid "Not authorized to perform the requested operation."
 msgstr "Mangler rettigheter til utførelse av forespurt operasjon."
 
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:258
 msgid "The device is already mounted."
 msgstr "Denne enheten er allerede montert."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:260
 msgid "The device is not mounted."
 msgstr "Enheten er ikke montert."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
 msgid "Not permitted to use the requested option."
 msgstr "Mangler rettigheter til bruk av forespurt valg."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:266
 msgid "The device is mounted by another user."
 msgstr "Enheten er montert av en annen bruker."
 
-#: plinth/modules/storage/__init__.py:315
+#: plinth/modules/storage/__init__.py:314
 #, fuzzy, no-python-format, python-brace-format
 #| msgid ""
 #| "Warning: Low space on system partition ({percent_used}% used, "
@@ -5862,9 +5880,20 @@ msgstr ""
 "Advarsel: Lite plass igjen på systempartisjon ({percent_used}% brukt, "
 "{free_space} ledig)."
 
-#: plinth/modules/storage/__init__.py:317
+#: plinth/modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "Lite ledig diskplass"
+
+#: plinth/modules/storage/__init__.py:344
+msgid "Disk failure imminent"
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:346
+#, python-brace-format
+msgid ""
+"Disk {id} is reporting that it is likely to fail in the near future. Copy "
+"any data while you still can and replace the drive."
+msgstr ""
 
 #: plinth/modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -6364,11 +6393,19 @@ msgstr "Tiny Tiny RSS (avgreining)"
 msgid "Check for and apply the latest software and security updates."
 msgstr "Sjekk og legg til siste programvare- og sikkerhetsoppdateringer."
 
-#: plinth/modules/upgrades/__init__.py:40 plinth/templates/setup.html:74
+#: plinth/modules/upgrades/__init__.py:24
+msgid ""
+"Updates are run at 06:00 everyday according to local time zone. Set your "
+"time zone in Date & Time app. Apps are restarted after update causing them "
+"to be unavailable briefly. If system reboot is deemed necessary, it is done "
+"automatically at 02:00 causing all apps to be unavailable briefly."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:74
 msgid "Update"
 msgstr "Oppdater"
 
-#: plinth/modules/upgrades/__init__.py:78
+#: plinth/modules/upgrades/__init__.py:83
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -6427,7 +6464,7 @@ msgstr "Veksle nylige oppdateringslogger"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:76
 msgid "Manual update"
 msgstr "Manuell oppdatering"
 
@@ -6445,11 +6482,11 @@ msgstr "Automatiske oppgraderinger aktivert"
 msgid "Automatic upgrades disabled"
 msgstr "Automatiske oppgraderinger avslått (deaktivert)"
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:70
 msgid "Upgrade process started."
 msgstr "Oppgraderingsprosessen (upgrade process)  har startet."
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:73
 msgid "Starting upgrade failed."
 msgstr "Å starte oppgradering (upgrade) mislyktes."
 
@@ -7433,6 +7470,12 @@ msgstr "%(percentage)s%% fullført"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "active"
+#~ msgstr "Slått på"
+
+#~ msgid "Deleted all snapshots"
+#~ msgstr "Slettet alle avbildninger"
+
 #~ msgid "Enable application"
 #~ msgstr "Aktiver program"
 
@@ -8219,9 +8262,6 @@ msgstr "Gujarati"
 #~ "lynmeldinger, for ditt sosiale nettverksområde, og din nyhetsside. Husker "
 #~ "du webportaler? Vi kan være en av dem også. Mange av de tjenestene du "
 #~ "bruker på nettet kan snart være her og under din kontroll!"
-
-#~ msgid "System Configuration"
-#~ msgstr "Systemoppsett"
 
 #~ msgid ""
 #~ "Here you can administrate the underlying system of your %(box_name)s."
