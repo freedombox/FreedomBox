@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>84</revnumber>
+        <date>2020-05-06 06:02:24</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Include Coturn app</revremark>
+      </revision>
+      <revision>
         <revnumber>83</revnumber>
         <date>2020-05-04 07:46:54</date>
         <authorinitials>FredLeMeur</authorinitials>
@@ -590,6 +596,8 @@
     <title>Quick Start</title>
     <section>
       <title>What you need to get started</title>
+      <para>The easy way is to <ulink url="https://freedomboxfoundation.org/buy/">buy</ulink> a FreedomBox kit. </para>
+      <para>Alternatively you may choose to build it yourself, by gathering all the components: </para>
       <itemizedlist>
         <listitem>
           <para>A supported <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware#">device</ulink> (including any device that can run Debian). We will call that the FreedomBox in the rest of this manual. </para>
@@ -885,7 +893,13 @@
   </section>
   <section>
     <title>Download and Install</title>
-    <para>Welcome to the FreedomBox download page. You may either install FreedomBox on one of the supported inexpensive <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware#">hardware</ulink> devices, on any Linux <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink> operating system, or deploy it on a virtual machine. </para>
+    <para>Welcome to the FreedomBox download page. </para>
+    <itemizedlist>
+      <listitem override="none">
+        <para><emphasis role="strong">Note</emphasis>: If you purchased a FreedomBox kit this section is not meant for you, so you can just skip it entirely. (Unless you specifically want to build an alternative software image). </para>
+      </listitem>
+    </itemizedlist>
+    <para>You may either install FreedomBox on one of the supported inexpensive <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware#">hardware</ulink> devices, on any <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">Debian</ulink> operating system, or deploy it on a virtual machine. </para>
     <para>Installing on a machine running a Debian system is easy because FreedomBox is available as a package. We do recommend to install FreedomBox on a supported single board computer (SBC). The board will be dedicated for FreedomBox use from home, this will prevent a lot of risks, such as accidental misconfiguration by the user. In case of trouble deciding which hardware is best for you or during the installation, please use the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Support#">support page</ulink> or read the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/QuestionsAndAnswers#">Questions and Answers</ulink> page based on posts on the <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">Freedombox-discuss</ulink> mailing list archives. </para>
     <section>
       <title>Downloading on Debian</title>
@@ -1571,13 +1585,13 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       </section>
       <section>
         <title>Synchronizing over Tor</title>
-        <para>In Plinth, setting up a calendar with Radicale over Tor is the same as over the clear net. Here is a short summary: </para>
+        <para>In FreedomBox, setting up a calendar with Radicale over Tor is the same as over the clear net. Here is a short summary: </para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>When logged in to Plinth over Tor, click on Radicale, and at the prompt provide your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user name and password.  </para>
+            <para>When logged in to FreedomBox interface over Tor, click on Radicale, and at the prompt provide your FreedomBox user name and password.  </para>
           </listitem>
           <listitem>
-            <para>In the Radicale web interface, log in using your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> user name and password. </para>
+            <para>In the Radicale web interface, log in using your FreedomBox user name and password. </para>
           </listitem>
           <listitem>
             <para>Click on "Create new address book or calendar", provide a title, select a type, and click "Create". </para>
@@ -1601,10 +1615,10 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
             <para>Select CalDAV and for the location copy the URL, e.g., <code>https://</code><emphasis>ONION-ADDRESS-FOR-YOUR-SERVER</emphasis><code>.onion/radicale/</code><emphasis>USERNAME</emphasis><code>/</code><emphasis>CALENDAR-CODE</emphasis><code>/</code>. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
           </listitem>
           <listitem>
-            <para>Provide a name, etc. Click "Next". Your calendar is now syncing with your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> over Tor. </para>
+            <para>Provide a name, etc. Click "Next". Your calendar is now syncing with your FreedomBox over Tor. </para>
           </listitem>
           <listitem>
-            <para>If you have not generated a certificate for your <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> with "Let's Encrypt", you may need to select "Confirm Security Exception" when prompted. </para>
+            <para>If you have not generated a certificate for your FreedomBox with "Let's Encrypt", you may need to select "Confirm Security Exception" when prompted. </para>
           </listitem>
         </orderedlist>
       </section>
@@ -2036,8 +2050,8 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
       </section>
     </section>
     <section>
-      <title>File Synchronization (Samba)</title>
-      <para>Samba lets you have a shared folder over the local network that can be used from multiple computers running different operating systems. We will henceforth refer to these shared folders as "shares".  </para>
+      <title>Network File Storage (Samba)</title>
+      <para>Samba lets you have shared folders over the local network that can be used from multiple computers running different operating systems. We refer to these shared folders as "shares".  </para>
       <para>You can have a personal folder shared between your own devices (Home share), a folder shared with a trusted group (Group share) or one that is shared with every device on the network (Open share). </para>
       <para>Samba lets you to treat a share as if it's a local folder on your computer. However, shares are available only on the local network. </para>
       <para>To learn more about Samba, please refer to the <ulink url="https://wiki.samba.org/index.php/User_Documentation">user documentation</ulink> on their wiki. </para>
@@ -2093,7 +2107,7 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
         <title>How to setup Quassel?</title>
         <itemizedlist>
           <listitem>
-            <para>Within Plinth </para>
+            <para>Within FreedomBox's web interface </para>
             <orderedlist numeration="arabic">
               <listitem>
                 <para>select <emphasis>Applications</emphasis> </para>
@@ -2135,10 +2149,10 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
                 <para>
                   <inlinemediaobject>
                     <imageobject>
-                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding.png"/>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding_en_v01.png"/>
                     </imageobject>
                     <textobject>
-                      <phrase>Quassel_PortForwarding.png</phrase>
+                      <phrase>Quassel_PortForwarding_en_v01.png</phrase>
                     </textobject>
                   </inlinemediaobject>
                 </para>
@@ -2934,6 +2948,28 @@ $ sudo nmcli connection import type openvpn file /path/to/<USER>.ovpn]]></screen
         <para>Alternatively, you can set a new password as follows: </para>
         <screen><![CDATA[sudo su -
 echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc/mumble-server.ini --readsupw"]]></screen>
+      </section>
+    </section>
+    <section>
+      <title>VoIP Helper (Coturn)</title>
+      <para>Coturn is a server to facilitate audio/video calls and conferences by providing an implementation of TURN and STUN protocols. WebRTC, SIP and other communication servers can use it to establish a call between parties who are otherwise unable connect to each other. </para>
+      <para>It is not meant to be used directly by users. Servers such as Matrix Synapse need to be configured with the details provided on the Coturn app page. Apart from Matrix Synapse, Jitsi, Ejabberd, Nextcloud Talk, etc. can use Coturn server for audio/video calls and conferences. There is no need for the servers to be running on the same machine as FreedomBox and external servers can use Coturn running on FreedomBox. </para>
+      <para>Coturn is available in FreedomBox since version 20.8 as an advanced app. This means that you need to check "Show advanced apps and features" in "General Configuration" to see Coturn icon in the "Apps" section. </para>
+      <section>
+        <title>How it works</title>
+        <para>When making an audio/video call, it is best to route the media streams between two peers directly. This will give the best possible latency (better signal quality) and avoid depending on a centralized server (privacy). It scales well because a simple chat server can host thousands of calls without involving the server in any way other than to setup the call. However, this approach does not work most of the time to due to how networks are configured. Most peers on the network do not have a unique IP address allocated to them. They work hidden behind a network device that performs "Network Address Translation" (NAT) for them. This means that the two peers have no way of reaching each other. </para>
+        <para>To address this problem, a simple technique known as STUN was introduced. With the help of a third party STUN server, the peers can trick the NAT devices, to carry the traffic between the two peers. Unfortunately, this trick only works about 80% of the time. So, if STUN fails, peers have no choice but to route their traffic through an intermediary server called TURN server. All the mechanism of trying out STUN first and then falling back to TURN is described in a protocol known as ICE. </para>
+        <para>On FreedomBox, Coturn provides both STUN and TURN servers. Both services are provided over TCP as well as UDP. They are provided on unencrypted as well as encrypted channels (with have a higher chance of success). Since STUN servers are very inexpensive and don't consume a lot of server resources, there is no authentication needed to use them. TURN servers on the other hand need authentication. This authentication is highly simplified and does not require maintaining a database of users. A server such as matrix-synapse which is about to setup an audio/video call between two peers will generate a username and password using a shared secret. When the peers use the TURN server, they will be validated using these credentials because the TURN server also knows the same secret. </para>
+        <para>In summary, a communication server needs to know the URLs of the STUN/TURN servers along with a shared authentication secret for TURN. After that, during audio/video call setup, they will correctly guide the peers to use STUN/TURN servers. Coturn app in FreedomBox provides exactly this information. This information can be used to configure a communication server irrespective of whether it is running on the same FreedomBox or on another server. </para>
+      </section>
+      <section>
+        <title>Configuring Matrix Synapse</title>
+        <para>Matrix Synapse server in FreedomBox can be configured to use Coturn TURN/STUN server. In future, when you install Matrix Synapse, FreedomBox will automatically install Coturn and configure its parameters into Matrix Synapse. To configure Matrix Synapse, edit the file <emphasis>/etc/matrix-synapse/homeserver.yaml</emphasis> with the following lines: </para>
+        <screen><![CDATA[turn_uris: [ "stun:myfreedombox.example.org:3478?transport=udp", "stun:myfreedombox.example.org:3478?transport=tcp", "turn:myfreedombox.example.org:3478?transport=udp", "turn:myfreedombox.example.org:3478?transport=tcp" ]
+turn_shared_secret: "my-freedombox-provided-secret"
+turn_user_lifetime: 86400000
+turn_allow_guests: True]]></screen>
+        <para>And then restart matrix-synapse server by disabling and re-enabling the matrix-synapse app. </para>
       </section>
     </section>
     <section>
@@ -6690,22 +6726,15 @@ nmcli con modify "<connection_name>" connection.zone internal]]></screen>
     </section>
     <section>
       <title>Performance (cockpit-pcp)</title>
-      <itemizedlist>
-        <listitem>
-          <para>Cockpit support for reading PCP metrics and loading PCP archives. </para>
-        </listitem>
-        <listitem>
-          <para>Performance Co-Pilot (PCP) is a framework and services to support system-level performance monitoring and performance management. </para>
-        </listitem>
-      </itemizedlist>
-      <para>When this system app is installed and enabled, cockpit's graphs show the past (up to one week). </para>
+      <para>Performance app allows you to collect, store and view information about utilization of the hardware. This can gives you basic insights into usage patterns and whether the hardware is overloaded by users and services. </para>
+      <para>Performance metrics are collected by Performance Co-Pilot and can be viewed using the Cockpit app. Performance app is available in FreedomBox since version 20.9. When this system app is installed and enabled, cockpit's graphs shows the past (up to one year at a time). </para>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Performance?action=AttachFile&amp;do=get&amp;target=one-week.png"/>
+            <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Performance?action=AttachFile&amp;do=get&amp;target=performance-one-week.png"/>
           </imageobject>
           <textobject>
-            <phrase>one-week.png</phrase>
+            <phrase>performance-one-week.png</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -8069,7 +8098,7 @@ Password: <enter user password here>
     </section>
     <section>
       <title>Pioneer Edition FreedomBox</title>
-      <para>Pioneer FreedomBox Home Servers are produced and sold by Olimex, a company which specializes in Open Source Hardware. The kit includes pocket-sized server hardware, an SD card with the operating system pre-installed, and a backup battery which can power the hardware for 4-5 hours in case of outages. It sells for 82 euro. By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
+      <para>Pioneer FreedomBox Home Servers are produced and sold by Olimex, a company which specializes in Open Source Hardware (OSHW). The kit includes pocket-sized server hardware, an SD card with the operating system pre-installed, and a backup battery which can power the hardware for 4-5 hours in case of outages. It sells for 82 euro. An optional storage add-on for high capacity hard disk (HDD) or solid-state drive (SSD) is also available from Olimex.  By purchasing this product, you also support the FreedomBox Foundation's efforts to create and promote its free and open source server software. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -8102,6 +8131,9 @@ Password: <enter user password here>
           <listitem>
             <para>an Ethernet cable. </para>
           </listitem>
+          <listitem>
+            <para>an optional storage add-on for hard disk (HDD) or solid-state drive (SSD) </para>
+          </listitem>
         </itemizedlist>
       </section>
       <section>
@@ -8125,6 +8157,7 @@ Password: <enter user password here>
       </section>
       <section>
         <title>Hardware Specifications</title>
+        <para>Pioneer Edition FreedomBox Home Server is based on A20-OLinuXino-LIME2 Rev.G. </para>
         <itemizedlist>
           <listitem>
             <para>Open Source Hardware (OSHW): <ulink url="https://github.com/OLIMEX/OLINUXINO/tree/master/HARDWARE">Yes</ulink> </para>
@@ -8139,6 +8172,12 @@ Password: <enter user password here>
             <para>Storage: 32GB class 10+ microSD card pre-loaded with FreedomBox </para>
           </listitem>
           <listitem>
+            <para>SATA: 1 SATA port 2.6 compliant 3Gb/s </para>
+          </listitem>
+          <listitem>
+            <para>USB: 2 USB 2.0 Hi-Speed host ports </para>
+          </listitem>
+          <listitem>
             <para>Battery: 3.3V Li-Po, 1400mAh (4-5 hours of backup without additional devices connected via USB) </para>
           </listitem>
           <listitem>
@@ -8148,10 +8187,68 @@ Password: <enter user password here>
             <para>Power adapter: 110-220 V input, 5V output, EU style (with optional UK or US sockets) </para>
           </listitem>
           <listitem>
+            <para>Power consumption: 1.5W and 5W depending on load (0.3A to 1A current) </para>
+          </listitem>
+          <listitem>
             <para>Box: Custom metallic box with FreedomBox decal </para>
           </listitem>
         </itemizedlist>
+        <para>Further information: </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware">Quick start leaflet</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware">Hardware source files</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware">A20-OLinuXino-LIME2 rev.G schematic</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="http://dl.linux-sunxi.org/A20/A20%20Brief%202013-02-27.pdf">A20 SOC datasheet</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
         <para>The kits run entirely on Free Software. They work with Kernel and u-boot from Debian repositories. Even the boot firmware in ROM called <ulink url="https://linux-sunxi.org/BROM">BROM</ulink> is free software (GPLV2+). </para>
+      </section>
+      <section>
+        <title>Storage Add-on</title>
+        <para>You can order a storage add-on along with the Pioneer Edition FreedomBox Home Server. The storage add-on is a SATA disk drive enclosure case optionally with a hard disk or solid-state drive of size 128GB to 2000GB. If you have already purchased the Home Server without the add-on, you can order the add-on separately. </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/BAY-HDD-1000GB/">Olimex Store</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>Price: 9 EUR (without the hard disk, only for the case, you need to add your own HDD/SSD to it) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 42 EUR (with 128GB Solid-State Drive) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 69 EUR (with 512GB Solid-State Drive) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 42 EUR (with 320GB Hard Disk) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 53 EUR (with 500GB Hard Disk) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 64 EUR (with 1000GB Hard Disk) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 86 EUR (with 2000GB Hard Disk) </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Download</title>
@@ -10184,6 +10281,78 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.9 (2020-05-18)</title>
+        <section>
+          <title>Top Highlights</title>
+          <itemizedlist>
+            <listitem>
+              <para>performance: Add app for system monitoring </para>
+            </listitem>
+            <listitem>
+              <para>upgrades: Restart services and system when needed after upgrades </para>
+              <itemizedlist>
+                <listitem>
+                  <para>System restart will happen at 02:00 local time </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Other Changes</title>
+          <itemizedlist>
+            <listitem>
+              <para>bind: Add service alias for bind9 -&gt; named </para>
+            </listitem>
+            <listitem>
+              <para>firewall: Reload firewalld so it works with newly installed services </para>
+            </listitem>
+            <listitem>
+              <para>first_setup: Fix regression with logo not showing </para>
+            </listitem>
+            <listitem>
+              <para>locale: Update translations for Norwegian Bokmål, German, Swedish, Spanish, and Russian </para>
+            </listitem>
+            <listitem>
+              <para>mediawiki: Stop jobrunner during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>minidlna: Stop service during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>mumble: Stop service during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>package: Fix error log when checking if package manager is busy </para>
+            </listitem>
+            <listitem>
+              <para>performance: Launch the Cockpit graphs directly if possible </para>
+            </listitem>
+            <listitem>
+              <para>quassel: Fix stopping service during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>quassel: Use systemd sandboxing features </para>
+            </listitem>
+            <listitem>
+              <para>samba: Change description to Network File Storage </para>
+            </listitem>
+            <listitem>
+              <para>snapshot: Fix issues with restore and delete </para>
+            </listitem>
+            <listitem>
+              <para>snapshot: Set as essential module </para>
+            </listitem>
+            <listitem>
+              <para>storage: Auto-mount disks, notify of failing disks </para>
+            </listitem>
+            <listitem>
+              <para>tor: Fix stopping service during backup/restore </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
       <section>
         <title>FreedomBox 20.8 (2020-05-04)</title>
         <itemizedlist>

@@ -5,6 +5,18 @@
     <title>es/FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>64</revnumber>
+        <date>2020-05-10 10:11:38</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Se alinea con la versión 84 en inglés del 06 de mayo de 2020</revremark>
+      </revision>
+      <revision>
+        <revnumber>63</revnumber>
+        <date>2020-05-10 00:33:47</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Enlace a página traducida.</revremark>
+      </revision>
+      <revision>
         <revnumber>62</revnumber>
         <date>2020-05-03 17:17:44</date>
         <authorinitials>JamesValleroy</authorinitials>
@@ -466,6 +478,8 @@
     <title>Guía de Inicio Rápido</title>
     <section>
       <title>Lo que necesitas para empezar</title>
+      <para>La forma fácil es <ulink url="https://freedomboxfoundation.org/buy/">comprar</ulink> un kit FreedomBox. </para>
+      <para>Alternativamente podrías optar por montarlo tu mismo reuniendo todas las piezas: </para>
       <itemizedlist>
         <listitem>
           <para>Un <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware#">dispositivo</ulink> soportado (incluyendo cualquier dispositivo que pueda funcionar con Debian). En el resto de este manual lo llamaremos la FreedomBox. </para>
@@ -586,7 +600,7 @@
           <para>La siguiente página te pide un nombre de usuario y contraseña. Rellena el formulario y haz clic en "Crear Cuenta." </para>
           <itemizedlist>
             <listitem>
-              <para>Nota: El usuario que creas aquí tendrá privilegios de Admin y también podrá <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/FreedomBox/Manual/SecureShell#">entrar por SSH</ulink>. Por seguridad y para prevenir meteduras de pata no deberías introducir tu cuenta de uso habitual, sino una especial. Luego puedes añadir más usuarios, entre ellos el tuyo de uso habitual. </para>
+              <para>Nota: El usuario que creas aquí tendrá privilegios de Admin y también podrá <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/SecureShell#">entrar por SSH</ulink>. Por seguridad y para prevenir meteduras de pata no deberías introducir tu cuenta de uso habitual, sino una especial. Luego puedes añadir más usuarios, entre ellos el tuyo de uso habitual. </para>
             </listitem>
             <listitem override="none">
               <para>
@@ -761,7 +775,13 @@
   </section>
   <section>
     <title>Descarga e Instalación</title>
-    <para>Bienvenido a la página de descargas de FreedomBox. Puedes instalar FreedomBox sobre alguno de los baratos dispositivos <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware#">hardware</ulink> soportados, sobre cualquier sistema operativo <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware/Debian#">Debian</ulink> Linux, o sobre una máquina virtual. </para>
+    <para>Bienvenido a la página de descargas de FreedomBox. </para>
+    <itemizedlist>
+      <listitem override="none">
+        <para><emphasis role="strong">Nota</emphasis>: Si has comprado un kit FreedomBox esta sección no está pensada para tí, así que puedes simplemente saltártela entera. (A no ser que quieras específicamente compilarte una imagen alternativa del software). </para>
+      </listitem>
+    </itemizedlist>
+    <para>Puedes instalar FreedomBox sobre alguno de los baratos dispositivos <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware#">hardware</ulink> soportados, sobre cualquier sistema operativo <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Hardware/Debian#">Debian</ulink> Linux, o sobre una máquina virtual. </para>
     <para>Instalar en una máquina que lleve el sistema Debian es fácil porque FreedomBox está disponble como paquete. Recomendamos instalar FreedomBox sobre una placa SBC soportada. La placa estaría dedicada al uso de FreedomBox en el hogar. Esto evitará un montón de riesgos, como configuraciones accidentalmente incorectas por el usuario. En caso de duda  decidiendo qué hardware es el más apropiado para tí o durante la instalación, usa por favor la <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Support#">página de soporte</ulink> o lee la página de <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/QuestionsAndAnswers#">Preguntas y Respuestas</ulink> basada en los archivos de la lista de correo <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">Freedombox-discuss</ulink>. </para>
     <section>
       <title>Descargando en Debian</title>
@@ -1291,7 +1311,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
     </section>
     <section>
       <title>Block Sandbox (Minetest)</title>
-      <para><emphasis>Minetest</emphasis> es un <emphasis>Block Sandbox</emphasis> multijugador para mundos infinitos. Este módulo permite ejecutar el servidor <code>Minetest</code> en esta FreedomBox, en su puerto por defecto (30000). Para conectar al servidor se necesita un <ulink url="http://www.minetest.net/downloads/">cliente de Minetest</ulink>. </para>
+      <para><emphasis>Minetest</emphasis> es un <emphasis>Block Sandbox</emphasis> multijugador para mundos infinitos. Este módulo permite ejecutar el servidor <code>Minetest</code> en esta FreedomBox, en su puerto por defecto (30000). Para conectar al servidor se necesita un <ulink url="https://www.minetest.net/downloads/">cliente de Minetest</ulink>. </para>
       <section>
         <title>Enrutado de Puertos</title>
         <para>Si tu FreedomBox está detrás de un router necesitarás configurar la redirección de puertos en tu router para los siguientes puertos de Minetest: </para>
@@ -1354,7 +1374,7 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
           </inlinemediaobject>
         </para>
         <para>Si quieres compartir un calendario solo con algunos usuarios determinados la manera más simple es crear un nuevo usuario común para ellos y compartir con ellos el nombre del usuario común y su contraseña. </para>
-        <para>Radicale proporciona un interfaz web básico que solo soporta crear calendarios y libretas nuevos. Para añadir eventos o contactos se necesita una  <ulink url="http://radicale.org/clients/">aplicación cliente soportada</ulink> externa. </para>
+        <para>Radicale proporciona un interfaz web básico que solo soporta crear calendarios y libretas nuevos. Para añadir eventos o contactos se necesita una  <ulink url="https://radicale.org/master.html#documentation/supported-clients/">aplicación cliente soportada</ulink> externa. </para>
         <para>
           <inlinemediaobject>
             <imageobject>
@@ -1453,10 +1473,10 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       </section>
       <section>
         <title>Sincronizar via Tor</title>
-        <para>Configurar un calendario en Plinth con Radicale sobre Tor es lo mismo que sobre la red en claro, en resumen: </para>
+        <para>Configurar un calendario en FreedomBox con Radicale sobre Tor es lo mismo que sobre la red en claro, en resumen: </para>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>Cuando hayas ingresado a Plinth desde Tor haz clic en Radicale e introduce un usuario de tu FreedomBox y su contraseña.  </para>
+            <para>Cuando hayas ingresado al interfaz web de FreedomBox desde Tor haz clic en Radicale e introduce un usuario de tu FreedomBox y su contraseña.  </para>
           </listitem>
           <listitem>
             <para>Ingresa en el interfaz web de Radicale usando el usuario de tu FreedomBox y su contraseña. </para>
@@ -1910,9 +1930,9 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
       </section>
     </section>
     <section>
-      <title>Sincronización de Archivos (Samba)</title>
+      <title>Almacenamiento de Ficheros en Red (Samba)</title>
       <para>Samba te permite tener una carpeta compartida en la red local que se puede usar desde multiples ordenadores con sistemas operativos diferentes. De ahora en adelante nos referiremos a estas carpetas como "shares". Puedes tener una carpeta personal compartida por tus propios dispositivos (share casero), una compartida con un grupo de confianza (share de grupo) o una compartida con todo dispositivo de la red (share abierto). </para>
-      <para>Samba te permite tratar un share como si fuera una carpeta local de tu ordenador. No obstante los shares solo están disponibles en la red local. </para>
+      <para>Samba te permite tratar un share como si fueran carpetas locales de tu ordenador. No obstante los shares solo están disponibles en la red local. </para>
       <para>Para aprender más acerca de Samba, mira la <ulink url="https://wiki.samba.org/index.php/User_Documentation">documentación de usuario</ulink> de su wiki. </para>
       <para><emphasis>Disponible desde la versión:</emphasis>  19.22 </para>
       <section>
@@ -1974,7 +1994,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
         <title>¿Cómo activar Quassel?</title>
         <itemizedlist>
           <listitem>
-            <para>En Plinth </para>
+            <para>En el interfaz web de FreedomBox </para>
             <orderedlist numeration="arabic">
               <listitem>
                 <para>selecciona <emphasis>Aplicaciones</emphasis> </para>
@@ -1987,7 +2007,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                 <para>
                   <inlinemediaobject>
                     <imageobject>
-                      <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_Installation.png" width="800"/>
+                      <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_Installation_es_v01.png" width="800"/>
                     </imageobject>
                     <textobject>
                       <phrase>Quassel Installation</phrase>
@@ -2016,10 +2036,10 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                 <para>
                   <inlinemediaobject>
                     <imageobject>
-                      <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding.png"/>
+                      <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel_PortForwarding_es_v01.png"/>
                     </imageobject>
                     <textobject>
-                      <phrase>Quassel_PortForwarding.png</phrase>
+                      <phrase>Quassel_PortForwarding_es_v01.png</phrase>
                     </textobject>
                   </inlinemediaobject>
                 </para>
@@ -2030,19 +2050,19 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
       </section>
       <section>
         <title>Clientes</title>
-        <para>Hay disponibles clientes para <ulink url="http://quassel-irc.org/downloads">escritorio</ulink> y <ulink url="http://quasseldroid.iskrembilen.com/">dispositivos móviles</ulink> para conectar a Quassel. </para>
+        <para>Hay disponibles clientes para <ulink url="http://quassel-irc.org/downloads">escritorio</ulink> y <ulink url="https://quasseldroid.info/">dispositivos móviles</ulink> para conectar a Quassel. </para>
         <section>
           <title>Escritorio</title>
           <para>En un sistema Debian puedes, p. ej. usar <ulink url="https://packages.debian.org/search?keywords=quassel-client">quassel-client</ulink>. Los siguientes pasos describen cómo conectar el Cliente Quassel con el Núcleo de Quassel de tu FreedomBox. La primera vez que te conectes el Núcleo de Quassel se inicializará también. </para>
           <orderedlist numeration="arabic">
             <listitem>
-              <para>Abre el Cliente Quassel. Te guiará paso a paso para <code>Conectar con el Núcleo</code>. </para>
+              <para>Abre el Cliente Quassel. Te guiará paso a paso para <code>Conectarse al núcleo</code>. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-1-connect-to-core.png" width="394"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-1-connect-to-core_es_v01.png" width="394"/>
                       </imageobject>
                       <textobject>
                         <phrase>Connect to Core</phrase>
@@ -2053,13 +2073,13 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>Haz clic en el botón <code>Añadir</code> para abrir el diálogo <code>Añadir Cuenta al Núcleo</code>. </para>
+              <para>Haz clic en el botón <code>Añadir</code> para abrir el diálogo <code>Añadir cuenta de núcleo</code>. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-2-add-core-account.png" width="382"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-2-add-core-account_es_v01.png" width="382"/>
                       </imageobject>
                       <textobject>
                         <phrase>Add Core Account</phrase>
@@ -2070,16 +2090,16 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>Rellena cualquier cosa en el campo <code>Nombre de Cuenta</code>. Introduce el <emphasis>hostname DNS</emphasis> de tu FreedomBox en el campo <code>Hostname</code>. El campo <code>Puerto</code> debe tener el valor <code>4242</code>. Pon el usuario y la contraseña de la cuenta que quieres crear para conectar con el Núcleo de Quassel en los campos <code>Usuario</code> y <code>Contraseña</code>. Si no quieres que se te pida la contraseña cada vez que arranques el cliente de Quassel marca la opción <code>Recordarme</code>. </para>
+              <para>Rellena cualquier cosa en el campo <code>Nombre de la cuenta</code>. Introduce el <emphasis>hostname DNS</emphasis> de tu FreedomBox en el campo <code>Servidor</code>. El campo <code>Puerto</code> debe tener el valor <code>4242</code>. Pon el usuario y la contraseña de la cuenta que quieres crear para conectar con el Núcleo de Quassel en los campos <code>Usuario</code> y <code>Contraseña</code>. Si no quieres que se te pida la contraseña cada vez que arranques el cliente de Quassel marca la opción <code>Recordar</code>. </para>
             </listitem>
             <listitem>
-              <para>Tras pulsar <code>OK</code> en el diálogo <code>Añadir Cuenta al Núcleo</code> deberías ver la cuenta en el diálogo <code>Conectar con el Núcleo</code>. </para>
+              <para>Tras pulsar <code>OK</code> en el diálogo <code>Añadir cuenta de núcleo</code> deberías ver la cuenta en el diálogo <code>Conectarse al núcleo</code>. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-3-connect-to-core.png" width="394"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-3-connect-to-core_es_v01.png" width="394"/>
                       </imageobject>
                       <textobject>
                         <phrase>Connect to Core</phrase>
@@ -2093,13 +2113,13 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               <para>Selecciona la cuenta del núcleo recién creada y dale a <code>OK</code> para conectar con él. </para>
             </listitem>
             <listitem>
-              <para>Si es la primera vez que te conectas a este núcleo verás un aviso de <code>Certificado de Seguridad Desconocido</code> y necesitarás aceptar el certificado del servidor. </para>
+              <para>Si es la primera vez que te conectas a este núcleo verás un aviso de <code>Certificado de seguridad no confiable</code> y necesitarás aceptar el certificado del servidor. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-4-untrusted-security-certficate.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-4-untrusted-security-certficate_es_v01.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Untrusted Security Certificate</phrase>
@@ -2116,7 +2136,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-5-untrusted-security-certificate.png" width="434"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-5-untrusted-security-certificate_es_v01.png" width="434"/>
                       </imageobject>
                       <textobject>
                         <phrase>Untrusted Security Certificate</phrase>
@@ -2127,30 +2147,21 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>Si nadie se ha conectado nunca antes a este Núcleo Quassel antes verás un diálogo por pasos <code>Asistente de Configuración del Núcleo</code>. Selecciona <code>Siguiente</code>. </para>
+              <para>Si nadie se ha conectado nunca antes a este Núcleo Quassel antes verás un diálogo por pasos <code>Asistente de configuración del núcleo</code>. Selecciona <code>Siguiente</code>. </para>
               <itemizedlist>
                 <listitem override="none">
-                  <para>
-                    <inlinemediaobject>
-                      <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-6-core-configuration-wizard.png" width="504"/>
-                      </imageobject>
-                      <textobject>
-                        <phrase>Core Configuration Wizard</phrase>
-                      </textobject>
-                    </inlinemediaobject>
-                  </para>
+                  <para>{{attachment:quassel-client-6-core-configuration-wizard_es_v01.png|Core Configuration Wizard|width=504}n </para>
                 </listitem>
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>En la página <code>Crear Usuario Administrador</code> introduce el usuario y la contraseña que has usado antes para crear la conexión al núcleo. Selecciona <code>Recordar contraseña</code> para que recuerde la contraseña para futuras sesiones. Haz clic en <code>Siguiente</code>. </para>
+              <para>En la página <code>Crear usuario administrador</code> introduce el usuario y la contraseña que has usado antes para crear la conexión al núcleo. Selecciona <code>Recordar la contraseña</code> para que recuerde la contraseña para futuras sesiones. Haz clic en <code>Siguiente</code>. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-7-create-admin-user.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-7-create-admin-user_es_v01.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Create Admin User Page</phrase>
@@ -2161,13 +2172,13 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>En la página <code>Seleccionar Backend de Almacenamiento</code> selecciona <code>SQLite</code> y haz clic en <code>Confirmar</code>. </para>
+              <para>En la página <code>Seleccionar un motor de almacenamiento</code> selecciona <code>SQLite</code> y haz clic en <code>Enviar</code>. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-8-select-storage-backend.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-8-select-storage-backend_es_v01.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Select Storage Backend</phrase>
@@ -2184,7 +2195,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-9-welcome-wizard.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-9-welcome-wizard_es_v01.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Welcome Wizard</phrase>
@@ -2195,13 +2206,13 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>A continuación en la página de <code>Configuración de Identidad</code> pon un nombre y múltiples pseudónimos. Te presentarás con estos a otros usuarios de IRC. No es necesario dar tu nombre real. Los pseudónimos múltipes son útiles como suplentes cuando el primero no se pueda usar por cualquier motivo. Tras aportar la información haz clic en <code>Siguiente</code>. </para>
+              <para>A continuación en la página de <code>Configurar identidad</code> pon un nombre y múltiples pseudónimos. Te presentarás con estos a otros usuarios de IRC. No es necesario dar tu nombre real. Los pseudónimos múltipes son útiles como suplentes cuando el primero no se pueda usar por cualquier motivo. Tras aportar la información haz clic en <code>Siguiente</code>. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-10-setup-identity.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-10-setup-identity_es_v01.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Setup Identity</phrase>
@@ -2212,13 +2223,13 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>A continuación en la página de <code>Configuración de Conexión de Red</code> pon el nombre de red que quieras y una lista de servidores a los que se deba conectar el Núcleo de Quassel para unirte a esa red IRC (por ejemplo <code>irc.debian.org:6667</code>). </para>
+              <para>A continuación en la página de <code>Configurar conexión de red</code> pon el nombre de red que quieras y una lista de servidores a los que se deba conectar el Núcleo de Quassel para unirte a esa red IRC (por ejemplo <code>irc.debian.org:6667</code>). </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-11-setup-network-connection.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-11-setup-network-connection_es_v02.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Setup Network Connection</phrase>
@@ -2229,13 +2240,13 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>Selecciona un servidor de la lista y dale a <code>Editar</code>. En el diálogo <code>Información del Servidor</code> pon el puerto <code>6697</code> (consulta la lista real de servidores y sus puertos seguros en la documentación de tu red) y haz clic en <code>Usar SSL</code>. Clic en <code>OK</code>. Esto es para asegurar que la comunicación entre tu FreedomBox y el servidor de la red IRC va cifrada. </para>
+              <para>Selecciona un servidor de la lista y dale a <code>Editar</code>. En el diálogo <code>Información del servidor</code> pon el puerto <code>6697</code> (consulta la lista real de servidores y sus puertos seguros en la documentación de tu red) y haz clic en <code>Usar conexión cifrada</code>. Clic en <code>OK</code>. Esto es para asegurar que la comunicación entre tu FreedomBox y el servidor de la red IRC va cifrada. </para>
               <itemizedlist>
                 <listitem override="none">
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-12-server-info.png" width="390"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-12-server-info_es_v01.png" width="390"/>
                       </imageobject>
                       <textobject>
                         <phrase>Server Info</phrase>
@@ -2243,7 +2254,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                     </inlinemediaobject>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-13-server-info-ssl.png" width="390"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-13-server-info-ssl_es_v01.png" width="390"/>
                       </imageobject>
                       <textobject>
                         <phrase>Server Info SSL</phrase>
@@ -2260,7 +2271,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-14-setup-network-connection.png" width="504"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-14-setup-network-connection_es_v01.png" width="504"/>
                       </imageobject>
                       <textobject>
                         <phrase>Setup Network Connection</phrase>
@@ -2277,7 +2288,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
                   <para>
                     <inlinemediaobject>
                       <imageobject>
-                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-15-quassel-main.png" width="644"/>
+                        <imagedata fileref="https://wiki.debian.org/es/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=quassel-client-15-quassel-main_es_v01.png" width="644"/>
                       </imageobject>
                       <textobject>
                         <phrase>Quassel Main Window</phrase>
@@ -2294,7 +2305,7 @@ echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /
         </section>
         <section>
           <title>Android</title>
-          <para>Para dispositivos Android puedes usar p.ej. <emphasis>Quasseldroid</emphasis> obtenido desde <ulink url="https://f-droid.org/repository/browse/?fdfilter=quassel&amp;fdid=com.iskrembilen.quasseldroid">F-Droid</ulink> </para>
+          <para>Para dispositivos Android puedes usar p.ej. <emphasis>Quasseldroid</emphasis> obtenido desde <ulink url="https://f-droid.org/es/packages/com.iskrembilen.quasseldroid/">F-Droid</ulink> </para>
           <itemizedlist>
             <listitem>
               <para>introduce el núcleo, usuario, etc. </para>
@@ -2814,9 +2825,31 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
       </section>
     </section>
     <section>
+      <title>Asistente para VoIP (Coturn)</title>
+      <para>Coturn es un servidor para facilitar llamadas y conferencias de audio/video proporcionando una implementación de los protocolos TURN y STUN. Los servidores de comunicación por WebRTC, SIP y otros pueden usarlo para establecer una llamada entre partes que de otro modo no podrían conectarse entre si. </para>
+      <para>No está pensado para que lo usen diréctamente los usuarios. Los servidores como Matrix Synapse necesitan configurarse con los datos proporcionados en la página de app de Coturn. Además de Matrix Synapse, Jitsi, Ejabberd, Nexcloud Talk, etc. pueden usar el servidor Coturn para llamadas y conferencias de audio/video. No hace falta que los servidores se ejecuten en la misma máquina que FreedomBox. Los servidores externos pueden usar un Coturn ejecutado en FreedomBox. </para>
+      <para>Coturn está disponible en FreedomBox desde la version 20.8 como app avanzada. Esto implica que para ver el icono de Coturn en la sección "Apps" necesitas marcar en "Mostrar apps y funcionalidades avanzadas" en "Configuración General". </para>
+      <section>
+        <title>Cómo funciona</title>
+        <para>Al hacer una llamada de audio/video lo mejor es enrutar los flujos multimedia directamente entre los pares porque minimiza la latencia (mejor calidad de señal) y evita depender de un servidor centralizado (privacidad). Esto escala bien porque un servidor de chat simple puede albergar miles de llamadas sin involucrarse de ningún otro modo que para establecer la llamada. Sin embargo este enfoque no suele funcionar la mayoría de las veces por cómo se configuran las redes. La mayoría de los pares de la red carecen de una dirección IP propia reservada para ellos y suelen operar detrás de un dispositivo de red que les traduce las direcciones de red (NAT: <emphasis>"Network Address Translation"</emphasis>). Esto significa que en realidad estos pares no tienen modo de alcanzarse entre sí directamente. </para>
+        <para>Para abordar este problema se introdujo una técnica simple conocida como STUN. Con ayuda de un servidor STUN los pares pueden prescindir de los dispositivos NAT para transmitir entre ellos. Desafortunadamente este truco solo funciona un 80% de las ocasiones. Así que si STUN falla, los pares no tienen más opción que enrutar su comunicación a través de un intermediario llamado servidor TURN. Todo el mecanismo de intentar primero con STUN y recaer en TURN se describe en un protocolo llamado ICE. </para>
+        <para>En FreedomBox, Coturn proporciona servidores STUN y TURN. Ambos servicios se proporcionan tanto sobre TCP como sobre UDP y tanto en canales cifrados (que tienen mayor probabilidad de éxito) como sin cifrar. Como los servidores STUN son baratos y no consumen muchos recursos no se necesita autenticación para usarlos. Por otra parte los servidores TURN sí la necesitan. Esta autenticación está altamente simplificada y no requiere mantener una base de datos de usuarios. Un servidor como matrix-synapse que vaya a establecer una llamada de audio/video entre dos pares generará un nombre de usuario y contraseña empleando un secreto compartido. Cuando los pares usen el servidor TURN se les validará usando estas credenciales porque el servidor TURN conoce este secreto. </para>
+        <para>En resumen, un servidor de comunicaciones necesita saber las URLs de los servidores STUN/TURN junto con el secreto de autenticación para TURN. Después, durante el establecimiento de la llamada de audio/video guiarán a los pares a usar los servidores STUN/TURN. La app Coturn de FreedomBox proporciona exactamente ésta información, que se puede usar para configurar un servidor de comunicaciones independientemente de que se ejecute en la misma máquina que FreedomBox o en otro servidor. </para>
+      </section>
+      <section>
+        <title>Configurar Matrix Synapse</title>
+        <para>El servidor de Matrix Synapse de FreedomBox se puede configurar para que use el servidor de TURN/STUN Coturn. En el futuro, cuando instales Matrix Synapse FreedomBox instalará Coturn automáticamente y configurará sus parámetros en Matrix Synapse. Para configurar Matrix Synapse, edita el fichero <emphasis>/etc/matrix-synapse/homeserver.yaml</emphasis> con las siguientes líneas: </para>
+        <screen><![CDATA[turn_uris: [ "stun:myfreedombox.example.org:3478?transport=udp", "stun:myfreedombox.example.org:3478?transport=tcp", "turn:myfreedombox.example.org:3478?transport=udp", "turn:myfreedombox.example.org:3478?transport=tcp" ]
+turn_shared_secret: "my-freedombox-provided-secret"
+turn_user_lifetime: 86400000
+turn_allow_guests: True]]></screen>
+        <para>Y luego reinicia el servidor matrix-synapse deshabilitando y rehabilitando la app de matrix-synapse. </para>
+      </section>
+    </section>
+    <section>
       <title>Proxy Web (Privoxy)</title>
       <para>Un <emphasis>proxy web</emphasis> actúa como filtro para tráfico web entrante y saliente. Por tanto, puedes ofrecer a los ordenadores de tu red pasar su tráfico internet  a través del proxy para eliminar anuncios y mecanismos de rastreo indeseados. </para>
-      <para><emphasis>Privoxy</emphasis> es un software para la seguridad, privacidad, y control certero sobre la web. Proporciona una navegación web mucho más controlada (y anónima) que la que te puede ofrecer tu navegador. Privoxy "es un proxy enfocado principalmente al aumento de la privacidad, eliminación de anuncios y morralla, y a liberar al usuario de las restricciones impuestas sobre sus propias actividades" (fuente: <ulink url="http://www.privoxy.org/faq/index.html">Preguntas frecuentes acerca de Privoxy</ulink>). </para>
+      <para><emphasis>Privoxy</emphasis> es un software para la seguridad, privacidad, y control certero sobre la web. Proporciona una navegación web mucho más controlada (y anónima) que la que te puede ofrecer tu navegador. Privoxy "es un proxy enfocado principalmente al aumento de la privacidad, eliminación de anuncios y morralla, y a liberar al usuario de las restricciones impuestas sobre sus propias actividades" (fuente: <ulink url="https://www.privoxy.org/faq/index.html">Preguntas frecuentes acerca de Privoxy</ulink>). </para>
       <section>
         <title>Vídeo</title>
         <para>Mira el <ulink url="https://wiki.debian.org/es/FreedomBox/Manual/es/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy_Installation.webm">vídeo</ulink> acerca de como configurar y usar Privoxy en FreedomBox. </para>
@@ -2881,7 +2914,7 @@ echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini
             <para>Ahora encontrarás un botón <code>EDITAR</code> en la pantalla de configuración de <code>http://config.privoxy.org/</code>. </para>
           </listitem>
           <listitem>
-            <para>La <ulink url="http://www.privoxy.org/user-manual/quickstart.html">Guía rápida</ulink> es un buen punto de partida para leer acerca de cómo definir reglas de bloqueo y filtrado propias. </para>
+            <para>La <ulink url="https://www.privoxy.org/user-manual/quickstart.html">Guía rápida</ulink> es un buen punto de partida para leer acerca de cómo definir reglas de bloqueo y filtrado propias. </para>
           </listitem>
         </orderedlist>
       </section>
@@ -4163,7 +4196,7 @@ https://exampletorhs.onion/cockpit/]]></screen>
     <section>
       <title>Cortafuegos</title>
       <para>Un cortafuegos es un sistema de seguridad de red que controla el tráfico de entrada y salida desde/a la red. Mantener un cortafuegos habilitado y apropiadamente configurado reduce el riesgo de amenazas a la seguridad desde Internet. </para>
-      <para>La operación del cortafuegos desde el interfaz web Plinth de FreedomBox es automática. Cuando habilitas un servicio se le abre automáticamente  el cortafuegos y cuando lo deshabilitas se le cierra también automáticamente. Para servicios habilitados por defecto en FreedomBox los puertos se abren en el cortafuegos por defecto durante el proceso de la primera ejecución. </para>
+      <para>La operación del cortafuegos desde el interfaz web de FreedomBox es automática. Cuando habilitas un servicio se le abre automáticamente  el cortafuegos y cuando lo deshabilitas se le cierra también automáticamente. Para servicios habilitados por defecto en FreedomBox los puertos se abren en el cortafuegos por defecto durante el proceso de la primera ejecución. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -4183,7 +4216,7 @@ https://exampletorhs.onion/cockpit/]]></screen>
       </section>
       <section>
         <title>Puertos/Servicios</title>
-        <para>La siguiente tabla trata de documentar los puertos, servicios y sus estados por defecto en FreedomBox. Si encuentras esta página desactualizada mira <ulink url="http://sources.debian.net/src/plinth/latest/data/usr/lib/freedombox/first-run.d/90_firewall">lib/freedombox/first-run.d/90_firewall</ulink> en el código fuente de Plinth y la página de estado del cortafuegos en Plinth. </para>
+        <para>La siguiente tabla trata de documentar los puertos, servicios y sus estados por defecto en FreedomBox. Si encuentras esta página desactualizada mira la página de estado del cortafuegos en el interfaz web de FreedomBox. </para>
         <informaltable>
           <tgroup cols="6">
             <colspec colname="col_0"/>
@@ -4216,12 +4249,12 @@ https://exampletorhs.onion/cockpit/]]></screen>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
-                    <emphasis role="strong">Estado mostrado en Plinth</emphasis>
+                    <emphasis role="strong">Estado mostrado en FreedomBox</emphasis>
                   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para>
-                    <emphasis role="strong">Administrado por Plinth</emphasis>
+                    <emphasis role="strong">Administrado por FreedomBox</emphasis>
                   </para>
                 </entry>
               </row>
@@ -4507,7 +4540,7 @@ https://exampletorhs.onion/cockpit/]]></screen>
               </row>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
-                  <para> Plinth      </para>
+                  <para> Interfaz web de FreedomBox </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
                   <para> 443/tcp        </para>
@@ -7892,7 +7925,7 @@ Password: <introduce la contraseña aquí>
     </section>
     <section>
       <title>FreedomBox Pioneer Edition</title>
-      <para>Los servidores caseros FreedomBox Pioneer Edition los fabrica y vende Olimex, una compañía epecializada en <emphasis>hardware</emphasis> de fuentes abiertas. El Kit incluye <emphasis>hardware</emphasis> de servidor tamaño bolsillo, una tarjeta SD con el sistema operativo preinstalado, y una batería de respaldo que puede alimentar el <emphasis>hardware</emphasis> durante 4-5 horas en casos de indisponibilidad de la red eléctrica. Se vende por 82 €. Al comprar este producto contribuyes a los esfuerzos de la FreedomBox Foundation's para crear y promover su <emphasis>software</emphasis> de servidor libre. </para>
+      <para>Los servidores caseros FreedomBox Pioneer Edition los fabrica y vende Olimex, una compañía epecializada en <emphasis>hardware</emphasis> de fuentes abiertas. El Kit incluye <emphasis>hardware</emphasis> de servidor tamaño bolsillo, una tarjeta SD con el sistema operativo preinstalado, y una batería de respaldo que puede alimentar el <emphasis>hardware</emphasis> durante 4-5 horas en casos de indisponibilidad de la red eléctrica. Se vende por 82 €. Olimex ofrece una extensión opcional para almacenamiento de alta capacidad en disco duro o de estado sólido.  Al comprar este producto contribuyes a los esfuerzos de la FreedomBox Foundation's para crear y promover su <emphasis>software</emphasis> de servidor libre. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -7929,10 +7962,13 @@ Password: <introduce la contraseña aquí>
             <para>una batería de respaldo, </para>
           </listitem>
           <listitem>
-            <para>un transformador, y </para>
+            <para>un transformador, </para>
           </listitem>
           <listitem>
-            <para>un cable Ethernet. </para>
+            <para>un cable Ethernet, y </para>
+          </listitem>
+          <listitem>
+            <para>una extensión para almacenamiento de alta capacidad en disco duro o de estado sólido. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -7952,6 +7988,7 @@ Password: <introduce la contraseña aquí>
       </section>
       <section>
         <title>Especificaciones del Hardware</title>
+        <para>El servidor casero FreedomBox Pioneer Edition se basa en la A20-OLinuXino-LIME2 Rev.G </para>
         <itemizedlist>
           <listitem>
             <para>Hardware de fuentes abiertas (OSHW): <ulink url="https://github.com/OLIMEX/OLINUXINO/tree/master/HARDWARE">Sí</ulink> </para>
@@ -7966,6 +8003,12 @@ Password: <introduce la contraseña aquí>
             <para>Almacenamiento: tarjeta microSD de 32GB de clase 10+ precargada con FreedomBox </para>
           </listitem>
           <listitem>
+            <para>SATA: 1 puerto SATA compatible 2.6 a 3Gb/s </para>
+          </listitem>
+          <listitem>
+            <para>USB: 2 puertos host de alta velocidad USB 2.0 </para>
+          </listitem>
+          <listitem>
             <para>Batería: Li-Po, 3.3V y 1400mAh (4-5 horas de respaldo si no hay dispositivos adicionales conectados al puerto USB) </para>
           </listitem>
           <listitem>
@@ -7975,10 +8018,68 @@ Password: <introduce la contraseña aquí>
             <para>Transformador: Entrada a 110-220V, salida a 5V, estilo UE (enchufes opcionales para el Reino Unido o EE.UU) </para>
           </listitem>
           <listitem>
+            <para>Consumo eléctrico: 1.5W o 5W dependiendo de la carga (corriente entre 0.3A 1 1A) </para>
+          </listitem>
+          <listitem>
             <para>Carcasa: Metálica con la marca FreedomBox </para>
           </listitem>
         </itemizedlist>
         <para>Los kits ejecutan sólo Software Libre. Funcionan con núcleo (kernel) y <emphasis>u-boot</emphasis> de los repositorios Debian. Incluso el firmware de arranque de la ROM, llamado <ulink url="https://linux-sunxi.org/BROM">BROM</ulink> es software libre (GPLV2+). </para>
+        <para>Más información: </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware">Guía de inicio rápido.</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware">Ficheros fuente del hardware</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/Pioneer-FreedomBox-HSK/open-source-hardware">Esquéma de la A20-OLinuXino-LIME2 rev.G</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="http://dl.linux-sunxi.org/A20/A20%20Brief%202013-02-27.pdf">Especificaciones técnicas del SoC A20</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Extensión para Almacenamiento</title>
+        <para>Junto con tu servidor casero FreedomBox Pioneer Edition puedes encargar una extensión para almacenamiento consistente en una carcasa para disco SATA, opcionalmente con un disco duro o de estado sólido de entre 128 y 2000 GB de capacidad. Si ya has comprado tu  servidor casero sin la extensión puedes encargarla aparte. </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/Home-Server/BAY-HDD-1000GB/">Tienda Olimex</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>Precio:  9 EUR (carcasa suelta sin disco duro, para albergar un disco tuyo) </para>
+          </listitem>
+          <listitem>
+            <para>Precio: 42 EUR (con disco de estado sólido de 128 GB) </para>
+          </listitem>
+          <listitem>
+            <para>Precio: 69 EUR (con disco de estado sólido de 512 GB) </para>
+          </listitem>
+          <listitem>
+            <para>Precio: 42 EUR (con disco duro de 320 GB) </para>
+          </listitem>
+          <listitem>
+            <para>Precio: 53 EUR (con disco duro de 500 GB) </para>
+          </listitem>
+          <listitem>
+            <para>Precio: 64 EUR (con disco duro de 1000 GB) </para>
+          </listitem>
+          <listitem>
+            <para>Precio: 86 EUR (con disco duro de 2000 GB) </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Descarga</title>
@@ -10010,6 +10111,78 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.9 (2020-05-18)</title>
+        <section>
+          <title>Top Highlights</title>
+          <itemizedlist>
+            <listitem>
+              <para>performance: Add app for system monitoring </para>
+            </listitem>
+            <listitem>
+              <para>upgrades: Restart services and system when needed after upgrades </para>
+              <itemizedlist>
+                <listitem>
+                  <para>System restart will happen at 02:00 local time </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Other Changes</title>
+          <itemizedlist>
+            <listitem>
+              <para>bind: Add service alias for bind9 -&gt; named </para>
+            </listitem>
+            <listitem>
+              <para>firewall: Reload firewalld so it works with newly installed services </para>
+            </listitem>
+            <listitem>
+              <para>first_setup: Fix regression with logo not showing </para>
+            </listitem>
+            <listitem>
+              <para>locale: Update translations for Norwegian Bokmål, German, Swedish, Spanish, and Russian </para>
+            </listitem>
+            <listitem>
+              <para>mediawiki: Stop jobrunner during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>minidlna: Stop service during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>mumble: Stop service during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>package: Fix error log when checking if package manager is busy </para>
+            </listitem>
+            <listitem>
+              <para>performance: Launch the Cockpit graphs directly if possible </para>
+            </listitem>
+            <listitem>
+              <para>quassel: Fix stopping service during backup/restore </para>
+            </listitem>
+            <listitem>
+              <para>quassel: Use systemd sandboxing features </para>
+            </listitem>
+            <listitem>
+              <para>samba: Change description to Network File Storage </para>
+            </listitem>
+            <listitem>
+              <para>snapshot: Fix issues with restore and delete </para>
+            </listitem>
+            <listitem>
+              <para>snapshot: Set as essential module </para>
+            </listitem>
+            <listitem>
+              <para>storage: Auto-mount disks, notify of failing disks </para>
+            </listitem>
+            <listitem>
+              <para>tor: Fix stopping service during backup/restore </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
       <section>
         <title>FreedomBox 20.8 (2020-05-04)</title>
         <itemizedlist>
@@ -13222,7 +13395,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
   </section>
   <section>
     <title>Guía del Desarrollador</title>
-    <para>The FreedomBox Developer Manual provides a step by step tutorial for writing apps for FreedomBox and an API reference. It is available from <ulink url="https://docs.freedombox.org">docs.freedombox.org</ulink>. </para>
+    <para>El Manual del Desarrollador de FreedomBox proporciona un tutorial paso a paso para escribir apps para FreedomBox y una referencia para la API. Está disponible en <ulink url="https://docs.freedombox.org">docs.freedombox.org</ulink>. </para>
   </section>
   <section>
     <title>Cacharreo</title>
