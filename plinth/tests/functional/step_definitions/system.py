@@ -168,9 +168,8 @@ def dynamicdns_has_original_config(session_browser):
 
 
 @when(
-    parsers.parse(
-        'I create a backup of the {app_name:w} app data with name {archive_name:w}'
-    ))
+    parsers.parse('I create a backup of the {app_name:w} app data with '
+                  'name {archive_name:w}'))
 def backup_create(session_browser, app_name, archive_name):
     system.backup_create(session_browser, app_name, archive_name)
 
@@ -203,9 +202,8 @@ def backup_restore_from_upload(session_browser, app_name,
 
 
 @when(
-    parsers.parse(
-        'I configure pagekite with host {host:S}, port {port:d}, kite name {kite_name:S} and kite secret {kite_secret:w}'
-    ))
+    parsers.parse('I configure pagekite with host {host:S}, port {port:d}, '
+                  'kite name {kite_name:S} and kite secret {kite_secret:w}'))
 def pagekite_configure(session_browser, host, port, kite_name, kite_secret):
     system.pagekite_configure(session_browser, host, port, kite_name,
                               kite_secret)
@@ -213,8 +211,8 @@ def pagekite_configure(session_browser, host, port, kite_name, kite_secret):
 
 @then(
     parsers.parse(
-        'pagekite should be configured with host {host:S}, port {port:d}, kite name {kite_name:S} and kite secret {kite_secret:w}'
-    ))
+        'pagekite should be configured with host {host:S}, port {port:d}, '
+        'kite name {kite_name:S} and kite secret {kite_secret:w}'))
 def pagekite_assert_configured(session_browser, host, port, kite_name,
                                kite_secret):
     assert (host, port, kite_name,

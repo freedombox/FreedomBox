@@ -216,7 +216,8 @@ def mldonkey_remove_all_ed2k_files(browser):
 def mldonkey_upload_sample_ed2k_file(browser):
     """Upload a sample ed2k file into mldonkey."""
     browser.visit(config['DEFAULT']['url'] + '/mldonkey/')
-    dllink_command = 'dllink ed2k://|file|foo.bar|123|0123456789ABCDEF0123456789ABCDEF|/'
+    dllink_command = 'dllink ed2k://|file|foo.bar|123|' \
+        '0123456789ABCDEF0123456789ABCDEF|/'
     _mldonkey_submit_command(browser, dllink_command)
 
 

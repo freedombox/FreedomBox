@@ -22,8 +22,8 @@ def access_application(session_browser, app_name):
 
 @when(
     parsers.parse(
-        'I upload an image named {image:S} to mediawiki with credentials {username:w} and '
-        '{password:w}'))
+        'I upload an image named {image:S} to mediawiki with credentials '
+        '{username:w} and {password:w}'))
 def upload_image(session_browser, username, password, image):
     site.upload_image_mediawiki(session_browser, username, password, image)
 
@@ -43,9 +43,8 @@ def verify_upload_password(session_browser, password):
 
 
 @when(
-    parsers.parse(
-        'I upload the sample local file to coquelicot with password {password:w}'
-    ))
+    parsers.parse('I upload the sample local file to coquelicot with password '
+                  '{password:w}'))
 def coquelicot_upload_file(session_browser, sample_local_file, password):
     url = site.upload_file_to_coquelicot(session_browser,
                                          sample_local_file['file_path'],

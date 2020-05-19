@@ -103,17 +103,15 @@ def configure_shadowsocks(session_browser):
 
 
 @when(
-    parsers.parse(
-        'I configure shadowsocks with server {server:S} and password {password:w}'
-    ))
+    parsers.parse('I configure shadowsocks with server {server:S} and '
+                  'password {password:w}'))
 def configure_shadowsocks_with_details(session_browser, server, password):
     application.configure_shadowsocks(session_browser, server, password)
 
 
 @then(
-    parsers.parse(
-        'shadowsocks should be configured with server {server:S} and password {password:w}'
-    ))
+    parsers.parse('shadowsocks should be configured with server {server:S} '
+                  'and password {password:w}'))
 def assert_shadowsocks_configuration(session_browser, server, password):
     assert (
         server,
@@ -147,9 +145,8 @@ def add_share(session_browser, name, path, group):
 
 
 @when(
-    parsers.parse(
-        'I edit share {old_name:w} to {new_name:w} from path {path} for {group:w}'
-    ))
+    parsers.parse('I edit share {old_name:w} to {new_name:w} from path {path} '
+                  'for {group:w}'))
 def edit_share(session_browser, old_name, new_name, path, group):
     application.edit_share(session_browser, old_name, new_name, path, group)
 
@@ -376,9 +373,8 @@ def radicale_given_owner_only(session_browser):
     application.radicale_set_access_rights(session_browser, 'owner_only')
 
 
-@given(
-    'the access rights are set to "any user can view, but only the owner can make changes"'
-)
+@given('the access rights are set to "any user can view, but only the '
+       'owner can make changes"')
 def radicale_given_owner_write(session_browser):
     application.radicale_set_access_rights(session_browser, 'owner_write')
 
@@ -394,9 +390,8 @@ def radicale_set_owner_only(session_browser):
     application.radicale_set_access_rights(session_browser, 'owner_only')
 
 
-@when(
-    'I change the access rights to "any user can view, but only the owner can make changes"'
-)
+@when('I change the access rights to "any user can view, but only the '
+      'owner can make changes"')
 def radicale_set_owner_write(session_browser):
     application.radicale_set_access_rights(session_browser, 'owner_write')
 
@@ -412,9 +407,8 @@ def radicale_check_owner_only(session_browser):
         session_browser) == 'owner_only'
 
 
-@then(
-    'the access rights should be "any user can view, but only the owner can make changes"'
-)
+@then('the access rights should be "any user can view, but only the '
+      'owner can make changes"')
 def radicale_check_owner_write(session_browser):
     assert application.radicale_get_access_rights(
         session_browser) == 'owner_write'
