@@ -4,6 +4,7 @@ Test module for storage module operations.
 """
 
 import os
+import pathlib
 import re
 import subprocess
 import tempfile
@@ -204,14 +205,14 @@ class TestActions:
     @staticmethod
     def call_action(action_command, **kwargs):
         """Call the action script."""
-        current_directory = os.path.dirname(os.path.realpath(__file__))
-        action = os.path.join(current_directory, '..', '..', '..', '..',
-                              'actions', action_command[0])
-        action_command[0] = action
+        test_directory = pathlib.Path(__file__).parent
+        top_directory = (test_directory / '..' / '..' / '..' / '..').resolve()
+        action_command[0] = top_directory / 'actions' / action_command[0]
         kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
         kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
         kwargs['check'] = kwargs.get('check', True)
-        return subprocess.run(action_command, **kwargs)
+        env = dict(os.environ, PYTHONPATH=str(top_directory))
+        return subprocess.run(action_command, env=env, **kwargs)
 
     def check_action(self, action_command):
         """Return success/failure result of the action command."""
