@@ -20,6 +20,10 @@
 
 {% block status %}
 
+  {% if status.is_setup and not status.setup_running %}
+    {{ block.super }}
+  {% endif %}
+
   {% if not status.is_setup and not status.setup_running %}
     <h3>{% trans "Status" %}</h3>
 
@@ -41,7 +45,7 @@
     </form>
   {% endif %}
 
-  {% if not status.is_setup and status.setup_running %}
+  {% if status.setup_running %}
     <h3>{% trans "Status" %}</h3>
 
     <p class="running-status-parent">
@@ -59,15 +63,11 @@
     </p>
   {% endif %}
 
-  {% if status.is_setup %}
-    {{ block.super }}
-  {% endif %}
-
 {% endblock %}
 
 {% block configuration %}
 
-  {% if status.is_setup %}
+  {% if status.is_setup and not status.setup_running %}
 
     <h3>{% trans "Profile" %}</h3>
 
@@ -96,10 +96,6 @@
              value="{% trans "Download my profile" %}"/>
     </form>
 
-  {% endif %}
-
-  {% if status.is_setup %}
-    {{ block.super }}
   {% endif %}
 
 {% endblock %}

@@ -36,11 +36,18 @@ port_forwarding_info = [('UDP', 1194)]
 
 app = None
 
+setup_process = None
+
 
 class OpenVPNApp(app_module.App):
     """FreedomBox app for OpenVPN."""
 
     app_id = 'openvpn'
+
+    @property
+    def can_be_disabled(self):
+        """Return whether the app can be disabled."""
+        return is_setup() and not setup_process
 
     def __init__(self):
         """Create components for the app."""

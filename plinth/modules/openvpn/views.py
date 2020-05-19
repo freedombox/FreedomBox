@@ -8,59 +8,45 @@ import logging
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import actions, daemon
+from plinth import actions
 from plinth.modules import config, openvpn
-
-from .forms import OpenVpnForm
+from plinth.views import AppView
 
 logger = logging.getLogger(__name__)
 
-setup_process = None
 
+class OpenVPNAppView(AppView):
+    """Show OpenVPN app main page."""
+    app_id = 'openvpn'
+    template_name = 'openvpn.html'
+    port_forwarding_info = openvpn.port_forwarding_info
 
-def index(request):
-    """Serve configuration page."""
-    status = get_status()
+    def dispatch(self, request, *args, **kwargs):
+        """Collect the result of running setup process."""
+        if bool(openvpn.setup_process):
+            _collect_setup_result(request)
 
-    if status['setup_running']:
-        _collect_setup_result(request)
+        return super().dispatch(request, *args, **kwargs)
 
-    form = None
-
-    if request.method == 'POST':
-        form = OpenVpnForm(request.POST, prefix='openvpn')
-        # pylint: disable=E1101
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = OpenVpnForm(initial=status, prefix='openvpn')
-    else:
-        form = OpenVpnForm(initial=status, prefix='openvpn')
-
-    return TemplateResponse(
-        request, 'openvpn.html', {
-            'app_id': 'openvpn',
-            'app_info': openvpn.app.info,
-            'port_forwarding_info': openvpn.port_forwarding_info,
-            'status': status,
-            'form': form,
-            'is_running': status['is_running'],
-            'has_diagnostics': True,
-            'is_enabled': status['enabled'],
-        })
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['status'] = {
+            'is_setup': openvpn.is_setup(),
+            'setup_running': bool(openvpn.setup_process),
+        }
+        return context
 
 
 @require_POST
 def setup(request):
     """Start the setup process."""
-    global setup_process
-    if not openvpn.is_setup() and not setup_process:
-        setup_process = actions.superuser_run('openvpn', ['setup'],
-                                              run_in_background=True)
+    if not openvpn.is_setup() and not openvpn.setup_process:
+        openvpn.setup_process = actions.superuser_run('openvpn', ['setup'],
+                                                      run_in_background=True)
 
     openvpn.app.enable()
 
@@ -86,24 +72,12 @@ def profile(request):
     return response
 
 
-def get_status():
-    """Get the current settings from OpenVPN server."""
-
-    return {
-        'is_setup': openvpn.is_setup(),
-        'setup_running': bool(setup_process),
-        'enabled': openvpn.app.is_enabled(),
-        'is_running': daemon.app_is_running(openvpn.app)
-    }
-
-
 def _collect_setup_result(request):
     """Handle setup process is completion."""
-    global setup_process
-    if not setup_process:
+    if not openvpn.setup_process:
         return
 
-    return_code = setup_process.poll()
+    return_code = openvpn.setup_process.poll()
 
     # Setup process is not complete yet
     if return_code is None:
@@ -114,22 +88,4 @@ def _collect_setup_result(request):
     else:
         messages.info(request, _('Setup failed.'))
 
-    setup_process = None
-
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the changes."""
-    modified = False
-
-    if old_status['enabled'] != new_status['enabled']:
-        if new_status['enabled']:
-            openvpn.app.enable()
-        else:
-            openvpn.app.disable()
-
-        modified = True
-
-    if modified:
-        messages.success(request, _('Configuration updated'))
-    else:
-        messages.info(request, _('Setting unchanged'))
+    openvpn.setup_process = None

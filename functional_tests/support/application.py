@@ -26,7 +26,6 @@ app_module = {
 
 app_checkbox_id = {
     'tor': 'id_tor-enabled',
-    'openvpn': 'id_openvpn-enabled',
 }
 
 default_url = config['DEFAULT']['url']
