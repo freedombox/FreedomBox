@@ -3,10 +3,29 @@
 pytest configuration for all tests.
 """
 
+import importlib
 import os
 import pathlib
 
 import pytest
+
+try:
+    importlib.import_module('pytest_bdd')
+    _bdd_available = True
+except ImportError:
+    _bdd_available = False
+else:
+    from plinth.tests.functional.step_definitions.application import *
+    from plinth.tests.functional.step_definitions.interface import *
+    from plinth.tests.functional.step_definitions.service import *
+    from plinth.tests.functional.step_definitions.site import *
+    from plinth.tests.functional.step_definitions.system import *
+
+
+def pytest_ignore_collect(path, config):
+    """Return True to ignore functional tests."""
+    if path.basename == 'test_functional.py':
+        return not _bdd_available
 
 
 def pytest_addoption(parser):
@@ -16,7 +35,7 @@ def pytest_addoption(parser):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Filter out functional tests unless --include-functional arg is passed."""
+    """Filter out functional tests unless --include-functional is passed."""
     if config.getoption('--include-functional'):
         # Option provided on command line, no filtering
         return
@@ -24,7 +43,9 @@ def pytest_collection_modifyitems(config, items):
     skip_functional = pytest.mark.skip(
         reason='--include-functional not provided')
     for item in items:
-        if 'functional' in item.keywords:
+        if 'functional' in item.keywords or (
+                item.parent.fspath.basename
+                and item.parent.fspath.basename == 'test_functional.py'):
             item.add_marker(skip_functional)
 
 

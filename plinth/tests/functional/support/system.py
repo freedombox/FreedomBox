@@ -1,0 +1,417 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+import tempfile
+from urllib.parse import urlparse
+
+import requests
+
+from . import application, config
+from .interface import nav_to_module, submit
+from .service import wait_for_page_update
+
+config_page_title_language_map = {
+    'da': 'Generel Konfiguration',
+    'de': 'Allgemeine Konfiguration',
+    'es': 'Configuración general',
+    'fr': 'Configuration générale',
+    'nb': 'Generelt oppsett',
+    'nl': 'Algemene Instellingen',
+    'pl': 'Ustawienia główne',
+    'pt': 'Configuração Geral',
+    'ru': 'Общие настройки',
+    'sv': 'Allmän Konfiguration',
+    'te': 'సాధారణ ఆకృతీకరణ',
+    'tr': 'Genel Yapılandırma',
+    'zh-hans': '常规配置',
+}
+
+
+def get_hostname(browser):
+    nav_to_module(browser, 'config')
+    return browser.find_by_id('id_hostname').value
+
+
+def set_hostname(browser, hostname):
+    nav_to_module(browser, 'config')
+    browser.find_by_id('id_hostname').fill(hostname)
+    submit(browser)
+
+
+def get_domain_name(browser):
+    nav_to_module(browser, 'config')
+    return browser.find_by_id('id_domainname').value
+
+
+def set_domain_name(browser, domain_name):
+    nav_to_module(browser, 'config')
+    browser.find_by_id('id_domainname').fill(domain_name)
+    submit(browser)
+
+
+def set_home_page(browser, home_page):
+    if 'plinth' not in home_page and 'apache' not in home_page:
+        home_page = 'shortcut-' + home_page
+
+    nav_to_module(browser, 'config')
+    drop_down = browser.find_by_id('id_homepage')
+    drop_down.select(home_page)
+    submit(browser)
+
+
+def set_advanced_mode(browser, mode):
+    nav_to_module(browser, 'config')
+    advanced_mode = browser.find_by_id('id_advanced_mode')
+    if mode:
+        advanced_mode.check()
+    else:
+        advanced_mode.uncheck()
+
+    submit(browser)
+
+
+def set_language(browser, language_code):
+    username = config['DEFAULT']['username']
+    browser.visit(config['DEFAULT']['url'] +
+                  '/plinth/sys/users/{}/edit/'.format(username))
+    browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
+                          language_code + '"]').first.click()
+    submit(browser)
+
+
+def check_language(browser, language_code):
+    nav_to_module(browser, 'config')
+    return browser.find_by_css('.app-titles').first.find_by_tag(
+        'h2').first.value == config_page_title_language_map[language_code]
+
+
+def delete_all_snapshots(browser):
+    if get_snapshot_count(browser):
+        browser.find_by_id('select-all').check()
+        submit(browser, browser.find_by_name('delete_selected'))
+
+        confirm_button = browser.find_by_name('delete_confirm')
+        if confirm_button:  # Only if redirected to confirm page
+            submit(browser, confirm_button)
+
+
+def create_snapshot(browser):
+    browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
+    submit(browser)  # Click on 'Create Snapshot'
+
+
+def get_snapshot_count(browser):
+    browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
+    # Subtract 1 for table header
+    return len(browser.find_by_xpath('//tr')) - 1
+
+
+def snapshot_set_configuration(browser, free_space, timeline_enabled,
+                               software_enabled, hourly, daily, weekly,
+                               monthly, yearly):
+    """Set the configuration for snapshots."""
+    nav_to_module(browser, 'snapshot')
+    browser.find_by_name('free_space').select(free_space / 100)
+    browser.find_by_name('enable_timeline_snapshots').select(
+        'yes' if timeline_enabled else 'no')
+    browser.find_by_name('enable_software_snapshots').select(
+        'yes' if software_enabled else 'no')
+    browser.find_by_name('hourly_limit').fill(hourly)
+    browser.find_by_name('daily_limit').fill(daily)
+    browser.find_by_name('weekly_limit').fill(weekly)
+    browser.find_by_name('monthly_limit').fill(monthly)
+    browser.find_by_name('yearly_limit').fill(yearly)
+    submit(browser)
+
+
+def snapshot_get_configuration(browser):
+    """Return the current configuration for snapshots."""
+    nav_to_module(browser, 'snapshot')
+    return (int(float(browser.find_by_name('free_space').value) * 100),
+            browser.find_by_name('enable_timeline_snapshots').value == 'yes',
+            browser.find_by_name('enable_software_snapshots').value == 'yes',
+            int(browser.find_by_name('hourly_limit').value),
+            int(browser.find_by_name('daily_limit').value),
+            int(browser.find_by_name('weekly_limit').value),
+            int(browser.find_by_name('monthly_limit').value),
+            int(browser.find_by_name('yearly_limit').value))
+
+
+def check_home_page_redirect(browser, app_name):
+    browser.visit(config['DEFAULT']['url'])
+    return browser.find_by_xpath(
+        "//a[contains(@href, '/plinth/') and @title='FreedomBox']")
+
+
+def dynamicdns_configure(browser):
+    nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    browser.find_by_id('id_enabled').check()
+    browser.find_by_id('id_service_type').select('GnuDIP')
+    browser.find_by_id('id_dynamicdns_server').fill('example.com')
+    browser.find_by_id('id_dynamicdns_domain').fill('freedombox.example.com')
+    browser.find_by_id('id_dynamicdns_user').fill('tester')
+    browser.find_by_id('id_dynamicdns_secret').fill('testingtesting')
+    browser.find_by_id('id_dynamicdns_ipurl').fill(
+        'http://myip.datasystems24.de')
+    submit(browser)
+
+
+def dynamicdns_has_original_config(browser):
+    nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    enabled = browser.find_by_id('id_enabled').value
+    service_type = browser.find_by_id('id_service_type').value
+    server = browser.find_by_id('id_dynamicdns_server').value
+    domain = browser.find_by_id('id_dynamicdns_domain').value
+    user = browser.find_by_id('id_dynamicdns_user').value
+    ipurl = browser.find_by_id('id_dynamicdns_ipurl').value
+    if enabled and service_type == 'GnuDIP' and server == 'example.com' \
+       and domain == 'freedombox.example.com' and user == 'tester' \
+       and ipurl == 'http://myip.datasystems24.de':
+        return True
+    else:
+        return False
+
+
+def dynamicdns_change_config(browser):
+    nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    browser.find_by_id('id_enabled').check()
+    browser.find_by_id('id_service_type').select('GnuDIP')
+    browser.find_by_id('id_dynamicdns_server').fill('2.example.com')
+    browser.find_by_id('id_dynamicdns_domain').fill('freedombox2.example.com')
+    browser.find_by_id('id_dynamicdns_user').fill('tester2')
+    browser.find_by_id('id_dynamicdns_secret').fill('testingtesting2')
+    browser.find_by_id('id_dynamicdns_ipurl').fill(
+        'http://myip2.datasystems24.de')
+    submit(browser)
+
+
+def _click_button_and_confirm(browser, href):
+    buttons = browser.find_link_by_href(href)
+    if buttons:
+        buttons.first.click()
+        with wait_for_page_update(browser,
+                                  expected_url='/plinth/sys/backups/'):
+            submit(browser)
+
+
+def backup_delete_archive_by_name(browser, archive_name):
+    nav_to_module(browser, 'backups')
+    href = f'/plinth/sys/backups/root/delete/{archive_name}/'
+    _click_button_and_confirm(browser, href)
+
+
+def backup_create(browser, app_name, archive_name=None):
+    application.install(browser, 'backups')
+    if archive_name:
+        backup_delete_archive_by_name(browser, archive_name)
+
+    browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
+    browser.find_by_id('select-all').uncheck()
+    if archive_name:
+        browser.find_by_id('id_backups-name').fill(archive_name)
+
+    # ensure the checkbox is scrolled into view
+    browser.execute_script('window.scrollTo(0, 0)')
+    browser.find_by_value(app_name).first.check()
+    submit(browser)
+
+
+def backup_restore(browser, app_name, archive_name=None):
+    nav_to_module(browser, 'backups')
+    href = f'/plinth/sys/backups/root/restore-archive/{archive_name}/'
+    _click_button_and_confirm(browser, href)
+
+
+def backup_upload_and_restore(browser, app_name, downloaded_file_path):
+    nav_to_module(browser, 'backups')
+    browser.find_link_by_href('/plinth/sys/backups/upload/').first.click()
+    fileinput = browser.driver.find_element_by_id('id_backups-file')
+    fileinput.send_keys(downloaded_file_path)
+    # submit upload form
+    submit(browser)
+    # submit restore form
+    with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
+        submit(browser)
+
+
+def download_backup(browser, archive_name=None):
+    nav_to_module(browser, 'backups')
+    href = f'/plinth/sys/backups/root/download/{archive_name}/'
+    url = config['DEFAULT']['url'] + href
+    file_path = download_file_logged_in(browser, url, suffix='.tar.gz')
+    return file_path
+
+
+def download_file_logged_in(browser, url, suffix=''):
+    """Download a file from Plinth, pretend being logged in via cookies"""
+    if not url.startswith("http"):
+        current_url = urlparse(browser.url)
+        url = "%s://%s%s" % (current_url.scheme, current_url.netloc, url)
+    cookies = browser.driver.get_cookies()
+    cookies = {cookie["name"]: cookie["value"] for cookie in cookies}
+    response = requests.get(url, verify=False, cookies=cookies)
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp_file:
+        for chunk in response.iter_content(chunk_size=128):
+            temp_file.write(chunk)
+    return temp_file.name
+
+
+def pagekite_configure(browser, host, port, kite_name, kite_secret):
+    """Configure pagekite basic parameters."""
+    nav_to_module(browser, 'pagekite')
+    # time.sleep(0.250)  # Wait for 200ms show animation to complete
+    browser.fill('pagekite-server_domain', host)
+    browser.fill('pagekite-server_port', str(port))
+    browser.fill('pagekite-kite_name', kite_name)
+    browser.fill('pagekite-kite_secret', kite_secret)
+    submit(browser, form_class='form-configuration')
+
+
+def pagekite_get_configuration(browser):
+    """Return pagekite basic parameters."""
+    nav_to_module(browser, 'pagekite')
+    return (browser.find_by_name('pagekite-server_domain').value,
+            int(browser.find_by_name('pagekite-server_port').value),
+            browser.find_by_name('pagekite-kite_name').value,
+            browser.find_by_name('pagekite-kite_secret').value)
+
+
+def bind_set_forwarders(browser, forwarders):
+    """Set the forwarders list (space separated) in bind configuration."""
+    nav_to_module(browser, 'bind')
+    browser.fill('forwarders', forwarders)
+    submit(browser, form_class='form-configuration')
+
+
+def bind_get_forwarders(browser):
+    """Return the forwarders list (space separated) in bind configuration."""
+    nav_to_module(browser, 'bind')
+    return browser.find_by_name('forwarders').first.value
+
+
+def bind_enable_dnssec(browser, enable):
+    """Enable/disable DNSSEC in bind configuration."""
+    nav_to_module(browser, 'bind')
+    if enable:
+        browser.check('enable_dnssec')
+    else:
+        browser.uncheck('enable_dnssec')
+
+    submit(browser, form_class='form-configuration')
+
+
+def bind_get_dnssec(browser):
+    """Return whether DNSSEC is enabled/disabled in bind configuration."""
+    nav_to_module(browser, 'bind')
+    return browser.find_by_name('enable_dnssec').first.checked
+
+
+def security_enable_restricted_logins(browser, should_enable):
+    """Enable/disable restricted logins in security module."""
+    nav_to_module(browser, 'security')
+    if should_enable:
+        browser.check('security-restricted_access')
+    else:
+        browser.uncheck('security-restricted_access')
+
+    submit(browser)
+
+
+def security_get_restricted_logins(browser):
+    """Return whether restricted console logins is enabled."""
+    nav_to_module(browser, 'security')
+    return browser.find_by_name('security-restricted_access').first.checked
+
+
+def upgrades_enable_automatic(browser, should_enable):
+    """Enable/disable automatic software upgrades."""
+    nav_to_module(browser, 'upgrades')
+    checkbox_element = browser.find_by_name('auto_upgrades_enabled').first
+    if should_enable == checkbox_element.checked:
+        return
+
+    if should_enable:
+        checkbox_element.check()
+    else:
+        checkbox_element.uncheck()
+
+    submit(browser)
+
+
+def upgrades_get_automatic(browser):
+    """Return whether automatic software upgrades is enabled."""
+    nav_to_module(browser, 'upgrades')
+    return browser.find_by_name('auto_upgrades_enabled').first.checked
+
+
+def _monkeysphere_find_domain(browser, key_type, domain_type, domain):
+    """Iterate every domain of a given type which given key type."""
+    keys_of_type = browser.find_by_css(
+        '.monkeysphere-service-{}'.format(key_type))
+    for key_of_type in keys_of_type:
+        search_domains = key_of_type.find_by_css(
+            '.monkeysphere-{}-domain'.format(domain_type))
+        for search_domain in search_domains:
+            if search_domain.text == domain:
+                return key_of_type, search_domain
+
+    raise IndexError('Domain not found')
+
+
+def monkeysphere_import_key(browser, key_type, domain):
+    """Import a key of specified type for given domain into monkeysphere."""
+    try:
+        monkeysphere_assert_imported_key(browser, key_type, domain)
+    except IndexError:
+        pass
+    else:
+        return
+
+    key, _ = _monkeysphere_find_domain(browser, key_type, 'importable', domain)
+    with wait_for_page_update(browser):
+        key.find_by_css('.button-import').click()
+
+
+def monkeysphere_assert_imported_key(browser, key_type, domain):
+    """Assert that a key of specified type for given domain was imported.."""
+    nav_to_module(browser, 'monkeysphere')
+    return _monkeysphere_find_domain(browser, key_type, 'imported', domain)
+
+
+def monkeysphere_publish_key(browser, key_type, domain):
+    """Publish a key of specified type for given domain from monkeysphere."""
+    nav_to_module(browser, 'monkeysphere')
+    key, _ = _monkeysphere_find_domain(browser, key_type, 'imported', domain)
+    with wait_for_page_update(browser):
+        key.find_by_css('.button-publish').click()
+
+    application.wait_for_config_update(browser, 'monkeysphere')
+
+
+def open_main_page(browser):
+    with wait_for_page_update(browser):
+        browser.find_link_by_href('/plinth/').first.click()
+
+
+def networks_set_firewall_zone(browser, zone):
+    """"Set the network device firewall zone as internal or external."""
+    nav_to_module(browser, 'networks')
+    device = browser.find_by_xpath(
+        '//span[contains(@class, "label-success") '
+        'and contains(@class, "connection-status-label")]/following::a').first
+    network_id = device['href'].split('/')[-3]
+    device.click()
+    edit_url = "/plinth/sys/networks/{}/edit/".format(network_id)
+    browser.find_link_by_href(edit_url).first.click()
+    browser.select('zone', zone)
+    browser.find_by_tag("form").first.find_by_tag('input')[-1].click()
+
+
+def storage_is_root_disk_shown(browser):
+    table_cells = browser.find_by_tag('td')
+    return any(cell.text == '/' for cell in table_cells)
