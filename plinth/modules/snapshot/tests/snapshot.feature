@@ -11,7 +11,7 @@ Background:
 Scenario: Create a snapshot
   Given the list of snapshots is empty
   When I manually create a snapshot
-  Then there should be 1 snapshot in the list
+  Then there should be 1 more snapshots in the list
 
 Scenario: Configure snapshots
   Given snapshots are configured with free space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0

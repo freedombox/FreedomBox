@@ -13,6 +13,7 @@ scenarios('snapshot.feature')
 @given('the list of snapshots is empty')
 def empty_snapshots_list(session_browser):
     _delete_all(session_browser)
+    return _get_count(session_browser)
 
 
 @when('I manually create a snapshot')
@@ -20,10 +21,9 @@ def create_snapshot(session_browser):
     _create(session_browser)
 
 
-@then(parsers.parse('there should be {count:d} snapshot in the list'))
-def verify_snapshot_count(session_browser, count):
-    num_snapshots = _get_count(session_browser)
-    assert num_snapshots == count
+@then(parsers.parse('there should be {count:d} more snapshots in the list'))
+def verify_snapshot_count(session_browser, count, empty_snapshots_list):
+    assert _get_count(session_browser) == count + empty_snapshots_list
 
 
 @given(
