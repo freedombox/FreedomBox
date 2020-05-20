@@ -65,7 +65,7 @@ def parse_arguments():
 
 def subcommand_setup(arguments):
     """Setup Tor configuration after installing it."""
-    if arguments.old_version and arguments.old_version <= 3:
+    if arguments.old_version and arguments.old_version <= 4:
         _upgrade_orport_value()
         return
 
@@ -148,7 +148,8 @@ def _upgrade_orport_value():
     aug = augeas_load()
 
     if _is_relay_enabled(aug):
-        aug.set(TOR_CONFIG + '/ORPort', '[::]:9001')
+        aug.set(TOR_CONFIG + '/ORPort[1]', '9001')
+        aug.set(TOR_CONFIG + '/ORPort[2]', '[::]:9001')
 
     aug.save()
 
@@ -241,7 +242,7 @@ def _get_upstream_bridges(aug):
 
 def _is_relay_enabled(aug):
     """Return whether a relay is enabled."""
-    orport = aug.get(TOR_CONFIG + '/ORPort')
+    orport = aug.get(TOR_CONFIG + '/ORPort[1]')
     return bool(orport) and orport != '0'
 
 
@@ -390,7 +391,8 @@ def _enable_relay(relay=None, bridge=None, aug=None):
     use_upstream_bridges = _are_upstream_bridges_enabled(aug)
 
     if relay == 'enable' and not use_upstream_bridges:
-        aug.set(TOR_CONFIG + '/ORPort', '[::]:9001')
+        aug.set(TOR_CONFIG + '/ORPort[1]', '9001')
+        aug.set(TOR_CONFIG + '/ORPort[2]', '[::]:9001')
     elif relay == 'disable':
         aug.remove(TOR_CONFIG + '/ORPort')
 
