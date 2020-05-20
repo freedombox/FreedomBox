@@ -27,7 +27,7 @@ def ttrss_assert_subscribed(session_browser):
 
 def _ttrss_load_main_interface(browser):
     """Load the TT-RSS interface."""
-    functional.access_url(browser, 'ttrss')
+    functional.visit(browser, '/tt-rss/')
     overlay = browser.find_by_id('overlay')
     functional.eventually(lambda: not overlay.visible)
 
@@ -36,11 +36,22 @@ def _is_feed_shown(browser, invert=False):
     return browser.is_text_present('Planet Debian') != invert
 
 
+def _click_main_menu_item(browser, text):
+    """Select an item from the main actions menu."""
+    burger_menu = browser.find_by_xpath('//*[contains(@title, "Actions...")]')
+    if burger_menu:
+        burger_menu.click()
+    else:
+        browser.find_by_text('Actions...').click()
+
+    browser.find_by_text(text).click()
+
+
 def _subscribe(browser):
     """Subscribe to a feed in TT-RSS."""
     _ttrss_load_main_interface(browser)
-    browser.find_by_text('Actions...').click()
-    browser.find_by_text('Subscribe to feed...').click()
+
+    _click_main_menu_item(browser, 'Subscribe to feed...')
     browser.find_by_id('feedDlg_feedUrl').fill(
         'https://planet.debian.org/atom.xml')
     browser.find_by_text('Subscribe').click()
@@ -62,9 +73,13 @@ def _unsubscribe(browser):
         expand.first.click()
 
     browser.find_by_text('Planet Debian').click()
-    browser.execute_script("quickMenuGo('qmcRemoveFeed')")
+    _click_main_menu_item(browser, 'Unsubscribe')
+
     prompt = browser.get_alert()
     prompt.accept()
+
+    # Reload as sometimes the feed does not disappear immediately
+    _ttrss_load_main_interface(browser)
 
     assert functional.eventually(_is_feed_shown, [browser, True])
 
