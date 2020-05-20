@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@system @essential @configuration
+@system @essential @config
 Feature: Configuration
   Configure the system.
 
@@ -21,4 +21,3 @@ Scenario: Change webserver home page
   And the home page is syncthing
   When I change the home page to plinth
   Then the home page should be plinth
-

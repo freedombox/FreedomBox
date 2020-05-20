@@ -15,11 +15,7 @@ try:
 except ImportError:
     _bdd_available = False
 else:
-    from plinth.tests.functional.step_definitions.application import *
-    from plinth.tests.functional.step_definitions.interface import *
-    from plinth.tests.functional.step_definitions.service import *
-    from plinth.tests.functional.step_definitions.site import *
-    from plinth.tests.functional.step_definitions.system import *
+    from plinth.tests.functional.step_definitions import *
 
 
 def pytest_ignore_collect(path, config):

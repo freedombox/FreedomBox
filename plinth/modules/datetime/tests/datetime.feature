@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-@essential @date_and_time @system
+@essential @datetime @system
 Feature: Date and Time
   Configure time zone and network time service.
 
@@ -8,16 +8,16 @@ Background:
   Given I'm a logged in user
 
 Scenario: Disable network time application
-  Given the network time application can be disabled
-  And the network time application is enabled
-  When I disable the network time application
-  Then the network time service should not be running
+  Given the datetime application can be disabled
+  And the datetime application is enabled
+  When I disable the datetime application
+  Then the datetime service should not be running
 
 Scenario: Enable network time application
-  Given the network time application can be disabled
-  And the network time application is disabled
-  When I enable the network time application
-  Then the network time service should be running
+  Given the datetime application can be disabled
+  And the datetime application is disabled
+  When I enable the datetime application
+  Then the datetime service should be running
 
 Scenario: Set timezone
   When I set the time zone to Africa/Abidjan

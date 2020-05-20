@@ -8,7 +8,7 @@
 # TODO Scenario: Make user active
 # TODO Scenario: Change user password
 
-@system @essential @users_groups
+@system @essential @users
 Feature: Users and Groups
   Manage users and groups.
 
