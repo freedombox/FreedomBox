@@ -337,6 +337,10 @@ def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_domainname').fill(domain_name)
     submit(browser)
+    # After a domain name change, Let's Encrypt will reload the web server and
+    # could cause a connection failure.
+    if browser.find_by_id('netErrorButtonContainer'):
+        browser.visit(browser.url)
 
 
 ########################
