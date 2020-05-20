@@ -18,8 +18,8 @@ Scenario: Enable coturn application
 Scenario: Backup and restore coturn
   Given the coturn application is enabled
   When I create a backup of the coturn app data with name test_coturn
-  And I restore the coturn app data backup
-  Then the coturn service should be running with name test_coturn
+  And I restore the coturn app data backup with name test_coturn
+  Then the coturn service should be running
 
 Scenario: Disable coturn application
   Given the coturn application is enabled
