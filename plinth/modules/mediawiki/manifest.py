@@ -2,8 +2,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import validate
+from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
     'name': _('MediaWiki'),
@@ -19,5 +19,6 @@ backup = validate_backup({
     },
     'data': {
         'directories': ['/var/lib/mediawiki-db/']
-    }
+    },
+    'services': ['mediawiki-jobrunner']
 })

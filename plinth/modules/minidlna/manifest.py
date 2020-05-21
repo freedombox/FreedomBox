@@ -118,6 +118,8 @@ clients = validate([
 # for now hard code default media folder.
 backup = validate_backup({
     'data': {
+        'files': ['/etc/minidlna.conf'],
         'directories': ['/var/lib/minidlna']
-    }
+    },
+    'services': ['minidlna']
 })

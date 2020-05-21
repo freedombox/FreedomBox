@@ -3,6 +3,7 @@
 FreedomBox app to manage storage.
 """
 
+import base64
 import logging
 import subprocess
 
@@ -13,17 +14,15 @@ from django.utils.translation import ugettext_noop
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, menu, utils
-from plinth.daemon import Daemon
 from plinth.errors import ActionError, PlinthError
 from plinth.utils import format_lazy, import_from_gi
 
+from . import udisks2
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 4
 
-managed_services = ['freedombox-udiskie']
-
-managed_packages = ['parted', 'udiskie', 'gir1.2-udisks-2.0']
+managed_packages = ['parted', 'udisks2', 'gir1.2-udisks-2.0']
 
 _description = [
     format_lazy(
@@ -60,12 +59,12 @@ class StorageApp(app_module.App):
                               'storage:index', parent_url_name='system')
         self.add(menu_item)
 
-        daemon = Daemon('daemon-udiskie', managed_services[0])
-        self.add(daemon)
-
         # Check every hour for low disk space, every 3 minutes in debug mode
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, warn_about_low_disk_space)
+
+        # Schedule initialization of UDisks2 initialization
+        glib.schedule(3, udisks2.init, repeat=False)
 
 
 def init():
@@ -334,3 +333,22 @@ def warn_about_low_disk_space(request):
                                       title=title, message=message,
                                       actions=actions, data=data,
                                       group='admin')
+
+
+def report_failing_drive(id, is_failing):
+    """Show or withdraw notification about failing drive."""
+    notification_id = 'storage-disk-failure-' + base64.b32encode(
+        id.encode()).decode()
+
+    from plinth.notification import Notification
+    title = ugettext_noop('Disk failure imminent')
+    message = ugettext_noop(
+        'Disk {id} is reporting that it is likely to fail in the near future. '
+        'Copy any data while you still can and replace the drive.')
+    data = {'id': id}
+    note = Notification.update_or_create(id=notification_id, app_id='storage',
+                                         severity='error', title=title,
+                                         message=message, actions=[{
+                                             'type': 'dismiss'
+                                         }], data=data, group='admin')
+    note.dismiss(should_dismiss=not is_failing)

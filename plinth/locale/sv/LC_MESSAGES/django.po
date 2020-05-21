@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-04 19:59-0400\n"
-"PO-Revision-Date: 2020-05-02 08:11+0000\n"
+"POT-Creation-Date: 2020-05-18 18:36-0400\n"
+"PO-Revision-Date: 2020-05-11 10:41+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "plinth/sv/>\n"
@@ -27,27 +27,27 @@ msgstr "Sid källa"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:70
+#: plinth/daemon.py:85
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Tjänsten service {service_name} körs"
 
-#: plinth/daemon.py:96
+#: plinth/daemon.py:111
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Lyssnar på {kind} port {listen_address}:{port}"
 
-#: plinth/daemon.py:99
+#: plinth/daemon.py:114
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Lyssnar på {kind} port {port}"
 
-#: plinth/daemon.py:167
+#: plinth/daemon.py:182
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Anslut till {host}:{port}"
 
-#: plinth/daemon.py:169
+#: plinth/daemon.py:184
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Kan inte ansluta till {host}:{port}"
@@ -724,6 +724,7 @@ msgstr ""
 "fungera när de nås med en IP-adress som en del av webbadressen."
 
 #: plinth/modules/cockpit/__init__.py:59 plinth/modules/cockpit/manifest.py:12
+#: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -754,7 +755,7 @@ msgstr "Allmän Konfiguration"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:26
+#: plinth/modules/snapshot/views.py:28
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "Konfigurera"
@@ -908,7 +909,7 @@ msgstr ""
 msgid "Coquelicot"
 msgstr "Coquelicot"
 
-#: plinth/modules/coquelicot/__init__.py:47 plinth/modules/samba/__init__.py:63
+#: plinth/modules/coquelicot/__init__.py:47
 msgid "File Sharing"
 msgstr "Fildelning"
 
@@ -960,20 +961,26 @@ msgid ""
 "other communication servers can use it to establish a call between parties "
 "who are otherwise unable connect to each other."
 msgstr ""
+"Coturn är en server för att underlätta ljud- / videosamtal och konferenser "
+"genom att tillhandahålla en implementering av TURN- och STUN-protokoll. "
+"WebRTC, SIP och andra kommunikationsservrar kan använda den för att upprätta "
+"ett samtal mellan parter som annars inte kan ansluta till varandra."
 
 #: plinth/modules/coturn/__init__.py:35
 msgid ""
 "It is not meant to be used directly by users. Servers such as matrix-synapse "
 "need to be configured with the details provided here."
 msgstr ""
+"Det är inte avsett att användas direkt av användarna. Servrar som matris-"
+"synaps måste konfigureras med de uppgifter som anges här."
 
 #: plinth/modules/coturn/__init__.py:64
 msgid "Coturn"
-msgstr ""
+msgstr "Coturn"
 
 #: plinth/modules/coturn/__init__.py:65
 msgid "VoIP Helper"
-msgstr ""
+msgstr "VoIP-hjälpare"
 
 #: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
 msgid "TLS domain"
@@ -990,12 +997,11 @@ msgstr ""
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr ""
+"Använd följande webbadresser för att konfigurera din kommunikationsserver:"
 
 #: plinth/modules/coturn/templates/coturn.html:26
-#, fuzzy
-#| msgid "The following storage devices are in use:"
 msgid "Use the following shared authentication secret:"
-msgstr "Följande lagringsenheter används:"
+msgstr "Använd följande delade autentiseringshemligheter:"
 
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
@@ -1579,17 +1585,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Brandvägg"
 
-#: plinth/modules/firewall/components.py:118
+#: plinth/modules/firewall/components.py:124
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Port {name} ({details}) tillgängligt för interna nätverk"
 
-#: plinth/modules/firewall/components.py:126
+#: plinth/modules/firewall/components.py:132
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Port {name} ({details}) tillgängligt för externa nätverk"
 
-#: plinth/modules/firewall/components.py:131
+#: plinth/modules/firewall/components.py:137
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port {name} ({details}) är inte tillgängligt för externa nätverk"
@@ -2045,12 +2051,6 @@ msgstr ""
 "\"_blank\"> diskussionsforum</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
-#, fuzzy
-#| msgid ""
-#| "If you find any bugs or issues, please use the <a href=\"https://salsa."
-#| "debian.org/freedombox-team/plinth/issues\" target=\"_blank\">issue "
-#| "tracker</a> to let our developers know. To report, first check if the "
-#| "issue is already reported and then use the \"New issue\" button."
 msgid ""
 "If you find any bugs or issues, please use the <a href=\"https://salsa."
 "debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">issue "
@@ -2058,9 +2058,9 @@ msgid ""
 "is already reported and then use the \"New issue\" button."
 msgstr ""
 "Om du hittar fel eller problem kan du använda <a href=\"https://salsa.debian."
-"org/freedombox-team/plinth/issues\" target=\"_blank\">utföra tracker</a> att "
-"låta våra utvecklare veta. För att rapportera ska du först kontrollera om "
-"problemet redan har rapporterats och sedan använda knappen \"New issue\"."
+"org/freedombox-team/freedombox/issues\" target=\"_blank\">issue tracker</a> "
+"att låta våra utvecklare veta. För att rapportera ska du först kontrollera "
+"om problemet redan har rapporterats och sedan använda knappen \"New issue\"."
 
 #: plinth/modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
@@ -2155,12 +2155,7 @@ msgid "Status Log"
 msgstr "Status Log"
 
 #: plinth/modules/help/templates/statuslog.html:13
-#, fuzzy, python-format
-#| msgid ""
-#| "These are the last %(num_lines)s lines of the status log for this web "
-#| "interface. If you want to report a bug, please use the <a href=\"https://"
-#| "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and "
-#| "attach this status log to the bug report."
+#, python-format
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
@@ -2169,8 +2164,8 @@ msgid ""
 msgstr ""
 "Dessa är de sista %(num_lines)s rader i statusloggen för detta "
 "webbgränssnitt. Om du vill rapportera ett fel, använd <a href=\"https://"
-"salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> och bifoga "
-"denna statuslogg rapport bug-tracker."
+"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> och "
+"bifoga denna statuslogg rapport bug-tracker."
 
 #: plinth/modules/help/templates/statuslog.html:24
 msgid ""
@@ -3257,7 +3252,7 @@ msgstr "Mumblefly"
 
 #: plinth/modules/mumble/manifest.py:60
 msgid "Mumla"
-msgstr ""
+msgstr "Mumla"
 
 #: plinth/modules/mumble/views.py:29
 msgid "SuperUser password successfully updated."
@@ -3788,7 +3783,7 @@ msgstr "Gränssnitt"
 
 #: plinth/modules/networks/templates/connection_show.html:95
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:18
-#: plinth/modules/snapshot/templates/snapshot_manage.html:30
+#: plinth/modules/snapshot/templates/snapshot_manage.html:31
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:26
 msgid "Description"
 msgstr "Beskrivning"
@@ -4575,6 +4570,15 @@ msgstr ""
 "Se SSH-klientinstallation <a href =\"https://pagekite.net/wiki/Howto/"
 "SshoverPageKite/\">instruktioner</a>"
 
+#: plinth/modules/performance/__init__.py:16
+#: plinth/modules/performance/__init__.py:45
+msgid "Performance"
+msgstr ""
+
+#: plinth/modules/performance/__init__.py:46
+msgid "System Monitoring"
+msgstr ""
+
 #: plinth/modules/power/__init__.py:16
 msgid "Restart or shut down the system."
 msgstr "Starta om eller stänga av systemet."
@@ -4926,6 +4930,12 @@ msgstr "Tillgång till de privata shares"
 #: plinth/modules/samba/__init__.py:62
 msgid "Samba"
 msgstr "Samba"
+
+#: plinth/modules/samba/__init__.py:63
+#, fuzzy
+#| msgid "Network Time Server"
+msgid "Network File Storage"
+msgstr "Tidsserver för nätverket"
 
 #: plinth/modules/samba/templates/samba.html:24
 #: plinth/modules/samba/templates/samba.html:35
@@ -5400,7 +5410,7 @@ msgstr "Redigera share"
 msgid "Share deleted."
 msgstr "Share borttagen."
 
-#: plinth/modules/snapshot/__init__.py:23
+#: plinth/modules/snapshot/__init__.py:25
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -5410,7 +5420,7 @@ msgstr ""
 "Dessa kan användas för att återställa systemet till ett tidigare känt skick "
 "i händelse av oönskade ändringar i systemet."
 
-#: plinth/modules/snapshot/__init__.py:27
+#: plinth/modules/snapshot/__init__.py:29
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -5421,7 +5431,7 @@ msgstr ""
 "även före och efter en programvaruinstallation. Äldre ögonblicksbilder "
 "kommer att rensas automatiskt enligt inställningarna nedan."
 
-#: plinth/modules/snapshot/__init__.py:30
+#: plinth/modules/snapshot/__init__.py:32
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -5432,7 +5442,7 @@ msgstr ""
 "\"/plinth/sys/backups\">säkerhetskopior</a> eftersom de bara kan lagras på "
 "samma partition. "
 
-#: plinth/modules/snapshot/__init__.py:52
+#: plinth/modules/snapshot/__init__.py:54
 msgid "Storage Snapshots"
 msgstr "Ögonblicksbilder av lagring"
 
@@ -5520,20 +5530,20 @@ msgid "Delete the following snapshots permanently?"
 msgstr "Vill du ta bort följande ögonblicksbilder permanent?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:16
-#: plinth/modules/snapshot/templates/snapshot_manage.html:28
+#: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:24
 msgid "Number"
 msgstr "Nummer"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:17
-#: plinth/modules/snapshot/templates/snapshot_manage.html:29
+#: plinth/modules/snapshot/templates/snapshot_manage.html:30
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:25
 msgid "Date"
 msgstr "Datum"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:37
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:175
+#: plinth/modules/snapshot/views.py:189
 msgid "Delete Snapshots"
 msgstr "Ta bort ögonblicksbilder"
 
@@ -5541,32 +5551,32 @@ msgstr "Ta bort ögonblicksbilder"
 msgid "Create Snapshot"
 msgstr "Skapa ögonblicksbild"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 msgid "Rollback"
 msgstr "Återställning"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:42
-msgid "active"
-msgstr "Aktiva"
+msgid "will be used at next boot"
+msgstr ""
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:51
+#: plinth/modules/snapshot/templates/snapshot_manage.html:47
+msgid "in use"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Återställning till ögonblicksbild #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:11
-#, fuzzy, python-format
-#| msgid ""
-#| "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots "
-#| "are currently only available on <strong>%(types_supported)s</strong> "
-#| "filesystems."
+#, python-format
 msgid ""
 "You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
-"Du har ett filsystem av typen <strong>%(fs_type)s </strong>. "
-"Ögonblicksbilder är för närvarande endast tillgängliga på <strong> "
-"%(types_supported)s </strong> filsystem."
+"Du har ett filsystem av typen <strong>%(fs_type)s</strong>. Ögonblicksbilder "
+"är för närvarande endast tillgängliga på <strong>%(types_supported)s</"
+"strong> filsystem."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:12
 msgid "Roll back the system to this snapshot?"
@@ -5587,45 +5597,41 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Återställning till ögonblicksbild #%(number)s"
 
-#: plinth/modules/snapshot/views.py:30
+#: plinth/modules/snapshot/views.py:32
 msgid "Manage Snapshots"
 msgstr "Hantera ögonblicksbilder"
 
-#: plinth/modules/snapshot/views.py:79
+#: plinth/modules/snapshot/views.py:81
 msgid "Created snapshot."
 msgstr "Skapade ögonblicksbild."
 
-#: plinth/modules/snapshot/views.py:135
+#: plinth/modules/snapshot/views.py:144
 msgid "Storage snapshots configuration updated"
 msgstr "Lagring ögonblicksbildkonfiguration uppdaterad"
 
-#: plinth/modules/snapshot/views.py:139 plinth/modules/tor/views.py:59
+#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:59
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Åtgärdsfel: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:154
-msgid "Deleted all snapshots"
-msgstr "Raderade alla ögonblicksbilder"
-
-#: plinth/modules/snapshot/views.py:158
+#: plinth/modules/snapshot/views.py:176
 msgid "Deleted selected snapshots"
 msgstr "Borttagna markerade ögonblicksbilder"
 
-#: plinth/modules/snapshot/views.py:163
+#: plinth/modules/snapshot/views.py:181
 msgid "Snapshot is currently in use. Please try again later."
 msgstr "Ögonblicksbild används för närvarande. Vänligen försök igen senare."
 
-#: plinth/modules/snapshot/views.py:186
+#: plinth/modules/snapshot/views.py:200
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Återställs till Snapshot #{number}."
 
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:203
 msgid "The system must be restarted to complete the rollback."
 msgstr "Systemet måste startas om för att slutföra återställningen."
 
-#: plinth/modules/snapshot/views.py:201
+#: plinth/modules/snapshot/views.py:215
 msgid "Rollback to Snapshot"
 msgstr "Återställning till ögonblicksbild"
 
@@ -5695,7 +5701,7 @@ msgstr "Enkel inloggning på"
 msgid "Login"
 msgstr "Logga in"
 
-#: plinth/modules/storage/__init__.py:30
+#: plinth/modules/storage/__init__.py:29
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -5706,97 +5712,108 @@ msgstr ""
 "{box_name}. Du kan visa lagringsmedia som för närvarande används, montera "
 "och demontera flyttbara media, expandera rotpartitionen etc."
 
-#: plinth/modules/storage/__init__.py:54 plinth/modules/storage/__init__.py:320
+#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:319
 msgid "Storage"
 msgstr "Lagring"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} Kib"
 
-#: plinth/modules/storage/__init__.py:221
+#: plinth/modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} Mib"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} Gib"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} Tib"
 
-#: plinth/modules/storage/__init__.py:235
+#: plinth/modules/storage/__init__.py:234
 msgid "The operation failed."
 msgstr "Åtgärden misslyckades."
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:236
 msgid "The operation was cancelled."
 msgstr "Operationen avbröts."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:238
 msgid "The device is already unmounting."
 msgstr "Enheten lossnar redan."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:240
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "Åtgärden stöds inte på grund av saknade drivrutiner/verktygsstöd."
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:243
 msgid "The operation timed out."
 msgstr "Åtgärden orsakade timeout."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Åtgärden skulle väcka en disk som är i ett djupviloläge."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 msgid "Attempting to unmount a device that is busy."
 msgstr "Försöker avmontera en enhet som är upptagen."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:250
 msgid "The operation has already been cancelled."
 msgstr "Operationen har redan avbrutits."
 
-#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:256
 msgid "Not authorized to perform the requested operation."
 msgstr "Inte behörig att utföra den begärda åtgärden."
 
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:258
 msgid "The device is already mounted."
 msgstr "Enheten är redan monterad."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:260
 msgid "The device is not mounted."
 msgstr "Enheten är inte monterad."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
 msgid "Not permitted to use the requested option."
 msgstr "Inte tillåtet att använda det begärda alternativet."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:266
 msgid "The device is mounted by another user."
 msgstr "Enheten monteras av en annan användare."
 
-#: plinth/modules/storage/__init__.py:315
+#: plinth/modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Lågt utrymme på systempartitionen: {percent_used}% används, {free_space} "
 "fritt."
 
-#: plinth/modules/storage/__init__.py:317
+#: plinth/modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "Lågt diskutrymme"
+
+#: plinth/modules/storage/__init__.py:344
+msgid "Disk failure imminent"
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:346
+#, python-brace-format
+msgid ""
+"Disk {id} is reporting that it is likely to fail in the near future. Copy "
+"any data while you still can and replace the drive."
+msgstr ""
 
 #: plinth/modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -6275,11 +6292,19 @@ msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Sök efter och installera de senaste program-och säkerhetsuppdateringarna."
 
-#: plinth/modules/upgrades/__init__.py:40 plinth/templates/setup.html:74
+#: plinth/modules/upgrades/__init__.py:24
+msgid ""
+"Updates are run at 06:00 everyday according to local time zone. Set your "
+"time zone in Date & Time app. Apps are restarted after update causing them "
+"to be unavailable briefly. If system reboot is deemed necessary, it is done "
+"automatically at 02:00 causing all apps to be unavailable briefly."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:74
 msgid "Update"
 msgstr "Uppdatera"
 
-#: plinth/modules/upgrades/__init__.py:78
+#: plinth/modules/upgrades/__init__.py:83
 msgid "FreedomBox Updated"
 msgstr "FreedomBox uppdaterad"
 
@@ -6336,7 +6361,7 @@ msgstr "Växla senaste uppdateringsloggar"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:76
 msgid "Manual update"
 msgstr "Manuell uppdatering"
 
@@ -6353,11 +6378,11 @@ msgstr "Automatiska uppgraderingar aktiverade"
 msgid "Automatic upgrades disabled"
 msgstr "Automatiska uppgraderingar inaktiverade"
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:70
 msgid "Upgrade process started."
 msgstr "Uppgraderingsprocessen påbörjades."
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:73
 msgid "Starting upgrade failed."
 msgstr "Det gick inte att starta uppgraderingen."
 
@@ -6988,11 +7013,6 @@ msgid "Requested page %(request_path)s was not found."
 msgstr "Begärd sida %(request_path)s hittades inte."
 
 #: plinth/templates/404.html:19
-#, fuzzy
-#| msgid ""
-#| "If you believe this missing page should exist, please file a bug at the "
-#| "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
-#| "freedombox-team/plinth/issues\">issue tracker</a>."
 msgid ""
 "If you believe this missing page should exist, please file a bug at the "
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
@@ -7000,20 +7020,14 @@ msgid ""
 msgstr ""
 "Om du tror att denna saknade sida bör finnas, vänligen skicka en bugg på "
 "FreedomBox service (Plinth) projekt <a href =\"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">issue tracker</a>."
+"freedombox-team/freedombox/issues\">issue tracker</a>."
 
 #: plinth/templates/500.html:10
 msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, fuzzy, python-format
-#| msgid ""
-#| "This is an internal error and not something you caused or can fix. Please "
-#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
-#| "team/plinth/issues\">bug tracker</a> so we can fix it. Also, please "
-#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
-#| "report."
+#, python-format
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
@@ -7022,8 +7036,8 @@ msgid ""
 msgstr ""
 "Detta är ett internt fel och inte något du orsakat eller kan fixa. Vänligen "
 "rapportera felet på <a href=\"https://salsa.debian.org/freedombox-team/"
-"plinth/issues\">bug tracker</a> så att vi kan fixa det. Bifoga också <a href="
-"\"%(status_log_url)s\">status logg</a> till felrapporten."
+"freedombox/issues\">bug tracker</a> så att vi kan fixa det. Bifoga också <a "
+"href=\"%(status_log_url)s\">status logg</a> till felrapporten."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"
@@ -7292,6 +7306,12 @@ msgstr "%(percentage)s %% färdigt"
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "active"
+#~ msgstr "Aktiva"
+
+#~ msgid "Deleted all snapshots"
+#~ msgstr "Raderade alla ögonblicksbilder"
 
 #~ msgid "Enable application"
 #~ msgstr "Aktivera applikation"
@@ -7904,9 +7924,6 @@ msgstr "Gujarati"
 
 #~ msgid "Enable service discovery"
 #~ msgstr "Aktivera tjänstidentifiering"
-
-#~ msgid "Network Time Server"
-#~ msgstr "Tidsserver för nätverket"
 
 #~ msgid "BitTorrent (Deluge)"
 #~ msgstr "BitTorrent (Deluge)"

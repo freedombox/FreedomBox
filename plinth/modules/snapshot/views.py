@@ -4,8 +4,10 @@ Views for snapshot module.
 """
 
 import json
+import urllib.parse
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
@@ -78,15 +80,21 @@ def manage(request):
             actions.superuser_run('snapshot', ['create'])
             messages.success(request, _('Created snapshot.'))
         if 'delete_selected' in request.POST:
-            if request.POST.getlist('snapshot_list'):
-                snapshot_to_delete = request.POST.getlist('snapshot_list')
-                request.session['snapshots'] = snapshot_to_delete
-                return redirect(reverse('snapshot:delete-selected'))
+            to_delete = request.POST.getlist('snapshot_list')
+            if to_delete:
+                # Send values using GET params instead of session variables so
+                # that snapshots can be deleted even when disk is full.
+                params = [('snapshots', number) for number in to_delete]
+                params = urllib.parse.urlencode(params)
+                url = reverse('snapshot:delete-selected')
+                return HttpResponseRedirect(f'{url}?{params}')
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
-    has_deletable_snapshots = any(
-        [snapshot for snapshot in snapshots[1:] if not snapshot['is_default']])
+    has_deletable_snapshots = any([
+        snapshot for snapshot in snapshots
+        if not snapshot['is_default'] and not snapshot['is_active']
+    ])
 
     return TemplateResponse(
         request, 'snapshot_manage.html', {
@@ -100,6 +108,7 @@ def manage(request):
 
 def update_configuration(request, old_status, new_status):
     """Update configuration of snapshots."""
+
     def make_config(args):
         key, stamp = args[0], args[1]
         if old_status[key] != new_status[key]:
@@ -142,39 +151,44 @@ def update_configuration(request, old_status, new_status):
 
 
 def delete_selected(request):
+    """View to delete selected snapshots."""
+    if request.method == 'POST':
+        to_delete = set(request.POST.getlist('snapshots'))
+    else:
+        to_delete = set(request.GET.getlist('snapshots'))
+
+    if not to_delete:
+        return redirect(reverse('snapshot:manage'))
+
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
+    snapshots_to_delete = [
+        snapshot for snapshot in snapshots if snapshot['number'] in to_delete
+        and not snapshot['is_active'] and not snapshot['is_default']
+    ]
 
     if request.method == 'POST':
-        if 'snapshots' in request.session:
-            to_delete = request.session['snapshots']
-            try:
-                if to_delete == len(snapshots):
-                    actions.superuser_run('snapshot', ['delete_all'])
-                    messages.success(request, _('Deleted all snapshots'))
-                else:
-                    for snapshot in to_delete:
-                        actions.superuser_run('snapshot', ['delete', snapshot])
-                    messages.success(request, _('Deleted selected snapshots'))
-            except ActionError as exception:
-                if 'Config is in use.' in exception.args[2]:
-                    messages.error(
-                        request,
-                        _('Snapshot is currently in use. '
-                          'Please try again later.'))
-                else:
-                    raise
+        try:
+            for snapshot in snapshots_to_delete:
+                actions.superuser_run('snapshot',
+                                      ['delete', snapshot['number']])
 
-            return redirect(reverse('snapshot:manage'))
+            messages.success(request, _('Deleted selected snapshots'))
+        except ActionError as exception:
+            if 'Config is in use.' in exception.args[2]:
+                messages.error(
+                    request,
+                    _('Snapshot is currently in use. '
+                      'Please try again later.'))
+            else:
+                raise
 
-    if 'snapshots' in request.session:
-        data = request.session['snapshots']
-        to_delete = list(filter(lambda x: x['number'] in data, snapshots))
+        return redirect(reverse('snapshot:manage'))
 
-        return TemplateResponse(request, 'snapshot_delete_selected.html', {
-            'title': _('Delete Snapshots'),
-            'snapshots': to_delete
-        })
+    return TemplateResponse(request, 'snapshot_delete_selected.html', {
+        'title': _('Delete Snapshots'),
+        'snapshots': snapshots_to_delete
+    })
 
 
 def rollback(request, number):

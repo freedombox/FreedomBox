@@ -19,13 +19,11 @@
     </thead>
     <tbody>
       {% for snapshot in snapshots %}
-        {% if not snapshot.is_default %}
-          <tr>
-            <td>{{ snapshot.number }}</td>
-            <td>{{ snapshot.date }}</td>
-            <td>{{ snapshot.description }}</td>
-          </tr>
-        {% endif %}
+        <tr>
+          <td>{{ snapshot.number }}</td>
+          <td>{{ snapshot.date }}</td>
+          <td>{{ snapshot.description }}</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
@@ -33,6 +31,11 @@
   <p>
     <form class="form" method="post">
       {% csrf_token %}
+
+      {% for snapshot in snapshots %}
+        <input type="hidden" name="snapshots" value="{{ snapshot.number }}" />
+      {% endfor %}
+
       <input type="submit" class="btn btn-danger" name="delete_confirm"
              value="{% trans 'Delete Snapshots' %}"/>
     </form>

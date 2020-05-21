@@ -48,5 +48,5 @@ backup = validate_backup({
     'secrets': {
         'directories': ['/var/lib/tor/', '/var/lib/tor-instances/']
     },
-    'services': ['tor@service']
+    'services': ['tor@plinth']
 })

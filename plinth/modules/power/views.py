@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
-from plinth import actions
+from plinth import actions, package
 from plinth.modules import power
 
 
@@ -18,7 +18,7 @@ def index(request):
         request, 'power.html', {
             'title': power.app.info.name,
             'app_info': power.app.info,
-            'pkg_manager_is_busy': _is_pkg_manager_busy()
+            'pkg_manager_is_busy': package.is_package_manager_busy()
         })
 
 
@@ -29,15 +29,14 @@ def restart(request):
     if request.method == 'POST':
         actions.superuser_run('power', ['restart'], run_in_background=True)
         return redirect(reverse('apps'))
-    else:
-        form = Form(prefix='power')
 
+    form = Form(prefix='power')
     return TemplateResponse(
         request, 'power_restart.html', {
             'title': power.app.info.name,
             'form': form,
             'manual_page': power.app.info.manual_page,
-            'pkg_manager_is_busy': _is_pkg_manager_busy()
+            'pkg_manager_is_busy': package.is_package_manager_busy()
         })
 
 
@@ -48,22 +47,12 @@ def shutdown(request):
     if request.method == 'POST':
         actions.superuser_run('power', ['shutdown'], run_in_background=True)
         return redirect(reverse('apps'))
-    else:
-        form = Form(prefix='power')
 
+    form = Form(prefix='power')
     return TemplateResponse(
         request, 'power_shutdown.html', {
             'title': power.app.info.name,
             'form': form,
             'manual_page': power.app.info.manual_page,
-            'pkg_manager_is_busy': _is_pkg_manager_busy()
+            'pkg_manager_is_busy': package.is_package_manager_busy()
         })
-
-
-def _is_pkg_manager_busy():
-    """Return whether a package manager is running."""
-    try:
-        actions.superuser_run('packages', ['is-package-manager-busy'])
-        return True
-    except actions.ActionError:
-        return False

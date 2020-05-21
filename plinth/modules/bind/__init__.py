@@ -3,11 +3,11 @@
 FreedomBox app to configure BIND server.
 """
 
-import augeas
 import re
 from collections import defaultdict
 from pathlib import Path
 
+import augeas
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -21,7 +21,7 @@ from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 2
 
-managed_services = ['bind9']
+managed_services = ['bind9', 'named']
 
 managed_packages = ['bind9']
 
@@ -97,7 +97,8 @@ class BindApp(app_module.App):
             'daemon-bind', managed_services[0], listen_ports=[(53, 'tcp6'),
                                                               (53, 'udp6'),
                                                               (53, 'tcp4'),
-                                                              (53, 'udp4')])
+                                                              (53, 'udp4')],
+            alias=managed_services[1])
         self.add(daemon)
 
 
@@ -232,8 +233,8 @@ def get_served_domains():
     :return: dictionary in the form 'domain_name': ['ip_address', 'ipv6_addr']
     """
     RECORD_TYPES = ('A', 'AAAA')
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Dns_Zone/lens', 'Dns_Zone.lns')
 
     zone_file_path = Path(ZONES_DIR)
@@ -251,8 +252,8 @@ def get_served_domains():
         count = 1
         mname = aug.get(base_path.format(record_order=count, field='mname'))
         while True:
-            record_type = aug.get(base_path.format(record_order=count,
-                                                   field='type'))
+            record_type = aug.get(
+                base_path.format(record_order=count, field='type'))
 
             # no record type ends the search
             if record_type is None:
@@ -260,10 +261,8 @@ def get_served_domains():
 
             if record_type in RECORD_TYPES:
                 served_domains[mname].append(
-                    aug.get(base_path.format(
-                        record_order=count, field='rdata')
-                    )
-                )
+                    aug.get(base_path.format(record_order=count,
+                                             field='rdata')))
 
             count += 1
 

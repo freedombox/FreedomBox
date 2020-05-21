@@ -17,6 +17,8 @@ from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 4
 
+is_essential = True
+
 managed_packages = ['snapper']
 
 _description = [

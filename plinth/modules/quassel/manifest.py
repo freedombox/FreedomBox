@@ -49,5 +49,5 @@ backup = validate_backup({
     'secrets': {
         'directories': ['/var/lib/quassel/']
     },
-    'services': ['quassel-core'],
+    'services': ['quasselcore'],
 })

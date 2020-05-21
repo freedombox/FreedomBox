@@ -14,11 +14,6 @@ Scenario: Enable samba application
   When I enable the samba application
   Then the samba service should be running
 
-Scenario: Disable samba application
-  Given the samba application is enabled
-  When I disable the samba application
-  Then the samba service should not be running
-
 Scenario: Enable open samba share
   Given the samba application is enabled
   When I enable the open samba share
@@ -50,3 +45,8 @@ Scenario: Backup and restore samba
   And I restore the samba app data backup
   Then the samba service should be running
   And I can write to the home samba share
+
+Scenario: Disable samba application
+  Given the samba application is enabled
+  When I disable the samba application
+  Then the samba service should not be running

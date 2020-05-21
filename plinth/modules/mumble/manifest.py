@@ -66,4 +66,9 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({'data': {'directories': ['/var/lib/mumble-server']}})
+backup = validate_backup({
+    'data': {
+        'directories': ['/var/lib/mumble-server']
+    },
+    'services': ['mumble-server']
+})

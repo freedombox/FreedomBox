@@ -92,7 +92,7 @@ and requires about 4.5 GB of disk space.
 
     ```bash
     host$ git clone https://salsa.debian.org/freedombox-team/freedombox.git
-    host$ cd plinth
+    host$ cd freedombox
     ```
 
 2.  To download, setup, run, and configure a VM for FreedomBox development using

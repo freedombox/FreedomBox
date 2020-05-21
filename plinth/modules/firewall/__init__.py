@@ -142,6 +142,45 @@ def ignore_dbus_error(dbus_error=None, service_error=None):
             raise
 
 
+def parse_dbus_error(exception):
+    """Parse a GDBus error."""
+    parts = exception.message.split(':')
+    if parts[0] != 'GDBus.Error' or \
+       parts[1] != 'org.fedoraproject.FirewallD1.Exception':
+        return None
+
+    return parts[2].strip()
+
+
+def reload():
+    """Reload firewalld."""
+    logger.info('Reloading firewalld')
+    with ignore_dbus_error(dbus_error='ServiceUnknown'):
+        proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _FIREWALLD_INTERFACE)
+        proxy.reload()
+
+
+def try_with_reload(operation):
+    """Try an operation and retry after firewalld reload.
+
+    When a service file is newly installed into /usr/lib/firewalld/services,
+    it's information can be immediately queried but the service can't be
+    added/removed from a zone. A firewalld reload is necessary. So, try an
+    operation and if it fails with INVALID_SERVICE error, reload firewalld and
+    try again.
+
+    """
+    try:
+        operation()
+    except glib.Error as exception:
+        error = parse_dbus_error(exception)
+        if error != 'INVALID_SERVICE':
+            raise
+
+        reload()
+        operation()
+
+
 def get_enabled_status():
     """Return whether firewall is enabled"""
     output = _run(['get-status'], superuser=True)
