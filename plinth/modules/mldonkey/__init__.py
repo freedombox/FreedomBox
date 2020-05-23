@@ -11,12 +11,13 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 managed_services = ['mldonkey-server']
 
@@ -34,6 +35,8 @@ _description = [
         _('On {box_name}, downloaded files can be found in /var/lib/mldonkey/ '
           'directory.'), box_name=cfg.box_name)
 ]
+
+_SYSTEM_USER = 'mldonkey'
 
 app = None
 
@@ -81,7 +84,7 @@ class MLDonkeyApp(app_module.App):
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-mldonkey',
-                                          reserved_usernames=['mldonkey'],
+                                          reserved_usernames=[_SYSTEM_USER],
                                           groups=groups)
         self.add(users_and_groups)
 
@@ -100,4 +103,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'mldonkey', ['pre-install'])
     helper.install(managed_packages)
-    helper.call('post', app.enable)
+    if not old_version:
+        helper.call('post', app.enable)
+
+    add_user_to_share_group(_SYSTEM_USER, managed_services[0])
