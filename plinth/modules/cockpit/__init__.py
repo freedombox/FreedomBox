@@ -35,6 +35,11 @@ _description = [
           'required. A web based terminal for console operations is also '
           'available.'), box_name=_(cfg.box_name)),
     format_lazy(
+        _('Cockpit can be used to perform advanced storage operations such as '
+          'disk partitioning and RAID management. It can also be used for '
+          'opening custom firewall ports and advanced networking such as '
+          'bonding, bridging and VLAN management.')),
+    format_lazy(
         _('It can be accessed by <a href="{users_url}">any user</a> on '
           '{box_name} belonging to the admin group.'),
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
