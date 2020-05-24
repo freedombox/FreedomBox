@@ -7,8 +7,12 @@ Configure Mumble server.
 """
 
 import argparse
+import augeas
 import sys
 from subprocess import Popen, PIPE
+
+CONFIG_FILE = '/etc/mumble-server.ini'
+DATA_DIR = '/var/lib/mumble-server'
 
 
 def parse_arguments():
@@ -17,10 +21,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    subparsers.add_parser('setup', help='Setup Mumble server')
     subparsers.add_parser('create-password',
                           help='Setup mumble superuser password')
 
     return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup Mumble server."""
+    aug = load_augeas()
+    aug.set('.anon/sslCert', DATA_DIR + '/fullchain.pem')
+    aug.set('.anon/sslKey', DATA_DIR + '/privkey.pem')
+    aug.save()
 
 
 def read_from_stdin():
@@ -34,7 +47,7 @@ def subcommand_create_password(arguments):
 
     password = read_from_stdin()
 
-    cmd = ['murmurd', '-ini', '/etc/mumble-server.ini', '-readsupw']
+    cmd = ['murmurd', '-ini', CONFIG_FILE, '-readsupw']
     proc = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=False)
 
     # The exit code of the command above seems to be 1 when successful!
@@ -49,6 +62,17 @@ def subcommand_create_password(arguments):
             "Error occured while saving password: %s" % err
         )
         sys.exit(1)
+
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Php', CONFIG_FILE)
+    aug.set('/augeas/context', '/files' + CONFIG_FILE)
+    aug.load()
+
+    return aug
 
 
 def main():

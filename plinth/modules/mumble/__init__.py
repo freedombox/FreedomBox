@@ -3,6 +3,8 @@
 FreedomBox app to configure Mumble server.
 """
 
+import pathlib
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -10,6 +12,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -19,6 +22,8 @@ version = 1
 managed_services = ['mumble-server']
 
 managed_packages = ['mumble-server']
+
+managed_paths = [pathlib.Path('/var/lib/mumble-server')]
 
 _description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
@@ -60,6 +65,15 @@ class MumbleApp(app_module.App):
         firewall = Firewall('firewall-mumble', info.name,
                             ports=['mumble-plinth'], is_external=True)
         self.add(firewall)
+
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-mumble', domains='*',
+            daemons=managed_services, should_copy_certificates=True,
+            private_key_path='/var/lib/mumble-server/privkey.pem',
+            certificate_path='/var/lib/mumble-server/fullchain.pem',
+            user_owner='mumble-server', group_owner='mumble-server',
+            managing_app='mumble')
+        self.add(letsencrypt)
 
         daemon = Daemon(
             'daemon-mumble', managed_services[0],
