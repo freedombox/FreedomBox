@@ -9,7 +9,7 @@
     {% if not component.is_external %}
       <div class="bg-warning">
         {% blocktrans trimmed with service_name=component.name %}
-          <em>{{ service_name }}</em> is available only on internal networks.
+          <em>{{ service_name }}</em> is available only on internal networks or when the client is connected to {{ box_name }} through VPN.
         {% endblocktrans %}
         <p>
           {% with interfaces=component.get_internal_interfaces %}
