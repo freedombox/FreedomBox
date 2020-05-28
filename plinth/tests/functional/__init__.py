@@ -272,22 +272,14 @@ def app_select_domain_name(browser, app_name, domain_name):
 #########################
 # App install utilities #
 #########################
-def _find_install_button(browser, app_name):
-    nav_to_module(browser, app_name)
-    return browser.find_by_css('.form-install input[type=submit]')
-
-
 def is_installed(browser, app_name):
-    install_button = _find_install_button(browser, app_name)
-    return not bool(install_button)
+    nav_to_module(browser, app_name)
+    return not bool(browser.find_by_css('.form-install input[type=submit]'))
 
 
 def install(browser, app_name):
-    install_button = _find_install_button(browser, app_name)
-    if not install_button:
-        return
-
-    install_button.click()
+    nav_to_module(browser, app_name)
+    install_button_css = '.form-install input[type=submit]'
     while True:
         script = 'return (document.readyState == "complete") && ' \
             '(!Boolean(document.querySelector(".installing")));'
@@ -295,6 +287,18 @@ def install(browser, app_name):
             time.sleep(0.1)
         elif browser.is_element_present_by_css('.neterror'):
             browser.visit(browser.url)
+        elif browser.is_element_present_by_css(install_button_css):
+            install_button = browser.find_by_css(install_button_css).first
+            if install_button['disabled']:
+                if not browser.find_by_name('refresh-packages'):
+                    # Package manager is busy, wait and refresh page
+                    time.sleep(1)
+                    browser.visit(browser.url)
+                else:
+                    # This app is not available in this distribution
+                    raise Exception('App not available in distribution')
+            else:
+                install_button.click()
         else:
             break
 
