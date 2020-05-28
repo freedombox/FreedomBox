@@ -94,11 +94,22 @@ class _PageLoaded():
         try:
             self.element.has_class('whatever_class')
         except StaleElementReferenceException:
-            if self.expected_url is None:
+            # After a domain name change, Let's Encrypt will reload the web
+            # server and could cause a connection failure.
+            if driver.find_by_id('netErrorButtonContainer'):
+                driver.visit(driver.url)
+                return False
+
+            is_fully_loaded = driver.execute_script(
+                'return document.readyState;') == 'complete'
+            if not is_fully_loaded:
+                is_stale = False
+            elif self.expected_url is None:
                 is_stale = True
             else:
                 if driver.url.endswith(self.expected_url):
                     is_stale = True
+
         return is_stale
 
 
@@ -273,33 +284,19 @@ def is_installed(browser, app_name):
 
 def install(browser, app_name):
     install_button = _find_install_button(browser, app_name)
+    if not install_button:
+        return
 
-    def install_in_progress():
-        selectors = [
-            '.install-state-' + state
-            for state in ['pre', 'post', 'installing']
-        ]
-        return any(
-            browser.is_element_present_by_css(selector)
-            for selector in selectors)
-
-    def is_server_restarting():
-        return browser.is_element_present_by_css('.neterror')
-
-    def wait_for_install():
-        if install_in_progress():
-            time.sleep(1)
-        elif is_server_restarting():
-            time.sleep(1)
+    install_button.click()
+    while True:
+        script = 'return (document.readyState == "complete") && ' \
+            '(!Boolean(document.querySelector(".installing")));'
+        if not browser.execute_script(script):
+            time.sleep(0.1)
+        elif browser.is_element_present_by_css('.neterror'):
             browser.visit(browser.url)
         else:
-            return
-        wait_for_install()
-
-    if install_button:
-        install_button.click()
-        wait_for_install()
-        # sleep(2)  # XXX This shouldn't be required.
+            break
 
 
 ################################
@@ -349,10 +346,6 @@ def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_domainname').fill(domain_name)
     submit(browser)
-    # After a domain name change, Let's Encrypt will reload the web server and
-    # could cause a connection failure.
-    if browser.find_by_id('netErrorButtonContainer'):
-        browser.visit(browser.url)
 
 
 ########################

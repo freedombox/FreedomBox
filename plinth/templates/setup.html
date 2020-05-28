@@ -79,16 +79,16 @@
   {% else %}
 
     {% if setup_current_operation.step == 'pre' %}
-      <div class="install-state-pre">
+      <div class="installing install-state-pre">
         {% trans "Performing pre-install operation" %}
       </div>
     {% elif setup_current_operation.step == 'post' %}
-      <div class="install-state-post">
+      <div class="installing install-state-post">
         {% trans "Performing post-install operation" %}
       </div>
     {% elif setup_current_operation.step == 'install' %}
       {% with transaction=setup_current_operation.transaction %}
-        <div class="install-state-installing">
+        <div class="installing install-state-installing">
           {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
             Installing {{ package_names }}: {{ status }}
           {% endblocktrans %}

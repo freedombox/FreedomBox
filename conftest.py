@@ -85,3 +85,29 @@ def fixture_needs_sudo():
     """Skip test if sudo command is not available."""
     if not os.path.isfile('/usr/bin/sudo'):
         pytest.skip('Needs sudo command installed.')
+
+
+@pytest.fixture(scope='session')
+def splinter_selenium_implicit_wait():
+    """Disable implicit waiting."""
+    return 0
+
+
+@pytest.fixture(scope='session')
+def splinter_wait_time():
+    """Disable explicit waiting."""
+    return 0.01
+
+
+@pytest.fixture(scope='session')
+def splinter_browser_load_condition():
+    """When a page it loaded, wait until <body> is available."""
+
+    def _load_condition(browser):
+        if browser.url == 'about:blank':
+            return True
+
+        ready_state = browser.execute_script('return document.readyState;')
+        return ready_state == 'complete'
+
+    return _load_condition
