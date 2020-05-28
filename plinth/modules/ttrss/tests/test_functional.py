@@ -49,18 +49,27 @@ def _click_main_menu_item(browser, text):
 
 def _subscribe(browser):
     """Subscribe to a feed in TT-RSS."""
+
+    def _already_subscribed_message():
+        return browser.is_text_present(
+            'You are already subscribed to this feed.')
+
     _ttrss_load_main_interface(browser)
 
     _click_main_menu_item(browser, 'Subscribe to feed...')
     browser.find_by_id('feedDlg_feedUrl').fill(
         'https://planet.debian.org/atom.xml')
     browser.find_by_text('Subscribe').click()
-    if browser.is_text_present('You are already subscribed to this feed.'):
+    add_dialog = browser.find_by_css('#feedAddDlg')
+    functional.eventually(
+        lambda: not add_dialog.visible or _already_subscribed_message())
+    if _already_subscribed_message():
         browser.find_by_text('Cancel').click()
+        functional.eventually(lambda: not add_dialog.visible)
 
     expand = browser.find_by_css('span.dijitTreeExpandoClosed')
     if expand:
-        expand.first.click()
+        functional.eventually(expand.first.click)
 
     assert functional.eventually(_is_feed_shown, [browser])
 

@@ -64,8 +64,11 @@ def eventually(function, args=[], timeout=30):
     end_time = time.time() + timeout
     current_time = time.time()
     while current_time < end_time:
-        if function(*args):
-            return True
+        try:
+            if function(*args):
+                return True
+        except Exception:
+            pass
 
         time.sleep(0.1)
         current_time = time.time()
