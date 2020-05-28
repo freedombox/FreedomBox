@@ -77,9 +77,11 @@ def snapshot_assert_configuration(session_browser, free_space,
 
 
 def _delete_all(browser):
-    if _get_count(browser):
+    functional.visit(browser, '/plinth/sys/snapshot/manage/')
+    delete_button = browser.find_by_name('delete_selected').first
+    if not delete_button['disabled']:
         browser.find_by_id('select-all').check()
-        functional.submit(browser, browser.find_by_name('delete_selected'))
+        functional.submit(browser, delete_button)
 
         confirm_button = browser.find_by_name('delete_confirm')
         if confirm_button:  # Only if redirected to confirm page
