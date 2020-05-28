@@ -184,7 +184,16 @@ def change_checkbox_status(browser, app_name, checkbox_id,
 
 
 def wait_for_config_update(browser, app_name):
-    while browser.is_element_present_by_css('.running-status.loading'):
+    """Wait until the configuration update progress goes away.
+
+    Perform an atomic check that page is fully loaded and that progress icon is
+    not present at the same time to avoid race conditions due to automatic page
+    reloads.
+
+    """
+    script = 'return (document.readyState == "complete") && ' \
+        '(!Boolean(document.querySelector(".running-status.loading")));'
+    while not browser.execute_script(script):
         time.sleep(0.1)
 
 
