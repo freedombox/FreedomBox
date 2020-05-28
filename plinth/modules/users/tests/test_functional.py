@@ -10,6 +10,7 @@ from plinth.tests import functional
 scenarios('users.feature')
 
 _language_codes = {
+    'None': '',
     'Deutsch': 'de',
     'Nederlands': 'nl',
     'Português': 'pt',
@@ -26,6 +27,7 @@ _language_codes = {
 }
 
 _config_page_title_language_map = {
+    '': 'General Configuration',
     'da': 'Generel Konfiguration',
     'de': 'Allgemeine Konfiguration',
     'es': 'Configuración general',
