@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_noop
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, glib, menu, utils
+from plinth import cfg, glib, menu
 from plinth.errors import ActionError, PlinthError
 from plinth.utils import format_lazy, import_from_gi
 
@@ -77,48 +77,17 @@ def init():
 def get_disks():
     """Returns list of disks by combining information from df and udisks."""
     disks = _get_disks_from_df()
-    disks_from_udisks = _get_disks_from_udisks()
+    disks_from_udisks = udisks2.get_disks()
+    for disk in disks_from_udisks:
+        disk['size'] = format_bytes(disk['size'])
 
     # Add info from udisks to the disks from df based on mount point.
     for disk_from_df in disks:
         for disk_from_udisks in disks_from_udisks:
-            if disk_from_udisks['mount_point'] == disk_from_df['mount_point']:
+            if disk_from_df['mount_point'] in disk_from_udisks['mount_points']:
                 disk_from_df.update(disk_from_udisks)
 
     return sorted(disks, key=lambda disk: disk['device'])
-
-
-def _get_disks_from_udisks():
-    """List devices that can be ejected."""
-    udisks = utils.import_from_gi('UDisks', '2.0')
-    client = udisks.Client.new_sync()
-    object_manager = client.get_object_manager()
-    devices = []
-
-    for obj in object_manager.get_objects():
-
-        if not obj.get_block():
-            continue
-
-        block = obj.get_block()
-
-        if block.props.id_usage != 'filesystem':
-            continue
-
-        device = {
-            'device': block.props.device,
-            'label': block.props.id_label,
-            'size': format_bytes(block.props.size),
-            'filesystem_type': block.props.id_type,
-            'is_removable': not block.props.hint_system
-        }
-        try:
-            device['mount_point'] = obj.get_filesystem().props.mount_points[0]
-        except Exception:
-            continue
-        devices.append(device)
-
-    return devices
 
 
 def _get_disks_from_df():

@@ -79,7 +79,7 @@ class Proxy:
         if signature == 'aay':
             return [bytes(value_item).decode()[:-1] for value_item in value]
 
-        if signature in ('s', 'b', 'o', 'u'):
+        if signature in ('s', 'b', 'o', 'u', 't'):
             return glib.Variant.unpack(value)
 
         raise ValueError('Unhandled type')
@@ -100,7 +100,11 @@ class BlockDevice(Proxy):
         'hint_ignore': ('b', 'HintIgnore'),
         'hint_system': ('b', 'HintSystem'),
         'id': ('s', 'Id'),
+        'id_label': ('s', 'IdLabel'),
+        'id_type': ('s', 'IdType'),
+        'id_usage': ('s', 'IdUsage'),
         'preferred_device': ('ay', 'PreferredDevice'),
+        'size': ('t', 'Size'),
         'symlinks': ('aay', 'Symlinks'),
     }
 
@@ -117,6 +121,38 @@ class Filesystem(Proxy):
     """Abstraction for UDisks2 Filesystem."""
     interface = _INTERFACES['Filesystem']
     properties = {'mount_points': ('aay', 'MountPoints')}
+
+
+def get_disks():
+    """List devices that can be ejected."""
+    devices = []
+
+    manager = _get_dbus_proxy(_OBJECTS['UDisks2'],
+                              _INTERFACES['ObjectManager'])
+    objects = manager.GetManagedObjects()
+    for object_, interface_and_properties in objects.items():
+        if _INTERFACES['Block'] not in interface_and_properties:
+            continue
+
+        block = BlockDevice(object_)
+        if block.id_usage != 'filesystem':
+            continue
+
+        device = {
+            'device': block.device,
+            'label': block.id_label,
+            'size': block.size,
+            'filesystem_type': block.id_type,
+            'is_removable': not block.hint_system
+        }
+        try:
+            file_system = Filesystem(object_)
+            device['mount_points'] = file_system.mount_points
+        except Exception:
+            continue
+        devices.append(device)
+
+    return devices
 
 
 def _mount(object_path):
