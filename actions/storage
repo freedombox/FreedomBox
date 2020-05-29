@@ -259,8 +259,12 @@ def subcommand_mount(arguments):
 def subcommand_eject(arguments):
     """Eject a device by its path."""
     device_path = arguments.device
-    drive = eject_drive_of_device(device_path)
-    print(json.dumps(drive))
+    try:
+        drive = eject_drive_of_device(device_path)
+        print(json.dumps(drive))
+    except Exception as exception:
+        print(exception, file=sys.stderr)
+        sys.exit(1)
 
 
 def _get_options():

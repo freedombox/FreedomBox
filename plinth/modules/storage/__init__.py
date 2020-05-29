@@ -15,7 +15,7 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.errors import ActionError, PlinthError
-from plinth.utils import format_lazy, import_from_gi
+from plinth.utils import format_lazy
 
 from . import udisks2
 from .manifest import backup  # noqa, pylint: disable=unused-import
@@ -198,45 +198,46 @@ def format_bytes(size):
 
 def get_error_message(error):
     """Return an error message given an exception."""
-    udisks = import_from_gi('UDisks', '2.0')
-    if error.matches(udisks.Error.quark(), udisks.Error.FAILED):
-        message = _('The operation failed.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.CANCELLED):
-        message = _('The operation was cancelled.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_UNMOUNTING):
-        message = _('The device is already unmounting.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_SUPPORTED):
-        message = _('The operation is not supported due to '
-                    'missing driver/tool support.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.TIMED_OUT):
-        message = _('The operation timed out.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.WOULD_WAKEUP):
-        message = _('The operation would wake up a disk that is '
-                    'in a deep-sleep state.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.DEVICE_BUSY):
-        message = _('Attempting to unmount a device that is busy.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_CANCELLED):
-        message = _('The operation has already been cancelled.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_AUTHORIZED) or \
-        error.matches(udisks.Error.quark(),
-                      udisks.Error.NOT_AUTHORIZED_CAN_OBTAIN) or \
-        error.matches(udisks.Error.quark(),
-                      udisks.Error.NOT_AUTHORIZED_DISMISSED):
-        message = _('Not authorized to perform the requested operation.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_MOUNTED):
-        message = _('The device is already mounted.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_MOUNTED):
-        message = _('The device is not mounted.')
-    elif error.matches(udisks.Error.quark(),
-                       udisks.Error.OPTION_NOT_PERMITTED):
-        message = _('Not permitted to use the requested option.')
-    elif error.matches(udisks.Error.quark(),
-                       udisks.Error.MOUNTED_BY_OTHER_USER):
-        message = _('The device is mounted by another user.')
-    else:
-        message = error.message
+    error_parts = error.split(':')
+    if error_parts[0] != 'udisks-error-quark':
+        return error
 
-    return message
+    short_error = error_parts[2].strip().split('.')[-1]
+    message_map = {
+        'Failed':
+            _('The operation failed.'),
+        'Cancelled':
+            _('The operation was cancelled.'),
+        'AlreadyUnmounting':
+            _('The device is already unmounting.'),
+        'NotSupported':
+            _('The operation is not supported due to missing driver/tool '
+              'support.'),
+        'TimedOut':
+            _('The operation timed out.'),
+        'WouldWakeup':
+            _('The operation would wake up a disk that is in a deep-sleep '
+              'state.'),
+        'DeviceBusy':
+            _('Attempting to unmount a device that is busy.'),
+        'AlreadyCancelled':
+            _('The operation has already been cancelled.'),
+        'NotAuthorized':
+            _('Not authorized to perform the requested operation.'),
+        'NotAuthorizedCanObtain':
+            _('Not authorized to perform the requested operation.'),
+        'NotAuthorizedDismissed':
+            _('Not authorized to perform the requested operation.'),
+        'AlreadyMounted':
+            _('The device is already mounted.'),
+        'NotMounted':
+            _('The device is not mounted.'),
+        'OptionNotPermitted':
+            _('Not permitted to use the requested option.'),
+        'MountedByOtherUser':
+            _('The device is mounted by another user.')
+    }
+    return message_map.get(short_error, error)
 
 
 def setup(helper, old_version=None):
