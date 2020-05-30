@@ -75,7 +75,36 @@ def init():
 
 
 def get_disks():
-    """Returns list of disks by combining information from df and udisks."""
+    """Returns list of disks and their free space.
+
+    The primary source of information is UDisks' list of block devices.
+    Information from df is used for free space available.
+
+    """
+    disks_from_df = _get_disks_from_df()
+    disks = udisks2.get_disks()
+    for disk in disks:
+        disk['size'] = format_bytes(disk['size'])
+
+    # Add info from df to the disks from udisks based on mount point.
+    for disk in disks:
+        for disk_from_df in disks_from_df:
+            if disk_from_df['mount_point'] in disk['mount_points']:
+                disk['mount_point'] = disk_from_df['mount_point']
+                for key in ('percent_used', 'size', 'used', 'free', 'size_str',
+                            'used_str', 'free_str'):
+                    disk[key] = disk_from_df[key]
+
+    return sorted(disks, key=lambda disk: disk['device'])
+
+
+def get_mounts():
+    """Return list of mounts by combining information from df and UDisks.
+
+    The primary source of information is the df command. Information from
+    UDisks is used for labels.
+
+    """
     disks = _get_disks_from_df()
     disks_from_udisks = udisks2.get_disks()
     for disk in disks_from_udisks:
@@ -130,7 +159,7 @@ def get_filesystem_type(mount_point='/'):
 def get_disk_info(mount_point):
     """Get information about the free space of a drive"""
     disks = get_disks()
-    list_root = [disk for disk in disks if disk['mount_point'] == mount_point]
+    list_root = [disk for disk in disks if mount_point in disk['mount_points']]
     if not list_root:
         raise PlinthError('Mount point {} not found.'.format(mount_point))
 
@@ -147,8 +176,9 @@ def get_disk_info(mount_point):
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
     for disk in disks:
-        if disk['mount_point'] == '/':
+        if '/' in disk['mount_points']:
             return disk['device']
+
     return None
 
 

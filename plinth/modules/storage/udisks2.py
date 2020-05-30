@@ -143,13 +143,15 @@ def get_disks():
             'label': block.id_label,
             'size': block.size,
             'filesystem_type': block.id_type,
-            'is_removable': not block.hint_system
+            'is_removable': not block.hint_system,
+            'mount_points': [],
         }
         try:
             file_system = Filesystem(object_)
             device['mount_points'] = file_system.mount_points
         except Exception:
             continue
+
         devices.append(device)
 
     return devices

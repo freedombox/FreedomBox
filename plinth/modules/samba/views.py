@@ -28,7 +28,7 @@ class SambaAppView(views.AppView):
     def get_context_data(self, *args, **kwargs):
         """Return template context data."""
         context = super().get_context_data(*args, **kwargs)
-        disks = storage.get_disks()
+        disks = storage.get_mounts()
         shares = samba.get_shares()
 
         for disk in disks:

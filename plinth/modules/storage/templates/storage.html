@@ -35,7 +35,7 @@
         <tr>
           <td>{{ disk.device }}</td>
           <td>{{ disk.label|default_if_none:"" }}</td>
-          <td>{{ disk.mount_point }}</td>
+          <td>{{ disk.mount_points|join:"<br>" }}</td>
           <td>{{ disk.filesystem_type }}</td>
           <td>
             <div class="progress">

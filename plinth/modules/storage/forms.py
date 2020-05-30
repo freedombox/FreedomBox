@@ -21,7 +21,7 @@ def get_available_samba_shares():
         samba_shares = json.loads(
             actions.superuser_run('samba', ['get-shares']))
         if samba_shares:
-            disks = storage.get_disks()
+            disks = storage.get_mounts()
             for share in samba_shares:
                 for disk in disks:
                     if share['mount_point'] == disk['mount_point']:

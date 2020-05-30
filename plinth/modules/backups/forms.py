@@ -15,7 +15,7 @@ from django.core.validators import (FileExtensionValidator,
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.storage import get_disks
+from plinth.modules.storage import get_mounts
 from plinth.utils import format_lazy
 
 from . import api, split_path
@@ -158,7 +158,7 @@ def get_disk_choices():
         if repository.storage_type == 'disk'
     ]
     choices = []
-    for device in get_disks():
+    for device in get_mounts():
         if device['mount_point'] == '/':
             continue
 
