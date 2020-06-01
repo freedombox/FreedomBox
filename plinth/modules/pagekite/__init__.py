@@ -5,6 +5,7 @@ FreedomBox app to configure PageKite.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
@@ -14,7 +15,7 @@ from plinth.utils import format_lazy
 from . import utils
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 depends = ['names']
 
@@ -106,4 +107,8 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', app.enable)
+    if not old_version:
+        helper.call('post', app.enable)
+
+    if old_version == 1:
+        actions.superuser_run('service', ['try-restart', managed_services[0]])
