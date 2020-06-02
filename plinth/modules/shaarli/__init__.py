@@ -18,10 +18,8 @@ managed_packages = ['shaarli']
 
 _description = [
     _('Shaarli allows you to save and share bookmarks.'),
-    _('When enabled, Shaarli will be available from <a href="/shaarli" '
-      'data-turbolinks="false">/shaarli</a> path on the web server. Note that '
-      'Shaarli only supports a single user account, which you will need to '
-      'setup on the initial visit.'),
+    _('Note that Shaarli only supports a single user account, which you will '
+      'need to setup on the initial visit.'),
 ]
 
 app = None

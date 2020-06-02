@@ -23,8 +23,7 @@ _description = [
       'full functionality you expect from an email client, including '
       'MIME support, address book, folder manipulation, message '
       'searching and spell checking.'),
-    _('You can access Roundcube from <a href="/roundcube" data-turbolinks='
-      '"false">/roundcube</a>. Provide the username and password of the email '
+    _('You can use it by providing the username and password of the email '
       'account you wish to access followed by the domain name of the '
       'IMAP server for your email provider, like <code>imap.example.com'
       '</code>.  For IMAP over SSL (recommended), fill the server field '

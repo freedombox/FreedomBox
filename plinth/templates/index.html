@@ -65,9 +65,9 @@
               {% if user.is_authenticated or not shortcut.login_required %}
                 <div class="card thumbnail">
                   {% if selected_shortcut.component_id == shortcut.component_id %}
-                    <a href="{{ shortcut.url }}" class="nav-link active" data-turbolinks="false">
+                    <a href="{{ shortcut.url }}" class="nav-link active">
                   {% else %}
-                    <a href="{{ shortcut.url }}" class="nav-link" data-turbolinks="false">
+                    <a href="{{ shortcut.url }}" class="nav-link">
                   {% endif %}
                         <div class="card-title">
                           {{ shortcut.name }}
