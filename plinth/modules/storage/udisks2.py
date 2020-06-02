@@ -6,7 +6,7 @@ Handle disk operations using UDisk2 DBus API.
 import logging
 import threading
 
-from plinth import actions
+from plinth import actions, cfg
 from plinth.errors import ActionError
 from plinth.utils import import_from_gi
 
@@ -21,6 +21,7 @@ _INTERFACES = {
     'Drive': 'org.freedesktop.UDisks2.Drive',
     'Filesystem': 'org.freedesktop.UDisks2.Filesystem',
     'Job': 'org.freedesktop.UDisks2.Job',
+    'Loop': 'org.freedesktop.UDisks2.Loop',
     'Manager': 'org.freedesktop.UDisks2.Manager',
     'ObjectManager': 'org.freedesktop.DBus.ObjectManager',
     'Partition': 'org.freedesktop.UDisks2.Partition',
@@ -114,6 +115,7 @@ class Partition(Proxy):
     interface = _INTERFACES['Partition']
     properties = {
         'number': ('u', 'Number'),
+        'table': ('o', 'Table'),
     }
 
 
@@ -121,6 +123,12 @@ class Filesystem(Proxy):
     """Abstraction for UDisks2 Filesystem."""
     interface = _INTERFACES['Filesystem']
     properties = {'mount_points': ('aay', 'MountPoints')}
+
+
+class Loop(Proxy):
+    """Abstraction for UDisks2 Loop."""
+    interface = _INTERFACES['Loop']
+    properties = {'backing_file': ('ay', 'BackingFile')}
 
 
 def get_disks():
@@ -226,6 +234,19 @@ def _on_filesystem_added(object_path, _interfaces):
     threading.Thread(target=_consider_for_mounting, args=[object_path]).start()
 
 
+def _is_loop_device(object_path):
+    """Return if the block device is a loop device backed by a file."""
+    loop = Loop(object_path)
+    if loop.backing_file:
+        return True
+
+    partition_table = Partition(object_path).table
+    if partition_table:
+        return _is_loop_device(partition_table)
+
+    return False
+
+
 def _consider_for_mounting(object_path):
     """Check if the block device needs mounting and mount it."""
     block_device = BlockDevice(object_path)
@@ -253,6 +274,12 @@ def _consider_for_mounting(object_path):
             logger.info('Ignoring auto-mount of docker device: %s %s',
                         block_device.id, block_device.preferred_device)
             return
+
+    # Ignore loopback devices except in development mode.
+    if _is_loop_device(object_path) and not cfg.develop:
+        logger.info('Ignoring loop device in production mode: %s %s',
+                    block_device.id, block_device.preferred_device)
+        return
 
     _mount(object_path)
 
