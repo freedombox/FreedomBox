@@ -254,16 +254,6 @@ def _consider_for_mounting(object_path):
                         block_device.id, block_device.preferred_device)
             return
 
-    # Ignore non-external devices that don't have partition table (top-level
-    # filesystem). If the device is backed by a crypto device, still handle it.
-    # XXX: This rule is from udiskie. Should we keep it?
-    partition = Partition(object_path)
-    if block_device.hint_system and not partition.number and \
-       block_device.crypto_backing_device == '/':
-        logger.info('Ignoring auto-mount of top-level internal device: %s %s',
-                    block_device.id, block_device.preferred_device)
-        return
-
     _mount(object_path)
 
 
