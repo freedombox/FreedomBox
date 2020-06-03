@@ -184,6 +184,21 @@ def _check_and_backports_sources():
         print('Repositories list up-to-date. Skipping update.')
         return
 
+    try:
+        with open('/etc/dpkg/origins/default', 'r') as default_origin:
+            matches = [
+                re.match(r'Vendor:\s+Debian', line, flags=re.IGNORECASE)
+                for line in default_origin.readlines()
+            ]
+    except FileNotFoundError:
+        print('Could not open /etc/dpkg/origins/default')
+        return
+
+    if not any(matches):
+        print('System is running a derivative of Debian. Skip enabling '
+              'backports.')
+        return
+
     protocol = _get_protocol()
     if protocol == 'tor+http':
         print('Package download over Tor is enabled.')
