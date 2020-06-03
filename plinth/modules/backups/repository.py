@@ -130,7 +130,6 @@ class BaseBorgRepository(abc.ABC):
         """Return Borg information about a repository."""
         output = self.run(['info', '--path', self.borg_path])
         output = json.loads(output)
-        print(output, self._get_encryption_data())
         if output['encryption']['mode'] == 'none' and \
            self._get_encryption_data():
             raise errors.BorgUnencryptedRepository(
