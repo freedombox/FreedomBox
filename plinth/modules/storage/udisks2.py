@@ -74,6 +74,9 @@ class Proxy:
         if value is None:
             return value
 
+        if signature.startswith('a('):
+            return value
+
         if signature == 'ay':
             return bytes(value)[:-1].decode()
 
@@ -96,6 +99,7 @@ class BlockDevice(Proxy):
     """Abstraction for UDisks2 Block device."""
     interface = _INTERFACES['Block']
     properties = {
+        'configuration': ('a(sa{sv})', 'Configuration'),
         'crypto_backing_device': ('o', 'CryptoBackingDevice'),
         'device': ('ay', 'Device'),
         'hint_ignore': ('b', 'HintIgnore'),
@@ -131,6 +135,16 @@ class Loop(Proxy):
     properties = {'backing_file': ('ay', 'BackingFile')}
 
 
+def _is_removable(object_path):
+    """Return True if the device is not part of fstab or crypttab."""
+    block = BlockDevice(object_path)
+    for type_, _details in block.configuration:
+        if type_ in ('fstab', 'crypttab'):
+            return False
+
+    return True
+
+
 def get_disks():
     """List devices that can be ejected."""
     devices = []
@@ -151,7 +165,7 @@ def get_disks():
             'label': block.id_label,
             'size': block.size,
             'filesystem_type': block.id_type,
-            'is_removable': not block.hint_system,
+            'is_removable': _is_removable(object_),
             'mount_points': [],
         }
         try:
