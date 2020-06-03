@@ -281,6 +281,7 @@ def eject_drive_of_device(device_path):
     Return the details (model, vendor) of drives ejected.
     """
     udisks = utils.import_from_gi('UDisks', '2.0')
+    glib = utils.import_from_gi('GLib', '2.0')
     client = udisks.Client.new_sync()
     object_manager = client.get_object_manager()
 
@@ -307,7 +308,13 @@ def eject_drive_of_device(device_path):
     # Eject the drive
     drive = client.get_drive_for_block(block_device)
     if drive:
-        drive.call_eject_sync(_get_options(), None)
+        try:
+            drive.call_eject_sync(_get_options(), None)
+        except glib.Error:
+            # Ignore error during ejection as along as all the filesystems are
+            # unmounted, the disk can be removed.
+            pass
+
         return {
             'vendor': drive.props.vendor,
             'model': drive.props.model,
