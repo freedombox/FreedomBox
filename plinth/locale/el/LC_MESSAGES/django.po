@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-18 18:36-0400\n"
-"PO-Revision-Date: 2020-01-25 17:21+0000\n"
-"Last-Translator: Nektarios Katakis <iam@nektarioskatakis.xyz>\n"
+"POT-Creation-Date: 2020-06-01 17:44-0400\n"
+"PO-Revision-Date: 2020-05-29 18:41+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/plinth/"
 "el/>\n"
 "Language: el\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -157,53 +157,67 @@ msgid "{app} (No data to backup)"
 msgstr "{app} (Δεν υπάρχουν δεδομένα για δημιουργία αντιγράφων ασφαλείας)"
 
 #: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/templates/backups_delete.html:18
+#: plinth/modules/ikiwiki/forms.py:15
+#: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/sharing/templates/sharing.html:37
+msgid "Name"
+msgstr "Όνομα"
+
+#: plinth/modules/backups/forms.py:53
+#, fuzzy
+#| msgid "Upload and restore a backup archive"
+msgid "(Optional) Set a name for this backup archive"
+msgstr "Ανεβάστε και επαναφέρετε ένα αντίγραφο ασφαλείας"
+
+#: plinth/modules/backups/forms.py:56
 msgid "Included apps"
 msgstr "Συμπεριλαμβανόμενες εφαρμογές"
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:56
 msgid "Apps to include in the backup"
 msgstr "Εφαρμογές που θα συμπεριληφθούν στο αντίγραφο ασφαλείας"
 
-#: plinth/modules/backups/forms.py:66
+#: plinth/modules/backups/forms.py:70
 msgid "Select the apps you want to restore"
 msgstr "Επιλέξτε τις εφαρμογές που θέλετε να επαναφέρετε"
 
-#: plinth/modules/backups/forms.py:79
+#: plinth/modules/backups/forms.py:83
 msgid "Upload File"
 msgstr "Ανέβασμα αρχείου"
 
-#: plinth/modules/backups/forms.py:81
+#: plinth/modules/backups/forms.py:85
 msgid "Backup files have to be in .tar.gz format"
 msgstr "Τα αντίγραφα ασφαλείας πρέπει να είναι σε μορφή. tar. gz"
 
-#: plinth/modules/backups/forms.py:82
+#: plinth/modules/backups/forms.py:86
 msgid "Select the backup file you want to upload"
 msgstr "Επιλέξτε το αντίγραφο ασφαλείας που θέλετε να ανεβάσετε"
 
-#: plinth/modules/backups/forms.py:88
+#: plinth/modules/backups/forms.py:92
 msgid "Repository path format incorrect."
 msgstr "Εσφαλμένο μονοπατι αποθετηρίου (repository)."
 
-#: plinth/modules/backups/forms.py:95
+#: plinth/modules/backups/forms.py:99
 #, python-brace-format
 msgid "Invalid username: {username}"
 msgstr "Μη έγκυρο όνομα χρήστη: {username}"
 
-#: plinth/modules/backups/forms.py:105
+#: plinth/modules/backups/forms.py:109
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
 msgstr "Μη έγκυρο όνομα υπολογιστή: {hostname}"
 
-#: plinth/modules/backups/forms.py:109
+#: plinth/modules/backups/forms.py:113
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
 msgstr "Εσφαλμένο μονοπάτι φακέλου: {dir_path}"
 
-#: plinth/modules/backups/forms.py:115
+#: plinth/modules/backups/forms.py:119
 msgid "Encryption"
 msgstr "Κρυπτογράφηση"
 
-#: plinth/modules/backups/forms.py:116
+#: plinth/modules/backups/forms.py:120
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -211,43 +225,43 @@ msgstr ""
 "\"Κλειδί στο αποθετήριο\" σημαίνει ότι ένα κλειδί που προστατεύεται με "
 "κωδικό πρόσβασης αποθηκεύεται με το αντίγραφο ασφαλείας."
 
-#: plinth/modules/backups/forms.py:120 plinth/modules/networks/forms.py:262
+#: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:262
 msgid "Passphrase"
 msgstr "Κωδικός"
 
-#: plinth/modules/backups/forms.py:121
+#: plinth/modules/backups/forms.py:125
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Κωδικός πρόσβασης. Απαιτείται μόνο όταν χρησιμοποιείται κρυπτογράφηση."
 
-#: plinth/modules/backups/forms.py:124
+#: plinth/modules/backups/forms.py:128
 msgid "Confirm Passphrase"
 msgstr "Επιβεβαίωση κωδικού"
 
-#: plinth/modules/backups/forms.py:124
+#: plinth/modules/backups/forms.py:128
 msgid "Repeat the passphrase."
 msgstr "Επιβεβαίωση κωδικού."
 
-#: plinth/modules/backups/forms.py:135
+#: plinth/modules/backups/forms.py:139
 msgid "The entered encryption passphrases do not match"
 msgstr "Οι εισηγμένοι κωδικοί κρυπτογράφησης δεν ταιριάζουν"
 
-#: plinth/modules/backups/forms.py:139
+#: plinth/modules/backups/forms.py:143
 msgid "Passphrase is needed for encryption."
 msgstr "Απαιτείται κωδικός για την κρυπτογράφηση."
 
-#: plinth/modules/backups/forms.py:174
+#: plinth/modules/backups/forms.py:178
 msgid "Select Disk or Partition"
 msgstr "Επιλέξτε Δίσκο ή Διαμέρισμα του δίσκου"
 
-#: plinth/modules/backups/forms.py:175
+#: plinth/modules/backups/forms.py:179
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "Τα αντίγραφα ασφαλείας θα αποθηκευτούν στον κατάλογο FreedomBoxBackups"
 
-#: plinth/modules/backups/forms.py:184
+#: plinth/modules/backups/forms.py:188
 msgid "SSH Repository Path"
 msgstr "Μονοπάτι αποθετηρίου SSH"
 
-#: plinth/modules/backups/forms.py:185
+#: plinth/modules/backups/forms.py:189
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -255,11 +269,11 @@ msgstr ""
 "Το μονοπάτι από ένα νέο ή ένα υπάρχον αποθετήριο. Παράδειγμα: "
 "<i>χρήστης@υπολογιστής:~/μονοπάτι/για/το/αποθετήριο/</i>"
 
-#: plinth/modules/backups/forms.py:189
+#: plinth/modules/backups/forms.py:193
 msgid "SSH server password"
 msgstr "Κωδικός πρόσβασης διακομιστή SSH"
 
-#: plinth/modules/backups/forms.py:190
+#: plinth/modules/backups/forms.py:194
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -267,11 +281,11 @@ msgstr ""
 "Κωδικός πρόσβασης του διακομιστή SSH.<br />Ο έλεγχος ταυτότητας με κλειδί "
 "SSH δεν είναι ακόμα δυνατός."
 
-#: plinth/modules/backups/forms.py:209
+#: plinth/modules/backups/forms.py:213
 msgid "Remote backup repository already exists."
 msgstr "Το απομακρυσμένο αποθετήριο αντιγράφων ασφαλείας υπάρχει ήδη."
 
-#: plinth/modules/backups/forms.py:215
+#: plinth/modules/backups/forms.py:219
 msgid "Select verified SSH public key"
 msgstr "Επιλογή εξακριβωμένου δημόσιου κλειδιού SSH"
 
@@ -376,13 +390,6 @@ msgstr "Δημιουργία Αποθετηρίου"
 msgid "Delete this archive permanently?"
 msgstr "Διαγράψτε αυτό το αρχείο μόνιμα;"
 
-#: plinth/modules/backups/templates/backups_delete.html:18
-#: plinth/modules/ikiwiki/forms.py:15
-#: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/sharing/templates/sharing.html:37
-msgid "Name"
-msgstr "Όνομα"
-
 #: plinth/modules/backups/templates/backups_delete.html:19
 msgid "Time"
 msgstr "Ώρα"
@@ -432,7 +439,7 @@ msgstr "Λήψη"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
-#: plinth/modules/backups/views.py:154
+#: plinth/modules/backups/views.py:155
 msgid "Restore"
 msgstr "Επαναφορά"
 
@@ -558,88 +565,88 @@ msgstr "Επαλήθευση υπολογιστή"
 msgid "Archive created."
 msgstr "Το αρχείο δημιουργήθηκε."
 
-#: plinth/modules/backups/views.py:82
+#: plinth/modules/backups/views.py:83
 msgid "Delete Archive"
 msgstr "Διαγραφή αρχείου"
 
-#: plinth/modules/backups/views.py:94
+#: plinth/modules/backups/views.py:95
 msgid "Archive deleted."
 msgstr "Το αρχείο διαγράφηκε."
 
-#: plinth/modules/backups/views.py:107
+#: plinth/modules/backups/views.py:108
 msgid "Upload and restore a backup"
 msgstr "Ανεβάστε και επαναφέρετε ένα αντίγραφο ασφαλείας"
 
-#: plinth/modules/backups/views.py:142
+#: plinth/modules/backups/views.py:143
 msgid "Restored files from backup."
 msgstr "Επαναφορά αρχείων από τα αντίγραφα ασφαλείας."
 
-#: plinth/modules/backups/views.py:169
+#: plinth/modules/backups/views.py:170
 msgid "No backup file found."
 msgstr "Δεν βρέθηκε αντίγραφο ασφαλείας."
 
-#: plinth/modules/backups/views.py:177
+#: plinth/modules/backups/views.py:178
 msgid "Restore from uploaded file"
 msgstr "Επαναφορά από το αρχείο που ανεβάσατε"
 
-#: plinth/modules/backups/views.py:234
+#: plinth/modules/backups/views.py:235
 msgid "No additional disks available to add a repository."
 msgstr ""
 "Δεν υπάρχουν επιπλέον δίσκοι διαθέσιμοι για να προσθέσετε ένα αποθετήριο."
 
-#: plinth/modules/backups/views.py:242
+#: plinth/modules/backups/views.py:243
 msgid "Create backup repository"
 msgstr "Δημιουργία αποθετηρίου αντιγράφων ασφαλείας"
 
-#: plinth/modules/backups/views.py:269
+#: plinth/modules/backups/views.py:270
 msgid "Create remote backup repository"
 msgstr "Δημιουργία απομακρυσμένου αποθετηρίου αντιγράφων ασφαλείας"
 
-#: plinth/modules/backups/views.py:288
+#: plinth/modules/backups/views.py:289
 msgid "Added new remote SSH repository."
 msgstr "Προστέθηκε νέο απομακρυσμένο αποθετήριο SSH."
 
-#: plinth/modules/backups/views.py:310
+#: plinth/modules/backups/views.py:311
 msgid "Verify SSH hostkey"
 msgstr "Επιβεβαίωση κεντρικού κλειδιού SSH"
 
-#: plinth/modules/backups/views.py:336
+#: plinth/modules/backups/views.py:337
 msgid "SSH host already verified."
 msgstr "Ο υπολογιστής SSH έχει ήδη επαληθευτεί."
 
-#: plinth/modules/backups/views.py:346
+#: plinth/modules/backups/views.py:347
 msgid "SSH host verified."
 msgstr "Ο υπολογιστής SSH επιβεβαιώθηκε."
 
-#: plinth/modules/backups/views.py:360
+#: plinth/modules/backups/views.py:361
 msgid "SSH host public key could not be verified."
 msgstr "Το δημόσιο κλειδί του υπολογιστή SSH δεν μπόρεσε να επαληθευτεί."
 
-#: plinth/modules/backups/views.py:362
+#: plinth/modules/backups/views.py:363
 msgid "Authentication to remote server failed."
 msgstr "Ο έλεγχος ταυτότητας στον απομακρυσμένο διακομιστή απέτυχε."
 
-#: plinth/modules/backups/views.py:364
+#: plinth/modules/backups/views.py:365
 msgid "Error establishing connection to server: {}"
 msgstr "Σφάλμα κατά τη δημιουργία σύνδεσης στο διακομιστή: {}"
 
-#: plinth/modules/backups/views.py:375
+#: plinth/modules/backups/views.py:376
 msgid "Repository removed."
 msgstr "Το αποθετήριο αφαιρέθηκε."
 
-#: plinth/modules/backups/views.py:389
+#: plinth/modules/backups/views.py:390
 msgid "Remove Repository"
 msgstr "Κατάργηση αποθετηρίου"
 
-#: plinth/modules/backups/views.py:398
+#: plinth/modules/backups/views.py:399
 msgid "Repository removed. Backups were not deleted."
 msgstr "Αποθετήριο που καταργήθηκε. Τα αντίγραφα ασφαλείας δεν διαγράφηκαν."
 
-#: plinth/modules/backups/views.py:408
+#: plinth/modules/backups/views.py:409
 msgid "Unmounting failed!"
 msgstr "Η αφαίρεση δίσκου απέτυχε!"
 
-#: plinth/modules/backups/views.py:423 plinth/modules/backups/views.py:427
+#: plinth/modules/backups/views.py:424 plinth/modules/backups/views.py:428
 msgid "Mounting failed"
 msgstr "Η προσθήκη δίσκου απέτυχε"
 
@@ -730,8 +737,8 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/openvpn/views.py:133 plinth/modules/pagekite/forms.py:90
-#: plinth/modules/quassel/views.py:30 plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
+#: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Η ρύθμιση παραμέτρων Ενημερώθηκε"
@@ -751,6 +758,14 @@ msgstr ""
 "παρέχει λειτουργίες κονσόλας σε ένα τερματικό στο πρόγραμμα περιήγησης ιστού."
 
 #: plinth/modules/cockpit/__init__.py:38
+msgid ""
+"Cockpit can be used to perform advanced storage operations such as disk "
+"partitioning and RAID management. It can also be used for opening custom "
+"firewall ports and advanced networking such as bonding, bridging and VLAN "
+"management."
+msgstr ""
+
+#: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -759,7 +774,7 @@ msgstr ""
 "To πρόγραμμα είναι προσβάσιμο στο URL <a href=\"{users_url}\"> από "
 "οποιοσδήποτε χρήστης </a> στο {box_name} που ανήκει στην ομάδα διαχειριστών."
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:47
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
@@ -768,12 +783,12 @@ msgstr ""
 "λειτουργήσει όταν αποκτάτε πρόσβαση χρησιμοποιώντας μια διεύθυνση IP ως "
 "μέρος της διεύθυνσης URL."
 
-#: plinth/modules/cockpit/__init__.py:59 plinth/modules/cockpit/manifest.py:12
+#: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:12
 #: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:61
+#: plinth/modules/cockpit/__init__.py:66
 msgid "Server Administration"
 msgstr "Διαχείριση διακομιστή"
 
@@ -1502,8 +1517,8 @@ msgstr "Σχετικά με"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:24
-#: plinth/modules/openvpn/templates/openvpn.html:45
+#: plinth/modules/openvpn/templates/openvpn.html:28
+#: plinth/modules/openvpn/templates/openvpn.html:49
 #: plinth/modules/tor/templates/tor.html:22
 #: plinth/modules/tor/templates/tor.html:36
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
@@ -1650,17 +1665,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Firewall (τείχος προστασίας)"
 
-#: plinth/modules/firewall/components.py:124
+#: plinth/modules/firewall/components.py:133
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Θύρα {name} ({details}) διαθέσιμη για εσωτερικά δίκτυα"
 
-#: plinth/modules/firewall/components.py:132
+#: plinth/modules/firewall/components.py:141
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Η θύρα {name} ({details}) είναι διαθέσιμη για εξωτερικά δίκτυα"
 
-#: plinth/modules/firewall/components.py:137
+#: plinth/modules/firewall/components.py:146
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Η θύρα {name} ({details}) δεν είναι διαθέσιμη για εξωτερικά δίκτυα"
@@ -1724,6 +1739,18 @@ msgstr ""
 "Η λειτουργία του τείχους προστασίας είναι αυτόματη. Όταν ενεργοποιείτε μια "
 "υπηρεσία, επιτρέπεται επίσης στο τείχος προστασίας και όταν απενεργοποιείτε "
 "μια υπηρεσία είναι επίσης απενεργοποιημένη στο τείχος προστασίας."
+
+#: plinth/modules/firewall/templates/firewall.html:96
+#: plinth/modules/networks/templates/networks_configuration.html:49
+#: plinth/modules/storage/templates/storage.html:91
+msgid "Advanced"
+msgstr ""
+
+#: plinth/modules/firewall/templates/firewall.html:98
+msgid ""
+"Advanced firewall operations such as opening custom ports are provided by "
+"the <a href=\"/_cockpit/network/firewall\">Cockpit</a> app."
+msgstr ""
 
 #: plinth/modules/first_boot/forms.py:14
 #, python-brace-format
@@ -2812,28 +2839,16 @@ msgstr ""
 "εάν είναι ενεργοποιημένη η δημόσια εγγραφή."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        The configured domain name is using a self-signed certificate.\n"
-#| "        Federation with other Matrix Synapse instances requires a valid "
-#| "TLS\n"
-#| "        certificate. Please go to <a href=\"%(letsencrypt_url)s\">Let's\n"
-#| "        Encrypt</a> to obtain one.\n"
-#| "      "
+#, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
-"\n"
-"        Το διαμορφωμένο όνομα τομέα χρησιμοποιεί πιστοποιητικό που έχει "
-"υπογραφεί αυτόματα.\n"
-"        Η ομοσπονδία με άλλους διακομιστές Synapse Matrix απαιτεί έγκυρο "
-"TLS\n"
-"        πιστοποιητικό. Μεταβείτε στη διεύθυνση <a href=\"%(letsencrypt_url)s"
-"\"> Lets Encrypt </a> για να αποκτήσετε ένα.\n"
-"      "
+"Το διαμορφωμένο όνομα τομέα χρησιμοποιεί πιστοποιητικό που έχει υπογραφεί "
+"αυτόματα. Η ομοσπονδία με άλλους διακομιστές Synapse Matrix απαιτεί έγκυρο "
+"TLS πιστοποιητικό. Μεταβείτε στη διεύθυνση <a href=\"%(letsencrypt_url)s\"> "
+"Lets Encrypt </a> για να αποκτήσετε ένα."
 
 #: plinth/modules/matrixsynapse/views.py:86
 msgid "Public registration enabled"
@@ -3079,6 +3094,10 @@ msgstr ""
 msgid "Media streaming server"
 msgstr "Διακομιστής ροής πολυμέσων"
 
+#: plinth/modules/minidlna/__init__.py:47
+msgid "MiniDLNA"
+msgstr ""
+
 #: plinth/modules/minidlna/__init__.py:48
 msgid "Simple Media Server"
 msgstr "Απλός διακομιστής πολυμέσων"
@@ -3124,7 +3143,7 @@ msgstr "Ο καθορισμένος κατάλογος δεν υπάρχει."
 msgid "Updated media directory"
 msgstr "O κατάλογος πολυμέσων ενημερώθηκε"
 
-#: plinth/modules/mldonkey/__init__.py:26
+#: plinth/modules/mldonkey/__init__.py:27
 msgid ""
 "MLDonkey is a peer-to-peer file sharing application used to exchange large "
 "files. It can participate in multiple peer-to-peer networks including "
@@ -3135,7 +3154,7 @@ msgstr ""
 "πολλαπλά ομότιμα (peer-to-peer) δίκτυα όπως το eDonkey, Kademlia, Overnet, "
 "BitTorrent και DirectConnect."
 
-#: plinth/modules/mldonkey/__init__.py:29
+#: plinth/modules/mldonkey/__init__.py:30
 msgid ""
 "Users belonging to admin and ed2k group can control it through the web "
 "interface. Users in the admin group can also control it through any of the "
@@ -3146,7 +3165,7 @@ msgstr ""
 "να το ελέγξουν μέσω οποιουδήποτε ξεχωριστού κινητού ή επιτραπέζιου "
 "υπολογιστή ή μιας διασύνδεσης Telnet. Δείτε το εγχειρίδιο."
 
-#: plinth/modules/mldonkey/__init__.py:34
+#: plinth/modules/mldonkey/__init__.py:35
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
@@ -3154,16 +3173,16 @@ msgstr ""
 "Στο {box_name}, τα ληφθέντα αρχεία μπορούν να βρεθούν στον κατάλογο/var/lib/"
 "mldonkey/."
 
-#: plinth/modules/mldonkey/__init__.py:50
+#: plinth/modules/mldonkey/__init__.py:53
 msgid "Download files using eDonkey applications"
 msgstr "Λήψη αρχείων με χρήση των εφαρμογών eDonkey"
 
-#: plinth/modules/mldonkey/__init__.py:53
+#: plinth/modules/mldonkey/__init__.py:56
 #: plinth/modules/mldonkey/manifest.py:12
 msgid "MLDonkey"
 msgstr "MLDonkey"
 
-#: plinth/modules/mldonkey/__init__.py:55
+#: plinth/modules/mldonkey/__init__.py:58
 msgid "Peer-to-peer File Sharing"
 msgstr "Διαμοιρασμός αρχείων σε ομότιμο δίκτυο (peer-to-peer)"
 
@@ -4199,6 +4218,12 @@ msgid ""
 "are no other devices on the network."
 msgstr ""
 
+#: plinth/modules/networks/templates/networks_configuration.html:51
+msgid ""
+"Advanced networking operations such as bonding, bridging and VLAN management "
+"are provided by the <a href=\"/_cockpit/network\">Cockpit</a> app."
+msgstr ""
+
 #: plinth/modules/networks/templates/router_configuration_content.html:10
 #, fuzzy, python-format
 #| msgid "%(box_name)s is up to date."
@@ -4336,24 +4361,20 @@ msgstr ""
 "επίσης να αποκτήσετε πρόσβαση στο υπόλοιπο Internet μέσω του {box_name} για "
 "πρόσθετη ασφάλεια και ανωνυμία."
 
-#: plinth/modules/openvpn/__init__.py:49 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:50
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:53
 msgid "Virtual Private Network"
 msgstr "Εικονικό ιδιωτικό δίκτυο"
 
-#: plinth/modules/openvpn/__init__.py:61
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
 msgstr "<a class=\"btn btn-primary btn-sm\" href=\"{link}\"> Λήψη προφίλ </a>"
-
-#: plinth/modules/openvpn/forms.py:12
-msgid "Enable OpenVPN server"
-msgstr "Ενεργοποίηση διακομιστή OpenVPN"
 
 #: plinth/modules/openvpn/manifest.py:48
 #, fuzzy
@@ -4361,7 +4382,7 @@ msgstr "Ενεργοποίηση διακομιστή OpenVPN"
 msgid "Tunnelblick"
 msgstr "TunnelBlick"
 
-#: plinth/modules/openvpn/templates/openvpn.html:27
+#: plinth/modules/openvpn/templates/openvpn.html:31
 #, python-format
 msgid ""
 "OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
@@ -4373,15 +4394,15 @@ msgstr ""
 "να χρειαστούν και ώρες.  Εάν η ρύθμιση διακοπεί, μπορείτε να την ξεκινήσετε "
 "ξανά."
 
-#: plinth/modules/openvpn/templates/openvpn.html:40
+#: plinth/modules/openvpn/templates/openvpn.html:44
 msgid "Start setup"
 msgstr "Έναρξη εγκατάστασης"
 
-#: plinth/modules/openvpn/templates/openvpn.html:49
+#: plinth/modules/openvpn/templates/openvpn.html:53
 msgid "OpenVPN setup is running"
 msgstr "Η εγκατάσταση του OpenVPN εκτελείται"
 
-#: plinth/modules/openvpn/templates/openvpn.html:53
+#: plinth/modules/openvpn/templates/openvpn.html:57
 #, python-format
 msgid ""
 "To perform a secure setup, this process takes a very long time.  Depending "
@@ -4423,20 +4444,15 @@ msgstr ""
 msgid "Download my profile"
 msgstr "Λήψη του προφίλ μου"
 
-#: plinth/modules/openvpn/views.py:113
+#: plinth/modules/openvpn/views.py:87
 msgid "Setup completed."
 msgstr "Η εγκατάσταση ολοκληρώθηκε."
 
-#: plinth/modules/openvpn/views.py:115
+#: plinth/modules/openvpn/views.py:89
 msgid "Setup failed."
 msgstr "Η εγκατάσταση απέτυχε."
 
-#: plinth/modules/openvpn/views.py:135 plinth/modules/tor/views.py:136
-#: plinth/views.py:196
-msgid "Setting unchanged"
-msgstr "Οι ρυθμίσεις δεν άλλαξαν"
-
-#: plinth/modules/pagekite/__init__.py:27
+#: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4449,19 +4465,19 @@ msgstr ""
 "υπηρεσίες δεν είναι προσβάσιμες από το υπόλοιπο Internet. Αυτό περιλαμβάνει "
 "τις ακόλουθες καταστάσεις:"
 
-#: plinth/modules/pagekite/__init__.py:32
+#: plinth/modules/pagekite/__init__.py:33
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "το {box_name} βρίσκεται πίσω από ένα περιορισμένο τείχος προστασίας."
 
-#: plinth/modules/pagekite/__init__.py:35
+#: plinth/modules/pagekite/__init__.py:36
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "το {box_name} είναι συνδεδεμένο σε έναν (ασύρματο) δρομολογητή, τον οποίο "
 "δεν ελέγχετε."
 
-#: plinth/modules/pagekite/__init__.py:37
+#: plinth/modules/pagekite/__init__.py:38
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4469,7 +4485,7 @@ msgstr ""
 "Ο παροχέας ιντερνετ δεν σας παρέχει εξωτερική διεύθυνση IP και αντίθετα "
 "παρέχει σύνδεση στο Internet μέσω δικτύου NAT."
 
-#: plinth/modules/pagekite/__init__.py:39
+#: plinth/modules/pagekite/__init__.py:40
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4477,11 +4493,11 @@ msgstr ""
 "Ο παροχέας ιντερνετ δεν σας παρέχει μια στατική διεύθυνση IP και η διεύθυνση "
 "IP αλλάζει κάθε φορά που συνδέεστε στο Internet."
 
-#: plinth/modules/pagekite/__init__.py:41
+#: plinth/modules/pagekite/__init__.py:42
 msgid "Your ISP limits incoming connections."
 msgstr "Ο παροχέας ιντερνετ περιορίζει τις εισερχόμενες συνδέσεις."
 
-#: plinth/modules/pagekite/__init__.py:43
+#: plinth/modules/pagekite/__init__.py:44
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP address limitations by using a "
@@ -4495,15 +4511,15 @@ msgstr ""
 "παράδειγμα <a href=\"https://pagekite.net\"> pagekite.net </a>. Στο μέλλον "
 "μπορεί να είναι δυνατή η χρήση του {box_name} ενός φίλου σας για αυτό."
 
-#: plinth/modules/pagekite/__init__.py:63
+#: plinth/modules/pagekite/__init__.py:64
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:65
+#: plinth/modules/pagekite/__init__.py:66
 msgid "Public Visibility"
 msgstr "Δημόσια ορατότητα"
 
-#: plinth/modules/pagekite/__init__.py:75
+#: plinth/modules/pagekite/__init__.py:76
 msgid "PageKite Domain"
 msgstr "Όνομα διαδικτύου Pagekite"
 
@@ -4817,12 +4833,18 @@ msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
 #: plinth/modules/radicale/__init__.py:33
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
+#| "sharing of scheduling and contact data. To use Radicale, a <a href="
+#| "\"http://radicale.org/clients/\">supported client application</a> is "
+#| "needed. Radicale can be accessed by any user with a {box_name} login."
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
-"sharing of scheduling and contact data. To use Radicale, a <a href=\"http://"
-"radicale.org/clients/\">supported client application</a> is needed. Radicale "
-"can be accessed by any user with a {box_name} login."
+"sharing of scheduling and contact data. To use Radicale, a <a href=\"https://"
+"radicale.org/master.html#documentation/supported-clients\">supported client "
+"application</a> is needed. Radicale can be accessed by any user with a "
+"{box_name} login."
 msgstr ""
 "Το Radicale είναι διακομιστής CalDAV και CardDAV. Αυτό επιτρέπει το "
 "συγχρονισμό και την κοινή χρήση μερολογίου και των επαφών. Για να "
@@ -4830,7 +4852,7 @@ msgstr ""
 "clients/\">πελάτη</a> . Το Radicale μπορεί να προσεγγιστεί από οποιονδήποτε "
 "χρήστη με {box_name} πιστοποιητικά."
 
-#: plinth/modules/radicale/__init__.py:38
+#: plinth/modules/radicale/__init__.py:39
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
@@ -4841,12 +4863,12 @@ msgstr ""
 "γεγονότων ή επαφών, το οποίο πρέπει να γίνει χρησιμοποιώντας ένα ξεχωριστό "
 "πελάτη."
 
-#: plinth/modules/radicale/__init__.py:61
+#: plinth/modules/radicale/__init__.py:62
 #: plinth/modules/radicale/manifest.py:75
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:62
+#: plinth/modules/radicale/__init__.py:63
 msgid "Calendar and Addressbook"
 msgstr "Ημερολόγιο και βιβλίο διευθύνσεων"
 
@@ -5041,6 +5063,30 @@ msgstr "Samba"
 #| msgid "Distributed File Storage"
 msgid "Network File Storage"
 msgstr "Διανεμημένος χώρος αποθήκευσης αρχείων"
+
+#: plinth/modules/samba/manifest.py:15
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Android Samba Client"
+msgstr "Πελάτης IRC"
+
+#: plinth/modules/samba/manifest.py:28
+msgid "Ghost Commander - Samba plugin"
+msgstr ""
+
+#: plinth/modules/samba/manifest.py:42
+msgid "VLC media player"
+msgstr ""
+
+#: plinth/modules/samba/manifest.py:56
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "GNOME Files"
+msgstr "GNOME Calendar"
+
+#: plinth/modules/samba/manifest.py:68
+msgid "Dolphin"
+msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:24
 #: plinth/modules/samba/templates/samba.html:35
@@ -6035,6 +6081,12 @@ msgstr ""
 msgid "Expand Root Partition"
 msgstr "Επεκτείνετε το διαμέρισμα root"
 
+#: plinth/modules/storage/templates/storage.html:93
+msgid ""
+"Advanced storage operations such as disk partitioning and RAID management "
+"are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
+msgstr ""
+
 #: plinth/modules/storage/templates/storage_expand.html:14
 #, python-format
 msgid ""
@@ -6393,6 +6445,10 @@ msgstr "SOCKS"
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Μια θύρα Tor SOCKS είναι διαθέσιμη στη θύρα 9050 του %(box_name)s σας."
+
+#: plinth/modules/tor/views.py:136 plinth/views.py:196
+msgid "Setting unchanged"
+msgstr "Οι ρυθμίσεις δεν άλλαξαν"
 
 #: plinth/modules/transmission/__init__.py:28
 msgid ""
@@ -7455,8 +7511,11 @@ msgid "Mailing list"
 msgstr "Λίστα ηλεκτρονικού ταχυδρομείου"
 
 #: plinth/templates/internal-zone.html:11
-#, python-format
-msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, fuzzy, python-format
+#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+msgid ""
+"<em>%(service_name)s</em> is available only on internal networks or when the "
+"client is connected to %(box_name)s through VPN."
 msgstr ""
 "Η υπηρεσία <em>%(service_name)s</em> είναι διαθέσιμη μόνο σε εσωτερικά "
 "δίκτυα."
@@ -7543,6 +7602,9 @@ msgstr "ολοκληρώθηκε το %(percentage)s%%"
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Enable OpenVPN server"
+#~ msgstr "Ενεργοποίηση διακομιστή OpenVPN"
 
 #~ msgid "active"
 #~ msgstr "Ενεργό"

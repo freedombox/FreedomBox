@@ -4,6 +4,7 @@ App component for other apps to use firewall functionality.
 """
 
 import logging
+import re
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -100,8 +101,16 @@ class Firewall(app.FollowerComponent):
 
     @staticmethod
     def get_internal_interfaces():
-        """Returns a list of interfaces in a firewall zone."""
-        return firewall.get_interfaces('internal')
+        """Returns a list of interfaces in a firewall zone.
+
+        Filter out tun interfaces as they are always assumed to be internal
+        interfaces.
+
+        """
+        return [
+            interface for interface in firewall.get_interfaces('internal')
+            if not re.fullmatch(r'tun\d+', interface)
+        ]
 
     def diagnose(self):
         """Check if the firewall ports are open and only as expected.

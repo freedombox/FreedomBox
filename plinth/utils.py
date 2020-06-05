@@ -149,4 +149,10 @@ def is_axes_old():
 
     """
     import axes
-    return LooseVersion(axes.get_version()) < LooseVersion('5.0')
+    try:
+        version = axes.get_version()
+    except AttributeError:
+        # axes.get_version() was removed in 5.0.13
+        return False
+
+    return LooseVersion(version) < LooseVersion('5.0')

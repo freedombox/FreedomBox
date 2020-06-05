@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-18 18:36-0400\n"
+"POT-Creation-Date: 2020-06-01 17:44-0400\n"
 "PO-Revision-Date: 2020-01-17 21:21+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -152,53 +152,67 @@ msgid "{app} (No data to backup)"
 msgstr "{app} (geen gegevens voor back-up)"
 
 #: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/templates/backups_delete.html:18
+#: plinth/modules/ikiwiki/forms.py:15
+#: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/sharing/templates/sharing.html:37
+msgid "Name"
+msgstr "Naam"
+
+#: plinth/modules/backups/forms.py:53
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "(Optional) Set a name for this backup archive"
+msgstr "Naam voor nieuw back-uparchief."
+
+#: plinth/modules/backups/forms.py:56
 msgid "Included apps"
 msgstr "Meegeleverde applicaties"
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:56
 msgid "Apps to include in the backup"
 msgstr "Applicaties die in de back-up moeten worden opgenomen"
 
-#: plinth/modules/backups/forms.py:66
+#: plinth/modules/backups/forms.py:70
 msgid "Select the apps you want to restore"
 msgstr "Selecteer de te herstellen applicaties"
 
-#: plinth/modules/backups/forms.py:79
+#: plinth/modules/backups/forms.py:83
 msgid "Upload File"
 msgstr "Bestand uploaden"
 
-#: plinth/modules/backups/forms.py:81
+#: plinth/modules/backups/forms.py:85
 msgid "Backup files have to be in .tar.gz format"
 msgstr "Back-up bestanden moeten in .tar.gz formaat zijn"
 
-#: plinth/modules/backups/forms.py:82
+#: plinth/modules/backups/forms.py:86
 msgid "Select the backup file you want to upload"
 msgstr "Selecteer het back-upbestand dat u wilt uploaden"
 
-#: plinth/modules/backups/forms.py:88
+#: plinth/modules/backups/forms.py:92
 msgid "Repository path format incorrect."
 msgstr "Repository pad-indeling is onjuist."
 
-#: plinth/modules/backups/forms.py:95
+#: plinth/modules/backups/forms.py:99
 #, python-brace-format
 msgid "Invalid username: {username}"
 msgstr "Ongeldige gebruikersnaam: {username}"
 
-#: plinth/modules/backups/forms.py:105
+#: plinth/modules/backups/forms.py:109
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
 msgstr "Ongeldige hostnaam: {hostname}"
 
-#: plinth/modules/backups/forms.py:109
+#: plinth/modules/backups/forms.py:113
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
 msgstr "Ongeldig pad: {dir_path}"
 
-#: plinth/modules/backups/forms.py:115
+#: plinth/modules/backups/forms.py:119
 msgid "Encryption"
 msgstr "Encryptie"
 
-#: plinth/modules/backups/forms.py:116
+#: plinth/modules/backups/forms.py:120
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -206,43 +220,43 @@ msgstr ""
 "\"Sleutel in archief\" wil zeggen dat een sleutel, beschermd met een "
 "wachtwoord, is opgeslagen in de backup."
 
-#: plinth/modules/backups/forms.py:120 plinth/modules/networks/forms.py:262
+#: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:262
 msgid "Passphrase"
 msgstr "Wachtwoordzin"
 
-#: plinth/modules/backups/forms.py:121
+#: plinth/modules/backups/forms.py:125
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Wachtwoordzin; Alleen nodig bij het gebruik van versleuteling."
 
-#: plinth/modules/backups/forms.py:124
+#: plinth/modules/backups/forms.py:128
 msgid "Confirm Passphrase"
 msgstr "Wachtwoordzin bevestigen"
 
-#: plinth/modules/backups/forms.py:124
+#: plinth/modules/backups/forms.py:128
 msgid "Repeat the passphrase."
 msgstr "Herhaal de wachtwoordzin."
 
-#: plinth/modules/backups/forms.py:135
+#: plinth/modules/backups/forms.py:139
 msgid "The entered encryption passphrases do not match"
 msgstr "De ingevoerde coderingswachtwoorden komen niet overeen"
 
-#: plinth/modules/backups/forms.py:139
+#: plinth/modules/backups/forms.py:143
 msgid "Passphrase is needed for encryption."
 msgstr "Wachtwoordzin is nodig voor versleuteling."
 
-#: plinth/modules/backups/forms.py:174
+#: plinth/modules/backups/forms.py:178
 msgid "Select Disk or Partition"
 msgstr "Schijf of partitie selecteren"
 
-#: plinth/modules/backups/forms.py:175
+#: plinth/modules/backups/forms.py:179
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "Back-ups worden opgeslagen in de map FreedomBoxBackups"
 
-#: plinth/modules/backups/forms.py:184
+#: plinth/modules/backups/forms.py:188
 msgid "SSH Repository Path"
 msgstr "SSH Repository Pad"
 
-#: plinth/modules/backups/forms.py:185
+#: plinth/modules/backups/forms.py:189
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -250,11 +264,11 @@ msgstr ""
 "Pad naar een nieuwe of bestaande repository.Voorbeeld: <i>user@host:~/pad/"
 "naar/repo/</i>"
 
-#: plinth/modules/backups/forms.py:189
+#: plinth/modules/backups/forms.py:193
 msgid "SSH server password"
 msgstr "SSH-server wachtwoord"
 
-#: plinth/modules/backups/forms.py:190
+#: plinth/modules/backups/forms.py:194
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -262,11 +276,11 @@ msgstr ""
 "Wachtwoord van de SSH Server.<br />SSH-sleutel-gebaseerde authenticatie is "
 "nog niet mogelijk."
 
-#: plinth/modules/backups/forms.py:209
+#: plinth/modules/backups/forms.py:213
 msgid "Remote backup repository already exists."
 msgstr "Externe backup repository bestaat al."
 
-#: plinth/modules/backups/forms.py:215
+#: plinth/modules/backups/forms.py:219
 msgid "Select verified SSH public key"
 msgstr "Selecteer geverifieerde SSH openbare sleutel"
 
@@ -365,13 +379,6 @@ msgstr "Maak Repository"
 msgid "Delete this archive permanently?"
 msgstr "Dit archief permanent verwijderen?"
 
-#: plinth/modules/backups/templates/backups_delete.html:18
-#: plinth/modules/ikiwiki/forms.py:15
-#: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/sharing/templates/sharing.html:37
-msgid "Name"
-msgstr "Naam"
-
 #: plinth/modules/backups/templates/backups_delete.html:19
 msgid "Time"
 msgstr "Tijd"
@@ -421,7 +428,7 @@ msgstr "downloaden"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
-#: plinth/modules/backups/views.py:154
+#: plinth/modules/backups/views.py:155
 msgid "Restore"
 msgstr "Herstellen"
 
@@ -527,87 +534,87 @@ msgstr ""
 msgid "Archive created."
 msgstr "Archief aangemaakt."
 
-#: plinth/modules/backups/views.py:82
+#: plinth/modules/backups/views.py:83
 msgid "Delete Archive"
 msgstr "Archief verwijderen"
 
-#: plinth/modules/backups/views.py:94
+#: plinth/modules/backups/views.py:95
 msgid "Archive deleted."
 msgstr "Archief verwijderd."
 
-#: plinth/modules/backups/views.py:107
+#: plinth/modules/backups/views.py:108
 msgid "Upload and restore a backup"
 msgstr "Een back-up uploaden en herstellen"
 
-#: plinth/modules/backups/views.py:142
+#: plinth/modules/backups/views.py:143
 msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:169
+#: plinth/modules/backups/views.py:170
 msgid "No backup file found."
 msgstr "Er is geen back-upbestand gevonden."
 
-#: plinth/modules/backups/views.py:177
+#: plinth/modules/backups/views.py:178
 msgid "Restore from uploaded file"
 msgstr ""
 
-#: plinth/modules/backups/views.py:234
+#: plinth/modules/backups/views.py:235
 msgid "No additional disks available to add a repository."
 msgstr ""
 
-#: plinth/modules/backups/views.py:242
+#: plinth/modules/backups/views.py:243
 msgid "Create backup repository"
 msgstr "Maak een back-up repository"
 
-#: plinth/modules/backups/views.py:269
+#: plinth/modules/backups/views.py:270
 msgid "Create remote backup repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:288
+#: plinth/modules/backups/views.py:289
 msgid "Added new remote SSH repository."
 msgstr "Nieuwe externe SSH-repository toegevoegd."
 
-#: plinth/modules/backups/views.py:310
+#: plinth/modules/backups/views.py:311
 msgid "Verify SSH hostkey"
 msgstr ""
 
-#: plinth/modules/backups/views.py:336
+#: plinth/modules/backups/views.py:337
 msgid "SSH host already verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:346
+#: plinth/modules/backups/views.py:347
 msgid "SSH host verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:360
+#: plinth/modules/backups/views.py:361
 msgid "SSH host public key could not be verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:362
+#: plinth/modules/backups/views.py:363
 msgid "Authentication to remote server failed."
 msgstr ""
 
-#: plinth/modules/backups/views.py:364
+#: plinth/modules/backups/views.py:365
 msgid "Error establishing connection to server: {}"
 msgstr "Fout bij het tot stand brengen van een verbinding met de server: {}"
 
-#: plinth/modules/backups/views.py:375
+#: plinth/modules/backups/views.py:376
 msgid "Repository removed."
 msgstr "Repository verwijderd."
 
-#: plinth/modules/backups/views.py:389
+#: plinth/modules/backups/views.py:390
 msgid "Remove Repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:398
+#: plinth/modules/backups/views.py:399
 msgid "Repository removed. Backups were not deleted."
 msgstr ""
 
-#: plinth/modules/backups/views.py:408
+#: plinth/modules/backups/views.py:409
 msgid "Unmounting failed!"
 msgstr ""
 
-#: plinth/modules/backups/views.py:423 plinth/modules/backups/views.py:427
+#: plinth/modules/backups/views.py:424 plinth/modules/backups/views.py:428
 msgid "Mounting failed"
 msgstr ""
 
@@ -695,8 +702,8 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/openvpn/views.py:133 plinth/modules/pagekite/forms.py:90
-#: plinth/modules/quassel/views.py:30 plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
+#: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Configuratie bijgewerkt"
@@ -715,6 +722,14 @@ msgstr ""
 "Er is ook een webgebaseerde terminal beschikbaar voor consoleactiviteiten."
 
 #: plinth/modules/cockpit/__init__.py:38
+msgid ""
+"Cockpit can be used to perform advanced storage operations such as disk "
+"partitioning and RAID management. It can also be used for opening custom "
+"firewall ports and advanced networking such as bonding, bridging and VLAN "
+"management."
+msgstr ""
+
+#: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -723,18 +738,18 @@ msgstr ""
 "Het kan geraadpleegd worden door <a href=\"{users_url}\">iedere gebruiker</"
 "a> op {box_name} die lid is van de systeembeheerdergroep (admin)."
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:47
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:59 plinth/modules/cockpit/manifest.py:12
+#: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:12
 #: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:61
+#: plinth/modules/cockpit/__init__.py:66
 msgid "Server Administration"
 msgstr "Serverbeheer"
 
@@ -1439,8 +1454,8 @@ msgstr "Over"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:24
-#: plinth/modules/openvpn/templates/openvpn.html:45
+#: plinth/modules/openvpn/templates/openvpn.html:28
+#: plinth/modules/openvpn/templates/openvpn.html:49
 #: plinth/modules/tor/templates/tor.html:22
 #: plinth/modules/tor/templates/tor.html:36
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
@@ -1583,17 +1598,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Firewall"
 
-#: plinth/modules/firewall/components.py:124
+#: plinth/modules/firewall/components.py:133
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Poort {name} ({details}) is beschikbaar binnen interne netwerken"
 
-#: plinth/modules/firewall/components.py:132
+#: plinth/modules/firewall/components.py:141
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Poort {name} ({details})is beschikbaar voor externe netwerken"
 
-#: plinth/modules/firewall/components.py:137
+#: plinth/modules/firewall/components.py:146
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -1655,6 +1670,18 @@ msgstr ""
 "De firewall wordt automatisch ingesteld. Als een dienst wordt ingeschakeld "
 "wordt deze ook toegevoegd aan de firewall, en als een dienst wordt "
 "uitgeschakeld, gebeurt dit ook in de firewall."
+
+#: plinth/modules/firewall/templates/firewall.html:96
+#: plinth/modules/networks/templates/networks_configuration.html:49
+#: plinth/modules/storage/templates/storage.html:91
+msgid "Advanced"
+msgstr ""
+
+#: plinth/modules/firewall/templates/firewall.html:98
+msgid ""
+"Advanced firewall operations such as opening custom ports are provided by "
+"the <a href=\"/_cockpit/network/firewall\">Cockpit</a> app."
+msgstr ""
 
 #: plinth/modules/first_boot/forms.py:14
 #, fuzzy, python-brace-format
@@ -2929,6 +2956,10 @@ msgstr ""
 msgid "Media streaming server"
 msgstr ""
 
+#: plinth/modules/minidlna/__init__.py:47
+msgid "MiniDLNA"
+msgstr ""
+
 #: plinth/modules/minidlna/__init__.py:48
 #, fuzzy
 #| msgid "Mumble Voice Chat Server"
@@ -2971,36 +3002,36 @@ msgstr ""
 msgid "Updated media directory"
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:26
+#: plinth/modules/mldonkey/__init__.py:27
 msgid ""
 "MLDonkey is a peer-to-peer file sharing application used to exchange large "
 "files. It can participate in multiple peer-to-peer networks including "
 "eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:29
+#: plinth/modules/mldonkey/__init__.py:30
 msgid ""
 "Users belonging to admin and ed2k group can control it through the web "
 "interface. Users in the admin group can also control it through any of the "
 "separate mobile or desktop front-ends or a telnet interface. See manual."
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:34
+#: plinth/modules/mldonkey/__init__.py:35
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:50
+#: plinth/modules/mldonkey/__init__.py:53
 msgid "Download files using eDonkey applications"
 msgstr "Bestanden downloaden met eDonkey-toepassingen"
 
-#: plinth/modules/mldonkey/__init__.py:53
+#: plinth/modules/mldonkey/__init__.py:56
 #: plinth/modules/mldonkey/manifest.py:12
 msgid "MLDonkey"
 msgstr "MLDonkey"
 
-#: plinth/modules/mldonkey/__init__.py:55
+#: plinth/modules/mldonkey/__init__.py:58
 msgid "Peer-to-peer File Sharing"
 msgstr "Peer-to-peer bestandsdeling"
 
@@ -4026,6 +4057,12 @@ msgid ""
 "are no other devices on the network."
 msgstr ""
 
+#: plinth/modules/networks/templates/networks_configuration.html:51
+msgid ""
+"Advanced networking operations such as bonding, bridging and VLAN management "
+"are provided by the <a href=\"/_cockpit/network\">Cockpit</a> app."
+msgstr ""
+
 #: plinth/modules/networks/templates/router_configuration_content.html:10
 #, fuzzy, python-format
 #| msgid "%(box_name)s is up to date."
@@ -4161,31 +4198,27 @@ msgstr ""
 "mogelijk om de rest van het internetgebruik via {box_name} te leiden, voor "
 "meer veiligheid en anonimiteit."
 
-#: plinth/modules/openvpn/__init__.py:49 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:50
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:53
 msgid "Virtual Private Network"
 msgstr "Virtual Private Network"
 
-#: plinth/modules/openvpn/__init__.py:61
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
 msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\"> Download profiel</a>"
 
-#: plinth/modules/openvpn/forms.py:12
-msgid "Enable OpenVPN server"
-msgstr "OpenVPN server Inschakelen"
-
 #: plinth/modules/openvpn/manifest.py:48
 msgid "Tunnelblick"
 msgstr ""
 
-#: plinth/modules/openvpn/templates/openvpn.html:27
+#: plinth/modules/openvpn/templates/openvpn.html:31
 #, python-format
 msgid ""
 "OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
@@ -4196,15 +4229,15 @@ msgstr ""
 "Afhankelijk van de snelheid van %(box_name)s kan dit zelfs uren duren. Als "
 "de installatie wordt onderbroken, kan deze opnieuw gestart worden."
 
-#: plinth/modules/openvpn/templates/openvpn.html:40
+#: plinth/modules/openvpn/templates/openvpn.html:44
 msgid "Start setup"
 msgstr "Setup starten"
 
-#: plinth/modules/openvpn/templates/openvpn.html:49
+#: plinth/modules/openvpn/templates/openvpn.html:53
 msgid "OpenVPN setup is running"
 msgstr "OpenVPN setup draait"
 
-#: plinth/modules/openvpn/templates/openvpn.html:53
+#: plinth/modules/openvpn/templates/openvpn.html:57
 #, python-format
 msgid ""
 "To perform a secure setup, this process takes a very long time.  Depending "
@@ -4249,20 +4282,15 @@ msgstr ""
 msgid "Download my profile"
 msgstr "Download mijn profiel"
 
-#: plinth/modules/openvpn/views.py:113
+#: plinth/modules/openvpn/views.py:87
 msgid "Setup completed."
 msgstr "Instelling voltooid."
 
-#: plinth/modules/openvpn/views.py:115
+#: plinth/modules/openvpn/views.py:89
 msgid "Setup failed."
 msgstr "Instelling mislukt."
 
-#: plinth/modules/openvpn/views.py:135 plinth/modules/tor/views.py:136
-#: plinth/views.py:196
-msgid "Setting unchanged"
-msgstr "Instelling onveranderd"
-
-#: plinth/modules/pagekite/__init__.py:27
+#: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -4275,19 +4303,19 @@ msgstr ""
 "Dit is alleen vereist als de diensten op {box_name} niet te bereiken zijn "
 "vanaf de rest van internet. Dit is het geval in de volgende situaties:"
 
-#: plinth/modules/pagekite/__init__.py:32
+#: plinth/modules/pagekite/__init__.py:33
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} is verbonden achter een beperkende firewall."
 
-#: plinth/modules/pagekite/__init__.py:35
+#: plinth/modules/pagekite/__init__.py:36
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} is verbonden met een (wireless) router die niet onder eigen "
 "controle staat."
 
-#: plinth/modules/pagekite/__init__.py:37
+#: plinth/modules/pagekite/__init__.py:38
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -4295,7 +4323,7 @@ msgstr ""
 "De internetprovider geeft geen extern IP adres maar maakt gebruik van een "
 "NAT verbinding."
 
-#: plinth/modules/pagekite/__init__.py:39
+#: plinth/modules/pagekite/__init__.py:40
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4303,11 +4331,11 @@ msgstr ""
 "De internetprovider geeft geen statisch IP adres, en het IP adres verandert "
 "telkens wanneer u verbinding maakt met internet."
 
-#: plinth/modules/pagekite/__init__.py:41
+#: plinth/modules/pagekite/__init__.py:42
 msgid "Your ISP limits incoming connections."
 msgstr "De internetprovider beperkt inkomende verbindingen."
 
-#: plinth/modules/pagekite/__init__.py:43
+#: plinth/modules/pagekite/__init__.py:44
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -4327,15 +4355,15 @@ msgstr ""
 "\">pagekite.net</a>.  In de toekomst is het misschien mogelijk om de "
 "{box_name} van een van je vrienden te gebruiken."
 
-#: plinth/modules/pagekite/__init__.py:63
+#: plinth/modules/pagekite/__init__.py:64
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:65
+#: plinth/modules/pagekite/__init__.py:66
 msgid "Public Visibility"
 msgstr "Publieke zichtbaarheid"
 
-#: plinth/modules/pagekite/__init__.py:75
+#: plinth/modules/pagekite/__init__.py:76
 msgid "PageKite Domain"
 msgstr "PageKite domein"
 
@@ -4649,31 +4677,37 @@ msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
 #: plinth/modules/radicale/__init__.py:33
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
+#| "sharing of scheduling and contact data. To use Radicale, a <a href="
+#| "\"http://radicale.org/clients/\">supported client application</a> is "
+#| "needed. Radicale can be accessed by any user with a {box_name} login."
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
-"sharing of scheduling and contact data. To use Radicale, a <a href=\"http://"
-"radicale.org/clients/\">supported client application</a> is needed. Radicale "
-"can be accessed by any user with a {box_name} login."
+"sharing of scheduling and contact data. To use Radicale, a <a href=\"https://"
+"radicale.org/master.html#documentation/supported-clients\">supported client "
+"application</a> is needed. Radicale can be accessed by any user with a "
+"{box_name} login."
 msgstr ""
 "Radicale is een CalDAV en CardDAV server. Het biedt synchronisatie en delen "
 "van agenda- en contactgegevens. Om Radicale te gebruiken is een <a href="
 "\"http://radicale.org/clients\">ondersteunde clienttoepassing</a> nodig. "
 "Radicale kan worden benaderd door elke {box_name} gebruiker."
 
-#: plinth/modules/radicale/__init__.py:38
+#: plinth/modules/radicale/__init__.py:39
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
 "which must be done using a separate client."
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:61
+#: plinth/modules/radicale/__init__.py:62
 #: plinth/modules/radicale/manifest.py:75
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:62
+#: plinth/modules/radicale/__init__.py:63
 msgid "Calendar and Addressbook"
 msgstr "Agenda en Adresboek"
 
@@ -4854,6 +4888,30 @@ msgstr ""
 #| msgid "Network Time Server"
 msgid "Network File Storage"
 msgstr "Netwerktijdsserver"
+
+#: plinth/modules/samba/manifest.py:15
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Android Samba Client"
+msgstr "IRC Cliënt"
+
+#: plinth/modules/samba/manifest.py:28
+msgid "Ghost Commander - Samba plugin"
+msgstr ""
+
+#: plinth/modules/samba/manifest.py:42
+msgid "VLC media player"
+msgstr ""
+
+#: plinth/modules/samba/manifest.py:56
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "GNOME Files"
+msgstr "GNOME Kalender"
+
+#: plinth/modules/samba/manifest.py:68
+msgid "Dolphin"
+msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:24
 #: plinth/modules/samba/templates/samba.html:35
@@ -5826,6 +5884,12 @@ msgstr ""
 msgid "Expand Root Partition"
 msgstr "Root-partitie uitbreiden"
 
+#: plinth/modules/storage/templates/storage.html:93
+msgid ""
+"Advanced storage operations such as disk partitioning and RAID management "
+"are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
+msgstr ""
+
 #: plinth/modules/storage/templates/storage_expand.html:14
 #, python-format
 msgid ""
@@ -6193,6 +6257,10 @@ msgstr "SOCKS"
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Een Tor SOCKS poort is beschikbaar op %(box_name)s, op TCP poort 9050."
+
+#: plinth/modules/tor/views.py:136 plinth/views.py:196
+msgid "Setting unchanged"
+msgstr "Instelling onveranderd"
 
 #: plinth/modules/transmission/__init__.py:28
 msgid ""
@@ -7257,8 +7325,11 @@ msgid "Mailing list"
 msgstr "Mailinglijst"
 
 #: plinth/templates/internal-zone.html:11
-#, python-format
-msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, fuzzy, python-format
+#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+msgid ""
+"<em>%(service_name)s</em> is available only on internal networks or when the "
+"client is connected to %(box_name)s through VPN."
 msgstr ""
 "<em>%(service_name)s</em> is alleen beschikbaar binnen interne netwerken."
 
@@ -7338,6 +7409,9 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:107
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Enable OpenVPN server"
+#~ msgstr "OpenVPN server Inschakelen"
 
 #~ msgid "active"
 #~ msgstr "actief"
@@ -8000,9 +8074,6 @@ msgstr "Gujarati"
 
 #~ msgid "Archive name"
 #~ msgstr "Archiefnaam"
-
-#~ msgid "Name for new backup archive."
-#~ msgstr "Naam voor nieuw back-uparchief."
 
 #~ msgid "Invalid archive name"
 #~ msgstr "Ongeldige archiefnaam"

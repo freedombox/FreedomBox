@@ -14,13 +14,13 @@ from plinth.daemon import Daemon, diagnose_netcat, diagnose_port_listening
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
-from plinth.signals import domain_added, domain_removed
 from plinth.modules.users.components import UsersAndGroups
+from plinth.signals import domain_added, domain_removed
 
 from . import utils
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 4
+version = 5
 
 depends = ['names']
 

@@ -48,6 +48,10 @@ def _get_repository_choices():
 
 class CreateArchiveForm(forms.Form):
     repository = forms.ChoiceField()
+    name = forms.RegexField(
+        label=_('Name'),
+        help_text=_('(Optional) Set a name for this backup archive'),
+        regex=r'^[^{}/]*$', required=False, strip=True)
     selected_apps = forms.MultipleChoiceField(
         label=_('Included apps'), help_text=_('Apps to include in the backup'),
         widget=forms.CheckboxSelectMultiple)

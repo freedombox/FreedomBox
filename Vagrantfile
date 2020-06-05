@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
     echo 'alias run-develop="sudo -u plinth /vagrant/run --develop"' >> /home/vagrant/.bashrc
   SHELL
-  config.vm.provision "tests", run: "never", type: "shell", path: "functional_tests/install.sh"
+  config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. You can run the development version of Plinth using
 the following command.

@@ -213,10 +213,11 @@ Buster (or later).
 ```bash
 host$ pip3 install splinter
 host$ pip3 install pytest-splinter
+host$ pip3 install pytest-xdist  # optional, to run tests in parallel
+host$ sudo apt install firefox
 host$ sudo apt install python3-pytest-bdd
 host$ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening browser windows
-host$ sudo apt install firefox
-host$ sudo apt install smbclient # optional, to test samba
+host$ sudo apt install smbclient  # optional, to test samba
 ```
 
 - Install the latest version of geckodriver. It is usually a single binary which
@@ -273,6 +274,13 @@ If xvfb is installed and you still want to see browser windows, use the
 
 ```bash
 vm$ py.test-3 --no-xvfb -m mediawiki --include-functional
+```
+
+Tests can also be run in parallel, provided you have the pytest-xdist plugin
+installed.
+
+```
+$ py.test-3 -n 4 --dist=loadfile --include-functional -m essential
 ```
 
 ## Building the Documentation Separately
