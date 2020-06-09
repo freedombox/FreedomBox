@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-01 17:44-0400\n"
-"PO-Revision-Date: 2020-02-19 22:47+0000\n"
-"Last-Translator: Radek Pasiok <rpasiok@gmail.com>\n"
+"PO-Revision-Date: 2020-06-10 15:41+0000\n"
+"Last-Translator: WaldiS <sto@tutanota.de>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/plinth/"
 "pl/>\n"
 "Language: pl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.11\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -62,8 +62,8 @@ msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr ""
-"Ostrzeżenie! Aplikacja może nie działać poprawnie jeśli nazwa domeny "
-"zostanie zmieniona później."
+"Uwaga! Aplikacja może nie działać poprawnie jeśli nazwa domeny zostanie "
+"zmieniona w przyszłości."
 
 #: plinth/forms.py:48
 msgid "Language"
@@ -71,7 +71,7 @@ msgstr "Język"
 
 #: plinth/forms.py:49
 msgid "Language to use for presenting this web interface"
-msgstr "Język tego interfejsu"
+msgstr "Język używany do reprezentowania danego interfejsu www"
 
 #: plinth/forms.py:56
 msgid "Use the language preference set in the browser"
@@ -158,10 +158,8 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: plinth/modules/backups/forms.py:53
-#, fuzzy
-#| msgid "Upload and restore a backup archive"
 msgid "(Optional) Set a name for this backup archive"
-msgstr "Prześlij i odtwórz kopię zapasową"
+msgstr "(Opcjonalnie) Ustaw nazwę tego archiwum kopii zapasowych"
 
 #: plinth/modules/backups/forms.py:56
 msgid "Included apps"
@@ -354,8 +352,6 @@ msgid "Add Remote Backup Location"
 msgstr "Dodaj zdalną lokalizację kopii zapasowej"
 
 #: plinth/modules/backups/templates/backups.html:58
-#, fuzzy
-#| msgid "Existing backups"
 msgid "Existing Backups"
 msgstr "Istniejące kopie zapasowe"
 
@@ -403,10 +399,8 @@ msgid "Submit"
 msgstr "Wyślij"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
-#, fuzzy
-#| msgid "Existing repository is not encrypted."
 msgid "This repository is encrypted"
-msgstr "Istniejące repozytorium nie jest zaszyfrowane."
+msgstr "To repozytorium jest szyfrowane"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
 #, fuzzy
@@ -425,10 +419,8 @@ msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_repository.html:77
-#, fuzzy
-#| msgid "{box_name} Manual"
 msgid "Download"
-msgstr "{box_name} Podręcznik"
+msgstr "Pobierz"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
@@ -438,31 +430,19 @@ msgstr "Odtwórz"
 
 #: plinth/modules/backups/templates/backups_repository.html:103
 msgid "No archives currently exist."
-msgstr ""
+msgstr "Obecnie nie istnieją żadne archiwa."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
 msgstr "Naprawdę chcesz usunąć to repozytorium?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:19
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      The remote repository will not be deleted.\n"
-#| "      This just removes the repository from the listing on the backup "
-#| "page, you\n"
-#| "      can add it again later on.\n"
-#| "    "
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
-"\n"
-"      Zdalne repozytorium nie zostanie usunięte.\n"
-"      Zostanie ono jedynie usunięte z listy na stronie kopii zapasowych. "
-"Możesz\n"
-"      dodać je później z powrotem.\n"
-"    "
+"Zdalne repozytorium nie zostanie usunięte. To po prostu usuwa repozytorium z "
+"listy na stronie kopii zapasowej, możesz później dodać je ponownie."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:31
 msgid "Remove Location"
@@ -701,10 +681,8 @@ msgid "Type"
 msgstr "Typ"
 
 #: plinth/modules/bind/templates/bind.html:17
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Names"
-msgstr "Nazwa domeny"
+msgstr "Nazwy domen"
 
 #: plinth/modules/bind/templates/bind.html:18
 #, fuzzy
@@ -714,12 +692,12 @@ msgstr "Serwer czatu"
 
 #: plinth/modules/bind/templates/bind.html:19
 msgid "IP addresses"
-msgstr ""
+msgstr "Adresy IP"
 
 #: plinth/modules/bind/templates/bind.html:35
 #: plinth/modules/bind/templates/bind.html:37
 msgid "Refresh IP address and domains"
-msgstr ""
+msgstr "Odśwież adres IP i domeny"
 
 #: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
@@ -781,7 +759,7 @@ msgstr "Administracja serwera"
 
 #: plinth/modules/cockpit/templates/cockpit.html:11
 msgid "Access"
-msgstr ""
+msgstr "Dostęp"
 
 #: plinth/modules/cockpit/templates/cockpit.html:14
 msgid "Cockpit will only work when accessed using the following URLs."
@@ -792,6 +770,8 @@ msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
+"Tutaj możesz ustawić kilka ogólnych opcji konfiguracji, takich jak nazwa "
+"hosta, nazwa domeny, strona główna serwera www itp."
 
 #: plinth/modules/config/__init__.py:52
 msgid "General Configuration"
@@ -1017,13 +997,11 @@ msgstr ""
 
 #: plinth/modules/coturn/__init__.py:65
 msgid "VoIP Helper"
-msgstr ""
+msgstr "Asystent VoIP"
 
 #: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
-#, fuzzy
-#| msgid "Subdomain"
 msgid "TLS domain"
-msgstr "Subdomena"
+msgstr "Domena TLS"
 
 #: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
 msgid ""
@@ -1033,7 +1011,7 @@ msgstr ""
 
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
-msgstr ""
+msgstr "Użyj następujących adresów URL, aby skonfigurować serwer komunikacyjny:"
 
 #: plinth/modules/coturn/templates/coturn.html:26
 #, fuzzy
@@ -1087,19 +1065,12 @@ msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge to klient BitTorrent z interfejsem webowym."
 
 #: plinth/modules/deluge/__init__.py:27
-#, fuzzy
-#| msgid ""
-#| "When enabled, the Deluge web client will be available from <a href=\"/"
-#| "deluge\">/deluge</a> path on the web server. The default password is "
-#| "'deluge', but you should log in and change it immediately after enabling "
-#| "this service."
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr ""
-"Kiedy jest uruchomiony jest dostępny z adresu <a href=\"/deluge\">/deluge</"
-"a>. Standardowe hasło to \"deluge\", powinno ono być zmienione zaraz po "
-"zalogowaniu."
+"Domyślne hasło to „deluge”, ale należy się zalogować i zmienić je "
+"natychmiast po włączeniu tej usługi."
 
 #: plinth/modules/deluge/__init__.py:46
 #: plinth/modules/transmission/__init__.py:48
@@ -1117,7 +1088,7 @@ msgstr "Klient BitTorrent"
 
 #: plinth/modules/deluge/forms.py:20 plinth/modules/transmission/forms.py:21
 msgid "Download directory"
-msgstr ""
+msgstr "Pobierz katalog"
 
 #: plinth/modules/deluge/manifest.py:10
 msgid "Bittorrent client written in Python/PyGTK"
@@ -1153,7 +1124,7 @@ msgstr "Wyniki"
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
 #, python-format
 msgid "App: %(app_id)s"
-msgstr ""
+msgstr "Aplikacja: %(app_id)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
