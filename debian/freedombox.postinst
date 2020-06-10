@@ -16,8 +16,14 @@ sed -i 's+-:ALL EXCEPT root fbx (admin) (sudo):ALL+-:ALL EXCEPT root fbx plinth 
 
 case "$1" in
     configure)
-        addgroup --system --quiet plinth
-        adduser --system --quiet --ingroup plinth --no-create-home --home /var/lib/plinth plinth
+        if ! getent group plinth >/dev/null; then
+            addgroup --system --quiet plinth
+        fi
+
+        if ! getent passwd plinth >/dev/null; then
+            adduser --system --quiet --ingroup plinth --no-create-home --home /var/lib/plinth plinth
+        fi
+
         chown plinth: /var/lib/plinth
         chown plinth: /var/lib/plinth/sessions
 
