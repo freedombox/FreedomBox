@@ -83,12 +83,12 @@ def parse_arguments():
 def subcommand_run(_):
     """Run unattended-upgrades"""
     try:
-        subprocess.Popen(['unattended-upgrades', '-v'],
+        subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL, close_fds=True,
                          start_new_session=True)
     except FileNotFoundError:
-        print('Error: unattended-upgrades is not available.', file=sys.stderr)
+        print('Error: systemctl is not available.', file=sys.stderr)
         sys.exit(2)
     except Exception as error:
         print('Error: {0}'.format(error), file=sys.stderr)
