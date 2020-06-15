@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-01 17:44-0400\n"
+"POT-Creation-Date: 2020-06-15 19:20-0400\n"
 "PO-Revision-Date: 2020-06-14 16:41+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -1695,8 +1695,8 @@ msgid ""
 "the <a href=\"/_cockpit/network/firewall\">Cockpit</a> app."
 msgstr ""
 "Operaciones avanzadas de firewall tales como abrir puertos específicos son "
-"provistas por la aplicación <a href=\"/_cockpit/network/firewall\""
-">Cockpit</a>."
+"provistas por la aplicación <a href=\"/_cockpit/network/firewall\">Cockpit</"
+"a>."
 
 #: plinth/modules/first_boot/forms.py:14
 #, python-brace-format
@@ -1853,7 +1853,7 @@ msgstr "Eliminar repositorio %(repo.name)s"
 msgid "Cloning…"
 msgstr "Clonando…"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:74
+#: plinth/modules/gitweb/templates/gitweb_configure.html:73
 #, python-format
 msgid "Go to repository %(repo.name)s"
 msgstr "Ir al repositorio %(repo.name)s"
@@ -2381,7 +2381,7 @@ msgstr "No hay wikis o blogs disponibles."
 msgid "Delete site %(site)s"
 msgstr "Eliminar sitio %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:40
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Ir al sitio %(site)s"
@@ -2487,7 +2487,7 @@ msgid "Chat Client"
 msgstr "Cliente de Chat"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:125
-#: plinth/templates/base.html:237
+#: plinth/templates/base.html:234
 msgid "JavaScript license information"
 msgstr "Información de licencia de JavaScript"
 
@@ -3776,7 +3776,7 @@ msgstr "Editar conexión"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:151 plinth/templates/base.html:152
+#: plinth/templates/base.html:148 plinth/templates/base.html:149
 msgid "Edit"
 msgstr "Editar"
 
@@ -4891,9 +4891,16 @@ msgstr ""
 "organización de carpetas, búsqueda de mensajes y corrección ortográfica."
 
 #: plinth/modules/roundcube/__init__.py:26
+#, fuzzy
+#| msgid ""
+#| "You can access Roundcube from <a href=\"/roundcube\" data-turbolinks="
+#| "\"false\">/roundcube</a>. Provide the username and password of the email "
+#| "account you wish to access followed by the domain name of the IMAP server "
+#| "for your email provider, like <code>imap.example.com</code>.  For IMAP "
+#| "over SSL (recommended), fill the server field like <code>imaps://imap."
+#| "example.com</code>."
 msgid ""
-"You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
-"\">/roundcube</a>. Provide the username and password of the email account "
+"You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
 "email provider, like <code>imap.example.com</code>.  For IMAP over SSL "
 "(recommended), fill the server field like <code>imaps://imap.example.com</"
@@ -4906,7 +4913,7 @@ msgstr ""
 "Para IMAP sobre SSL (recomendado) rellene el campo del servidor como "
 "<code>imaps://imap.ejemplo.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:32
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -4922,12 +4929,12 @@ msgstr ""
 "google.com/settings/security/lesssecureapps\">https://www.google.com/"
 "settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:53
 #: plinth/modules/roundcube/manifest.py:9
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:54
 msgid "Email Client"
 msgstr "Cliente de correo"
 
@@ -5294,22 +5301,26 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli le permite guardar y compartir marcadores."
 
 #: plinth/modules/shaarli/__init__.py:21
+#, fuzzy
+#| msgid ""
+#| "When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
+#| "turbolinks=\"false\">/shaarli</a> path on the web server. Note that "
+#| "Shaarli only supports a single user account, which you will need to setup "
+#| "on the initial visit."
 msgid ""
-"When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
-"turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
-"only supports a single user account, which you will need to setup on the "
-"initial visit."
+"Note that Shaarli only supports a single user account, which you will need "
+"to setup on the initial visit."
 msgstr ""
 "Cuando se activa Shaarli está disponible en la dirección <a href=\"/shaarli"
 "\" data-turbolinks=\"false\">/shaarli</a> de su servidor. Note que Shaarli "
 "solo soporta una cuenta de usuaria/o, que debe configurar en el primer "
 "acceso."
 
-#: plinth/modules/shaarli/__init__.py:39 plinth/modules/shaarli/manifest.py:8
+#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:8
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:40
+#: plinth/modules/shaarli/__init__.py:38
 msgid "Bookmarks"
 msgstr "Marcadores"
 
@@ -5463,7 +5474,7 @@ msgstr "Compartido por"
 msgid "With Groups"
 msgstr "Con los grupos"
 
-#: plinth/modules/sharing/templates/sharing.html:58
+#: plinth/modules/sharing/templates/sharing.html:57
 msgid "public access"
 msgstr "Acceso público"
 
@@ -5971,8 +5982,8 @@ msgid ""
 "are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
 msgstr ""
 "Gestión de operaciones de almacenamiento avanzadas tales como particionado "
-"de discos o gestión de RAID son provistas por <a href=\"/_cockpit/storage\""
-">Cockpit</a>."
+"de discos o gestión de RAID son provistas por <a href=\"/_cockpit/storage"
+"\">Cockpit</a>."
 
 #: plinth/modules/storage/templates/storage_expand.html:14
 #, python-format
@@ -6362,24 +6373,28 @@ msgstr ""
 "\"{users_url}\">persona con una cuenta de acceso en {box_name}</a>."
 
 #: plinth/modules/ttrss/__init__.py:37
+#, fuzzy
+#| msgid ""
+#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#| "<a href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
+#| "connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
-"connecting."
+"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgstr ""
 "Cuando emplee una aplicación de móvil o de escritorio para Tiny Tiny RSS, "
 "use la URL <a href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</"
 "a> para conectar."
 
-#: plinth/modules/ttrss/__init__.py:54
+#: plinth/modules/ttrss/__init__.py:53
 msgid "Read and subscribe to news feeds"
 msgstr "Leer y suscribirse a nuevos agregadores"
 
-#: plinth/modules/ttrss/__init__.py:57 plinth/modules/ttrss/manifest.py:19
+#: plinth/modules/ttrss/__init__.py:56 plinth/modules/ttrss/manifest.py:19
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:58
+#: plinth/modules/ttrss/__init__.py:57
 msgid "News Feed Reader"
 msgstr "Lector de noticias"
 
@@ -7155,49 +7170,49 @@ msgstr "Instalación"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "El servidor <em>%(service_name)s</em> no se está ejecutando."
 
-#: plinth/templates/base.html:35
+#: plinth/templates/base.html:34
 #, python-format
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Funcionalidad central e interfaz web para %(box_name)s"
 
-#: plinth/templates/base.html:80
+#: plinth/templates/base.html:77
 msgid "Toggle navigation"
 msgstr "Cambiar modo de navegación"
 
-#: plinth/templates/base.html:104 plinth/templates/base.html:107
+#: plinth/templates/base.html:101 plinth/templates/base.html:104
 msgid "Home"
 msgstr "Inicio"
 
-#: plinth/templates/base.html:112 plinth/templates/base.html:116
+#: plinth/templates/base.html:109 plinth/templates/base.html:113
 msgid "Apps"
 msgstr "Aplicaciones"
 
-#: plinth/templates/base.html:121 plinth/templates/base.html:125
+#: plinth/templates/base.html:118 plinth/templates/base.html:122
 msgid "System"
 msgstr "Sistema"
 
-#: plinth/templates/base.html:157 plinth/templates/base.html:158
+#: plinth/templates/base.html:154 plinth/templates/base.html:155
 msgid "Change password"
 msgstr "Cambiar clave de acceso"
 
-#: plinth/templates/base.html:165 plinth/templates/base.html:166
+#: plinth/templates/base.html:162 plinth/templates/base.html:163
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
 msgid "Shut down"
 msgstr "Apagar"
 
-#: plinth/templates/base.html:179 plinth/templates/base.html:180
-#: plinth/templates/base.html:204 plinth/templates/base.html:206
+#: plinth/templates/base.html:176 plinth/templates/base.html:177
+#: plinth/templates/base.html:201 plinth/templates/base.html:203
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-#: plinth/templates/base.html:188 plinth/templates/base.html:191
+#: plinth/templates/base.html:185 plinth/templates/base.html:188
 msgid "Select language"
 msgstr "Seleccionar idioma"
 
-#: plinth/templates/base.html:196 plinth/templates/base.html:198
+#: plinth/templates/base.html:193 plinth/templates/base.html:195
 msgid "Log in"
 msgstr "Iniciar sesión"
 
