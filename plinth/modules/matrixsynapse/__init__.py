@@ -130,9 +130,9 @@ def force_upgrade(helper, packages):
     if 'matrix-synapse' not in packages:
         return False
 
-    # Allow any lower version to upgrade to 1.12.*
+    # Allow any lower version to upgrade to 1.15.*
     package = packages['matrix-synapse']
-    if Version(package['new_version']) > Version('1.13~'):
+    if Version(package['new_version']) > Version('1.16~'):
         return False
 
     public_registration_status = get_public_registration_status()
