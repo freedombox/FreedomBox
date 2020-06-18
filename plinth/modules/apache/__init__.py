@@ -19,7 +19,7 @@ is_essential = True
 
 managed_services = ['apache2']
 
-managed_packages = ['apache2', 'php-fpm']
+managed_packages = ['apache2', 'php-fpm', 'ssl-cert']
 
 app = None
 
