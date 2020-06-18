@@ -1,0 +1,8 @@
+[Unit]
+Description=Run unattended-upgrade once
+
+[Service]
+Type=oneshot
+ExecStart=unattended-upgrade --verbose
+KillMode=process
+TimeoutStopSec=900

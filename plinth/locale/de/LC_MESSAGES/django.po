@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-01 17:44-0400\n"
-"PO-Revision-Date: 2020-05-11 10:41+0000\n"
-"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
+"POT-Creation-Date: 2020-06-15 19:20-0400\n"
+"PO-Revision-Date: 2020-06-06 00:41+0000\n"
+"Last-Translator: Ralf Barkow <ralf.barkow@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
 "Language: de\n"
@@ -160,10 +160,8 @@ msgid "Name"
 msgstr "Name"
 
 #: plinth/modules/backups/forms.py:53
-#, fuzzy
-#| msgid "Name for new backup archive."
 msgid "(Optional) Set a name for this backup archive"
-msgstr "Name für das neue Backup-Archiv."
+msgstr "(Optional) Festlegen eines Namens für dieses Sicherungsarchiv"
 
 #: plinth/modules/backups/forms.py:56
 msgid "Included apps"
@@ -730,6 +728,10 @@ msgid ""
 "firewall ports and advanced networking such as bonding, bridging and VLAN "
 "management."
 msgstr ""
+"Cockpit kann verwendet werden, um erweiterte Speicher-Operationen, wie das "
+"partitionieren von Festplatten und RAID-management. Es kann auch verwendet "
+"werden, für die Öffnung der benutzerdefinierten Firewall-Anschlüsse und "
+"erweiterte Netzwerkfunktionen wie bonding, bridging und VLAN-Management."
 
 #: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
@@ -1703,13 +1705,16 @@ msgstr ""
 #: plinth/modules/networks/templates/networks_configuration.html:49
 #: plinth/modules/storage/templates/storage.html:91
 msgid "Advanced"
-msgstr ""
+msgstr "Fortgeschritten"
 
 #: plinth/modules/firewall/templates/firewall.html:98
 msgid ""
 "Advanced firewall operations such as opening custom ports are provided by "
 "the <a href=\"/_cockpit/network/firewall\">Cockpit</a> app."
 msgstr ""
+"Erweiterte Firewall-Operationen wie das Öffnen benutzerdefinierter Ports "
+"werden von der Anwendung <a href=\"/_cockpit/network/firewall\"> Cockpit</a> "
+"bereitgestellt."
 
 #: plinth/modules/first_boot/forms.py:14
 #, python-brace-format
@@ -1871,7 +1876,7 @@ msgstr "Archiv %(repo.name)s löschen"
 msgid "Cloning…"
 msgstr "Klonen…"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:74
+#: plinth/modules/gitweb/templates/gitweb_configure.html:73
 #, python-format
 msgid "Go to repository %(repo.name)s"
 msgstr "Gehe zum Archiv %(repo.name)s"
@@ -2403,7 +2408,7 @@ msgstr "Keine Wikis oder Blogs verfügbar."
 msgid "Delete site %(site)s"
 msgstr "Seite %(site)s löschen"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:40
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Gehe zu Seite %(site)s"
@@ -2508,7 +2513,7 @@ msgid "Chat Client"
 msgstr "Chatclient"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:125
-#: plinth/templates/base.html:237
+#: plinth/templates/base.html:234
 msgid "JavaScript license information"
 msgstr "JavaScript-Lizenzinformation"
 
@@ -3025,7 +3030,7 @@ msgstr "Medien-Streaming-Server"
 
 #: plinth/modules/minidlna/__init__.py:47
 msgid "MiniDLNA"
-msgstr ""
+msgstr "MiniDLNA"
 
 #: plinth/modules/minidlna/__init__.py:48
 msgid "Simple Media Server"
@@ -3824,7 +3829,7 @@ msgstr "Verbindung bearbeiten"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:151 plinth/templates/base.html:152
+#: plinth/templates/base.html:148 plinth/templates/base.html:149
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -4964,9 +4969,16 @@ msgstr ""
 "Nachrichten und Rechtschreibprüfung."
 
 #: plinth/modules/roundcube/__init__.py:26
+#, fuzzy
+#| msgid ""
+#| "You can access Roundcube from <a href=\"/roundcube\" data-turbolinks="
+#| "\"false\">/roundcube</a>. Provide the username and password of the email "
+#| "account you wish to access followed by the domain name of the IMAP server "
+#| "for your email provider, like <code>imap.example.com</code>.  For IMAP "
+#| "over SSL (recommended), fill the server field like <code>imaps://imap."
+#| "example.com</code>."
 msgid ""
-"You can access Roundcube from <a href=\"/roundcube\" data-turbolinks=\"false"
-"\">/roundcube</a>. Provide the username and password of the email account "
+"You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
 "email provider, like <code>imap.example.com</code>.  For IMAP over SSL "
 "(recommended), fill the server field like <code>imaps://imap.example.com</"
@@ -4978,7 +4990,7 @@ msgstr ""
 "z. B. <code>imap.example.com</code>. Für IMAP über SSL (empfohlen) geben Sie "
 "im Feld Server etwas ein wie <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:32
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -4995,12 +5007,12 @@ msgstr ""
 "lesssecureapps\" >https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:53
 #: plinth/modules/roundcube/manifest.py:9
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:54
 msgid "Email Client"
 msgstr "E-Mail-Client"
 
@@ -5372,22 +5384,26 @@ msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli ermöglicht das Speichern und Teilen von Lesezeichen."
 
 #: plinth/modules/shaarli/__init__.py:21
+#, fuzzy
+#| msgid ""
+#| "When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
+#| "turbolinks=\"false\">/shaarli</a> path on the web server. Note that "
+#| "Shaarli only supports a single user account, which you will need to setup "
+#| "on the initial visit."
 msgid ""
-"When enabled, Shaarli will be available from <a href=\"/shaarli\" data-"
-"turbolinks=\"false\">/shaarli</a> path on the web server. Note that Shaarli "
-"only supports a single user account, which you will need to setup on the "
-"initial visit."
+"Note that Shaarli only supports a single user account, which you will need "
+"to setup on the initial visit."
 msgstr ""
 "Falls aktiviert, wird Shaarli auf dem Webserver unter <a href=\"/shaarli\" "
 "data-turbolinks=\"false\">/shaarli</a> erreichar sein. Shaarli unterstützt "
 "nur ein Benutzerkonto; dieses muss beim ersten Besuch der Seite eingerichtet "
 "werden."
 
-#: plinth/modules/shaarli/__init__.py:39 plinth/modules/shaarli/manifest.py:8
+#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:8
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:40
+#: plinth/modules/shaarli/__init__.py:38
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
@@ -5543,7 +5559,7 @@ msgstr "Freigegeben über"
 msgid "With Groups"
 msgstr "Mit Gruppen"
 
-#: plinth/modules/sharing/templates/sharing.html:58
+#: plinth/modules/sharing/templates/sharing.html:57
 msgid "public access"
 msgstr "öffentlicher Zugang"
 
@@ -6447,24 +6463,28 @@ msgstr ""
 "\"{users_url}\">Benutzer mit einem {box_name} Login</a> aufgerufen werden."
 
 #: plinth/modules/ttrss/__init__.py:37
+#, fuzzy
+#| msgid ""
+#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#| "<a href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
+#| "connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\" data-turbolinks=\"false\">/tt-rss-app</a> for "
-"connecting."
+"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgstr ""
 "Um Tiny Tiny RSS mit einer Anwendung auf ihrem Handy oder Computer zu "
 "nutzen, tragen Sie die URL <a href=\"/tt-rss-app/\" data-turbolinks=\"false"
 "\">/tt-rss-app</a> ein."
 
-#: plinth/modules/ttrss/__init__.py:54
+#: plinth/modules/ttrss/__init__.py:53
 msgid "Read and subscribe to news feeds"
 msgstr "Lesen und Abonnieren von Neuigkeiten-Feeds"
 
-#: plinth/modules/ttrss/__init__.py:57 plinth/modules/ttrss/manifest.py:19
+#: plinth/modules/ttrss/__init__.py:56 plinth/modules/ttrss/manifest.py:19
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:58
+#: plinth/modules/ttrss/__init__.py:57
 msgid "News Feed Reader"
 msgstr "Feedreader"
 
@@ -7249,49 +7269,49 @@ msgstr "Installation"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Dienst <em>%(service_name)s</em> läuft nicht."
 
-#: plinth/templates/base.html:35
+#: plinth/templates/base.html:34
 #, python-format
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Kernfunktionalität und Weboberfläche für %(box_name)s"
 
-#: plinth/templates/base.html:80
+#: plinth/templates/base.html:77
 msgid "Toggle navigation"
 msgstr "Navigation ein-/ausklappen"
 
-#: plinth/templates/base.html:104 plinth/templates/base.html:107
+#: plinth/templates/base.html:101 plinth/templates/base.html:104
 msgid "Home"
 msgstr "Startseite"
 
-#: plinth/templates/base.html:112 plinth/templates/base.html:116
+#: plinth/templates/base.html:109 plinth/templates/base.html:113
 msgid "Apps"
 msgstr "Apps"
 
-#: plinth/templates/base.html:121 plinth/templates/base.html:125
+#: plinth/templates/base.html:118 plinth/templates/base.html:122
 msgid "System"
 msgstr "System"
 
-#: plinth/templates/base.html:157 plinth/templates/base.html:158
+#: plinth/templates/base.html:154 plinth/templates/base.html:155
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: plinth/templates/base.html:165 plinth/templates/base.html:166
+#: plinth/templates/base.html:162 plinth/templates/base.html:163
 msgid "Restart"
 msgstr "Neu starten"
 
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
 msgid "Shut down"
 msgstr "Herunterfahren"
 
-#: plinth/templates/base.html:179 plinth/templates/base.html:180
-#: plinth/templates/base.html:204 plinth/templates/base.html:206
+#: plinth/templates/base.html:176 plinth/templates/base.html:177
+#: plinth/templates/base.html:201 plinth/templates/base.html:203
 msgid "Log out"
 msgstr "Abmelden"
 
-#: plinth/templates/base.html:188 plinth/templates/base.html:191
+#: plinth/templates/base.html:185 plinth/templates/base.html:188
 msgid "Select language"
 msgstr "Sprache wählen"
 
-#: plinth/templates/base.html:196 plinth/templates/base.html:198
+#: plinth/templates/base.html:193 plinth/templates/base.html:195
 msgid "Log in"
 msgstr "Anmelden"
 

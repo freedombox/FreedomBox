@@ -35,8 +35,7 @@ _description = [
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
     format_lazy(
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
-          'the URL <a href="/tt-rss-app/" data-turbolinks="false">'
-          '/tt-rss-app</a> for connecting.'))
+          'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
 ]
 
 app = None

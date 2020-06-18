@@ -54,9 +54,8 @@ def init():
                  settings.INSTALLED_APPS)
 
     logger.debug('Creating or adding new tables to data file')
-    verbosity = 1 if cfg.develop else 0
     django.core.management.call_command('migrate', '--fake-initial',
-                                        interactive=False, verbosity=verbosity)
+                                        interactive=False, verbosity=0)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
     # Cleanup expired sessions every day
@@ -98,6 +97,7 @@ def get_languages():
     Add additional languages that FreedomBox support but Django doesn't.
 
     """
+
     def gettext_noop(string):
         """Django's actual translation methods need Django to be setup."""
         return string
