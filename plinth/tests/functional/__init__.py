@@ -12,7 +12,8 @@ import time
 from contextlib import contextmanager
 
 import requests
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import (WebDriverException,
+                                        StaleElementReferenceException)
 from selenium.webdriver.support.ui import WebDriverWait
 
 config = configparser.ConfigParser()
@@ -94,10 +95,13 @@ class _PageLoaded():
         try:
             self.element.has_class('whatever_class')
         except StaleElementReferenceException:
-            # After a domain name change, Let's Encrypt will reload the web
+            # After a domain name change, Let's Encrypt will restart the web
             # server and could cause a connection failure.
             if driver.find_by_id('netErrorButtonContainer'):
-                driver.visit(driver.url)
+                try:
+                    driver.visit(driver.url)
+                except WebDriverException:
+                    pass
                 return False
 
             is_fully_loaded = driver.execute_script(
@@ -116,7 +120,12 @@ class _PageLoaded():
 @contextmanager
 def wait_for_page_update(browser, timeout=300, expected_url=None):
     page_body = browser.find_by_tag('body').first
-    yield
+    try:
+        yield
+    except WebDriverException:
+        # ignore a connection failure which may happen after web server restart
+        pass
+
     WebDriverWait(browser, timeout).until(_PageLoaded(page_body, expected_url))
 
 
