@@ -11,6 +11,7 @@ import tempfile
 import time
 from contextlib import contextmanager
 
+import pytest
 import requests
 from selenium.common.exceptions import (WebDriverException,
                                         StaleElementReferenceException)
@@ -305,7 +306,7 @@ def install(browser, app_name):
                     browser.visit(browser.url)
                 else:
                     # This app is not available in this distribution
-                    raise Exception('App not available in distribution')
+                    pytest.skip('App not available in distribution')
             else:
                 install_button.click()
         else:
