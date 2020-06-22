@@ -156,10 +156,12 @@ def get_filesystem_type(mount_point='/'):
     raise ValueError('No such mount point')
 
 
-def get_disk_info(mount_point):
-    """Get information about the free space of a drive"""
-    disks = get_disks()
-    list_root = [disk for disk in disks if mount_point in disk['mount_points']]
+def get_mount_info(mount_point):
+    """Get information about the free space of a mount point."""
+    mounts = get_mounts()
+    list_root = [
+        mount for mount in mounts if mount_point == mount['mount_point']
+    ]
     if not list_root:
         raise PlinthError('Mount point {} not found.'.format(mount_point))
 
@@ -289,7 +291,7 @@ def warn_about_low_disk_space(request):
     from plinth.notification import Notification
 
     try:
-        root_info = get_disk_info('/')
+        root_info = get_mount_info('/')
     except PlinthError:
         return
 

@@ -107,7 +107,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['title'] = _('Upload and restore a backup')
         try:
-            disk_info = storage.get_disk_info('/')
+            mount_info = storage.get_mount_info('/')
         except PlinthError as exception:
             logger.exception(
                 'Error getting information about root partition: %s',
@@ -121,7 +121,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
             # - For restoring it's highly advisable to have at least as much
             #   free disk space as the file size.
             context['max_filesize'] = storage.format_bytes(
-                disk_info['free_bytes'] / 2)
+                mount_info['free_bytes'] / 2)
 
         return context
 
@@ -164,6 +164,7 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
 
 class RestoreFromUploadView(BaseRestoreView):
     """View to restore files from an (uploaded) exported archive."""
+
     def get(self, *args, **kwargs):
         path = self.request.session.get(SESSION_PATH_VARIABLE)
         if not os.path.isfile(path):
@@ -193,6 +194,7 @@ class RestoreFromUploadView(BaseRestoreView):
 
 class RestoreArchiveView(BaseRestoreView):
     """View to restore files from an archive."""
+
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
         name = unquote(self.kwargs['name'])
@@ -210,6 +212,7 @@ class RestoreArchiveView(BaseRestoreView):
 
 class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
+
     def get(self, request, uuid, name):
         repository = get_instance(uuid)
         filename = f'{name}.tar.gz'
