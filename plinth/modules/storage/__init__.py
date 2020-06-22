@@ -290,9 +290,7 @@ def warn_about_low_disk_space(request):
 
     try:
         root_info = get_disk_info('/')
-    except PlinthError as exception:
-        logger.exception('Error getting information about root partition: %s',
-                         exception)
+    except PlinthError:
         return
 
     show = False
