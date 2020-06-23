@@ -138,6 +138,9 @@ KEY_SERVER = 'keys.gnupg.net'
 PROVISION_SCRIPT = '''
 set -x
 
+# Remove FreedomBox database lingering in source directory to start fresh
+sudo rm -f /freedombox/data/var/lib/plinth/plinth.sqlite3
+
 cd /freedombox/
 
 sudo apt-get update
@@ -157,9 +160,6 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
 sudo apt-mark unhold freedombox
 # Install ncurses-term
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term
-
-# Remove FreedomBox database lingering in source directory to start fresh
-sudo rm -f /freedombox/data/var/lib/plinth/plinth.sqlite3
 
 echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' \
   >> /home/fbx/.bashrc
