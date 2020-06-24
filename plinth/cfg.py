@@ -50,6 +50,19 @@ develop = False
 config_files = []
 
 
+def expand_to_dot_d_paths(file_paths):
+    """Expand a list of file paths to include file.d/* also."""
+    final_list = []
+    for file_path in file_paths:
+        final_list.append(str(file_path))
+        path = pathlib.Path(file_path)
+        path_d = path.with_suffix(path.suffix + '.d')
+        for dot_d_file in sorted(path_d.glob('*' + path.suffix)):
+            final_list.append(str(dot_d_file))
+
+    return final_list
+
+
 def get_develop_config_path():
     """Return config path of current source folder for development mode."""
     root_directory = os.path.dirname(os.path.realpath(__file__))
@@ -58,15 +71,20 @@ def get_develop_config_path():
     return config_path
 
 
-def get_config_path():
+def get_config_paths():
     """Get default config paths."""
-    return '/etc/freedombox/freedombox.config'
+    return [
+        '/usr/share/freedombox/freedombox.config',
+        '/etc/plinth/plinth.config',
+        '/etc/freedombox/freedombox.config',
+    ]
 
 
 def read():
     """Read all configuration files."""
-    config_path = get_config_path()
-    read_file(config_path)
+    config_paths = get_config_paths()
+    for config_path in expand_to_dot_d_paths(config_paths):
+        read_file(config_path)
 
 
 def read_file(config_path):

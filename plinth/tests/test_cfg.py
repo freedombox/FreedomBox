@@ -45,13 +45,28 @@ def test_read_default_config_file():
     compare_configurations(parser)
 
 
-@patch('plinth.cfg.get_config_path')
-def test_read_primary_config_file(get_config_path):
+@patch('plinth.cfg.get_config_paths')
+def test_read_primary_config_file(get_config_paths):
     """Verify that the primary config file is used by default."""
     config_path = CONFIG_FILE_WITH_MISSING_OPTIONS
-    get_config_path.return_value = config_path
+    get_config_paths.return_value = [config_path]
     cfg.read()
     assert cfg.config_files[-1] == config_path
+
+
+@patch('plinth.cfg.get_config_paths')
+def test_read_dot_d_config_files(get_config_paths):
+    """Verify that the configuration is read from .d directories."""
+    root_dir = pathlib.Path(__file__).resolve().parent
+    config_path = root_dir / 'data' / 'configs' / 'freedombox.config'
+    config_path_d = config_path.with_suffix(config_path.suffix + '.d')
+
+    get_config_paths.return_value = [str(config_path)]
+    cfg.read()
+    assert cfg.config_files[-3] == str(config_path)
+    assert cfg.config_files[-2] == str(config_path_d / '01_first.config')
+    assert cfg.config_files[-1] == str(config_path_d / '02_second.config')
+    assert cfg.box_name == 'FreedomBox02'
 
 
 def test_read_develop_config_file():
