@@ -39,13 +39,8 @@ def get_fallback_config_paths():
 
 
 def get_config_paths():
-    """Get config paths.
-    Return the fallback plinth config if the default one does not exist"""
-    root_directory = DEFAULT_ROOT
-    config_path = DEFAULT_CONFIG_FILE
-    if not os.path.isfile(config_path):
-        config_path, root_directory = get_fallback_config_paths()
-    return config_path, root_directory
+    """Get default config paths."""
+    return '/etc/plinth/plinth.config', '/'
 
 
 def read(config_path=None, root_directory=None):
