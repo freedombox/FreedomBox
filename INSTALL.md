@@ -16,7 +16,7 @@ FreedomBox [Manual](https://wiki.debian.org/FreedomBox/Manual/)'s
     ```
 
     ```
-    $ sudo apt install -y $(./run --list-dependencies)
+    $ sudo apt install -y $(./run --develop --list-dependencies)
     ```
 
     Install additional dependencies by picking the list from debian/control file
