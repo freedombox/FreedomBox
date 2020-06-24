@@ -53,9 +53,8 @@ config_files = []
 def get_develop_config_path():
     """Return config path of current source folder for development mode."""
     root_directory = os.path.dirname(os.path.realpath(__file__))
-    root_directory = os.path.join(root_directory, '..')
     root_directory = os.path.realpath(root_directory)
-    config_path = os.path.join(root_directory, 'plinth.config')
+    config_path = os.path.join(root_directory, 'develop.config')
     return config_path
 
 
@@ -79,9 +78,13 @@ def read_file(config_path):
     # Keep a note of configuration files read.
     config_files.append(config_path)
 
-    parser = configparser.ConfigParser(defaults={
-        'parent_dir': pathlib.Path(config_path).parent.resolve(),
-    })
+    parser = configparser.ConfigParser(
+        defaults={
+            'parent_dir':
+                pathlib.Path(config_path).parent.resolve(),
+            'parent_parent_dir':
+                pathlib.Path(config_path).parent.parent.resolve(),
+        })
     parser.read(config_path)
 
     config_items = (

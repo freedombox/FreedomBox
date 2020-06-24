@@ -54,7 +54,8 @@ def test_read_develop_config_file():
     """Verify that the correct develop config file is used."""
     test_dir = os.path.dirname(os.path.realpath(__file__))
     develop_root = os.path.realpath(os.path.join(test_dir, '..', '..'))
-    develop_config_file = os.path.join(develop_root, 'plinth.config')
+    develop_config_file = os.path.join(develop_root, 'plinth',
+                                       'develop.config')
     config_path = cfg.get_develop_config_path()
     cfg.read_file(config_path)
     assert cfg.config_files[-1] == develop_config_file
