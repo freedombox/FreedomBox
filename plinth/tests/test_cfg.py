@@ -6,6 +6,7 @@ Test module for configuration module.
 import configparser
 import logging
 import os
+import pathlib
 from unittest.mock import patch
 
 import pytest
@@ -26,58 +27,54 @@ pytestmark = pytest.mark.usefixtures('load_cfg')
 
 def test_read_default_config_file():
     """Verify that the default config file can be read correctly."""
-    config_file, config_dir = cfg.get_develop_config_paths()
+    config_file = cfg.get_develop_config_path()
 
     # Read the plinth.config file directly
-    parser = configparser.ConfigParser(defaults={'root': config_dir})
+    parser = configparser.ConfigParser(
+        defaults={'parent_dir': pathlib.Path(config_file).parent})
     parser.read(config_file)
 
     # Read the plinth.config file via the cfg module
-    cfg.read_file(config_file, config_dir)
+    cfg.read_file(config_file)
 
     # Compare the two results
     compare_configurations(parser)
 
 
-@patch('plinth.cfg.get_config_paths')
-def test_read_primary_config_file(get_config_paths):
+@patch('plinth.cfg.get_config_path')
+def test_read_primary_config_file(get_config_path):
     """Verify that the primary config file is used by default."""
-    expected_config_path = CONFIG_FILE_WITH_MISSING_OPTIONS
-    root_directory = 'x-default-root'
-    expected_root_directory = os.path.realpath(root_directory)
-    get_config_paths.return_value = (expected_config_path, root_directory)
-
+    config_path = CONFIG_FILE_WITH_MISSING_OPTIONS
+    get_config_path.return_value = config_path
     cfg.read()
-
-    assert cfg.config_files[-1] == expected_config_path
-    assert cfg.root == expected_root_directory
+    assert cfg.config_files[-1] == config_path
 
 
-def test_read_fallback_config_file():
-    """Verify that the correct fallback config file is used"""
+def test_read_develop_config_file():
+    """Verify that the correct develop config file is used."""
     test_dir = os.path.dirname(os.path.realpath(__file__))
-    fallback_root = os.path.realpath(os.path.join(test_dir, '..', '..'))
-    fallback_config_file = os.path.join(fallback_root, 'plinth.config')
-    config_path, root_directory = cfg.get_develop_config_paths()
-    cfg.read_file(config_path, root_directory)
-    assert cfg.config_files[-1] == fallback_config_file
-    assert cfg.root == fallback_root
+    develop_root = os.path.realpath(os.path.join(test_dir, '..', '..'))
+    develop_config_file = os.path.join(develop_root, 'plinth.config')
+    config_path = cfg.get_develop_config_path()
+    cfg.read_file(config_path)
+    assert cfg.config_files[-1] == develop_config_file
+    assert cfg.file_root == develop_root
 
 
 def test_read_missing_config_file():
     """Verify that an exception is raised when there's no config file."""
-    cfg.read_file('x-non-existant-file', 'x-root-directory')
+    cfg.read_file('x-non-existant-file')
 
 
 def test_read_config_file_with_missing_sections():
     """Verify that missing configuration sections can be detected."""
-    cfg.read_file(CONFIG_FILE_WITH_MISSING_SECTIONS, TEST_CONFIG_DIR)
+    cfg.read_file(CONFIG_FILE_WITH_MISSING_SECTIONS)
     assert cfg.box_name == 'FreedomBoxTestMissingSections'
 
 
 def test_read_config_file_with_missing_options():
     """Verify that missing configuration options can be detected."""
-    cfg.read_file(CONFIG_FILE_WITH_MISSING_OPTIONS, TEST_CONFIG_DIR)
+    cfg.read_file(CONFIG_FILE_WITH_MISSING_OPTIONS)
     assert cfg.box_name == 'FreedomBoxTestMissingOptions'
 
 
@@ -86,7 +83,6 @@ def compare_configurations(parser):
     # Note that the count of items within each section includes the number
     # of default items (1, for 'root').
     assert len(parser.items('Path')) == 9
-    assert parser.get('Path', 'root') == cfg.root
     assert parser.get('Path', 'file_root') == cfg.file_root
     assert parser.get('Path', 'config_dir') == cfg.config_dir
     assert parser.get('Path', 'custom_static_dir') == cfg.custom_static_dir

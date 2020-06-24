@@ -167,7 +167,7 @@ def test_action_path(monkeypatch):
     monkeypatch.setitem(os.environ, 'PYTHONPATH', '')
     plinth_path = run('test_path').strip()
     su_plinth_path = superuser_run('test_path').strip()
-    assert plinth_path.startswith(cfg.root)
+    assert plinth_path.startswith(cfg.file_root)
     assert plinth_path == su_plinth_path
 
 

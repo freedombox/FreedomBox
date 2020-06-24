@@ -6,11 +6,11 @@ Configuration parser and default values for configuration options.
 import configparser
 import logging
 import os
+import pathlib
 
 logger = logging.getLogger(__name__)
 
 # [Path] section
-root = None
 file_root = '/usr/share/plinth'
 config_dir = '/etc/plinth'
 data_dir = '/var/lib/plinth'
@@ -50,33 +50,28 @@ develop = False
 config_files = []
 
 
-def get_develop_config_paths():
-    """Return config paths of current source folder for development mode."""
+def get_develop_config_path():
+    """Return config path of current source folder for development mode."""
     root_directory = os.path.dirname(os.path.realpath(__file__))
     root_directory = os.path.join(root_directory, '..')
     root_directory = os.path.realpath(root_directory)
     config_path = os.path.join(root_directory, 'plinth.config')
-    return config_path, root_directory
+    return config_path
 
 
-def get_config_paths():
+def get_config_path():
     """Get default config paths."""
-    return '/etc/plinth/plinth.config', '/'
+    return '/etc/plinth/plinth.config'
 
 
 def read():
     """Read all configuration files."""
-    config_path, root_directory = get_config_paths()
-    read_file(config_path, root_directory)
+    config_path = get_config_path()
+    read_file(config_path)
 
 
-def read_file(config_path, root_directory):
-    """Read and merge into defaults a single configuration file.
-
-    - config_path: path of plinth.config file
-    - root_directory: path of plinth root folder
-
-    """
+def read_file(config_path):
+    """Read and merge into defaults a single configuration file."""
     if not os.path.isfile(config_path):
         # Ignore missing configuration files
         return
@@ -85,12 +80,11 @@ def read_file(config_path, root_directory):
     config_files.append(config_path)
 
     parser = configparser.ConfigParser(defaults={
-        'root': os.path.realpath(root_directory),
+        'parent_dir': pathlib.Path(config_path).parent.resolve(),
     })
     parser.read(config_path)
 
     config_items = (
-        ('Path', 'root', 'string'),
         ('Path', 'file_root', 'string'),
         ('Path', 'config_dir', 'string'),
         ('Path', 'data_dir', 'string'),

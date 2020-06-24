@@ -169,7 +169,7 @@ def _run(action, options=None, input=None, run_in_background=False,
     if cfg.develop and sudo_call:
         # Passing 'env' does not work with sudo, so append the PYTHONPATH
         # as part of the command
-        sudo_call += ['PYTHONPATH=%s' % cfg.root]
+        sudo_call += ['PYTHONPATH=%s' % cfg.file_root]
 
     if sudo_call:
         cmd = sudo_call + cmd
@@ -186,7 +186,7 @@ def _run(action, options=None, input=None, run_in_background=False,
     }
     if cfg.develop:
         # In development mode pass on local pythonpath to access Plinth
-        kwargs['env'] = {'PYTHONPATH': cfg.root}
+        kwargs['env'] = {'PYTHONPATH': cfg.file_root}
 
     proc = subprocess.Popen(cmd, **kwargs)
 
