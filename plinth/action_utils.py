@@ -197,6 +197,7 @@ def webserver_disable(name, kind='config', apply_changes=True):
 
 class WebserverChange(object):
     """Context to restart/reload Apache after configuration changes."""
+
     def __init__(self):
         """Initialize the context object state."""
         self.actions_required = set()
@@ -388,3 +389,23 @@ def is_disk_image():
     - Installing packages on a Debian machine using apt.
     """
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
+
+
+def run_apt_command(arguments):
+    """Run apt-get with provided arguments."""
+    # Ask apt-get to output its progress to file descriptor 3.
+    command = [
+        'apt-get', '--assume-yes', '--quiet=2', '--option', 'APT::Status-Fd=3'
+    ] + arguments
+
+    # Duplicate stdout to file descriptor 3 for this process.
+    os.dup2(1, 3)
+
+    # Pass on file descriptor 3 instead of closing it.  Close stdout
+    # so that regular output is ignored.
+    env = os.environ.copy()
+    env['DEBIAN_FRONTEND'] = 'noninteractive'
+    process = subprocess.run(command, stdin=subprocess.DEVNULL,
+                             stdout=subprocess.DEVNULL, close_fds=False,
+                             env=env)
+    return process.returncode

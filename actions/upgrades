@@ -11,6 +11,7 @@ import re
 import subprocess
 import sys
 
+from plinth.action_utils import run_apt_command
 from plinth.modules.apache.components import check_url
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
@@ -83,6 +84,7 @@ def parse_arguments():
 
 def subcommand_run(_):
     """Run unattended-upgrades"""
+    run_apt_command(['--fix-broken', 'install'])
     try:
         subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
