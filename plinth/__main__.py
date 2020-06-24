@@ -132,6 +132,7 @@ def main():
     log.init()
 
     web_framework.init()
+    web_framework.post_init()
 
     logger.info('FreedomBox Service (Plinth) version - %s', __version__)
     for config_file in cfg.config_files:

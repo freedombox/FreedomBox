@@ -53,6 +53,9 @@ def init():
     logger.debug('Configured Django with applications - %s',
                  settings.INSTALLED_APPS)
 
+
+def post_init():
+    """Perform operations after completing init of other modules."""
     logger.debug('Creating or adding new tables to data file')
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=0)
