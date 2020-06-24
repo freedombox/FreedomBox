@@ -40,9 +40,7 @@ def get_shortcuts_as_json(username=None):
         for shortcut in frontpage.Shortcut.list(username)
         if shortcut.component_id and shortcut.is_enabled()
     ]
-    custom_shortcuts = frontpage.get_custom_shortcuts()
-    if custom_shortcuts:
-        shortcuts += custom_shortcuts['shortcuts']
+    shortcuts += frontpage.get_custom_shortcuts()['shortcuts']
     return {'shortcuts': shortcuts}
 
 

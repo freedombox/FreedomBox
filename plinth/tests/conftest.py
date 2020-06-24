@@ -31,7 +31,7 @@ NEXTCLOUD_SHORTCUT = {
 @pytest.fixture(name='custom_shortcuts_file')
 def fixture_custom_shortcuts_file(load_cfg, tmp_path):
     """Fixture to set path for a custom shortcuts file."""
-    load_cfg.config_file = str(tmp_path / 'plinth.conf')
+    load_cfg.config_dir = str(tmp_path)
     return tmp_path / 'custom-shortcuts.json'
 
 
