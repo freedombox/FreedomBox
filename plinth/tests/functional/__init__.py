@@ -269,7 +269,8 @@ def nav_to_module(browser, module):
     sys_or_apps = 'sys' if module in _sys_modules else 'apps'
     required_url = base_url + f'/plinth/{sys_or_apps}/{module}/'
     if browser.url != required_url:
-        browser.visit(required_url)
+        with wait_for_page_update(browser, expected_url=required_url):
+            browser.visit(required_url)
 
 
 def app_select_domain_name(browser, app_name, domain_name):
@@ -404,10 +405,8 @@ def set_advanced_mode(browser, mode):
 def _click_button_and_confirm(browser, href):
     buttons = browser.find_link_by_href(href)
     if buttons:
-        buttons.first.click()
-        with wait_for_page_update(browser,
-                                  expected_url='/plinth/sys/backups/'):
-            submit(browser)
+        submit(browser, buttons.first)
+        submit(browser, expected_url='/plinth/sys/backups/')
 
 
 def _backup_delete_archive_by_name(browser, archive_name):
@@ -421,7 +420,8 @@ def backup_create(browser, app_name, archive_name=None):
     if archive_name:
         _backup_delete_archive_by_name(browser, archive_name)
 
-    browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
+    buttons = browser.find_link_by_href('/plinth/sys/backups/create/')
+    submit(browser, buttons.first)
     browser.find_by_id('select-all').uncheck()
     if archive_name:
         browser.find_by_id('id_backups-name').fill(archive_name)
