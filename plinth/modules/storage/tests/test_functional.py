@@ -22,4 +22,4 @@ def go_to_module(session_browser, name):
 
 def _is_root_disk_shown(browser):
     table_cells = browser.find_by_tag('td')
-    return any(cell.text == '/' for cell in table_cells)
+    return any(cell.text.split('\n')[0] == '/' for cell in table_cells)
