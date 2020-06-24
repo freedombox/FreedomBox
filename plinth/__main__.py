@@ -129,6 +129,11 @@ def main():
 
     adapt_config(arguments)
 
+    if arguments.list_dependencies is not False:
+        log.default_level = 'ERROR'
+        web_framework.init(read_only=True)
+        list_dependencies(arguments.list_dependencies)
+
     log.init()
 
     web_framework.init()
@@ -151,9 +156,6 @@ def main():
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
-
-    if arguments.list_dependencies is not False:
-        list_dependencies(arguments.list_dependencies)
 
     if arguments.list_modules is not False:
         list_modules(arguments.list_modules)
