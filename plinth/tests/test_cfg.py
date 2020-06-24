@@ -28,13 +28,14 @@ pytestmark = pytest.mark.usefixtures('load_cfg')
 
 def test_read_default_config_file():
     """Verify that the default config file can be read correctly."""
-    config_file = cfg.get_develop_config_path()
+    path = pathlib.Path(__file__).resolve().parent
+    config_file = path / 'data' / 'configs' / 'freedombox.config'
 
     # Read the freedombox.config file directly
     parser = configparser.ConfigParser(
         defaults={
-            'parent_dir': pathlib.Path(config_file).parent,
-            'parent_parent_dir': pathlib.Path(config_file).parent.parent
+            'parent_dir': config_file.parent,
+            'parent_parent_dir': config_file.parent.parent
         })
     parser.read(config_file)
 
