@@ -138,7 +138,7 @@ def test_shortcut_list_with_username(superuser_run, common_shortcuts):
     assert return_list == [cuts[0], cuts[3], cut]
 
 
-@pytest.mark.usefixtures('nextcloud_shortcut')
-def test_add_custom_shortcuts():
+def test_add_custom_shortcuts(shortcuts_file):
     """Test that adding custom shortcuts succeeds."""
+    shortcuts_file('nextcloud.json')
     add_custom_shortcuts()

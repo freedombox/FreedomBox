@@ -158,16 +158,21 @@ def _extract_web_app_url(custom_shortcut):
     return None
 
 
+def get_custom_shortcuts_paths():
+    """Return the list of custom shortcut file paths."""
+    file_paths = [
+        '/etc/freedombox/custom-shortcuts.json',
+        '/etc/plinth/custom-shortcuts.json',
+        '/var/lib/freedombox/custom-shortcuts.json',
+        '/usr/share/freedombox/custom-shortcuts.json',
+    ]
+    return cfg.expand_to_dot_d_paths(file_paths)
+
+
 def get_custom_shortcuts():
     """Return a merged dictionary of all custom shortcuts."""
-    dirs = [cfg.config_dir, cfg.data_dir, cfg.file_root]
-    file_paths = [
-        pathlib.Path(dir_) / 'custom-shortcuts.json' for dir_ in dirs
-    ]
-    file_paths = cfg.expand_to_dot_d_paths(file_paths)
-
     shortcuts = {'shortcuts': []}
-    for file_path in file_paths:
+    for file_path in get_custom_shortcuts_paths():
         file_path = pathlib.Path(file_path)
         if not file_path.is_file() or not file_path.stat().st_size:
             continue
