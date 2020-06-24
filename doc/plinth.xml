@@ -71,17 +71,10 @@
         <term><option>--server_dir SERVER_DIR</option></term>
         <listitem>
           <para>
-            This the URL fragment under which Plinth will provide its
-            services.  By default the value from
-            <filename>plinth.config</filename> is used.  Plinth is
-            shipped with a value of <filename>/plinth</filename> in
-            <filename>/etc/plinth/plinth.config</filename>.  This
-            means that Plinth will be available as
-            http://localhost:8000/plinth by default.
-            When <filename>/etc/plinth/plinth.config</filename> is not
-            available, <filename>plinth.config</filename> from the current
-            working directory is used.
-
+            This the URL fragment under which Plinth will provide its services.
+            Plinth is shipped with a default value of
+            <filename>/plinth</filename>. This means that Plinth will be
+            available as http://localhost:8000/plinth by default.
           </para>
         </listitem>
       </varlistentry>
@@ -89,9 +82,9 @@
         <term><option>--develop</option></term>
         <listitem>
           <para>
-            Enable development mode.  Use plinth.config and the actions_dir
-            of the current working directory.  Enables extra debug messages,
-            enable Django debug mode for detailed error pages and and turn off
+            Enable development mode.  Use develop.config and action scripts
+            from the current working directory.  Enables extra debug messages,
+            enable Django debug mode for detailed error pages and turn off
             Django security features.  Monitor source files for changes and
             restart Plinth on modifications.  Die if there is an error during
             module initialization.
@@ -165,12 +158,15 @@
   <refsect1>
     <title>Configuration</title>
     <para>
-      Plinth reads various configuration options from the file
-      <filename>/etc/plinth/plinth.config</filename>.  If this file is
-      not present, then it reads configuration file
-      <filename>./plinth.config</filename> from the current directory.
-      This is mainly meant to make Plinth work with configuration from
-      source code directory for debugging purposes.
+      Plinth reads various configuration options from the files
+      <filename>/usr/share/freedombox/freedombox.config</filename>,
+      <filename>/usr/share/freedombox/freedombox.config.d/*.config</filename>,
+      <filename>/etc/plinth/plinth.config</filename>,
+      <filename>/etc/plinth/plinth.config.d/*.config</filename>,
+      <filename>/etc/freedombox/freedombox.config</filename> and
+      <filename>/etc/freedombox/freedombox.config.d/*.config</filename> in that
+      order. Options in a file read later override options specified earlier.
+      <filename>/etc/plinth/</filename> locations are deprecated.
     </para>
   </refsect1>
 
