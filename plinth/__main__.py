@@ -105,7 +105,7 @@ def run_diagnostics_and_exit():
 
 
 def adapt_config(arguments):
-    """Give commandline arguments precedence over plinth.config entries"""
+    """Give commandline arguments precedence over config entries"""
     for argument_name in precedence_commandline_arguments:
         argument_value = getattr(arguments, argument_name)
         if argument_value is not None:

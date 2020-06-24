@@ -14,11 +14,12 @@ import pytest
 from plinth import cfg
 
 TEST_CONFIG_DIR = \
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
+    os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                 'data', 'configs')
 CONFIG_FILE_WITH_MISSING_OPTIONS = \
-    os.path.join(TEST_CONFIG_DIR, 'plinth.config.with_missing_options')
+    os.path.join(TEST_CONFIG_DIR, 'freedombox.config.with_missing_options')
 CONFIG_FILE_WITH_MISSING_SECTIONS = \
-    os.path.join(TEST_CONFIG_DIR, 'plinth.config.with_missing_sections')
+    os.path.join(TEST_CONFIG_DIR, 'freedombox.config.with_missing_sections')
 
 logging.disable(logging.CRITICAL)
 
@@ -29,12 +30,15 @@ def test_read_default_config_file():
     """Verify that the default config file can be read correctly."""
     config_file = cfg.get_develop_config_path()
 
-    # Read the plinth.config file directly
+    # Read the freedombox.config file directly
     parser = configparser.ConfigParser(
-        defaults={'parent_dir': pathlib.Path(config_file).parent})
+        defaults={
+            'parent_dir': pathlib.Path(config_file).parent,
+            'parent_parent_dir': pathlib.Path(config_file).parent.parent
+        })
     parser.read(config_file)
 
-    # Read the plinth.config file via the cfg module
+    # Read the freedombox.config file via the cfg module
     cfg.read_file(config_file)
 
     # Compare the two results
@@ -81,9 +85,6 @@ def test_read_config_file_with_missing_options():
 
 def compare_configurations(parser):
     """Compare two sets of configuration values."""
-    # Note that the count of items within each section includes the number
-    # of default items (1, for 'root').
-    assert len(parser.items('Path')) == 9
     assert parser.get('Path', 'file_root') == cfg.file_root
     assert parser.get('Path', 'config_dir') == cfg.config_dir
     assert parser.get('Path', 'custom_static_dir') == cfg.custom_static_dir
@@ -92,7 +93,6 @@ def compare_configurations(parser):
     assert parser.get('Path', 'actions_dir') == cfg.actions_dir
     assert parser.get('Path', 'doc_dir') == cfg.doc_dir
 
-    assert len(parser.items('Network')) == 6
     assert parser.get('Network', 'host') == cfg.host
     assert int(parser.get('Network', 'port')) == cfg.port
     assert parser.get('Network', 'secure_proxy_ssl_header') == \
@@ -103,5 +103,5 @@ def compare_configurations(parser):
     assert isinstance(cfg.use_x_forwarded_host, bool)
     assert parser.get('Network', 'use_x_forwarded_host') == \
         str(cfg.use_x_forwarded_host)
-    assert len(parser.items('Misc')) == 2
+
     assert parser.get('Misc', 'box_name') == cfg.box_name

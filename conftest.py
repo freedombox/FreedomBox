@@ -52,7 +52,7 @@ def fixture_load_cfg():
 
     root_dir = pathlib.Path(__file__).resolve().parent
     test_data_dir = root_dir / 'plinth' / 'tests' / 'data'
-    cfg_file = test_data_dir / 'etc' / 'plinth' / 'plinth.config'
+    cfg_file = test_data_dir / 'configs' / 'freedombox.config'
     cfg.read_file(str(cfg_file))
     yield cfg
     cfg.read_file(str(cfg_file))

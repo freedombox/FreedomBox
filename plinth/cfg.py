@@ -60,7 +60,7 @@ def get_develop_config_path():
 
 def get_config_path():
     """Get default config paths."""
-    return '/etc/plinth/plinth.config'
+    return '/etc/freedombox/freedombox.config'
 
 
 def read():
