@@ -26,14 +26,14 @@ pytestmark = pytest.mark.usefixtures('load_cfg')
 
 def test_read_default_config_file():
     """Verify that the default config file can be read correctly."""
-    config_file, config_dir = cfg.get_fallback_config_paths()
+    config_file, config_dir = cfg.get_develop_config_paths()
 
     # Read the plinth.config file directly
     parser = configparser.ConfigParser(defaults={'root': config_dir})
     parser.read(config_file)
 
     # Read the plinth.config file via the cfg module
-    cfg.read(config_file, config_dir)
+    cfg.read_file(config_file, config_dir)
 
     # Compare the two results
     compare_configurations(parser)
@@ -58,26 +58,26 @@ def test_read_fallback_config_file():
     test_dir = os.path.dirname(os.path.realpath(__file__))
     fallback_root = os.path.realpath(os.path.join(test_dir, '..', '..'))
     fallback_config_file = os.path.join(fallback_root, 'plinth.config')
-    config_path, root_directory = cfg.get_fallback_config_paths()
-    cfg.read(config_path, root_directory)
+    config_path, root_directory = cfg.get_develop_config_paths()
+    cfg.read_file(config_path, root_directory)
     assert cfg.config_files[-1] == fallback_config_file
     assert cfg.root == fallback_root
 
 
 def test_read_missing_config_file():
     """Verify that an exception is raised when there's no config file."""
-    cfg.read('x-non-existant-file', 'x-root-directory')
+    cfg.read_file('x-non-existant-file', 'x-root-directory')
 
 
 def test_read_config_file_with_missing_sections():
     """Verify that missing configuration sections can be detected."""
-    cfg.read(CONFIG_FILE_WITH_MISSING_SECTIONS, TEST_CONFIG_DIR)
+    cfg.read_file(CONFIG_FILE_WITH_MISSING_SECTIONS, TEST_CONFIG_DIR)
     assert cfg.box_name == 'FreedomBoxTestMissingSections'
 
 
 def test_read_config_file_with_missing_options():
     """Verify that missing configuration options can be detected."""
-    cfg.read(CONFIG_FILE_WITH_MISSING_OPTIONS, TEST_CONFIG_DIR)
+    cfg.read_file(CONFIG_FILE_WITH_MISSING_OPTIONS, TEST_CONFIG_DIR)
     assert cfg.box_name == 'FreedomBoxTestMissingOptions'
 
 

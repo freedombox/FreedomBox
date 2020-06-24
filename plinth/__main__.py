@@ -122,12 +122,11 @@ def main():
     """Initialize and start the application"""
     arguments = parse_arguments()
 
+    cfg.read()
     if arguments.develop:
         # use the root and plinth.config of the current working directory
-        config_path, root_directory = cfg.get_fallback_config_paths()
-        cfg.read(config_path, root_directory)
-    else:
-        cfg.read()
+        config_path, root_directory = cfg.get_develop_config_paths()
+        cfg.read_file(config_path, root_directory)
 
     adapt_config(arguments)
 

@@ -50,8 +50,8 @@ develop = False
 config_files = []
 
 
-def get_fallback_config_paths():
-    """Get config paths of the current source code folder"""
+def get_develop_config_paths():
+    """Return config paths of current source folder for development mode."""
     root_directory = os.path.dirname(os.path.realpath(__file__))
     root_directory = os.path.join(root_directory, '..')
     root_directory = os.path.realpath(root_directory)
@@ -64,16 +64,19 @@ def get_config_paths():
     return '/etc/plinth/plinth.config', '/'
 
 
-def read(config_path=None, root_directory=None):
-    """
-    Read configuration.
+def read():
+    """Read all configuration files."""
+    config_path, root_directory = get_config_paths()
+    read_file(config_path, root_directory)
+
+
+def read_file(config_path, root_directory):
+    """Read and merge into defaults a single configuration file.
 
     - config_path: path of plinth.config file
     - root_directory: path of plinth root folder
-    """
-    if not config_path and not root_directory:
-        config_path, root_directory = get_config_paths()
 
+    """
     if not os.path.isfile(config_path):
         # Ignore missing configuration files
         return
