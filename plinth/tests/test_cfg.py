@@ -6,6 +6,7 @@ Test module for configuration module.
 import configparser
 import logging
 import os
+from unittest.mock import patch
 
 import pytest
 
@@ -23,54 +24,33 @@ logging.disable(logging.CRITICAL)
 pytestmark = pytest.mark.usefixtures('load_cfg')
 
 
-@pytest.fixture(name='test_config_file')
-def fixture_test_config_file(load_cfg):
-    """Test fixture to return the configuration file path"""
-    return cfg.get_config_paths()[0]
-
-
-@pytest.fixture(name='test_config_dir')
-def fixture_test_config_dir(load_cfg):
-    """Test fixture to return the configuration file directory."""
-    return cfg.get_config_paths()[1]
-
-
-def test_read_default_config_file(test_config_dir, test_config_file):
+def test_read_default_config_file():
     """Verify that the default config file can be read correctly."""
+    config_file, config_dir = cfg.get_fallback_config_paths()
+
     # Read the plinth.config file directly
-    parser = configparser.ConfigParser(defaults={'root': test_config_dir})
-    parser.read(test_config_file)
+    parser = configparser.ConfigParser(defaults={'root': config_dir})
+    parser.read(config_file)
 
     # Read the plinth.config file via the cfg module
-    cfg.read(test_config_file, test_config_dir)
+    cfg.read(config_file, config_dir)
 
     # Compare the two results
     compare_configurations(parser)
 
 
-def test_read_primary_config_file():
+@patch('plinth.cfg.get_config_paths')
+def test_read_primary_config_file(get_config_paths):
     """Verify that the primary config file is used by default."""
-    original_config_path = cfg.DEFAULT_CONFIG_FILE
-    original_root_directory = cfg.DEFAULT_ROOT
-
     expected_config_path = CONFIG_FILE_WITH_MISSING_OPTIONS
     root_directory = 'x-default-root'
     expected_root_directory = os.path.realpath(root_directory)
+    get_config_paths.return_value = (expected_config_path, root_directory)
 
-    try:
-        cfg.DEFAULT_CONFIG_FILE = expected_config_path
-        cfg.DEFAULT_ROOT = root_directory
-        # reading the config file will fail, but still cfg.root and
-        # cfg.config_file will be set for parsing the config file
-        try:
-            cfg.read()
-        except configparser.NoOptionError:
-            pass
-        assert cfg.config_file == expected_config_path
-        assert cfg.root == expected_root_directory
-    finally:
-        cfg.DEFAULT_CONFIG_FILE = original_config_path
-        cfg.DEFAULT_ROOT = original_root_directory
+    cfg.read()
+
+    assert cfg.config_file == expected_config_path
+    assert cfg.root == expected_root_directory
 
 
 def test_read_fallback_config_file():
@@ -86,20 +66,19 @@ def test_read_fallback_config_file():
 
 def test_read_missing_config_file():
     """Verify that an exception is raised when there's no config file."""
-    with pytest.raises(FileNotFoundError):
-        cfg.read('x-non-existant-file', 'x-root-directory')
+    cfg.read('x-non-existant-file', 'x-root-directory')
 
 
-def test_read_config_file_with_missing_sections(test_config_dir):
+def test_read_config_file_with_missing_sections():
     """Verify that missing configuration sections can be detected."""
-    with pytest.raises(configparser.NoSectionError):
-        cfg.read(CONFIG_FILE_WITH_MISSING_SECTIONS, test_config_dir)
+    cfg.read(CONFIG_FILE_WITH_MISSING_SECTIONS, TEST_CONFIG_DIR)
+    assert cfg.box_name == 'FreedomBoxTestMissingSections'
 
 
-def test_read_config_file_with_missing_options(test_config_dir):
+def test_read_config_file_with_missing_options():
     """Verify that missing configuration options can be detected."""
-    with pytest.raises(configparser.NoOptionError):
-        cfg.read(CONFIG_FILE_WITH_MISSING_OPTIONS, test_config_dir)
+    cfg.read(CONFIG_FILE_WITH_MISSING_OPTIONS, TEST_CONFIG_DIR)
+    assert cfg.box_name == 'FreedomBoxTestMissingOptions'
 
 
 def compare_configurations(parser):

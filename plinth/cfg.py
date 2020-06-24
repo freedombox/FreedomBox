@@ -1,4 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configuration parser and default values for configuration options.
+"""
 
 import configparser
 import logging
@@ -6,27 +9,45 @@ import os
 
 logger = logging.getLogger(__name__)
 
-box_name = None
+# [Path] section
 root = None
-file_root = None
-config_dir = None
-data_dir = None
-custom_static_dir = None
-store_file = None
-actions_dir = None
-doc_dir = None
-host = None
-port = None
-use_x_forwarded_for = False
-use_x_forwarded_host = False
-secure_proxy_ssl_header = None
+file_root = '/usr/share/plinth'
+config_dir = '/etc/plinth'
+data_dir = '/var/lib/plinth'
+custom_static_dir = '/var/www/plinth/custom/static'
+store_file = data_dir + '/plinth.sqlite3'
+actions_dir = '/usr/share/plinth/actions'
+doc_dir = '/usr/share/freedombox'
+server_dir = '/plinth'
+
+# [Network] section
+host = '127.0.0.1'
+port = 8000
+
+# Enable the following only if Plinth is behind a proxy server.  The
+# proxy server should properly clean and the following HTTP headers:
+#   X-Forwarded-For
+#   X-Forwarded-Host
+#   X-Forwarded-Proto
+# If you enable these unnecessarily, this will lead to serious security
+# problems. For more information, see
+# https://docs.djangoproject.com/en/1.7/ref/settings/
+#
+# These are enabled by default in FreedomBox because the default
+# configuration allows only connections from localhost
+#
+# Leave the values blank to disable
+use_x_forwarded_for = True
+use_x_forwarded_host = True
+secure_proxy_ssl_header = 'HTTP_X_FORWARDED_PROTO'
+
+# [Misc] section
+box_name = 'FreedomBox'
+
+# Other globals
 develop = False
-server_dir = '/'
 
 config_file = None
-
-DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
-DEFAULT_ROOT = '/'
 
 
 def get_fallback_config_paths():
@@ -54,8 +75,8 @@ def read(config_path=None, root_directory=None):
         config_path, root_directory = get_config_paths()
 
     if not os.path.isfile(config_path):
-        msg = 'No plinth.config file could be found on path: %s' % config_path
-        raise FileNotFoundError(msg)
+        # Ignore missing configuration files
+        return
 
     global config_file  # pylint: disable-msg=invalid-name,global-statement
     config_file = config_path
@@ -87,9 +108,8 @@ def read(config_path=None, root_directory=None):
         try:
             value = parser.get(section, name)
         except (configparser.NoSectionError, configparser.NoOptionError):
-            logger.error('Configuration does not contain option: %s.%s',
-                         section, name)
-            raise
+            # Use default values for any missing keys in configuration
+            continue
         else:
             if datatype == 'int':
                 value = int(value)

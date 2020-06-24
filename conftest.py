@@ -55,7 +55,7 @@ def fixture_load_cfg():
     cfg_file = test_data_dir / 'etc' / 'plinth' / 'plinth.config'
     cfg.read(str(cfg_file), str(root_dir))
     yield cfg
-    cfg.read()
+    cfg.read(str(cfg_file), str(root_dir))
 
 
 @pytest.fixture(name='develop_mode')
