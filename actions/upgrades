@@ -15,6 +15,7 @@ from plinth.modules.apache.components import check_url
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
+DPKG_LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades-dpkg.log'
 BUSTER_BACKPORTS_RELEASE_FILE_URL = \
     'https://deb.debian.org/debian/dists/buster-backports/Release'
 
@@ -132,7 +133,15 @@ def subcommand_disable_auto(_):
 def subcommand_get_log(_):
     """Print the automatic upgrades log."""
     try:
+        print('==> ' + os.path.basename(LOG_FILE))
         with open(LOG_FILE, 'r') as file_handle:
+            print(file_handle.read())
+    except IOError:
+        pass
+
+    try:
+        print('==> ' + os.path.basename(DPKG_LOG_FILE))
+        with open(DPKG_LOG_FILE, 'r') as file_handle:
             print(file_handle.read())
     except IOError:
         pass
