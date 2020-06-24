@@ -49,7 +49,7 @@ def test_read_primary_config_file(get_config_paths):
 
     cfg.read()
 
-    assert cfg.config_file == expected_config_path
+    assert cfg.config_files[-1] == expected_config_path
     assert cfg.root == expected_root_directory
 
 
@@ -60,7 +60,7 @@ def test_read_fallback_config_file():
     fallback_config_file = os.path.join(fallback_root, 'plinth.config')
     config_path, root_directory = cfg.get_fallback_config_paths()
     cfg.read(config_path, root_directory)
-    assert cfg.config_file == fallback_config_file
+    assert cfg.config_files[-1] == fallback_config_file
     assert cfg.root == fallback_root
 
 

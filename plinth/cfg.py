@@ -47,7 +47,7 @@ box_name = 'FreedomBox'
 # Other globals
 develop = False
 
-config_file = None
+config_files = []
 
 
 def get_fallback_config_paths():
@@ -78,13 +78,13 @@ def read(config_path=None, root_directory=None):
         # Ignore missing configuration files
         return
 
-    global config_file  # pylint: disable-msg=invalid-name,global-statement
-    config_file = config_path
+    # Keep a note of configuration files read.
+    config_files.append(config_path)
 
     parser = configparser.ConfigParser(defaults={
         'root': os.path.realpath(root_directory),
     })
-    parser.read(config_file)
+    parser.read(config_path)
 
     config_items = (
         ('Path', 'root', 'string'),

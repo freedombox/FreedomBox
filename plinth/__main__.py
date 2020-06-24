@@ -136,7 +136,8 @@ def main():
     web_framework.init()
 
     logger.info('FreedomBox Service (Plinth) version - %s', __version__)
-    logger.info('Configuration loaded from file - %s', cfg.config_file)
+    for config_file in cfg.config_files:
+        logger.info('Configuration loaded from file - %s', config_file)
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.include_urls()
