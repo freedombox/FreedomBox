@@ -84,6 +84,7 @@ def parse_arguments():
 
 def subcommand_run(_):
     """Run unattended-upgrades"""
+    subprocess.run(['dpkg', '--configure', '-a'])
     run_apt_command(['--fix-broken', 'install'])
     try:
         subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],

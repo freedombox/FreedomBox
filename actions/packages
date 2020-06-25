@@ -94,6 +94,7 @@ def subcommand_install(arguments):
     elif arguments.force_configuration == 'new':
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confnew']
 
+    subprocess.run(['dpkg', '--configure', '-a'])
     with _apt_hold():
         run_apt_command(['--fix-broken', 'install'])
         returncode = run_apt_command(['install'] + extra_arguments +
