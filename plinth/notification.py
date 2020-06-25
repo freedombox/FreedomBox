@@ -316,12 +316,12 @@ class Notification(models.StoredNotification):
         return new_dict
 
     @staticmethod
-    def _render(template, data):
+    def _render(request, template, data):
         """Use the template name and render it."""
         if not template:
             return None
 
-        context = dict(data, box_name=ugettext(cfg.box_name))
+        context = dict(data, box_name=ugettext(cfg.box_name), request=request)
         try:
             return SimpleTemplateResponse(template, context).render()
         except TemplateDoesNotExist:
@@ -329,7 +329,7 @@ class Notification(models.StoredNotification):
             return {'content': f'Template {template} does not exist.'.encode()}
 
     @staticmethod
-    def get_display_context(user):
+    def get_display_context(request, user):
         """Return a list of notifications meant for display to a user."""
         notifications = Notification.list(user=user)
         max_severity = max(notifications, default=None,
@@ -345,13 +345,14 @@ class Notification(models.StoredNotification):
                     action['text'] = Notification._translate(
                         action['text'], data)
 
+            body = Notification._render(request, note.body_template, data)
             notes.append({
                 'id': note.id,
                 'app_id': note.app_id,
                 'severity': note.severity,
                 'title': Notification._translate(note.title, data),
                 'message': Notification._translate(note.message, data),
-                'body': Notification._render(note.body_template, data),
+                'body': body,
                 'actions': actions,
                 'data': data,
                 'created_time': note.created_time,
