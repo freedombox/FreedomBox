@@ -269,8 +269,7 @@ def nav_to_module(browser, module):
     sys_or_apps = 'sys' if module in _sys_modules else 'apps'
     required_url = base_url + f'/plinth/{sys_or_apps}/{module}/'
     if browser.url != required_url:
-        with wait_for_page_update(browser, expected_url=required_url):
-            browser.visit(required_url)
+        browser.visit(required_url)
 
 
 def app_select_domain_name(browser, app_name, domain_name):
