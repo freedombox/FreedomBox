@@ -211,6 +211,12 @@ def _check_and_backports_sources():
               'backports.')
         return
 
+    release = subprocess.check_output(['lsb_release', '--release',
+                                       '--short']).decode().strip()
+    if release in ['testing', 'unstable']:
+        print(f'System release is {release}. Skip enabling backports.')
+        return
+
     protocol = _get_protocol()
     if protocol == 'tor+http':
         print('Package download over Tor is enabled.')
