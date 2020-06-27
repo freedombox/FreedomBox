@@ -7,14 +7,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-  {% if is_busy %}
-    <noscript>
-      <meta http-equiv="refresh" content="3" />
-    </noscript>
-  {% endif %}
-{% endblock %}
-
 {% block extra_content %}
   <h3>{% trans "Manual update" %}</h3>
   {% if is_busy %}
@@ -57,11 +49,5 @@
         <pre>{{ log }}</pre>
       </div>
     </p>
-  {% endif %}
-{% endblock %}
-
-{% block page_js %}
-  {% if is_busy %}
-    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
   {% endif %}
 {% endblock %}

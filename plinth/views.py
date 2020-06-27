@@ -283,6 +283,12 @@ class SetupView(TemplateView):
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
 
+        context['refresh_page_sec'] = None
+        if context['setup_state'] == 'up-to-date':
+            context['refresh_page_sec'] = 0
+        elif context['setup_current_operation']:
+            context['refresh_page_sec'] = 3
+
         return context
 
     def dispatch(self, request, *args, **kwargs):

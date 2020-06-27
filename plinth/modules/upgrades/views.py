@@ -30,6 +30,7 @@ class UpgradesConfigurationView(AppView):
         context = super().get_context_data(*args, **kwargs)
         context['is_busy'] = package.is_package_manager_busy()
         context['log'] = get_log()
+        context['refresh_page_sec'] = 3 if context['is_busy'] else None
         return context
 
     def form_valid(self, form):

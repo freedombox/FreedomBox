@@ -23,6 +23,24 @@
 */
 
 /*
+ * Refresh page if marked for refresh.
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.querySelector('body');
+    if (body.hasAttribute('data-refresh-page-sec')) {
+        let seconds = body.getAttribute('data-refresh-page-sec');
+        seconds = parseInt(seconds, 10);
+        if (isNaN(seconds))
+            return;
+
+        window.setTimeout(() => {
+            // Refresh the page without resubmitting the POST data.
+            window.location = window.location.href;
+        }, seconds * 1000);
+    }
+});
+
+/*
  * Disable submit button on click.
  */
 function onSubmitAddProgress(event) {

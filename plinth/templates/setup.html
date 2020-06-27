@@ -7,18 +7,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-  {% if setup_state == 'up-to-date' %}
-    <noscript>
-      <meta http-equiv="refresh" content="0" />
-    </noscript>
-  {% elif setup_current_operation %}
-    <noscript>
-      <meta http-equiv="refresh" content="3" />
-    </noscript>
-  {% endif %}
-{% endblock %}
-
 {% block content %}
 
   {% include "app-header.html" with setup=True %}
@@ -108,19 +96,6 @@
       {% endwith %}
     {% endif %}
 
-  {% endif %}
-
-{% endblock %}
-
-
-{% block page_js %}
-
-  {% if setup_current_operation or setup_state == 'up-to-date' %}
-    {% if setup_state == 'up-to-date' %}
-      <script type="text/javascript" src="{% static 'theme/js/refresh_immediately.js' %}"></script>
-    {% else %}
-      <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
-    {% endif %}
   {% endif %}
 
 {% endblock %}
