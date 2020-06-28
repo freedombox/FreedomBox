@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-15 19:20-0400\n"
-"PO-Revision-Date: 2016-07-03 21:44+0000\n"
-"Last-Translator: Mikkel Kirkgaard Nielsen <memb_weblate@mikini.dk>\n"
+"PO-Revision-Date: 2020-06-28 19:30+0000\n"
+"Last-Translator: Jens Molgaard <subscriptions@zete.tk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/plinth/"
 "da/>\n"
 "Language: da\n"
@@ -19,21 +19,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.7-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
-msgstr ""
+msgstr "Sidens kildekode"
 
 #: plinth/context_processors.py:23 plinth/views.py:53
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/daemon.py:85
-#, fuzzy, python-brace-format
-#| msgid "Service discovery server is running"
+#, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Tjenestesøgningstjenesten er aktiv"
+msgstr "Tjenesten {service_name} er aktiv"
 
 #: plinth/daemon.py:111
 #, python-brace-format
@@ -56,30 +55,28 @@ msgid "Cannot connect to {host}:{port}"
 msgstr "Kan ikke forbinde til {host}:{port}"
 
 #: plinth/forms.py:38
-#, fuzzy
-#| msgid "Invalid domain name"
 msgid "Select a domain name to be used with this application"
-msgstr "Ugyldigt domænenavn"
+msgstr "Vælg et domænenavn til brug i denne applikation"
 
 #: plinth/forms.py:40
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr ""
+"Advarsel! Applikationen holder muligvis op med at fungere korrekt hvis "
+"domænenavnet bliver ændret senere."
 
 #: plinth/forms.py:48
 msgid "Language"
 msgstr "Sprog"
 
 #: plinth/forms.py:49
-#, fuzzy
-#| msgid "Language for this web administration interface"
 msgid "Language to use for presenting this web interface"
-msgstr "Sprog i dette administrationsværktøj"
+msgstr "Sprog denne web-brugergrænseflade skal vises i"
 
 #: plinth/forms.py:56
 msgid "Use the language preference set in the browser"
-msgstr ""
+msgstr "Benyt browserens sprogindstilling"
 
 #: plinth/middleware.py:57 plinth/templates/setup.html:30
 msgid "Application installed."
@@ -139,20 +136,20 @@ msgstr "Tjenestesøgning"
 
 #: plinth/modules/avahi/__init__.py:68
 msgid "Local Network Domain"
-msgstr ""
+msgstr "Lokalt netværksdomæne"
 
 #: plinth/modules/backups/__init__.py:28
 msgid "Backups allows creating and managing backup archives."
-msgstr ""
+msgstr "Sikkerhedskopiering lader dig oprette og administrere sikkerhedskopier."
 
 #: plinth/modules/backups/__init__.py:47
 msgid "Backups"
-msgstr ""
+msgstr "Sikkerhedskopiering"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
 msgid "{app} (No data to backup)"
-msgstr ""
+msgstr "{app} (Ingen data at sikkerhedskopiere)"
 
 #: plinth/modules/backups/forms.py:52
 #: plinth/modules/backups/templates/backups_delete.html:18
@@ -164,225 +161,201 @@ msgstr "Navn"
 
 #: plinth/modules/backups/forms.py:53
 msgid "(Optional) Set a name for this backup archive"
-msgstr ""
+msgstr "(Valgfrit) Navngiv denne sikkerhedskopi"
 
 #: plinth/modules/backups/forms.py:56
 msgid "Included apps"
-msgstr ""
+msgstr "Inkluderede apps"
 
 #: plinth/modules/backups/forms.py:56
 msgid "Apps to include in the backup"
-msgstr ""
+msgstr "Applikationer som skal inkluderes i sikkerhedskopien"
 
 #: plinth/modules/backups/forms.py:70
-#, fuzzy
-#| msgid "The subdomain you want to register"
 msgid "Select the apps you want to restore"
-msgstr "Subdomænet du vil registrere"
+msgstr "Vælg de apps du vil genskabe"
 
 #: plinth/modules/backups/forms.py:83
 msgid "Upload File"
-msgstr ""
+msgstr "Upload fil"
 
 #: plinth/modules/backups/forms.py:85
 msgid "Backup files have to be in .tar.gz format"
-msgstr ""
+msgstr "Sikkerhedskopier skal være gemt i filformatet .tar.gz"
 
 #: plinth/modules/backups/forms.py:86
 msgid "Select the backup file you want to upload"
-msgstr ""
+msgstr "Vælg den sikkerhedskopi du vil uploade"
 
 #: plinth/modules/backups/forms.py:92
-#, fuzzy
-#| msgid "packages not found"
 msgid "Repository path format incorrect."
-msgstr "pakker ikke fundet"
+msgstr "Sti til fjernlager er fejlagtigt angivet."
 
 #: plinth/modules/backups/forms.py:99
-#, fuzzy, python-brace-format
-#| msgid "Invalid server name"
+#, python-brace-format
 msgid "Invalid username: {username}"
-msgstr "Ugyldigt servernavn"
+msgstr "Ugyldigt brugernavn: {username}"
 
 #: plinth/modules/backups/forms.py:109
-#, fuzzy, python-brace-format
-#| msgid "Invalid hostname"
+#, python-brace-format
 msgid "Invalid hostname: {hostname}"
-msgstr "Ugyldigt værtsnavn"
+msgstr "Ugyldigt værtsnavn: {hostname}"
 
 #: plinth/modules/backups/forms.py:113
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr ""
+msgstr "Ugyldig sti til filkatalog: {dir_path}"
 
 #: plinth/modules/backups/forms.py:119
-#, fuzzy
-#| msgid "Description"
 msgid "Encryption"
-msgstr "Beskrivelse"
+msgstr "Kryptering"
 
 #: plinth/modules/backups/forms.py:120
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
 msgstr ""
+"\"Nøgle i arkiv\" betyder at en nøglefil beskyttet med kodeord gemmes sammen "
+"med sikkerhedskopien."
 
 #: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:262
 msgid "Passphrase"
-msgstr "Kodesætning"
+msgstr "Adgangsfrase"
 
 #: plinth/modules/backups/forms.py:125
 msgid "Passphrase; Only needed when using encryption."
-msgstr ""
+msgstr "Adgangsfrase; Kun påkrævet ved brug af kryptering."
 
 #: plinth/modules/backups/forms.py:128
-#, fuzzy
-#| msgid "Passphrase"
 msgid "Confirm Passphrase"
-msgstr "Kodesætning"
+msgstr "Bekræft adgangsfrase"
 
 #: plinth/modules/backups/forms.py:128
 msgid "Repeat the passphrase."
-msgstr ""
+msgstr "Gentag adgangsfrasen."
 
 #: plinth/modules/backups/forms.py:139
 msgid "The entered encryption passphrases do not match"
-msgstr ""
+msgstr "De angivne adgangsfraser til kryptering er ikke ens"
 
 #: plinth/modules/backups/forms.py:143
 msgid "Passphrase is needed for encryption."
-msgstr ""
+msgstr "Adgangsfrase er påkrævet ved brug af kryptering."
 
 #: plinth/modules/backups/forms.py:178
 msgid "Select Disk or Partition"
-msgstr ""
+msgstr "Vælg disk eller partition"
 
 #: plinth/modules/backups/forms.py:179
 msgid "Backups will be stored in the directory FreedomBoxBackups"
-msgstr ""
+msgstr "Sikkerhedskopier vil blive gemt i mappen FreedomBoxBackups"
 
 #: plinth/modules/backups/forms.py:188
 msgid "SSH Repository Path"
-msgstr ""
+msgstr "Sti til SSH-fjernlager"
 
 #: plinth/modules/backups/forms.py:189
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
 msgstr ""
+"Sti til nyt eller eksisterende fjernlager. Eksempelvis: <i>bruger@vært:~/sti/"
+"til/arkiv/</i>"
 
 #: plinth/modules/backups/forms.py:193
-#, fuzzy
-#| msgid "Save Password"
 msgid "SSH server password"
-msgstr "Gem Kodeord"
+msgstr "SSH-serverens adgangskode"
 
 #: plinth/modules/backups/forms.py:194
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
+"SSH-serverens adgangskode.<br />Nøglebaseret SSH-autentifikation er endnu "
+"ikke muligt."
 
 #: plinth/modules/backups/forms.py:213
 msgid "Remote backup repository already exists."
-msgstr ""
+msgstr "Fjernlager for sikkerhedskopier eksisterer i forvejen."
 
 #: plinth/modules/backups/forms.py:219
 msgid "Select verified SSH public key"
-msgstr ""
+msgstr "Vælg en verificeret offentlig SSH-nøgle"
 
 #: plinth/modules/backups/repository.py:33
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
+"Forbindelse afvist – sørg for at du har angivet de korrekte loginoplysninger "
+"og at serveren kører."
 
 #: plinth/modules/backups/repository.py:40
-#, fuzzy
-#| msgid "Connection Type"
 msgid "Connection refused"
-msgstr "Forbindelsestype"
+msgstr "Forbindelse afvist"
 
 #: plinth/modules/backups/repository.py:47
-#, fuzzy
-#| msgid "packages not found"
 msgid "Repository not found"
-msgstr "pakker ikke fundet"
+msgstr "Arkiv ikke fundet"
 
 #: plinth/modules/backups/repository.py:52
 msgid "Incorrect encryption passphrase"
-msgstr ""
+msgstr "Fejlagtig adgangsfrase til kryptering"
 
 #: plinth/modules/backups/repository.py:57
 msgid "SSH access denied"
-msgstr ""
+msgstr "SSH-adgang afvist"
 
 #: plinth/modules/backups/repository.py:63
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Sti til lager er hverken tom eller et eksisterende lager af sikkerhedskopier."
 
 #: plinth/modules/backups/repository.py:137
 msgid "Existing repository is not encrypted."
-msgstr ""
+msgstr "Eksisterende lager er ikke krypteret."
 
 #: plinth/modules/backups/repository.py:322
-#, fuzzy, python-brace-format
-#| msgid "{box_name} Manual"
+#, python-brace-format
 msgid "{box_name} storage"
-msgstr "{box_name} Brugervejledning"
+msgstr "Lagring af {box_name}"
 
 #: plinth/modules/backups/templates/backups.html:30
 #: plinth/modules/backups/views.py:60
-#, fuzzy
-#| msgid "PageKite Account"
 msgid "Create a new backup"
-msgstr "PageKite-konto"
+msgstr "Opret en ny sikkerhedskopi"
 
 #: plinth/modules/backups/templates/backups.html:34
-#, fuzzy
-#| msgid "PageKite Account"
 msgid "Create Backup"
-msgstr "PageKite-konto"
+msgstr "Opret sikkerhedskopi"
 
 #: plinth/modules/backups/templates/backups.html:37
 msgid "Upload and restore a backup archive"
-msgstr ""
+msgstr "Upload og genopret en sikkerhedskopi"
 
 #: plinth/modules/backups/templates/backups.html:41
-#, fuzzy
-#| msgid "Save Password"
 msgid "Upload and Restore"
-msgstr "Gem Kodeord"
+msgstr "Upload og genopret"
 
 #: plinth/modules/backups/templates/backups.html:44
-#, fuzzy
-#| msgid "Existing custom services"
 msgid "Add a backup location"
-msgstr "Eksisterende brugerdefinerede tjenester"
+msgstr "Tilføj sikkerhedskopieringslager"
 
 #: plinth/modules/backups/templates/backups.html:48
-#, fuzzy
-#| msgid "Existing custom services"
 msgid "Add Backup Location"
-msgstr "Eksisterende brugerdefinerede tjenester"
+msgstr "Tilføj sikkerhedskopieringslager"
 
 #: plinth/modules/backups/templates/backups.html:51
-#, fuzzy
-#| msgid "Existing custom services"
 msgid "Add a remote backup location"
-msgstr "Eksisterende brugerdefinerede tjenester"
+msgstr "Tilføj fjernlager for sikkerhedskopier"
 
 #: plinth/modules/backups/templates/backups.html:55
-#, fuzzy
-#| msgid "Existing custom services"
 msgid "Add Remote Backup Location"
-msgstr "Eksisterende brugerdefinerede tjenester"
+msgstr "Tilføj fjernlager for sikkerhedskopier"
 
 #: plinth/modules/backups/templates/backups.html:58
-#, fuzzy
-#| msgid "Existing custom services"
 msgid "Existing Backups"
-msgstr "Eksisterende brugerdefinerede tjenester"
+msgstr "Eksisterende sikkerhedskopier"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
 #, python-format
@@ -391,37 +364,31 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Adgangsoplysningerne til dette arkiv gemmes på din %(box_name)s. <br /> For "
+"at genoprette en sikkerhedskopi på en ny %(box_name)s har du brug for SSH-"
+"loginoplysningerne samt adgangsfrasen til kryptering hvis denne er slået til."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
-#, fuzzy
-#| msgid "Create Connection"
 msgid "Create Location"
-msgstr "Opret Forbindelse"
+msgstr "Opret sted"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:19
 #: plinth/modules/gitweb/views.py:49
-#, fuzzy
-#| msgid "Create User"
 msgid "Create Repository"
-msgstr "Opret Bruger"
+msgstr "Opret lager"
 
 #: plinth/modules/backups/templates/backups_delete.html:12
-#, fuzzy
-#| msgid "Delete user permanently?"
 msgid "Delete this archive permanently?"
-msgstr "Slet bruger permanent?"
+msgstr "Slet dette arkiv permanent?"
 
 #: plinth/modules/backups/templates/backups_delete.html:19
-#, fuzzy
-#| msgid "Time Zone"
 msgid "Time"
-msgstr "Tidszone"
+msgstr "Tid"
 
 #: plinth/modules/backups/templates/backups_delete.html:36
-#, fuzzy, python-format
-#| msgid "Delete %(name)s"
+#, python-format
 msgid "Delete Archive %(name)s"
-msgstr "Slet %(name)s"
+msgstr "Slet arkivet %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:20
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:20
@@ -431,75 +398,63 @@ msgstr "Slet %(name)s"
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 msgid "Submit"
-msgstr "Indsend"
+msgstr "Send"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
-#, fuzzy
-#| msgid "packages not found"
 msgid "This repository is encrypted"
-msgstr "pakker ikke fundet"
+msgstr "Dette arkiv er krypteret"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
-#, fuzzy
-#| msgid "Documentation"
 msgid "Unmount Location"
-msgstr "Dokumentation"
+msgstr "Afmonter lager"
 
 #: plinth/modules/backups/templates/backups_repository.html:45
-#, fuzzy
-#| msgid "Mount Point"
 msgid "Mount Location"
 msgstr "Monteringspunkt"
 
 #: plinth/modules/backups/templates/backups_repository.html:56
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
+"Fjern sikkerhedskopilageret. Dette vil ikke slette sikkerhedskopien på "
+"fjernlageret."
 
 #: plinth/modules/backups/templates/backups_repository.html:77
-#, fuzzy
-#| msgid "downloading"
 msgid "Download"
-msgstr "downloader"
+msgstr "Downloader"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:28
 #: plinth/modules/backups/views.py:155
-#, fuzzy
-#| msgid "reStore"
 msgid "Restore"
-msgstr "reStore"
+msgstr "Genopret"
 
 #: plinth/modules/backups/templates/backups_repository.html:103
 msgid "No archives currently exist."
-msgstr ""
+msgstr "Ingen arkiver er oprettet endnu."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
-msgstr ""
+msgstr "Er du sikker på at du vil fjerne dette lager?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:19
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
+"Fjernlageret vil ikke blive slettet. Dette fjerner bare lageret fra listen "
+"på sikkerhedskopieringssiden – du kan tilføje det igen senere."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:31
-#, fuzzy
-#| msgid "Documentation"
 msgid "Remove Location"
-msgstr "Dokumentation"
+msgstr "Fjern sted"
 
 #: plinth/modules/backups/templates/backups_restore.html:15
-#, fuzzy
-#| msgid "Delete %(name)s"
 msgid "Restore data from"
-msgstr "Slet %(name)s"
+msgstr "Genopret data fra"
 
 #: plinth/modules/backups/templates/backups_restore.html:32
-#, fuzzy
-#| msgid "reStore"
 msgid "Restoring"
-msgstr "reStore"
+msgstr "Genopretter"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
@@ -512,11 +467,17 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Upload en sikkerhedskopi fra en anden %(box_name)s for at genskabe "
+"dens\n"
+"      indhold. Når du har uploadet en sikkerhedskopi kan du vælge hvilke\n"
+"      applikationer du vil genoprette.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:27
 #: plinth/modules/help/templates/statuslog.html:23
 msgid "Caution:"
-msgstr ""
+msgstr "Advarsel:"
 
 #: plinth/modules/backups/templates/backups_upload.html:28
 #, python-format
@@ -524,12 +485,12 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"Du har %(max_filesize)s tilgængelig til at genoprette en backup. Hvis du "
+"overskrider denne grænse kan det efterlade din %(box_name)s ubrugelig."
 
 #: plinth/modules/backups/templates/backups_upload.html:41
-#, fuzzy
-#| msgid "Download my profile"
 msgid "Upload file"
-msgstr "Hent min profil"
+msgstr "Upload fil"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:18
 #, python-format
@@ -537,6 +498,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"SSH-værten %(hostname)s kunne ikke nås. Sørg venligst for at værten kører og "
+"accepterer forbindelser."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
 #, python-format
@@ -544,10 +507,12 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Autenticiteten af SSH-værten %(hostname)s kunne ikke bekræftes. Værten "
+"angiver de følgende offentlige SSH-nøgler. Verificér venligst en af dem."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Hvordan verificerer man?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -555,116 +520,109 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Kør følgende kommando på SSH-værtscomputeren. Output skal svare til en af de "
+"angivne indstillinger. I stedet for rsa kan du også bruge dsa, ecdsa, "
+"ed25519 osv. ved at vælge den tilsvarende fil."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
-msgstr ""
+msgstr "Verificér vært"
 
 #: plinth/modules/backups/views.py:55
 msgid "Archive created."
-msgstr ""
+msgstr "Arkiv oprettet."
 
 #: plinth/modules/backups/views.py:83
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Archive"
-msgstr "Slet"
+msgstr "Slet arkiv"
 
 #: plinth/modules/backups/views.py:95
-#, fuzzy
-#| msgid "{name} deleted."
 msgid "Archive deleted."
-msgstr "{name} slettet."
+msgstr "Arkiv slettet."
 
 #: plinth/modules/backups/views.py:108
 msgid "Upload and restore a backup"
-msgstr ""
+msgstr "Upload og genopret en sikkerhedskopi"
 
 #: plinth/modules/backups/views.py:143
 msgid "Restored files from backup."
-msgstr ""
+msgstr "Filer genoprettet fra sikkerhedskopi."
 
 #: plinth/modules/backups/views.py:170
 msgid "No backup file found."
-msgstr ""
+msgstr "Ingen sikkerhedskopi fundet."
 
 #: plinth/modules/backups/views.py:178
 msgid "Restore from uploaded file"
-msgstr ""
+msgstr "Genopret fra overført fil"
 
 #: plinth/modules/backups/views.py:235
 msgid "No additional disks available to add a repository."
-msgstr ""
+msgstr "Ingen yderligere diske er tilgængelige til oprettelse af et lager."
 
 #: plinth/modules/backups/views.py:243
-#, fuzzy
-#| msgid "Create User"
 msgid "Create backup repository"
-msgstr "Opret Bruger"
+msgstr "Opret lager til sikkerhedskopier"
 
 #: plinth/modules/backups/views.py:270
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Opret fjernlager til sikkerhedskopier"
 
 #: plinth/modules/backups/views.py:289
-#, fuzzy
-#| msgid "Create User"
 msgid "Added new remote SSH repository."
-msgstr "Opret Bruger"
+msgstr "Tilføjede et nyt SSH-fjernlager."
 
 #: plinth/modules/backups/views.py:311
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Verificér SSH-værtsnøgle"
 
 #: plinth/modules/backups/views.py:337
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH-vært er allerede verificeret."
 
 #: plinth/modules/backups/views.py:347
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH-vært verificeret."
 
 #: plinth/modules/backups/views.py:361
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "SSH-værtens offentlige nøgle kunne ikke verificeres."
 
 #: plinth/modules/backups/views.py:363
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Godkendelse til serveren mislykkedes."
 
 #: plinth/modules/backups/views.py:365
-#, fuzzy
-#| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
-msgstr "Kunne ikke installere applikation: {error}"
+msgstr "Fejl ved oprettelse af forbindelse til serveren: {}"
 
 #: plinth/modules/backups/views.py:376
-#, fuzzy
-#| msgid "packages not found"
 msgid "Repository removed."
-msgstr "pakker ikke fundet"
+msgstr "Lager fjernet."
 
 #: plinth/modules/backups/views.py:390
 msgid "Remove Repository"
-msgstr ""
+msgstr "Fjern lager"
 
 #: plinth/modules/backups/views.py:399
 msgid "Repository removed. Backups were not deleted."
-msgstr ""
+msgstr "Lager fjernet. Sikkerhedskopier slettedes ikke."
 
 #: plinth/modules/backups/views.py:409
 msgid "Unmounting failed!"
-msgstr ""
+msgstr "Afmontering mislykkedes!"
 
 #: plinth/modules/backups/views.py:424 plinth/modules/backups/views.py:428
 msgid "Mounting failed"
-msgstr ""
+msgstr "Montering mislykkedes"
 
 #: plinth/modules/bind/__init__.py:29
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
+"Med BIND kan du offentliggøre dine DNS-oplysninger (Domain Name System) på "
+"internettet, og løse DNS-forespørgsler fra brugerenhederne på dit netværk."
 
 #: plinth/modules/bind/__init__.py:33
 #, python-brace-format
@@ -673,41 +631,40 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
+"I øjeblikket bruges BIND på {box_name} kun til at løse DNS-forespørgsler for "
+"andre maskiner på det lokale netværk. Det er også uforeneligt med deling af "
+"internetforbindelse fra {box_name}."
 
 #: plinth/modules/bind/__init__.py:82
 msgid "BIND"
-msgstr ""
+msgstr "BIND"
 
 #: plinth/modules/bind/__init__.py:83
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Name Server"
-msgstr "Domænenavn"
+msgstr "DNS-server"
 
 #: plinth/modules/bind/forms.py:20
 msgid "Forwarders"
-msgstr ""
+msgstr "Viderestillere"
 
 #: plinth/modules/bind/forms.py:21
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr ""
+"En liste over DNS-servere, adskilt med mellemrum, som forespørgsler vil "
+"blive viderestillet til"
 
 #: plinth/modules/bind/forms.py:25
-#, fuzzy
-#| msgid "Enable Dynamic DNS"
 msgid "Enable DNSSEC"
-msgstr "Aktiver Dynamisk DNS"
+msgstr "Aktivér DNSSEC"
 
 #: plinth/modules/bind/forms.py:26
 msgid "Enable Domain Name System Security Extensions"
-msgstr ""
+msgstr "Akiver sikkerhedsudvidelser til DNS (DNSSEC)"
 
 #: plinth/modules/bind/templates/bind.html:11
-#, fuzzy
-#| msgid "Server domain"
 msgid "Serving Domains"
-msgstr "Serverdomæne"
+msgstr "Betjener domæner"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
@@ -717,27 +674,21 @@ msgid "Type"
 msgstr "Type"
 
 #: plinth/modules/bind/templates/bind.html:17
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Names"
-msgstr "Domænenavn"
+msgstr "Domænenavne"
 
 #: plinth/modules/bind/templates/bind.html:18
-#, fuzzy
-#| msgid "Service"
 msgid "Serving"
-msgstr "Tjeneste"
+msgstr "Betjener"
 
 #: plinth/modules/bind/templates/bind.html:19
-#, fuzzy
-#| msgid "IP address"
 msgid "IP addresses"
-msgstr "IP-adresse"
+msgstr "IP-adresser"
 
 #: plinth/modules/bind/templates/bind.html:35
 #: plinth/modules/bind/templates/bind.html:37
 msgid "Refresh IP address and domains"
-msgstr ""
+msgstr "Opfrisk IP-adresse og domæner"
 
 #: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
@@ -755,6 +706,10 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
+"Cockpit er et serverhåndteringsværktøj til administration af GNU/Linux-"
+"servere via en webbrowser. På en {box_name} er der indstillingsmuligheder "
+"for mange avancerede funktioner som typisk ikke påkræves. En web-baseret "
+"terminal til kørsel af konsolkommandoer er ligeledes tilgængelig."
 
 #: plinth/modules/cockpit/__init__.py:38
 msgid ""
@@ -763,43 +718,44 @@ msgid ""
 "firewall ports and advanced networking such as bonding, bridging and VLAN "
 "management."
 msgstr ""
+"Cockpit kan bruges til avanceret håndtering af lagermedier såsom "
+"diskpartitionering og RAID-styring. Det kan også bruges til at åbne "
+"brugerdefinerede porte i systemets firewall, samt avanceret "
+"netværkshåndtering såsom bonding, bridging og håndtering af VLAN."
 
 #: plinth/modules/cockpit/__init__.py:43
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server."
+#, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"Når aktiveret, vil Tiny Tiny RSS være tilgængelige på stien <a href=\"/tt-rss"
-"\">/tt-rss</a> på webserveren."
+"Det kan tilgås af <a href=\"{users_url}\">enhver bruger</a> på {box_name} "
+"som tilhører administratorgruppen."
 
 #: plinth/modules/cockpit/__init__.py:47
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
+"Cockpit skal tilgås via et domænenavn. Det fungerer ikke hvis det tilgås med "
+"en IP-adresse som en del af webadressen."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:12
 #: plinth/modules/performance/manifest.py:11
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:66
-#, fuzzy
-#| msgid "Server domain"
 msgid "Server Administration"
-msgstr "Serverdomæne"
+msgstr "Serveradministration"
 
 #: plinth/modules/cockpit/templates/cockpit.html:11
 msgid "Access"
-msgstr ""
+msgstr "Adgang"
 
 #: plinth/modules/cockpit/templates/cockpit.html:14
 msgid "Cockpit will only work when accessed using the following URLs."
-msgstr ""
+msgstr "Cockpit vil kun fungere når det tilgås gennem de følgende webadresser."
 
 #: plinth/modules/config/__init__.py:23
 msgid ""
