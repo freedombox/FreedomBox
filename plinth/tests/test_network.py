@@ -109,6 +109,7 @@ def _connection(network, settings):
     uuid = network.add_connection(settings)
     time.sleep(0.1)
     yield uuid
+    time.sleep(0.1)
     network.delete_connection(uuid)
 
 
