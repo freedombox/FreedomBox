@@ -58,7 +58,7 @@ class UpgradesApp(app_module.App):
         # Check every day for setting up apt backport sources, every 3 minutes
         # in debug mode.
         interval = 180 if cfg.develop else 24 * 3600
-        glib.schedule(interval, _setup_repositories)
+        glib.schedule(interval, setup_repositories)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
@@ -111,7 +111,7 @@ def setup(helper, old_version=None):
 
     # Try to setup apt repositories, if needed, if possible, on first install
     # and on version increment.
-    helper.call('post', _setup_repositories, None)
+    helper.call('post', setup_repositories, None)
 
 
 def is_enabled():
@@ -130,7 +130,7 @@ def disable():
     actions.superuser_run('upgrades', ['disable-auto'])
 
 
-def _setup_repositories(data):
+def setup_repositories(data):
     """Setup apt backport repositories."""
     actions.superuser_run('upgrades', ['setup-repositories'])
 
@@ -146,3 +146,16 @@ def get_backports_in_use():
                 return True
 
     return False
+
+
+def can_activate_backports():
+    """Return whether backports can be activated."""
+    if get_backports_in_use():
+        return False
+
+    release = subprocess.check_output(['lsb_release', '--release',
+                                       '--short']).decode().strip()
+    if release in ['testing', 'unstable']:
+        return False
+
+    return True

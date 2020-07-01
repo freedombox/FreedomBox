@@ -28,6 +28,7 @@ class UpgradesConfigurationView(AppView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        context['can_activate_backports'] = upgrades.can_activate_backports()
         context['is_busy'] = package.is_package_manager_busy()
         context['log'] = get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
@@ -75,5 +76,14 @@ def upgrade(request):
             messages.success(request, _('Upgrade process started.'))
         except ActionError:
             messages.error(request, _('Starting upgrade failed.'))
+
+    return redirect(reverse_lazy('upgrades:index'))
+
+
+def activate_backports(request):
+    """Activate backports."""
+    if request.method == 'POST':
+        upgrades.setup_repositories(None)
+        messages.success(request, _('Backports activated.'))
 
     return redirect(reverse_lazy('upgrades:index'))

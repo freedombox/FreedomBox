@@ -8,6 +8,40 @@
 {% load static %}
 
 {% block extra_content %}
+  {% if can_activate_backports %}
+    <h3>{% trans "Backports" %}</h3>
+    <p>
+      {% blocktrans trimmed %}
+        Backports can be activated. This will allow a limited set of software,
+        including FreedomBox service, to be upgraded to newer versions from
+        Debian backports repository.
+      {% endblocktrans %}
+    </p>
+    <p>
+      {% blocktrans trimmed %}
+        Please note that backports packages do not have security support from
+        Debian. However, they are maintained on a best-effort basis by
+        contributors in Debian and FreedomBox community.
+      {% endblocktrans %}
+    </p>
+    <div class="alert alert-warning" role="alert">
+      {% url 'snapshot:index' as snapshot_url %}
+      {% blocktrans trimmed %}
+        <strong>Warning!</strong> Once backports are activated, they cannot be
+        easily deactivated. You may wish to take a snapshot using
+        <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
+      {% endblocktrans %}
+    </div>
+    <p>
+      <form class="form" method="post"
+            action="{% url 'upgrades:activate-backports' %}">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-warning"
+               value="{% trans 'Activate backports' %}"/>
+      </form>
+    </p>
+  {% endif %}
+
   <h3>{% trans "Manual update" %}</h3>
   {% if is_busy %}
     <p>
