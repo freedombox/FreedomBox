@@ -26,7 +26,7 @@ BACKPORTS_RELEASE_FILE_URL = \
 APT_PREFERENCES = '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: Allow carefully selected updates to 'freedombox' from backports.
 Package: freedombox
-Pin: release a=buster-backports
+Pin: release a={}-backports
 Pin-Priority: 500
 
 Explanation: matrix-synapse 0.99.5 introduces room version 4. Older version
@@ -243,8 +243,15 @@ def _add_apt_preferences():
     # Don't try to remove 50freedombox3.pref as this file is shipped with the
     # Debian package and is removed using maintainer scripts.
 
-    with open(base_path / '50freedombox4.pref', 'w') as file_handle:
-        file_handle.write(APT_PREFERENCES)
+    dist = subprocess.check_output(['lsb_release', '--codename',
+                                    '--short']).decode().strip()
+    if dist == 'sid':
+        print(f'System distribution is {dist}. Skip setting apt preferences '
+              'for backports.')
+    else:
+        print('Setting apt preferences for backports.')
+        with open(base_path / '50freedombox4.pref', 'w') as file_handle:
+            file_handle.write(APT_PREFERENCES.format(dist))
 
 
 def subcommand_setup(_):
