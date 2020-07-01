@@ -222,7 +222,8 @@ def _check_and_backports_sources():
     if protocol == 'tor+http':
         print('Package download over Tor is enabled.')
 
-    dist = 'buster'
+    dist = subprocess.check_output(['lsb_release', '--codename',
+                                    '--short']).decode().strip()
     if not _is_release_file_available(protocol, dist):
         print(f'Release file for {dist}-backports is not available yet.')
         return
