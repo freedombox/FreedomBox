@@ -3,6 +3,8 @@
 FreedomBox app for upgrades.
 """
 
+import subprocess
+
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 
@@ -131,3 +133,16 @@ def disable():
 def _setup_repositories(data):
     """Setup apt backport repositories."""
     actions.superuser_run('upgrades', ['setup-repositories'])
+
+
+def get_backports_in_use():
+    """Return whether backports packages are installed."""
+    # Only freedombox package is set to be installed from backports currently.
+    output = subprocess.check_output(['apt-cache', 'policy', 'freedombox'])
+    for line in output.decode().split('\n'):
+        if 'Installed:' in line:
+            version = line.strip().split(': ')[1]
+            if 'bpo' in version:
+                return True
+
+    return False

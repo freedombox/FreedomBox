@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 
 from plinth import action_utils, actions
 from plinth.modules import security
+from plinth.modules.upgrades import get_backports_in_use
 
 from .forms import SecurityForm
 
@@ -28,10 +29,12 @@ def index(request):
     else:
         form = SecurityForm(initial=status, prefix='security')
 
-    return TemplateResponse(request, 'security.html', {
-        'app_info': security.app.info,
-        'form': form,
-    })
+    return TemplateResponse(
+        request, 'security.html', {
+            'app_info': security.app.info,
+            'form': form,
+            'backports_in_use': get_backports_in_use(),
+        })
 
 
 def get_status(request):

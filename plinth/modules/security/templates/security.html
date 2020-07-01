@@ -7,6 +7,18 @@
 {% load i18n %}
 
 {% block status %}
+  {% if backports_in_use %}
+    <h3>{% trans "Security Notice" %}</h3>
+    <p>
+      {% blocktrans trimmed %}
+        You are using packages from Debian backports. Please note that these
+        packages do not have security support from Debian. However, they are
+        maintained on a best-effort basis by contributors in Debian and
+        FreedomBox community.
+      {% endblocktrans %}
+    </p>
+  {% endif %}
+
   <a class="btn btn-default" role="button" href="{% url 'security:report' %}"
      title="{% trans 'Show security report' %}">
     <span class="fa fa-line-chart" aria-hidden="true"></span>
