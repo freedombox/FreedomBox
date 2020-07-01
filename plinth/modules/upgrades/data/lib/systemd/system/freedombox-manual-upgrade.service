@@ -3,6 +3,7 @@ Description=Run unattended-upgrade once
 
 [Service]
 Type=oneshot
+ExecStartPre=-apt-get update --assume-yes --quiet
 ExecStart=unattended-upgrade --verbose
 KillMode=process
 TimeoutStopSec=900
