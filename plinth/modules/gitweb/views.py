@@ -31,6 +31,7 @@ class GitwebAppView(views.AppView):
         repos = gitweb.app.get_repo_list()
         context['repos'] = repos
         context['cloning'] = any('clone_progress' in repo for repo in repos)
+        context['refresh_page_sec'] = 3 if context['cloning'] else None
         return context
 
 

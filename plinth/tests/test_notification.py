@@ -335,8 +335,10 @@ def test_list_filter_user_and_group(note, user):
 
 
 @patch('plinth.notification.ugettext')
-def test_display_context(ugettext, note, user):
+def test_display_context(ugettext, note, user, rf):
     """Test display context for a notification."""
+    request = rf.get('/plinth/help/about/')
+
     data = {
         'test-key1': 'test-value1',
         'test-key2': 'translate:test-value2',
@@ -370,7 +372,7 @@ def test_display_context(ugettext, note, user):
     note.data = data
     note.save()
 
-    context = Notification.get_display_context(user)
+    context = Notification.get_display_context(request, user)
     assert len(context['notifications']) == 1
     assert context['max_severity'] == 'error'
 
@@ -392,12 +394,14 @@ def test_display_context(ugettext, note, user):
     assert not context_note['dismissed']
 
 
-def test_display_context_body_template(note, user, load_cfg):
+def test_display_context_body_template(note, user, load_cfg, rf):
     """Test display context for a notification with body template."""
+    request = rf.get('/plinth/help/about/')
+
     note.body_template = 'invalid-template.html'
     note.save()
 
-    context = Notification.get_display_context(user)
+    context = Notification.get_display_context(request, user)
     assert context['notifications'][0]['body'] == {
         'content': b'Template invalid-template.html does not exist.'
     }
@@ -405,6 +409,7 @@ def test_display_context_body_template(note, user, load_cfg):
     note.body_template = 'test-notification.html'
     note.save()
 
-    context = Notification.get_display_context(user)
+    context = Notification.get_display_context(request, user)
     context_note = context['notifications'][0]
-    assert context_note['body'].content == b'Test notification body\n'
+    assert context_note['body'].content == \
+        b'Test notification body /plinth/help/about/\n'

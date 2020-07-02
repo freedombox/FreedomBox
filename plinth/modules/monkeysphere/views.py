@@ -27,7 +27,8 @@ def index(request):
             'app_info': monkeysphere.app.info,
             'title': monkeysphere.app.info.name,
             'status': status,
-            'running': bool(publish_process)
+            'running': bool(publish_process),
+            'refresh_page_sec': 3 if bool(publish_process) else None,
         })
 
 

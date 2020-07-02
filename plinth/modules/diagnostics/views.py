@@ -17,11 +17,13 @@ def index(request):
     if request.method == 'POST' and not diagnostics.running_task:
         diagnostics.start_task()
 
+    is_running = diagnostics.running_task is not None
     return TemplateResponse(
         request, 'diagnostics.html', {
             'app_info': diagnostics.app.info,
-            'is_running': diagnostics.running_task is not None,
-            'results': diagnostics.current_results
+            'is_running': is_running,
+            'results': diagnostics.current_results,
+            'refresh_page_sec': 3 if is_running else None
         })
 
 

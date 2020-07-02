@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 19:20-0400\n"
+"POT-Creation-Date: 2020-06-29 15:43-0700\n"
 "PO-Revision-Date: 2020-05-29 18:41+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Oldal forrása"
 
-#: plinth/context_processors.py:23 plinth/views.py:53
+#: plinth/context_processors.py:23 plinth/views.py:77
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -76,7 +76,7 @@ msgstr "A webes felület megjelenítéséhez használt nyelv"
 msgid "Use the language preference set in the browser"
 msgstr "Használd a böngésző nyelvi beállítását"
 
-#: plinth/middleware.py:57 plinth/templates/setup.html:30
+#: plinth/middleware.py:57 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Alkalmazás telepítve."
 
@@ -91,7 +91,7 @@ msgid "Error installing application: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
 #: plinth/modules/apache/__init__.py:40
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:73
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Webszerver"
@@ -218,7 +218,7 @@ msgstr ""
 "A \"Kulcs a tárolóban\" azt jelenti, hogy a jelszóval védett kulcs a "
 "biztonsági mentéssel együtt van tárolva."
 
-#: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:262
+#: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:264
 msgid "Passphrase"
 msgstr "Jelszó"
 
@@ -312,11 +312,11 @@ msgstr ""
 "A tároló elérési útja nem üres és nem is már meglévő biztonsági másolat "
 "tároló."
 
-#: plinth/modules/backups/repository.py:137
+#: plinth/modules/backups/repository.py:136
 msgid "Existing repository is not encrypted."
 msgstr "A meglévő tároló nem titkosított."
 
-#: plinth/modules/backups/repository.py:322
+#: plinth/modules/backups/repository.py:321
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} tároló"
@@ -375,7 +375,7 @@ msgid "Create Location"
 msgstr "Hely létrehozása"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:19
-#: plinth/modules/gitweb/views.py:49
+#: plinth/modules/gitweb/views.py:50
 msgid "Create Repository"
 msgstr "Tároló létrehozása"
 
@@ -431,7 +431,7 @@ msgid "Download"
 msgstr "letöltés"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
-#: plinth/modules/backups/templates/backups_restore.html:28
+#: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:155
 msgid "Restore"
 msgstr "Visszaállít"
@@ -459,10 +459,6 @@ msgstr "Hely eltávolítása"
 #: plinth/modules/backups/templates/backups_restore.html:15
 msgid "Restore data from"
 msgstr "Adatok visszaállítása"
-
-#: plinth/modules/backups/templates/backups_restore.html:32
-msgid "Restoring"
-msgstr "Visszaállítás"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
@@ -558,71 +554,71 @@ msgstr "Biztonsági másolat feltöltése és visszaállítása"
 msgid "Restored files from backup."
 msgstr "Fájlok visszaállítva a biztonsági mentésből."
 
-#: plinth/modules/backups/views.py:170
+#: plinth/modules/backups/views.py:171
 msgid "No backup file found."
 msgstr "Biztonsági másolat fájl nem található."
 
-#: plinth/modules/backups/views.py:178
+#: plinth/modules/backups/views.py:179
 msgid "Restore from uploaded file"
 msgstr "Visszaállítás a feltöltött fájlból"
 
-#: plinth/modules/backups/views.py:235
+#: plinth/modules/backups/views.py:238
 msgid "No additional disks available to add a repository."
 msgstr "Nincs további lemez amit a tárolóhoz lehetne adni."
 
-#: plinth/modules/backups/views.py:243
+#: plinth/modules/backups/views.py:246
 msgid "Create backup repository"
 msgstr "Biztonsági másolat tároló létrehozása"
 
-#: plinth/modules/backups/views.py:270
+#: plinth/modules/backups/views.py:273
 msgid "Create remote backup repository"
 msgstr "Távoli biztonsági másolat tároló létrehozása"
 
-#: plinth/modules/backups/views.py:289
+#: plinth/modules/backups/views.py:292
 msgid "Added new remote SSH repository."
 msgstr "Új távoli SSH tároló hozzáadva."
 
-#: plinth/modules/backups/views.py:311
+#: plinth/modules/backups/views.py:314
 msgid "Verify SSH hostkey"
 msgstr "SSH állomáskulcs ellenőrzése"
 
-#: plinth/modules/backups/views.py:337
+#: plinth/modules/backups/views.py:340
 msgid "SSH host already verified."
 msgstr "SSH állomás már le lett ellenőrizve."
 
-#: plinth/modules/backups/views.py:347
+#: plinth/modules/backups/views.py:350
 msgid "SSH host verified."
 msgstr "SSH állomás leellenőrizve."
 
-#: plinth/modules/backups/views.py:361
+#: plinth/modules/backups/views.py:364
 msgid "SSH host public key could not be verified."
 msgstr "SSH állomás nyilvános kulcsa nem ellenőrizhető le."
 
-#: plinth/modules/backups/views.py:363
+#: plinth/modules/backups/views.py:366
 msgid "Authentication to remote server failed."
 msgstr "Sikertelen a hitelesítés a távoli kiszolgálóra."
 
-#: plinth/modules/backups/views.py:365
+#: plinth/modules/backups/views.py:368
 msgid "Error establishing connection to server: {}"
 msgstr "Hiba lépett fel a kiszolgálóhoz való kapcsolódás során: {}"
 
-#: plinth/modules/backups/views.py:376
+#: plinth/modules/backups/views.py:379
 msgid "Repository removed."
 msgstr "Tároló eltávolítva."
 
-#: plinth/modules/backups/views.py:390
+#: plinth/modules/backups/views.py:393
 msgid "Remove Repository"
 msgstr "Tároló eltávolítása"
 
-#: plinth/modules/backups/views.py:399
+#: plinth/modules/backups/views.py:402
 msgid "Repository removed. Backups were not deleted."
 msgstr "Tároló eltávolítva. A biztonsági mentések nem lettek törölve."
 
-#: plinth/modules/backups/views.py:409
+#: plinth/modules/backups/views.py:412
 msgid "Unmounting failed!"
 msgstr "Lecsatolás sikertelen!"
 
-#: plinth/modules/backups/views.py:424 plinth/modules/backups/views.py:428
+#: plinth/modules/backups/views.py:427 plinth/modules/backups/views.py:431
 msgid "Mounting failed"
 msgstr "Felcsatolás sikertelen"
 
@@ -1124,21 +1120,21 @@ msgstr ""
 msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:28
+#: plinth/modules/diagnostics/templates/diagnostics.html:17
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:16
 msgid "Run Diagnostics"
 msgstr "Ellenőrzés indítása"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:31
+#: plinth/modules/diagnostics/templates/diagnostics.html:20
 msgid "Diagnostics test is currently running"
 msgstr "Az ellenőrzés jelenleg fut"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:44
+#: plinth/modules/diagnostics/templates/diagnostics.html:33
 msgid "Results"
 msgstr "Eredmények"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:52
+#: plinth/modules/diagnostics/templates/diagnostics.html:41
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
 #, python-format
 msgid "App: %(app_id)s"
@@ -1160,7 +1156,7 @@ msgstr "Teszt"
 msgid "Result"
 msgstr "Eredmény"
 
-#: plinth/modules/diagnostics/views.py:37
+#: plinth/modules/diagnostics/views.py:39
 msgid "Diagnostic Test"
 msgstr "Ellenőrző tesz"
 
@@ -1370,16 +1366,16 @@ msgstr "Minden SSL tanúsítvány elfogadása"
 msgid "Use HTTP basic authentication"
 msgstr "HTTP alap hitelesítés használata"
 
-#: plinth/modules/dynamicdns/forms.py:101 plinth/modules/networks/forms.py:199
+#: plinth/modules/dynamicdns/forms.py:101 plinth/modules/networks/forms.py:201
 msgid "Username"
 msgstr "Felhasználónév"
 
-#: plinth/modules/dynamicdns/forms.py:104 plinth/modules/networks/forms.py:200
+#: plinth/modules/dynamicdns/forms.py:104 plinth/modules/networks/forms.py:202
 #: plinth/modules/shadowsocks/forms.py:44
 msgid "Password"
 msgstr "Jelszó"
 
-#: plinth/modules/dynamicdns/forms.py:108 plinth/modules/networks/forms.py:202
+#: plinth/modules/dynamicdns/forms.py:108 plinth/modules/networks/forms.py:204
 msgid "Show password"
 msgstr "Jelszó mutatása"
 
@@ -1482,10 +1478,10 @@ msgstr "Leírás"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:28
-#: plinth/modules/openvpn/templates/openvpn.html:49
-#: plinth/modules/tor/templates/tor.html:22
-#: plinth/modules/tor/templates/tor.html:36
+#: plinth/modules/openvpn/templates/openvpn.html:17
+#: plinth/modules/openvpn/templates/openvpn.html:38
+#: plinth/modules/tor/templates/tor.html:12
+#: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 msgid "Status"
@@ -1703,7 +1699,7 @@ msgstr ""
 
 #: plinth/modules/firewall/templates/firewall.html:96
 #: plinth/modules/networks/templates/networks_configuration.html:49
-#: plinth/modules/storage/templates/storage.html:91
+#: plinth/modules/storage/templates/storage.html:94
 msgid "Advanced"
 msgstr ""
 
@@ -1892,33 +1888,33 @@ msgstr "Véglegesen törlöd ezt a tárolót?"
 msgid "Delete %(name)s"
 msgstr "%(name)s törlése"
 
-#: plinth/modules/gitweb/views.py:44
+#: plinth/modules/gitweb/views.py:45
 msgid "Repository created."
 msgstr "Tároló létrehozva."
 
-#: plinth/modules/gitweb/views.py:68
+#: plinth/modules/gitweb/views.py:69
 msgid "An error occurred while creating the repository."
 msgstr "Hiba történt a tároló létrehozása közben."
 
-#: plinth/modules/gitweb/views.py:83
+#: plinth/modules/gitweb/views.py:84
 msgid "Repository edited."
 msgstr "Tároló szerkesztve."
 
-#: plinth/modules/gitweb/views.py:88
+#: plinth/modules/gitweb/views.py:89
 msgid "Edit repository"
 msgstr "Tároló szerkesztése"
 
-#: plinth/modules/gitweb/views.py:116 plinth/modules/searx/views.py:41
-#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:158
+#: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
+#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 msgid "An error occurred during configuration."
 msgstr "Hiba történt a beállítás közben."
 
-#: plinth/modules/gitweb/views.py:137
+#: plinth/modules/gitweb/views.py:138
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} törölve."
 
-#: plinth/modules/gitweb/views.py:141
+#: plinth/modules/gitweb/views.py:142
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} nem törölhető: {error}"
@@ -2504,8 +2500,8 @@ msgstr "JSXC"
 msgid "Chat Client"
 msgstr "Chat kliens"
 
-#: plinth/modules/jsxc/templates/jsxc_launch.html:125
-#: plinth/templates/base.html:234
+#: plinth/modules/jsxc/templates/jsxc_launch.html:118
+#: plinth/templates/base.html:246
 msgid "JavaScript license information"
 msgstr "JavaScript licencinformáció"
 
@@ -2975,7 +2971,7 @@ msgid "Address"
 msgstr "Cím"
 
 #: plinth/modules/minetest/templates/minetest.html:19
-#: plinth/modules/tor/templates/tor.html:81
+#: plinth/modules/tor/templates/tor.html:71
 msgid "Port"
 msgstr "Port"
 
@@ -3149,59 +3145,59 @@ msgstr ""
 msgid "Monkeysphere"
 msgstr "Monkeysphere"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:45
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:39
 msgid "Publishing key to keyserver..."
 msgstr "A kulcs közzététele a kulcskiszolgálónak…"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:52
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:46
 #: plinth/modules/users/templates/users_delete.html:26
 msgid "Cancel"
 msgstr "Mégse"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:60
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:54
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:40
-#: plinth/modules/tor/templates/tor.html:80
+#: plinth/modules/tor/templates/tor.html:70
 msgid "Service"
 msgstr "Szolgáltatás"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:61
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:55
 msgid "Domains"
 msgstr "Domainek"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:62
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:56
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:16
 msgid "OpenPGP Fingerprint"
 msgstr "OpenPGP ujjlenyomat"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:71
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:65
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:43
 #: plinth/modules/names/components.py:24
 msgid "Secure Shell"
 msgstr "Secure Shell (Biztonságos parancsértelmező)"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:75
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:69
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:47
 msgid "Other"
 msgstr "Egyéb"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:112
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:106
 #, python-format
 msgid "Show details for key %(fingerprint)s"
 msgstr "A %(fingerprint)s kulcs részletei"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:118
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:112
 msgid "-"
 msgstr "-"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:129
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:123
 msgid "Import Key"
 msgstr "Kulcs importálása"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:139
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:133
 msgid "Publish Key"
 msgstr "Kulcs közzététele"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:149
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:143
 msgid "Add Domains"
 msgstr "Domainek hozzáadása"
 
@@ -3258,19 +3254,19 @@ msgstr "A kulcs aláírása"
 msgid "Send the key back to the keyservers"
 msgstr "A kulcs visszaküldése a kulcskiszolgálónak"
 
-#: plinth/modules/monkeysphere/views.py:43
+#: plinth/modules/monkeysphere/views.py:44
 msgid "Imported key."
 msgstr "Importált kulcs."
 
-#: plinth/modules/monkeysphere/views.py:79
+#: plinth/modules/monkeysphere/views.py:80
 msgid "Cancelled key publishing."
 msgstr "Kulcs közzététel megszakítva."
 
-#: plinth/modules/monkeysphere/views.py:130
+#: plinth/modules/monkeysphere/views.py:131
 msgid "Published key to keyserver."
 msgstr "Kulcs közzétéve a kulcskiszolgálónak."
 
-#: plinth/modules/monkeysphere/views.py:132
+#: plinth/modules/monkeysphere/views.py:133
 msgid "Error occurred while publishing key."
 msgstr "Hiba történt a kulcs közzététele során."
 
@@ -3508,7 +3504,7 @@ msgstr ""
 "Az „Automatikus” módszer esetén a {box_name} eszköz ügyfél lesz, amely során "
 "a beállításokat a csatlakoztatott hálózatról kéri le."
 
-#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:241
+#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:243
 msgid "Automatic"
 msgstr "Automatikus"
 
@@ -3550,50 +3546,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "-- válassz --"
 
-#: plinth/modules/networks/forms.py:234
+#: plinth/modules/networks/forms.py:236
 #: plinth/modules/networks/templates/connection_show.html:129
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:235
+#: plinth/modules/networks/forms.py:237
 msgid "The visible name of the network."
 msgstr "A név, amellyel a hálózat látható."
 
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/networks/forms.py:239
 #: plinth/modules/networks/templates/connection_show.html:142
 msgid "Mode"
 msgstr "Mód"
 
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/networks/forms.py:239
 msgid "Infrastructure"
 msgstr "Infrastuktúra"
 
-#: plinth/modules/networks/forms.py:238
+#: plinth/modules/networks/forms.py:240
 msgid "Access Point"
 msgstr "Hozzáférési pont"
 
-#: plinth/modules/networks/forms.py:239
+#: plinth/modules/networks/forms.py:241
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:241
+#: plinth/modules/networks/forms.py:243
 msgid "Frequency Band"
 msgstr "Frekvenciasáv"
 
-#: plinth/modules/networks/forms.py:242
+#: plinth/modules/networks/forms.py:244
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:243
+#: plinth/modules/networks/forms.py:245
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:245
+#: plinth/modules/networks/forms.py:247
 #: plinth/modules/networks/templates/connection_show.html:158
 msgid "Channel"
 msgstr "Csatorna"
 
-#: plinth/modules/networks/forms.py:246
+#: plinth/modules/networks/forms.py:248
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -3602,11 +3598,11 @@ msgstr ""
 "korlátozódik a működés. Üresen hagyva vagy 0 értéket megadva automatikus "
 "választást jelent."
 
-#: plinth/modules/networks/forms.py:251
+#: plinth/modules/networks/forms.py:253
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:252
+#: plinth/modules/networks/forms.py:254
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -3616,11 +3612,11 @@ msgstr ""
 "ponthoz kapcsolódsz, csak akkor kapcsolódj ha a hozzáférési pont BSSID-je "
 "megegyezik az itt megadottal. Például: 00:11:22:aa:bb:cc."
 
-#: plinth/modules/networks/forms.py:258
+#: plinth/modules/networks/forms.py:260
 msgid "Authentication Mode"
 msgstr "Hitelesítési mód"
 
-#: plinth/modules/networks/forms.py:259
+#: plinth/modules/networks/forms.py:261
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -3628,21 +3624,21 @@ msgstr ""
 "Válaszd a WPA-t ha a vezeték nélküli hálózatod biztonságos és az ügyfelektől "
 "jelszót kér a csatlakozáshoz."
 
-#: plinth/modules/networks/forms.py:261
+#: plinth/modules/networks/forms.py:263
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:261
+#: plinth/modules/networks/forms.py:263
 msgid "Open"
 msgstr "Nyílt"
 
-#: plinth/modules/networks/forms.py:297
+#: plinth/modules/networks/forms.py:299
 #, fuzzy, python-brace-format
 #| msgid "Use upstream bridges to connect to Tor network"
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Használj felmenő hidakat a Tor hálózatra kapcsolódáshoz"
 
-#: plinth/modules/networks/forms.py:304
+#: plinth/modules/networks/forms.py:306
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -3650,7 +3646,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:311
+#: plinth/modules/networks/forms.py:313
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -3659,7 +3655,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:320
+#: plinth/modules/networks/forms.py:322
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -3667,11 +3663,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:339
+#: plinth/modules/networks/forms.py:341
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:343
+#: plinth/modules/networks/forms.py:345
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-block"
 "\">This means that devices on the Internet can reach you when you are "
@@ -3682,10 +3678,10 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:355
+#: plinth/modules/networks/forms.py:357
 #, python-brace-format
 msgid ""
-"I have a public IP address that does not change overtime (recommended)<p "
+"I have a public IP address that does not change over time (recommended)<p "
 "class=\"help-block\">This means that devices on the Internet can reach you "
 "when you are connected to the Internet. Every time you connect to the "
 "Internet with your Internet Service Provider (ISP), you always get the same "
@@ -3694,7 +3690,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:368
+#: plinth/modules/networks/forms.py:370
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -3706,19 +3702,19 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:381
+#: plinth/modules/networks/forms.py:383
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-block"
 "\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:398
+#: plinth/modules/networks/forms.py:400
 #, fuzzy
 #| msgid "An error occurred during configuration."
 msgid "Preferred router configuration"
 msgstr "Hiba történt a beállítás közben."
 
-#: plinth/modules/networks/forms.py:403
+#: plinth/modules/networks/forms.py:405
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
@@ -3729,7 +3725,7 @@ msgid ""
 "p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:415
+#: plinth/modules/networks/forms.py:417
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
@@ -3741,7 +3737,7 @@ msgid ""
 "to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:429
+#: plinth/modules/networks/forms.py:431
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -3755,7 +3751,7 @@ msgstr "Kapcsolat szerkesztése"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:148 plinth/templates/base.html:149
+#: plinth/templates/base.html:160 plinth/templates/base.html:161
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -3911,6 +3907,7 @@ msgstr ""
 "kockázatot jelent."
 
 #: plinth/modules/networks/templates/connection_show.html:285
+#: plinth/modules/networks/templates/connection_show.html:308
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -3923,15 +3920,9 @@ msgstr ""
 #: plinth/modules/networks/templates/connection_show.html:304
 #, python-format
 msgid ""
-"This interface is not maintained by %(box_name)s.  Its security status is "
-"unknown to %(box_name)s.  Many %(box_name)s services may not be available on "
-"this interface.  It is recommended that you deactivate or delete this "
-"connection and re-configure it."
+"This interface is not maintained by %(box_name)s.  For security, it is "
+"automatically assigned to the external zone."
 msgstr ""
-"Ezt az interfészt %(box_name)s eszközöd nem kezeli. Ennek a biztonsági "
-"állapota ismeretlen %(box_name)s eszközöd számára. %(box_name)s eszközöd sok "
-"szolgáltatása nem biztos, hogy elérhető lesz ezen az interfészen. Ajánlott "
-"kikapcsolni vagy törölni ezt a kapcsolatot, majd újra beállítani."
 
 #: plinth/modules/networks/templates/connections_create.html:19
 msgid "Create Connection"
@@ -4292,7 +4283,7 @@ msgstr ""
 msgid "Tunnelblick"
 msgstr ""
 
-#: plinth/modules/openvpn/templates/openvpn.html:31
+#: plinth/modules/openvpn/templates/openvpn.html:20
 #, python-format
 msgid ""
 "OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
@@ -4304,15 +4295,15 @@ msgstr ""
 "órákig is eltarthat. Ha a beállítás megszakad, akkor később újra lehet "
 "kezdeni."
 
-#: plinth/modules/openvpn/templates/openvpn.html:44
+#: plinth/modules/openvpn/templates/openvpn.html:33
 msgid "Start setup"
 msgstr "Beállítás elindítása"
 
-#: plinth/modules/openvpn/templates/openvpn.html:53
+#: plinth/modules/openvpn/templates/openvpn.html:42
 msgid "OpenVPN setup is running"
 msgstr "OpenVPN beállítás fut"
 
-#: plinth/modules/openvpn/templates/openvpn.html:57
+#: plinth/modules/openvpn/templates/openvpn.html:46
 #, python-format
 msgid ""
 "To perform a secure setup, this process takes a very long time.  Depending "
@@ -4323,11 +4314,11 @@ msgstr ""
 "függően hogy milyen gyors a te %(box_name)s eszközöd, akár órákig is "
 "eltarthat. Ha a beállítás megszakad, akkor később újra lehet kezdeni."
 
-#: plinth/modules/openvpn/templates/openvpn.html:72
+#: plinth/modules/openvpn/templates/openvpn.html:61
 msgid "Profile"
 msgstr "Profil"
 
-#: plinth/modules/openvpn/templates/openvpn.html:75
+#: plinth/modules/openvpn/templates/openvpn.html:64
 #, fuzzy, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
@@ -4348,22 +4339,22 @@ msgstr ""
 "\"%(box_name)s Kézikönyv - OpenVPN\">dokumentációt</a> az ajánlott "
 "kliensekhez és a beállítási utasításokhoz."
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:74
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr ""
 "A profil a %(box_name)s eszköz minden egyes felhasználójára egyedi. Tartsd "
 "titokban."
 
-#: plinth/modules/openvpn/templates/openvpn.html:96
+#: plinth/modules/openvpn/templates/openvpn.html:85
 msgid "Download my profile"
 msgstr "Saját profilom letöltése"
 
-#: plinth/modules/openvpn/views.py:87
+#: plinth/modules/openvpn/views.py:89
 msgid "Setup completed."
 msgstr "Beállítás sikerült."
 
-#: plinth/modules/openvpn/views.py:89
+#: plinth/modules/openvpn/views.py:91
 msgid "Setup failed."
 msgstr "Beállítás sikertelen."
 
@@ -5164,7 +5155,7 @@ msgstr ""
 "Engedélyezi ennek az alkalmazásnak a használatát bárkinek, aki el tudja érni."
 
 #: plinth/modules/searx/views.py:38 plinth/modules/searx/views.py:49
-#: plinth/modules/tor/views.py:129 plinth/modules/tor/views.py:156
+#: plinth/modules/tor/views.py:130 plinth/modules/tor/views.py:157
 msgid "Configuration updated."
 msgstr "Beállítások frissítve."
 
@@ -5714,7 +5705,7 @@ msgstr "Pillanatkép létrehozva."
 msgid "Storage snapshots configuration updated"
 msgstr "Tárolási pillanatképek konfigurációja frissítve"
 
-#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:59
+#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:60
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Hiba a művelet közben: {0} [{1}] [{2}]"
@@ -5826,83 +5817,85 @@ msgstr ""
 msgid "Storage"
 msgstr "Háttértár"
 
-#: plinth/modules/storage/__init__.py:212
+#: plinth/modules/storage/__init__.py:213
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: plinth/modules/storage/__init__.py:216
+#: plinth/modules/storage/__init__.py:217
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:220
+#: plinth/modules/storage/__init__.py:221
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:224
+#: plinth/modules/storage/__init__.py:225
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:227
+#: plinth/modules/storage/__init__.py:228
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:234
+#: plinth/modules/storage/__init__.py:240
 msgid "The operation failed."
 msgstr "A művelet sikertelen."
 
-#: plinth/modules/storage/__init__.py:236
+#: plinth/modules/storage/__init__.py:242
 msgid "The operation was cancelled."
 msgstr "A művelet meg lett szakítva."
 
-#: plinth/modules/storage/__init__.py:238
+#: plinth/modules/storage/__init__.py:244
 msgid "The device is already unmounting."
 msgstr "Az eszköz leválasztása már folyamatban van."
 
-#: plinth/modules/storage/__init__.py:240
+#: plinth/modules/storage/__init__.py:246
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "A művelet nem támogatott hiányzó eszközvezérlő/segédeszköz támogatás miatt."
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:249
 msgid "The operation timed out."
 msgstr "A művelet túllépte az időkorlátot."
 
-#: plinth/modules/storage/__init__.py:245
+#: plinth/modules/storage/__init__.py:251
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "A művelet fel fogja ébreszteni a lemezt, amely mély-alvó állapotban van."
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:254
 msgid "Attempting to unmount a device that is busy."
 msgstr ""
 "Megpróbáltál leválasztani egy eszközt, amely jelenleg is használatban van."
 
-#: plinth/modules/storage/__init__.py:250
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation has already been cancelled."
 msgstr "A művelet már meg lett szakítva."
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:260
+#: plinth/modules/storage/__init__.py:262
 msgid "Not authorized to perform the requested operation."
 msgstr "Nem jogosult végrehajtani a kért műveletet."
 
-#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:264
 msgid "The device is already mounted."
 msgstr "Az eszköz már fel lett csatolva."
 
-#: plinth/modules/storage/__init__.py:260
+#: plinth/modules/storage/__init__.py:266
 msgid "The device is not mounted."
 msgstr "Az eszköz nincs felcsatolva."
 
-#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:268
 msgid "Not permitted to use the requested option."
 msgstr "Nem használhatja a kért lehetőséget."
 
-#: plinth/modules/storage/__init__.py:266
+#: plinth/modules/storage/__init__.py:270
 msgid "The device is mounted by another user."
 msgstr "Az eszközt egy másik felhasználó felcsatolva."
 
@@ -5989,11 +5982,11 @@ msgstr "Címke"
 msgid "Mount Point"
 msgstr "Csatolási pont"
 
-#: plinth/modules/storage/templates/storage.html:75
+#: plinth/modules/storage/templates/storage.html:78
 msgid "Partition Expansion"
 msgstr "Partíció kibővítése"
 
-#: plinth/modules/storage/templates/storage.html:77
+#: plinth/modules/storage/templates/storage.html:80
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -6004,13 +5997,13 @@ msgstr ""
 "követően. A root partíció kibővíthető erre a területre. Ez további szabad "
 "területet biztosíthat a fájljaid tárolásához."
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:90
 #: plinth/modules/storage/templates/storage_expand.html:24
-#: plinth/modules/storage/views.py:57
+#: plinth/modules/storage/views.py:58
 msgid "Expand Root Partition"
 msgstr "Root partíció kibővítése"
 
-#: plinth/modules/storage/templates/storage.html:93
+#: plinth/modules/storage/templates/storage.html:96
 msgid ""
 "Advanced storage operations such as disk partitioning and RAID management "
 "are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
@@ -6027,25 +6020,25 @@ msgstr ""
 "után %(expandable_root_size)s további szabad tárterület lesz elérhető a root "
 "partíción."
 
-#: plinth/modules/storage/views.py:69
+#: plinth/modules/storage/views.py:70
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Hiba a partíció kibővítése során: {exception}"
 
-#: plinth/modules/storage/views.py:72
+#: plinth/modules/storage/views.py:73
 msgid "Partition expanded successfully."
 msgstr "A partíció kibővítése sikerült."
 
-#: plinth/modules/storage/views.py:90
+#: plinth/modules/storage/views.py:91
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor} {drive_model} biztonságosan kivehető."
 
-#: plinth/modules/storage/views.py:94
+#: plinth/modules/storage/views.py:95
 msgid "Device can be safely unplugged."
 msgstr "Az eszköz biztonságosan kivehető."
 
-#: plinth/modules/storage/views.py:104
+#: plinth/modules/storage/views.py:102
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "Hiba történt az eszköz kiadása során: {error_message}"
@@ -6344,25 +6337,25 @@ msgstr "Tor böngésző"
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Tor proxy Android platformra"
 
-#: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/tor/templates/tor.html:16
 msgid "Tor configuration is being updated"
 msgstr "A Tor beállításainak frissítése folyamatban"
 
-#: plinth/modules/tor/templates/tor.html:35
+#: plinth/modules/tor/templates/tor.html:25
 #, fuzzy
 #| msgid "Hidden Service"
 msgid "Onion Service"
 msgstr "Rejtett szolgáltatás"
 
-#: plinth/modules/tor/templates/tor.html:37
+#: plinth/modules/tor/templates/tor.html:27
 msgid "Ports"
 msgstr "Portok"
 
-#: plinth/modules/tor/templates/tor.html:67
+#: plinth/modules/tor/templates/tor.html:57
 msgid "Relay"
 msgstr "Továbbító"
 
-#: plinth/modules/tor/templates/tor.html:69
+#: plinth/modules/tor/templates/tor.html:59
 #, python-format
 msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
@@ -6372,17 +6365,17 @@ msgstr ""
 "található, akkor győződj meg arról, hogy a következő portok nyitva vannak és "
 "port továbbításuk (port-forward) megfelelő:"
 
-#: plinth/modules/tor/templates/tor.html:97
+#: plinth/modules/tor/templates/tor.html:87
 msgid "SOCKS"
 msgstr "SOCKS"
 
-#: plinth/modules/tor/templates/tor.html:100
+#: plinth/modules/tor/templates/tor.html:90
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
 "Egy Tor SOCKS port elérhető a te %(box_name)s eszközöd 9050-es TCP portján."
 
-#: plinth/modules/tor/views.py:136 plinth/views.py:196
+#: plinth/modules/tor/views.py:137 plinth/views.py:220
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
@@ -6467,7 +6460,7 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:74
+#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Frissítés"
 
@@ -6504,17 +6497,26 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades.html:30
-msgid "Update now"
-msgstr "Frissítés most"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Manual update"
+msgstr "Kézi frissítés"
 
-#: plinth/modules/upgrades/templates/upgrades.html:39
+#: plinth/modules/upgrades/templates/upgrades_configure.html:17
 msgid "Updating..."
 msgstr "Frissítés…"
 
-#: plinth/modules/upgrades/templates/upgrades.html:44
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid "Update now"
+msgstr "Frissítés most"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#, fuzzy
+#| msgid ""
+#| "<strong>This may take a long time to complete</strong>. During an update, "
+#| "you cannot install apps. Also, this web interface may be temporarily "
+#| "unavailable and show an error. In that case, refresh the page to continue."
 msgid ""
-"<strong>This may take a long time to complete</strong>. During an update, "
+"<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
@@ -6523,34 +6525,30 @@ msgstr ""
 "felület átmenetileg elérhetetlenné válhat és hibát jelezhet. Ebben az "
 "esetben frissítsd az oldalt a folytatáshoz."
 
-#: plinth/modules/upgrades/templates/upgrades.html:58
-msgid "Toggle recent update logs"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#, fuzzy
+#| msgid "Toggle recent update logs"
+msgid "Show recent update logs"
 msgstr "Frissítésnapló megjelenítése"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#: plinth/modules/upgrades/views.py:76
-msgid "Manual update"
-msgstr "Kézi frissítés"
-
-#: plinth/modules/upgrades/views.py:46
+#: plinth/modules/upgrades/views.py:53
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Hiba az unattended-upgrades konfigurálása közben: {error}"
 
-#: plinth/modules/upgrades/views.py:50
+#: plinth/modules/upgrades/views.py:57
 msgid "Automatic upgrades enabled"
 msgstr "Automatikus frissítések engedélyezve"
 
-#: plinth/modules/upgrades/views.py:53
+#: plinth/modules/upgrades/views.py:60
 msgid "Automatic upgrades disabled"
 msgstr "Automatikus frissítések kikapcsolva"
 
-#: plinth/modules/upgrades/views.py:70
+#: plinth/modules/upgrades/views.py:75
 msgid "Upgrade process started."
 msgstr "A frissítési folyamat elkezdődött."
 
-#: plinth/modules/upgrades/views.py:73
+#: plinth/modules/upgrades/views.py:77
 msgid "Starting upgrade failed."
 msgstr "A frissítést nem sikerült elindítani."
 
@@ -7273,44 +7271,44 @@ msgstr "A szolgáltatás nem fut (<em>%(service_name)s</em>)."
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Alapvető funkcionalitás és webes felület %(box_name)s eszközére"
 
-#: plinth/templates/base.html:77
+#: plinth/templates/base.html:89
 msgid "Toggle navigation"
 msgstr "Navigációs sor ki- vagy bekapcsolása"
 
-#: plinth/templates/base.html:101 plinth/templates/base.html:104
+#: plinth/templates/base.html:113 plinth/templates/base.html:116
 msgid "Home"
 msgstr "Kezdőlap"
 
-#: plinth/templates/base.html:109 plinth/templates/base.html:113
+#: plinth/templates/base.html:121 plinth/templates/base.html:125
 msgid "Apps"
 msgstr "Alkalmazások"
 
-#: plinth/templates/base.html:118 plinth/templates/base.html:122
+#: plinth/templates/base.html:130 plinth/templates/base.html:134
 msgid "System"
 msgstr "Rendszer"
 
-#: plinth/templates/base.html:154 plinth/templates/base.html:155
+#: plinth/templates/base.html:166 plinth/templates/base.html:167
 msgid "Change password"
 msgstr "Jelszómódosítás"
 
-#: plinth/templates/base.html:162 plinth/templates/base.html:163
+#: plinth/templates/base.html:174 plinth/templates/base.html:175
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: plinth/templates/base.html:168 plinth/templates/base.html:169
+#: plinth/templates/base.html:180 plinth/templates/base.html:181
 msgid "Shut down"
 msgstr "Leállítás"
 
-#: plinth/templates/base.html:176 plinth/templates/base.html:177
-#: plinth/templates/base.html:201 plinth/templates/base.html:203
+#: plinth/templates/base.html:188 plinth/templates/base.html:189
+#: plinth/templates/base.html:213 plinth/templates/base.html:215
 msgid "Log out"
 msgstr "Kijelentkezés"
 
-#: plinth/templates/base.html:185 plinth/templates/base.html:188
+#: plinth/templates/base.html:197 plinth/templates/base.html:200
 msgid "Select language"
 msgstr "Válassz nyelvet"
 
-#: plinth/templates/base.html:193 plinth/templates/base.html:195
+#: plinth/templates/base.html:205 plinth/templates/base.html:207
 msgid "Log in"
 msgstr "Bejelentkezés"
 
@@ -7488,15 +7486,15 @@ msgstr ""
 "kell állítanod a port továbbítást. A %(service_name)s szolgáltatáshoz a "
 "következő portokat kellene továbbítani:"
 
-#: plinth/templates/setup.html:36
+#: plinth/templates/setup.html:24
 msgid "Install this application?"
 msgstr "Alkalmazás telepítése?"
 
-#: plinth/templates/setup.html:40
+#: plinth/templates/setup.html:28
 msgid "This application needs an update. Update now?"
 msgstr "Az alkalmazást frissíteni szükséges. Indulhat a frissítés most?"
 
-#: plinth/templates/setup.html:51
+#: plinth/templates/setup.html:39
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
@@ -7504,35 +7502,49 @@ msgstr ""
 "Egy másik telepítés vagy frissítés már fut. Pár perc után érdemes újra "
 "megpróbálni."
 
-#: plinth/templates/setup.html:58
+#: plinth/templates/setup.html:46
 msgid "This application is currently not available in your distribution."
 msgstr "Ez az alkalmazás jelenleg nem hozzáférhető ebben a disztribúcióban."
 
-#: plinth/templates/setup.html:72
+#: plinth/templates/setup.html:60
 msgid "Install"
 msgstr "Telepítés"
 
-#: plinth/templates/setup.html:83
+#: plinth/templates/setup.html:71
 msgid "Performing pre-install operation"
 msgstr "Telepítés előtti műveletek végrehajtása"
 
-#: plinth/templates/setup.html:87
+#: plinth/templates/setup.html:75
 msgid "Performing post-install operation"
 msgstr "Telepítés utáni műveletek végrehajtása"
 
-#: plinth/templates/setup.html:92
+#: plinth/templates/setup.html:80
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "%(package_names)s telepítése: %(status)s"
 
-#: plinth/templates/setup.html:102
+#: plinth/templates/setup.html:90
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "befejezettségi szint: %(percentage)s%%"
 
-#: plinth/web_framework.py:107
+#: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Restoring"
+#~ msgstr "Visszaállítás"
+
+#~ msgid ""
+#~ "This interface is not maintained by %(box_name)s.  Its security status is "
+#~ "unknown to %(box_name)s.  Many %(box_name)s services may not be available "
+#~ "on this interface.  It is recommended that you deactivate or delete this "
+#~ "connection and re-configure it."
+#~ msgstr ""
+#~ "Ezt az interfészt %(box_name)s eszközöd nem kezeli. Ennek a biztonsági "
+#~ "állapota ismeretlen %(box_name)s eszközöd számára. %(box_name)s eszközöd "
+#~ "sok szolgáltatása nem biztos, hogy elérhető lesz ezen az interfészen. "
+#~ "Ajánlott kikapcsolni vagy törölni ezt a kapcsolatot, majd újra beállítani."
 
 #~ msgid "Enable OpenVPN server"
 #~ msgstr "OpenVPN kiszolgáló engedélyezése"

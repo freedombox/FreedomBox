@@ -26,7 +26,9 @@ def transmission_upload_sample_torrent(session_browser):
     parsers.parse(
         'there should be {torrents_number:d} torrents listed in transmission'))
 def transmission_assert_number_of_torrents(session_browser, torrents_number):
-    assert torrents_number == _get_number_of_torrents(session_browser)
+    functional.visit(session_browser, '/transmission')
+    assert functional.eventually(
+        lambda: torrents_number == _get_number_of_torrents(session_browser))
 
 
 def _remove_all_torrents(browser):
@@ -65,5 +67,4 @@ def _upload_sample_torrent(browser):
 
 def _get_number_of_torrents(browser):
     """Return the number torrents currently in transmission."""
-    functional.visit(browser, '/transmission')
     return len(browser.find_by_css('#torrent_list .torrent'))

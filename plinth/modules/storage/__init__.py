@@ -13,9 +13,9 @@ from django.utils.translation import ugettext_noop
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, glib, menu, utils
+from plinth import cfg, glib, menu
 from plinth.errors import ActionError, PlinthError
-from plinth.utils import format_lazy, import_from_gi
+from plinth.utils import format_lazy
 
 from . import udisks2
 from .manifest import backup  # noqa, pylint: disable=unused-import
@@ -75,50 +75,48 @@ def init():
 
 
 def get_disks():
-    """Returns list of disks by combining information from df and udisks."""
-    disks = _get_disks_from_df()
-    disks_from_udisks = _get_disks_from_udisks()
+    """Returns list of disks and their free space.
 
-    # Add info from udisks to the disks from df based on mount point.
-    for disk_from_df in disks:
-        for disk_from_udisks in disks_from_udisks:
-            if disk_from_udisks['mount_point'] == disk_from_df['mount_point']:
-                disk_from_df.update(disk_from_udisks)
+    The primary source of information is UDisks' list of block devices.
+    Information from df is used for free space available.
+
+    """
+    disks_from_df = _get_disks_from_df()
+    disks = udisks2.get_disks()
+    for disk in disks:
+        disk['size'] = format_bytes(disk['size'])
+
+    # Add info from df to the disks from udisks based on mount point.
+    for disk in disks:
+        for disk_from_df in disks_from_df:
+            if disk_from_df['mount_point'] in disk['mount_points']:
+                disk['mount_point'] = disk_from_df['mount_point']
+                for key in ('percent_used', 'size', 'used', 'free', 'size_str',
+                            'used_str', 'free_str'):
+                    disk[key] = disk_from_df[key]
 
     return sorted(disks, key=lambda disk: disk['device'])
 
 
-def _get_disks_from_udisks():
-    """List devices that can be ejected."""
-    udisks = utils.import_from_gi('UDisks', '2.0')
-    client = udisks.Client.new_sync()
-    object_manager = client.get_object_manager()
-    devices = []
+def get_mounts():
+    """Return list of mounts by combining information from df and UDisks.
 
-    for obj in object_manager.get_objects():
+    The primary source of information is the df command. Information from
+    UDisks is used for labels.
 
-        if not obj.get_block():
-            continue
+    """
+    disks = _get_disks_from_df()
+    disks_from_udisks = udisks2.get_disks()
+    for disk in disks_from_udisks:
+        disk['size'] = format_bytes(disk['size'])
 
-        block = obj.get_block()
+    # Add info from udisks to the disks from df based on mount point.
+    for disk_from_df in disks:
+        for disk_from_udisks in disks_from_udisks:
+            if disk_from_df['mount_point'] in disk_from_udisks['mount_points']:
+                disk_from_df.update(disk_from_udisks)
 
-        if block.props.id_usage != 'filesystem':
-            continue
-
-        device = {
-            'device': block.props.device,
-            'label': block.props.id_label,
-            'size': format_bytes(block.props.size),
-            'filesystem_type': block.props.id_type,
-            'is_removable': not block.props.hint_system
-        }
-        try:
-            device['mount_point'] = obj.get_filesystem().props.mount_points[0]
-        except Exception:
-            continue
-        devices.append(device)
-
-    return devices
+    return sorted(disks, key=lambda disk: disk['device'])
 
 
 def _get_disks_from_df():
@@ -158,10 +156,12 @@ def get_filesystem_type(mount_point='/'):
     raise ValueError('No such mount point')
 
 
-def get_disk_info(mount_point):
-    """Get information about the free space of a drive"""
-    disks = get_disks()
-    list_root = [disk for disk in disks if disk['mount_point'] == mount_point]
+def get_mount_info(mount_point):
+    """Get information about the free space of a mount point."""
+    mounts = get_mounts()
+    list_root = [
+        mount for mount in mounts if mount_point == mount['mount_point']
+    ]
     if not list_root:
         raise PlinthError('Mount point {} not found.'.format(mount_point))
 
@@ -178,8 +178,9 @@ def get_disk_info(mount_point):
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
     for disk in disks:
-        if disk['mount_point'] == '/':
+        if '/' in disk['mount_points']:
             return disk['device']
+
     return None
 
 
@@ -229,45 +230,46 @@ def format_bytes(size):
 
 def get_error_message(error):
     """Return an error message given an exception."""
-    udisks = import_from_gi('UDisks', '2.0')
-    if error.matches(udisks.Error.quark(), udisks.Error.FAILED):
-        message = _('The operation failed.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.CANCELLED):
-        message = _('The operation was cancelled.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_UNMOUNTING):
-        message = _('The device is already unmounting.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_SUPPORTED):
-        message = _('The operation is not supported due to '
-                    'missing driver/tool support.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.TIMED_OUT):
-        message = _('The operation timed out.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.WOULD_WAKEUP):
-        message = _('The operation would wake up a disk that is '
-                    'in a deep-sleep state.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.DEVICE_BUSY):
-        message = _('Attempting to unmount a device that is busy.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_CANCELLED):
-        message = _('The operation has already been cancelled.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_AUTHORIZED) or \
-        error.matches(udisks.Error.quark(),
-                      udisks.Error.NOT_AUTHORIZED_CAN_OBTAIN) or \
-        error.matches(udisks.Error.quark(),
-                      udisks.Error.NOT_AUTHORIZED_DISMISSED):
-        message = _('Not authorized to perform the requested operation.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_MOUNTED):
-        message = _('The device is already mounted.')
-    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_MOUNTED):
-        message = _('The device is not mounted.')
-    elif error.matches(udisks.Error.quark(),
-                       udisks.Error.OPTION_NOT_PERMITTED):
-        message = _('Not permitted to use the requested option.')
-    elif error.matches(udisks.Error.quark(),
-                       udisks.Error.MOUNTED_BY_OTHER_USER):
-        message = _('The device is mounted by another user.')
-    else:
-        message = error.message
+    error_parts = error.split(':')
+    if error_parts[0] != 'udisks-error-quark':
+        return error
 
-    return message
+    short_error = error_parts[2].strip().split('.')[-1]
+    message_map = {
+        'Failed':
+            _('The operation failed.'),
+        'Cancelled':
+            _('The operation was cancelled.'),
+        'AlreadyUnmounting':
+            _('The device is already unmounting.'),
+        'NotSupported':
+            _('The operation is not supported due to missing driver/tool '
+              'support.'),
+        'TimedOut':
+            _('The operation timed out.'),
+        'WouldWakeup':
+            _('The operation would wake up a disk that is in a deep-sleep '
+              'state.'),
+        'DeviceBusy':
+            _('Attempting to unmount a device that is busy.'),
+        'AlreadyCancelled':
+            _('The operation has already been cancelled.'),
+        'NotAuthorized':
+            _('Not authorized to perform the requested operation.'),
+        'NotAuthorizedCanObtain':
+            _('Not authorized to perform the requested operation.'),
+        'NotAuthorizedDismissed':
+            _('Not authorized to perform the requested operation.'),
+        'AlreadyMounted':
+            _('The device is already mounted.'),
+        'NotMounted':
+            _('The device is not mounted.'),
+        'OptionNotPermitted':
+            _('Not permitted to use the requested option.'),
+        'MountedByOtherUser':
+            _('The device is mounted by another user.')
+    }
+    return message_map.get(short_error, error)
 
 
 def setup(helper, old_version=None):
@@ -289,10 +291,8 @@ def warn_about_low_disk_space(request):
     from plinth.notification import Notification
 
     try:
-        root_info = get_disk_info('/')
-    except PlinthError as exception:
-        logger.exception('Error getting information about root partition: %s',
-                         exception)
+        root_info = get_mount_info('/')
+    except PlinthError:
         return
 
     show = False

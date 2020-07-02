@@ -47,16 +47,15 @@ Shared folder: Using systemd-nspawn, the project directory is mounted as
 /freedombox inside the container. The project directory is determined as
 directory in which this script resides. The project folder from the container
 point of view will be read-only. Container should be able to write various
-files such as build files, FreedomBox sqlite3 database and session files into
-the /freedombox folder. To enable writing, an additional read-write folder is
-overlayed onto /freedombox folder in the container. This directory can't be
-created under the project folder and is created instead in
-$XDG_DATA_HOME/freedombox-container/overlay/$DISTRIBUTION. If XDG_DATA_HOME is
-not set, it is assumed to be $HOME/.local/shared/. Whenever data is written
-into /freedombox directory inside the container, this directory on the host
-receives the changes. See documentation for Overlay filesystem for further
-details. When container is destroyed, this overlay folder is destroyed to
-ensure clean state after bringing up the container again.
+files such as build files into the /freedombox folder. To enable writing, an
+additional read-write folder is overlayed onto /freedombox folder in the
+container. This directory can't be created under the project folder and is
+created instead in $XDG_DATA_HOME/freedombox-container/overlay/$DISTRIBUTION.
+If XDG_DATA_HOME is not set, it is assumed to be $HOME/.local/shared/. Whenever
+data is written into /freedombox directory inside the container, this directory
+on the host receives the changes. See documentation for Overlay filesystem for
+further details. When container is destroyed, this overlay folder is destroyed
+to ensure clean state after bringing up the container again.
 
 Users: PrivateUsers configuration flag for systemd-nspawn is currently off.
 This means that each user's UID on the host is also the same UID in the
@@ -157,9 +156,6 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
 sudo apt-mark unhold freedombox
 # Install ncurses-term
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term
-
-# Remove FreedomBox database lingering in source directory to start fresh
-sudo rm -f /freedombox/data/var/lib/plinth/plinth.sqlite3
 
 echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' \
   >> /home/fbx/.bashrc

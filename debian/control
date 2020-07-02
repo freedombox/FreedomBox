@@ -85,6 +85,8 @@ Depends:
  lsof,
  netcat-openbsd,
  network-manager,
+# Ensure that nscd is installed rather than unscd.
+ nscd (>= 2),
  ppp,
  pppoe,
  python3-apt,
@@ -104,6 +106,7 @@ Depends:
  python3-psutil,
  python3-requests,
  python3-ruamel.yaml,
+ python3-systemd,
  python3-yaml,
  sudo,
  wget,
@@ -155,8 +158,6 @@ Recommends:
  powermgmt-base,
 # fuser, pstree and other utilities
  psmisc,
-# Optional FreedomBox dependency
- python3-systemd,
 # Manage /etc/resolv.conf
  resolvconf,
 # Tool to kill WLAN, Bluetooth and moble broadband

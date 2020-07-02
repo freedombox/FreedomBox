@@ -22,8 +22,8 @@ from plinth.actions import run, superuser_run
 from plinth.errors import ActionError
 
 
-@pytest.fixture(scope='module', autouse=True)
-def actions_test_setup():
+@pytest.fixture(autouse=True)
+def actions_test_setup(load_cfg):
     """Setup a temporary directory for testing actions.
 
     Copy system commands ``echo`` and ``id`` into actions directory during
@@ -167,7 +167,7 @@ def test_action_path(monkeypatch):
     monkeypatch.setitem(os.environ, 'PYTHONPATH', '')
     plinth_path = run('test_path').strip()
     su_plinth_path = superuser_run('test_path').strip()
-    assert plinth_path.startswith(cfg.root)
+    assert plinth_path.startswith(cfg.file_root)
     assert plinth_path == su_plinth_path
 
 

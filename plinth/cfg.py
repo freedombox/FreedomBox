@@ -1,77 +1,111 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configuration parser and default values for configuration options.
+"""
 
 import configparser
 import logging
 import os
+import pathlib
 
 logger = logging.getLogger(__name__)
 
-box_name = None
-root = None
-file_root = None
-config_dir = None
-data_dir = None
-custom_static_dir = None
-store_file = None
-actions_dir = None
-doc_dir = None
-host = None
-port = None
-use_x_forwarded_for = False
-use_x_forwarded_host = False
-secure_proxy_ssl_header = None
+# [Path] section
+file_root = '/usr/share/plinth'
+config_dir = '/etc/plinth'
+data_dir = '/var/lib/plinth'
+custom_static_dir = '/var/www/plinth/custom/static'
+store_file = data_dir + '/plinth.sqlite3'
+actions_dir = '/usr/share/plinth/actions'
+doc_dir = '/usr/share/freedombox'
+server_dir = '/plinth'
+
+# [Network] section
+host = '127.0.0.1'
+port = 8000
+
+# Enable the following only if Plinth is behind a proxy server.  The
+# proxy server should properly clean and the following HTTP headers:
+#   X-Forwarded-For
+#   X-Forwarded-Host
+#   X-Forwarded-Proto
+# If you enable these unnecessarily, this will lead to serious security
+# problems. For more information, see
+# https://docs.djangoproject.com/en/1.7/ref/settings/
+#
+# These are enabled by default in FreedomBox because the default
+# configuration allows only connections from localhost
+#
+# Leave the values blank to disable
+use_x_forwarded_for = True
+use_x_forwarded_host = True
+secure_proxy_ssl_header = 'HTTP_X_FORWARDED_PROTO'
+
+# [Misc] section
+box_name = 'FreedomBox'
+
+# Other globals
 develop = False
-server_dir = '/'
 
-config_file = None
-
-DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
-DEFAULT_ROOT = '/'
+config_files = []
 
 
-def get_fallback_config_paths():
-    """Get config paths of the current source code folder"""
+def expand_to_dot_d_paths(file_paths):
+    """Expand a list of file paths to include file.d/* also."""
+    final_list = []
+    for file_path in file_paths:
+        final_list.append(str(file_path))
+        path = pathlib.Path(file_path)
+        path_d = path.with_suffix(path.suffix + '.d')
+        for dot_d_file in sorted(path_d.glob('*' + path.suffix)):
+            final_list.append(str(dot_d_file))
+
+    return final_list
+
+
+def get_develop_config_path():
+    """Return config path of current source folder for development mode."""
     root_directory = os.path.dirname(os.path.realpath(__file__))
-    root_directory = os.path.join(root_directory, '..')
     root_directory = os.path.realpath(root_directory)
-    config_path = os.path.join(root_directory, 'plinth.config')
-    return config_path, root_directory
+    config_path = os.path.join(root_directory, 'develop.config')
+    return config_path
 
 
 def get_config_paths():
-    """Get config paths.
-    Return the fallback plinth config if the default one does not exist"""
-    root_directory = DEFAULT_ROOT
-    config_path = DEFAULT_CONFIG_FILE
+    """Get default config paths."""
+    return [
+        '/usr/share/freedombox/freedombox.config',
+        '/etc/plinth/plinth.config',
+        '/etc/freedombox/freedombox.config',
+    ]
+
+
+def read():
+    """Read all configuration files."""
+    config_paths = get_config_paths()
+    for config_path in expand_to_dot_d_paths(config_paths):
+        read_file(config_path)
+
+
+def read_file(config_path):
+    """Read and merge into defaults a single configuration file."""
     if not os.path.isfile(config_path):
-        config_path, root_directory = get_fallback_config_paths()
-    return config_path, root_directory
+        # Ignore missing configuration files
+        return
 
+    # Keep a note of configuration files read.
+    config_files.append(config_path)
 
-def read(config_path=None, root_directory=None):
-    """
-    Read configuration.
-
-    - config_path: path of plinth.config file
-    - root_directory: path of plinth root folder
-    """
-    if not config_path and not root_directory:
-        config_path, root_directory = get_config_paths()
-
-    if not os.path.isfile(config_path):
-        msg = 'No plinth.config file could be found on path: %s' % config_path
-        raise FileNotFoundError(msg)
-
-    global config_file  # pylint: disable-msg=invalid-name,global-statement
-    config_file = config_path
-
-    parser = configparser.ConfigParser(defaults={
-        'root': os.path.realpath(root_directory),
-    })
-    parser.read(config_file)
+    parser = configparser.ConfigParser(
+        defaults={
+            'parent_dir':
+                pathlib.Path(config_path).parent.resolve(),
+            'parent_parent_dir':
+                pathlib.Path(config_path).parent.parent.resolve(),
+        })
+    parser.read(config_path)
 
     config_items = (
-        ('Path', 'root', 'string'),
         ('Path', 'file_root', 'string'),
         ('Path', 'config_dir', 'string'),
         ('Path', 'data_dir', 'string'),
@@ -92,9 +126,8 @@ def read(config_path=None, root_directory=None):
         try:
             value = parser.get(section, name)
         except (configparser.NoSectionError, configparser.NoOptionError):
-            logger.error('Configuration does not contain option: %s.%s',
-                         section, name)
-            raise
+            # Use default values for any missing keys in configuration
+            continue
         else:
             if datatype == 'int':
                 value = int(value)

@@ -50,12 +50,21 @@ def fixture_load_cfg():
     """Load test configuration."""
     from plinth import cfg
 
+    keys = ('file_root', 'config_dir', 'data_dir', 'custom_static_dir',
+            'store_file', 'actions_dir', 'doc_dir', 'server_dir', 'host',
+            'port', 'use_x_forwarded_for', 'use_x_forwarded_host',
+            'secure_proxy_ssl_header', 'box_name', 'develop')
+    saved_state = {}
+    for key in keys:
+        saved_state[key] = getattr(cfg, key)
+
     root_dir = pathlib.Path(__file__).resolve().parent
-    test_data_dir = root_dir / 'plinth' / 'tests' / 'data'
-    cfg_file = test_data_dir / 'etc' / 'plinth' / 'plinth.config'
-    cfg.read(str(cfg_file), str(root_dir))
+    cfg_file = root_dir / 'plinth' / 'develop.config'
+    cfg.read_file(str(cfg_file))
     yield cfg
-    cfg.read()
+
+    for key in keys:
+        setattr(cfg, key, saved_state[key])
 
 
 @pytest.fixture(name='develop_mode')
@@ -85,3 +94,29 @@ def fixture_needs_sudo():
     """Skip test if sudo command is not available."""
     if not os.path.isfile('/usr/bin/sudo'):
         pytest.skip('Needs sudo command installed.')
+
+
+@pytest.fixture(scope='session')
+def splinter_selenium_implicit_wait():
+    """Disable implicit waiting."""
+    return 0
+
+
+@pytest.fixture(scope='session')
+def splinter_wait_time():
+    """Disable explicit waiting."""
+    return 0.01
+
+
+@pytest.fixture(scope='session')
+def splinter_browser_load_condition():
+    """When a page it loaded, wait until <body> is available."""
+
+    def _load_condition(browser):
+        if browser.url == 'about:blank':
+            return True
+
+        ready_state = browser.execute_script('return document.readyState;')
+        return ready_state == 'complete'
+
+    return _load_condition

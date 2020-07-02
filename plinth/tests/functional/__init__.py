@@ -11,8 +11,10 @@ import tempfile
 import time
 from contextlib import contextmanager
 
+import pytest
 import requests
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import (WebDriverException,
+                                        StaleElementReferenceException)
 from selenium.webdriver.support.ui import WebDriverWait
 
 config = configparser.ConfigParser()
@@ -64,8 +66,11 @@ def eventually(function, args=[], timeout=30):
     end_time = time.time() + timeout
     current_time = time.time()
     while current_time < end_time:
-        if function(*args):
-            return True
+        try:
+            if function(*args):
+                return True
+        except Exception:
+            pass
 
         time.sleep(0.1)
         current_time = time.time()
@@ -91,18 +96,37 @@ class _PageLoaded():
         try:
             self.element.has_class('whatever_class')
         except StaleElementReferenceException:
-            if self.expected_url is None:
+            # After a domain name change, Let's Encrypt will restart the web
+            # server and could cause a connection failure.
+            if driver.find_by_id('netErrorButtonContainer'):
+                try:
+                    driver.visit(driver.url)
+                except WebDriverException:
+                    pass
+                return False
+
+            is_fully_loaded = driver.execute_script(
+                'return document.readyState;') == 'complete'
+            if not is_fully_loaded:
+                is_stale = False
+            elif self.expected_url is None:
                 is_stale = True
             else:
                 if driver.url.endswith(self.expected_url):
                     is_stale = True
+
         return is_stale
 
 
 @contextmanager
 def wait_for_page_update(browser, timeout=300, expected_url=None):
     page_body = browser.find_by_tag('body').first
-    yield
+    try:
+        yield
+    except WebDriverException:
+        # ignore a connection failure which may happen after web server restart
+        pass
+
     WebDriverWait(browser, timeout).until(_PageLoaded(page_body, expected_url))
 
 
@@ -181,7 +205,16 @@ def change_checkbox_status(browser, app_name, checkbox_id,
 
 
 def wait_for_config_update(browser, app_name):
-    while browser.is_element_present_by_css('.running-status.loading'):
+    """Wait until the configuration update progress goes away.
+
+    Perform an atomic check that page is fully loaded and that progress icon is
+    not present at the same time to avoid race conditions due to automatic page
+    reloads.
+
+    """
+    script = 'return (document.readyState == "complete") && ' \
+        '(!Boolean(document.querySelector(".running-status.loading")));'
+    while not browser.execute_script(script):
         time.sleep(0.1)
 
 
@@ -249,45 +282,35 @@ def app_select_domain_name(browser, app_name, domain_name):
 #########################
 # App install utilities #
 #########################
-def _find_install_button(browser, app_name):
-    nav_to_module(browser, app_name)
-    return browser.find_by_css('.form-install input[type=submit]')
-
-
 def is_installed(browser, app_name):
-    install_button = _find_install_button(browser, app_name)
-    return not bool(install_button)
+    nav_to_module(browser, app_name)
+    return not bool(browser.find_by_css('.form-install input[type=submit]'))
 
 
 def install(browser, app_name):
-    install_button = _find_install_button(browser, app_name)
-
-    def install_in_progress():
-        selectors = [
-            '.install-state-' + state
-            for state in ['pre', 'post', 'installing']
-        ]
-        return any(
-            browser.is_element_present_by_css(selector)
-            for selector in selectors)
-
-    def is_server_restarting():
-        return browser.is_element_present_by_css('.neterror')
-
-    def wait_for_install():
-        if install_in_progress():
-            time.sleep(1)
-        elif is_server_restarting():
-            time.sleep(1)
+    nav_to_module(browser, app_name)
+    install_button_css = '.form-install input[type=submit]'
+    while True:
+        script = 'return (document.readyState == "complete") && ' \
+            '(!Boolean(document.querySelector(".installing")));'
+        if not browser.execute_script(script):
+            time.sleep(0.1)
+        elif browser.is_element_present_by_css('.neterror'):
             browser.visit(browser.url)
+        elif browser.is_element_present_by_css(install_button_css):
+            install_button = browser.find_by_css(install_button_css).first
+            if install_button['disabled']:
+                if not browser.find_by_name('refresh-packages'):
+                    # Package manager is busy, wait and refresh page
+                    time.sleep(1)
+                    browser.visit(browser.url)
+                else:
+                    # This app is not available in this distribution
+                    pytest.skip('App not available in distribution')
+            else:
+                install_button.click()
         else:
-            return
-        wait_for_install()
-
-    if install_button:
-        install_button.click()
-        wait_for_install()
-        # sleep(2)  # XXX This shouldn't be required.
+            break
 
 
 ################################
@@ -337,10 +360,6 @@ def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_domainname').fill(domain_name)
     submit(browser)
-    # After a domain name change, Let's Encrypt will reload the web server and
-    # could cause a connection failure.
-    if browser.find_by_id('netErrorButtonContainer'):
-        browser.visit(browser.url)
 
 
 ########################
@@ -385,10 +404,8 @@ def set_advanced_mode(browser, mode):
 def _click_button_and_confirm(browser, href):
     buttons = browser.find_link_by_href(href)
     if buttons:
-        buttons.first.click()
-        with wait_for_page_update(browser,
-                                  expected_url='/plinth/sys/backups/'):
-            submit(browser)
+        submit(browser, buttons.first)
+        submit(browser, expected_url='/plinth/sys/backups/')
 
 
 def _backup_delete_archive_by_name(browser, archive_name):
@@ -402,7 +419,8 @@ def backup_create(browser, app_name, archive_name=None):
     if archive_name:
         _backup_delete_archive_by_name(browser, archive_name)
 
-    browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
+    buttons = browser.find_link_by_href('/plinth/sys/backups/create/')
+    submit(browser, buttons.first)
     browser.find_by_id('select-all').uncheck()
     if archive_name:
         browser.find_by_id('id_backups-name').fill(archive_name)

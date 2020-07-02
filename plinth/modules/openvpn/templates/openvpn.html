@@ -7,17 +7,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-
-  {% if status.setup_running %}
-    <noscript>
-      <meta http-equiv="refresh" content="3" />
-    </noscript>
-  {% endif %}
-
-{% endblock %}
-
-
 {% block status %}
 
   {% if status.is_setup and not status.setup_running %}
@@ -98,10 +87,4 @@
 
   {% endif %}
 
-{% endblock %}
-
-{% block page_js %}
-  {% if status.setup_running %}
-    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
-  {% endif %}
 {% endblock %}

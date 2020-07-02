@@ -3,40 +3,21 @@
 pytest configuration for all tests in the plinth/tests/ directory.
 """
 
-import json
+import pathlib
+from unittest.mock import patch
 
 import pytest
 
-NEXTCLOUD_SHORTCUT = {
-    'name':
-        'NextCloud',
-    'short_description':
-        'File Hosting Service',
-    'description': [
-        'Nextcloud is a suite of client-server software for creating '
-        'and using file hosting services.'
-    ],
-    'icon_url':
-        '/plinth/custom/static/themes/default/icons/nextcloud.png',
-    'clients': [{
-        'name': 'nextcloud',
-        'platforms': [{
-            'type': 'web',
-            'url': '/nextcloud'
-        }]
-    }]
-}
+from plinth import cfg
 
 
-@pytest.fixture(name='custom_shortcuts_file')
-def fixture_custom_shortcuts_file(load_cfg, tmp_path):
-    """Fixture to set path for a custom shortcuts file."""
-    load_cfg.config_file = str(tmp_path / 'plinth.conf')
-    return tmp_path / 'custom-shortcuts.json'
+@pytest.fixture(name='shortcuts_file')
+def fixture_shortcuts_file():
+    with patch('plinth.frontpage.get_custom_shortcuts_paths') as func:
 
+        def setter(file_name):
+            path = pathlib.Path(__file__).parent / 'data' / 'shortcuts'
+            path /= file_name
+            func.return_value = cfg.expand_to_dot_d_paths([path])
 
-@pytest.fixture(name='nextcloud_shortcut')
-def fixture_nextcloud_shortcut(custom_shortcuts_file):
-    """Create a custom_shortcuts file with NextCloud shortcut."""
-    shortcuts = {'shortcuts': [NEXTCLOUD_SHORTCUT]}
-    custom_shortcuts_file.write_text(json.dumps(shortcuts))
+        yield setter

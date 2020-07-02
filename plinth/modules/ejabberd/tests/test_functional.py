@@ -22,7 +22,7 @@ def ejabberd_delete_contact(session_browser):
 
 @then('I should have a contact on my roster')
 def ejabberd_should_have_contact(session_browser):
-    assert functional.eventually(_jsxc_has_contact, [session_browser])
+    _jsxc_assert_has_contact(session_browser)
 
 
 @when(parsers.parse('I enable message archive management'))
@@ -53,16 +53,17 @@ def _jsxc_login(browser):
     """Login to JSXC."""
     username = functional.config['DEFAULT']['username']
     password = functional.config['DEFAULT']['password']
-    functional.access_url(browser, 'jsxc')
+    functional.visit(browser, '/plinth/apps/jsxc/jsxc/')
+    assert functional.eventually(browser.find_by_text,
+                                 ['BOSH Server reachable.'])
+    if browser.find_by_text('relogin'):
+        browser.reload()
+
     browser.find_by_id('jsxc-username').fill(username)
     browser.find_by_id('jsxc-password').fill(password)
     browser.find_by_id('jsxc-submit').click()
-    relogin = browser.find_by_text('relogin')
-    if relogin:
-        relogin.first.click()
-        browser.find_by_id('jsxc_username').fill(username)
-        browser.find_by_id('jsxc_password').fill(password)
-        browser.find_by_text('Connect').first.click()
+    assert functional.eventually(browser.find_by_css,
+                                 ['#jsxc_roster.jsxc_state_shown'])
 
 
 def _jsxc_add_contact(browser):
@@ -75,18 +76,23 @@ def _jsxc_add_contact(browser):
         new.first.click()
         browser.find_by_id('jsxc_username').fill('alice@localhost')
         browser.find_by_text('Add').first.click()
+        assert functional.eventually(browser.find_by_text, ['alice@localhost'])
 
 
 def _jsxc_delete_contact(browser):
     """Delete the contact from JSXC user's roster."""
     _jsxc_login(browser)
+
+    # noqa, pylint: disable=unnecessary-lambda
+    functional.eventually(browser.find_by_css, ['div.jsxc_more'])
     browser.find_by_css('div.jsxc_more').first.click()
+    functional.eventually(browser.find_by_text, ['delete contact'])
     browser.find_by_text('delete contact').first.click()
+    functional.eventually(browser.find_by_text, ['Remove'])
     browser.find_by_text('Remove').first.click()
 
 
-def _jsxc_has_contact(browser):
+def _jsxc_assert_has_contact(browser):
     """Check whether the contact is in JSXC user's roster."""
     _jsxc_login(browser)
-    contact = browser.find_by_text('alice@localhost')
-    return bool(contact)
+    assert functional.eventually(browser.find_by_text, ['alice@localhost'])

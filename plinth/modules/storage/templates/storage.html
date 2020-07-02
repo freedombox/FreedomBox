@@ -35,24 +35,27 @@
         <tr>
           <td>{{ disk.device }}</td>
           <td>{{ disk.label|default_if_none:"" }}</td>
-          <td>{{ disk.mount_point }}</td>
+          <td>{{ disk.mount_points|join:"<br>" }}</td>
           <td>{{ disk.filesystem_type }}</td>
           <td>
-            <div class="progress">
-              {% if disk.percent_used < 75 %}
-                <div class="progress-bar progress-bar-striped progress-bar-success"
-              {% elif disk.percent_used < 90 %}
-                  <div class="progress-bar progress-bar-striped progress-bar-warning"
-              {% else %}
-                    <div class="progress-bar progress-bar-striped progress-bar-danger"
-              {% endif %}
-                         role="progressbar" aria-valuenow="disk.percent_used"
-                         aria-valuemin="0" aria-valuemax="100"
-                         style="width: {{ disk.percent_used }}%;">
-                      {{ disk.percent_used }}%
-                    </div>
-                  </div>
-                  <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
+            {% if 'percent_used' in disk %}
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped
+                            {% if disk.percent_used < 75 %}
+                              progress-bar-success
+                            {% elif disk.percent_used < 90 %}
+                              progress-bar-warning
+                            {% else %}
+                              progress-bar-danger
+                            {% endif %}"
+                     role="progressbar" aria-valuenow="disk.percent_used"
+                     aria-valuemin="0" aria-valuemax="100"
+                     style="width: {{ disk.percent_used }}%;">
+                  {{ disk.percent_used }}%
+                </div>
+              </div>
+              <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
+            {% endif %}
           </td>
           <td>
             {% if disk.is_removable %}

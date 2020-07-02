@@ -105,7 +105,7 @@ def run_diagnostics_and_exit():
 
 
 def adapt_config(arguments):
-    """Give commandline arguments precedence over plinth.config entries"""
+    """Give commandline arguments precedence over config entries"""
     for argument_name in precedence_commandline_arguments:
         argument_value = getattr(arguments, argument_name)
         if argument_value is not None:
@@ -122,21 +122,26 @@ def main():
     """Initialize and start the application"""
     arguments = parse_arguments()
 
+    cfg.read()
     if arguments.develop:
-        # use the root and plinth.config of the current working directory
-        config_path, root_directory = cfg.get_fallback_config_paths()
-        cfg.read(config_path, root_directory)
-    else:
-        cfg.read()
+        # Use the config in the current working directory
+        cfg.read_file(cfg.get_develop_config_path())
 
     adapt_config(arguments)
+
+    if arguments.list_dependencies is not False:
+        log.default_level = 'ERROR'
+        web_framework.init(read_only=True)
+        list_dependencies(arguments.list_dependencies)
 
     log.init()
 
     web_framework.init()
+    web_framework.post_init()
 
     logger.info('FreedomBox Service (Plinth) version - %s', __version__)
-    logger.info('Configuration loaded from file - %s', cfg.config_file)
+    for config_file in cfg.config_files:
+        logger.info('Configuration loaded from file - %s', config_file)
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.include_urls()
@@ -151,9 +156,6 @@ def main():
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
-
-    if arguments.list_dependencies is not False:
-        list_dependencies(arguments.list_dependencies)
 
     if arguments.list_modules is not False:
         list_modules(arguments.list_modules)

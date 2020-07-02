@@ -4,13 +4,13 @@ Main FreedomBox views.
 """
 
 import time
+import urllib.parse
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.http import is_safe_url
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
@@ -26,11 +26,35 @@ from . import forms, frontpage
 REDIRECT_FIELD_NAME = 'next'
 
 
+def is_safe_url(url):
+    """Check if the URL is safe to redirect to.
+
+    Based on Django internal utility.
+
+    """
+    if url is not None:
+        url = url.strip()
+
+    if not url:
+        return False
+
+    if '\\' in url or url.startswith('///'):
+        return False
+
+    result = urllib.parse.urlparse(url)
+
+    # Only accept URLs to the same site and scheme.
+    if result.scheme or result.netloc:
+        return False
+
+    return True
+
+
 def _get_redirect_url_from_param(request):
     """Return the redirect URL from 'next' GET/POST param."""
     redirect_to = request.GET.get(REDIRECT_FIELD_NAME, '')
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME, redirect_to)
-    if is_safe_url(url=redirect_to, allowed_hosts={request.get_host()}):
+    if is_safe_url(redirect_to):
         return redirect_to
 
     return reverse('index')
@@ -258,6 +282,12 @@ class SetupView(TemplateView):
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
+
+        context['refresh_page_sec'] = None
+        if context['setup_state'] == 'up-to-date':
+            context['refresh_page_sec'] = 0
+        elif context['setup_current_operation']:
+            context['refresh_page_sec'] = 3
 
         return context
 

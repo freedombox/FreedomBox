@@ -78,6 +78,7 @@ def _load_main_interface(browser):
         lambda: browser.evaluate_script('document.is_ui_online'), timeout=5)
 
     # Dismiss the Usage Reporting consent dialog
+    functional.eventually(browser.find_by_id, ['ur'])
     usage_reporting = browser.find_by_id('ur').first
     functional.eventually(lambda: usage_reporting.visible, timeout=2)
     if usage_reporting.visible:

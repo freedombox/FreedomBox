@@ -153,6 +153,7 @@ class ConnectionForm(forms.Form):
 
 class GenericForm(ConnectionForm):
     """Form to create/edit a generic connection."""
+
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
         super(GenericForm, self).__init__(*args, **kwargs)
@@ -168,6 +169,7 @@ class GenericForm(ConnectionForm):
 
 class EthernetForm(ConnectionForm):
     """Form to create/edit a ethernet connection."""
+
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
         super(EthernetForm, self).__init__(*args, **kwargs)
@@ -352,7 +354,7 @@ class InternetConnectionTypeForm(forms.Form):
                  allow_markup=True)),
             ('static_public_ip',
              format_lazy(
-                 _('I have a public IP address that does not change overtime '
+                 _('I have a public IP address that does not change over time '
                    '(recommended)'
                    '<p class="help-block">This means that devices on the '
                    'Internet can reach you when you are connected to the '

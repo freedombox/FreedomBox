@@ -100,7 +100,7 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
 
     # Enable automatic upgrades but only on first install
-    if not old_version:
+    if not old_version and not cfg.develop:
         helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
 
     # Update apt preferences whenever on first install and on version

@@ -7,16 +7,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-
-  {% if config_running %}
-    <noscript>
-      <meta http-equiv="refresh" content="3" />
-    </noscript>
-  {% endif %}
-
-{% endblock %}
-
 {% block status %}
   {% if config_running %}
     <h3>{% trans "Status" %}</h3>
@@ -111,9 +101,5 @@
 {% block page_js %}
 
   <script type="text/javascript" src="{% static 'tor/tor.js' %}"></script>
-
-  {% if config_running %}
-    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
-  {% endif %}
 
 {% endblock %}

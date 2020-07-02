@@ -9,12 +9,6 @@
 
 {% block page_head %}
 
-  {% if running %}
-    <noscript>
-      <meta http-equiv="refresh" content="3" />
-    </noscript>
-  {% endif %}
-
   <style type="text/css">
     td li {
         list-style: none;
@@ -157,10 +151,3 @@
   </table>
 
 {% endblock %}
-
-{% block page_js %}
-  {% if running %}
-    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
-  {% endif %}
-{% endblock %}
-

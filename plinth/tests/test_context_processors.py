@@ -8,7 +8,6 @@ from unittest.mock import MagicMock, Mock, patch
 import pytest
 from django.http import HttpRequest
 
-from plinth import cfg
 from plinth import context_processors as cp
 from plinth import menu as menu_module
 
@@ -20,9 +19,8 @@ def fixture_menu():
 
 
 @patch('plinth.notification.Notification')
-def test_common(Notification):
+def test_common(Notification, load_cfg):
     """Verify that the common() function returns the correct values."""
-    cfg.read()  # initialize config settings
 
     request = HttpRequest()
     request.path = '/aaa/bbb/ccc/'

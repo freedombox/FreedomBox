@@ -20,7 +20,7 @@ from . import cfg, glib, log, module_loader, settings
 logger = logging.getLogger(__name__)
 
 
-def init():
+def init(read_only=False):
     """Setup Django configuration in the absence of .settings file"""
     if cfg.secure_proxy_ssl_header:
         settings.SECURE_PROXY_SSL_HEADER = (cfg.secure_proxy_ssl_header,
@@ -36,7 +36,7 @@ def init():
     settings.LANGUAGES = get_languages()
     settings.LOGGING = log.get_configuration()
     settings.MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
-    settings.SECRET_KEY = _get_secret_key()
+    settings.SECRET_KEY = _get_secret_key(read_only)
     settings.SESSION_FILE_PATH = os.path.join(cfg.data_dir, 'sessions')
     settings.STATIC_URL = '/'.join([cfg.server_dir,
                                     'static/']).replace('//', '/')
@@ -53,6 +53,9 @@ def init():
     logger.debug('Configured Django with applications - %s',
                  settings.INSTALLED_APPS)
 
+
+def post_init():
+    """Perform operations after completing init of other modules."""
     logger.debug('Creating or adding new tables to data file')
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=0)
@@ -62,13 +65,16 @@ def init():
     glib.schedule(24 * 3600, _cleanup_expired_sessions, in_thread=True)
 
 
-def _get_secret_key():
+def _get_secret_key(read_only=False):
     """Retrieve or create a new Django secret key."""
     secret_key_file = pathlib.Path(cfg.data_dir) / 'django-secret.key'
     if secret_key_file.exists():
         secret_key = secret_key_file.read_text()
         if len(secret_key) >= 128:
             return secret_key
+
+    if read_only:
+        return ''
 
     secret_key = _generate_secret_key()
     # File should be created with permission 0o700

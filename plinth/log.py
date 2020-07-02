@@ -11,6 +11,8 @@ import cherrypy
 
 from . import cfg
 
+default_level = None
+
 
 class ColoredFormatter(logging.Formatter):
     """Print parts of log message in color."""
@@ -105,7 +107,7 @@ def get_configuration():
         },
         'root': {
             'handlers': ['console'],
-            'level': 'DEBUG' if cfg.develop else 'INFO'
+            'level': default_level or ('DEBUG' if cfg.develop else 'INFO')
         },
         'loggers': {
             'django.db.backends': {

@@ -44,9 +44,12 @@
 */
 
 $(function() {
+    const body = document.querySelector('body');
+    const root = body.getAttribute('data-jsxc-root');
+    const domain = body.getAttribute('data-domain');
     var settings = {
         url: '/bosh/',
-        domain: plinth_settings.domainname
+        domain: domain
     };
 
     jsxc.init({
@@ -58,7 +61,7 @@ $(function() {
         },
         checkFlash: false,
         rosterAppend: 'body',
-        root: plinth_settings.jsxc_root,
+        root: root,
         otr: {
             debug: true,
             SEND_WHITESPACE_TAG: true,

@@ -5,7 +5,7 @@ Manage application shortcuts on front page.
 
 import json
 import logging
-import os
+import pathlib
 
 from plinth import app, cfg
 
@@ -129,8 +129,6 @@ class Shortcut(app.FollowerComponent):
 
 def add_custom_shortcuts():
     custom_shortcuts = get_custom_shortcuts()
-    if not custom_shortcuts:
-        return
 
     for shortcut in custom_shortcuts['shortcuts']:
         web_app_url = _extract_web_app_url(shortcut)
@@ -160,12 +158,30 @@ def _extract_web_app_url(custom_shortcut):
     return None
 
 
+def get_custom_shortcuts_paths():
+    """Return the list of custom shortcut file paths."""
+    file_paths = [
+        '/etc/freedombox/custom-shortcuts.json',
+        '/etc/plinth/custom-shortcuts.json',
+        '/var/lib/freedombox/custom-shortcuts.json',
+        '/usr/share/freedombox/custom-shortcuts.json',
+    ]
+    return cfg.expand_to_dot_d_paths(file_paths)
+
+
 def get_custom_shortcuts():
-    cfg_dir = os.path.dirname(cfg.config_file)
-    shortcuts_file = os.path.join(cfg_dir, 'custom-shortcuts.json')
-    if os.path.isfile(shortcuts_file) and os.stat(shortcuts_file).st_size:
-        logger.info('Loading custom shortcuts from %s', shortcuts_file)
-        with open(shortcuts_file) as shortcuts:
-            custom_shortcuts = json.load(shortcuts)
-            return custom_shortcuts
-    return None
+    """Return a merged dictionary of all custom shortcuts."""
+    shortcuts = {'shortcuts': []}
+    for file_path in get_custom_shortcuts_paths():
+        file_path = pathlib.Path(file_path)
+        if not file_path.is_file() or not file_path.stat().st_size:
+            continue
+
+        logger.info('Loading custom shortcuts from %s', file_path)
+        with file_path.open() as file_handle:
+            try:
+                shortcuts['shortcuts'] += json.load(file_handle)['shortcuts']
+            except (KeyError, json.JSONDecodeError):
+                logger.info('Error loading shortcuts from %s', file_path)
+
+    return shortcuts

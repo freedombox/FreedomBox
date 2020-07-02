@@ -15,6 +15,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
 from plinth import actions, views
+from plinth.errors import ActionError
 from plinth.modules import storage
 
 from . import get_error_message
@@ -92,13 +93,10 @@ def eject(request, device_path):
                        drive_model=drive['model']))
         else:
             messages.success(request, _('Device can be safely unplugged.'))
-    except Exception as exception:
-        try:
-            message = get_error_message(exception)
-        except AttributeError:
-            message = str(exception)
+    except ActionError as exception:
+        message = get_error_message(exception.args[2])
 
-        logger.exception('Error ejecting device - %s', message)
+        logger.error('Error ejecting device - %s', message)
         messages.error(
             request,
             _('Error ejecting device: {error_message}').format(

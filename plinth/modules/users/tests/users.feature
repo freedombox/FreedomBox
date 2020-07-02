@@ -51,3 +51,4 @@ Scenario Outline: Change language
   | తెలుగు          |
   | Türkçe         |
   | 简体中文       |
+  | None           |

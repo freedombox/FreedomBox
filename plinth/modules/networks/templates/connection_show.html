@@ -294,19 +294,22 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-danger">{{ connection.zone }}</span>
+              <span class="label label-warning">external</span>
             </div>
           </div>
         </div>
 
-        <div class="alert alert-danger">
-          <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+        <div class="alert alert-info">
+          <span class="fa fa-info-circle" aria-hidden="true"></span>
           {% blocktrans trimmed %}
-            This interface is not maintained by {{ box_name }}.  Its
-            security status is unknown to {{ box_name }}.  Many {{ box_name }}
-            services may not be available on this interface.  It is
-            recommended that you deactivate or delete this connection and
-            re-configure it.
+            This interface is not maintained by {{ box_name }}.  For security,
+            it is automatically assigned to the external zone.
+          {% endblocktrans %}
+          {% blocktrans trimmed %}
+            This interface should receive your Internet connection.
+            If you connect it to a local network/machine, many
+            services meant to available only internally will not be
+            available.
           {% endblocktrans %}
         </div>
       {% endif %}

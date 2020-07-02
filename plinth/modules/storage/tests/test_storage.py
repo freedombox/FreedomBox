@@ -48,7 +48,13 @@ class Disk():
         command = 'losetup --show --find {file}'.format(
             file=self.disk_file.name)
         process = subprocess.run(command.split(), stdout=subprocess.PIPE,
-                                 check=True)
+                                 stderr=subprocess.PIPE)
+        if process.returncode:
+            if b'cannot find an unused loop device' in process.stderr:
+                pytest.skip('Loopback devices not available')
+            else:
+                raise Exception(process.stderr)
+
         device = process.stdout.decode().strip()
 
         subprocess.run(['partprobe', device], check=True)

@@ -24,21 +24,12 @@
 
       <input id="restore_btn" type="submit"
              class="btn btn-primary"
-             onclick="swapWithLoadingButton();"
              value="{% trans 'Restore' %}" />
-
-      <button id="loading_btn" class="btn btn-primary sr-only" disabled>
-        <span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></span>
-        {% trans "Restoring" %}
-      </button>
-
     </form>
   </p>
 
 {% endblock %}
 
 {% block page_js %}
-  <script type="text/javascript"
-          src="{% static 'backups/loading_button.js' %}"></script>
   <script type="text/javascript" src="{% static 'backups/select_all.js' %}"></script>
 {% endblock %}

@@ -11,10 +11,12 @@ import re
 import subprocess
 import sys
 
+from plinth.action_utils import run_apt_command
 from plinth.modules.apache.components import check_url
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
+DPKG_LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades-dpkg.log'
 BUSTER_BACKPORTS_RELEASE_FILE_URL = \
     'https://deb.debian.org/debian/dists/buster-backports/Release'
 
@@ -82,6 +84,8 @@ def parse_arguments():
 
 def subcommand_run(_):
     """Run unattended-upgrades"""
+    subprocess.run(['dpkg', '--configure', '-a'])
+    run_apt_command(['--fix-broken', 'install'])
     try:
         subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
@@ -132,7 +136,15 @@ def subcommand_disable_auto(_):
 def subcommand_get_log(_):
     """Print the automatic upgrades log."""
     try:
+        print('==> ' + os.path.basename(LOG_FILE))
         with open(LOG_FILE, 'r') as file_handle:
+            print(file_handle.read())
+    except IOError:
+        pass
+
+    try:
+        print('==> ' + os.path.basename(DPKG_LOG_FILE))
+        with open(DPKG_LOG_FILE, 'r') as file_handle:
             print(file_handle.read())
     except IOError:
         pass
@@ -197,6 +209,12 @@ def _check_and_backports_sources():
     if not any(matches):
         print('System is running a derivative of Debian. Skip enabling '
               'backports.')
+        return
+
+    release = subprocess.check_output(['lsb_release', '--release',
+                                       '--short']).decode().strip()
+    if release in ['testing', 'unstable']:
+        print(f'System release is {release}. Skip enabling backports.')
         return
 
     protocol = _get_protocol()

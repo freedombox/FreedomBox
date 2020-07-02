@@ -6,7 +6,7 @@ Handle disk operations using UDisk2 DBus API.
 import logging
 import threading
 
-from plinth import actions
+from plinth import actions, cfg
 from plinth.errors import ActionError
 from plinth.utils import import_from_gi
 
@@ -21,6 +21,7 @@ _INTERFACES = {
     'Drive': 'org.freedesktop.UDisks2.Drive',
     'Filesystem': 'org.freedesktop.UDisks2.Filesystem',
     'Job': 'org.freedesktop.UDisks2.Job',
+    'Loop': 'org.freedesktop.UDisks2.Loop',
     'Manager': 'org.freedesktop.UDisks2.Manager',
     'ObjectManager': 'org.freedesktop.DBus.ObjectManager',
     'Partition': 'org.freedesktop.UDisks2.Partition',
@@ -73,13 +74,16 @@ class Proxy:
         if value is None:
             return value
 
+        if signature.startswith('a('):
+            return value
+
         if signature == 'ay':
             return bytes(value)[:-1].decode()
 
         if signature == 'aay':
             return [bytes(value_item).decode()[:-1] for value_item in value]
 
-        if signature in ('s', 'b', 'o', 'u'):
+        if signature in ('s', 'b', 'o', 'u', 't'):
             return glib.Variant.unpack(value)
 
         raise ValueError('Unhandled type')
@@ -95,12 +99,17 @@ class BlockDevice(Proxy):
     """Abstraction for UDisks2 Block device."""
     interface = _INTERFACES['Block']
     properties = {
+        'configuration': ('a(sa{sv})', 'Configuration'),
         'crypto_backing_device': ('o', 'CryptoBackingDevice'),
         'device': ('ay', 'Device'),
         'hint_ignore': ('b', 'HintIgnore'),
         'hint_system': ('b', 'HintSystem'),
         'id': ('s', 'Id'),
+        'id_label': ('s', 'IdLabel'),
+        'id_type': ('s', 'IdType'),
+        'id_usage': ('s', 'IdUsage'),
         'preferred_device': ('ay', 'PreferredDevice'),
+        'size': ('t', 'Size'),
         'symlinks': ('aay', 'Symlinks'),
     }
 
@@ -110,6 +119,7 @@ class Partition(Proxy):
     interface = _INTERFACES['Partition']
     properties = {
         'number': ('u', 'Number'),
+        'table': ('o', 'Table'),
     }
 
 
@@ -117,6 +127,56 @@ class Filesystem(Proxy):
     """Abstraction for UDisks2 Filesystem."""
     interface = _INTERFACES['Filesystem']
     properties = {'mount_points': ('aay', 'MountPoints')}
+
+
+class Loop(Proxy):
+    """Abstraction for UDisks2 Loop."""
+    interface = _INTERFACES['Loop']
+    properties = {'backing_file': ('ay', 'BackingFile')}
+
+
+def _is_removable(object_path):
+    """Return True if the device is not part of fstab or crypttab."""
+    block = BlockDevice(object_path)
+    for type_, _details in block.configuration:
+        if type_ in ('fstab', 'crypttab'):
+            return False
+
+    return True
+
+
+def get_disks():
+    """List devices that can be ejected."""
+    devices = []
+
+    manager = _get_dbus_proxy(_OBJECTS['UDisks2'],
+                              _INTERFACES['ObjectManager'])
+    objects = manager.GetManagedObjects()
+    for object_, interface_and_properties in objects.items():
+        if _INTERFACES['Block'] not in interface_and_properties:
+            continue
+
+        block = BlockDevice(object_)
+        if block.id_usage != 'filesystem':
+            continue
+
+        device = {
+            'device': block.device,
+            'label': block.id_label,
+            'size': block.size,
+            'filesystem_type': block.id_type,
+            'is_removable': _is_removable(object_),
+            'mount_points': [],
+        }
+        try:
+            file_system = Filesystem(object_)
+            device['mount_points'] = file_system.mount_points
+        except Exception:
+            continue
+
+        devices.append(device)
+
+    return devices
 
 
 def _mount(object_path):
@@ -188,6 +248,19 @@ def _on_filesystem_added(object_path, _interfaces):
     threading.Thread(target=_consider_for_mounting, args=[object_path]).start()
 
 
+def _is_loop_device(object_path):
+    """Return if the block device is a loop device backed by a file."""
+    loop = Loop(object_path)
+    if loop.backing_file:
+        return True
+
+    partition_table = Partition(object_path).table
+    if partition_table:
+        return _is_loop_device(partition_table)
+
+    return False
+
+
 def _consider_for_mounting(object_path):
     """Check if the block device needs mounting and mount it."""
     block_device = BlockDevice(object_path)
@@ -216,13 +289,9 @@ def _consider_for_mounting(object_path):
                         block_device.id, block_device.preferred_device)
             return
 
-    # Ignore non-external devices that don't have partition table (top-level
-    # filesystem). If the device is backed by a crypto device, still handle it.
-    # XXX: This rule is from udiskie. Should we keep it?
-    partition = Partition(object_path)
-    if block_device.hint_system and not partition.number and \
-       block_device.crypto_backing_device == '/':
-        logger.info('Ignoring auto-mount of top-level internal device: %s %s',
+    # Ignore loopback devices except in development mode.
+    if _is_loop_device(object_path) and not cfg.develop:
+        logger.info('Ignoring loop device in production mode: %s %s',
                     block_device.id, block_device.preferred_device)
         return
 

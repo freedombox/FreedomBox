@@ -23,7 +23,8 @@ def common(request):
     ugettext_noop('FreedomBox')
 
     from plinth.notification import Notification
-    notifications_context = Notification.get_display_context(user=request.user)
+    notifications_context = Notification.get_display_context(
+        request, user=request.user)
 
     slash_indices = [match.start() for match in re.finditer('/', request.path)]
     active_menu_urls = [request.path[:index + 1] for index in slash_indices]

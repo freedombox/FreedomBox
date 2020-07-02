@@ -1858,6 +1858,7 @@ proto udp]]></screen>
           <screen><![CDATA[$ sudo apt install openvpn]]></screen>
           <para>Abre el archivo ovpn con el cliente OpenVPN. </para>
           <screen><![CDATA[$ sudo openvpn --config /ruta/a/<usuario>.ovpn]]></screen>
+          <para>Si te sale un error como <code>configuration error: invalid 1th argument to “proto” (line 5)</code> edita el fichero .ovpn y elimina la línea <code>proto udp6</code>. </para>
         </section>
       </section>
       <section>
@@ -10261,6 +10262,67 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>FreedomBox 20.12 (2020-06-29)</title>
+        <section>
+          <title>Highlights</title>
+          <itemizedlist>
+            <listitem>
+              <para>apt: Recover from errors before installing apps or updating system </para>
+            </listitem>
+            <listitem>
+              <para>apache: Add strict content security policy, sandbox and other security headers </para>
+            </listitem>
+            <listitem>
+              <para>storage: Allow ejecting SATA disks </para>
+            </listitem>
+            <listitem>
+              <para>configuration: Allow changes using .d drop-in files </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Other Changes</title>
+          <itemizedlist>
+            <listitem>
+              <para>configuration: Move default configuration into source code </para>
+            </listitem>
+            <listitem>
+              <para>configuration: Read from multiple locations in /etc/ and /usr/share/ </para>
+            </listitem>
+            <listitem>
+              <para>debian: Add ssl-cert and nscd as proper dependencies </para>
+            </listitem>
+            <listitem>
+              <para>frontpage: Allow adding shotcuts using .d drop-in files </para>
+            </listitem>
+            <listitem>
+              <para>frontpage: Read shortcuts from multiple locations in /etc/, /usr/share and /var/lib </para>
+            </listitem>
+            <listitem>
+              <para>locale: Update translations for Czech, Danish, French, German, Russian, Spanish, Swedish, Telugu, Turkish </para>
+            </listitem>
+            <listitem>
+              <para>storage: Automount system disks without partition table but ignore all loopback devices </para>
+            </listitem>
+            <listitem>
+              <para>storage: Allow ejecting SATA disks </para>
+            </listitem>
+            <listitem>
+              <para>storage: Show only physical disks and not all mount points </para>
+            </listitem>
+            <listitem>
+              <para>upgrades: Skip enabling backports on testing and unstable </para>
+            </listitem>
+            <listitem>
+              <para>upgrades: Show more logs </para>
+            </listitem>
+            <listitem>
+              <para>ui: Show a spinner and disable button on form submit </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
       <section>
         <title>FreedomBox 20.11 (2020-06-15)</title>
         <section>

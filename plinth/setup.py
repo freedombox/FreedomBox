@@ -3,6 +3,7 @@
 Utilities for performing application setup operations.
 """
 
+import importlib
 import logging
 import os
 import threading
@@ -207,7 +208,9 @@ def setup_modules(module_list=None, essential=False, allow_install=True):
 
 def list_dependencies(module_list=None, essential=False):
     """Print list of packages required by selected or essential modules."""
-    for module_name, module in plinth.module_loader.loaded_modules.items():
+    for module_import_path in plinth.module_loader.get_modules_to_load():
+        module_name = module_import_path.split('.')[-1]
+        module = importlib.import_module(module_import_path)
         if essential and not _is_module_essential(module):
             continue
 

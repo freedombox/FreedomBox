@@ -46,6 +46,7 @@ def index(request):
             'has_diagnostics': True,
             'is_enabled': status['enabled'],
             'is_running': status['is_running'],
+            'refresh_page_sec': 3 if bool(config_process) else None,
         })
 
 

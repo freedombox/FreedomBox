@@ -4,7 +4,7 @@ FreedomBox app for upgrades.
 """
 
 from django.contrib import messages
-from django.template.response import TemplateResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 
@@ -25,6 +25,13 @@ class UpgradesConfigurationView(AppView):
 
     def get_initial(self):
         return {'auto_upgrades_enabled': upgrades.is_enabled()}
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['is_busy'] = package.is_package_manager_busy()
+        context['log'] = get_log()
+        context['refresh_page_sec'] = 3 if context['is_busy'] else None
+        return context
 
     def form_valid(self, form):
         """Apply the form changes."""
@@ -62,18 +69,11 @@ def get_log():
 
 def upgrade(request):
     """Serve the upgrade page."""
-    is_busy = package.is_package_manager_busy()
-
     if request.method == 'POST':
         try:
             actions.superuser_run('upgrades', ['run'])
             messages.success(request, _('Upgrade process started.'))
-            is_busy = True
         except ActionError:
             messages.error(request, _('Starting upgrade failed.'))
 
-    return TemplateResponse(request, 'upgrades.html', {
-        'title': _('Manual update'),
-        'is_busy': is_busy,
-        'log': get_log()
-    })
+    return redirect(reverse_lazy('upgrades:index'))

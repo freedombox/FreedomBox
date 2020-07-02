@@ -8,7 +8,7 @@ export PYBUILD_DESTDIR=debian/tmp
 
 override_dh_auto_install-indep:
 	dh_auto_install
-	./run --list-dependencies 2> /dev/null | sort | tr '\n' ', ' | \
+	./run --develop --list-dependencies | sort | tr '\n' ', ' | \
 		sed -e 's/^/freedombox:Depends=/' >> debian/freedombox.substvars
 
 override_dh_auto_test:

@@ -38,6 +38,8 @@ class OpenVPNAppView(AppView):
             'is_setup': openvpn.is_setup(),
             'setup_running': bool(openvpn.setup_process),
         }
+        context['refresh_page_sec'] = 3 if context['status'][
+            'setup_running'] else None
         return context
 
 

@@ -58,5 +58,6 @@ def _get_number_of_ed2k_files(browser):
             '//tr//td[contains(text(), "Transfers")]').click()
 
     with browser.get_iframe('output') as output_frame:
+        functional.eventually(output_frame.find_by_css, ['.downloaded'])
         return len(output_frame.find_by_css('.dl-1')) + len(
             output_frame.find_by_css('.dl-2'))
