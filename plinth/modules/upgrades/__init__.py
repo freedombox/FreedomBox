@@ -3,6 +3,7 @@
 FreedomBox app for upgrades.
 """
 
+import os
 import subprocess
 
 from django.utils.translation import ugettext_lazy as _
@@ -31,6 +32,8 @@ _description = [
 ]
 
 app = None
+
+SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
 
 
 class UpgradesApp(app_module.App):
@@ -135,22 +138,14 @@ def setup_repositories(data):
     actions.superuser_run('upgrades', ['setup-repositories'])
 
 
-def get_backports_in_use():
-    """Return whether backports packages are installed."""
-    # Only freedombox package is set to be installed from backports currently.
-    output = subprocess.check_output(['apt-cache', 'policy', 'freedombox'])
-    for line in output.decode().split('\n'):
-        if 'Installed:' in line:
-            version = line.strip().split(': ')[1]
-            if 'bpo' in version:
-                return True
-
-    return False
+def is_backports_enabled():
+    """Return whether backports are enabled."""
+    return os.path.exists(SOURCES_LIST)
 
 
 def can_activate_backports():
     """Return whether backports can be activated."""
-    if get_backports_in_use():
+    if is_backports_enabled():
         return False
 
     release = subprocess.check_output(['lsb_release', '--release',
