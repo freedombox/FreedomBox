@@ -13,7 +13,7 @@ import sys
 
 from plinth.action_utils import run_apt_command
 from plinth.modules.apache.components import check_url
-from plinth.modules.upgrades import is_backports_enabled, SOURCES_LIST
+from plinth.modules.upgrades import is_backports_current, SOURCES_LIST
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
@@ -193,7 +193,7 @@ def _check_and_backports_sources():
     if os.path.exists(old_sources_list):
         os.remove(old_sources_list)
 
-    if is_backports_enabled():
+    if is_backports_current():
         print('Repositories list up-to-date. Skipping update.')
         return
 

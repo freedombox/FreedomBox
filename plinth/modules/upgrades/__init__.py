@@ -3,6 +3,7 @@
 FreedomBox app for upgrades.
 """
 
+from aptsources import sourceslist
 import os
 import subprocess
 
@@ -143,9 +144,24 @@ def is_backports_enabled():
     return os.path.exists(SOURCES_LIST)
 
 
+def is_backports_current():
+    """Return whether backports are enabled for the current release."""
+    if not is_backports_enabled:
+        return False
+
+    dist = subprocess.check_output(['lsb_release', '--codename', '--short'
+                                    ]).decode().strip() + '-backports'
+    sources = sourceslist.SourcesList()
+    for source in sources:
+        if source.dist == dist:
+            return True
+
+    return False
+
+
 def can_activate_backports():
     """Return whether backports can be activated."""
-    if is_backports_enabled():
+    if is_backports_current():
         return False
 
     release = subprocess.check_output(['lsb_release', '--release',
