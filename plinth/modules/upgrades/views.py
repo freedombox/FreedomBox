@@ -3,6 +3,8 @@
 FreedomBox app for upgrades.
 """
 
+import subprocess
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -29,6 +31,8 @@ class UpgradesConfigurationView(AppView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['can_activate_backports'] = upgrades.can_activate_backports()
+        context['dist'] = subprocess.check_output(
+            ['lsb_release', '--codename', '--short']).decode().strip()
         context['is_busy'] = package.is_package_manager_busy()
         context['log'] = get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
