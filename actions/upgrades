@@ -13,7 +13,8 @@ import sys
 
 from plinth.action_utils import run_apt_command
 from plinth.modules.apache.components import check_url
-from plinth.modules.upgrades import is_backports_current, SOURCES_LIST
+from plinth.modules.upgrades import (get_current_release, is_backports_current,
+                                     SOURCES_LIST)
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
@@ -218,8 +219,7 @@ def _check_and_backports_sources(develop=False):
               'backports.')
         return
 
-    release = subprocess.check_output(['lsb_release', '--release',
-                                       '--short']).decode().strip()
+    release, dist = get_current_release()
     if release == 'unstable' or (release == 'testing' and not develop):
         print(f'System release is {release}. Skip enabling backports.')
         return
@@ -228,8 +228,6 @@ def _check_and_backports_sources(develop=False):
     if protocol == 'tor+http':
         print('Package download over Tor is enabled.')
 
-    dist = subprocess.check_output(['lsb_release', '--codename',
-                                    '--short']).decode().strip()
     if not _is_release_file_available(protocol, dist):
         print(f'Release file for {dist}-backports is not available yet.')
         return
@@ -251,8 +249,7 @@ def _add_apt_preferences():
     # Don't try to remove 50freedombox3.pref as this file is shipped with the
     # Debian package and is removed using maintainer scripts.
 
-    dist = subprocess.check_output(['lsb_release', '--codename',
-                                    '--short']).decode().strip()
+    _, dist = get_current_release()
     if dist == 'sid':
         print(f'System distribution is {dist}. Skip setting apt preferences '
               'for backports.')

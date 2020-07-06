@@ -148,13 +148,22 @@ def is_backports_enabled():
     return os.path.exists(SOURCES_LIST)
 
 
+def get_current_release():
+    """Return current release and codename as a tuple."""
+    output = subprocess.check_output(
+        ['lsb_release', '--release', '--codename',
+         '--short']).decode().strip()
+    lines = output.split('\n')
+    return lines[0], lines[1]
+
+
 def is_backports_current():
     """Return whether backports are enabled for the current release."""
     if not is_backports_enabled:
         return False
 
-    dist = subprocess.check_output(['lsb_release', '--codename', '--short'
-                                    ]).decode().strip() + '-backports'
+    _, dist = get_current_release()
+    dist += '-backports'
     sources = sourceslist.SourcesList()
     for source in sources:
         if source.dist == dist:
@@ -168,8 +177,7 @@ def can_activate_backports():
     if is_backports_current():
         return False
 
-    release = subprocess.check_output(['lsb_release', '--release',
-                                       '--short']).decode().strip()
+    release, _ = get_current_release()
     if release == 'unstable' or (release == 'testing' and not cfg.develop):
         return False
 
