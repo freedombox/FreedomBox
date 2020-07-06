@@ -230,6 +230,8 @@ def _check_and_backports_sources():
 
     print(f'{dist}-backports is now available. Adding to sources.')
     _add_backports_sources(SOURCES_LIST, protocol, dist)
+    # In case of dist upgrade, rewrite the preferences file.
+    _add_apt_preferences()
 
 
 def _add_apt_preferences():
