@@ -21,15 +21,17 @@ DPKG_LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades-dpkg.log'
 BACKPORTS_RELEASE_FILE_URL = \
     'https://deb.debian.org/debian/dists/{}-backports/Release'
 
-# Whenever these preferences needs to change, increment the version number
-# upgrades app. This ensures that setup is run again and the new contents are
-# overwritten on the old file.
-APT_PREFERENCES = '''Explanation: This file is managed by FreedomBox, do not edit.
+APT_PREFERENCES_FREEDOMBOX = '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: Allow carefully selected updates to 'freedombox' from backports.
 Package: freedombox
 Pin: release a={}-backports
 Pin-Priority: 500
+'''
 
+# Whenever these preferences needs to change, increment the version number
+# upgrades app. This ensures that setup is run again and the new contents are
+# overwritten on the old file.
+APT_PREFERENCES_APPS = '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: matrix-synapse 0.99.5 introduces room version 4. Older version
 Explanation: 0.99.2 in buster won't be able join newly created rooms.
 Package: matrix-synapse
@@ -255,9 +257,11 @@ def _add_apt_preferences():
         print(f'System distribution is {dist}. Skip setting apt preferences '
               'for backports.')
     else:
-        print('Setting apt preferences for backports.')
+        print(f'Setting apt preferences for {dist}-backports.')
         with open(base_path / '50freedombox4.pref', 'w') as file_handle:
-            file_handle.write(APT_PREFERENCES.format(dist))
+            file_handle.write(APT_PREFERENCES_FREEDOMBOX.format(dist))
+        with open(base_path / '51freedombox-apps.pref', 'w') as file_handle:
+            file_handle.write(APT_PREFERENCES_APPS)
 
 
 def subcommand_setup(_):

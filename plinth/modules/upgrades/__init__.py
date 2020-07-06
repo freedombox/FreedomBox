@@ -17,7 +17,7 @@ from plinth import cfg, glib, menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 4
 
 is_essential = True
 
