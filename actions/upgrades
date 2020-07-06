@@ -76,8 +76,12 @@ def parse_arguments():
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
 
     subparsers.add_parser('setup', help='Setup apt preferences')
-    subparsers.add_parser('setup-repositories',
-                          help='Setup software repositories for FreedomBox')
+    setup_repositories = subparsers.add_parser(
+        'setup-repositories',
+        help='Setup software repositories for FreedomBox')
+    setup_repositories.add_argument('--develop', required=False, default=False,
+                                    action='store_true',
+                                    help='Development mode')
 
     subparsers.required = True
     return parser.parse_args()
@@ -187,7 +191,7 @@ deb-src {protocol}://deb.debian.org/debian {dist}-backports main
         file_handle.write(sources)
 
 
-def _check_and_backports_sources():
+def _check_and_backports_sources(develop=False):
     """Add backports sources after checking if it is available."""
     old_sources_list = '/etc/apt/sources.list.d/freedombox.list'
     if os.path.exists(old_sources_list):
@@ -214,7 +218,7 @@ def _check_and_backports_sources():
 
     release = subprocess.check_output(['lsb_release', '--release',
                                        '--short']).decode().strip()
-    if release in ['testing', 'unstable']:
+    if release == 'unstable' or (release == 'testing' and not develop):
         print(f'System release is {release}. Skip enabling backports.')
         return
 
@@ -261,14 +265,14 @@ def subcommand_setup(_):
     _add_apt_preferences()
 
 
-def subcommand_setup_repositories(_):
+def subcommand_setup_repositories(arguments):
     """Setup software repositories needed for FreedomBox.
 
     Repositories list for now only contains the backports. If the file exists,
     assume that it contains backports.
 
     """
-    _check_and_backports_sources()
+    _check_and_backports_sources(arguments.develop)
 
 
 def main():

@@ -136,7 +136,11 @@ def disable():
 
 def setup_repositories(data):
     """Setup apt backport repositories."""
-    actions.superuser_run('upgrades', ['setup-repositories'])
+    command = ['setup-repositories']
+    if cfg.develop:
+        command += ['--develop']
+
+    actions.superuser_run('upgrades', command)
 
 
 def is_backports_enabled():
@@ -166,7 +170,7 @@ def can_activate_backports():
 
     release = subprocess.check_output(['lsb_release', '--release',
                                        '--short']).decode().strip()
-    if release in ['testing', 'unstable']:
+    if release == 'unstable' or (release == 'testing' and not cfg.develop):
         return False
 
     return True
