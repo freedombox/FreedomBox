@@ -174,14 +174,15 @@ def get_custom_shortcuts():
     shortcuts = {'shortcuts': []}
     for file_path in get_custom_shortcuts_paths():
         file_path = pathlib.Path(file_path)
-        if not file_path.is_file() or not file_path.stat().st_size:
-            continue
+        try:
+            if not file_path.is_file() or not file_path.stat().st_size:
+                continue
 
-        logger.info('Loading custom shortcuts from %s', file_path)
-        with file_path.open() as file_handle:
-            try:
+            logger.info('Loading custom shortcuts from %s', file_path)
+            with file_path.open() as file_handle:
                 shortcuts['shortcuts'] += json.load(file_handle)['shortcuts']
-            except (KeyError, json.JSONDecodeError):
-                logger.info('Error loading shortcuts from %s', file_path)
+        except Exception as exception:
+            logger.warning('Error loading shortcuts from %s: %s', file_path,
+                           exception)
 
     return shortcuts

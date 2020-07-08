@@ -57,8 +57,12 @@ def expand_to_dot_d_paths(file_paths):
         final_list.append(str(file_path))
         path = pathlib.Path(file_path)
         path_d = path.with_suffix(path.suffix + '.d')
-        for dot_d_file in sorted(path_d.glob('*' + path.suffix)):
-            final_list.append(str(dot_d_file))
+        try:
+            for dot_d_file in sorted(path_d.glob('*' + path.suffix)):
+                final_list.append(str(dot_d_file))
+        except Exception as exception:
+            logger.warning('Unable to read from directory %s: %s', path_d,
+                           exception)
 
     return final_list
 
@@ -89,7 +93,7 @@ def read():
 
 def read_file(config_path):
     """Read and merge into defaults a single configuration file."""
-    if not os.path.isfile(config_path):
+    if not os.path.isfile(config_path):  # Does not throw exceptions
         # Ignore missing configuration files
         return
 
@@ -103,7 +107,7 @@ def read_file(config_path):
             'parent_parent_dir':
                 pathlib.Path(config_path).parent.parent.resolve(),
         })
-    parser.read(config_path)
+    parser.read(config_path)  # Ignores all read errors
 
     config_items = (
         ('Path', 'file_root', 'string'),
