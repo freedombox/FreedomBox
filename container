@@ -112,17 +112,22 @@ in /run/systemd/nspawn. All machinectl commands should work.
 """
 
 import argparse
+import datetime
 import ipaddress
 import itertools
 import json
 import logging
 import os
 import pathlib
+import re
 import subprocess
 import sys
 import tempfile
 import time
 import urllib.parse
+
+from dateutil.parser import parse
+from urllib.request import urlopen
 
 URLS = {
     'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
@@ -199,6 +204,13 @@ def parse_arguments():
                            default='testing',
                            help='Distribution of the image to delete')
 
+    # Update
+    subparser = subparsers.add_parser(
+        'update', help='Update the container image to the latest version')
+    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+                           default='testing',
+                           help='Distribution of the image to update')
+
     return parser.parse_args()
 
 
@@ -269,10 +281,13 @@ def _get_systemd_nspawn_version():
     systemd_version = float(process.stdout.decode().split()[1])
 
 
-def _download_file(url, target_file):
+def _download_file(url, target_file, force=False):
     """Download a file from remote URL."""
-    if target_file.exists():
+    if target_file.exists() and not force:
         return
+
+    if force:
+        os.remove(target_file)
 
     partial_file = target_file.with_suffix(target_file.suffix + '.partial')
 
@@ -362,17 +377,17 @@ def _get_overlay_folder(distribution):
     return folder.resolve()
 
 
-def _download_disk_image(distribution):
+def _download_disk_image(distribution, force=False):
     """Download and unpack FreedomBox disk image."""
     work_directory.mkdir(exist_ok=True)
 
     url = URLS[distribution]
 
     target_file = _get_compressed_image_path(distribution)
-    _download_file(url, target_file)
+    _download_file(url, target_file, force=force)
 
     signature_file = target_file.with_suffix(target_file.suffix + '.sig')
-    _download_file(url + '.sig', signature_file)
+    _download_file(url + '.sig', signature_file, force=force)
 
     _verify_signature(target_file, signature_file)
 
@@ -761,6 +776,24 @@ def _wait_for(method):
     sys.exit(1)
 
 
+def _get_latest_image_timestamp(distribution):
+    """Get the timestamp of the latest available image."""
+    url = URLS[distribution]
+    response = urlopen(url[0:url.rindex('/')])
+    page_contents = response.read().decode()
+    str_time = re.findall(r'\d{2}-[A-Z][a-z]{2}-\d{4}', page_contents)[0]
+    return parse(str_time).timestamp()
+
+
+def _is_update_required(distribution):
+    """Compare local image timestamp against the latest image timestamp."""
+    filename = URLS[distribution].split('/')[-1]
+    local_image_timestamp = os.path.getmtime(work_directory / filename)
+    one_day = datetime.timedelta(days=1).total_seconds()
+    latest_image_timestamp = _get_latest_image_timestamp(distribution)
+    return latest_image_timestamp - local_image_timestamp > one_day
+
+
 def subcommand_up(arguments):
     """Download, setup and bring up the container."""
     machine_name = f'fbx-{arguments.distribution}'
@@ -795,6 +828,15 @@ def subcommand_destroy(arguments):
     """Destroy the disk image."""
     _terminate(arguments.distribution)
     _destroy(arguments.distribution)
+
+
+def subcommand_update(arguments):
+    """Update the disk image."""
+    if _is_update_required(arguments.distribution):
+        logger.info("Updating...")
+        _download_disk_image(arguments.distribution, force=True)
+    else:
+        logger.info("Already using the latest image")
 
 
 def main():
