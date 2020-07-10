@@ -95,7 +95,7 @@ def repository_validator(path):
     hostname = hostname.split('%')[0]
 
     # Validate username using Unix username regex
-    if not re.match(r'[a-z_][a-z0-9_-]*$', username):
+    if not re.match(r'[a-z0-9_][a-z0-9_-]*$', username):
         raise ValidationError(_(f'Invalid username: {username}'))
 
     # The hostname should either be a valid IP address or hostname
