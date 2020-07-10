@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-29 15:43-0700\n"
-"PO-Revision-Date: 2020-05-29 18:41+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2020-07-11 15:41+0000\n"
+"Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -158,10 +158,8 @@ msgid "Name"
 msgstr "Név"
 
 #: plinth/modules/backups/forms.py:53
-#, fuzzy
-#| msgid "Name for new backup archive."
 msgid "(Optional) Set a name for this backup archive"
-msgstr "Az új biztonsági másolat neve."
+msgstr "(Opcionális) Név beállítása ehhez a biztonsági másolathoz"
 
 #: plinth/modules/backups/forms.py:56
 msgid "Included apps"
@@ -403,32 +401,26 @@ msgid "Submit"
 msgstr "Küldés"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
-#, fuzzy
-#| msgid "Existing repository is not encrypted."
 msgid "This repository is encrypted"
-msgstr "A meglévő tároló nem titkosított."
+msgstr "Ez a tároló titkosított"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
-#, fuzzy
-#| msgid "Remove Location"
 msgid "Unmount Location"
-msgstr "Hely eltávolítása"
+msgstr "Hely lecsatolása"
 
 #: plinth/modules/backups/templates/backups_repository.html:45
-#, fuzzy
-#| msgid "Mount Point"
 msgid "Mount Location"
-msgstr "Csatolási pont"
+msgstr "Hely felcsatolása"
 
 #: plinth/modules/backups/templates/backups_repository.html:56
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
+"Biztonsági mentési hely eltávolítása. Ez nem fogja kitörölni a távoli "
+"biztonsági másolatot."
 
 #: plinth/modules/backups/templates/backups_repository.html:77
-#, fuzzy
-#| msgid "downloading"
 msgid "Download"
-msgstr "letöltés"
+msgstr "Letöltés"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:27
@@ -670,10 +662,8 @@ msgid "Enable Domain Name System Security Extensions"
 msgstr "Domain Name System Security Extensions engedélyezése"
 
 #: plinth/modules/bind/templates/bind.html:11
-#, fuzzy
-#| msgid "Server domain"
 msgid "Serving Domains"
-msgstr "Kiszolgáló domain"
+msgstr "Kiszolgált tartományok"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
@@ -683,27 +673,21 @@ msgid "Type"
 msgstr "Típus"
 
 #: plinth/modules/bind/templates/bind.html:17
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain Names"
-msgstr "Domain név"
+msgstr "Tartománynevek"
 
 #: plinth/modules/bind/templates/bind.html:18
-#, fuzzy
-#| msgid "Service"
 msgid "Serving"
-msgstr "Szolgáltatás"
+msgstr "Kiszolgálás"
 
 #: plinth/modules/bind/templates/bind.html:19
-#, fuzzy
-#| msgid "IP address"
 msgid "IP addresses"
-msgstr "IP cím"
+msgstr "IP címek"
 
 #: plinth/modules/bind/templates/bind.html:35
 #: plinth/modules/bind/templates/bind.html:37
 msgid "Refresh IP address and domains"
-msgstr ""
+msgstr "IP címek és tartományok frissítése"
 
 #: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
@@ -733,6 +717,10 @@ msgid ""
 "firewall ports and advanced networking such as bonding, bridging and VLAN "
 "management."
 msgstr ""
+"A Cockpit fejlett tárolási műveletek elvégzésére használható, úgy mint lemez "
+"particionálás és RAID kezelés. Továbbá felhasználható egyedi tűzfalportok "
+"nyitására és olyan fejlett hálózati funkciókhoz mint az aggregált "
+"interfészek, hidalás és VLAN kezelés."
 
 #: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
@@ -995,42 +983,49 @@ msgid ""
 "other communication servers can use it to establish a call between parties "
 "who are otherwise unable connect to each other."
 msgstr ""
+"A Coturn egy olyan kiszolgáló, amely elősegíti a hang/videohívásokat és "
+"konferenciákat a TURN és STUN protokollok megvalósításával. A WebRTC, SIP és "
+"egyéb kommunikációs kiszolgálók arra tudják használni, hogy hívást tudjanak "
+"felépíteni olyan felek között, akik egyébként nem tudnak csatlakozni "
+"egymáshoz."
 
 #: plinth/modules/coturn/__init__.py:35
 msgid ""
 "It is not meant to be used directly by users. Servers such as matrix-synapse "
 "need to be configured with the details provided here."
 msgstr ""
+"Ezt nem a felhasználók általi közvetlen használatra szánták. Az olyan "
+"kiszolgálók, mint a matrix-synapse, az itt megadott részletekkel kell "
+"konfigurálni."
 
 #: plinth/modules/coturn/__init__.py:64
 msgid "Coturn"
-msgstr ""
+msgstr "Coturn"
 
 #: plinth/modules/coturn/__init__.py:65
 msgid "VoIP Helper"
-msgstr ""
+msgstr "VoIP Segéd"
 
 #: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
-#, fuzzy
-#| msgid "Subdomain"
 msgid "TLS domain"
-msgstr "Aldomain"
+msgstr "TLS tartomány"
 
 #: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
 msgstr ""
+"Válasszon ki egy tartományt, amelyhez a TLS-t használni szeretné. Ha ez a "
+"lista üres, konfiguráljon legalább egy tanúsítványt is tartalmazó tartományt."
 
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr ""
+"A kommunikációs kiszolgáló konfigurálásához használja az alábbi URL-címeket:"
 
 #: plinth/modules/coturn/templates/coturn.html:26
-#, fuzzy
-#| msgid "The following storage devices are in use:"
 msgid "Use the following shared authentication secret:"
-msgstr "A következő tárolóeszközök vannak használatban:"
+msgstr "Használja az alábbi megosztott hitelesítési titkos kulcsot:"
 
 #: plinth/modules/datetime/__init__.py:25
 msgid ""
@@ -1701,13 +1696,15 @@ msgstr ""
 #: plinth/modules/networks/templates/networks_configuration.html:49
 #: plinth/modules/storage/templates/storage.html:94
 msgid "Advanced"
-msgstr ""
+msgstr "Fejlett"
 
 #: plinth/modules/firewall/templates/firewall.html:98
 msgid ""
 "Advanced firewall operations such as opening custom ports are provided by "
 "the <a href=\"/_cockpit/network/firewall\">Cockpit</a> app."
 msgstr ""
+"Fejlett tűzfal műveleteket, mint például egyedi portok megnyitását a <a href="
+"\"/_cockpit/network/firewall\">Cockpit</a> alkalmazás biztosítja."
 
 #: plinth/modules/first_boot/forms.py:14
 #, python-brace-format
@@ -1863,8 +1860,6 @@ msgid "Delete repository %(repo.name)s"
 msgstr "%(repo.name)s tároló törlése"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:68
-#, fuzzy
-#| msgid "Cloning..."
 msgid "Cloning…"
 msgstr "Klónozás…"
 
@@ -2079,6 +2074,13 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
+"A projektet pénzügyileg is segítheti, ha a FreedomBox Foundation-nak <a href="
+"\"https://freedomboxfoundation.org/donate/\">adományoz</a>. A 2011-ben "
+"alapított FreedomBox Foundation egy New York-i székhelyű, 501(c)(3) státuszú "
+"non-profit szervezet, amely a FreedomBox támogatására szolgál. Technikai "
+"infrastruktúrát és jogi szolgáltatásokat nyújt a projekthez, partnerségeket "
+"köt, és támogatja a FreedomBox-ot az egész világon. A FreedomBox Foundation "
+"nem létezhetne a támogatói nélkül."
 
 #: plinth/modules/help/templates/help_contribute.html:42
 #: plinth/modules/power/templates/power_restart.html:27
@@ -2090,7 +2092,7 @@ msgstr "Bővebben..."
 #: plinth/modules/help/templates/help_feedback.html:12
 #, python-format
 msgid "Your feedback will help us improve %(box_name)s!"
-msgstr ""
+msgstr "A visszajelzése elősegíti a %(box_name)s továbbfejlesztését!"
 
 #: plinth/modules/help/templates/help_feedback.html:18
 msgid ""
@@ -2098,6 +2100,9 @@ msgid ""
 "improve them on our <a href=\"https://discuss.freedombox.org\" target="
 "\"_blank\"> discussion forum</a>."
 msgstr ""
+"Tudassa velünk a hiányzó funkciókat, a kedvenc alkalmazásait, és azt hogy "
+"hogyan fejleszthetnénk őket a <a href=\"https://discuss.freedombox.org\" "
+"target=\"_blank\">vitafórumunkon</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
 msgid ""
