@@ -14,13 +14,19 @@
   </a>
 
   {% if is_backports_enabled %}
-    <h3>{% trans "Security Notice" %}</h3>
+    <h3>{% trans "Frequent Feature Updates" %}</h3>
     <p>
       {% blocktrans trimmed %}
-        Backports are enabled. Please note that packages from the backports
-        repository do not have security support from Debian. However, they are
-        maintained on a best-effort basis by contributors in Debian and
-        FreedomBox community.
+        Frequent feature updates are enabled.
+      {% endblocktrans %}
+    </p>
+    <p>
+      {% blocktrans trimmed %}
+        This will allow a very limited set of software, including FreedomBox
+        service, to be updated to receive newer features regularly instead of
+        once every 2 years or so. Note that packages with frequent feature
+        updates do not have support from Debian Security Team. They are instead
+        maintained by contributors to Debian and the FreedomBox community.
       {% endblocktrans %}
     </p>
   {% endif %}

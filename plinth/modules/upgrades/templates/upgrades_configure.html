@@ -8,27 +8,34 @@
 {% load static %}
 
 {% block extra_content %}
+  <h3>{% trans "Frequent Feature Updates" %}</h3>
+  <p>
+    {% if can_activate_backports %}
+      {% blocktrans trimmed %}
+        Frequent feature updates can be activated. Activating them is
+        recommended.
+      {% endblocktrans %}
+    {% else %}
+      {% blocktrans trimmed %}
+        Frequent feature updates are enabled.
+      {% endblocktrans %}
+    {% endif %}
+  </p>
+  <p>
+    {% blocktrans trimmed %}
+      This will allow a very limited set of software, including FreedomBox
+      service, to be updated to receive newer features regularly instead of once
+      every 2 years or so. Note that packages with frequent feature updates do
+      not have support from Debian Security Team. They are instead maintained by
+      contributors to Debian and the FreedomBox community.
+    {% endblocktrans %}
+  </p>
   {% if can_activate_backports %}
-    <h3>{% trans "Backports" %}</h3>
-    <p>
-      {% blocktrans trimmed %}
-        Backports can be activated. This will allow a limited set of software,
-        including FreedomBox service, to be upgraded to newer versions from
-        Debian {{ dist }}-backports repository.
-      {% endblocktrans %}
-    </p>
-    <p>
-      {% blocktrans trimmed %}
-        Please note that backports packages do not have security support from
-        Debian. However, they are maintained on a best-effort basis by
-        contributors in Debian and FreedomBox community.
-      {% endblocktrans %}
-    </p>
     <div class="alert alert-warning" role="alert">
       {% url 'snapshot:index' as snapshot_url %}
       {% blocktrans trimmed %}
-        <strong>Warning!</strong> Once backports are activated, they cannot be
-        easily deactivated. You may wish to take a snapshot using
+        <strong>Warning!</strong> Once frequent feature updates are activated,
+        they cannot be deactivated. You may wish to take a snapshot using
         <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
       {% endblocktrans %}
     </div>
@@ -36,13 +43,13 @@
       <form class="form" method="post"
             action="{% url 'upgrades:activate-backports' %}">
         {% csrf_token %}
-        <input type="submit" class="btn btn-warning"
-               value="{% trans 'Activate backports' %}"/>
+        <input type="submit" class="btn btn-primary"
+               value="{% trans 'Activate frequent feature updates (recommended)' %}"/>
       </form>
     </p>
   {% endif %}
 
-  <h3>{% trans "Manual update" %}</h3>
+  <h3>{% trans "Manual Update" %}</h3>
   {% if is_busy %}
     <p>
       <button type="button" disabled="disabled"
