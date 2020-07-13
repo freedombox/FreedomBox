@@ -3,10 +3,10 @@
 FreedomBox app for upgrades.
 """
 
-from aptsources import sourceslist
 import os
 import subprocess
 
+from aptsources import sourceslist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 
