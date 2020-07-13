@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-29 15:43-0700\n"
+"POT-Creation-Date: 2020-07-13 18:32-0400\n"
 "PO-Revision-Date: 2020-07-13 22:29+0000\n"
 "Last-Translator: Tang Zongxun <tangzongxun@hotmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -1907,21 +1907,21 @@ msgstr "手册"
 
 #: plinth/modules/help/__init__.py:39
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:42 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "获取帮助"
 
 #: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:36 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
 
 #: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:30 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "贡献"
@@ -1997,20 +1997,6 @@ msgstr "有新版本可用"
 #| msgid "%(box_name)s Setup"
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s 安装程序"
-
-#: plinth/modules/help/templates/help_about.html:79
-#, fuzzy
-#| msgid "Security"
-msgid "Security Notice"
-msgstr "安全"
-
-#: plinth/modules/help/templates/help_about.html:81
-msgid ""
-"You are using packages from Debian backports. Please note that these "
-"packages do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
 
 #: plinth/modules/help/templates/help_base.html:21
 #: plinth/modules/help/templates/help_index.html:61
@@ -2177,16 +2163,16 @@ msgid ""
 "before submitting the bug report."
 msgstr "提交日志报告前，请从日志中删除任何密码和其他个人信息。"
 
-#: plinth/modules/help/views.py:25
+#: plinth/modules/help/views.py:24
 msgid "Documentation and FAQ"
 msgstr "文档和 FAQ"
 
-#: plinth/modules/help/views.py:51
+#: plinth/modules/help/views.py:50
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "关于 {box_name}"
 
-#: plinth/modules/help/views.py:86
+#: plinth/modules/help/views.py:84
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} 手册"
@@ -5079,14 +5065,28 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:11
+#, fuzzy
+#| msgid "Security"
+msgid "Security Notice"
+msgstr "安全"
+
 #: plinth/modules/security/templates/security.html:13
+msgid ""
+"Backports are enabled. Please note that packages from the backports "
+"repository do not have security support from Debian. However, they are "
+"maintained on a best-effort basis by contributors in Debian and FreedomBox "
+"community."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:23
+#: plinth/modules/security/templates/security.html:25
 #, fuzzy
 #| msgid "Security"
 msgid "Show security report"
 msgstr "安全"
 
 #: plinth/modules/security/templates/security_report.html:10
-#: plinth/modules/security/views.py:71
+#: plinth/modules/security/views.py:74
 #, fuzzy
 #| msgid "Security"
 msgid "Security Report"
@@ -5173,12 +5173,12 @@ msgstr ""
 msgid "Not running"
 msgstr " 未运行"
 
-#: plinth/modules/security/views.py:53
+#: plinth/modules/security/views.py:56
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "设置限制访问错误：{exception}"
 
-#: plinth/modules/security/views.py:56
+#: plinth/modules/security/views.py:59
 msgid "Updated security configuration"
 msgstr "安全配置已更新"
 
@@ -6289,11 +6289,11 @@ msgstr ""
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:23
+#: plinth/modules/upgrades/__init__.py:27
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:24
+#: plinth/modules/upgrades/__init__.py:28
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6301,11 +6301,11 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:51 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "更新"
 
-#: plinth/modules/upgrades/__init__.py:83
+#: plinth/modules/upgrades/__init__.py:89
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Updated"
@@ -6339,23 +6339,58 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:12
+#, fuzzy
+#| msgid "Backups"
+msgid "Backports"
+msgstr "备份"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
+#, python-format
+msgid ""
+"Backports can be activated. This will allow a limited set of software, "
+"including FreedomBox service, to be upgraded to newer versions from Debian "
+"%(dist)s-backports repository."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:21
+msgid ""
+"Please note that backports packages do not have security support from "
+"Debian. However, they are maintained on a best-effort basis by contributors "
+"in Debian and FreedomBox community."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#, python-format
+msgid ""
+"<strong>Warning!</strong> Once backports are activated, they cannot be "
+"easily deactivated. You may wish to take a snapshot using <a href="
+"\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:40
+#, fuzzy
+#| msgid "Activate"
+msgid "Activate backports"
+msgstr "激活"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:45
 #, fuzzy
 #| msgid "Last update"
 msgid "Manual update"
 msgstr "最后一次更新"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:51
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+#: plinth/modules/upgrades/templates/upgrades_configure.html:59
 #, fuzzy
 #| msgid "Update"
 msgid "Update now"
 msgstr "更新"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:65
 #, fuzzy
 #| msgid ""
 #| "Depending on the number of packages to install, this may take a long time "
@@ -6371,30 +6406,36 @@ msgstr ""
 "装其它软件包。升级期间，此 web 界面可能暂时不可用并显示错误消息。刷新页面后，"
 "可以继续。"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:79
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:53
+#: plinth/modules/upgrades/views.py:56
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "配置无人参与升级时错误：{error}"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:60
 msgid "Automatic upgrades enabled"
 msgstr "已启用自动升级"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:63
 msgid "Automatic upgrades disabled"
 msgstr "已禁用自动升级"
 
-#: plinth/modules/upgrades/views.py:75
+#: plinth/modules/upgrades/views.py:78
 msgid "Upgrade process started."
 msgstr "升级过程开始。"
 
-#: plinth/modules/upgrades/views.py:77
+#: plinth/modules/upgrades/views.py:80
 msgid "Starting upgrade failed."
 msgstr "开始升级失败。"
+
+#: plinth/modules/upgrades/views.py:89
+#, fuzzy
+#| msgid "Create User"
+msgid "Backports activated."
+msgstr "创建用户"
 
 #: plinth/modules/users/__init__.py:39
 msgid ""
@@ -7880,11 +7921,6 @@ msgstr "古吉拉特语"
 #~| msgid "reStore"
 #~ msgid "Restore apps"
 #~ msgstr "reStore"
-
-#, fuzzy
-#~| msgid "Create User"
-#~ msgid "Backup archives"
-#~ msgstr "创建用户"
 
 #~ msgid "Software Upgrades"
 #~ msgstr "软件升级"

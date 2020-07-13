@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-29 15:43-0700\n"
+"POT-Creation-Date: 2020-07-13 18:32-0400\n"
 "PO-Revision-Date: 2020-04-03 20:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -1965,21 +1965,21 @@ msgstr "मैन्युअल"
 
 #: plinth/modules/help/__init__.py:39
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:42 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr ""
 
 #: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:36 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
 
 #: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:30 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr ""
@@ -2053,20 +2053,6 @@ msgstr "एक नया %(box_name)s संस्करण उपलब्ध �
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s उद्दिनांकित है."
-
-#: plinth/modules/help/templates/help_about.html:79
-#, fuzzy
-#| msgid "Security"
-msgid "Security Notice"
-msgstr "सुरक्षा"
-
-#: plinth/modules/help/templates/help_about.html:81
-msgid ""
-"You are using packages from Debian backports. Please note that these "
-"packages do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
 
 #: plinth/modules/help/templates/help_base.html:21
 #: plinth/modules/help/templates/help_index.html:61
@@ -2234,16 +2220,16 @@ msgid ""
 "before submitting the bug report."
 msgstr "बग रिपोर्ट सबमिट करने से पहले कोई पासवर्ड या दूसरे व्यक्तिगत जानकारी निकालें."
 
-#: plinth/modules/help/views.py:25
+#: plinth/modules/help/views.py:24
 msgid "Documentation and FAQ"
 msgstr "प्रलेखन और एफ़एक्यू"
 
-#: plinth/modules/help/views.py:51
+#: plinth/modules/help/views.py:50
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "{box_name} के बारे में"
 
-#: plinth/modules/help/views.py:86
+#: plinth/modules/help/views.py:84
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} मैनुअल"
@@ -5119,14 +5105,28 @@ msgstr ""
 "सर्विसस को ब्रूट फोर्स ब्रेक-इन प्रयासों से सीमा होगी."
 
 #: plinth/modules/security/templates/security.html:11
+#, fuzzy
+#| msgid "Security"
+msgid "Security Notice"
+msgstr "सुरक्षा"
+
 #: plinth/modules/security/templates/security.html:13
+msgid ""
+"Backports are enabled. Please note that packages from the backports "
+"repository do not have security support from Debian. However, they are "
+"maintained on a best-effort basis by contributors in Debian and FreedomBox "
+"community."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:23
+#: plinth/modules/security/templates/security.html:25
 #, fuzzy
 #| msgid "Security"
 msgid "Show security report"
 msgstr "सुरक्षा"
 
 #: plinth/modules/security/templates/security_report.html:10
-#: plinth/modules/security/views.py:71
+#: plinth/modules/security/views.py:74
 #, fuzzy
 #| msgid "Security"
 msgid "Security Report"
@@ -5207,12 +5207,12 @@ msgstr "कोई नहीं"
 msgid "Not running"
 msgstr "टोर चल रहा है"
 
-#: plinth/modules/security/views.py:53
+#: plinth/modules/security/views.py:56
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "त्रुटि सेटिंग एक्सेस प्रतिबंधित: {exception}"
 
-#: plinth/modules/security/views.py:56
+#: plinth/modules/security/views.py:59
 msgid "Updated security configuration"
 msgstr "सुरक्षा कॉंफ़िगरेशन अपडेट किया गया"
 
@@ -6322,11 +6322,11 @@ msgstr "समाचार फ़ीड रीडर"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "टैनी टैनी आरएसएस (फोर्क)"
 
-#: plinth/modules/upgrades/__init__.py:23
+#: plinth/modules/upgrades/__init__.py:27
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:24
+#: plinth/modules/upgrades/__init__.py:28
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6334,11 +6334,11 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:51 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "अपडेट"
 
-#: plinth/modules/upgrades/__init__.py:83
+#: plinth/modules/upgrades/__init__.py:89
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -6372,23 +6372,58 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:12
+#, fuzzy
+#| msgid "Backups"
+msgid "Backports"
+msgstr "बैकअप"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
+#, python-format
+msgid ""
+"Backports can be activated. This will allow a limited set of software, "
+"including FreedomBox service, to be upgraded to newer versions from Debian "
+"%(dist)s-backports repository."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:21
+msgid ""
+"Please note that backports packages do not have security support from "
+"Debian. However, they are maintained on a best-effort basis by contributors "
+"in Debian and FreedomBox community."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#, python-format
+msgid ""
+"<strong>Warning!</strong> Once backports are activated, they cannot be "
+"easily deactivated. You may wish to take a snapshot using <a href="
+"\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:40
+#, fuzzy
+#| msgid "Activate"
+msgid "Activate backports"
+msgstr "सक्रिय"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:45
 #, fuzzy
 #| msgid "Last update"
 msgid "Manual update"
 msgstr "अंतिम अपडेट"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:51
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+#: plinth/modules/upgrades/templates/upgrades_configure.html:59
 #, fuzzy
 #| msgid "Update"
 msgid "Update now"
 msgstr "अपडेट"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:65
 #, fuzzy
 #| msgid ""
 #| "Depending on the number of packages to install, this may take a long time "
@@ -6404,30 +6439,36 @@ msgstr ""
 "जब अपग्रेडस प्रगति पर हैं, दुसरे पैकेजस इंस्टॉल नहीं कर सकेगा. अपग्रेड करते समय, यह वेब इंटरफ़ेस "
 "शयद अस्थायी रूप से अनुपलब्ध है और एक त्रुटि दिखाएे. जारी रखने के लिए पेज रिफ्रेश करें."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:79
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:53
+#: plinth/modules/upgrades/views.py:56
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "अनअटेंडेड-अपग्रेडस कॉन्फ़िगर करते समय त्रुटि: {error}"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:60
 msgid "Automatic upgrades enabled"
 msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:63
 msgid "Automatic upgrades disabled"
 msgstr "ऑटोमेटिक अपग्रेडस अक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:75
+#: plinth/modules/upgrades/views.py:78
 msgid "Upgrade process started."
 msgstr "अपग्रेड प्रक्रिया शुरू हुई."
 
-#: plinth/modules/upgrades/views.py:77
+#: plinth/modules/upgrades/views.py:80
 msgid "Starting upgrade failed."
 msgstr "अपग्रेड प्रारंभ करना विफल रहा."
+
+#: plinth/modules/upgrades/views.py:89
+#, fuzzy
+#| msgid "Backups"
+msgid "Backports activated."
+msgstr "बैकअप"
 
 #: plinth/modules/users/__init__.py:39
 msgid ""
@@ -8067,11 +8108,6 @@ msgstr ""
 #~| "Disk path to a folder on this server where the archive will be extracted."
 #~ msgid "Disk or removable storage where the backup archive will be saved."
 #~ msgstr "इस सर्वर पर उस फ़ोल्डर का डिस्क पाथ है जहां संग्रह निकाला जाएगा."
-
-#, fuzzy
-#~| msgid "Backups"
-#~ msgid "Backup archives"
-#~ msgstr "बैकअप"
 
 #~ msgid "Export"
 #~ msgstr "निर्यात"
