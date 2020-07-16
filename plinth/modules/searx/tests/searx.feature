@@ -12,6 +12,7 @@ Scenario: Enable searx application
   Given the searx application is disabled
   When I enable the searx application
   Then the searx site should be available
+  And the search form should be visible
 
 @backups
 Scenario: Backup and restore searx
