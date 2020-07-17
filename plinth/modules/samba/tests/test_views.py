@@ -27,6 +27,14 @@ DISKS = [{
     'percent_used': 63,
     'size_str': '9.5 GiB',
     'used_str': '5.7 GiB'
+}, {
+    'device': '/dev/sda2',
+    'label': '',
+    'filesystem_type': 'vfat',
+    'mount_point': '/boot/efi',
+    'percent_used': 50,
+    'size_str': '150 MiB',
+    'used_str': '75 MiB'
 }]
 
 SHARES = [
@@ -96,7 +104,7 @@ def test_samba_shares_view(rf):
         view = views.SambaAppView.as_view()
         response, _ = make_request(rf.get(''), view)
 
-        assert response.context_data['disks'] == DISKS
+        assert response.context_data['disks'] == [DISKS[0]]
         assert response.context_data['shared_mounts'] == {
             '/': ['open', 'home'],
             '/media/root/otherdisk': ['open']
