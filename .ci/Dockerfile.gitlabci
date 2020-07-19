@@ -19,5 +19,4 @@ RUN apt-get build-dep -y .  # Dependencies of the freedombox Debian package
 RUN apt-get install -y build-essential # Build dependencies
 RUN apt-get install -y sshpass parted # Test dependencies
 RUN apt-get install -y sudo
-RUN apt-mark hold fuse fuse3 # not installable in CI environment
 RUN apt-get install -y $(./run --list-dependencies) # Module dependencies

@@ -5,7 +5,6 @@ before_script:
   - export DEBIAN_FRONTEND=noninteractive
   - apt-get update
   - apt-get build-dep -y .  # Dependencies of the plinth Debian package
-  - apt-mark hold fuse fuse3  # not installable in CI environment
   - apt-get install -y $(./run --list-dependencies)  # Module dependencies
 
 stages:
