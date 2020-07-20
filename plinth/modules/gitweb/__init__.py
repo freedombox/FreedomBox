@@ -18,7 +18,7 @@ from plinth.modules.users.components import UsersAndGroups
 
 from .forms import is_repo_url
 from .manifest import (GIT_REPO_PATH,  # noqa, pylint: disable=unused-import
-                       backup, clients)
+    backup, clients)
 
 version = 1
 
@@ -87,6 +87,10 @@ class GitwebApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-gitweb',
                                           groups=groups)
         self.add(users_and_groups)
+
+        setup_helper = globals()['setup_helper']
+        if setup_helper.get_state() != 'needs-setup':
+            self.update_service_access()
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
@@ -162,18 +166,6 @@ class GitwebWebserverAuth(Webserver):
         repos = app.get_repo_list()
         if not have_public_repos(repos):
             super().enable()
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = GitwebApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
-        app.update_service_access()
-        if app.is_enabled():
-            app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

@@ -65,13 +65,6 @@ class DiagnosticsApp(app_module.App):
         return results
 
 
-def init():
-    """Initialize the module"""
-    global app
-    app = DiagnosticsApp()
-    app.set_enabled(True)
-
-
 def start_task():
     """Start the run task in a separate thread."""
     global running_task

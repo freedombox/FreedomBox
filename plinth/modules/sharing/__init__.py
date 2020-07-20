@@ -45,13 +45,6 @@ class SharingApp(app_module.App):
         self.add(menu_item)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = SharingApp()
-    app.set_enabled(True)
-
-
 def list_shares():
     """Return a list of shares."""
     output = actions.superuser_run('sharing', ['list'])

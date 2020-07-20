@@ -91,18 +91,8 @@ class CockpitApp(app_module.App):
         daemon = Daemon('daemon-cockpit', managed_services[0])
         self.add(daemon)
 
-
-def init():
-    """Initialize the module."""
-    global app
-    app = CockpitApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-    domain_added.connect(on_domain_added)
-    domain_removed.connect(on_domain_removed)
+        domain_added.connect(on_domain_added)
+        domain_removed.connect(on_domain_removed)
 
 
 def setup(helper, old_version=None):

@@ -33,10 +33,3 @@ class PowerApp(app_module.App):
         self.add(info)
 
         # not in menu, see issue #834
-
-
-def init():
-    """Initialize the power module."""
-    global app
-    app = PowerApp()
-    app.set_enabled(True)

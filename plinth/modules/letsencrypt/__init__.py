@@ -73,6 +73,11 @@ class LetsEncryptApp(app_module.App):
                               'letsencrypt:index', parent_url_name='system')
         self.add(menu_item)
 
+        domain_added.connect(on_domain_added)
+        domain_removed.connect(on_domain_removed)
+
+        post_module_loading.connect(_certificate_handle_modified)
+
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
@@ -82,18 +87,6 @@ class LetsEncryptApp(app_module.App):
                 results.append(diagnose_url('https://' + domain.name))
 
         return results
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = LetsEncryptApp()
-    app.set_enabled(True)
-
-    domain_added.connect(on_domain_added)
-    domain_removed.connect(on_domain_removed)
-
-    post_module_loading.connect(_certificate_handle_modified)
 
 
 def setup(helper, old_version=None):

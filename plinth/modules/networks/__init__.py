@@ -87,13 +87,6 @@ class NetworksApp(app_module.App):
         return results
 
 
-def init():
-    """Initialize the Networks module."""
-    global app
-    app = NetworksApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)

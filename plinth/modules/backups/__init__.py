@@ -56,16 +56,6 @@ class BackupsApp(app_module.App):
         self.add(menu_item)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = BackupsApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)

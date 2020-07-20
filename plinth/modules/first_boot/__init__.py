@@ -8,7 +8,7 @@ import os
 
 from django.urls import reverse
 
-from plinth import cfg, module_loader
+from plinth import app, cfg, module_loader
 from plinth.signals import post_setup
 
 version = 1
@@ -34,9 +34,15 @@ _all_first_boot_steps = None
 _is_completed = None
 
 
-def init():
-    """Initialize the first boot module."""
-    post_setup.connect(_clear_first_boot_steps)
+class FirstBootApp(app.App):
+    """FreedomBox app for First Boot."""
+
+    app_id = 'first_boot'
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+        post_setup.connect(_clear_first_boot_steps)
 
 
 def _clear_first_boot_steps(sender, module_name, **kwargs):

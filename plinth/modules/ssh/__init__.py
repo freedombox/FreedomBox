@@ -63,14 +63,6 @@ class SSHApp(app_module.App):
         self.add(daemon)
 
 
-def init():
-    """Initialize the ssh module."""
-    global app
-    app = SSHApp()
-    if app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Configure the module."""
     actions.superuser_run('ssh', ['setup'])

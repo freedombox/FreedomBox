@@ -63,10 +63,3 @@ class HelpApp(app_module.App):
         static_files = web_server.StaticFiles('static-files-help',
                                               directory_map)
         self.add(static_files)
-
-
-def init():
-    """Initialize the Help module"""
-    global app
-    app = HelpApp()
-    app.set_enabled(True)

@@ -174,16 +174,6 @@ class RadicaleDaemon(Daemon):
         return True
 
 
-def init():
-    """Initialize the radicale module."""
-    global app
-    app = RadicaleApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     if old_version == 1:

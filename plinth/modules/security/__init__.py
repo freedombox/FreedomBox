@@ -51,13 +51,6 @@ class SecurityApp(app_module.App):
         self.add(menu_item)
 
 
-def init():
-    """Initialize the module"""
-    global app
-    app = SecurityApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)

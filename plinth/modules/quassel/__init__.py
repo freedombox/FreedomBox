@@ -99,16 +99,6 @@ class QuasselApp(app_module.App):
         self.add(users_and_groups)
 
 
-def init():
-    """Initialize the quassel module."""
-    global app
-    app = QuasselApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)

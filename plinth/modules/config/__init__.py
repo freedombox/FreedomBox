@@ -62,6 +62,13 @@ class ConfigApp(app_module.App):
                                  'config:index', can_have_certificate=True)
         self.add(domain_type)
 
+        # Register domain with Name Services module.
+        domainname = get_domainname()
+        if domainname:
+            domain_added.send_robust(sender='config',
+                                     domain_type='domain-type-static',
+                                     name=domainname, services='__all__')
+
 
 def get_domainname():
     """Return the domainname"""
@@ -140,20 +147,6 @@ def set_advanced_mode(advanced_mode):
     """Turn on/off advanced mode."""
     from plinth import kvstore
     kvstore.set(ADVANCED_MODE_KEY, advanced_mode)
-
-
-def init():
-    """Initialize the module"""
-    global app
-    app = ConfigApp()
-    app.set_enabled(True)
-
-    # Register domain with Name Services module.
-    domainname = get_domainname()
-    if domainname:
-        domain_added.send_robust(sender='config',
-                                 domain_type='domain-type-static',
-                                 name=domainname, services='__all__')
 
 
 def setup(helper, old_version=None):

@@ -92,6 +92,14 @@ class TahoeApp(app_module.App):
         daemon = Daemon('daemon-tahoe', managed_services[0])
         self.add(daemon)
 
+    def is_enabled(self):
+        """Return whether all the leader components are enabled.
+
+        Return True when there are no leader components and
+        domain name is setup.
+        """
+        return super().is_enabled() and is_setup()
+
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
@@ -108,6 +116,7 @@ class TahoeApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
+
     def enable(self):
         """Set the proper shortcut URL when enabled."""
         super().enable()
@@ -128,17 +137,6 @@ def get_configured_domain_name():
     else:
         with open(domain_name_file) as dnf:
             return dnf.read().rstrip()
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = TahoeApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and is_setup() \
-       and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

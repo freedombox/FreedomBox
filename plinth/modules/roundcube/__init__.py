@@ -77,16 +77,6 @@ class RoundcubeApp(app_module.App):
         self.add(webserver)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = RoundcubeApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])

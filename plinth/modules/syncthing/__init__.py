@@ -90,19 +90,9 @@ class SyncthingApp(app_module.App):
         daemon = Daemon('daemon-syncthing', managed_services[0])
         self.add(daemon)
 
-        users_and_groups = UsersAndGroups(
-            'users-and-groups-syncthing', [SYSTEM_USER], self.groups)
+        users_and_groups = UsersAndGroups('users-and-groups-syncthing',
+                                          [SYSTEM_USER], self.groups)
         self.add(users_and_groups)
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = SyncthingApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

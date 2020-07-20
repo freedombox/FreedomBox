@@ -70,18 +70,21 @@ class DynamicDNSApp(app_module.App):
                                           reserved_usernames=['ez-ipupd'])
         self.add(users_and_groups)
 
+        current_status = get_status()
+        if current_status['enabled']:
+            domain_added.send_robust(sender='dynamicdns',
+                                     domain_type='domain-type-dynamic',
+                                     name=current_status['dynamicdns_domain'],
+                                     services='__all__')
+            self.set_enabled(True)
 
-def init():
-    """Initialize the module."""
-    global app
-    app = DynamicDNSApp()
-    current_status = get_status()
-    if current_status['enabled']:
-        domain_added.send_robust(sender='dynamicdns',
-                                 domain_type='domain-type-dynamic',
-                                 name=current_status['dynamicdns_domain'],
-                                 services='__all__')
-        app.set_enabled(True)
+    def is_enabled(self):
+        """Return whether all the leader components are enabled.
+
+        Return True when there are no leader components and DynamicDNS setup
+        is done.
+        """
+        return super().is_enabled() and get_status()['enabled']
 
 
 def setup(helper, old_version=None):

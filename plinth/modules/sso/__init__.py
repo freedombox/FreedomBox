@@ -28,6 +28,7 @@ class SSOApp(app_module.App):
 
     def __init__(self):
         """Create components for the app."""
+        super().__init__()
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, depends=depends,
                                name=_('Single Sign On'))

@@ -86,20 +86,11 @@ class MediaWikiApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut for only logged users when in private mode."""
+
     def enable(self):
         """When enabled, check if MediaWiki is in private mode."""
         super().enable()
         self.login_required = is_private_mode_enabled()
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = MediaWikiApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):
@@ -125,6 +116,7 @@ def is_private_mode_enabled():
 
 def get_default_skin():
     """Return the value of the default skin"""
+
     def _find_skin(config_file):
         with open(config_file, 'r') as config:
             for line in config:

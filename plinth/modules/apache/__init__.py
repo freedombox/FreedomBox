@@ -56,13 +56,6 @@ class ApacheApp(app_module.App):
         self.add(daemon)
 
 
-def init():
-    """Initailze firewall module"""
-    global app
-    app = ApacheApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Configure the module."""
     helper.install(managed_packages)

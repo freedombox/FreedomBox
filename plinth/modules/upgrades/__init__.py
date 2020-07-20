@@ -94,13 +94,6 @@ class UpgradesApp(app_module.App):
         note.dismiss(should_dismiss=dismiss)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = UpgradesApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
