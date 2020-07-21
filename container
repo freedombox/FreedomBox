@@ -451,6 +451,18 @@ def _runc(image_file, command, **kwargs):
         **kwargs)
 
 
+def _get_interface_name(distribution):
+    """Return the name of the interface."""
+    interface = f've-fbx-{distribution}'
+    process = subprocess.run(['systemd-nspawn', '--version'],
+                             stdout=subprocess.PIPE, check=True)
+    version = process.stdout.decode().splitlines()[0].split()[1]
+    if int(float(version)) < 245:
+        return interface[:14]
+
+    return interface
+
+
 def _setup_nm_connection(distribution):
     """Create a network manager conn. on host for DHCP/DNS with container."""
     connection_name = f'fbx-{distribution}-shared'
@@ -465,7 +477,7 @@ def _setup_nm_connection(distribution):
     properties = {
         'connection.id': connection_name,
         'connection.type': '802-3-ethernet',
-        'connection.interface-name': f've-fbx-{distribution}',
+        'connection.interface-name': _get_interface_name(distribution),
         'connection.autoconnect': 'yes',
         'ipv4.method': 'shared',
     }
@@ -757,7 +769,7 @@ def _get_ssh_command(ip_address, distribution):
     """Exec an SSH command."""
     public_key = work_directory / 'ssh' / 'id_ed25519'
     if ipaddress.ip_address(ip_address).is_link_local:
-        ip_address = f'{ip_address}%ve-fbx-{distribution}'
+        ip_address = f'{ip_address}%' + _get_interface_name(distribution)
 
     return [
         'ssh', '-i',
