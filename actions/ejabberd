@@ -13,7 +13,7 @@ import socket
 import subprocess
 from distutils.version import LooseVersion as LV
 
-import ruamel.yaml
+from ruamel.yaml import YAML, scalarstring
 
 from plinth import action_utils
 
@@ -23,6 +23,10 @@ EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
 EJABBERD_ORIG_CERT = '/etc/ejabberd/ejabberd.pem'
 IQDISC_DEPRECATED_VERSION = LV('18.03')
 MOD_IRC_DEPRECATED_VERSION = LV('18.06')
+
+yaml = YAML()
+yaml.allow_duplicate_keys = True
+yaml.preserve_quotes = True
 
 
 def parse_arguments():
@@ -79,7 +83,7 @@ def parse_arguments():
 def subcommand_get_configuration(_):
     """Return the current configuration, specifically domains configured."""
     with open(EJABBERD_CONFIG, 'r') as file_handle:
-        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+        conf = yaml.load(file_handle)
 
     print(json.dumps({'domains': conf['hosts']}))
 
@@ -98,21 +102,19 @@ def subcommand_pre_install(arguments):
 def subcommand_setup(arguments):
     """Enabled LDAP authentication"""
     with open(EJABBERD_CONFIG, 'r') as file_handle:
-        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+        conf = yaml.load(file_handle)
 
     for listen_port in conf['listen']:
         if 'tls' in listen_port:
             listen_port['tls'] = False
 
     conf['auth_method'] = 'ldap'
-    conf['ldap_servers'] = [
-        ruamel.yaml.scalarstring.DoubleQuotedScalarString('localhost')
-    ]
-    conf['ldap_base'] = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+    conf['ldap_servers'] = [scalarstring.DoubleQuotedScalarString('localhost')]
+    conf['ldap_base'] = scalarstring.DoubleQuotedScalarString(
         'ou=users,dc=thisbox')
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
-        ruamel.yaml.round_trip_dump(conf, file_handle)
+        yaml.dump(conf, file_handle)
 
     upgrade_config(arguments.domainname)
 
@@ -129,7 +131,7 @@ def upgrade_config(domain):
         print('Warning: Unable to get ejabberd version.')
 
     with open(EJABBERD_CONFIG, 'r') as file_handle:
-        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+        conf = yaml.load(file_handle)
 
     # Check if `iqdisc` is present and remove it
     if 'mod_mam' in conf['modules'] and \
@@ -154,7 +156,7 @@ def upgrade_config(domain):
 
     cert_dir = pathlib.Path('/etc/ejabberd/letsencrypt') / domain
     cert_file = str(cert_dir / 'ejabberd.pem')
-    cert_file = ruamel.yaml.scalarstring.DoubleQuotedScalarString(cert_file)
+    cert_file = scalarstring.DoubleQuotedScalarString(cert_file)
     conf['s2s_certfile'] = cert_file
     for listen_port in conf['listen']:
         if 'certfile' in listen_port:
@@ -162,7 +164,7 @@ def upgrade_config(domain):
 
     # Write changes back to the file
     with open(EJABBERD_CONFIG, 'w') as file_handle:
-        ruamel.yaml.round_trip_dump(conf, file_handle)
+        yaml.dump(conf, file_handle)
 
 
 def subcommand_pre_change_hostname(arguments):
@@ -225,22 +227,21 @@ def subcommand_add_domain(arguments):
 
     # Add updated domainname to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r') as file_handle:
-        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+        conf = yaml.load(file_handle)
 
-    conf['hosts'].append(
-        ruamel.yaml.scalarstring.DoubleQuotedScalarString(domainname))
+    conf['hosts'].append(scalarstring.DoubleQuotedScalarString(domainname))
 
     conf['hosts'] = list(set(conf['hosts']))
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
-        ruamel.yaml.round_trip_dump(conf, file_handle)
+        yaml.dump(conf, file_handle)
 
 
 def subcommand_mam(argument):
     """Enable, disable, or get status of Message Archive Management (MAM)."""
 
     with open(EJABBERD_CONFIG, 'r') as file_handle:
-        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+        conf = yaml.load(file_handle)
 
     if 'modules' not in conf:
         print('Found no "modules" entry in ejabberd configuration file.')
@@ -278,7 +279,7 @@ def subcommand_mam(argument):
         return
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
-        ruamel.yaml.round_trip_dump(conf, file_handle)
+        yaml.dump(conf, file_handle)
 
     if action_utils.service_is_running('ejabberd'):
         subprocess.call(['ejabberdctl', 'reload_config'])
