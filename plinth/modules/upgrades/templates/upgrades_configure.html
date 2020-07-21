@@ -15,20 +15,27 @@
         Frequent feature updates can be activated. Activating them is
         recommended.
       {% endblocktrans %}
-    {% else %}
+    {% elif is_backports_enabled %}
       {% blocktrans trimmed %}
         Frequent feature updates are enabled.
+      {% endblocktrans %}
+    {% else %}
+      {% blocktrans trimmed %}
+        Frequent feature updates cannot be activated. They may not be necessary
+        on your distribution.
       {% endblocktrans %}
     {% endif %}
   </p>
   <p>
-    {% blocktrans trimmed %}
-      This will allow a very limited set of software, including FreedomBox
-      service, to be updated to receive newer features regularly instead of once
-      every 2 years or so. Note that packages with frequent feature updates do
-      not have support from Debian Security Team. They are instead maintained by
-      contributors to Debian and the FreedomBox community.
-    {% endblocktrans %}
+    {% if can_activate_backports or is_backports_enabled %}
+      {% blocktrans trimmed %}
+        This will allow a very limited set of software, including FreedomBox
+        service, to be updated to receive newer features regularly instead of
+        once every 2 years or so. Note that packages with frequent feature
+        updates do not have support from Debian Security Team. They are instead
+        maintained by contributors to Debian and the FreedomBox community.
+      {% endblocktrans %}
+    {% endif %}
   </p>
   {% if can_activate_backports %}
     <div class="alert alert-warning" role="alert">
