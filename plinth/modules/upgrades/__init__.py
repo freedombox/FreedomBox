@@ -23,6 +23,14 @@ is_essential = True
 
 managed_packages = ['unattended-upgrades', 'needrestart']
 
+first_boot_steps = [
+    {
+        'id': 'backports_wizard',
+        'url': 'upgrades:backports-firstboot',
+        'order': 5,
+    },
+]
+
 _description = [
     _('Check for and apply the latest software and security updates.'),
     _('Updates are run at 06:00 everyday according to local time zone. Set '
@@ -33,6 +41,8 @@ _description = [
 ]
 
 app = None
+
+BACKPORTS_ENABLED_KEY = 'upgrades_backports_enabled'
 
 SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
 
@@ -129,11 +139,13 @@ def disable():
 
 def setup_repositories(data):
     """Setup apt backport repositories."""
-    command = ['setup-repositories']
-    if cfg.develop:
-        command += ['--develop']
+    from plinth import kvstore
+    if kvstore.get_default(BACKPORTS_ENABLED_KEY, False):
+        command = ['setup-repositories']
+        if cfg.develop:
+            command += ['--develop']
 
-    actions.superuser_run('upgrades', command)
+        actions.superuser_run('upgrades', command)
 
 
 def is_backports_enabled():

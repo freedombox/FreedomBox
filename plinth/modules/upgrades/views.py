@@ -3,17 +3,23 @@
 FreedomBox app for upgrades.
 """
 
+import logging
+
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
+from django.views.generic.edit import FormView
 
-from plinth import actions, package
+from plinth import actions, kvstore, package
 from plinth.errors import ActionError
-from plinth.modules import upgrades
+from plinth.modules import first_boot, upgrades
 from plinth.views import AppView
 
-from .forms import ConfigureForm
+from .forms import BackportsFirstbootForm, ConfigureForm
+
+logger = logging.getLogger(__name__)
 
 
 class UpgradesConfigurationView(AppView):
@@ -84,7 +90,54 @@ def upgrade(request):
 def activate_backports(request):
     """Activate backports."""
     if request.method == 'POST':
+        kvstore.set(upgrades.BACKPORTS_ENABLED_KEY, True)
         upgrades.setup_repositories(None)
         messages.success(request, _('Frequent feature updates activated.'))
 
     return redirect(reverse_lazy('upgrades:index'))
+
+
+class BackportsFirstbootView(FormView):
+    """View to configure backports during first boot wizard."""
+    template_name = 'backports-firstboot.html'
+    form_class = BackportsFirstbootForm
+
+    def dispatch(self, request, *args, **kwargs):
+        """Show backports configuration form only if it can be activated."""
+        if upgrades.is_backports_enabled():
+            # Backports is already enabled. Record this preference and
+            # skip first boot step.
+            kvstore.set(upgrades.BACKPORTS_ENABLED_KEY, True)
+            first_boot.mark_step_done('backports_wizard')
+            return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
+
+        if not upgrades.can_activate_backports():
+            # Skip first boot step.
+            first_boot.mark_step_done('backports_wizard')
+            return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
+
+        return super().dispatch(request, *args, *kwargs)
+
+    def get_initial(self):
+        """Get initial form data."""
+        return {
+            'backports_enabled':
+                kvstore.get_default(upgrades.BACKPORTS_ENABLED_KEY, True)
+        }
+
+    def get_success_url(self):
+        """Return next firstboot step."""
+        return reverse_lazy(first_boot.next_step())
+
+    def form_valid(self, form):
+        """Mark the first wizard step as done, save value and redirect."""
+        enabled = form.cleaned_data['backports_enabled']
+        kvstore.set(upgrades.BACKPORTS_ENABLED_KEY, enabled)
+        if enabled:
+            upgrades.setup_repositories(None)
+            logger.info('Backports enabled.')
+        else:
+            logger.info('Backports not enabled.')
+
+        first_boot.mark_step_done('backports_wizard')
+        return super().form_valid(form)

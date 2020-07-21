@@ -13,8 +13,8 @@ from contextlib import contextmanager
 
 import pytest
 import requests
-from selenium.common.exceptions import (WebDriverException,
-                                        StaleElementReferenceException)
+from selenium.common.exceptions import (StaleElementReferenceException,
+                                        WebDriverException)
 from selenium.webdriver.support.ui import WebDriverWait
 
 config = configparser.ConfigParser()
@@ -260,6 +260,9 @@ def login(browser, url, username, password):
 
         if '/internet-connection-type' in browser.url:
             submit(browser, element=browser.find_by_name('skip')[0])
+
+        if '/firstboot/backports' in browser.url:
+            submit(browser, element=browser.find_by_name('next')[0])
 
 
 #################
