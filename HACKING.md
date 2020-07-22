@@ -4,9 +4,12 @@
 
 FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
 install Debian to do development for FreedomBox. FreedomBox development is
-typically done on a container or a Virtual Machine. For running a container, you
-need systemd containers, Git and Python. This approach is recommended. For
-running a VM, you can work on any operating system that can install latest
+typically done on a container or a Virtual Machine.
+
+For running a container, you need systemd containers, Git, Python and a
+sudo-enabled user. This approach is recommended.
+
+For running a VM, you can work on any operating system that can install latest
 versions of Git, Vagrant and VirtualBox.
 
 ## Using Containers
