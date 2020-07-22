@@ -84,6 +84,6 @@ def activate_backports(request):
     """Activate backports."""
     if request.method == 'POST':
         upgrades.setup_repositories(None)
-        messages.success(request, _('Backports activated.'))
+        messages.success(request, _('Frequent feature updates activated.'))
 
     return redirect(reverse_lazy('upgrades:index'))
