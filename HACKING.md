@@ -17,14 +17,20 @@ versions of Git, Vagrant and VirtualBox.
 The ./container script shipped with FreedomBox source code can manage the
 development environment inside a systemd-nspawn container.
 
-1.  Checkout FreedomBox Service (Plinth) source code using Git.
+1.  Checkout FreedomBox Service (Plinth) source code using Git:
 
     ```bash
     host$ git clone https://salsa.debian.org/freedombox-team/freedombox.git
     host$ cd freedombox
     ```
 
-2.  To download, setup, run, and configure a container for FreedomBox
+2.  Work in a specific branch:
+    ```bash
+    git branch YOUR-FEATURE-BRANCH`
+    git checkout YOUR-FEATURE-BRANCH`
+    ```
+
+3.  To download, setup, run, and configure a container for FreedomBox
     development, simply execute in your FreedomBox Service (Plinth) development
     folder:
 
@@ -32,7 +38,7 @@ development environment inside a systemd-nspawn container.
     host$ ./container up
     ```
 
-3.  SSH into the running container with the following command:
+4.  SSH into the running container with the following command:
 
     ```bash
     host$ ./container ssh
