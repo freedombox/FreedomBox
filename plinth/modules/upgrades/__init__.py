@@ -139,8 +139,7 @@ def disable():
 
 def setup_repositories(data):
     """Setup apt backport repositories."""
-    from plinth import kvstore
-    if kvstore.get_default(BACKPORTS_ENABLED_KEY, False):
+    if is_backports_enabled():
         command = ['setup-repositories']
         if cfg.develop:
             command += ['--develop']
@@ -150,7 +149,9 @@ def setup_repositories(data):
 
 def is_backports_enabled():
     """Return whether backports are enabled."""
-    return os.path.exists(SOURCES_LIST)
+    from plinth import kvstore
+    return kvstore.get_default(BACKPORTS_ENABLED_KEY,
+                               os.path.exists(SOURCES_LIST))
 
 
 def get_current_release():
