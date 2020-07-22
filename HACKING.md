@@ -264,7 +264,7 @@ executed (red).
 Inside the container run
 
 ```bash
-guest$ cd /freedombox ; sudo functional_tests/install.sh
+guest$ cd /freedombox ; sudo plinth/tests/functional/install.sh
 ```
 
 #### For running tests inside the VM
