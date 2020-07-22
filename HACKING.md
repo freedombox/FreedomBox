@@ -26,8 +26,8 @@ development environment inside a systemd-nspawn container.
 
 2.  Work in a specific branch:
     ```bash
-    host$ git branch YOUR-FEATURE-BRANCH`
-    host$ git checkout YOUR-FEATURE-BRANCH`
+    host$ git branch YOUR-FEATURE-BRANCH
+    host$ git checkout YOUR-FEATURE-BRANCH
     ```
 
 3.  To download, setup, run, and configure a container for FreedomBox
