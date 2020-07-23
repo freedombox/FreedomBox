@@ -23,16 +23,26 @@ def parse_arguments():
 
 
 def subcommand_fix_wiki_urls(arguments):
-    file_name = arguments.filename
+    """ Rebase the wiki urls.
+
+    The base for relative links in Debian wiki is the wiki's URL but our
+    extraction process rebases the relative links to the page containing
+    the link. This function fixes that.
+    """
+    WIKI_URL = 'https://wiki.debian.org'
+    _, lang, file_name = arguments.filename.split('/')
     page_name = file_name.split('.')[0]
 
-    with open(file_name, 'r') as xml_file:
+    with open(arguments.filename, 'r') as xml_file:
         lines = xml_file.readlines()
 
-    pattern = f'FreedomBox/Manual/{page_name}/FreedomBox'
-    lines = list(map(lambda s: s.replace(pattern, 'FreedomBox'), lines))
+    if 'en' == lang:
+        pattern = f'{WIKI_URL}/FreedomBox/Manual/{page_name}'
+    else:
+        pattern = f'{WIKI_URL}/{lang}/FreedomBox/Manual/{page_name}'
+    lines = list(map(lambda s: s.replace(pattern, f'{WIKI_URL}'), lines))
 
-    with open(file_name, 'w') as xml_file:
+    with open(arguments.filename, 'w') as xml_file:
         xml_file.writelines(lines)
 
 
