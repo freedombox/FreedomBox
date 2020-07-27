@@ -5,6 +5,24 @@
     <title>FreedomBox/Manual</title>
     <revhistory>
       <revision>
+        <revnumber>95</revnumber>
+        <date>2020-07-19 19:32:07</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Sharing app included</revremark>
+      </revision>
+      <revision>
+        <revnumber>94</revnumber>
+        <date>2020-07-18 11:17:27</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>Remove Coquelicot as it is no longer part of FreedomBox</revremark>
+      </revision>
+      <revision>
+        <revnumber>93</revnumber>
+        <date>2020-07-17 23:24:50</date>
+        <authorinitials>fioddor</authorinitials>
+        <revremark>JSXC page included</revremark>
+      </revision>
+      <revision>
         <revnumber>92</revnumber>
         <date>2020-05-30 18:28:47</date>
         <authorinitials>SunilMohanAdapa</authorinitials>
@@ -1180,59 +1198,32 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
       <remark>Add entries here sorted after the level 2 heading inside the page to keep the list alphabetically sorted</remark>
     </para>
     <section>
-      <title>Coquelicot (File Sharing)</title>
-      <section>
-        <title>About Coquelicot</title>
-        <para>Coquelicot is a "one-click" file sharing web application with a focus on protecting users' privacy. The basic principle is simple: users can upload a file to the server, in return they get a unique URL which can be shared with others in order to download the file. A download password can be defined. </para>
-        <para>After the upload you get a unique link that can be shared to your partners in order to  </para>
-        <para>Read more about Coquelicot at <ulink url="https://coquelicot.potager.org/README">the Coquelicot README</ulink> </para>
-        <para><emphasis role="strong">Available since:</emphasis>  version 0.24.0 </para>
-      </section>
-      <section>
-        <title>When to use Coquelicot</title>
-        <para>Coquelicot is best used to quickly share a single file.  If you want to share a folder,  </para>
-        <orderedlist numeration="arabic">
-          <listitem>
-            <para>for a single use, compress the folder and share it over Coquelicot </para>
-          </listitem>
-          <listitem>
-            <para>which must be kept synchronized between computers, use <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Syncthing#">Syncthing</ulink> instead </para>
-          </listitem>
-        </orderedlist>
-        <para>Coquelicot can only provide a reasonable degree of privacy. If anonymity is required, you should consider using the desktop application <ulink url="https://onionshare.org/">Onionshare</ulink> instead. </para>
-        <para>Since Coquelicot fully uploads the file to the server, your FreedomBox will incur both upload and download bandwidth costs. For very large files, consider sharing them using BitTorrent by creating a private torrent file. If anonymity is required, use Onionshare. It is P2P and doesn't require a server.  </para>
-      </section>
-      <section>
-        <title>Coquelicot on FreedomBox</title>
-        <para>With Coquelicot installed, you can upload files to your FreedomBox server and privately share them.  </para>
-        <para>Post installation, the Coquelicot page offers two settings. </para>
-        <orderedlist numeration="arabic">
-          <listitem>
-            <para><emphasis role="strong">Upload Password</emphasis>: Coquelicot on FreedomBox is currently configured to use simple password authentication for ease of use. Remember that it's one global password for this Coquelicot instance and not your user password for FreedomBox. You need not remember this password. You can set a new one from the FreedomBox interface anytime.  </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="strong">Maximum File Size</emphasis>: You can alter the maximum size of the file that can be transferred through Coquelicot using this setting. The size is in <ulink url="https://en.wikipedia.org/wiki/Mebibyte">Mebibytes</ulink>. The maximum file size is only limited by the disk size of your FreedomBox.  </para>
-          </listitem>
-        </orderedlist>
-      </section>
-      <section>
-        <title>Privacy</title>
-        <para>Someone monitoring your network traffic might find out that some file is being transferred through your FreedomBox and also possibly its size, but will not know the file name. Coquelicot encrypts files on the server and also fills the file contents with 0s when deleting them. This eliminates the risk of file contents being revealed in the event of your FreedomBox being confiscated or stolen. The real risk to mitigate here is a third-party also downloading your file along with the intended recipient. </para>
-        <section>
-          <title>Sharing over instant messengers</title>
-          <para>Some instant messengers which have previews for websites might download your file in order to show a preview in the conversation. If you set the option of one-time download  on a file, you might notice that the one download will be used up by the instant messenger. If sharing over such messengers, please use a download password in combination with a one-time download option.  </para>
-        </section>
-        <section>
-          <title>Sharing download links privately</title>
-          <para>It is recommended to share your file download links and download passwords over encrypted channels. You can simply avoid all the above problems with instant messenger previews by using instant messengers that support encrypted conversations like Riot with <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/MatrixSynapse#">Matrix Synapse</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/ejabberd#">XMPP</ulink> (ejabberd server on FreedomBox) with clients that support end-to-end encryption. Send the download link and the download password in two separate messages (helps if your messenger supports perfect forward secrecy like XMPP with OTR). You can also share your links over PGP-encrypted email using <ulink url="https://securityinabox.org/en/guide/thunderbird/linux/">Thunderbird</ulink>.  </para>
-        </section>
-      </section>
-    </section>
-    <section>
       <title>Coturn (VoIP Helper)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Coturn?action=AttachFile&amp;do=get&amp;target=Coturn-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Coturn icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 20.8 </para>
       <para>Coturn is a server to facilitate audio/video calls and conferences by providing an implementation of TURN and STUN protocols. WebRTC, SIP and other communication servers can use it to establish a call between parties who are otherwise unable connect to each other. </para>
       <para>It is not meant to be used directly by users. Servers such as Matrix Synapse need to be configured with the details provided on the Coturn app page. Apart from Matrix Synapse, Jitsi, Ejabberd, Nextcloud Talk, etc. can use Coturn server for audio/video calls and conferences. There is no need for the servers to be running on the same machine as FreedomBox and external servers can use Coturn running on FreedomBox. </para>
-      <para>Coturn is available in FreedomBox since version 20.8 as an advanced app. This means that you need to check "Show advanced apps and features" in "General Configuration" to see Coturn icon in the "Apps" section. </para>
+      <para>Coturn is configured in FreedomBox as an advanced app. This means that you need to check "Show advanced apps and features" in "General Configuration" to see Coturn icon in the "Apps" section. </para>
       <section>
         <title>How it works</title>
         <para>When making an audio/video call, it is best to route the media streams between two peers directly. This will give the best possible latency (better signal quality) and avoid depending on a centralized server (privacy). It scales well because a simple chat server can host thousands of calls without involving the server in any way other than to setup the call. However, this approach does not work most of the time to due to how networks are configured. Most peers on the network do not have a unique IP address allocated to them. They work hidden behind a network device that performs "Network Address Translation" (NAT) for them. This means that the two peers have no way of reaching each other. </para>
@@ -1252,6 +1243,28 @@ turn_allow_guests: True]]></screen>
     </section>
     <section>
       <title>Deluge (BitTorrent Web Client)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Deluge?action=AttachFile&amp;do=get&amp;target=Deluge-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Deluge icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.5 </para>
       <section>
         <title>What is Deluge?</title>
         <para>BitTorrent is a communications protocol using peer-to-peer (P2P) file sharing. It is not anonymous; you should assume that others can see what files you are sharing. There are two BitTorrent web clients available in FreedomBox: <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Transmission#">Transmission</ulink> and Deluge. They have similar features, but you may prefer one over the other. </para>
@@ -1310,10 +1323,37 @@ turn_allow_guests: True]]></screen>
       </section>
     </section>
     <section>
-      <title>ejabberd (Chat Server)</title>
+      <title>Ejabberd (Chat Server)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/ejabberd?action=AttachFile&amp;do=get&amp;target=ejabberd-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>ejabberd icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.3 </para>
       <section>
         <title>What is XMPP?</title>
-        <para>XMPP is a federated protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server. XMPP can also be used for voice and video calls, if supported by the clients. </para>
+        <para>XMPP is a federated server-client protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server. </para>
+        <para>XMPP can also be used for voice and video calls, if supported by the clients. </para>
+        <para>Currently FreedomBox offers both, a server (ejabberd) and a web client (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/JSXC#">JSXC</ulink>) from its web interface. </para>
+      </section>
+      <section>
+        <title>Privacy</title>
         <para>With XMPP, there are two ways that conversations can be secured: </para>
         <orderedlist numeration="arabic">
           <listitem>
@@ -1326,26 +1366,15 @@ turn_allow_guests: True]]></screen>
       </section>
       <section>
         <title>Setting the Domain Name</title>
-        <para>For XMPP to work, your FreedomBox needs to have a Domain Name that can be accessed over the public Internet. You can read more about obtaining a Domain Name in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/DynamicDNS#">Dynamic DNS section of this manual</ulink>. </para>
+        <para>For XMPP to work, your FreedomBox needs to have a Domain Name that can be accessed over the network. </para>
+        <para>If you only need the local network (LAN) users to chat with each other you can invent your domain name, but if you want users from the internet to join your rooms you need a public domain name. You can read more about obtaining a Domain Name in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/DynamicDNS#">Dynamic DNS section of this manual</ulink>. </para>
         <para>Once you have a Domain Name, you can tell your FreedomBox to use it by setting the Domain Name in the System <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Configure#">Configuration</ulink>. </para>
-        <itemizedlist>
-          <listitem>
-            <para>Note: After changing your Domain Name, the Chat Server (XMPP) page may show that the service is not running. After a minute or so, it should be up and running again. </para>
-          </listitem>
-        </itemizedlist>
+        <para><emphasis role="strong">Note</emphasis>: After changing your Domain Name, the Chat Server (XMPP) page may show that the service is not running. After a minute or so, it should be up and running again. </para>
         <para>Please note that <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/PageKite#">PageKite</ulink> does not support the XMPP protocol at this time. </para>
       </section>
       <section>
-        <title>Registering XMPP users through SSO</title>
+        <title>Registering FreedomBox users to use XMPP</title>
         <para>Currently, all users created through FreedomBox will be able to login to the XMPP server. You can add new users through the System Users and Groups module. It does not matter which Groups are selected for the new user. </para>
-      </section>
-      <section>
-        <title>Using the web client</title>
-        <para>After the XMPP module install completes, the JSXC web client for XMPP can be accessed at <code>https://&lt;your freedombox&gt;/plinth/apps/xmpp/jsxc/</code>. It will automatically check the BOSH server connection to the configured domain name. </para>
-      </section>
-      <section>
-        <title>Using a desktop or mobile client</title>
-        <para><ulink url="https://xmpp.org/software/clients.html">XMPP clients</ulink> are available for various desktop and mobile platforms. </para>
       </section>
       <section>
         <title>Port Forwarding</title>
@@ -1357,21 +1386,56 @@ turn_allow_guests: True]]></screen>
           <listitem>
             <para>TCP 5269 (server-to-server) </para>
           </listitem>
+          <listitem>
+            <para>TCP 5280 (?) </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Compatible clients</title>
+        <itemizedlist>
+          <listitem>
+            <para>FreedomBox provides a web client: <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/JSXC#">JSXC</ulink>. </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://xmpp.org/software/clients.html">XMPP clients</ulink> are available for various desktop and mobile platforms. </para>
+          </listitem>
         </itemizedlist>
       </section>
     </section>
     <section>
       <title>GitWeb (Simple Git Hosting)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/GitWeb?action=AttachFile&amp;do=get&amp;target=Gitweb-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Gitweb icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 19.19 </para>
       <para>Git is a distributed version-control system for tracking changes in source code during software development. GitWeb provides a web interface to Git repositories. You can browse history and content of source code, use search to find relevant commits and code. You can also clone repositories and upload code changes with a command-line Git client or with multiple available graphical clients. And you can share your code with people around the world. </para>
       <para>To learn more on how to use Git visit <ulink url="https://git-scm.com/docs/gittutorial">Git tutorial</ulink>. </para>
-      <para><emphasis role="strong">Available since version:</emphasis> 19.19 </para>
       <section>
         <title>Managing the repositories</title>
         <para>After installation of GitWeb, a new repository can be created. It can be marked as <emphasis>private</emphasis> to limit access. </para>
       </section>
       <section>
         <title>Access</title>
-        <para>GitWeb can be accessed after installation e.g. by the web client through <ulink url="https://&lt;my_freedombox_name&gt;/gitweb"/> </para>
+        <para>GitWeb can be accessed after installation e.g. by the web client through <code>https://&lt;my_freedombox_name&gt;/gitweb</code>. </para>
       </section>
       <section>
         <title>HTTP basic auth</title>
@@ -1381,7 +1445,7 @@ turn_allow_guests: True]]></screen>
           <ulink url="https://username:password@my.freedombox.rocks/gitweb/myrepo"/>
         </para>
         <para>Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.</para>
-        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's .git/config file. For this reason, you should create a FreedomBox user who has only access to the gitweb and never use an admin account. </para>
+        <para><emphasis role="strong">Note:</emphasis> If using this method, your password will be stored in plain text in the local repository's <code>.git/config</code> file. For this reason, you should create a FreedomBox user who has only access to the gitweb and never use an admin account. </para>
       </section>
       <section>
         <title>Mirroring</title>
@@ -1390,6 +1454,27 @@ turn_allow_guests: True]]></screen>
     </section>
     <section>
       <title>I2P (Anonymity Network)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/I2P?action=AttachFile&amp;do=get&amp;target=I2P-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>I2P icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <section>
         <title>About I2P</title>
         <para>The Invisible Internet Project is an anonymous network layer intended to protect communication from censorship and surveillance. I2P provides anonymity by sending encrypted traffic through a volunteer-run network distributed around the world. </para>
@@ -1419,6 +1504,28 @@ turn_allow_guests: True]]></screen>
     </section>
     <section>
       <title>Ikiwiki (Wiki and Blog)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Ikiwiki?action=AttachFile&amp;do=get&amp;target=Ikiwiki-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Ikiwiki icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Avaiable since</emphasis>: version 0.5 </para>
       <section>
         <title>What is Ikiwiki?</title>
         <para>Ikiwiki converts wiki pages into HTML pages suitable for publishing on a website. It provides particularly blogging, podcasting, calendars and a large selection of plugins. </para>
@@ -1505,7 +1612,29 @@ turn_allow_guests: True]]></screen>
       </section>
     </section>
     <section>
-      <title>infinoted (Gobby Server)</title>
+      <title>Infinoted (Gobby Server)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Infinoted?action=AttachFile&amp;do=get&amp;target=Infinoted-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Infinoted icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.5 </para>
       <para>infinoted is a server for Gobby, a collaborative text editor. </para>
       <para>To use it, <ulink url="https://gobby.github.io/">download Gobby</ulink>, desktop client and install it. Then start Gobby and select "Connect to Server" and enter your FreedomBox's domain name. </para>
       <section>
@@ -1519,11 +1648,119 @@ turn_allow_guests: True]]></screen>
       </section>
     </section>
     <section>
+      <title>JSXC (Web Chat Client)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/JSXC?action=AttachFile&amp;do=get&amp;target=JSXC-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>JSXC icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.11.0 </para>
+      <para>JSXC is a web chat client. It can be used to join compatible chat servers.  </para>
+      <para>FreedomBox offers both parties, a server (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/ejabberd#">ejabberd</ulink>) and a web client (JSXC), from its web interface. </para>
+      <section>
+        <title>Technical Specifications</title>
+        <para>JSXC features the XMPP over <ulink url="https://en.wikipedia.org/wiki/BOSH_(protocol)">BOSH</ulink> protocol and is implemented in HTML5. </para>
+        <para>XMPP is a federated server-client protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server. </para>
+        <para>XMPP can also be used for voice and video calls, if supported by the clients. </para>
+      </section>
+      <section>
+        <title>Installation</title>
+        <para>You can install JSXC through its icon in the Apps section of FreedomBox web interface. The ejabberd (XMPP server) icon also offers to launch the web client (and installs JSXC if not yet installed). </para>
+      </section>
+      <section>
+        <title>Usage</title>
+        <para>After the JSXC module install completes, the JSXC  can be accessed through its icon in the Apps section of FreedomBox web interface. The ejabberd (XMPP server) icon also offers to launch the web client. Both will redirect you to <code>https://&lt;your freedombox&gt;/plinth/apps/xmpp/jsxc/</code>. </para>
+        <para>To use it, you need to input the domain name of the server to connect to. It will automatically check the BOSH server connection to the given domain name as you type it. </para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colname="col_0"/>
+            <colspec colname="col_1"/>
+            <tbody>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="250" fileref="https://wiki.debian.org/FreedomBox/Manual/JSXC?action=AttachFile&amp;do=get&amp;target=JSXC-KO_en_V01.png"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>JSXC not connecting</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="250" fileref="https://wiki.debian.org/FreedomBox/Manual/JSXC?action=AttachFile&amp;do=get&amp;target=JSXC-ok_en_V01.png"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>JSXC connecting</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para>Check <ulink url="https://www.jsxc.org"/> for further details. </para>
+        <para>Videoconferencing and file transfer features are offered by JSXC but don't seem to work in FreedomBox yet. </para>
+      </section>
+      <section>
+        <title>Port Forwarding</title>
+        <para>If your FreedomBox is behind a router and you want to connect to other servers, you will need to set up port forwarding on your router. You should forward the following ports for XMPP: </para>
+        <itemizedlist>
+          <listitem>
+            <para>TCP 5222 (client-to-server) </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
       <title>Matrix Synapse (Chat Server)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MatrixSynapse?action=AttachFile&amp;do=get&amp;target=Matrix-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Matrix Synapse icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.14.0 </para>
       <section>
         <title>What is Matrix?</title>
         <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on FreedomBox to host large chat rooms, end-to-end encrypted communication and audio/video calls.   Matrix Synapse is a federated application where chat rooms can exist on any server and users from any server in the federated network can join them.  <ulink url="https://matrix.org/docs/guides/faq.html">Learn more</ulink> about Matrix. </para>
-        <para><emphasis role="strong">Available since:</emphasis> version 0.14.0 </para>
       </section>
       <section>
         <title>How to access your Matrix Synapse server?</title>
@@ -1582,11 +1819,32 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
     </section>
     <section>
       <title>MediaWiki (Wiki)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MediaWiki?action=AttachFile&amp;do=get&amp;target=MediaWiki-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>MediaWiki icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since:</emphasis>  version 0.20.0 </para>
       <section>
         <title>About MediaWiki</title>
         <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink> is the software that powers the Wikimedia suite of wikis. </para>
         <para>Read more about MediaWiki on <ulink url="https://en.wikipedia.org/wiki/MediaWiki">Wikipedia</ulink> </para>
-        <para><emphasis role="strong">Available since:</emphasis>  version 0.20.0 </para>
       </section>
       <section>
         <title>MediaWiki on FreedomBox</title>
@@ -1674,6 +1932,28 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
     </section>
     <section>
       <title>Minetest (Block Sandbox)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Minetest?action=AttachFile&amp;do=get&amp;target=Minetest-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Minetest icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.9 </para>
       <para>Minetest is a multiplayer infinite-world block sandbox. This module enables the Minetest server to be run on this FreedomBox, on the default port (30000). To connect to the server, a <ulink url="https://www.minetest.net/downloads/">Minetest client</ulink> is needed. </para>
       <section>
         <title>Port Forwarding</title>
@@ -1687,8 +1967,30 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
     </section>
     <section>
       <title>MiniDLNA (Simple Media Server)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MiniDLNA?action=AttachFile&amp;do=get&amp;target=MiniDLNA-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>MiniDLNA icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 19.23 </para>
       <para>MiniDLNA is a media server with the aim to be compliant with DLNA/UPnP clients. </para>
-      <para>Note: This service is available only on networks configured as "internal" zone. It is not available when connected via OpenVPN. </para>
+      <para>Note: This service is available only on networks configured as "internal" zone. It is not available when connected via <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/OpenVPN#">OpenVPN</ulink>. </para>
       <section>
         <title>What is UPnP/DLNA?</title>
         <para>Universal plug &amp; play is a set of networking protocols that allow devices within  a network such as PCs, TVs, printers etc. to seamlessly discover each other and  establish communication for data sharing. It is zero configuration protocol and  requires only a media server and a media player that are compliant with the  protocol. </para>
@@ -1762,12 +2064,33 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
     </section>
     <section>
       <title>MLDonkey (Peer-to-peer File Sharing)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/MLDonkey?action=AttachFile&amp;do=get&amp;target=MLDonkey-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>MLDonkey icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since:</emphasis>  version 0.48.0 </para>
       <section>
         <title>What is MLDonkey?</title>
         <para>MLDonkey is an open-source, multi-protocol, peer-to-peer file sharing application that runs as a back-end server application on many platforms. It can be controlled through a user interface provided by one of many separate front-ends, including a Web interface, telnet interface and over a dozen native client programs. </para>
         <para>Originally a Linux client for the eDonkey protocol, it now runs on many flavors of Unix-like, OS X, Microsoft Windows and MorphOS and supports numerous peer-to-peer protocols including ED2K (and Kademlia and Overnet), BitTorrent, DC++ and more. </para>
         <para>Read more about MLDonkey at <ulink url="http://mldonkey.sourceforge.net/Main_Page">the MLDonkey Project Wiki</ulink> </para>
-        <para><emphasis role="strong">Available since:</emphasis>  version 0.48.0 </para>
       </section>
       <section>
         <title>Screenshot</title>
@@ -1805,7 +2128,29 @@ echo "UPDATE users SET admin=1 WHERE name='@username:domainname'" | sudo sqlite3
       </section>
     </section>
     <section>
-      <title>Mumble (Voice Chat)</title>
+      <title>Mumble (Voice Chat) Server</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Mumble?action=AttachFile&amp;do=get&amp;target=Mumble-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Mumble icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.5 </para>
       <section>
         <title>What is Mumble?</title>
         <para>Mumble is a voice chat software. Primarily intended for use while gaming, it is suitable for simple talking with high audio quality, noise suppression, encrypted communication, public/private-key authentication by default, and "wizards" to configure your microphone for instance. A user can be marked as a "priority speaker" within a channel. </para>
@@ -1839,6 +2184,28 @@ echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc
     </section>
     <section>
       <title>OpenVPN (Virtual Private Network)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/OpenVPN?action=AttachFile&amp;do=get&amp;target=OpenVPN-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>OpenVPN icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.7 </para>
       <section>
         <title>What is OpenVPN?</title>
         <para>OpenVPN provides to your FreedomBox a virtual private network service. You can use this software for remote access, site-to-site VPNs and Wi-Fi security. OpenVPN includes support for dynamic IP addresses and NAT. </para>
@@ -2052,7 +2419,37 @@ $ sudo nmcli connection import type openvpn file /path/to/<USER>.ovpn]]></screen
       </section>
       <section>
         <title>Accessing internal services</title>
-        <para>After connecting to OpenVPN, you will be able to access FreedomBox services that are only meant to be accessed on internal networks. This is in addition to being able to access external services. This can be done by using the IP address 10.91.0.1 as the host name for these services. The following services are known to work: Privoxy, Tor Socks, Shadowsocks, I2P Proxy and Samba. Some services are known not to work at this time: Avahi, Bind and MiniDLNA. </para>
+        <para>After connecting to OpenVPN, you will be able to access FreedomBox services that are only meant to be accessed on internal networks. This is in addition to being able to access external services. This can be done by using the IP address 10.91.0.1 as the host name for these services. </para>
+        <para>The following services are known to <emphasis role="strong">work</emphasis>: </para>
+        <itemizedlist>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Privoxy#">Privoxy</ulink>, </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Tor#">Tor Socks</ulink>, </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Shadowsocks#">Shadowsocks</ulink>, </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/I2P#">I2P Proxy</ulink> and </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Samba#">Samba</ulink>. </para>
+          </listitem>
+        </itemizedlist>
+        <para>Some services are known <emphasis role="strong">not</emphasis> to work at this time: </para>
+        <itemizedlist>
+          <listitem>
+            <para>Avahi, </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Bind#">bind</ulink> and </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/MiniDLNA#">MiniDLNA</ulink>. </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>External Links</title>
@@ -2063,6 +2460,28 @@ $ sudo nmcli connection import type openvpn file /path/to/<USER>.ovpn]]></screen
     </section>
     <section>
       <title>Privoxy (Web Proxy)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Privoxy icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.1 </para>
       <para>A web proxy acts as a filter for incoming and outgoing web traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
       <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="https://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
       <section>
@@ -2136,6 +2555,28 @@ $ sudo nmcli connection import type openvpn file /path/to/<USER>.ovpn]]></screen
     </section>
     <section>
       <title>Quassel (IRC Client)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Quassel?action=AttachFile&amp;do=get&amp;target=Quassel-icon_en_V02.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Quassel icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.8 </para>
       <para><emphasis>Quassel</emphasis> is an IRC application that is split into two parts, a "core" and a "client". This allows the core to remain connected to IRC servers, and to continue receiving messages, even when the client is disconnected. FreedomBox can run the Quassel core service keeping you always online and one or more Quassel clients from a desktop or a mobile device can be used to connect and disconnect from it. </para>
       <section>
         <title>Why run Quassel?</title>
@@ -2491,6 +2932,28 @@ $ sudo nmcli connection import type openvpn file /path/to/<USER>.ovpn]]></screen
     </section>
     <section>
       <title>Radicale (Calendar and Addressbook)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=Radicale-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Radicale icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.9 </para>
       <para>With Radicale, you can synchronize your personal calendars, ToDo lists, and addressbooks with your various computers, tablets, and smartphones, and share them with friends, without letting third parties know your personal schedule or contacts. </para>
       <section>
         <title>Why should I run Radicale?</title>
@@ -2824,7 +3287,7 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
       </section>
     </section>
     <section>
-      <title>repro (SIP Server)</title>
+      <title>Repro (SIP Server)</title>
       <caution>
         <para>
           <emphasis role="strong">App removed</emphasis>
@@ -2834,6 +3297,28 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Roundcube (Email Client)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Roundcube?action=AttachFile&amp;do=get&amp;target=Roundcube-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Roundcube icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.5 </para>
       <section>
         <title>What is Roundcube?</title>
         <para>Roundcube is a browser-based multilingual email client with an application-like user interface. Roundcube is using the Internet Message Access Protocol (IMAP) to access e-mail on a remote mail server. It supports MIME to send files, and provides particularly address book, folder management, message searching and spell checking. </para>
@@ -2869,11 +3354,32 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Samba (Network File Storage)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Samba?action=AttachFile&amp;do=get&amp;target=Samba-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Samba icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 19.22 </para>
       <para>Samba lets you have shared folders over the local network that can be used from multiple computers running different operating systems. We refer to these shared folders as "shares".  </para>
       <para>You can have a personal folder shared between your own devices (Home share), a folder shared with a trusted group (Group share) or one that is shared with every device on the network (Open share). </para>
       <para>Samba lets you to treat a share as if it's a local folder on your computer. However, shares are available only on the local network. </para>
       <para>To learn more about Samba, please refer to the <ulink url="https://wiki.samba.org/index.php/User_Documentation">user documentation</ulink> on their wiki. </para>
-      <para><emphasis>Available since version:</emphasis>  19.22 </para>
       <section>
         <title>Using Samba</title>
         <para>After installation, you can choose which disks to use for sharing. Enabled shares are accessible in the file manager on your computer at location \\freedombox (on Windows) or smb://freedombox.local (on Linux and Mac). There are three types of shares you can choose from: </para>
@@ -2902,11 +3408,32 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Searx (Web Search)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Searx?action=AttachFile&amp;do=get&amp;target=Searx-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Searx icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>:  version 0.24.0 </para>
       <section>
         <title>About Searx</title>
         <para>Searx is a <ulink url="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</ulink>. A metasearch engine aggregates the results from various search engines and presents them in a unified interface. </para>
         <para>Read more about Searx on their <ulink url="https://asciimoo.github.io/searx/">official website</ulink>. </para>
-        <para><emphasis role="strong">Available since:</emphasis>  version 0.24.0 </para>
       </section>
       <section>
         <title>Screenshot</title>
@@ -2963,10 +3490,31 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Shadowsocks (SOCKS5 proxy)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Shadowsocks?action=AttachFile&amp;do=get&amp;target=Shadowsocks-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Shadowsocks icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.18.0 </para>
       <section>
         <title>What is Shadowsocks?</title>
         <para><ulink url="https://shadowsocks.org/en/index.html">Shadowsocks</ulink> is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your FreedomBox can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server. </para>
-        <para><emphasis role="strong">Note:</emphasis> Shadowsocks is available in FreedomBox starting with version 0.18. </para>
       </section>
       <section>
         <title>Using the Shadowsocks client?</title>
@@ -2992,9 +3540,89 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
       </section>
     </section>
     <section>
+      <title>Sharing (File Publishing)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Sharing?action=AttachFile&amp;do=get&amp;target=Sharing-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Sharing icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.25 </para>
+      <section>
+        <title>What Is Sharing App?</title>
+        <para>Sharing app allows you to share content over the web. Shared content can be individual files or whole directories. </para>
+        <para>The content can be shared publicly or restricted to the users of listed allowed groups. Allowed users will be able to access the shared content from their web browser at <code>https://your_freedombox/share/content_name</code>. Users not belonging to any of the allowed groups won't see or access the content through this mechanism. </para>
+      </section>
+      <section>
+        <title>Setting Up Shares</title>
+        <para>For the users to access the content through their browser it must exist and have a share. A share is an entry in the Sharing app relating: </para>
+        <itemizedlist>
+          <listitem>
+            <para>the Name (an thereby the URL) with which the users will ask for the content, </para>
+          </listitem>
+          <listitem>
+            <para>the Disk Path of the content to be served and </para>
+          </listitem>
+          <listitem>
+            <para>the sharing mode. On restricted mode, it also has the list of allowed groups. </para>
+          </listitem>
+        </itemizedlist>
+        <para>Many shares can coexist in the same server. </para>
+        <para>Only admins can create, edit or remove shares. They'll find the Sharing app in the Apps section of FreedomBox web interface. Sharing app is an easy to use web application with an evident interface. </para>
+        <para>Each share has its own sharing mode (public or restricted) setting. Only groups recognized by FreedomBox service can be combined in the list of allowed groups. Groups created in the CLI won't be offered by the Sharing app.  </para>
+      </section>
+      <section>
+        <title>Providing/Updating Content</title>
+        <para>The content can be created before or after the share is created and they can be updated independently. </para>
+        <para>The content doesn't need to be provided by an admin either. Any user with write access to the share's disk path can create or update it. </para>
+        <para>Multiple shares might point to the same content. </para>
+        <para>If you are user of FreedomBox and your admin refuses to create shares for you, and you don't need to restrict the access to your content, you still can fall back to the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Apache_userdir#">User Websites</ulink> mechanism or the P2P networks (<ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Deluge#">Deluge</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Transmission#">Transmission</ulink> for Torrent, or <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/MLDonkey#">MLDonkey</ulink>) to publish your files. </para>
+      </section>
+      <section>
+        <title>Technicalities</title>
+        <para>Sharing will share the content using the built-in Apache web server. </para>
+      </section>
+    </section>
+    <section>
       <title>Syncthing (File Synchronization)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Syncthing?action=AttachFile&amp;do=get&amp;target=Syncthing-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Syncthing icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.14 </para>
       <para>With <emphasis>Syncthing</emphasis> installed on your FreedomBox, you can synchronize content from other devices to your FreedomBox and vice-versa. For example, you can keep the photos taken on your mobile phone synchronized to your FreedomBox. </para>
-      <para><emphasis>Available since version:</emphasis>  0.14 </para>
       <para>Users should keep in mind that Syncthing is a peer-to-peer synchronization solution, not a client-server one. This means that the FreedomBox isn't really the server and your other devices clients. They're all devices from Syncthing's perspective. You can use Syncthing to synchronize your files between any of your devices. The advantage that FreedomBox provides is that it is a server that's always running. Suppose you want your photos on your phone to be synchronized to your laptop, if you simply sync the photos to the FreedomBox, the laptop can get them from the FreedomBox whenever it comes online the next time. You don't have to be worried about your other devices being online for synchronization. If your FreedomBox is one of the devices set up with your Syncthing shared folder, you can rest assured that your other devices will eventually get the latest files once they come online. </para>
       <para>After installation follow the instructions in the <ulink url="https://docs.syncthing.net/intro/getting-started.html">getting started of the Syncthing project</ulink>.  Syncthing allows individual folders to be selectively shared with other devices. Devices must be paired up before sharing by scanning QR codes or entering the device ids manually. Syncthing has a discovery service for easily identifying the other devices on the same network having Syncthing installed. </para>
       <para>In order to access to the web client of the Syncthing instance running on your FreedomBox, use the path <emphasis>/syncthing</emphasis>. This web client is currently only accessible to the users of the FreedomBox that have administrator privileges, though it might be accessible to all FreedomBox users in a future release. </para>
@@ -3033,6 +3661,28 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Tiny Tiny RSS (News Feed Reader)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/TinyTinyRSS?action=AttachFile&amp;do=get&amp;target=TinyTinyRSS-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Tiny Tiny RSS icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: version 0.9 </para>
       <para>Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to allow reading news from any location, while feeling as close to a real desktop application as possible. </para>
       <para>Any user created through FreedomBox web interface will be able to login and use this app.  Each user has their own feeds, state and preferences. </para>
       <section>
@@ -3188,6 +3838,28 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Tor (Anonymity Network)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Tor?action=AttachFile&amp;do=get&amp;target=Tor-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Tor icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: versión 0.3 </para>
       <section>
         <title>What is Tor?</title>
         <para>Tor is a network of servers operated by volunteers. It allows users of these servers to improve their privacy and security while surfing on the Internet. You and your friends are able to access to your FreedomBox via Tor network without revealing its IP address. Activating Tor application on your FreedomBox, you will be able to offer remote services (chat, wiki, file sharing, etc...) without showing your location. This application will give you a better protection than a public web server because you will be less exposed to intrusive people on the web. </para>
@@ -3303,6 +3975,28 @@ if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-d
     </section>
     <section>
       <title>Transmission (BitTorrent Web Client)</title>
+      <informaltable>
+        <tgroup cols="1">
+          <colspec colname="col_0"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Transmission?action=AttachFile&amp;do=get&amp;target=Transmission-icon_en_V01.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Transmission icon</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para><emphasis role="strong">Available since</emphasis>: versión 0.5 </para>
       <section>
         <title>What is Transmission ?</title>
         <para>BitTorrent is a communications protocol using peer-to-peer (P2P) file sharing. It is not anonymous; you should assume that others can see what files you are sharing. There are two BitTorrent web clients available in FreedomBox: Transmission and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Deluge#">Deluge</ulink>. They have similar features, but you may prefer one over the other. </para>
@@ -10484,7 +11178,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
       <section>
-        <title>FreedomBox 20.13 (2020-07-13)</title>
+        <title>FreedomBox 20.13 (2020-07-18)</title>
         <section>
           <title>Highlights</title>
           <itemizedlist>
@@ -10503,7 +11197,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
               <para>backups: Allow remote repository usernames to start with numbers </para>
             </listitem>
             <listitem>
-              <para>locale: Update translations for Chinese (Simplified), Hungarian, Norwegian Bokmål </para>
+              <para>locale: Update translations for Chinese (Simplified), Hungarian, Kannada, Norwegian Bokmål, Spanish, Swedish </para>
             </listitem>
             <listitem>
               <para>security: Move backports notice to security page </para>
