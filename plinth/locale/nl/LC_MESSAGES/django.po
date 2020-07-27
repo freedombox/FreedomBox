@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 18:32-0400\n"
+"POT-Creation-Date: 2020-07-27 17:41-0400\n"
 "PO-Revision-Date: 2020-01-17 21:21+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -138,11 +138,11 @@ msgstr "Service Discovery"
 msgid "Local Network Domain"
 msgstr "Lokaal netwerkdomein"
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr "Met back-ups kunt u back-uparchieven maken en beheren."
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr "Back-ups"
 
@@ -4961,43 +4961,43 @@ msgstr "Gedeelde map toegevoegd."
 msgid "Action"
 msgstr "Acties"
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Share"
 msgid "Open Share"
 msgstr "Gedeelde map toevoegen"
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Share"
 msgid "Group Share"
 msgstr "Gedeelde map toevoegen"
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 #, fuzzy
 #| msgid "Homepage"
 msgid "Home Share"
 msgstr "Startpagina"
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 #, fuzzy
 #| msgid "Share deleted."
 msgid "Share enabled."
 msgstr "Gedeelde map verwijderd."
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error enabling share: {error_message}"
 msgstr "Fout bij het installeren van de toepassing: {error}"
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 #, fuzzy
 #| msgid "Share edited."
 msgid "Share disabled."
 msgstr "Gedeelde map bewerkt."
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error disabling share: {error_message}"
@@ -5095,21 +5095,29 @@ msgstr ""
 "SSH server en andere diensten die door wachtwoorden worden afgeschermd."
 
 #: plinth/modules/security/templates/security.html:11
-msgid "Security Notice"
-msgstr "Veiligheidsmededeling"
-
 #: plinth/modules/security/templates/security.html:13
-msgid ""
-"Backports are enabled. Please note that packages from the backports "
-"repository do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
-
-#: plinth/modules/security/templates/security.html:23
-#: plinth/modules/security/templates/security.html:25
 msgid "Show security report"
 msgstr "Beveiligingsrapport weergeven"
+
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are enabled."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid ""
+"This will allow a very limited set of software, including FreedomBox "
+"service, to be updated to receive newer features regularly instead of once "
+"every 2 years or so. Note that packages with frequent feature updates do not "
+"have support from Debian Security Team. They are instead maintained by "
+"contributors to Debian and the FreedomBox community."
+msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:74
@@ -6370,54 +6378,38 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#, fuzzy
-#| msgid "Backups"
-msgid "Backports"
-msgstr "Back-ups"
-
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
-#, python-format
 msgid ""
-"Backports can be activated. This will allow a limited set of software, "
-"including FreedomBox service, to be upgraded to newer versions from Debian "
-"%(dist)s-backports repository."
+"Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:21
-msgid ""
-"Please note that backports packages do not have security support from "
-"Debian. However, they are maintained on a best-effort basis by contributors "
-"in Debian and FreedomBox community."
-msgstr ""
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
 #, python-format
 msgid ""
-"<strong>Warning!</strong> Once backports are activated, they cannot be "
-"easily deactivated. You may wish to take a snapshot using <a href="
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-#, fuzzy
-#| msgid "Activate"
-msgid "Activate backports"
-msgstr "Activeer"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
-msgid "Manual update"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#, fuzzy
+#| msgid "Manual update"
+msgid "Manual Update"
 msgstr "Handmatige update"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Updating..."
 msgstr "Bezig met bijwerken…"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:59
+#: plinth/modules/upgrades/templates/upgrades_configure.html:66
 msgid "Update now"
 msgstr "Nu bijwerken"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:65
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 #, fuzzy
 #| msgid ""
 #| "<strong>This may take a long time to complete</strong>. During an update, "
@@ -6434,32 +6426,32 @@ msgstr ""
 "tijdelijk niet beschikbaar zijn, en een foutmelding weergeven.  Vernieuw in "
 "dat geval de pagina om door te gaan."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:79
+#: plinth/modules/upgrades/templates/upgrades_configure.html:86
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:56
+#: plinth/modules/upgrades/views.py:54
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Fout bij het instellen van automatische upgrades: {error}"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:58
 msgid "Automatic upgrades enabled"
 msgstr "Automatisch bijwerken ingeschakeld"
 
-#: plinth/modules/upgrades/views.py:63
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades disabled"
 msgstr "Automatisch bijwerken uitgeschakeld"
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:76
 msgid "Upgrade process started."
 msgstr "Upgrade-proces gestart."
 
-#: plinth/modules/upgrades/views.py:80
+#: plinth/modules/upgrades/views.py:78
 msgid "Starting upgrade failed."
 msgstr "Starten van de upgrade is mislukt."
 
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:87
 #, fuzzy
 #| msgid "Backups"
 msgid "Backports activated."
@@ -7442,6 +7434,19 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Security Notice"
+#~ msgstr "Veiligheidsmededeling"
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "Backports"
+#~ msgstr "Back-ups"
+
+#, fuzzy
+#~| msgid "Activate"
+#~ msgid "Activate backports"
+#~ msgstr "Activeer"
 
 #~ msgid "Restoring"
 #~ msgstr "Backup aan het terugzetten"

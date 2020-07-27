@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 18:32-0400\n"
+"POT-Creation-Date: 2020-07-27 17:41-0400\n"
 "PO-Revision-Date: 2020-07-13 22:29+0000\n"
 "Last-Translator: Tang Zongxun <tangzongxun@hotmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -133,11 +133,11 @@ msgstr "服务发现"
 msgid "Local Network Domain"
 msgstr "本地网络领域"
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr "备份允许创建和管理备份存档。"
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr "备份"
 
@@ -4935,43 +4935,43 @@ msgstr "共享"
 msgid "Action"
 msgstr "行动"
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Service"
 msgid "Open Share"
 msgstr "添加服务"
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Service"
 msgid "Group Share"
 msgstr "添加服务"
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 #, fuzzy
 #| msgid "Homepage"
 msgid "Home Share"
 msgstr "主页"
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Share enabled."
 msgstr "{name} 已删除。"
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error enabling share: {error_message}"
 msgstr "安装应用程序出错：{error}"
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 #, fuzzy
 #| msgid "Shared"
 msgid "Share disabled."
 msgstr "共享"
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error disabling share: {error_message}"
@@ -5065,25 +5065,31 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:11
-#, fuzzy
-#| msgid "Security"
-msgid "Security Notice"
-msgstr "安全"
-
 #: plinth/modules/security/templates/security.html:13
-msgid ""
-"Backports are enabled. Please note that packages from the backports "
-"repository do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
-
-#: plinth/modules/security/templates/security.html:23
-#: plinth/modules/security/templates/security.html:25
 #, fuzzy
 #| msgid "Security"
 msgid "Show security report"
 msgstr "安全"
+
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are enabled."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid ""
+"This will allow a very limited set of software, including FreedomBox "
+"service, to be updated to receive newer features regularly instead of once "
+"every 2 years or so. Note that packages with frequent feature updates do not "
+"have support from Debian Security Team. They are instead maintained by "
+"contributors to Debian and the FreedomBox community."
+msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:74
@@ -6339,58 +6345,40 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#, fuzzy
-#| msgid "Backups"
-msgid "Backports"
-msgstr "备份"
-
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
-#, python-format
 msgid ""
-"Backports can be activated. This will allow a limited set of software, "
-"including FreedomBox service, to be upgraded to newer versions from Debian "
-"%(dist)s-backports repository."
+"Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:21
-msgid ""
-"Please note that backports packages do not have security support from "
-"Debian. However, they are maintained on a best-effort basis by contributors "
-"in Debian and FreedomBox community."
-msgstr ""
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
 #, python-format
 msgid ""
-"<strong>Warning!</strong> Once backports are activated, they cannot be "
-"easily deactivated. You may wish to take a snapshot using <a href="
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-#, fuzzy
-#| msgid "Activate"
-msgid "Activate backports"
-msgstr "激活"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
 #, fuzzy
 #| msgid "Last update"
-msgid "Manual update"
+msgid "Manual Update"
 msgstr "最后一次更新"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:59
+#: plinth/modules/upgrades/templates/upgrades_configure.html:66
 #, fuzzy
 #| msgid "Update"
 msgid "Update now"
 msgstr "更新"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:65
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 #, fuzzy
 #| msgid ""
 #| "Depending on the number of packages to install, this may take a long time "
@@ -6406,32 +6394,32 @@ msgstr ""
 "装其它软件包。升级期间，此 web 界面可能暂时不可用并显示错误消息。刷新页面后，"
 "可以继续。"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:79
+#: plinth/modules/upgrades/templates/upgrades_configure.html:86
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:56
+#: plinth/modules/upgrades/views.py:54
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "配置无人参与升级时错误：{error}"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:58
 msgid "Automatic upgrades enabled"
 msgstr "已启用自动升级"
 
-#: plinth/modules/upgrades/views.py:63
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades disabled"
 msgstr "已禁用自动升级"
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:76
 msgid "Upgrade process started."
 msgstr "升级过程开始。"
 
-#: plinth/modules/upgrades/views.py:80
+#: plinth/modules/upgrades/views.py:78
 msgid "Starting upgrade failed."
 msgstr "开始升级失败。"
 
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:87
 #, fuzzy
 #| msgid "Create User"
 msgid "Backports activated."
@@ -7433,6 +7421,21 @@ msgstr "已完成 %(percentage)s%%"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#, fuzzy
+#~| msgid "Security"
+#~ msgid "Security Notice"
+#~ msgstr "安全"
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "Backports"
+#~ msgstr "备份"
+
+#, fuzzy
+#~| msgid "Activate"
+#~ msgid "Activate backports"
+#~ msgstr "激活"
 
 #~ msgid "Restoring"
 #~ msgstr "恢复中"

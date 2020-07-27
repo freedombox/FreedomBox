@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 18:32-0400\n"
+"POT-Creation-Date: 2020-07-27 17:41-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,11 +126,11 @@ msgstr ""
 msgid "Local Network Domain"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr ""
 
@@ -4347,32 +4347,32 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 msgid "Open Share"
 msgstr ""
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 msgid "Group Share"
 msgstr ""
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 msgid "Home Share"
 msgstr ""
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 msgid "Share enabled."
 msgstr ""
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, python-brace-format
 msgid "Error enabling share: {error_message}"
 msgstr ""
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 msgid "Share disabled."
 msgstr ""
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, python-brace-format
 msgid "Error disabling share: {error_message}"
 msgstr ""
@@ -4457,20 +4457,28 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:11
-msgid "Security Notice"
-msgstr ""
-
 #: plinth/modules/security/templates/security.html:13
-msgid ""
-"Backports are enabled. Please note that packages from the backports "
-"repository do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
+msgid "Show security report"
 msgstr ""
 
-#: plinth/modules/security/templates/security.html:23
-#: plinth/modules/security/templates/security.html:25
-msgid "Show security report"
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are enabled."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid ""
+"This will allow a very limited set of software, including FreedomBox "
+"service, to be updated to receive newer features regularly instead of once "
+"every 2 years or so. Note that packages with frequent feature updates do not "
+"have support from Debian Security Team. They are instead maintained by "
+"contributors to Debian and the FreedomBox community."
 msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
@@ -5550,82 +5558,68 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-msgid "Backports"
-msgstr ""
-
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
-#, python-format
 msgid ""
-"Backports can be activated. This will allow a limited set of software, "
-"including FreedomBox service, to be upgraded to newer versions from Debian "
-"%(dist)s-backports repository."
+"Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:21
-msgid ""
-"Please note that backports packages do not have security support from "
-"Debian. However, they are maintained on a best-effort basis by contributors "
-"in Debian and FreedomBox community."
-msgstr ""
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
 #, python-format
 msgid ""
-"<strong>Warning!</strong> Once backports are activated, they cannot be "
-"easily deactivated. You may wish to take a snapshot using <a href="
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-msgid "Activate backports"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
+msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
-msgid "Manual update"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+msgid "Manual Update"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:59
+#: plinth/modules/upgrades/templates/upgrades_configure.html:66
 msgid "Update now"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:65
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:79
+#: plinth/modules/upgrades/templates/upgrades_configure.html:86
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:56
+#: plinth/modules/upgrades/views.py:54
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:58
 msgid "Automatic upgrades enabled"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:63
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades disabled"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:76
 msgid "Upgrade process started."
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:80
+#: plinth/modules/upgrades/views.py:78
 msgid "Starting upgrade failed."
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:87
 msgid "Backports activated."
 msgstr ""
 

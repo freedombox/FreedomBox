@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 18:32-0400\n"
+"POT-Creation-Date: 2020-07-27 17:41-0400\n"
 "PO-Revision-Date: 2020-06-24 11:41+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -135,11 +135,11 @@ msgstr "Zjišťování služby"
 msgid "Local Network Domain"
 msgstr "Doména místní sítě"
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr "Zálohy umožňují vytváření a správu zálohových archivů."
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr "Zálohy"
 
@@ -5025,43 +5025,43 @@ msgstr "Sdílení přidáno."
 msgid "Action"
 msgstr "Akce"
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Share"
 msgid "Open Share"
 msgstr "Přidat sdílení"
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Share"
 msgid "Group Share"
 msgstr "Přidat sdílení"
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 #, fuzzy
 #| msgid "Homepage"
 msgid "Home Share"
 msgstr "Domovská stránka"
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 #, fuzzy
 #| msgid "Share deleted."
 msgid "Share enabled."
 msgstr "Sdílení smazáno."
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, fuzzy, python-brace-format
 #| msgid "Error ejecting device: {error_message}"
 msgid "Error enabling share: {error_message}"
 msgstr "Chyba při vysouvání zařízení: {error_message}"
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 #, fuzzy
 #| msgid "Share edited."
 msgid "Share disabled."
 msgstr "Sdílení upraveno."
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, fuzzy, python-brace-format
 #| msgid "Error ejecting device: {error_message}"
 msgid "Error disabling share: {error_message}"
@@ -5159,31 +5159,29 @@ msgstr ""
 "ověření heslem."
 
 #: plinth/modules/security/templates/security.html:11
-msgid "Security Notice"
-msgstr "Výstraha ohledně zabezpečení"
-
 #: plinth/modules/security/templates/security.html:13
-#, fuzzy
-#| msgid ""
-#| "You are using packages from Debian backports. Please note that these "
-#| "packages do not have security support from Debian. However, they are "
-#| "maintained on a best-effort basis by contributors in Debian and "
-#| "FreedomBox community."
-msgid ""
-"Backports are enabled. Please note that packages from the backports "
-"repository do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
-"Používáte balíčky z Debian backports. Mějte na paměti, že bezpečnostní tým "
-"projektu Debian se nezabývá opravami zabezpečení těchto balíčků. Nicméně "
-"jsou spravovány na základě nejlepší snahy přispěvateli z komunit Debian a "
-"FreedomBox."
-
-#: plinth/modules/security/templates/security.html:23
-#: plinth/modules/security/templates/security.html:25
 msgid "Show security report"
 msgstr "Zobrazit výkaz o zabezpečení"
+
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are enabled."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid ""
+"This will allow a very limited set of software, including FreedomBox "
+"service, to be updated to receive newer features regularly instead of once "
+"every 2 years or so. Note that packages with frequent feature updates do not "
+"have support from Debian Security Team. They are instead maintained by "
+"contributors to Debian and the FreedomBox community."
+msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:74
@@ -6451,64 +6449,38 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#, fuzzy
-#| msgid "Backups"
-msgid "Backports"
-msgstr "Zálohy"
-
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
-#, python-format
 msgid ""
-"Backports can be activated. This will allow a limited set of software, "
-"including FreedomBox service, to be upgraded to newer versions from Debian "
-"%(dist)s-backports repository."
+"Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:21
-#, fuzzy
-#| msgid ""
-#| "You are using packages from Debian backports. Please note that these "
-#| "packages do not have security support from Debian. However, they are "
-#| "maintained on a best-effort basis by contributors in Debian and "
-#| "FreedomBox community."
-msgid ""
-"Please note that backports packages do not have security support from "
-"Debian. However, they are maintained on a best-effort basis by contributors "
-"in Debian and FreedomBox community."
-msgstr ""
-"Používáte balíčky z Debian backports. Mějte na paměti, že bezpečnostní tým "
-"projektu Debian se nezabývá opravami zabezpečení těchto balíčků. Nicméně "
-"jsou spravovány na základě nejlepší snahy přispěvateli z komunit Debian a "
-"FreedomBox."
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
 #, python-format
 msgid ""
-"<strong>Warning!</strong> Once backports are activated, they cannot be "
-"easily deactivated. You may wish to take a snapshot using <a href="
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-#, fuzzy
-#| msgid "Activate"
-msgid "Activate backports"
-msgstr "Aktivovat"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
-msgid "Manual update"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#, fuzzy
+#| msgid "Manual update"
+msgid "Manual Update"
 msgstr "Ruční aktualizace"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Updating..."
 msgstr "Aktualizace…"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:59
+#: plinth/modules/upgrades/templates/upgrades_configure.html:66
 msgid "Update now"
 msgstr "Aktualizovat nyní"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:65
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 #, fuzzy
 #| msgid ""
 #| "<strong>This may take a long time to complete</strong>. During an update, "
@@ -6523,34 +6495,34 @@ msgstr ""
 "aktualizace není možné instalovat aplikace. Také webové rozhraní může být "
 "dočasně nedostupné a zobrazovat chybu. V takovém případě ho načtěte znovu."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:79
+#: plinth/modules/upgrades/templates/upgrades_configure.html:86
 #, fuzzy
 #| msgid "Toggle recent update logs"
 msgid "Show recent update logs"
 msgstr "Vyp/zap. záznamy událostí při nedávných aktualizacích"
 
-#: plinth/modules/upgrades/views.py:56
+#: plinth/modules/upgrades/views.py:54
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Chyba při nastavování bezobslužných aktualizací: {error}"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:58
 msgid "Automatic upgrades enabled"
 msgstr "Automatické aktualizace zapnuty"
 
-#: plinth/modules/upgrades/views.py:63
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades disabled"
 msgstr "Automatické aktualizace vypnuty"
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:76
 msgid "Upgrade process started."
 msgstr "Proces přechodu na novější verze zahájen."
 
-#: plinth/modules/upgrades/views.py:80
+#: plinth/modules/upgrades/views.py:78
 msgid "Starting upgrade failed."
 msgstr "Spouštění přechodu na novější verzi se nezdařilo."
 
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:87
 #, fuzzy
 #| msgid "Backup archives"
 msgid "Backports activated."
@@ -7536,6 +7508,52 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Security Notice"
+#~ msgstr "Výstraha ohledně zabezpečení"
+
+#, fuzzy
+#~| msgid ""
+#~| "You are using packages from Debian backports. Please note that these "
+#~| "packages do not have security support from Debian. However, they are "
+#~| "maintained on a best-effort basis by contributors in Debian and "
+#~| "FreedomBox community."
+#~ msgid ""
+#~ "Backports are enabled. Please note that packages from the backports "
+#~ "repository do not have security support from Debian. However, they are "
+#~ "maintained on a best-effort basis by contributors in Debian and "
+#~ "FreedomBox community."
+#~ msgstr ""
+#~ "Používáte balíčky z Debian backports. Mějte na paměti, že bezpečnostní "
+#~ "tým projektu Debian se nezabývá opravami zabezpečení těchto balíčků. "
+#~ "Nicméně jsou spravovány na základě nejlepší snahy přispěvateli z komunit "
+#~ "Debian a FreedomBox."
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "Backports"
+#~ msgstr "Zálohy"
+
+#, fuzzy
+#~| msgid ""
+#~| "You are using packages from Debian backports. Please note that these "
+#~| "packages do not have security support from Debian. However, they are "
+#~| "maintained on a best-effort basis by contributors in Debian and "
+#~| "FreedomBox community."
+#~ msgid ""
+#~ "Please note that backports packages do not have security support from "
+#~ "Debian. However, they are maintained on a best-effort basis by "
+#~ "contributors in Debian and FreedomBox community."
+#~ msgstr ""
+#~ "Používáte balíčky z Debian backports. Mějte na paměti, že bezpečnostní "
+#~ "tým projektu Debian se nezabývá opravami zabezpečení těchto balíčků. "
+#~ "Nicméně jsou spravovány na základě nejlepší snahy přispěvateli z komunit "
+#~ "Debian a FreedomBox."
+
+#, fuzzy
+#~| msgid "Activate"
+#~ msgid "Activate backports"
+#~ msgstr "Aktivovat"
 
 #~ msgid "Restoring"
 #~ msgstr "Obnovuje se"

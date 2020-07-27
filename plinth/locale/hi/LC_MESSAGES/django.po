@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 18:32-0400\n"
+"POT-Creation-Date: 2020-07-27 17:41-0400\n"
 "PO-Revision-Date: 2020-04-03 20:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -135,11 +135,11 @@ msgstr "सर्विस डिस्कोवरि"
 msgid "Local Network Domain"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr "बैकअपस पुरालेखागार बनाने और  प्रबंधित करने की अनुमति देता है."
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr "बैकअप"
 
@@ -4975,43 +4975,43 @@ msgstr "शेयर जोड़ा गया."
 msgid "Action"
 msgstr "एक्सआयन"
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Share"
 msgid "Open Share"
 msgstr "शेयर जोड़ें"
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Share"
 msgid "Group Share"
 msgstr "शेयर जोड़ें"
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 #, fuzzy
 #| msgid "Homepage"
 msgid "Home Share"
 msgstr "होमपेज"
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 #, fuzzy
 #| msgid "Share deleted."
 msgid "Share enabled."
 msgstr "शेयर हटाया गया."
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, fuzzy, python-brace-format
 #| msgid "Error ejecting device: {error_message}"
 msgid "Error enabling share: {error_message}"
 msgstr "एेरर इजेक्टिग्न डिवाइस: {error_message}"
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 #, fuzzy
 #| msgid "Share edited."
 msgid "Share disabled."
 msgstr "शेयर संपादित किया गया."
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, fuzzy, python-brace-format
 #| msgid "Error ejecting device: {error_message}"
 msgid "Error disabling share: {error_message}"
@@ -5105,25 +5105,31 @@ msgstr ""
 "सर्विसस को ब्रूट फोर्स ब्रेक-इन प्रयासों से सीमा होगी."
 
 #: plinth/modules/security/templates/security.html:11
-#, fuzzy
-#| msgid "Security"
-msgid "Security Notice"
-msgstr "सुरक्षा"
-
 #: plinth/modules/security/templates/security.html:13
-msgid ""
-"Backports are enabled. Please note that packages from the backports "
-"repository do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
-
-#: plinth/modules/security/templates/security.html:23
-#: plinth/modules/security/templates/security.html:25
 #, fuzzy
 #| msgid "Security"
 msgid "Show security report"
 msgstr "सुरक्षा"
+
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are enabled."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid ""
+"This will allow a very limited set of software, including FreedomBox "
+"service, to be updated to receive newer features regularly instead of once "
+"every 2 years or so. Note that packages with frequent feature updates do not "
+"have support from Debian Security Team. They are instead maintained by "
+"contributors to Debian and the FreedomBox community."
+msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:74
@@ -6372,58 +6378,40 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-#, fuzzy
-#| msgid "Backups"
-msgid "Backports"
-msgstr "बैकअप"
-
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
-#, python-format
 msgid ""
-"Backports can be activated. This will allow a limited set of software, "
-"including FreedomBox service, to be upgraded to newer versions from Debian "
-"%(dist)s-backports repository."
+"Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:21
-msgid ""
-"Please note that backports packages do not have security support from "
-"Debian. However, they are maintained on a best-effort basis by contributors "
-"in Debian and FreedomBox community."
-msgstr ""
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:29
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
 #, python-format
 msgid ""
-"<strong>Warning!</strong> Once backports are activated, they cannot be "
-"easily deactivated. You may wish to take a snapshot using <a href="
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-#, fuzzy
-#| msgid "Activate"
-msgid "Activate backports"
-msgstr "सक्रिय"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
 #, fuzzy
 #| msgid "Last update"
-msgid "Manual update"
+msgid "Manual Update"
 msgstr "अंतिम अपडेट"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:59
+#: plinth/modules/upgrades/templates/upgrades_configure.html:66
 #, fuzzy
 #| msgid "Update"
 msgid "Update now"
 msgstr "अपडेट"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:65
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 #, fuzzy
 #| msgid ""
 #| "Depending on the number of packages to install, this may take a long time "
@@ -6439,32 +6427,32 @@ msgstr ""
 "जब अपग्रेडस प्रगति पर हैं, दुसरे पैकेजस इंस्टॉल नहीं कर सकेगा. अपग्रेड करते समय, यह वेब इंटरफ़ेस "
 "शयद अस्थायी रूप से अनुपलब्ध है और एक त्रुटि दिखाएे. जारी रखने के लिए पेज रिफ्रेश करें."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:79
+#: plinth/modules/upgrades/templates/upgrades_configure.html:86
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:56
+#: plinth/modules/upgrades/views.py:54
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "अनअटेंडेड-अपग्रेडस कॉन्फ़िगर करते समय त्रुटि: {error}"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:58
 msgid "Automatic upgrades enabled"
 msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:63
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades disabled"
 msgstr "ऑटोमेटिक अपग्रेडस अक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:76
 msgid "Upgrade process started."
 msgstr "अपग्रेड प्रक्रिया शुरू हुई."
 
-#: plinth/modules/upgrades/views.py:80
+#: plinth/modules/upgrades/views.py:78
 msgid "Starting upgrade failed."
 msgstr "अपग्रेड प्रारंभ करना विफल रहा."
 
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:87
 #, fuzzy
 #| msgid "Backups"
 msgid "Backports activated."
@@ -7429,6 +7417,21 @@ msgstr "%(percentage)s%% पूर्ण"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Security"
+#~ msgid "Security Notice"
+#~ msgstr "सुरक्षा"
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "Backports"
+#~ msgstr "बैकअप"
+
+#, fuzzy
+#~| msgid "Activate"
+#~ msgid "Activate backports"
+#~ msgstr "सक्रिय"
 
 #, fuzzy
 #~| msgid "reStore"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 18:32-0400\n"
+"POT-Creation-Date: 2020-07-27 17:41-0400\n"
 "PO-Revision-Date: 2020-07-24 17:41+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
@@ -138,11 +138,11 @@ msgstr "Dienste-Erkennung"
 msgid "Local Network Domain"
 msgstr "Lokale Netzwerkdomäne"
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr "Backups ermöglicht das Erzeugen und Verwalten von Backup-Archiven."
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr "Backups"
 
@@ -5123,32 +5123,32 @@ msgstr "Freigabename"
 msgid "Action"
 msgstr "Aktion"
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 msgid "Open Share"
 msgstr "Open Share"
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 msgid "Group Share"
 msgstr "Group Share"
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 msgid "Home Share"
 msgstr "Home Share"
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 msgid "Share enabled."
 msgstr "Freigabe aktiviert."
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, python-brace-format
 msgid "Error enabling share: {error_message}"
 msgstr "Fehler beim Aktivieren der Freigabe: {error_message}"
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 msgid "Share disabled."
 msgstr "Freigabe deaktiviert."
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, python-brace-format
 msgid "Error disabling share: {error_message}"
 msgstr "Fehler beim Deaktivieren der Freigabe: {error_message}"
@@ -5246,25 +5246,29 @@ msgstr ""
 "SSH-Server und andere aktivierte, passwortgeschützte Anwendungen."
 
 #: plinth/modules/security/templates/security.html:11
-msgid "Security Notice"
-msgstr "Sicherheitshinweis"
-
 #: plinth/modules/security/templates/security.html:13
-msgid ""
-"Backports are enabled. Please note that packages from the backports "
-"repository do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
-"Backports sind aktiviert. Bitte beachten Sie, dass Pakete aus dem Backports-"
-"Repository keine Sicherheitsunterstützung von Debian haben. Sie werden "
-"jedoch von den Mitarbeitern der Debian- und FreedomBox-Community nach besten "
-"Kräften gepflegt."
-
-#: plinth/modules/security/templates/security.html:23
-#: plinth/modules/security/templates/security.html:25
 msgid "Show security report"
 msgstr "Berichte über Sicherheitslücken anzeigen"
+
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are enabled."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+msgid ""
+"This will allow a very limited set of software, including FreedomBox "
+"service, to be updated to receive newer features regularly instead of once "
+"every 2 years or so. Note that packages with frequent feature updates do not "
+"have support from Debian Security Team. They are instead maintained by "
+"contributors to Debian and the FreedomBox community."
+msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:74
@@ -6516,60 +6520,45 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Verwerfen"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:12
-msgid "Backports"
-msgstr "Backports"
-
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
-#, python-format
 msgid ""
-"Backports can be activated. This will allow a limited set of software, "
-"including FreedomBox service, to be upgraded to newer versions from Debian "
-"%(dist)s-backports repository."
+"Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
-"Backports können aktiviert werden. Dies wird es ermöglichen, eine begrenzte "
-"Menge an Software, einschließlich des FreedomBox-Dienstes, auf neuere "
-"Versionen aus dem Debian %(dist)s-Backports-Repository zu aktualisieren."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:21
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
+#, fuzzy, python-format
+#| msgid ""
+#| "<strong>Warning!</strong> Once backports are activated, they cannot be "
+#| "easily deactivated. You may wish to take a snapshot using <a href="
+#| "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgid ""
-"Please note that backports packages do not have security support from "
-"Debian. However, they are maintained on a best-effort basis by contributors "
-"in Debian and FreedomBox community."
-msgstr ""
-"Sie verwenden Pakete von Debian-Backports. Bitte beachten Sie, dass diese "
-"Pakete keine Sicherheitsunterstützung von Debian haben. Sie werden jedoch "
-"von Mitwirkenden in der Debian- und FreedomBox-Community bestmöglich "
-"gepflegt."
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:29
-#, python-format
-msgid ""
-"<strong>Warning!</strong> Once backports are activated, they cannot be "
-"easily deactivated. You may wish to take a snapshot using <a href="
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 "<strong>Warnung!</strong> Sobald Backports aktiviert sind, können sie nicht "
-"einfach deaktiviert werden. Sie können einen Snapshot mit <a href=\""
-"%(snapshot_url)s\">Storage Snapshots</a> erstellen, bevor Sie fortfahren."
+"einfach deaktiviert werden. Sie können einen Snapshot mit <a href="
+"\"%(snapshot_url)s\">Storage Snapshots</a> erstellen, bevor Sie fortfahren."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-msgid "Activate backports"
-msgstr "Backports aktivieren"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
-msgid "Manual update"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#, fuzzy
+#| msgid "Manual update"
+msgid "Manual Update"
 msgstr "Manuelles Update"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Updating..."
 msgstr "Aktualisierung läuft …"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:59
+#: plinth/modules/upgrades/templates/upgrades_configure.html:66
 msgid "Update now"
 msgstr "Jetzt aktualisieren"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:65
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -6580,32 +6569,32 @@ msgstr ""
 "Weboberfläche möglicherweise vorübergehend nicht verfügbar und zeigt einen "
 "Fehler an. In diesem Fall aktualisieren Sie die Seite, um fortzufahren."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:79
+#: plinth/modules/upgrades/templates/upgrades_configure.html:86
 msgid "Show recent update logs"
 msgstr "Letzte Update-Protokolle anzeigen"
 
-#: plinth/modules/upgrades/views.py:56
+#: plinth/modules/upgrades/views.py:54
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Fehler beim Konfigurieren von automatischen Aktualisierungen: {error}"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:58
 msgid "Automatic upgrades enabled"
 msgstr "Automatische Systemaktualisierung aktivieren"
 
-#: plinth/modules/upgrades/views.py:63
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades disabled"
 msgstr "Automatische Aktualisierungen ausgeschaltet"
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:76
 msgid "Upgrade process started."
 msgstr "Aktualisierung gestartet."
 
-#: plinth/modules/upgrades/views.py:80
+#: plinth/modules/upgrades/views.py:78
 msgid "Starting upgrade failed."
 msgstr "Starten der Aktualisierung fehlgeschlagen."
 
-#: plinth/modules/upgrades/views.py:89
+#: plinth/modules/upgrades/views.py:87
 msgid "Backports activated."
 msgstr "Backports aktiviert."
 
@@ -7548,6 +7537,46 @@ msgstr "%(percentage)s %% abgeschlossen"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Security Notice"
+#~ msgstr "Sicherheitshinweis"
+
+#~ msgid ""
+#~ "Backports are enabled. Please note that packages from the backports "
+#~ "repository do not have security support from Debian. However, they are "
+#~ "maintained on a best-effort basis by contributors in Debian and "
+#~ "FreedomBox community."
+#~ msgstr ""
+#~ "Backports sind aktiviert. Bitte beachten Sie, dass Pakete aus dem "
+#~ "Backports-Repository keine Sicherheitsunterstützung von Debian haben. Sie "
+#~ "werden jedoch von den Mitarbeitern der Debian- und FreedomBox-Community "
+#~ "nach besten Kräften gepflegt."
+
+#~ msgid "Backports"
+#~ msgstr "Backports"
+
+#~ msgid ""
+#~ "Backports can be activated. This will allow a limited set of software, "
+#~ "including FreedomBox service, to be upgraded to newer versions from "
+#~ "Debian %(dist)s-backports repository."
+#~ msgstr ""
+#~ "Backports können aktiviert werden. Dies wird es ermöglichen, eine "
+#~ "begrenzte Menge an Software, einschließlich des FreedomBox-Dienstes, auf "
+#~ "neuere Versionen aus dem Debian %(dist)s-Backports-Repository zu "
+#~ "aktualisieren."
+
+#~ msgid ""
+#~ "Please note that backports packages do not have security support from "
+#~ "Debian. However, they are maintained on a best-effort basis by "
+#~ "contributors in Debian and FreedomBox community."
+#~ msgstr ""
+#~ "Sie verwenden Pakete von Debian-Backports. Bitte beachten Sie, dass diese "
+#~ "Pakete keine Sicherheitsunterstützung von Debian haben. Sie werden jedoch "
+#~ "von Mitwirkenden in der Debian- und FreedomBox-Community bestmöglich "
+#~ "gepflegt."
+
+#~ msgid "Activate backports"
+#~ msgstr "Backports aktivieren"
 
 #~ msgid "Restoring"
 #~ msgstr "Wiederherstellen"
