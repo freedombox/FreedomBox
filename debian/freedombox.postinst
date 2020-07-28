@@ -29,7 +29,7 @@ case "$1" in
 
         if [ ! -e '/var/lib/freedombox/is-freedombox-disk-image' ]; then
             umask 377
-            cat /dev/urandom | base64 | head -c16 > /var/lib/plinth/firstboot-wizard-secret
+            echo $(cat /dev/urandom | base64 | head -c16) > /var/lib/plinth/firstboot-wizard-secret
             chown plinth:plinth /var/lib/plinth/firstboot-wizard-secret
             db_subst plinth/firstboot_wizard_secret secret $(cat /var/lib/plinth/firstboot-wizard-secret)
             db_input high plinth/firstboot_wizard_secret || true
