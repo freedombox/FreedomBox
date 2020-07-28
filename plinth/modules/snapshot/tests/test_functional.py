@@ -3,11 +3,19 @@
 Functional, browser based tests for snapshot app.
 """
 
+import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
 
 from plinth.tests import functional
 
 scenarios('snapshot.feature')
+
+
+@given('the filesystem supports snapshots')
+def is_snapshots_supported(session_browser):
+    if not _is_snapshot_supported(session_browser):
+        pytest.skip('Filesystem doesn\'t support snapshots')
+    assert True
 
 
 @given('the list of snapshots is empty')
@@ -97,6 +105,12 @@ def _get_count(browser):
     functional.visit(browser, '/plinth/sys/snapshot/manage/')
     # Subtract 1 for table header
     return len(browser.find_by_xpath('//tr')) - 1
+
+
+def _is_snapshot_supported(browser):
+    """Return whether the filesystem supports snapshots."""
+    functional.nav_to_module(browser, 'snapshot')
+    return not bool(browser.find_by_id('snapshot-not-supported'))
 
 
 def _set_configuration(browser, free_space, timeline_enabled, software_enabled,

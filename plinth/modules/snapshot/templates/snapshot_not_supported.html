@@ -7,7 +7,7 @@
 {% load i18n %}
 
 {% block configuration %}
-  <div class="alert alert-danger">
+  <div id="snapshot-not-supported" class="alert alert-danger">
     {% blocktrans trimmed with fs_types_supported|join:', ' as types_supported %}
       You have a filesystem of type <strong>{{ fs_type }}</strong>. Snapshots
       are currently only available on <strong>{{ types_supported }}</strong>

@@ -6,7 +6,8 @@ Feature: Storage Snapshots
 
 Background:
   Given I'm a logged in user
-  Given the snapshot application is installed
+  And the snapshot application is installed
+  And the filesystem supports snapshots
 
 Scenario: Create a snapshot
   Given the list of snapshots is empty
