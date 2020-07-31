@@ -9,6 +9,22 @@ from xml.sax.saxutils import escape
 import logging
 import re
 
+ICONS_DIR = 'icons'
+
+# Additional language codes, besides 'en'
+LANGUAGES = [
+    'es',
+]
+
+WIKI_ICONS = {
+    '/!\\': 'alert',
+    '(./)': 'checkmark',
+    '{X}': 'icon-error',
+    '{i}': 'icon-info',
+    '{o}': 'star_off',
+    '{*}': 'star_on',
+}
+
 
 class Element:
     """Represents an element of a MoinMoin wiki page."""
@@ -134,16 +150,25 @@ class Paragraph(Element):
         self.content += content
 
     def to_docbook(self, context=None):
-        xml = '<para>'
         if context is not None:
             context['in_paragraph'] = True
 
-        item_xml = [item.to_docbook(context) for item in self.content]
+        items_xml = [item.to_docbook(context) for item in self.content]
         if context is not None:
             context['in_paragraph'] = False
 
-        xml += ' '.join(item_xml) + ' </para>'
-        return xml
+        try:
+            xml = items_xml.pop(0)
+        except IndexError:
+            xml = ''
+
+        for item_xml in items_xml:
+            if item_xml[0] in '.,:;-_!?':
+                xml += item_xml
+            else:
+                xml += ' ' + item_xml
+
+        return f'<para>{xml}</para>'
 
 
 class Link(Element):
@@ -512,17 +537,28 @@ def parse_text(line, context=None):
 
     result = []
     while line:
+        # Icons
+        for icon_text, icon_name in WIKI_ICONS.items():
+            if line.lstrip().startswith(icon_text):
+                target = f'{ICONS_DIR}/{WIKI_ICONS[line.strip()]}.png'
+                result.append(EmbeddedAttachment(target, None, 'height=20'))
+                line = line.lstrip().replace(icon_text, '', 1)
+                break
+
+        # Smaller text
         content, line = split_formatted(line, '~-', '-~')
         if content:
             result.append(SmallerTextWarning())
             line = content + line
             # continue processing line
 
+        # Bold text
         content, line = split_formatted(line, "'''")
         if content:
             result.append(BoldText(content))
             continue
 
+        # Italic text
         content, line = split_formatted(line, "''")
         if content:
             if content.startswith('[[') and content.endswith(']]'):
@@ -545,21 +581,25 @@ def parse_text(line, context=None):
                 result.append(ItalicText(content))
                 continue
 
+        # Monospace text
         content, line = split_formatted(line, '`')
         if content:
             result.append(MonospaceText(content))
             continue
 
+        # Code text
         content, line = split_formatted(line, '{{{', '}}}')
         if content:
             result.append(CodeText(content))
             continue
 
+        # Underline text
         content, line = split_formatted(line, '__')
         if content:
             result.append(UnderlineText(content))
             continue
 
+        # Links
         content, line = split_formatted(line, '[[', ']]')
         if content:
             target, _, remaining = content.partition('|')
@@ -585,6 +625,7 @@ def parse_text(line, context=None):
             result.append(link)
             continue
 
+        # Embedded
         content, line = split_formatted(line, '{{', '}}')
         if content:
             target, _, remaining = content.partition('|')
@@ -614,6 +655,7 @@ def parse_text(line, context=None):
             result.append(link)
             continue
 
+        # Plain text and URLs
         content = re.split(r"''|`|{{|__|\[\[", line)[0]
         if content:
             line = line.replace(content, '', 1)
@@ -711,10 +753,65 @@ def parse_list(list_data, context=None):
         else:
             content = list_data.pop(0)[2]
             parsed_list.add_item(
-                ListItem([Paragraph(parse_text(content, context))],
+                ListItem(parse_wiki(content, context),
                          override_marker=override_marker))
 
     return parsed_list, list_data
+
+
+def parse_multiline_codetext(starting_line, pending_lines):
+    """Purpose: Parse a multiline preformatted text.
+
+       Design.: + Since preformatted texts and admonitions share the same mark
+                  ('{{{') we need to discard these.
+                + Intendedly ignores single-line preformatted texts.
+                + Reads remaining lines until end of codetext.
+                + Returns the parsed CodeText and the remaining lines.
+    """
+    if starting_line.strip().startswith('{{{') and '}}}' not in starting_line:
+        is_admonition = re.match(r'{{{#!wiki\s(.*)', starting_line)
+        if not is_admonition:
+            texts = []
+            while pending_lines:
+                line = pending_lines.pop(0)
+                if line.strip().startswith('}}}'):
+                    break
+                else:
+                    texts.append(line)
+
+            return CodeText('\n'.join(texts)), pending_lines
+
+    return None, pending_lines
+
+
+def parse_multiline_wiki_admonition(starting_line, pending_lines, context):
+    """Purpose: Parse a multiline wiki admonition.
+
+       Design.: + Intendedly ignores single-line wiki admonitions.
+                + Reads remaining lines until end of codetext.
+                + Returns the parsed admonition and the remaining lines.
+    """
+    if starting_line.strip().startswith('{{{') and '}}}' not in starting_line:
+        admonition = re.match(r'{{{#!wiki\s(.*)', starting_line)
+        if admonition:
+            content = []
+            paragraph = Paragraph([])
+            br = '<<BR>>'
+            while pending_lines:
+                line = pending_lines.pop(0)
+                if line == '}}}':
+                    break
+
+                paragraph.add_content(parse_text(line.rstrip(br), context))
+                if br in line:
+                    content.append(paragraph)
+                    paragraph = Paragraph([])
+
+            style = admonition.group(1)
+            content.append(paragraph)
+            return Admonition(style, content), pending_lines
+
+    return None, pending_lines
 
 
 def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
@@ -735,6 +832,8 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
 
     >>> parse_wiki('plain text')
     [Paragraph([PlainText('plain text')])]
+    >>> parse_wiki('    plain    multispaced text    ')
+    [Paragraph([PlainText('plain multispaced text')])]
     >>> parse_wiki('https://freedombox.org')
     [Paragraph([Url('https://freedombox.org')])]
     >>> parse_wiki("''italic''")
@@ -765,6 +864,25 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
     >>> parse_wiki('[[https://onionshare.org/|Onionshare]]')
     [Paragraph([Link('https://onionshare.org/', [PlainText('Onionshare')])])]
 
+    >>> parse_wiki('/!\\\\')
+    [Paragraph([EmbeddedAttachment('icons/alert.png', \
+[PlainText('icons/alert.png')], 'height=20')])]
+    >>> parse_wiki('(./)')
+    [Paragraph([EmbeddedAttachment('icons/checkmark.png', \
+[PlainText('icons/checkmark.png')], 'height=20')])]
+    >>> parse_wiki('{X}')
+    [Paragraph([EmbeddedAttachment('icons/icon-error.png', \
+[PlainText('icons/icon-error.png')], 'height=20')])]
+    >>> parse_wiki('{i}')
+    [Paragraph([EmbeddedAttachment('icons/icon-info.png', \
+[PlainText('icons/icon-info.png')], 'height=20')])]
+    >>> parse_wiki('{o}')
+    [Paragraph([EmbeddedAttachment('icons/star_off.png', \
+[PlainText('icons/star_off.png')], 'height=20')])]
+    >>> parse_wiki('{*}')
+    [Paragraph([EmbeddedAttachment('icons/star_on.png', \
+[PlainText('icons/star_on.png')], 'height=20')])]
+
     >>> parse_wiki('{{attachment:cockpit-enable.png}}')
     [Paragraph([EmbeddedAttachment('cockpit-enable.png', \
 [PlainText('cockpit-enable.png')])])]
@@ -773,6 +891,8 @@ width=800}}')
     [Paragraph([EmbeddedAttachment('Backups_Step1_v49.png', \
 [PlainText('Backups: Step 1')], 'width=800')])]
 
+    >>> parse_wiki(' * single item')
+    [List('bulleted', [ListItem([Paragraph([PlainText('single item')])])])]
     >>> parse_wiki(' * first item\\n * second item')
     [List('bulleted', [ListItem([Paragraph([PlainText('first item')])]), \
 ListItem([Paragraph([PlainText('second item')])])])]
@@ -788,6 +908,10 @@ List('bulleted', [ListItem([Paragraph([PlainText('item 1.1')])])])])])]
     >>> parse_wiki(' 1. item 1\\n  1. item 1.1')
     [List('numbered', [ListItem([Paragraph([PlainText('item 1')]), \
 List('numbered', [ListItem([Paragraph([PlainText('item 1.1')])])])])])]
+    >>> parse_wiki(' * single,\\n multiline item')
+    [List('bulleted', \
+[ListItem([Paragraph([PlainText('single,'), \
+PlainText('multiline item')])])])]
 
     >>> parse_wiki('----')
     [HorizontalRule(4)]
@@ -853,6 +977,24 @@ typing '), Url('https://myfreedombox.rocks/plinth/'), PlainText('into the \
 browser.')]), Paragraph([PlainText('/freedombox can also be used as an alias \
 to /plinth')])])]
 
+    >>> parse_wiki('{{{\\nmulti-line\\n\
+preformatted text (source code)\\n}}}''')
+    [CodeText('multi-line\\npreformatted text (source code)')]
+    >>> parse_wiki('text to introduce {{{ a singleliner}}}')
+    [Paragraph([PlainText('text to introduce'), CodeText(' a singleliner')])]
+    >>> parse_wiki('text to introduce \\n{{{\\n a multiliner\\nstarting at\
+\\n   different indents.\\n}}}')
+    [Paragraph([PlainText('text to introduce')]), \
+CodeText(' a multiliner\\nstarting at\\n   different indents.')]
+    >>> parse_wiki('Blah, blah:\\n {{{\\nmulti-line\\nformatted text\\n\
+starting at col #1\\n}}}')
+    [Paragraph([PlainText('Blah, blah:')]), \
+CodeText('multi-line\\nformatted text\\nstarting at col #1')]
+    >>> parse_wiki(' * Blah, blah:\\n {{{\\nmulti-line\\nformatted text\
+\\nstarting at col #1\\n}}}')
+    [List('bulleted', \
+[ListItem([Paragraph([PlainText('Blah, blah:')]), \
+CodeText('multi-line\\nformatted text\\nstarting at col #1')])])]
     >>> parse_wiki('     {{{\\n     nmap -p 80 --open -sV 192.168.0.0/24 \
 (replace the ip/netmask with the one the router uses)\\n     }}}\\n     In \
 most cases you can look at your current IP address, and change the last \
@@ -1025,6 +1167,25 @@ exposes the FreedomBox's services to your entire local network.")])])])]
     [Paragraph([PlainText('After logging in, you can become root with the \
 command'), MonospaceText('sudo su'), PlainText('.')]), \
 Heading(3, 'Build Image')]
+
+    >>> parse_wiki('Quassel Core will be initialized too.\\n\\n\
+ 1. Launch Quassel Client. You will be greeted with a wizard to `Connect to \
+Core`.\\n\
+   {{attachment:quassel-client-1-connect-to-core.png|Connect to Core|\
+width=394}}\\n\
+ 1. Click the `Add` button to launch `Add Core Account` dialog.\\n\
+')
+    [Paragraph(\
+[PlainText('Quassel Core will be initialized too.')]), \
+List('numbered', \
+[ListItem([Paragraph([PlainText('Launch Quassel Client. You will be greeted \
+with a wizard to'), MonospaceText('Connect to Core'), PlainText('.')]), \
+Paragraph([EmbeddedAttachment('quassel-client-1-connect-to-core.png', \
+[PlainText('Connect to Core')], 'width=394')])]), \
+ListItem([Paragraph([PlainText('Click the'), MonospaceText('Add'), \
+PlainText('button to launch'), MonospaceText('Add Core Account'), \
+PlainText('dialog.')])])])]
+
     """
     elements = []
     lines = text.split('\n')
@@ -1038,6 +1199,7 @@ Heading(3, 'Build Image')]
 
     while lines:
         line = lines.pop(0)
+        # End of included file
         if end_marker and line.strip().startswith(end_marker):
             break  # end parsing
 
@@ -1050,11 +1212,11 @@ Heading(3, 'Build Image')]
             elements.append(EndInclude())
             continue
 
+        # Comment, not rendered
         if line.strip().startswith('##'):
-            # Seems to be another type of comment that is not rendered
-            # in the docbook.
             continue
 
+        # Table of Contents
         match = re.match(r'<<TableOfContents\((\d*)\)>>', line)
         if match:
             level = match.group(1)
@@ -1064,6 +1226,7 @@ Heading(3, 'Build Image')]
                 elements.append(TableOfContents())
             continue
 
+        # Heading
         match = re.match(r'(=+) (.+) (=+)', line)
         if match:
             level = len(match.group(1))
@@ -1071,12 +1234,14 @@ Heading(3, 'Build Image')]
             elements.append(Heading(level, content))
             continue
 
+        # Horizontal rule
         match = re.match(r'---(-+)', line)
         if match:
             dashes = len(match.group(1)) + 3
             elements.append(HorizontalRule(dashes))
             continue
 
+        # Table
         if line.strip().startswith('||'):
             rows = []
             style = None
@@ -1092,22 +1257,51 @@ Heading(3, 'Build Image')]
             elements.append(Table(rows, style))
             continue
 
-        match = re.match(r'(\s+)(\*|\.|\d\.|I\.|A\.)\s+(.*)', line)
+        # List
+        list_item_re = re.compile(r'(\s+)(\*|\.|\d\.|I\.|A\.)\s+(.*)')
+        match = list_item_re.match(line)
         if match:
             # Collect lines until end of List is reached.
-            list_lines = [line]
+            list_lines = []
+            next_list_item = line
+            top_indent = len(match.group(1))
             while lines:
-                match = re.match(r'(\s+)(\*|\.|\d\.|I\.|A\.)\s+(.*)', lines[0])
-                if match:
-                    list_lines.append(lines.pop(0))
-                    continue
-                else:
+                candidate = lines[0]
+                if not candidate.startswith(' ' * top_indent):
+                    # Not part of list
                     break
+
+                match = list_item_re.match(candidate)
+                if match:
+                    # New item in list
+                    list_lines.append(next_list_item)
+                    next_list_item = lines.pop(0)
+                else:
+                    # More content in same list item
+                    if candidate.strip().startswith('{{{') \
+                       and '}}}' not in candidate:
+                        # Multi-line code text or admonition may not
+                        # have expected indentation
+                        while lines:
+                            line = lines.pop(0)
+                            if '}}}' == line.strip():
+                                next_list_item += '\n}}}'
+                                break
+                            else:
+                                next_list_item += '\n' + line
+                    elif candidate.strip().startswith('{{'):
+                        # Add line break before inline image
+                        next_list_item += '<<BR>>\n' + lines.pop(0)
+                    else:
+                        next_list_item += '\n' + lines.pop(0)
+
+            # finish list
+            list_lines.append(next_list_item)
 
             # Parse List info for each line.
             list_data = []
             for line in list_lines:
-                match = re.match(r'(\s+)(\*|\.|\d\.|I\.|A\.)\s+(.*)', line)
+                match = list_item_re.match(line)
                 indent = len(match.group(1))
                 marker = match.group(2)
                 if marker == '.':
@@ -1123,59 +1317,40 @@ Heading(3, 'Build Image')]
             elements.append(new_list)
             continue
 
+        # Comment
         match = re.match(r'\/\* (.+) \*\/', line)
         if match:
             content = match.group(1)
             elements.append(Comment(content))
             continue
 
-        if line.strip().startswith('{{{') and '}}}' not in line:
-            match = re.match(r'{{{#!wiki\s(.*)', line)
-            if match:
-                # admonition
-                content = []
-                paragraph = Paragraph([])
-                while lines:
-                    line = lines.pop(0)
-                    if line == '}}}':
-                        break
+        # Admonition
+        element, lines = parse_multiline_wiki_admonition(line, lines, context)
+        if element:
+            elements.append(element)
+            continue
 
-                    br = '<<BR>>'
-                    paragraph.add_content(parse_text(line.rstrip(br), context))
-                    if br in line:
-                        content.append(paragraph)
-                        paragraph = Paragraph([])
+        # Code text
+        element, lines = parse_multiline_codetext(line, lines)
+        if element:
+            elements.append(element)
+            continue
 
-                content.append(paragraph)
-                style = match.group(1)
-                elements.append(Admonition(style, content))
-                continue
-
-            else:
-                # multi-line preformatted text
-                texts = []
-                while lines:
-                    line = lines.pop(0)
-                    if line.strip().startswith('}}}'):
-                        break
-
-                    texts.append(line)
-
-                elements.append(CodeText('\n'.join(texts)))
-                continue
-
+        # Category
         match = re.match(r'Category(\w+)', line)
         if match:
             content = match.group(1)
             elements.append(Category(content))
             continue
 
+        # Anchor
         match = re.match(r'<<Anchor\((.+)\)>>', line)
         if match:
             content = match.group(1)
             elements.append(Anchor(content))
             continue
 
+        # Include
         match = re.match(r'<<Include\((.+)\)>>', line)
         if match:
             contents = match.group(1).split(',')
@@ -1191,8 +1366,8 @@ Heading(3, 'Build Image')]
             elements.append(Include(page, from_marker, to_marker))
             continue
 
+        # Paragraph
         if line.strip():
-            # Nothing else matches, assume its a paragraph of text.
             texts = []
             br = '<<BR>>'
             texts.extend(parse_text(line.rstrip(br), context))
@@ -1232,7 +1407,7 @@ Heading(2, 'heading 2nd level'), \
 ])
     '<section><title>heading 1st level</title>\
 <section><title>heading 2nd level</title>\
-<para>plain text </para>\
+<para>plain text</para>\
 <section><title>heading 3rd level</title>\
 </section></section>\
 <section><title>heading 2nd level</title>\
@@ -1242,27 +1417,27 @@ Heading(2, 'heading 2nd level'), \
     '<section><title>Date &amp; Time</title></section>'
 
     >>> generate_inner_docbook([Paragraph([PlainText('plain text')])])
-    '<para>plain text </para>'
+    '<para>plain text</para>'
 
     >>> generate_inner_docbook([Paragraph([Url('https://freedombox.org')])])
-    '<para><ulink url="https://freedombox.org"/> </para>'
+    '<para><ulink url="https://freedombox.org"/></para>'
 
     >>> generate_inner_docbook([Paragraph([ItalicText('italic')])])
-    '<para><emphasis>italic</emphasis> </para>'
+    '<para><emphasis>italic</emphasis></para>'
 
     >>> generate_inner_docbook([Paragraph([BoldText('bold')])])
-    '<para><emphasis role="strong">bold</emphasis> </para>'
+    '<para><emphasis role="strong">bold</emphasis></para>'
 
     >>> generate_inner_docbook([Paragraph([\
 PlainText('normal text followed by'), BoldText('bold text')])])
     '<para>normal text followed by \
-<emphasis role="strong">bold text</emphasis> </para>'
+<emphasis role="strong">bold text</emphasis></para>'
 
     >>> generate_inner_docbook([Paragraph([MonospaceText('monospace')])])
-    '<para><code>monospace</code> </para>'
+    '<para><code>monospace</code></para>'
 
     >>> generate_inner_docbook([Paragraph([MonospaceText('Save & Connect')])])
-    '<para><code>Save &amp; Connect</code> </para>'
+    '<para><code>Save &amp; Connect</code></para>'
 
     >>> generate_inner_docbook([CodeText('code')])
     '<screen><![CDATA[code]]></screen>'
@@ -1302,18 +1477,18 @@ TableRow([TableItem([Paragraph([PlainText('1')])]), \
 TableItem([Paragraph([PlainText('2')])])])])])
     '<informaltable><tgroup cols="2"><tbody>\
 <row rowsep="1">\
-<entry colsep="1" rowsep="1"><para>A </para></entry>\
-<entry colsep="1" rowsep="1"><para>B </para></entry></row>\
+<entry colsep="1" rowsep="1"><para>A</para></entry>\
+<entry colsep="1" rowsep="1"><para>B</para></entry></row>\
 <row rowsep="1">\
-<entry colsep="1" rowsep="1"><para>1 </para></entry>\
-<entry colsep="1" rowsep="1"><para>2 </para></entry></row>\
+<entry colsep="1" rowsep="1"><para>1</para></entry>\
+<entry colsep="1" rowsep="1"><para>2</para></entry></row>\
 </tbody></tgroup></informaltable>'
 
     >>> generate_inner_docbook([List('bulleted', [\
 ListItem([Paragraph([PlainText('first item')])]), \
 ListItem([Paragraph([PlainText('second item')])])])])
-    '<itemizedlist><listitem><para>first item </para></listitem>\
-<listitem><para>second item </para></listitem></itemizedlist>'
+    '<itemizedlist><listitem><para>first item</para></listitem>\
+<listitem><para>second item</para></listitem></itemizedlist>'
 
     >>> generate_inner_docbook([Comment('comment')])
     '<para><remark>comment</remark></para>'
@@ -1332,7 +1507,7 @@ ListItem([Paragraph([PlainText('second item')])])])])
 
     >>> generate_inner_docbook([Admonition('caution', \
 [Paragraph([PlainText("Don't overuse admonitions")])])])
-    "<caution><para>Don't overuse admonitions </para></caution>"
+    "<caution><para>Don't overuse admonitions</para></caution>"
 
     >>> generate_inner_docbook([TableOfContents()])
     ''
@@ -1342,9 +1517,9 @@ PlainText('User documentation:')]), \
 List('bulleted', [ListItem([Paragraph([PlainText('List of'), \
 Link('FreedomBox/Features', [PlainText('applications')]), \
 PlainText('offered by FreedomBox.')])])])])
-    '<para>User documentation: </para><itemizedlist><listitem><para>List of \
+    '<para>User documentation:</para><itemizedlist><listitem><para>List of \
 <ulink url="https://wiki.debian.org/FreedomBox/Features#">applications\
-</ulink> offered by FreedomBox. </para></listitem></itemizedlist>'
+</ulink> offered by FreedomBox.</para></listitem></itemizedlist>'
 
     >>> generate_inner_docbook([List('bulleted', [\
 ListItem([Paragraph([PlainText('Within FreedomBox Service (Plinth)')]), \
@@ -1363,22 +1538,22 @@ but only the owner can make changes')])]), \
 ListItem([Paragraph([PlainText('Any user can view or make changes to any \
 calendar/addressbook')])])])])])])])])
     '<itemizedlist>\
-<listitem><para>Within FreedomBox Service (Plinth) </para> \
+<listitem><para>Within FreedomBox Service (Plinth)</para> \
 <orderedlist numeration="arabic">\
-<listitem><para>select Apps </para></listitem>\
-<listitem><para>go to Radicale (Calendar and Addressbook) and </para>\
+<listitem><para>select Apps</para></listitem>\
+<listitem><para>go to Radicale (Calendar and Addressbook) and</para>\
 </listitem>\
 <listitem><para>install the application. After the installation is complete, \
 make sure the application is marked "enabled" in the FreedomBox interface. \
-Enabling the application launches the Radicale CalDAV/CardDAV server. </para>\
+Enabling the application launches the Radicale CalDAV/CardDAV server.</para>\
 </listitem>\
-<listitem><para>define the access rights: </para> \
+<listitem><para>define the access rights:</para> \
 <itemizedlist>\
 <listitem><para>Only the owner of a calendar/addressbook can view or make \
-changes </para></listitem>\
+changes</para></listitem>\
 <listitem><para>Any user can view any calendar/addressbook, but only the \
-owner can make changes </para></listitem>\
-<listitem><para>Any user can view or make changes to any calendar/addressbook \
+owner can make changes</para></listitem>\
+<listitem><para>Any user can view or make changes to any calendar/addressbook\
 </para></listitem></itemizedlist>\
 </listitem></orderedlist>\
 </listitem></itemizedlist>'
@@ -1392,13 +1567,13 @@ PlainText('on it.')])])
 <ulink url="https://wiki.debian.org/InstallingDebianOn/TI/BeagleBone#">\
 install Debian</ulink> on the BeagleBone and then \
 <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install \
-FreedomBox</ulink> on it. </para>'
+FreedomBox</ulink> on it.</para>'
 
     >>> generate_inner_docbook([Paragraph([PlainText('After Roundcube is \
 installed, it can be accessed at'), CodeText('https://<your freedombox>\
 /roundcube'), PlainText('.')])])
     '<para>After Roundcube is installed, it can be accessed at <code>\
-https://&lt;your freedombox&gt;/roundcube</code> . </para>'
+https://&lt;your freedombox&gt;/roundcube</code>.</para>'
     """
     doc_out = ''
     sections = []
@@ -1423,18 +1598,72 @@ https://&lt;your freedombox&gt;/roundcube</code> . </para>'
 
 
 def get_context(file_path):
-    """Get dict with page path, name, language, and title."""
+    """Get dict with page path, name, language, and title.
+
+    >>> get_context(Path('manual/en/freedombox-manual'))
+    {'path': PosixPath('manual/en/freedombox-manual'), \
+'name': 'FreedomBox Manual', \
+'language': 'en', \
+'title': 'FreedomBox/Manual/freedombox-manual'}
+
+    >>> get_context(Path('manual/es/freedombox-manual'))
+    {'path': PosixPath('manual/es/freedombox-manual'), \
+'name': 'FreedomBox Manual', \
+'language': 'es', \
+'title': 'es/FreedomBox/Manual/freedombox-manual'}
+
+    >>> get_context(Path('manual/unknown/freedombox-manual'))
+    {'path': PosixPath('manual/unknown/freedombox-manual'), \
+'name': 'FreedomBox Manual', \
+'language': 'en', \
+'title': 'FreedomBox/Manual/freedombox-manual'}
+
+    >>> get_context(Path('strange/path/to/manual/en/freedombox-manual'))
+    {'path': PosixPath('strange/path/to/manual/en/freedombox-manual'), \
+'name': 'FreedomBox Manual', \
+'language': 'en', \
+'title': 'FreedomBox/Manual/freedombox-manual'}
+
+    >>> get_context(Path('strange/path/to/manual/es/freedombox-manual'))
+    {'path': PosixPath('strange/path/to/manual/es/freedombox-manual'), \
+'name': 'FreedomBox Manual', \
+'language': 'es', \
+'title': 'es/FreedomBox/Manual/freedombox-manual'}
+
+    >>> get_context(Path('strange/path/to/manual/unknown/freedombox-manual'))
+    {'path': PosixPath('strange/path/to/manual/unknown/freedombox-manual'), \
+'name': 'FreedomBox Manual', \
+'language': 'en', \
+'title': 'FreedomBox/Manual/freedombox-manual'}
+
+    >>> get_context(Path('manual/en/some-page'))
+    {'path': PosixPath('manual/en/some-page'), \
+'name': 'some-page', \
+'language': 'en', \
+'title': 'FreedomBox/Manual/some-page'}
+
+    >>> get_context(Path('manual/es/some-page'))
+    {'path': PosixPath('manual/es/some-page'), \
+'name': 'some-page', \
+'language': 'es', \
+'title': 'es/FreedomBox/Manual/some-page'}
+    """
     page_name = Path(file_path.stem).stem
     if page_name == 'freedombox-manual':
         name = 'FreedomBox Manual'
     else:
         name = page_name
 
-    language = 'es' if 'es' in file_path.parts else 'en'
-    if language == 'es':
-        title = f'es/FreedomBox/Manual/{page_name}'
-    else:
+    language = 'en'
+    for lang in LANGUAGES:
+        if lang in file_path.parts:
+            language = lang
+            break
+
+    if language == 'en':
         title = f'FreedomBox/Manual/{page_name}'
+    else:
+        title = f'{language}/FreedomBox/Manual/{page_name}'
 
     context = {
         'path': file_path,
