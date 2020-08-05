@@ -43,6 +43,14 @@ class Disk():
 
         self.disk_file = disk_file
 
+    def expand_disk_file(self, size):
+        """Expand the disk file."""
+        command = f'truncate --size={size}M {self.disk_file.name}'
+        subprocess.run(command.split(), check=True)
+        self._unmount_file_systems()
+        self._cleanup_loopback()
+        self._setup_loopback()
+
     def _setup_loopback(self):
         """Setup loop back on the create disk file."""
         command = 'losetup --show --find {file}'.format(
@@ -112,6 +120,7 @@ class Disk():
         self._create_partitions()
         self._setup_loopback()
         self._create_file_systems()
+        return self
 
     def __exit__(self, *exc):
         """Exit the context, destroy the test disk."""
@@ -162,32 +171,45 @@ class TestActions:
             'mkpart extended 8 12', 'mkpart extended 12 16',
             'mkpart extended 16 160'
         ]
-        with Disk(self, 256, disk_info, [(5, 'btrfs')]):
+        with Disk(self, 192, disk_info, [(5, 'btrfs')]) as disk:
+            # Second header already at the end
+            self.assert_free_space(5, space=True)
+            self.expand_partition(5, success=True)
+            self.expand_partition(5, success=False)
+            disk.expand_disk_file(256)
+            # Second header not at the end
             self.assert_free_space(5, space=True)
             self.expand_partition(5, success=True)
             self.expand_partition(5, success=False)
 
     @pytest.mark.usefixtures('needs_root')
-    def test_unsupported_file_system(self):
+    @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
+    def test_unsupported_file_system(self, partition_table_type):
         """Test that free space after unknown file system does not count."""
-        disk_info = ['mktable msdos', 'mkpart primary 1 8']
+        disk_info = [f'mktable {partition_table_type}', 'mkpart primary 1 8']
         with Disk(self, 32, disk_info):
             self.assert_free_space(1, space=False)
             self.expand_partition(1, success=False)
 
     @pytest.mark.usefixtures('needs_root')
-    def test_btrfs_expansion(self):
+    @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
+    def test_btrfs_expansion(self, partition_table_type):
         """Test that btrfs file system can be expanded."""
-        disk_info = ['mktable msdos', 'mkpart primary btrfs 1 200']
+        disk_info = [
+            f'mktable {partition_table_type}', 'mkpart primary btrfs 1 200'
+        ]
         with Disk(self, 256, disk_info, [(1, 'btrfs')]):
             self.expand_partition(1, success=True)
             self.expand_partition(1, success=False)
             self.assert_btrfs_file_system_healthy(1)
 
     @pytest.mark.usefixtures('needs_root')
-    def test_ext4_expansion(self):
+    @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
+    def test_ext4_expansion(self, partition_table_type):
         """Test that ext4 file system can be expanded."""
-        disk_info = ['mktable msdos', 'mkpart primary ext4 1 64']
+        disk_info = [
+            f'mktable {partition_table_type}', 'mkpart primary ext4 1 64'
+        ]
         with Disk(self, 128, disk_info, [(1, 'ext4')]):
             self.expand_partition(1, success=True)
             self.expand_partition(1, success=False)
