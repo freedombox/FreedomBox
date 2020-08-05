@@ -1,0 +1,213 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configuration helper for bepasty.
+"""
+
+import argparse
+import json
+import grp
+import os
+import pwd
+import secrets
+import shutil
+import string
+import subprocess
+
+from plinth import action_utils
+from plinth.modules import bepasty
+
+DATA_DIR = '/var/lib/bepasty'
+
+CONF_FILE = '/etc/bepasty-freedombox.conf'
+
+CONF_CONTENTS = """
+SITENAME = '{}'
+STORAGE_FILESYSTEM_DIRECTORY = '/var/lib/bepasty'
+SECRET_KEY = '{}'
+PERMISSIONS = {{
+    '{}': 'admin,list,create,read,delete', # admin
+    '{}': 'list,create,read,delete',       # editor
+    '{}': 'list,read',                     # viewer
+}}
+"""
+
+PASSWORD_LENGTH = 20
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    setup = subparsers.add_parser(
+        'setup', help='Perform post-installation operations for bepasty')
+    setup.add_argument('--domain-name',
+                       help='The domain name that will be used by bepasty')
+
+    subparsers.add_parser(
+        'list-passwords',
+        help='Get a list of passwords, their permissions and comments')
+
+    add_password = subparsers.add_parser(
+        'add-password', help='Generate a password with given permissions')
+    add_password.add_argument(
+        '--permissions', nargs='*',
+        help='Any number of permissions from the set: {}'.format(', '.join(
+            bepasty.PERMISSIONS.keys())))
+    add_password.add_argument(
+        '--comment', required=False,
+        help='A comment for the password and its permissions')
+
+    remove_password = subparsers.add_parser(
+        'remove-password', help='Remove a password and its permissions')
+    remove_password.add_argument('--password', required=True,
+                                 help='The password to be removed')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_setup(arguments):
+    """Post installation actions for bepasty."""
+    # Create bepasty group if needed.
+    try:
+        grp.getgrnam('bepasty')
+    except KeyError:
+        subprocess.run(['addgroup', '--system', 'bepasty'], check=True)
+
+    # Create bepasty user is needed.
+    try:
+        pwd.getpwnam('bepasty')
+    except KeyError:
+        subprocess.run([
+            'adduser', '--system', '--ingroup', 'bepasty', '--home',
+            '/var/lib/bepasty', '--gecos', 'bepasty file sharing', 'bepasty'
+        ], check=True)
+
+    # Create data directory if needed.
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR, mode=0o750)
+        shutil.chown(DATA_DIR, user='bepasty', group='bepasty')
+
+    # Create configuration file if needed.
+    if not os.path.isfile(CONF_FILE):
+        # Generate secrets
+        secret_key = secrets.token_hex(64)
+        passwords = []
+        for i in range(3):
+            passwords.append(_generate_password())
+
+        with open(CONF_FILE, 'w') as conf_file:
+            conf_file.write(
+                CONF_CONTENTS.format(arguments.domain_name, secret_key,
+                                     *passwords))
+
+        os.chmod(CONF_FILE, 0o640)
+        shutil.chown(CONF_FILE, user='bepasty', group='bepasty')
+
+
+def subcommand_list_passwords(_):
+    """Get a list of passwords, their permissions and comments"""
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    passwords = []
+    in_permissions = False
+    for line in lines:
+        if line.startswith('PERMISSIONS'):
+            in_permissions = True
+        elif in_permissions:
+            if line.startswith('}'):
+                in_permissions = False
+            else:
+                parts = line.split('#')
+                try:
+                    comment = parts[1].strip()
+                except IndexError:
+                    comment = ''
+
+                parts = parts[0].split(':')
+                password = parts[0].replace("'", '').strip()
+                permissions = parts[1].replace(
+                    "'", '').strip().rstrip(',').split(',')
+                passwords.append({
+                    'password': password,
+                    'permissions': ', '.join(permissions),
+                    'comment': comment
+                })
+
+    print(json.dumps(passwords))
+
+
+def subcommand_add_password(arguments):
+    """Generate a password with given permissions"""
+    if arguments.permissions:
+        permissions = set(bepasty.PERMISSIONS.keys()).intersection(
+            arguments.permissions)
+        permissions = ','.join(permissions)
+    else:
+        permissions = ''
+
+    password = _generate_password()
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    with open(CONF_FILE, 'w') as conf_file:
+        in_permissions = False
+        for line in lines:
+            if line.startswith('PERMISSIONS'):
+                in_permissions = True
+            elif in_permissions:
+                if line.startswith('}'):
+                    in_permissions = False
+                    conf_file.write("    '{}': '{}',".format(
+                        password, permissions))
+                    if arguments.comment:
+                        conf_file.write(' # {}'.format(arguments.comment))
+
+                    conf_file.write('\n')
+
+            conf_file.write(line)
+
+    action_utils.service_try_restart('uwsgi')
+
+
+def subcommand_remove_password(arguments):
+    """Remove a password and its permissions"""
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    with open(CONF_FILE, 'w') as conf_file:
+        in_permissions = False
+        for line in lines:
+            if line.startswith('PERMISSIONS'):
+                in_permissions = True
+            elif in_permissions:
+                if line.startswith('}'):
+                    in_permissions = False
+                elif arguments.password in line:
+                    continue
+
+            conf_file.write(line)
+
+    action_utils.service_try_restart('uwsgi')
+
+
+def _generate_password():
+    """Generate a random password"""
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for i in range(PASSWORD_LENGTH))
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
