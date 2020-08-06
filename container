@@ -420,6 +420,8 @@ def _resize_disk_image(image_file, new_size):
         ['sudo', 'kpartx', '-avs', str(image_file)], stdout=subprocess.PIPE,
         check=True)
     partition = '/dev/mapper/' + process.stdout.decode().split()[2]
+    subprocess.run(['sudo', 'btrfstune', '-uf', partition], check=True)
+
     with tempfile.TemporaryDirectory(
             dir=work_directory.resolve()) as mount_point:
         subprocess.run(['sudo', 'mount', partition, mount_point], check=True)
