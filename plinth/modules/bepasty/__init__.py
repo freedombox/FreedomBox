@@ -44,6 +44,12 @@ PERMISSIONS = {
     'admin': _('Admin (lock/unlock files)'),
 }
 
+DEFAULT_PERMISSIONS = {
+    '': _('None (password always required)'),
+    'read': _('Read files (using their web address)'),
+    'read list': _('List and read all files'),
+}
+
 
 class BepastyApp(app_module.App):
     """FreedomBox app for bepasty."""
@@ -113,3 +119,16 @@ def remove_password(password):
     """Remove a password and its permissions"""
     actions.superuser_run('bepasty',
                           ['remove-password', '--password', password])
+
+
+def get_default_permissions():
+    """Get default permissions"""
+    output = actions.superuser_run('bepasty', ['get-default']).strip()
+    output = 'read list' if output == 'list read' else output
+    return output.strip()
+
+
+def set_default_permissions(permissions):
+    """Set default permissions"""
+    perm = permissions.split()
+    actions.superuser_run('bepasty', ['set-default', '--permissions'] + perm)

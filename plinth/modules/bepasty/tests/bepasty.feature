@@ -13,6 +13,18 @@ Scenario: Enable bepasty application
   When I enable the bepasty application
   Then the bepasty site should be available
 
+Scenario: Set default permissions to List and read all files
+  Given the bepasty application is enabled
+  And I am not logged in to bepasty
+  When I set the default permissions to List and read all files
+  Then I should be able to List all Items in bepasty
+
+Scenario: Set default permissions to Read files
+  Given the bepasty application is enabled
+  And I am not logged in to bepasty
+  When I set the default permissions to Read files
+  Then I should not be able to List all Items in bepasty
+
 Scenario: Add password
   Given the bepasty application is enabled
   When I add a password

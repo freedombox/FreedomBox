@@ -9,6 +9,7 @@ import json
 import grp
 import os
 import pwd
+import re
 import secrets
 import shutil
 import string
@@ -30,6 +31,7 @@ PERMISSIONS = {{
     '{}': 'list,create,read,delete',       # editor
     '{}': 'list,read',                     # viewer
 }}
+DEFAULT_PERMISSIONS = ''
 """
 
 PASSWORD_LENGTH = 20
@@ -63,6 +65,15 @@ def parse_arguments():
         'remove-password', help='Remove a password and its permissions')
     remove_password.add_argument('--password', required=True,
                                  help='The password to be removed')
+
+    subparsers.add_parser('get-default', help='Get default permissions')
+
+    set_default = subparsers.add_parser('set-default',
+                                        help='Set default permissions')
+    set_default.add_argument(
+        '--permissions', nargs='*',
+        help='Any number of permissions from the set: {}'.format(', '.join(
+            bepasty.PERMISSIONS.keys())))
 
     subparsers.required = True
     return parser.parse_args()
@@ -121,34 +132,25 @@ def subcommand_list_passwords(_):
             if line.startswith('}'):
                 in_permissions = False
             else:
-                parts = line.split('#')
-                try:
-                    comment = parts[1].strip()
-                except IndexError:
-                    comment = ''
+                match = re.match(r"\s*'(.*)': '(.*)',\s*(#\s*.*)?", line)
+                if match:
+                    password = match.group(1)
+                    permissions = match.group(2).split(',')
+                    comment = match.group(3) or ''
+                    comment = comment.lstrip('#').strip()
 
-                parts = parts[0].split(':')
-                password = parts[0].replace("'", '').strip()
-                permissions = parts[1].replace(
-                    "'", '').strip().rstrip(',').split(',')
-                passwords.append({
-                    'password': password,
-                    'permissions': ', '.join(permissions),
-                    'comment': comment
-                })
+                    passwords.append({
+                        'password': password,
+                        'permissions': ', '.join(permissions),
+                        'comment': comment
+                    })
 
     print(json.dumps(passwords))
 
 
 def subcommand_add_password(arguments):
     """Generate a password with given permissions"""
-    if arguments.permissions:
-        permissions = set(bepasty.PERMISSIONS.keys()).intersection(
-            arguments.permissions)
-        permissions = ','.join(permissions)
-    else:
-        permissions = ''
-
+    permissions = _format_permissions(arguments.permissions)
     password = _generate_password()
     with open(CONF_FILE, 'r') as conf_file:
         lines = conf_file.readlines()
@@ -192,6 +194,41 @@ def subcommand_remove_password(arguments):
             conf_file.write(line)
 
     action_utils.service_try_restart('uwsgi')
+
+
+def subcommand_get_default(_):
+    """Get default permissions"""
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    for line in lines:
+        match = re.match(r"DEFAULT_PERMISSIONS = '(.*)'", line)
+        if match:
+            print(match.group(1).replace(',', ' '))
+            return
+
+
+def subcommand_set_default(arguments):
+    """Set default permissions"""
+    permissions = _format_permissions(arguments.permissions)
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    with open(CONF_FILE, 'w') as conf_file:
+        for line in lines:
+            if line.startswith('DEFAULT_PERMISSIONS'):
+                conf_file.write(
+                    "DEFAULT_PERMISSIONS = '{}'\n".format(permissions))
+            else:
+                conf_file.write(line)
+
+    action_utils.service_try_restart('uwsgi')
+
+
+def _format_permissions(permissions=None):
+    """Format permissions as comma-separated"""
+    return ','.join(set(bepasty.PERMISSIONS.keys()).intersection(
+        permissions)) if permissions else ''
 
 
 def _generate_password():

@@ -11,16 +11,17 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView
 
+from plinth.errors import ActionError
 from plinth.modules import bepasty
 from plinth.views import AppView
 
-from .forms import AddPasswordForm
+from .forms import AddPasswordForm, SetDefaultPermissionsForm
 
 
 class BepastyView(AppView):
     """Serve configuration page."""
     app_id = 'bepasty'
-    diagnostics_module_name = 'bepasty'
+    form_class = SetDefaultPermissionsForm
     template_name = 'bepasty.html'
 
     def get_context_data(self, **kwargs):
@@ -28,6 +29,28 @@ class BepastyView(AppView):
         context = super().get_context_data(**kwargs)
         context['passwords'] = bepasty.list_passwords()
         return context
+
+    def get_initial(self):
+        """Return the status of the service to fill in the form."""
+        initial = super().get_initial()
+        initial['default_permissions'] = bepasty.get_default_permissions()
+        return initial
+
+    def form_valid(self, form):
+        """Apply the changes submitted in the form."""
+        old_data = form.initial
+        form_data = form.cleaned_data
+
+        if old_data['default_permissions'] != form_data['default_permissions']:
+            try:
+                bepasty.set_default_permissions(
+                    form_data['default_permissions'])
+                messages.success(self.request, _('Configuration updated.'))
+            except ActionError:
+                messages.error(self.request,
+                               _('An error occurred during configuration.'))
+
+        return super().form_valid(form)
 
 
 class AddPasswordView(SuccessMessageMixin, FormView):

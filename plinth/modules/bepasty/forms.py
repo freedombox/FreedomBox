@@ -9,6 +9,16 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.modules import bepasty
 
 
+class SetDefaultPermissionsForm(forms.Form):
+    """Form to set default permissions"""
+    default_permissions = forms.ChoiceField(
+        choices=bepasty.DEFAULT_PERMISSIONS.items(), required=False,
+        widget=forms.RadioSelect(),
+        label=_('Public Access (default permissions)'),
+        help_text=_('Permissions for anonymous users, who have not provided a '
+                    'password.'))
+
+
 class AddPasswordForm(forms.Form):
     """Form to add a new password."""
 
