@@ -17,8 +17,10 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 
 from .forms import is_repo_url
-from .manifest import (GIT_REPO_PATH,  # noqa, pylint: disable=unused-import
-    backup, clients)
+from .manifest import (  # noqa, pylint: disable=unused-import
+    GIT_REPO_PATH,
+    backup,
+    clients)
 
 version = 1
 
@@ -98,37 +100,9 @@ class GitwebApp(app_module.App):
         shortcut.login_required = login_required
         self.add(shortcut)
 
-    def get_repo_list(self):
-        """List all Git repositories and set Gitweb as public or private."""
-        repos = []
-        if os.path.exists(GIT_REPO_PATH):
-            for repo in os.listdir(GIT_REPO_PATH):
-                if not repo.endswith('.git') or repo.startswith('.'):
-                    continue
-
-                repo_info = {}
-                repo_info['name'] = repo[:-4]
-
-                private_file = os.path.join(GIT_REPO_PATH, repo, 'private')
-                if os.path.exists(private_file):
-                    repo_info['access'] = 'private'
-                else:
-                    repo_info['access'] = 'public'
-
-                progress_file = os.path.join(GIT_REPO_PATH, repo,
-                                             'clone_progress')
-                if os.path.exists(progress_file):
-                    with open(progress_file) as file_handle:
-                        clone_progress = file_handle.read()
-                        repo_info['clone_progress'] = clone_progress
-
-                repos.append(repo_info)
-
-        return sorted(repos, key=lambda repo: repo['name'])
-
     def update_service_access(self):
         """Update the frontpage shortcut and webserver auth requirement."""
-        repos = self.get_repo_list()
+        repos = get_repo_list()
         if have_public_repos(repos):
             self._enable_public_access()
         else:
@@ -158,12 +132,12 @@ class GitwebWebserverAuth(Webserver):
 
     def is_enabled(self):
         """Return if configuration is enabled or public access is enabled."""
-        repos = app.get_repo_list()
+        repos = get_repo_list()
         return have_public_repos(repos) or super().is_enabled()
 
     def enable(self):
         """Enable apache configuration only if no public repository exists."""
-        repos = app.get_repo_list()
+        repos = get_repo_list()
         if not have_public_repos(repos):
             super().enable()
 
@@ -210,6 +184,34 @@ def create_repo(repo, repo_description, owner, is_private):
     else:
         args = ['create-repo', '--name', repo] + args
         actions.superuser_run('gitweb', args)
+
+
+def get_repo_list():
+    """List all git repositories."""
+    repos = []
+    if os.path.exists(GIT_REPO_PATH):
+        for repo in os.listdir(GIT_REPO_PATH):
+            if not repo.endswith('.git') or repo.startswith('.'):
+                continue
+
+            repo_info = {}
+            repo_info['name'] = repo[:-4]
+
+            private_file = os.path.join(GIT_REPO_PATH, repo, 'private')
+            if os.path.exists(private_file):
+                repo_info['access'] = 'private'
+            else:
+                repo_info['access'] = 'public'
+
+            progress_file = os.path.join(GIT_REPO_PATH, repo, 'clone_progress')
+            if os.path.exists(progress_file):
+                with open(progress_file) as file_handle:
+                    clone_progress = file_handle.read()
+                    repo_info['clone_progress'] = clone_progress
+
+            repos.append(repo_info)
+
+    return sorted(repos, key=lambda repo: repo['name'])
 
 
 def repo_info(repo):

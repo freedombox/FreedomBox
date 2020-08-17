@@ -92,7 +92,7 @@ class CreateRepoForm(forms.Form):
         if repo_name.endswith('.git'):
             repo_name = repo_name[:-4]
 
-        for repo in gitweb.app.get_repo_list():
+        for repo in gitweb.get_repo_list():
             if repo_name == repo['name']:
                 raise ValidationError(
                     _('A repository with this name already exists.'))
@@ -124,7 +124,7 @@ class EditRepoForm(CreateRepoForm):
         if name.endswith('.git'):
             name = name[:-4]
 
-        for repo in gitweb.app.get_repo_list():
+        for repo in gitweb.get_repo_list():
             if name == repo['name']:
                 raise ValidationError(
                     _('A repository with this name already exists.'))

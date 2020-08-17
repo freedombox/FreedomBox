@@ -28,7 +28,7 @@ class GitwebAppView(views.AppView):
     def get_context_data(self, *args, **kwargs):
         """Add repositories to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        repos = gitweb.app.get_repo_list()
+        repos = gitweb.get_repo_list()
         context['repos'] = repos
         context['cloning'] = any('clone_progress' in repo for repo in repos)
         context['refresh_page_sec'] = 3 if context['cloning'] else None
@@ -92,7 +92,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
     def get_initial(self):
         """Load information about repository being edited."""
         name = self.kwargs['name']
-        for repo in gitweb.app.get_repo_list():
+        for repo in gitweb.get_repo_list():
             if repo['name'] == name and 'clone_progress' not in repo:
                 break
         else:
@@ -126,7 +126,7 @@ def delete(request, name):
     On GET, display a confirmation page.
     On POST, delete the repository.
     """
-    for repo in gitweb.app.get_repo_list():
+    for repo in gitweb.get_repo_list():
         if repo['name'] == name and 'clone_progress' not in repo:
             break
     else:

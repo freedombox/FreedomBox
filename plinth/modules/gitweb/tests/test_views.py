@@ -60,14 +60,17 @@ def action_run(*args, **kwargs):
 @pytest.fixture(autouse=True)
 def gitweb_patch():
     """Patch gitweb."""
-    with patch('plinth.modules.gitweb.app') as app_patch, \
+    with patch('plinth.modules.gitweb.get_repo_list') as get_repo_list, \
+            patch('plinth.modules.gitweb.app') as gitweb_app, \
             patch('plinth.actions.superuser_run', side_effect=action_run), \
             patch('plinth.actions.run', side_effect=action_run):
-        app_patch.get_repo_list.return_value = [{
+        get_repo_list.return_value = [{
             'name': EXISTING_REPOS[0]['name']
         }, {
             'name': EXISTING_REPOS[1]['name']
         }]
+        gitweb_app.update_service_access.return_value = None
+
         yield
 
 
@@ -148,8 +151,8 @@ def test_create_repo_failed_view(rf):
     """Test that repo creation failure sends correct error message."""
     general_error_message = "An error occurred while creating the repository."
     error_description = 'some error'
-    with patch('plinth.modules.gitweb.create_repo', side_effect=ActionError(
-            'gitweb', '', error_description)):
+    with patch('plinth.modules.gitweb.create_repo',
+               side_effect=ActionError('gitweb', '', error_description)):
         form_data = {
             'gitweb-name': 'something_other',
             'gitweb-description': '',
