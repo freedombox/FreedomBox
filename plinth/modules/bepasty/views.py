@@ -24,16 +24,51 @@ class BepastyView(AppView):
     form_class = SetDefaultPermissionsForm
     template_name = 'bepasty.html'
 
+    def __init__(self, *args, **kwargs):
+        """Initialize the view."""
+        super().__init__(*args, **kwargs)
+        self.conf = None
+
+    def _get_configuration(self):
+        """Return the current configuration."""
+        if not self.conf:
+            self.conf = bepasty.get_configuration()
+
+        return self.conf
+
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
+        permissions_short_text = {
+            'read': _('Read'),
+            'create': _('Create'),
+            'list': _('List'),
+            'delete': _('Delete'),
+            'admin': _('Admin')
+        }
         context = super().get_context_data(**kwargs)
-        context['passwords'] = bepasty.list_passwords()
+        conf = self._get_configuration()
+        passwords = []
+        for password, permissions in conf['PERMISSIONS'].items():
+            permissions = permissions.split(',')
+            permissions = [
+                str(permissions_short_text[permission])
+                for permission in permissions if permission
+            ]
+            passwords.append({
+                'password': password,
+                'permissions': ', '.join(permissions),
+                'comment': conf['PERMISSION_COMMENTS'].get(password) or ''
+            })
+        context['passwords'] = passwords
         return context
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
         initial = super().get_initial()
-        initial['default_permissions'] = bepasty.get_default_permissions()
+        default = self._get_configuration().get('DEFAULT_PERMISSIONS', '')
+        default = ' '.join(default.split(','))
+        default = 'read list' if default == 'list read' else default
+        initial['default_permissions'] = default
         return initial
 
     def form_valid(self, form):

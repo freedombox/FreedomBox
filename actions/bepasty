@@ -5,36 +5,28 @@ Configuration helper for bepasty.
 """
 
 import argparse
-import json
+import collections
 import grp
+import json
 import os
+import pathlib
 import pwd
-import re
 import secrets
 import shutil
 import string
 import subprocess
+import sys
+
+import augeas
 
 from plinth import action_utils
 from plinth.modules import bepasty
 
 DATA_DIR = '/var/lib/bepasty'
 
-CONF_FILE = '/etc/bepasty-freedombox.conf'
-
-CONF_CONTENTS = """
-SITENAME = '{}'
-STORAGE_FILESYSTEM_DIRECTORY = '/var/lib/bepasty'
-SECRET_KEY = '{}'
-PERMISSIONS = {{
-    '{}': 'admin,list,create,read,delete', # admin
-    '{}': 'list,create,read,delete',       # editor
-    '{}': 'list,read',                     # viewer
-}}
-DEFAULT_PERMISSIONS = ''
-"""
-
 PASSWORD_LENGTH = 20
+
+CONF_FILE = pathlib.Path('/etc/bepasty-freedombox.conf')
 
 
 def parse_arguments():
@@ -47,9 +39,7 @@ def parse_arguments():
     setup.add_argument('--domain-name', required=True,
                        help='The domain name that will be used by bepasty')
 
-    subparsers.add_parser(
-        'list-passwords',
-        help='Get a list of passwords, their permissions and comments')
+    subparsers.add_parser('get-configuration', help='Get all configuration')
 
     add_password = subparsers.add_parser(
         'add-password', help='Generate a password with given permissions')
@@ -61,12 +51,8 @@ def parse_arguments():
         '--comment', required=False,
         help='A comment for the password and its permissions')
 
-    remove_password = subparsers.add_parser(
-        'remove-password', help='Remove a password and its permissions')
-    remove_password.add_argument('--password', required=True,
-                                 help='The password to be removed')
-
-    subparsers.add_parser('get-default', help='Get default permissions')
+    subparsers.add_parser('remove-password',
+                          help='Remove a password and its permissions')
 
     set_default = subparsers.add_parser('set-default',
                                         help='Set default permissions')
@@ -77,6 +63,45 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def _augeas_load():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
+    aug.set('/augeas/load/Simplevars/incl[last() + 1]', str(CONF_FILE))
+    aug.load()
+    return aug
+
+
+def _key_path(key):
+    """Return the augeas path for the key."""
+    return '/files' + str(CONF_FILE) + '/' + key
+
+
+def conf_file_read():
+    """Read and return the configuration."""
+    aug = _augeas_load()
+    conf = collections.OrderedDict()
+    for path in aug.match(_key_path('*')):
+        key = path.rsplit('/', 1)[-1]
+        if key[0] != '#':
+            conf[key] = json.loads(aug.get(path))
+
+    return conf
+
+
+def conf_file_write(conf):
+    """Write configuration to the file."""
+    aug = _augeas_load()
+    for key, value in conf.items():
+        if not key.startswith('#'):
+            value = json.dumps(value)
+
+        aug.set(_key_path(key), value)
+
+    aug.save()
 
 
 def subcommand_setup(arguments):
@@ -102,126 +127,70 @@ def subcommand_setup(arguments):
         shutil.chown(DATA_DIR, user='bepasty', group='bepasty')
 
     # Create configuration file if needed.
-    if not os.path.isfile(CONF_FILE):
-        # Generate secrets
-        secret_key = secrets.token_hex(64)
-        passwords = []
-        for i in range(3):
-            passwords.append(_generate_password())
-
-        with open(CONF_FILE, 'w') as conf_file:
-            conf_file.write(
-                CONF_CONTENTS.format(arguments.domain_name, secret_key,
-                                     *passwords))
-
-        os.chmod(CONF_FILE, 0o640)
+    if not CONF_FILE.is_file():
+        passwords = [_generate_password() for _ in range(3)]
+        conf = {
+            '#comment':
+                'This file is managed by FreedomBox. Only a small subset of '
+                'the original configuration format is supported. Each line '
+                'should be in KEY = VALUE format. VALUE must be a JSON '
+                'encoded string.',
+            'SITENAME': arguments.domain_name,
+            'STORAGE_FILESYSTEM_DIRECTORY': '/var/lib/bepasty',
+            'SECRET_KEY': secrets.token_hex(64),
+            'PERMISSIONS': {
+                passwords[0]: 'admin,list,create,read,delete',
+                passwords[1]: 'list,create,read,delete',
+                passwords[2]: 'list,read',
+            },
+            'PERMISSION_COMMENTS': {
+                passwords[0]: 'admin',
+                passwords[1]: 'editor',
+                passwords[2]: 'viewer',
+            },
+            'DEFAULT_PERMISSIONS': '',
+        }
+        conf_file_write(conf)
+        CONF_FILE.chmod(0o640)
         shutil.chown(CONF_FILE, user='bepasty', group='bepasty')
 
 
-def subcommand_list_passwords(_):
-    """Get a list of passwords, their permissions and comments"""
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
-
-    passwords = []
-    in_permissions = False
-    for line in lines:
-        if line.startswith('PERMISSIONS'):
-            in_permissions = True
-        elif in_permissions:
-            if line.startswith('}'):
-                in_permissions = False
-            else:
-                match = re.match(r"\s*'(.*)': '(.*)',\s*(#\s*.*)?", line)
-                if match:
-                    password = match.group(1)
-                    permissions = match.group(2).split(',')
-                    comment = match.group(3) or ''
-                    comment = comment.lstrip('#').strip()
-
-                    passwords.append({
-                        'password': password,
-                        'permissions': ', '.join(permissions),
-                        'comment': comment
-                    })
-
-    print(json.dumps(passwords))
+def subcommand_get_configuration(_):
+    """Get default permissions, passwords, permissions and comments."""
+    conf = conf_file_read()
+    print(json.dumps(conf))
 
 
 def subcommand_add_password(arguments):
-    """Generate a password with given permissions"""
+    """Generate a password with given permissions."""
+    conf = conf_file_read()
     permissions = _format_permissions(arguments.permissions)
     password = _generate_password()
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
+    conf['PERMISSIONS'][password] = permissions
+    if arguments.comment:
+        conf['PERMISSION_COMMENTS'][password] = arguments.comment
 
-    with open(CONF_FILE, 'w') as conf_file:
-        in_permissions = False
-        for line in lines:
-            if line.startswith('PERMISSIONS'):
-                in_permissions = True
-            elif in_permissions:
-                if line.startswith('}'):
-                    in_permissions = False
-                    conf_file.write("    '{}': '{}',".format(
-                        password, permissions))
-                    if arguments.comment:
-                        conf_file.write(' # {}'.format(arguments.comment))
-
-                    conf_file.write('\n')
-
-            conf_file.write(line)
-
+    conf_file_write(conf)
     action_utils.service_try_restart('uwsgi')
 
 
-def subcommand_remove_password(arguments):
-    """Remove a password and its permissions"""
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
+def subcommand_remove_password(_arguments):
+    """Remove a password and its permissions."""
+    conf = conf_file_read()
+    password = ''.join(sys.stdin)
+    if password in conf['PERMISSIONS']:
+        del conf['PERMISSIONS'][password]
 
-    with open(CONF_FILE, 'w') as conf_file:
-        in_permissions = False
-        for line in lines:
-            if line.startswith('PERMISSIONS'):
-                in_permissions = True
-            elif in_permissions:
-                if line.startswith('}'):
-                    in_permissions = False
-                elif arguments.password in line:
-                    continue
-
-            conf_file.write(line)
-
+    if password in conf['PERMISSION_COMMENTS']:
+        del conf['PERMISSION_COMMENTS'][password]
+    conf_file_write(conf)
     action_utils.service_try_restart('uwsgi')
-
-
-def subcommand_get_default(_):
-    """Get default permissions"""
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
-
-    for line in lines:
-        match = re.match(r"DEFAULT_PERMISSIONS = '(.*)'", line)
-        if match:
-            print(match.group(1).replace(',', ' '))
-            return
 
 
 def subcommand_set_default(arguments):
-    """Set default permissions"""
-    permissions = _format_permissions(arguments.permissions)
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
-
-    with open(CONF_FILE, 'w') as conf_file:
-        for line in lines:
-            if line.startswith('DEFAULT_PERMISSIONS'):
-                conf_file.write(
-                    "DEFAULT_PERMISSIONS = '{}'\n".format(permissions))
-            else:
-                conf_file.write(line)
-
+    """Set default permissions."""
+    conf = {'DEFAULT_PERMISSIONS': _format_permissions(arguments.permissions)}
+    conf_file_write(conf)
     action_utils.service_try_restart('uwsgi')
 
 

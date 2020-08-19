@@ -100,9 +100,9 @@ def setup(helper, old_version=None):
     helper.call('post', app.enable)
 
 
-def list_passwords():
-    """Get a list of passwords, their permissions and comments"""
-    output = actions.superuser_run('bepasty', ['list-passwords'])
+def get_configuration():
+    """Get a full configuration including passwords and defaults."""
+    output = actions.superuser_run('bepasty', ['get-configuration'])
     return json.loads(output)
 
 
@@ -116,16 +116,9 @@ def add_password(permissions, comment=None):
 
 
 def remove_password(password):
-    """Remove a password and its permissions"""
-    actions.superuser_run('bepasty',
-                          ['remove-password', '--password', password])
-
-
-def get_default_permissions():
-    """Get default permissions"""
-    output = actions.superuser_run('bepasty', ['get-default']).strip()
-    output = 'read list' if output == 'list read' else output
-    return output.strip()
+    """Remove a password and its permissions."""
+    actions.superuser_run('bepasty', ['remove-password'],
+                          input=password.encode())
 
 
 def set_default_permissions(permissions):
