@@ -27,7 +27,7 @@ def set_default_permissions_list_read(session_browser):
     _set_default_permissions(session_browser, 'read list')
 
 
-@when('I add a password')
+@when('I add a bepasty password')
 def add_password(session_browser):
     global last_password_added
     _remove_all_passwords(session_browser)
@@ -35,7 +35,7 @@ def add_password(session_browser):
     last_password_added = _get_password(session_browser)
 
 
-@when('I remove all passwords')
+@when('I remove all bepasty passwords')
 def remove_all_passwords(session_browser):
     _remove_all_passwords(session_browser)
 

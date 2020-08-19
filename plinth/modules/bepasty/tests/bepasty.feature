@@ -27,20 +27,21 @@ Scenario: Set default permissions to Read files
 
 Scenario: Add password
   Given the bepasty application is enabled
-  When I add a password
+  When I add a bepasty password
   Then I should be able to login to bepasty with that password
 
 Scenario: Remove password
   Given the bepasty application is enabled
-  When I remove all passwords
+  When I add a bepasty password
+  When I remove all bepasty passwords
   Then I should not be able to login to bepasty with that password
 
 @backups
 Scenario: Backup and restore bepasty
   Given the bepasty application is enabled
-  When I add a password
+  When I add a bepasty password
   And I create a backup of the bepasty app data with name test_bepasty
-  And I remove all passwords
+  And I remove all bepasty passwords
   And I restore the bepasty app data backup with name test_bepasty
   Then the bepasty site should be available
   And I should be able to login to bepasty with that password
