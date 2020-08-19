@@ -39,16 +39,16 @@ _description = [
 app = None
 
 PERMISSIONS = {
-    'read': _('Read files (using their web address)'),
+    'read': _('Read a file, if a web link to the file is available'),
     'create': _('Create or upload files'),
-    'list': _('List all files'),
+    'list': _('List all files and their web links'),
     'delete': _('Delete files'),
-    'admin': _('Admin (lock/unlock files)'),
+    'admin': _('Administer files: lock/unlock files'),
 }
 
 DEFAULT_PERMISSIONS = {
-    '': _('None (password always required)'),
-    'read': _('Read files (using their web address)'),
+    '': _('None, password is always required'),
+    'read': _('Read a file, if a web link to the file is available'),
     'read list': _('List and read all files'),
 }
 
