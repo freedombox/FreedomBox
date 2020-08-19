@@ -132,6 +132,6 @@ def get_default_permissions():
 
 
 def set_default_permissions(permissions):
-    """Set default permissions"""
+    """Set default permissions."""
     perm = permissions.split()
     actions.superuser_run('bepasty', ['set-default', '--permissions'] + perm)

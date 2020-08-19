@@ -87,7 +87,7 @@ def subcommand_setup(arguments):
     except KeyError:
         subprocess.run(['addgroup', '--system', 'bepasty'], check=True)
 
-    # Create bepasty user is needed.
+    # Create bepasty user if needed.
     try:
         pwd.getpwnam('bepasty')
     except KeyError:
@@ -226,15 +226,15 @@ def subcommand_set_default(arguments):
 
 
 def _format_permissions(permissions=None):
-    """Format permissions as comma-separated"""
+    """Format permissions as comma-separated."""
     return ','.join(set(bepasty.PERMISSIONS.keys()).intersection(
         permissions)) if permissions else ''
 
 
 def _generate_password():
-    """Generate a random password"""
+    """Generate a random password."""
     alphabet = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(alphabet) for i in range(PASSWORD_LENGTH))
+    return ''.join(secrets.choice(alphabet) for _ in range(PASSWORD_LENGTH))
 
 
 def main():
