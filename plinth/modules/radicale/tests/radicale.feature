@@ -36,6 +36,16 @@ Scenario: Authenticated access rights
   Then the radicale service should be running
   And the access rights should be "any user can view or make changes"
 
+@backups
+Scenario: Backup and restore radicale
+  Given the radicale application is enabled
+  And the access rights are set to "only the owner can view or make changes"
+  When I create a backup of the radicale app data with name test_radicale
+  And I change the access rights to "any user can view, but only the owner can make changes"
+  And I restore the radicale app data backup with name test_radicale
+  Then the radicale service should be running
+  And the access rights should be "only the owner can view or make changes"
+
 Scenario: Disable radicale application
   Given the radicale application is enabled
   When I disable the radicale application
