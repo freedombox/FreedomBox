@@ -21,9 +21,11 @@ managed_packages = ['bepasty', 'uwsgi', 'uwsgi-plugin-python3']
 
 managed_services = ['uwsgi']
 
-    _('bepasty is a web application that allows all types of files to be '
-      'uploaded and shared.'),
 _description = [
+    _('bepasty is a web application that allows large files to be uploaded '
+      'and shared. Text and code snippets can also be pasted and shared. '
+      'Text, image, audio, video and PDF documents can be previewed in the '
+      'browser. Shared files can be set to expire after a time period.'),
     _('bepasty does not use usernames for login. It only uses passwords. For '
       'each password, a set of permissions can be selected. Once you have '
       'created a password, you can share it with the users who should have the'
