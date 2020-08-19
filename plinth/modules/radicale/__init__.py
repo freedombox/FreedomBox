@@ -22,6 +22,8 @@ version = 2
 
 managed_packages = ['radicale', 'uwsgi', 'uwsgi-plugin-python3']
 
+managed_services = ['uwsgi']
+
 _description = [
     format_lazy(
         _('Radicale is a CalDAV and CardDAV server. It allows synchronization '

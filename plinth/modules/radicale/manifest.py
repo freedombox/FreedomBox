@@ -79,4 +79,9 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({'data': {'directories': ['/var/lib/radicale/']}})
+backup = validate_backup({
+    'data': {
+        'directories': ['/var/lib/radicale/']
+    },
+    'services': ['uwsgi']
+})
