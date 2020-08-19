@@ -64,7 +64,7 @@ class BepastyApp(app_module.App):
 
         info = app_module.Info(self.app_id, version, name=_('bepasty'),
                                icon_filename='bepasty',
-                               short_description=_('File Sharing'),
+                               short_description=_('File & Snippet Sharing'),
                                description=_description, manual_page='bepasty',
                                clients=clients)
         self.add(info)
