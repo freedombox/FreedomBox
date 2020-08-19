@@ -87,7 +87,8 @@ class BepastyApp(app_module.App):
         uwsgi = Uwsgi('uwsgi-bepasty', 'bepasty-freedombox')
         self.add(uwsgi)
 
-        webserver = Webserver('webserver-bepasty', 'bepasty-freedombox')
+        webserver = Webserver('webserver-bepasty', 'bepasty-freedombox',
+                              urls=['https://{host}/bepasty/'])
         self.add(webserver)
 
 
