@@ -24,8 +24,8 @@ class AddPasswordForm(forms.Form):
 
     permissions = forms.MultipleChoiceField(
         choices=bepasty.PERMISSIONS.items(),
-        widget=forms.CheckboxSelectMultiple, required=False,
-        label=_('Permissions'), help_text=_(
+        widget=forms.CheckboxSelectMultiple, label=_('Permissions'),
+        help_text=_(
             'Users that log in with this password will have the selected '
             'permissions.'))
 

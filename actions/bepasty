@@ -44,7 +44,7 @@ def parse_arguments():
 
     setup = subparsers.add_parser(
         'setup', help='Perform post-installation operations for bepasty')
-    setup.add_argument('--domain-name',
+    setup.add_argument('--domain-name', required=True,
                        help='The domain name that will be used by bepasty')
 
     subparsers.add_parser(
@@ -54,7 +54,7 @@ def parse_arguments():
     add_password = subparsers.add_parser(
         'add-password', help='Generate a password with given permissions')
     add_password.add_argument(
-        '--permissions', nargs='*',
+        '--permissions', nargs='+',
         help='Any number of permissions from the set: {}'.format(', '.join(
             bepasty.PERMISSIONS.keys())))
     add_password.add_argument(

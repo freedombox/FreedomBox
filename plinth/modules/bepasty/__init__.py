@@ -106,12 +106,9 @@ def list_passwords():
     return json.loads(output)
 
 
-def add_password(permissions=None, comment=None):
-    """Generate a password with given permissions"""
-    command = ['add-password']
-    if permissions:
-        command += ['--permissions'] + permissions
-
+def add_password(permissions, comment=None):
+    """Generate a password with given permissions."""
+    command = ['add-password', '--permissions'] + permissions
     if comment:
         command += ['--comment', comment]
 
