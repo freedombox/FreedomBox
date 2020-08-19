@@ -21,9 +21,9 @@ managed_packages = ['bepasty', 'uwsgi', 'uwsgi-plugin-python3']
 
 managed_services = ['uwsgi']
 
-description = [
     _('bepasty is a web application that allows all types of files to be '
       'uploaded and shared.'),
+_description = [
     _('bepasty does not use usernames for login. It only uses passwords. For '
       'each password, a set of permissions can be selected. Once you have '
       'created a password, you can share it with the users who should have the'
@@ -63,7 +63,7 @@ class BepastyApp(app_module.App):
         info = app_module.Info(self.app_id, version, name=_('bepasty'),
                                icon_filename='bepasty',
                                short_description=_('File Sharing'),
-                               description=description, manual_page='bepasty',
+                               description=_description, manual_page='bepasty',
                                clients=clients)
         self.add(info)
 
