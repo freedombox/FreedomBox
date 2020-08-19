@@ -144,7 +144,7 @@ def subcommand_setup(_):
     except KeyError:
         subprocess.run(['addgroup', '--system', 'infinoted'], check=True)
 
-    # Create infinoted user is needed.
+    # Create infinoted user if needed.
     try:
         pwd.getpwnam('infinoted')
     except KeyError:
