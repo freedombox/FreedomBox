@@ -19,8 +19,15 @@ class Menu(app.FollowerComponent):
 
         short_description is an optional description shown on the menu item.
 
-        icon is the icon to be displayed for the menu item. Choose from the
-        Fork Awesome set: https://forkawesome.github.io/Fork-Awesome/icons/
+        icon is the icon to be displayed for the menu item. Icon can be the
+        name of a glyphicon from the Fork Awesome font's icon set:
+        https://forkawesome.github.io/Fork-Awesome/icons/. In this case, the
+        icon name starts with the string 'fa-'. Alternatively, the icon can
+        also be a file under the directory static/theme/icons/, provided
+        without an extension. SVG icons are preferred. Currently, both PNG and
+        SVG icons with the same name are used. For example, if the value of
+        icon is 'myapp', then two icons files static/theme/icons/myapp.svg and
+        static/theme/icons/myapp.png are used in the interface.
 
         url_name is the name of url location that will be activated when the
         menu item is selected. This is not optional. url_args and url_kwargs
