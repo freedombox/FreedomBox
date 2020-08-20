@@ -30,7 +30,7 @@ clients = validate([{
         'type': 'store',
         'os': 'ios',
         'store_name': 'app-store',
-        'url': 'https://itunes.apple.com/us/app/mumble/id443472808'
+        'url': 'https://apps.apple.com/us/app/mumble/id443472808'
     }]
 }, {
     'name':
@@ -53,7 +53,7 @@ clients = validate([{
         'type': 'store',
         'os': 'ios',
         'store_name': 'app-store',
-        'url': 'https://itunes.apple.com/dk/app/mumblefy/id858752232'
+        'url': 'https://apps.apple.com/dk/app/mumblefy/id858752232'
     }]
 }, {
     'name':
