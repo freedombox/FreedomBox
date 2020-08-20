@@ -2,6 +2,7 @@
 
 from django import forms
 from django.core import validators
+from django.utils.translation import pgettext_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg, network
@@ -44,7 +45,8 @@ class ConnectionForm(forms.Form):
               'clients on this network and share its Internet connection.'),
             box_name=_(cfg.box_name)),
         choices=[('auto', _('Automatic (DHCP)')), ('shared', _('Shared')),
-                 ('manual', _('Manual')), ('disabled', _('Disabled'))])
+                 ('manual', pgettext_lazy('Not automatically', 'Manual')),
+                 ('disabled', _('Disabled'))])
     ipv4_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv4_address],
         required=False)
@@ -74,7 +76,8 @@ class ConnectionForm(forms.Form):
               'configuration from this network making it a client.'),
             box_name=_(cfg.box_name)),
         choices=[('auto', _('Automatic')), ('dhcp', _('Automatic, DHCP only')),
-                 ('manual', _('Manual')), ('ignore', _('Ignore'))])
+                 ('manual', pgettext_lazy('Not automatically', 'Manual')),
+                 ('ignore', _('Ignore'))])
     ipv6_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv6_address],
         required=False)
