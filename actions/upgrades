@@ -19,8 +19,8 @@ from plinth.modules.upgrades import (get_current_release, is_backports_current,
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 DPKG_LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades-dpkg.log'
-BACKPORTS_RELEASE_FILE_URL = \
-    'https://deb.debian.org/debian/dists/{}-backports/Release'
+RELEASE_FILE_URL = \
+    'https://deb.debian.org/debian/dists/{}/Release'
 
 APT_PREFERENCES_FREEDOMBOX = '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: Allow carefully selected updates to 'freedombox' from backports.
@@ -180,14 +180,16 @@ def _get_protocol():
     return 'http'
 
 
-def _is_release_file_available(protocol, dist):
-    """Return whether the release for backports is available."""
+def _is_release_file_available(protocol, dist, backports=False):
+    """Return whether the release for dist[-backports] is available."""
     wrapper = None
     if protocol == 'tor+http':
         wrapper = 'torsocks'
 
-    result = check_url(BACKPORTS_RELEASE_FILE_URL.format(dist),
-                       wrapper=wrapper)
+    if backports:
+        dist += '-backports'
+
+    result = check_url(RELEASE_FILE_URL.format(dist), wrapper=wrapper)
     return result == 'passed'
 
 
@@ -238,7 +240,7 @@ def _check_and_backports_sources(develop=False):
     if protocol == 'tor+http':
         print('Package download over Tor is enabled.')
 
-    if not _is_release_file_available(protocol, dist):
+    if not _is_release_file_available(protocol, dist, backports=True):
         print(f'Release file for {dist}-backports is not available yet.')
         return
 
