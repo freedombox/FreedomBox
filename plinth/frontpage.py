@@ -44,14 +44,14 @@ class Shortcut(app.FollowerComponent):
         provided by the app. For shortcuts that should simply additional
         information this value must be None.
 
-        'details' are additional information that the user is shown when the
-        shortcut is activated. This must be provided instead of 'url' and must
-        be 'None' if 'url' is provided.
+        'description' is additional information that the user is shown when
+        the shortcut is activated. This must be provided instead of 'url' and
+        must be 'None' if 'url' is provided.
 
         'configure_url' is the page to which the user may be redirected if they
         wish to change the settings for the app or one of its services. This is
         only used when 'url' is 'None'. It is optionally provided along with
-        'details'.
+        'description'.
 
         'clients' is a list of clients software that can used to access the
         service offered by the shortcut. This should be a valid client
