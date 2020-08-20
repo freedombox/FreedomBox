@@ -40,8 +40,8 @@ _description = [
       'servers via federation.'),
     _('To communicate, you can use the '
       '<a href="https://matrix.org/docs/projects/">available clients</a> '
-      'for mobile, desktop and the web. <a href="https://riot.im/">Riot</a> '
-      'client is recommended.')
+      'for mobile, desktop and the web. '
+      '<a href="https://element.io/">Element</a> client is recommended.')
 ]
 
 port_forwarding_info = [('TCP', 8448)]
