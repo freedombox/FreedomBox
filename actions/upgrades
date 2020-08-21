@@ -11,10 +11,10 @@ import re
 import subprocess
 import sys
 
-from plinth.action_utils import run_apt_command
+from plinth.action_utils import run_apt_command, service_restart
 from plinth.modules.apache.components import check_url
-from plinth.modules.upgrades import (get_current_release, is_backports_current,
-                                     SOURCES_LIST)
+from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
+                                     get_current_release, is_backports_current)
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
@@ -95,20 +95,28 @@ def parse_arguments():
     setup_repositories.add_argument('--develop', required=False, default=False,
                                     action='store_true',
                                     help='Development mode')
+    setup_repositories.add_argument(
+        '--test-upgrade', required=False, default=False, action='store_true',
+        help='Test dist-upgrade from stable to testing')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_run(_):
+def _run():
     """Run unattended-upgrades"""
     subprocess.run(['dpkg', '--configure', '-a'])
     run_apt_command(['--fix-broken', 'install'])
+    subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
+                     stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                     stderr=subprocess.DEVNULL, close_fds=True,
+                     start_new_session=True)
+
+
+def subcommand_run(_):
+    """Run unattended-upgrades"""
     try:
-        subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
-                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL, close_fds=True,
-                         start_new_session=True)
+        _run()
     except FileNotFoundError:
         print('Error: systemctl is not available.', file=sys.stderr)
         sys.exit(2)
@@ -117,24 +125,28 @@ def subcommand_run(_):
         sys.exit(3)
 
 
-def subcommand_check_auto(_):
-    """Check if automatic upgrades are enabled"""
+def _check_auto():
+    """Check if automatic upgrades are enabled."""
     arguments = [
         'apt-config', 'shell', 'UpdateInterval',
         'APT::Periodic::Update-Package-Lists'
     ]
-    try:
-        output = subprocess.check_output(arguments).decode()
-    except subprocess.CalledProcessError as error:
-        print('Error: {0}'.format(error), file=sys.stderr)
-        sys.exit(1)
-
+    output = subprocess.check_output(arguments).decode()
     update_interval = 0
     match = re.match(r"UpdateInterval='(.*)'", output)
     if match:
         update_interval = int(match.group(1))
 
-    print(bool(update_interval))
+    return bool(update_interval)
+
+
+def subcommand_check_auto(_):
+    """Check if automatic upgrades are enabled"""
+    try:
+        print(_check_auto())
+    except subprocess.CalledProcessError as error:
+        print('Error: {0}'.format(error), file=sys.stderr)
+        sys.exit(1)
 
 
 def subcommand_enable_auto(_):
@@ -245,7 +257,7 @@ def _check_and_backports_sources(develop=False):
         return
 
     print(f'{dist}-backports is now available. Adding to sources.')
-    _add_backports_sources(SOURCES_LIST, protocol, dist)
+    _add_backports_sources(BACKPORTS_SOURCES_LIST, protocol, dist)
     # In case of dist upgrade, rewrite the preferences file.
     _add_apt_preferences()
 
@@ -273,6 +285,97 @@ def _add_apt_preferences():
             file_handle.write(APT_PREFERENCES_APPS)
 
 
+def _check_and_dist_upgrade(develop=False, test_upgrade=False):
+    """Check for new stable release. If there is one, and updates are
+    enabled, perform dist-upgrade.
+
+    If develop is True, check for possible upgrade from stable to testing.
+    If test_upgrade is True, also perform the upgrade to testing.
+    """
+    release, dist = get_current_release()
+    if release in ['unstable', 'testing']:
+        print(f'System release is {release}. Skip checking for new stable '
+              'release.')
+        return
+
+    check_dists = ['stable']
+    if develop:
+        check_dists.append('testing')
+
+    codename = None
+    for check_dist in check_dists:
+        url = RELEASE_FILE_URL.format(check_dist)
+        command = ['curl', '--silent', '--location', '--fail', url]
+        protocol = _get_protocol()
+        if protocol == 'tor+http':
+            command.insert(0, 'torsocks')
+            print('Package download over Tor is enabled.')
+
+        try:
+            output = subprocess.check_output(command).decode()
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print(f'Error while checking for new {check_dist} release')
+        else:
+            for line in output.split('\n'):
+                if line.startswith('Codename:'):
+                    codename = line.split()[1]
+
+    if not codename:
+        print('"Codename:" not found in release file.')
+        return
+
+    if codename == dist:
+        print(f'{dist} is already the latest release.')
+        return
+
+    if not _check_auto():
+        print('Automatic updates are not enabled.')
+        return
+
+    if check_dist == 'testing' and not test_upgrade:
+        print(f'Skipping dist-upgrade to {check_dist} since --test-upgrade is '
+              'not set.')
+        return
+
+    print(f'Upgrading from {dist} to {codename}...')
+    if check_dist == 'testing':
+        with open(SOURCES_LIST, 'r') as sources_list:
+            lines = sources_list.readlines()
+
+        with open(SOURCES_LIST, 'w') as sources_list:
+            for line in lines:
+                new_line = line.replace('stable', codename)
+                if 'security' in new_line:
+                    new_line = new_line.replace('/updates', '-security')
+
+                sources_list.write(new_line)
+
+    run_apt_command(['update'])
+    run_apt_command(['install', 'base-files'])
+    run_apt_command(['install', 'unattended-upgrades'])
+    subprocess.run(['unattended-upgrade', '--verbose'])
+
+    # Remove obsolete packages that may prevent other packages from
+    # upgrading.
+    run_apt_command(['remove', 'libgcc1'])
+
+    # Hold packages known to have conffile prompts. FreedomBox service
+    # will handle their upgrade later.
+    HOLD_PACKAGES = ['firewalld', 'radicale']
+    try:
+        subprocess.run(['apt-mark', 'hold'] + HOLD_PACKAGES)
+        run_apt_command(['full-upgrade'])
+    finally:
+        subprocess.run(['apt-mark', 'unhold'] + HOLD_PACKAGES)
+
+    run_apt_command(['autoremove'])
+
+    # FreedomBox Service may have tried to restart several times
+    # during the upgrade, but failed. It will stop trying after 5
+    # retries. Restart it once more to ensure it is running.
+    service_restart('plinth')
+
+
 def subcommand_setup(_):
     """Setup apt preferences."""
     _add_apt_preferences()
@@ -284,8 +387,11 @@ def subcommand_setup_repositories(arguments):
     Repositories list for now only contains the backports. If the file exists,
     assume that it contains backports.
 
+    Check if a new stable release is available, and perform
+    dist-upgrade if updates are enabled.
     """
     _check_and_backports_sources(arguments.develop)
+    _check_and_dist_upgrade(arguments.develop, arguments.test_upgrade)
 
 
 def main():
