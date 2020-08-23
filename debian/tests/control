@@ -9,3 +9,9 @@
 #
 Test-Command: plinth --list-modules 2> /dev/null
 Restrictions: needs-root
+
+#
+# Run unit and integration tests on installed files.
+#
+Test-Command: PYTHONPATH='/usr/lib/python3/dist-packages/plinth/' py.test-3 -p no:cacheprovider
+Depends: git, python3-pytest, python3-pytest-django, @
