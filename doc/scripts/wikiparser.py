@@ -1017,6 +1017,9 @@ digits with zero to find your home network, like so: XXX.XXX.XXX.0/24')
 ip/netmask with the one the router uses)'), Paragraph([PlainText('In \
 most cases you can look at your current IP address, and change the last \
 digits with zero to find your home network, like so: XXX.XXX.XXX.0/24')])]
+    >>> parse_wiki('text to introduce \\n----\\n<<TableOfContents()>>')
+    [Paragraph([PlainText('text to introduce')]), \
+HorizontalRule(4), TableOfContents()]
 
     >>> parse_wiki('  If this command shows an error such as ''new key but \
 contains no user ID - skipped'', then use a different keyserver to download \
@@ -1402,8 +1405,12 @@ PlainText('dialog.')])])])]
                     if end_marker and lines[0].strip().startswith(end_marker):
                         break
 
-                    # start of multi-line CodeText
-                    if lines[0].strip().startswith('{{{'):
+                    # If any of the syntax that ends a paragraph
+                    paragraph_breakers = ['{{{', '##', '----', '||']
+                    if any([
+                            True for breaker in paragraph_breakers
+                            if lines[0].strip().startswith(breaker)
+                    ]):
                         break
 
                     if re.match(r'\s+(\*|\.|\d\.|I\.|A\.)\s+.*', lines[0]):
