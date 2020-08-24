@@ -414,7 +414,10 @@ class Table(Element):
 
     def to_docbook(self, context=None):
         cols = len(self.rows[0]) if self.rows else 0
-        xml = f'<informaltable><tgroup cols="{cols}"><tbody>'
+        xml = f'<informaltable><tgroup cols="{cols}">'
+        for number in range(cols):
+            xml += f'<colspec colname="col_{number}"/>'
+        xml += '<tbody>'
         for row in self.rows:
             xml += row.to_docbook(context)
         xml += '</tbody></tgroup></informaltable>'
@@ -1502,7 +1505,10 @@ TableItem([Paragraph([PlainText('A')])]), \
 TableItem([Paragraph([PlainText('B')])])]), \
 TableRow([TableItem([Paragraph([PlainText('1')])]), \
 TableItem([Paragraph([PlainText('2')])])])])])
-    '<informaltable><tgroup cols="2"><tbody>\
+    '<informaltable><tgroup cols="2">\
+<colspec colname="col_0"/>\
+<colspec colname="col_1"/>\
+<tbody>\
 <row rowsep="1">\
 <entry colsep="1" rowsep="1"><para>A</para></entry>\
 <entry colsep="1" rowsep="1"><para>B</para></entry></row>\
