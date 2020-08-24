@@ -3,7 +3,7 @@
 
 for var in "$@"
 do
-    gen=$(python3 scripts/wikiparser.py "$var" | xmllint --format -)
-    orig=$(sed 's/<revhistory>.*<\/revhistory>//g' "${var//.wiki/.xml}" | xmllint --format -)
+    gen=$(python3 scripts/wikiparser.py "$var" --begin-marker='## BEGIN_INCLUDE' --end-marker='## END_INCLUDE' | xsltproc scripts/fixes.xslt - | xmllint --format -)
+    orig=$(xmllint --format "${var//.raw.wiki/.xml}" )
     diff --ignore-all-space <(echo "$gen") <(echo "$orig")
 done
