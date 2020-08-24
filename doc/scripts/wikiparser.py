@@ -3,11 +3,11 @@
 MoinMoin wiki parser
 """
 
+import logging
+import re
 from enum import Enum
 from pathlib import Path
 from xml.sax.saxutils import escape
-import logging
-import re
 
 ICONS_DIR = 'icons'
 
@@ -1214,6 +1214,12 @@ PlainText('dialog.')])])])]
 
         # Comment, not rendered
         if line.strip().startswith('##'):
+            continue
+
+        # Processing instructions, not rendered
+        if line.strip() and \
+           line.strip().split()[0] in ('#format', '#redirect', '#refresh',
+                                       '#pragma', '#deprecated', '#language'):
             continue
 
         # Table of Contents
