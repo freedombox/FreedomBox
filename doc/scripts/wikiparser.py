@@ -832,6 +832,8 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
     >>> parse_wiki('')
     []
 
+    >>> parse_wiki('<<TableOfContents>>')
+    [TableOfContents()]
     >>> parse_wiki('<<TableOfContents()>>')
     [TableOfContents()]
     >>> parse_wiki('<<TableOfContents(2)>>')
@@ -1240,7 +1242,7 @@ PlainText('dialog.')])])])]
             continue
 
         # Table of Contents
-        match = re.match(r'<<TableOfContents\((\d*)\)>>', line)
+        match = re.match(r'<<TableOfContents(?:\((\d*)\))?>>', line)
         if match:
             level = match.group(1)
             if level:
