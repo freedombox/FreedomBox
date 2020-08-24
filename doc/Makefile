@@ -117,7 +117,8 @@ $(manual-xmls): %.xml: %.raw.xml $(SCRIPTS_DIR)/fixes.xslt
 	xsltproc --output $@ $(SCRIPTS_DIR)/fixes.xslt $<
 
 $(manual-pages-raw-xml): %.raw.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
-	python3 $(SCRIPTS_DIR)/wikiparser.py $< > $@
+	python3 $(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
+	    --end-marker='## END_INCLUDE' $< > $@
 
 $(manual-pages-xml): %.xml: %.raw.xml $(SCRIPTS_DIR)/manual-page-fixes.xslt
 	xsltproc --output $@ $(SCRIPTS_DIR)/manual-page-fixes.xslt $<

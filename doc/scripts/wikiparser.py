@@ -1201,10 +1201,15 @@ PlainText('dialog.')])])])]
 
     # Skip lines before begin_marker, if given.
     if begin_marker:
+        removed_lines = []
         while lines:
             line = lines.pop(0).strip()
+            removed_lines.append(line)
             if line.startswith(begin_marker):
                 break
+
+        if not lines:  # No begin marker found
+            lines = removed_lines
 
     while lines:
         line = lines.pop(0)
@@ -1722,6 +1727,10 @@ if __name__ == '__main__':
                         help='Skip module doctests')
     parser.add_argument('--debug', action='store_true',
                         help='Show parser output')
+    parser.add_argument('--begin-marker', default=None,
+                        help='Start parsing at this line')
+    parser.add_argument('--end-marker', default=None,
+                        help='Stop parsing at this line')
     parser.add_argument('input', type=Path, nargs='*',
                         help='input file path(s)')
     arguments = parser.parse_args()
@@ -1736,7 +1745,9 @@ if __name__ == '__main__':
             wiki_text = wiki_file.read()
 
         context = get_context(in_file)
-        parsed_wiki = parse_wiki(wiki_text, context)
+        parsed_wiki = parse_wiki(wiki_text, context,
+                                 begin_marker=arguments.begin_marker,
+                                 end_marker=arguments.end_marker)
         if arguments.debug:
             import pprint
             pprint.pprint(parsed_wiki, indent=4)
