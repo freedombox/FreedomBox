@@ -5,6 +5,7 @@ MoinMoin wiki parser
 
 import logging
 import re
+import urllib
 from enum import Enum
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -189,6 +190,14 @@ class Link(Element):
 
     def to_docbook(self, context=None):
         target = escape(self.target)
+        if target.startswith('attachment:'):
+            target = target.lstrip('attachment:')
+            page_title = context.get('title', None) if context else None
+            if page_title:
+                target = f'https://wiki.debian.org/{page_title}' \
+                    + '?action=AttachFile&amp;do=get&amp;' + \
+                    urllib.parse.urlencode({'target': target})
+
         if target.startswith('FreedomBox/') or \
            target.startswith('InstallingDebianOn/'):
             target = 'https://wiki.debian.org/' + target + '#'
@@ -1463,6 +1472,13 @@ PlainText('normal text followed by'), BoldText('bold text')])])
 [PlainText('Features introduction')])])
     '<ulink url="https://wiki.debian.org/FreedomBox/Features#">\
 Features introduction</ulink>'
+
+    >>> generate_inner_docbook([Link("attachment:Let's Encrypt.webm", \
+[PlainText("Let's Encrypt")], 'do=get')], context={'title': \
+'FreedomBox/Manual/LetsEncrypt'})
+    '<ulink url="https://wiki.debian.org/FreedomBox/Manual/LetsEncrypt\
+?action=AttachFile&amp;do=get&amp;target=Let%27s+Encrypt.webm">\
+Let\\'s Encrypt</ulink>'
 
     >>> generate_inner_docbook([EmbeddedAttachment('cockpit-enable.png')])
     '<inlinemediaobject><imageobject>\

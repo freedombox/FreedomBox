@@ -89,19 +89,4 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- Fix incorrectly output wiki links -->
-  <xsl:template match="@url[parent::ulink]">
-    <xsl:attribute name="url">
-      <xsl:choose>
-        <xsl:when test="contains(., 'FreedomBox/Manual/')">
-          <xsl:value-of select="substring-before(., 'FreedomBox/Manual/')"/>
-          <xsl:value-of select="substring-after(., 'FreedomBox/Manual/')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="."/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
-  </xsl:template>
-
 </xsl:stylesheet>
