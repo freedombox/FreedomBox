@@ -540,15 +540,11 @@ def split_formatted(text, delimiter, end_delimiter=None):
     return (content, text)
 
 
-def parse_text(line, context=None):
+def parse_text(line, context=None, parse_links=True):
     """
     Parse a line of MoinMoin wiki text.
     Returns a list of objects representing text.
     """
-    # Handle !WikiWords which suppress automatic links.
-    words = [word.lstrip('!') for word in line.split()]
-    line = ' '.join(words)
-
     result = []
     while line:
         # Icons
@@ -587,7 +583,7 @@ def parse_text(line, context=None):
                 if remaining:
                     params, _, remaining = remaining.partition('|')
 
-                link = Link(target, [ItalicText(text)], params)
+                link = Link(target.strip(), [ItalicText(text.strip())], params)
                 result.append(link)
                 continue
 
@@ -617,6 +613,7 @@ def parse_text(line, context=None):
         content, line = split_formatted(line, '[[', ']]')
         if content:
             target, _, remaining = content.partition('|')
+            target = target.strip()
             text = None
             if remaining:
                 # Handle embedded attachments inside links
@@ -629,7 +626,8 @@ def parse_text(line, context=None):
                 else:
                     text, _, remaining = remaining.partition('|')
 
-                text = parse_text(text)
+                text = text.strip()
+                text = parse_text(text, parse_links=False)
 
             params = None
             if remaining:
@@ -655,7 +653,7 @@ def parse_text(line, context=None):
                 else:
                     text, _, remaining = remaining.partition('|')
 
-                text = parse_text(text)
+                text = parse_text(text, parse_links=False)
 
             params = None
             if remaining:
@@ -674,40 +672,53 @@ def parse_text(line, context=None):
         if content:
             line = line.replace(content, '', 1)
             content = content.strip()
-            while content:
-                if '<' not in content and '>' not in content \
-                   and (content.startswith('http://')
-                        or content.startswith('https://')):
-                    contents = content.split(' ', 1)
-                    result.append(Url(contents[0]))
-                    if len(contents) > 1:
-                        content = contents[1]
-                    else:
-                        break
-                else:
-                    found_http = content.find('http://')
-                    found_https = content.find('https://')
-                    if found_http >= 0:
-                        if found_https >= 0:
-                            length = min(content.find('http://'),
-                                         content.find('https://'))
-                        else:
-                            length = found_http
-                    else:
-                        length = found_https
-
-                    if length > 0:
-                        result.append(PlainText(content[:length]))
-                        content = content[length:]
-                    else:
-                        result.append(PlainText(content))
-                        break
-
-                continue
-
+            result += parse_plain_text(content, parse_links=parse_links)
             continue
 
         break
+
+    return result
+
+
+def parse_plain_text(content, parse_links=True):
+    """Parse a line or plain text and generate plain text and URL objects."""
+    result = []
+    while content:
+        content = content.strip()
+        wiki_link_match = re.search(
+            r'(?: |^)([A-Z][a-z0-9]+([A-Z][a-z0-9]+)+)(?: |$)', content)
+        link_match = re.search(r'(https?://[^<> ]+[^<> .:\(\)])', content)
+        if parse_links and link_match and link_match.span(0)[0] == 0:
+            link = link_match.group(1)
+            result.append(Url(link))
+            content = content[link_match.span(1)[1]:]
+        elif parse_links and wiki_link_match and wiki_link_match.span(
+                0)[0] == 0:
+            link = wiki_link_match.group(1)
+            result.append(Link(link, [PlainText(link)]))
+            content = content[wiki_link_match.span(1)[1]:]
+        else:
+            end = None
+            if parse_links and link_match:
+                end = link_match.span(1)[0]
+
+            if parse_links and wiki_link_match:
+                end = wiki_link_match.span(1)[0]
+
+            text = content[:end]
+
+            # Replace occurrences of !WikiText with WikiText
+            text = re.sub(r'([^A-Za-z]|^)!', r'\g<1>', text)
+
+            # Gobble multiple spaces
+            text = re.sub(r'  +', r' ', text)
+
+            result.append(PlainText(text))
+
+            if end:
+                content = content[end:]
+            else:
+                break
 
     return result
 
@@ -1152,7 +1163,13 @@ the instructions on that site to install and run it.')])]
     >>> parse_wiki('After installation a web page becomes available on \
 https://<your-freedombox>/_minidlna.')
     [Paragraph([PlainText('After installation a web page becomes available on \
-'), PlainText('https://<your-freedombox>/_minidlna.')])]
+https://<your-freedombox>/_minidlna.')])]
+
+    >>> parse_wiki('or http://10.42.0.1/.')
+    [Paragraph([PlainText('or '), Url('http://10.42.0.1/'), PlainText('.')])]
+
+    >>> parse_wiki('or http://10.42.0.1/:')
+    [Paragraph([PlainText('or '), Url('http://10.42.0.1/'), PlainText(':')])]
 
     >>> parse_wiki('||<style="text-align: center;"> [[FreedomBox/Hardware/\
 A20-OLinuXino-Lime2|{{attachment:a20-olinuxino-lime2_thumb.jpg|A20 OLinuXino \
