@@ -480,7 +480,9 @@ class Admonition(Element):
 class Comment(Text):
 
     def to_docbook(self, context=None):
-        return f'<para><remark>{escape(self.content)}</remark></para>'
+        item_xml = [item.to_docbook(context) for item in self.content]
+        xml = ' '.join(item_xml)
+        return f'<para><remark>{xml}</remark></para>'
 
 
 class BeginInclude(Element):
@@ -945,7 +947,10 @@ TableItem([Paragraph([PlainText('3')])])])])]
 'border:1px solid black;width: 80%')]
 
     >>> parse_wiki('/* comment */')
-    [Comment('comment')]
+    [Comment([PlainText('comment')])]
+
+    >>> parse_wiki('/* comment http://example.com */')
+    [Comment([PlainText('comment '), Url('http://example.com')])]
 
     >>> parse_wiki('## BEGIN_INCLUDE')
     [BeginInclude()]
@@ -1349,6 +1354,7 @@ PlainText('dialog.')])])])]
         match = re.match(r'\/\* (.+) \*\/', line)
         if match:
             content = match.group(1)
+            content = parse_plain_text(content)
             elements.append(Comment(content))
             continue
 
@@ -1532,8 +1538,12 @@ ListItem([Paragraph([PlainText('second item')])])])])
     '<itemizedlist><listitem><para>first item</para></listitem>\
 <listitem><para>second item</para></listitem></itemizedlist>'
 
-    >>> generate_inner_docbook([Comment('comment')])
+    >>> generate_inner_docbook([Comment([PlainText('comment')])])
     '<para><remark>comment</remark></para>'
+
+    >>> generate_inner_docbook([Comment([PlainText('comment'), \
+Url('http://example.com')])])
+    '<para><remark>comment <ulink url="http://example.com"/></remark></para>'
 
     >>> generate_inner_docbook([Category('CategoryFreedomBox')])
     ''
