@@ -928,6 +928,10 @@ List('numbered', [ListItem([Paragraph([PlainText('item 1.1')])])])])])]
     [List('bulleted', \
 [ListItem([Paragraph([PlainText('single,'), \
 PlainText('multiline item')])])])]
+    >>> parse_wiki(' * single,\\n \\n multipara item')
+    [List('bulleted', \
+[ListItem([Paragraph([PlainText('single,')]), \
+Paragraph([PlainText('multipara item')])])])]
 
     >>> parse_wiki('----')
     [HorizontalRule(4)]
@@ -1300,6 +1304,11 @@ PlainText('dialog.')])])])]
             top_indent = len(match.group(1))
             while lines:
                 candidate = lines[0]
+                if re.match(r'^ *$', candidate):
+                    # Eat up empty lines
+                    next_list_item += '\n' + lines.pop(0)
+                    continue
+
                 if not candidate.startswith(' ' * top_indent):
                     # Not part of list
                     break
