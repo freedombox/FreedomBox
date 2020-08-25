@@ -26,6 +26,8 @@ WIKI_ICONS = {
     '{*}': 'star_on',
 }
 
+BASE_URL = 'https://wiki.debian.org/'
+
 
 class Element:
     """Represents an element of a MoinMoin wiki page."""
@@ -189,19 +191,7 @@ class Link(Element):
         return rep
 
     def to_docbook(self, context=None):
-        target = escape(self.target)
-        if target.startswith('attachment:'):
-            target = target.lstrip('attachment:')
-            page_title = context.get('title', None) if context else None
-            if page_title:
-                target = f'https://wiki.debian.org/{page_title}' \
-                    + '?action=AttachFile&amp;do=get&amp;' + \
-                    urllib.parse.urlencode({'target': target})
-
-        if target.startswith('FreedomBox/') or \
-           target.startswith('InstallingDebianOn/'):
-            target = 'https://wiki.debian.org/' + target + '#'
-
+        target = escape(resolve_url(self.target, context))
         link_text = ''
         if self.text:
             for element in self.text:
@@ -226,7 +216,7 @@ class EmbeddedAttachment(EmbeddedLink):
 
     def to_docbook(self, context=None):
         if self.page_title:
-            target = 'https://wiki.debian.org/' + self.page_title \
+            target = BASE_URL + self.page_title \
                 + '?action=AttachFile&amp;do=get&amp;target=' \
                 + escape(self.target)
         else:
@@ -519,6 +509,43 @@ class Anchor(Element):
 
     def to_docbook(self, context=None):
         return f'<anchor id="{self.name}"/>'
+
+
+def resolve_url(url, context):
+    """Expand a URL into a full path."""
+    if re.match(r'https?://', url) or url.startswith('mailto:') or \
+       url.startswith('irc://'):
+        return url
+
+    if url.startswith('attachment:'):
+        target = url.lstrip('attachment:')
+        page_title = context.get('title') if context else None
+        if page_title:
+            target = f'{BASE_URL}{page_title}?action=AttachFile&do=get&' + \
+                urllib.parse.urlencode({'target': target})
+        return target
+
+    if url.startswith('DebianBug:'):
+        target = url.lstrip('DebianBug:')
+        return f'https://bugs.debian.org/{target}#'
+
+    if url.startswith('DebianPkg:'):
+        target = url.lstrip('DebianPkg:')
+        return f'https://packages.debian.org/{target}#'
+
+    if url.startswith('AliothList:'):
+        target = url.lstrip('AliothList:')
+        return f'https://lists.alioth.debian.org/mailman/listinfo/{target}#'
+
+    if url.startswith('../'):
+        page_title = context.get('title', '') if context else ''
+        while url.startswith('../'):
+            url = url[3:]
+            page_title = page_title.rpartition('/')[0]
+
+        return f'{BASE_URL}{page_title}/{url}#'
+
+    return f'{BASE_URL}{url}#'
 
 
 def split_formatted(text, delimiter, end_delimiter=None):
@@ -1521,6 +1548,26 @@ PlainText('normal text followed by'), BoldText('bold text')])])
 [PlainText('Features introduction')])])
     '<ulink url="https://wiki.debian.org/FreedomBox/Features#">\
 Features introduction</ulink>'
+
+    >>> generate_inner_docbook([Link('FreedomBox', [PlainText('FreedomBox')])])
+    '<ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>'
+
+    >>> generate_inner_docbook([Link('../../Contribute', \
+[PlainText('Contribute')])], context={'title': 'FreedomBox/Manual/Hardware'})
+    '<ulink url="https://wiki.debian.org/FreedomBox/Contribute#">\
+Contribute</ulink>'
+
+    >>> generate_inner_docbook([Link('DebianBug:1234', [PlainText('Bug')])])
+    '<ulink url="https://bugs.debian.org/1234#">Bug</ulink>'
+
+    >>> generate_inner_docbook([Link('DebianPkg:plinth', \
+[PlainText('Plinth')])])
+    '<ulink url="https://packages.debian.org/plinth#">Plinth</ulink>'
+
+    >>> generate_inner_docbook([Link('AliothList:freedombox-discuss', \
+[PlainText('Discuss')])])
+    '<ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-\
+discuss#">Discuss</ulink>'
 
     >>> generate_inner_docbook([Link("attachment:Let's Encrypt.webm", \
 [PlainText("Let's Encrypt")], 'do=get')], context={'title': \
