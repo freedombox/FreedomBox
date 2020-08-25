@@ -1953,13 +1953,13 @@ if __name__ == '__main__':
         with in_file.open() as wiki_file:
             wiki_text = wiki_file.read()
 
-        context = get_context(in_file)
-        parsed_wiki = parse_wiki(wiki_text, context,
+        _context = get_context(in_file)
+        parsed_wiki = parse_wiki(wiki_text, _context,
                                  begin_marker=arguments.begin_marker,
                                  end_marker=arguments.end_marker)
         if arguments.debug:
             import pprint
             pprint.pprint(parsed_wiki, indent=4)
 
-        doc_out = generate_docbook(parsed_wiki, context)
+        doc_out = generate_docbook(parsed_wiki, _context)
         print(doc_out)
