@@ -379,7 +379,7 @@ class TableItem(Element):
             xml += '</entry>'
 
         else:
-            xml = ''
+            xml = f'<entry {align}colsep="1" rowsep="1"/>'
 
         return xml
 
