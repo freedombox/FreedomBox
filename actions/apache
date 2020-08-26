@@ -122,6 +122,9 @@ def subcommand_setup(arguments):
         webserver.enable('proxy_fcgi', kind='module')
         webserver.enable('rewrite', kind='module')
 
+        # Disable /server-status page to avoid leaking private info.
+        webserver.disable('status', kind='module')
+
         # switch to mod_ssl from mod_gnutls
         webserver.disable('gnutls', kind='module')
         webserver.enable('ssl', kind='module')
