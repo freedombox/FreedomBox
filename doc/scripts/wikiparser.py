@@ -224,7 +224,8 @@ class EmbeddedAttachment(EmbeddedLink):
             target = escape(self.target)
 
         xml = '<inlinemediaobject><imageobject>'
-        xml += f'<imagedata fileref="{target}"'
+        xml += '<imagedata '
+        props = {'fileref': target}
         if self.params:
             params = self.params.split(',')
             for param in params:
@@ -232,7 +233,10 @@ class EmbeddedAttachment(EmbeddedLink):
                 if prop == 'height':
                     prop = 'depth'
 
-                xml += ' ' + prop + '="' + value + '"'
+                props[prop] = value
+
+        props = [f'{prop}="{value}"' for prop, value in sorted(props.items())]
+        xml += ' '.join(props)
 
         xml += '/>'
         xml += '</imageobject>'
