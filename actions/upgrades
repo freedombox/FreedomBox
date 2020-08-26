@@ -75,6 +75,9 @@ Pin: release a=buster-backports
 Pin-Priority: 500
 '''
 
+dist_upgrade_flag = pathlib.Path(
+    '/var/lib/freedombox/dist-upgrade-in-progress')
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
@@ -292,6 +295,11 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
     If develop is True, check for possible upgrade from stable to testing.
     If test_upgrade is True, also perform the upgrade to testing.
     """
+    if dist_upgrade_flag.exists():
+        print('Continuing previously interrupted dist-upgrade.')
+        _perform_dist_upgrade()
+        return
+
     release, dist = get_current_release()
     if release in ['unstable', 'testing']:
         print(f'System release is {release}. Skip checking for new stable '
@@ -350,6 +358,13 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
 
                 sources_list.write(new_line)
 
+    print('Dist upgrade in progress. Setting flag.')
+    dist_upgrade_flag.touch(mode=0o660)
+    _perform_dist_upgrade()
+
+
+def _perform_dist_upgrade():
+    """Perform upgrade to next release of Debian."""
     run_apt_command(['update'])
     run_apt_command(['install', 'base-files'])
     run_apt_command(['install', 'unattended-upgrades'])
@@ -369,6 +384,10 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
         subprocess.run(['apt-mark', 'unhold'] + HOLD_PACKAGES)
 
     run_apt_command(['autoremove'])
+
+    print('Dist upgrade complete. Removing flag.')
+    if dist_upgrade_flag.exists():
+        dist_upgrade_flag.unlink()
 
     # FreedomBox Service may have tried to restart several times
     # during the upgrade, but failed. It will stop trying after 5
