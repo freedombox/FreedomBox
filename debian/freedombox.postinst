@@ -5,9 +5,6 @@ set -e
 # Source debconf library.
 . /usr/share/debconf/confmodule
 
-daemonuser=plinth
-daemongroup=plinth
-
 # Due to a change in sudo, now it runs PAM modules even on password-less
 # invocations. This leads to plinth not being able to run root privileges. This
 # is because of our own restrictions in /etc/security/access.conf. Since Plinth
