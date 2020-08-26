@@ -1053,7 +1053,7 @@ TableItem([Paragraph([PlainText('3    ')])])])])]
     [Category('FreedomBox')]
 
     >>> parse_wiki('<<Anchor(gettinghelp)>>')
-    [Anchor('gettinghelp')]
+    [Paragraph([Anchor('gettinghelp')])]
 
     >>> parse_wiki('<<Include(FreedomBox/Portal)>>')
     [Include('FreedomBox/Portal')]
@@ -1521,7 +1521,7 @@ PlainText(' dialog. ')])])])]
         match = re.match(r'<<Anchor\((.+)\)>>', line)
         if match:
             content = match.group(1)
-            elements.append(Anchor(content))
+            elements.append(Paragraph([Anchor(content)]))
             continue
 
         # Include
