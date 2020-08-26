@@ -194,7 +194,11 @@ class Link(Element):
             for element in self.text:
                 link_text += element.to_docbook(context)
 
-        xml = f'<ulink url="{target}">{link_text}</ulink>'
+        if target.startswith('#'):
+            xml = f'<link linkend="{target[1:]}">{link_text}</link>'
+        else:
+            xml = f'<ulink url="{target}">{link_text}</ulink>'
+
         return xml
 
 
@@ -514,6 +518,9 @@ def resolve_url(url, context):
        url.startswith('irc://'):
         return url
 
+    if url.startswith('#'):
+        return url
+
     if url.startswith('attachment:'):
         target = url.lstrip('attachment:')
         page_title = context.get('title') if context else None
@@ -540,9 +547,14 @@ def resolve_url(url, context):
             url = url[3:]
             page_title = page_title.rpartition('/')[0]
 
-        return f'{BASE_URL}{page_title}/{url}#'
+        url = f'{BASE_URL}{page_title}/{url}'
+    else:
+        url = f'{BASE_URL}{url}'
 
-    return f'{BASE_URL}{url}#'
+    if '#' not in url:
+        url = url + '#'
+
+    return url
 
 
 def split_formatted(text, delimiter, end_delimiter=None):
@@ -606,6 +618,7 @@ def parse_text(line, context=None, parse_links=True):
                 if remaining:
                     params, _, remaining = remaining.partition('|')
 
+                text = text or target
                 link = Link(target.strip(), [ItalicText(text.strip())], params)
                 result.append(link)
                 continue
@@ -637,7 +650,7 @@ def parse_text(line, context=None, parse_links=True):
         if content:
             target, _, remaining = content.partition('|')
             target = target.strip()
-            text = None
+            text = target
             if remaining:
                 # Handle embedded attachments inside links
                 if '{{' in remaining and '}}' in remaining:
@@ -649,8 +662,8 @@ def parse_text(line, context=None, parse_links=True):
                 else:
                     text, _, remaining = remaining.partition('|')
 
-                text = text.strip()
-                text = parse_text(text, parse_links=False)
+            text = text.strip()
+            text = parse_text(text, parse_links=False)
 
             params = None
             if remaining:
@@ -916,6 +929,9 @@ PlainText(' ')])]
     >>> parse_wiki('Back to [[FreedomBox/Manual|manual]] page.')
     [Paragraph([PlainText('Back to '), Link('FreedomBox/Manual', \
 [PlainText('manual')]), PlainText(' page. ')])]
+    >>> parse_wiki('[[FreedomBox/Manual]]')
+    [Paragraph([Link('FreedomBox/Manual', [PlainText('FreedomBox/Manual')]), \
+PlainText(' ')])]
     >>> parse_wiki('[[attachment:Searx.webm|Searx installation and first steps\
 |&do=get]]')
     [Paragraph([Link('attachment:Searx.webm', \
@@ -1589,6 +1605,14 @@ Contribute</ulink>'
 [PlainText('Discuss')])])
     '<ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-\
 discuss#">Discuss</ulink>'
+
+    >>> generate_inner_docbook([Link('WiFi#USB_Devices', \
+[PlainText('Devices')])])
+    '<ulink url="https://wiki.debian.org/WiFi#USB_Devices">Devices</ulink>'
+
+    >>> generate_inner_docbook([Link('#internal-link', \
+[PlainText('Section')])])
+    '<link linkend="internal-link">Section</link>'
 
     >>> generate_inner_docbook([Link("attachment:Let's Encrypt.webm", \
 [PlainText("Let's Encrypt")], 'do=get')], context={'title': \
