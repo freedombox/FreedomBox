@@ -166,10 +166,7 @@ class Paragraph(Element):
             xml = ''
 
         for item_xml in items_xml:
-            if item_xml[0] in '.,:;-_!?':
-                xml += item_xml
-            else:
-                xml += ' ' + item_xml
+            xml += item_xml
 
         return f'<para>{xml}</para>'
 
@@ -555,7 +552,6 @@ def split_formatted(text, delimiter, end_delimiter=None):
     Return (formatted_text, remaining_text) if it is found.
     Return (None, text) otherwise.
     """
-    text = text.strip()
     end_delimiter = end_delimiter or delimiter
     content = None
     if text.startswith(delimiter):
@@ -698,7 +694,6 @@ def parse_text(line, context=None, parse_links=True):
         content = re.split(r"''|`|{{|__|\[\[", line)[0]
         if content:
             line = line.replace(content, '', 1)
-            content = content.strip()
             result += parse_plain_text(content, parse_links=parse_links)
             continue
 
@@ -711,7 +706,6 @@ def parse_plain_text(content, parse_links=True):
     """Parse a line or plain text and generate plain text and URL objects."""
     result = []
     while content:
-        content = content.strip()
         wiki_link_match = re.search(
             r'(?: |^)([A-Z][a-z0-9]+([A-Z][a-z0-9]+)+)(?: |$)', content)
         link_match = re.search(r'(https?://[^<> ]+[^<> .:\(\)])', content)
@@ -737,9 +731,6 @@ def parse_plain_text(content, parse_links=True):
             # Replace occurrences of !WikiText with WikiText
             text = re.sub(r'([^A-Za-z]|^)!', r'\g<1>', text)
 
-            # Gobble multiple spaces
-            text = re.sub(r'  +', r' ', text)
-
             result.append(PlainText(text))
 
             if end:
@@ -755,8 +746,8 @@ def parse_table_row(line, context=None):
     row_cells = re.split(r'\|\|', line)[1:-1]
     row_items = []
     for cell in row_cells:
-        content = cell.strip()
-        if content:
+        content = cell
+        if content.strip():
             # remove <tablestyle=...> that was already processed
             content = re.sub('<tablestyle=[^>]+>', '', content)
             align = None
@@ -804,8 +795,21 @@ def parse_list(list_data, context=None):
 
         else:
             content = list_data.pop(0)[2]
+            new_content = ''
+            in_code_block = False
+            for line in content.splitlines(True):
+                if line.startswith(' ' * current_level) and not in_code_block:
+                    line = line[current_level:]
+
+                if line.strip().startswith('{{{'):
+                    in_code_block = True
+                elif line.strip().startswith('}}}'):
+                    in_code_block = False
+
+                new_content += line
+
             parsed_list.add_item(
-                ListItem(parse_wiki(content, context),
+                ListItem(parse_wiki(new_content, context),
                          override_marker=override_marker))
 
     return parsed_list, list_data
@@ -885,91 +889,94 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
     [Heading(5, 'heading 5th level')]
 
     >>> parse_wiki('plain text')
-    [Paragraph([PlainText('plain text')])]
+    [Paragraph([PlainText('plain text ')])]
     >>> parse_wiki('    plain    multispaced text    ')
-    [Paragraph([PlainText('plain multispaced text')])]
+    [Paragraph([PlainText('    plain    multispaced text     ')])]
     >>> parse_wiki('https://freedombox.org')
-    [Paragraph([Url('https://freedombox.org')])]
+    [Paragraph([Url('https://freedombox.org'), PlainText(' ')])]
     >>> parse_wiki("''italic''")
-    [Paragraph([ItalicText('italic')])]
+    [Paragraph([ItalicText('italic'), PlainText(' ')])]
     >>> parse_wiki("'''bold'''")
-    [Paragraph([BoldText('bold')])]
+    [Paragraph([BoldText('bold'), PlainText(' ')])]
     >>> parse_wiki("normal text followed by '''bold text'''")
-    [Paragraph([PlainText('normal text followed by'), BoldText('bold text')])]
+    [Paragraph([PlainText('normal text followed by '), BoldText('bold text'), \
+PlainText(' ')])]
     >>> parse_wiki('`monospace`')
-    [Paragraph([MonospaceText('monospace')])]
+    [Paragraph([MonospaceText('monospace'), PlainText(' ')])]
     >>> parse_wiki('{{{code}}}')
-    [Paragraph([CodeText('code')])]
+    [Paragraph([CodeText('code'), PlainText(' ')])]
     >>> parse_wiki('__underline__')
-    [Paragraph([UnderlineText('underline')])]
+    [Paragraph([UnderlineText('underline'), PlainText(' ')])]
     >>> parse_wiki('~-smaller text-~')
-    [Paragraph([SmallerTextWarning(), PlainText('smaller text')])]
+    [Paragraph([SmallerTextWarning(), PlainText('smaller text ')])]
     >>> parse_wiki('!FreedomBox')
-    [Paragraph([PlainText('FreedomBox')])]
+    [Paragraph([PlainText('FreedomBox ')])]
     >>> parse_wiki('making a point!')
-    [Paragraph([PlainText('making a point!')])]
+    [Paragraph([PlainText('making a point! ')])]
     >>> parse_wiki('Back to [[FreedomBox/Manual|manual]] page.')
-    [Paragraph([PlainText('Back to'), Link('FreedomBox/Manual', \
-[PlainText('manual')]), PlainText('page.')])]
+    [Paragraph([PlainText('Back to '), Link('FreedomBox/Manual', \
+[PlainText('manual')]), PlainText(' page. ')])]
     >>> parse_wiki('[[attachment:Searx.webm|Searx installation and first steps\
 |&do=get]]')
     [Paragraph([Link('attachment:Searx.webm', \
-[PlainText('Searx installation and first steps')], '&do=get')])]
+[PlainText('Searx installation and first steps')], '&do=get'), \
+PlainText(' ')])]
     >>> parse_wiki('[[https://onionshare.org/|Onionshare]]')
-    [Paragraph([Link('https://onionshare.org/', [PlainText('Onionshare')])])]
+    [Paragraph([Link('https://onionshare.org/', [PlainText('Onionshare')]), \
+PlainText(' ')])]
 
     >>> parse_wiki('/!\\\\')
     [Paragraph([EmbeddedAttachment('icons/alert.png', \
-[PlainText('icons/alert.png')], 'height=20')])]
+[PlainText('icons/alert.png')], 'height=20'), PlainText(' ')])]
     >>> parse_wiki('(./)')
     [Paragraph([EmbeddedAttachment('icons/checkmark.png', \
-[PlainText('icons/checkmark.png')], 'height=20')])]
+[PlainText('icons/checkmark.png')], 'height=20'), PlainText(' ')])]
     >>> parse_wiki('{X}')
     [Paragraph([EmbeddedAttachment('icons/icon-error.png', \
-[PlainText('icons/icon-error.png')], 'height=20')])]
+[PlainText('icons/icon-error.png')], 'height=20'), PlainText(' ')])]
     >>> parse_wiki('{i}')
     [Paragraph([EmbeddedAttachment('icons/icon-info.png', \
-[PlainText('icons/icon-info.png')], 'height=20')])]
+[PlainText('icons/icon-info.png')], 'height=20'), PlainText(' ')])]
     >>> parse_wiki('{o}')
     [Paragraph([EmbeddedAttachment('icons/star_off.png', \
-[PlainText('icons/star_off.png')], 'height=20')])]
+[PlainText('icons/star_off.png')], 'height=20'), PlainText(' ')])]
     >>> parse_wiki('{*}')
     [Paragraph([EmbeddedAttachment('icons/star_on.png', \
-[PlainText('icons/star_on.png')], 'height=20')])]
+[PlainText('icons/star_on.png')], 'height=20'), PlainText(' ')])]
 
     >>> parse_wiki('{{attachment:cockpit-enable.png}}')
     [Paragraph([EmbeddedAttachment('cockpit-enable.png', \
-[PlainText('cockpit-enable.png')])])]
+[PlainText('cockpit-enable.png')]), PlainText(' ')])]
     >>> parse_wiki('{{attachment:Backups_Step1_v49.png|Backups: Step 1|\
 width=800}}')
     [Paragraph([EmbeddedAttachment('Backups_Step1_v49.png', \
-[PlainText('Backups: Step 1')], 'width=800')])]
+[PlainText('Backups: Step 1')], 'width=800'), PlainText(' ')])]
 
     >>> parse_wiki(' * single item')
-    [List('bulleted', [ListItem([Paragraph([PlainText('single item')])])])]
+    [List('bulleted', [ListItem([Paragraph([PlainText('single item ')])])])]
     >>> parse_wiki(' * first item\\n * second item')
-    [List('bulleted', [ListItem([Paragraph([PlainText('first item')])]), \
-ListItem([Paragraph([PlainText('second item')])])])]
+    [List('bulleted', [ListItem([Paragraph([PlainText('first item ')])]), \
+ListItem([Paragraph([PlainText('second item ')])])])]
     >>> parse_wiki('text to introduce\\n * a list')
-    [Paragraph([PlainText('text to introduce')]), \
-List('bulleted', [ListItem([Paragraph([PlainText('a list')])])])]
+    [Paragraph([PlainText('text to introduce ')]), \
+List('bulleted', [ListItem([Paragraph([PlainText('a list ')])])])]
     >>> parse_wiki(' . first item\\n . second item')
-    [List('plain', [ListItem([Paragraph([PlainText('first item')])]), \
-ListItem([Paragraph([PlainText('second item')])])])]
+    [List('plain', [ListItem([Paragraph([PlainText('first item ')])]), \
+ListItem([Paragraph([PlainText('second item ')])])])]
     >>> parse_wiki(' * item 1\\n  * item 1.1')
-    [List('bulleted', [ListItem([Paragraph([PlainText('item 1')]), \
-List('bulleted', [ListItem([Paragraph([PlainText('item 1.1')])])])])])]
+    [List('bulleted', [ListItem([Paragraph([PlainText('item 1 ')]), \
+List('bulleted', [ListItem([Paragraph([PlainText('item 1.1 ')])])])])])]
     >>> parse_wiki(' 1. item 1\\n  1. item 1.1')
-    [List('numbered', [ListItem([Paragraph([PlainText('item 1')]), \
-List('numbered', [ListItem([Paragraph([PlainText('item 1.1')])])])])])]
+    [List('numbered', [ListItem([Paragraph([PlainText('item 1 ')]), \
+List('numbered', [ListItem([Paragraph([PlainText('item 1.1 ')])])])])])]
     >>> parse_wiki(' * single,\\n multiline item')
     [List('bulleted', \
-[ListItem([Paragraph([PlainText('single,'), \
-PlainText('multiline item')])])])]
+[ListItem([Paragraph([PlainText('single, '), \
+PlainText('multiline item ')])])])]
     >>> parse_wiki(' * single,\\n \\n multipara item')
     [List('bulleted', \
-[ListItem([Paragraph([PlainText('single,')]), \
-Paragraph([PlainText('multipara item')])])])]
+[ListItem([Paragraph([PlainText('single, ')]), \
+Paragraph([PlainText('multipara item ')])])])]
 
     >>> parse_wiki('----')
     [HorizontalRule(4)]
@@ -980,9 +987,9 @@ Paragraph([PlainText('multipara item')])])])]
     [Table([TableRow([TableItem([Paragraph([BoldText('A')])]), \
 TableItem([Paragraph([BoldText('B')])]), \
 TableItem([Paragraph([BoldText('C')])])]), \
-TableRow([TableItem([Paragraph([PlainText('1')])]), \
-TableItem([Paragraph([PlainText('2')])]), \
-TableItem([Paragraph([PlainText('3')])])])])]
+TableRow([TableItem([Paragraph([PlainText('1    ')])]), \
+TableItem([Paragraph([PlainText('2    ')])]), \
+TableItem([Paragraph([PlainText('3    ')])])])])]
 
     >>> parse_wiki("||<tablestyle='border:1px solid black;width: 80%'>A||")
     [Table([TableRow([TableItem([Paragraph([PlainText('A')])])])], \
@@ -1020,52 +1027,53 @@ from="## BEGIN_INCLUDE", to="## END_INCLUDE")>>')
 
     >>> parse_wiki('a\\n\\n## END_INCLUDE\\n\\nb', \
     None, None, '## END_INCLUDE')
-    [Paragraph([PlainText('a')])]
+    [Paragraph([PlainText('a ')])]
     >>> parse_wiki('a\\n\\n## BEGIN_INCLUDE\\n\\nb' \
     '\\n\\n## END_INCLUDE\\n\\nc', \
     None, '## BEGIN_INCLUDE', '## END_INCLUDE')
-    [Paragraph([PlainText('b')])]
+    [Paragraph([PlainText('b ')])]
 
     >>> parse_wiki('a<<BR>>\\nb')
-    [Paragraph([PlainText('a')]), Paragraph([PlainText('b')])]
+    [Paragraph([PlainText('a')]), Paragraph([PlainText('b ')])]
     >>> parse_wiki('{{{#!wiki caution\\n\\nOnce some other app is set as the \
 home page, you can only navigate to the !FreedomBox Service (Plinth) by \
 typing https://myfreedombox.rocks/plinth/ into the browser. <<BR>>\\n\
-''/freedombox'' can also be  used as an alias to ''/plinth''\\n}}}')
+''/freedombox'' can also be used as an alias to ''/plinth''\\n}}}')
     [Admonition('caution', [Paragraph([PlainText('Once some other app is set \
 as the home page, you can only navigate to the FreedomBox Service (Plinth) by \
-typing '), Url('https://myfreedombox.rocks/plinth/'), PlainText('into the \
-browser.')]), Paragraph([PlainText('/freedombox can also be used as an alias \
+typing '), Url('https://myfreedombox.rocks/plinth/'), PlainText(' into the \
+browser. ')]), Paragraph([PlainText('/freedombox can also be used as an alias \
 to /plinth')])])]
 
     >>> parse_wiki('{{{\\nmulti-line\\n\
 preformatted text (source code)\\n}}}''')
     [CodeText('multi-line\\npreformatted text (source code)')]
     >>> parse_wiki('text to introduce {{{ a singleliner}}}')
-    [Paragraph([PlainText('text to introduce'), CodeText(' a singleliner')])]
-    >>> parse_wiki('text to introduce \\n{{{\\n a multiliner\\nstarting at\
+    [Paragraph([PlainText('text to introduce '), CodeText(' a singleliner'),\
+ PlainText(' ')])]
+    >>> parse_wiki('text to introduce\\n{{{\\n a multiliner\\nstarting at\
 \\n   different indents.\\n}}}')
-    [Paragraph([PlainText('text to introduce')]), \
+    [Paragraph([PlainText('text to introduce ')]), \
 CodeText(' a multiliner\\nstarting at\\n   different indents.')]
     >>> parse_wiki('Blah, blah:\\n {{{\\nmulti-line\\nformatted text\\n\
 starting at col #1\\n}}}')
-    [Paragraph([PlainText('Blah, blah:')]), \
+    [Paragraph([PlainText('Blah, blah: ')]), \
 CodeText('multi-line\\nformatted text\\nstarting at col #1')]
     >>> parse_wiki(' * Blah, blah:\\n {{{\\nmulti-line\\nformatted text\
 \\nstarting at col #1\\n}}}')
     [List('bulleted', \
-[ListItem([Paragraph([PlainText('Blah, blah:')]), \
+[ListItem([Paragraph([PlainText('Blah, blah: ')]), \
 CodeText('multi-line\\nformatted text\\nstarting at col #1')])])]
     >>> parse_wiki('     {{{\\n     nmap -p 80 --open -sV 192.168.0.0/24 \
 (replace the ip/netmask with the one the router uses)\\n     }}}\\n     In \
 most cases you can look at your current IP address, and change the last \
 digits with zero to find your home network, like so: XXX.XXX.XXX.0/24')
     [CodeText('     nmap -p 80 --open -sV 192.168.0.0/24 (replace the \
-ip/netmask with the one the router uses)'), Paragraph([PlainText('In \
+ip/netmask with the one the router uses)'), Paragraph([PlainText('     In \
 most cases you can look at your current IP address, and change the last \
-digits with zero to find your home network, like so: XXX.XXX.XXX.0/24')])]
-    >>> parse_wiki('text to introduce \\n----\\n<<TableOfContents()>>')
-    [Paragraph([PlainText('text to introduce')]), \
+digits with zero to find your home network, like so: XXX.XXX.XXX.0/24 ')])]
+    >>> parse_wiki('text to introduce\\n----\\n<<TableOfContents()>>')
+    [Paragraph([PlainText('text to introduce ')]), \
 HorizontalRule(4), TableOfContents()]
 
     >>> parse_wiki('  If this command shows an error such as ''new key but \
@@ -1074,69 +1082,69 @@ the keys:\\n  {{{\\n$ gpg --keyserver keys.gnupg.net --recv-keys \
 BCBEBD57A11F70B23782BC5736C361440C9BC971\\n$ gpg --keyserver keys.gnupg.net \
 --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808\\n$ gpg --keyserver \
 keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8\\n  }}}')
-    [Paragraph([PlainText('If this command shows an error such as new key but \
-contains no user ID - skipped, then use a different keyserver to download the \
-keys:')]), CodeText('$ gpg --keyserver keys.gnupg.net --recv-keys \
+    [Paragraph([PlainText('  If this command shows an error such as new key \
+but contains no user ID - skipped, then use a different keyserver to download \
+the keys: ')]), CodeText('$ gpg --keyserver keys.gnupg.net --recv-keys \
 BCBEBD57A11F70B23782BC5736C361440C9BC971\\n$ gpg --keyserver keys.gnupg.net \
 --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808\\n$ gpg --keyserver \
 keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8')]
 
     >>> parse_wiki('User documentation:\\n * List of \
 [[FreedomBox/Features|applications]] offered by !FreedomBox.')
-    [Paragraph([PlainText('User documentation:')]), List('bulleted', \
-[ListItem([Paragraph([PlainText('List of'), Link('FreedomBox/Features', \
-[PlainText('applications')]), PlainText('offered by FreedomBox.')])])])]
+    [Paragraph([PlainText('User documentation: ')]), List('bulleted', \
+[ListItem([Paragraph([PlainText('List of '), Link('FreedomBox/Features', \
+[PlainText('applications')]), PlainText(' offered by FreedomBox. ')])])])]
 
     >>> parse_wiki('\
  * Within !FreedomBox Service (Plinth)\\n\
   1. select ''Apps''\\n\
-  2. go to ''Radicale (Calendar and Addressbook)'' and \\n\
+  2. go to ''Radicale (Calendar and Addressbook)'' and\\n\
   3. install the application. After the installation is complete, make sure \
 the application is marked "enabled" in the !FreedomBox interface. Enabling \
-the application launches the Radicale CalDAV/CardDAV server. \\n\
+the application launches the Radicale CalDAV/CardDAV server.\\n\
   4. define the access rights:\\n\
    * Only the owner of a calendar/addressbook can view or make changes\\n\
    * Any user can view any calendar/addressbook, but only the owner can make \
 changes\\n\
    * Any user can view or make changes to any calendar/addressbook')
     [List('bulleted', [\
-ListItem([Paragraph([PlainText('Within FreedomBox Service (Plinth)')]), \
-List('numbered', [ListItem([Paragraph([PlainText('select Apps')])]), \
+ListItem([Paragraph([PlainText('Within FreedomBox Service (Plinth) ')]), \
+List('numbered', [ListItem([Paragraph([PlainText('select Apps ')])]), \
 ListItem([Paragraph([PlainText('go to Radicale (Calendar and Addressbook) \
-and')])]), \
+and ')])]), \
 ListItem([Paragraph([PlainText('install the application. After the \
 installation is complete, make sure the application is marked "enabled" in \
 the FreedomBox interface. Enabling the application launches the Radicale \
-CalDAV/CardDAV server.')])]), \
-ListItem([Paragraph([PlainText('define the access rights:')]), \
+CalDAV/CardDAV server. ')])]), \
+ListItem([Paragraph([PlainText('define the access rights: ')]), \
 List('bulleted', [ListItem([Paragraph([PlainText('Only the owner of a \
-calendar/addressbook can view or make changes')])]), \
+calendar/addressbook can view or make changes ')])]), \
 ListItem([Paragraph([PlainText('Any user can view any calendar/addressbook, \
-but only the owner can make changes')])]), \
+but only the owner can make changes ')])]), \
 ListItem([Paragraph([PlainText('Any user can view or make changes to any \
-calendar/addressbook')])])])])])])])]
+calendar/addressbook ')])])])])])])])]
 
     >>> parse_wiki('[[attachment:freedombox-screenshot-home.png|\
 {{attachment:freedombox-screenshot-home.png|Home Page|width=300}}]]')
     [Paragraph([Link('attachment:freedombox-screenshot-home.png', \
 [EmbeddedAttachment('freedombox-screenshot-home.png', \
-[PlainText('Home Page')], 'width=300')])])]
+[PlainText('Home Page')], 'width=300')]), PlainText(' ')])]
 
     >>> parse_wiki(" * New wiki and manual content licence: \
 ''[[https://creativecommons.org/licenses/by-sa/4.0/|Creative Commons \
 Attribution-ShareAlike 4.0 International]]'' (from June 13rd 2016).")
     [List('bulleted', [ListItem([Paragraph([PlainText('New wiki and manual \
-content licence:'), Link('https://creativecommons.org/licenses/by-sa/4.0/', \
+content licence: '), Link('https://creativecommons.org/licenses/by-sa/4.0/', \
 [ItalicText('Creative Commons Attribution-ShareAlike 4.0 International')]), \
-PlainText('(from June 13rd 2016).')])])])]
+PlainText(' (from June 13rd 2016). ')])])])]
 
     >>> parse_wiki('An alternative to downloading these images is to \
 [[InstallingDebianOn/TI/BeagleBone|install Debian]] on the !BeagleBone and \
 then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.')
-    [Paragraph([PlainText('An alternative to downloading these images is to'),\
- Link('InstallingDebianOn/TI/BeagleBone', [PlainText('install Debian')]), \
-PlainText('on the BeagleBone and then'), Link('FreedomBox/Hardware/Debian', \
-[PlainText('install FreedomBox')]), PlainText('on it.')])]
+    [Paragraph([PlainText('An alternative to downloading these images is to ')\
+, Link('InstallingDebianOn/TI/BeagleBone', [PlainText('install Debian')]), \
+PlainText(' on the BeagleBone and then '), Link('FreedomBox/Hardware/Debian', \
+[PlainText('install FreedomBox')]), PlainText(' on it. ')])]
 
     >>> parse_wiki("'''Synchronizing contacts'''\\n 1. Click on the hamburger \
 menus of CalDAV and CardDAV and select either \\"Refresh ...\\" in case of \
@@ -1144,13 +1152,14 @@ existing accounts or \\"Create ...\\" in case of new accounts (see the second \
 screenshot below).\\n 1. Check the checkboxes for the address books and \
 calendars you want to synchronize and click on the sync button in the header. \
 (see the third screenshot below)")
-    [Paragraph([BoldText('Synchronizing contacts')]), List('numbered', \
+    [Paragraph([BoldText('Synchronizing contacts'), PlainText(' ')]), \
+List('numbered', \
 [ListItem([Paragraph([PlainText('Click on the hamburger menus of CalDAV and \
 CardDAV and select either "Refresh ..." in case of existing accounts or \
-"Create ..." in case of new accounts (see the second screenshot below).')])]),\
+"Create ..." in case of new accounts (see the second screenshot below). ')])]),\
  ListItem([Paragraph([PlainText('Check the checkboxes for the address books \
 and calendars you want to synchronize and click on the sync button in the \
-header. (see the third screenshot below)')])])])]
+header. (see the third screenshot below) ')])])])]
 
     >>> parse_wiki("After Roundcube is installed, it can be accessed at \
 {{{https://<your freedombox>/roundcube}}}. Enter your username and password. \
@@ -1164,19 +1173,19 @@ the IMAP server. Using encrypted connection to your IMAP server is strongly \
 recommended. To do this, prepend 'imaps://' at the beginning of your IMAP \
 server address. For example, ''imaps://imap.example.org''.")
     [Paragraph([PlainText('After Roundcube is installed, it can be accessed \
-at'), CodeText('https://<your freedombox>/roundcube'), PlainText('. Enter \
+at '), CodeText('https://<your freedombox>/roundcube'), PlainText('. Enter \
 your username and password. The username for many mail services will be the \
-full email address such as'), ItalicText('exampleuser@example.org'), \
-PlainText('and not just the username like'), ItalicText('exampleuser'), \
+full email address such as '), ItalicText('exampleuser@example.org'), \
+PlainText(' and not just the username like '), ItalicText('exampleuser'), \
 PlainText(". Enter the address of your email service's IMAP server address in \
-the"), ItalicText('Server'), PlainText('field. You can try providing your \
-domain name here such as'), ItalicText('example.org'), PlainText('for email \
-address'), ItalicText('exampleuser@example.org'), PlainText("and if this does \
-not work, consult your email provider's documentation for the address of the \
-IMAP server. Using encrypted connection to your IMAP server is strongly \
-recommended. To do this, prepend 'imaps://' at the beginning of your IMAP \
-server address. For example,"), ItalicText('imaps://imap.example.org'), \
-PlainText('.')])]
+the "), ItalicText('Server'), PlainText(' field. You can try providing your \
+domain name here such as '), ItalicText('example.org'), PlainText(' for email \
+address '), ItalicText('exampleuser@example.org'), PlainText(" and if this \
+does not work, consult your email provider's documentation for the address \
+of the IMAP server. Using encrypted connection to your IMAP server is \
+strongly recommended. To do this, prepend 'imaps://' at the beginning of \
+your IMAP server address. For example, "), \
+ItalicText('imaps://imap.example.org'), PlainText('. ')])]
 
     >>> parse_wiki('Tor Browser is the recommended way to browse the web \
 using Tor. You can download the Tor Browser from \
@@ -1184,19 +1193,19 @@ https://www.torproject.org/projects/torbrowser.html and follow the \
 instructions on that site to install and run it.')
     [Paragraph([PlainText('Tor Browser is the recommended way to browse the \
 web using Tor. You can download the Tor Browser from '), Url('\
-https://www.torproject.org/projects/torbrowser.html'), PlainText('and follow \
-the instructions on that site to install and run it.')])]
+https://www.torproject.org/projects/torbrowser.html'), PlainText(' and follow \
+the instructions on that site to install and run it. ')])]
 
     >>> parse_wiki('After installation a web page becomes available on \
 https://<your-freedombox>/_minidlna.')
     [Paragraph([PlainText('After installation a web page becomes available on \
-https://<your-freedombox>/_minidlna.')])]
+https://<your-freedombox>/_minidlna. ')])]
 
     >>> parse_wiki('or http://10.42.0.1/.')
-    [Paragraph([PlainText('or '), Url('http://10.42.0.1/'), PlainText('.')])]
+    [Paragraph([PlainText('or '), Url('http://10.42.0.1/'), PlainText('. ')])]
 
     >>> parse_wiki('or http://10.42.0.1/:')
-    [Paragraph([PlainText('or '), Url('http://10.42.0.1/'), PlainText(':')])]
+    [Paragraph([PlainText('or '), Url('http://10.42.0.1/'), PlainText(': ')])]
 
     >>> parse_wiki('||<style="text-align: center;"> [[FreedomBox/Hardware/\
 A20-OLinuXino-Lime2|{{attachment:a20-olinuxino-lime2_thumb.jpg|A20 OLinuXino \
@@ -1207,18 +1216,23 @@ MICRO|width=235,height=132}}]]<<BR>> [[FreedomBox/Hardware/A20-OLinuXino-MICRO\
 |A20 OLinuXino MICRO]] ||<style="text-align: center;"> [[FreedomBox/Hardware/\
 APU|{{attachment:apu1d_thumb.jpg|PC Engines APU|width=235,height=157}}]]<<BR>>\
  [[FreedomBox/Hardware/APU|PC Engines APU]] ||')
-    [Table([TableRow([TableItem([Paragraph([Link('FreedomBox/Hardware/\
-A20-OLinuXino-Lime2', [EmbeddedAttachment('a20-olinuxino-lime2_thumb.jpg', [\
-PlainText('A20 OLinuXino Lime2')], 'width=235,height=159')])]), Paragraph([\
-Link('FreedomBox/Hardware/A20-OLinuXino-Lime2', [PlainText('A20 OLinuXino \
-Lime2')])])], 'center'), TableItem([Paragraph([Link('FreedomBox/Hardware/\
-A20-OLinuXino-MICRO', [EmbeddedAttachment('a20-olinuxino-micro_thumb.jpg', [\
-PlainText('A20 OLinuXino MICRO')], 'width=235,height=132')])]), Paragraph([\
-Link('FreedomBox/Hardware/A20-OLinuXino-MICRO', [PlainText('A20 OLinuXino \
-MICRO')])])], 'center'), TableItem([Paragraph([Link('FreedomBox/Hardware/\
-APU', [EmbeddedAttachment('apu1d_thumb.jpg', [PlainText('PC Engines APU')], \
-'width=235,height=157')])]), Paragraph([Link('FreedomBox/Hardware/APU', [\
-PlainText('PC Engines APU')])])], 'center')])])]
+    [Table([TableRow([TableItem([Paragraph([PlainText(' '), \
+Link('FreedomBox/Hardware/A20-OLinuXino-Lime2', \
+[EmbeddedAttachment('a20-olinuxino-lime2_thumb.jpg', \
+[PlainText('A20 OLinuXino Lime2')], 'width=235,height=159')])]), \
+Paragraph([PlainText(' '), Link('FreedomBox/Hardware/A20-OLinuXino-Lime2', \
+[PlainText('A20 OLinuXino Lime2')]), PlainText(' ')])], 'center'), \
+TableItem([Paragraph([PlainText(' '), \
+Link('FreedomBox/Hardware/A20-OLinuXino-MICRO', \
+[EmbeddedAttachment('a20-olinuxino-micro_thumb.jpg', \
+[PlainText('A20 OLinuXino MICRO')], 'width=235,height=132')])]), \
+Paragraph([PlainText(' '), Link('FreedomBox/Hardware/A20-OLinuXino-MICRO', \
+[PlainText('A20 OLinuXino MICRO')]), PlainText(' ')])], 'center'), \
+TableItem([Paragraph([PlainText(' '), Link('FreedomBox/Hardware/APU', \
+[EmbeddedAttachment('apu1d_thumb.jpg', [PlainText('PC Engines APU')], \
+'width=235,height=157')])]), Paragraph([PlainText(' '), \
+Link('FreedomBox/Hardware/APU', [PlainText('PC Engines APU')]), \
+PlainText(' ')])], 'center')])])]
 
     >>> parse_wiki(" 1. When created, go to the virtual machine's Settings -> \
 [Network] -> [Adapter 1]->[Attached to:] and choose the network type your \
@@ -1228,14 +1242,14 @@ that this exposes the !FreedomBox's services to your entire local network.")
     [List('numbered', [ListItem([Paragraph([PlainText("When created, go to \
 the virtual machine's Settings -> [Network] -> [Adapter 1]->[Attached to:] \
 and choose the network type your want the machine to use according to the \
-explanation in Network Configuration below. The recommended type is the"), \
-ItalicText('Bridged adapter'), PlainText("option, but be aware that this \
-exposes the FreedomBox's services to your entire local network.")])])])]
+explanation in Network Configuration below. The recommended type is the "), \
+ItalicText('Bridged adapter'), PlainText(" option, but be aware that this \
+exposes the FreedomBox's services to your entire local network. ")])])])]
 
     >>> parse_wiki('After logging in, you can become root with the command \
 `sudo su`.\\n \\n=== Build Image ===')
     [Paragraph([PlainText('After logging in, you can become root with the \
-command'), MonospaceText('sudo su'), PlainText('.')]), \
+command '), MonospaceText('sudo su'), PlainText('. ')]), \
 Heading(3, 'Build Image')]
 
     >>> parse_wiki('Quassel Core will be initialized too.\\n\\n\
@@ -1246,15 +1260,16 @@ width=394}}\\n\
  1. Click the `Add` button to launch `Add Core Account` dialog.\\n\
 ')
     [Paragraph(\
-[PlainText('Quassel Core will be initialized too.')]), \
+[PlainText('Quassel Core will be initialized too. ')]), \
 List('numbered', \
 [ListItem([Paragraph([PlainText('Launch Quassel Client. You will be greeted \
-with a wizard to'), MonospaceText('Connect to Core'), PlainText('.')]), \
-Paragraph([EmbeddedAttachment('quassel-client-1-connect-to-core.png', \
-[PlainText('Connect to Core')], 'width=394')])]), \
-ListItem([Paragraph([PlainText('Click the'), MonospaceText('Add'), \
-PlainText('button to launch'), MonospaceText('Add Core Account'), \
-PlainText('dialog.')])])])]
+with a wizard to '), MonospaceText('Connect to Core'), PlainText('. ')]), \
+Paragraph([PlainText('  '), \
+EmbeddedAttachment('quassel-client-1-connect-to-core.png', \
+[PlainText('Connect to Core')], 'width=394'), PlainText(' ')])]), \
+ListItem([Paragraph([PlainText('Click the '), MonospaceText('Add'), \
+PlainText(' button to launch '), MonospaceText('Add Core Account'), \
+PlainText(' dialog. ')])])])]
 
     """
     elements = []
@@ -1264,7 +1279,7 @@ PlainText('dialog.')])])])]
     if begin_marker:
         removed_lines = []
         while lines:
-            line = lines.pop(0).strip()
+            line = lines.pop(0)
             removed_lines.append(line)
             if line.startswith(begin_marker):
                 break
@@ -1375,9 +1390,10 @@ PlainText('dialog.')])])])]
                                 break
                             else:
                                 next_list_item += '\n' + line
-                    elif candidate.strip().startswith('{{'):
+                    elif (candidate.strip().startswith('{{')
+                          and next_list_item[-1] != '\n'):
                         # Add line break before inline image
-                        next_list_item += '<<BR>>\n' + lines.pop(0)
+                        next_list_item += ' <<BR>>\n' + lines.pop(0)
                     else:
                         next_list_item += '\n' + lines.pop(0)
 
@@ -1396,7 +1412,7 @@ PlainText('dialog.')])])])]
                     list_type = ListType.BULLETED
                 else:
                     list_type = ListType.NUMBERED
-                content = line.lstrip(match.group(2) + ' ')
+                content = ' ' * indent + line.lstrip(match.group(2) + ' ')
                 list_data.append((list_type, indent, content))
 
             new_list, _ = parse_list(list_data, context)
@@ -1457,11 +1473,15 @@ PlainText('dialog.')])])])]
         if line.strip():
             texts = []
             br = '<<BR>>'
-            texts.extend(parse_text(line.rstrip(br), context))
+            space_line = line.rstrip(br) if br in line else line + ' '
+            texts.extend(parse_text(space_line, context))
             if br not in line:
                 # Collect text until next empty line is reached.
                 while lines and lines[0].strip():
                     if end_marker and lines[0].strip().startswith(end_marker):
+                        break
+
+                    if br in line:
                         break
 
                     # If any of the syntax that ends a paragraph
@@ -1476,7 +1496,8 @@ PlainText('dialog.')])])])]
                         break
 
                     line = lines.pop(0)
-                    texts.extend(parse_text(line.rstrip(br), context))
+                    space_line = line.rstrip(br) if br in line else line + ' '
+                    texts.extend(parse_text(space_line, context))
 
             elements.append(Paragraph(texts))
 
@@ -1492,13 +1513,13 @@ def generate_inner_docbook(parsed_wiki, context=None):
     >>> generate_inner_docbook([\
 Heading(1, 'heading 1st level'), \
 Heading(2, 'heading 2nd level'), \
-Paragraph([PlainText('plain text')]), \
+Paragraph([PlainText('plain text ')]), \
 Heading(3, 'heading 3rd level'), \
 Heading(2, 'heading 2nd level'), \
 ])
     '<section><title>heading 1st level</title>\
 <section><title>heading 2nd level</title>\
-<para>plain text</para>\
+<para>plain text </para>\
 <section><title>heading 3rd level</title>\
 </section></section>\
 <section><title>heading 2nd level</title>\
@@ -1507,8 +1528,8 @@ Heading(2, 'heading 2nd level'), \
     >>> generate_inner_docbook([Heading(1, 'Date & Time')])
     '<section><title>Date &amp; Time</title></section>'
 
-    >>> generate_inner_docbook([Paragraph([PlainText('plain text')])])
-    '<para>plain text</para>'
+    >>> generate_inner_docbook([Paragraph([PlainText('plain text ')])])
+    '<para>plain text </para>'
 
     >>> generate_inner_docbook([Paragraph([Url('https://freedombox.org')])])
     '<para><ulink url="https://freedombox.org"/></para>'
@@ -1520,7 +1541,7 @@ Heading(2, 'heading 2nd level'), \
     '<para><emphasis role="strong">bold</emphasis></para>'
 
     >>> generate_inner_docbook([Paragraph([\
-PlainText('normal text followed by'), BoldText('bold text')])])
+PlainText('normal text followed by '), BoldText('bold text')])])
     '<para>normal text followed by \
 <emphasis role="strong">bold text</emphasis></para>'
 
@@ -1639,9 +1660,9 @@ Url('http://example.com')])])
 
     >>> generate_inner_docbook([Paragraph([\
 PlainText('User documentation:')]), \
-List('bulleted', [ListItem([Paragraph([PlainText('List of'), \
+List('bulleted', [ListItem([Paragraph([PlainText('List of '), \
 Link('FreedomBox/Features', [PlainText('applications')]), \
-PlainText('offered by FreedomBox.')])])])])
+PlainText(' offered by FreedomBox.')])])])])
     '<para>User documentation:</para><itemizedlist><listitem><para>List of \
 <ulink url="https://wiki.debian.org/FreedomBox/Features#">applications\
 </ulink> offered by FreedomBox.</para></listitem></itemizedlist>'
@@ -1650,52 +1671,52 @@ PlainText('offered by FreedomBox.')])])])])
 ListItem([Paragraph([PlainText('Within FreedomBox Service (Plinth)')]), \
 List('numbered', [ListItem([Paragraph([PlainText('select Apps')])]), \
 ListItem([Paragraph([PlainText('go to Radicale (Calendar and Addressbook) \
-and')])]), \
+and ')])]), \
 ListItem([Paragraph([PlainText('install the application. After the \
 installation is complete, make sure the application is marked "enabled" in \
 the FreedomBox interface. Enabling the application launches the Radicale \
-CalDAV/CardDAV server.')])]), \
-ListItem([Paragraph([PlainText('define the access rights:')]), \
+CalDAV/CardDAV server. ')])]), \
+ListItem([Paragraph([PlainText('define the access rights: ')]), \
 List('bulleted', [ListItem([Paragraph([PlainText('Only the owner of a \
-calendar/addressbook can view or make changes')])]), \
+calendar/addressbook can view or make changes ')])]), \
 ListItem([Paragraph([PlainText('Any user can view any calendar/addressbook, \
-but only the owner can make changes')])]), \
+but only the owner can make changes ')])]), \
 ListItem([Paragraph([PlainText('Any user can view or make changes to any \
-calendar/addressbook')])])])])])])])])
+calendar/addressbook ')])])])])])])])])
     '<itemizedlist>\
 <listitem><para>Within FreedomBox Service (Plinth)</para> \
 <orderedlist numeration="arabic">\
 <listitem><para>select Apps</para></listitem>\
-<listitem><para>go to Radicale (Calendar and Addressbook) and</para>\
+<listitem><para>go to Radicale (Calendar and Addressbook) and </para>\
 </listitem>\
 <listitem><para>install the application. After the installation is complete, \
 make sure the application is marked "enabled" in the FreedomBox interface. \
-Enabling the application launches the Radicale CalDAV/CardDAV server.</para>\
+Enabling the application launches the Radicale CalDAV/CardDAV server. </para>\
 </listitem>\
-<listitem><para>define the access rights:</para> \
+<listitem><para>define the access rights: </para> \
 <itemizedlist>\
 <listitem><para>Only the owner of a calendar/addressbook can view or make \
-changes</para></listitem>\
+changes </para></listitem>\
 <listitem><para>Any user can view any calendar/addressbook, but only the \
-owner can make changes</para></listitem>\
-<listitem><para>Any user can view or make changes to any calendar/addressbook\
+owner can make changes </para></listitem>\
+<listitem><para>Any user can view or make changes to any calendar/addressbook \
 </para></listitem></itemizedlist>\
 </listitem></orderedlist>\
 </listitem></itemizedlist>'
 
     >>> generate_inner_docbook([Paragraph([PlainText('An alternative to \
-downloading these images is to'), Link('InstallingDebianOn/TI/BeagleBone', \
-[PlainText('install Debian')]), PlainText('on the BeagleBone and then'), \
+downloading these images is to '), Link('InstallingDebianOn/TI/BeagleBone', \
+[PlainText(' install Debian')]), PlainText(' on the BeagleBone and then '), \
 Link('FreedomBox/Hardware/Debian', [PlainText('install FreedomBox')]), \
-PlainText('on it.')])])
+PlainText(' on it. ')])])
     '<para>An alternative to downloading these images is to \
 <ulink url="https://wiki.debian.org/InstallingDebianOn/TI/BeagleBone#">\
-install Debian</ulink> on the BeagleBone and then \
+ install Debian</ulink> on the BeagleBone and then \
 <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install \
-FreedomBox</ulink> on it.</para>'
+FreedomBox</ulink> on it. </para>'
 
     >>> generate_inner_docbook([Paragraph([PlainText('After Roundcube is \
-installed, it can be accessed at'), CodeText('https://<your freedombox>\
+installed, it can be accessed at '), CodeText('https://<your freedombox>\
 /roundcube'), PlainText('.')])])
     '<para>After Roundcube is installed, it can be accessed at <code>\
 https://&lt;your freedombox&gt;/roundcube</code>.</para>'
