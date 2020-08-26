@@ -13,7 +13,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.utils import format_lazy
 
-version = 7
+version = 8
 
 is_essential = True
 
