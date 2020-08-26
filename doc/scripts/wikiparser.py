@@ -274,6 +274,7 @@ class ListType(Enum):
     PLAIN = 1
     BULLETED = 2
     NUMBERED = 3
+    SPACED = 4
 
 
 class List(Element):
@@ -284,8 +285,10 @@ class List(Element):
                 self.list_type = ListType.PLAIN
             elif list_type == 'bulleted':
                 self.list_type = ListType.BULLETED
-            else:
+            elif list_type == 'numbered':
                 self.list_type = ListType.NUMBERED
+            else:
+                self.list_type = ListType.SPACED
         else:
             self.list_type = list_type
 
@@ -296,8 +299,10 @@ class List(Element):
             list_type = 'plain'
         elif self.list_type == ListType.BULLETED:
             list_type = 'bulleted'
-        else:
+        elif self.list_type == ListType.NUMBERED:
             list_type = 'numbered'
+        else:
+            list_type = 'spaced'
 
         return super().__repr__(list_type, self.items)
 
@@ -309,8 +314,10 @@ class List(Element):
             xml = '<itemizedlist>'
         elif self.list_type == ListType.BULLETED:
             xml = '<itemizedlist>'
-        else:
+        elif self.list_type == ListType.NUMBERED:
             xml = '<orderedlist numeration="arabic">'
+        else:
+            xml = '<itemizedlist>'
 
         for item in self.items:
             xml += item.to_docbook(context)
@@ -319,8 +326,10 @@ class List(Element):
             xml += '</itemizedlist>'
         elif self.list_type == ListType.BULLETED:
             xml += '</itemizedlist>'
-        else:
+        elif self.list_type == ListType.NUMBERED:
             xml += '</orderedlist>'
+        else:
+            xml += '</itemizedlist>'
 
         return xml
 
@@ -811,7 +820,7 @@ def parse_list(list_data, context=None):
     list_type = list_data[0][0]
     current_level = list_data[0][1]
     parsed_list = List(list_type)
-    override_marker = True if list_type == ListType.PLAIN else False
+    override_marker = (list_type in (ListType.PLAIN, ListType.SPACED))
     while list_data:
         level = list_data[0][1]
         if level > current_level:
@@ -920,7 +929,8 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
     >>> parse_wiki('plain text')
     [Paragraph([PlainText('plain text ')])]
     >>> parse_wiki('    plain    multispaced text    ')
-    [Paragraph([PlainText('    plain    multispaced text     ')])]
+    [List('spaced', [ListItem([Paragraph([PlainText(\
+'plain    multispaced text     ')])])])]
     >>> parse_wiki('https://freedombox.org')
     [Paragraph([Url('https://freedombox.org'), PlainText(' ')])]
     >>> parse_wiki("''italic''")
@@ -1087,7 +1097,7 @@ preformatted text (source code)\\n}}}''')
 \\n   different indents.\\n}}}')
     [Paragraph([PlainText('text to introduce ')]), \
 CodeText(' a multiliner\\nstarting at\\n   different indents.')]
-    >>> parse_wiki('Blah, blah:\\n {{{\\nmulti-line\\nformatted text\\n\
+    >>> parse_wiki('Blah, blah:\\n{{{\\nmulti-line\\nformatted text\\n\
 starting at col #1\\n}}}')
     [Paragraph([PlainText('Blah, blah: ')]), \
 CodeText('multi-line\\nformatted text\\nstarting at col #1')]
@@ -1100,10 +1110,11 @@ CodeText('multi-line\\nformatted text\\nstarting at col #1')])])]
 (replace the ip/netmask with the one the router uses)\\n     }}}\\n     In \
 most cases you can look at your current IP address, and change the last \
 digits with zero to find your home network, like so: XXX.XXX.XXX.0/24')
-    [CodeText('     nmap -p 80 --open -sV 192.168.0.0/24 (replace the \
-ip/netmask with the one the router uses)'), Paragraph([PlainText('     In \
-most cases you can look at your current IP address, and change the last \
-digits with zero to find your home network, like so: XXX.XXX.XXX.0/24 ')])]
+    [List('spaced', [ListItem([CodeText('     nmap -p 80 --open -sV 192.168.\
+0.0/24 (replace the ip/netmask with the one the router uses)'), Paragraph(\
+[PlainText('In most cases you can look at your current IP address, and \
+change the last digits with zero to find your home network, like so: XXX.XXX\
+.XXX.0/24 ')])])])]
     >>> parse_wiki('text to introduce\\n----\\n<<TableOfContents()>>')
     [Paragraph([PlainText('text to introduce ')]), \
 HorizontalRule(4), TableOfContents()]
@@ -1114,12 +1125,13 @@ the keys:\\n  {{{\\n$ gpg --keyserver keys.gnupg.net --recv-keys \
 BCBEBD57A11F70B23782BC5736C361440C9BC971\\n$ gpg --keyserver keys.gnupg.net \
 --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808\\n$ gpg --keyserver \
 keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8\\n  }}}')
-    [Paragraph([PlainText('  If this command shows an error such as new key \
-but contains no user ID - skipped, then use a different keyserver to download \
-the keys: ')]), CodeText('$ gpg --keyserver keys.gnupg.net --recv-keys \
-BCBEBD57A11F70B23782BC5736C361440C9BC971\\n$ gpg --keyserver keys.gnupg.net \
---recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808\\n$ gpg --keyserver \
-keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8')]
+    [List('spaced', [ListItem([Paragraph([PlainText('If this command shows an \
+error such as new key but contains no user ID - skipped, then use a different \
+keyserver to download the keys: ')]), CodeText('$ gpg --keyserver keys.gnupg.\
+net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971\\n$ gpg --keyserver \
+keys.gnupg.net --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808\\n$ gpg \
+--keyserver keys.gnupg.net --recv-keys \
+013D86D8BA32EAB4A6691BF85D4153D6FE188FC8')])])]
 
     >>> parse_wiki('User documentation:\\n * List of \
 [[FreedomBox/Features|applications]] offered by !FreedomBox.')
@@ -1296,9 +1308,9 @@ width=394}}\\n\
 List('numbered', \
 [ListItem([Paragraph([PlainText('Launch Quassel Client. You will be greeted \
 with a wizard to '), MonospaceText('Connect to Core'), PlainText('. ')]), \
-Paragraph([PlainText('  '), \
+List('spaced', [ListItem([Paragraph([\
 EmbeddedAttachment('quassel-client-1-connect-to-core.png', \
-[PlainText('Connect to Core')], 'width=394'), PlainText(' ')])]), \
+[PlainText('Connect to Core')], 'width=394'), PlainText(' ')])])])]), \
 ListItem([Paragraph([PlainText('Click the '), MonospaceText('Add'), \
 PlainText(' button to launch '), MonospaceText('Add Core Account'), \
 PlainText(' dialog. ')])])])]
@@ -1321,6 +1333,11 @@ PlainText(' dialog. ')])])])]
 
     while lines:
         line = lines.pop(0)
+        # Empty line
+        match = re.match(r'^\s+$', line)
+        if match:
+            continue
+
         # End of included file
         if end_marker and line.strip().startswith(end_marker):
             break  # end parsing
@@ -1387,17 +1404,31 @@ PlainText(' dialog. ')])])])]
 
         # List
         list_item_re = re.compile(r'(\s+)(\*|\.|\d\.|I\.|A\.)\s+(.*)')
-        match = list_item_re.match(line)
-        if match:
+        space_list_re = re.compile(r'(\s+)')
+        match = list_item_re.match(line) or space_list_re.match(line)
+        if match or re.match(r'\s+', line):
             # Collect lines until end of List is reached.
             list_lines = []
             next_list_item = line
             top_indent = len(match.group(1))
+
+            if line.strip().startswith('{{{') and '}}}' not in line:
+                # Multi-line code text or admonition may not have expected
+                # indentation
+                while lines:
+                    line = lines.pop(0)
+                    if line.strip() == '}}}':
+                        next_list_item += '\n}}}'
+                        break
+                    else:
+                        next_list_item += '\n' + line
+
             while lines:
                 candidate = lines[0]
-                if re.match(r'^ *$', candidate):
+                if re.match(r'^\s*$', candidate):
                     # Eat up empty lines
-                    next_list_item += '\n' + lines.pop(0)
+                    lines.pop(0)
+                    next_list_item += '\n'
                     continue
 
                 if not candidate.startswith(' ' * top_indent):
@@ -1417,7 +1448,7 @@ PlainText(' dialog. ')])])])]
                         # have expected indentation
                         while lines:
                             line = lines.pop(0)
-                            if '}}}' == line.strip():
+                            if line.strip() == '}}}':
                                 next_list_item += '\n}}}'
                                 break
                             else:
@@ -1436,15 +1467,23 @@ PlainText(' dialog. ')])])])]
             list_data = []
             for line in list_lines:
                 match = list_item_re.match(line)
-                indent = len(match.group(1))
-                marker = match.group(2)
-                if marker == '.':
-                    list_type = ListType.PLAIN
-                elif '*' in marker:
-                    list_type = ListType.BULLETED
+                if match:
+                    indent = len(match.group(1))
+                    marker = match.group(2)
+                    if marker == '.':
+                        list_type = ListType.PLAIN
+                    elif '*' in marker:
+                        list_type = ListType.BULLETED
+                    else:
+                        list_type = ListType.NUMBERED
+
+                    content = ' ' * indent + line.lstrip(match.group(2) + ' ')
                 else:
-                    list_type = ListType.NUMBERED
-                content = ' ' * indent + line.lstrip(match.group(2) + ' ')
+                    match = space_list_re.match(line)
+                    indent = len(match.group(1))
+                    list_type = ListType.SPACED
+                    content = line
+
                 list_data.append((list_type, indent, content))
 
             new_list, _ = parse_list(list_data, context)
