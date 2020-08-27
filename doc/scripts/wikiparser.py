@@ -100,13 +100,15 @@ class Url(Text):
 class ItalicText(Text):
 
     def to_docbook(self, context=None):
-        return f'<emphasis>{escape(self.content)}</emphasis>'
+        xml = ''.join([item.to_docbook() for item in self.content])
+        return f'<emphasis>{xml}</emphasis>'
 
 
 class BoldText(Text):
 
     def to_docbook(self, context=None):
-        return f'<emphasis role="strong">{escape(self.content)}</emphasis>'
+        xml = ''.join([item.to_docbook() for item in self.content])
+        return f'<emphasis role="strong">{xml}</emphasis>'
 
 
 class MonospaceText(Text):
@@ -630,32 +632,14 @@ def parse_text(line, context=None, parse_links=True):
         # Bold text
         content, line = split_formatted(line, "'''")
         if content:
-            result.append(BoldText(content))
+            result.append(BoldText(parse_text(content, context)))
             continue
 
         # Italic text
         content, line = split_formatted(line, "''")
         if content:
-            if content.startswith('[[') and content.endswith(']]'):
-                # Special handling for links within emphasis
-                content = content.lstrip('[[').rstrip(']]')
-                target, _, remaining = content.partition('|')
-                text = None
-                if remaining:
-                    text, _, remaining = remaining.partition('|')
-
-                params = None
-                if remaining:
-                    params, _, remaining = remaining.partition('|')
-
-                text = text or get_url_text(target)
-                link = Link(target.strip(), [ItalicText(text.strip())], params)
-                result.append(link)
-                continue
-
-            else:
-                result.append(ItalicText(content))
-                continue
+            result.append(ItalicText(parse_text(content, context)))
+            continue
 
         # Monospace text
         content, line = split_formatted(line, '`')
@@ -940,12 +924,12 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
     >>> parse_wiki('https://freedombox.org')
     [Paragraph([Url('https://freedombox.org'), PlainText(' ')])]
     >>> parse_wiki("''italic''")
-    [Paragraph([ItalicText('italic'), PlainText(' ')])]
+    [Paragraph([ItalicText([PlainText('italic')]), PlainText(' ')])]
     >>> parse_wiki("'''bold'''")
-    [Paragraph([BoldText('bold'), PlainText(' ')])]
+    [Paragraph([BoldText([PlainText('bold')]), PlainText(' ')])]
     >>> parse_wiki("normal text followed by '''bold text'''")
-    [Paragraph([PlainText('normal text followed by '), BoldText('bold text'), \
-PlainText(' ')])]
+    [Paragraph([PlainText('normal text followed by '), \
+BoldText([PlainText('bold text')]), PlainText(' ')])]
     >>> parse_wiki('`monospace`')
     [Paragraph([MonospaceText('monospace'), PlainText(' ')])]
     >>> parse_wiki('``not-monospace``')
@@ -1034,9 +1018,9 @@ Paragraph([PlainText('multipara item ')])])])]
     [HorizontalRule(10)]
 
     >>> parse_wiki("||'''A'''||'''B'''||'''C'''||\\n||1    ||2    ||3    ||")
-    [Table([TableRow([TableItem([Paragraph([BoldText('A')])]), \
-TableItem([Paragraph([BoldText('B')])]), \
-TableItem([Paragraph([BoldText('C')])])]), \
+    [Table([TableRow([TableItem([Paragraph([BoldText([PlainText('A')])])]), \
+TableItem([Paragraph([BoldText([PlainText('B')])])]), \
+TableItem([Paragraph([BoldText([PlainText('C')])])])]), \
 TableRow([TableItem([Paragraph([PlainText('1    ')])]), \
 TableItem([Paragraph([PlainText('2    ')])]), \
 TableItem([Paragraph([PlainText('3    ')])])])])]
@@ -1186,9 +1170,9 @@ calendar/addressbook ')])])])])])])])]
 ''[[https://creativecommons.org/licenses/by-sa/4.0/|Creative Commons \
 Attribution-ShareAlike 4.0 International]]'' (from June 13rd 2016).")
     [List('bulleted', [ListItem([Paragraph([PlainText('New wiki and manual \
-content licence: '), Link('https://creativecommons.org/licenses/by-sa/4.0/', \
-[ItalicText('Creative Commons Attribution-ShareAlike 4.0 International')]), \
-PlainText(' (from June 13rd 2016). ')])])])]
+content licence: '), ItalicText([Link('https://creativecommons.org/licenses/\
+by-sa/4.0/', [PlainText('Creative Commons Attribution-ShareAlike 4.0 \
+International')])]), PlainText(' (from June 13rd 2016). ')])])])]
 
     >>> parse_wiki('An alternative to downloading these images is to \
 [[InstallingDebianOn/TI/BeagleBone|install Debian]] on the !BeagleBone and \
@@ -1204,8 +1188,8 @@ existing accounts or \\"Create ...\\" in case of new accounts (see the second \
 screenshot below).\\n 1. Check the checkboxes for the address books and \
 calendars you want to synchronize and click on the sync button in the header. \
 (see the third screenshot below)")
-    [Paragraph([BoldText('Synchronizing contacts'), PlainText(' ')]), \
-List('numbered', \
+    [Paragraph([BoldText([PlainText('Synchronizing contacts')]), \
+PlainText(' ')]), List('numbered', \
 [ListItem([Paragraph([PlainText('Click on the hamburger menus of CalDAV and \
 CardDAV and select either "Refresh ..." in case of existing accounts or \
 "Create ..." in case of new accounts (see the second screenshot below). ')])]),\
@@ -1227,17 +1211,18 @@ server address. For example, ''imaps://imap.example.org''.")
     [Paragraph([PlainText('After Roundcube is installed, it can be accessed \
 at '), CodeText('https://<your freedombox>/roundcube'), PlainText('. Enter \
 your username and password. The username for many mail services will be the \
-full email address such as '), ItalicText('exampleuser@example.org'), \
-PlainText(' and not just the username like '), ItalicText('exampleuser'), \
-PlainText(". Enter the address of your email service's IMAP server address in \
-the "), ItalicText('Server'), PlainText(' field. You can try providing your \
-domain name here such as '), ItalicText('example.org'), PlainText(' for email \
-address '), ItalicText('exampleuser@example.org'), PlainText(" and if this \
+full email address such as '), ItalicText([PlainText('exampleuser@example.org'\
+)]), PlainText(' and not just the username like '), ItalicText([PlainText(\
+'exampleuser')]), PlainText(". Enter the address of your email service's IMAP \
+server address in the "), ItalicText([PlainText('Server')]), PlainText(' \
+field. You can try providing your domain name here such as '), ItalicText(\
+[PlainText('example.org')]), PlainText(' for email address '), ItalicText(\
+[PlainText('exampleuser@example.org')]), PlainText(" and if this \
 does not work, consult your email provider's documentation for the address \
 of the IMAP server. Using encrypted connection to your IMAP server is \
 strongly recommended. To do this, prepend 'imaps://' at the beginning of \
-your IMAP server address. For example, "), \
-ItalicText('imaps://imap.example.org'), PlainText('. ')])]
+your IMAP server address. For example, "), ItalicText([PlainText(\
+'imaps://imap.example.org')]), PlainText('. ')])]
 
     >>> parse_wiki('Tor Browser is the recommended way to browse the web \
 using Tor. You can download the Tor Browser from \
@@ -1295,8 +1280,9 @@ that this exposes the !FreedomBox's services to your entire local network.")
 the virtual machine's Settings -> [Network] -> [Adapter 1]->[Attached to:] \
 and choose the network type your want the machine to use according to the \
 explanation in Network Configuration below. The recommended type is the "), \
-ItalicText('Bridged adapter'), PlainText(" option, but be aware that this \
-exposes the FreedomBox's services to your entire local network. ")])])])]
+ItalicText([PlainText('Bridged adapter')]), PlainText(" option, but be aware \
+that this exposes the FreedomBox's services to your entire local network. \
+")])])])]
 
     >>> parse_wiki('After logging in, you can become root with the command \
 `sudo su`.\\n \\n=== Build Image ===')
@@ -1613,14 +1599,15 @@ Heading(2, 'heading 2nd level'), \
     >>> generate_inner_docbook([Paragraph([Url('https://freedombox.org')])])
     '<para><ulink url="https://freedombox.org"/></para>'
 
-    >>> generate_inner_docbook([Paragraph([ItalicText('italic')])])
+    >>> generate_inner_docbook([Paragraph([ItalicText([\
+PlainText('italic')])])])
     '<para><emphasis>italic</emphasis></para>'
 
-    >>> generate_inner_docbook([Paragraph([BoldText('bold')])])
+    >>> generate_inner_docbook([Paragraph([BoldText([PlainText('bold')])])])
     '<para><emphasis role="strong">bold</emphasis></para>'
 
     >>> generate_inner_docbook([Paragraph([\
-PlainText('normal text followed by '), BoldText('bold text')])])
+PlainText('normal text followed by '), BoldText([PlainText('bold text')])])])
     '<para>normal text followed by \
 <emphasis role="strong">bold text</emphasis></para>'
 
