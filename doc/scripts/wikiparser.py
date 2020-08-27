@@ -595,10 +595,10 @@ def split_formatted(text, delimiter, end_delimiter=None):
     end_delimiter = end_delimiter or delimiter
     content = None
     if text.startswith(delimiter):
-        text = text.lstrip(delimiter)
+        text = text[len(delimiter):]
         end = text.find(end_delimiter)
         content = text[:end]
-        text = text[end:].lstrip(end_delimiter)
+        text = text[end:][len(end_delimiter):]
 
     return (content, text)
 
@@ -948,6 +948,8 @@ def parse_wiki(text, context=None, begin_marker=None, end_marker=None):
 PlainText(' ')])]
     >>> parse_wiki('`monospace`')
     [Paragraph([MonospaceText('monospace'), PlainText(' ')])]
+    >>> parse_wiki('``not-monospace``')
+    [Paragraph([PlainText('not-monospace'), PlainText(' ')])]
     >>> parse_wiki('{{{code}}}')
     [Paragraph([CodeText('code'), PlainText(' ')])]
     >>> parse_wiki('__underline__')
