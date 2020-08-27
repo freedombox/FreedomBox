@@ -15,7 +15,6 @@ SCRIPTS_DIR=scripts
 
 manual-pdfs=$(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.pdf)
 manual-xmls=$(patsubst %.pdf,%.xml,$(manual-pdfs))
-manual-raw-xmls=$(patsubst %.pdf,%.raw.xml,$(manual-pdfs))
 OUTPUTS=$(manual-pdfs) plinth.1 manual-pages
 
 INSTALL_OPTS=-D --mode=644
@@ -96,10 +95,8 @@ $(fetch-pages-list): fetch-pages-%:
 	done
 
 manual-pages-raw-wiki:=$(foreach lang,$(MANUAL_LANGUAGES),$(filter-out manual/%/freedombox-manual.raw.wiki,$(wildcard manual/$(lang)/*.raw.wiki)))
-manual-pages-raw-xml:=$(patsubst %.raw.wiki, %.raw.xml, $(manual-pages-raw-wiki))
-manual-pages-part-html:=$(patsubst %.raw.xml, %.part.html, $(manual-pages-raw-xml)) $(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.part.html)
-manual-pages-html:=$(patsubst %.part.html, %.html, $(manual-pages-part-html))
-manual-pages-xml:=$(patsubst %.raw.xml, %.xml, $(manual-pages-raw-xml))
+manual-pages-part-html:=$(patsubst %.raw.wiki, %.part.html, $(manual-pages-raw-wiki)) $(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.part.html)
+manual-pages-xml:=$(patsubst %.raw.wiki, %.xml, $(manual-pages-raw-wiki))
 
 .PHONY: manual-pages
 manual-pages: $(manual-pages-part-html)
@@ -107,30 +104,19 @@ manual-pages: $(manual-pages-part-html)
 $(manual-pdfs): %.pdf: %.xml
 	xmlto $(XMLTO_DEBUG_FLAGS) --with-dblatex pdf -o $(dir $@) $<
 
-$(manual-pages-part-html): %.part.html: %.html
-	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' $< > $@
-
-$(manual-raw-xmls): %.raw.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
-	python3 $(SCRIPTS_DIR)/wikiparser.py $< > $@
-
-$(manual-xmls): %.xml: %.raw.xml
-	xmllint --format $< > $@
-
-$(manual-pages-raw-xml): %.raw.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
-	python3 $(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
-	    --end-marker='## END_INCLUDE' $< > $@
-
-$(manual-pages-xml): %.xml: %.raw.xml
-	xmllint --format $< > $@
-
-$(manual-pages-html): %.html: %.xml
-	xsltproc --output $@ /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $<
+$(manual-pages-part-html): %.part.html: %.xml
+	xsltproc /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $< | \
+	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' > $@
 	rm -f $(dir $@)docbook.css
+
+$(manual-xmls) $(manual-pages-xml): %.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
+	python3 $(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
+	    --end-marker='## END_INCLUDE' $< | xmllint --format - > $@
 
 %.1: %.xml
 	xmlto man $<
 
 .PHONY: clean
 clean:
-	rm -f $(manual-pages-html) $(manual-pages-part-html) $(manual-pages-raw-xml) $(manual-pages-xml) $(manual-raw-xmls) $(manual-xmls)
+	rm -f $(manual-pages-part-html) $(manual-pages-xml) $(manual-xmls)
 	rm -f $(OUTPUTS)
