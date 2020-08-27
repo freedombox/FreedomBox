@@ -557,7 +557,13 @@ def map_local_files(path):
 
 
 def resolve_url(url, context):
-    """Expand a URL into a full path."""
+    """Expand a URL into a full path.
+
+    XXX: Links inside the included pages are resolved properly. However,
+    without the original path of a page, links in page can't always be resolved
+    correctly. Preserve the original path information.
+
+    """
     if re.match(r'https?://', url) or url.startswith('mailto:') or \
        url.startswith('irc://'):
         return url
