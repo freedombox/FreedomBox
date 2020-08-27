@@ -113,15 +113,15 @@ $(manual-pages-part-html): %.part.html: %.html
 $(manual-raw-xmls): %.raw.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
 	python3 $(SCRIPTS_DIR)/wikiparser.py $< > $@
 
-$(manual-xmls): %.xml: %.raw.xml $(SCRIPTS_DIR)/fixes.xslt
-	xsltproc --output $@ $(SCRIPTS_DIR)/fixes.xslt $<
+$(manual-xmls): %.xml: %.raw.xml
+	xmllint --format $< > $@
 
 $(manual-pages-raw-xml): %.raw.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
 	python3 $(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
 	    --end-marker='## END_INCLUDE' $< > $@
 
-$(manual-pages-xml): %.xml: %.raw.xml $(SCRIPTS_DIR)/manual-page-fixes.xslt
-	xsltproc --output $@ $(SCRIPTS_DIR)/manual-page-fixes.xslt $<
+$(manual-pages-xml): %.xml: %.raw.xml
+	xmllint --format $< > $@
 
 $(manual-pages-html): %.html: %.xml
 	xsltproc --output $@ /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $<

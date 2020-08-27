@@ -227,7 +227,7 @@ class EmbeddedAttachment(EmbeddedLink):
 
         xml = '<inlinemediaobject><imageobject>'
         xml += '<imagedata '
-        props = {'fileref': target}
+        props = {'fileref': map_local_files(target)}
         if self.params:
             params = self.params.split(',')
             for param in params:
@@ -235,7 +235,7 @@ class EmbeddedAttachment(EmbeddedLink):
                 if prop == 'height':
                     prop = 'depth'
 
-                props[prop] = value
+                props[prop] = convert_image_units(value)
 
         props = [f'{prop}="{value}"' for prop, value in sorted(props.items())]
         xml += ' '.join(props)
@@ -536,6 +536,24 @@ def get_url_text(url):
         return url.partition(':')[2]
 
     return url
+
+
+def convert_image_units(value):
+    """Covert wiki image units to docbook image units."""
+    value = int(value)
+    value = value / 2.0 if value % 2 else int(value / 2)
+    return str(value) + 'pt'
+
+
+def map_local_files(path):
+    """Map files to locally existing paths."""
+    if 'target=' in path:
+        path = path.partition('target=')[2]
+
+    if '/' in path:
+        path = path.rsplit('/', maxsplit=1)[1]
+
+    return f'images/{path}'
 
 
 def resolve_url(url, context):
@@ -1673,13 +1691,13 @@ Let\\'s Encrypt</ulink>'
 
     >>> generate_inner_docbook([EmbeddedAttachment('cockpit-enable.png')])
     '<inlinemediaobject><imageobject>\
-<imagedata fileref="cockpit-enable.png"/></imageobject>\
+<imagedata fileref="images/cockpit-enable.png"/></imageobject>\
 <textobject><phrase>cockpit-enable.png</phrase></textobject>\
 </inlinemediaobject>'
     >>> generate_inner_docbook([EmbeddedAttachment('Backups_Step1_v49.png', \
 [PlainText('Backups: Step 1')], 'width=800')])
     '<inlinemediaobject><imageobject>\
-<imagedata fileref="Backups_Step1_v49.png" width="800"/></imageobject>\
+<imagedata fileref="images/Backups_Step1_v49.png" width="400pt"/></imageobject>\
 <textobject><phrase>Backups: Step 1</phrase></textobject>\
 </inlinemediaobject>'
 
