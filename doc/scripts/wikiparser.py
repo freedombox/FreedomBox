@@ -714,7 +714,7 @@ def parse_text(line, context=None, parse_links=True):
                 else:
                     text, _, remaining = remaining.partition('|')
 
-                text = parse_text(text, parse_links=False)
+                text = parse_text(text.strip(), parse_links=False)
 
             params = None
             if remaining:
