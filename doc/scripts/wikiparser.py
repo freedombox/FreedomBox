@@ -559,6 +559,10 @@ def resolve_url(url, context):
             page_title = page_title.rpartition('/')[0]
 
         url = f'{BASE_URL}{page_title}/{url}'
+    elif url.startswith('/'):
+        page_title = context.get('title', '') if context else ''
+        url = url.lstrip('/')
+        url = f'{BASE_URL}{page_title}/{url}'
     else:
         url = f'{BASE_URL}{url}'
 
@@ -1605,6 +1609,11 @@ Features introduction</ulink>'
 [PlainText('Contribute')])], context={'title': 'FreedomBox/Manual/Hardware'})
     '<ulink url="https://wiki.debian.org/FreedomBox/Contribute#">\
 Contribute</ulink>'
+
+    >>> generate_inner_docbook([Link('/Code', \
+[PlainText('Code')])], context={'title': 'FreedomBox/Contribute'})
+    '<ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">\
+Code</ulink>'
 
     >>> generate_inner_docbook([Link('DebianBug:1234', [PlainText('Bug')])])
     '<ulink url="https://bugs.debian.org/1234#">Bug</ulink>'
