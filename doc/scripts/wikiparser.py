@@ -512,6 +512,17 @@ class Anchor(Element):
         return f'<anchor id="{self.name}"/>'
 
 
+def get_url_text(url):
+    """Return text to assign to URLs if not provided."""
+    if re.match(r'[A-Za-z]+://', url) or url.startswith('#'):
+        return None
+
+    if re.match(r'[A-Za-z]+:', url):
+        return url.partition(':')[2]
+
+    return url
+
+
 def resolve_url(url, context):
     """Expand a URL into a full path."""
     if re.match(r'https?://', url) or url.startswith('mailto:') or \
@@ -618,7 +629,7 @@ def parse_text(line, context=None, parse_links=True):
                 if remaining:
                     params, _, remaining = remaining.partition('|')
 
-                text = text or target
+                text = text or get_url_text(target)
                 link = Link(target.strip(), [ItalicText(text.strip())], params)
                 result.append(link)
                 continue
@@ -650,7 +661,7 @@ def parse_text(line, context=None, parse_links=True):
         if content:
             target, _, remaining = content.partition('|')
             target = target.strip()
-            text = target
+            text = get_url_text(target)
             if remaining:
                 # Handle embedded attachments inside links
                 if '{{' in remaining and '}}' in remaining:
@@ -662,8 +673,9 @@ def parse_text(line, context=None, parse_links=True):
                 else:
                     text, _, remaining = remaining.partition('|')
 
-            text = text.strip()
-            text = parse_text(text, parse_links=False)
+            if text:
+                text = text.strip()
+                text = parse_text(text, parse_links=False)
 
             params = None
             if remaining:
