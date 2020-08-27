@@ -459,7 +459,7 @@ class Include(Element):
         with include_file.open() as wiki_file:
             wiki_text = wiki_file.read()
 
-        context = get_context(include_file)
+        context = get_context(include_file, self.page)
         parsed_wiki = parse_wiki(wiki_text, context, self.from_marker,
                                  self.to_marker)
         return generate_inner_docbook(parsed_wiki, context)
@@ -1833,7 +1833,7 @@ https://&lt;your freedombox&gt;/roundcube</code>.</para>'
     return doc_out
 
 
-def get_context(file_path):
+def get_context(file_path, file_title=None):
     """Get dict with page path, name, language, and title.
 
     >>> get_context(Path('manual/en/freedombox-manual'))
@@ -1872,17 +1872,17 @@ def get_context(file_path):
 'language': 'en', \
 'title': 'FreedomBox/Manual/freedombox-manual'}
 
-    >>> get_context(Path('manual/en/some-page'))
+    >>> get_context(Path('manual/en/some-page'), 'FreedomBox/some-page')
     {'path': PosixPath('manual/en/some-page'), \
 'name': 'some-page', \
 'language': 'en', \
-'title': 'FreedomBox/Manual/some-page'}
+'title': 'FreedomBox/some-page'}
 
-    >>> get_context(Path('manual/es/some-page'))
+    >>> get_context(Path('manual/es/some-page'), 'FreedomBox/some-page')
     {'path': PosixPath('manual/es/some-page'), \
 'name': 'some-page', \
 'language': 'es', \
-'title': 'es/FreedomBox/Manual/some-page'}
+'title': 'es/FreedomBox/some-page'}
     """
     page_name = Path(file_path.stem).stem
     if page_name == 'freedombox-manual':
@@ -1896,10 +1896,9 @@ def get_context(file_path):
             language = lang
             break
 
-    if language == 'en':
-        title = f'FreedomBox/Manual/{page_name}'
-    else:
-        title = f'{language}/FreedomBox/Manual/{page_name}'
+    title = file_title or f'FreedomBox/Manual/{page_name}'
+    if language != 'en':
+        title = f'{language}/{title}'
 
     context = {
         'path': file_path,
