@@ -878,21 +878,16 @@ def parse_multiline_wiki_admonition(starting_line, pending_lines, context):
     if starting_line.strip().startswith('{{{') and '}}}' not in starting_line:
         admonition = re.match(r'{{{#!wiki\s(.*)', starting_line)
         if admonition:
-            content = []
-            paragraph = Paragraph([])
-            br = '<<BR>>'
+            lines = []
             while pending_lines:
                 line = pending_lines.pop(0)
                 if line == '}}}':
                     break
 
-                paragraph.add_content(parse_text(line.rstrip(br), context))
-                if br in line:
-                    content.append(paragraph)
-                    paragraph = Paragraph([])
+                lines.append(line)
 
             style = admonition.group(1)
-            content.append(paragraph)
+            content = parse_wiki('\n'.join(lines), context)
             return Admonition(style, content), pending_lines
 
     return None, pending_lines
@@ -1057,7 +1052,7 @@ from="## BEGIN_INCLUDE", to="## END_INCLUDE")>>')
     [CodeText('nmcli connection')]
     >>> parse_wiki("{{{#!wiki caution\\nDon't overuse admonitions\\n}}}")
     [Admonition('caution', [Paragraph(\
-[PlainText("Don't overuse admonitions")])])]
+[PlainText("Don't overuse admonitions ")])])]
 
     >>> parse_wiki('a\\n\\n## END_INCLUDE\\n\\nb', \
     None, None, '## END_INCLUDE')
@@ -1077,7 +1072,7 @@ typing https://myfreedombox.rocks/plinth/ into the browser. <<BR>>\\n\
 as the home page, you can only navigate to the FreedomBox Service (Plinth) by \
 typing '), Url('https://myfreedombox.rocks/plinth/'), PlainText(' into the \
 browser. ')]), Paragraph([PlainText('/freedombox can also be used as an alias \
-to /plinth')])])]
+to /plinth ')])])]
 
     >>> parse_wiki('{{{\\nmulti-line\\n\
 preformatted text (source code)\\n}}}''')
