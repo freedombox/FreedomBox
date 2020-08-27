@@ -122,7 +122,6 @@ $(manual-pages-raw-xml): %.raw.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
 
 $(manual-pages-xml): %.xml: %.raw.xml $(SCRIPTS_DIR)/manual-page-fixes.xslt
 	xsltproc --output $@ $(SCRIPTS_DIR)/manual-page-fixes.xslt $<
-	$(SCRIPTS_DIR)/post-processor fix-wiki-urls $@
 
 $(manual-pages-html): %.html: %.xml
 	xsltproc --output $@ /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $<
