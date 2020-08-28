@@ -12,7 +12,6 @@ import string
 from distutils.version import LooseVersion
 
 import markupsafe
-import pam
 import ruamel.yaml
 from django.utils.functional import lazy
 
@@ -68,6 +67,7 @@ def is_user_admin(request, cached=False):
 
 class YAMLFile(object):
     """A context management class for updating YAML files"""
+
     def __init__(self, yaml_file):
         """Return a context object for the YAML file.
 
@@ -161,5 +161,6 @@ def is_axes_old():
 
 def is_authenticated_user(username, password):
     """Return true if the user authentication succeeds."""
+    import pam  # Minimize dependencies for running tests
     pam_authenticator = pam.pam()
     return bool(pam_authenticator.authenticate(username, password))

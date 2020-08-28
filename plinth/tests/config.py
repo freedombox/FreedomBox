@@ -14,6 +14,12 @@ backups_ssh_password = None
 backups_ssh_keyfile = None
 backups_ssh_repo_uuid = 'plinth_test_sshfs'  # will be mounted to /media/<uuid>
 
+# An existing admin account for privileged actions. If this admin account
+# doesn't exist and no other admin accounts exist, a random admin account is
+# created and deleted afterwards by the tests.
+admin_username = 'tester'
+admin_password = 'testingtesting'
+
 # Import config_local to override the default variables
 try:
     from .config_local import *  # noqa, pylint: disable=unused-import

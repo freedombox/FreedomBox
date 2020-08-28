@@ -6,6 +6,7 @@ import re
 from django import forms
 from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group, User
 from django.core import validators
 from django.core.exceptions import ValidationError
@@ -71,9 +72,27 @@ USERNAME_FIELD = forms.CharField(
                             'letters, digits and @/./-/_ only.'))
 
 
+class PasswordConfirmForm(forms.Form):
+    """Password confirmation form."""
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput,
+        label=ugettext_lazy('Authorization Password'), help_text=ugettext_lazy(
+            'Enter your current password to authorize account modifications.'))
+
+    def clean_confirm_password(self):
+        """Check that current user's password matches."""
+        confirm_password = self.cleaned_data['confirm_password']
+        password_matches = check_password(confirm_password,
+                                          self.request.user.password)
+        if not password_matches:
+            raise ValidationError(_('Invalid password.'), code='invalid')
+
+        return confirm_password
+
+
 class CreateUserForm(ValidNewUsernameCheckMixin,
                      plinth.forms.LanguageSelectionFormMixin,
-                     UserCreationForm):
+                     PasswordConfirmForm, UserCreationForm):
     """Custom user create form.
 
     Include options to add user to groups.
@@ -95,7 +114,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
     class Meta(UserCreationForm.Meta):
         """Metadata to control automatic form building."""
-        fields = ('username', 'password1', 'password2', 'groups', 'language')
+        fields = ('username', 'password1', 'password2', 'groups', 'language',
+                  'confirm_password')
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -104,7 +124,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         self.fields['username'].widget.attrs.update({
             'autofocus': 'autofocus',
             'autocapitalize': 'none',
-            'autocomplete': 'username'
+            'autocomplete': 'username',
         })
 
     def save(self, commit=True):
@@ -114,26 +134,34 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         if commit:
             user.userprofile.language = self.cleaned_data['language']
             user.userprofile.save()
+            auth_username = self.request.user.username
+            confirm_password = self.cleaned_data['confirm_password']
 
+            process_input = '{0}\n{1}'.format(self.cleaned_data['password1'],
+                                              confirm_password).encode()
             try:
-                actions.superuser_run(
-                    'users',
-                    ['create-user', user.get_username()],
-                    input=self.cleaned_data['password1'].encode())
-            except ActionError:
-                messages.error(self.request, _('Creating LDAP user failed.'))
+                actions.superuser_run('users', [
+                    'create-user',
+                    user.get_username(), '--auth-user', auth_username
+                ], input=process_input)
+            except ActionError as error:
+                messages.error(
+                    self.request,
+                    _('Creating LDAP user failed: {error}'.format(
+                        error=error)))
 
             for group in self.cleaned_data['groups']:
                 try:
-                    actions.superuser_run(
-                        'users',
-                        ['add-user-to-group',
-                         user.get_username(), group])
-                except ActionError:
+                    actions.superuser_run('users', [
+                        'add-user-to-group',
+                        user.get_username(), group, '--auth-user',
+                        auth_username
+                    ], input=confirm_password.encode())
+                except ActionError as error:
                     messages.error(
                         self.request,
-                        _('Failed to add new user to {group} group.').format(
-                            group=group))
+                        _('Failed to add new user to {group} group: {error}').
+                        format(group=group, error=error))
 
                 group_object, created = Group.objects.get_or_create(name=group)
                 group_object.user_set.add(user)
@@ -141,7 +169,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         return user
 
 
-class UserUpdateForm(ValidNewUsernameCheckMixin,
+class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     username = USERNAME_FIELD
@@ -158,7 +186,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
 
     class Meta:
         """Metadata to control automatic form building."""
-        fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active')
+        fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active',
+                  'confirm_password')
         model = User
         widgets = {
             'groups': plinth.forms.CheckboxSelectMultipleWithReadOnly(),
@@ -210,9 +239,11 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         user = super(UserUpdateForm, self).save(commit=False)
         # Profile is auto saved with user object
         user.userprofile.language = self.cleaned_data['language']
+        auth_username = self.request.user.username
+        confirm_password = self.cleaned_data['confirm_password']
 
         # If user is updating their own profile then only translate the pages
-        if self.username == self.request.user.username:
+        if self.username == auth_username:
             set_language(self.request, None, user.userprofile.language)
 
         if commit:
@@ -240,8 +271,9 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                     try:
                         actions.superuser_run('users', [
                             'remove-user-from-group',
-                            user.get_username(), old_group
-                        ])
+                            user.get_username(), old_group, '--auth-user',
+                            auth_username
+                        ], input=confirm_password.encode())
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to remove user from group.'))
@@ -251,18 +283,23 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                     try:
                         actions.superuser_run('users', [
                             'add-user-to-group',
-                            user.get_username(), new_group
-                        ])
+                            user.get_username(), new_group, '--auth-user',
+                            auth_username
+                        ], input=confirm_password.encode())
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to add user to group.'))
 
             try:
                 actions.superuser_run('ssh', [
-                    'set-keys', '--username',
-                    user.get_username(), '--keys',
-                    self.cleaned_data['ssh_keys'].strip()
-                ])
+                    'set-keys',
+                    '--username',
+                    user.get_username(),
+                    '--keys',
+                    self.cleaned_data['ssh_keys'].strip(),
+                    '--auth-user',
+                    auth_username,
+                ], input=confirm_password.encode())
             except ActionError:
                 messages.error(self.request, _('Unable to set SSH keys.'))
 
@@ -273,10 +310,13 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                 else:
                     status = 'inactive'
                 try:
-                    actions.superuser_run(
-                        'users',
-                        ['set-user-status',
-                         user.get_username(), status])
+                    actions.superuser_run('users', [
+                        'set-user-status',
+                        user.get_username(),
+                        status,
+                        '--auth-user',
+                        auth_username,
+                    ], input=confirm_password.encode())
                 except ActionError:
                     messages.error(self.request,
                                    _('Failed to change user status.'))
@@ -297,7 +337,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         return cleaned_data
 
 
-class UserChangePasswordForm(SetPasswordForm):
+class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
     """Custom form that also updates password for LDAP users."""
 
     def __init__(self, request, *args, **kwargs):
@@ -310,12 +350,16 @@ class UserChangePasswordForm(SetPasswordForm):
     def save(self, commit=True):
         """Save the user model and change LDAP password as well."""
         user = super(UserChangePasswordForm, self).save(commit)
+        auth_username = self.request.user.username
         if commit:
+            process_input = '{0}\n{1}'.format(
+                self.cleaned_data['new_password1'],
+                self.cleaned_data['confirm_password']).encode()
             try:
-                actions.superuser_run(
-                    'users', ['set-user-password',
-                              user.get_username()],
-                    input=self.cleaned_data['new_password1'].encode())
+                actions.superuser_run('users', [
+                    'set-user-password',
+                    user.get_username(), '--auth-user', auth_username
+                ], input=process_input)
             except ActionError:
                 messages.error(self.request,
                                _('Changing LDAP user password failed.'))
@@ -341,19 +385,25 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
             try:
                 actions.superuser_run(
                     'users',
-                    ['create-user', user.get_username()],
+                    ['create-user',
+                     user.get_username(), '--auth-user', ''],
                     input=self.cleaned_data['password1'].encode())
-            except ActionError:
-                messages.error(self.request, _('Creating LDAP user failed.'))
+            except ActionError as error:
+                messages.error(
+                    self.request,
+                    _('Creating LDAP user failed: {error}'.format(
+                        error=error)))
 
             try:
                 actions.superuser_run(
                     'users',
                     ['add-user-to-group',
                      user.get_username(), 'admin'])
-            except ActionError:
-                messages.error(self.request,
-                               _('Failed to add new user to admin group.'))
+            except ActionError as error:
+                messages.error(
+                    self.request,
+                    _('Failed to add new user to admin group: {error}'.format(
+                        error=error)))
 
             # Create initial Django groups
             for group_choice in UsersAndGroups.get_group_choices():
@@ -368,9 +418,11 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
             # Restrict console login to users in admin or sudo group
             try:
                 set_restricted_access(True)
-            except Exception:
-                messages.error(self.request,
-                               _('Failed to restrict console access.'))
+            except Exception as error:
+                messages.error(
+                    self.request,
+                    _('Failed to restrict console access: {error}'.format(
+                        error=error)))
 
         return user
 

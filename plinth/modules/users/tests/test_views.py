@@ -67,6 +67,7 @@ def make_request(request, view, as_admin=True, **kwargs):
 
     user = User.objects.create(username='tester')
     admin_user = User.objects.create(username='admin')
+    admin_user.set_password('adminpassword')
 
     request.user = admin_user if as_admin else user
 
@@ -99,7 +100,8 @@ def test_create_user_view(rf, username):
     form_data = {
         'username': username,
         'password1': password,
-        'password2': password
+        'password2': password,
+        'confirm_password': 'adminpassword',
     }
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
@@ -109,6 +111,31 @@ def test_create_user_view(rf, username):
     assert list(messages)[0].message == 'User {} created.'.format(username)
     assert response.status_code == 302
     assert response.url == urls.reverse('users:index')
+
+
+@pytest.mark.parametrize('password,error', [
+    ('', {
+        'confirm_password': ['This field is required.']
+    }),
+    ('wrong_password', {
+        'confirm_password': ['Invalid password.']
+    }),
+])
+def test_create_user_invalid_admin_view(rf, password, error):
+    """Test that user creation with an invalid admin password fails."""
+    user_password = 'testingtesting'
+    form_data = {
+        'username': 'test-new',
+        'password1': user_password,
+        'password2': user_password,
+        'confirm_password': password,
+    }
+
+    request = rf.post(urls.reverse('users:create'), data=form_data)
+    view = views.UserCreate.as_view()
+    response, messages = make_request(request, view)
+
+    assert response.context_data['form'].errors == error
 
 
 def test_create_user_form_view(rf):
@@ -133,7 +160,8 @@ def test_create_user_invalid_username_view(rf, username):
     form_data = {
         'username': username,
         'password1': 'testingtesting',
-        'password2': 'testingtesting'
+        'password2': 'testingtesting',
+        'confirm_password': 'adminpassword',
     }
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
@@ -157,7 +185,8 @@ def test_create_user_taken_or_reserved_username_view(rf, username, error):
     form_data = {
         'username': username,
         'password1': 'testingtesting',
-        'password2': 'testingtesting'
+        'password2': 'testingtesting',
+        'confirm_password': 'adminpassword',
     }
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
@@ -175,7 +204,8 @@ def test_update_user_view(rf):
     form_data = {
         'username': new_username,
         'password1': 'testingtesting',
-        'password2': 'testingtesting'
+        'password2': 'testingtesting',
+        'confirm_password': 'adminpassword',
     }
 
     url = urls.reverse('users:edit', kwargs={'slug': user})
@@ -189,12 +219,40 @@ def test_update_user_view(rf):
                                         kwargs={'slug': new_username})
 
 
+@pytest.mark.parametrize('password,error', [
+    ('', {
+        'confirm_password': ['This field is required.']
+    }),
+    ('wrong_password', {
+        'confirm_password': ['Invalid password.']
+    }),
+])
+def test_update_user_invalid_admin_view(rf, password, error):
+    """Test that updating username with an invalid admin password fails."""
+    user = 'tester'
+    new_username = 'tester-renamed'
+    form_data = {
+        'username': new_username,
+        'password1': 'testingtesting',
+        'password2': 'testingtesting',
+        'confirm_password': password,
+    }
+
+    url = urls.reverse('users:edit', kwargs={'slug': user})
+    request = rf.post(url, data=form_data)
+    view = views.UserUpdate.as_view()
+    response, messages = make_request(request, view, as_admin=True, slug=user)
+
+    assert response.context_data['form'].errors == error
+
+
 def test_update_user_without_permissions_view(rf):
     """Test that updating other user as non-admin user raises exception."""
     form_data = {
         'username': 'admin-renamed',
         'password1': 'testingtesting',
-        'password2': 'testingtesting'
+        'password2': 'testingtesting',
+        'confirm_password': 'adminpassword',
     }
 
     url = urls.reverse('users:edit', kwargs={'slug': 'admin'})
@@ -224,7 +282,8 @@ def test_user_change_password_view(rf):
     user = 'admin'
     form_data = {
         'new_password1': 'testingtesting2',
-        'new_password2': 'testingtesting2'
+        'new_password2': 'testingtesting2',
+        'confirm_password': 'adminpassword',
     }
 
     url = urls.reverse('users:change_password', kwargs={'slug': user})
@@ -237,6 +296,32 @@ def test_user_change_password_view(rf):
     assert response.url == urls.reverse('users:edit', kwargs={'slug': user})
 
 
+@pytest.mark.parametrize('password,error', [
+    ('', {
+        'confirm_password': ['This field is required.']
+    }),
+    ('wrong_password', {
+        'confirm_password': ['Invalid password.']
+    }),
+])
+def test_user_change_password_invalid_admin_view(rf, password, error):
+    """Test that changing password with an invalid admin password fails."""
+    user = 'admin'
+    form_data = {
+        'new_password1': 'testingtesting2',
+        'new_password2': 'testingtesting2',
+        'confirm_password': password,
+    }
+
+    url = urls.reverse('users:change_password', kwargs={'slug': user})
+    request = rf.post(url, data=form_data)
+    view = views.UserChangePassword.as_view()
+    response, messages = make_request(request, view, as_admin=True, slug=user)
+
+    assert response.context_data['form'].errors == error
+    assert response.status_code == 200
+
+
 def test_user_change_password_without_permissions_view(rf):
     """
     Test that changing other user password as a non-admin user raises
@@ -245,7 +330,8 @@ def test_user_change_password_without_permissions_view(rf):
     user = 'admin'
     form_data = {
         'new_password1': 'adminadmin2',
-        'new_password2': 'adminadmin2'
+        'new_password2': 'adminadmin2',
+        'confirm_password': 'adminpassword',
     }
 
     url = urls.reverse('users:change_password', kwargs={'slug': user})

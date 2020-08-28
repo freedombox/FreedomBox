@@ -349,7 +349,7 @@ tests will create the required user using FreedomBox's first boot process.
 **When inside a container/VM you will need to target the guest**
 
 ```bash
-guest$ export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SAMBA_PORT=445
+guest$ export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SSH_PORT=22 FREEDOMBOX_SAMBA_PORT=445
 ```
 
 You will be running `py.test-3`.
