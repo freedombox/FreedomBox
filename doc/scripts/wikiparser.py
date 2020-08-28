@@ -477,6 +477,9 @@ class Admonition(Element):
         return super().__repr__(self.style, self.content)
 
     def to_docbook(self, context=None):
+        if self.style == 'comment':
+            return ''
+
         xml = '<' + self.style + '>'
         item_xml = [item.to_docbook(context) for item in self.content]
         xml += ' '.join(item_xml) + '</' + self.style + '>'
