@@ -12,6 +12,7 @@ import string
 from distutils.version import LooseVersion
 
 import markupsafe
+import pam
 import ruamel.yaml
 from django.utils.functional import lazy
 
@@ -156,3 +157,9 @@ def is_axes_old():
         return False
 
     return LooseVersion(version) < LooseVersion('5.0')
+
+
+def is_authenticated_user(username, password):
+    """Return true if the user authentication succeeds."""
+    pam_authenticator = pam.pam()
+    return bool(pam_authenticator.authenticate(username, password))
