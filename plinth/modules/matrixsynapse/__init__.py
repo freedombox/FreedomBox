@@ -47,7 +47,11 @@ _description = [
 logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
-CONFIG_FILE_PATH = '/etc/matrix-synapse/homeserver.yaml'
+ORIG_CONF_PATH = '/etc/matrix-synapse/homeserver.yaml'
+STATIC_CONF_PATH = '/etc/matrix-synapse/conf.d/freedombox-static.yaml'
+LISTENERS_CONF_PATH = '/etc/matrix-synapse/conf.d/freedombox-listeners.yaml'
+REGISTRATION_CONF_PATH = \
+    '/etc/matrix-synapse/conf.d/freedombox-registration.yaml'
 
 app = None
 

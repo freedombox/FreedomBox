@@ -9,7 +9,27 @@ import argparse
 import yaml
 
 from plinth import action_utils
-from plinth.modules.matrixsynapse import CONFIG_FILE_PATH
+from plinth.modules.matrixsynapse import ORIG_CONF_PATH, STATIC_CONF_PATH, \
+    LISTENERS_CONF_PATH, REGISTRATION_CONF_PATH
+
+STATIC_CONFIG = {
+    'max_upload_size':
+        '100M',
+    'password_providers': [{
+        'module': 'ldap_auth_provider.LdapAuthProvider',
+        'config': {
+            'enabled': True,
+            'uri': 'ldap://localhost:389',
+            'start_tls': False,
+            'base': 'ou=users,dc=thisbox',
+            'attributes': {
+                'uid': 'uid',
+                'name': 'uid',
+                'mail': '',
+            },
+        },
+    }, ],
+}
 
 
 def parse_arguments():
@@ -33,35 +53,21 @@ def parse_arguments():
 
 def subcommand_post_install(_):
     """Perform post installation configuration."""
-    with open(CONFIG_FILE_PATH) as config_file:
-        config = yaml.load(config_file)
+    with open(STATIC_CONF_PATH, 'w') as static_conf_file:
+        yaml.dump(STATIC_CONFIG, static_conf_file)
 
-    config['max_upload_size'] = '100M'
+    # start with listener config from original homeserver.yaml
+    with open(ORIG_CONF_PATH) as orig_conf_file:
+        orig_config = yaml.load(orig_conf_file)
 
-    for listener in config['listeners']:
+    listeners = orig_config['listeners']
+    for listener in listeners:
         if listener['port'] == 8448:
             listener['bind_addresses'] = ['::', '0.0.0.0']
             listener.pop('bind_address', None)
 
-    # Setup ldap parameters
-    config['password_providers'] = [{}]
-    config['password_providers'][0][
-        'module'] = 'ldap_auth_provider.LdapAuthProvider'
-    ldap_config = {
-        'enabled': True,
-        'uri': 'ldap://localhost:389',
-        'start_tls': False,
-        'base': 'ou=users,dc=thisbox',
-        'attributes': {
-            'uid': 'uid',
-            'name': 'uid',
-            'mail': ''
-        }
-    }
-    config['password_providers'][0]['config'] = ldap_config
-
-    with open(CONFIG_FILE_PATH, 'w') as config_file:
-        yaml.dump(config, config_file)
+    with open(LISTENERS_CONF_PATH, 'w') as listeners_conf_file:
+        yaml.dump({'listeners': listeners}, listeners_conf_file)
 
 
 def subcommand_setup(arguments):
@@ -73,8 +79,17 @@ def subcommand_setup(arguments):
 
 def subcommand_public_registration(argument):
     """Enable/Disable/Status public user registration."""
-    with open(CONFIG_FILE_PATH) as config_file:
-        config = yaml.load(config_file)
+    try:
+        with open(REGISTRATION_CONF_PATH) as reg_conf_file:
+            config = yaml.load(reg_conf_file)
+    except FileNotFoundError:
+        # Check if its set in original conffile.
+        with open(ORIG_CONF_PATH) as orig_conf_file:
+            orig_config = yaml.load(orig_conf_file)
+            config = {
+                'enable_registration':
+                    orig_config.get('enable_registration', False)
+            }
 
     if argument.command == 'status':
         if config['enable_registration']:
@@ -88,8 +103,8 @@ def subcommand_public_registration(argument):
     elif argument.command == 'disable':
         config['enable_registration'] = False
 
-    with open(CONFIG_FILE_PATH, 'w') as config_file:
-        yaml.dump(config, config_file)
+    with open(REGISTRATION_CONF_PATH, 'w') as reg_conf_file:
+        yaml.dump(config, reg_conf_file)
 
     if action_utils.service_is_running('matrix-synapse'):
         action_utils.service_restart('matrix-synapse')
