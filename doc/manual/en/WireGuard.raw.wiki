@@ -1,0 +1,75 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/WireGuard|Español]] -~
+
+<<TableOfContents>>
+
+## BEGIN_INCLUDE
+
+== WireGuard (Virtual Private Network) ==
+||<tablestyle="float: right;"> {{attachment:WireGuard-icon_en_V01.png|alt="WireGuard icon"}} ||
+
+
+=== About WireGuard ===
+
+'''!WireGuard''' is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It can be a useful replacement for IPSec or [[FreedomBox/Manual/OpenVPN|OpenVPN]].
+
+Official website: https://www.wireguard.com
+
+=== Installation ===
+
+On [[DebianBuster]], wireguard is available from [[Backports]]. If your sources list contains the backports stanza, you can install wireguard from the Apps section of !FreedomBox web interface.
+{{{#!wiki caution
+ WireGuard cannot be installed in !FreedomBox on buster-backports yet, because a newer version of NetworkManager is required by the !FreedomBox service to complete the setup.
+}}}
+
+=== Configuration - Debian Peers ===
+
+ * [[WireGuard|Step 1 - Generating Keypairs]]
+ * [[WireGuard|Step 2 - Alternative A - Manual Configuration]]
+
+
+=== Usage ===
+
+ * Point-to-point tunnel
+ * VPN client with default route
+
+=== Configuration - Mobile Clients ===
+
+WireGuard has a user space implementation for mobile devices available via the WireGuard app - available for Android and iOS (a full list of supported operating systems is available [[https://www.wireguard.com/install/|here]]).
+
+The client can be configured in several ways:
+
+==== Alternative A - Create configuration manually ====
+
+This is self-explanatory, you actually create the config on the mobile device then transfer the relevant keys to the server's config.
+
+==== Alternative B - Create configuration from archive ====
+
+Here you have to create a .zip archive of the client configuration file, transfer it to the device then import it into the app.
+
+==== Alternative C - Import by reading a QR code (most secure method) ====
+
+The mobile client as of version 0.0.20180724 supports QR code based input.
+
+DebianPackage:qrencode can be used to generate qr codes, even in a terminal/console using UTF8 characters.
+
+The syntax is:
+
+{{{
+# qrencode -t ansiutf8 < client.conf
+}}}
+
+This will generate a QR code that is readable by the mobile client. 
+
+The advantage of this approach is that there is no need to transfer sensitive information via data channels that can potentially be compromised and there is no need for any additional software.
+
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

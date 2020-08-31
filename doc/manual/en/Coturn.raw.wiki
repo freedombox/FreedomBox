@@ -38,6 +38,8 @@ turn_user_lifetime: 86400000
 turn_allow_guests: True
 }}}
 
+The value for the `turn_shared_secret` is provided as `static-auth-secret` in `/etc/coturn/freedombox.conf` file.
+
 And then restart matrix-synapse server by disabling and re-enabling the matrix-synapse app.
 
 === Port Forwarding ===
@@ -51,7 +53,8 @@ If your !FreedomBox is behind a router, you will need to set up port forwarding 
  * TCP 5349
  * UDP 5350
  * TCP 5350
-
+ * UDP 49152-50175
+ * TCP 49152-50175
 
 ## END_INCLUDE
 
