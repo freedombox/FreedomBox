@@ -51,7 +51,8 @@ class WireguardApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('WireGuard'), icon_filename='wireguard',
                                short_description=_('Virtual Private Network'),
-                               description=_description, clients=clients)
+                               description=_description,
+                               manual_page='WireGuard', clients=clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-wireguard', info.name,
