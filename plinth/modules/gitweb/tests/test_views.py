@@ -24,14 +24,16 @@ EXISTING_REPOS = [
         'description': '',
         'owner': '',
         'access': 'public',
-        'is_private': False
+        'is_private': False,
+        'default_branch': 'master',
     },
     {
         'name': 'something2',
         'description': '',
         'owner': '',
         'access': 'private',
-        'is_private': True
+        'is_private': True,
+        'default_branch': 'master',
     },
 ]
 
@@ -48,11 +50,18 @@ def fixture_gitweb_urls():
 
 def action_run(*args, **kwargs):
     """Action return values."""
-    if args[1][0] == 'repo-info':
+    subcommand = args[1][0]
+    if subcommand == 'repo-info':
         return json.dumps(EXISTING_REPOS[0])
 
-    if args[1][0] == 'check-repo-exists':
+    elif subcommand == 'check-repo-exists':
         return True
+
+    elif subcommand == 'get-branches':
+        return json.dumps({
+            "default_branch": "master",
+            "branches": ["master", "branch1"]
+        })
 
     return None
 
@@ -208,7 +217,8 @@ def test_edit_repository_view(rf):
         'gitweb-name': 'something_other.git',
         'gitweb-description': 'test-description',
         'gitweb-owner': 'test-owner',
-        'gitweb-is_private': True
+        'gitweb-is_private': True,
+        'gitweb-default_branch': 'branch1',
     }
     url = urls.reverse('gitweb:edit',
                        kwargs={'name': EXISTING_REPOS[0]['name']})
@@ -277,7 +287,8 @@ def test_edit_repository_no_change_view(rf):
         form_data = {
             'gitweb-name': EXISTING_REPOS[0]['name'],
             'gitweb-description': EXISTING_REPOS[0]['description'],
-            'gitweb-owner': EXISTING_REPOS[0]['owner']
+            'gitweb-owner': EXISTING_REPOS[0]['owner'],
+            'gitweb-default_branch': EXISTING_REPOS[0]['default_branch'],
         }
         request = rf.post(
             urls.reverse('gitweb:edit',
@@ -297,7 +308,8 @@ def test_edit_repository_failed_view(rf):
         form_data = {
             'gitweb-name': 'something_other',
             'gitweb-description': 'test-description',
-            'gitweb-owner': 'test-owner'
+            'gitweb-owner': 'test-owner',
+            'gitweb-default_branch': 'master',
         }
         request = rf.post(
             urls.reverse('gitweb:edit',

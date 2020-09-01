@@ -3,6 +3,7 @@
 Django form for configuring Gitweb.
 """
 
+import json
 import re
 from urllib.parse import urlparse
 
@@ -11,7 +12,21 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth.modules import gitweb
+
+
+def _get_branches(repo):
+    """Get all the branches in the repository."""
+    branch_data = json.loads(
+        actions.run('gitweb', ['get-branches', '--name', repo]))
+    default_branch = branch_data['default_branch']
+    branches = branch_data['branches']
+
+    if default_branch not in branches:
+        branches.insert(0, default_branch)
+
+    return [(branch, branch) for branch in branches]
 
 
 def get_name_from_url(url):
@@ -114,6 +129,16 @@ class EditRepoForm(CreateRepoForm):
         help_text=_(
             'An alpha-numeric string that uniquely identifies a repository.'),
     )
+
+    default_branch = forms.ChoiceField(
+        label=_('Default branch'),
+        help_text=_('Gitweb displays this as a default branch.'))
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with extra request argument."""
+        super().__init__(*args, **kwargs)
+        branches = _get_branches(self.initial['name'])
+        self.fields['default_branch'].choices = branches
 
     def clean_name(self):
         """Check if the name is valid."""

@@ -30,6 +30,13 @@ def gitweb_private_repo(session_browser):
     _create_repo(session_browser, 'Test-repo', 'private', True)
 
 
+@given(parsers.parse('a repository with the branch {branch:w}'))
+def _create_repo_with_branch(session_browser, branch):
+    _delete_repo(session_browser, 'Test-repo', ignore_missing=True)
+    _create_repo(session_browser, 'Test-repo', 'public')
+    _create_branch('Test-repo', branch)
+
+
 @given('both public and private repositories exist')
 def gitweb_public_and_private_repo(session_browser):
     _create_repo(session_browser, 'Test-repo', 'public', True)
@@ -66,6 +73,11 @@ def gitweb_delete_repo(session_browser):
     _delete_repo(session_browser, 'Test-repo')
 
 
+@when(parsers.parse('I set {branch:w} as a default branch'))
+def gitweb_set_default_branch(session_browser, branch):
+    _set_default_branch(session_browser, 'Test-repo', branch)
+
+
 @when('I set the metadata of the repository')
 def gitweb_edit_repo_metadata(session_browser, gitweb_repo_metadata):
     _edit_repo_metadata(session_browser, 'Test-repo', gitweb_repo_metadata)
@@ -74,6 +86,14 @@ def gitweb_edit_repo_metadata(session_browser, gitweb_repo_metadata):
 @when('using a git client')
 def gitweb_using_git_client():
     pass
+
+
+@then(
+    parsers.parse(
+        'the gitweb site should show {branch:w} as a default repo branch'))
+def gitweb_site_check_default_repo_branch(session_browser, branch):
+    assert _get_gitweb_site_default_repo_branch(session_browser,
+                                                'Test-repo') == branch
 
 
 @then('the repository should be restored')
@@ -142,6 +162,39 @@ def gitweb_repo_privately_writable():
                              url_git_extension=True)
 
 
+def _create_branch(repo, branch):
+    """Create a branch on the remote repository."""
+    repo_url = _get_repo_url(repo, with_auth=True)
+
+    with _gitweb_temp_directory() as temp_directory:
+        repo_path = os.path.join(temp_directory, repo)
+
+        _create_local_repo(repo_path)
+
+        add_branch_commands = [['git', 'checkout', '-q', '-b', branch],
+                               [
+                                   'git', '-c', 'user.name=Tester', '-c',
+                                   'user.email=tester', 'commit', '-q',
+                                   '--allow-empty', '-m', 'test_branch1'
+                               ],
+                               ['git', 'push', '-q', '-f', repo_url, branch]]
+        for command in add_branch_commands:
+            subprocess.check_call(command, cwd=repo_path)
+
+
+def _create_local_repo(path):
+    """Create a local repository."""
+    shutil.rmtree(path, ignore_errors=True)
+    os.mkdir(path)
+    create_repo_commands = [
+        'git init -q', 'git config http.sslVerify false',
+        'git -c "user.name=Tester" -c "user.email=tester" '
+        'commit -q --allow-empty -m "test"'
+    ]
+    for command in create_repo_commands:
+        subprocess.check_call(command, shell=True, cwd=path)
+
+
 def _create_repo(browser, repo, access=None, ok_if_exists=False):
     """Create repository."""
     if not _repo_exists(browser, repo, access):
@@ -185,6 +238,13 @@ def _edit_repo_metadata(browser, repo, metadata):
         else:
             browser.find_by_id('id_gitweb-is_private').uncheck()
     functional.submit(browser)
+
+
+def _get_gitweb_site_default_repo_branch(browser, repo):
+    functional.nav_to_module(browser, 'gitweb')
+    browser.find_by_css('a[href="/gitweb/{0}.git"]'.format(repo)).first.click()
+
+    return browser.find_by_css('.head').first.text
 
 
 def _get_repo_metadata(browser, repo):
@@ -268,19 +328,23 @@ def _repo_is_writable(repo, with_auth=False, url_git_extension=False):
     if url_git_extension:
         url = url + '.git'
 
-    with _gitweb_temp_directory() as cwd:
-        subprocess.run(['mkdir', 'test-project'], check=True, cwd=cwd)
-        cwd = os.path.join(cwd, 'test-project')
-        prepare_git_repo_commands = [
-            'git init -q', 'git config http.sslVerify false',
-            'git -c "user.name=Tester" -c "user.email=tester" '
-            'commit -q --allow-empty -m "test"'
-        ]
-        for command in prepare_git_repo_commands:
-            subprocess.run(command, shell=True, check=True, cwd=cwd)
+    with _gitweb_temp_directory() as temp_directory:
+        repo_directory = os.path.join(temp_directory, 'test-project')
+        _create_local_repo(repo_directory)
+
         git_push_command = ['git', 'push', '-qf', url, 'master']
 
-        return _gitweb_git_command_is_successful(git_push_command, cwd)
+        return _gitweb_git_command_is_successful(git_push_command,
+                                                 repo_directory)
+
+
+def _set_default_branch(browser, repo, branch):
+    """Set default branch of the repository."""
+    functional.nav_to_module(browser, 'gitweb')
+    browser.find_link_by_href(
+        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+    browser.find_by_id('id_gitweb-default_branch').select(branch)
+    functional.submit(browser)
 
 
 def _set_repo_access(browser, repo, access):

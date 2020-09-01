@@ -12,6 +12,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import time
 
 from plinth import action_utils
@@ -23,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 class ValidateRepoName(argparse.Action):
     """Validate a repository name and add .git extension if necessary."""
+
     def __call__(self, parser, namespace, values, option_string=None):
         RepositoryValidator()(values)
         if not values.endswith('.git'):
@@ -32,6 +34,7 @@ class ValidateRepoName(argparse.Action):
 
 class ValidateRepoUrl(argparse.Action):
     """Validate a repository URL."""
+
     def __call__(self, parser, namespace, values, option_string=None):
         RepositoryValidator(input_should_be='url')(values)
         setattr(namespace, self.dest, values)
@@ -85,6 +88,18 @@ def parse_arguments():
                            help='Old name of the repository')
     subparser.add_argument('--newname', required=True, action=ValidateRepoName,
                            help='New name of the repository')
+
+    subparser = subparsers.add_parser(
+        'set-default-branch', help='Set default branch of the repository')
+    subparser.add_argument('--name', required=True, action=ValidateRepoName,
+                           help='Name of the repository')
+    subparser.add_argument('--branch', required=True,
+                           help='Name of the branch')
+
+    subparser = subparsers.add_parser(
+        'get-branches', help='Get all the branches of the repository')
+    subparser.add_argument('--name', required=True, action=ValidateRepoName,
+                           help='Name of the repository')
 
     subparser = subparsers.add_parser('set-repo-description',
                                       help='Set description of the repository')
@@ -245,7 +260,7 @@ def _create_repo(arguments):
     """Create an empty repository."""
     repo = arguments.name
     try:
-        subprocess.check_call(['git', 'init', '--bare', repo],
+        subprocess.check_call(['git', 'init', '-q', '--bare', repo],
                               cwd=GIT_REPO_PATH)
         if not arguments.keep_ownership:
             subprocess.check_call(['chown', '-R', 'www-data:www-data', repo],
@@ -259,6 +274,15 @@ def _create_repo(arguments):
         if os.path.isdir(repo_path):
             shutil.rmtree(repo_path)
         raise
+
+
+def _get_default_branch(repo):
+    """Get default branch of the repository."""
+    repo_path = os.path.join(GIT_REPO_PATH, repo)
+
+    return subprocess.check_output(
+        ['git', '-C', repo_path, 'symbolic-ref', '--short',
+         'HEAD']).decode().strip()
 
 
 def _get_repo_description(repo):
@@ -325,11 +349,44 @@ def _set_access_status(repo, status):
             os.remove(private_file)
 
 
+def _get_branches(repo):
+    """Return list of the branches in the repository."""
+    output = subprocess.check_output(
+        ['git', '-C', repo, 'branch', '--format=%(refname:short)'],
+        cwd=GIT_REPO_PATH)
+
+    return output.decode().strip().split()
+
+
+def subcommand_get_branches(arguments):
+    """Check whether a branch exists in the repository."""
+    repo = arguments.name
+
+    print(
+        json.dumps(
+            dict(default_branch=_get_default_branch(repo),
+                 branches=_get_branches(repo))))
+
+
 def subcommand_rename_repo(arguments):
     """Rename a repository."""
     oldpath = os.path.join(GIT_REPO_PATH, arguments.oldname)
     newpath = os.path.join(GIT_REPO_PATH, arguments.newname)
     os.rename(oldpath, newpath)
+
+
+def subcommand_set_default_branch(arguments):
+    """Set description of the repository."""
+    repo = arguments.name
+    branch = arguments.branch
+
+    if branch not in _get_branches(repo):
+        sys.exit('No such branch.')
+
+    subprocess.check_call([
+        'git', '-C', repo, 'symbolic-ref', 'HEAD',
+        "refs/heads/{}".format(branch)
+    ], cwd=GIT_REPO_PATH)
 
 
 def subcommand_set_repo_description(arguments):
@@ -355,10 +412,13 @@ def subcommand_repo_info(arguments):
 
     print(
         json.dumps(
-            dict(name=arguments.name[:-4],
-                 description=_get_repo_description(arguments.name),
-                 owner=_get_repo_owner(arguments.name),
-                 access=_get_access_status(arguments.name))))
+            dict(
+                name=arguments.name[:-4],
+                description=_get_repo_description(arguments.name),
+                owner=_get_repo_owner(arguments.name),
+                access=_get_access_status(arguments.name),
+                default_branch=_get_default_branch(arguments.name),
+            )))
 
 
 def subcommand_create_repo(arguments):

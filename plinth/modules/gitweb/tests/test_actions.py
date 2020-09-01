@@ -11,6 +11,15 @@ from unittest.mock import patch
 import pytest
 from django.forms import ValidationError
 
+REPO_NAME = 'Test-repo'
+REPO_DATA = {
+    'name': REPO_NAME,
+    'description': '',
+    'owner': '',
+    'access': 'private',
+    'default_branch': 'master',
+}
+
 
 def _action_file():
     """Return the path to the 'gitweb' actions file."""
@@ -25,6 +34,7 @@ gitweb_actions = imp.load_source('gitweb', _action_file())
 @pytest.fixture(name='call_action')
 def fixture_call_action(tmpdir, capsys):
     """Run actions with custom repo root path."""
+
     def _call_action(args, **kwargs):
         gitweb_actions.GIT_REPO_PATH = str(tmpdir)
         with patch('argparse._sys.argv', ['gitweb'] + args):
@@ -35,47 +45,85 @@ def fixture_call_action(tmpdir, capsys):
     return _call_action
 
 
-def test_actions(call_action):
-    """Test gitweb actions script."""
-    repo = 'Test-repo'
-    repo_renamed = 'Test-repo_2'
-    data = {
-        'name': repo,
-        'description': 'Test description',
-        'owner': 'Test owner',
-        'access': 'private'
+@pytest.fixture(name='existing_repo')
+def fixture_existing_repo(call_action):
+    """A fixture to create a repository."""
+    try:
+        call_action(['delete-repo', '--name', REPO_NAME])
+    except FileNotFoundError:
+        pass
+
+    call_action([
+        'create-repo', '--name', REPO_NAME, '--description', '', '--owner', '',
+        '--is-private', '--keep-ownership'
+    ])
+
+
+def test_create_repo(call_action):
+    """Test creating a repository."""
+    call_action([
+        'create-repo', '--name', REPO_NAME, '--description', '', '--owner', '',
+        '--is-private', '--keep-ownership'
+    ])
+
+    assert json.loads(call_action(['repo-info', '--name',
+                                   REPO_NAME])) == REPO_DATA
+
+
+def test_change_repo_medatada(call_action, existing_repo):
+    """Test change a metadata of the repository."""
+    new_data = {
+        'name': REPO_NAME,
+        'description': 'description2',
+        'owner': 'owner2',
+        'access': 'public',
+        'default_branch': 'master',
     }
 
-    # Create repository
     call_action([
-        'create-repo', '--name', repo, '--description', data['description'],
-        '--owner', data['owner'], '--is-private', '--keep-ownership'
+        'set-repo-description', '--name', REPO_NAME, '--description',
+        new_data['description']
     ])
-    assert json.loads(call_action(['repo-info', '--name', repo])) == data
-
-    # Change metadata
-    data['description'] = 'Test description 2'
-    data['owner'] = 'Test owner 2'
-    data['access'] = 'public'
-    call_action([
-        'set-repo-description', '--name', repo, '--description',
-        data['description']
-    ])
-    call_action(['set-repo-owner', '--name', repo, '--owner', data['owner']])
     call_action(
-        ['set-repo-access', '--name', repo, '--access', data['access']])
-    assert json.loads(call_action(['repo-info', '--name', repo])) == data
+        ['set-repo-owner', '--name', REPO_NAME, '--owner', new_data['owner']])
+    call_action([
+        'set-repo-access', '--name', REPO_NAME, '--access', new_data['access']
+    ])
 
-    # Rename repository
-    call_action(['rename-repo', '--oldname', repo, '--newname', repo_renamed])
-    with pytest.raises(RuntimeError, match='Repository not found'):
-        call_action(['repo-info', '--name', repo])
-    assert call_action(['repo-info', '--name', repo_renamed])
+    assert json.loads(call_action(['repo-info', '--name',
+                                   REPO_NAME])) == new_data
 
-    # Delete repository
-    call_action(['delete-repo', '--name', repo_renamed])
+
+def test_rename_repository(call_action, existing_repo):
+    """Test renaming a repository."""
+    new_name = 'Test-repo_2'
+
+    call_action(['rename-repo', '--oldname', REPO_NAME, '--newname', new_name])
     with pytest.raises(RuntimeError, match='Repository not found'):
-        call_action(['repo-info', '--name', repo_renamed])
+        call_action(['repo-info', '--name', REPO_NAME])
+
+    assert json.loads(call_action(['repo-info', '--name', new_name])) == {
+        **REPO_DATA,
+        **{
+            'name': new_name
+        }
+    }
+
+
+def test_get_branches(call_action, existing_repo):
+    """Test  getting all the branches of the repository."""
+    assert json.loads(call_action(['get-branches', '--name', REPO_NAME])) == {
+        "default_branch": "master",
+        "branches": []
+    }
+
+
+def test_delete_repository(call_action, existing_repo):
+    """Test deleting a repository."""
+    call_action(['delete-repo', '--name', REPO_NAME])
+
+    with pytest.raises(RuntimeError, match='Repository not found'):
+        call_action(['repo-info', '--name', REPO_NAME])
 
 
 @pytest.mark.parametrize(

@@ -18,9 +18,7 @@ from plinth.modules.users.components import UsersAndGroups
 
 from .forms import is_repo_url
 from .manifest import (  # noqa, pylint: disable=unused-import
-    GIT_REPO_PATH,
-    backup,
-    clients)
+    GIT_REPO_PATH, backup, clients)
 
 version = 1
 
@@ -233,6 +231,18 @@ def _rename_repo(oldname, newname):
     actions.superuser_run('gitweb', args)
 
 
+def _set_default_branch(repo, branch):
+    """Set default branch of the repository."""
+    args = [
+        'set-default-branch',
+        '--name',
+        repo,
+        '--branch',
+        branch,
+    ]
+    actions.superuser_run('gitweb', args)
+
+
 def _set_repo_description(repo, repo_description):
     """Set description of the repository."""
     args = [
@@ -276,6 +286,9 @@ def edit_repo(form_initial, form_cleaned):
             _set_repo_access(repo, 'private')
         else:
             _set_repo_access(repo, 'public')
+
+    if form_cleaned['default_branch'] != form_initial['default_branch']:
+        _set_default_branch(repo, form_cleaned['default_branch'])
 
 
 def delete_repo(repo):

@@ -27,12 +27,6 @@ Scenario: Create private repository
   Then the repository should be listed as a private
   And the repository should be listed on gitweb
 
-Scenario: Delete repository
-  Given the gitweb application is enabled
-  And a repository
-  When I delete the repository
-  Then the repository should not be listed
-
 @backups
 Scenario: Backup and restore gitweb
   Given the gitweb application is enabled
@@ -70,6 +64,13 @@ Scenario: Edit repository metadata
   And I set the metadata of the repository
   Then the metadata of the repository should be as set
 
+Scenario: Edit default branch of the repository
+  Given the gitweb application is enabled
+  And a repository with the branch branch1
+  When I set branch1 as a default branch
+  Then the gitweb site should show branch1 as a default repo branch
+
+
 Scenario: Access public repository with git client
   Given the gitweb application is enabled
   And a public repository
@@ -86,6 +87,12 @@ Scenario: Access private repository with git client
   And the repository should not be publicly writable
   And the repository should be privately readable
   And the repository should be privately writable
+
+Scenario: Delete repository
+  Given the gitweb application is enabled
+  And a repository
+  When I delete the repository
+  Then the repository should not be listed
 
 Scenario: Disable gitweb application
   Given the gitweb application is enabled
