@@ -153,7 +153,12 @@ class Firewall(app.FollowerComponent):
 
 def get_port_forwarding_info(app_):
     """Return a list of ports to be forwarded for this app to work."""
-    info = []
+    from plinth.modules import networks
+    info = {
+        'network_topology_type': networks.get_network_topology_type(),
+        'router_configuration_type': networks.get_router_configuration_type(),
+        'ports': []
+    }
     for component in app_.components.values():
         if not isinstance(component, Firewall):
             continue
@@ -166,6 +171,9 @@ def get_port_forwarding_info(app_):
                 continue
 
             for detail in port['details']:
-                info.append((detail[1].upper(), detail[0]))
+                info['ports'].append({
+                    'protocol': detail[1].upper(),
+                    'ports': detail[0]
+                })
 
     return info
