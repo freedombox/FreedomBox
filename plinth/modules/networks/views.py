@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
-from plinth import kvstore, network
+from plinth import network
 from plinth.modules import first_boot, networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
@@ -25,10 +25,8 @@ def index(request):
     """Show connection list."""
     connections = network.get_connection_list()
 
-    network_topology = kvstore.get_default(networks.NETWORK_TOPOLOGY_TYPE_KEY,
-                                           'to_router')
-    internet_connection_type = kvstore.get_default(
-        networks.INTERNET_CONNECTION_TYPE_KEY, 'unknown')
+    network_topology_type = networks.get_network_topology_type()
+    internet_connection_type = networks.get_internet_connection_type()
     return TemplateResponse(
         request, 'networks_configuration.html', {
             'app_id': 'networks',
@@ -37,7 +35,7 @@ def index(request):
             'has_diagnostics': True,
             'is_enabled': True,
             'connections': connections,
-            'network_topology': network_topology,
+            'network_topology': network_topology_type,
             'internet_connectivity_type': internet_connection_type,
         })
 
@@ -418,18 +416,14 @@ class NetworkTopologyView(FormView):
 
     def get_initial(self):
         """Get initial form data."""
-        return {
-            'network_topology':
-                kvstore.get_default(networks.NETWORK_TOPOLOGY_TYPE_KEY,
-                                    'to_router')
-        }
+        return {'network_topology': networks.get_network_topology_type()}
 
     def form_valid(self, form):
         """Save value to DB."""
         network_topology = form.cleaned_data['network_topology']
         logger.info('Updating network topology type with value %s' %
                     network_topology)
-        kvstore.set(networks.NETWORK_TOPOLOGY_TYPE_KEY, network_topology)
+        networks.set_network_topology_type(network_topology)
         if network_topology == 'to_router':
             self.success_url = reverse_lazy('networks:router-configuration')
 
@@ -462,17 +456,13 @@ class RouterConfigurationView(FormView):
 
     def get_initial(self):
         """Return initial data for the form."""
-        return {
-            'router_config':
-                kvstore.get_default(networks.ROUTER_CONFIGURATION_TYPE_KEY,
-                                    'not_configured')
-        }
+        return {'router_config': networks.get_router_configuration_type()}
 
     def form_valid(self, form):
         """Save value to DB and redirect."""
         type_ = form.cleaned_data['router_config']
         logger.info('Updating router configuration: %s', type_)
-        kvstore.set(networks.ROUTER_CONFIGURATION_TYPE_KEY, type_)
+        networks.set_router_configuration_type(type_)
         return super().form_valid(form)
 
 
@@ -482,8 +472,7 @@ class RouterConfigurationFirstBootView(RouterConfigurationView):
 
     def dispatch(self, request, *args, **kwargs):
         """Don't show wizard step if FreedomBox is not behind a router."""
-        network_topology = kvstore.get_default(
-            networks.NETWORK_TOPOLOGY_TYPE_KEY, 'to_router')
+        network_topology = networks.get_network_topology_type()
         if network_topology != 'to_router':
             first_boot.mark_step_done('router_setup_wizard')
             return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
@@ -513,15 +502,14 @@ class InternetConnectionTypeView(FormView):
         """Return initial data for the form."""
         return {
             'internet_connection_type':
-                kvstore.get_default(networks.INTERNET_CONNECTION_TYPE_KEY,
-                                    'unknown')
+                networks.get_internet_connection_type()
         }
 
     def form_valid(self, form):
         """Save value to DB and redirect."""
         type_ = form.cleaned_data['internet_connection_type']
         logger.info('Updating internet connectivity type: %s', type_)
-        kvstore.set(networks.INTERNET_CONNECTION_TYPE_KEY, type_)
+        networks.set_internet_connection_type(type_)
         return super().form_valid(form)
 
 
