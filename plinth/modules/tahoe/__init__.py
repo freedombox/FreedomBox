@@ -37,11 +37,6 @@ _description = [
           'node to the other storage nodes.'), box_name=_(cfg.box_name)),
 ]
 
-port_forwarding_info = [
-    ('TCP', 3456),
-    ('TCP', 5678),
-]
-
 tahoe_home = '/var/lib/tahoe-lafs'
 introducer_name = 'introducer'
 storage_node_name = 'storage_node'

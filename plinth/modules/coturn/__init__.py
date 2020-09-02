@@ -36,18 +36,6 @@ _description = [
       'matrix-synapse need to be configured with the details provided here.'),
 ]
 
-port_forwarding_info = [
-    ('UDP', 3478),
-    ('TCP', 3478),
-    ('UDP', 3479),
-    ('TCP', 3479),
-    ('UDP', 5349),
-    ('TCP', 5349),
-    ('UDP', 5350),
-    ('TCP', 5350),
-    # XXX: Add relay ports here
-]
-
 app = None
 
 

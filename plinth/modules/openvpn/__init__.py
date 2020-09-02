@@ -32,8 +32,6 @@ _description = [
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
 
-port_forwarding_info = [('UDP', 1194)]
-
 app = None
 
 setup_process = None

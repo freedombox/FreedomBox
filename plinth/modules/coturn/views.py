@@ -17,7 +17,6 @@ class CoturnAppView(views.AppView):
     app_id = 'coturn'
     template_name = 'coturn.html'
     form_class = forms.CoturnForm
-    port_forwarding_info = coturn.port_forwarding_info
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""

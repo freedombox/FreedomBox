@@ -30,8 +30,6 @@ _description = [
         box_name=_(cfg.box_name)),
 ]
 
-port_forwarding_info = [('TCP', 6523)]
-
 app = None
 
 

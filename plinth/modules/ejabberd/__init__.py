@@ -18,10 +18,10 @@ from plinth.modules import config
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import (domain_added, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
-from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -44,12 +44,6 @@ _description = [
           '<a href="{users_url}"> user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'),
         jsxc_url=reverse_lazy('jsxc:index'))
-]
-
-port_forwarding_info = [
-    ('TCP', 5222),
-    ('TCP', 5269),
-    ('TCP', 5280),
 ]
 
 logger = logging.getLogger(__name__)

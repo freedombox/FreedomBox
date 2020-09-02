@@ -32,8 +32,6 @@ _description = [
       'using such connections.')
 ]
 
-port_forwarding_info = [('TCP', 22)]
-
 app = None
 
 

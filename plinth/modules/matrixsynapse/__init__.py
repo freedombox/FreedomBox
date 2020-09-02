@@ -44,8 +44,6 @@ _description = [
       '<a href="https://element.io/">Element</a> client is recommended.')
 ]
 
-port_forwarding_info = [('TCP', 8448)]
-
 logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"

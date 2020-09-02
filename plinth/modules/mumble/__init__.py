@@ -28,11 +28,6 @@ _description = [
       'from your desktop and Android devices are available.')
 ]
 
-port_forwarding_info = [
-    ('TCP', 64738),
-    ('UDP', 64738),
-]
-
 app = None
 
 

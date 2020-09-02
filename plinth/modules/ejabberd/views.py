@@ -18,7 +18,6 @@ class EjabberdAppView(AppView):
     app_id = 'ejabberd'
     template_name = 'ejabberd.html'
     form_class = EjabberdForm
-    port_forwarding_info = ejabberd.port_forwarding_info
 
     def get_initial(self):
         initdict = super().get_initial()

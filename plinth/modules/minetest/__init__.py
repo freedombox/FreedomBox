@@ -11,8 +11,8 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
-from plinth.utils import format_lazy
 from plinth.modules.users.components import UsersAndGroups
+from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -41,8 +41,6 @@ _description = [
           'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
           'is needed.'), box_name=_(cfg.box_name)),
 ]
-
-port_forwarding_info = [('UDP', 30000)]
 
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'

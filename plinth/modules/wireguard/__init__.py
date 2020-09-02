@@ -33,8 +33,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-port_forwarding_info = [('UDP', 51820)]
-
 app = None
 
 SERVER_INTERFACE = 'wg0'

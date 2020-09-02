@@ -7,10 +7,10 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.views import AppView
 from plinth.modules import bind, names
+from plinth.views import AppView
 
-from . import get_config, port_forwarding_info
+from . import get_config
 from .forms import BindForm
 
 
@@ -19,7 +19,6 @@ class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     app_id = 'bind'
     form_class = BindForm
     template_name = 'bind.html'
-    port_forwarding_info = port_forwarding_info
 
     def get_context_data(self, *args, **kwargs):
         """

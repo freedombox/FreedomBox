@@ -5,8 +5,9 @@ URLs for the infinoted module.
 
 from django.conf.urls import url
 
-from .views import InfinotedAppView
+from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/infinoted/$', InfinotedAppView.as_view(), name='index'),
+    url(r'^apps/infinoted/$', AppView.as_view(app_id='infinoted'),
+        name='index'),
 ]
