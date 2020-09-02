@@ -15,9 +15,22 @@
     {% endblocktrans %}
   </p>
 
-  <ul>
-    {% for port in port_forwarding_info %}
-      <li>{{ port.0 }} {{ port.1 }}</li>
-    {% endfor %}
-  </ul>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>{% trans "Protocol" %}</th>
+        <th>{% trans "From Router/WAN Ports" %}</th>
+        <th>{% blocktrans %}To {{box_name}} Ports{% endblocktrans %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for port in port_forwarding_info %}
+        <tr>
+          <td>{{ port.0 }}</td>
+          <td>{{ port.1 }}</td>
+          <td>{{ port.1 }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endif %}
