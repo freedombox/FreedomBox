@@ -165,7 +165,7 @@ def get_current_release():
 
 def is_backports_current():
     """Return whether backports are enabled for the current release."""
-    if not is_backports_enabled:
+    if not is_backports_enabled():
         return False
 
     _, dist = get_current_release()
