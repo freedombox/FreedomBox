@@ -10,12 +10,13 @@ from enum import Enum
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+BASE_URL = 'https://wiki.debian.org/'
+LOCAL_BASE = '/plinth/help/manual/{lang}/'
 ICONS_DIR = 'icons'
 
-# Additional language codes, besides 'en'
-LANGUAGES = [
-    'es',
-]
+DEFAULT_LANGUAGE = 'en'
+# List of language codes for provided translations
+LANGUAGES = ('en', 'es')
 
 WIKI_ICONS = {
     '/!\\': 'alert',
@@ -25,8 +26,6 @@ WIKI_ICONS = {
     '{o}': 'star_off',
     '{*}': 'star_on',
 }
-
-BASE_URL = 'https://wiki.debian.org/'
 
 
 class Element:
@@ -566,7 +565,80 @@ def resolve_url(url, context):
     without the original path of a page, links in page can't always be resolved
     correctly. Preserve the original path information.
 
+
+    Return these urls unmodified:
+    -----------------------------
+
+    >>> resolve_url('http://tst.me', {'language': '', 'title': ''})
+    'http://tst.me'
+
+    >>> resolve_url('https://tst.me', {'language': '', 'title': ''})
+    'https://tst.me'
+
+    >>> resolve_url('mailto:tst.me', {'language': '', 'title': ''})
+    'mailto:tst.me'
+
+    >>> resolve_url('irc://etc', {'language': '', 'title': ''})
+    'irc://etc'
+
+    >>> resolve_url('#tst', {'language': '', 'title': ''})
+    '#tst'
+
+    Detect and resolve Keyword-protocolled urls:
+    --------------------------------------------
+
+    >>> resolve_url('attachment:tst', {'language': '', 'title': ''})
+    'tst'
+
+    >>> resolve_url('attachment:tst', {'language': '', 'title': 'here'})
+    'https://wiki.debian.org/here?action=AttachFile&do=get&target=tst'
+
+    >>> resolve_url('DebianBug:tst', {'language': '', 'title': ''})
+    'https://bugs.debian.org/tst#'
+
+    >>> resolve_url('DebianPkg:tst', {'language': '', 'title': ''})
+    'https://packages.debian.org/tst#'
+
+    >>> resolve_url('AliothList:tst', {'language': '', 'title': ''})
+    'https://lists.alioth.debian.org/mailman/listinfo/tst#'
+
+    Relative links:
+    ---------------
+
+    >>> resolve_url('../../back', {'language': '', 'title': 'here/skip_me/A'})
+    'https://wiki.debian.org/here/back#'
+
+    >>> resolve_url('/sub', {'language': '', 'title': 'A'})
+    'https://wiki.debian.org/A/sub#'
+
+    FreedomBox urls:
+    ----------------
+
+    Locally unavailable => send to online help (wiki):
+    >>> resolve_url('FreedomBox/unavailable', {'language': '', 'title': ''})
+    'https://wiki.debian.org/FreedomBox/unavailable#'
+
+    Locally available page in default language => shortcut to local copy:
+    >>> resolve_url('FreedomBox/Contribute', {'language': '', 'title': ''})
+    '/plinth/help/manual/en/Contribute#'
+
+    Translated available page => shortcut to local copy:
+    >>> resolve_url('es/FreedomBox/Contribute', {'language': '', 'title': ''})
+    '/plinth/help/manual/es/Contribute#'
+
+    Available page in default language refferred as translated => shortcut to
+    local copy:
+    >>> resolve_url('en/FreedomBox/Contribute', {'language': '', 'title': ''})
+    '/plinth/help/manual/en/Contribute#'
+
+    Unrecognized language => handle considering it as default language:
+    >>> resolve_url('missing/FreedomBox/Contribute', {'language': '', \
+    'title': ''})
+    '/plinth/help/manual/en/Contribute#'
     """
+
+    # Process first all easy, straight forward cases:
+
     if re.match(r'https?://', url) or url.startswith('mailto:') or \
        url.startswith('irc://'):
         return url
@@ -575,7 +647,7 @@ def resolve_url(url, context):
         return url
 
     if url.startswith('attachment:'):
-        target = url.lstrip('attachment:')
+        target = url[len('attachment:'):]
         page_title = context.get('title') if context else None
         if page_title:
             target = f'{BASE_URL}{page_title}?action=AttachFile&do=get&' + \
@@ -583,31 +655,52 @@ def resolve_url(url, context):
         return target
 
     if url.startswith('DebianBug:'):
-        target = url.lstrip('DebianBug:')
+        target = url[len('DebianBug:'):]
         return f'https://bugs.debian.org/{target}#'
 
     if url.startswith('DebianPkg:'):
-        target = url.lstrip('DebianPkg:')
+        target = url[len('DebianPkg:'):]
         return f'https://packages.debian.org/{target}#'
 
     if url.startswith('AliothList:'):
-        target = url.lstrip('AliothList:')
+        target = url[len('AliothList:'):]
         return f'https://lists.alioth.debian.org/mailman/listinfo/{target}#'
 
+    # Intermediate step(s) for relative links:
     if url.startswith('../'):
         page_title = context.get('title', '') if context else ''
         while url.startswith('../'):
             url = url[3:]
             page_title = page_title.rpartition('/')[0]
-
-        url = f'{BASE_URL}{page_title}/{url}'
+        url = f'{page_title}/{url}'
     elif url.startswith('/'):
         page_title = context.get('title', '') if context else ''
         url = url.lstrip('/')
-        url = f'{BASE_URL}{page_title}/{url}'
+        url = f'{page_title}/{url}'
+
+    # Shortcut url to local copy if available:
+    if re.match(r'(?:[a-zA-Z_-]+/)?FreedomBox/', url):
+        # Digest URL
+        link_parts = url.split('/')
+        link_page = link_parts[-1]
+
+        # Identify language of link target
+        link_language = link_parts[0]
+        if link_language not in LANGUAGES:
+            link_language = DEFAULT_LANGUAGE
+
+        # Check for local file and use local path
+        file_ = Path(f'manual/{link_language}') / (link_page + '.raw.wiki')
+        if file_.exists():
+            help_base = LOCAL_BASE.format(lang=link_language)
+            url = f'{help_base}{link_page}'
+        else:
+            url = f'{BASE_URL}{url}'
     else:
         url = f'{BASE_URL}{url}'
 
+    # Match the behavior of DocBook exporter that appends # at the end of a URL
+    # that does not have it.
     if '#' not in url:
         url = url + '#'
 
@@ -1663,7 +1756,7 @@ Features introduction</ulink>'
 
     >>> generate_inner_docbook([Link('../../Contribute', \
 [PlainText('Contribute')])], context={'title': 'FreedomBox/Manual/Hardware'})
-    '<ulink url="https://wiki.debian.org/FreedomBox/Contribute#">\
+    '<ulink url="/plinth/help/manual/en/Contribute#">\
 Contribute</ulink>'
 
     >>> generate_inner_docbook([Link('/Code', \
@@ -1813,7 +1906,7 @@ PlainText(' on it. ')])])
     '<para>An alternative to downloading these images is to \
 <ulink url="https://wiki.debian.org/InstallingDebianOn/TI/BeagleBone#">\
  install Debian</ulink> on the BeagleBone and then \
-<ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install \
+<ulink url="/plinth/help/manual/en/Debian#">install \
 FreedomBox</ulink> on it. </para>'
 
     >>> generate_inner_docbook([Paragraph([PlainText('After Roundcube is \
@@ -1901,14 +1994,14 @@ def get_context(file_path, file_title=None):
     else:
         name = page_name
 
-    language = 'en'
+    language = DEFAULT_LANGUAGE
     for lang in LANGUAGES:
         if lang in file_path.parts:
             language = lang
             break
 
     title = file_title or f'FreedomBox/Manual/{page_name}'
-    if language != 'en':
+    if language != DEFAULT_LANGUAGE:
         title = f'{language}/{title}'
 
     context = {
