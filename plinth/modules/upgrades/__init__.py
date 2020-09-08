@@ -3,6 +3,7 @@
 FreedomBox app for upgrades.
 """
 
+import logging
 import os
 import subprocess
 
@@ -42,9 +43,11 @@ _description = [
 
 app = None
 
-BACKPORTS_ENABLED_KEY = 'upgrades_backports_enabled'
+BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
 SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
+
+logger = logging.getLogger(__name__)
 
 
 class UpgradesApp(app_module.App):
@@ -139,7 +142,7 @@ def disable():
 
 def setup_repositories(data):
     """Setup apt backport repositories."""
-    if is_backports_enabled():
+    if is_backports_requested():
         command = ['setup-repositories']
         if cfg.develop:
             command += ['--develop']
@@ -147,11 +150,22 @@ def setup_repositories(data):
         actions.superuser_run('upgrades', command)
 
 
-def is_backports_enabled():
-    """Return whether backports are enabled."""
+def is_backports_requested():
+    """Return whether user has chosen to activate backports."""
     from plinth import kvstore
-    return kvstore.get_default(BACKPORTS_ENABLED_KEY,
-                               os.path.exists(SOURCES_LIST))
+    return kvstore.get_default(BACKPORTS_REQUESTED_KEY, False)
+
+
+def set_backports_requested(requested):
+    """Set whether user has chosen to activate backports."""
+    from plinth import kvstore
+    kvstore.set(BACKPORTS_REQUESTED_KEY, requested)
+    logger.info('Backports requested - %s', requested)
+
+
+def is_backports_enabled():
+    """Return whether backports are enabled in the system configuration."""
+    return os.path.exists(SOURCES_LIST)
 
 
 def get_current_release():
@@ -180,9 +194,6 @@ def is_backports_current():
 
 def can_activate_backports():
     """Return whether backports can be activated."""
-    if is_backports_current():
-        return False
-
     release, _ = get_current_release()
     if release == 'unstable' or (release == 'testing' and not cfg.develop):
         return False

@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 from plinth import action_utils, actions
 from plinth.modules import security
-from plinth.modules.upgrades import is_backports_enabled
+from plinth.modules.upgrades import is_backports_requested
 
 from .forms import SecurityForm
 
@@ -33,7 +33,7 @@ def index(request):
         request, 'security.html', {
             'app_info': security.app.info,
             'form': form,
-            'is_backports_enabled': is_backports_enabled(),
+            'is_backports_requested': is_backports_requested(),
         })
 
 

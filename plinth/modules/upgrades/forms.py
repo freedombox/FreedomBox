@@ -18,4 +18,4 @@ class BackportsFirstbootForm(forms.Form):
     """Form to configure backports during first boot wizard."""
     backports_enabled = forms.BooleanField(
         label=_('Activate frequent feature updates (recommended)'),
-        required=False)
+        required=False, initial=True)
