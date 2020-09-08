@@ -18,7 +18,7 @@ from plinth import cfg, glib, menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 6
+version = 7
 
 is_essential = True
 
@@ -118,6 +118,11 @@ def setup(helper, old_version=None):
     # Update apt preferences whenever on first install and on version
     # increment.
     helper.call('post', actions.superuser_run, 'upgrades', ['setup'])
+
+    # When upgrading from a version without first boot wizard for backports,
+    # assume backports have been requested.
+    if old_version and old_version < 7:
+        set_backports_requested(can_activate_backports())
 
     # Try to setup apt repositories, if needed, if possible, on first install
     # and on version increment.
