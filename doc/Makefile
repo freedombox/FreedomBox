@@ -107,11 +107,10 @@ $(manual-pdfs): %.pdf: %.xml
 $(manual-pages-part-html): %.part.html: %.xml
 	xsltproc /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $< | \
 	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' > $@
-	rm -f $(dir $@)docbook.css
+	@rm -f $(dir $@)docbook.css
 
 $(manual-xmls) $(manual-pages-xml): %.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
-	$(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
-	    --end-marker='## END_INCLUDE' $< | xmllint --format - > $@
+	$(SCRIPTS_DIR)/wikiparser.py $< | xmllint --format - > $@
 
 %.1: %.xml
 	xmlto man $<

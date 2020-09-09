@@ -2047,9 +2047,9 @@ if __name__ == '__main__':
                         help='Skip module doctests')
     parser.add_argument('--debug', action='store_true',
                         help='Show parser output')
-    parser.add_argument('--begin-marker', default=None,
+    parser.add_argument('--begin-marker', default='## BEGIN_INCLUDE',
                         help='Start parsing at this line')
-    parser.add_argument('--end-marker', default=None,
+    parser.add_argument('--end-marker', default='## END_INCLUDE',
                         help='Stop parsing at this line')
     parser.add_argument('input', type=Path, nargs='*',
                         help='input file path(s)')
