@@ -1987,6 +1987,12 @@ def get_context(file_path, file_title=None):
 'name': 'some-page', \
 'language': 'es', \
 'title': 'es/FreedomBox/some-page'}
+
+    >>> get_context(Path('manual/es/some-page'), 'es/FreedomBox/some-page')
+    {'path': PosixPath('manual/es/some-page'), \
+'name': 'some-page', \
+'language': 'es', \
+'title': 'es/FreedomBox/some-page'}
     """
     page_name = Path(file_path.stem).stem
     if page_name == 'freedombox-manual':
@@ -2001,7 +2007,8 @@ def get_context(file_path, file_title=None):
             break
 
     title = file_title or f'FreedomBox/Manual/{page_name}'
-    if language != DEFAULT_LANGUAGE:
+    if title.partition('/')[0] not in LANGUAGES and \
+            language != DEFAULT_LANGUAGE:
         title = f'{language}/{title}'
 
     context = {
