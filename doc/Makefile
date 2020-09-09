@@ -110,7 +110,7 @@ $(manual-pages-part-html): %.part.html: %.xml
 	rm -f $(dir $@)docbook.css
 
 $(manual-xmls) $(manual-pages-xml): %.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
-	python3 $(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
+	$(SCRIPTS_DIR)/wikiparser.py --begin-marker="## BEGIN_INCLUDE" \
 	    --end-marker='## END_INCLUDE' $< | xmllint --format - > $@
 
 %.1: %.xml
