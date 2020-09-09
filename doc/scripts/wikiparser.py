@@ -214,7 +214,7 @@ class EmbeddedAttachment(EmbeddedLink):
         if not text:
             text = [PlainText(target)]
 
-        return super().__init__(target, text, params)
+        super().__init__(target, text, params)
 
     def to_docbook(self, context=None):
         if self.page_title:
