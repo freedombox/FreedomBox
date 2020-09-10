@@ -51,7 +51,7 @@ def init(read_only=False):
     django.setup(set_prefix=True)
 
     logger.debug('Configured Django with applications - %s',
-                 settings.INSTALLED_APPS)
+                 ', '.join(settings.INSTALLED_APPS))
 
 
 def post_init():
