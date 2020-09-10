@@ -41,6 +41,12 @@ def parse_arguments():
         '--force-configuration', choices=['new', 'old'],
         help='force old/new configuration files during install')
     subparser.add_argument(
+        '--reinstall', action='store_true',
+        help='force re-installation of package even if it is current')
+    subparser.add_argument(
+        '--force-missing-configuration', action='store_true',
+        help='force installation of missing configuration files')
+    subparser.add_argument(
         'module', help='name of module for which package is being installed')
     subparser.add_argument('packages', nargs='+',
                            help='list of packages to install')
@@ -93,6 +99,12 @@ def subcommand_install(arguments):
         ]
     elif arguments.force_configuration == 'new':
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confnew']
+
+    if arguments.reinstall:
+        extra_arguments.append('--reinstall')
+
+    if arguments.force_missing_configuration:
+        extra_arguments += ['-o', 'Dpkg::Options::=--force-confmiss']
 
     subprocess.run(['dpkg', '--configure', '-a'])
     with _apt_hold():

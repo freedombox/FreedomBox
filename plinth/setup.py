@@ -29,6 +29,7 @@ _force_upgrader = None
 
 class Helper(object):
     """Helper routines for modules to show progress."""
+
     def __init__(self, module_name, module):
         """Initialize the object."""
         self.module_name = module_name
@@ -90,7 +91,8 @@ class Helper(object):
             self.current_operation = None
 
     def install(self, package_names, skip_recommends=False,
-                force_configuration=None):
+                force_configuration=None, reinstall=False,
+                force_missing_configuration=False):
         """Install a set of packages marking progress."""
         if self.allow_install is False:
             # Raise error if packages are not already installed.
@@ -109,7 +111,8 @@ class Helper(object):
             'step': 'install',
             'transaction': transaction,
         }
-        transaction.install(skip_recommends, force_configuration)
+        transaction.install(skip_recommends, force_configuration, reinstall,
+                            force_missing_configuration)
 
     def call(self, step, method, *args, **kwargs):
         """Call an arbitrary method during setup and note down its stage."""
@@ -408,9 +411,11 @@ class ForceUpgrader():
 
     class TemporaryFailure(Exception):
         """Raised when upgrade fails but can be tried again immediately."""
+
     class PermanentFailure(Exception):
         """Raised when upgrade fails and there is nothing more we wish to do.
         """
+
     def __init__(self):
         """Initialize the force upgrader."""
         if plinth.cfg.develop:
