@@ -5,12 +5,14 @@ Configuration helper for Matrix-Synapse server.
 """
 
 import argparse
+import pathlib
 
 import yaml
 
 from plinth import action_utils
-from plinth.modules.matrixsynapse import ORIG_CONF_PATH, STATIC_CONF_PATH, \
-    LISTENERS_CONF_PATH, REGISTRATION_CONF_PATH
+from plinth.modules.matrixsynapse import (LISTENERS_CONF_PATH, ORIG_CONF_PATH,
+                                          REGISTRATION_CONF_PATH,
+                                          STATIC_CONF_PATH)
 
 STATIC_CONFIG = {
     'max_upload_size':
@@ -46,6 +48,10 @@ def parse_arguments():
     setup.add_argument(
         '--domain-name',
         help='The domain name that will be used by Matrix Synapse')
+
+    subparsers.add_parser(
+        'move-old-conf',
+        help='Move old configuration file to backup before reinstall')
 
     subparsers.required = True
     return parser.parse_args()
@@ -108,6 +114,14 @@ def subcommand_public_registration(argument):
 
     if action_utils.service_is_running('matrix-synapse'):
         action_utils.service_restart('matrix-synapse')
+
+
+def subcommand_move_old_conf(_arguments):
+    """Move old configuration to backup so it can be restored by reinstall."""
+    conf_file = pathlib.Path(ORIG_CONF_PATH)
+    if conf_file.exists():
+        backup_file = conf_file.with_suffix(conf_file.suffix + '.fbx-bak')
+        conf_file.replace(backup_file)
 
 
 def main():

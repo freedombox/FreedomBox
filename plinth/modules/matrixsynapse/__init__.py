@@ -18,11 +18,10 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.utils import Version
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 5
+version = 6
 
 managed_services = ['matrix-synapse']
 
@@ -111,30 +110,28 @@ class MatrixSynapseApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'matrixsynapse',
-                ['post-install'])
-    helper.call('post', app.enable)
+    if old_version and old_version < 6:
+        helper.call('post', upgrade, helper)
+    else:
+        helper.call('post', actions.superuser_run, 'matrixsynapse',
+                    ['post-install'])
+
+    if not old_version:
+        helper.call('post', app.enable)
+
     app.get_component('letsencrypt-matrixsynapse').setup_certificates()
 
 
-def force_upgrade(helper, packages):
-    """Force upgrade matrix-synapse to resolve conffile prompt."""
-    if 'matrix-synapse' not in packages:
-        return False
-
-    # Allow any lower version to upgrade to 1.15.*
-    package = packages['matrix-synapse']
-    if Version(package['new_version']) > Version('1.16~'):
-        return False
-
+def upgrade(helper):
+    """Upgrade matrix-synapse configuration to avoid conffile prompt."""
     public_registration_status = get_public_registration_status()
-    helper.install(['matrix-synapse'], force_configuration='new')
+    actions.superuser_run('matrixsynapse', ['move-old-conf'])
+    helper.install(['matrix-synapse'], force_configuration='new',
+                   reinstall=True, force_missing_configuration=True)
     actions.superuser_run('matrixsynapse', ['post-install'])
     if public_registration_status:
         actions.superuser_run('matrixsynapse',
                               ['public-registration', 'enable'])
-
-    return True
 
 
 def setup_domain(domain_name):
