@@ -6,15 +6,14 @@ FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
 install Debian to do development for FreedomBox. FreedomBox development is
 typically done on a container or a Virtual Machine.
 
-For running a container, you need systemd containers, Git, Python and a
+* For running a container, you need systemd containers, Git, Python and a
 sudo-enabled user. This approach is recommended.
-
-For running a VM, you can work on any operating system that can install latest
+* For running a VM, you can work on any operating system that can install latest
 versions of Git, Vagrant and VirtualBox.
 
 ## Using Containers
 
-The ./container script shipped with FreedomBox source code can manage the
+The `./container` script shipped with FreedomBox source code can manage the
 development environment inside a systemd-nspawn container.
 
 1.  Checkout FreedomBox Service (Plinth) source code using Git:
@@ -46,7 +45,7 @@ development environment inside a systemd-nspawn container.
 
 ### Using after Setup
 
-After logging into the container, the source code is available in /freedombox
+After logging into the container, the source code is available in `/freedombox`
 directory:
 
 ```bash
@@ -72,10 +71,18 @@ guest$ sudo ./setup.py install
 
 Note: This development container has automatic upgrades disabled by default.
 
+### Troubleshooting
+
+* Sometimes `host$ ./container destroy && ./container up` doesn't work. In such
+  cases, try to delete the hidden `.container` folder and then `host$
+  ./container up`.
+* Not all kinds of changes are automatically updated. Try `guest$ sudo mount -o
+  remount /freedombox`.
+
 ## Using Vagrant
 
-Use VirtualBox and Vagrant if for some reason, the container option is not
-suitable such as when you are running non-GNU/Linux machine or a non-systemd
+Use VirtualBox and Vagrant if for some reason the container option is not
+suitable, such as when you are running non-GNU/Linux machine or a non-systemd
 machine.
 
 ### For Debian GNU/Linux and Derivatives
