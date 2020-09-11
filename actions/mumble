@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 
 # SPDX-License-Identifier: AGPL-3.0-or-later
-
 """
 Configure Mumble server.
 """
 
 import argparse
-import augeas
+import pathlib
 import sys
-from subprocess import Popen, PIPE
+from subprocess import PIPE, Popen
+
+import augeas
 
 CONFIG_FILE = '/etc/mumble-server.ini'
 DATA_DIR = '/var/lib/mumble-server'
@@ -25,6 +26,11 @@ def parse_arguments():
     subparsers.add_parser('create-password',
                           help='Setup mumble superuser password')
 
+    subparsers.add_parser('get-domain', help='Print Mumble domain')
+    subparser = subparsers.add_parser('set-domain', help='Setup Mumble domain')
+    subparser.add_argument('domain_name', help='Domain name to be allowed')
+
+    subparsers.required = True
     return parser.parse_args()
 
 
@@ -42,7 +48,7 @@ def read_from_stdin():
     return (''.join(sys.stdin)).strip()
 
 
-def subcommand_create_password(arguments):
+def subcommand_create_password(_):
     """Save superuser password with murmurd command"""
 
     password = read_from_stdin()
@@ -58,10 +64,23 @@ def subcommand_create_password(arguments):
 
     phrase = "Superuser password set on server"
     if phrase not in err:
-        print(
-            "Error occured while saving password: %s" % err
-        )
+        print("Error occured while saving password: %s" % err)
         sys.exit(1)
+
+
+def subcommand_get_domain(_):
+    """Print the file containing domain name or empty string."""
+    domain_file = pathlib.Path('/var/lib/mumble-server/domain-freedombox')
+    try:
+        print(domain_file.read_text())
+    except FileNotFoundError:
+        pass
+
+
+def subcommand_set_domain(arguments):
+    """Write a file containing domain name."""
+    domain_file = pathlib.Path('/var/lib/mumble-server/domain-freedombox')
+    domain_file.write_text(arguments.domain_name)
 
 
 def load_augeas():
