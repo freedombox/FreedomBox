@@ -134,6 +134,10 @@ def get_domain():
 
 def get_domains():
     """Return a list with the configured domain for quassel."""
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() == 'needs-setup':
+        return []
+
     domain = get_domain()
     if domain:
         return [domain]
