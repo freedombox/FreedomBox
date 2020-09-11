@@ -87,7 +87,9 @@ class TorApp(app_module.App):
         self.add(users_and_groups)
 
         # Register hidden service name with Name Services module.
-        if self.is_enabled() and app_is_running(self):
+        setup_helper = globals()['setup_helper']
+        if setup_helper.get_state() != 'needs-setup' and \
+           self.is_enabled() and app_is_running(self):
             status = utils.get_status(initialized=False)
             hostname = status['hs_hostname']
             services = [int(port['virtport']) for port in status['hs_ports']]
