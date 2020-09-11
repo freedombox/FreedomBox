@@ -9,9 +9,9 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.modules.names.components import DomainType
+from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added
 from plinth.utils import format_lazy
-from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
@@ -76,7 +76,6 @@ class DynamicDNSApp(app_module.App):
                                      domain_type='domain-type-dynamic',
                                      name=current_status['dynamicdns_domain'],
                                      services='__all__')
-            self.set_enabled(True)
 
     def is_enabled(self):
         """Return whether all the leader components are enabled.
