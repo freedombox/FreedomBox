@@ -134,8 +134,8 @@ def get_domain():
 
 def get_domains():
     """Return a list with the configured domain for quassel."""
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    # If not installed, return empty. But work while installing too.
+    if not pathlib.Path('/var/lib/quassel/').exists():
         return []
 
     domain = get_domain()
