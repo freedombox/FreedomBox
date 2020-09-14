@@ -7,12 +7,14 @@ from django import forms
 from django.core import validators
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
+
 from plinth import cfg
 from plinth.utils import format_lazy
 
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField."""
+
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
@@ -59,11 +61,11 @@ class ConfigureForm(forms.Form):
     help_user = \
         ugettext_lazy('The username that was used when the account was '
                       'created.')
-    """ToDo: sync this list with the html template file"""
-    provider_choices = (('GnuDIP', 'GnuDIP'), ('noip', 'noip.com'),
-                        ('selfhost', 'selfhost.bz'), ('freedns',
-                                                      'freedns.afraid.org'),
-                        ('other', 'other update URL'))
+
+    provider_choices = (('GnuDIP', ugettext_lazy('GnuDIP')),
+                        ('noip', 'noip.com'), ('selfhost', 'selfhost.bz'),
+                        ('freedns', 'freedns.afraid.org'),
+                        ('other', ugettext_lazy('other update URL')))
 
     enabled = forms.BooleanField(label=ugettext_lazy('Enable Dynamic DNS'),
                                  required=False)

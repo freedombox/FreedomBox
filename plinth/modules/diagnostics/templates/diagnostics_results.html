@@ -17,11 +17,11 @@
         <td>{{ test }}</td>
         <td>
           {% if result == 'passed' %}
-            <span class="label label-success">{{ result }}</span>
+            <span class="label label-success">{% trans result %}</span>
           {% elif result == 'failed' %}
-            <span class="label label-danger">{{ result }}</span>
+            <span class="label label-danger">{% trans result %}</span>
           {% elif result == 'error' %}
-            <span class="label label-warning">{{ result }}</span>
+            <span class="label label-warning">{% trans result %}</span>
           {% else %}
             {{ result }}
           {% endif %}

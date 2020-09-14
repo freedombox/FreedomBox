@@ -9,6 +9,7 @@ import logging
 import threading
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_noop
 
 from plinth import app as app_module
 from plinth import daemon, menu
@@ -95,6 +96,12 @@ def run_on_all_enabled_modules():
         'results': collections.OrderedDict(),
         'progress_percentage': 0
     }
+
+    # Three result strings returned by tests, mark for translation and
+    # translate later.
+    ugettext_noop('passed')
+    ugettext_noop('failed')
+    ugettext_noop('error')
 
     apps = []
     for app in app_module.App.list():

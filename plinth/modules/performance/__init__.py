@@ -22,12 +22,12 @@ managed_services = [
 managed_packages = ['cockpit-pcp']
 
 _description = [
-    ('Performance app allows you to collect, store and view information about '
-     'utilization of the hardware. This can give you basic insights into '
-     'usage patterns and whether the hardware is overloaded by users and '
-     'services.'),
-    ('Performance metrics are collected by Performance Co-Pilot and can be '
-     'viewed using the Cockpit app.'),
+    _('Performance app allows you to collect, store and view information '
+      'about utilization of the hardware. This can give you basic insights '
+      'into usage patterns and whether the hardware is overloaded by users '
+      'and services.'),
+    _('Performance metrics are collected by Performance Co-Pilot and can be '
+      'viewed using the Cockpit app.'),
 ]
 
 app = None

@@ -3,7 +3,7 @@
 Views for I2P application.
 """
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from plinth.views import AppView
 
