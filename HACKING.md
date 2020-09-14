@@ -4,12 +4,22 @@
 
 FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
 install Debian to do development for FreedomBox. FreedomBox development is
-typically done on a container or a Virtual Machine.
+typically done with a container or a Virtual Machine.
 
-* For running a container, you need systemd containers, Git, Python and a
+* For running a container, you need systemd containers, Git, Python3 and a
 sudo-enabled user. This approach is recommended.
 * For running a VM, you can work on any operating system that can install latest
 versions of Git, Vagrant and VirtualBox.
+
+In addition:
+
+- To run code quality checks you need flake8 and yapf. These may be installed
+  inside the container with Python3 and pip but installing them on host leads to
+  smoother development experience.
+- To update translation strings on the host machine, you need Django and gettext
+  to be installed on host machine. These can be installed with Python3 and pip.
+- You need Mumble voice chat software to participate in bi-weekly live
+  development discussions.
 
 ## Using Containers
 
@@ -422,7 +432,7 @@ For more information on translations: https://wiki.debian.org/FreedomBox/Transla
 ## Application Icons
 
 When adding a new App into FreedomBox, an icon is needed to represent the app in
-the application view and for shortcuts in the front page. The following the
+the application view and for shortcuts in the front page. Follow these
 guidelines for creating an app icon:
 
 - Use SVG format.
