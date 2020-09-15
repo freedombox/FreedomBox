@@ -741,7 +741,7 @@ def parse_text(line, context=None, parse_links=True):
                 target = f'{ICONS_DIR}/{WIKI_ICONS[line.strip()]}.png'
                 result.append(
                     EmbeddedAttachment(target, [PlainText(icon_text)],
-                                       'depth=16,width=16'))
+                                       'height=26'))
                 line = line.lstrip().replace(icon_text, '', 1)
                 break
 
@@ -1079,22 +1079,22 @@ PlainText(' ')])]
 
     >>> parse_wiki('/!\\\\')
     [Paragraph([EmbeddedAttachment('icons/alert.png', \
-[PlainText('/!\\\\')], 'depth=16,width=16'), PlainText(' ')])]
+[PlainText('/!\\\\')], 'height=26'), PlainText(' ')])]
     >>> parse_wiki('(./)')
     [Paragraph([EmbeddedAttachment('icons/checkmark.png', \
-[PlainText('(./)')], 'depth=16,width=16'), PlainText(' ')])]
+[PlainText('(./)')], 'height=26'), PlainText(' ')])]
     >>> parse_wiki('{X}')
     [Paragraph([EmbeddedAttachment('icons/icon-error.png', \
-[PlainText('{X}')], 'depth=16,width=16'), PlainText(' ')])]
+[PlainText('{X}')], 'height=26'), PlainText(' ')])]
     >>> parse_wiki('{i}')
     [Paragraph([EmbeddedAttachment('icons/icon-info.png', \
-[PlainText('{i}')], 'depth=16,width=16'), PlainText(' ')])]
+[PlainText('{i}')], 'height=26'), PlainText(' ')])]
     >>> parse_wiki('{o}')
     [Paragraph([EmbeddedAttachment('icons/star_off.png', \
-[PlainText('{o}')], 'depth=16,width=16'), PlainText(' ')])]
+[PlainText('{o}')], 'height=26'), PlainText(' ')])]
     >>> parse_wiki('{*}')
     [Paragraph([EmbeddedAttachment('icons/star_on.png', \
-[PlainText('{*}')], 'depth=16,width=16'), PlainText(' ')])]
+[PlainText('{*}')], 'height=26'), PlainText(' ')])]
 
     >>> parse_wiki('{{attachment:cockpit-enable.png}}')
     [Paragraph([EmbeddedAttachment('cockpit-enable.png', \
