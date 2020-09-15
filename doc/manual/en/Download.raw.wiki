@@ -153,6 +153,7 @@ An alternative to copy to SD card command
  {{{
 $ cat freedombox-stable-free_buster_cubietruck-armhf.img > /dev/sdg ; sync
 }}}
+
 On MS Windows you will need a tool like ''etcher''.
 On MacOS (OSX) you can use programs like ''balenaetcher'' and ''rosaimagewriter''.
 
@@ -166,6 +167,11 @@ On MacOS (OSX) you can use programs like ''balenaetcher'' and ''rosaimagewriter'
  1. Use the image by inserting the SD card or USB disk into the target device and booting from it.  Your device should also be prepared (see the [[FreedomBox/Hardware|Hardware]] section).
 
  1. Read (the rest of) the [[FreedomBox/Manual|Manual]] for instructions on how to use applications in !FreedomBox.
+
+=== Troubleshooting ===
+
+ * Can't boot off your MicroSD card (and/or disk utilities like GPartEd report a missing/corrupt partition table).
+   You likely forgot or failed to extract the .img file with `xz -d` before writing it to your device (e.g. ''/dev/sdg'').
 
 == Obtaining Source Code ==
 
