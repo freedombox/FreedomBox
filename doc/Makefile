@@ -60,13 +60,21 @@ install: all
 # require further reviews.
 fetch-main-list:=$(foreach lang,$(MANUAL_LANGUAGES),fetch-main-$(lang))
 fetch-pages-list:=$(foreach lang,$(MANUAL_LANGUAGES),fetch-pages-$(lang))
+fetch-cleanup-list:=$(foreach lang,$(MANUAL_LANGUAGES),fetch-cleanup-$(lang))
 
-.PHONY: fetch $(fetch-main-list) $(fetch-pages-list)
+.PHONY: fetch $(fetch-main-list) $(fetch-pages-list) $(fetch-cleanup-list)
 fetch: $(fetch-main-list) $(fetch-pages-list)
+
+# Remove raw wiki pages and images before fetching to drop items deleted
+# upstream.
+featch-cleanup-%: lang = $*
+$(fetch-cleanup-list): fetch-cleanup-%:
+	rm -f manual/$(lang)/*.raw.wiki
+	rm -f manual/$(lang)/images/*.png manual/$(lang)/images/*.jpg
 
 fetch-main-%: lang = $*
 fetch-main-%: lang-fragment = $(subst en/,,$*/)
-$(fetch-main-list): fetch-main-%:
+$(fetch-main-list): fetch-main-%: fetch-cleanup-%
 	MANUAL_URL_RAW_LANG=$(subst {lang-fragment},$(lang-fragment),$(MANUAL_URL_RAW)) ; \
 	wget --quiet --user-agent=Firefox \
 	  -O manual/$(lang)/freedombox-manual.raw.wiki $${MANUAL_URL_RAW_LANG}
@@ -82,7 +90,7 @@ $(fetch-main-list): fetch-main-%:
 
 fetch-pages-%: lang = $*
 fetch-pages-%: lang-fragment = $(subst en/,,$*/)
-$(fetch-pages-list): fetch-pages-%:
+$(fetch-pages-list): fetch-pages-%: fetch-cleanup-%
 	MANUAL_URL_LANG=$(subst {lang-fragment},$(lang-fragment),$(MANUAL_URL_RAW)) ; \
 	PAGES=$$(wget --quiet --user-agent=Firefox -O - $${MANUAL_URL_LANG} | \
 	  sed -n -e "s|.*<<Include(\([a-zA-Z0-9_/+-]*\),.*|\1|p" | sort -u) ; \
