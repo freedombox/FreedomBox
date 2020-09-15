@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-22 10:24-0400\n"
+"POT-Creation-Date: 2020-09-15 16:55-0400\n"
 "PO-Revision-Date: 2020-09-15 20:54+0000\n"
 "Last-Translator: Reg Me <regmeplus@zoho.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Paginabron"
 
-#: plinth/context_processors.py:23 plinth/views.py:77
+#: plinth/context_processors.py:23 plinth/views.py:78
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -151,6 +151,12 @@ msgstr "Back-ups"
 msgid "{app} (No data to backup)"
 msgstr "{app} (geen gegevens voor back-up)"
 
+#: plinth/modules/backups/forms.py:50
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Repository"
+msgstr "Maak Repository"
+
 #: plinth/modules/backups/forms.py:52
 #: plinth/modules/backups/templates/backups_delete.html:18
 #: plinth/modules/ikiwiki/forms.py:15
@@ -219,6 +225,16 @@ msgid ""
 msgstr ""
 "\"Sleutel in archief\" wil zeggen dat een sleutel, beschermd met een "
 "wachtwoord, is opgeslagen in de backup."
+
+#: plinth/modules/backups/forms.py:122
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Key in Repository"
+msgstr "Maak Repository"
+
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
+msgid "None"
+msgstr "Geen"
 
 #: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:267
 msgid "Passphrase"
@@ -680,7 +696,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:83 plinth/modules/users/forms.py:197
+#: plinth/modules/users/forms.py:84 plinth/modules/users/forms.py:198
 msgid "Permissions"
 msgstr "Toegangsrechten"
 
@@ -718,7 +734,7 @@ msgid "No passwords currently configured."
 msgstr "Er zijn momenteel geen bestandsdelingen geconfigureerd."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:104 plinth/modules/networks/forms.py:205
+#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:205
 #: plinth/modules/shadowsocks/forms.py:44
 msgid "Password"
 msgstr "Wachtwoord"
@@ -799,11 +815,11 @@ msgstr ""
 "apparaten op het netwerk te beantwoorden. Het werkt niet in samenspel met "
 "het delen van de Internetverbinding vanaf {box_name}."
 
-#: plinth/modules/bind/__init__.py:82
+#: plinth/modules/bind/__init__.py:77
 msgid "BIND"
 msgstr "BIND"
 
-#: plinth/modules/bind/__init__.py:83
+#: plinth/modules/bind/__init__.py:78
 msgid "Domain Name Server"
 msgstr "Domeinnaam Server"
 
@@ -834,6 +850,7 @@ msgstr "Serverdomein"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
+#: plinth/modules/names/templates/names.html:14
 #: plinth/modules/networks/templates/connection_show.html:83
 #: plinth/modules/storage/templates/storage.html:28
 msgid "Type"
@@ -858,9 +875,9 @@ msgstr "IP adressen"
 msgid "Refresh IP address and domains"
 msgstr ""
 
-#: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
+#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
+#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
@@ -938,12 +955,13 @@ msgid "Configure"
 msgstr "Configureer"
 
 #: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
-#: plinth/modules/dynamicdns/forms.py:95
+#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Domeinnaam"
 
 #: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
-#: plinth/modules/dynamicdns/forms.py:98
+#: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Foutieve domeinnaam"
 
@@ -1011,7 +1029,7 @@ msgstr ""
 msgid "Show advanced apps and features"
 msgstr ""
 
-#: plinth/modules/config/forms.py:92
+#: plinth/modules/config/forms.py:93
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 
@@ -1070,11 +1088,11 @@ msgid ""
 "need to be configured with the details provided here."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:64
+#: plinth/modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:65
+#: plinth/modules/coturn/__init__.py:53
 msgid "VoIP Helper"
 msgstr ""
 
@@ -1173,7 +1191,7 @@ msgstr "Opslagmap"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Bittorrent-client geschreven in Python/PyGTK"
 
-#: plinth/modules/diagnostics/__init__.py:24
+#: plinth/modules/diagnostics/__init__.py:25
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1181,9 +1199,25 @@ msgstr ""
 "De systeemdiagnose zal een aantal tests uitvoeren op dit systeem om te "
 "bevestigen dat de programma's en diensten zoals verwacht functioneren."
 
-#: plinth/modules/diagnostics/__init__.py:48
+#: plinth/modules/diagnostics/__init__.py:49
 msgid "Diagnostics"
 msgstr "Diagnose"
+
+#: plinth/modules/diagnostics/__init__.py:102
+#, fuzzy
+#| msgid "Quassel"
+msgid "passed"
+msgstr "Quassel"
+
+#: plinth/modules/diagnostics/__init__.py:103
+#, fuzzy
+#| msgid "Setup failed."
+msgid "failed"
+msgstr "Instelling mislukt."
+
+#: plinth/modules/diagnostics/__init__.py:104
+msgid "error"
+msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
@@ -1330,7 +1364,7 @@ msgstr "Dynamic DNS Cliënt"
 msgid "Dynamic Domain Name"
 msgstr "Dynamische domeinnaam"
 
-#: plinth/modules/dynamicdns/forms.py:27
+#: plinth/modules/dynamicdns/forms.py:29
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1340,7 +1374,7 @@ msgstr ""
 "worden gebruikt in de URL. Zie voor details de update URL voorbeelden van de "
 "voorbeeld providers."
 
-#: plinth/modules/dynamicdns/forms.py:31
+#: plinth/modules/dynamicdns/forms.py:33
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1350,7 +1384,7 @@ msgstr ""
 "GnuDIP protocol gebruikt of de provider staat niet in de lijst, gebruik dan "
 "de update URL van de provider."
 
-#: plinth/modules/dynamicdns/forms.py:36
+#: plinth/modules/dynamicdns/forms.py:38
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1358,19 +1392,19 @@ msgstr ""
 "Voer hier geen complete URL in (zoals \"https://example.com/\") maar alleen "
 "de hostnaam van de GnuDIP server (zoals \"example.com\")."
 
-#: plinth/modules/dynamicdns/forms.py:40
+#: plinth/modules/dynamicdns/forms.py:42
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "De publieke domeinnaam die gebruikt wordt om {box_name} aan te spreken."
 
-#: plinth/modules/dynamicdns/forms.py:43
+#: plinth/modules/dynamicdns/forms.py:45
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Gebruik deze functie indien de provider gebruik maakt van self-signed "
 "certificaten."
 
-#: plinth/modules/dynamicdns/forms.py:46
+#: plinth/modules/dynamicdns/forms.py:48
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1378,11 +1412,11 @@ msgstr ""
 "Als deze optie is geselecteerd wordt de gebruikersnaam en wachtwoord "
 "gebruikt voor HTTP basic authentificatie."
 
-#: plinth/modules/dynamicdns/forms.py:49
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Laat dit veld leeg om het huidige wachtwoord te behouden."
 
-#: plinth/modules/dynamicdns/forms.py:52
+#: plinth/modules/dynamicdns/forms.py:54
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1395,63 +1429,74 @@ msgstr ""
 "Internet IP adres te bepalen. Het antwoord op het aanroepen van deze URL zou "
 "het IP adres moeten zijn (Voorbeeld: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/forms.py:60
+#: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
 msgstr "De gebruikersnaam die werd gebruikt toen de account werd gemaakt."
 
+#: plinth/modules/dynamicdns/forms.py:65
+msgid "GnuDIP"
+msgstr ""
+
 #: plinth/modules/dynamicdns/forms.py:68
+#, fuzzy
+#| msgid "Update URL"
+msgid "other update URL"
+msgstr "URL bijwerken"
+
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Enable Dynamic DNS"
 msgstr "Dynamic DNS Inschakelen"
 
-#: plinth/modules/dynamicdns/forms.py:71
+#: plinth/modules/dynamicdns/forms.py:73
 msgid "Service Type"
 msgstr "Dienst Type"
 
-#: plinth/modules/dynamicdns/forms.py:76
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP Serveradres"
 
-#: plinth/modules/dynamicdns/forms.py:79
+#: plinth/modules/dynamicdns/forms.py:81
 msgid "Invalid server name"
 msgstr "Foute servernaam"
 
-#: plinth/modules/dynamicdns/forms.py:82
+#: plinth/modules/dynamicdns/forms.py:84
 msgid "Update URL"
 msgstr "URL bijwerken"
 
-#: plinth/modules/dynamicdns/forms.py:87
+#: plinth/modules/dynamicdns/forms.py:89
 msgid "Accept all SSL certificates"
 msgstr "Accepteer alle SSL certificaten"
 
-#: plinth/modules/dynamicdns/forms.py:91
+#: plinth/modules/dynamicdns/forms.py:93
 msgid "Use HTTP basic authentication"
 msgstr "Gebruik HTTP-basisverificatie"
 
-#: plinth/modules/dynamicdns/forms.py:101 plinth/modules/networks/forms.py:204
+#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:204
+#: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: plinth/modules/dynamicdns/forms.py:108 plinth/modules/networks/forms.py:207
+#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:207
 msgid "Show password"
 msgstr "Toon wachtwoord"
 
-#: plinth/modules/dynamicdns/forms.py:112
+#: plinth/modules/dynamicdns/forms.py:114
 msgid "URL to look up public IP"
 msgstr "URL voor controle van het IP-adres"
 
-#: plinth/modules/dynamicdns/forms.py:136
+#: plinth/modules/dynamicdns/forms.py:138
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Voer een update URL of GnuDIP Serveradres in"
 
-#: plinth/modules/dynamicdns/forms.py:141
+#: plinth/modules/dynamicdns/forms.py:143
 msgid "Please provide a GnuDIP username"
 msgstr "Voer een GnuDIP gebruikersnaam in"
 
-#: plinth/modules/dynamicdns/forms.py:145
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP domain name"
 msgstr "Voer een GnuDIP domeinnaam in"
 
-#: plinth/modules/dynamicdns/forms.py:150
+#: plinth/modules/dynamicdns/forms.py:152
 msgid "Please provide a password"
 msgstr "Voer een wachtwoord in"
 
@@ -1571,12 +1616,12 @@ msgstr ""
 "kan elke <a href=\"{users_url}\">gebruiker van {box_name}</a> daartoe "
 "toegang krijgen."
 
-#: plinth/modules/ejabberd/__init__.py:69
+#: plinth/modules/ejabberd/__init__.py:63
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:70
-#: plinth/modules/matrixsynapse/__init__.py:68
+#: plinth/modules/ejabberd/__init__.py:64
+#: plinth/modules/matrixsynapse/__init__.py:69
 msgid "Chat Server"
 msgstr "Chatserver"
 
@@ -1653,11 +1698,11 @@ msgstr ""
 "eruit als <i>username@%(domainname)s</i>. Het domein kan worden ingesteld op "
 "de <a href=\"%(index_url)s\">Instellingen</a> pagina."
 
-#: plinth/modules/ejabberd/views.py:45
+#: plinth/modules/ejabberd/views.py:44
 msgid "Message Archive Management enabled"
 msgstr "Berichten Archief Management aangezet"
 
-#: plinth/modules/ejabberd/views.py:49
+#: plinth/modules/ejabberd/views.py:48
 msgid "Message Archive Management disabled"
 msgstr "Berichten Archief Management uitgezet"
 
@@ -1714,12 +1759,14 @@ msgstr "Dienst/Poort"
 
 #: plinth/modules/firewall/templates/firewall.html:48
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:74
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
 #: plinth/modules/firewall/templates/firewall.html:51
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:76
-#: plinth/modules/networks/forms.py:49 plinth/templates/cards.html:34
+#: plinth/modules/networks/forms.py:49 plinth/modules/snapshot/forms.py:23
+#: plinth/modules/snapshot/forms.py:29 plinth/templates/cards.html:34
 msgid "Disabled"
 msgstr "Uitgeschakeld"
 
@@ -1809,7 +1856,7 @@ msgstr "Setup starten"
 msgid "Setup Complete"
 msgstr "Instelling voltooid"
 
-#: plinth/modules/gitweb/__init__.py:30
+#: plinth/modules/gitweb/__init__.py:28
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -1820,69 +1867,79 @@ msgid ""
 "the world."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:37
+#: plinth/modules/gitweb/__init__.py:35
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:53
+#: plinth/modules/gitweb/__init__.py:51
 msgid "Read-write access to Git repositories"
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:58 plinth/modules/gitweb/manifest.py:13
+#: plinth/modules/gitweb/__init__.py:56 plinth/modules/gitweb/manifest.py:13
 msgid "Gitweb"
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:59
+#: plinth/modules/gitweb/__init__.py:57
 msgid "Simple Git Hosting"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:44
+#: plinth/modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
 msgstr "Ongeldige repository URL."
 
-#: plinth/modules/gitweb/forms.py:54
+#: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Ongeldige repository naam."
 
-#: plinth/modules/gitweb/forms.py:62
+#: plinth/modules/gitweb/forms.py:77
 msgid "Name of a new repository or URL to import an existing repository."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:68
+#: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:69 plinth/modules/gitweb/forms.py:73
+#: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
 msgid "Optional, for displaying on Gitweb."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:71
+#: plinth/modules/gitweb/forms.py:86
 msgid "Repository's owner name"
 msgstr "Naam eigenaar repository"
 
-#: plinth/modules/gitweb/forms.py:76
+#: plinth/modules/gitweb/forms.py:91
 msgid "Private repository"
 msgstr "Privérepository"
 
-#: plinth/modules/gitweb/forms.py:77
+#: plinth/modules/gitweb/forms.py:92
 msgid "Allow only authorized users to access this repository."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:98 plinth/modules/gitweb/forms.py:130
+#: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:155
 msgid "A repository with this name already exists."
 msgstr "Er bestaat al een repository met deze naam."
 
-#: plinth/modules/gitweb/forms.py:111
+#: plinth/modules/gitweb/forms.py:126
 msgid "Name of the repository"
 msgstr "Naam van de repository"
 
-#: plinth/modules/gitweb/forms.py:115
+#: plinth/modules/gitweb/forms.py:130
 msgid "An alpha-numeric string that uniquely identifies a repository."
 msgstr ""
 "Een alfanumerieke tekenreeks die op unieke wijze een repository "
 "identificeert."
+
+#: plinth/modules/gitweb/forms.py:134
+#, fuzzy
+#| msgid "Default Skin"
+msgid "Default branch"
+msgstr "Standaard Uiterlijk"
+
+#: plinth/modules/gitweb/forms.py:135
+msgid "Gitweb displays this as a default branch."
+msgstr ""
 
 #: plinth/modules/gitweb/manifest.py:21
 msgid "Git"
@@ -2270,19 +2327,19 @@ msgid ""
 "configuration process."
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:62
+#: plinth/modules/i2p/__init__.py:56
 msgid "Manage I2P application"
 msgstr "I2P-toepassing beheren"
 
-#: plinth/modules/i2p/__init__.py:65 plinth/modules/i2p/manifest.py:16
+#: plinth/modules/i2p/__init__.py:59 plinth/modules/i2p/manifest.py:16
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:66 plinth/modules/tor/__init__.py:56
+#: plinth/modules/i2p/__init__.py:60 plinth/modules/tor/__init__.py:56
 msgid "Anonymity Network"
 msgstr "Anonimiteitsnetwerk"
 
-#: plinth/modules/i2p/__init__.py:88
+#: plinth/modules/i2p/__init__.py:82
 msgid "I2P Proxy"
 msgstr "I2P proxy"
 
@@ -2450,11 +2507,11 @@ msgstr ""
 "a> desktop-client en installeer deze. Start Gobby en selecteer vervolgens "
 "\"Verbinden met Server\" en voer uw {box_name} domeinnaam in."
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:45
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:48
+#: plinth/modules/infinoted/__init__.py:46
 msgid "Gobby Server"
 msgstr "Gobby Server"
 
@@ -2634,7 +2691,7 @@ msgstr "Certificaat met succes verwijderd voor domein {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Verwijderen certificaat voor domein {domain} mislukt: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:33
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -2651,7 +2708,7 @@ msgstr ""
 "Matrix server kunnen gesprekken aangaan met gebruikers op alle andere Matrix "
 "servers door federatie (gedecentraliseerd netwerk)."
 
-#: plinth/modules/matrixsynapse/__init__.py:41
+#: plinth/modules/matrixsynapse/__init__.py:40
 #, fuzzy
 #| msgid ""
 #| "To communicate, you can use the <a href=\"https://matrix.org/docs/"
@@ -2666,7 +2723,7 @@ msgstr ""
 "projects/\">beschikbare programma's</a> voor smartphone, computer of via het "
 "web. Het programma <a href=\"https://riot.im/\">Riot</a> wordt aanbevolen."
 
-#: plinth/modules/matrixsynapse/__init__.py:66
+#: plinth/modules/matrixsynapse/__init__.py:67
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -2756,11 +2813,11 @@ msgid ""
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/views.py:86
+#: plinth/modules/matrixsynapse/views.py:85
 msgid "Public registration enabled"
 msgstr "Openbare registratie ingeschakeld"
 
-#: plinth/modules/matrixsynapse/views.py:91
+#: plinth/modules/matrixsynapse/views.py:90
 msgid "Public registration disabled"
 msgstr "Openbare registratie uitgeschakeld"
 
@@ -2892,12 +2949,12 @@ msgstr ""
 "standaardpoort (30000). Voor de verbinding met de server is een <a href="
 "\"http://www.minetest.net/downloads/\"> Minetest client</a> nodig."
 
-#: plinth/modules/minetest/__init__.py:62
+#: plinth/modules/minetest/__init__.py:60
 #: plinth/modules/minetest/manifest.py:10
 msgid "Minetest"
 msgstr "Minetest"
 
-#: plinth/modules/minetest/__init__.py:63
+#: plinth/modules/minetest/__init__.py:61
 msgid "Block Sandbox"
 msgstr "Block Sandbox"
 
@@ -2953,19 +3010,19 @@ msgstr "Adres"
 msgid "Port"
 msgstr "Poort"
 
-#: plinth/modules/minetest/views.py:49
+#: plinth/modules/minetest/views.py:48
 msgid "Maximum players configuration updated"
 msgstr "Instelling maximum aantal spelers bijgewerkt"
 
-#: plinth/modules/minetest/views.py:56
+#: plinth/modules/minetest/views.py:55
 msgid "Creative mode configuration updated"
 msgstr "Instelling Creatieve modus bijgewerkt"
 
-#: plinth/modules/minetest/views.py:62
+#: plinth/modules/minetest/views.py:61
 msgid "PVP configuration updated"
 msgstr "Instelling PVP bijgewerkt"
 
-#: plinth/modules/minetest/views.py:68
+#: plinth/modules/minetest/views.py:67
 msgid "Damage configuration updated"
 msgstr "Instelling schade bijgewerkt"
 
@@ -3259,11 +3316,11 @@ msgstr ""
 "programma's waarmee de Mumble dienst gebruikt kan worden. Er zijn "
 "programma's voor zowel desktop en Android machines."
 
-#: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:43 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:49
+#: plinth/modules/mumble/__init__.py:44
 msgid "Voice Chat"
 msgstr "Voice Chat"
 
@@ -3291,7 +3348,7 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr ""
 
-#: plinth/modules/mumble/views.py:29
+#: plinth/modules/mumble/views.py:27
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "SuperUser password successfully updated."
@@ -3318,6 +3375,12 @@ msgstr "Alle"
 msgid "All web apps"
 msgstr "Alle webapps"
 
+#: plinth/modules/names/templates/names.html:16
+#, fuzzy
+#| msgid "Service"
+msgid "Services"
+msgstr "Dienst"
+
 #: plinth/modules/networks/__init__.py:40
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
@@ -3330,11 +3393,11 @@ msgid ""
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:64
+#: plinth/modules/networks/__init__.py:60
 msgid "Networks"
 msgstr "Netwerken"
 
-#: plinth/modules/networks/__init__.py:150
+#: plinth/modules/networks/__init__.py:178
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "Gebruikt DNSSEC op IPv{kind}"
@@ -3894,7 +3957,7 @@ msgid "Create Connection"
 msgstr "Maak Verbinding"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:408
+#: plinth/modules/networks/views.py:406
 msgid "Delete Connection"
 msgstr "Verwijder verbinding"
 
@@ -3939,7 +4002,7 @@ msgid "Computer"
 msgstr "Computer"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:128 plinth/modules/networks/views.py:212
+#: plinth/modules/networks/views.py:126 plinth/modules/networks/views.py:210
 msgid "Edit Connection"
 msgstr "Wijzig verbinding"
 
@@ -3949,13 +4012,13 @@ msgstr "Verbindingen"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:261
+#: plinth/modules/networks/views.py:259
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi Netwerken dichtbij"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:285
+#: plinth/modules/networks/views.py:283
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Verbinding toevoegen"
@@ -3996,6 +4059,7 @@ msgstr ""
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:21
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
+#: plinth/modules/upgrades/templates/backports-firstboot.html:45
 msgid "Next"
 msgstr "Volgende"
 
@@ -4135,71 +4199,71 @@ msgid ""
 "full instructions on how to perform this task."
 msgstr ""
 
-#: plinth/modules/networks/views.py:36
+#: plinth/modules/networks/views.py:34
 msgid "Network Connections"
 msgstr "Netwerkverbindingen"
 
-#: plinth/modules/networks/views.py:51
+#: plinth/modules/networks/views.py:49
 msgid "Cannot show connection: Connection not found."
 msgstr "Kan verbinding niet weergeven: Verbinding niet gevonden."
 
-#: plinth/modules/networks/views.py:86
+#: plinth/modules/networks/views.py:84
 msgid "Connection Information"
 msgstr "Verbindingsgegevens"
 
-#: plinth/modules/networks/views.py:100
+#: plinth/modules/networks/views.py:98
 msgid "Cannot edit connection: Connection not found."
 msgstr "Kan verbinding niet wijzigen: Verbinding niet gevonden."
 
-#: plinth/modules/networks/views.py:106
+#: plinth/modules/networks/views.py:104
 msgid "This type of connection is not yet understood."
 msgstr "Deze verbindingsmethode is (nog) niet bekend."
 
-#: plinth/modules/networks/views.py:224
+#: plinth/modules/networks/views.py:222
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Geactiveerde verbinding {name}."
 
-#: plinth/modules/networks/views.py:228
+#: plinth/modules/networks/views.py:226
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kan verbinding niet inschakelen: Verbinding niet gevonden."
 
-#: plinth/modules/networks/views.py:234
+#: plinth/modules/networks/views.py:232
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "Kan verbinding {name} niet inschakelen: Verbinding niet gevonden."
 
-#: plinth/modules/networks/views.py:247
+#: plinth/modules/networks/views.py:245
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Verbinding {name} uitgeschakeld."
 
-#: plinth/modules/networks/views.py:251
+#: plinth/modules/networks/views.py:249
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kan verbinding niet uitschakelen: Verbinding niet gevonden."
 
-#: plinth/modules/networks/views.py:303
+#: plinth/modules/networks/views.py:301
 msgid "Adding New Generic Connection"
 msgstr "Toevoegen nieuwe Verbinding"
 
-#: plinth/modules/networks/views.py:321
+#: plinth/modules/networks/views.py:319
 msgid "Adding New Ethernet Connection"
 msgstr "Toevoegen nieuwe Ethernetverbinding"
 
-#: plinth/modules/networks/views.py:339
+#: plinth/modules/networks/views.py:337
 msgid "Adding New PPPoE Connection"
 msgstr "Toevoegen nieuwe PPPoE verbinding"
 
-#: plinth/modules/networks/views.py:374
+#: plinth/modules/networks/views.py:372
 msgid "Adding New Wi-Fi Connection"
 msgstr "Toevoegen nieuwe W-Fi verbinding"
 
-#: plinth/modules/networks/views.py:389
+#: plinth/modules/networks/views.py:387
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Verbinding {name} verwijderd."
 
-#: plinth/modules/networks/views.py:393 plinth/modules/networks/views.py:403
+#: plinth/modules/networks/views.py:391 plinth/modules/networks/views.py:401
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kan verbinding niet verwijderen: Verbinding niet gevonden."
 
@@ -4221,16 +4285,16 @@ msgstr ""
 "mogelijk om de rest van het internetgebruik via {box_name} te leiden, voor "
 "meer veiligheid en anonimiteit."
 
-#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:57
-#: plinth/modules/wireguard/__init__.py:53
+#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/wireguard/__init__.py:51
 msgid "Virtual Private Network"
 msgstr "Virtual Private Network"
 
-#: plinth/modules/openvpn/__init__.py:68
+#: plinth/modules/openvpn/__init__.py:66
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4305,11 +4369,11 @@ msgstr ""
 msgid "Download my profile"
 msgstr "Download mijn profiel"
 
-#: plinth/modules/openvpn/views.py:89
+#: plinth/modules/openvpn/views.py:88
 msgid "Setup completed."
 msgstr "Instelling voltooid."
 
-#: plinth/modules/openvpn/views.py:91
+#: plinth/modules/openvpn/views.py:90
 msgid "Setup failed."
 msgstr "Instelling mislukt."
 
@@ -4547,6 +4611,19 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
+#: plinth/modules/performance/__init__.py:25
+msgid ""
+"Performance app allows you to collect, store and view information about "
+"utilization of the hardware. This can give you basic insights into usage "
+"patterns and whether the hardware is overloaded by users and services."
+msgstr ""
+
+#: plinth/modules/performance/__init__.py:29
+msgid ""
+"Performance metrics are collected by Performance Co-Pilot and can be viewed "
+"using the Cockpit app."
+msgstr ""
+
 #: plinth/modules/performance/__init__.py:46
 #, fuzzy
 #| msgid "System Configuration"
@@ -4687,11 +4764,11 @@ msgstr ""
 "\"http://quassel-irc.org/downloads\">desktop</a> en <a href=\"http://"
 "quasseldroid.iskrembilen.com/\">mobiele</a> apparaten."
 
-#: plinth/modules/quassel/__init__.py:61 plinth/modules/quassel/manifest.py:10
+#: plinth/modules/quassel/__init__.py:59 plinth/modules/quassel/manifest.py:10
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:62
+#: plinth/modules/quassel/__init__.py:60
 msgid "IRC Client"
 msgstr "IRC Cliënt"
 
@@ -4757,6 +4834,12 @@ msgid ""
 msgstr ""
 "Elke gebruiker met een {box_name} login kan kijken of wijzigingen aanbrengen "
 "in een kalender/adresboek."
+
+#: plinth/modules/radicale/forms.py:30
+#, fuzzy
+#| msgid "Access Point"
+msgid "Access rights"
+msgstr "Access Point"
 
 #: plinth/modules/radicale/manifest.py:10
 msgid "DAVx5"
@@ -5079,10 +5162,6 @@ msgstr ""
 "Kies het standaard familiefilter om toe te passen op uw zoekresultaten."
 
 #: plinth/modules/searx/forms.py:15
-msgid "None"
-msgstr "Geen"
-
-#: plinth/modules/searx/forms.py:15
 msgid "Moderate"
 msgstr "Modereren"
 
@@ -5133,23 +5212,28 @@ msgid "Show security report"
 msgstr "Beveiligingsrapport weergeven"
 
 #: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/backports-firstboot.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:11
 msgid "Frequent Feature Updates"
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:19
 #: plinth/modules/upgrades/templates/upgrades_configure.html:19
-msgid "Frequent feature updates are enabled."
+msgid "Frequent feature updates are activated."
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:24
-#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+#: plinth/modules/upgrades/templates/backports-firstboot.html:14
+#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#, python-format
 msgid ""
-"This will allow a very limited set of software, including FreedomBox "
-"service, to be updated to receive newer features regularly instead of once "
-"every 2 years or so. Note that packages with frequent feature updates do not "
-"have support from Debian Security Team. They are instead maintained by "
-"contributors to Debian and the FreedomBox community."
+"Frequent feature updates allow the %(box_name)s Service, plus a very limited "
+"set of software, to receive new features more frequently (from the backports "
+"repository). This results in receiving some new features within weeks, "
+"instead of only once every 2 years or so. Note that software with frequent "
+"feature updates does not have support from the Debian Security Team. "
+"Instead, they are maintained by contributors to Debian and the %(box_name)s "
+"community."
 msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
@@ -5539,9 +5623,13 @@ msgid "Yearly Snapshots Limit"
 msgstr "Jaarlijkse Snapshots limiet"
 
 #: plinth/modules/snapshot/forms.py:49
+#, fuzzy
+#| msgid ""
+#| "Keep a maximum of this many yearly snapshots. The default value is 0 "
+#| "(disabled)."
 msgid ""
-"Keep a maximum of this many yearly snapshots. The default value is 0 "
-"(disabled)."
+"Keep a maximum of this many yearly snapshots. The default value is 0 (keep "
+"no yearly snapshot)."
 msgstr ""
 "Bewaar maximaal dit aantal jaarlijkse snapshots. De standaardwaarde is 0 "
 "(uitgeschakeld)."
@@ -5666,7 +5754,7 @@ msgstr ""
 "andere locatie die daarvoor geautoriseerd is, kan beheerdertaken uitvoeren, "
 "bestanden kopiëren en andere taken verrichten door zulk een verbinding."
 
-#: plinth/modules/ssh/__init__.py:50
+#: plinth/modules/ssh/__init__.py:48
 msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell (SSH) Server"
 
@@ -6030,11 +6118,11 @@ msgstr ""
 "introduceerder. Er kunnen extra introduceerders worden toegevoegd, waardoor "
 "dit knooppunt aan de andere knooppunten bekend wordt gemaakt."
 
-#: plinth/modules/tahoe/__init__.py:66
+#: plinth/modules/tahoe/__init__.py:61
 msgid "Tahoe-LAFS"
 msgstr "Tahoe-LAFS"
 
-#: plinth/modules/tahoe/__init__.py:68
+#: plinth/modules/tahoe/__init__.py:63
 msgid "Distributed File Storage"
 msgstr "Distributed File Storage"
 
@@ -6289,7 +6377,7 @@ msgstr "SOCKS"
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Een Tor SOCKS poort is beschikbaar op %(box_name)s, op TCP poort 9050."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:220
+#: plinth/modules/tor/views.py:137 plinth/views.py:216
 msgid "Setting unchanged"
 msgstr "Instelling onveranderd"
 
@@ -6355,12 +6443,12 @@ msgstr "News Feed Reader"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:27
+#: plinth/modules/upgrades/__init__.py:36
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Controleer de nieuwste software- en beveiligingsupdates en pas deze toe."
 
-#: plinth/modules/upgrades/__init__.py:28
+#: plinth/modules/upgrades/__init__.py:37
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6368,11 +6456,11 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:51 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:64 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Update"
 
-#: plinth/modules/upgrades/__init__.py:89
+#: plinth/modules/upgrades/__init__.py:102
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -6387,6 +6475,23 @@ msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr ""
 "Als deze functie is ingeschakeld, wordt FreedomBox automatisch één keer per "
 "dag bijgewerkt."
+
+#: plinth/modules/upgrades/forms.py:20
+#: plinth/modules/upgrades/templates/upgrades_configure.html:56
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
+
+#: plinth/modules/upgrades/templates/backports-firstboot.html:26
+msgid ""
+"It is strongly recommended to activate frequent feature updates. If not "
+"activated now, they can be activated later."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/backports-firstboot.html:33
+msgid ""
+"<strong>Note:</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated."
+msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
@@ -6411,7 +6516,13 @@ msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:36
+#: plinth/modules/upgrades/templates/upgrades_configure.html:23
+msgid ""
+"Frequent feature updates cannot be activated. They may not be necessary on "
+"your distribution."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:45
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -6419,25 +6530,21 @@ msgid ""
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:47
-msgid "Activate frequent feature updates (recommended)"
-msgstr ""
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#: plinth/modules/upgrades/templates/upgrades_configure.html:61
 #, fuzzy
 #| msgid "Manual update"
 msgid "Manual Update"
 msgstr "Handmatige update"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:58
+#: plinth/modules/upgrades/templates/upgrades_configure.html:67
 msgid "Updating..."
 msgstr "Bezig met bijwerken…"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:66
+#: plinth/modules/upgrades/templates/upgrades_configure.html:75
 msgid "Update now"
 msgstr "Nu bijwerken"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:72
+#: plinth/modules/upgrades/templates/upgrades_configure.html:81
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -6449,36 +6556,34 @@ msgstr ""
 "niet beschikbaar zijn, en een foutmelding weergeven. Vernieuw in dat geval "
 "de pagina om door te gaan."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:86
+#: plinth/modules/upgrades/templates/upgrades_configure.html:95
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:54
+#: plinth/modules/upgrades/views.py:57
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Fout bij het instellen van automatische upgrades: {error}"
 
-#: plinth/modules/upgrades/views.py:58
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades enabled"
 msgstr "Automatisch bijwerken ingeschakeld"
 
-#: plinth/modules/upgrades/views.py:61
+#: plinth/modules/upgrades/views.py:64
 msgid "Automatic upgrades disabled"
 msgstr "Automatisch bijwerken uitgeschakeld"
 
-#: plinth/modules/upgrades/views.py:76
+#: plinth/modules/upgrades/views.py:79
 msgid "Upgrade process started."
 msgstr "Upgrade-proces gestart."
 
-#: plinth/modules/upgrades/views.py:78
+#: plinth/modules/upgrades/views.py:81
 msgid "Starting upgrade failed."
 msgstr "Starten van de upgrade is mislukt."
 
-#: plinth/modules/upgrades/views.py:87
-#, fuzzy
-#| msgid "Backups"
-msgid "Backports activated."
-msgstr "Back-ups"
+#: plinth/modules/upgrades/views.py:91
+msgid "Frequent feature updates activated."
+msgstr ""
 
 #: plinth/modules/users/__init__.py:39
 msgid ""
@@ -6518,12 +6623,12 @@ msgstr "Gebruikersnaam is in gebruik of is gereserveerd."
 msgid "Enter a valid username."
 msgstr "Foute servernaam"
 
-#: plinth/modules/users/forms.py:69
+#: plinth/modules/users/forms.py:70
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: plinth/modules/users/forms.py:85
+#: plinth/modules/users/forms.py:86
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -6545,20 +6650,20 @@ msgstr ""
 "ook op het systeem inloggen met SSH en kunnen systeemadministratie doen "
 "(sudo)."
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:346
+#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:347
 msgid "Creating LDAP user failed."
 msgstr "LDAP gebruiker aanmaken mislukt."
 
-#: plinth/modules/users/forms.py:134
+#: plinth/modules/users/forms.py:135
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "Nieuwe gebruiker aan groep {group} toevoegen mislukt."
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:149
 msgid "Authorized SSH Keys"
 msgstr "Geautoriseerde SSH-sleutels"
 
-#: plinth/modules/users/forms.py:150
+#: plinth/modules/users/forms.py:151
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -6569,45 +6674,45 @@ msgstr ""
 "sleutels toevoegen, één op elke regel. Lege regels en regels die beginnen "
 "met # worden genegeerd."
 
-#: plinth/modules/users/forms.py:234
+#: plinth/modules/users/forms.py:235
 msgid "Renaming LDAP user failed."
 msgstr "LDAP gebruiker hernoemen mislukt."
 
-#: plinth/modules/users/forms.py:246
+#: plinth/modules/users/forms.py:247
 msgid "Failed to remove user from group."
 msgstr "Gebruiker uit groep verwijderen mislukt."
 
-#: plinth/modules/users/forms.py:257
+#: plinth/modules/users/forms.py:258
 msgid "Failed to add user to group."
 msgstr "Gebruiker aan groep toevoegen mislukt."
 
-#: plinth/modules/users/forms.py:266
+#: plinth/modules/users/forms.py:267
 msgid "Unable to set SSH keys."
 msgstr "Kan de SSH-sleutels niet instellen."
 
-#: plinth/modules/users/forms.py:281
+#: plinth/modules/users/forms.py:282
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "Gebruiker aan groep toevoegen mislukt."
 
-#: plinth/modules/users/forms.py:289
+#: plinth/modules/users/forms.py:290
 msgid "Cannot delete the only administrator in the system."
 msgstr "Kan de enige beheerder in het systeem niet verwijderen."
 
-#: plinth/modules/users/forms.py:320
+#: plinth/modules/users/forms.py:321
 msgid "Changing LDAP user password failed."
 msgstr "Wijzigen LDAP gebruikerswachtwoord mislukt."
 
-#: plinth/modules/users/forms.py:355
+#: plinth/modules/users/forms.py:356
 msgid "Failed to add new user to admin group."
 msgstr "Toevoegen van gebruiker aan admin groep mislukt."
 
-#: plinth/modules/users/forms.py:372
+#: plinth/modules/users/forms.py:373
 msgid "Failed to restrict console access."
 msgstr "Consoletoegang beperken is mislukt."
 
-#: plinth/modules/users/forms.py:384
+#: plinth/modules/users/forms.py:385
 msgid "User account created, you are now logged in"
 msgstr "Gebruikersaccount aangemaakt, U bent nu ingelogd"
 
@@ -6739,7 +6844,7 @@ msgid ""
 "securely relayed through {box_name}."
 msgstr ""
 
-#: plinth/modules/wireguard/__init__.py:52
+#: plinth/modules/wireguard/__init__.py:50
 #: plinth/modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr ""
@@ -6875,7 +6980,7 @@ msgid "Add a new peer"
 msgstr "Nieuwe introduceerder toevoegen"
 
 #: plinth/modules/wireguard/templates/wireguard.html:61
-#: plinth/modules/wireguard/views.py:50
+#: plinth/modules/wireguard/views.py:48
 msgid "Add Allowed Client"
 msgstr ""
 
@@ -6906,7 +7011,7 @@ msgid "Add a new server"
 msgstr "Nieuwe introduceerder toevoegen"
 
 #: plinth/modules/wireguard/templates/wireguard.html:108
-#: plinth/modules/wireguard/views.py:159
+#: plinth/modules/wireguard/views.py:157
 #, fuzzy
 #| msgid "Add Connection"
 msgid "Add Connection to Server"
@@ -7010,85 +7115,85 @@ msgstr ""
 msgid "IP address of this machine:"
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:45
+#: plinth/modules/wireguard/views.py:43
 #, fuzzy
 #| msgid "Add new introducer"
 msgid "Added new client."
 msgstr "Nieuwe introduceerder toevoegen"
 
-#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:119
+#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
 #, fuzzy
 #| msgid "A share with this name already exists."
 msgid "Client with public key already exists"
 msgstr "Er bestaat reeds een gedeelde map met deze naam."
 
-#: plinth/modules/wireguard/views.py:73
+#: plinth/modules/wireguard/views.py:71
 #, fuzzy
 #| msgid "Email Client"
 msgid "Allowed Client"
 msgstr "Email Cliënt"
 
-#: plinth/modules/wireguard/views.py:95
+#: plinth/modules/wireguard/views.py:93
 #, fuzzy
 #| msgid "Update setup"
 msgid "Updated client."
 msgstr "Instelling bijwerken"
 
-#: plinth/modules/wireguard/views.py:100
+#: plinth/modules/wireguard/views.py:98
 #, fuzzy
 #| msgid "Email Client"
 msgid "Modify Client"
 msgstr "Email Cliënt"
 
-#: plinth/modules/wireguard/views.py:133
+#: plinth/modules/wireguard/views.py:131
 #, fuzzy
 #| msgid "Delete All"
 msgid "Delete Allowed Client"
 msgstr "Verwijder alles"
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:140
 #, fuzzy
 #| msgid "Archive deleted."
 msgid "Client deleted."
 msgstr "Archief verwijderd."
 
-#: plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:142
 #, fuzzy
 #| msgid "Repository not found"
 msgid "Client not found"
 msgstr "Repository niet gevonden"
 
-#: plinth/modules/wireguard/views.py:154
+#: plinth/modules/wireguard/views.py:152
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Added new server."
 msgstr "Aangepaste dienst toevoegen"
 
-#: plinth/modules/wireguard/views.py:175
+#: plinth/modules/wireguard/views.py:173
 #, fuzzy
 #| msgid "Connection Type"
 msgid "Connection to Server"
 msgstr "Verbindingssoort"
 
-#: plinth/modules/wireguard/views.py:193
+#: plinth/modules/wireguard/views.py:191
 #, fuzzy
 #| msgid "Update setup"
 msgid "Updated server."
 msgstr "Instelling bijwerken"
 
-#: plinth/modules/wireguard/views.py:198
+#: plinth/modules/wireguard/views.py:196
 #, fuzzy
 #| msgid "Edit Connection"
 msgid "Modify Connection to Server"
 msgstr "Wijzig verbinding"
 
-#: plinth/modules/wireguard/views.py:235
+#: plinth/modules/wireguard/views.py:233
 #, fuzzy
 #| msgid "Delete Connection"
 msgid "Delete Connection to Server"
 msgstr "Verwijder verbinding"
 
-#: plinth/modules/wireguard/views.py:255
+#: plinth/modules/wireguard/views.py:253
 #, fuzzy
 #| msgid "Share deleted."
 msgid "Server deleted."
@@ -7102,23 +7207,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Generiek"
 
-#: plinth/package.py:122
+#: plinth/package.py:134
 msgid "Error during installation"
 msgstr "Fout tijdens installatie"
 
-#: plinth/package.py:144
+#: plinth/package.py:156
 msgid "installing"
 msgstr "installeren"
 
-#: plinth/package.py:146
+#: plinth/package.py:158
 msgid "downloading"
 msgstr "downloaden"
 
-#: plinth/package.py:148
+#: plinth/package.py:160
 msgid "media change"
 msgstr "media wijzigen"
 
-#: plinth/package.py:150
+#: plinth/package.py:162
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "configuratiebestand: {file}"
@@ -7392,13 +7497,49 @@ msgstr "Geen certificaat"
 msgid "Port Forwarding"
 msgstr "Port Forwarding"
 
-#: plinth/templates/port-forwarding-info.html:11
+#: plinth/templates/port-forwarding-info.html:13
+#, fuzzy, python-format
+#| msgid ""
+#| "You may want to check the <a href=\"%(networks_url)s\">network setup</a> "
+#| "and modify it if necessary."
+msgid ""
+"Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
+"action is necessary."
+msgstr ""
+"Je wilt wellicht de <a href=\"%(networks_url)s\">netwerk instellingen</a> "
+"controleren, en wijzigen indien noodzakelijk."
+
+#: plinth/templates/port-forwarding-info.html:19
 #, python-format
 msgid ""
-"If your FreedomBox is behind a router, you will need to set up port "
-"forwarding on your router. You should forward the following ports for "
-"%(service_name)s:"
+"Your FreedomBox is <a href=\"%(networks_url)s\"> behind a router</a> and you "
+"are using the DMZ feature to forward all ports. No further router "
+"configuration is necessary."
 msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:26
+#, python-format
+msgid ""
+"Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
+"are not using the DMZ feature. You will need to set up port forwarding on "
+"your router. You should forward the following ports for %(service_name)s:"
+msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:36
+#, fuzzy
+#| msgid "protocol"
+msgid "Protocol"
+msgstr "protocol"
+
+#: plinth/templates/port-forwarding-info.html:37
+msgid "From Router/WAN Ports"
+msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:38
+#, fuzzy, python-format
+#| msgid "%(box_name)s Setup"
+msgid "To %(box_name)s Ports"
+msgstr "%(box_name)s Setup"
 
 #: plinth/templates/setup.html:24
 msgid "Install this application?"
@@ -7445,6 +7586,11 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "Backports activated."
+#~ msgstr "Back-ups"
 
 #~ msgid ""
 #~ "Coquelicot is a \"one-click\" file sharing web application with a focus "
