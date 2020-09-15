@@ -553,7 +553,9 @@ def map_local_files(path):
     if 'target=' in path:
         path = path.partition('target=')[2]
 
-    if '/' in path:
+    if path.startswith('icons/'):
+        pass
+    elif '/' in path:
         path = path.rsplit('/', maxsplit=1)[1]
 
     return f'images/{path}'
