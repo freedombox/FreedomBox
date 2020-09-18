@@ -22,9 +22,9 @@ managed_services = ['minidlna']
 _description = [
     _('MiniDLNA is a simple media server software, with the aim of being '
       'fully compliant with DLNA/UPnP-AV clients. '
-      'The MiniDNLA daemon serves media files '
+      'The MiniDLNA daemon serves media files '
       '(music, pictures, and video) to clients on a network. '
-      'DNLA/UPnP is zero configuration protocol and is compliant '
+      'DLNA/UPnP is zero configuration protocol and is compliant '
       'with any device passing the DLNA Certification like portable '
       'media players, Smartphones, Televisions, and gaming systems ('
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
