@@ -7,23 +7,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-29 15:43-0700\n"
-"PO-Revision-Date: 2019-09-13 05:23+0000\n"
-"Last-Translator: Anxin YI <2732146152@qq.com>\n"
+"POT-Creation-Date: 2020-09-15 16:55-0400\n"
+"PO-Revision-Date: 2020-07-13 22:29+0000\n"
+"Last-Translator: Tang Zongxun <tangzongxun@hotmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
-"freedombox/plinth/zh_Hans/>\n"
+"freedombox/freedombox/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:77
+#: plinth/context_processors.py:23 plinth/views.py:78
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -133,11 +133,11 @@ msgstr "服务发现"
 msgid "Local Network Domain"
 msgstr "本地网络领域"
 
-#: plinth/modules/backups/__init__.py:28
+#: plinth/modules/backups/__init__.py:30
 msgid "Backups allows creating and managing backup archives."
 msgstr "备份允许创建和管理备份存档。"
 
-#: plinth/modules/backups/__init__.py:47
+#: plinth/modules/backups/__init__.py:49
 msgid "Backups"
 msgstr "备份"
 
@@ -145,6 +145,12 @@ msgstr "备份"
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app} （没有要备份的数据）"
+
+#: plinth/modules/backups/forms.py:50
+#, fuzzy
+#| msgid "Create User"
+msgid "Repository"
+msgstr "创建用户"
 
 #: plinth/modules/backups/forms.py:52
 #: plinth/modules/backups/templates/backups_delete.html:18
@@ -213,7 +219,17 @@ msgid ""
 "backup."
 msgstr "\"存储库中的密钥\"表示受密码保护的密钥与备份一起存储。"
 
-#: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:264
+#: plinth/modules/backups/forms.py:122
+#, fuzzy
+#| msgid "Create User"
+msgid "Key in Repository"
+msgstr "创建用户"
+
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
+msgid "None"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:267
 msgid "Passphrase"
 msgstr "密码"
 
@@ -386,6 +402,7 @@ msgid "Delete Archive %(name)s"
 msgstr "删除名为 %(name)s 的存档"
 
 #: plinth/modules/backups/templates/backups_form.html:20
+#: plinth/modules/bepasty/templates/bepasty_add.html:20
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:20
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
@@ -418,10 +435,8 @@ msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_repository.html:77
-#, fuzzy
-#| msgid "downloading"
 msgid "Download"
-msgstr "下载中"
+msgstr "下载"
 
 #: plinth/modules/backups/templates/backups_repository.html:81
 #: plinth/modules/backups/templates/backups_restore.html:27
@@ -628,6 +643,184 @@ msgstr "卸载失败！"
 msgid "Mounting failed"
 msgstr "安装失败"
 
+#: plinth/modules/bepasty/__init__.py:25
+msgid ""
+"bepasty is a web application that allows large files to be uploaded and "
+"shared. Text and code snippets can also be pasted and shared. Text, image, "
+"audio, video and PDF documents can be previewed in the browser. Shared files "
+"can be set to expire after a time period."
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:29
+msgid ""
+"bepasty does not use usernames for login. It only uses passwords. For each "
+"password, a set of permissions can be selected. Once you have created a "
+"password, you can share it with the users who should have the associated "
+"permissions."
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:33
+msgid ""
+"You can also create multiple passwords with the same set of privileges, and "
+"distribute them to different people or groups. This will allow you to later "
+"revoke access for a single person or group, by removing their password from "
+"the list."
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:42 plinth/modules/bepasty/__init__.py:51
+msgid "Read a file, if a web link to the file is available"
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:43
+#, fuzzy
+#| msgid "Restore from uploaded file"
+msgid "Create or upload files"
+msgstr "从已上传的文件中恢复"
+
+#: plinth/modules/bepasty/__init__.py:44
+msgid "List all files and their web links"
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:45
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete files"
+msgstr "删除用户"
+
+#: plinth/modules/bepasty/__init__.py:46
+msgid "Administer files: lock/unlock files"
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:50
+msgid "None, password is always required"
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:52
+msgid "List and read all files"
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:65 plinth/modules/bepasty/manifest.py:9
+msgid "bepasty"
+msgstr ""
+
+#: plinth/modules/bepasty/__init__.py:67
+#, fuzzy
+#| msgid "File Sharing"
+msgid "File & Snippet Sharing"
+msgstr "文件分享"
+
+#: plinth/modules/bepasty/forms.py:17
+msgid "Public Access (default permissions)"
+msgstr ""
+
+#: plinth/modules/bepasty/forms.py:18
+msgid "Permissions for anonymous users, who have not provided a password."
+msgstr ""
+
+#: plinth/modules/bepasty/forms.py:27
+#: plinth/modules/bepasty/templates/bepasty.html:30
+#: plinth/modules/users/forms.py:84 plinth/modules/users/forms.py:198
+#, fuzzy
+#| msgid "Transmission BitTorrent"
+msgid "Permissions"
+msgstr "Transmission BitTorrent"
+
+#: plinth/modules/bepasty/forms.py:29
+msgid ""
+"Users that log in with this password will have the selected permissions."
+msgstr ""
+
+#: plinth/modules/bepasty/forms.py:33
+#: plinth/modules/bepasty/templates/bepasty.html:31
+msgid "Comment"
+msgstr ""
+
+#: plinth/modules/bepasty/forms.py:34
+msgid "Any comment to help you remember the purpose of this password."
+msgstr ""
+
+#: plinth/modules/bepasty/templates/bepasty.html:12
+#, fuzzy
+#| msgid "Change Password"
+msgid "Manage Passwords"
+msgstr "更改密码"
+
+#: plinth/modules/bepasty/templates/bepasty.html:16
+#: plinth/modules/bepasty/templates/bepasty.html:18
+#, fuzzy
+#| msgid "Show password"
+msgid "Add password"
+msgstr "显示密码"
+
+#: plinth/modules/bepasty/templates/bepasty.html:23
+msgid "No passwords currently configured."
+msgstr ""
+
+#: plinth/modules/bepasty/templates/bepasty.html:29
+#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:205
+#: plinth/modules/shadowsocks/forms.py:44
+msgid "Password"
+msgstr "密码"
+
+#: plinth/modules/bepasty/views.py:42
+msgid "Read"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:43
+msgid "Create"
+msgstr "创建"
+
+#: plinth/modules/bepasty/views.py:44
+msgid "List"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:45
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:91
+#: plinth/modules/networks/templates/connection_show.html:48
+#: plinth/modules/samba/templates/samba.html:127
+#: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
+#: plinth/modules/wireguard/templates/wireguard_delete_server.html:33
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:73
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:74
+msgid "Delete"
+msgstr "删除"
+
+#: plinth/modules/bepasty/views.py:46
+#, fuzzy
+#| msgid "admin"
+msgid "Admin"
+msgstr "管理员"
+
+#: plinth/modules/bepasty/views.py:83 plinth/modules/searx/views.py:38
+#: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
+#: plinth/modules/tor/views.py:157
+msgid "Configuration updated."
+msgstr "配置已更新。"
+
+#: plinth/modules/bepasty/views.py:86 plinth/modules/gitweb/views.py:117
+#: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
+#: plinth/modules/tor/views.py:159
+msgid "An error occurred during configuration."
+msgstr "在配置过程中出错。"
+
+#: plinth/modules/bepasty/views.py:97
+#, fuzzy
+#| msgid "Password"
+msgid "Password added."
+msgstr "密码"
+
+#: plinth/modules/bepasty/views.py:102
+#, fuzzy
+#| msgid "Password"
+msgid "Add Password"
+msgstr "密码"
+
+#: plinth/modules/bepasty/views.py:119
+#, fuzzy
+#| msgid "Password"
+msgid "Password deleted."
+msgstr "密码"
+
 #: plinth/modules/bind/__init__.py:29
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
@@ -646,11 +839,11 @@ msgstr ""
 "目前，在 {box_name} 上，BIND 只用于解决本地网络其它机器的 DNS 查询。它也不适"
 "用于从 {box_name} 分享来的互联网连接。"
 
-#: plinth/modules/bind/__init__.py:82
+#: plinth/modules/bind/__init__.py:77
 msgid "BIND"
 msgstr "结合"
 
-#: plinth/modules/bind/__init__.py:83
+#: plinth/modules/bind/__init__.py:78
 msgid "Domain Name Server"
 msgstr "域名服务器"
 
@@ -679,6 +872,7 @@ msgstr "服务器域"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
+#: plinth/modules/names/templates/names.html:14
 #: plinth/modules/networks/templates/connection_show.html:83
 #: plinth/modules/storage/templates/storage.html:28
 msgid "Type"
@@ -707,9 +901,9 @@ msgstr "IP 地址"
 msgid "Refresh IP address and domains"
 msgstr ""
 
-#: plinth/modules/bind/views.py:72 plinth/modules/coturn/views.py:40
+#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:30
+#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
@@ -793,12 +987,13 @@ msgid "Configure"
 msgstr "配置"
 
 #: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
-#: plinth/modules/dynamicdns/forms.py:95
+#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "域名"
 
 #: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
-#: plinth/modules/dynamicdns/forms.py:98
+#: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "无效的域名"
 
@@ -867,7 +1062,7 @@ msgstr ""
 msgid "Show advanced apps and features"
 msgstr "展示先进的应用和特点"
 
-#: plinth/modules/config/forms.py:92
+#: plinth/modules/config/forms.py:93
 msgid "Show apps and features that require more technical knowledge."
 msgstr "展示需要更多专业知识的应用和特点。"
 
@@ -911,74 +1106,6 @@ msgstr "展现先进的应用和特征"
 msgid "Hiding advanced apps and features"
 msgstr "隐藏先进的应用和特征"
 
-#: plinth/modules/coquelicot/__init__.py:24
-#, fuzzy
-#| msgid ""
-#| "Coquelicot is a “one-click” file sharing web application with a focus on "
-#| "protecting users’ privacy. It is best used for quickly sharing a single "
-#| "file. "
-msgid ""
-"Coquelicot is a \"one-click\" file sharing web application with a focus on "
-"protecting users' privacy. It is best used for quickly sharing a single "
-"file. "
-msgstr ""
-"Coquelicot 是一个“即点即用”的文件分享应用，注重保护用户隐私。适宜快速分享单个"
-"文件。 "
-
-#: plinth/modules/coquelicot/__init__.py:27
-msgid ""
-"This Coquelicot instance is exposed to the public but requires an upload "
-"password to prevent unauthorized access. You can set a new upload password "
-"in the form that will appear below after installation. The default upload "
-"password is \"test\"."
-msgstr ""
-
-#: plinth/modules/coquelicot/__init__.py:45
-msgid "Coquelicot"
-msgstr "Coquelicot"
-
-#: plinth/modules/coquelicot/__init__.py:47
-msgid "File Sharing"
-msgstr "文件分享"
-
-#: plinth/modules/coquelicot/forms.py:13
-msgid "Upload Password"
-msgstr "保存密码"
-
-#: plinth/modules/coquelicot/forms.py:14
-msgid ""
-"Set a new upload password for Coquelicot. Leave this field blank to keep the "
-"current password."
-msgstr ""
-
-#: plinth/modules/coquelicot/forms.py:18
-msgid "Maximum File Size (in MiB)"
-msgstr "最大的文件容量（以MiB计算）"
-
-#: plinth/modules/coquelicot/forms.py:19
-msgid "Set the maximum size of the files that can be uploaded to Coquelicot."
-msgstr ""
-
-#: plinth/modules/coquelicot/manifest.py:9
-msgid "coquelicot"
-msgstr ""
-
-#: plinth/modules/coquelicot/views.py:36
-msgid "Upload password updated"
-msgstr "上传密码已更新"
-
-#: plinth/modules/coquelicot/views.py:39
-msgid "Failed to update upload password"
-msgstr "更新上传的密码失败"
-
-#: plinth/modules/coquelicot/views.py:47
-msgid "Maximum file size updated"
-msgstr "最大玩家配置已更新"
-
-#: plinth/modules/coquelicot/views.py:50
-msgid "Failed to update maximum file size"
-msgstr "更新最大文件容量失败"
-
 #: plinth/modules/coturn/__init__.py:31
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
@@ -993,11 +1120,11 @@ msgid ""
 "need to be configured with the details provided here."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:64
+#: plinth/modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:65
+#: plinth/modules/coturn/__init__.py:53
 msgid "VoIP Helper"
 msgstr ""
 
@@ -1033,7 +1160,7 @@ msgstr "网络时间服务是与 Internet 上的服务器同步系统时间的�
 msgid "Date & Time"
 msgstr "日期与时间"
 
-#: plinth/modules/datetime/__init__.py:120
+#: plinth/modules/datetime/__init__.py:111
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -1102,16 +1229,30 @@ msgstr "下载目录"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:24
+#: plinth/modules/diagnostics/__init__.py:25
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
 msgstr ""
 "系统诊断将运行测试程序检查您的系统以确认应用程序和服务正在按预期方式运行。"
 
-#: plinth/modules/diagnostics/__init__.py:48
+#: plinth/modules/diagnostics/__init__.py:49
 msgid "Diagnostics"
 msgstr "诊断程序"
+
+#: plinth/modules/diagnostics/__init__.py:102
+msgid "passed"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:103
+#, fuzzy
+#| msgid "Setup failed."
+msgid "failed"
+msgstr "安装失败。"
+
+#: plinth/modules/diagnostics/__init__.py:104
+msgid "error"
+msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
@@ -1252,7 +1393,7 @@ msgstr "动态 DNS 客户端"
 msgid "Dynamic Domain Name"
 msgstr "域名"
 
-#: plinth/modules/dynamicdns/forms.py:27
+#: plinth/modules/dynamicdns/forms.py:29
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1261,7 +1402,7 @@ msgstr ""
 "变量 &lt; 用户 &gt; &lt; 传递 &gt; &lt; Ip &gt; &lt; 域 &gt; 可能在 URL 内使"
 "用。详细信息请参见更新 URL 模板的示例提供程序。"
 
-#: plinth/modules/dynamicdns/forms.py:31
+#: plinth/modules/dynamicdns/forms.py:33
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1270,7 +1411,7 @@ msgstr ""
 "请选择您的提供商更新协议。如果您的提供商不支持 GnuDIP 协议或未列出您的提供商"
 "可能会使用您的提供商的更新 URL。"
 
-#: plinth/modules/dynamicdns/forms.py:36
+#: plinth/modules/dynamicdns/forms.py:38
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1278,26 +1419,26 @@ msgstr ""
 "请不要在此输入 URL（如\"https://example.com/\"），只输入 GnuDIP 服务器的主机"
 "名（例如“example.com”）。"
 
-#: plinth/modules/dynamicdns/forms.py:40
+#: plinth/modules/dynamicdns/forms.py:42
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "你访问你的 {box_name} 时想使用的公开域名。"
 
-#: plinth/modules/dynamicdns/forms.py:43
+#: plinth/modules/dynamicdns/forms.py:45
 msgid "Use this option if your provider uses self signed certificates."
 msgstr "如果您的提供商使用自签名的证书，请使用此选项。"
 
-#: plinth/modules/dynamicdns/forms.py:46
+#: plinth/modules/dynamicdns/forms.py:48
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
 msgstr "如果选择了此选项，您的用户名和密码将用于 HTTP 基本身份验证。"
 
-#: plinth/modules/dynamicdns/forms.py:49
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "如果你想保持你的当前密码，请将此字段留空。"
 
-#: plinth/modules/dynamicdns/forms.py:52
+#: plinth/modules/dynamicdns/forms.py:54
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1309,68 +1450,74 @@ msgstr ""
 "此 URL 用于确定真实的IP地址。URL应该简单地返回客户端来自的 IP （例如：http://"
 "myip.datasystems24.de）。"
 
-#: plinth/modules/dynamicdns/forms.py:60
+#: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
 msgstr "账户创建时使用的用户名"
 
+#: plinth/modules/dynamicdns/forms.py:65
+msgid "GnuDIP"
+msgstr ""
+
 #: plinth/modules/dynamicdns/forms.py:68
+#, fuzzy
+#| msgid "Update URL"
+msgid "other update URL"
+msgstr "更新 URL"
+
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Enable Dynamic DNS"
 msgstr "启用动态 DNS"
 
-#: plinth/modules/dynamicdns/forms.py:71
+#: plinth/modules/dynamicdns/forms.py:73
 msgid "Service Type"
 msgstr "服务类型"
 
-#: plinth/modules/dynamicdns/forms.py:76
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP 服务器地址"
 
-#: plinth/modules/dynamicdns/forms.py:79
+#: plinth/modules/dynamicdns/forms.py:81
 msgid "Invalid server name"
 msgstr "服务器名称无效"
 
-#: plinth/modules/dynamicdns/forms.py:82
+#: plinth/modules/dynamicdns/forms.py:84
 msgid "Update URL"
 msgstr "更新 URL"
 
-#: plinth/modules/dynamicdns/forms.py:87
+#: plinth/modules/dynamicdns/forms.py:89
 msgid "Accept all SSL certificates"
 msgstr "接受所有 SSL 证书"
 
-#: plinth/modules/dynamicdns/forms.py:91
+#: plinth/modules/dynamicdns/forms.py:93
 msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
-#: plinth/modules/dynamicdns/forms.py:101 plinth/modules/networks/forms.py:201
+#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:204
+#: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "用户名"
 
-#: plinth/modules/dynamicdns/forms.py:104 plinth/modules/networks/forms.py:202
-#: plinth/modules/shadowsocks/forms.py:44
-msgid "Password"
-msgstr "密码"
-
-#: plinth/modules/dynamicdns/forms.py:108 plinth/modules/networks/forms.py:204
+#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:207
 msgid "Show password"
 msgstr "显示密码"
 
-#: plinth/modules/dynamicdns/forms.py:112
+#: plinth/modules/dynamicdns/forms.py:114
 msgid "URL to look up public IP"
 msgstr "查寻公开 IP 的 URL"
 
-#: plinth/modules/dynamicdns/forms.py:136
+#: plinth/modules/dynamicdns/forms.py:138
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "请提供一个更新 URL 或者 GnuDIP 服务器地址"
 
-#: plinth/modules/dynamicdns/forms.py:141
+#: plinth/modules/dynamicdns/forms.py:143
 msgid "Please provide a GnuDIP username"
 msgstr "请提供一个 GnuDIP 用户名"
 
-#: plinth/modules/dynamicdns/forms.py:145
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP domain name"
 msgstr "请提供一个 GnuDIP 域名"
 
-#: plinth/modules/dynamicdns/forms.py:150
+#: plinth/modules/dynamicdns/forms.py:152
 msgid "Please provide a password"
 msgstr "请提供一个密码"
 
@@ -1435,7 +1582,7 @@ msgstr ""
 msgid "Last update"
 msgstr "最后一次更新"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:51
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:53
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "关于"
@@ -1485,12 +1632,12 @@ msgstr ""
 "要实际沟通，您可以使用 web 客户端或任何其他 <a href='http://xmpp.org/xmpp-"
 "software/clients/' target='_blank'> XMPP 客户端</a>。"
 
-#: plinth/modules/ejabberd/__init__.py:69
+#: plinth/modules/ejabberd/__init__.py:63
 msgid "ejabberd"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:70
-#: plinth/modules/matrixsynapse/__init__.py:68
+#: plinth/modules/ejabberd/__init__.py:64
+#: plinth/modules/matrixsynapse/__init__.py:69
 #, fuzzy
 #| msgid "Web Server"
 msgid "Chat Server"
@@ -1543,11 +1690,11 @@ msgid ""
 "your own server for extra security."
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:74
+#: plinth/modules/ejabberd/manifest.py:73
 msgid "Dino"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:86
+#: plinth/modules/ejabberd/manifest.py:85
 msgid "Gajim"
 msgstr ""
 
@@ -1562,11 +1709,11 @@ msgstr ""
 "%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置</a>中设置你"
 "的域名。"
 
-#: plinth/modules/ejabberd/views.py:45
+#: plinth/modules/ejabberd/views.py:44
 msgid "Message Archive Management enabled"
 msgstr ""
 
-#: plinth/modules/ejabberd/views.py:49
+#: plinth/modules/ejabberd/views.py:48
 msgid "Message Archive Management disabled"
 msgstr ""
 
@@ -1623,12 +1770,14 @@ msgstr "服务/端口"
 
 #: plinth/modules/firewall/templates/firewall.html:48
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:74
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
 msgid "Enabled"
 msgstr "启用"
 
 #: plinth/modules/firewall/templates/firewall.html:51
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:76
-#: plinth/modules/networks/forms.py:47 plinth/templates/cards.html:34
+#: plinth/modules/networks/forms.py:49 plinth/modules/snapshot/forms.py:23
+#: plinth/modules/snapshot/forms.py:29 plinth/templates/cards.html:34
 msgid "Disabled"
 msgstr "已禁用"
 
@@ -1740,65 +1889,75 @@ msgstr ""
 msgid "Simple Git Hosting"
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:44
+#: plinth/modules/gitweb/forms.py:59
 #, fuzzy
 #| msgid "Invalid hostname"
 msgid "Invalid repository URL."
 msgstr "无效的主机名"
 
-#: plinth/modules/gitweb/forms.py:54
+#: plinth/modules/gitweb/forms.py:69
 #, fuzzy
 #| msgid "Invalid hostname"
 msgid "Invalid repository name."
 msgstr "无效的主机名"
 
-#: plinth/modules/gitweb/forms.py:62
+#: plinth/modules/gitweb/forms.py:77
 #, fuzzy
 #| msgid ""
 #| "Repository path is neither empty nor is an existing backups repository."
 msgid "Name of a new repository or URL to import an existing repository."
 msgstr "存储库的路径为空或已有备份。"
 
-#: plinth/modules/gitweb/forms.py:68
+#: plinth/modules/gitweb/forms.py:83
 #, fuzzy
 #| msgid "Create new repository"
 msgid "Description of the repository"
 msgstr "创建新存储库"
 
-#: plinth/modules/gitweb/forms.py:69 plinth/modules/gitweb/forms.py:73
+#: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
 msgid "Optional, for displaying on Gitweb."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:71
+#: plinth/modules/gitweb/forms.py:86
 #, fuzzy
 #| msgid "Repository removed."
 msgid "Repository's owner name"
 msgstr "储存库被移除。"
 
-#: plinth/modules/gitweb/forms.py:76
+#: plinth/modules/gitweb/forms.py:91
 #, fuzzy
 #| msgid "Create User"
 msgid "Private repository"
 msgstr "创建用户"
 
-#: plinth/modules/gitweb/forms.py:77
+#: plinth/modules/gitweb/forms.py:92
 msgid "Allow only authorized users to access this repository."
 msgstr ""
 
-#: plinth/modules/gitweb/forms.py:98 plinth/modules/gitweb/forms.py:130
+#: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:155
 #, fuzzy
 #| msgid "This service already exists"
 msgid "A repository with this name already exists."
 msgstr "此服务已存在"
 
-#: plinth/modules/gitweb/forms.py:111
+#: plinth/modules/gitweb/forms.py:126
 #, fuzzy
 #| msgid "Create new repository"
 msgid "Name of the repository"
 msgstr "创建新存储库"
 
-#: plinth/modules/gitweb/forms.py:115
+#: plinth/modules/gitweb/forms.py:130
 msgid "An alpha-numeric string that uniquely identifies a repository."
+msgstr ""
+
+#: plinth/modules/gitweb/forms.py:134
+#, fuzzy
+#| msgid "Default"
+msgid "Default branch"
+msgstr "默认"
+
+#: plinth/modules/gitweb/forms.py:135
+msgid "Gitweb displays this as a default branch."
 msgstr ""
 
 #: plinth/modules/gitweb/manifest.py:21
@@ -1882,11 +2041,6 @@ msgstr "储存库被移除。"
 msgid "Edit repository"
 msgstr "创建用户"
 
-#: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
-#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
-msgid "An error occurred during configuration."
-msgstr "在配置过程中出错。"
-
 #: plinth/modules/gitweb/views.py:138
 #, python-brace-format
 msgid "{name} deleted."
@@ -1897,36 +2051,38 @@ msgstr "{name} 已删除。"
 msgid "Could not delete {name}: {error}"
 msgstr "不能删除 {name}：{error}"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:33
 msgid "Documentation"
 msgstr "文档"
 
-#: plinth/modules/help/__init__.py:35 plinth/modules/networks/forms.py:47
-#: plinth/modules/networks/forms.py:77 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:37 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
+#, fuzzy
+#| msgid "Manual"
+msgctxt "User guide"
 msgid "Manual"
 msgstr "手册"
 
-#: plinth/modules/help/__init__.py:39
+#: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:42 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
-msgstr ""
+msgstr "获取帮助"
 
-#: plinth/modules/help/__init__.py:43
+#: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:36 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
 
-#: plinth/modules/help/__init__.py:47
+#: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:30 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
-msgstr ""
+msgstr "贡献"
 
 #: plinth/modules/help/templates/help_about.html:17
 #, python-format
@@ -1999,20 +2155,6 @@ msgstr "有新版本可用"
 #| msgid "%(box_name)s Setup"
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s 安装程序"
-
-#: plinth/modules/help/templates/help_about.html:79
-#, fuzzy
-#| msgid "Security"
-msgid "Security Notice"
-msgstr "安全"
-
-#: plinth/modules/help/templates/help_about.html:81
-msgid ""
-"You are using packages from Debian backports. Please note that these "
-"packages do not have security support from Debian. However, they are "
-"maintained on a best-effort basis by contributors in Debian and FreedomBox "
-"community."
-msgstr ""
 
 #: plinth/modules/help/templates/help_base.html:21
 #: plinth/modules/help/templates/help_index.html:61
@@ -2179,16 +2321,16 @@ msgid ""
 "before submitting the bug report."
 msgstr "提交日志报告前，请从日志中删除任何密码和其他个人信息。"
 
-#: plinth/modules/help/views.py:25
+#: plinth/modules/help/views.py:24
 msgid "Documentation and FAQ"
 msgstr "文档和 FAQ"
 
-#: plinth/modules/help/views.py:51
+#: plinth/modules/help/views.py:50
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "关于 {box_name}"
 
-#: plinth/modules/help/views.py:86
+#: plinth/modules/help/views.py:84
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} 手册"
@@ -2219,23 +2361,23 @@ msgid ""
 "configuration process."
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:62
+#: plinth/modules/i2p/__init__.py:56
 #, fuzzy
 #| msgid "Enable application"
 msgid "Manage I2P application"
 msgstr "启用应用程序"
 
-#: plinth/modules/i2p/__init__.py:65 plinth/modules/i2p/manifest.py:16
+#: plinth/modules/i2p/__init__.py:59 plinth/modules/i2p/manifest.py:16
 msgid "I2P"
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:66 plinth/modules/tor/__init__.py:55
+#: plinth/modules/i2p/__init__.py:60 plinth/modules/tor/__init__.py:56
 #, fuzzy
 #| msgid "Tor Anonymity Network"
 msgid "Anonymity Network"
 msgstr "Tor 匿名网络"
 
-#: plinth/modules/i2p/__init__.py:88
+#: plinth/modules/i2p/__init__.py:82
 #, fuzzy
 #| msgid "Privoxy Web Proxy"
 msgid "I2P Proxy"
@@ -2405,11 +2547,11 @@ msgstr ""
 "要使用它， <a href=\"https://gobby.github.io\">下载 Gobby</a> 的桌面客户端并"
 "安装。然后启动 Gobby 并选择“连接到服务器”并书入你的 {box_name} 域名即可。"
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:45
 msgid "infinoted"
 msgstr ""
 
-#: plinth/modules/infinoted/__init__.py:48
+#: plinth/modules/infinoted/__init__.py:46
 #, fuzzy
 #| msgid "Web Server"
 msgid "Gobby Server"
@@ -2553,16 +2695,6 @@ msgstr "没有证书"
 msgid "Re-obtain"
 msgstr "重新获取"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:91
-#: plinth/modules/networks/templates/connection_show.html:48
-#: plinth/modules/samba/templates/samba.html:127
-#: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
-#: plinth/modules/wireguard/templates/wireguard_delete_server.html:33
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:73
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:74
-msgid "Delete"
-msgstr "删除"
-
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:98
 msgid "Revoke"
 msgstr "撤销"
@@ -2618,7 +2750,7 @@ msgstr "成功为域名 {domain} 吊销证书"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "无法为 {domain} 撤销证书：{error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:33
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -2628,14 +2760,14 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:41
+#: plinth/modules/matrixsynapse/__init__.py:40
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
-"riot.im/\">Riot</a> client is recommended."
+"element.io/\">Element</a> client is recommended."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:66
+#: plinth/modules/matrixsynapse/__init__.py:67
 #, fuzzy
 #| msgid ""
 #| "Chat Server \n"
@@ -2659,7 +2791,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:13
-msgid "Riot"
+msgid "Element"
 msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -2719,13 +2851,13 @@ msgid ""
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/views.py:86
+#: plinth/modules/matrixsynapse/views.py:85
 #, fuzzy
 #| msgid "Application enabled"
 msgid "Public registration enabled"
 msgstr "应用程序已启用"
 
-#: plinth/modules/matrixsynapse/views.py:91
+#: plinth/modules/matrixsynapse/views.py:90
 #, fuzzy
 #| msgid "Application disabled"
 msgid "Public registration disabled"
@@ -2761,7 +2893,7 @@ msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:132
 msgid "Wiki"
-msgstr ""
+msgstr "共笔文档"
 
 #: plinth/modules/mediawiki/forms.py:25
 #, fuzzy
@@ -2859,12 +2991,12 @@ msgstr ""
 "（30000）上运行 Minetest 服务器。要连接到服务器，需要 <a href=\"http://www."
 "minetest.net/downloads/\">Minetest 客户端</a>。"
 
-#: plinth/modules/minetest/__init__.py:62
+#: plinth/modules/minetest/__init__.py:60
 #: plinth/modules/minetest/manifest.py:10
 msgid "Minetest"
 msgstr ""
 
-#: plinth/modules/minetest/__init__.py:63
+#: plinth/modules/minetest/__init__.py:61
 #, fuzzy
 #| msgid ""
 #| "Block Sandbox \n"
@@ -2928,7 +3060,7 @@ msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "禁用时，玩家间不能互相伤害也不能死"
 
 #: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/networks/forms.py:49 plinth/modules/networks/forms.py:79
+#: plinth/modules/networks/forms.py:51 plinth/modules/networks/forms.py:82
 msgid "Address"
 msgstr "地址"
 
@@ -2937,19 +3069,19 @@ msgstr "地址"
 msgid "Port"
 msgstr "端口"
 
-#: plinth/modules/minetest/views.py:49
+#: plinth/modules/minetest/views.py:48
 msgid "Maximum players configuration updated"
 msgstr "最大玩家配置已更新"
 
-#: plinth/modules/minetest/views.py:56
+#: plinth/modules/minetest/views.py:55
 msgid "Creative mode configuration updated"
 msgstr "创意模式配置已更新"
 
-#: plinth/modules/minetest/views.py:62
+#: plinth/modules/minetest/views.py:61
 msgid "PVP configuration updated"
 msgstr "玩家对战（PVP）配置已更新"
 
-#: plinth/modules/minetest/views.py:68
+#: plinth/modules/minetest/views.py:67
 msgid "Damage configuration updated"
 msgstr "伤害配置已更新"
 
@@ -3241,11 +3373,11 @@ msgstr ""
 "您可以使用常规端口 64738 连接到您的 Mumble 服务器。您可以从桌面和 Android 设"
 "备连接 Mumble <a href=\"http://mumble.info\">客户端</a>。"
 
-#: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:43 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr ""
 
-#: plinth/modules/mumble/__init__.py:49
+#: plinth/modules/mumble/__init__.py:44
 #, fuzzy
 #| msgid ""
 #| "Voice Chat \n"
@@ -3279,7 +3411,7 @@ msgstr ""
 msgid "Mumla"
 msgstr ""
 
-#: plinth/modules/mumble/views.py:29
+#: plinth/modules/mumble/views.py:27
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "SuperUser password successfully updated."
@@ -3306,6 +3438,12 @@ msgstr ""
 msgid "All web apps"
 msgstr ""
 
+#: plinth/modules/names/templates/names.html:16
+#, fuzzy
+#| msgid "Service"
+msgid "Services"
+msgstr "服务"
+
 #: plinth/modules/networks/__init__.py:40
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
@@ -3318,58 +3456,58 @@ msgid ""
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:64
+#: plinth/modules/networks/__init__.py:60
 msgid "Networks"
 msgstr "网络"
 
-#: plinth/modules/networks/__init__.py:157
+#: plinth/modules/networks/__init__.py:178
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "在 IPv{kind} 上使用 DNSSEC"
 
-#: plinth/modules/networks/forms.py:16
+#: plinth/modules/networks/forms.py:17
 msgid "Connection Type"
 msgstr "连接类型"
 
-#: plinth/modules/networks/forms.py:28
+#: plinth/modules/networks/forms.py:29
 msgid "Connection Name"
 msgstr "连接名称"
 
-#: plinth/modules/networks/forms.py:30
+#: plinth/modules/networks/forms.py:31
 #, fuzzy
 #| msgid "Interface"
 msgid "Network Interface"
 msgstr "接口"
 
-#: plinth/modules/networks/forms.py:31
+#: plinth/modules/networks/forms.py:32
 msgid "The network device that this connection should be bound to."
 msgstr "连接应绑定到的网络设备。"
 
-#: plinth/modules/networks/forms.py:34
+#: plinth/modules/networks/forms.py:35
 msgid "Firewall Zone"
 msgstr "防火墙区域"
 
-#: plinth/modules/networks/forms.py:35
+#: plinth/modules/networks/forms.py:36
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
 msgstr "防火墙区域将控制哪些服务可用在此接口。选择内部只有受信任的网络。"
 
-#: plinth/modules/networks/forms.py:38
+#: plinth/modules/networks/forms.py:39
 #: plinth/modules/networks/templates/connections_diagram.html:63
 msgid "External"
 msgstr "外网"
 
-#: plinth/modules/networks/forms.py:38
+#: plinth/modules/networks/forms.py:39
 #: plinth/modules/networks/templates/connections_diagram.html:92
 msgid "Internal"
 msgstr "内网"
 
-#: plinth/modules/networks/forms.py:40
+#: plinth/modules/networks/forms.py:41
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 寻址方式"
 
-#: plinth/modules/networks/forms.py:41
+#: plinth/modules/networks/forms.py:42
 #, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
@@ -3379,39 +3517,46 @@ msgstr ""
 "“自动”方式可以让 {box_name} 从此网络请求一个配置使其成为一个客户端。“共享”方"
 "式会让 {box_name} 作为一个路由器，配置此网络上的客户端并共享互联网连接。"
 
-#: plinth/modules/networks/forms.py:46
+#: plinth/modules/networks/forms.py:47
 msgid "Automatic (DHCP)"
 msgstr "自动 (DHCP)"
 
-#: plinth/modules/networks/forms.py:46
+#: plinth/modules/networks/forms.py:47
 msgid "Shared"
 msgstr "共享"
 
-#: plinth/modules/networks/forms.py:52
+#: plinth/modules/networks/forms.py:48 plinth/modules/networks/forms.py:79
+#, fuzzy
+#| msgid "Manual"
+msgctxt "Not automatically"
+msgid "Manual"
+msgstr "手册"
+
+#: plinth/modules/networks/forms.py:54
 msgid "Netmask"
 msgstr "子网掩码"
 
-#: plinth/modules/networks/forms.py:53
+#: plinth/modules/networks/forms.py:55
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr "可选的值。如果为空，则将使用基于地址的默认子网掩码。"
 
-#: plinth/modules/networks/forms.py:57 plinth/modules/networks/forms.py:86
+#: plinth/modules/networks/forms.py:59 plinth/modules/networks/forms.py:89
 #: plinth/modules/networks/templates/connection_show.html:187
 #: plinth/modules/networks/templates/connection_show.html:226
 msgid "Gateway"
 msgstr "网关"
 
-#: plinth/modules/networks/forms.py:57 plinth/modules/networks/forms.py:86
+#: plinth/modules/networks/forms.py:59 plinth/modules/networks/forms.py:89
 msgid "Optional value."
 msgstr "可选的值。"
 
-#: plinth/modules/networks/forms.py:60 plinth/modules/networks/forms.py:89
+#: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:92
 msgid "DNS Server"
 msgstr "DNS 服务器"
 
-#: plinth/modules/networks/forms.py:61
+#: plinth/modules/networks/forms.py:63
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3419,11 +3564,11 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv4 寻址方法是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:66 plinth/modules/networks/forms.py:95
+#: plinth/modules/networks/forms.py:68 plinth/modules/networks/forms.py:98
 msgid "Second DNS Server"
 msgstr "备选 DNS 服务器"
 
-#: plinth/modules/networks/forms.py:67
+#: plinth/modules/networks/forms.py:69
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3431,38 +3576,38 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv4 寻址方式是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:72
+#: plinth/modules/networks/forms.py:74
 msgid "IPv6 Addressing Method"
 msgstr "IPv6 寻址方式"
 
-#: plinth/modules/networks/forms.py:73
+#: plinth/modules/networks/forms.py:75
 #, python-brace-format
 msgid ""
 "\"Automatic\" methods will make {box_name} acquire configuration from this "
 "network making it a client."
 msgstr "“自动”方式可以让 {box_name} 从此网络请求一个配置使其成为一个客户端。"
 
-#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:243
+#: plinth/modules/networks/forms.py:78 plinth/modules/networks/forms.py:246
 msgid "Automatic"
 msgstr "自动"
 
-#: plinth/modules/networks/forms.py:76
+#: plinth/modules/networks/forms.py:78
 msgid "Automatic, DHCP only"
 msgstr "自动，只使用 DHCP"
 
-#: plinth/modules/networks/forms.py:77
+#: plinth/modules/networks/forms.py:80
 msgid "Ignore"
 msgstr "忽略"
 
-#: plinth/modules/networks/forms.py:81
+#: plinth/modules/networks/forms.py:84
 msgid "Prefix"
 msgstr "前缀"
 
-#: plinth/modules/networks/forms.py:82
+#: plinth/modules/networks/forms.py:85
 msgid "Value between 1 and 128."
 msgstr "在 1 到 128 之间取值。"
 
-#: plinth/modules/networks/forms.py:90
+#: plinth/modules/networks/forms.py:93
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3470,7 +3615,7 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv6 寻址方法是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:96
+#: plinth/modules/networks/forms.py:99
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3478,64 +3623,64 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv6 寻址方式是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:109
+#: plinth/modules/networks/forms.py:112
 msgid "-- select --"
 msgstr "-- 选择 --"
 
-#: plinth/modules/networks/forms.py:236
+#: plinth/modules/networks/forms.py:239
 #: plinth/modules/networks/templates/connection_show.html:129
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:237
+#: plinth/modules/networks/forms.py:240
 msgid "The visible name of the network."
 msgstr "可见网络的名称。"
 
-#: plinth/modules/networks/forms.py:239
+#: plinth/modules/networks/forms.py:242
 #: plinth/modules/networks/templates/connection_show.html:142
 msgid "Mode"
 msgstr "模式"
 
-#: plinth/modules/networks/forms.py:239
+#: plinth/modules/networks/forms.py:242
 msgid "Infrastructure"
 msgstr "基础架构"
 
-#: plinth/modules/networks/forms.py:240
+#: plinth/modules/networks/forms.py:243
 msgid "Access Point"
 msgstr "访问点"
 
-#: plinth/modules/networks/forms.py:241
+#: plinth/modules/networks/forms.py:244
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:243
+#: plinth/modules/networks/forms.py:246
 msgid "Frequency Band"
 msgstr "频带"
 
-#: plinth/modules/networks/forms.py:244
+#: plinth/modules/networks/forms.py:247
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:245
+#: plinth/modules/networks/forms.py:248
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:247
+#: plinth/modules/networks/forms.py:250
 #: plinth/modules/networks/templates/connection_show.html:158
 msgid "Channel"
 msgstr "信道"
 
-#: plinth/modules/networks/forms.py:248
+#: plinth/modules/networks/forms.py:251
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr "可选值。可通过指定频宽限制无线信道。为空或者填 0 表示自动选择。"
 
-#: plinth/modules/networks/forms.py:253
+#: plinth/modules/networks/forms.py:256
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:254
+#: plinth/modules/networks/forms.py:257
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -3544,31 +3689,31 @@ msgstr ""
 "可选的值。指定接入点的标识。当要连接到一个接入点时，只会连接到符合给出值的提"
 "供者。例如：00:11:22:aa:bb:cc。"
 
-#: plinth/modules/networks/forms.py:260
+#: plinth/modules/networks/forms.py:263
 msgid "Authentication Mode"
 msgstr "身份验证模式"
 
-#: plinth/modules/networks/forms.py:261
+#: plinth/modules/networks/forms.py:264
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "如果无线网络安全的和要求客户端具有密码才能连接，请选择 WPA。"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:266
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:266
 msgid "Open"
 msgstr "打开"
 
-#: plinth/modules/networks/forms.py:299
+#: plinth/modules/networks/forms.py:302
 #, fuzzy, python-brace-format
 #| msgid "Direct connection to the Internet."
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "直接连接到互联网。"
 
-#: plinth/modules/networks/forms.py:306
+#: plinth/modules/networks/forms.py:309
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -3576,7 +3721,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:313
+#: plinth/modules/networks/forms.py:316
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -3585,7 +3730,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:322
+#: plinth/modules/networks/forms.py:325
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -3593,11 +3738,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:341
+#: plinth/modules/networks/forms.py:344
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:345
+#: plinth/modules/networks/forms.py:348
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-block"
 "\">This means that devices on the Internet can reach you when you are "
@@ -3608,7 +3753,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:357
+#: plinth/modules/networks/forms.py:360
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -3620,7 +3765,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:370
+#: plinth/modules/networks/forms.py:373
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -3632,19 +3777,19 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:383
+#: plinth/modules/networks/forms.py:386
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-block"
 "\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:400
+#: plinth/modules/networks/forms.py:403
 #, fuzzy
 #| msgid "Current Network Configuration"
 msgid "Preferred router configuration"
 msgstr "当前的网络配置"
 
-#: plinth/modules/networks/forms.py:405
+#: plinth/modules/networks/forms.py:408
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
@@ -3655,7 +3800,7 @@ msgid ""
 "p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:417
+#: plinth/modules/networks/forms.py:420
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
@@ -3667,7 +3812,7 @@ msgid ""
 "to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:431
+#: plinth/modules/networks/forms.py:434
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -3856,7 +4001,7 @@ msgid "Create Connection"
 msgstr "创建连接"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:408
+#: plinth/modules/networks/views.py:406
 msgid "Delete Connection"
 msgstr "删除连接"
 
@@ -3901,7 +4046,7 @@ msgid "Computer"
 msgstr "计算机"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:128 plinth/modules/networks/views.py:212
+#: plinth/modules/networks/views.py:126 plinth/modules/networks/views.py:210
 msgid "Edit Connection"
 msgstr "编辑连接"
 
@@ -3913,13 +4058,13 @@ msgstr "连接"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:261
+#: plinth/modules/networks/views.py:259
 msgid "Nearby Wi-Fi Networks"
 msgstr "附近的无线网络"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:285
+#: plinth/modules/networks/views.py:283
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "添加连接"
@@ -3960,6 +4105,7 @@ msgstr ""
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:21
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
+#: plinth/modules/upgrades/templates/backports-firstboot.html:45
 msgid "Next"
 msgstr ""
 
@@ -4102,71 +4248,71 @@ msgid ""
 "full instructions on how to perform this task."
 msgstr ""
 
-#: plinth/modules/networks/views.py:36
+#: plinth/modules/networks/views.py:34
 msgid "Network Connections"
 msgstr "网络连接"
 
-#: plinth/modules/networks/views.py:51
+#: plinth/modules/networks/views.py:49
 msgid "Cannot show connection: Connection not found."
 msgstr "不能显示连接: 找不到连接。"
 
-#: plinth/modules/networks/views.py:86
+#: plinth/modules/networks/views.py:84
 msgid "Connection Information"
 msgstr "连接信息"
 
-#: plinth/modules/networks/views.py:100
+#: plinth/modules/networks/views.py:98
 msgid "Cannot edit connection: Connection not found."
 msgstr "不能编辑连接: 找不到连接。"
 
-#: plinth/modules/networks/views.py:106
+#: plinth/modules/networks/views.py:104
 msgid "This type of connection is not yet understood."
 msgstr "这种类型的连接尚没有引入。"
 
-#: plinth/modules/networks/views.py:224
+#: plinth/modules/networks/views.py:222
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "激活的连接 {name}。"
 
-#: plinth/modules/networks/views.py:228
+#: plinth/modules/networks/views.py:226
 msgid "Failed to activate connection: Connection not found."
 msgstr "未能激活连接: 找不到连接。"
 
-#: plinth/modules/networks/views.py:234
+#: plinth/modules/networks/views.py:232
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "未能激活连接 {name}: 没有合适的设备是可用。"
 
-#: plinth/modules/networks/views.py:247
+#: plinth/modules/networks/views.py:245
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "停用的连接 {name}。"
 
-#: plinth/modules/networks/views.py:251
+#: plinth/modules/networks/views.py:249
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "无法取消激活连接: 找不到连接。"
 
-#: plinth/modules/networks/views.py:303
+#: plinth/modules/networks/views.py:301
 msgid "Adding New Generic Connection"
 msgstr "添加新的常规连接"
 
-#: plinth/modules/networks/views.py:321
+#: plinth/modules/networks/views.py:319
 msgid "Adding New Ethernet Connection"
 msgstr "添加新的以太网连接"
 
-#: plinth/modules/networks/views.py:339
+#: plinth/modules/networks/views.py:337
 msgid "Adding New PPPoE Connection"
 msgstr "添加新的 PPPoE 连接"
 
-#: plinth/modules/networks/views.py:374
+#: plinth/modules/networks/views.py:372
 msgid "Adding New Wi-Fi Connection"
 msgstr "添加新的 Wi-Fi 连接"
 
-#: plinth/modules/networks/views.py:389
+#: plinth/modules/networks/views.py:387
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "连接 {name} 已删除。"
 
-#: plinth/modules/networks/views.py:393 plinth/modules/networks/views.py:403
+#: plinth/modules/networks/views.py:391 plinth/modules/networks/views.py:401
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
 
@@ -4185,20 +4331,20 @@ msgstr ""
 "供的私人/内部服务。您还可以通过 {box_name} 访问互联网的其他部分，以增加安全性"
 "和匿名性。"
 
-#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
 #, fuzzy
 #| msgid "Open"
 msgid "OpenVPN"
 msgstr "打开"
 
-#: plinth/modules/openvpn/__init__.py:57
-#: plinth/modules/wireguard/__init__.py:53
+#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/wireguard/__init__.py:51
 #, fuzzy
 #| msgid "Virtual Private Network (OpenVPN)"
 msgid "Virtual Private Network"
 msgstr "虚拟专用网络（OpenVPN）"
 
-#: plinth/modules/openvpn/__init__.py:68
+#: plinth/modules/openvpn/__init__.py:66
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4269,11 +4415,11 @@ msgstr "配置文件是特定于每个 %(box_name)s 用户的。请保持其私�
 msgid "Download my profile"
 msgstr "下载我的配置文件"
 
-#: plinth/modules/openvpn/views.py:89
+#: plinth/modules/openvpn/views.py:88
 msgid "Setup completed."
 msgstr "安装已完成。"
 
-#: plinth/modules/openvpn/views.py:91
+#: plinth/modules/openvpn/views.py:90
 msgid "Setup failed."
 msgstr "安装失败。"
 
@@ -4504,6 +4650,19 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
+#: plinth/modules/performance/__init__.py:25
+msgid ""
+"Performance app allows you to collect, store and view information about "
+"utilization of the hardware. This can give you basic insights into usage "
+"patterns and whether the hardware is overloaded by users and services."
+msgstr ""
+
+#: plinth/modules/performance/__init__.py:29
+msgid ""
+"Performance metrics are collected by Performance Co-Pilot and can be viewed "
+"using the Cockpit app."
+msgstr ""
+
 #: plinth/modules/performance/__init__.py:46
 #, fuzzy
 #| msgid "System Configuration"
@@ -4602,7 +4761,7 @@ msgstr "启用 Privoxy"
 msgid "Web Proxy"
 msgstr "Privoxy 网页代理"
 
-#: plinth/modules/privoxy/__init__.py:119
+#: plinth/modules/privoxy/__init__.py:109
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "在 tcp{kind} 上通过 {proxy} 访问 {url}"
@@ -4633,11 +4792,11 @@ msgstr ""
 "quassel-irc.org/downloads\">桌面</a>和<a href=\"http://quasseldroid."
 "iskrembilen.com/\">移动设备</a>客户端连接到 Quassel 的核心。"
 
-#: plinth/modules/quassel/__init__.py:61 plinth/modules/quassel/manifest.py:10
+#: plinth/modules/quassel/__init__.py:59 plinth/modules/quassel/manifest.py:10
 msgid "Quassel"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:62
+#: plinth/modules/quassel/__init__.py:60
 #, fuzzy
 #| msgid "Quassel IRC Client"
 msgid "IRC Client"
@@ -4647,7 +4806,7 @@ msgstr "Quassel IRC 客户端"
 msgid "Quasseldroid"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:33
+#: plinth/modules/radicale/__init__.py:29
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -4667,19 +4826,19 @@ msgstr ""
 "user_documentation/#idcaldav-and-carddav-client\">支持的客户端应用程序</a>。"
 "任何拥有 {box_name} 登录名的用户都可以访问 Radicale。"
 
-#: plinth/modules/radicale/__init__.py:39
+#: plinth/modules/radicale/__init__.py:35
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
 "which must be done using a separate client."
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:62
+#: plinth/modules/radicale/__init__.py:56
 #: plinth/modules/radicale/manifest.py:75
 msgid "Radicale"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:63
+#: plinth/modules/radicale/__init__.py:57
 #, fuzzy
 #| msgid ""
 #| "Calendar and Addressbook \n"
@@ -4710,6 +4869,12 @@ msgid ""
 "Any user with a {box_name} login can view or make changes to any calendar/"
 "addressbook."
 msgstr "任何用户都可以查看和修改任何日历/通训录。"
+
+#: plinth/modules/radicale/forms.py:30
+#, fuzzy
+#| msgid "Access Point"
+msgid "Access rights"
+msgstr "访问点"
 
 #: plinth/modules/radicale/manifest.py:10
 msgid "DAVx5"
@@ -4951,43 +5116,43 @@ msgstr "共享"
 msgid "Action"
 msgstr "行动"
 
-#: plinth/modules/samba/views.py:43 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Service"
 msgid "Open Share"
 msgstr "添加服务"
 
-#: plinth/modules/samba/views.py:44 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Service"
 msgid "Group Share"
 msgstr "添加服务"
 
-#: plinth/modules/samba/views.py:45
+#: plinth/modules/samba/views.py:53
 #, fuzzy
 #| msgid "Homepage"
 msgid "Home Share"
 msgstr "主页"
 
-#: plinth/modules/samba/views.py:78
+#: plinth/modules/samba/views.py:86
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Share enabled."
 msgstr "{name} 已删除。"
 
-#: plinth/modules/samba/views.py:83
+#: plinth/modules/samba/views.py:91
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error enabling share: {error_message}"
 msgstr "安装应用程序出错：{error}"
 
-#: plinth/modules/samba/views.py:88
+#: plinth/modules/samba/views.py:96
 #, fuzzy
 #| msgid "Shared"
 msgid "Share disabled."
 msgstr "共享"
 
-#: plinth/modules/samba/views.py:93
+#: plinth/modules/samba/views.py:101
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error disabling share: {error_message}"
@@ -5030,10 +5195,6 @@ msgid "Select the default family filter to apply to your search results."
 msgstr ""
 
 #: plinth/modules/searx/forms.py:15
-msgid "None"
-msgstr ""
-
-#: plinth/modules/searx/forms.py:15
 #, fuzzy
 #| msgid "Mode"
 msgid "Moderate"
@@ -5050,11 +5211,6 @@ msgstr ""
 #: plinth/modules/searx/forms.py:19
 msgid "Allow this application to be used by anyone who can reach it."
 msgstr ""
-
-#: plinth/modules/searx/views.py:38 plinth/modules/searx/views.py:49
-#: plinth/modules/tor/views.py:130 plinth/modules/tor/views.py:157
-msgid "Configuration updated."
-msgstr "配置已更新。"
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
@@ -5087,8 +5243,33 @@ msgstr ""
 msgid "Show security report"
 msgstr "安全"
 
+#: plinth/modules/security/templates/security.html:17
+#: plinth/modules/upgrades/templates/backports-firstboot.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+msgid "Frequent Feature Updates"
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+msgid "Frequent feature updates are activated."
+msgstr ""
+
+#: plinth/modules/security/templates/security.html:24
+#: plinth/modules/upgrades/templates/backports-firstboot.html:14
+#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#, python-format
+msgid ""
+"Frequent feature updates allow the %(box_name)s Service, plus a very limited "
+"set of software, to receive new features more frequently (from the backports "
+"repository). This results in receiving some new features within weeks, "
+"instead of only once every 2 years or so. Note that software with frequent "
+"feature updates does not have support from the Debian Security Team. "
+"Instead, they are maintained by contributors to Debian and the %(box_name)s "
+"community."
+msgstr ""
+
 #: plinth/modules/security/templates/security_report.html:10
-#: plinth/modules/security/views.py:71
+#: plinth/modules/security/views.py:74
 #, fuzzy
 #| msgid "Security"
 msgid "Security Report"
@@ -5175,12 +5356,12 @@ msgstr ""
 msgid "Not running"
 msgstr " 未运行"
 
-#: plinth/modules/security/views.py:53
+#: plinth/modules/security/views.py:56
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "设置限制访问错误：{exception}"
 
-#: plinth/modules/security/views.py:56
+#: plinth/modules/security/views.py:59
 msgid "Updated security configuration"
 msgstr "安全配置已更新"
 
@@ -5507,8 +5688,8 @@ msgstr "删除快照"
 
 #: plinth/modules/snapshot/forms.py:49
 msgid ""
-"Keep a maximum of this many yearly snapshots. The default value is 0 "
-"(disabled)."
+"Keep a maximum of this many yearly snapshots. The default value is 0 (keep "
+"no yearly snapshot)."
 msgstr ""
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:12
@@ -5635,7 +5816,7 @@ msgid ""
 "connections."
 msgstr ""
 
-#: plinth/modules/ssh/__init__.py:50
+#: plinth/modules/ssh/__init__.py:48
 msgid "Secure Shell (SSH) Server"
 msgstr "安全 Shell（SSH）服务器"
 
@@ -5684,7 +5865,7 @@ msgstr ""
 msgid "SSH authentication with password enabled."
 msgstr "远程服务器认证失败。"
 
-#: plinth/modules/sso/__init__.py:33
+#: plinth/modules/sso/__init__.py:34
 msgid "Single Sign On"
 msgstr ""
 
@@ -5700,116 +5881,116 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:319
+#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:312
 #, fuzzy
 #| msgid "reStore"
 msgid "Storage"
 msgstr "reStore"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:206
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} bytes"
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size} bytes"
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:210
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} KiB"
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size} KiB"
 
-#: plinth/modules/storage/__init__.py:221
+#: plinth/modules/storage/__init__.py:214
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} MiB"
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size} MiB"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:218
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} GiB"
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size} GiB"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:221
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} TiB"
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size} TiB"
 
-#: plinth/modules/storage/__init__.py:240
+#: plinth/modules/storage/__init__.py:233
 msgid "The operation failed."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:242
+#: plinth/modules/storage/__init__.py:235
 msgid "The operation was cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:237
 #, fuzzy
 #| msgid "repro service is running"
 msgid "The device is already unmounting."
 msgstr "repro 服务正在运行"
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:239
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:242
 msgid "The operation timed out."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:244
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:247
 msgid "Attempting to unmount a device that is busy."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:249
 msgid "The operation has already been cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:258
-#: plinth/modules/storage/__init__.py:260
-#: plinth/modules/storage/__init__.py:262
+#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:253
+#: plinth/modules/storage/__init__.py:255
 msgid "Not authorized to perform the requested operation."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:257
 #, fuzzy
 #| msgid "This service already exists"
 msgid "The device is already mounted."
 msgstr "此服务已存在"
 
-#: plinth/modules/storage/__init__.py:266
+#: plinth/modules/storage/__init__.py:259
 #, fuzzy
 #| msgid "repro service is not running"
 msgid "The device is not mounted."
 msgstr "repro 服务未运行"
 
-#: plinth/modules/storage/__init__.py:268
+#: plinth/modules/storage/__init__.py:261
 msgid "Not permitted to use the requested option."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:270
+#: plinth/modules/storage/__init__.py:263
 msgid "The device is mounted by another user."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:314
+#: plinth/modules/storage/__init__.py:307
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:316
+#: plinth/modules/storage/__init__.py:309
 msgid "Low disk space"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:344
+#: plinth/modules/storage/__init__.py:337
 msgid "Disk failure imminent"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:346
+#: plinth/modules/storage/__init__.py:339
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -5984,11 +6165,11 @@ msgid ""
 "other storage nodes."
 msgstr ""
 
-#: plinth/modules/tahoe/__init__.py:66
+#: plinth/modules/tahoe/__init__.py:61
 msgid "Tahoe-LAFS"
 msgstr ""
 
-#: plinth/modules/tahoe/__init__.py:68
+#: plinth/modules/tahoe/__init__.py:63
 msgid "Distributed File Storage"
 msgstr ""
 
@@ -6031,7 +6212,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:34
+#: plinth/modules/tor/__init__.py:35
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -6044,42 +6225,42 @@ msgstr ""
 "href=\"https://www.torproject.org/download/download-easy.html.en\">Tor浏览器"
 "</a>。"
 
-#: plinth/modules/tor/__init__.py:54
+#: plinth/modules/tor/__init__.py:55
 msgid "Tor"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:65
+#: plinth/modules/tor/__init__.py:66
 #, fuzzy
 #| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
 msgstr "隐藏的 Tor 服务"
 
-#: plinth/modules/tor/__init__.py:69
+#: plinth/modules/tor/__init__.py:70
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:73
+#: plinth/modules/tor/__init__.py:74
 msgid "Tor Bridge Relay"
 msgstr "Tor 网桥中继"
 
-#: plinth/modules/tor/__init__.py:98
+#: plinth/modules/tor/__init__.py:110
 msgid "Tor relay port available"
 msgstr "Tor 中继端口可用"
 
-#: plinth/modules/tor/__init__.py:108
+#: plinth/modules/tor/__init__.py:120
 msgid "Obfs3 transport registered"
 msgstr "已注册 Obfs3 传输"
 
-#: plinth/modules/tor/__init__.py:118
+#: plinth/modules/tor/__init__.py:130
 msgid "Obfs4 transport registered"
 msgstr "已注册 Obfs4 传输"
 
-#: plinth/modules/tor/__init__.py:211
+#: plinth/modules/tor/__init__.py:199
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "在 tcp{kind} 上通过 Tor 访问 {url}"
 
-#: plinth/modules/tor/__init__.py:222
+#: plinth/modules/tor/__init__.py:210
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "确认使用 Tor 通过 tcp{kind} 访问 {url}"
@@ -6223,7 +6404,7 @@ msgstr "SOCKS"
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Tor SOCKS 端口是你 %(box_name)s 上的 TCP 端口 9050 。"
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:220
+#: plinth/modules/tor/views.py:137 plinth/views.py:216
 msgid "Setting unchanged"
 msgstr "设置未改变"
 
@@ -6291,11 +6472,11 @@ msgstr ""
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:23
+#: plinth/modules/upgrades/__init__.py:36
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:24
+#: plinth/modules/upgrades/__init__.py:37
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6303,11 +6484,11 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:45 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:64 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "更新"
 
-#: plinth/modules/upgrades/__init__.py:83
+#: plinth/modules/upgrades/__init__.py:102
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Updated"
@@ -6321,6 +6502,23 @@ msgstr "启用自动升级"
 
 #: plinth/modules/upgrades/forms.py:14
 msgid "When enabled, FreedomBox automatically updates once a day."
+msgstr ""
+
+#: plinth/modules/upgrades/forms.py:20
+#: plinth/modules/upgrades/templates/upgrades_configure.html:56
+msgid "Activate frequent feature updates (recommended)"
+msgstr ""
+
+#: plinth/modules/upgrades/templates/backports-firstboot.html:26
+msgid ""
+"It is strongly recommended to activate frequent feature updates. If not "
+"activated now, they can be activated later."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/backports-firstboot.html:33
+msgid ""
+"<strong>Note:</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated."
 msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
@@ -6341,23 +6539,42 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
+msgid ""
+"Frequent feature updates can be activated. Activating them is recommended."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:23
+msgid ""
+"Frequent feature updates cannot be activated. They may not be necessary on "
+"your distribution."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#, python-format
+msgid ""
+"<strong>Warning!</strong> Once frequent feature updates are activated, they "
+"cannot be deactivated. You may wish to take a snapshot using <a href="
+"\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:61
 #, fuzzy
 #| msgid "Last update"
-msgid "Manual update"
+msgid "Manual Update"
 msgstr "最后一次更新"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:17
+#: plinth/modules/upgrades/templates/upgrades_configure.html:67
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:25
+#: plinth/modules/upgrades/templates/upgrades_configure.html:75
 #, fuzzy
 #| msgid "Update"
 msgid "Update now"
 msgstr "更新"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:81
 #, fuzzy
 #| msgid ""
 #| "Depending on the number of packages to install, this may take a long time "
@@ -6373,30 +6590,34 @@ msgstr ""
 "装其它软件包。升级期间，此 web 界面可能暂时不可用并显示错误消息。刷新页面后，"
 "可以继续。"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:95
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:53
+#: plinth/modules/upgrades/views.py:57
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "配置无人参与升级时错误：{error}"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:61
 msgid "Automatic upgrades enabled"
 msgstr "已启用自动升级"
 
-#: plinth/modules/upgrades/views.py:60
+#: plinth/modules/upgrades/views.py:64
 msgid "Automatic upgrades disabled"
 msgstr "已禁用自动升级"
 
-#: plinth/modules/upgrades/views.py:75
+#: plinth/modules/upgrades/views.py:79
 msgid "Upgrade process started."
 msgstr "升级过程开始。"
 
-#: plinth/modules/upgrades/views.py:77
+#: plinth/modules/upgrades/views.py:81
 msgid "Starting upgrade failed."
 msgstr "开始升级失败。"
+
+#: plinth/modules/upgrades/views.py:91
+msgid "Frequent feature updates activated."
+msgstr ""
 
 #: plinth/modules/users/__init__.py:39
 msgid ""
@@ -6421,7 +6642,7 @@ msgstr "用户和组"
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/__init__.py:122
+#: plinth/modules/users/__init__.py:115
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "请检查 LDAP 条目“{search_item}”"
@@ -6436,18 +6657,12 @@ msgstr "用户名已经占用或保留。"
 msgid "Enter a valid username."
 msgstr "服务器名称无效"
 
-#: plinth/modules/users/forms.py:69
+#: plinth/modules/users/forms.py:70
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: plinth/modules/users/forms.py:83 plinth/modules/users/forms.py:197
-#, fuzzy
-#| msgid "Transmission BitTorrent"
-msgid "Permissions"
-msgstr "Transmission BitTorrent"
-
-#: plinth/modules/users/forms.py:85
+#: plinth/modules/users/forms.py:86
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -6466,20 +6681,20 @@ msgstr ""
 "支持单一登录的服务。<br/><br/>管理员（admin）组中的用户将能够登录所有服务。他"
 "们还可以通过 SSH 登录到系统并具有管理权限（sudo）。"
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:346
+#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:347
 msgid "Creating LDAP user failed."
 msgstr "创建 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:134
+#: plinth/modules/users/forms.py:135
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "未能将新用户添加到 {group}。"
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:149
 msgid "Authorized SSH Keys"
 msgstr ""
 
-#: plinth/modules/users/forms.py:150
+#: plinth/modules/users/forms.py:151
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -6488,45 +6703,45 @@ msgstr ""
 "设置 SSH 公钥将允许此用户安全地登录到系统不使用密码。您可以输入多个密钥，每行"
 "一个。将忽略空行和以 # 开头的行。"
 
-#: plinth/modules/users/forms.py:234
+#: plinth/modules/users/forms.py:235
 msgid "Renaming LDAP user failed."
 msgstr "重命名 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:246
+#: plinth/modules/users/forms.py:247
 msgid "Failed to remove user from group."
 msgstr "无法从组中删除用户。"
 
-#: plinth/modules/users/forms.py:257
+#: plinth/modules/users/forms.py:258
 msgid "Failed to add user to group."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:266
+#: plinth/modules/users/forms.py:267
 msgid "Unable to set SSH keys."
 msgstr "不能设置 SSH 密钥。"
 
-#: plinth/modules/users/forms.py:281
+#: plinth/modules/users/forms.py:282
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:289
+#: plinth/modules/users/forms.py:290
 msgid "Cannot delete the only administrator in the system."
 msgstr ""
 
-#: plinth/modules/users/forms.py:320
+#: plinth/modules/users/forms.py:321
 msgid "Changing LDAP user password failed."
 msgstr "更改 LDAP 用户密码失败。"
 
-#: plinth/modules/users/forms.py:355
+#: plinth/modules/users/forms.py:356
 msgid "Failed to add new user to admin group."
 msgstr "未能将新用户添加到管理员组。"
 
-#: plinth/modules/users/forms.py:372
+#: plinth/modules/users/forms.py:373
 msgid "Failed to restrict console access."
 msgstr "限制命令行访问失败。"
 
-#: plinth/modules/users/forms.py:384
+#: plinth/modules/users/forms.py:385
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
 
@@ -6655,7 +6870,7 @@ msgid ""
 "securely relayed through {box_name}."
 msgstr ""
 
-#: plinth/modules/wireguard/__init__.py:52
+#: plinth/modules/wireguard/__init__.py:50
 #: plinth/modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr ""
@@ -6787,7 +7002,7 @@ msgid "Add a new peer"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:61
-#: plinth/modules/wireguard/views.py:50
+#: plinth/modules/wireguard/views.py:48
 msgid "Add Allowed Client"
 msgstr ""
 
@@ -6822,7 +7037,7 @@ msgid "Add a new server"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:108
-#: plinth/modules/wireguard/views.py:159
+#: plinth/modules/wireguard/views.py:157
 #, fuzzy
 #| msgid "Add Connection"
 msgid "Add Connection to Server"
@@ -6932,17 +7147,17 @@ msgstr ""
 msgid "IP address of this machine:"
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:45
+#: plinth/modules/wireguard/views.py:43
 msgid "Added new client."
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:119
+#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
 #, fuzzy
 #| msgid "This service already exists"
 msgid "Client with public key already exists"
 msgstr "此服务已存在"
 
-#: plinth/modules/wireguard/views.py:73
+#: plinth/modules/wireguard/views.py:71
 #, fuzzy
 #| msgid ""
 #| "Email Client \n"
@@ -6952,13 +7167,13 @@ msgstr ""
 "邮件客户端\n"
 "（Roundcube）"
 
-#: plinth/modules/wireguard/views.py:95
+#: plinth/modules/wireguard/views.py:93
 #, fuzzy
 #| msgid "Update setup"
 msgid "Updated client."
 msgstr "更新安装程序"
 
-#: plinth/modules/wireguard/views.py:100
+#: plinth/modules/wireguard/views.py:98
 #, fuzzy
 #| msgid ""
 #| "Email Client \n"
@@ -6968,55 +7183,55 @@ msgstr ""
 "邮件客户端\n"
 "（Roundcube）"
 
-#: plinth/modules/wireguard/views.py:133
+#: plinth/modules/wireguard/views.py:131
 #, fuzzy
 #| msgid "Delete"
 msgid "Delete Allowed Client"
 msgstr "删除"
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:140
 #, fuzzy
 #| msgid "Archive deleted."
 msgid "Client deleted."
 msgstr "归档已删除。"
 
-#: plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:142
 #, fuzzy
 #| msgid "Repository not found"
 msgid "Client not found"
 msgstr "找不到存储库"
 
-#: plinth/modules/wireguard/views.py:154
+#: plinth/modules/wireguard/views.py:152
 #, fuzzy
 #| msgid "Added custom service"
 msgid "Added new server."
 msgstr "已添加的自定义服务"
 
-#: plinth/modules/wireguard/views.py:175
+#: plinth/modules/wireguard/views.py:173
 #, fuzzy
 #| msgid "Connection Type"
 msgid "Connection to Server"
 msgstr "连接类型"
 
-#: plinth/modules/wireguard/views.py:193
+#: plinth/modules/wireguard/views.py:191
 #, fuzzy
 #| msgid "Update setup"
 msgid "Updated server."
 msgstr "更新安装程序"
 
-#: plinth/modules/wireguard/views.py:198
+#: plinth/modules/wireguard/views.py:196
 #, fuzzy
 #| msgid "Edit Connection"
 msgid "Modify Connection to Server"
 msgstr "编辑连接"
 
-#: plinth/modules/wireguard/views.py:235
+#: plinth/modules/wireguard/views.py:233
 #, fuzzy
 #| msgid "Delete Connection"
 msgid "Delete Connection to Server"
 msgstr "删除连接"
 
-#: plinth/modules/wireguard/views.py:255
+#: plinth/modules/wireguard/views.py:253
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Server deleted."
@@ -7030,23 +7245,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "通用"
 
-#: plinth/package.py:122
+#: plinth/package.py:134
 msgid "Error during installation"
 msgstr "安装时错误"
 
-#: plinth/package.py:144
+#: plinth/package.py:156
 msgid "installing"
 msgstr "安装"
 
-#: plinth/package.py:146
+#: plinth/package.py:158
 msgid "downloading"
 msgstr "下载中"
 
-#: plinth/package.py:148
+#: plinth/package.py:160
 msgid "media change"
 msgstr "媒体改变"
 
-#: plinth/package.py:150
+#: plinth/package.py:162
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "配置文件：{file}"
@@ -7343,13 +7558,44 @@ msgstr "没有证书"
 msgid "Port Forwarding"
 msgstr "启用转发"
 
-#: plinth/templates/port-forwarding-info.html:11
+#: plinth/templates/port-forwarding-info.html:13
 #, python-format
 msgid ""
-"If your FreedomBox is behind a router, you will need to set up port "
-"forwarding on your router. You should forward the following ports for "
-"%(service_name)s:"
+"Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
+"action is necessary."
 msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:19
+#, python-format
+msgid ""
+"Your FreedomBox is <a href=\"%(networks_url)s\"> behind a router</a> and you "
+"are using the DMZ feature to forward all ports. No further router "
+"configuration is necessary."
+msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:26
+#, python-format
+msgid ""
+"Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
+"are not using the DMZ feature. You will need to set up port forwarding on "
+"your router. You should forward the following ports for %(service_name)s:"
+msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:36
+#, fuzzy
+#| msgid "protocol"
+msgid "Protocol"
+msgstr "协议"
+
+#: plinth/templates/port-forwarding-info.html:37
+msgid "From Router/WAN Ports"
+msgstr ""
+
+#: plinth/templates/port-forwarding-info.html:38
+#, fuzzy, python-format
+#| msgid "%(box_name)s Setup"
+msgid "To %(box_name)s Ports"
+msgstr "%(box_name)s 安装程序"
 
 #: plinth/templates/setup.html:24
 msgid "Install this application?"
@@ -7394,6 +7640,60 @@ msgstr "已完成 %(percentage)s%%"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#, fuzzy
+#~| msgid "Create User"
+#~ msgid "Backports activated."
+#~ msgstr "创建用户"
+
+#, fuzzy
+#~| msgid ""
+#~| "Coquelicot is a “one-click” file sharing web application with a focus on "
+#~| "protecting users’ privacy. It is best used for quickly sharing a single "
+#~| "file. "
+#~ msgid ""
+#~ "Coquelicot is a \"one-click\" file sharing web application with a focus "
+#~ "on protecting users' privacy. It is best used for quickly sharing a "
+#~ "single file. "
+#~ msgstr ""
+#~ "Coquelicot 是一个“即点即用”的文件分享应用，注重保护用户隐私。适宜快速分享"
+#~ "单个文件。 "
+
+#~ msgid "Coquelicot"
+#~ msgstr "Coquelicot"
+
+#~ msgid "Upload Password"
+#~ msgstr "保存密码"
+
+#~ msgid "Maximum File Size (in MiB)"
+#~ msgstr "最大的文件容量（以MiB计算）"
+
+#~ msgid "Upload password updated"
+#~ msgstr "上传密码已更新"
+
+#~ msgid "Failed to update upload password"
+#~ msgstr "更新上传的密码失败"
+
+#~ msgid "Maximum file size updated"
+#~ msgstr "最大玩家配置已更新"
+
+#~ msgid "Failed to update maximum file size"
+#~ msgstr "更新最大文件容量失败"
+
+#, fuzzy
+#~| msgid "Security"
+#~ msgid "Security Notice"
+#~ msgstr "安全"
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "Backports"
+#~ msgstr "备份"
+
+#, fuzzy
+#~| msgid "Activate"
+#~ msgid "Activate backports"
+#~ msgstr "激活"
 
 #~ msgid "Restoring"
 #~ msgstr "恢复中"
@@ -7655,9 +7955,6 @@ msgstr "古吉拉特语"
 #~ msgid "Manage"
 #~ msgstr "管理"
 
-#~ msgid "Create"
-#~ msgstr "创建"
-
 #~ msgid "The voucher you received with your {box_name} Danube Edition"
 #~ msgstr "您收到的您的 {box_name} Danube 版本优惠卷"
 
@@ -7883,11 +8180,6 @@ msgstr "古吉拉特语"
 #~ msgid "Restore apps"
 #~ msgstr "reStore"
 
-#, fuzzy
-#~| msgid "Create User"
-#~ msgid "Backup archives"
-#~ msgstr "创建用户"
-
 #~ msgid "Software Upgrades"
 #~ msgstr "软件升级"
 
@@ -8017,9 +8309,6 @@ msgstr "古吉拉特语"
 #~| msgid "Deluge BitTorrent"
 #~ msgid "BitTorrent"
 #~ msgstr "Deluge BitTorrent 客户端"
-
-#~ msgid "admin"
-#~ msgstr "管理员"
 
 #~ msgid "wiki"
 #~ msgstr "维基"

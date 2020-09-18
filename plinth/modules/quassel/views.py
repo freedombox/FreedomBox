@@ -11,7 +11,6 @@ from .forms import QuasselForm
 
 class QuasselAppView(AppView):
     app_id = 'quassel'
-    port_forwarding_info = quassel.port_forwarding_info
     form_class = QuasselForm
 
     def get_initial(self):

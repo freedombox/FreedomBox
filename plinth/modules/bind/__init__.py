@@ -36,11 +36,6 @@ _description = [
         box_name=_(cfg.box_name)),
 ]
 
-port_forwarding_info = [
-    ('TCP', 53),
-    ('UDP', 53),
-]
-
 CONFIG_FILE = '/etc/bind/named.conf.options'
 ZONES_DIR = '/var/bind/pri'
 
@@ -100,16 +95,6 @@ class BindApp(app_module.App):
                                                               (53, 'udp4')],
             alias=managed_services[1])
         self.add(daemon)
-
-
-def init():
-    """Initialize the BIND module."""
-    global app
-    app = BindApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

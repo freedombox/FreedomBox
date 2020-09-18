@@ -1,0 +1,92 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/TinyTinyRSS|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Tiny Tiny RSS (Lector de Feeds de Noticias) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/TinyTinyRSS/TinyTinyRSS-icon_en_V01.png|Tiny Tiny RSS icon}} ||
+
+'''Disponible desde''': versión 0.9
+
+''Tiny Tiny RSS'' es un lector y agregador de ''feeds'' de noticias (RSS/Atom) diseñado para leer noticias desde cualquier lugar con una experiencia lo más parecida posible a una aplicación de escritorio.
+
+Cualquier usuario creado mediante el interfaz web de !FreedomBox podrá ingresar y usar esta app. Cada usuario tiene sus propios ''feeds'', estado y preferencias.
+
+=== Usar el interfaz web ===
+
+Cuando esté habilitado Tiny Tiny RSS estará disponible en la ruta ''/tt-rss'' del servidor web. Cualquier usuario creado mediante !FreedomBox podrá ingresar y usar esta app.
+
+{{attachment:ttrss.png|Tiny Tiny RSS|width=800}}
+
+==== Añadir un nuevo feed ====
+
+1. Ve a la página cuyo feed quieras y copia su enlace RSS/Atom feed.
+
+{{attachment:Select-RSS-feed.png|Selecting feeds|width=800}}
+
+2. Selecciona "Subscribirse al feed.." en el desplegable Acciones.
+
+{{attachment:Subscribe-to-feed.png|Subscribe to feed}}
+
+3. Pega la URL que has copiado en el diálogo que aparece y pulsa el botón '''Subscribirse'''.
+
+{{attachment:Subscribe-dialog.png|Subscription dialog box|width=800}}
+
+Dale un minuto a la aplicación para obtener los ''feeds''.
+
+En algunos sitios web el botón de ''feeds'' RSS no está claramente visible. En tal caso simplemente pega la URL del sitio web en el diálogo Subscribirse y deja que TT-RSS detecte automáticamente los ''feeds'' RSS que haya en la página. 
+
+Puedes probarlo ahora con la página principal de [[https://en.wikinews.org/wiki/Main_Page|WikiNews]]
+
+Como puedes ver en la imagen seguiente TT-RSS ha detectado y añadido el ''feed'' Atom de !WikiNews a nuestra lista de ''feeds''.
+
+{{attachment:WikiNews-feed.png|WikiNews feed added}}
+
+Si no quieres conservar este ''feed'' haz clic con el botón derecho del ratón en el ''feed'' de la imagen anterior, selecciona '''Editar feed''' y dale a  '''Desubscribir''' en el diálogo que aparece.
+
+{{attachment:Unsubscribe.png|Unsubscribe from a feed|width=800}}
+
+
+==== Importar tus feeds desde otro lector ====
+
+Encuentra en tu lector de ''feeds'' previo una opción para ''Exportar'' tus ''feeds'' a un fichero. Si tiene que elegir entre varios formatos elige OPML. Pongamos que tu fichero de ''feeds'' exportados se llama Subscriptions.opml
+
+Haz click en la esquina superior izquierda el menú ''Acciones'' y selecciona ''Preferencias''. Se te llevará a otra página.
+
+En la cabecera superior selecciona la 2ª solapa llamada ''Feeds''. Tiene varias secciones y la 2ª se llama ''OPML''. Selecciónala.
+
+{{attachment:OPML.png| OPML feeds page|width=960}}
+
+Para importar tu fichero Subscriptions.opml a TT-RSS,
+ 1. Haz clic en ''Examinar...'' y selecciona el fichero en tu sistema de archivos.
+ 2. Haz clic en ''Importar mi OPML''
+
+Tras importar se te llevará a la sección '''Feeds''' que está en la página encima de la de OPML. Puedes ver que los ''feeds'' del lector previo figuran ahora importados en Tiny Tiny RSS. Ahora puedes empezar a usar Tiny Tiny RSS como tu lector principal. 
+
+
+=== Usar la app móvil ===
+
+La app oficial para Android del proyecto Tiny Tiny RSS funciona con el servidor Tiny Tiny RSS de !FreedomBox. Se sabe que la aplicación anterior TTRSS-Reader  '''no''' funciona. 
+
+Desafortunadamente la app oficial para Android solo está disponible en la Play Store de Google y no en F-Droid. Todavía puedes obtener el código fuente y compilar el fichero apk por tu cuenta.
+
+Para configurarla, primero instálala y entonces en la página de configuración pon ''https://<tu_freedombox>/tt-rss-app/'' como URL. Pon tu usuario y contraseña en los detalles del Login así como los detalles de Autenticación HTTP. Si tu !FreedomBox no tiene un certificado HTTPS válido configuralo para que admita cualquier certificado SSL y cualquier servidor.
+
+{{attachment:ttrssapp1.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp2.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp3.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp4.png|Tiny Tiny RSS|width=288}}
+{{attachment:ttrssapp5.png|Tiny Tiny RSS|width=288}}
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

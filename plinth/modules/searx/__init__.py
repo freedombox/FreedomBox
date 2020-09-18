@@ -15,7 +15,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unused-import
-                       backup, clients)
+    backup, clients)
 
 version = 4
 
@@ -101,16 +101,6 @@ class SearxWebserverAuth(Webserver):
         """Enable apache configuration only if public access is disabled."""
         if not is_public_access_enabled():
             super().enable()
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = SearxApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

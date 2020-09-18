@@ -37,6 +37,7 @@ ENABLED_APPS_PATH = "/etc/plinth/modules-enabled/"
 
 DISABLED_APPS_TO_REMOVE = [
     'apps',
+    'coquelicot',
     'diaspora',
     'owncloud',
     'system',
@@ -110,6 +111,7 @@ class CustomBuild(build):
 
 class CustomClean(clean):
     """Override clean command to clean doc, locales, and egg-info."""
+
     def run(self):
         """Execute clean command"""
         subprocess.check_call(['rm', '-rf', 'Plinth.egg-info/'])
@@ -127,6 +129,7 @@ class CustomClean(clean):
 
 class CustomInstall(install):
     """Override install command."""
+
     def run(self):
         for app in DISABLED_APPS_TO_REMOVE:
             file_path = pathlib.Path(ENABLED_APPS_PATH) / app
@@ -144,6 +147,7 @@ class CustomInstall(install):
 
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
+
     def _run_doc_install(self):
         """Install documentation"""
         command = ['make', '-j', '8', '-C', 'doc', 'install']

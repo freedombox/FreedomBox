@@ -13,7 +13,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
 
-import plinth.modules.wireguard as wireguard
 from plinth import network
 from plinth.modules.names.components import DomainName
 from plinth.views import AppView
@@ -26,7 +25,6 @@ class WireguardView(AppView):
     app_id = 'wireguard'
     diagnostics_module_name = 'wireguard'
     template_name = 'wireguard.html'
-    port_forwarding_info = wireguard.port_forwarding_info
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""

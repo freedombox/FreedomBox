@@ -3,6 +3,11 @@
 FreedomBox app for upgrades.
 """
 
+import logging
+import os
+import subprocess
+
+from aptsources import sourceslist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 
@@ -13,11 +18,19 @@ from plinth import cfg, glib, menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 3
+version = 7
 
 is_essential = True
 
 managed_packages = ['unattended-upgrades', 'needrestart']
+
+first_boot_steps = [
+    {
+        'id': 'backports_wizard',
+        'url': 'upgrades:backports-firstboot',
+        'order': 5,
+    },
+]
 
 _description = [
     _('Check for and apply the latest software and security updates.'),
@@ -29,6 +42,12 @@ _description = [
 ]
 
 app = None
+
+BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
+
+SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
+
+logger = logging.getLogger(__name__)
 
 
 class UpgradesApp(app_module.App):
@@ -56,7 +75,7 @@ class UpgradesApp(app_module.App):
         # Check every day for setting up apt backport sources, every 3 minutes
         # in debug mode.
         interval = 180 if cfg.develop else 24 * 3600
-        glib.schedule(interval, _setup_repositories)
+        glib.schedule(interval, setup_repositories)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
@@ -88,13 +107,6 @@ class UpgradesApp(app_module.App):
         note.dismiss(should_dismiss=dismiss)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = UpgradesApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
@@ -107,9 +119,14 @@ def setup(helper, old_version=None):
     # increment.
     helper.call('post', actions.superuser_run, 'upgrades', ['setup'])
 
+    # When upgrading from a version without first boot wizard for backports,
+    # assume backports have been requested.
+    if old_version and old_version < 7:
+        set_backports_requested(can_activate_backports())
+
     # Try to setup apt repositories, if needed, if possible, on first install
     # and on version increment.
-    helper.call('post', _setup_repositories, None)
+    helper.call('post', setup_repositories, None)
 
 
 def is_enabled():
@@ -128,6 +145,62 @@ def disable():
     actions.superuser_run('upgrades', ['disable-auto'])
 
 
-def _setup_repositories(data):
+def setup_repositories(data):
     """Setup apt backport repositories."""
-    actions.superuser_run('upgrades', ['setup-repositories'])
+    if is_backports_requested():
+        command = ['setup-repositories']
+        if cfg.develop:
+            command += ['--develop']
+
+        actions.superuser_run('upgrades', command)
+
+
+def is_backports_requested():
+    """Return whether user has chosen to activate backports."""
+    from plinth import kvstore
+    return kvstore.get_default(BACKPORTS_REQUESTED_KEY, False)
+
+
+def set_backports_requested(requested):
+    """Set whether user has chosen to activate backports."""
+    from plinth import kvstore
+    kvstore.set(BACKPORTS_REQUESTED_KEY, requested)
+    logger.info('Backports requested - %s', requested)
+
+
+def is_backports_enabled():
+    """Return whether backports are enabled in the system configuration."""
+    return os.path.exists(SOURCES_LIST)
+
+
+def get_current_release():
+    """Return current release and codename as a tuple."""
+    output = subprocess.check_output(
+        ['lsb_release', '--release', '--codename',
+         '--short']).decode().strip()
+    lines = output.split('\n')
+    return lines[0], lines[1]
+
+
+def is_backports_current():
+    """Return whether backports are enabled for the current release."""
+    if not is_backports_enabled():
+        return False
+
+    _, dist = get_current_release()
+    dist += '-backports'
+    sources = sourceslist.SourcesList()
+    for source in sources:
+        if source.dist == dist:
+            return True
+
+    return False
+
+
+def can_activate_backports():
+    """Return whether backports can be activated."""
+    release, _ = get_current_release()
+    if release == 'unstable' or (release == 'testing' and not cfg.develop):
+        return False
+
+    return True

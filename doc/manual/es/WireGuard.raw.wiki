@@ -1,0 +1,76 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/WireGuard|English]] - Español -~
+
+<<TableOfContents>>
+
+## BEGIN_INCLUDE
+
+== WireGuard (Red Privada Virtual) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/WireGuard/WireGuard-icon_en_V01.png|alt="Icono de WireGuard"}} ||
+
+
+=== Acerca de WireGuard ===
+
+'''!WireGuard''' es red privada virtual (VPN) extremadamente sencilla aunque rápida y moderna que emplea cifrado de última generación.Puede ser un reemplazo útil para IPSec u [[es/FreedomBox/Manual/OpenVPN|OpenVPN]].
+
+Sitio web oficial: https://www.wireguard.com
+
+=== Instalación ===
+
+En está disponible para [[DebianBuster]] en [[Backports]]. Si tu lista de fuentes incluye a backports, Puedes instalar wireguard desde la sección Apps del interfaz web de !FreedomBox.
+{{{#!wiki caution
+ WireGuard no se puede instalar aún en !FreedomBox con buster-backports porque el servicio !FreedomBox necesita una nueva versión de NetworkManager para ponerla en funcionamiento.
+}}}
+
+=== Configuración - Debian Peers ===
+
+ * [[WireGuard|Step 1 - Generating Keypairs]]
+ * [[WireGuard|Step 2 - Alternative A - Manual Configuration]]
+
+
+=== Uso ===
+
+ * Tunel punto a punto
+ * Cliente VPN con ruta por omisión
+
+=== Configuración - Clientes móviles ===
+
+WireGuard tiene una implementación en espacio de usuario para dispositivos móviles disponible en la propia app. Funciona en Android e iOS. [[https://www.wireguard.com/install/|Aquí]] hay una lista completa de sistemas operativos compatibles.
+
+El cliente se puede configurar de varias maneras:
+
+==== Alternativa A - Crear una configuración a mano ====
+
+Esta es autoexplicativa: te creas la configuración en el dispositivo móvil y transfieres las claves apropiadas a la configuración del servidor.
+
+==== Alternativa B - Crear una configuración a partir de un archivo ====
+
+Aquí tienes que comprimir a .zip el archivo de configuración del cliente, transferirlo al dispositivo, e importarlo a la app.
+
+==== Alternativa C - Importarla leyendo un código QR (el método másseguro) ====
+
+La versión 0.0.20180724 del cliente móvil soporta lectura de código QR.
+
+Se puede emplear DebianPackage:qrencode para generar códigos QR incluso desde el terminal/la consola usando carácteres UTF-8.
+
+La syntaxis es:
+
+{{{
+# qrencode -t ansiutf8 < client.conf
+}}}
+
+Esto generará un código QR legible desde el cliente móvil. 
+
+La ventaja de este enfoque es que no hay necesidad de software adicional ni de transferir información sensible a través de canales de datos que podrían estar comprometidos.
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

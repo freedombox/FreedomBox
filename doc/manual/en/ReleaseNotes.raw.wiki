@@ -1,0 +1,1319 @@
+<<TableOfContents(2)>>
+
+Please check as well [[FreedomBox/Contribute|contribution]], [[FreedomBox/ProgressCalls|progress calls]], and [[FreedomBox/TODO|TODOs]] related pages.
+
+For more technical details, see the [[https://salsa.debian.org/freedombox-team/freedombox/blob/master/debian/changelog|FreedomBox changelog]].
+
+## BEGIN_INCLUDE
+
+= Release Notes =
+
+The following are the release notes for each !FreedomBox version.
+
+== FreedomBox 20.14 (2020-09-15) ==
+
+=== Highlights ===
+
+ * apache: Disable mod_status (CVE-2020-25073)
+ * bepasty: New app for file upload and sharing
+ * matrixsynapse: Allow upgrade to version 1.19
+
+=== Other Changes ===
+
+ * apps: Remove Coquelicot
+ * backups: Make app available by default
+ * debian: Add newline to end of /var/lib/plinth/firstboot-wizard-secret
+ * debian: Don't show first wizard secret on command line
+ * debian: Temporarily revert source package rename
+ * diagnostics: Prevent showing running status on diagnostics menu item
+ * doc: Add moinmoin wiki parser
+ * doc: Fix wiki links in manual
+ * ejabberd, mumble, wireguard: Update Apple app links
+ * ejabberd: Use new ruamel.yaml API and allow duplicate keys
+ * firewall: Show port forwarding info contextually
+ * firewall: Show port forwarding info in tabular format
+ * gitweb: Add ability to change default branch
+ * gitweb: Fix enable auth webserver component on app init
+ * help, networks: Clarify i18n different contexts for "Manual"
+ * i18n: Mark strings missed for translation
+ * ikiwiki: Validate a path when deleting wiki or blog
+ * js: Don't show running status on buttons pulled to right
+ * jsxc, sharing, wireguard: Add 'Learn more...' link for help pages
+ * locale: Update translations for Danish, Dutch, Galician, German, Hungarian, Italian, Spanish, Swedish, Russian, Turkish
+ * matrixsynapse: Perform a one time conversion to new config format
+ * matrixsynapse: Rename Riot to Element
+ * matrixsynapse: Use conf.d snippets
+ * radicale: Remove code to handle 1.x
+ * radicale: Stop service during backup and restore
+ * samba: Hide common system partitions
+ * snapshots: Clarify description for disabling yearly snapshots
+ * ssh: Disallow managing keys for the root user
+ * storage: Fix expanding partitions on GPT partition tables
+ * upgrades, security: Update the messages describing backports
+ * upgrades: Add first boot step to configure backports
+ * upgrades: Change backports activation message wording
+ * upgrades: Display correct backports info for unstable
+ * upgrades: security: Don't use technical term 'backports' in UI
+ * wireguard: Remove hardcoded Windows client version
+
+== FreedomBox 20.13 (2020-07-18) ==
+
+=== Highlights ===
+
+ * upgrades: Update apt cache before manual update
+ * minidlna: Do not expose statistics over public web
+
+=== Other Changes ===
+
+ * backups: Allow remote repository usernames to start with numbers
+ * locale: Update translations for Chinese (Simplified), Hungarian, Kannada, Norwegian Bokmål, Spanish, Swedish
+ * security: Move backports notice to security page
+ * upgrades: Add button to activate backports if needed for current release
+ * debian: Rename source package from plinth to freedombox
+
+== FreedomBox 20.12.1 (2020-07-05) ==
+
+ * cfg, frontpage: Ignore errors while reading config and shortcuts
+ * locale: Update translations for French, German, and Norwegian Bokmål
+
+== FreedomBox 20.12 (2020-06-29) ==
+
+=== Highlights ===
+
+ * apt: Recover from errors before installing apps or updating system
+ * apache: Add strict content security policy, sandbox and other security headers
+ * storage: Allow ejecting SATA disks
+ * configuration: Allow changes using .d drop-in files
+
+=== Other Changes ===
+
+ * configuration: Move default configuration into source code
+ * configuration: Read from multiple locations in /etc/ and /usr/share/
+ * debian: Add ssl-cert and nscd as proper dependencies
+ * frontpage: Allow adding shotcuts using .d drop-in files
+ * frontpage: Read shortcuts from multiple locations in /etc/, /usr/share and /var/lib
+ * locale: Update translations for Czech, Danish, French, German, Russian, Spanish, Swedish, Telugu, Turkish
+ * storage: Automount system disks without partition table but ignore all loopback devices
+ * storage: Allow ejecting SATA disks
+ * storage: Show only physical disks and not all mount points
+ * upgrades: Skip enabling backports on testing and unstable
+ * upgrades: Show more logs
+ * ui: Show a spinner and disable button on form submit
+
+== FreedomBox 20.11 (2020-06-15) ==
+
+=== Top Highlight ===
+
+ * locale: Add new translation for Arabic (Saudi Arabia)
+
+=== Other Changes ===
+
+ * javascript: Remove use of Turbolinks library
+ * locale: Update translations for French, Norwegian Bokmål, German, Swedish, Polish, and Spanish
+ * matrixsynapse: Handle upgrade to versions 1.15.x
+ * upgrades: Avoid manual update interruption when upgrading freedombox package
+ * upgrades: Don't enable backports on Debian derivatives
+
+== FreedomBox 20.10 (2020-06-01) ==
+
+=== Top Highlights ===
+
+ * pagekite: Fix expired certificates causing connection failures
+ * tor: Fix problems with running a relay
+
+=== Other Changes ===
+
+ * backups: Add optional field - Name
+ * cockpit: Promote for advanced storage/firewalld/networking ops
+ * firewall: Don't show tun interface in internal zone warning
+ * firewall: Mention that internal services are available over VPN
+ * ikiwiki: Enable 'attachment' plugin by default
+ * locale: Update translations for Spanish, French, Russian, Norwegian Bokmål, Czech, Hungarian, and Greek
+ * minidlna: Add link to manual page
+ * minidlna: Fix internationalization for name of the app
+ * mldonkey: Add app to freedombox-share group
+ * openvpn: Use app toggle button and common app view
+ * radicale: Fix link in description to clients
+ * samba: Add clients information
+ * templates: Fix setup state check
+ * users: Avoid error when user's groups cannot be parsed
+
+== FreedomBox 20.9 (2020-05-18) ==
+
+=== Top Highlights ===
+
+ * performance: Add app for system monitoring
+ * upgrades: Restart services and system when needed after upgrades
+   * System restart will happen at 02:00 local time
+
+=== Other Changes ===
+
+ * bind: Add service alias for bind9 -> named
+ * firewall: Reload firewalld so it works with newly installed services
+ * first_setup: Fix regression with logo not showing
+ * locale: Update translations for Norwegian Bokmål, German, Swedish, Spanish, and Russian
+ * mediawiki: Stop jobrunner during backup/restore
+ * minidlna: Stop service during backup/restore
+ * mumble: Stop service during backup/restore
+ * package: Fix error log when checking if package manager is busy
+ * performance: Launch the Cockpit graphs directly if possible
+ * quassel: Fix stopping service during backup/restore
+ * quassel: Use systemd sandboxing features
+ * samba: Change description to Network File Storage
+ * snapshot: Fix issues with restore and delete
+ * snapshot: Set as essential module
+ * storage: Auto-mount disks, notify of failing disks
+ * tor: Fix stopping service during backup/restore
+
+== FreedomBox 20.8 (2020-05-04) ==
+
+  * syncthing: Add service to freedombox-share group
+  * users: When adding service to sharing group, only restart if already running
+  * datetime: Ignore time synchronization service in containers and virtual machines
+  * minidlna: Make app installable inside unprivileged container
+  * web_server: Suppress warnings that static directories don't exist
+  * debian: Remove unused timer
+  * static: Use SVG logo during first wizard welcome step
+  * static: Reduce the size of the background noise image
+  * setup.py: Don't install/ship .po files
+  * static: Don't ship visual design file and unused images
+  * all: Update links to repository and project page
+  * coturn: Add app to manage Coturn TURN/STUN server
+  * mediawiki: Partial fix for installing on testing
+  * datetime: Disable diagnostics when no tests are available
+  * data: Print hostname and IP addresses before console login
+  * snapshot: Fix message when not available
+  * snapshot: Fix title
+  * mumble: Add Mumla to the list of clients
+  * locale: Update translations for Spanish, Telugu, Russian, German, French, and Swedish
+
+== FreedomBox 20.7 (2020-04-20) ==
+
+ * matrixsynapse: Fix initial installation and upgrade from backports
+ * gitweb: Improve error handling when creating repository
+ * locale: Update translations for French, Serbian, and Telugu
+
+== FreedomBox 20.6.1 (2020-04-11) ==
+
+ * users: Restore line of help text that was accidentally dropped
+ * debian: Add firmware-ath9k-htc to Recommends
+ * gitweb: Use proper ellipsis char when showing clone progress
+ * locale: Update translations for Norwegian Bokmål, German, French, Portuguese, Italian, Russian, and Serbian
+
+== FreedomBox 20.6 (2020-04-06) ==
+
+ * app: Ensure toggle buttons work independently of configuration form
+ * networks, monkeysphere: Make styling more specific to avoid interference
+ * syncthing: Update description to mention 'syncthing' group
+ * radicale: Support upgrade up to any 2.x version
+ * packages: Hold freedombox package during package installs
+ * users: Add component for managing users and groups
+ * app: Fix grammar in developer documentation string
+ * ikiwiki: Disable public edits of blog pages
+ * ikiwiki: Add moderation of blog comments
+ * firewalld: Support upgrade up to any 0.8.x version
+ * infinoted: Fix permissions of sync directory
+ * locale: Added Serbian translation
+ * locale: Update translations for Russian, French, German, Czech, Italian, Hindi, Telugu, and Spanish
+
+== FreedomBox 20.5.1 (2020-03-26) ==
+
+ * networks: Update label wording in topology form
+ * jsxc: Fix issue with serving static files
+ * debian: Separate binary packages for each language manual
+ * locale: Update translations for Norwegian Bokmål and German
+
+== FreedomBox 20.5 (2020-03-23) ==
+
+ * app: Fix description block in app header
+ * pagekite: Don't signal new domain on init if app is disabled
+ * pagekite: Don't attempt to notify about domain if app is disabled
+ * pagekite: Remove app enabled checking from getting configuration
+ * pagekite: On enable/disable, add/remove domain from names module
+ * pagekite: Fix an error message in custom services form
+ * matrixsynapse: Handle release of matrix-synapse 1.11
+ * setup: Fix regression to force-upgrade caused by Info changes
+ * pagekite: Don't allow non-unique custom services
+ * index: Reintroduce clients button in front page
+ * upgrades: Don't ship apt backport preferences file
+ * upgrades: Use internal scheduler instead of systemd timer
+ * shadowsocks: Change default configuration
+ * shadowsocks: Fix incorrect setting of state directory
+ * shadowsocks: When editing configuration, don't re-enable
+ * mediawiki: Don't allow anonymous edits
+ * names: Fix Local Network Domain is not shown
+ * shadowshocks: Fix setting configuration on Buster
+ * locale: Update translations for Swedish, Spanish, and French
+
+== FreedomBox 20.4 (2020-03-09) ==
+
+ * apache: Handle transition to php 7.4
+ * app: Fix showing app name in port forwarding information
+ * apps: Do not show status block if service is running
+ * i2p: New style app page layout
+ * locale: Update translations for French, Telugu, Spanish, and Swedish
+ * networks: Add first boot step for network topology wizard
+ * networks: Add form for network topology
+ * networks: Don't show router wizard if not behind a router
+ * networks, firewall: Support newer version of policykit
+ * networks: Fixes for networks wizards access and user experience
+ * networks: If topology wizard is skipped, skip router wizard too
+ * networks: Show router wizard before Internet connection type wizard
+ * plinth: Increase sqlite busy timeout from default 5s to 30s
+ * quassel: Fix unable to disable application without choosing a domain name
+ * shadowsocks: Move user settings to state directory
+ * storage: Directory selection form improvements
+ * transmission: Allow to submit download directory if it is creatable
+ * upgrades: Clean apt cache every week
+ * views: Improve template security
+
+== FreedomBox 20.3 (2020-02-24) ==
+
+ * apps: Update style for toggle button
+ * apps: Drop border shadow for app icon in mobile view
+ * apps: Show short description as secondary title
+ * apps: Remove css filters and glow from app icons
+ * cards: Remove the transition delay on hover effect
+ * system: Implement new style for cards
+ * framework: Generate secret key (existing sessions will get logged out)
+ * framework: Cleanup expired sessions every week
+ * networks: Add setting for internet connection type
+ * networks: Ask about internet connection type during setup
+ * shadowsocks: Fix shadowsocks not able to start
+ * jsxc: Bypass issue with stronghold to get the app working again
+ * monkeysphere: Fix regression with reading Apache configuration
+ * help: Fix attribute on download manual button
+ * firewall: Improve speed of some operations using DBus API
+ * css: Add missing license identifier on some CSS files
+ * deluge: Use safer method for editing configuration
+ * deluge: More reliable initial configuration setup
+ * samba: Add link to manual page
+ * searx: Update search engines for 0.16.0
+ * openvpn: Fix spelling for Tunnelblick
+ * bind: Show served domains
+ * Update translations for German, Swedish, Italian, Spanish, Norwegian Bokmål, Hungarian, Polish, and French
+
+== FreedomBox 20.2 (2020-02-10) ==
+
+ * networks: Support virtual Ethernet (veth) devices
+ * diagnostics: Show firewall service status
+ * storage: Show disks if !FreedomBox is running in an unprivileged container
+ * service: Stop service not before but after disabling it
+ * users: Use more precise username validation
+ * sso, users: Turn off autocapitalization on the username field
+ * help: Fix anchor hidden under navbar
+ * searx: Fix installation issue for 0.16.0
+ * firewall: Show Run Diagnostics button in app
+ * glib: Introduce method to schedule an operation at regular intervals
+ * notification: Show a drop down from main navbar for notifications
+ * storage: Show low disk space warning using notifications API
+ * upgrades: Show notification when !FreedomBox is updated
+ * security: Add Sandbox Coverage to report page
+ * matrixsynapse: Enable systemd sandboxing
+ * locale: Update translations for Telugu, French, Norwegian Bokmål, German, Spanish, and Swedish
+
+== FreedomBox 20.1 (2020-01-27) ==
+
+ * deluge: Allow to set a download directory
+ * deluge: Fix installation failure on slow machine
+ * storage: Make external disk mounts accessible to other users
+ * gitweb: Add link to the manual page
+ * style: Fix incorrect margins for containers in mobile view
+ * style: Fix responsiveness for app header
+ * network: Fix activating connections that don't have real devices
+ * wireguard: Add !WireGuard VPN app
+ * networks: Add router configuration page
+ * networks: Add first boot step for router config helper
+ * bind: Enable sandboxing for bind service
+ * locale: Updated translations for Dutch, Norwegian Bokmål, German, Spanish, Swedish, French, and Greek
+
+== FreedomBox 20.0 (2020-01-13) ==
+
+ * samba: Improve speed of actions
+ * deluge: Manage deluged service and connect automatically from web interface
+ * openvpn: Enable support for communication among all clients
+ * storage: Ignore errors resizing partition during initial setup
+ * storage: Make partition resizing work with parted 3.3
+ * debian: Add powermgmt-base as recommended package
+ * openvpn: Enable IPv6 for server and client outside the tunnel
+ * networks: Fix crashing when accessing network manager D-Bus API
+ * mediawiki: Use a mobile-friendly skin by default
+ * mediawiki: Allow admin to set default skin
+ * matrixsynapse: Allow upgrade to 1.8.*
+ * security: Add explanation of sandboxing
+ * Update translations for Greek, German, Swedish, Hungarian, Norwegian Bokmål, and French
+
+== FreedomBox 19.24 (2019-12-30) ==
+
+ * app: Fix !JavaScript doesn't run on first visit
+ * samba: Add private shares
+ * firewall: Support upgrading firewalld to 0.8
+ * deluge: Add systemd sandboxing features
+ * infinoted: Add systemd sandboxing features
+ * storage: Add systemd sandboxing features to udiskie service
+ * upgrades: Add systemd sandboxing features to repository setup service
+ * security: List whether each app is sandboxed
+ * mediawiki: Avoid delay in update script
+ * diagnostics: Use new component based API for all diagnostic tests
+ * minidlna: Fix showing clients information
+ * mediawiki: Fix problem with session cache failing logins
+ * locale: Update translations for French, German, Swedish, Greek, Hungarian, Norwegian Bokmål, and Dutch
+
+== FreedomBox 19.23 (2019-12-16) ==
+
+ * minidlna: New app for MiniDLNA (Simple Media Server)
+ * apps: Show app icons in app pages
+ * apps: Implement responsive layout for app pages
+ * samba: Recursively set open share directory permissions
+ * transmission: Add directory selection form
+ * mumble: Add option to set !SuperUser password
+ * cockpit: Extend apps description with access info
+ * cockpit: Add list of valid urls to access the app
+ * Update translations for French, German, Spanish, Portuguese, and Swedish
+
+== FreedomBox 19.22 (2019-12-02) ==
+
+ * samba: Add new app for Samba file sharing
+ * pagekite: Remove tabs in the configuration page
+ * openvpn: Fix text with manual link
+ * pagekite: Show existing services only if there are any
+ * pagekite: Move Custom Services under Configuration
+ * pagekite: Use the new app toggle button
+ * openvpn: Add client apps
+ * backups: Fix title not appearing
+ * diagnostics: Don't run on disabled modules
+ * apps: Remove link to webapps in app descriptions
+ * interface: Fix error with app toggle input
+ * templates: Add toolbar for apps
+ * toolbar: Move diagnostics button into dropdown menu
+ * ssh: Fix Avahi SFTP service file
+ * diagnostics: Fix IPv6 failures
+ * matrix-synapse: Fix installation of 1.5 from buster-backports
+ * app: Fix javascript constant redeclaration error
+ * ikiwiki: Move the create button to manage section
+ * gitweb: Move create button into manage section
+ * networks: Move actions button into connection section
+ * users: Move create button into users section
+ * locale: Update translations for French, German, and Swedish
+
+== FreedomBox 19.21 (2019-11-18) ==
+
+ * gitweb: Allow to import from a remote repository
+ * interface: Disable turbolinks on links that don't point to /plinth/...
+ * backups: Show proper error when SSH server is not reachable
+ * tor: Rename "Hidden Service" to "Onion Service"
+ * ejabberd: Handle case where domain name is not set
+ * tahoe: Mark Tahoe-LAFS as an advanced app
+ * searx: Set safe_search to Moderate by default
+ * backups: Make verify ssh host page string translatable
+ * backups: Simplify SSH fingerprint verification command
+ * doc: Fix unavailability of manual images
+ * tor: Fix port diagnostics by correcting port data type
+ * tor: Expect obfs service to be also available on IPv6
+ * tor: Listen on IPv6 for !OrPort
+ * clients: implement launch button feature
+ * apps: Implement toggle button in apps pages
+ * Update translations for German, Hungarian, Swedish, Norwegian Bokmål, French, Polish
+
+== FreedomBox 19.20 (2019-11-04) ==
+
+ * doc: Add Spanish manual
+ * ssh: Add option to disable password authentication
+ * sharing: Fix wrong links on Apache2 directory index page
+ * gitweb: Set correct access rights after enabling application
+ * gitweb: Fix links leading to blank page
+ * gitweb: Set proper access after restoration of a backup
+ * snapshot: Sort snapshot list from newest to oldest
+ * infinoted: Add missing manual page link
+ * backups: Fix typo
+ * Update translations for German, Spanish, Swedish, Czech, French, Norwegian Bokmål, Hungarian
+
+== FreedomBox 19.19 (2019-10-21) ==
+
+ * gitweb: New app for simple git hosting
+ * ikiwiki: Allow full Unicode text in wiki/blog title names
+ * users: reload Apache2 to flush LDAP cache after user operations
+ * ssh: Show server fingerprints in SSH page
+ * frontpage: Show public shortcuts to all users regardless of group
+ * ikiwiki: Remove extra create button when no wiki/blog is present
+ * quassel: Add Let's Encrypt component for certificates
+ * Update translations for Czech, French, Bulgarian, Dutch, German, and Norwegian Bokmål
+
+== FreedomBox 19.18 (2019-10-07) ==
+
+ * diagnostics: Ensure that exceptions are reported as failures
+ * users: Rearrange UI to match with other apps
+ * upgrades, ikiwiki, networks, backups: Replace page tabs with buttons
+ * dynamicdns, i2p, pagekite, snapshot: Cleanup page templates
+ * deluge: Support deluge 2 by starting it properly
+ * minetest: Remove mod-torches no longer available in testing/unstable
+ * security: Add past vulnerabilities count, move report to new page
+ * Update translations for Spanish, Norwegian Bokmål, German
+
+== FreedomBox 19.17 (2019-09-23) ==
+
+ * firstboot: Add new help menu to firstboot navbar
+ * firstboot: Hide left menu during first boot as intended
+ * Update translations for Chinese (Simplified) and Czech
+ * Fix tests for letsencrypt and tor
+
+== FreedomBox 19.16 (2019-09-09) ==
+
+ * backups: Allow adding backup repositories on multiple disks
+ * help: Add buttons for contribute, support, and feedback
+ * action_utils: Workaround problem with setting debconf answers
+ * views: Fix failure in redirecting from language selection page
+ * manual: Move PDF download link to HTML manual page
+ * help: Convert help icon in the navbar to dropdown
+ * ejabberd: Fix listen port configuration for ejabberd 19.x
+ * cockpit, ejabberd: Prevent restart on freedombox startup
+ * ejabberd: Perform host/domain name operations only when installed
+ * logging: Improve formatting and reduce noise
+ * translations: Update Hungarian, German, Italian, French, and Norwegian Bokmål
+
+== FreedomBox 19.15 (2019-08-26) ==
+
+ * security: Hide vulnerability table by default
+ * names: Perform better layout of domain names table on small screens
+ * cockpit: Apply domain name changes immediately
+ * ejabberd: Prevent processing empty domain name
+ * config: Send hostname change signal only after fully processing it
+ * letsencrypt: Don't try to obtain certificates for .local domains
+ * avahi: Expose .local domain as a proper domain
+ * cockpit: Make essential and install by default
+ * tt-rss: Force upgrade to 18.12-1.1 and beyond
+ * updates: Allow matrix-synapse 1.3 to be installed for buster users
+ * javascript: Don't resubmit when refreshing the page
+ * storage: Fix regression with restoring backups with storage
+ * matrix-synapse: Use recommended reverse proxy configuration
+ * Update translations for German, Hungarian, and Norwegian Bokmål
+
+== FreedomBox 19.14 (2019-08-12) ==
+
+ * storage: Handle all device paths during eject
+ * storage: Fix incorrect internationalization when throwing an error
+ * upgrades: Use collapsible-button style for logs
+ * firewall: Allow automatic upgrade to 0.7.x
+ * upgrades: Handle release info change
+ * frontpage: Fix regression with loading custom shortcuts
+ * names: Add dynamic domain name
+ * names: Add button to configure each type of name
+ * names: Update page layout for clearer presentation
+ * names: Introduce new API for domain name handling
+ * api: Fix regression with listing only enabled apps in mobile app
+ * Update translations for Czech, Hungarian, French, Chinese (Simplified), Turkish, Polish, and Norwegian Bokmål
+
+== FreedomBox 19.13 (2019-07-29) ==
+
+ * backups: Make UI more consistent with other apps
+ * backups: Make backup location tables collapsible
+ * Updated translations for Chinese (Simplified), German, and Norwegian Bokmål
+ * help: Show security notice when backports are in use
+ * security: Show vulnerability counts
+
+== FreedomBox 19.12 (2019-07-22) ==
+
+ * sharing: Allow directories to be publicly shared
+ * backups: Add option to select/deselect all apps for backup or restore
+ * dbus: Allow plinth user to own !FreedomBox DBus service
+ * letsencrypt: Simplify renewal hooks implementation
+ * cockpit: Don't handle domains if app is not installed
+ * dynamicdns: Send domain added signal properly during init
+ * ejabberd: Backup and restore TLS certificates
+ * Started new Galician translation on Weblate
+ * Updated translations for Czech, Norwegian Bokmål, Hungarian, Spanish, Telugu, Chinese (Simplified), German, Turkish, and Russian
+
+== FreedomBox 19.2.2 (2019-07-17) ==
+
+This release does not contain any functional changes, but fixes test failures when building the package.
+
+== FreedomBox 19.2.1 (2019-07-09) ==
+
+This is a bugfix release for 19.2.
+
+ * dbus: Allow plinth user to own !FreedomBox DBus service
+
+== FreedomBox 19.11 (2019-07-08) ==
+
+ * backups: Fixes to issues while adding SSH remotes:
+   * Improve UX of adding ssh remote
+   * Avoid creating duplicate SSH remotes
+   * Fix issue with repository not being initialized
+   * Verify SSH hostkey before mounting
+   * Allow SSH directory paths with : in them
+   * Require passphrase for encryption in add repository form
+   * Don't send passphrase on the command line
+   * Un-mount SSH repositories before deleting them
+ * matrixsynapse: Fix missing translation mark
+ * Started new Greek translation on Weblate
+ * Updated translations for Chinese (Simplified), Hungarian, Spanish, and Russian
+
+== FreedomBox 19.10 (2019-06-24) ==
+
+ * syncthing: Open firewall ports for listening and discovery
+ * radicale: Workaround issue with creating log directory
+ * Update translations for Turkish, German, Czech, Norwegian Bokmål, and Portuguese
+ * Introduce components for firewall, webserver, uwsgi, and daemons
+
+== FreedomBox 19.9 (2019-06-10) ==
+
+ * config: Add option to show advanced apps, which are hidden by default
+ * monkeysphere: Hide by default
+ * searx: Add option to allow public access to the application
+ * Introduce component architecture for apps, with components for menus and shortcuts
+ * Start new translation for Bulgarian
+ * Update translations for Turkish and Norwegian Bokmål
+
+== FreedomBox 19.8 (2019-05-27) ==
+
+ * Switch to using SVG icons for all apps.
+ * Updated translations for Czech, Norwegian Bokmål, Hungarian, German, Turkish, and Spanish.
+
+== FreedomBox 19.7 (2019-05-13) ==
+
+ * i2p: Include default favorites.
+ * Separate enabled and disabled apps.
+ * Display port forwarding info for apps.
+ * Added Slovenian translation.
+ * Updated translations for Dutch, German, Hungarian, Norwegian Bokmål, Polish, Portuguese, Telugu.
+
+== FreedomBox 19.6 (2019-04-29) ==
+
+ * i2p: Enable new application for I2P Anonymity Network.
+ * Updated translations for Czech, German, Norwegian Bokmål, and Turkish.
+ * letsencrypt: Provide link to configure domain if not configured.
+ * firewall: Show port numbers and types.
+
+== FreedomBox 19.5 (2019-04-15) ==
+
+ * storage: Use more reliable method to list disks and disk space usage.
+ * Updated translations for Russian and German.
+
+== FreedomBox 19.4 (2019-04-01) ==
+
+ * clients: Open web app in a new browser tab
+ * matrix-synapse: Change client diagnostics url
+ * minetest: Fix duplicate domain names being displayed in UI
+ * storage: Do not show an eject button on /boot partitions
+ * letsencrypt: Call letsencrypt manage_hooks with correct arguments
+ * dynamicdns: Install module by default
+ * storage: Don't check type of the disk for / and /boot
+ * storage: Don't log error when checking if partition is expandable
+ * Updated translations for Norwegian Bokmål, Czech, German, Hungarian, Spanish, German, and Russian.
+
+== FreedomBox 19.3 (2019-03-18) ==
+
+ * UI: Move tabs below descriptions.
+ * firewall: Style heading
+ * names: Add description
+ * pagekite: Change heading text
+ * ikiwiki: Consistent styling for delete warning page
+ * main: Show service version in logs
+ * setup: Organize data files into various apps
+ * Updated translations for Czech, Hungarian, Norwegian Bokmål, Spanish, German, French, Italian, and Turkish.
+
+== FreedomBox 19.2 (2019-03-02) ==
+
+ * config: Fix Ikiwiki entries not showing up as default apps
+ * config: Migrate default app configuration to new conf file
+ * config: Rename Default App to Webserver Home Page
+ * config: Add option to use Apache's default home page as home page
+ * config: Fix error when setting JSXC as the home page
+ * Disable Coquelicot for Buster release
+ * matrix-synapse: Fix LDAP login issue
+ * config: Revert changes in freedombox.conf to avoid conffile prompt
+ * openvpn: Migration from easy-rsa 2 to 3 for existing installations
+ * tor: Use fixed 9001 port for relaying
+ * package: Implement identifying packages that need conffile prompts
+ * setup: Trigger force upgrade for app that implement it
+ * bind: Handle conffile prompt during upgrade
+ * apache: Pre-enable necessary apache modules
+ * apache: Use cgid module instead of cgi
+ * openvpn: Make frontpage shortcut appear after an upgrade
+ * openvpn: Work around firewalld bug 919517
+ * firewalld: Implement upgrading from 0.4.x to 0.6.x
+ * ttrss: Implement upgrade from 17.4 to 18.12
+ * radicale: Add description of web interface
+ * ttrss: Add backup support
+ * security: Migrate access config to new file
+ * Updated translations for Czech, Hungarian, Norwegian Bokmål, Spanish, German, Telugu.
+
+== FreedomBox 19.1 (2019-02-14) ==
+
+ * radicale: Increment module version to trigger upgrade handling
+ * radicale: Remove obsolete diagnostics
+ * radicale: Fix server URLs in client info
+ * Updated translations for Czech, Norwegian Bokmål, and Spanish.
+ * setup: Add option to handle configuration prompts during install
+ * radicale: Simplify upgrading to newer packages
+ * matrixsynapse: Use Let's Encrypt certificates
+
+== FreedomBox 19.0 (2019-02-09) ==
+
+ * mldonkey: Add some more clients to the module page
+ * mldonkey: Add to the description the three available front-ends
+ * monkeysphere: Fix handling of multiple domains and keys
+ * monkeysphere: Fix regression with reading new apache domain config
+ * apache: Switch to mod_ssl from mod_gnutls
+ * mldonkey: Enable app
+ * upgrades: Fix priority for buster-backports version
+ * upgrades: Fix premature adding of buster-backports sources
+ * Updated translations for Czech, German, and Spanish
+ * Switched to a new version number scheme: YY.N
+   * YY is the year of release.
+   * N is the release number within that year.
+
+== Version 0.49.1 (2019-02-07) ==
+
+ * ui: Fix regression with configure button in home page.
+ * backups: Rename 'Abort' buttons to 'Cancel'.
+ * backups: Use icon for add repository button.
+ * backups: Move subsubmenu below description.
+ * backups: Add title and description to other pages.
+ * backups: Add link to manual page.
+ * backups: Fix styling for upload size warning.
+ * backups: Increase timeout for SSH operations to 30 seconds.
+ * letsencrypt: UI: Fix checkbox disabling.
+ * datetime: Switch from chrony to systemd-timesyncd.
+ * Updated translations for Czech, Norwegian Bokmål, and Spanish.
+
+== Version 0.49.0 (2019-02-05) ==
+
+ * security: Update javascript for Content Security Policy.
+ * help: Use correct package to determine available version.
+ * repro: Disable app due to issues with Debian package.
+ * ui: Fix regression with card icon style in front page.
+ * js: Support full librejs compatibility.
+ * js: Remove javascript license link from footer.
+ * backups: Remove incorrectly set buffer size during download.
+ * backups: Fix incomplete download archives.
+ * backups: Improve performance of backup download.
+ * radicale: Handle migration from 1.x to 2.x.
+ * datetime: Switch from ntp to chrony.
+ * backports: Add buster-backports to apt sources list.
+ * Updated translations for Czech, Norwegian Bokmål, and Hungarian.
+
+== Version 0.48.0 (2019-01-28) ==
+
+ * Updated translations for Czech, Hungarian, German, and Norwegian Bokmål.
+ * UI improvements:
+   * Fix top margin for content containers.
+   * Fix setting width of card-list at various page sizes.
+   * Show help nav item text when navbar is collapsed.
+   * Hide restart/shutdown items when navbar is collapsed.
+   * Compact pages on extra small screen sizes.
+ * Backups improvements:
+   * Add backup/restore support for syncthing and openvpn.
+   * Upgrade apps before restoring them
+   * Fix showing not-installed apps in create backup page
+   * Automatically install required apps before restore.
+   * Add a loader to the restore button to indicate progress.
+ * Serve default favicon for apps that don't provide one.
+ * radicale: Fix issue with configuration changes not applying.
+ * storage: Fix false error message in log when visiting home page.
+ * infinoted: Handle timeout issue when stopping daemon during setup.
+ * matrix-synapse: Fix startup error caused by bind_address setting.
+ * radicale: Avoid changes to conffile for radicale 2.x.
+ * help: Fix showing status logs when an error occurs.
+ * fail2ban: Enable bans for apache auth failures.
+ * mldonkey: Initial work on new module for the eDonkey network.
+   * Not available yet, due to bug in package.
+
+== Version 0.47.0 (2019-01-14) ==
+
+ * Show Gujarati in the list of languages.
+ * Replace glyphicons with forkawesome icons.
+ * Snapshots:
+   * Change configuration to avoid filling up disk.
+   * Handle "Config in use" error.
+   * Update descriptions and configuration options.
+ * Firewall: Fix issue with transition from iptables.
+ * Security: Switch to Argon2 password hash.
+ * Cockpit: Add link to manual page and update description.
+ * Radicale: Add initial support for radicale 2.x.
+ * Setup:
+   * Handle showing setup page after app completes installation.
+   * Optimize installation in-progress checks and refresh time.
+
+== Version 0.46.0 (2018-12-31) ==
+
+ * Updated translations for Czech, German, Spanish, Ukrainian, and Norwegian Bokmål.
+ * Use systemd journal for logging.
+ * Rename plinth binary package to "freedombox", and merge freedombox-setup package into it.
+
+== Version 0.45.0 (2018-12-17) ==
+
+ * Storage: Merge list of removable media into existing table.
+ * Backups: Allow remote backups to SSH servers using sshfs.
+ * Backups: Removed asking for backup archive name.
+ * Automatically handle future versions of PHP.
+ * Updated translations for Hungarian, Czech, Spanish, Chinese (Simplified), Italian, Norwegian Bokmål, French, and German.
+
+== Version 0.44.0 (2018-12-03) ==
+
+ * UI: Add card style and gray noise background to apps pages.
+ * UI: Fix distortion of the client apps buttons.
+ * ejabberd: Handle BOSH port change from TCP 5280 to 5443.
+ * Minetest: Update mods list to available Debian packages.
+ * Firewall: Use nftables instead of iptables.
+ * Snapshots: Fix default snapshot listing.
+ * Snapshots: Show description above either tab.
+ * Snapshots: Allow snapshots to be selected for deletion.
+ * Translations: Updated Czech, Norwegian Bokmål, Spanish, German, and Portuguese.
+
+== Version 0.43.0 (2018-11-19) ==
+
+ * Backups improvements:
+   * Allow backups to be downloaded directly, without export step.
+   * Restore directly from uploaded backup.
+   * Avoid error for apps with no data to backup.
+   * Show free disk space on upload and restore page.
+   * Do not limit maximum upload size.
+ * openvpn: Migrate to easy-rsa 3 and fix setup issues.
+ * Make single sign-on tickets valid for 12 hours.
+ * Use consistent terminology for updates.
+ * Updated translations for Czech and Portuguese.
+
+== Version 0.42.0 (2018-11-05) ==
+
+ * Fix wrong color in mobile menu
+ * snapshot: Fix broken snapshot management after snapper update
+ * Enable backup/restore for tor, upgrades, monkeysphere, letsencrypt, tahoe
+ * monkeysphere: Handle importing new OpenSSH format keys
+ * udiskie: unmount drive as superuser
+ * Updated translations for Telugu, Indonesian, and Italian
+
+== Version 0.41.0 (2018-10-22) ==
+
+ * Enable backup/restore for datetime, deluge, avahi, backups, bind, security, snapshot, ssh, firewall, diagnostics, names, power, and storage.
+ * snapshot: Fix issue with setting configuration.
+ * backups: Fix backup archives ownership issue.
+ * backups: Fix issue with showing exports from disks without labels.
+ * backups: Don't rely on disk labels during export/restore.
+ * backups: Fix downloading extracted archive files.
+ * Updated translations for Norwegian Bokmål, French, Russian, and Spanish.
+
+== Version 0.40.0 (2018-10-08) ==
+
+ * Backups
+   * Enable backup/restore for mumble, privoxy, roundcube, searx, jsxc, coquelicot, transmission, quassel, shadowsocks, sharing, pagekite, and cockpit.
+   * Allow backup archives to be downloaded/uploaded through browser.
+   * mediawiki: Backup/restore settings as well as data.
+ * User Interface
+   * Change card text style and position.
+   * Change maximum cards per row.
+   * Add tint effect on card icons under "Apps".
+ * mediawiki: Run update script for 1.31 upgrade.
+ * customization: Show custom shortcuts on frontpage.
+ * Updated translations for Norwegian Bokmål, Portuguese, Spanish, Czech, German, French, and Italian.
+
+== Version 0.39.0 (2018-09-24) ==
+
+ * Updated translations for Hungarian and Norwegian Bokmål.
+ * Merge Removable Media (udiskie) into Storage module.
+ * Add Backups module for backing up apps data.
+
+== Version 0.38.0 (2018-09-10) ==
+
+ * mediawiki: Enable SVG support for !MediaWiki
+ * upgrades: Clean up old kernel packages during automatic upgrades
+ * Make the progress bar at the top of the page more visible.
+ * Updated translations for Norwegian Bokmål, Czech, Russian, German, Hungarian, and Spanish.
+
+== Version 0.37.0 (2018-08-27) ==
+
+ * Updated translations for Czech, Norwegian Bokmål, Russian, Spanish, Hungarian, and Dutch.
+ * install: Use Post/Response/Get pattern for reloads.
+
+== Version 0.36.0 (2018-08-13) ==
+
+ * Updated translations for Hindi, Spanish, Russian, Telugu, German, Hungarian, Czech, and French
+ * ejabberd: Remove deprecated settings from already existing config files
+ * mediawiki: Fix issue with re-installation
+ * mediawiki: Enable Instant Commons
+ * mediawiki: Fix images throwing 403s
+ * turbolinks: Reload page using !JavaScript
+ * Add Lato woff2 fonts
+ * Disable launch button for web client when not installed
+
+== Version 0.35.0 (2018-07-30) ==
+
+ * configuration: Add an option to set a default app for !FreedomBox. The root URL path (`https://domainname/`) will redirect to the selected app.
+ * ejabberd: Remove deprecated `iqdisc` setting. To apply this fix, disable and then re-enable the Message Archive Management setting.
+ * ejabberd: Replace logo with original version.
+ * mediawiki: Enable short URLs, which look like `https://domainname/mediawiki/ArticleName`.
+ * radicale: Clarify description for shared calendar/addressbook.
+ * storage: Handle mount points with spaces.
+ * udiskie: Add button to eject drives.
+ * udiskie: Also show read-only filesystems.
+ * udiskie: Remove internal networks warning.
+ * udiskie: Show special message when no storage device available.
+ * Add turbolinks library for smoother navigation.
+ * Removed extra text from icons for mediawiki, radicale, and tahoe-lafs.
+ * Updated translations for Russian, Spanish, Dutch, Hungarian, Hindi, Italian, Telugu, German, and Norwegian Bokmål.
+
+== Version 0.34.0 (2018-07-16) ==
+
+ * Prompt for secret during firstboot welcome
+   * (Does not apply to downloadable !FreedomBox images, but only when installed using freedombox-setup package.)
+ * Updated translations for Italian, Dutch, Hindi, Hungarian
+
+== Version 0.33.1 (2018-07-04) ==
+
+  * Fix issue where editing a user would remove them from admin group
+  * Updated translations for Hungarian, Czech, Spanish, Russian, Hindi
+
+== Version 0.33.0 (2018-07-02) ==
+
+ * Updated translations for Hungarian, Norwegian Bokmål, Spanish, Russian, Czech, Hindi, Dutch, Italian
+ * firewall: Display information that a service is internal only
+ * users: Don't show Create User link to non-admin users
+ * users: Redirect to users list on successful user creation
+ * packages: Show button to refresh package lists when a package is not available for install
+ * Only show front page shortcuts that a user is allowed to access
+ * Restrict removal of last admin user
+ * Use logos instead of icons in the apps page
+ * udiskie: New module for automatic mounting of removable media
+
+== Version 0.32.0 (2018-06-18) ==
+
+ * Apply new card based design
+ * Fix client info table size and flickering
+ * first-setup: Automatically expand root partition
+ * mediawiki: Enable image uploads
+ * mediawiki: Make private mode and public registrations mutually exclusive
+ * mediawiki: Hide frontpage shortcut when private mode is enabled
+ * Updated translations for Norwegian Bokmål, Czech, Spanish, Russian, Hindi, Telugu, Italian, Dutch, German, and Hungarian
+
+== Version 0.31.0 (2018-06-04) ==
+
+ * Updated translations for Czech, Spanish, Russian, German, Italian, Hindi, Telugu, and Norwegian Bokmål
+ * mediawiki: Added private mode option
+ * users: Fix user permissions not being saved
+ * users: internationalize a string
+ * mediawiki: Run update script for 1.30 upgrade
+ * shortcuts: Fix urls for ikiwiki shortcuts
+
+== Version 0.30.0 (2018-05-21) ==
+
+ * Updated translations for Russian, Italian, Norwegian Bokmål, Hungarian, and Hindi
+ * setup: Remove unavailable as a state in setup_helper
+
+== Version 0.29.1 (2018-05-08) ==
+
+  * security: Fix issue with Plinth locked out from sudo
+  * Updated translations for Czech and Spanish
+
+== Version 0.29.0 (2018-05-07) ==
+
+ * security: Allow console login access to user plinth
+ * Add an option to enable/disable public registrations in mediawiki
+ * tt-rss: Skip the check for SELF_URL_PATH
+ * searx: Fix issue with uwsgi crashing
+ * Updated translations for Czech, Spanish, German, Norwegian Bokmål, and Italian
+
+== Version 0.28.0 (2018-04-23) ==
+
+ * setup: disable install button for currently unavailable apps
+ * Add locale for Lithuanian (lt)
+ * Translation updates for Italian, Czech, Russian, Spanish, German, Norwegian Bokmål, Telugu, and Dutch
+
+== Version 0.27.0 (2018-04-09) ==
+
+ * middleware: Skip 'installed' message for essential apps
+ * users: Fix admin group appearing twice in permissions
+ * apps: Fix app names and short descriptions not being translated
+ * snapshots: Move manual page link to the index page
+ * UI: Fix progress bar not appearing
+ * snapshots: Fix for permissions issue when updating configuration
+ * snapshots: Add option to enable/disable software installation snapshots
+ * Translation updates for Italian, Czech, Russian, Spanish, Dutch, German, Norwegian Bokmål, and Ukrainian
+
+== Version 0.26.0 (2018-03-26) ==
+
+  * snapshots: Update description
+  * searx: Rewrite url from /searx to /searx/
+  * manual: Link to manual from each service
+  * Workaround security issues in django-axes
+  * apache: Only regenerate snake oil cert when needed
+  * apache: Explicitly enable the latest version of PHP module
+  * apache: Increase module version number to fix php7.2
+  * Update translations for Chinese (Simplified), Russian, Czech, German, Norwegian Bokmål, Hungarian, Spanish, and Italian
+
+== Version 0.25.0 (2018-03-12) ==
+
+ * sharing: Add app for sharing disk folders.
+ * ttrss: Update list of client apps.
+ * infinoted: Allow setup to recover after timeout issue.
+ * snapshots: Add configuration tab with settings for time-based snapshots.
+
+== Plinth v0.24.0 (2018-02-26) ==
+
+ * Add file-sharing application Coquelicot.
+ * Add metasearch engine application Searx.
+ * Add locale for Hungarian (hu).
+ * mediawiki: Allow shortcut to be publicly visible on front page.
+ * clients: Add and correct Client Apps.
+ * locale: Preferred language can be set in each user's profile.
+ * locale: Anonymous users can select preferred language.
+ * config: Remove language selection from config page.
+ * matrixsynapse: Fix mail attribute for ldap login.
+
+== Plinth v0.23.0 (2018-02-12) ==
+
+  * snapshots: Modify configurations to reduce disk usage.
+  * snapshots: Skip currently active snapshot when deleting all snapshots.
+  * jsxc: Use consistent url format.
+  * sso: Increase timeout to 60 minutes.
+  * theme: Change font from Helvetica to Lato.
+  * Translation updates for Czech, German, Gujarati, and Telugu.
+
+== Plinth v0.22.0 (2018-01-30) ==
+
+  * matrix-synapse: Make sure configuration file does not get corrupted.
+  * tor: Show enabled status properly.
+  * first_setup: Fix not showing admin user creation step.
+  * Migrate from !GitHub to Salsa
+  * Migrate from CirceCI to !GitLab CI on Salsa.
+  * Translation updates for Czech, Dutch, Gujarati, Hindi, Russian and Telugu.
+  * Started new translation for Ukrainian.
+
+== Plinth v0.21.0 (2018-01-15) ==
+
+  * navigation bar: Change label from 'Configuration' to 'System'.
+  * storage: Removed beta warning for expanding partition.
+  * groups: Consistently show available user groups, even before applications are installed.
+  * syncthing: Restrict administration to users in "syncthing" group.
+  * help: Show menu on smaller screens also.
+  * diagnostics: Enable the "Run Diagnostics" button when applications are enabled but not running.
+
+== Plinth v0.20.0 (2018-01-01) ==
+
+ * bind: Don't use forwarders by default
+ * ejabberd: Remove redundant button Client Apps
+ * mediawiki: Add wiki application
+ * users: Make sure first run actually works
+ * bind: Add information about current utility
+
+== Plinth v0.19.0 (2017-12-18) ==
+
+ * ejabberd: Use dynamic reload instead of restart when changing configuration.
+ * manual: Make manual available as a PDF download.
+ * minetest: Show domain information for users to connect to minetest.
+ * snapshots: Add button to delete all snapshots.
+ * snapshots: Add option to enable/disable automatic timeline snapshots.
+ * users: Add groups for bit-torrent and feed-reader, available when these applications are installed.
+
+== Plinth v0.18.0 (2017-12-04) ==
+
+ * Add Shadowsocks client with socks5 proxy.
+ * Fix SSO regressions and conflict with captcha.
+ * transmission: Fix sso not being enabled on upgrade.
+ * avahi: Add service for !FreedomBox discovery.
+ * Add client information for modules.
+
+== Plinth v0.17.0 (2017-11-20) ==
+
+ * transmission: Enable Single Sign On.
+ * cockpit: Add short description to frontpage shortcut.
+ * fail2ban: Fix spelling and sentence structure.
+
+== Plinth v0.16.0 (2017-11-06) ==
+
+=== Added ===
+ * Add mobile, web and desktop client info for modules.
+ * Enable django !SecurityMiddleware to improve security ratings.
+ * cockpit: New module for server administration and web terminal.
+
+=== Fixed ===
+ * letsencrypt: Fix internal server error when obtaining a certificate.
+ * ejabberd: Fix LDAP server entry in config file during setup.
+ * jsxc: Fix outdated URLs for connecting to local ejabberd server.
+
+== Plinth v0.15.3 (2017-10-20) ==
+
+=== Changed ===
+
+ * Rename Disks to Storage.
+ * Rename Snapshot to Storage Snapshots.
+ * tt-rss: Enable API access by default.
+ * Allow access to Plinth from outside the LAN.
+ * matrix-synapse: Disable public registration by default.
+ * power: Merge actions into the user dropdown.
+
+=== Added ===
+
+ * Add locales for Kannada (kn) and for Bengali (bn).
+ * ejabberd: Use Let's Encrypt certificate, also across renewals.
+ * matrix-synapse: Add enable/disable public registrations.
+ * Add captcha validation on 3 failed attempts.
+ * matrix-synapse: Enable LDAP integration.
+ * letsencrypt: Automatically obtain and revoke SSL certificates.
+
+=== Fixed ===
+
+ * Fix front page label names.
+ * Fix vertical alignment of shortcut icons.
+ * storage: Fix issue with locales that use other decimal separators.
+ * Make tt-rss api accessible using Apache basic auth.
+ * letsencrypt: Handle case where current domain is empty.
+ * Handle both admin and non-admin user names in update user template.
+
+== Plinth v0.15.2 (2017-09-24) ==
+
+=== Added ===
+
+ * letsencrypt: Show more info on cert validity status.
+ * letsencrypt: Add option to delete certificates.
+ * letsencrypt: Add option to let Plinth manage certbot's renewal hooks.
+ * power: Warn if a package manager is running before shutdown/restart.
+ * security: Install and manage fail2ban.
+ * names: Include domain and services from dynamicdns.
+ * disks: Add low disk space warning to system and disks page.
+ * ssh: New application to manage SSH server.
+ * Add api module to get enabled services and access info.
+ * Add Django password validators.
+ * ejabberd, ikiwiki, ttrss: Add user login descriptions.
+
+=== Removed ===
+
+ * diaspora: Disable for this release due to issues affecting package.
+ * Remove help from navbar before firstboot complete.
+
+=== Fixed ===
+
+ * i18n: Don't use backslash-newline for wrapping long lines.
+ * radicale: Update link to documentation.
+ * sso: Upgrade crypto to 4096-bit RSA and SHA-512.
+ * Users: Allow non-admin users to log out.
+
+=== Changed ===
+
+ * letsencrypt: Make Let's Encrypt an essential module.
+ * UI: Make apps and configure pages responsive on small screens.
+ * Make help accessible for logged-in non-admin users.
+
+== Plinth v0.15.0 (2017-07-01) ==
+
+ * Added Tahoe-LAFS module for distributed file storage.
+ * Added Diaspora* module for federated social networking.
+   * Currently only available in "contrib" repository.
+ * New Locales for Czech (cs) and Tamil (ta).
+ * Added SSO using auth_pubtkt for Syncthing, TT-RSS, and the Repro admin panel.
+     * If you are logged in to Plinth, you will be automatically logged in to these web apps.
+ * ejabberd: Added option to enable/disable Message Archive Management.
+ * help: Added Debian release name to about page.
+ * firstboot: De-bloat first welcome screen.
+ * Pinned footer to the bottom of the viewport.
+ * disks: Restrict precision of reported available space on root partition.
+ * diagnostics: Disable button if app/service is not running.
+ * help: Only show help pages if user is logged in.
+ * navbar: Moved logout to user drop-down and added a new power drop-down.
+ * disks: Show disabled partition resize option if no space is available.
+ * Added line break to titles to fix frontpage layout.
+ * syncthing: Fixed typos and clarity in description.
+ * firewall: Fix 500 error when firewalld is not running.
+ * setup: Disable install/upgrade when dpkg/apt is running.
+ * disks: Use information from lsblk for more accuracy.
+ * datetime: Show timezone properly when it not in expected list.
+
+== Plinth v0.14.0 (2017-04) ==
+
+ * tor: Added option to use upstream bridges.
+ * openvpn: Added shortcut to front page, shown only when logged-in.
+ * openvpn: Non-admin users can download their own profiles.
+ * Added new locales for Hindi (hi) and Gujarati (gu).
+ * Added Syncthing module for file synchronization.
+ * Added Matrix Synapse as chat server with groups, audio and video.
+ * Require admin access for all system configuration pages.
+ * Changed appearance of topbar and footer.
+ * openvpn: Regenerate user key or certificate if empty.
+ * disks: Workaround issue in parted during resize.
+
+== Plinth v0.13.1 (2017-01-22) ==
+
+ * Two new apps were added:
+   * Gobby Server (infinoted) for collaborative editing of text documents
+   * Domain Name Server (BIND), in system menu
+ * Added !JavaScript license web labels to provide partial support for LibreJS.
+ * Added basic configuration form for Minetest server.
+ * Added indicator to Help->About page if new Plinth version is available.
+ * Show app logos on front page instead of generic icons.
+ * Prevent anonymous users from accessing setup pages.
+ * Split Chat Server (XMPP) app into Chat Server (ejabberd) and Chat Client (jsxc).
+
+== Plinth v0.12.0 (2016-12-08) ==
+
+ * Open up RTP ports in the firewall for repro (SIP server).
+ * Front page shortcuts for services show a Configure button in the details box for logged-in users.
+ * Add mods packages to be installed with Minetest server.
+ * Fix issue with reading Dynamic DNS status as non-root user.
+ * After the hostname is changed, ensure the domain name is still set correctly.
+ * Allow the domain name to be cleared, and properly set the configuration in this case.
+ * On the Certificates (Let's Encrypt) page, show a more informative message when no domains are configured.
+ * On the Chat Server (XMPP) page, show more clearly if domain is not set.
+ * Apps that require login will not be shown on the front page, unless the user is logged in.
+ * Show status block for News Feed Reader (Tiny Tiny RSS).
+ * Change appearance of front page with larger icons and repositioned text.
+ * Firewall page only lists services that have been setup. The port lists are collapsible under each service.
+ * Support configuring IPv6 networks.
+ * Make it less likely to accidentally delete the only Plinth user.
+ * Updated to work with JSXC 3.0.0 (XMPP web client).
+
+== Plinth v0.11.0 (2016-09-29) ==
+
+ * Added loading icon for additional busy operations.
+ * Added basic front page with shortcuts to web apps, and information about enabled services.
+ * networks: Add batctl as dependency, required for batman-adv mesh networking.
+ * users:
+   * Fixed checking restricted usernames.
+   * Display error message if unable to set SSH keys.
+   * Flush nscd cache after user operations to avoid some types of errors.
+ * monkeysphere:
+   * Adopted to using SHA256 fingerprints.
+   * Sort items for consistent display.
+   * Handle new uid format of gpg2.
+   * Fixed handling of unavailable imported domains.
+ * minetest: Fixed showing status block and diagnostics.
+ * Fixed stretched favicon.
+ * Switched base template from container-fluid to container. This will narrow the content area for larger displays.
+ * Plinth is now able to run as "plinth" user instead of root user.
+ * xmpp: Replaced jwchat with jsxc.
+ * ikiwiki: Allow only alphanumerics in wiki/blog name to avoid invalid paths.
+
+== Plinth v0.10.0 (2016-08-21) ==
+
+ * Updated Plinth to support Django 1.10.
+ * Added a page to display recent status log from Plinth. It is accessible from the 500 error page.
+ * Tor: Added options to toggle relay and bridge relay modes.
+ * Radicale: Added access rights control.
+ * Ikiwiki: Updated suggested packages.
+ * Users and Groups: Fixed editing users without SSH keys.
+ * Networks: Added basic support for configuring batman-adv mesh networking.
+ * Networks: Fixed incorrect access for retrieving DNS entries.
+ * New languages:
+   * Persian (50% translated)
+   * Indonesian (not started, contributions needed)
+ * New modules added to Plinth:
+   * Disks: Shows free space of mounted partitions, and allows expanding the root partition.
+   * Security: Controls login restrictions.
+   * Snapshots: Manages Btrfs snapshots.
+
+== Version 0.9.4 (2016-06-24) ==
+
+ * Added Polish translation.
+ * Fixed issue preventing access to Plinth on a non-standard port.
+ * Dealt with ownCloud removal from Debian. The ownCloud page in Plinth will be hidden if it has not been setup. Otherwise, a warning is shown.
+ * Fixed issue in Privoxy configuration. Two overlapping listen-addresses were configured, which prevented privoxy service from starting.
+ * Fixed issue that could allow someone to start a module setup process without being logged in to Plinth.
+ * Fixed issues with some diagnostic tests that would show false positive results.
+ * Added check to Diagnostics to skip tests for modules that have not been setup.
+ * Fixed some username checks that could cause errors when editing the user.
+ * Added sorting of menu items per locale.
+ * Moved Dynamic DNS and Pagekite from Applications to System Configuration.
+ * Allowed setting IP for shared network connections.
+ * Switched Dreamplug image from "non-free" to "free". This means that we no longer include the non-free firmware for the built-in wifi on Dreamplug.
+ * Added the "userdir" module for the Apache web server. This allows users in the "admin" group to create a folder called "public_html" under their home folder, and to publicly share files placed in this folder.
+ * New wiki and manual content licence: ''[[https://creativecommons.org/licenses/by-sa/4.0/|Creative Commons Attribution-ShareAlike 4.0 International]]'' (from June 13rd 2016).
+ * Switched to using apt-get for module setup in Plinth. This fixes several issues that were seen during package installs.
+
+== Version 0.9 (2016-04-24) ==
+
+ * Fixed Wi-Fi AP setup.
+ * Prevent lockout of users in 'sudo' group after setup is complete.
+ * Improved setup mechanism for Plinth modules. Allows users to see what a module is useful for, before doing the setup and package install. Also allows essential modules to be setup by default during !FreedomBox install.
+ * Added HTTPS certificates to Monkeysphere page. Reorganized so that multiple domains can be added to a key.
+ * Added Radicale, a CalDAV and CardDAV server.
+ * Added Minetest Server, a multiplayer infinite-world block sandbox.
+ * Added Tiny Tiny RSS, a news feed reader.
+
+== Version 0.8 (2016-02-20) ==
+
+ * Added Quassel, an IRC client that stays connected to IRC networks and can synchronize multiple frontends.
+ * Improved first boot user interface.
+ * Fixed Transmission RPC whitelist issue.
+ * Added translations for Turkish, Chinese, and Russian. Fixed and updated translations in other languages.
+ * Added Monkeysphere, which uses PGP web of trust for SSH host key verification.
+ * Added Let's Encrypt, to obtain certificates for domains, so that browser certificate warnings can be avoided.
+ * Added repro, a SIP server for audio and video calls.
+ * Allow users to set their SSH public keys, so they can login over SSH without a password.
+
+== Version 0.7 (2015-12-13) ==
+
+ * Translations! Full translations of the interface in Danish, Dutch, French, German and Norwegian Bokmål, and partial Telugu.
+ * Support for OLinuXino A20 MICRO and LIME2
+ * New Plinth applications: OpenVPN, reStore
+ * Improved first-boot experience
+ * Many bugfixes and cleanups
+
+== Version 0.6 (2015-10-31) ==
+
+ * New supported hardware target: Raspberry Pi 2
+ * New modules in Plinth:
+   * Shaarli: Web application to manage and share bookmarks
+   * Date & Time: Configure time zone and NTP service
+   * Service Discovery: Configure Avahi service
+ * Documentation revamp including new user manual and developer guide
+ * Improved diagnostic tests, available in Plinth
+ * Avoid unnecessary changes when installing on existing Debian system
+ * Network configuration supports PPPoE connections
+ * Debian packages can be download over Tor
+
+== Version 0.5 (2015-08-07) ==
+
+ * New targets: !CubieTruck, i386, amd64
+ * New apps in Plinth: Transmission, Dynamic DNS, Mumble, ikiwiki, Deluge, Roundcube, Privoxy
+ * !NetworkManager handles network configuration and can be manipulated through Plinth.
+ * Software Upgrades (unattended-upgrades) module can upgrade the system, and enable automatic upgrades.
+ * Plinth is now capable of installing ejabberd, jwchat, and privoxy, so they are not included in image but can be installed when needed.
+ * User authentication through LDAP for SSH, XMPP (ejabberd), and ikiwiki.
+ * Unit test suite is automatically run on Plinth upstream. This helps us catch at least some code errors before they are discovered by users!
+ * New, simpler look for Plinth.
+ * Performance improvements for Plinth.
+
+== Version 0.3 (2015-01-20) ==
+
+ * Tor Bridges: All boxes now act as non-exit Tor bridges, routing traffic for the Tor network.
+ * [[FreedomBox/Manual/Firewall|Firewall]]: firewall is on by default and is automatically managed.
+ * Add !BeagleBone support.  We now have images for !BeagleBone, !RaspberryPi, !VirtualBox i386/amd64, and !DreamPlug.
+ * Ability to enable and use Tor Hidden Services.  Works with Ejabberd/JWChat and ownCloud services.
+ * Enable Tor obfsproxy with scramblesuit.
+ * Drop well-known root password (an account with sudo capabilities still exists for now but will be removed soon).
+ * Switch to unstable as suite of choice for easier development.
+ * Newer images are built with systemd by default (due to Debian change).
+ * Install and operate firewall automatically (uses firewalld).
+ * Major restructuring of Plinth UI using Python3, Django web development framework and Bootstrap3.  Code quality is much better and UI is more polished.
+ * Introduced packaging framework in Plinth UI for on-demand application installation.
+
+== Version 0.2 (2014-03-16) ==
+
+ * Support for Raspberry Pi and !VirtualBox (x86) in addition to the !DreamPlug.
+ * New Services:
+  * Configuration Management UI.
+  * Instant Messaging.
+  * !OwnCloud.
+  * dnsmasq.
+  * Low-Level Configuration Management.
+  * Service Announcement.
+  * LDAP Server.
+  * LXC Support.
+  * Source Packages.
+ * The privoxy setup is now the default from Debian.
+
+== Version 0.1 (2013-02-26) ==
+
+ * First !FreedomBox software release (0.1 image, developer release). 
+ * Full hardware support in Debian
+ * Support for !DreamPlug.
+ * Basic software tools selected as common working environment:
+  * User interface system "plinth"
+  * Cryptography tools: gpg or "monkeysphere"
+  * Box-to-box communication design: Freedom-buddy (uses [[https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29|TOR network]])
+  * Web cleaning: "privoxy-freedombox".
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -20,6 +20,8 @@ from . import api
 
 version = 2
 
+is_essential = True
+
 managed_packages = ['borgbackup', 'sshfs']
 
 depends = ['storage']
@@ -52,16 +54,6 @@ class BackupsApp(app_module.App):
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = BackupsApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

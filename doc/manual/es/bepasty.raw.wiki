@@ -1,0 +1,77 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/bepasty|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Bepasty (Compartición de apuntes y archivos) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/bepasty/bepasty-icon_en_V01.png|Icono de bepasty}} ||
+
+'''Disponible desde''': versión 20.14
+
+=== ¿Qué es bepasty? ===
+
+bepasty es una aplicación web que permite cargar y compartir archivos grandes. También se pueden cargar y compartir recortes de texto y código. Los textos, imágenes, audio, video y documentos PDF se pueden previsualizar en el navegador. Se puede asignar una caducidad a los archivos.
+
+=== Captura de pantalla ===
+
+{{attachment:FreedomBox/Manual/bepasty/bepasty_logged_in_page.png|Captura de pantalla de bepasty|width=800}}
+
+=== Contraseñas y permisos ===
+
+bepasty solo usa contraseñas (sin usuarios) para controlar el acceso. El usuario tendrá permisos diferentes dependiendo de la contraseña empleada para ingresar a bepasty. Podría tener cualquier combinación de los siguentes permisos:
+ * '''read''': Leer un archivo, si conoce la URL.
+ * '''list''': Listar todos los archivos.
+ * '''create''': Pegar o cargar un archivo nuevo.
+ * '''delete''': Eliminar un archivo.
+ * '''admin''': Bloquear y desbloquear archivos.
+
+Tras instalar bepasty viene pre-configurado con los siguientes roles:
+ * Viewer: puede ver y listar archivos.
+ * Editor: puede ver, listar, crear y eliminar archivos.
+ * Administrator: tiene todos los permisos
+
+Estos roles dan soporte a un caso de uso de compartición de archivos entre usuarios authorizados y conocidos. Si lo necesitas puedes reconfigurar bepasty para otros roles y casos de uso.
+
+=== Distribuir contraseñas ===
+
+Por omisión, la configuración de Acceso Público está puesta a ''None'', de modo que se requiere contraseña para cada uso de bepasty. Esto implica que necesitarás distribuir las contraseñas a los usuarios mediante cualquier canal de comunicación del que dispongas.
+
+Observa que quizá quieras crear múltiples contraseñas con los mismos permisos de modo que puedas distribuir una contraseña única a cada usuario (o grupo de usuarios) y si necesitas revocar acceso a un usuario puedas símplemente borrar su contraseña sin afectar a los demás usuarios.
+
+=== Usar bepasty ===
+
+Tras ingresar a bepasty, si tienes el permiso Create verás una caja grande de texto en la que podrás pegar cualquier texto. Opcionalmente puedes proporcionar un nombre de fichero o tipo de contenido (Content-Type) para los datos. Tras pulsar Submit se crea el fichero.
+
+Puedes también arrastrar archivos al area de abajo. Se cargan inmediatamente al soltarlos en este área. También puedes crear una lista para controlar la colección de archivos cargados.
+
+En ambos casos puedes establecer una caducidad y cuando expire se eliminará el archivo.
+
+Si tienes el permiso List verás un enlace ''List all Items'' en la zona superior de la página. Esto mostrará todos los archivos creados o cargados.
+
+Si tienes el permiso Delete o Admin verás acciones junto a cada archivo en la página de la lista.
+
+Si sólo tienes el permiso Read para leer los archivos necesitarás tento una contraseña como una o más URLs de archivos existentes.
+
+=== Administrando contraseñas ===
+
+La página de configuración de bepasty en el interfaz de !FreedomBox te permite crear contraseñas nuevas, o eliminar alguna. Al crear una contraseña puedes elegir cualquier  combinación de permisos descritos anteriormente. Observa que un administrador típico debiera tener todos los permisos (no solo "Admin").
+
+También puedes establecer un comentario. Se recomienda. Y deberías usarlo para ayudarte a recordar el propósito de la contraseña o quién la va a usar.
+
+Puedes configurar también el Acceso Público, que establece los permisos disponibles por omisión incluso sin ingresar con contraseña. Puedes establecer esto para permitir leer archivos por su URL, o leer y listar todos los archivos.
+
+=== Enlaces externos ===
+
+https://bepasty-server.readthedocs.io/en/latest/user.html
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

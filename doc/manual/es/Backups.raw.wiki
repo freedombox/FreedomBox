@@ -1,0 +1,96 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Backups|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Copias de respaldo (backups) ==
+
+!FreedomBox incluye la posibilidad de copiar y restaurar datos, preferencias, configuración y secretos de la mayoría de las aplicaciones. La funcionalidad de ''Backups'' se resuelve con el software de ''backup'' ''Borg''. ''Borg'' es un programa de ''backup'' con deduplicación y compresión. Está diseñado para hacer ''backups'' eficientes y seguros. Esta funcionalidad de ''backups'' se puede emplear para respaldar y recuperar datos aplicación por aplicación. Las copias de respaldado se pueden almacenar en la propia máquina !FreedomBox o en un servidor remoto. Cualquier servidor remoto con acceso por SSH se puede emplear como almacenamiento para los ''backups'' de la !FreedomBox. Las copias remotas se pueden cifrar para que el servidor remoto no pueda leer los datos que alberga.
+
+
+=== Estados de la Funcionalidad de Backups ===
+
+|| '''App/Funcionalidad''' || '''Soporte en Versión''' || '''Notas''' ||
+|| Avahi || - || no precisa ''backup'' ||
+|| Backups || - || no precisa ''backup'' ||
+|| Bind || 0.41 || ||
+|| Cockpit || - || no precisa ''backup'' ||
+|| Datetime || 0.41 || ||
+|| Deluge || 0.41 || '''no''' incluye archivos descargados ni semillas ||
+|| Diagnostics || - || no precisa ''backup'' ||
+|| Dynamic DNS || 0.39 || ||
+|| ejabberd || 0.39 || incluye todos los datos y configuración ||
+|| Firewall || - || no precisa ''backup'' ||
+|| ikiwiki || 0.39 || incluye todos los wikis/blogs y sus contenidos ||
+|| infinoted || 0.39 || incluye todos los datos y claves ||
+|| JSXC || - || no precisa ''backup'' ||
+|| Let's Encrypt || 0.42 || ||
+|| Matrix Synapse || 0.39 || incluye media y cargas ||
+|| !MediaWiki || 0.39 || incluye páginas de wiki y archivos adjuntos ||
+|| Minetest || 0.39 || ||
+|| MLDonkey || 19.0 || ||
+|| Monkeysphere || 0.42 || ||
+|| Mumble || 0.40 || ||
+|| Names || - || no precisa ''backup'' ||
+|| Networks || No || sin planes para implementar ''backup'', de momento ||
+|| OpenVPN || 0.48 || incluye a todos los usuarios y claves de servidor ||
+|| Pagekite || 0.40 || ||
+|| Power || - || no precisa ''backup'' ||
+|| Privoxy || - || no precisa ''backup'' ||
+|| Quassel || 0.40 || incluye usuarios y registros de ejeución (''logs'') ||
+|| Radicale || 0.39 || incluye calendario y datos de tarjetas de todos los usuarios ||
+|| Roundcube || - || no precisa ''backup'' ||
+|| SearX || - || no precisa ''backup'' ||
+|| Secure Shell (SSH) Server || 0.41 || incluye las claves del servidor ||
+|| Security || 0.41 || ||
+|| Shadowsocks || 0.40 || solo secretos ||
+|| Sharing || 0.40 || '''no''' incluye datos de las carpetas compartidas ||
+|| Snapshot || 0.41 || solo configuración, '''no''' incluye datos de capturas (snapshots) ||
+|| Storage || - || no precisa ''backup'' ||
+|| Syncthing || 0.48 || '''no''' incluye datos de las carpetas compartidas ||
+|| Tahoe-LAFS || 0.42 || incluye todos los datos y configuración ||
+|| Tiny Tiny RSS || 19.2 || incluye base de datos con ''feeds'', historias, etc. ||
+|| Tor || 0.42 || includes configuración y secretos como las claves de servicios Tor Onion ||
+|| Transmission || 0.40 || '''no''' incluye archivos descargados ni semillas ||
+|| Upgrades || 0.42 || ||
+|| Users || No || sin planes para implementar ''backup'', de momento  ||
+
+=== Cómo instalar y usar Backups ===
+
+'''Paso 1: Ir a la página de Copias de Seguridad'''
+
+{{attachment:Backups_Step1_es_v02.png|Backups: Paso 1|width=800}}
+
+'''Paso 2: Pulsar el botón Instalar'''
+
+{{attachment:Backups_Step2_v49.png|Backups: Paso 2|width=800}}
+
+'''Paso 3: Esperar a que se instalen todos los componentes de la aplicación'''
+
+{{attachment:Backups_Step3_es_v01.png|Backups: Paso 3|width=800}}
+
+'''Paso 4: Pulsar el botón de Crear Copia de Seguridad'''
+
+{{attachment:Backups_Step4_es_v02.png|Backups: Paso 4|width=800}}
+
+'''Paso 5: Seleccionar las aplicaciones a respaldar y pulsar Enviar'''
+
+{{attachment:Backups_Step5_es_v02.png|Backups: Paso 5|width=800}}
+
+'''Paso 6: Pulsar en el botón Descargar'''
+
+{{attachment:Backups_Step6_es_v02.png|Backups: Paso 6|width=800}}
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

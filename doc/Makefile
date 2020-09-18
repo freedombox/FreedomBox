@@ -7,7 +7,7 @@ MANUAL_LANGUAGES=en es
 
 MANUAL_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=show&mimetype=text%2Fdocbook"
 MANUAL_URL_RAW="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=raw"
-MANUAL_PAGE_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual/{page}?action=show&mimetype=text%2Fdocbook"
+MANUAL_PAGE_URL_RAW="https://wiki.debian.org/{page}?action=raw"
 
 DESTDIR=
 INSTALL_DIR=$(DESTDIR)/usr/share/freedombox
@@ -67,34 +67,36 @@ fetch: $(fetch-main-list) $(fetch-pages-list)
 fetch-main-%: lang = $*
 fetch-main-%: lang-fragment = $(subst en/,,$*/)
 $(fetch-main-list): fetch-main-%:
+	MANUAL_URL_RAW_LANG=$(subst {lang-fragment},$(lang-fragment),$(MANUAL_URL_RAW)) ; \
+	wget --quiet --user-agent=Firefox \
+	  -O manual/$(lang)/freedombox-manual.raw.wiki $${MANUAL_URL_RAW_LANG}
 	MANUAL_URL_LANG=$(subst {lang-fragment},$(lang-fragment),$(MANUAL_URL)) ; \
-	wget --quiet -O - $${MANUAL_URL_LANG} | \
+	wget --quiet --user-agent=Firefox -O - $${MANUAL_URL_LANG} | \
 	  xmllint --format --output manual/$(lang)/freedombox-manual.raw.xml -
 	mkdir -p manual/$(lang)/images/
 	xsltproc $(SCRIPTS_DIR)/fetch-images.xslt manual/$(lang)/freedombox-manual.raw.xml | \
 	  sort -u | \
 	  awk 'NF {print "wget --quiet -O manual/$(lang)/images/" $$1 " " $$2}' | \
 	  sh
+	rm manual/$(lang)/freedombox-manual.raw.xml
 
 fetch-pages-%: lang = $*
 fetch-pages-%: lang-fragment = $(subst en/,,$*/)
 $(fetch-pages-list): fetch-pages-%:
 	MANUAL_URL_LANG=$(subst {lang-fragment},$(lang-fragment),$(MANUAL_URL_RAW)) ; \
-	MANUAL_PAGE_URL_LANG=$(subst {lang-fragment},$(lang-fragment),$(MANUAL_PAGE_URL)) ; \
-	PAGES=$$(wget --quiet -U Firefox -O - $${MANUAL_URL_LANG} | \
-	  sed -n -e "s|.*FreedomBox/Manual/\([a-zA-Z0-9_-]*\).*|\1|p" | sort -u | \
-	  grep -v -e GettingHelp -e Developer -e QuickStart) ; \
+	PAGES=$$(wget --quiet --user-agent=Firefox -O - $${MANUAL_URL_LANG} | \
+	  sed -n -e "s|.*<<Include(\([a-zA-Z0-9_/+-]*\),.*|\1|p" | sort -u) ; \
 	for PAGE in $${PAGES} ; do \
-	  FILE="manual/$(lang)/$${PAGE}.raw.xml" ; \
-	  URL=$$(echo $${MANUAL_PAGE_URL_LANG} | sed "s/{page}/$${PAGE}/") ; \
+	  PAGE_NAME=$$(basename $${PAGE}) ; \
 	  echo "Downloading $(lang) $${PAGE}" ; \
-	  wget --quiet --user-agent=Firefox -O $${FILE} $${URL} ; \
+	  RAW_FILE="manual/$(lang)/$${PAGE_NAME}.raw.wiki" ; \
+	  RAW_URL=$$(echo $(MANUAL_PAGE_URL_RAW) | sed "s|{page}|$${PAGE}|") ; \
+	  wget --quiet --user-agent=Firefox -O $${RAW_FILE} $${RAW_URL} ; \
 	done
 
-manual-pages-raw:=$(foreach lang,$(MANUAL_LANGUAGES),$(filter-out manual/%/freedombox-manual.raw.xml,$(wildcard manual/$(lang)/*.raw.xml)))
-manual-pages-part-html:=$(patsubst %.raw.xml, %.part.html, $(manual-pages-raw)) $(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.part.html)
-manual-pages-html:=$(patsubst %.part.html, %.html, $(manual-pages-part-html))
-manual-pages-xml:=$(patsubst %.raw.xml, %.xml, $(manual-pages-raw))
+manual-pages-raw-wiki:=$(foreach lang,$(MANUAL_LANGUAGES),$(filter-out manual/%/freedombox-manual.raw.wiki,$(wildcard manual/$(lang)/*.raw.wiki)))
+manual-pages-part-html:=$(patsubst %.raw.wiki, %.part.html, $(manual-pages-raw-wiki)) $(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.part.html)
+manual-pages-xml:=$(patsubst %.raw.wiki, %.xml, $(manual-pages-raw-wiki))
 
 .PHONY: manual-pages
 manual-pages: $(manual-pages-part-html)
@@ -102,25 +104,18 @@ manual-pages: $(manual-pages-part-html)
 $(manual-pdfs): %.pdf: %.xml
 	xmlto $(XMLTO_DEBUG_FLAGS) --with-dblatex pdf -o $(dir $@) $<
 
-$(manual-pages-part-html): %.part.html: %.html
-	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' $< > $@
+$(manual-pages-part-html): %.part.html: %.xml
+	xsltproc /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $< | \
+	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' > $@
+	@rm -f $(dir $@)docbook.css
 
-$(manual-xmls): %.xml: %.raw.xml $(SCRIPTS_DIR)/fixes.xslt
-	xsltproc --output $@ $(SCRIPTS_DIR)/fixes.xslt $<
-
-$(manual-pages-xml): %.xml: %.raw.xml $(SCRIPTS_DIR)/manual-page-fixes.xslt
-	xsltproc --output $@ $(SCRIPTS_DIR)/manual-page-fixes.xslt $<
-	$(SCRIPTS_DIR)/post-processor remove-footer $@
-	$(SCRIPTS_DIR)/post-processor fix-wiki-urls $@
-
-$(manual-pages-html): %.html: %.xml
-	xsltproc --output $@ /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $<
-	rm -f $(dir $@)docbook.css
+$(manual-xmls) $(manual-pages-xml): %.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
+	$(SCRIPTS_DIR)/wikiparser.py $< | xmllint --format - > $@
 
 %.1: %.xml
 	xmlto man $<
 
 .PHONY: clean
 clean:
-	rm -f $(manual-pages-html) $(manual-pages-part-html) $(manual-pages-xml) $(manual-xmls)
+	rm -f $(manual-pages-part-html) $(manual-pages-xml) $(manual-xmls)
 	rm -f $(OUTPUTS)

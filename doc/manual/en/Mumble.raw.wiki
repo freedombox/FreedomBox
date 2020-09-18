@@ -1,0 +1,55 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Mumble|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Mumble (Voice Chat) Server ==
+||<tablestyle="float: right;"> {{attachment:Mumble-icon_en_V01.png|Mumble icon}} ||
+
+'''Available since''': version 0.5
+
+=== What is Mumble? ===
+
+Mumble is a voice chat software. Primarily intended for use while gaming, it is suitable for simple talking with high audio quality, noise suppression, encrypted communication, public/private-key authentication by default, and "wizards" to configure your microphone for instance. A user can be marked as a "priority speaker" within a channel.
+
+=== Using Mumble ===
+
+!FreedomBox includes the Mumble server. [[https://wiki.mumble.info/wiki/Main_Page|Clients]] are available for desktop and mobile platforms. Users can download one of these clients and connect to the server.
+
+=== Port Forwarding ===
+
+If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for Mumble:
+ * TCP 64738
+ * UDP 64738
+
+=== Managing Permissions ===
+
+A super user in Mumble has the ability to create administrator accounts who can in turn  manage groups and channel permissions. This can be done after logging in with the username "!SuperUser" using the super user password. See [[https://wiki.mumble.info/wiki/Murmurguide|Mumble Guide]] for information on how to do this.. !FreedomBox currently does not offer a UI to get or set the super user password for Mumble. A super user password is automatically generated during Mumble setup. To get the password, login to the terminal as admin user using [[FreedomBox/Manual/Cockpit|Cockpit]] , [[FreedomBox/Manual/SecureShell|Secure Shell]] or the console. Then, to read the super user password that was automatically generated during Mumble installation run the following command:
+
+{{{
+sudo grep SuperUser /var/log/mumble-server/mumble-server.log
+}}}
+
+You should see output such as:
+{{{
+<W>2019-11-06 02:47:41.313 1 => Password for 'SuperUser' set to 'noo8Dahwiesh'
+}}}
+
+Alternatively, you can set a new password as follows:
+
+{{{
+sudo su -
+echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc/mumble-server.ini --readsupw"
+}}}
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

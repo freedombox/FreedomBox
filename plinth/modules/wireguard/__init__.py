@@ -33,8 +33,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-port_forwarding_info = [('UDP', 51820)]
-
 app = None
 
 SERVER_INTERFACE = 'wg0'
@@ -51,7 +49,8 @@ class WireguardApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('WireGuard'), icon_filename='wireguard',
                                short_description=_('Virtual Private Network'),
-                               description=_description, clients=clients)
+                               description=_description,
+                               manual_page='WireGuard', clients=clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-wireguard', info.name,
@@ -90,16 +89,6 @@ class WireguardApp(app_module.App):
         from plinth import kvstore
         enabled = super().is_enabled()
         return enabled and kvstore.get_default('wireguard-enabled', False)
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = WireguardApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

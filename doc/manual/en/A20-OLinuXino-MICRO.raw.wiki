@@ -1,0 +1,54 @@
+== A20 OLinuXino MICRO ==
+
+{{attachment:a20-olinuxino-micro.jpg|A20 OLinuXino MICRO|width=640,height=359}}
+
+Olimex's [[https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-MICRO/open-source-hardware|A20 OLinuXino MICRO]] is a fully Open Source Hardware (OSHW) single board computer.  This means that the designer is actively helping people using the platform for their own designs, and supports them in adding hardware functionality and production advice. This is a part of freedom that is often overlooked, but very much aligned with the !FreedomBox goals.  It uses the Allwinner A20 Dual Core ARM processor.
+
+'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this single board computer.
+
+=== Similar Hardware ===
+
+The following similar hardware will also work well with !FreedomBox.
+
+ * Olimex's [[https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-MICRO-4GB/open-source-hardware|A20 OLinuXino MICRO 4GB]].  This hardware merely has extra 4GB NAND storage that is not used by !FreedomBox.
+
+=== Download ===
+
+!FreedomBox MicroSD card [[FreedomBox/Download|images]] are available for this device.  Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox MicroSD card and boot the device.  These MicroSD card images are meant for use with the on-board MicroSD card slot and won't work on the SD card slot or when using a separate MicroSD card reader connected via USB.
+
+An alternative to downloading these images is to [[InstallingDebianOn/Allwinner|install Debian]] on the device and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+=== Availability ===
+ 
+ * Price: 50 EUR (A20 OLinuXino MICRO)
+ * Price: 63 EUR (A20 OLinuXino MICRO 4GB)
+ * [[https://www.olimex.com/Products/OLinuXino/A20/open-source-hardware|Olimex Store]]
+
+=== Hardware ===
+
+ * Open Source Hardware (OSHW): [[https://github.com/OLIMEX/OLINUXINO/tree/master/HARDWARE|Yes]]
+ * CPU: Allwinner A20, ARM Cortex-A7 @ 1GHz dual-core
+ * RAM: 1 GiB DDR3
+ * Storage: 4 GB NAND flash built-in (only on 4GB model), 1x microSD slot
+ * Architecture: armhf
+ * Ethernet: 10/100, RJ45
+ * !WiFi: None, use a [[FreedomBox/Hardware/USBWiFi|USB WiFi device]]
+ * SATA: 1x port
+
+=== Non-Free Status ===
+
+ * Non-free blobs required: No
+ * !WiFi: Not available
+ * Boot Firmware: [[https://linux-sunxi.org/BROM|BROM]] (GPLV2+)
+
+=== Known Issues ===
+
+ * Not visible on local network
+ * When booting the 'stable' image (made on 2017-06-18) the board does not automatically get an IP address from the router's DHCP server over ethernet. Booting the 'testing' image (2018-06) the board does get an IP address. Tested on MICRO hardware revision J. see also: [[https://www.olimex.com/forum/index.php?topic=5839.msg24167#msg24167]]
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

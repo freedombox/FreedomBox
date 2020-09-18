@@ -22,12 +22,12 @@ managed_services = [
 managed_packages = ['cockpit-pcp']
 
 _description = [
-    ('Performance app allows you to collect, store and view information about '
-     'utilization of the hardware. This can give you basic insights into '
-     'usage patterns and whether the hardware is overloaded by users and '
-     'services.'),
-    ('Performance metrics are collected by Performance Co-Pilot and can be '
-     'viewed using the Cockpit app.'),
+    _('Performance app allows you to collect, store and view information '
+      'about utilization of the hardware. This can give you basic insights '
+      'into usage patterns and whether the hardware is overloaded by users '
+      'and services.'),
+    _('Performance metrics are collected by Performance Co-Pilot and can be '
+      'viewed using the Cockpit app.'),
 ]
 
 app = None
@@ -68,16 +68,6 @@ class PerformanceApp(app_module.App):
         daemon_3 = Daemon('daemon-performance-3', managed_services[3],
                           listen_ports=None)
         self.add(daemon_3)
-
-
-def init():
-    """Initialize the Performance module."""
-    global app
-    app = PerformanceApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

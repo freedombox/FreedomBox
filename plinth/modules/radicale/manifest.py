@@ -83,5 +83,5 @@ backup = validate_backup({
     'data': {
         'directories': ['/var/lib/radicale/']
     },
-    'services': ['radicale']
+    'services': ['uwsgi']
 })

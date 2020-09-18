@@ -22,7 +22,6 @@ class OpenVPNAppView(AppView):
     """Show OpenVPN app main page."""
     app_id = 'openvpn'
     template_name = 'openvpn.html'
-    port_forwarding_info = openvpn.port_forwarding_info
 
     def dispatch(self, request, *args, **kwargs):
         """Collect the result of running setup process."""

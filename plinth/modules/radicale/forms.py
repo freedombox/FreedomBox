@@ -27,5 +27,6 @@ CHOICES = [
 
 class RadicaleForm(forms.Form):
     """Specialized configuration form for radicale service."""
-    access_rights = forms.ChoiceField(choices=CHOICES, required=True,
+    access_rights = forms.ChoiceField(label=_('Access rights'),
+                                      choices=CHOICES, required=True,
                                       widget=forms.RadioSelect())

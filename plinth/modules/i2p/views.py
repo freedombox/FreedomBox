@@ -3,8 +3,8 @@
 Views for I2P application.
 """
 
-from django.utils.translation import ugettext as _
-from plinth.modules import i2p
+from django.utils.translation import ugettext_lazy as _
+
 from plinth.views import AppView
 
 
@@ -29,7 +29,6 @@ class I2PAppView(AppView):
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
         context = super().get_context_data(**kwargs)
-        context['port_forwarding_info'] = i2p.port_forwarding_info
         context['proxies_description'] = self.proxies_description
         context['torrents_description'] = self.torrents_description
 

@@ -1,0 +1,130 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[FreedomBox/Manual/Cockpit|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Cockpit (Server Administration) ==
+
+Cockpit is a server manager that makes it easy to administer GNU/Linux servers via a web browser. On a !FreedomBox, controls are available for many advanced functions that are not usually required. A web based terminal for console operations is also available.
+
+It can be accessed by any user on your !FreedomBox belonging to the admin group. Cockpit is only usable when you have proper domain name setup for your !FreedomBox and you use that domain name to access Cockpit. See the Troubleshooting section for more information.
+
+{{{#!wiki caution
+Use cockpit only if you are an administrator of GNU/Linux systems with advanced skills. !FreedomBox tries to coexist with changes to system by system administrators and system administration tools like Cockpit. However, improper changes to the system might causes failures in !FreedomBox functions.
+}}}
+
+=== Using Cockpit ===
+
+Install Cockpit like any other application on !FreedomBox. Make sure that Cockpit is enabled after that.
+
+{{attachment:cockpit-enable.png}}
+
+Ensure that the user account on !FreedomBox that will used for Cockpit is part of the administrators group.
+
+{{attachment:cockpit-admin-user.png}}
+
+Launch the Cockpit web interface. Login using the configured user account.
+
+{{attachment:cockpit-login.png}}
+
+Start using cockpit.
+
+{{attachment:cockpit-system.png}}
+
+Cockpit is usable on mobile interfaces too.
+
+{{attachment:cockpit-mobile.png}}
+
+=== Features ===
+
+The following features of Cockpit may be useful for advanced !FreedomBox users.
+
+==== System Dashboard ====
+
+Cockpit has a system dashboard that
+ * Shows detailed hardware information
+ * Shows basic performance metrics of a system
+ * Allows changing system time and timezone
+ * Allows changing hostname. Please use !FreedomBox UI to do this
+ * Shows SSH server fingerprints
+
+{{attachment:cockpit-system.png}}
+
+
+==== Viewing System Logs ====
+
+Cockpit allows querying system logs and examining them in full detail.
+
+{{attachment:cockpit-logs.png}}
+
+==== Managing Storage ====
+
+Cockpit allows following advanced storage functions:
+
+ * View full disk information
+ * Editing disk partitions
+ * RAID management
+
+{{attachment:cockpit-storage1.png}}
+
+{{attachment:cockpit-storage2.png}}
+
+==== Networking ====
+
+Cockpit and !FreedomBox both rely on !NetworkManager to configure the network. However, Cockpit offers some advanced configuration not available on !FreedomBox:
+
+ * Route configuration
+ * Configure Bonds, Bridges, VLANs
+
+{{attachment:cockpit-network1.png}}
+
+{{attachment:cockpit-network2.png}}
+
+{{attachment:cockpit-network3.png}}
+
+==== Services ====
+
+Cockpit allows management of services and periodic jobs (similar to cron).
+
+{{attachment:cockpit-services1.png}}
+
+{{attachment:cockpit-services2.png}}
+
+==== Web Terminal ====
+
+Cockpit offers a web based terminal that can be used perform manual system administration tasks.
+
+{{attachment:cockpit-terminal.png}}
+
+=== Troubleshooting ===
+
+Cockpit requires a domain name to be properly setup on your !FreedomBox and will only work when you access it using a URL with that domain name. Cockpit will not work when using IP address in the URL. Using ''freedombox.local'' as the domain name also does not work. For example, the following URLs will not work:
+
+{{{
+https://192.168.0.10/_cockpit/
+https://freedombox.local/_cockpit/
+}}}
+
+Starting with !FreedomBox version 19.15, using ''.local'' domain works. You can access Cockpit using the URL https://freedombox.local/_cockpit/. The ''.local'' domain is based on your hostname. If your hostname is ''mybox'', your ''.local'' domain name will be ''mybox.local'' and the Cockpit URL will be https://mybox.local/_cockpit/.
+
+To properly access Cockpit, use the domain name [[FreedomBox/Manual/Configure|configured]] for your !FreedomBox.Cockpit will also work well when using a [[FreedomBox/Manual/Tor|Tor Onion Service]]. The following URLs will work:
+
+{{{
+https://mybox.freedombox.rocks/_cockpit/
+https://exampletorhs.onion/_cockpit/
+}}}
+
+The reason for this behaviour is that Cockpit uses !WebSockets to connect to the backend server. Cross site requests for !WebSockets must be prevented for security reasons. To implement this, Cockpit maintains a list of all domains from which requests are allowed. !FreedomBox automatically configures this list whenever you add or remove a domain. However, since we can't rely on IP addresses, they are not added by !FreedomBox to this domain list. You can see the current list of allowed domains, as managed by !FreedomBox, in ''/etc/cockpit/cockpit.conf''. You may edit this, but do so only if you understand web security consequences of this.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

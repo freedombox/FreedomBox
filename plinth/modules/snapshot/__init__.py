@@ -61,16 +61,6 @@ class SnapshotApp(app_module.App):
         self.add(menu_item)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = SnapshotApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-
 def is_supported():
     """Return whether snapshots are support on current setup."""
     fs_type = storage.get_filesystem_type()

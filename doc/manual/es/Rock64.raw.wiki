@@ -1,0 +1,51 @@
+== Rock64 ==
+
+{{attachment:rock64.jpg|Rock64|width=640,height=420}}
+
+Pine64's [[https://www.pine64.org/devices/single-board-computers/rock64/|Rock64]] is a powerful single board computer.  It uses the Rockchip RK3328 Quad Core ARM64 processor.  !FreedomBox images are built and tested for this device.
+
+'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this single board computer.
+
+=== Download ===
+
+Before downloading and using !FreedomBox you need to ensure that latest u-boot based firmware is installed into the SPI flash chip. Download the [[https://github.com/ayufan-rock64/linux-mainline-u-boot/releases/latest|latest u-boot]] to write to SPI flash and then see instructions on how to [[http://wiki.pine64.org/index.php?title=NOOB#Flashing_u-boot_to_SPI_Flash|write u-boot firmware into SPI flash]]. The gist is that you download and write an image to an SD card. Boot with SD card and wait for white LED to blink continuosly. After that power off remove SD card and proceed with !FreedomBox download.
+
+!FreedomBox [[FreedomBox/Download|images]] meant for all "arm64" hardware work well for this device.  However, u-boot firmware must present in SPI flash (or on a separate SD card, which is not explained here).  Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox SD card and boot the device.  These images also work well for eMMC disk which an optional attachment to this board and disk drives in USB 2.0 ports (but not in the USB 3.0 port). The process for preparing them is same as for an SD card.
+
+An alternative to downloading these images is to [[InstallingDebianOn|install Debian]] on the device and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+=== Availability ===
+
+ * Price: 25 USD (1GB)
+ * Price: 35 USD (2GB)
+ * Price: 45 USD (4GB)
+ * [[https://store.pine64.org/product/rockpro64-2gb-single-board-computer/|Pine64 Store]]
+
+=== Hardware ===
+
+ * Open Source Hardware (OSHW): No
+ * CPU: Rockchip RK3328 Quad-Core SOC (4x Cortex A53@1.5Ghz)
+ * GPU: Mali 450MP2
+ * RAM: 1 GiB or 2 GiB or 4 GiB LPDDR3
+ * Storage: eMMC module slot, microSD slot, 16 MiB SPI Flash
+ * USB: 2x USB 2.0, 1x USB 3.0
+ * Architecture: arm64
+ * Ethernet: 10/100/1000, RJ45
+ * !WiFi: None, use a [[FreedomBox/Hardware/USBWiFi|USB WiFi device]]
+
+=== Non-Free Status ===
+
+ * Non-free blobs required: No
+ * !WiFi: Not available
+
+=== Known Issues ===
+
+ * !FreedomBox does not work when booted from USB 3.0 port (but works from eMMC, SD card or USB 2.0 disk).
+ * !FreedomBox does not work when booted form the top USB 2.0 port with some u-boot firmware versions (the one listed above). It only works with the bottom USB 2.0 port (the one closer to the board).
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

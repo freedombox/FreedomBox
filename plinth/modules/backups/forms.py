@@ -47,7 +47,7 @@ def _get_repository_choices():
 
 
 class CreateArchiveForm(forms.Form):
-    repository = forms.ChoiceField()
+    repository = forms.ChoiceField(label=_('Repository'))
     name = forms.RegexField(
         label=_('Name'),
         help_text=_('(Optional) Set a name for this backup archive'),
@@ -95,7 +95,7 @@ def repository_validator(path):
     hostname = hostname.split('%')[0]
 
     # Validate username using Unix username regex
-    if not re.match(r'[a-z_][a-z0-9_-]*$', username):
+    if not re.match(r'[a-z0-9_][a-z0-9_-]*$', username):
         raise ValidationError(_(f'Invalid username: {username}'))
 
     # The hostname should either be a valid IP address or hostname
@@ -119,7 +119,7 @@ class EncryptedBackupsMixin(forms.Form):
         label=_('Encryption'), help_text=format_lazy(
             _('"Key in Repository" means that a '
               'password-protected key is stored with the backup.')),
-        choices=[('repokey', 'Key in Repository'), ('none', 'None')])
+        choices=[('repokey', _('Key in Repository')), ('none', _('None'))])
     encryption_passphrase = forms.CharField(
         label=_('Passphrase'),
         help_text=_('Passphrase; Only needed when using encryption.'),

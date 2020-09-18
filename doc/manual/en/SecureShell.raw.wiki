@@ -1,0 +1,154 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/SecureShell|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Secure Shell (SSH) Sever ==
+
+=== What is Secure Shell? ===
+
+!FreedomBox runs `openssh-server` server by default allowing remote logins from all interfaces.  If your hardware device is connected to a monitor and a keyboard, you may login directly as well.  Regular operation of !FreedomBox does not require you to use the shell.  However, some tasks or identifying a problem may require you to login to a shell.
+
+=== Setting Up A User Account ===
+
+==== FreedomBox First Log In: Admin Account ====
+
+When creating an account in !FreedomBox's web interface for the first time, this user will automatically have administrator capabilities. `Admin` users are able to log in using ssh (see Logging In below) and have superuser privileges via ``sudo``.
+
+==== Default User Account ====
+
+ * Note: If you can access !FreedomBox's web interface, then you don't need to do this. You can use the user account created in !FreedomBox's web interface to connect to SSH.
+
+The pre-built !FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default.
+
+There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user:
+
+1. Decompress the image file.
+
+2. Get a copy of freedom-maker from https://salsa.debian.org/freedombox-team/freedom-maker/.
+
+3. Run {{{sudo ./bin/passwd-in-image <image-file> fbx}}}.
+
+4. Copy the image file to SD card and boot device as normal.
+
+The "fbx" user also has superuser privileges via ``sudo``.
+
+=== Logging In ===
+
+==== Local ====
+
+To login via SSH, to your !FreedomBox:
+
+{{{
+$ ssh fbx@freedombox
+}}}
+
+Replace `fbx` with the name of the user you wish to login as.  `freedombox` should be replaced with the hostname or IP address of you !FreedomBox device as found in the [[FreedomBox/Manual/QuickStart|Quick Start]] process.
+
+`fbx` is the default user present on !FreedomBox with superuser privileges.  Any other user created using !FreedomBox and belonging to the group `admin` will be able to login.  The `root` account has no password set and will not be able to login.  Access will be denied to all other users.
+
+`fbx` and users in `admin` group will also be able to login on the terminal directly.  Other users will be denied access.
+
+If you repeatedly try to login as a user and fail, you will be blocked from logging in for some time.  This is due to `libpam-abl` package that !FreedomBox installs by default.  To control this behavior consult `libpam-abl` documentation.
+
+==== SSH over Tor ====
+
+If in !FreedomBox you have enabled onion services via Tor, you can access your !FreedomBox using ssh over Tor. On a GNU/Linux computer, install netcat-openbsd.
+
+{{{
+$ sudo apt-get install netcat-openbsd
+}}}
+
+Edit ~/.ssh/config to enable connections over Tor.
+
+{{{
+$ nano ~/.ssh/config
+}}}
+
+Add the following:
+
+{{{
+Host *.onion
+  user USERNAME
+  port 22
+  ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p
+}}}
+
+Replace USERNAME with, e.g., an `admin` username (see above).
+
+Note that in some cases you may need to replace 9050 with 9150.
+
+Now to connect to the !FreedomBox, open a terminal and type:
+
+{{{
+$ ssh USERNAME@ADDRESS.onion
+}}}
+
+Replace USERNAME with, e.g., an `admin` username, and ADDRESS with the onion service address for your !FreedomBox.
+
+==== SSH Over Pagekite ====
+
+If in !FreedomBox you are using Pagekite to expose services to the Internet, you can access your !FreedomBox using SSH over Pagekite. On a GNU/Linux computer install netcat-openbsd.
+
+{{{
+$ sudo apt-get install netcat-openbsd
+}}}
+
+Edit ~/.ssh/config to enable connections over Pagekite.
+
+{{{
+$ nano ~/.ssh/config
+}}}
+
+Add the following:
+
+{{{
+Host *.pagekite.me
+  CheckHostIP no
+  ProxyCommand /bin/nc -X connect -x %h:443 %h %p
+}}}
+
+Now to connect to !FreedomBox, open a terminal and type:
+
+{{{
+$ ssh USERNAME@KITENAME.pagekite.me
+}}}
+
+Replace USERNAME with, e.g., an `admin` username, and KITENAME with your kite name provided by pagekite.net as configured in !FreedomBox.
+
+
+=== Becoming Superuser ===
+
+After logging in, if you want to become the superuser for performing administrative activities:
+
+{{{
+$ sudo su
+}}}
+
+Make a habit of logging in as root ''only when you need to''.  If you aren't logged in as root, you can't accidentally break everything.
+
+<<Anchor(changingpassword)>>
+=== Changing Password ===
+
+To change the password of a user managed by !FreedomBox's web interface, use the change password page.  However, the `fbx` default user is not managed by !FreedomBox's web interface and its password cannot be changed through it.
+
+To change password on the terminal, log in to your !FreedomBox as the user whose password you want to change. Then, run the following command:
+
+{{{
+$ passwd
+}}}
+
+This will ask you for your current password before giving you the opportunity to set a new one.
+
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

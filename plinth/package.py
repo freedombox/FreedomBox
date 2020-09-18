@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 class PackageException(Exception):
     """A package operation has failed."""
+
     def __init__(self, error_string=None, error_details=None, *args, **kwargs):
         """Store apt-get error string and details."""
         super(PackageException, self).__init__(*args, **kwargs)
@@ -32,6 +33,7 @@ class PackageException(Exception):
 
 class Transaction(object):
     """Information about an ongoing transaction."""
+
     def __init__(self, module_name, package_names):
         """Initialize transaction object.
 
@@ -52,12 +54,9 @@ class Transaction(object):
         self.percentage = 0
         self.stderr = None
 
-    def install(self, skip_recommends=False, force_configuration=None):
+    def install(self, skip_recommends=False, force_configuration=None,
+                reinstall=False, force_missing_configuration=False):
         """Run an apt-get transaction to install given packages.
-
-        FreedomBox Service (Plinth) needs to be running as root when calling
-        this. Currently, this is meant to be only during first time setup when
-        --setup is argument is passed.
 
         If force_configuration is set to 'new', dpkg options will be enabled to
         make it force overwrite (without prompts) new configuration in place of
@@ -75,6 +74,13 @@ class Transaction(object):
         If force_configuration is None, no special options are passed to
         apt/dpkg for configuration file behavior.
 
+        If reinstall is True, packages will be reinstalled, even if they are
+        the latest version.
+
+        If force_missing_configuration is True, any configuration files that
+        have been removed after the first package has been installed will be
+        restored.
+
         """
         try:
             self._run_apt_command(['update'])
@@ -85,6 +91,12 @@ class Transaction(object):
             if force_configuration is not None:
                 extra_arguments.append(
                     '--force-configuration={}'.format(force_configuration))
+
+            if reinstall:
+                extra_arguments.append('--reinstall')
+
+            if force_missing_configuration:
+                extra_arguments.append('--force-missing-configuration')
 
             self._run_apt_command(['install'] + extra_arguments +
                                   [self.module_name] + self.package_names)

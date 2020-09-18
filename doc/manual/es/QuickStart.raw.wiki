@@ -1,0 +1,124 @@
+#language es
+#pragma section-numbers 2
+~-[[DebianWiki/EditorGuide#translation|Translation(s)]]: [[de/FreedomBox/Handbuch/Schnelleinstieg|Deutsch]] - [[FreedomBox/Manual/QuickStart|English]] - Español -~
+
+## BEGIN_INCLUDE
+= Guía de Inicio Rápido =
+
+== Lo que necesitas para empezar ==
+
+La forma fácil es [[https://freedomboxfoundation.org/buy/|comprar]] un kit !FreedomBox.
+
+Alternativamente podrías optar por montarlo tu mismo reuniendo todas las piezas:
+ * Un [[es/FreedomBox/Hardware|dispositivo]] soportado (incluyendo cualquier dispositivo que pueda funcionar con Debian). En el resto de este manual lo llamaremos la !FreedomBox.
+ * Un cable de alimentación para tu dispositivo.
+ * Un cable de red ''Ethernet''.
+ * Una tarjeta ''microSD'' (o un medio de almacenamiento equivalente para tu dispositivo) preparado según las instrucciones de la página de [[es/FreedomBox/Download|Descargas]].
+
+== Cómo empezar ==
+
+  1. Conecta un extremo del cable de red al puerto ''Ethernet'' de tu !FreedomBox y el otro a tu router.
+  1. Enciende la !FreedomBox.
+     * '''Nota:''' En la mayoría de computadoras monoplaca no esperes un efecto de salida en un monitor si lo conectas por HDMI porque el núcleo (kernel) del sistema podría no reconocerlo. Mira más abajo para aprender cómo acceder y controlar tu !FreedomBox desde la red.
+  1. En el primer arranque !FreedomBox ejecutará su configuración inicial (las versiones más antiguas de !FreedomBox se reinician tras este paso). Este proceso podría llevar varios minutos en algunas máquinas. Después de darle unos 10 minutos aproximadamente, sigue con el siguiente paso.
+     * '''Nota:''' Esta espera y reinicio se necesitan a causa de un defecto conocido. /* esto está probablemente obsoleto */
+  1. Después de que tu !FreedomBox haya finalizado su configuración inicial puedes acceder a su interfaz web mediante tu navegador web.
+     * Si tu ordenador está conectado directamente a tu !FreedomBox a través de un segundo puerto ''Ethernet'' de la red local, puedes navegar a http://freedombox/ o a http://10.42.0.1/.
+     * Si tu ordenador soporta mDNS (GNU/Linux, Mac OSX o Windows con software mDNS instalado), puedes navegar a: http://freedombox.local/ (o a http://<el-hostname-que-estableciste-durante-la-instalación>.local/)
+     * Si te manejas con el interfaz web de tu router, puedes buscar allí la dirección IP de tu !FreedomBox y navegar a ella.
+     * Si no están disponibles ninguno de estos métodos necesitarás averiguar la dirección IP de tu !FreedomBox. Puedes usar el programa "nmap" de tu ordenador para encontrar su dirección IP:
+     {{{
+     nmap -p 80 --open -sV 192.168.0.0/24 (remplaza la ip/máscara de red con la que use tu router)
+     }}}
+     En la mayoría de los casos puedes mirar tu dirección IP actual y cambiar los últimos dígitos por 0 para encontrar tu red local, así: `XXX.XXX.XXX.0/24`
+
+     Tu !FreedomBox aparecerá como una dirección IP con un puerto TCP 80 abierto usando el servicio `Apache httpd` sobre Debian. En el siguiente ejemplo estaría en `http://192.168.0.165`:
+     {{{
+     Nmap scan report for 192.168.0.165
+     Host is up (0.00088s latency).
+     PORT   STATE SERVICE VERSION
+     80/tcp open  http    Apache httpd 2.4.17 ((Debian))
+     }}}
+     Si nmap no encuentra nada con el comando anterior puedes probar a remplazar `192.168.0.0/24` por `10.42.0.255/24`.
+     {{{
+     nmap -n -sP 10.42.0.255/24
+     }}}
+     El informe de escaneo mostrará algo similar a esto:
+     {{{
+     Nmap scan report for 10.42.0.1
+     Host is up (0.00027s latency).
+     Nmap scan report for 10.42.0.50
+     Host is up (0.00044s latency).
+     }}}
+     En este ejemplo, la !FreedomBox está en `http://10.42.0.50`. (`10.42.0.1` es mi ordenador.)
+
+  1. Al acceder al interfaz web de !FreedomBox tu navegador te avisará de que comunica en modo seguro pero que considera invalido el certificado de seguridad. Tienes que aceptarlo porque el certificado es autogenerado en la !FreedomBox y "autofirmado" (el navegador podría denominarlo "no confiable", "no privado", "error de privacidad" o "emisor/autoridad desconocida"). Decir a tu navegador que ya lo sabes podría implicar accionar algunos botones como "Entiendo los riesgos", "proceder ... (inseguro)" o "Añadir excepción".  Después de la instalación este certificado se puede cambiar a otro normal usando la opción ''Let's Encrypt''.
+
+     . {{attachment:ui_insecure_connection-es.png|Aviso de certificado autofirmado|width=600}}
+     . {{attachment:ui_add_security_exception-es.png|Añadir excepción de seguridad|width=400}}
+  1. La primera vez que accedes al interfaz web de tu !FreedomBox verás una página de bienvenida. Haz clic en el botón "Iniciar configuración" para continuar.
+     . {{attachment:ui_firstboot_welcome-es.png|Bienvenida|width=500}}
+
+     Si has instalado !FreedomBox usando un paquete [[es/FreedomBox/Hardware/Debian|Debian]] se te pedirá una clave secreta. Esta clave se habrá generado durante la instalación del paquete Debian. Se puede leer en el archivo `/var/lib/plinth/firstboot-wizard-secret`.
+  1. La siguiente página te pide un nombre de usuario y contraseña. Rellena el formulario y haz clic en "Crear Cuenta."
+     * Nota: El usuario que creas aquí tendrá privilegios de ``Admin`` y también podrá [[es/FreedomBox/Manual/SecureShell|entrar por SSH]]. Por mayor seguridad deberías emplear para tareas administrativas una cuenta diferente de la de uso habitual. Luego puedes añadir más usuarios, entre ellos el tuyo de uso habitual.
+     . {{attachment:ui_firstboot_account-es.png|Cuenta|width=500}}
+  1. Tras completar el formulario estarás en el interfaz web de !FreedomBox y podrás acceder a las apps y a la configuración mediante el interfaz web.
+     . {{attachment:ui_firstboot_complete-es.png|Completado|width=500}}mayor 
+Ahora puedes probar [[es/FreedomBox/Features|cualquier App]] disponible en !FreedomBox.
+
+== Orientándote ==
+
+=== Página principal ===
+
+La página principal es la que verás al acceder a la raíz web de tu !FreedomBox. También puedes acceder a ella haciendo clic sobre el logo de !FreedomBox de la esquina de arriba a la izquierda del interfaz web de !FreedomBox.
+
+La página principal tiene accesos directos a las apps instaladas que estén habilitadas. Haciendo clic en los accesos directos de aplicaciones web te llevarán a la página web correspondiente de cada app. Si son otro tipo de servicios hacer clic en los accesos directos te mostrará información acerca de cada servicio.
+
+{{attachment:ui_frontpage.png|Página principal|width=600}}
+
+{{attachment:ui_frontpage_with_app.png|Página principal|width=600}}
+
+=== Menú de Aplicaciones ===
+
+Al Menú de Aplicaciones se accede por el icono de rejilla que está junto al logo de !FreedomBox. Esta página lista todas las apps disponibles para instalar en tu !FreedomBox. Haz click sobre el nombre de la app para visitar su página, desde la que podrás instalarla y configurarla.
+
+{{attachment:ui_apps.png|Apps|width=600}}
+
+=== Menú de Ayuda ===
+
+Al Menú de Ayuda se accede por el icono del signo de interrogación de la esquina de arriba a la derecha. Incluye enlaces útiles y el manual de !FreedomBox.
+
+{{attachment:ui_help-es.png|Ayuda|width=600}}
+
+=== Menú del Sistema ===
+
+Al Menú del Sistema se accede por el icono del engranaje de la esquina de arriba a la izquierda. Incluye páginas relacionadas con la configuración del sistema.
+
+{{attachment:ui_system.png|Sistema|width=600}}
+
+=== Menú del Usuario ===
+
+En la esquina superior derecha se muestra el nombre del usuario actual. Un menú desplegable incluye opciones para editar el perfil del usuario o sacarle del interfaz web.
+
+{{attachment:ui_user_menu-es.png|Usuario|width=600}}
+
+=== Menú de Hamburgesa ===
+
+El interfaz web de !FreedomBox's es autoadaptativo. En pantallas o ventanas de navegador estrechas las opciones del menú podrían estar ocultas.
+
+{{attachment:ui_burger_icon-es.png|User|width=600}}
+
+Esto se debe a que las opciones del menú han colapsado en el icono de hamburguesa mostrado en la esquina superior derecha de la ventana. Haz clic en él para desplegar el menú.
+
+{{attachment:ui_burger_menu-es.png|User|width=600}}
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

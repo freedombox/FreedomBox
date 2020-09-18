@@ -36,7 +36,6 @@ class TahoeAppView(AppView):
     """Show tahoe-lafs service page."""
     app_id = 'tahoe'
     template_name = 'tahoe-post-setup.html'
-    port_forwarding_info = tahoe.port_forwarding_info
 
     def dispatch(self, request, *args, **kwargs):
         if not tahoe.is_setup():

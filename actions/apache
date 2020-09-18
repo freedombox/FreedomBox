@@ -117,6 +117,9 @@ def subcommand_setup(arguments):
         webserver.enable('rewrite', kind='module')
         webserver.enable('macro', kind='module')
 
+        # Disable /server-status page to avoid leaking private info.
+        webserver.disable('status', kind='module')
+
         # switch to mod_ssl from mod_gnutls
         webserver.disable('gnutls', kind='module')
         webserver.enable('ssl', kind='module')

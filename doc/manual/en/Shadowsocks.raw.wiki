@@ -1,0 +1,41 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Shadowsocks|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Shadowsocks (SOCKS5 proxy) ==
+||<tablestyle="float: right;"> {{attachment:Shadowsocks-icon_en_V01.png|Shadowsocks icon}} ||
+
+'''Available since''': version 0.18.0
+
+=== What is Shadowsocks? ===
+[[https://shadowsocks.org/en/index.html|Shadowsocks]] is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your !FreedomBox can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server.
+
+=== Using the Shadowsocks client? ===
+
+The current implementation of Shadowsocks in !FreedomBox only supports configuring !FreedomBox as a Shadowsocks client. The current use case for Shadowsocks is as follows:
+ * Shadowsocks client (!FreedomBox) is in a region where some parts of the Internet are blocked or censored.
+ * Shadowsocks server is in a different region, which doesn't have these blocks.
+ * The !FreedomBox provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection.
+
+At a future date it will be possible to configure !FreedomBox as Shadowsocks server.
+
+=== Configuring your FreedomBox for the Shadowsocks client ===
+
+To enable Shadowsocks, first navigate to the Socks5 Proxy (Shadowsocks) page and install it. 
+
+Server: the Shadowsocks server is not the !FreedomBox IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them.
+
+To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, browser or application to http://freedombox_address:1080/
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

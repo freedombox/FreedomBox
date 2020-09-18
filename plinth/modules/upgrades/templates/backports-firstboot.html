@@ -1,0 +1,48 @@
+{% extends "base_firstboot.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <h1>{% trans "Frequent Feature Updates" %}</h1>
+
+  <p>
+    {% blocktrans trimmed %}
+      Frequent feature updates allow the {{box_name}} Service, plus a very
+      limited set of software, to receive new features more frequently (from the
+      backports repository). This results in receiving some new features within
+      weeks, instead of only once every 2 years or so. Note that software with
+      frequent feature updates does not have support from the Debian Security
+      Team. Instead, they are maintained by contributors to Debian and the
+      {{box_name}} community.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      It is strongly recommended to activate frequent feature updates. If not
+      activated now, they can be activated later.
+    {% endblocktrans %}
+  </p>
+
+  <div class="alert alert-warning" role="alert">
+    {% blocktrans trimmed %}
+      <strong>Note:</strong> Once frequent feature updates are activated,
+      they cannot be deactivated.
+    {% endblocktrans %}
+  </div>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary pull-right" name="next"
+           value="{% trans "Next" %}"/>
+  </form>
+
+{% endblock %}

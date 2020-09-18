@@ -1,0 +1,50 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/GitWeb|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== GitWeb (Alojamiento simple para Git) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/GitWeb/Gitweb-icon_en_V01.png|icono de Gitweb}} ||
+
+'''Disponible desde versión:''' 19.19
+
+!GitWeb proporciona alojamiento Git en !FreedomBox. Proporciona un interfaz web para realizar acciones comunes sobre repositorios Git como ver archivos, diferencias, descripciones de cambio, etc.
+''Git'' es un sistema de control de versiones distribuído para trazar cambios en código fuente durante el desarrollo de software. Con ''!GitWeb'' puedes hojear la historia y el contenido del código fuente, y usar la búsqueda para encontrar cambios y código específicos. También puedes clonar repositorios y subir cambios al código con un cliente Git de línea de órdenes o con múltiples clientes gráficos que hay disponibles. Y puedes compartir tu código con gente de todo el mundo.
+
+Para aprender a usar Git visita su [[https://git-scm.com/docs/gittutorial|tutorial]].
+
+=== Administrar los repositorios ===
+
+Tras instalar !GitWeb se puede crear un nuevo repositorio. Se puede marcar como privado para limitar el acceso.
+
+=== Acceso ===
+
+Tras instalar !GitWeb se puede acceder a !GitWeb mediante el cliente web (p.ej) en {{{https://<mi_freedombox>/gitweb}}}.
+
+=== Autenticación básica HTTP ===
+
+Actualmente el !GitWeb de !FreedomBox solo soporta remotos HTTP. Para evitar tener que introducir la contraseña cada vez que haces pull/push al repositorio puedes editar tu remoto para incluír credenciales.
+
+''Ejemplo:'' https://usuario:contrasena@mi.freedombox.mola/gitweb/mirepo
+
+Tu nombre de usuario y contraseña se cifrarán. Quien monitorize el tráfico de la red solo apreciará el nombre de dominio.<<BR>>
+'''Nota:''' Al usar este método tu contraseña se almacenará en claro en el fichero `.git/config` del repositorio local. Por este motivo debes crear un usuario !FreedomBox que solo tenga acceso a gitweb y no usar nunca una cuenta de administrador.
+
+
+=== Réplicas Espejo ===
+
+Aunque tus repositorios se albergan principalmente en tu propia !FreedomBox puedes configurar un repositorio en otro servicio de alojamiento Git como GitLab a modo de copia espejo.
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

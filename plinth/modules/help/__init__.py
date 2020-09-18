@@ -5,6 +5,7 @@ FreedomBox app for help pages.
 
 import os
 
+from django.utils.translation import pgettext_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
@@ -32,7 +33,8 @@ class HelpApp(app_module.App):
         menu_item = menu.Menu('menu-help', _('Documentation'), None, 'fa-book',
                               'help:index', parent_url_name='index')
         self.add(menu_item)
-        menu_item = menu.Menu('menu-help-manual', _('Manual'), None,
+        menu_item = menu.Menu('menu-help-manual',
+                              pgettext_lazy('User guide', 'Manual'), None,
                               'fa-info-circle', 'help:manual',
                               parent_url_name='help:index', order=10)
         self.add(menu_item)
@@ -63,10 +65,3 @@ class HelpApp(app_module.App):
         static_files = web_server.StaticFiles('static-files-help',
                                               directory_map)
         self.add(static_files)
-
-
-def init():
-    """Initialize the Help module"""
-    global app
-    app = HelpApp()
-    app.set_enabled(True)

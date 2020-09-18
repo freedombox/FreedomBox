@@ -52,6 +52,7 @@ function onSubmitAddProgress(event) {
     if (!button.classList.contains('btn') ||
         button.classList.contains('btn-link') ||
         button.classList.contains('no-running-status') ||
+        button.classList.contains('pull-right') ||
         button.hasAttribute('disabled')) {
         return;
     }

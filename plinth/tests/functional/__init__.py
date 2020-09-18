@@ -13,15 +13,15 @@ from contextlib import contextmanager
 
 import pytest
 import requests
-from selenium.common.exceptions import (WebDriverException,
-                                        StaleElementReferenceException)
+from selenium.common.exceptions import (StaleElementReferenceException,
+                                        WebDriverException)
 from selenium.webdriver.support.ui import WebDriverWait
 
 config = configparser.ConfigParser()
 config.read(pathlib.Path(__file__).with_name('config.ini'))
 
 config['DEFAULT']['url'] = os.environ.get('FREEDOMBOX_URL',
-                                          config['DEFAULT']['url'])
+                                          config['DEFAULT']['url']).rstrip('/')
 config['DEFAULT']['samba_port'] = os.environ.get(
     'FREEDOMBOX_SAMBA_PORT', config['DEFAULT']['samba_port'])
 
@@ -261,6 +261,9 @@ def login(browser, url, username, password):
         if '/internet-connection-type' in browser.url:
             submit(browser, element=browser.find_by_name('skip')[0])
 
+        if '/firstboot/backports' in browser.url:
+            submit(browser, element=browser.find_by_name('next')[0])
+
 
 #################
 # App utilities #
@@ -297,6 +300,8 @@ def install(browser, app_name):
             time.sleep(0.1)
         elif browser.is_element_present_by_css('.neterror'):
             browser.visit(browser.url)
+        elif browser.is_element_present_by_css('.alert-danger'):
+            break
         elif browser.is_element_present_by_css(install_button_css):
             install_button = browser.find_by_css(install_button_css).first
             if install_button['disabled']:

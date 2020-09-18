@@ -12,3 +12,10 @@ class ConfigureForm(forms.Form):
     auto_upgrades_enabled = forms.BooleanField(
         label=_('Enable auto-update'), required=False, help_text=_(
             'When enabled, FreedomBox automatically updates once a day.'))
+
+
+class BackportsFirstbootForm(forms.Form):
+    """Form to configure backports during first boot wizard."""
+    backports_enabled = forms.BooleanField(
+        label=_('Activate frequent feature updates (recommended)'),
+        required=False, initial=True)

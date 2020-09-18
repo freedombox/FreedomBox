@@ -1,0 +1,56 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+  {{ block.super }}
+
+  <h3>{% trans "Manage Passwords" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'bepasty:add' %}" class="btn btn-default"
+       role="button" title="{% trans 'Add password' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Add password' %}
+    </a>
+  </div>
+
+  {% if not passwords %}
+    <p>{% trans 'No passwords currently configured.' %}</p>
+  {% else %}
+    <table class="table table-bordered table-condensed table-striped"
+           id="passwords-list">
+      <thead>
+        <tr>
+          <th>{% trans "Password" %}</th>
+          <th>{% trans "Permissions" %}</th>
+          <th>{% trans "Comment" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for password in passwords %}
+          <tr id="password-{{ password.password }}" class="password">
+            <td class="password-password">{{ password.password }}</td>
+            <td class="password-permissions">{{ password.permissions }}</td>
+            <td class="password-comment">{{ password.comment }}</td>
+            <td class="password-operations">
+              <form class="form form-inline" method="post"
+                    action="{% url 'bepasty:remove' password.password %}">
+                {% csrf_token %}
+                <button class="password-remove btn btn-sm btn-default fa fa-trash-o"
+                        type="submit"></button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+{% endblock %}

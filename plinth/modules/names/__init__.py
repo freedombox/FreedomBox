@@ -52,15 +52,8 @@ class NamesApp(app_module.App):
                               'names:index', parent_url_name='system')
         self.add(menu_item)
 
-
-def init():
-    """Initialize the names module."""
-    global app
-    app = NamesApp()
-    app.set_enabled(True)
-
-    domain_added.connect(on_domain_added)
-    domain_removed.connect(on_domain_removed)
+        domain_added.connect(on_domain_added)
+        domain_removed.connect(on_domain_removed)
 
 
 def on_domain_added(sender, domain_type, name='', description='',

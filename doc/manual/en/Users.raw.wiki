@@ -1,0 +1,45 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Users|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Users and Groups ==
+
+You can grant access to your !FreedomBox for other users. Provide the Username with a password and assign a group to it. Currently the groups
+ * admin
+ * bit-torrent
+ * ed2k
+ * feed-reader
+ * freedombox-share
+ * git-access
+ * i2p
+ * minidlna
+ * syncthing
+ * web-search
+ * wiki
+are supported. 
+
+The user will be able to log in to services that support single sign-on through LDAP, if they are in the appropriate group.
+
+Users in the admin group will be able to log in to all services. They can also log in to the system through SSH and have administrative privileges (sudo).
+
+A user's groups can also be changed later.
+
+It is also possible to set an SSH public key which will allow this user to securely log in to the system without using a password. You may enter multiple keys, one on each line. Blank lines and lines starting with # will be ignored.
+
+The interface language can be set for each user individually. By default, the language preference set in the web browser will be used.
+
+A user's account can be deactivated, which will temporarily disable the account.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -75,13 +75,6 @@ class FirewallApp(app_module.App):
         self.add(daemon)
 
 
-def init():
-    """Initailze firewall module"""
-    global app
-    app = FirewallApp()
-    app.set_enabled(True)
-
-
 def _run_setup():
     """Run firewalld setup."""
     _run(['setup'], superuser=True)

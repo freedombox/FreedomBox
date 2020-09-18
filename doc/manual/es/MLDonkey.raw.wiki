@@ -1,0 +1,52 @@
+## page was renamed from FreedomBox/Manual/MLdonkey
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/MLDonkey|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== MLDonkey (Compartir archivos entre pares) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/MLDonkey/MLDonkey-icon_en_V01.png|icono de MLDonkey}} ||
+
+'''Disponible desde:'''  versión 0.48.0
+
+=== ¿Qué es MLDonkey? ===
+
+''MLDonkey'' es una aplicación libre y multiprotocolo para compartir archivos entre pares (P2P) que ejecuta un servidor ''back-end'' sobre muchas plataformas. Se puede controlar mediante algún interfaz ''front-end'', ya sea web, telnet o cualquier otro de entre una docena de programas cliente nativos.
+
+Originalmente era un cliente Linux para el protocolo eDonkey pero ahora se ejecuta en multiples sabores de Unix y derivados, OS X, Microsoft Windows y MorphOS. Y soporta muchos protocolos P2P, incluyendo ED2K (y Kademlia sobre Overnet), !BitTorrent, DC++ y más.
+
+Más información acerca de MLDonkey en [[http://mldonkey.sourceforge.net/Main_Page|el Wiki del Proyecto MLDonkey]]
+
+=== Captura de Pantalla ===
+
+{{attachment:mldonkey.jpg|MLDonkey Web Interface|width=800}}
+
+=== Usar el Interfaz Web MLDonkey ===
+
+Tras instalar MLDonkey su interfaz web está accesible a los usuarios de los grupos ''ed2k'' y ''admin'' en {{{https://<tu_freedombox>/mldonkey}}}.
+
+=== Usar el Interfaz para Escritorio/Móvil ===
+
+Se pueden usar muchas [[http://mldonkey.sourceforge.net/Gui|aplicaciones de escritorio y móviles]] para controlar a MLDonkey. El servidor MLDonkey estará ejecutándose siempre en la !FreedomBox y (cargará o) descargará archivos y los mantendrá almacenados incluso cuando tu máquina local esté apagada o desconectada del MLDonkey de !FreedomBox. Por restricciones de acceso via SSH a la !FreedomBox solo los usuarios del grupo ''admin'' pueden acceder a su MLDonkey.
+
+  1. Crea un usuario nuevo en el grupo admin o usa uno que ya esté allí.
+
+  1. En tu máquina de escritorio abre una terminal y ejecuta el siguiente comando. Para este paso se recomienda que configures y uses claves SSH en vez de contraseñas.
+  {{{
+$ ssh -L 4001:localhost:4001 -N usuario_de_ejemplo@ejemplo.freedombox.mola
+  }}}
+  1. Arranca la aplicación gráfica y conéctala a MLDonkey como si MLDonkey se estuviera ejecutando en la máquina local de escritorio. Cuando hayas terminado mata el proceso SSH pulsando Control-C.
+
+Para más información lee acerca de los [[http://mldonkey.sourceforge.net/SshTunnel|túneles SSH]] en la documentación MLDonkey.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

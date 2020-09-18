@@ -1,0 +1,63 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Ikiwiki|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Ikiwiki (Wiki and Blog) ==
+||<tablestyle="float: right;"> {{attachment:Ikiwiki-icon_en_V01.png|Ikiwiki icon}} ||
+
+'''Avaiable since''': version 0.5
+
+=== What is Ikiwiki? ===
+Ikiwiki converts wiki pages into HTML pages suitable for publishing on a website. It provides particularly blogging, podcasting, calendars and a large selection of plugins.
+
+=== Quick Start ===
+
+After the app installation on your box administration interface:
+ * Go to "Create" section and create a wiki or a blog
+ * Go back to "Configure" section and click on /ikiwiki link
+ * Click on your new wiki or blog name under "Parent directory"
+ * Enjoy your new publication page.
+
+=== Creating a wiki or blog ===
+You can create a wiki or blog to be hosted on your !FreedomBox through the Wiki & Blog (Ikiwiki) page in !FreedomBox. The first time you visit this page, it will ask to install packages required by Ikiwiki.
+
+After the package install has completed, select the Create tab. You can select the type to be Wiki or Blog. Also type in a name for the wiki or blog, and the username and password for the wiki's/blog's admin account. Then click Update setup and you will see the wiki/blog added to your list. Note that each wiki/blog has its own admin account.
+
+{{attachment:ikiwiki_create.png|ikiwiki: Create|width=800}}
+
+=== Accessing your wiki or blog ===
+From the Wiki & Blog (Ikiwiki) page, select the Manage tab and you will see a list of your wikis and blogs. Click a name to navigate to that wiki or blog.
+
+{{attachment:ikiwiki_manage.png|ikiwiki: Manage|width=800}}
+
+From here, if you click Edit or Preferences, you will be taken to a login page. To log in with the admin account that you created before, select the Other tab, enter the username and password, and click Login.
+
+=== User login through SSO ===
+Besides the wiki/blog admin, other !FreedomBox users can be given access to login and edit wikis and blogs.  However, they will not have all the same permissions as the wiki admin. They can add or edit pages, but cannot change the wiki's configuration.
+
+To add a wiki user, go to the Users and Groups page in !FreedomBox (under System configuration, the gear icon at the top right corner of the page). Create or modify a user, and add them to the wiki group. (Users in the admin group will also have wiki access.)
+
+To login as a !FreedomBox user, go to the wiki/blog's login page and select the Other tab.  Then click the "Login with HTTP auth" button. The browser will show a popup dialog where you can enter the username and password of the !FreedomBox user.
+
+=== Adding FreedomBox users as wiki admins ===
+
+ 1. Login to the wiki, using the admin account that was specified when the wiki was created.
+ 2. Click "Preferences", then "Setup".
+ 3. Under "main", in the "users who are wiki admins", add the name of a user on the !FreedomBox.
+ 4. (Optional) Under "auth plugin: passwordauth", uncheck the "enable passwordauth?" option. (Note: This will disable the old admin account login. Only SSO login using HTTP auth will be possible.)
+ 5. Click "Save Setup".
+ 6. Click "Preferences", then "Logout".
+ 7. Login as the new admin user using "Login with HTTP auth".
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

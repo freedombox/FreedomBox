@@ -1,0 +1,34 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/PageKite|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== PageKite (Public Visibility) ==
+
+=== What is PageKite? ===
+
+!PageKite makes local websites and services publicly accessible immediately without creating yourself a public IP address. It does this by tunneling protocols such as HTTPS or SSH through firewalls and NAT. Using !PageKite requires an account on a !PageKite relay service. One such service is https://pagekite.net.
+
+A !PageKite relay service will allow you to create kites. Kites are similar to domain names, but with different advantages and drawbacks. A kite can have a number of configured services. !PageKite is known to work with HTTP, HTTPS, and SSH, and may work with some other services, but not all.
+
+=== Using PageKite ===
+
+ 1. Create an account on a !PageKite relay service.
+ 1. Add a kite to your account. Note your kite name and kite secret.
+ 1. In !FreedomBox, go to the "Configure !PageKite" tab on the Public Visibility (!PageKite) page.
+ 1. Check the "Enable !PageKite" box, then enter your kite name and kite secret. Click "Save settings".
+ 1. On the "Standard Services" tab, you can enable HTTP and HTTPS (recommended) and SSH (optional).
+    * HTTP is needed to obtain the Let's Encrypt certificate. You can disable it later.
+ 1. On the [[FreedomBox/Manual/LetsEncrypt|Certificates (Let's Encrypt)]] page, you can obtain a Let's Encrypt certificate for your kite name.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

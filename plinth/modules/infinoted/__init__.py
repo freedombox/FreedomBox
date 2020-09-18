@@ -30,8 +30,6 @@ _description = [
         box_name=_(cfg.box_name)),
 ]
 
-port_forwarding_info = [('TCP', 6523)]
-
 app = None
 
 
@@ -70,16 +68,6 @@ class InfinotedApp(app_module.App):
         daemon = Daemon('daemon-infinoted', managed_services[0],
                         listen_ports=[(6523, 'tcp4'), (6523, 'tcp6')])
         self.add(daemon)
-
-
-def init():
-    """Initialize the infinoted module."""
-    global app
-    app = InfinotedApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

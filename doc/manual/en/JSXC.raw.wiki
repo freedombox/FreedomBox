@@ -1,0 +1,52 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/JSXC|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== JSXC (Web Chat Client) ==
+||<tablestyle="float: right;"> {{attachment:JSXC-icon_en_V01.png|JSXC icon}} ||
+
+'''Available since''': version 0.11.0
+
+JSXC is a web chat client. It can be used to join compatible chat servers. 
+
+!FreedomBox offers both parties, a server ([[FreedomBox/Manual/ejabberd|ejabberd]]) and a web client (JSXC), from its web interface.
+
+=== Technical Specifications ===
+
+JSXC features the XMPP over [[https://en.wikipedia.org/wiki/BOSH_(protocol)|BOSH]] protocol and is implemented in HTML5.
+
+XMPP is a federated server-client protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server.
+
+XMPP can also be used for voice and video calls, if supported by the clients.
+
+=== Installation ===
+You can install JSXC through its icon in the Apps section of !FreedomBox web interface. The ejabberd (XMPP server) icon also offers to launch the web client (and installs JSXC if not yet installed).
+
+=== Usage ===
+After the JSXC module install completes, the JSXC  can be accessed through its icon in the Apps section of !FreedomBox web interface. The ejabberd (XMPP server) icon also offers to launch the web client. Both will redirect you to {{{https://<your freedombox>/plinth/apps/xmpp/jsxc/}}}.
+
+To use it, you need to input the domain name of the server to connect to. It will automatically check the BOSH server connection to the given domain name as you type it.
+||{{attachment:JSXC-KO_en_V01.png|JSXC not connecting|height=250}} || {{attachment:JSXC-ok_en_V01.png|JSXC connecting|height=250}} ||
+
+Check https://www.jsxc.org for further details.
+
+Videoconferencing and file transfer features are offered by JSXC but don't seem to work in !FreedomBox yet.
+
+=== Port Forwarding ===
+
+If your !FreedomBox is behind a router and you want to connect to other servers, you will need to set up port forwarding on your router. You should forward the following ports for XMPP:
+ * TCP 5222 (client-to-server)
+
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

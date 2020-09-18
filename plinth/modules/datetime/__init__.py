@@ -92,15 +92,6 @@ class DateTimeApp(app_module.App):
         return self._is_time_managed()
 
 
-def init():
-    """Initialize the date/time module."""
-    global app
-    app = DateTimeApp()
-
-    if app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('post', app.enable)

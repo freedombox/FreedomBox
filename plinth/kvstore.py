@@ -3,11 +3,10 @@
 Simple key/value store using Django models
 """
 
-from plinth.models import KVStore
-
 
 def get(key):
     """Return the value of a key"""
+    from plinth.models import KVStore
     # pylint: disable-msg=E1101
     return KVStore.objects.get(pk=key).value
 
@@ -22,10 +21,12 @@ def get_default(key, default_value):
 
 def set(key, value):  # pylint: disable-msg=W0622
     """Store the value of a key"""
+    from plinth.models import KVStore
     store = KVStore(key=key, value=value)
     store.save()
 
 
 def delete(key):
     """Delete a key"""
+    from plinth.models import KVStore
     return KVStore.objects.get(key=key).delete()

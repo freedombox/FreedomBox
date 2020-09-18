@@ -1,0 +1,125 @@
+#language en
+#pragma section-numbers 2
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[de/FreedomBox/Handbuch/Schnelleinstieg|Deutsch]] - English - [[es/FreedomBox/Manual/QuickStart|Español]] -~
+
+## BEGIN_INCLUDE
+= Quick Start =
+
+== What you need to get started ==
+
+The easy way is to [[https://freedomboxfoundation.org/buy/|buy]] a !FreedomBox kit.
+
+Alternatively you may choose to build it yourself, by gathering all the components:
+ * A supported [[FreedomBox/Hardware|device]] (including any device that can run Debian). We will call that the !FreedomBox in the rest of this manual.
+ * A power cable for your device.
+ * An ethernet cable.
+ * A microSD card (or equivalent storage media for your device), prepared according to the instructions on the [[FreedomBox/Download|Download]] page.
+
+== How to get started ==
+
+  1. Plug one end of your ethernet cord into your !FreedomBox's ethernet port, and plug the other end into your router.
+  1. Power on the !FreedomBox.
+     * '''Note:''' On most single board computers, don't expect any output on a monitor connected via HDMI as the support may not exist in the kernel. See below to access and control your !FreedomBox via network.
+  1. On first boot, !FreedomBox will perform its initial setup (older versions of !FreedomBox reboot after this step). This process may take several minutes on some machines. After giving it about 10 minutes, proceed to the next step.
+     * '''Note:''' Currently, due a known bug, you need to restart your !FreedomBox after 10m and then proceed to the next step. /* Is this still the case? */
+  1. After the !FreedomBox has finished its initial setup, you can access its web interface through your web browser.
+     * If your computer is connected directly to the !FreedomBox through a second (LAN) ethernet port, you can browse to: http://freedombox/ or http://10.42.0.1/.
+     * If your computer supports mDNS (GNU/Linux, Mac OSX or Windows with mDNS software installed), you can browse to: http://freedombox.local/ (or http://the-hostname-you-entered-during-install.local/)
+     * If you know your way around the router's web interface, you can look up the IP address of the !FreedomBox there, and browse to that address.
+     * If none of these methods are available, then you will need to figure out the IP address of your !FreedomBox. You can use the "nmap" program from your computer to find its IP address:
+     {{{
+     nmap -p 80 --open -sV 192.168.0.0/24 (replace the ip/netmask with the one the router uses)
+     }}}
+     In most cases you can look at your current IP address, and change the last digits with zero to find your home network, like so: XXX.XXX.XXX.0/24
+
+     Your !FreedomBox will show up as an IP address with an open tcp port 80 using Apache httpd service on Debian, such as the example below which would make it accessible at http://192.168.0.165:
+     {{{
+     Nmap scan report for 192.168.0.165
+     Host is up (0.00088s latency).
+     PORT   STATE SERVICE VERSION
+     80/tcp open  http    Apache httpd 2.4.17 ((Debian))
+     }}}
+     If nmap does not find anything with the above command, you can try replacing 192.168.0.0/24 with 10.42.0.255/24.
+     {{{
+     nmap -n -sP 10.42.0.255/24
+     }}}
+     The scan report will show something similar to the following:
+     {{{
+     Nmap scan report for 10.42.0.1
+     Host is up (0.00027s latency).
+     Nmap scan report for 10.42.0.50
+     Host is up (0.00044s latency).
+     }}}
+     In this example, the !FreedomBox is accessible at http://10.42.0.50. (10.42.0.1 is my laptop.)
+
+  1. On accessing !FreedomBox's web interface your browser will warn you that it communicates securely but that it regards the security certificate for doing so as invalid. This is a fact you need to accept because the certificate is auto generated on the box and therefore "self-signed" (the browser might also use words such as "untrusted", "not private", "privacy error" or "unknown issuer/authority"). Telling your browser that you are aware of this might involve pressing buttons such as "I understand the Risks", "proceed to ... (unsafe)" or "Add exception".  After installation this certificate can be changed to a normal one using the Let's Encrypt option.
+
+     . {{attachment:ui_insecure_connection.png|Self-signed certificate warning|width=600}}
+     . {{attachment:ui_add_security_exception.png|Add Security Exception|width=400}}
+  1. The first time you access the !FreedomBox web interface, you will see a welcome page. Click the "Start Setup" button to continue.
+     . {{attachment:ui_firstboot_welcome.png|Welcome|width=500}}
+
+     If you have installed !FreedomBox using a [[FreedomBox/Hardware/Debian|Debian]] package, you will be asked for a secret key. This secret was generated during the installation of the Debian package. It can be read from the file `/var/lib/plinth/firstboot-wizard-secret`.
+  1. The next page asks you to provide a user name and password. Fill in the form, and then click "Create Account."
+     * Note: The user that you create here has ``Admin`` privileges and can also [[FreedomBox/Manual/SecureShell|log in using ssh]]. For additional security, you may want to use a separate account for administrative tasks and for your normal, daily use. You can add more users later.
+     . {{attachment:ui_firstboot_account.png|Account|width=500}}
+  1. After completing the form, you will be logged in to !FreedomBox's web interface and able to access apps and configuration through the interface.
+     . {{attachment:ui_firstboot_complete.png|Complete|width=500}}
+
+Now you can try [[FreedomBox/Features|any of the Apps]] that are available on !FreedomBox.
+
+== Finding your way around ==
+
+=== Front page ===
+
+The front page is the page that you will see when accessing the web root of your !FreedomBox. You can also access it by clicking the !FreedomBox logo in the top-left corner of the !FreedomBox's web interface.
+
+The front page includes shortcuts to apps that have been installed and are enabled. For web apps, clicking the shortcut will take you directly to the app's web page. For other services, clicking the shortcut will show more information about the service.
+
+{{attachment:ui_frontpage.png|Front page|width=600}}
+
+{{attachment:ui_frontpage_with_app.png|Front page|width=600}}
+
+=== Apps menu ===
+
+The Apps menu can be accessed by clicking the grid icon, next to the !FreedomBox logo. This page lists all of the apps that are available for installing on !FreedomBox. Click the name of an app to visit its page, where you can install and configure it.
+
+{{attachment:ui_apps.png|Apps|width=600}}
+
+=== Help menu ===
+
+The Help menu can be accessed by clicking the question mark icon in the top-right corner. It includes helpful links and the !FreedomBox manual.
+
+{{attachment:ui_help.png|Help|width=600}}
+
+=== System menu ===
+
+The System menu can be accessed by clicking the gear icon in the top-left corner. It includes a number of pages related to system configuration.
+
+{{attachment:ui_system.png|System|width=600}}
+
+=== User menu ===
+
+In the top-right corner, the name of the currently logged-in user is shown. A drop-down menu includes options for editing the current user or logging out of the user interface.
+
+{{attachment:ui_user_menu.png|User|width=600}}
+
+
+=== Burger menu ===
+
+!FreedomBox's web interface is responsive. When the display or browser window is very narrow, menu options may be hidden.
+
+{{attachment:ui_burger_icon.png|User|width=600}}
+
+That is because the top menu options are collapsed into the burger icon shown at the top right corner of the window. Click on it to display a drop-down menu.
+
+{{attachment:ui_burger_menu.png|User|width=600}}
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -76,8 +76,29 @@ def subcommand_expand_partition(arguments):
               file=sys.stderr)
         sys.exit(4)
 
+    if requested_partition['table_type'] == 'gpt':
+        _move_gpt_second_header(device)
+
     _resize_partition(device, requested_partition, free_space)
     _resize_file_system(device, requested_partition, free_space)
+
+
+def _move_gpt_second_header(device):
+    """Move second header to the end of the disk.
+
+    GPT scheme has two mostly identical partition table headers. One at the
+    beginning of the disk and one at the end. When an image is written to
+    larger disk, the second header is not at the end of the disk. Fix that by
+    moving second partition to end of the disk before attempting partition
+    resize.
+
+    """
+    command = ['sgdisk', '--move-second-header', device]
+    try:
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError:
+        print('Error moving GPT second header to the end')
+        sys.exit(6)
 
 
 def _resize_partition(device, requested_partition, free_space):

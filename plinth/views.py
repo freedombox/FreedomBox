@@ -19,6 +19,7 @@ from stronghold.decorators import public
 from plinth import app, package
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
+from plinth.modules.firewall.components import get_port_forwarding_info
 from plinth.translation import get_language_from_request, set_language
 
 from . import forms, frontpage
@@ -146,15 +147,10 @@ class AppView(FormView):
     to customize the appearance of the app to achieve more complex presentation
     instead of the simple appearance provided by default.
 
-    'port_forwarding_info' is a list of port information dictionaries that can
-    used to show a special section in the app page that tells the users how to
-    forward ports on their router for this app to work properly.
-
     """
     form_class = None
     app_id = None
     template_name = 'app.html'
-    port_forwarding_info = None
 
     def __init__(self, *args, **kwargs):
         """Initialize the view."""
@@ -254,7 +250,7 @@ class AppView(FormView):
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
-        context['port_forwarding_info'] = self.port_forwarding_info
+        context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
 
         from plinth.modules.firewall.components import Firewall

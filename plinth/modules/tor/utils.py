@@ -19,7 +19,7 @@ APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
 APT_TOR_PREFIX = 'tor+'
 
 
-def get_status():
+def get_status(initialized=True):
     """Return current Tor status."""
     output = actions.superuser_run('tor', ['get-status'])
     status = json.loads(output)
@@ -43,8 +43,8 @@ def get_status():
     }
 
     return {
-        'enabled': tor.app.is_enabled(),
-        'is_running': app_is_running(tor.app),
+        'enabled': tor.app.is_enabled() if initialized else False,
+        'is_running': app_is_running(tor.app) if initialized else False,
         'use_upstream_bridges': status['use_upstream_bridges'],
         'upstream_bridges': status['upstream_bridges'],
         'relay_enabled': status['relay_enabled'],

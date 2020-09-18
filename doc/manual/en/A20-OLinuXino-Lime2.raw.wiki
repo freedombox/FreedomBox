@@ -1,0 +1,76 @@
+== A20 OLinuXino Lime2 ==
+
+{{attachment:a20-olinuxino-lime2.jpg|A20 OLinuXino Lime2|width=640,height=432}}
+
+Olimex's [[https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-LIME2/open-source-hardware|A20 OLinuXino Lime2]] is a fully Open Source Hardware (OSHW) single board computer.  This means that the designer is actively helping people using the platform for their own designs, and supports them in adding hardware functionality and production advice. This is a part of freedom that is often overlooked, but very much aligned with the !FreedomBox goals.  It uses the Allwinner A20 Dual Core ARM processor.
+
+'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this single board computer.
+
+=== Similar Hardware ===
+
+The following similar hardware will also work well with !FreedomBox.
+
+ * Olimex's [[https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-LIME2-4GB/open-source-hardware|A20 OLinuXino Lime2 4GB]].  This hardware merely has extra 4GB NAND storage that is not used by !FreedomBox.
+
+=== Download ===
+
+!FreedomBox SD card [[FreedomBox/Download|images]] are available for this device.  Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox SD card and boot the device.  These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB.
+
+An alternative to downloading these images is to [[InstallingDebianOn/Allwinner|install Debian]] on the device and then [[FreedomBox/Hardware/Debian|install FreedomBox]] on it.
+
+=== Availability ===
+ 
+ * Price: 45 EUR (A20 OLinuXino Lime2)
+ * Price: 55 EUR (A20 OLinuXino Lime2 4GB)
+ * [[https://www.olimex.com/Products/OLinuXino/A20/open-source-hardware|Olimex Store]]
+
+=== Hardware ===
+
+ * Open Source Hardware (OSHW): [[https://github.com/OLIMEX/OLINUXINO/tree/master/HARDWARE|Yes]]
+ * CPU: Allwinner A20, ARM Cortex-A7 @ 1GHz dual-core
+ * RAM: 1 GiB DDR3
+ * Storage: 4 GB NAND flash built-in (only on 4GB model), 1x microSD slot
+ * Architecture: armhf
+ * Ethernet: 10/100/1000, RJ45
+ * !WiFi: None, use a [[FreedomBox/Hardware/USBWiFi|USB WiFi device]]
+ * SATA: 1x port
+
+=== Non-Free Status ===
+
+ * Non-free blobs required: No
+ * !WiFi: Not available
+ * Boot Firmware: [[https://linux-sunxi.org/BROM|BROM]] (GPLV2+)
+
+=== Known Issues ===
+
+ * Revision C hardware has [[DebianBug:845128|poor performance when receiving Ethernet data in Gigabit mode]]. To workaround the problem, you can switch to 100 Mbps mode instead of Gigabit mode. Login to your !FreedomBox as root (or plugin the SD card into another computer) and create the file /etc/NetworkManager/dispatcher.d/20-fix-ethernet-problem with the following contents:
+ {{{
+#!/bin/bash
+
+set -e  # Exit with code on error
+
+IFACE="$1"
+ACTION="$2"
+
+if [[ "$IFACE" != "eth0" ]]; then
+    exit 0
+fi
+
+case ${ACTION} in
+    up)
+        logger "Setting up $IFACE in 100Mbps mode"
+        mii-tool eth0 -A 100BaseTx-FD
+        ;;
+    *)
+        ;;
+esac
+}}}
+ * Revision G2 hardware has [[DebianBug:927397|poor performance when transmitting Ethernet data in Gigabit mode]]. Download and use the [[https://ftp.freedombox.org/pub/freedombox/pioneer/|Pioneer Edition image]] to fix the issue. It contains a slightly [[https://salsa.debian.org/freedombox-team/u-boot/commit/2cb18893ef|modified u-boot]]. The above workaround to put the Ethernet into 100 Mbps mode also fixes this issue.
+ * Revision K hardware is [[https://salsa.debian.org/freedombox-team/freedom-maker/issues/148|not working properly]].
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

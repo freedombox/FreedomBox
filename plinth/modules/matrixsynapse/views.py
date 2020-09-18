@@ -46,7 +46,6 @@ class MatrixSynapseAppView(AppView):
     app_id = 'matrixsynapse'
     template_name = 'matrix-synapse.html'
     form_class = MatrixSynapseForm
-    port_forwarding_info = matrixsynapse.port_forwarding_info
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""

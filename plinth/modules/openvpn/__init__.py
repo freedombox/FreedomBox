@@ -32,8 +32,6 @@ _description = [
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
 
-port_forwarding_info = [('UDP', 1194)]
-
 app = None
 
 setup_process = None
@@ -83,16 +81,13 @@ class OpenVPNApp(app_module.App):
                         listen_ports=[(1194, 'udp4'), (1194, 'udp6')])
         self.add(daemon)
 
+    def is_enabled(self):
+        """Return whether all the leader components are enabled.
 
-def init():
-    """Initialize the OpenVPN module."""
-    global app
-    app = OpenVPNApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled() \
-       and is_setup():
-        app.set_enabled(True)
+        Return True when there are no leader components and OpenVPN setup
+        is done.
+        """
+        return super().is_enabled() and is_setup()
 
 
 def setup(helper, old_version=None):

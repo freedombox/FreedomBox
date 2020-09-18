@@ -1,0 +1,100 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Backups|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Backups ==
+
+!FreedomBox includes the ability to backup and restore data, preferences, configuration and secrets from most of the applications. The Backups feature is built using Borg backup software. Borg is a deduplicating and compressing backup program. It is designed for efficient and secure backups. This backups feature can be used to selectively backup and restore data on an app-by-app basis. Backed up data can be stored on the !FreedomBox machine itself or on a remote server. Any remote server providing SSH access can be used as a backup storage repository for !FreedomBox backups. Data stored remotely may be encrypted and in such cases remote server cannot access your decrypted data.
+
+
+=== Status of Backups Feature ===
+
+|| '''App/Feature''' || '''Support in Version''' || '''Notes''' ||
+|| Avahi || - || no backup needed ||
+|| Backups || - || no backup needed ||
+|| Bind || 0.41 || ||
+|| Cockpit || - || no backup needed ||
+|| Datetime || 0.41 || ||
+|| Deluge || 0.41 || does not include downloaded/seeding files ||
+|| Diagnostics || - || no backup needed ||
+|| Dynamic DNS || 0.39 || ||
+|| ejabberd || 0.39 || includes all data and configuration ||
+|| Firewall || - || no backup needed ||
+|| ikiwiki || 0.39 || includes all wikis/blogs and their content ||
+|| infinoted || 0.39 || includes all data and keys ||
+|| JSXC || - || no backup needed ||
+|| Let's Encrypt || 0.42 || ||
+|| Matrix Synapse || 0.39 || includes media and uploads ||
+|| !MediaWiki || 0.39 || includes wiki pages and uploaded files ||
+|| Minetest || 0.39 || ||
+|| MLDonkey || 19.0 || ||
+|| Monkeysphere || 0.42 || ||
+|| Mumble || 0.40 || ||
+|| Names || - || no backup needed ||
+|| Networks || No || No plans currently to implement backup ||
+|| OpenVPN || 0.48 || includes all user and server keys ||
+|| Pagekite || 0.40 || ||
+|| Power || - || no backup needed ||
+|| Privoxy || - || no backup needed ||
+|| Quassel || 0.40 || includes users and logs ||
+|| Radicale || 0.39 || includes calendar and cards data for all users ||
+|| Roundcube || - || no backup needed ||
+|| SearX || - || no backup needed ||
+|| Secure Shell (SSH) Server || 0.41 || includes host keys ||
+|| Security || 0.41 || ||
+|| Shadowsocks || 0.40 || only secrets ||
+|| Sharing || 0.40 || does not include the data in the shared folders ||
+|| Snapshot || 0.41 || only configuration, does not include snapshot data ||
+|| Storage || - || no backup needed ||
+|| Syncthing || 0.48 || does not include data in the shared folders ||
+|| Tahoe-LAFS || 0.42 || includes all data and configuration ||
+|| Tiny Tiny RSS || 19.2 || includes database containing feeds, stories, etc. ||
+|| Tor || 0.42 || includes configuration and secrets such as onion service keys ||
+|| Transmission || 0.40 || does not include downloaded/seeding files ||
+|| Upgrades || 0.42 || ||
+|| Users || No || No plans currently to implement backup ||
+
+=== How to install and use Backups ===
+
+'''Step 1'''
+
+{{attachment:Backups_Step1_v49.png|Backups: Step 1|width=800}}
+
+'''Step 2'''
+
+{{attachment:Backups_Step2_v49.png|Backups: Step 2|width=800}}
+
+'''Step 3'''
+
+{{attachment:Backups_Step3_v49.png|Backups: Step 3|width=800}}
+
+'''Step 4'''
+
+{{attachment:Backups_Step4_v49.png|Backups: Step 4|width=800}}
+
+'''Step 5'''
+
+{{attachment:Backups_Step5_v49.png|Backups: Step 5|width=800}}
+
+'''Step 6'''
+
+{{attachment:Backups_Step6_v49.png|Backups: Step 6|width=800}}
+
+'''Step 7'''
+
+{{attachment:Backups_Step7_v49.png|Backups: Step 7|width=800}}
+
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

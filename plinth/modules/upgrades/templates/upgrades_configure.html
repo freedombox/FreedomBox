@@ -8,7 +8,57 @@
 {% load static %}
 
 {% block extra_content %}
-  <h3>{% trans "Manual update" %}</h3>
+  <h3>{% trans "Frequent Feature Updates" %}</h3>
+  <p>
+    {% if can_activate_backports and not is_backports_requested %}
+      {% blocktrans trimmed %}
+        Frequent feature updates can be activated. Activating them is
+        recommended.
+      {% endblocktrans %}
+    {% elif can_activate_backports and is_backports_requested %}
+      {% blocktrans trimmed %}
+        Frequent feature updates are activated.
+      {% endblocktrans %}
+    {% else %}
+      {% blocktrans trimmed %}
+        Frequent feature updates cannot be activated. They may not be necessary
+        on your distribution.
+      {% endblocktrans %}
+    {% endif %}
+  </p>
+  <p>
+    {% if can_activate_backports %}
+      {% blocktrans trimmed %}
+        Frequent feature updates allow the {{box_name}} Service, plus a very
+        limited set of software, to receive new features more frequently (from
+        the backports repository). This results in receiving some new features
+        within weeks, instead of only once every 2 years or so. Note that
+        software with frequent feature updates does not have support from the
+        Debian Security Team. Instead, they are maintained by contributors to
+        Debian and the {{box_name}} community.
+      {% endblocktrans %}
+    {% endif %}
+  </p>
+  {% if can_activate_backports and not is_backports_requested %}
+    <div class="alert alert-warning" role="alert">
+      {% url 'snapshot:index' as snapshot_url %}
+      {% blocktrans trimmed %}
+        <strong>Warning!</strong> Once frequent feature updates are activated,
+        they cannot be deactivated. You may wish to take a snapshot using
+        <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
+      {% endblocktrans %}
+    </div>
+    <p>
+      <form class="form" method="post"
+            action="{% url 'upgrades:activate-backports' %}">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary"
+               value="{% trans 'Activate frequent feature updates (recommended)' %}"/>
+      </form>
+    </p>
+  {% endif %}
+
+  <h3>{% trans "Manual Update" %}</h3>
   {% if is_busy %}
     <p>
       <button type="button" disabled="disabled"

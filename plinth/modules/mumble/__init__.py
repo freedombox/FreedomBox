@@ -28,11 +28,6 @@ _description = [
       'from your desktop and Android devices are available.')
 ]
 
-port_forwarding_info = [
-    ('TCP', 64738),
-    ('UDP', 64738),
-]
-
 app = None
 
 
@@ -75,16 +70,6 @@ class MumbleApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-mumble',
                                           reserved_usernames=['mumble-server'])
         self.add(users_and_groups)
-
-
-def init():
-    """Initialize the Mumble module."""
-    global app
-    app = MumbleApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

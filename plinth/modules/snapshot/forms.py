@@ -20,13 +20,13 @@ class SnapshotForm(forms.Form):
         label=_('Timeline Snapshots'),
         help_text=_('Enable or disable timeline snapshots '
                     '(hourly, daily, monthly and yearly).'),
-        choices=[('yes', 'Enabled'), ('no', 'Disabled')])
+        choices=[('yes', _('Enabled')), ('no', _('Disabled'))])
 
     enable_software_snapshots = forms.ChoiceField(
         label=_('Software Installation Snapshots'),
         help_text=_('Enable or disable snapshots before and after software '
-                    'installation'), choices=[('yes', 'Enabled'),
-                                              ('no', 'Disabled')])
+                    'installation'), choices=[('yes', _('Enabled')),
+                                              ('no', _('Disabled'))])
 
     hourly_limit = forms.IntegerField(
         label=_('Hourly Snapshots Limit'), min_value=0,
@@ -47,4 +47,4 @@ class SnapshotForm(forms.Form):
     yearly_limit = forms.IntegerField(
         label=_('Yearly Snapshots Limit'), min_value=0,
         help_text=_('Keep a maximum of this many yearly snapshots. '
-                    'The default value is 0 (disabled).'))
+                    'The default value is 0 (keep no yearly snapshot).'))

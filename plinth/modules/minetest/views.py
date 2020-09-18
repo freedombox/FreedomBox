@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.modules import minetest, names
+from plinth.modules import names
 from plinth.views import AppView
 
 from . import get_configuration
@@ -19,7 +19,6 @@ class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
     app_id = 'minetest'
     template_name = 'minetest.html'
     form_class = MinetestForm
-    port_forwarding_info = minetest.port_forwarding_info
 
     def get_initial(self):
         """Return the values to fill in the form."""

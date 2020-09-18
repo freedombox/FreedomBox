@@ -32,8 +32,6 @@ _description = [
       'using such connections.')
 ]
 
-port_forwarding_info = [('TCP', 22)]
-
 app = None
 
 
@@ -61,14 +59,6 @@ class SSHApp(app_module.App):
 
         daemon = Daemon('daemon-ssh', managed_services[0])
         self.add(daemon)
-
-
-def init():
-    """Initialize the ssh module."""
-    global app
-    app = SSHApp()
-    if app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

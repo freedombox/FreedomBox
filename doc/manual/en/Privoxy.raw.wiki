@@ -1,0 +1,58 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Privoxy|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Privoxy (Web Proxy) ==
+||<tablestyle="float: right;"> {{attachment:Privoxy-icon_en_V01.png|Privoxy icon}} ||
+
+'''Available since''': version 0.1
+
+A web proxy acts as a filter for incoming and outgoing web traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms.
+
+Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: [[https://www.privoxy.org/faq/index.html|Privoxy FAQ]]).
+
+=== Screencast ===
+
+Watch the [[attachment:Privoxy_Installation.webm|screencast]] on how to setup and use Privoxy in !FreedomBox.
+
+=== Setting up ===
+
+ 1. In !FreedomBox, install ''Web Proxy (Privoxy)''
+
+ {{attachment:Privoxy-Installation.png|Privoxy Installation|width=800}}
+
+ 1. Adapt your browser proxy settings to your !FreedomBox hostname (or IP address) with port 8118. Please note that Privoxy can only proxy HTTP and HTTPS traffic. It will not work with FTP or other protocols. 
+
+ {{attachment:Privoxy-BrowserSettings.png|Privoxy Browser Settings|width=800}}
+
+ 1. Go to page http://config.privoxy.org/ or http://p.p. If Privoxy is installed properly, you will be able to configure it in detail; if not you will see an error message.
+ 
+ 1. If you are using a laptop that occasionally has to connect through other routers than yours with the !FreedomBox and Privoxy, you may want to install a proxy switch add-on that allows you to easily turn the proxy on or off. 
+
+=== Advanced Users ===
+
+ 1. The default installation should provide a reasonable starting point for most. There will undoubtedly be occasions where you will want to adjust the configuration, that can be dealt with as the need arises. 
+
+ 1. While using Privoxy, you can see its configuration details and documentation at http://config.privoxy.org/ or http://p.p.
+
+ 1. To enable changing these configurations, you first have to change the value of `enable-edit-actions` in `/etc/privoxy/config` to `1`. Before doing so, read carefully the manual, especially:   
+   ''Access to the editor can not be controlled separately by "ACLs" or HTTP authentication, so that everybody who can access Privoxy can modify its configuration for all users. This option is not recommended for environments with untrusted users. Note that malicious client side code (e.g Java) is also capable of using the actions editor and you shouldn't enable this options unless you understand the consequences and are sure your browser is configured correctly.''
+
+ 1. Now you find an `EDIT` button on the configuration screen in `http://config.privoxy.org/`.
+
+ 1. The [[https://www.privoxy.org/user-manual/quickstart.html|Quickstart]] is a good starting point to read on how to define own blocking and filtering rules.
+
+## END_INCLUDE
+
+----
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

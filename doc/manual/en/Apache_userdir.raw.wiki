@@ -1,0 +1,48 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Apache_userdir|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== User Websites ==
+
+=== What is User websites? ===
+
+User websites is a module of the Apache webserver enabled to allow users defined in the !FreedomBox system to expose a set of static files on the !FreedomBox filesystem as a website to the local network and/or the internet according to the network and firewall setup.
+
+||||<tablestyle="border:1px solid black;width: 80%">'''Application basics'''||
+||Category|| File sharing ||
+||Available since version || 0.9.4||
+||Upstream project website || https://httpd.apache.org/docs/2.4/mod/mod_userdir.html||
+||Upstream end user documentation || https://httpd.apache.org/docs/2.4/howto/public_html.html||
+
+=== Screenshot ===
+
+/* Add when/if an interface is made for FreedomBox */
+
+=== Using User websites ===
+
+The module is always enabled and offers no configuration from the !FreedomBox web interface. There is no configuration or status page shown for this module in the !FreedomBox web interface.
+
+To serve documents, place the files in the designated directory in a !FreedomBox user's home directory in the filesystem.
+
+This directory is: '''public_html'''
+
+Thus the absolute path for the directory of a user named fbx with home directory in /home/fbx will be '''/home/fbx/public_html'''.
+User websites will serve documents placed in this directory when requests for documents with the URI path "~fbx" are received. For the the example.org domain thus a request for the document example.org/~fbx/index.html will transfer the file in /home/fbx/public_html/index.html.
+
+
+=== Using SFTP to create public_html and upload documents ===
+
+/* To be written */
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

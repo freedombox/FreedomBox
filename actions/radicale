@@ -6,21 +6,13 @@ Configuration helper for Radicale.
 
 import argparse
 import os
-import shutil
-import subprocess
-import tempfile
 
 import augeas
 
 from plinth import action_utils
-from plinth.modules import radicale
-
-COLLECTIONS_PATH = '/var/lib/radicale/collections'
-LOG_PATH = '/var/log/radicale'
 
 CONFIG_FILE = '/etc/radicale/config'
-
-DEFAULT_FILE = '/etc/default/radicale'
+LOG_PATH = '/var/log/radicale'
 
 
 def parse_arguments():
@@ -28,89 +20,32 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup', help='Setup Radicale configuration')
-    subparsers.add_parser('migrate', help='Migrate config to radicale 2.x')
-    subparsers.add_parser('fix-collections',
-                          help='Ensure collections path exists')
     configure = subparsers.add_parser('configure',
                                       help='Configure various options')
     configure.add_argument('--rights_type',
                            help='Set the rights type for radicale')
+    subparsers.add_parser('fix-paths', help='Ensure paths exists')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_setup(_):
-    """Setup Radicale configuration."""
-    current_version = radicale.get_package_version()
-    if not current_version:
-        print('Warning: Unable to get radicale version.')
-
-    aug = load_augeas()
-
-    if current_version and current_version < radicale.VERSION_2:
-        aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
-        aug.set('/files' + CONFIG_FILE + '/server/hosts',
-                '127.0.0.1:5232, [::1]:5232')
-        aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
-        aug.set('/files' + CONFIG_FILE + '/well-known/caldav',
-                '/radicale/%(user)s/caldav/')
-        aug.set('/files' + CONFIG_FILE + '/well-known/carddav',
-                '/radicale/%(user)s/carddav/')
-        aug.set('/files' + CONFIG_FILE + '/auth/type', 'remote_user')
-        aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
-
-    aug.save()
-
-
-def subcommand_migrate(_):
-    """Migrate from radicale 1.x to 2.x."""
-    current_version = radicale.get_package_version()
-
-    # Migrate data from radicale 1.x to radicale 2.x format.
-    if current_version and current_version < radicale.VERSION_2:
-        with tempfile.TemporaryDirectory() as temp_directory:
-            export_location = os.path.join(temp_directory, 'radicale-export')
-            subprocess.run(['radicale', '--export-storage', export_location],
-                           check=True)
-            collection_root = os.path.join(export_location, 'collection-root')
-            shutil.copytree(collection_root,
-                            os.path.join(COLLECTIONS_PATH, 'collection-root'))
-            subprocess.run(
-                ['chown', '-R', 'radicale:radicale', COLLECTIONS_PATH],
-                check=True)
-
-    action_utils.webserver_disable('radicale-plinth')
-
-
 def subcommand_configure(arguments):
     """Sets the radicale rights type to a particular value"""
-    current_version = radicale.get_package_version()
-    if not current_version:
-        print('Warning: Unable to get radicale version.')
-
-    if current_version and current_version >= radicale.VERSION_2:
-        if arguments.rights_type == 'owner_only':
-            # Radicale 2.x default rights file is equivalent to owner_only.
-            arguments.rights_type = 'from_file'
+    if arguments.rights_type == 'owner_only':
+        # Default rights file is equivalent to owner_only.
+        arguments.rights_type = 'from_file'
 
     aug = load_augeas()
     aug.set('/files' + CONFIG_FILE + '/rights/type', arguments.rights_type)
     aug.save()
 
-    if current_version and current_version >= radicale.VERSION_2:
-        action_utils.service_try_restart('uwsgi')
-    else:
-        action_utils.service_try_restart('radicale')
+    action_utils.service_try_restart('uwsgi')
 
 
-def subcommand_fix_collections(_):
-    """Fix collections path to work around a bug."""
-    # Workaround for bug in radicale's uwsgi script (#919339)
-    if not os.path.exists(COLLECTIONS_PATH):
-        os.makedirs(COLLECTIONS_PATH)
-
+def subcommand_fix_paths(_):
+    """Fix log path to work around a bug."""
+    # Workaround for bug in radicale's uwsgi script (#931201)
     if not os.path.exists(LOG_PATH):
         os.makedirs(LOG_PATH)
 
@@ -119,10 +54,6 @@ def load_augeas():
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-
-    # shell-script config file lens
-    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
-    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
 
     # INI file lens
     aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')

@@ -27,6 +27,14 @@ DISKS = [{
     'percent_used': 63,
     'size_str': '9.5 GiB',
     'used_str': '5.7 GiB'
+}, {
+    'device': '/dev/sda2',
+    'label': '',
+    'filesystem_type': 'vfat',
+    'mount_point': '/boot/efi',
+    'percent_used': 50,
+    'size_str': '150 MiB',
+    'used_str': '75 MiB'
 }]
 
 SHARES = [
@@ -47,7 +55,7 @@ SHARES = [
         "mount_point": "/media/root/otherdisk",
         "path": "/media/root/otherdisk/FreedomBox/shares/homes/open_share",
         "share_type": "open"
-    }
+    },
 ]
 
 
@@ -96,20 +104,16 @@ def test_samba_shares_view(rf):
         view = views.SambaAppView.as_view()
         response, _ = make_request(rf.get(''), view)
 
-        assert response.context_data['disks'] == DISKS
+        assert response.context_data['disks'] == [DISKS[0]]
         assert response.context_data['shared_mounts'] == {
             '/': ['open', 'home'],
             '/media/root/otherdisk': ['open']
         }
         assert response.context_data['unavailable_shares'] == [{
-            'mount_point':
-                '/media/root/otherdisk',
-            'name':
-                'otherdisk',
-            'path':
-                '/media/root/otherdisk/FreedomBox/shares/homes/open_share',
-            'share_type':
-                'open'
+            'mount_point': '/media/root/otherdisk',
+            'name': 'otherdisk',
+            'path': '/media/root/otherdisk/FreedomBox/shares/homes/open_share',
+            'share_type': 'open'
         }]
         assert response.context_data['users'] == USERS
         assert response.status_code == 200
@@ -119,8 +123,8 @@ def test_enable_samba_share_view(rf):
     """Test that enabling share sends correct success message."""
     form_data = {'filesystem_type': 'ext4', 'open_share': 'enable'}
     mount_point = urllib.parse.quote('/')
-    response, messages = make_request(
-        rf.post('', data=form_data), views.share, mount_point=mount_point)
+    response, messages = make_request(rf.post('', data=form_data), views.share,
+                                      mount_point=mount_point)
 
     assert list(messages)[0].message == 'Share enabled.'
     assert response.status_code == 302
@@ -134,8 +138,8 @@ def test_enable_samba_share_failed_view(rf):
     error_message = 'Sharing failed'
     with patch('plinth.modules.samba.add_share',
                side_effect=ActionError(error_message)):
-        response, messages = make_request(
-            rf.post('', data=form_data), views.share, mount_point=mount_point)
+        response, messages = make_request(rf.post('', data=form_data),
+                                          views.share, mount_point=mount_point)
 
         assert list(messages)[0].message == 'Error enabling share: {0}'.format(
             error_message)
@@ -147,8 +151,8 @@ def test_disable_samba_share(rf):
     """Test that enabling share sends correct success message."""
     form_data = {'filesystem_type': 'ext4', 'open_share': 'disable'}
     mount_point = urllib.parse.quote('/')
-    response, messages = make_request(
-        rf.post('', data=form_data), views.share, mount_point=mount_point)
+    response, messages = make_request(rf.post('', data=form_data), views.share,
+                                      mount_point=mount_point)
 
     assert list(messages)[0].message == 'Share disabled.'
     assert response.status_code == 302
@@ -162,10 +166,11 @@ def test_disable_samba_share_failed_view(rf):
     error_message = 'Unsharing failed'
     with patch('plinth.modules.samba.delete_share',
                side_effect=ActionError(error_message)):
-        response, messages = make_request(
-            rf.post('', data=form_data), views.share, mount_point=mount_point)
+        response, messages = make_request(rf.post('', data=form_data),
+                                          views.share, mount_point=mount_point)
 
-        assert list(messages)[
-            0].message == 'Error disabling share: {0}'.format(error_message)
+        assert list(
+            messages)[0].message == 'Error disabling share: {0}'.format(
+                error_message)
         assert response.status_code == 302
         assert response.url == urls.reverse('samba:index')

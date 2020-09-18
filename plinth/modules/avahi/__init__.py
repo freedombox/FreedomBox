@@ -76,19 +76,13 @@ class AvahiApp(app_module.App):
         daemon = Daemon('daemon-avahi', managed_services[0])
         self.add(daemon)
 
+        if self.is_enabled():
+            domain_added.send_robust(sender='avahi',
+                                     domain_type='domain-type-local',
+                                     name=get_hostname() + '.local',
+                                     services='__all__')
 
-def init():
-    """Initialize the service discovery module."""
-    global app
-    app = AvahiApp()
-    if app.is_enabled():
-        domain_added.send_robust(sender='avahi',
-                                 domain_type='domain-type-local',
-                                 name=get_hostname() + '.local',
-                                 services='__all__')
-        app.set_enabled(True)
-
-    post_hostname_change.connect(on_post_hostname_change)
+        post_hostname_change.connect(on_post_hostname_change)
 
 
 def setup(helper, old_version=None):

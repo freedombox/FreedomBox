@@ -61,13 +61,6 @@ class MonkeysphereApp(app_module.App):
         self.add(users_and_groups)
 
 
-def init():
-    """Initialize the monkeysphere module."""
-    global app
-    app = MonkeysphereApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)

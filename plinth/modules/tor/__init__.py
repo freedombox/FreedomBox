@@ -10,7 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import menu
-from plinth.daemon import Daemon, diagnose_netcat, diagnose_port_listening
+from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
+                           diagnose_port_listening)
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
@@ -85,6 +86,17 @@ class TorApp(app_module.App):
                                           reserved_usernames=['debian-tor'])
         self.add(users_and_groups)
 
+        # Register hidden service name with Name Services module.
+        if self.is_enabled() and app_is_running(self):
+            status = utils.get_status(initialized=False)
+            hostname = status['hs_hostname']
+            services = [int(port['virtport']) for port in status['hs_ports']]
+
+            if status['hs_enabled'] and status['hs_hostname']:
+                domain_added.send_robust(sender='tor',
+                                         domain_type='domain-type-tor',
+                                         name=hostname, services=services)
+
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
@@ -131,30 +143,6 @@ class TorApp(app_module.App):
         results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
 
         return results
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = TorApp()
-
-    setup_helper = globals()['setup_helper']
-    needs_setup = setup_helper.get_state() == 'needs-setup'
-
-    if not needs_setup:
-        if app.is_enabled():
-            app.set_enabled(True)
-
-        # Register hidden service name with Name Services module.
-        status = utils.get_status()
-        hostname = status['hs_hostname']
-        services = [int(port['virtport']) for port in status['hs_ports']]
-
-        if status['enabled'] and status['is_running'] and \
-           status['hs_enabled'] and status['hs_hostname']:
-            domain_added.send_robust(sender='tor',
-                                     domain_type='domain-type-tor',
-                                     name=hostname, services=services)
 
 
 def setup(helper, old_version=None):

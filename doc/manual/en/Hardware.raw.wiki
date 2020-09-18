@@ -1,0 +1,170 @@
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+!FreedomBox is designed to be the software for a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device ourselves, but instead we intend to partner with hardware vendors to build !FreedomBox devices and also support existing hardware. Typically, it is run on single board computers because of their small form factor, low power consumption and favourable price. Some users also run it on old/refurbished desktop or laptop computers or even on virtual machines running on their primary computers.
+
+In addition to supporting various single board computers and other devices, any Debian machine can be turned into a !FreedomBox by installing the `freedombox` package. Debian, the universal operating system, supports a much wider range on hardware. After [[InstallingDebianOn|installing Debian]], see the [[FreedomBox/Hardware/Debian|manual page]] for installing !FreedomBox on Debian.
+
+== Recommended Hardware ==
+
+On April 22nd, 2019, the !FreedomBox Foundation announced the [[https://freedomboxfoundation.org/buy/|sales]] of the Pioneer Edition !FreedomBox Home Server Kits. This is the recommended pre-installed hardware for all users who don't wish to build their own !FreedomBox by choosing the right components, downloading the image and preparing an SD card with !FreedomBox.
+
+The kit includes all the hardware needed for launching a !FreedomBox home server on an Olimex A20-OLinuXino-LIME2 board. This product provides the perfect combination of open source hardware and free and open source software. By purchasing this product, you also support the !FreedomBox Foundation's efforts to create and promote its free and open source server software.
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/PioneerEdition|{{attachment:pioneer-edition_thumb.jpg|Pioneer Edition FreedomBox Home Server Kits|width=320,height=257}}]]<<BR>> [[FreedomBox/Hardware/PioneerEdition|Pioneer Edition FreedomBox Home Server Kits]] ||
+
+== Supported Hardware ==
+
+Use these hardware if you are able to download !FreedomBox images and prepare an SD card by following the manual. If you wish for simper setup process, please buy the !FreedomBox kits from recommended hardware instead. Look at the list of known issues with a hardware before buying it.
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/A20-OLinuXino-Lime2|{{attachment:a20-olinuxino-lime2_thumb.jpg|A20 OLinuXino Lime2|width=235,height=159}}]]<<BR>> [[FreedomBox/Hardware/A20-OLinuXino-Lime2|A20 OLinuXino Lime2]] ||<style="text-align: center;"> [[FreedomBox/Hardware/A20-OLinuXino-MICRO|{{attachment:a20-olinuxino-micro_thumb.jpg|A20 OLinuXino MICRO|width=235,height=132}}]]<<BR>> [[FreedomBox/Hardware/A20-OLinuXino-MICRO|A20 OLinuXino MICRO]] ||<style="text-align: center;"> [[FreedomBox/Hardware/APU|{{attachment:apu1d_thumb.jpg|PC Engines APU|width=235,height=157}}]]<<BR>> [[FreedomBox/Hardware/APU|PC Engines APU]] ||
+||<style="text-align: center;"> [[FreedomBox/Hardware/Cubietruck|{{attachment:danube_thumb.png|Cubietruck|width=235,height=206}}]] <<BR>> [[FreedomBox/Hardware/Cubietruck|Cubietruck]] <<BR>> ||<style="text-align: center;"> [[FreedomBox/Hardware/Cubieboard2|{{attachment:cubieboard2_thumb.jpg|Cubieboard 2|width=235,height=156}}]]<<BR>> [[FreedomBox/Hardware/Cubieboard2|Cubieboard2]] ||<style="text-align: center;"> [[FreedomBox/Hardware/BeagleBone|{{attachment:beagleboard_thumb.jpg|BeagleBone Black|width=235,height=157}}]]<<BR>> [[FreedomBox/Hardware/BeagleBone|BeagleBone Black]] ||
+||<style="text-align: center;"> [[FreedomBox/Hardware/pcDuino3|{{attachment:pcduino3s_thumb.jpg|pcDuino3|width=235,height=107}}]] <<BR>> [[FreedomBox/Hardware/pcDuino3|pcDuino3]]||<style="text-align: center;"> [[FreedomBox/Hardware/Debian|{{attachment:debian_thumb.png|Debian|width=156,height=201}}]] <<BR>> [[FreedomBox/Hardware/Debian|Debian]]||<style="text-align: center;"> [[FreedomBox/Hardware/VirtualBox|{{attachment:virtualbox_thumb.png|VirtualBox|width=235,height=154}}]] <<BR>> [[FreedomBox/Hardware/VirtualBox|VirtualBox]]||
+||<style="text-align: center;"> [[FreedomBox/Hardware/PineA64+|{{attachment:pine64-plus_thumb.jpg|Pine A64+|width=235,height=213}}]] <<BR>> [[FreedomBox/Hardware/PineA64+|Pine A64+]] ||<style="text-align: center;"> [[FreedomBox/Hardware/BananaPro|{{attachment:banana-pro_thumb.jpg|Banana Pro|width=235}}]] <<BR>> [[FreedomBox/Hardware/BananaPro|Banana Pro]]||<style="text-align: center;"> [[FreedomBox/Hardware/OrangePiZero|{{attachment:orange-pi-zero_thumb.jpg|Orange Pi Zero|width=235}}]] <<BR>> [[FreedomBox/Hardware/OrangePiZero|Orange Pi Zero]] ||
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/RockPro64|{{attachment:rockpro64_thumb.jpg|RockPro64|width=235,height=142}}]] <<BR>> [[FreedomBox/Hardware/RockPro64|RockPro64]] ||<style="text-align: center;"> [[FreedomBox/Hardware/Rock64|{{attachment:rock64_thumb.jpg|Rock64|width=235,height=154}}]] <<BR>> [[FreedomBox/Hardware/Rock64|Rock64]]||||
+
+=== Hardware Comparison ===
+
+||'''Name'''||'''Speed (GHz)'''||'''Debian arch'''||'''Ram (GB)'''||'''disk (GB)'''||'''battery'''||'''SATA'''||'''Ethernet speed'''||'''[[OpenSourceHardware|OSHW]]'''||
+||APU.1D                  ||1x2  ||amd64           ||2||-|| -    || (./)    ||1000x3|| {X}  ||
+||APU.1D4                 ||1x2  ||amd64           ||4||-|| -    || (./)    ||1000x3|| {X}  ||
+||!BeagleBone Black C     ||1    ||armhf/omap      ||½||4|| -    || -       ||100   || (./) ||
+||Cubieboard2             ||1x2  ||armhf/sunxi     ||1||4|| (./) || (./)    ||100   || {X}  ||
+||Cubieboard2-Dual        ||1x2  ||armhf/sunxi     ||1||-|| (./) || (./)    ||100   || {X}  ||
+||Cubieboard3/Cubietruck  ||1x2  ||armhf/sunxi     ||2||8|| (./) || (./)    ||1000  || {X}  ||
+||OLinuXino A20 LIME      ||1x2  ||armhf/sunxi     ||½||-|| (./) || (./)    ||100   || (./) ||
+||OLinuXino A20 LIME2     ||1x2  ||armhf/sunxi     ||1||-|| (./) || (./)    ||1000  || (./) ||
+||OLinuXino A20 MICRO     ||1x2  ||armhf/sunxi     ||1||-|| (./) || (./)    ||100   || (./) ||
+||pcDunino3               ||1x2  ||armhf/sunxi     ||1||4|| (./) || (./)    ||100   || {X}  ||
+||Pine A64+               ||1.2x4||arm64/sunxi     ||½,1,2||-||- || -       ||1000  || {X}  ||
+||Banana Pro              ||1.2x2||armhf/sunxi     ||1||-||-     || (./)    ||1000  || {X}  ||
+||Orange Pi Zero          ||?x4  ||armhf/sunxi     ||¼,½||-||-     || -     ||100   || {X}  ||
+||!RockPro64              ||1.4x4+1.8x2||arm64     ||2,4||16,32,64,128|| -     || (./)     ||1000   || {X}  ||
+||Rock64                  ||1.5x4||arm64           ||1,2,4||16,32,64,128|| -     || (./)     ||1000   || {X}  ||
+
+== Additional Hardware ==
+
+=== Also Working Hardware ===
+
+This hardware works but is not recommended because the hardware can't run entirely on [[https://www.gnu.org/philosophy/free-sw.en.html|free software]]:
+
+||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi2|{{attachment:raspberry2_thumb.jpg|Raspberry Pi 2|width=235,height=157}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi2|Raspberry Pi 2]] ||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi3B|{{attachment:raspberrypi3b_thumb.jpg|Raspberry Pi 3 Model B|width=235,height=155}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi3B|Raspberry Pi 3 Model B]] ||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi3B+|{{attachment:raspberrypi3bplus_thumb.jpg|Raspberry Pi 3 Model B+|width=235,height=153}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi3B+|Raspberry Pi 3 Model B+]]||
+||<style="text-align: center;"> [[FreedomBox/Hardware/RaspberryPi4B|{{attachment:raspberrypi4b_thumb.jpg|Raspberry Pi 4 B|width=235,height=156}}]] <<BR>> [[FreedomBox/Hardware/RaspberryPi4B|Raspberry Pi 4 B]] || || ||
+
+=== Hardware Supported with Generic Images ===
+
+If you already have hardware that you wish turn into a !FreedomBox, don't let the limited list of supported hardware discourage you. If you are using AMD or Intel architecture machines, you can download the generic images of that specific architecture that image will work on any machine of that architecture. For ARM 32-bit or ARM 64-bit architectures, we have a similar solution.
+
+Starting with August 2020, we started building generic images that would work for all single board computers based on a solution involving UEFI standards and u-boot firmware. In this approach, a small board specific firmware resides on an SPI flash or an SD card. It is responsible for loading a generic !FreedomBox image that is placed in an SD card, a USB drive, a SATA drive or an NVMe drive. So, for your hardware, find and get a u-boot based firmware from your board manufacturer and place it on an SPI flash or an SD card. Next, ensure that that kernel in !FreedomBox has support for your board and place it on any of the other storage disks. This approach should work well for a lot of boards that are not listed as specifically supported. See firmware section for more details.
+
+We continue to build images specific to some hardware as we used to earlier. These images have the slight advantage that they are easier to setup because of less step involved. We intend, however, to phase out these images because they can't be booted from all the storage devices and involve development overhead limiting the number of boards we support.
+
+=== Adding Hardware Support ===
+
+If your hardware is not listed above but you were able to get it working using the above described method of using a generic image, drop us a line and we will list it as supported. Further, take a look at the list of [[CheapServerBoxHardware|targeted hardware]] for boards to support.
+
+=== Deprecated Hardware ===
+
+This hardware was supported earlier but is no longer supported.  If you downloaded an earlier image and are running !FreedomBox on one of these hardware, you will keep getting software updates.  However, no new images will be provided for these hardware.  It is recommended that you migrate to newer, supported hardware using backup and restore.
+
+ * !DreamPlug
+ * Raspberry Pi
+
+''Note'': ''Supported Hardware'' means that !FreedomBox images are built for said hardware and at least one developer has reported the basic functions to be working.
+
+== Common Hardware Information ==
+
+The following sections document common advice related to hardware and peripherals when using them with !FreedomBox.
+
+=== Wi-Fi ===
+
+!FreedomBox can use Wi-Fi hardware for two separate purposes. It can be used to provide internet connectivity or it can be used to share internet connectivity already available to !FreedomBox (via Ethernet, 3G/4G or another Wi-Fi interface) with devices on the network. See the [[FreedomBox/Manual/Networks|Networks]] manual page for instructions on how to configure !FreedomBox for these two cases.
+
+Unfortunately, most built-in Wi-Fi adapters and add-on Wi-Fi adapters require firmware that is not free software. So, !FreedomBox recommends attaching a [[FreedomBox/Hardware/USBWiFi|USB Wi-Fi device]] that does not require non-free firmware. Supported devices automatically show up in the network interface list when configuring networks.
+
+If you have a Wi-Fi device, either built-in or as an add-on, that requires non-free firmware and you are willing to install non-free firmware to get it working, see the Debian [[WiFi|wiki page]]. Once the firmware is installed and the device shows up, it can be configured and used by !FreedomBox.
+
+=== Power Supply ===
+
+On single board computers, one can easily encounter situations where the board and its peripherals are not provided sufficient power and malfunction in unpredictable ways. To avoid this, use a power adapter that can supply the minimum current recommended by the hardware manufacturer. When additional peripherals such as USB drives, Wi-Fi devices, SATA drives or NVMe drives are attached, the power requirements increase. A power supply that can provide higher current than needed is preferable but voltage should match the manufacturer recommendation exactly. Keep in mind that some cheap power supplies don't supply the current they promise to.
+
+=== Firmware ===
+
+Desktops, laptops and virtual machines have software that runs during machine start-up called UEFI/BIOS. This software, sometimes called firmware, can load and hand over control to the operating system (in our case !FreedomBox), when it is present on any of the storage devices. This is not the case with most single board computers.
+
+Single board computers ship with very small amount of software that is typically limited to booting OS from SD cards or eMMCs. They usually can't boot from USB disks, SATA disks or NVMe disks. To remedy this situation, hardware manufacturers started adding a special storage device called SPI flash which is only a few MiB in size. A special software, which we call firmware here, typically based on free and open source boot loader called u-boot is placed in this SPI flash. When the computer starts up, it starts the boot-loader from SPI flash which will in turn load the operating system. Since the firmware is much more powerful, it has the ability to load the OS from any of the storage media. Examples of single board computers with SPI flash include A20-OLinuXino-Lime2 and !RockPro64.
+
+This firmware approach can be used even when SPI flash is not available. Say, one wants to boot from a USB drive and the board does not support booting from it. Firmware can be installed on an SD card (a very tiny one is sufficient) and inserted into the board. Then USB disk will contain !FreedomBox as we wish it. When the board starts, it boots the firmware from SD card which in turn boots the operating system from USB drive or any other storage.
+
+This firmware approach also allows us to use generic download images that work for a large number of hardware boards. While increasing the effort for the user a bit more, it has the advantage of allowing us to support a lot more hardware and allow the OS to be present on any storage media.
+
+When special firmware is needed for a single board computer, !FreedomBox manual for the board discusses how to to obtain and install the firmware before proceeding with installation of !FreedomBox.
+
+=== Storage ===
+
+!FreedomBox can run from various storage media supported by your computer. Choosing the storage is about balancing reliability, capacity and speed against cost. A minimum storage capacity of 8GB is recommended for running !FreedomBox.
+
+==== Secure Digital (SD) Card ====
+
+SD cards are common on single board computers. Most single board computers can boot directly from an SD card without any additional tweaks.
+
+SD cards are typically slowest among the available storage media. Expect your !FreedomBox to perform certain operations slower on these disks. Not all SD cards perform similarly and some perform much better than others. When buying an SD card, pick a card with a speed class of at least 10 (written on the card as a circle around the number 10) or UHS speed class 1 (written on the card as a number 1 inside a bucket). UHS speed class 3 (written on the card as number 3 inside a bucket) or application speed class 1 or above (written as A1 and A2) will perform much better. Finally, users of !FreedomBox have reported cases where SD cards have failed. So, other storage media should be preferred for higher reliability.
+
+==== Embedded MultiMediaCard (eMMC) ====
+
+Many recently released single board computers support eMMC cards. Most single board computers can boot directly from an eMMC without any additional tweaks.
+
+eMMC is sometimes soldered onto the board and you will need to choose the size of eMMC when buying the board. An example of this is the Olimex's A20-OLinuXino-Lime2 board. Other times, a manufacturer will provide eMMC as pluggable peripheral. With this approach, you can add eMMC after you buy the board or upgrade existing one with higher capacity. Do not detach and reattach such pluggable eMMCs too often. They have a very limited number of wear cycles (< 100).
+
+eMMC are much faster than SD cards and spinning disk HDDs but are significantly slower than SSDs. They have much better random write speeds which are needed for many !FreedomBox operations. In general, they should be preferred over SD cards.
+
+!FreedomBox image can be setup on an eMMC in two ways. For a detachable eMMC, there are eMMC to USB converters available. Detach the eMMC from the board, attach it to the USB converter and plug it into your machine and proceed with writing !FreedomBox on it as one would for an SD card. In case the eMMC is not detachable, boot the computer with a media other than the eMMC such as an SD card or USB disk. It could be any operating system. After booting, the eMMC will show up as an additional disk. [[FreedomBox/Download|Download]] and write !FreedomBox image onto it as one would for an SD card.
+
+==== USB Disk Drive ====
+
+Most computers and single board computers have USB ports. These ports accept storage media such as USB flash drives, SSDs or HDDs.
+
+A USB flash drive can also serve as a storage medium for running !FreedomBox. USB 2.0 flash drives are much slower and comparable to SD cards in their performance. USB 3.0 flash drives yield much better performance. Both USB flash drives and SD cards use similar technology so the read/write cycles and hence the reliability as similarly limited.
+
+Apart from USB flash drives, solid state drives (SSDs) and hard disk drives (HDDs) can be inserted into USB ports. This is possible either by buying drives with USB interface or by using convertors such as USB to SATA or USB to M.2 interface. Both SSDs and HDDs have much higher reliability compared to SD cards, eMMC or USB flash drives. These should be preferred whenever possible. In addition, SSDs provide excellent performance when connected via USB 3.0 interface.
+
+When connecting SSDs and HDDs to USB ports on single board computers, care should be taken about the power supply to the drive. If the drive has an extra power supply there is nothing to worry about. Otherwise, ensure that the single board computer is able to power the drive by checking the power requirements of the drive and what the board supports. For the board, always use a power adapter that can supply the minimum current recommended by the hardware manufacturer. Power supply that can provide higher current than needed is preferable but the voltage supplied should match the manufacturer recommendation exactly. Keep in mind that some cheap power supplies don't supply the current they promise to.
+
+Setting up a !FreedomBox image on a USB (flash, SSD or HDD) drive can be straight forward as most computers have USB ports. Plug-in the USB drive to your computer, [[FreedomBox/Download|download]] and write the !FreedomBox image to the USB drive. While laptops, desktops and virtual machines can boot from a USB drive without intervention, many single board computers can't boot from USB drives. To address this, a separate firmware is needed. See firmware section for setting this up.
+
+==== SATA disk drive ====
+
+Some desktops, laptops and single board computers support a SATA interface to connect a solid state drive (SSD) or a hard disk drive (HDD). An example of a single board computer supporting SATA interface is the Olimex's A20-OLinuXino-Lime2. SATA protocol is also used for mSATA ports or M.2 slots (with a B-Key or an M-key). Both SSDs and HDDs have much higher reliability compared to SD cards, eMMC or USB flash drives. SATA interface provides very good data transfer rates (but not as good as NVMe drives based on PCIe). These should be preferred over SD cards, eMMCs or USB flash drives whenever possible. 
+
+When connecting SSDs and HDDs to SATA ports on single board computers, care should be taken about the power supply to the drive. If the drive has an extra power supply there is nothing to worry about. Otherwise, ensure that the single board computer is able to power the drive by checking the power requirements of the drive and what the board supports. Always use a power adapter that can supply the minimum current recommended by the hardware manufacturer. Power supply that can provide higher current than needed is preferable but voltage should match the recommendation exactly. Keep in mind that some cheap power supplies don't supply the current they promise to.
+
+To setup !FreedomBox image on a SATA disk drive, boot the computer with a media other than the SATA disk such as an SD card. It could be any operating system. After booting, the SATA disk will show up as an additional disk. [[FreedomBox/Download|Download]] and write !FreedomBox image onto it as one would for an SD card. While laptops, desktops and virtual machines can boot from a SATA drives without additional intervention, many single board computers can't boot from SATA drives. To address this, a separate firmware disk is needed. See firmware section for setting this up.
+
+==== NVMe disk drive ====
+
+Most desktops, laptops and some single board computers support an NVMe interface to connect a solid state drive (SSD). This support is provided either with an M.2 slot (with a B-key or an M-key) or by providing a PCIe expansion slot. If a PCIe expansion slot is provided, a PCIe to M.2 convertor can be used to accommodate an NVMe drive. An example of a single board computer supporting an M.2 slot is the Radxa's Rock Pi 4 board. An example of single board computer providing PCIe slot is the Pine64's !RockPro64 board. NVMe based SSD have much higher reliability compared to SD cards, eMMC or USB flash drives. NVMe drives provide the fastest data transfer rates. These should be preferred over all other types of drives whenever possible. 
+
+When connecting NVMe drives to single board computers, care should be taken about the power supply to the drive. Ensure that the single board computer is able to power the drive by checking the power requirements of the drive and what the board supports. Always use a power adapter that can supply the minimum current recommended by the hardware manufacturer. Power supply that can provide higher current than needed is preferable but voltage should match the manufacturer recommendation exactly. Keep in mind that some cheap power supplies don't supply the current they promise to.
+
+To setup !FreedomBox image on an NVMe disk drive, boot the computer with a media other than the NVMe disk such as an SD card. It could be any operating system. After booting NVMe disk will show up as an additional disk. [[FreedomBox/Download|Download]] and write !FreedomBox image onto it as one would for an SD card. While laptops, desktops and virtual machines can boot from NVMe drives without intervention, many single board computers can't boot from NVMe drives. To address this a separate firmware disk is needed. See firmware section for setting this up.
+
+== Building Your Own Images ==
+
+All !FreedomBox disk images for different hardware is built by the project using a tool known as [[FreedomBox/Maker|Freedom Maker]]. If for some reason, you wish to build your own images instead of downloading the provided images, use this tool. The README file in the project provides information about the list of hardware build targets available and how to build images.
+
+=== Status of Software Used ===
+
+ * All the software present in !FreedomBox images is from Debian repositories. There are some minor tweaks done by the [[FreedomBox/Maker|Freedom Maker]] script.
+ * All software present in the images is DFSG compliant free software except in case of Raspberry Pi images where the firmware package is non-free software.
+ * All images use the Linux kernel from Debian which is in turn based on the mainline Linux kernel.
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
+
+Images are licensed under various creative commons licenses.  See individual linked pages for attribution information.

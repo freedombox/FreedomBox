@@ -46,6 +46,11 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def _is_safe_path(basedir, path):
+    """Return whether a path is safe."""
+    return os.path.realpath(path).startswith(basedir)
+
+
 def subcommand_setup(_):
     """Perform first time setup operations."""
     setup()
@@ -105,6 +110,11 @@ def subcommand_delete(arguments):
     """Delete a wiki or blog."""
     html_folder = os.path.join(SITE_PATH, arguments.name)
     wiki_folder = os.path.join(WIKI_PATH, arguments.name)
+
+    if not (_is_safe_path(SITE_PATH, html_folder)
+            and _is_safe_path(WIKI_PATH, wiki_folder)):
+        print('Error: {0} is not a correct name.'.format(arguments.name))
+        exit(1)
 
     try:
         shutil.rmtree(html_folder)

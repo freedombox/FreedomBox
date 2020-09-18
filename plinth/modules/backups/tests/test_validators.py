@@ -34,8 +34,10 @@ def test_repository_paths_validation():
 
 def test_repository_username_validation():
     """Test that usernames in repository string are validated properly."""
-    valid_usernames = ['sshuser', 'cypher_punk-2077', '_user', '_-_']
-    invalid_usernames = ['1two', 'somebody else']
+    valid_usernames = [
+        'sshuser', 'cypher_punk-2077', '_user', '_-_', '1two', '1234'
+    ]
+    invalid_usernames = ['somebody else']
     path_string = '{}@example.org:~/backups'
     _validate_repository(valid_usernames, invalid_usernames, path_string)
 

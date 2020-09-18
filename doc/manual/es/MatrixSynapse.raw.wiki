@@ -1,0 +1,80 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/MatrixSynapse|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Matrix Synapse (Servidor de Mensajería Instantánea) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/MatrixSynapse/Matrix-icon_en_V01.png|icono de Matrix Synapse}} ||
+
+'''Disponible desde:''' versión 0.14.0
+
+=== ¿Qué es Matrix? ===
+[[https://matrix.org/|Matrix]] es un estándar abierto para comunicaciones sobre IP en tiempo real interoperables y descentralizadas. ''Synapse'' es la implementación de referencia de un servidor Matrix. Se puede usar para montar mensajería instantánea sobre !FreedomBox para albergar grandes salones de chat,  comunicaciones cifradas punto a punto y llamadas de audio/vídeo.  
+Matrix Synapse es una aplicación federada en la que puede haber salas de chat en un servidor y los usuarios de cualquier otro servidor de la red federada pueden unirse a ellas.  [[https://matrix.org/docs/guides/faq.html|Más información]] acerca de Matrix.
+
+=== ¿Cómo acceder a tu servidor Matrix Synapse? ===
+
+Para acceder al servidor Matrix Synapse recomendamos el cliente [[https://element.io/|Element]]. Puedes [[https://element.io/get-started|descargar]] Element para escritorio.  Las aplicaciones para Android e iOS están disponibles en sus tiendas (''app stores'') respectivas.
+
+=== Configurar Matrix Synapse en tu FreedomBox ===
+
+Para habilitar Matrix, primero navega a la página de tu servidor de chat (Matrix Synapse) e instálalo. Matrix necesita un nombre de dominio válido configurado.  Tras la instalación, se te pedirá que lo configures seleccionandolo de entre un menú desplegable con dominios disponibles.  Los dominios se configuran en la página Sistema -> Configuración y '''actualmente no podrás cambiar el dominio''' una vez esté configurado.  Tras configurar un dominio verás que el servicio se está ejecutando. El servicio estará accesible en el dominio de !FreedomBox configurado.
+
+Tendrás que configurar tu router para que reenvíe el puerto 8448 a tu !FreedomBox.
+
+Todos los usuarios registrados en tu !FreedomBox tendrán sus IDs Matrix  `@usuario:dominio`. Si está habilitado el registro público tu cliente se puede usar también para registrar una cuenta de usuario nueva.
+
+=== Federarse con otras instancias Matrix ===
+
+Podrás interactuar con cualquier otra persona que ejecute otra instancia de Matrix.  Esto se hace simplemente iniciando una conversación con ellos usando su matrix ID que seguirá el formato `@su-usuario:su-dominio`.  También podrás unirte a salas de otros servidores y tener llamadas de audio/video con contactos de otros servidores.
+
+=== Uso de Memoria ===
+El servidor de referencia Synapse implementado en Python es conocido por consumir mucha RAM, especialmente al cargar salones grandes con miles de participantes como #matrix:matrix.org. Se recomienda evitar unirse a estos salones si tu dispositivo !FreedomBox solo tiene 1 GiB RAM o menos. Debería ser seguro unirse a salas con hasta 100 participantes. El equipo de Matrix está trabajando en una implementación de servidor Matrix escrita en Go llamada ''Dendrite'' que debería tener mejor rendimiento en entornos con poca memoria.
+
+Algunos salones públicos muy grandes de la red Matrix están también disponibles como canales IRC (p.ej. #freedombox:matrix.org está disponible también como  #freedombox en irc.debian.org). Es mejor usar IRC en vez de Matrix para estos salones tán grandes. Puedes unirte a los canales de IRC usando [[FreedomBox/Manual/Quassel|Quassel]].
+
+=== Uso Avanzado ===
+
+ 1. Si quieres crear una gran cantidad de usuarios en tu servidor de Matrix Synapse usa los siguientes comandos en una shell remota como usuario root:
+  {{{
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 | sed "s+^+registration_shared_secret: +" > /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+chmod 600 /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+chown matrix-synapse:nogroup /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+systemctl restart matrix-synapse
+register_new_matrix_user -c /etc/matrix-synapse/conf.d/registration_shared_secret.yaml
+}}}
+ 1. Si quieres ver la lista de usuarios registrados en Matrix Syanpse haz lo siguiente como usuario root:
+  {{{
+apt install sqlite3
+echo 'select name from users' | sqlite3 /var/lib/matrix-synapse/homeserver.db  
+}}}
+ 1. Para crear una comunidad en Matrix Synapse se necesita un usuario Matrix con privilegios de admin en el servidor. Para dárselos a `miusuario` ejecuta los siguientes comandos como usuario root:
+   {{{
+sudo apt install sqlite3
+echo "UPDATE users SET admin=1 WHERE name='@miusuario:dominio'" | sudo sqlite3 /var/lib/matrix-synapse/homeserver.db  
+}}}
+
+=== Redirección de Puertos ===
+
+Si tu !FreedomBox está detrás de un router, necesitarás configurar la redirección de los siguientes puertos para Matrix:
+ * UDP 3478
+ * TCP 3478
+ * UDP 3479
+ * TCP 3479
+ * UDP 5349
+ * TCP 5349
+ * UDP 5350
+ * TCP 5350
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

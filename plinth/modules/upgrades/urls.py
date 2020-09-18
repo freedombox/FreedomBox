@@ -10,5 +10,9 @@ from . import views
 urlpatterns = [
     url(r'^sys/upgrades/$', views.UpgradesConfigurationView.as_view(),
         name='index'),
+    url(r'^sys/upgrades/activate-backports/$', views.activate_backports,
+        name='activate-backports'),
+    url(r'^sys/upgrades/firstboot/backports/$',
+        views.BackportsFirstbootView.as_view(), name='backports-firstboot'),
     url(r'^sys/upgrades/upgrade/$', views.upgrade, name='upgrade'),
 ]

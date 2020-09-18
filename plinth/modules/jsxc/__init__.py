@@ -42,7 +42,8 @@ class JSXCApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('JSXC'), icon_filename='jsxc',
                                short_description=_('Chat Client'),
-                               description=_description, clients=clients)
+                               description=_description, manual_page='JSXC',
+                               clients=clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-jsxc', info.name, info.short_description,
@@ -70,16 +71,6 @@ class JSXCApp(app_module.App):
         static_files = StaticFiles('static-files-jsxc',
                                    directory_map=directory_map)
         self.add(static_files)
-
-
-def init():
-    """Initialize the JSXC module"""
-    global app
-    app = JSXCApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

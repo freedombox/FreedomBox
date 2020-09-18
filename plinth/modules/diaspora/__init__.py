@@ -112,20 +112,11 @@ class DiasporaApp(app_module.App):
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut to use configured domain name for URL."""
+
     def enable(self):
         """Set the proper shortcut URL when enabled."""
         super().enable()
         self.url = 'https://diaspora.{}'.format(get_configured_domain_name())
-
-
-def init():
-    """Initialize the Diaspora module."""
-    global app
-    app = DiasporaApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

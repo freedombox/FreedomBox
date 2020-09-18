@@ -5,9 +5,6 @@ set -e
 # Source debconf library.
 . /usr/share/debconf/confmodule
 
-daemonuser=plinth
-daemongroup=plinth
-
 # Due to a change in sudo, now it runs PAM modules even on password-less
 # invocations. This leads to plinth not being able to run root privileges. This
 # is because of our own restrictions in /etc/security/access.conf. Since Plinth
@@ -29,7 +26,7 @@ case "$1" in
 
         if [ ! -e '/var/lib/freedombox/is-freedombox-disk-image' ]; then
             umask 377
-            cat /dev/urandom | base64 | head -c16 > /var/lib/plinth/firstboot-wizard-secret
+            base64 < /dev/urandom | head -c 16 | sed -e 's+$+\n+' > /var/lib/plinth/firstboot-wizard-secret
             chown plinth:plinth /var/lib/plinth/firstboot-wizard-secret
             db_subst plinth/firstboot_wizard_secret secret $(cat /var/lib/plinth/firstboot-wizard-secret)
             db_input high plinth/firstboot_wizard_secret || true

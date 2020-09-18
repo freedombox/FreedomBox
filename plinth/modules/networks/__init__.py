@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import daemon, menu, network
+from plinth import daemon, kvstore, menu, network
 
 version = 1
 
@@ -46,10 +46,6 @@ _description = [
 logger = Logger(__name__)
 
 app = None
-
-NETWORK_TOPOLOGY_TYPE_KEY = 'networks_topology_type'
-ROUTER_CONFIGURATION_TYPE_KEY = 'networks_router_configuration_type'
-INTERNET_CONNECTION_TYPE_KEY = 'networks_internet_type'
 
 
 class NetworksApp(app_module.App):
@@ -87,18 +83,43 @@ class NetworksApp(app_module.App):
         return results
 
 
-def init():
-    """Initialize the Networks module."""
-    global app
-    app = NetworksApp()
-    app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     actions.superuser_run('networks')
     helper.call('post', app.enable)
+
+
+def get_network_topology_type():
+    """Return the currently configured network topology type or default."""
+    return kvstore.get_default('networks_topology_type', 'to_router')
+
+
+def set_network_topology_type(network_topology_type):
+    """Store the network topology type."""
+    kvstore.set('networks_topology_type', network_topology_type)
+
+
+def get_internet_connection_type():
+    """Return the currently configured internet connection type or default."""
+    return kvstore.get_default('networks_internet_type', 'unknown')
+
+
+def set_internet_connection_type(internet_connection_type):
+    """Store the internet connection type."""
+    return kvstore.set('networks_internet_type', internet_connection_type)
+
+
+def get_router_configuration_type():
+    """Return the currently configured router configuration type or default."""
+    return kvstore.get_default('networks_router_configuration_type',
+                               'not_configured')
+
+
+def set_router_configuration_type(router_configuration_type):
+    """Store the router configuration type."""
+    return kvstore.set('networks_router_configuration_type',
+                       router_configuration_type)
 
 
 def _get_shared_interfaces():

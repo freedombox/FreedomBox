@@ -1,0 +1,34 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/PageKite|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== PageKite (Visibilidad Publica) ==
+
+=== ¿Qué es PageKite? ===
+
+!PageKite hace inmediata y públicamente accesibles desde internet a los sitios web y servicios locales sin tener que crear tu mismo una dirección IP pública. Lo hace tunelando protocolos como HTTPS o SSH a través de cortafuegos y NAT. Usar !PageKite require ana cuenta en un servicio de repetidor de !PageKite. https://pagekite.net es uno de de estos servicios.
+
+Un servicio de repetidor de !PageKite te permitirá crear cometas (''kites''). Las cometas son similares a los nombres de dominio pero con ventajas y desventajas diferentes. Una cometa puede tener varios servicios configurados. Se sabe que !PageKite funciona con HTTP, HTTPS, y SSH, y muchas funcionan con otros servicios, pero no todas.
+
+=== Usar PageKite ===
+
+ 1. Créate una cuenta en un servicio de repetidor de !PageKite.
+ 1. Añade una cometa a tu cuenta. Anota el nombre y el secreto de tu cometa.
+ 1. En !FreedomBox, vé a la solapa "Configurar !PageKite" de la página Visibilidad Publica (!PageKite).
+ 1. Marca la caja "Habilitar !PageKite" e introduce el nombre y el secreto de tu cometa. Haz clic en "Grabar propiedades".
+ 1. En la solapa "Servicios Estándar" puedes habilitar HTTP y HTTPS (recomendado) y SSH (opcional).
+    * HTTP se necesita para obtener el certificado ''Let's Encrypt''. Puedes deshabilitarlo (HTTPS) más tarde.
+ 1. En la página [[es/FreedomBox/Manual/LetsEncrypt|Certificados (Let's Encrypt)]] puedes obtener un certificado ''Let's Encrypt'' para el nombre de tu cometa.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

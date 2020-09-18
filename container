@@ -112,23 +112,29 @@ in /run/systemd/nspawn. All machinectl commands should work.
 """
 
 import argparse
+import datetime
 import ipaddress
 import itertools
 import json
 import logging
 import os
 import pathlib
+import re
 import subprocess
 import sys
 import tempfile
 import time
 import urllib.parse
 
+from urllib.request import urlopen
+
 URLS = {
     'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
               'amd64/stable/freedombox-stable-free_buster_all-amd64.img.xz',
     'testing': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
-               'amd64/testing/freedombox-testing-free_latest_all-amd64.img.xz',
+               'amd64/testing/freedombox-testing-free_dev_all-amd64.img.xz',
+    'unstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+                'amd64/nightly/freedombox-unstable-free_dev_all-amd64.img.xz',
 }
 
 TRUSTED_KEYS = ['013D86D8BA32EAB4A6691BF85D4153D6FE188FC8']
@@ -172,32 +178,41 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    distributions = list(URLS.keys())
+
     # Up
     subparser = subparsers.add_parser('up', help='Bring up the container')
     subparser.add_argument(
-        '--distribution', choices=['stable', 'testing'], default='testing',
+        '--distribution', choices=distributions, default='testing',
         help='Distribution of the image to download and setup')
     subparser.add_argument('--image-size', default='8G',
                            help='Disk image size to resize to after download')
 
     # ssh
     subparser = subparsers.add_parser('ssh', help='SSH into the container')
-    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+    subparser.add_argument('--distribution', choices=distributions,
                            default='testing',
                            help='Distribution of the container to SSH into')
 
     # Stop
     subparser = subparsers.add_parser('stop', help='Stop the container')
-    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+    subparser.add_argument('--distribution', choices=distributions,
                            default='testing',
                            help='Distribution of the container to stop')
 
     # Destroy
     subparser = subparsers.add_parser('destroy',
                                       help='Destroy the container image')
-    subparser.add_argument('--distribution', choices=['stable', 'testing'],
+    subparser.add_argument('--distribution', choices=distributions,
                            default='testing',
                            help='Distribution of the image to delete')
+
+    # Update
+    subparser = subparsers.add_parser(
+        'update', help='Update the container image to the latest version')
+    subparser.add_argument('--distribution', choices=distributions,
+                           default='testing',
+                           help='Distribution of the image to update')
 
     return parser.parse_args()
 
@@ -269,10 +284,13 @@ def _get_systemd_nspawn_version():
     systemd_version = float(process.stdout.decode().split()[1])
 
 
-def _download_file(url, target_file):
+def _download_file(url, target_file, force=False):
     """Download a file from remote URL."""
-    if target_file.exists():
+    if target_file.exists() and not force:
         return
+
+    if force:
+        os.remove(target_file)
 
     partial_file = target_file.with_suffix(target_file.suffix + '.partial')
 
@@ -362,17 +380,17 @@ def _get_overlay_folder(distribution):
     return folder.resolve()
 
 
-def _download_disk_image(distribution):
+def _download_disk_image(distribution, force=False):
     """Download and unpack FreedomBox disk image."""
     work_directory.mkdir(exist_ok=True)
 
     url = URLS[distribution]
 
     target_file = _get_compressed_image_path(distribution)
-    _download_file(url, target_file)
+    _download_file(url, target_file, force=force)
 
     signature_file = target_file.with_suffix(target_file.suffix + '.sig')
-    _download_file(url + '.sig', signature_file)
+    _download_file(url + '.sig', signature_file, force=force)
 
     _verify_signature(target_file, signature_file)
 
@@ -401,6 +419,8 @@ def _resize_disk_image(image_file, new_size):
         ['sudo', 'kpartx', '-avs', str(image_file)], stdout=subprocess.PIPE,
         check=True)
     partition = '/dev/mapper/' + process.stdout.decode().split()[2]
+    subprocess.run(['sudo', 'btrfstune', '-uf', partition], check=True)
+
     with tempfile.TemporaryDirectory(
             dir=work_directory.resolve()) as mount_point:
         subprocess.run(['sudo', 'mount', partition, mount_point], check=True)
@@ -432,6 +452,18 @@ def _runc(image_file, command, **kwargs):
         **kwargs)
 
 
+def _get_interface_name(distribution):
+    """Return the name of the interface."""
+    interface = f've-fbx-{distribution}'
+    process = subprocess.run(['systemd-nspawn', '--version'],
+                             stdout=subprocess.PIPE, check=True)
+    version = process.stdout.decode().splitlines()[0].split()[1]
+    if int(float(version)) < 245:
+        return interface[:14]
+
+    return interface
+
+
 def _setup_nm_connection(distribution):
     """Create a network manager conn. on host for DHCP/DNS with container."""
     connection_name = f'fbx-{distribution}-shared'
@@ -446,7 +478,7 @@ def _setup_nm_connection(distribution):
     properties = {
         'connection.id': connection_name,
         'connection.type': '802-3-ethernet',
-        'connection.interface-name': f've-fbx-{distribution}',
+        'connection.interface-name': _get_interface_name(distribution),
         'connection.autoconnect': 'yes',
         'ipv4.method': 'shared',
     }
@@ -738,7 +770,7 @@ def _get_ssh_command(ip_address, distribution):
     """Exec an SSH command."""
     public_key = work_directory / 'ssh' / 'id_ed25519'
     if ipaddress.ip_address(ip_address).is_link_local:
-        ip_address = f'{ip_address}%ve-fbx-{distribution}'
+        ip_address = f'{ip_address}%' + _get_interface_name(distribution)
 
     return [
         'ssh', '-i',
@@ -759,6 +791,25 @@ def _wait_for(method):
 
     logger.error('Failed')
     sys.exit(1)
+
+
+def _get_latest_image_timestamp(distribution):
+    """Get the timestamp of the latest available image."""
+    url = URLS[distribution]
+    response = urlopen(url[0:url.rindex('/')])
+    page_contents = response.read().decode()
+    str_time = re.findall(r'\d{2}-[A-Z][a-z]{2}-\d{4} \d{2}:\d{2}',
+                          page_contents)[0]
+    return datetime.datetime.strptime(str_time, '%d-%b-%Y %H:%M').timestamp()
+
+
+def _is_update_required(distribution):
+    """Compare local image timestamp against the latest image timestamp."""
+    filename = URLS[distribution].split('/')[-1]
+    local_image_timestamp = os.path.getmtime(work_directory / filename)
+    one_day = datetime.timedelta(days=1).total_seconds()
+    latest_image_timestamp = _get_latest_image_timestamp(distribution)
+    return latest_image_timestamp - local_image_timestamp > one_day
 
 
 def subcommand_up(arguments):
@@ -795,6 +846,15 @@ def subcommand_destroy(arguments):
     """Destroy the disk image."""
     _terminate(arguments.distribution)
     _destroy(arguments.distribution)
+
+
+def subcommand_update(arguments):
+    """Update the disk image."""
+    if _is_update_required(arguments.distribution):
+        logger.info("Updating...")
+        _download_disk_image(arguments.distribution, force=True)
+    else:
+        logger.info("Already using the latest image")
 
 
 def main():

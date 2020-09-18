@@ -1,0 +1,74 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/MiniDLNA|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== MiniDLNA (Servidor multimedia básico) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/MiniDLNA/MiniDLNA-icon_en_V01.png|icono de MiniDLNA}} ||
+
+'''Disponible desde''': versión 19.23
+
+MiniDLNA es un servidor multimedia que intenta ser compatible con clientes DLNA/UPnP.
+
+Nota: Este servicio solo está disponible en redes configuradas como zona "interna". Tampoco está disponble a través de [[es/FreedomBox/Manual/OpenVPN|OpenVPN]] (es incompatible).
+
+=== ¿Qué es UPnP/DLNA? ===
+
+UPnP (''Universal plug & play'') es un conjunto de protocolos de red que permite a los dispositivos de una red, como PCs, TVs, impresoras etc, reconocerse entre sí y establecer comunicación para compartir datos. Es un protocolo con cero configuración y require solo un servidor multimedia y un reproductor multimedia compatibles con el protocolo.
+
+DLNA se deriva de UPnP como una forma de estandarizar interoperabilidad entre medios. Conforma un estándar/certificación que cumplen muchos dispositivos electrónicos de consumo.
+
+=== Desplegando MiniDLNA en tu FreedomBox. ===
+
+Para instalar/habilitar el servidor multimedia necesitas navegar a la página MiniDLNA y habilitarlo. Se intenta que la aplicación esté disponible en la red interna y por ello requiere asignarle un interfaz de red configurado para tráfico interno.
+
+Tras la instalación queda disponible una página web en https://<tu-freedombox>/_minidlna. 
+Incluye información de cuántos ficheros detecta el servidor, cuántas conexiones existen etc. Esto resulta muy útil cuando conectas discos externos con contenido para para verificar que detecta los nuevos archivos como debe. Si no ocurre así, desconectar y activar el servidor lo arreglará. 
+
+=== Usar MiniDLNA para reproducir contenidos multimedia en tus dispositivos ===
+
+Cualquier dispositivo compatible con DLNA debiera ser capaz de detectar, hojear y reproducir automáticamente contenido multimedia de MiniDLNA en !FreedomBox. Los siguientes dispositivos y reproductores se han probado:
+
+ * '''GNOME Videos''': Videos es el reproductor multimedia por defecto en el popular entorno de escritorio GNU/Linux GNOME. Abre Videos, cambia a 'Canales'. Deberías ver un canal denominado 'freedombox: minidlna'. Deberías poder hojear y reproducir su contenido.
+ * '''VLC media player''': VLC es un reproductor multimedia para GNU/Linux, Android, Windows y macOS muy popular. Abre VLC y haz clic en 'Ver -> Lista de reproducción'. En la barra lateral de la lista de reproducción que aparece selecciona 'Universal Plug'n'Play'. Deberías ver un elemento denominado 'freedombox: minidlna'. Deberías poder hojear y reproducir su contenido.
+ * '''Kodi''': Kodi es un software popular de centro multimedia con un interfaz de usuario diseñado para televisores. Abre Kodi, ve a 'Sistema -> Configuración del Servicio -> UPnP/DLNA' y 'Habilitar soporte UPnP'. Visita entonces 'Home -> Videos -> Archivos -> Añadir videos... -> Navegar -> dispositivos UPnP'. Deberías ver 'freedombox: minidlna'. Selecciónalo y elige 'OK'. Entonces, elige 'OK en el diálogo 'Anadir entrada de video'. A partir de ahora , deberías ver 'freedombox: minidlna' en la sección 'Videos -> Archivos'. Deberías poder hojear y reproducir su contenido. Para más información mira [[https://kodi.wiki/view/Settings/Services/UPnP_DLNA|la documentación de Kodi]].
+ * '''Roku''': Roku es un aparato conectado a una TV para reproducir contenido de servicios de retransmisión por Internet. También hay muchas TVs que llevan a Roku integrado. Encuentra en el interfaz de Roku un canal denominado 'Roku Media Player' y ábrelo. Deberías ver un elemento denominado 'freedombox: minidlna'. Deberías poder hojear y reproducir su contenido.
+ * '''Rhythmbox''': Rhythmbox es el reproductor de sonido por defecto en el popular entorno de escritorio GNU/Linux GNOME. Abre Rhythmbox y asegura que el panel lateral esté abierto pulsando en 'Menú de Aplicación -> Ver -> Panel Lateral'. En el panel lateral deberías ver 'freedombox:minidlna' bajo la sección 'Compartidos'. Deberías poder hojear y reproducir sus archivos de sonido. Los archivos de video no aparecerán.
+
+=== Formatos multimedia soportados ===
+
+MiniDLNA soporta una amplia variedad de formatos de archivo de video y sonido.
+
+ * '''Video''': Archivos terminados en .avi, .mp4, .mkv, .mpg, .mpeg,  .wmv, .m4v, .flv, .mov, .3gp, etc.
+ * '''Sonido''': Archivos terminados en .mp3, .ogg, .flac, .wav, .pcm, .wma, .fla, .aac, etc.
+ * '''Imágen''': Archivos terminados en .jpg, .jpeg
+ * '''Listas de Reproducción''': Archivos terminados enh .m3u, .pls
+ * '''Subtítulos''': Archivos terminados en .srt, .smi
+
+Obsérvese que '''no''' soporta archivos con las siguientes extensiones. Parece que renombrar el archivo a una extensión reconocida funciona el la mayoría de casos.
+
+ * '''Video''': Archivos terminados en .webm
+
+Además del soporte al formato de archivo por parte de MiniDLNA, tu dispositivo o reproductor de medios necesita soportar el codec de sonido/video con el que se haya codificado tu contenido. MiniDLNA carece de la habilidad de traducir archivos a un codec compatible con el reproductor. Si te topas con problemas en la reproducción de contenido, usa VLC para identificar el codec empleado en el contenido y comprueba en la documentación de tu dispositivo o reproductor de medios si lo soporta.
+
+=== Sistemas de archivo para discos externos. ===
+
+Al usar un disco externo que se usa también desde sistemas Windows el mejor formato para el sistema de archivos es NTFS. NTFS conservará los permisos de acceso de Linux y la codificación UTF-8 para los nombres de fichero. Esto es útil si los nombres de archivos tienen tildes, eñes u otros signos raros.
+
+=== Enlaces externos ===
+
+ * http://minidlna.sourceforge.net (en)
+ * https://es.wikipedia.org/wiki/Digital_Living_Network_Alliance
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -2,8 +2,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import store_url, validate
+from plinth.modules.backups.api import validate as validate_backup
 from plinth.modules.jsxc import manifest as jsxc_manifest
 
 _clients = validate([{
@@ -66,8 +66,7 @@ _clients = validate([{
         'type': 'store',
         'os': 'ios',
         'store_name': 'app-store',
-        'url': 'https://itunes.apple.com/us/app/chatsecure'
-               '/id464200063'
+        'url': 'https://apps.apple.com/us/app/chatsecure/id464200063'
     }]
 }, {
     'name':

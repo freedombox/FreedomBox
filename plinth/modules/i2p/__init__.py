@@ -35,12 +35,6 @@ _description = [
       'configuration process.')
 ]
 
-port_forwarding_info = [
-    ('TCP', 4444),
-    ('TCP', 4445),
-    ('TCP', 6668),
-]
-
 tunnels_to_manage = {
     'I2P HTTP Proxy': 'i2p-http-proxy-freedombox',
     'I2P HTTPS Proxy': 'i2p-https-proxy-freedombox',
@@ -101,16 +95,6 @@ class I2PApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-i2p',
                                           groups=groups)
         self.add(users_and_groups)
-
-
-def init():
-    """Initialize the module."""
-    global app
-    app = I2PApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
 
 
 def setup(helper, old_version=None):

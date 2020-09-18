@@ -13,20 +13,13 @@ clients = validate([{
     'name':
         _('WireGuard'),
     'platforms': [{
-        'type':
-            'download',
-        'os':
-            'windows',
-        'url':
-            'https://download.wireguard.com/windows-client/'
-        'wireguard-amd64-0.0.23.msi'
+        'type': 'download',
+        'os': 'windows',
+        'url': 'https://download.wireguard.com'
     }, {
-        'type':
-            'download',
-        'os':
-            'macos',
-        'url':
-            'https://itunes.apple.com/us/app/wireguard/id1451685025?ls=1&mt=12'
+        'type': 'download',
+        'os': 'macos',
+        'url': 'https://apps.apple.com/us/app/wireguard/id1451685025'
     }, {
         'type': 'package',
         'format': 'deb',
@@ -42,13 +35,9 @@ clients = validate([{
         'store_name': 'google-play',
         'url': store_url('google-play', _wireguard_package_id)
     }, {
-        'type':
-            'store',
-        'os':
-            'ios',
-        'store_name':
-            'app-store',
-        'url':
-            'https://itunes.apple.com/us/app/wireguard/id1441195209?ls=1&mt=8'
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/us/app/wireguard/id1441195209'
     }]
 }])

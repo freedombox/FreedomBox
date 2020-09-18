@@ -1,0 +1,37 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Roundcube|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Roundcube (Cliente de Correo Electrónico (Email)) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Roundcube/Roundcube-icon_en_V01.png|icono de Roundcube}} ||
+
+'''Disponible desde''': versión 0.5
+
+=== ¿Qué es Roundcube? ===
+
+Roundcube es un cliente de correo electrónico (''email'') para navegador con un interfaz de usuario parecido a una aplicación de escritorio. Admite varios lenguajes. Roundcube usa el protocolo de acceso a mensajes de Internet (IMAP = ''Internet Message Access Protocol'') para acceder a los correos en un servidor remoto. Soporta MIME para enviar archivos adjuntos y en particular proporciona libreta de contactos, gestión de carpetas, búsquedas de mensajes y verificación ortográfica.
+
+=== Usar Roundcube ===
+
+Tras instalar Roundcube se puede acceder a él en {{{https://<tu_freedombox>/roundcube}}}. Introduce tu usuario y contraseña. El usuario de muchos servicios de correo electrónico suele ser la propia dirección completa, como ''usuario_de_ejemplo@servicio_de_ejemplo.org'', no solo el usuario ''usuario_de_ejemplo''. Introduce la dirección del servidor IMAP de tu servicio de correo electrónico en el campo ''Servidor''. Puedes probar a poner aquí tu nombre de dominio como ''servicio_de_ejemplo.org'' si la dirección es ''usuario_de_ejemplo@servicio_de_ejemplo.org'' y si esto no funciona consulta la dirección del servidor IMAP en la documentación de tu proveedor de correo electrónico. Se recomienda encarecidamente usar una conexión cifrada a tu servidor IMAP. Para ello inserta el prefijo  "imaps://" al principio de la dirección del servidor IMAP. Por ejemplo, `imaps://imap.servicio_de_ejemplo.org`.
+
+{{attachment:roundcube-riseup.png|Logging into your IMAP server|width=606}}
+
+=== Usar Gmail con Roundcube ===
+
+Si quieres usar Roundcube con tu cuenta Gmail necesitas habilitar primero el ingreso con contraseña en las preferencias de tu cuenta Google porque Gmail no va a permitir por defecto que ingresen aplicaciones mediante contraseña. Para hacerlo visita las [[https://www.google.com/settings/security/lesssecureapps|preferencias de la Cuenta Google]] y habilita ''Apps Menos seguras''. A continuación ingresa en Roundcube introduciendo tu dirección de Gmail como ''Usuario'' y tu contraseña. En el campo servidor pon `imaps://imap.gmail.com`.
+
+{{attachment:roundcube-gmail.png|Logging into Gmail|width=606}}
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

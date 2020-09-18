@@ -1,0 +1,65 @@
+#language es
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Syncthing|English]] - Español -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Syncthing (Sincronización de Archivos) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Syncthing/Syncthing-icon_en_V01.png|icono de Syncthing}} ||
+
+'''Disponible desde''': versión 0.14.0
+
+Con ''Syncthing'' instalado en tu !FreedomBox puedes sincronizar contenido desde otros dispositivos a tu !FreedomBox y vice-versa. Por ejemplo puedes mantener sincronizadas las fotos tomadas desde tu teléfono móvil con tu !FreedomBox.
+
+Syncthing es una solución de sincronización entre pares, no una de tipo cliente-servidor. Esto implica que !FreedomBox no es realmente el servidor y tus otros dispositivos no son sus clientes. Desde la perspectiva de Syncthing todos son dispositivos equivalentes. Puedes emplear Syncthing para sincronizar tus archivos  entre cualquiera de tus dispositivos. La ventaja que aporta !FreedomBox consiste en que como es un servidor está encendida (casi) siempre. Supón que quieres sincronizar las fotos de tu teléfono con tu portátil. Si sincronizas tu teléfono con !FreedomBox el portátil podrá obtenerlas desde la !FreedomBox cuando vuelva a conectarse. No necesitas preocuparte de cuando se conectan los otros dispositivos. Si tu !FreedomBox es uno de los dispositivos configurados con la carpeta compartida de Syncthing puedes estár tranquilo que tus otros dispositivos se sincronizarán en cuanto se conecten.
+
+Tras instalarlo sigue estas instrucciones del proyecto Syncthing: [[https://docs.syncthing.net/intro/getting-started.html|Arrancando]].
+ 
+Syncthing permite compartir selectivamente carpetas individuales. Antes de compartir los dispositivos tienen que estar emparejados leyendo códigos QR o introduciendo manualmente identificadores de dispositivo. Syncthing tiene un servicio de autodescubrimiento para identicar fácilmente a los otros dispositivos de la misma subred que tengan Syncthing instalado.
+
+Para acceder al cliente web de la instancia Syncthing que se ejecuta en tu !FreedomBox, usa la ruta `/syncthing`. Actualmente este cliente web está accesible solo a los usuarios de !FreedomBox que tengan privilegios de administrador aunque en alguna futura versión podría estarlo a todos los usuarios de !FreedomBox.
+
+{{attachment:Syncthing_GUI.png|Syncthing web interface|width=800}}
+
+Syncthing tiene apps Android disponibles en [[https://f-droid.org/repository/browse/?fdid=com.nutomic.syncthingandroid | F-Droid]] y [[https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid |Google Play]]. También hay disponibles aplicaciones de escritorio multiplataforma.
+
+
+Para más información acerca de Syncthing visita su [[https://syncthing.net | sitio web oficial]] y su [[https://docs.syncthing.net | documentación]]. 
+
+=== Sincronizar via Tor ===
+
+Syncthing debe sincronizar automáticamente con tu FreedomBox incluso cuando esta solo sea accesible como servicio Tor Onion.
+
+Si quieres enrutar tu cliente Syncthing via Tor configura la variable de entorno `all_proxy`:
+
+{{{
+$ all_proxy=socks5://localhost:9050 syncthing
+}}}
+
+Para más información mira la documentación de Syncthing acerca de [[https://docs.syncthing.net/users/proxying.html | el uso de proxies]].
+
+=== Evitar repetidores de Syncthing ===
+
+Syncthing emplea por defecto conexiones dinámicas para conectar con otros pares. Esto significa que si estás sincronizando a través de Internet, los datos quizá tengan que atravesar repetidores de Syncthing públicos para alcanzar tus dispositivos. Esto desaprovecha que tu !FreedomBox tenga una dirección IP pública.
+
+Al añadir tu !FreedomBox como dispositivo en otros clientes de Syncthing establece tu dirección como "tcp://<mi.dominio.freedombox>" en vez de "dinámica". Esto permite a tus pares Syncthing conectarse diréctamente a tu !FreedomBox eludiendo la necesidad de repetidores. También permite sincronización rápida bajo demanda si no quieres mantener a Syncthing ejecuándose todo el tiempo en tus dispositivos móviles.
+
+=== Usar Syncthing con otras aplicaciones ===
+
+==== Administrador de contraseñas ====
+
+Los administradores de contraseñas que almacenan sus bases de datos en ficheros son susceptibles de sincronizarse usando Syncthing. El siguiente ejemplo describe el uso de un administrador de contraseñas libre llamado KeePassXC en combinación con Syncthing para servir como remplazo para administradores de contraseñas privativos que almacenan tus contraseñas en la nube.
+
+KeePassXC almacena usuarios, contraseñas, etc en ficheros con la extensión .kdbx. Estos ficheros .kdbx se pueden almacenar en una carpeta compartida Syncthing para mantenerlos sincronizados en multiples máquinas. Hay disponibles, tanto para escritorio como para dispositivos móviles, aplicaciones de software libre que pueden leer este formato de fichero. Habitualmente sólo tienes que apuntar la aplicación al fichero .kdbx e introducir la contraseña maestra para acceder a tus credenciales almacenadas. Por ejemplo, el mismo fichero .kdbx se puede consultar empleando KeePassXC en el escritorio y KeePassDX en Android. Instalando una extensión se puede usar también KeePassXC para rellenar credenciales en los campos de ingreso (login) en el navegador.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

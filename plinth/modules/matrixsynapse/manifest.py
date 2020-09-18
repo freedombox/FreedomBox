@@ -2,15 +2,15 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import store_url, validate
+from plinth.modules.backups.api import validate as validate_backup
 
-_android_package_id = 'im.vector.alpha'
-_riot_desktop_download_url = 'https://riot.im/desktop.html'
+_android_package_id = 'im.vector.app'
+_element_desktop_download_url = 'https://element.io/get-started'
 
 clients = validate([{
     'name':
-        _('Riot'),
+        _('Element'),
     'platforms': [{
         'type': 'store',
         'os': 'android',
@@ -22,20 +22,25 @@ clients = validate([{
         'store_name': 'f-droid',
         'url': store_url('f-droid', _android_package_id)
     }, {
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/app/vector/id1083446067'
+    }, {
         'type': 'web',
-        'url': 'https://riot.im/app/#/home'
+        'url': 'https://app.element.io/'
     }, {
         'type': 'download',
         'os': 'gnu-linux',
-        'url': _riot_desktop_download_url,
+        'url': _element_desktop_download_url,
     }, {
         'type': 'download',
         'os': 'macos',
-        'url': _riot_desktop_download_url,
+        'url': _element_desktop_download_url,
     }, {
         'type': 'download',
         'os': 'windows',
-        'url': _riot_desktop_download_url,
+        'url': _element_desktop_download_url,
     }]
 }])
 

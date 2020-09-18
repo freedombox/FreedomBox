@@ -1,0 +1,54 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/GitWeb|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== GitWeb (Simple Git Hosting) ==
+||<tablestyle="float: right;"> {{attachment:Gitweb-icon_en_V01.png|Gitweb icon}} ||
+
+'''Available since''': version 19.19
+
+Git is a distributed version-control system for tracking changes in source code during software development. !GitWeb provides a web interface to Git repositories. You can browse history and content of source code, use search to find relevant commits and code. You can also clone repositories and upload code changes with a command-line Git client or with multiple available graphical clients. And you can share your code with people around the world.
+
+To learn more on how to use Git visit [[https://git-scm.com/docs/gittutorial|Git tutorial]].
+
+=== Managing the repositories ===
+
+After installation of !GitWeb, a new repository can be created. It can be marked as ''private'' to limit access.
+
+=== Access ===
+
+!GitWeb can be accessed after installation e.g. by the web client through {{{https://<my_freedombox_name>/gitweb}}}.
+
+
+
+=== HTTP basic auth ===
+
+!GitWeb on !FreedomBox currently supports HTTP remotes only. To avoid
+having to enter the password each time you pull/push to the repository, you can
+edit your remote to include the credentials.
+
+''Example:'' https://username:password@my.freedombox.rocks/gitweb/myrepo
+
+Your username and password will be encrypted. Someone monitoring the network traffic will notice the domain name only.<<BR>>
+'''Note:''' If using this method, your password will be stored in plain text in the local repository's {{{.git/config}}} file. For this reason, you should create a !FreedomBox user who has only access to the gitweb and never use an admin account.
+
+
+=== Mirroring ===
+
+Though your repositories are primarily hosted on your own !FreedomBox, you can
+configure a repository on another Git hosting system like GitLab as a mirror.
+
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

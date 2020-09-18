@@ -5,13 +5,14 @@ Discover, load and manage FreedomBox applications.
 
 import collections
 import importlib
+import inspect
 import logging
 import pathlib
 import re
 
 import django
 
-from plinth import cfg, setup
+from plinth import app, cfg, setup
 from plinth.signals import post_module_loading, pre_module_loading
 
 logger = logging.getLogger(__name__)
@@ -109,18 +110,24 @@ def _include_module_urls(module_import_path, module_name):
 
 
 def _initialize_module(module_name, module):
-    """Call initialization method in the module if it exists"""
+    """Perform module initialization"""
+
     # Perform setup related initialization on the module
     setup.init(module_name, module)
 
     try:
-        init = module.init
-    except AttributeError:
-        logger.debug('No init() for module - %s', module.__name__)
-        return
+        module_classes = inspect.getmembers(module, inspect.isclass)
+        app_class = [
+            cls for cls in module_classes if issubclass(cls[1], app.App)
+        ]
+        if module_classes and app_class:
+            module.app = app_class[0][1]()
 
-    try:
-        init()
+            if module.setup_helper.get_state(
+            ) != 'needs-setup' and module.app.is_enabled():
+                module.app.set_enabled(True)
+
+            logger.debug("Initialized %s", module.__name__)
     except Exception as exception:
         logger.exception('Exception while running init for %s: %s', module,
                          exception)

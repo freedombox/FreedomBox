@@ -67,13 +67,6 @@ class StorageApp(app_module.App):
         glib.schedule(3, udisks2.init, repeat=False)
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = StorageApp()
-    app.set_enabled(True)
-
-
 def get_disks():
     """Returns list of disks and their free space.
 

@@ -1,0 +1,52 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Sharing|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Sharing (File Publishing) ==
+||<tablestyle="float: right;"> {{attachment:Sharing-icon_en_V01.png|Sharing icon}} ||
+
+'''Available since''': version 0.25
+
+=== What Is Sharing App? ===
+
+Sharing app allows you to share content over the web. Shared content can be individual files or whole directories.
+
+The content can be shared publicly or restricted to the users of listed allowed groups. Allowed users will be able to access the shared content from their web browser at {{{https://your_freedombox/share/content_name}}}. Users not belonging to any of the allowed groups won't see or access the content through this mechanism.
+
+=== Setting Up Shares ===
+
+For the users to access the content through their browser it must exist and have a share. A share is an entry in the Sharing app relating:
+ * the Name (an thereby the URL) with which the users will ask for the content,
+ * the Disk Path of the content to be served and
+ * the sharing mode. On restricted mode, it also has the list of allowed groups.
+Many shares can coexist in the same server.
+
+Only admins can create, edit or remove shares. They'll find the Sharing app in the Apps section of !FreedomBox web interface. Sharing app is an easy to use web application with an evident interface.
+
+Each share has its own sharing mode (public or restricted) setting. Only groups recognized by !FreedomBox service can be combined in the list of allowed groups. Groups created in the CLI won't be offered by the Sharing app. 
+
+=== Providing/Updating Content ===
+
+The content can be created before or after the share is created and they can be updated independently.
+
+The content doesn't need to be provided by an admin either. Any user with write access to the share's disk path can create or update it.
+
+Multiple shares might point to the same content.
+
+If you are user of !FreedomBox and your admin refuses to create shares for you, and you don't need to restrict the access to your content, you still can fall back to the [[FreedomBox/Manual/Apache_userdir|User Websites]] mechanism or the P2P networks ([[FreedomBox/Manual/Deluge|Deluge]] or [[FreedomBox/Manual/Transmission|Transmission]] for Torrent, or [[FreedomBox/Manual/MLDonkey|MLDonkey]]) to publish your files.
+
+=== Technicalities ===
+Sharing will share the content using the built-in Apache web server.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

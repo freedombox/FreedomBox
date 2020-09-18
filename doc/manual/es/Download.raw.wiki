@@ -1,0 +1,259 @@
+# language es
+~-[[DebianWiki/EditorGuide#translation|Translation(s)]]: [[de/FreedomBox/Download|Deutsch]] - [[FreedomBox/Download|English]] - Español - [[fr/FreedomBox/Telecharger|Français]] -~
+----
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+= Descarga e Instalación =
+
+Bienvenido a la página de descargas de !FreedomBox.
+
+  '''Nota''': Si has comprado un kit !FreedomBox esta sección no está pensada para tí, así que puedes simplemente saltártela entera. (A no ser que quieras específicamente compilarte una imagen alternativa del software).
+
+Puedes instalar !FreedomBox sobre alguno de los baratos dispositivos [[es/FreedomBox/Hardware|hardware]] soportados, sobre cualquier sistema operativo [[es/FreedomBox/Hardware/Debian|Debian]] Linux, o sobre una máquina virtual.
+
+Instalar en una máquina que lleve el sistema Debian es fácil porque !FreedomBox está disponble como paquete. Recomendamos instalar !FreedomBox sobre una placa SBC soportada. La placa estaría dedicada al uso de !FreedomBox en el hogar. Esto evitará un montón de riesgos, como configuraciones accidentalmente incorectas por el usuario. En caso de duda  decidiendo qué hardware es el más apropiado para tí o durante la instalación, usa por favor la [[es/FreedomBox/Support|página de soporte]] o lee la página de [[es/FreedomBox/QuestionsAndAnswers|Preguntas y Respuestas]] basada en los archivos de la lista de correo [[https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss|Freedombox-discuss]].
+
+== Descargando en Debian ==
+
+Si estás instalando sobre un sistema Debian existente no necesitas descargar las imágenes. Lee las [[es/FreedomBox/Hardware/Debian|instrucciones]] para configurar !FreedomBox en Debian.
+
+== Descargando para placa SBC o Máquina Virtual ==
+
+=== Preparar tu dispositivo ===
+
+Lee las instrucciones específicas para tu hardware respecto a como preparar tu dispositivo en la sección [[es/FreedomBox/Hardware|Hardware]]. En la web hay abundante documentación respecto a como configurar tu dispositivo y grabar USB's o tarjetas SD para arrancar tu hardware.
+
+=== Descargar Imágenes ===
+
+Las imágenes recientes para hardware soportado están disponibles aquí:
+
+ * Imágenes Oficiales: https://freedombox.org/download/
+
+ * Imágenes Oficiales: https://ftp.freedombox.org/pub/freedombox/
+
+=== Verificar las Imágenes Descargadas ===
+
+Es importante verificar las imágenes que has descargado para asegurar que el fichero no se ha corrompido durante la transmisión y que efectívamente es la imagen construída por los desarrolladores de !FreedomBox.
+
+'''Nota:''' Las imágenes de prueba y nocturnas las firma el servidor de integración contínua de !FreedomBox automaticamente.
+
+  * Primero abre un terminal e importa las claves publicas de los desarrolladores de !FreedomBox que construyeron las imágenes:
+  {{{
+$ gpg --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+
+$ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+
+# Esta es la clave del servidor de integración contínua de FreedomBox
+$ gpg --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+}}}
+  Si este comando muestra un error como ''new key but contains no user ID - skipped'' usa un servidor de claves diferente para descargarlas:
+  {{{
+$ gpg --keyserver keys.gnupg.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+$ gpg --keyserver keys.gnupg.net --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+$ gpg --keyserver keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+  }}}
+  O
+  {{{
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+  }}}
+  * A continuación, verifica la huella de las claves públicas:
+  {{{
+$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
+pub   4096R/0C9BC971 2011-11-12
+      Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
+uid                  Sunil Mohan Adapa <sunil@medhas.org>
+sub   4096R/4C1D4B57 2011-11-12
+
+$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
+pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
+      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
+uid                  James Valleroy <jvalleroy@mailbox.org>
+uid                  James Valleroy <jvalleroy@freedombox.org>
+sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
+sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
+sub   2048R/2A624357 2015-12-22
+
+$ gpg --fingerprint 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+pub   rsa4096 2018-06-06 [SC]
+      013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
+uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
+sub   rsa4096 2018-06-06 [E]
+}}}
+  * Finalmente, verifica tu imágen descargada con su archivo de firma `.sig`. Por ejemplo:
+  {{{
+$ $ gpg --verify freedombox-stable-free_buster_cubietruck-armhf.img.xz.sig 
+gpg: assuming signed data in 'freedombox-stable-free_buster_cubietruck-armhf.img.xz'
+gpg: Signature made Sat 09 May 2020 11:54:01 AM EDT
+gpg:                using RSA key 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+gpg: Good signature from "FreedomBox CI (Continuous Integration server) <admin@freedombox.org>" [undefined]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
+}}}
+
+=== Instalación ===
+
+Tras la descarga puedes emplear la imágen para arrancar tu [[es/FreedomBox/Hardware|hardware]] (incluyendo máquinas virtuales). Necesitarás copiar la imágen a la tarjeta de memoria o pincho USB así:
+
+ 1. Averigua en qué dispositivo está tu tarjeta.
+
+   1. Desconecta tu tarjeta (Sácala de la ranura).
+
+   1. Ejecuta `dmesg -w` mara mostrar y seguir los mensajes del núcleo (kernel).
+
+   1. Conecta tu tarjeta (insértala en su ranura).  Verás mensajes como estos:
+   {{{
+[33299.023096] usb 4-6: new high-speed USB device number 12 using ehci-pci
+[33299.157160] usb 4-6: New USB device found, idVendor=058f, idProduct=6361
+[33299.157162] usb 4-6: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[33299.157164] usb 4-6: Product: Mass Storage Device
+[33299.157165] usb 4-6: Manufacturer: Generic
+[33299.157167] usb 4-6: SerialNumber: XXXXXXXXXXXX
+[33299.157452] usb-storage 4-6:1.0: USB Mass Storage device detected
+[33299.157683] scsi host13: usb-storage 4-6:1.0
+[33300.155626] scsi 13:0:0:0: Direct-Access     Generic- Compact Flash    1.01 PQ: 0 ANSI: 0
+[33300.156223] scsi 13:0:0:1: Direct-Access     Multiple Flash Reader     1.05 PQ: 0 ANSI: 0
+[33300.157059] sd 13:0:0:0: Attached scsi generic sg4 type 0
+[33300.157462] sd 13:0:0:1: Attached scsi generic sg5 type 0
+[33300.462115] sd 13:0:0:1: [sdg] 30367744 512-byte logical blocks: (15.5 GB/14.4 GiB)
+[33300.464144] sd 13:0:0:1: [sdg] Write Protect is off
+[33300.464159] sd 13:0:0:1: [sdg] Mode Sense: 03 00 00 00
+[33300.465896] sd 13:0:0:1: [sdg] No Caching mode page found
+[33300.465912] sd 13:0:0:1: [sdg] Assuming drive cache: write through
+[33300.470489] sd 13:0:0:0: [sdf] Attached SCSI removable disk
+[33300.479493]  sdg: sdg1
+[33300.483566] sd 13:0:0:1: [sdg] Attached SCSI removable disk
+}}}
+
+   1. En este caso, el disco insertado recientemente está disponible en ''/dev/sdg''.  Toma nota con mucho cuidado para emplearla en el paso de copia más adelante.
+
+ 1. Descomprime la descarga usando tar:
+ {{{
+$ xz -d freedombox-stable-free_buster_cubietruck-armhf.img.xz
+}}}
+
+ El comando de arriba es un ejemplo para la imagen estable para ''cubietruck''.  El nombre de archivo de tu descarga será diferente.
+
+ 1. Copia la imágen a tu tarjeta.  Asegúrate de que '''NO''' escribes sobre el almacenamiento principal de tu ordenador (como /dev/sda).  Asegúrate
+también de que '''NO''' ejecutas este paso como root para evitar sobreescribir datos en tu disco duro por una identificación errónea del dispositivo
+o fallos al teclear el comando.  No habitual es que los usuarios normales tuvieran acceso de escritura sobre los discos USB y tarjetas SD pinchados
+en el sistema.  Si no tienes permiso para escribir en tu tarjeta SD como usuario normal quizá necesites ejecutar éste comando como root.  En tal
+caso comprueba y recomprueba todo antes de ejecutar el comando.  Otra precaución de seguridad es desconectar todos los demás discos externos excepto
+la tarjeta SD antes de ejecutar el comando.
+
+ Por ejemplo, si tu tarjeta SD es ''/dev/sdg'', como en el paso anterior, para copiar la imágen, ejecuta:
+ {{{
+$ dd bs=1M if=freedombox-stable-free_buster_cubietruck-armhf.img of=/dev/sdg conv=fdatasync status=progress
+}}}
+
+Un comando alternativo para copiar a la tarjeta SD:
+ {{{
+$ cat freedombox-unstable-free_2015-12-13_cubietruck-armhf.img > /dev/sdg ; sync
+}}}
+En MS Windows necesitarás una herramienta como ''etcher''.
+En MacOS (OSX) puedes usar programas como ''balenaetcher'' y ''rosaimagewriter''.
+
+ El comando anterior es un ejemplo para la imagen estable para ''cubietruck''.  El nombre del archivo de tu imágen será diferente.
+
+ Al identificar el dispositivo, usa el destino con letra de unidad como ''/dev/sdg'', NO un destino numerado como ''/dev/sdg1''.  El dispositivo
+ sin número refiere al dispositivo completo, mientras que el numerado refiere a una partición concreta.  Queremos usar todo el dispositivo.
+ Las imágenes descargadas contienen información completa acerca de cuantas particiones debería haber, sus tamaños y tipos.
+ No necesitas formatear tu tarjeta SD ni crear particiones.  Todo el contenido previo de la tarjeta será eliminado durante el proceso de escritura.
+
+ 1. Usa la imágen insertando la tarjeta SD o disco USB en el dispositivo de destino y arrancándolo.  Tu dispositivo también debe estár preparado
+ (ver la sección [[es/FreedomBox/Hardware|Hardware]]).
+
+ 1. Lee (el resto de) el [[es/FreedomBox/Manual|Manual]] para obtener instrucciones acerca de como usar las aplicaciones de !FreedomBox.
+
+
+== Obtener el Código Fuente ==
+
+!FreedomBox es 100% [[https://www.gnu.org/philosophy/free-sw.html|software libre]] y puedes obtener el código fuente para estudiarlo, modificarlo y distribuir mejoras.
+
+=== Desde (dentro de) FreedomBox ===
+
+!FreedomBox se compone de diferentes programas de software y puedes obtener el código fuente de cualquiera de ellos. Estas instrucciones son similares a obtener y [[https://www.debian.org/doc/manuals/maint-guide/build.en.html|construír]] [[https://www.debian.org/doc/manuals/apt-howto/ch-sourcehandling.en.html|código fuente]] [[https://wiki.debian.org/BuildingTutorial|de Debian]] ya que !FreedomBox es una variante pura de Debian. Usando este procedimiento puedes obtener el código fuente de la misma versión del paquete que estás usando actualmene en !FreedomBox.
+
+ 1. Para ver la lista de paquetes software instalados en tu !FreedomBox, ejecuta lo siguiente en un terminal:
+ {{{
+dpkg -l
+}}}
+ 1. Para obtener el código fuente de cualquiera de esos programas ejecuta:
+ {{{
+apt source <nombre_del_paquete>
+}}}
+ Esto requiere que el archivo [[SourcesList|/etc/apt/sources/list]] contenga información acerca de los repositorios de código fuente. Esto es así por defecto en todas las imágenes !FreedomBox. Pero si has instalado !FreedomBox desde Debian necesitas asegurarte de que los repositorios de código fuente figuren en este archivo.
+ 1. Para construir el paquete desde su código fuente, primero instala sus dependencias
+ {{{
+apt build-dep <nombre_del_paquete>
+}}}
+ Cambia al directorio fuente creado con el comando ''apt source'':
+ {{{
+cd <directorio_fuente>
+}}}
+ Y construye el paquete
+ {{{
+ dpkg-buildpackage -rfakeroot -uc
+}}}
+ 1. Instala el paquete:
+ {{{
+ dpkg -i ../<paquete_construído>.deb
+}}}
+
+=== Otras Maneras de Obtener el Código Fuente ===
+
+ 1. El código fuente de cualquier paquete se puede ver y buscar usando el interfaz web de [[https://sources.debian.org/|sources.debian.org]]. Por ejemplo, mira el paquete [[https://sources.debian.org/src/plinth/|plinth]].
+
+ 1. El código fuente y el binario precompilado de cualquier version de un paquete, incluyendo versiones antigüas, se pueden obtener de [[https://snapshot.debian.org/|snapshot.debian.org]]. Por ejemplo, mira el paquete [[https://snapshot.debian.org/package/plinth/|plinth]].
+
+ 1. También puedes obtener los enlaces a la web del proyecto original, al control de versiones del proyecto original, al control de versiones de Debian, registro de cambios, etc. desde la página de control Debian para el proyecto en [[https://tracker.debian.org/|tracker.debian.org]]. Por ejemplo, mira la página de control para el paquete  [[https://tracker.debian.org/pkg/plinth|plinth]].
+
+ 1. Puedes compilar e instalar un paquete desde el control de versiones de Debian. Por ejemplo,
+ {{{
+ git clone https://salsa.debian.org/freedombox-team/freedombox.git
+ cd freedombox
+ apt build-dep .
+ dpkg-buildpackage -rfakeroot -uc
+ dpkg -i ../freedombox*.deb
+}}}
+
+=== Construyendo Imágenes de disco ===
+
+También puedes construír imágenes de disco !FreedomBox para varias platformas de ''hardware'' usando la herramienta '''freedom-maker'''. Esta también está disponible como paquete Debian y su código fuente se puede obtener empleando los métodos anteriores. Hay disponibles [[https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/README.md|Instrucciones de Construcción]] para generar imágenes de disco incluídas en el código fuente del paquete '''freedom-maker'''.
+
+Las imágenes de disco de !FreedomBox se construyen y suben a los servidores oficiales empleando la infraestructura de integración contínua automatizada. Esta infraestructura está disponible también como [[https://salsa.debian.org/freedombox-team/infrastructure|código fuente]] y proporciona información precisa acerca de como se contruyen las imágenes de !FreedomBox.
+
+==== Imágenes U-boot sobre Pioneer Edition ====
+
+Hay una excepción menor en el paquete u-boot que viene con el ''hardware'' que se vende como Kits de Servidor Doméstico !FreedomBox Pioneer Edition. Contiene un parche pequeño pero importante que no está en el código fuente de Debian. Tanto el repositorio fuente de Debian u-boot como el parche  de !FreedomBox están disponibles como [[https://salsa.debian.org/freedombox-team/u-boot|un repositorio aparte]]. Esperamos que en algún momento este parche esté integrado en u-boot de serie y este repositorio ya no sea necesario. Este paquete se puede compilar en una máquina Debian armhf como sigue (también se puede hacer compilación cruzada, simplemente sigue las instrucciones para compilación cruzada de paquetes Debian):
+
+{{{
+apt install git git-buildpackage
+git clone https://salsa.debian.org/freedombox-team/u-boot.git
+cd u-boot
+pbuilder create --distribution=buster
+gbp buildpackage --git-pbuilder
+}}}
+
+El paquete u-boot Debian estará en ''u-boot-sunxi*.deb''. Este paquete contendrá
+
+{{{
+mkdir temp
+dpkg -x u-boot-suxi*.deb temp
+unxz <lime2_image_built_with_freedom_maker>
+dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime2.img> seek=8 bs=1k conv=notrunc
+}}}
+
+La imagen resultante tendrá el u-boot modificado.
+
+
+## END_INCLUDE
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

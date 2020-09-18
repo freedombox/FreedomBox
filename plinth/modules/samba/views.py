@@ -12,12 +12,20 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
-
 from plinth import views
 from plinth.errors import ActionError
 from plinth.modules import samba, storage
 
 logger = logging.getLogger(__name__)
+
+
+def get_share_mounts():
+    """Return list of mount points."""
+    ignore_points = ('/boot', '/boot/efi', '/boot/firmware', '/.snapshots')
+    return [
+        mount for mount in storage.get_mounts()
+        if mount['mount_point'] not in ignore_points
+    ]
 
 
 class SambaAppView(views.AppView):
@@ -28,7 +36,7 @@ class SambaAppView(views.AppView):
     def get_context_data(self, *args, **kwargs):
         """Return template context data."""
         context = super().get_context_data(*args, **kwargs)
-        disks = storage.get_mounts()
+        disks = get_share_mounts()
         shares = samba.get_shares()
 
         for disk in disks:

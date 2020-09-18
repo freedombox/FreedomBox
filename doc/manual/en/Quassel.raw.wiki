@@ -1,0 +1,97 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Quassel|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Quassel (IRC Client) ==
+||<tablestyle="float: right;"> {{attachment:Quassel-icon_en_V02.png|Quassel icon}} ||
+
+'''Available since''': version 0.8
+
+''Quassel'' is an IRC application that is split into two parts, a "core" and a "client". This allows the core to remain connected to IRC servers, and to continue receiving messages, even when the client is disconnected. !FreedomBox can run the Quassel core service keeping you always online and one or more Quassel clients from a desktop or a mobile device can be used to connect and disconnect from it.
+
+
+=== Why run Quassel? ===
+
+Many discussions about !FreedomBox are being done on the IRC-Channel `irc://irc.debian.org/freedombox`. If your !FreedomBox is running ''Quassel'', it will collect all discussions while you are away, such as responses to your questions. Remember, the !FreedomBox project is a worldwide project with people from nearly every time zone. You use your ''client'' to connect to the ''Quassel'' core to read and respond whenever you have time and are available.
+
+=== How to setup Quassel? ===
+ * Within !FreedomBox's web interface
+  1. select ''Applications''
+  1. go to ''IRC Client (Quassel)'' and 
+  1. install the application and make sure it is enabled
+  {{attachment:Quassel_Installation.png|Quassel Installation|width=800}}
+  1. now your Quassel core is running
+
+
+=== Port Forwarding ===
+
+If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for Quassel:
+ * TCP 4242
+
+ * Example configuration in router:
+  {{attachment:Quassel_PortForwarding_en_v01.png}}
+
+=== Clients ===
+
+Clients to connect to Quassel from your [[http://quassel-irc.org/downloads|desktop]] and [[https://quasseldroid.info/|mobile]] devices are available.
+
+==== Desktop ====
+
+In a Debian system, you can e.g. use [[https://packages.debian.org/search?keywords=quassel-client|quassel-client]]. The following steps describe how to connect Quassel Client with Quassel Core running on a !FreedomBox. The first time you do this connection, Quassel Core will be initialized too.
+
+ 1. Launch Quassel Client. You will be greeted with a wizard to `Connect to Core`.
+   {{attachment:quassel-client-1-connect-to-core.png|Connect to Core|width=394}}
+ 1. Click the `Add` button to launch `Add Core Account` dialog.
+   {{attachment:quassel-client-2-add-core-account.png|Add Core Account|width=382}}
+ 1. Fill any value in the `Account Name` field. Fill proper DNS hostname of your !FreedomBox in `Hostname` filed. `Port` field must have the value `4242`. Provide the username and password of the account you wish to create to connect to the Quassel Core in the `User` and `Password` fields. Choose `Remember` if don't wish to be prompted for a password every time you launch Quassel client.
+ 1. After pressing `OK` in the `Add Core Account` dialog, you should see the core account in the `Connect to Core` dialog.
+   {{attachment:quassel-client-3-connect-to-core.png|Connect to Core|width=394}}
+ 1. Select the newly created core account and select `OK` to connect to it.
+ 1. If this is the first time you are connecting to this core. You will see an `Untrusted Security Certificate` warning and need to accept the server certificate.
+   {{attachment:quassel-client-4-untrusted-security-certficate.png|Untrusted Security Certificate|width=504}}
+ 1. Select `Continue`. Then you will be asked if you wish to accept the certificate permanently. Select `Forever`.
+   {{attachment:quassel-client-5-untrusted-security-certificate.png|Untrusted Security Certificate|width=434}}
+ 1. If this Quassel Core has not been connected to before, you will then see a `Core Configuration Wizard`. Select `Next`.
+   {{attachment:quassel-client-6-core-configuration-wizard.png|Core Configuration Wizard|width=504}}
+ 1. In the `Create Admin User` page, enter the username and password you have used earlier to create the core connection. Select `Remember password` to remember this password for future sessions. Click `Next`.
+   {{attachment:quassel-client-7-create-admin-user.png|Create Admin User Page|width=504}}
+ 1. In the `Select Storage Backend` page, select `SQLite` and click `Commit`.
+   {{attachment:quassel-client-8-select-storage-backend.png|Select Storage Backend|width=504}}
+ 1. The core configuration is then complete and you will see a `Quassel IRC` wizard to configure your IRC connections. Click `Next`.
+   {{attachment:quassel-client-9-welcome-wizard.png|Welcome Wizard|width=504}}
+ 1. In `Setup Identity` page next, provide a name and multiple nicknames. This is how you present yourself to other users on IRC. It is not necessary to give your real world name. Multiple nicknames are useful as fallback nicknames when the first nickname can't be used for some reason. After providing the information click `Next`.
+   {{attachment:quassel-client-10-setup-identity.png|Setup Identity|width=504}}
+ 1. In `Setup Network Connection` page next, provide a network name of your choice. Next provide a list of servers to which Quassel Core should connect to in order to join this IRC network (such as irc.debian.org:6667).
+   {{attachment:quassel-client-11-setup-network-connection.png|Setup Network Connection|width=504}}
+ 1. Select the server in the servers list and click `Edit`. In the `Server Info` dialog, set the port `6697` (consult your network's documentation for actual list of servers and their secure ports) and click `Use SSL`. Click `OK`. This is to ensure that communication between your !FreedomBox and the IRC network server is encrypted.
+   {{attachment:quassel-client-12-server-info.png|Server Info|width=390}}
+   {{attachment:quassel-client-13-server-info-ssl.png|Server Info SSL|width=390}}
+ 1. Back in the `Setup Network Connection` dialog, provide a list of IRC channels (such as #freedombox) to join upon connecting to the network. Click `Save & Connect`.
+   {{attachment:quassel-client-14-setup-network-connection.png|Setup Network Connection|width=504}}
+ 1. You should connect to the network and see the list of channels you have joined on the `All Chats` pane on the left of the Quassel Client main window.
+   {{attachment:quassel-client-15-quassel-main.png|Quassel Main Window|width=644}}
+ 1. Select a channel and start seeing messages from others in the channel and send your own messages.
+
+==== Android ====
+
+For Android devices you may use e.g. ''Quasseldroid'' from [[https://f-droid.org/en/packages/com.iskrembilen.quasseldroid/|F-Droid]]
+
+ * enter core, username etc. as above
+   {{attachment:Quasseldroid.png}}
+
+
+By the way, the German verb ''quasseln'' means ''talking a lot'', to ''jabber''.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

@@ -1,0 +1,133 @@
+#language en
+
+~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/OpenVPN|Español]] -~
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== OpenVPN (Virtual Private Network) ==
+||<tablestyle="float: right;"> {{attachment:OpenVPN-icon_en_V01.png|OpenVPN icon}} ||
+
+'''Available since''': version 0.7
+
+=== What is OpenVPN? ===
+
+OpenVPN provides to your !FreedomBox a virtual private network service. You can use this software for remote access, site-to-site VPNs and Wi-Fi security. OpenVPN includes support for dynamic IP addresses and NAT.
+
+=== Port Forwarding ===
+
+If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for OpenVPN:
+ * UDP 1194
+
+=== Setting up ===
+
+ 1. In !FreedomBox apps menu, select ''Virtual Private Network (OpenVPN)'' and click Install.
+
+ 1. After the module is installed, there is an additional setup step that may take a long time to complete. Click "Start setup" to begin.
+
+ {{attachment:plinth_openvpn.png|OpenVPN service page|width=800}}
+	
+ 1. Wait for the setup to finish. This could take a while.
+
+ 1. Once the setup of the OpenVPN server is complete, you can download your profile. This will download a file called <USER>.ovpn, where <USER> is the name of a !FreedomBox user. Each !FreedomBox user will be able to download a different profile. Users who are not administrators can download the profile from home page after login.
+ 
+ 1. The ovpn file contains all the information a vpn client needs to connect to the server.
+ 
+ 1. The downloaded profile contains the domain name of the !FreedomBox that the client should connect to. This is picked up from the domain configured in 'Config' section of 'System' page. In case your domain is not configured properly, you may need to change this value after downloading the profile. If your OpenVPN client allows it, you can do this after importing the OpenVPN profile. Otherwise, you can edit the .ovpn profile file in a text editor and change the 'remote' line to contain the WAN IP address or hostname of your !FreedomBox as follows.
+
+ {{{ 
+client
+remote mybox.sds-ip.de 1194
+proto udp
+}}}
+
+=== Browsing Internet after connecting to VPN ===
+
+After connecting to the VPN, the client device will be able to browse the Internet without any further configuration. However, a pre-condition for this to work is that you need to have at least one Internet connected network interface which is part of the 'External' firewall zone. Use the networks configuration page to edit the firewall zone for the device's network interfaces.
+
+=== Usage ===
+
+==== On Android/LineageOS ====
+
+ 1. Visit !FreedomBox home page. Login with your user account. From home page, download the OpenVPN profile. The file will be named ''username''.ovpn.
+
+  {{attachment:openvpn_download_profile.png|OpenVPN Download Profile|width=324}}
+
+ 1. Download an OpenVPN client such as ''OpenVPN for Android''. F-Droid repository is recommended. In the app, select import profile.
+
+  {{attachment:openvpn_install_app.png|OpenVPN App|width=324}}
+
+ 1. In the select profile dialog, choose the ''username''.opvn file you have just downloaded. Provide a name for the connection and save the profile.
+
+  {{attachment:openvpn_import_profile.png|OpenVPN import profile|width=324}}
+
+ 1. Newly created profile will show up. If necessary, edit the profile and set the domain name of your !FreedomBox as the server address.
+
+  {{attachment:openvpn_profile_created.png|OpenVPN profile created|width=324}}
+
+  {{attachment:openvpn_edit_domain_name.png|OpenVPN edit domain name|width=324}}
+
+ 1. Connect by tapping on the profile.
+
+  {{attachment:openvpn_connect.png|OpenVPN connect|width=324}}
+
+  {{attachment:openvpn_connected.png|OpenVPN connected|width=324}}
+
+ 1. When done, disconnect by tapping on the profile.
+
+  {{attachment:openvpn_disconnect.png|OpenVPN disconnect|width=324}}
+
+==== On Debian ====
+
+Install an OpenVPN client for your system
+{{{
+$ sudo apt install openvpn
+}}}
+Open the ovpn file with the OpenVPN client.
+{{{
+$ sudo openvpn --config /path/to/<USER>.ovpn
+}}}
+If you use Network Manager, you can create a new connection by importing the file:
+{{{
+$ sudo apt install network-manager-openvpn-gnome
+$ sudo nmcli connection import type openvpn file /path/to/<USER>.ovpn
+}}}
+If you get an error such as `configuration error: invalid 1th argument to “proto” (line 5)` then edit the .ovpn file and remove the line `proto udp6`.
+
+=== Checking if you are connected ===
+
+==== On Debian ====
+
+  1. Try to ping the !FreedomBox or other devices on the local network.
+  1. Running the command `ip addr` should show a `tun0` connection.
+  1. The command `traceroute freedombox.org` should show you the ip address of the VPN server as the first hop.
+
+=== Accessing internal services ===
+
+After connecting to OpenVPN, you will be able to access !FreedomBox services that are only meant to be accessed on internal networks. This is in addition to being able to access external services. This can be done by using the IP address 10.91.0.1 as the host name for these services.
+
+The following services are known to '''work''':
+ * [[FreedomBox/Manual/Privoxy|Privoxy]],
+ * [[FreedomBox/Manual/Tor|Tor Socks]],
+ * [[FreedomBox/Manual/Shadowsocks|Shadowsocks]],
+ * [[FreedomBox/Manual/I2P|I2P Proxy]] and
+ * [[FreedomBox/Manual/Samba|Samba]].
+
+Some services are known '''not''' to work at this time:
+ * Avahi,
+ * [[FreedomBox/Manual/Bind|bind]] and
+ * [[FreedomBox/Manual/MiniDLNA|MiniDLNA]].
+
+=== External Links ===
+
+https://community.openvpn.net/openvpn
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

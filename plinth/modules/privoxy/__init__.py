@@ -89,16 +89,6 @@ class PrivoxyApp(app_module.App):
         return results
 
 
-def init():
-    """Initialize the module."""
-    global app
-    app = PrivoxyApp()
-
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-        app.set_enabled(True)
-
-
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])

@@ -33,7 +33,7 @@ def subcommand_setup(_):
     except KeyError:
         subprocess.run(['addgroup', '--system', 'syncthing'], check=True)
 
-    # Create syncthing user is needed.
+    # Create syncthing user if needed.
     try:
         pwd.getpwnam('syncthing')
     except KeyError:

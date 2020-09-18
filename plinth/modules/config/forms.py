@@ -88,6 +88,7 @@ class ConfigurationForm(forms.Form):
         choices=get_homepage_choices)
 
     advanced_mode = forms.BooleanField(
-        label=_('Show advanced apps and features'), required=False,
-        help_text=_('Show apps and features that require more technical '
-                    'knowledge.'))
+        label=ugettext_lazy('Show advanced apps and features'), required=False,
+        help_text=ugettext_lazy(
+            'Show apps and features that require more technical '
+            'knowledge.'))

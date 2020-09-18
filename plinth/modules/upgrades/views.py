@@ -4,16 +4,18 @@ FreedomBox app for upgrades.
 """
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
+from django.views.generic.edit import FormView
 
 from plinth import actions, package
 from plinth.errors import ActionError
-from plinth.modules import upgrades
+from plinth.modules import first_boot, upgrades
 from plinth.views import AppView
 
-from .forms import ConfigureForm
+from .forms import BackportsFirstbootForm, ConfigureForm
 
 
 class UpgradesConfigurationView(AppView):
@@ -28,6 +30,8 @@ class UpgradesConfigurationView(AppView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        context['can_activate_backports'] = upgrades.can_activate_backports()
+        context['is_backports_requested'] = upgrades.is_backports_requested()
         context['is_busy'] = package.is_package_manager_busy()
         context['log'] = get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
@@ -77,3 +81,48 @@ def upgrade(request):
             messages.error(request, _('Starting upgrade failed.'))
 
     return redirect(reverse_lazy('upgrades:index'))
+
+
+def activate_backports(request):
+    """Activate backports."""
+    if request.method == 'POST':
+        upgrades.set_backports_requested(True)
+        upgrades.setup_repositories(None)
+        messages.success(request, _('Frequent feature updates activated.'))
+
+    return redirect(reverse_lazy('upgrades:index'))
+
+
+class BackportsFirstbootView(FormView):
+    """View to configure backports during first boot wizard."""
+    template_name = 'backports-firstboot.html'
+    form_class = BackportsFirstbootForm
+
+    def dispatch(self, request, *args, **kwargs):
+        """Show backports configuration form only if it can be activated."""
+        if upgrades.is_backports_enabled():
+            # Backports is already enabled. Record this preference and
+            # skip first boot step.
+            upgrades.set_backports_requested(True)
+            first_boot.mark_step_done('backports_wizard')
+            return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
+
+        if not upgrades.can_activate_backports():
+            # Skip first boot step.
+            upgrades.set_backports_requested(False)
+            first_boot.mark_step_done('backports_wizard')
+            return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
+
+        return super().dispatch(request, *args, *kwargs)
+
+    def get_success_url(self):
+        """Return next firstboot step."""
+        return reverse_lazy(first_boot.next_step())
+
+    def form_valid(self, form):
+        """Mark the first wizard step as done, save value and redirect."""
+        enabled = form.cleaned_data['backports_enabled']
+        upgrades.set_backports_requested(enabled)
+        upgrades.setup_repositories(None)
+        first_boot.mark_step_done('backports_wizard')
+        return super().form_valid(form)

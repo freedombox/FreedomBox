@@ -13,22 +13,26 @@ import sys
 
 from plinth.action_utils import run_apt_command
 from plinth.modules.apache.components import check_url
+from plinth.modules.upgrades import (get_current_release, is_backports_current,
+                                     SOURCES_LIST)
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 DPKG_LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades-dpkg.log'
-BUSTER_BACKPORTS_RELEASE_FILE_URL = \
-    'https://deb.debian.org/debian/dists/buster-backports/Release'
+BACKPORTS_RELEASE_FILE_URL = \
+    'https://deb.debian.org/debian/dists/{}-backports/Release'
+
+APT_PREFERENCES_FREEDOMBOX = '''Explanation: This file is managed by FreedomBox, do not edit.
+Explanation: Allow carefully selected updates to 'freedombox' from backports.
+Package: freedombox
+Pin: release a={}-backports
+Pin-Priority: 500
+'''
 
 # Whenever these preferences needs to change, increment the version number
 # upgrades app. This ensures that setup is run again and the new contents are
 # overwritten on the old file.
-APT_PREFERENCES = '''Explanation: This file is managed by FreedomBox, do not edit.
-Explanation: Allow carefully selected updates to 'freedombox' from backports.
-Package: freedombox
-Pin: release a=buster-backports
-Pin-Priority: 500
-
+APT_PREFERENCES_APPS = '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: matrix-synapse 0.99.5 introduces room version 4. Older version
 Explanation: 0.99.2 in buster won't be able join newly created rooms.
 Package: matrix-synapse
@@ -59,6 +63,16 @@ Explanation: python3-twisted requires matching version of python3-twisted-bin
 Package: python3-twisted-bin
 Pin: release a=buster-backports
 Pin-Priority: 500
+
+Explanation: matrix-synapse >= 1.16 requires python3-attr >= 19.1.0~
+Package: python3-attr
+Pin: release a=buster-backports
+Pin-Priority: 500
+
+Explanation: matrix-synapse >= 1.19 requires python3-canonicaljson >= 1.2.0
+Package: python3-canonicaljson
+Pin: release a=buster-backports
+Pin-Priority: 500
 '''
 
 
@@ -75,8 +89,12 @@ def parse_arguments():
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
 
     subparsers.add_parser('setup', help='Setup apt preferences')
-    subparsers.add_parser('setup-repositories',
-                          help='Setup software repositories for FreedomBox')
+    setup_repositories = subparsers.add_parser(
+        'setup-repositories',
+        help='Setup software repositories for FreedomBox')
+    setup_repositories.add_argument('--develop', required=False, default=False,
+                                    action='store_true',
+                                    help='Development mode')
 
     subparsers.required = True
     return parser.parse_args()
@@ -162,37 +180,37 @@ def _get_protocol():
     return 'http'
 
 
-def _is_release_file_available(protocol):
+def _is_release_file_available(protocol, dist):
     """Return whether the release for backports is available."""
     wrapper = None
     if protocol == 'tor+http':
         wrapper = 'torsocks'
 
-    result = check_url(BUSTER_BACKPORTS_RELEASE_FILE_URL, wrapper=wrapper)
+    result = check_url(BACKPORTS_RELEASE_FILE_URL.format(dist),
+                       wrapper=wrapper)
     return result == 'passed'
 
 
-def _add_buster_backports_sources(sources_list, protocol):
-    """Add buster backports sources to freedombox repositories list."""
+def _add_backports_sources(sources_list, protocol, dist):
+    """Add backports sources to freedombox repositories list."""
     sources = '''# This file is managed by FreedomBox, do not edit.
 # Allow carefully selected updates to 'freedombox' from backports.
 
-deb {protocol}://deb.debian.org/debian buster-backports main
-deb-src {protocol}://deb.debian.org/debian buster-backports main
+deb {protocol}://deb.debian.org/debian {dist}-backports main
+deb-src {protocol}://deb.debian.org/debian {dist}-backports main
 '''
-    sources = sources.format(protocol=protocol)
+    sources = sources.format(protocol=protocol, dist=dist)
     with open(sources_list, 'w') as file_handle:
         file_handle.write(sources)
 
 
-def _check_and_backports_sources():
-    """Add buster backports sources after checking if it is available."""
+def _check_and_backports_sources(develop=False):
+    """Add backports sources after checking if it is available."""
     old_sources_list = '/etc/apt/sources.list.d/freedombox.list'
     if os.path.exists(old_sources_list):
         os.remove(old_sources_list)
 
-    sources_list = '/etc/apt/sources.list.d/freedombox2.list'
-    if os.path.exists(sources_list):
+    if is_backports_current():
         print('Repositories list up-to-date. Skipping update.')
         return
 
@@ -211,9 +229,8 @@ def _check_and_backports_sources():
               'backports.')
         return
 
-    release = subprocess.check_output(['lsb_release', '--release',
-                                       '--short']).decode().strip()
-    if release in ['testing', 'unstable']:
+    release, dist = get_current_release()
+    if release == 'unstable' or (release == 'testing' and not develop):
         print(f'System release is {release}. Skip enabling backports.')
         return
 
@@ -221,12 +238,14 @@ def _check_and_backports_sources():
     if protocol == 'tor+http':
         print('Package download over Tor is enabled.')
 
-    if not _is_release_file_available(protocol):
-        print('Release file for Buster backports is not available yet.')
+    if not _is_release_file_available(protocol, dist):
+        print(f'Release file for {dist}-backports is not available yet.')
         return
 
-    print('Buster backports is now available. Adding to sources.')
-    _add_buster_backports_sources(sources_list, protocol)
+    print(f'{dist}-backports is now available. Adding to sources.')
+    _add_backports_sources(SOURCES_LIST, protocol, dist)
+    # In case of dist upgrade, rewrite the preferences file.
+    _add_apt_preferences()
 
 
 def _add_apt_preferences():
@@ -240,8 +259,16 @@ def _add_apt_preferences():
     # Don't try to remove 50freedombox3.pref as this file is shipped with the
     # Debian package and is removed using maintainer scripts.
 
-    with open(base_path / '50freedombox4.pref', 'w') as file_handle:
-        file_handle.write(APT_PREFERENCES)
+    _, dist = get_current_release()
+    if dist == 'sid':
+        print(f'System distribution is {dist}. Skip setting apt preferences '
+              'for backports.')
+    else:
+        print(f'Setting apt preferences for {dist}-backports.')
+        with open(base_path / '50freedombox4.pref', 'w') as file_handle:
+            file_handle.write(APT_PREFERENCES_FREEDOMBOX.format(dist))
+        with open(base_path / '51freedombox-apps.pref', 'w') as file_handle:
+            file_handle.write(APT_PREFERENCES_APPS)
 
 
 def subcommand_setup(_):
@@ -249,14 +276,14 @@ def subcommand_setup(_):
     _add_apt_preferences()
 
 
-def subcommand_setup_repositories(_):
+def subcommand_setup_repositories(arguments):
     """Setup software repositories needed for FreedomBox.
 
     Repositories list for now only contains the backports. If the file exists,
     assume that it contains backports.
 
     """
-    _check_and_backports_sources()
+    _check_and_backports_sources(arguments.develop)
 
 
 def main():
