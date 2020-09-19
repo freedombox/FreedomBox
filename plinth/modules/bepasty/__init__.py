@@ -15,7 +15,7 @@ from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 managed_packages = ['bepasty', 'uwsgi', 'uwsgi-plugin-python3']
 
@@ -98,6 +98,9 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'bepasty',
                 ['setup', '--domain-name', 'freedombox.local'])
     helper.call('post', app.enable)
+    if old_version == 1 and not get_configuration().get('DEFAULT_PERMISSIONS'):
+        # Upgrade to a better default only if user hasn't changed the value.
+        set_default_permissions('read')
 
 
 def get_configuration():
