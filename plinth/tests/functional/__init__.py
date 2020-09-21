@@ -234,7 +234,13 @@ def _create_admin_account(browser, username, password):
     submit(browser)
 
 
-def login(browser, url, username, password):
+def login(browser):
+    """Login to the interface."""
+    login_with_account(browser, base_url, config['DEFAULT']['username'],
+                       config['DEFAULT']['password'])
+
+
+def login_with_account(browser, url, username, password):
 
     # XXX: Find a way to remove the hardcoded jsxc URL
     if '/plinth/' not in browser.url or '/jsxc/jsxc' in browser.url:

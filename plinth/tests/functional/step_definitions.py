@@ -13,9 +13,7 @@ from plinth.tests import functional
 
 @given("I'm a logged in user")
 def logged_in_user(session_browser):
-    functional.login(session_browser, functional.base_url,
-                     functional.config['DEFAULT']['username'],
-                     functional.config['DEFAULT']['password'])
+    functional.login(session_browser)
 
 
 @given("I'm a logged out user")
