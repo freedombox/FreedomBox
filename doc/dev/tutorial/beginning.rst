@@ -18,7 +18,9 @@ be built.
 Picking an app
 ^^^^^^^^^^^^^^
 
-We must first, of course, pick an application to add to FreedomBox. For the
+We must first, of course, pick an application to add to FreedomBox. Many
+potential applications that can be added to FreedomBox have been listed on the
+`FreedomBox wiki <https://wiki.debian.org/FreedomBox/LeavingTheCloud>`. For the
 purpose of this tutorial, let us pick Transmission. Transmission daemon handles
 Bitorrent file sharing. BitTorrent is a peer-to-peer file sharing protocol.
 
