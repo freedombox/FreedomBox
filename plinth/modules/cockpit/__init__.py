@@ -77,7 +77,8 @@ class CockpitApp(app_module.App):
                                       short_description=info.short_description,
                                       icon=info.icon_filename,
                                       url='/_cockpit/', clients=info.clients,
-                                      login_required=True)
+                                      login_required=True,
+                                      allowed_groups=['admin'])
         self.add(shortcut)
 
         firewall = Firewall('firewall-cockpit', info.name,

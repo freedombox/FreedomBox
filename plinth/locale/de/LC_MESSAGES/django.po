@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 16:55-0400\n"
-"PO-Revision-Date: 2020-09-14 14:36+0000\n"
-"Last-Translator: Ralf Barkow <ralf.barkow@web.de>\n"
+"PO-Revision-Date: 2020-09-23 11:08+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -644,12 +644,12 @@ msgid ""
 "audio, video and PDF documents can be previewed in the browser. Shared files "
 "can be set to expire after a time period."
 msgstr ""
-"bepasty ist eine Webanwendung, mit der grosse Dateien hochgeladen und "
+"bepasty ist eine Webanwendung, mit der große Dateien hochgeladen und "
 "gemeinsam genutzt werden können. Es können auch Text- und Codeschnipsel "
 "eingefügt und ausgetauscht werden. Text-, Bild-, Audio-, Video- und PDF-"
 "Dokumente können in der Vorschau im Browser angezeigt werden. Freigegebene "
 "Dateien können so eingestellt werden, dass sie nach einer bestimmten "
-"Zeitspanne ablaufen."
+"Zeitspanne ablaufen und gelöscht werden."
 
 #: plinth/modules/bepasty/__init__.py:29
 msgid ""
@@ -677,7 +677,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/__init__.py:42 plinth/modules/bepasty/__init__.py:51
 msgid "Read a file, if a web link to the file is available"
-msgstr "Lesen Sie eine Datei, wenn ein Weblink zur Datei verfügbar ist"
+msgstr "Lesen einer Datei, wenn ein Weblink zur Datei verfügbar ist"
 
 #: plinth/modules/bepasty/__init__.py:43
 msgid "Create or upload files"
@@ -1258,7 +1258,7 @@ msgstr "Einrichtung fehlgeschlagen."
 
 #: plinth/modules/diagnostics/__init__.py:104
 msgid "error"
-msgstr ""
+msgstr "Fehler"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
@@ -1478,7 +1478,7 @@ msgstr "Benutzername, der beim Erstellen des Kontos gewählt wurde."
 
 #: plinth/modules/dynamicdns/forms.py:65
 msgid "GnuDIP"
-msgstr ""
+msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:68
 #, fuzzy
@@ -2001,7 +2001,7 @@ msgstr "Standard Thema"
 
 #: plinth/modules/gitweb/forms.py:135
 msgid "Gitweb displays this as a default branch."
-msgstr ""
+msgstr "Gitweb zeigt dies als Standard-Zweig an."
 
 #: plinth/modules/gitweb/manifest.py:21
 msgid "Git"
@@ -3131,17 +3131,17 @@ msgstr "Schaden-Konfiguration aktualisiert"
 #: plinth/modules/minidlna/__init__.py:23
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
-"compliant with DLNA/UPnP-AV clients. The MiniDNLA daemon serves media files "
-"(music, pictures, and video) to clients on a network. DNLA/UPnP is zero "
+"compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
+"(music, pictures, and video) to clients on a network. DLNA/UPnP is zero "
 "configuration protocol and is compliant with any device passing the DLNA "
 "Certification like portable media players, Smartphones, Televisions, and "
 "gaming systems (such as PS3 and Xbox 360) or applications such as totem and "
 "Kodi."
 msgstr ""
 "MiniDLNA ist eine einfache Medienserver-Software mit dem Ziel, vollständig "
-"mit DLNA/UPnP-AV-Clients kompatibel zu sein. Der MiniDNLA-Daemon stellt "
+"mit DLNA/UPnP-AV-Clients kompatibel zu sein. Der MiniDLNA-Daemon stellt "
 "Mediendateien (Musik, Bilder und Videos) für Clients in einem Netzwerk "
-"bereit. DNLA/UPnP ist ein Nullkonfigurationsprotokoll und entspricht jedem "
+"bereit. DLNA/UPnP ist ein Nullkonfigurationsprotokoll und entspricht jedem "
 "Gerät, das die DLNA-Zertifizierung übergibt, wie tragbare Mediaplayer, "
 "Smartphones, Fernseher und Gaming-Systeme (wie PS3 und Xbox 360) oder "
 "Anwendungen wie Totem und Kodi."
@@ -6699,18 +6699,12 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:33
-#, fuzzy
-#| msgid ""
-#| "<strong>Warning!</strong> Once frequent feature updates are activated, "
-#| "they cannot be deactivated. You may wish to take a snapshot using <a href="
-#| "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
-"<strong>Warnung!</strong> Sobald häufige Funktions-Updates aktiviert sind, "
-"können sie nicht deaktiviert werden. Sie können einen Snapshot mit <a href="
-"\"%(snapshot_url)s\">Speicherauszüge</a> erstellen, bevor Sie fortfahren."
+"<strong>Hinweis:</strong> Sobald häufige Funktions-Updates aktiviert sind, "
+"können sie nicht deaktiviert werden."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -7714,19 +7708,16 @@ msgid ""
 msgstr ""
 
 #: plinth/templates/port-forwarding-info.html:26
-#, fuzzy, python-format
-#| msgid ""
-#| "If your FreedomBox is behind a router, you will need to set up port "
-#| "forwarding on your router. You should forward the following ports for "
-#| "%(service_name)s:"
+#, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
-"Wenn sich Ihre FreedomBox hinter einem Router befindet, müssen Sie eine "
-"Portweiterleitung auf Ihrem Router einrichten. Sie sollten die folgenden "
-"Ports für %(service_name)s weiterleiten:"
+"Ihre FreedomBox befindet sich <a href=\"%(networks_url)s\">hinter einem "
+"Router</a> und Sie verwenden die DMZ-Funktion nicht. Sie müssen auf Ihrem "
+"Router eine Portweiterleitung einrichten. Sie sollten die folgenden Ports "
+"für %(service_name)s weiterleiten:"
 
 #: plinth/templates/port-forwarding-info.html:36
 #, fuzzy
