@@ -31,13 +31,13 @@ _description = [
           'You can store your e-books on your {box_name}, read them online or '
           'from any of your devices.'), box_name=_(cfg.box_name)),
     _('You can organize your e-books, extract and edit their metadata, and '
-      'perform advanced search. It can import, export, or convert across a '
-      'wide range of formats to make e-books ready for reading on any '
-      'device. You can read books on your browser with the builtin web '
-      'reader. It remembers your last read location, bookmarks, and '
-      'highlighted text.'),
+      'perform advanced search. calibre can import, export, or convert across '
+      'a wide range of formats to make e-books ready for reading on any '
+      'device. It also provides an online web reader. It remembers your '
+      'last read location, bookmarks, and highlighted text. Content '
+      'distribution using OPDS is currently not supported.'),
     _('Only users belonging to <em>calibre</em> group will be able to access '
-      'the app. Content distribution with OPDS is currently not supported.')
+      'the app. All users with access can use all the libraries.')
 ]
 
 app = None
