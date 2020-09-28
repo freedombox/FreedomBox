@@ -2,12 +2,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
 CONFIG_FILE = '/etc/gitweb-freedombox.conf'
 GIT_REPO_PATH = '/var/lib/git'
 
-clients = validate([
+clients = [
     {
         'name': _('Gitweb'),
         'platforms': [{
@@ -32,7 +30,7 @@ clients = validate([
             'url': 'https://git-scm.com/download/windows'
         }]
     },
-])
+]
 
 backup = {
     'config': {

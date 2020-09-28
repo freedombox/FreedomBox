@@ -5,12 +5,10 @@ Application manifest for I2P.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
 _package_id = 'net.geti2p.i2p'
 _download_url = 'https://geti2p.net/download'
 
-clients = validate([{
+clients = [{
     'name':
         _('I2P'),
     'platforms': [{
@@ -33,7 +31,7 @@ clients = validate([{
         'os': 'windows',
         'url': _download_url,
     }]
-}])
+}]
 
 backup = {
     'secrets': {

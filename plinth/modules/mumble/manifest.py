@@ -2,9 +2,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
-clients = validate([{
+clients = [{
     'name':
         _('Mumble'),
     'platforms': [{
@@ -52,7 +52,7 @@ clients = validate([{
         'store_name': 'google-play',
         'url': store_url('google-play', 'se.lublin.mumla')
     }]
-}])
+}]
 
 backup = {
     'data': {

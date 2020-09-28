@@ -5,11 +5,11 @@ Application manifest for Samba.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
 SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
 
-clients = validate([{
+clients = [{
     'name':
         _('Android Samba Client'),
     'platforms': [{
@@ -74,7 +74,7 @@ clients = validate([{
         'os': 'gnu-linux',
         'url': 'https://kde.org/applications/system/org.kde.dolphin'
     }]
-}])
+}]
 
 backup = {
     'data': {

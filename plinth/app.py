@@ -5,6 +5,8 @@ Base class for all Freedombox applications.
 
 import collections
 
+from . import clients as clients_module
+
 
 class App:
     """Implement common functionality for an app.
@@ -373,3 +375,5 @@ class Info(FollowerComponent):
         self.manual_page = manual_page
         self.clients = clients
         self.donation_url = donation_url
+        if clients:
+            clients_module.validate(clients)

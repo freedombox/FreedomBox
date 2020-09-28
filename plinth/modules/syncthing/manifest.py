@@ -2,12 +2,12 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
 _package_id = 'com.nutomic.syncthingandroid'
 _download_url = 'https://syncthing.net/'
 
-clients = validate([{
+clients = [{
     'name':
         _('Syncthing'),
     'platforms': [{
@@ -44,7 +44,7 @@ clients = validate([{
         'type': 'web',
         'url': '/syncthing'
     }]
-}])
+}]
 
 backup = {
     'secrets': {

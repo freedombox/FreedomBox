@@ -2,14 +2,12 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
-clients = validate([{
+clients = [{
     'name': _('ikiwiki'),
     'platforms': [{
         'type': 'web',
         'url': '/ikiwiki'
     }]
-}])
+}]
 
 backup = {'data': {'directories': ['/var/lib/ikiwiki/', '/var/www/ikiwiki/']}}

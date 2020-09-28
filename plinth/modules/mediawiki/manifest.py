@@ -2,15 +2,13 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
-clients = validate([{
+clients = [{
     'name': _('MediaWiki'),
     'platforms': [{
         'type': 'web',
         'url': '/mediawiki'
     }]
-}])
+}]
 
 backup = {
     'config': {

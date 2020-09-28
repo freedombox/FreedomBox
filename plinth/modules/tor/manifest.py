@@ -2,13 +2,13 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
 _orbot_package_id = 'org.torproject.android'
 _tor_browser_download_url = \
     'https://www.torproject.org/download/download-easy.html'
 
-clients = validate([{
+clients = [{
     'name':
         _('Tor Browser'),
     'platforms': [{
@@ -38,7 +38,7 @@ clients = validate([{
         'store_name': 'f-droid',
         'url': store_url('f-droid', _orbot_package_id)
     }]
-}])
+}]
 
 backup = {
     'config': {

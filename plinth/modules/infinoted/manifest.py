@@ -3,10 +3,9 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
-from plinth.clients import validate
 from plinth.utils import format_lazy
 
-clients = validate([{
+clients = [{
     'name':
         _('Gobby'),
     'description':
@@ -29,7 +28,7 @@ clients = validate([{
         'format': 'deb',
         'name': 'gobby'
     }]
-}])
+}]
 
 backup = {
     'data': {

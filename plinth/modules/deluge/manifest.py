@@ -2,16 +2,14 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
-clients = validate([{
+clients = [{
     'name': _('Deluge'),
     'description': _('Bittorrent client written in Python/PyGTK'),
     'platforms': [{
         'type': 'web',
         'url': '/deluge'
     }]
-}])
+}]
 
 backup = {
     'config': {

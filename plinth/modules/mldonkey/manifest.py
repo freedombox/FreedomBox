@@ -5,9 +5,9 @@ Application manifest for mldonkey.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
-clients = validate([{
+clients = [{
     'name': _('MLDonkey'),
     'platforms': [{
         'type': 'web',
@@ -34,7 +34,7 @@ clients = validate([{
         'store_name': 'google-play',
         'url': store_url('google-play', 'com.devwom.amldonkey'),
     }]
-}])
+}]
 
 backup = {
     'config': {

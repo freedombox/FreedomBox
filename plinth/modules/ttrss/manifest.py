@@ -2,9 +2,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
-clients = validate([{
+clients = [{
     'name':
         _('Tiny Tiny RSS (Fork)'),
     'platforms': [{
@@ -25,7 +25,7 @@ clients = validate([{
         'type': 'web',
         'url': '/tt-rss'
     }]
-}])
+}]
 
 backup = {
     'data': {

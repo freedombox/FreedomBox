@@ -2,15 +2,13 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
-clients = validate([{
+clients = [{
     'name': _('Searx'),
     'platforms': [{
         'type': 'web',
         'url': '/searx/'
     }]
-}])
+}]
 
 PUBLIC_ACCESS_SETTING_FILE = '/etc/searx/allow_public_access'
 

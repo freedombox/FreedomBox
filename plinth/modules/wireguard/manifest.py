@@ -5,11 +5,11 @@ Application manifest for WireGuard.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
 _wireguard_package_id = 'com.wireguard.android'
 
-clients = validate([{
+clients = [{
     'name':
         _('WireGuard'),
     'platforms': [{
@@ -40,4 +40,4 @@ clients = validate([{
         'store_name': 'app-store',
         'url': 'https://apps.apple.com/us/app/wireguard/id1441195209'
     }]
-}])
+}]

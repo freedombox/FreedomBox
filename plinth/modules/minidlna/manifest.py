@@ -2,9 +2,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
-clients = validate([
+clients = [
     {
         'name':
             _('vlc'),
@@ -96,7 +96,7 @@ clients = validate([
             'name': 'totem',
         }]
     },
-])
+]
 
 # TODO: get all media directories from config file
 # for now hard code default media folder.

@@ -5,14 +5,14 @@ Application manifest for OpenVPN.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
 _package_id = 'de.blinkt.openvpn'
 _download_url = 'https://openvpn.net/community-downloads'
 
 backup = {'secrets': {'directories': ['/etc/openvpn/']}}
 
-clients = validate([{
+clients = [{
     'name':
         _('OpenVPN'),
     'platforms': [{
@@ -50,4 +50,4 @@ clients = validate([{
         'os': 'macos',
         'url': 'https://tunnelblick.net/downloads.html'
     }]
-}])
+}]

@@ -10,6 +10,8 @@ import pytest
 
 from plinth.app import App, Component, FollowerComponent, Info, LeaderComponent
 
+# pylint: disable=protected-access
+
 
 class AppTest(App):
     """Sample App for testing."""
@@ -302,10 +304,17 @@ def test_info_initialization_without_args():
 
 def test_info_initialization_with_args():
     """Test initializing the Info component with arguments."""
+    clients = [{
+        'name': 'test',
+        'platforms': [{
+            'type': 'web',
+            'url': 'test-url'
+        }]
+    }]
     info = Info('test-app', 3, is_essential=True, depends=['test-app-2'],
                 name='Test App', icon='fa-test', icon_filename='test-icon',
                 short_description='For Test', description='Test description',
-                manual_page='Test', clients=['test'])
+                manual_page='Test', clients=clients)
     assert info.is_essential
     assert info.depends == ['test-app-2']
     assert info.name == 'Test App'
@@ -314,4 +323,19 @@ def test_info_initialization_with_args():
     assert info.short_description == 'For Test'
     assert info.description == 'Test description'
     assert info.manual_page == 'Test'
-    assert info.clients == ['test']
+    assert info.clients == clients
+
+
+def test_info_clients_validation():
+    """Test clients parameter validation during initialization."""
+    with pytest.raises(AssertionError):
+        Info('test-app', 3, clients='invalid')
+
+    clients = [{
+        'name': 'test',
+        'platforms': [{
+            'type': 'web',
+            'url': 'test-url'
+        }]
+    }]
+    Info('test-app', 3, clients=clients)

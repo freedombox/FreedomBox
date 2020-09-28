@@ -5,15 +5,13 @@ Application manifest for cockpit.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
-clients = validate([{
+clients = [{
     'name': _('Cockpit'),
     'platforms': [{
         'type': 'web',
         'url': '/_cockpit/'
     }]
-}])
+}]
 
 # cockpit.conf need not be backed up because add/remove domain signals are
 # triggered on every Plinth domain change (and cockpit application install) and
