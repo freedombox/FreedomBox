@@ -13,24 +13,20 @@ need to list them and present them. Let's add this information to
 
 .. code-block:: python3
 
-  from plinth.clients import validate
-
-  clients = validate([{
+  clients = [{
       'name': _('Transmission'),
       'platforms': [{
           'type': 'web',
           'url': '/transmission'
       }]
-  }])
+  }]
 
 Since our app is a simple web application with no clients needed, we just list
 that. We need to include this into the main app view. In ``__init__.py``, add:
 
 .. code-block:: python3
 
-   from .manifest import clients
-
-   clients = clients
+   from . import manifest
 
 In ``views.py``, add:
 
