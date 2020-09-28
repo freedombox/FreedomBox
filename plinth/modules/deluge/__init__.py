@@ -10,11 +10,12 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 6
 
@@ -50,7 +51,8 @@ class DelugeApp(app_module.App):
             app_id=self.app_id, version=version, name=_('Deluge'),
             icon_filename='deluge',
             short_description=_('BitTorrent Web Client'),
-            description=_description, manual_page='Deluge', clients=clients,
+            description=_description, manual_page='Deluge',
+            clients=manifest.clients,
             donation_url='https://www.patreon.com/deluge_cas')
         self.add(info)
 
@@ -87,6 +89,10 @@ class DelugeApp(app_module.App):
                                           reserved_usernames=[SYSTEM_USER],
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-deluge',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

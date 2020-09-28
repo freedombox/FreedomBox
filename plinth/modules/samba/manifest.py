@@ -6,7 +6,6 @@ Application manifest for Samba.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
 
 SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
 
@@ -77,9 +76,9 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'data': {
         'files': [SHARES_CONF_BACKUP_FILE]
     },
     'services': ['smbd', 'nmbd']
-})
+}

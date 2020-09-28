@@ -12,11 +12,12 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 3
 
@@ -52,7 +53,8 @@ class TransmissionApp(app_module.App):
             icon_filename='transmission',
             short_description=_('BitTorrent Web Client'),
             description=_description, manual_page='Transmission',
-            clients=clients, donation_url='https://transmissionbt.com/donate/')
+            clients=manifest.clients,
+            donation_url='https://transmissionbt.com/donate/')
         self.add(info)
 
         menu_item = menu.Menu('menu-transmission', info.name,
@@ -83,6 +85,10 @@ class TransmissionApp(app_module.App):
                                           reserved_usernames=[SYSTEM_USER],
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-transmission',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

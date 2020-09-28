@@ -9,9 +9,10 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -53,7 +54,8 @@ class RoundcubeApp(app_module.App):
                                name=_('Roundcube'), icon_filename='roundcube',
                                short_description=_('Email Client'),
                                description=_description,
-                               manual_page='Roundcube', clients=clients)
+                               manual_page='Roundcube',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-roundcube', info.name,
@@ -75,6 +77,10 @@ class RoundcubeApp(app_module.App):
         webserver = Webserver('webserver-roundcube', 'roundcube',
                               urls=['https://{host}/roundcube'])
         self.add(webserver)
+
+        backup_restore = BackupRestore('backup-restore-roundcube',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

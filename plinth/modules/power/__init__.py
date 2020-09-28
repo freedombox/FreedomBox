@@ -6,8 +6,9 @@ FreedomBox app for power controls.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
+from plinth.modules.backups.components import BackupRestore
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -31,5 +32,9 @@ class PowerApp(app_module.App):
                                is_essential=is_essential, name=_('Power'),
                                description=_description, manual_page='Power')
         self.add(info)
+
+        backup_restore = BackupRestore('backup-restore-power',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         # not in menu, see issue #834

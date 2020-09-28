@@ -15,8 +15,9 @@ import plinth
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
+from plinth.modules.backups.components import BackupRestore
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 8
 
@@ -78,6 +79,10 @@ class UpgradesApp(app_module.App):
         menu_item = menu.Menu('menu-upgrades', info.name, None, info.icon,
                               'upgrades:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-upgrades',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         self._show_new_release_notification()
 

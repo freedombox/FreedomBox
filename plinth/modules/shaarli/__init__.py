@@ -10,7 +10,7 @@ from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
-from .manifest import clients
+from . import manifest
 
 version = 1
 
@@ -37,7 +37,7 @@ class ShaarliApp(app_module.App):
                                name=_('Shaarli'), icon_filename='shaarli',
                                short_description=_('Bookmarks'),
                                description=_description, manual_page='Shaarli',
-                               clients=clients)
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-shaarli', info.name,

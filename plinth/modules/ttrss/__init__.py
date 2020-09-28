@@ -11,11 +11,12 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import Version, format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 3
 
@@ -56,7 +57,8 @@ class TTRSSApp(app_module.App):
                                name=_('Tiny Tiny RSS'), icon_filename='ttrss',
                                short_description=_('News Feed Reader'),
                                description=_description,
-                               manual_page='TinyTinyRSS', clients=clients)
+                               manual_page='TinyTinyRSS',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-ttrss', info.name, info.short_description,
@@ -87,10 +89,26 @@ class TTRSSApp(app_module.App):
                                           groups=groups)
         self.add(users_and_groups)
 
+        backup_restore = TTRSSBackupRestore('backup-restore-ttrss',
+                                            **manifest.backup)
+        self.add(backup_restore)
+
     def enable(self):
         """Enable components and API access."""
         super().enable()
         actions.superuser_run('ttrss', ['enable-api-access'])
+
+
+class TTRSSBackupRestore(BackupRestore):
+    """Component to backup/restore TT-RSS"""
+
+    def backup_pre(self, packet):
+        """Save database contents."""
+        actions.superuser_run('ttrss', ['dump-database'])
+
+    def restore_post(self, packet):
+        """Restore database contents."""
+        actions.superuser_run('ttrss', ['restore-database'])
 
 
 def setup(helper, old_version=None):
@@ -114,13 +132,3 @@ def force_upgrade(helper, packages):
     helper.install(['tt-rss'], force_configuration='new')
     actions.superuser_run('ttrss', ['setup'])
     return True
-
-
-def backup_pre(packet):
-    """Save database contents."""
-    actions.superuser_run('ttrss', ['dump-database'])
-
-
-def restore_post(packet):
-    """Restore database contents."""
-    actions.superuser_run('ttrss', ['restore-database'])

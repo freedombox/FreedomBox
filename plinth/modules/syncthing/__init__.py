@@ -10,12 +10,13 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users.components import UsersAndGroups
 from plinth.modules.users import add_user_to_share_group
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 3
 
@@ -59,7 +60,8 @@ class SyncthingApp(app_module.App):
                                name=_('Syncthing'), icon_filename='syncthing',
                                short_description=_('File Synchronization'),
                                description=_description,
-                               manual_page='Syncthing', clients=clients,
+                               manual_page='Syncthing',
+                               clients=manifest.clients,
                                donation_url='https://syncthing.net/donations/')
         self.add(info)
 
@@ -94,6 +96,10 @@ class SyncthingApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-syncthing',
                                           [SYSTEM_USER], self.groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-syncthing',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

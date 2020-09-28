@@ -5,7 +5,6 @@ Application manifest for cockpit.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import validate
 
 clients = validate([{
@@ -20,4 +19,4 @@ clients = validate([{
 # triggered on every Plinth domain change (and cockpit application install) and
 # will set the value of allowed domains correctly. This is the only key the is
 # customized in cockpit.conf.
-backup = validate_backup({})
+backup = {}

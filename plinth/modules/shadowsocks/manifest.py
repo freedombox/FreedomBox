@@ -3,13 +3,11 @@
 Application manifest for shadowsocks.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'secrets': {
         'files': [
             '/var/lib/private/shadowsocks-libev/freedombox/freedombox.json'
         ]
     },
     'services': ['shadowsocks-libev-local@freedombox']
-})
+}

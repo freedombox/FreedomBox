@@ -3,11 +3,9 @@
 Application manifest for bind.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'config': {
         'files': ['/etc/bind/named.conf.options']
     },
     'services': ['bind9']
-})
+}

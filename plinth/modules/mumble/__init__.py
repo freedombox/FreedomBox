@@ -13,12 +13,13 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules import names
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import Version
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -50,7 +51,8 @@ class MumbleApp(app_module.App):
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Mumble'),
             icon_filename='mumble', short_description=_('Voice Chat'),
-            description=_description, manual_page='Mumble', clients=clients,
+            description=_description, manual_page='Mumble',
+            clients=manifest.clients,
             donation_url='https://wiki.mumble.info/wiki/Donate')
         self.add(info)
 
@@ -87,6 +89,10 @@ class MumbleApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-mumble',
                                           reserved_usernames=['mumble-server'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-mumble',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

@@ -11,9 +11,10 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -64,7 +65,7 @@ class BepastyApp(app_module.App):
                                icon_filename='bepasty',
                                short_description=_('File & Snippet Sharing'),
                                description=_description, manual_page='bepasty',
-                               clients=clients)
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-bepasty', info.name,
@@ -75,7 +76,7 @@ class BepastyApp(app_module.App):
         shortcut = frontpage.Shortcut('shortcut-bepasty', info.name,
                                       info.short_description,
                                       info.icon_filename, '/bepasty',
-                                      clients=clients)
+                                      clients=manifest.clients)
         self.add(shortcut)
 
         firewall = Firewall('firewall-bepasty', info.name,
@@ -88,6 +89,10 @@ class BepastyApp(app_module.App):
         webserver = Webserver('webserver-bepasty', 'bepasty-freedombox',
                               urls=['https://{host}/bepasty/'])
         self.add(webserver)
+
+        backup_restore = BackupRestore('backup-restore-bepasty',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

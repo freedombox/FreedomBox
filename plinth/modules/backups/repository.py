@@ -158,6 +158,7 @@ class BaseBorgRepository(abc.ABC):
 
     def remove(self):
         """Remove a borg repository"""
+
     def list_archives(self):
         """Return list of archives in this repository."""
         output = self.run(['list-repo', '--path', self.borg_path])
@@ -165,12 +166,12 @@ class BaseBorgRepository(abc.ABC):
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
 
-    def create_archive(self, archive_name, app_names):
+    def create_archive(self, archive_name, app_ids):
         """Create a new archive in this repository with given name."""
         archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
-        api.backup_apps(_backup_handler, path=archive_path,
-                        app_names=app_names, encryption_passphrase=passphrase)
+        api.backup_apps(_backup_handler, path=archive_path, app_ids=app_ids,
+                        encryption_passphrase=passphrase)
 
     def delete_archive(self, archive_name):
         """Delete an archive with given name from this repository."""
@@ -222,6 +223,7 @@ class BaseBorgRepository(abc.ABC):
 
     def get_download_stream(self, archive_name):
         """Return an stream of .tar.gz binary data for a backup archive."""
+
         class BufferedReader(io.BufferedReader):
             """Improve performance of buffered binary streaming.
 
@@ -235,6 +237,7 @@ class BaseBorgRepository(abc.ABC):
             binary data.
 
             """
+
             def __next__(self):
                 """Override to call read() instead of readline()."""
                 chunk = self.read(io.DEFAULT_BUFFER_SIZE)
@@ -279,11 +282,11 @@ class BaseBorgRepository(abc.ABC):
         output = self.run(['get-archive-apps', '--path', archive_path])
         return output.splitlines()
 
-    def restore_archive(self, archive_name, apps=None):
+    def restore_archive(self, archive_name, app_ids=None):
         """Restore an archive from this repository to the system."""
         archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
-        api.restore_apps(restore_archive_handler, app_names=apps,
+        api.restore_apps(restore_archive_handler, app_ids=app_ids,
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 

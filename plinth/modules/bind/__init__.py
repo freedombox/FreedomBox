@@ -14,10 +14,11 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -95,6 +96,10 @@ class BindApp(app_module.App):
                                                               (53, 'udp4')],
             alias=managed_services[1])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-bind',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

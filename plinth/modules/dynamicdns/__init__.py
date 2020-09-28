@@ -8,12 +8,13 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added
 from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -69,6 +70,10 @@ class DynamicDNSApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-dynamicdns',
                                           reserved_usernames=['ez-ipupd'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-dynamicdns',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         current_status = get_status()
         if current_status['enabled']:

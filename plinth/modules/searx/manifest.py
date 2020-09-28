@@ -3,7 +3,6 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import validate
-from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
     'name': _('Searx'),
@@ -15,4 +14,4 @@ clients = validate([{
 
 PUBLIC_ACCESS_SETTING_FILE = '/etc/searx/allow_public_access'
 
-backup = validate_backup({'config': {'files': [PUBLIC_ACCESS_SETTING_FILE]}})
+backup = {'config': {'files': [PUBLIC_ACCESS_SETTING_FILE]}}

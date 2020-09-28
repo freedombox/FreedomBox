@@ -2,7 +2,6 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import store_url, validate
 
 clients = validate([{
@@ -28,7 +27,7 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'data': {
         'files': ['/var/lib/plinth/backups-data/ttrss-database.sql']
     },
@@ -36,4 +35,4 @@ backup = validate_backup({
         'files': ['/etc/tt-rss/database.php']
     },
     'services': ['tt-rss']
-})
+}

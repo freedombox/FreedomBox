@@ -3,10 +3,8 @@
 Application manifest for snapshot.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'config': {
         'files': ['/etc/snapper/configs/root', '/etc/default/snapper']
     }
-})
+}

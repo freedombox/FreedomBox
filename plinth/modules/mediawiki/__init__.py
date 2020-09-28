@@ -13,9 +13,10 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 9
 
@@ -58,7 +59,8 @@ class MediaWikiApp(app_module.App):
                                name=_('MediaWiki'), icon_filename='mediawiki',
                                short_description=_('Wiki'),
                                description=_description,
-                               manual_page='MediaWiki', clients=clients)
+                               manual_page='MediaWiki',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-mediawiki', info.name,
@@ -86,6 +88,10 @@ class MediaWikiApp(app_module.App):
 
         daemon = Daemon('daemon-mediawiki', managed_services[0])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-mediawiki',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 class Shortcut(frontpage.Shortcut):

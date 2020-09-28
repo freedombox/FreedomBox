@@ -9,7 +9,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 
-from .manifest import clients
+from . import manifest
 
 version = 1
 
@@ -45,7 +45,8 @@ class PerformanceApp(app_module.App):
                                name=_('Performance'), icon='fa-bar-chart',
                                short_description=_('System Monitoring'),
                                description=_description,
-                               manual_page='Performance', clients=clients)
+                               manual_page='Performance',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-performance', info.name,

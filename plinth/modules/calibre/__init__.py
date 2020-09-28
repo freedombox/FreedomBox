@@ -13,11 +13,12 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -60,7 +61,7 @@ class CalibreApp(app_module.App):
                                name=_('calibre'), icon_filename='calibre',
                                short_description=_('E-book Library'),
                                description=_description, manual_page='Calibre',
-                               clients=clients,
+                               clients=manifest.clients,
                                donation_url='https://calibre-ebook.com/donate')
         self.add(info)
 
@@ -93,6 +94,10 @@ class CalibreApp(app_module.App):
                                           reserved_usernames=['calibre'],
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-calibre',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

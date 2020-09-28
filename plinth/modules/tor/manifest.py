@@ -3,7 +3,6 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
 
 _orbot_package_id = 'org.torproject.android'
 _tor_browser_download_url = \
@@ -41,7 +40,7 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'config': {
         'directories': ['/etc/tor/']
     },
@@ -49,4 +48,4 @@ backup = validate_backup({
         'directories': ['/var/lib/tor/', '/var/lib/tor-instances/']
     },
     'services': ['tor@plinth']
-})
+}

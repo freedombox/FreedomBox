@@ -3,7 +3,6 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
     'name':
@@ -55,9 +54,9 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'data': {
         'directories': ['/var/lib/mumble-server']
     },
     'services': ['mumble-server']
-})
+}

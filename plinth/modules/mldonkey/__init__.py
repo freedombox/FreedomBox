@@ -10,12 +10,13 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -56,7 +57,8 @@ class MLDonkeyApp(app_module.App):
             app_id=self.app_id, version=version, name=_('MLDonkey'),
             icon_filename='mldonkey',
             short_description=_('Peer-to-peer File Sharing'),
-            description=_description, manual_page='MLDonkey', clients=clients)
+            description=_description, manual_page='MLDonkey',
+            clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-mldonkey', info.name,
@@ -87,6 +89,10 @@ class MLDonkeyApp(app_module.App):
                                           reserved_usernames=[_SYSTEM_USER],
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-mldonkey',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

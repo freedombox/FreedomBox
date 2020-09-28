@@ -11,11 +11,12 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import diagnose_url
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.utils import format_lazy
 from plinth.modules.users.components import UsersAndGroups
+from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -81,6 +82,10 @@ class PrivoxyApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-privoxy',
                                           reserved_usernames=['privoxy'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-privoxy',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
     def diagnose(self):
         """Run diagnostics and return the results."""

@@ -3,7 +3,6 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import validate
 from plinth.utils import format_lazy
 
@@ -32,7 +31,7 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'data': {
         'directories': ['/var/lib/infinoted/']
     },
@@ -43,4 +42,4 @@ backup = validate_backup({
         ],
     },
     'services': ['infinoted']
-})
+}

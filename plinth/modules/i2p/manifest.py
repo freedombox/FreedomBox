@@ -6,7 +6,6 @@ Application manifest for I2P.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import validate
-from plinth.modules.backups.api import validate as validate_backup
 
 _package_id = 'net.geti2p.i2p'
 _download_url = 'https://geti2p.net/download'
@@ -36,9 +35,9 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'secrets': {
         'directories': ['/var/lib/i2p/i2p-config']
     },
     'services': ['i2p']
-})
+}

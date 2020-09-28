@@ -8,10 +8,11 @@ import plinth.app as app_module
 from plinth import actions, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup, clients  # noqa
+from . import manifest
 
 version = 2
 
@@ -47,7 +48,8 @@ class MiniDLNAApp(app_module.App):
                                name=_('MiniDLNA'), icon_filename='minidlna',
                                short_description=_('Simple Media Server'),
                                description=_description,
-                               manual_page='MiniDLNA', clients=clients)
+                               manual_page='MiniDLNA',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu(
@@ -69,6 +71,10 @@ class MiniDLNAApp(app_module.App):
                                       url='/_minidlna/', login_required=True,
                                       allowed_groups=list(groups))
         daemon = Daemon('daemon-minidlna', managed_services[0])
+
+        backup_restore = BackupRestore('backup-restore-minidlna',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         self.add(menu_item)
         self.add(webserver)

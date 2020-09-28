@@ -11,8 +11,7 @@ from plinth import cfg, frontpage, menu
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy, import_from_gi
 
-from . import utils
-from .manifest import clients  # noqa, pylint: disable=unused-import
+from . import manifest, utils
 
 nm = import_from_gi('NM', '1.0')
 
@@ -50,7 +49,8 @@ class WireguardApp(app_module.App):
             app_id=self.app_id, version=version, name=_('WireGuard'),
             icon_filename='wireguard',
             short_description=_('Virtual Private Network'),
-            description=_description, manual_page='WireGuard', clients=clients,
+            description=_description, manual_page='WireGuard',
+            clients=manifest.clients,
             donation_url='https://www.wireguard.com/donations/')
         self.add(info)
 

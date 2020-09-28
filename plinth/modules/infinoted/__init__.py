@@ -10,10 +10,11 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 3
 
@@ -45,7 +46,8 @@ class InfinotedApp(app_module.App):
                                name=_('infinoted'), icon_filename='infinoted',
                                short_description=_('Gobby Server'),
                                description=_description,
-                               manual_page='Infinoted', clients=clients)
+                               manual_page='Infinoted',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-infinoted', info.name,
@@ -68,6 +70,10 @@ class InfinotedApp(app_module.App):
         daemon = Daemon('daemon-infinoted', managed_services[0],
                         listen_ports=[(6523, 'tcp4'), (6523, 'tcp6')])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-infinoted',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

@@ -10,11 +10,12 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -59,7 +60,8 @@ class MinetestApp(app_module.App):
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Minetest'),
             icon_filename='minetest', short_description=_('Block Sandbox'),
-            description=_description, manual_page='Minetest', clients=clients,
+            description=_description, manual_page='Minetest',
+            clients=manifest.clients,
             donation_url='https://www.minetest.net/get-involved/#donate')
         self.add(info)
 
@@ -88,6 +90,10 @@ class MinetestApp(app_module.App):
             'users-and-groups-minetest',
             reserved_usernames=['Debian-minetest'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-minetest',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

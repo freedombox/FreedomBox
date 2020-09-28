@@ -3,11 +3,9 @@
 Application manifest for pagekite.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'config': {
         'directories': ['/etc/pagekite.d/']
     },
     'services': ['pagekite']
-})
+}

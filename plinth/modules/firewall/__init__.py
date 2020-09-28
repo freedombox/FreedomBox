@@ -12,9 +12,10 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.utils import Version, format_lazy, import_from_gi
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 gio = import_from_gi('Gio', '2.0')
 glib = import_from_gi('GLib', '2.0')
@@ -73,6 +74,10 @@ class FirewallApp(app_module.App):
 
         daemon = Daemon('daemon-firewall', managed_services[0])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-firewall',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def _run_setup():

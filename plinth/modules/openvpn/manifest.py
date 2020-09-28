@@ -6,12 +6,11 @@ Application manifest for OpenVPN.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
 
 _package_id = 'de.blinkt.openvpn'
 _download_url = 'https://openvpn.net/community-downloads'
 
-backup = validate_backup({'secrets': {'directories': ['/etc/openvpn/']}})
+backup = {'secrets': {'directories': ['/etc/openvpn/']}}
 
 clients = validate([{
     'name':

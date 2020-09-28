@@ -10,79 +10,38 @@ TODO:
 - Implement unit tests.
 """
 
+import importlib
 import logging
 
-from plinth import actions, action_utils, module_loader, setup
+from plinth import action_utils, actions
+from plinth import app as app_module
+from plinth import setup
+
+from .components import BackupRestore
 
 logger = logging.getLogger(__name__)
 
 
-def validate(backup):
-    """Validate the backup' information schema."""
-    assert isinstance(backup, dict)
-
-    if 'config' in backup:
-        assert isinstance(backup['config'], dict)
-        _validate_directories_and_files(backup['config'])
-
-    if 'data' in backup:
-        assert isinstance(backup['data'], dict)
-        _validate_directories_and_files(backup['data'])
-
-    if 'secrets' in backup:
-        assert isinstance(backup['secrets'], dict)
-        _validate_directories_and_files(backup['secrets'])
-
-    if 'services' in backup:
-        assert isinstance(backup['services'], list)
-        for service in backup['services']:
-            assert isinstance(service, (str, dict))
-            if isinstance(service, dict):
-                _validate_service(service)
-
-    return backup
-
-
-def _validate_directories_and_files(section):
-    """Validate directories and files keys in a section."""
-    if 'directories' in section:
-        assert isinstance(section['directories'], list)
-        for directory in section['directories']:
-            assert isinstance(directory, str)
-
-    if 'files' in section:
-        assert isinstance(section['files'], list)
-        for file_path in section['files']:
-            assert isinstance(file_path, str)
-
-
-def _validate_service(service):
-    """Validate a service manifest provided as a dictionary."""
-    assert isinstance(service['name'], str)
-    assert isinstance(service['type'], str)
-    assert service['type'] in ('apache', 'uwsgi', 'system')
-    if service['type'] == 'apache':
-        assert service['kind'] in ('config', 'site', 'module')
-
-
 class BackupError:
     """Represent an backup/restore operation error."""
-    def __init__(self, error_type, app, hook=None):
+
+    def __init__(self, error_type, component, hook=None):
         """Initialize the error object."""
         self.error_type = error_type
-        self.app = app
+        self.component = component
         self.hook = hook
 
     def __eq__(self, other_error):
         """Compare to error objects."""
         return (self.error_type == other_error.error_type
-                and self.app == other_error.app
+                and self.component == other_error.component
                 and self.hook == other_error.hook)
 
 
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
-    def __init__(self, operation, scope, root, apps=None, path=None):
+
+    def __init__(self, operation, scope, root, components=None, path=None):
         """Initialize the packet.
 
         operation is either 'backup' or 'restore.
@@ -101,7 +60,7 @@ class Packet:
         self.operation = operation
         self.scope = scope
         self.root = root
-        self.apps = apps
+        self.components = components
         self.path = path
         self.errors = []
 
@@ -112,11 +71,11 @@ class Packet:
 
     def _process_manifests(self):
         """Look at manifests and fill up the list of directories/files."""
-        for app in self.apps:
+        for component in self.components:
             for section in ['config', 'data', 'secrets']:
-                self.directories += app.manifest.get(section, {}).get(
-                    'directories', [])
-                self.files += app.manifest.get(section, {}).get('files', [])
+                section = getattr(component, section)
+                self.directories += section.get('directories', [])
+                self.files += section.get('files', [])
 
 
 def backup_full(backup_handler, path=None):
@@ -146,25 +105,25 @@ def restore_full(restore_handler):
     _switch_to_subvolume(subvolume)
 
 
-def backup_apps(backup_handler, path, app_names=None,
+def backup_apps(backup_handler, path, app_ids=None,
                 encryption_passphrase=None):
     """Backup data belonging to a set of applications."""
-    if not app_names:
-        apps = get_all_apps_for_backup()
+    if not app_ids:
+        components = get_all_components_for_backup()
     else:
-        apps = get_apps_in_order(app_names)
+        components = get_components_in_order(app_ids)
 
     if _is_snapshot_available():
         snapshot = _take_snapshot()
         backup_root = snapshot['mount_path']
         snapshotted = True
     else:
-        _lockdown_apps(apps, lockdown=True)
-        original_state = _shutdown_services(apps)
+        _lockdown_apps(components, lockdown=True)
+        original_state = _shutdown_services(components)
         backup_root = '/'
         snapshotted = False
 
-    packet = Packet('backup', 'apps', backup_root, apps, path)
+    packet = Packet('backup', 'apps', backup_root, components, path)
     _run_operation(backup_handler, packet,
                    encryption_passphrase=encryption_passphrase)
 
@@ -172,29 +131,29 @@ def backup_apps(backup_handler, path, app_names=None,
         _delete_snapshot(snapshot)
     else:
         _restore_services(original_state)
-        _lockdown_apps(apps, lockdown=False)
+        _lockdown_apps(components, lockdown=False)
 
 
-def restore_apps(restore_handler, app_names=None, create_subvolume=True,
+def restore_apps(restore_handler, app_ids=None, create_subvolume=True,
                  backup_file=None, encryption_passphrase=None):
     """Restore data belonging to a set of applications."""
-    if not app_names:
-        apps = get_all_apps_for_backup()
+    if not app_ids:
+        components = get_all_components_for_backup()
     else:
-        apps = get_apps_in_order(app_names)
+        components = get_components_in_order(app_ids)
 
-    _install_apps_before_restore(apps)
+    _install_apps_before_restore(components)
 
     if _is_snapshot_available() and create_subvolume:
         subvolume = _create_subvolume(empty=False)
         restore_root = subvolume['mount_path']
     else:
-        _lockdown_apps(apps, lockdown=True)
-        original_state = _shutdown_services(apps)
+        _lockdown_apps(components, lockdown=True)
+        original_state = _shutdown_services(components)
         restore_root = '/'
         subvolume = False
 
-    packet = Packet('restore', 'apps', restore_root, apps, backup_file)
+    packet = Packet('restore', 'apps', restore_root, components, backup_file)
     _run_operation(restore_handler, packet,
                    encryption_passphrase=encryption_passphrase)
 
@@ -202,10 +161,10 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
         _switch_to_subvolume(subvolume)
     else:
         _restore_services(original_state)
-        _lockdown_apps(apps, lockdown=False)
+        _lockdown_apps(components, lockdown=False)
 
 
-def _install_apps_before_restore(apps):
+def _install_apps_before_restore(components):
     """Install/upgrade apps needed before restoring a backup.
 
     Upgrading apps to latest version before backups reduces the chance of newer
@@ -213,92 +172,57 @@ def _install_apps_before_restore(apps):
 
     """
     modules_to_setup = []
-    for backup_app in apps:
-        if backup_app.app.setup_helper.get_state() in ('needs-setup',
-                                                       'needs-update'):
-            modules_to_setup.append(backup_app.name)
+    for component in components:
+        module = importlib.import_module(component.app.__class__.__module__)
+        if module.setup_helper.get_state() in ('needs-setup', 'needs-update'):
+            modules_to_setup.append(component.app.app_id)
 
     setup.run_setup_on_modules(modules_to_setup)
 
 
-class BackupApp:
-    """A application that can be backed up and its manifest."""
-    def __init__(self, name, app):
-        """Initialize object and load manfiest."""
-        self.name = name
-        self.app = app
+def _get_backup_restore_component(app):
+    """Return the backup/restore component of the app."""
+    for component in app.components.values():
+        if isinstance(component, BackupRestore):
+            return component
 
-        # Has no backup related meta data
+    raise TypeError
+
+
+def get_all_components_for_backup():
+    """Return a list of all components that can be backed up."""
+    components = []
+
+    for app_ in app_module.App.list():
         try:
-            self.manifest = app.backup
-        except AttributeError:
-            raise TypeError
-
-        self.has_data = bool(app.backup)
-
-    def __eq__(self, other_app):
-        """Check if this app is same as another."""
-        return self.name == other_app.name and \
-            self.app == other_app.app and \
-            self.manifest == other_app.manifest and \
-            self.has_data == other_app.has_data
-
-    def is_installed(self):
-        """Return whether app is installed.
-
-        Return true even if the app needs update.
-        """
-        return self.app.setup_helper.get_state() != 'needs-setup'
-
-    def run_hook(self, hook, packet):
-        """Run a hook inside an application."""
-        if not hasattr(self.app, hook):
-            return
-
-        try:
-            getattr(self.app, hook)(packet)
-        except Exception as exception:
-            logger.exception(
-                'Error running backup/restore hook for app %s: %s', self.name,
-                exception)
-            packet.errors.append(BackupError('hook', self.app, hook=hook))
-
-
-def get_all_apps_for_backup():
-    """Return a list of all applications that can be backed up."""
-    apps = []
-    for module_name, module in module_loader.loaded_modules.items():
-        try:
-            backup_app = BackupApp(module_name, module)
-            if backup_app.is_installed():
-                apps.append(backup_app)
+            module = importlib.import_module(app_.__class__.__module__)
+            if module.setup_helper.get_state() != 'needs-setup':
+                components.append(_get_backup_restore_component(app_))
         except TypeError:  # Application not available for backup/restore
             pass
 
-    return apps
+    return components
 
 
-def get_apps_in_order(app_names):
-    """Return a list of app modules in order of dependency."""
-    apps = []
-    for module_name, module in module_loader.loaded_modules.items():
-        if module_name in app_names:
-            apps.append(BackupApp(module_name, module))
+def get_components_in_order(app_ids):
+    """Return a list of backup components in order of app dependencies."""
+    components = []
+    for app_ in app_module.App.list():
+        if app_.app_id in app_ids:
+            components.append(_get_backup_restore_component(app_))
 
-    return apps
+    return components
 
 
-def _lockdown_apps(apps, lockdown):
+def _lockdown_apps(components, lockdown):
     """Mark apps as in/out of lockdown mode and disable all user interaction.
 
     This is a flag in the app module. It will enforced by a middleware that
     will intercept all interaction and show a lockdown message.
 
     """
-    for app in apps:
-        app.app.locked = lockdown
-
-    # XXX: Lockdown the application UI by implementing a middleware
+    for component in components:
+        component.app.locked = lockdown
 
 
 def _is_snapshot_available():
@@ -347,6 +271,7 @@ def _switch_to_subvolume(subvolume):
 
 class ServiceHandler:
     """Abstraction to help with service shutdown/restart."""
+
     @staticmethod
     def create(backup_app, service):
         service_type = 'system'
@@ -381,6 +306,7 @@ class ServiceHandler:
 
 class SystemServiceHandler(ServiceHandler):
     """Handle starting and stopping of system services for backup."""
+
     def __init__(self, backup_app, service):
         """Initialize the object."""
         super().__init__(backup_app, service)
@@ -400,6 +326,7 @@ class SystemServiceHandler(ServiceHandler):
 
 class ApacheServiceHandler(ServiceHandler):
     """Handle starting and stopping of Apache services for backup."""
+
     def __init__(self, backup_app, service):
         """Initialize the object."""
         super().__init__(backup_app, service)
@@ -424,18 +351,19 @@ class ApacheServiceHandler(ServiceHandler):
                 ['enable', '--name', self.web_name, '--kind', self.kind])
 
 
-def _shutdown_services(apps):
-    """Shutdown all services specified by manifests.
+def _shutdown_services(components):
+    """Shutdown all services specified by backup manifests.
 
-    - Services are shutdown in the reverse order of the apps listing.
+    - Services are shutdown in the reverse order of the components listing.
 
     Return the current state of the services so they can be restored
     accurately.
+
     """
     state = []
-    for app in apps:
-        for service in app.manifest.get('services', []):
-            state.append(ServiceHandler.create(app, service))
+    for component in components:
+        for service in component.services:
+            state.append(ServiceHandler.create(component, service))
 
     for service in reversed(state):
         service.stop()
@@ -480,8 +408,14 @@ def _run_hooks(hook, packet):
 
     """
     logger.info('Running %s hooks', hook)
-    for app in packet.apps:
-        app.run_hook(hook, packet)
+    for component in packet.components:
+        try:
+            getattr(component, hook)(packet)
+        except Exception as exception:
+            logger.exception(
+                'Error running backup/restore hook for app %s: %s',
+                component.app.app_id, exception)
+            packet.errors.append(BackupError('hook', component, hook=hook))
 
 
 def _run_operation(handler, packet, encryption_passphrase=None):

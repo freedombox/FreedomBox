@@ -3,7 +3,6 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import validate
-from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
     'name': _('MediaWiki'),
@@ -13,7 +12,7 @@ clients = validate([{
     }]
 }])
 
-backup = validate_backup({
+backup = {
     'config': {
         'files': ['/etc/mediawiki/FreedomBoxSettings.php']
     },
@@ -21,4 +20,4 @@ backup = validate_backup({
         'directories': ['/var/lib/mediawiki-db/']
     },
     'services': ['mediawiki-jobrunner']
-})
+}
