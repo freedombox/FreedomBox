@@ -15,6 +15,7 @@ Components
    domain
    letsencrypt
    staticfiles
+   backups
 
 Base Classes
 ^^^^^^^^^^^^

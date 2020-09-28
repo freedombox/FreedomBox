@@ -229,3 +229,49 @@ a later section of this tutorial. The next parameter specifies whether anonymous
 users who are not logged into FreedomBox should be shown this shortcut. The
 final parameter further restricts to which group of users this shortcut must be
 shown.
+
+Adding backup/restore functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each app in FreedomBox needs to provide the ability to backup and restore its
+configuration and data. Apart from providing durability to users' data, this
+allows the user to migrate from one machine to another. FreedomBox framework
+provides a component for handling these operations. Create the
+:class:`~plinth.modules.backups.components.BackupRestore` component during app
+initialization.
+
+In ``__init__.py``, add:
+
+.. code-block:: python3
+
+  from plinth.modules.backups.components import BackupRestore
+
+  from . import manifest
+
+  class TransmissionApp(app_module.App):
+    ...
+
+    def __init__(self):
+        ...
+
+        backup_restore = BackupRestore('backup-restore-transmission',
+                                       **manifest.backup)
+        self.add(backup_restore)
+
+In ``manifest.py``, add:
+
+.. code-block:: python3
+
+  backup = {
+      'data': {
+          'directories': ['/var/lib/transmission-daemon/.config']
+      },
+      'secrets': {
+          'files': ['/etc/transmission-daemon/settings.json']
+      },
+      'services': ['transmission-daemon']
+  }
+
+The data and secrets information specifies which list of files and directories
+FreedomBox framework needs to backup and restore. The list of services specifies
+which daemons should be stopped during the backup and restore process.

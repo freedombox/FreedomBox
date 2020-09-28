@@ -68,37 +68,6 @@ Then, in ``views.py``, add:
       ...
       manual_page = transmission.manual_page
 
-Adding backup/restore functionality
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Each app in FreedomBox needs to provide the ability to backup its configuration
-and data. Apart from providing durability to users' data, this allows the user
-to migrate from one machine to another. FreedomBox framework provides a simple
-declarative mechanism to allow the app to be backed up and restored. In
-``manifest.py``, add:
-
-.. code-block:: python3
-
-  from plinth.modules.backups.api import validate as validate_backup
-
-  backup = validate_backup({
-      'data': {
-          'directories': ['/var/lib/transmission-daemon/.config']
-      },
-      'secrets': {
-          'files': ['/etc/transmission-daemon/settings.json']
-      },
-      'services': ['transmission-daemon']
-  })
-
-The data and secrets information specifies which list of files and directories
-FreedomBox framework needs to backup. The list of services specifies which
-daemons should be stopped during the backup process. In ``__init__.py``, add:
-
-.. code-block:: python3
-
-  from .manifest import backup
-
 Creating diagnostics
 ^^^^^^^^^^^^^^^^^^^^
 
