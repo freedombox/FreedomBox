@@ -53,12 +53,14 @@ class App:
 
     def add(self, component):
         """Add a component to an app."""
+        component.app_id = self.app_id
         self.components[component.component_id] = component
         return self
 
     def remove(self, component_id):
         """Remove a component from the app."""
         component = self.components[component_id]
+        component.app_id = None
         del self.components[component_id]
         return component
 
@@ -167,7 +169,13 @@ class App:
 
 
 class Component:
-    """Interface for an app component."""
+    """Interface for an app component.
+
+    `app_id` is a string which is set to the value of the application's app_id
+    to which this component belongs. It is set when the component is added to
+    an app. When the component is removed from an app, it set to None.
+
+    """
 
     is_leader = False
 
@@ -177,6 +185,16 @@ class Component:
             raise ValueError('Invalid component ID')
 
         self.component_id = component_id
+        self.app_id = None
+
+    @property
+    def app(self):
+        """Return the app this component is part of.
+
+        Raises KeyError if this component is not part of any app.
+
+        """
+        return App.get(self.app_id)
 
     def enable(self):
         """Run operations to enable the component."""

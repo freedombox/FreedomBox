@@ -71,6 +71,7 @@ def test_app_add():
     return_value = app.add(component)
     assert len(app.components) == 1
     assert app.components['test-component'] == component
+    assert component.app_id == app.app_id
     assert return_value == app
 
 
@@ -79,6 +80,7 @@ def test_app_remove(app_with_components):
     app = app_with_components
     component = app.components['test-leader-1']
     assert app.remove('test-leader-1') == component
+    assert component.app_id is None
     assert 'test-leader-1' not in app.components
 
 
@@ -204,6 +206,18 @@ def test_component_initialization():
     component = Component('test-component')
     assert component.component_id == 'test-component'
     assert not component.is_leader
+
+
+def test_component_app_property():
+    """Test component's app property."""
+    component = Component('test-component')
+    assert component.app_id is None
+    with pytest.raises(KeyError):
+        assert not component.app
+
+    app = AppTest()
+    app.add(component)
+    assert component.app == app
 
 
 def test_component_diagnose():
