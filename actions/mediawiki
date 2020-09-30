@@ -86,6 +86,7 @@ def subcommand_setup(_):
         password = generate_password()
         with tempfile.NamedTemporaryFile() as password_file_handle:
             password_file_handle.write(password.encode())
+            password_file_handle.flush()
             subprocess.check_call([
                 _get_php_command(), install_script,
                 '--confpath=/etc/mediawiki', '--dbtype=sqlite',
