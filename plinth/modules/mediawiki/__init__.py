@@ -4,6 +4,7 @@ FreedomBox app to configure MediaWiki.
 """
 
 import re
+from urllib.parse import urlparse
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -16,7 +17,7 @@ from plinth.modules.firewall.components import Firewall
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 8
+version = 9
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
@@ -38,6 +39,9 @@ _description = [
 ]
 
 app = None
+
+STATIC_CONFIG_FILE = '/etc/mediawiki/FreedomBoxStaticSettings.php'
+USER_CONFIG_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 
 
 class MediaWikiApp(app_module.App):
@@ -109,24 +113,44 @@ def is_public_registration_enabled():
 
 
 def is_private_mode_enabled():
-    """ Return whether private mode is enabled or disabled"""
+    """Return whether private mode is enabled or disabled."""
     output = actions.superuser_run('mediawiki', ['private-mode', 'status'])
     return output.strip() == 'enabled'
 
 
-def get_default_skin():
-    """Return the value of the default skin"""
-
-    def _find_skin(config_file):
-        with open(config_file, 'r') as config:
-            for line in config:
-                if line.startswith('$wgDefaultSkin'):
-                    return re.findall(r'["\'][^"\']*["\']',
-                                      line)[0].strip('"\'')
+def _get_config_value_in_file(setting_name, config_file):
+    """Return the value of a setting from a config file."""
+    with open(config_file, 'r') as config:
+        for line in config:
+            if line.startswith(setting_name):
+                return re.findall(r'["\'][^"\']*["\']', line)[0].strip('"\'')
 
         return None
 
-    user_config = '/etc/mediawiki/FreedomBoxSettings.php'
-    static_config = '/etc/mediawiki/FreedomBoxStaticSettings.php'
 
-    return _find_skin(user_config) or _find_skin(static_config)
+def _get_config_value(setting_name):
+    """Return a configuration value from multiple configuration files."""
+    return _get_config_value_in_file(setting_name, USER_CONFIG_FILE) or \
+        _get_config_value_in_file(setting_name, STATIC_CONFIG_FILE)
+
+
+def get_default_skin():
+    """Return the value of the default skin."""
+    return _get_config_value('$wgDefaultSkin')
+
+
+def set_default_skin(skin):
+    """Set the value of the default skin."""
+    actions.superuser_run('mediawiki', ['set-default-skin', skin])
+
+
+def get_server_url():
+    """Return the value of the server URL."""
+    server_url = _get_config_value('$wgServer')
+    return urlparse(server_url).netloc
+
+
+def set_server_url(server_url):
+    """Set the value of $wgServer."""
+    actions.superuser_run('mediawiki',
+                          ['set-server-url', f'https://{server_url}'])

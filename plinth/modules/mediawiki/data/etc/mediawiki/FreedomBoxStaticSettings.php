@@ -38,3 +38,6 @@ $wgSessionCacheType = CACHE_DB;
 
 # Use the mobile-friendly skin Timeless by default
 $wgDefaultSkin = "timeless";
+
+# Domain Name
+$wgServer = "https://freedombox.local";

@@ -48,6 +48,10 @@ def parse_arguments():
                                          help='Set the default skin')
     default_skin.add_argument('skin', help='name of the skin')
 
+    server_url = subparsers.add_parser(
+        'set-server-url', help='Set the value of $wgServer for this server')
+    server_url.add_argument('server_url', help='value of $wgServer')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -218,26 +222,35 @@ def subcommand_private_mode(arguments):
                                 conf_value + '\n')
 
 
-def subcommand_set_default_skin(arguments):
-    """Set a default skin"""
-    skin = arguments.skin
-    skin_setting = f'$wgDefaultSkin = "{skin}";\n'
-
+def _update_setting(setting_name, setting_line):
+    """Update the value of one setting in the config file."""
     with open(CONF_FILE, 'r') as conf_file:
         lines = conf_file.readlines()
 
         inserted = False
         for i, line in enumerate(lines):
-            if line.strip().startswith('$wgDefaultSkin'):
-                lines[i] = skin_setting
+            if line.strip().startswith(setting_name):
+                lines[i] = setting_line
                 inserted = True
                 break
 
         if not inserted:
-            lines.append(skin_setting)
+            lines.append(setting_line)
 
     with open(CONF_FILE, 'w') as conf_file:
         conf_file.writelines(lines)
+
+
+def subcommand_set_default_skin(arguments):
+    """Set a default skin."""
+    skin = arguments.skin
+    _update_setting('$wgDefaultSkin ', f'$wgDefaultSkin = "{skin}";\n')
+
+
+def subcommand_set_server_url(arguments):
+    """Set the value of $wgServer for this MediaWiki server."""
+    # This is a required setting from MediaWiki 1.34
+    _update_setting('$wgServer', f'$wgServer = "{arguments.server_url}";\n')
 
 
 def main():
