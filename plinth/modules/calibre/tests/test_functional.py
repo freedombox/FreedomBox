@@ -130,13 +130,13 @@ def _visit_library(browser, name):
         raise ValueError('Library not found')
 
     link.first.click()
-    functional.eventually(browser.find_by_css, [f'.book-list-cover-grid'])
+    functional.eventually(browser.find_by_css, ['.book-list-cover-grid'])
 
 
 def _add_book(browser, library_name, book_name):
     """Add a book to the library through Calibre interface."""
     _visit_library(browser, library_name)
-    add_button = browser.find_by_css(f'a[data-button-icon="plus"]')
+    add_button = browser.find_by_css('a[data-button-icon="plus"]')
     add_button.first.click()
 
     functional.eventually(browser.find_by_xpath,
@@ -163,7 +163,7 @@ def _delete_book(browser, library_name, book_name, ignore_missing=False):
         raise Exception('Book not found')
 
     book.first.click()
-    delete_button = browser.find_by_css(f'a[data-button-icon="trash"]')
+    delete_button = browser.find_by_css('a[data-button-icon="trash"]')
     delete_button.first.click()
 
     dialog = browser.find_by_id('modal-container').first
