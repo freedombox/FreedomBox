@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 16:55-0400\n"
+"POT-Creation-Date: 2020-10-05 18:59-0400\n"
 "PO-Revision-Date: 2020-06-24 11:41+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -423,6 +423,7 @@ msgstr "%(name)s తొలగించు"
 #: plinth/modules/networks/templates/router_configuration_update.html:19
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
+#: plinth/templates/form.html:19
 msgid "Submit"
 msgstr "సమర్పించు"
 
@@ -712,7 +713,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:84 plinth/modules/users/forms.py:198
+#: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
 msgid "Permissions"
 msgstr "అనుమతులు"
 
@@ -893,11 +894,130 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:29
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
+#: plinth/modules/calibre/__init__.py:30
+#, python-brace-format
+msgid ""
+"calibre server provides online access to your e-book collection. You can "
+"store your e-books on your {box_name}, read them online or from any of your "
+"devices."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:33
+msgid ""
+"You can organize your e-books, extract and edit their metadata, and perform "
+"advanced search. calibre can import, export, or convert across a wide range "
+"of formats to make e-books ready for reading on any device. It also provides "
+"an online web reader. It remembers your last read location, bookmarks, and "
+"highlighted text. Content distribution using OPDS is currently not supported."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:39
+msgid ""
+"Only users belonging to <em>calibre</em> group will be able to access the "
+"app. All users with access can use all the libraries."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:57
+#, fuzzy
+#| msgid "Install this application?"
+msgid "Administer calibre application"
+msgstr "ఈ అనువర్తనాన్ని నిక్షిప్తం చేయాలా?"
+
+#: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
+msgid "calibre"
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:61
+msgid "E-book Library"
+msgstr ""
+
+#: plinth/modules/calibre/forms.py:18
+#, fuzzy
+#| msgid "Name of the share"
+msgid "Name of the new library"
+msgstr "షేర్ యొక్క పేరు"
+
+#: plinth/modules/calibre/forms.py:27
+#, fuzzy
+msgid "A library with this name already exists."
+msgstr "ఈ సేవ ఇప్పటికే ఉంది"
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:11
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete calibre Library <em>%(name)s</em>"
+msgstr "వికీ లేదా బ్లాగ్ తొలగించు <em>%(name)s</em>"
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:17
+msgid ""
+"Delete this library permanently? All stored e-books and saved data will be "
+"lost."
+msgstr ""
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:27
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
+#, python-format
+msgid "Delete %(name)s"
+msgstr "%(name)s తొలగించు"
+
+#: plinth/modules/calibre/templates/calibre.html:23
+#, fuzzy
+#| msgid "Create User"
+msgid "Manage Libraries"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/calibre/templates/calibre.html:27
+#: plinth/modules/calibre/templates/calibre.html:29
+#, fuzzy
+#| msgid "Create User"
+msgid "Create Library"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/calibre/templates/calibre.html:36
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No libraries available."
+msgstr "టార్ రిలే పోర్ట్ అందుబాటులో ఉంది"
+
+#: plinth/modules/calibre/templates/calibre.html:43
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete library %(library)s"
+msgstr "ప్రదేశం తొలగించు %(site)s"
+
+#: plinth/modules/calibre/templates/calibre.html:49
+#, python-format
+msgid "Go to library %(library)s"
+msgstr ""
+
+#: plinth/modules/calibre/views.py:39
+#, fuzzy
+#| msgid "Repository created."
+msgid "Library created."
+msgstr "రిపోజిటరీ సృష్టించబడింది."
+
+#: plinth/modules/calibre/views.py:50
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "An error occurred while creating the library."
+msgstr "అక్రుతీకరణలో ఒక పొరపాటు జరిగింది."
+
+#: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} తొలగించబడింది."
+
+#: plinth/modules/calibre/views.py:68 plinth/modules/gitweb/views.py:142
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "{name} ను తొలగించలేము: {error}"
 
 #: plinth/modules/cockpit/__init__.py:32
 #, python-brace-format
@@ -1121,13 +1241,15 @@ msgstr ""
 msgid "VoIP Helper"
 msgstr ""
 
-#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+#: plinth/modules/coturn/forms.py:22 plinth/modules/mumble/forms.py:21
+#: plinth/modules/quassel/forms.py:22
 #, fuzzy
 #| msgid "Subdomain"
 msgid "TLS domain"
 msgstr "ఉప డోమైన్ పేరు"
 
-#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+#: plinth/modules/coturn/forms.py:24 plinth/modules/mumble/forms.py:23
+#: plinth/modules/quassel/forms.py:24
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -1500,7 +1622,7 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
 #: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:204
-#: plinth/modules/users/forms.py:68
+#: plinth/modules/users/forms.py:69
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
@@ -2025,12 +2147,6 @@ msgstr "వికీ లేదా బ్లాగ్ తొలగించు <e
 msgid "Delete this repository permanently?"
 msgstr "<strong>%(name)s</strong> అనుసంధానం శాశ్వతంగా తొలగించు ?"
 
-#: plinth/modules/gitweb/templates/gitweb_delete.html:27
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
-#, python-format
-msgid "Delete %(name)s"
-msgstr "%(name)s తొలగించు"
-
 #: plinth/modules/gitweb/views.py:45
 msgid "Repository created."
 msgstr "రిపోజిటరీ సృష్టించబడింది."
@@ -2050,16 +2166,6 @@ msgstr "రిపోజిటరీ సవరించబడింది."
 #| msgid "Create User"
 msgid "Edit repository"
 msgstr "వినియోగదారుని సృష్టించు"
-
-#: plinth/modules/gitweb/views.py:138
-#, python-brace-format
-msgid "{name} deleted."
-msgstr "{name} తొలగించబడింది."
-
-#: plinth/modules/gitweb/views.py:142
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
-msgstr "{name} ను తొలగించలేము: {error}"
 
 #: plinth/modules/help/__init__.py:33
 msgid "Documentation"
@@ -2608,7 +2714,7 @@ msgid "Chat Client"
 msgstr "చాట్ క్లయింట్"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:118
-#: plinth/templates/base.html:246
+#: plinth/templates/base.html:248
 msgid "JavaScript license information"
 msgstr "జావాస్క్రిప్ట్  లైసెన్స్ సమాచరం"
 
@@ -3344,7 +3450,7 @@ msgstr "కీ కీసేవకానికి ప్రచురించబ�
 msgid "Error occurred while publishing key."
 msgstr "కీని ప్రచురించేటప్పుడు దోషం సంభవించింది."
 
-#: plinth/modules/mumble/__init__.py:24
+#: plinth/modules/mumble/__init__.py:31
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3352,7 +3458,7 @@ msgstr ""
 "మంబుల్ అనేది తక్కువ-జాప్యత, ఎన్క్రిప్టెడ్, అధిక నాణ్యతా వంటి విశిష్టలతో కూడిన ఒక ఓపెన్ సోర్స్ స్వర సంభాషణా "
 "సాఫ్ట్‌వేర్."
 
-#: plinth/modules/mumble/__init__.py:26
+#: plinth/modules/mumble/__init__.py:33
 #, fuzzy
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
@@ -3363,21 +3469,21 @@ msgstr ""
 "mumble.info\"> 1Clients </a> 2 మీ నమలు సర్వర్ కనెక్ట్ చేయవచ్చు మరియు Android పరికరాలు "
 "అందుబాటులో ఉన్నాయి."
 
-#: plinth/modules/mumble/__init__.py:43 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "మంబుల్"
 
-#: plinth/modules/mumble/__init__.py:44
+#: plinth/modules/mumble/__init__.py:51
 msgid "Voice Chat"
 msgstr "స్వర సంభాషణ"
 
-#: plinth/modules/mumble/forms.py:14
+#: plinth/modules/mumble/forms.py:30
 #, fuzzy
 #| msgid "SSH server password"
 msgid "Set SuperUser Password"
 msgstr "SSH సర్వర్ పాస్ వర్డ్"
 
-#: plinth/modules/mumble/forms.py:17
+#: plinth/modules/mumble/forms.py:33
 msgid ""
 "Optional. Leave this field blank to keep the current password. SuperUser "
 "password can be used to manage permissions in Mumble."
@@ -3395,7 +3501,7 @@ msgstr "ముంబుల్ ఫ్లై"
 msgid "Mumla"
 msgstr ""
 
-#: plinth/modules/mumble/views.py:27
+#: plinth/modules/mumble/views.py:39
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "SuperUser password successfully updated."
@@ -3830,7 +3936,7 @@ msgstr "అనుసంధానాన్ని సవరించు"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:160 plinth/templates/base.html:161
+#: plinth/templates/base.html:161 plinth/templates/base.html:162
 msgid "Edit"
 msgstr "సవరించు"
 
@@ -4105,6 +4211,7 @@ msgstr ""
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
 #: plinth/modules/networks/templates/network_topology_firstboot.html:19
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:19
+#: plinth/modules/users/templates/users_firstboot.html:63
 #, fuzzy
 #| msgid "skip this step"
 msgid "Skip this step"
@@ -4623,29 +4730,29 @@ msgstr ""
 "<b>హెచ్చరిక:</b><br>మా PageKite ఫ్రంటెండ్ సర్వర్ మీరు ఇక్కడ నిర్వచించే చేయగల అన్ని ప్రోటోకాల్ / పోర్ట్ "
 "కాంబినేషన్ మద్దతు ఇవ్వకపోవచ్చు. ఉదాహరణకు, HTTPS 443 పోర్ట్లకు సమస్యలు కారణమవుతుంది."
 
-#: plinth/modules/pagekite/utils.py:42
+#: plinth/modules/pagekite/utils.py:45
 msgid "Web Server (HTTP)"
 msgstr "వెబ్ సేవిక (HTTP)"
 
-#: plinth/modules/pagekite/utils.py:44
+#: plinth/modules/pagekite/utils.py:47
 #, python-brace-format
 msgid "Site will be available at <a href=\"http://{0}\">http://{0}</a>"
 msgstr "సైట్ <a href=\"http://{0}\">http://{0}</a> వద్ద అందుబాటులో ఉంటుంది"
 
-#: plinth/modules/pagekite/utils.py:56
+#: plinth/modules/pagekite/utils.py:59
 msgid "Web Server (HTTPS)"
 msgstr "వెబ్ సేవిక (HTTPS)"
 
-#: plinth/modules/pagekite/utils.py:58
+#: plinth/modules/pagekite/utils.py:61
 #, python-brace-format
 msgid "Site will be available at <a href=\"https://{0}\">https://{0}</a>"
 msgstr "సైట్ <a href=\"https://{0}\">https://{0}</a> వద్ద అందుబాటులో ఉంటుంది"
 
-#: plinth/modules/pagekite/utils.py:70
+#: plinth/modules/pagekite/utils.py:73
 msgid "Secure Shell (SSH)"
 msgstr "సెక్యూర్ షెల్ (SSH)"
 
-#: plinth/modules/pagekite/utils.py:72
+#: plinth/modules/pagekite/utils.py:75
 msgid ""
 "See SSH client setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions</a>"
@@ -6216,24 +6323,24 @@ msgstr "సాక్స్5 ప్రాక్సీ"
 msgid "Tor Bridge Relay"
 msgstr "టార్ బ్రిడ్జ్ రిలే"
 
-#: plinth/modules/tor/__init__.py:110
+#: plinth/modules/tor/__init__.py:112
 msgid "Tor relay port available"
 msgstr "టార్ రిలే పోర్ట్ అందుబాటులో ఉంది"
 
-#: plinth/modules/tor/__init__.py:120
+#: plinth/modules/tor/__init__.py:122
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 రవాణా నమోదు చేయబడింది"
 
-#: plinth/modules/tor/__init__.py:130
+#: plinth/modules/tor/__init__.py:132
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 రవాణా నమోదు చేయబడింది"
 
-#: plinth/modules/tor/__init__.py:199
+#: plinth/modules/tor/__init__.py:201
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "టార్ ద్వారా {kind} లో {url} ను ఆక్సెస్ చెయ్యండి"
 
-#: plinth/modules/tor/__init__.py:210
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "టోర్ వాడుకను నిర్ధారించండి{url} టీ సి పి పై{kind}"
@@ -6460,11 +6567,11 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:64 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:66 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "నవీకరణ యూ.ఆర్.ఎల్"
 
-#: plinth/modules/upgrades/__init__.py:102
+#: plinth/modules/upgrades/__init__.py:106
 #, fuzzy
 #| msgid "FreedomBox Manual"
 msgid "FreedomBox Updated"
@@ -6614,22 +6721,38 @@ msgstr "అన్ని సేవలకు మరియు వ్యవస్థ
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "LDAP నమోదు \"{search_item}\" తనిఖీ"
 
-#: plinth/modules/users/forms.py:36
+#: plinth/modules/users/forms.py:37
 msgid "Username is taken or is reserved."
 msgstr "యూజర్ పేరు తీసుకోబడింది లేదా రిజర్వ్ చేయబడింది."
 
-#: plinth/modules/users/forms.py:63
+#: plinth/modules/users/forms.py:64
 #, fuzzy
 #| msgid "Invalid server name"
 msgid "Enter a valid username."
 msgstr "సేవిక పేరు చెలదు"
 
-#: plinth/modules/users/forms.py:70
+#: plinth/modules/users/forms.py:71
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:79
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Authorization Password"
+msgstr "నిర్వాహకుని రహస్యపదం"
+
+#: plinth/modules/users/forms.py:80
+msgid "Enter your current password to authorize account modifications."
+msgstr ""
+
+#: plinth/modules/users/forms.py:88
+#, fuzzy
+#| msgid "Show password"
+msgid "Invalid password."
+msgstr "రహస్యపదం కనబర్చు"
+
+#: plinth/modules/users/forms.py:105
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -6638,65 +6761,72 @@ msgid ""
 "SSH and have administrative privileges (sudo)."
 msgstr ""
 
-#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:347
-msgid "Creating LDAP user failed."
+#: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
+#, fuzzy, python-brace-format
+#| msgid "Creating LDAP user failed."
+msgid "Creating LDAP user failed: {error}"
 msgstr "ఎల్.డి.ఏ.పి వాడుకరి సృష్టించడంలో విఫలమైంది."
 
-#: plinth/modules/users/forms.py:135
-#, python-brace-format
-msgid "Failed to add new user to {group} group."
+#: plinth/modules/users/forms.py:163
+#, fuzzy, python-brace-format
+#| msgid "Failed to add new user to {group} group."
+msgid "Failed to add new user to {group} group: {error}"
 msgstr "వినియోగదారుని {group} సముహానికి జోడించడంలో విఫలం."
 
-#: plinth/modules/users/forms.py:149
+#: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
 msgstr "అధీకృత SSH కీలు"
 
-#: plinth/modules/users/forms.py:151
+#: plinth/modules/users/forms.py:179
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
 
-#: plinth/modules/users/forms.py:235
+#: plinth/modules/users/forms.py:266
 msgid "Renaming LDAP user failed."
 msgstr "ఎల్.డి.ఏ.పి వాడుకరి పేరుమార్పులో విఫలం."
 
-#: plinth/modules/users/forms.py:247
+#: plinth/modules/users/forms.py:279
 msgid "Failed to remove user from group."
 msgstr "సమూహంలోంచి వినియోగదారుని తొలగించడంలో విఫలం."
 
-#: plinth/modules/users/forms.py:258
+#: plinth/modules/users/forms.py:291
 msgid "Failed to add user to group."
 msgstr "సమూహంలోకి వినియోగదారుని జోడించడంలో విఫలం."
 
-#: plinth/modules/users/forms.py:267
+#: plinth/modules/users/forms.py:304
 msgid "Unable to set SSH keys."
 msgstr "SSH కీలను సెట్ చేయడం సాధ్యం కాలేదు."
 
-#: plinth/modules/users/forms.py:282
+#: plinth/modules/users/forms.py:322
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "సమూహంలోకి వినియోగదారుని జోడించడంలో విఫలం."
 
-#: plinth/modules/users/forms.py:290
+#: plinth/modules/users/forms.py:330
 msgid "Cannot delete the only administrator in the system."
 msgstr "సిస్టమ్‌లోని ఏకైక నిర్వాహకుడిని తొలగించలేరు."
 
-#: plinth/modules/users/forms.py:321
+#: plinth/modules/users/forms.py:365
 msgid "Changing LDAP user password failed."
 msgstr "ఎల్.డి.ఏ.పి వాడుకరి పాస్‌వర్డ్ మార్పిడి విఫలం."
 
-#: plinth/modules/users/forms.py:356
-msgid "Failed to add new user to admin group."
+#: plinth/modules/users/forms.py:405
+#, fuzzy, python-brace-format
+#| msgid "Failed to add new user to admin group."
+msgid "Failed to add new user to admin group: {error}"
 msgstr "కొత్త వాడుకరి ను అడ్మిన్ సమూహంలో జోడించడం విఫలమైనది."
 
-#: plinth/modules/users/forms.py:373
-msgid "Failed to restrict console access."
+#: plinth/modules/users/forms.py:424
+#, fuzzy, python-brace-format
+#| msgid "Failed to restrict console access."
+msgid "Failed to restrict console access: {error}"
 msgstr "console ప్రవేశమును పరిమితి చెయడంలొ విఫలమైంది."
 
-#: plinth/modules/users/forms.py:385
+#: plinth/modules/users/forms.py:437
 msgid "User account created, you are now logged in"
 msgstr "వాడుకరి ఖాతా సృస్టించబడింది, మీరు లాగిన్ చేయబడ్డారు"
 
@@ -6709,15 +6839,16 @@ msgstr "<em>%(username)s</em>కు పాస్‌వర్డ్ ను మా
 msgid "Save Password"
 msgstr "పాస్‌వర్డ్‌ను సేవ్ చేయి"
 
-#: plinth/modules/users/templates/users_create.html:17
+#: plinth/modules/users/templates/users_create.html:11
+#: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:27
 #: plinth/modules/users/templates/users_list.html:29
-#: plinth/modules/users/views.py:42
+#: plinth/modules/users/views.py:44
 msgid "Create User"
 msgstr "వినియోగదారుని సృష్టించు"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:120
+#: plinth/modules/users/views.py:122
 msgid "Delete User"
 msgstr "వినియోగదారుని తొలగించు"
 
@@ -6735,7 +6866,7 @@ msgstr "%(username)s తొలగించు"
 msgid "Administrator Account"
 msgstr "నిర్వాహక ఖాతా"
 
-#: plinth/modules/users/templates/users_firstboot.html:14
+#: plinth/modules/users/templates/users_firstboot.html:15
 msgid ""
 "Choose a username and password to access this web interface. The password "
 "can be changed later. This user will be granted administrative privileges. "
@@ -6744,12 +6875,34 @@ msgstr ""
 "దయచేసి ఈ సంవిదనం కోసం ఒక వాడుకరి పేరు మరియు పాస్‌వర్డ్ ను ఎంచుకోండి. తర్వాత పాస్‌వర్డ్ ను "
 "మార్చుకోగలరు. ఈ వినియోగడారునికి పరిపాలనా అధికారాలు ఇవ్వబడుతాయి. మిగిలిన వినియోగదారులను తరువాత జోడించగలరు."
 
-#: plinth/modules/users/templates/users_firstboot.html:27
+#: plinth/modules/users/templates/users_firstboot.html:28
 msgid "Create Account"
 msgstr "ఖాతా సృష్టించు"
 
+#: plinth/modules/users/templates/users_firstboot.html:32
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "An administrator account already exists."
+msgstr "నిర్వాహక ఖాతా"
+
+#: plinth/modules/users/templates/users_firstboot.html:38
+#, fuzzy
+#| msgid "Cannot delete the only administrator in the system."
+msgid "The following administrator accounts exist in the system."
+msgstr "సిస్టమ్‌లోని ఏకైక నిర్వాహకుడిని తొలగించలేరు."
+
+#: plinth/modules/users/templates/users_firstboot.html:50
+#, python-format, python-brace-format
+msgid ""
+"Delete these accounts from command line and refresh the page to create an "
+"account that is usable with %(box_name)s. On the command line run the "
+"command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-user "
+"{username}'. If an account is already usable with %(box_name)s, skip this "
+"step."
+msgstr ""
+
 #: plinth/modules/users/templates/users_list.html:23
-#: plinth/modules/users/views.py:59
+#: plinth/modules/users/views.py:61
 msgid "Users"
 msgstr "వినియోగదారులు"
 
@@ -6763,7 +6916,13 @@ msgstr "వినియోగదారి %(username)s ను తొలగిం
 msgid "Edit user %(username)s"
 msgstr "%(username)s వినియోగదారుని మార్చు"
 
-#: plinth/modules/users/templates/users_update.html:15
+#: plinth/modules/users/templates/users_update.html:11
+#, fuzzy, python-format
+#| msgid "Edit user %(username)s"
+msgid "Edit User <em>%(username)s</em>"
+msgstr "%(username)s వినియోగదారుని మార్చు"
+
+#: plinth/modules/users/templates/users_update.html:19
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -6772,39 +6931,39 @@ msgstr ""
 "పాస్వర్డ్ను మార్చడానికి <a href='%(change_password_url)s'> పాస్వర్డ్ రూపాన్ని మార్చండి </a>  ని "
 "ఉపయోగించండి."
 
-#: plinth/modules/users/templates/users_update.html:27
+#: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "మార్పులను భద్రపరుచు"
 
-#: plinth/modules/users/views.py:40
+#: plinth/modules/users/views.py:42
 #, python-format
 msgid "User %(username)s created."
 msgstr "వినియోగదారి %(username)s సృష్టించబడ్డారు."
 
-#: plinth/modules/users/views.py:74
+#: plinth/modules/users/views.py:76
 #, python-format
 msgid "User %(username)s updated."
 msgstr "వినియోగదారి %(username)s నావీకరించబడ్డాడు."
 
-#: plinth/modules/users/views.py:75
+#: plinth/modules/users/views.py:77
 msgid "Edit User"
 msgstr "వినియోగదారి మార్పు"
 
-#: plinth/modules/users/views.py:130
+#: plinth/modules/users/views.py:132
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "వినియోగదారి {user} తొలగించబడ్డాడు."
 
-#: plinth/modules/users/views.py:137
+#: plinth/modules/users/views.py:139
 msgid "Deleting LDAP user failed."
 msgstr "ఎల్.డి.ఏ.పి వినియోగదారి తొలగింపు విఫలం."
 
-#: plinth/modules/users/views.py:146
+#: plinth/modules/users/views.py:148
 msgid "Change Password"
 msgstr "పాస్‌వర్డ్ మార్చు"
 
-#: plinth/modules/users/views.py:147
+#: plinth/modules/users/views.py:149
 msgid "Password changed successfully."
 msgstr "పాస్‌వర్డ్ విజయవంతంగా మార్చబడినది."
 
@@ -7273,32 +7432,32 @@ msgstr "అనువర్తనాలు"
 msgid "System"
 msgstr "వ్యవస్థ"
 
-#: plinth/templates/base.html:166 plinth/templates/base.html:167
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
 msgid "Change password"
 msgstr "సంకేతపదాన్ని మార్చు"
 
-#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#: plinth/templates/base.html:176 plinth/templates/base.html:177
 msgid "Restart"
 msgstr "పునఃప్రారంభించండి"
 
-#: plinth/templates/base.html:180 plinth/templates/base.html:181
+#: plinth/templates/base.html:182 plinth/templates/base.html:183
 #, fuzzy
 #| msgid "Shut Down Now"
 msgid "Shut down"
 msgstr "ఇపుడు మూసివేయండి"
 
-#: plinth/templates/base.html:188 plinth/templates/base.html:189
-#: plinth/templates/base.html:213 plinth/templates/base.html:215
+#: plinth/templates/base.html:190 plinth/templates/base.html:191
+#: plinth/templates/base.html:215 plinth/templates/base.html:217
 msgid "Log out"
 msgstr "నిష్క్రమించు"
 
-#: plinth/templates/base.html:197 plinth/templates/base.html:200
+#: plinth/templates/base.html:199 plinth/templates/base.html:202
 #, fuzzy
 #| msgid "Language"
 msgid "Select language"
 msgstr "భాష"
 
-#: plinth/templates/base.html:205 plinth/templates/base.html:207
+#: plinth/templates/base.html:207 plinth/templates/base.html:209
 msgid "Log in"
 msgstr "లోనికి ప్రవేశించండి"
 
