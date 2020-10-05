@@ -480,6 +480,7 @@ def _setup_nm_connection(distribution):
         'connection.type': '802-3-ethernet',
         'connection.interface-name': _get_interface_name(distribution),
         'connection.autoconnect': 'yes',
+        'connection.zone': 'trusted',
         'ipv4.method': 'shared',
     }
     subprocess.run(['sudo', 'nmcli', 'connection', 'add'] +
@@ -694,6 +695,11 @@ def _destroy(distribution):
         image_file.unlink()
     except FileNotFoundError:
         pass
+
+    connection_name = f'fbx-{distribution}-shared'
+    logger.info('Removing Network Manager connection %s', connection_name)
+    subprocess.run(['sudo', 'nmcli', 'connection', 'delete', connection_name],
+                   stdout=subprocess.DEVNULL)
 
     logger.info('Keeping downloaded image: %s',
                 _get_compressed_image_path(distribution))
