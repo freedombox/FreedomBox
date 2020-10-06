@@ -9,8 +9,10 @@ import subprocess
 import threading
 
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
 from plinth import actions
+from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
 
@@ -153,13 +155,14 @@ class Transaction(object):
 
         status_map = {
             'pmstatus':
-                _('installing'),
+                ugettext_lazy('installing'),
             'dlstatus':
-                _('downloading'),
+                ugettext_lazy('downloading'),
             'media-change':
-                _('media change'),
+                ugettext_lazy('media change'),
             'pmconffile':
-                _('configuration file: {file}').format(file=parts[1]),
+                format_lazy(ugettext_lazy('configuration file: {file}'),
+                            file=parts[1]),
         }
         self.status_string = status_map.get(parts[0], '')
         self.percentage = int(float(parts[2]))
