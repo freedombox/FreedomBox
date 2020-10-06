@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-05 18:59-0400\n"
-"PO-Revision-Date: 2020-09-17 09:36+0000\n"
+"PO-Revision-Date: 2020-10-07 14:26+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -889,6 +889,9 @@ msgid ""
 "store your e-books on your {box_name}, read them online or from any of your "
 "devices."
 msgstr ""
+"Сервер calibre обеспечивает онлайн-доступ к вашей коллекции электронных "
+"книг. Вы можете хранить свои электронные книги на {box_name}, читать их в "
+"Интернете или с любого из своих устройств."
 
 #: plinth/modules/calibre/__init__.py:33
 msgid ""
@@ -898,50 +901,55 @@ msgid ""
 "an online web reader. It remembers your last read location, bookmarks, and "
 "highlighted text. Content distribution using OPDS is currently not supported."
 msgstr ""
+"Вы можете систематизировать свои электронные книги, извлекать и "
+"редактировать их метаданные, а также выполнять расширенный поиск. calibre "
+"может импортировать, экспортировать или конвертировать в широкий спектр "
+"форматов, чтобы сделать электронные книги готовыми для чтения на любом "
+"устройстве. Он также предоставляет онлайн-читалку. Он запоминает ваше "
+"последнее прочитанное место, закладки и выделенный текст. Распространение "
+"контента с использованием OPDS в настоящее время не поддерживается."
 
 #: plinth/modules/calibre/__init__.py:39
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
 msgstr ""
+"Только пользователи, принадлежащие к группе <em>calibre</em>, смогут "
+"получить доступ к приложению. Все пользователи с доступом могут использовать "
+"все библиотеки."
 
 #: plinth/modules/calibre/__init__.py:57
-#, fuzzy
-#| msgid "Administer Syncthing application"
 msgid "Administer calibre application"
-msgstr "Администрирование приложения Syncthing"
+msgstr "Администрирование приложения calibre"
 
 #: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
 msgid "calibre"
-msgstr ""
+msgstr "calibre"
 
 #: plinth/modules/calibre/__init__.py:61
 msgid "E-book Library"
-msgstr ""
+msgstr "Электронная библиотека"
 
 #: plinth/modules/calibre/forms.py:18
-#, fuzzy
-#| msgid "Name of the repository"
 msgid "Name of the new library"
-msgstr "Имя репозитория"
+msgstr "Название новой библиотеки"
 
 #: plinth/modules/calibre/forms.py:27
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "A library with this name already exists."
-msgstr "Общий ресурс с таким именем уже существует."
+msgstr "Библиотека с таким названием уже существует."
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:11
-#, fuzzy, python-format
-#| msgid "Delete Git Repository <em>%(name)s</em>"
+#, python-format
 msgid "Delete calibre Library <em>%(name)s</em>"
-msgstr "Удалить репозиторий Git <em>%(name)s</em>"
+msgstr "Удалить библиотеку calibre <em>%(name)s</em>"
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:17
 msgid ""
 "Delete this library permanently? All stored e-books and saved data will be "
 "lost."
 msgstr ""
+"Удалить эту библиотеку навсегда? Все сохраненные электронные книги и "
+"сохраненные данные будут потеряны."
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:27
 #: plinth/modules/gitweb/templates/gitweb_delete.html:27
@@ -951,46 +959,35 @@ msgid "Delete %(name)s"
 msgstr "Удаление %(name)s"
 
 #: plinth/modules/calibre/templates/calibre.html:23
-#, fuzzy
-#| msgid "Manage Repositories"
 msgid "Manage Libraries"
-msgstr "Управление репозиториями"
+msgstr "Управление библиотеками"
 
 #: plinth/modules/calibre/templates/calibre.html:27
 #: plinth/modules/calibre/templates/calibre.html:29
-#, fuzzy
-#| msgid "Create Repository"
 msgid "Create Library"
-msgstr "Создать репозиторий"
+msgstr "Создать библиотеку"
 
 #: plinth/modules/calibre/templates/calibre.html:36
-#, fuzzy
-#| msgid "No repositories available."
 msgid "No libraries available."
-msgstr "Нет доступных репозиториев."
+msgstr "Нет доступных библиотек."
 
 #: plinth/modules/calibre/templates/calibre.html:43
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete library %(library)s"
-msgstr "Удаление узла %(site)s"
+msgstr "Удалить библиотеку %(library)s"
 
 #: plinth/modules/calibre/templates/calibre.html:49
 #, python-format
 msgid "Go to library %(library)s"
-msgstr ""
+msgstr "Перейти в библиотеку %(library)s"
 
 #: plinth/modules/calibre/views.py:39
-#, fuzzy
-#| msgid "Repository created."
 msgid "Library created."
-msgstr "Репозиторий создан."
+msgstr "Библиотека создана."
 
 #: plinth/modules/calibre/views.py:50
-#, fuzzy
-#| msgid "An error occurred while creating the repository."
 msgid "An error occurred while creating the library."
-msgstr "Ошибка при создании репозитория."
+msgstr "Ошибка при создании библиотеки."
 
 #: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
 #, python-brace-format
@@ -6844,20 +6841,16 @@ msgstr ""
 "Требуется. 150 символов или меньше. Только английские буквы, цифры и @/./-/_."
 
 #: plinth/modules/users/forms.py:79
-#, fuzzy
-#| msgid "Administrator Password"
 msgid "Authorization Password"
-msgstr "Пароль администратора"
+msgstr "Пароль авторизации"
 
 #: plinth/modules/users/forms.py:80
 msgid "Enter your current password to authorize account modifications."
-msgstr ""
+msgstr "Введите свой текущий пароль, чтобы разрешить изменение учетной записи."
 
 #: plinth/modules/users/forms.py:88
-#, fuzzy
-#| msgid "Add password"
 msgid "Invalid password."
-msgstr "Добавить пароль"
+msgstr "Неправильный пароль."
 
 #: plinth/modules/users/forms.py:105
 msgid ""
@@ -6874,16 +6867,14 @@ msgstr ""
 "могут войти в систему через SSH и иметь административные привилегии (sudo)."
 
 #: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
-#, fuzzy, python-brace-format
-#| msgid "Creating LDAP user failed."
+#, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr "Создание пользователя LDAP не удалось."
+msgstr "Не удалось создать пользователя LDAP: {error}"
 
 #: plinth/modules/users/forms.py:163
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to {group} group."
+#, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "Не удалось добавить нового пользователя в группу {group}."
+msgstr "Не удалось добавить нового пользователя в группу {group}: {error}"
 
 #: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
@@ -6929,16 +6920,15 @@ msgid "Changing LDAP user password failed."
 msgstr "Изменение LDAP пароля пользователя не удалось."
 
 #: plinth/modules/users/forms.py:405
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to admin group."
+#, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
-msgstr "Не удалось добавить нового пользователя в группу администратора."
+msgstr ""
+"Не удалось добавить нового пользователя в группу администраторов: {error}"
 
 #: plinth/modules/users/forms.py:424
-#, fuzzy, python-brace-format
-#| msgid "Failed to restrict console access."
+#, python-brace-format
 msgid "Failed to restrict console access: {error}"
-msgstr "Не удалось ограничить доступ к консоли."
+msgstr "Не удалось ограничить доступ к консоли: {error}"
 
 #: plinth/modules/users/forms.py:437
 msgid "User account created, you are now logged in"
@@ -6995,16 +6985,12 @@ msgid "Create Account"
 msgstr "Создать учетную запись"
 
 #: plinth/modules/users/templates/users_firstboot.html:32
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "An administrator account already exists."
-msgstr "Учетная запись администратора"
+msgstr "Учетная запись администратора уже существует."
 
 #: plinth/modules/users/templates/users_firstboot.html:38
-#, fuzzy
-#| msgid "Cannot delete the only administrator in the system."
 msgid "The following administrator accounts exist in the system."
-msgstr "Невозможно удалить единственного администратора в системе."
+msgstr "В системе существуют следующие учетные записи администратора."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
 #, python-format, python-brace-format
@@ -7015,6 +7001,11 @@ msgid ""
 "{username}'. If an account is already usable with %(box_name)s, skip this "
 "step."
 msgstr ""
+"Удалите эти учетные записи из командной строки и обновите страницу, чтобы "
+"создать учетную запись, которую можно использовать с %(box_name)s. В "
+"командной строке запустите команду 'echo \"{password}\" | /usr/share/plinth/"
+"actions/users remove-user {username}'. Если учетная запись уже используется "
+"с %(box_name)s, пропустите этот шаг."
 
 #: plinth/modules/users/templates/users_list.html:23
 #: plinth/modules/users/views.py:61
@@ -7032,10 +7023,9 @@ msgid "Edit user %(username)s"
 msgstr "Редактирование пользователя %(username)s"
 
 #: plinth/modules/users/templates/users_update.html:11
-#, fuzzy, python-format
-#| msgid "Edit user %(username)s"
+#, python-format
 msgid "Edit User <em>%(username)s</em>"
-msgstr "Редактирование пользователя %(username)s"
+msgstr "Редактировать пользователя <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_update.html:19
 #, python-format
