@@ -16,6 +16,7 @@ from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _
 
 from plinth import __version__, actions, cfg
+from plinth.modules.upgrades.views import get_os_release
 
 
 def index(request):
@@ -50,7 +51,7 @@ def about(request):
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__,
         'new_version': not freedombox.candidate.is_installed,
-        'os_release': get_os_release(),
+        'os_release': get_os_release()
     }
     return TemplateResponse(request, 'help_about.html', context)
 
@@ -120,15 +121,3 @@ def status_log(request):
     output = actions.superuser_run('help', ['get-logs'])
     context = {'num_lines': 100, 'data': output}
     return TemplateResponse(request, 'statuslog.html', context)
-
-
-def get_os_release():
-    """Returns the Debian release number and name"""
-    output = 'Error: Cannot read PRETTY_NAME in /etc/os-release.'
-    with open('/etc/os-release', 'r') as release_file:
-        for line in release_file:
-            if 'PRETTY_NAME=' in line:
-                line = line.replace('"', '').strip()
-                line = line.split('=')
-                output = line[1]
-    return output
