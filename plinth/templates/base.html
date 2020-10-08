@@ -146,7 +146,7 @@
 
               {% include "help-menu.html" %}
 
-              <li class="dropdown">
+              <li id="id_user_menu" class="dropdown">
                 <a href="{% url 'users:edit' request.user.username %}"
                    class="dropdown-toggle" data-toggle="dropdown"
                    role="button" aria-expanded="false">
@@ -156,13 +156,15 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                   <li>
-                    <a href="{% url 'users:edit' request.user.username %}"
+                    <a id="id_user_edit_menu"
+                       href="{% url 'users:edit' request.user.username %}"
                        title="{% trans "Edit"%}">
                       {% trans "Edit" %}
                     </a>
                   </li>
                   <li>
-                    <a href="{% url 'users:change_password' request.user.username %}"
+                    <a id='id_change_password_menu'
+                       href="{% url 'users:change_password' request.user.username %}"
                        title="{% trans "Change password" %}">
                       {% trans "Change password" %}
                     </a>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 16:55-0400\n"
+"POT-Creation-Date: 2020-10-05 18:59-0400\n"
 "PO-Revision-Date: 2020-09-17 09:36+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -410,6 +410,7 @@ msgstr "Удалить архив %(name)s"
 #: plinth/modules/networks/templates/router_configuration_update.html:19
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
+#: plinth/templates/form.html:19
 msgid "Submit"
 msgstr "Отправить"
 
@@ -708,7 +709,7 @@ msgstr "Разрешения для анонимных пользователе�
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:84 plinth/modules/users/forms.py:198
+#: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
 msgid "Permissions"
 msgstr "Разрешения"
 
@@ -875,11 +876,131 @@ msgstr "Обновите IP-адреса и домены"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:29
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Конфигурация обновлена"
+
+#: plinth/modules/calibre/__init__.py:30
+#, python-brace-format
+msgid ""
+"calibre server provides online access to your e-book collection. You can "
+"store your e-books on your {box_name}, read them online or from any of your "
+"devices."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:33
+msgid ""
+"You can organize your e-books, extract and edit their metadata, and perform "
+"advanced search. calibre can import, export, or convert across a wide range "
+"of formats to make e-books ready for reading on any device. It also provides "
+"an online web reader. It remembers your last read location, bookmarks, and "
+"highlighted text. Content distribution using OPDS is currently not supported."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:39
+msgid ""
+"Only users belonging to <em>calibre</em> group will be able to access the "
+"app. All users with access can use all the libraries."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:57
+#, fuzzy
+#| msgid "Administer Syncthing application"
+msgid "Administer calibre application"
+msgstr "Администрирование приложения Syncthing"
+
+#: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
+msgid "calibre"
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:61
+msgid "E-book Library"
+msgstr ""
+
+#: plinth/modules/calibre/forms.py:18
+#, fuzzy
+#| msgid "Name of the repository"
+msgid "Name of the new library"
+msgstr "Имя репозитория"
+
+#: plinth/modules/calibre/forms.py:27
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A library with this name already exists."
+msgstr "Общий ресурс с таким именем уже существует."
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:11
+#, fuzzy, python-format
+#| msgid "Delete Git Repository <em>%(name)s</em>"
+msgid "Delete calibre Library <em>%(name)s</em>"
+msgstr "Удалить репозиторий Git <em>%(name)s</em>"
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:17
+msgid ""
+"Delete this library permanently? All stored e-books and saved data will be "
+"lost."
+msgstr ""
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:27
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
+#, python-format
+msgid "Delete %(name)s"
+msgstr "Удаление %(name)s"
+
+#: plinth/modules/calibre/templates/calibre.html:23
+#, fuzzy
+#| msgid "Manage Repositories"
+msgid "Manage Libraries"
+msgstr "Управление репозиториями"
+
+#: plinth/modules/calibre/templates/calibre.html:27
+#: plinth/modules/calibre/templates/calibre.html:29
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create Library"
+msgstr "Создать репозиторий"
+
+#: plinth/modules/calibre/templates/calibre.html:36
+#, fuzzy
+#| msgid "No repositories available."
+msgid "No libraries available."
+msgstr "Нет доступных репозиториев."
+
+#: plinth/modules/calibre/templates/calibre.html:43
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete library %(library)s"
+msgstr "Удаление узла %(site)s"
+
+#: plinth/modules/calibre/templates/calibre.html:49
+#, python-format
+msgid "Go to library %(library)s"
+msgstr ""
+
+#: plinth/modules/calibre/views.py:39
+#, fuzzy
+#| msgid "Repository created."
+msgid "Library created."
+msgstr "Репозиторий создан."
+
+#: plinth/modules/calibre/views.py:50
+#, fuzzy
+#| msgid "An error occurred while creating the repository."
+msgid "An error occurred while creating the library."
+msgstr "Ошибка при создании репозитория."
+
+#: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "{name} удален."
+
+#: plinth/modules/calibre/views.py:68 plinth/modules/gitweb/views.py:142
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "Не удалось удалить {name}: {error}"
 
 #: plinth/modules/cockpit/__init__.py:32
 #, python-brace-format
@@ -1114,11 +1235,13 @@ msgstr "Coturn"
 msgid "VoIP Helper"
 msgstr "VoIP-помощник"
 
-#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+#: plinth/modules/coturn/forms.py:22 plinth/modules/mumble/forms.py:21
+#: plinth/modules/quassel/forms.py:22
 msgid "TLS domain"
 msgstr "Домен TLS"
 
-#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+#: plinth/modules/coturn/forms.py:24 plinth/modules/mumble/forms.py:23
+#: plinth/modules/quassel/forms.py:24
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -1482,7 +1605,7 @@ msgid "Use HTTP basic authentication"
 msgstr "Использовать базовую аутентификацию HTTP"
 
 #: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:204
-#: plinth/modules/users/forms.py:68
+#: plinth/modules/users/forms.py:69
 msgid "Username"
 msgstr "Имя пользователя"
 
@@ -2000,12 +2123,6 @@ msgstr "Удалить репозиторий Git <em>%(name)s</em>"
 msgid "Delete this repository permanently?"
 msgstr "Удалить этот репозиторий навсегда?"
 
-#: plinth/modules/gitweb/templates/gitweb_delete.html:27
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
-#, python-format
-msgid "Delete %(name)s"
-msgstr "Удаление %(name)s"
-
 #: plinth/modules/gitweb/views.py:45
 msgid "Repository created."
 msgstr "Репозиторий создан."
@@ -2021,16 +2138,6 @@ msgstr "Репозиторий отредактирован."
 #: plinth/modules/gitweb/views.py:89
 msgid "Edit repository"
 msgstr "Редактировать репозиторий"
-
-#: plinth/modules/gitweb/views.py:138
-#, python-brace-format
-msgid "{name} deleted."
-msgstr "{name} удален."
-
-#: plinth/modules/gitweb/views.py:142
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
-msgstr "Не удалось удалить {name}: {error}"
 
 #: plinth/modules/help/__init__.py:33
 msgid "Documentation"
@@ -2596,7 +2703,7 @@ msgid "Chat Client"
 msgstr "Чат-клиент"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:118
-#: plinth/templates/base.html:246
+#: plinth/templates/base.html:248
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
@@ -3360,7 +3467,7 @@ msgstr "Опубликованый ключ на сервере ключей."
 msgid "Error occurred while publishing key."
 msgstr "Произошла ошибка при публикации ключа."
 
-#: plinth/modules/mumble/__init__.py:24
+#: plinth/modules/mumble/__init__.py:31
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3368,7 +3475,7 @@ msgstr ""
 "Mumble это шифрованый чат с высоким качеством голоса, низкой задержкой и "
 "открытым исходным кодом."
 
-#: plinth/modules/mumble/__init__.py:26
+#: plinth/modules/mumble/__init__.py:33
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3378,19 +3485,19 @@ msgstr ""
 "64738. На <a href=\"http://mumble.info\"> Клиенты</a> вы можете найти "
 "клиенты для вашего компьютера и Android устройств."
 
-#: plinth/modules/mumble/__init__.py:43 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:44
+#: plinth/modules/mumble/__init__.py:51
 msgid "Voice Chat"
 msgstr "Голосовой чат"
 
-#: plinth/modules/mumble/forms.py:14
+#: plinth/modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "Установить пароль суперпользователя"
 
-#: plinth/modules/mumble/forms.py:17
+#: plinth/modules/mumble/forms.py:33
 msgid ""
 "Optional. Leave this field blank to keep the current password. SuperUser "
 "password can be used to manage permissions in Mumble."
@@ -3410,7 +3517,7 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
-#: plinth/modules/mumble/views.py:27
+#: plinth/modules/mumble/views.py:39
 msgid "SuperUser password successfully updated."
 msgstr "Пароль суперпользователя успешно обновлён."
 
@@ -3890,7 +3997,7 @@ msgstr "Редактирование подключения"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:160 plinth/templates/base.html:161
+#: plinth/templates/base.html:161 plinth/templates/base.html:162
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -4166,6 +4273,7 @@ msgstr ""
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
 #: plinth/modules/networks/templates/network_topology_firstboot.html:19
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:19
+#: plinth/modules/users/templates/users_firstboot.html:63
 msgid "Skip this step"
 msgstr "Пропустить этот шаг"
 
@@ -4702,29 +4810,29 @@ msgstr ""
 "все комбинации протокол/порт, которые вы можете здесь задать. Например, "
 "HTTPS на портах, отличных от 443, может вызывать проблемы."
 
-#: plinth/modules/pagekite/utils.py:42
+#: plinth/modules/pagekite/utils.py:45
 msgid "Web Server (HTTP)"
 msgstr "Веб-сервер (HTTP)"
 
-#: plinth/modules/pagekite/utils.py:44
+#: plinth/modules/pagekite/utils.py:47
 #, python-brace-format
 msgid "Site will be available at <a href=\"http://{0}\">http://{0}</a>"
 msgstr "Сайт будет доступен на <a href=\"http://{0}\">http://{0}</a>"
 
-#: plinth/modules/pagekite/utils.py:56
+#: plinth/modules/pagekite/utils.py:59
 msgid "Web Server (HTTPS)"
 msgstr "Веб-сервер (HTTPS)"
 
-#: plinth/modules/pagekite/utils.py:58
+#: plinth/modules/pagekite/utils.py:61
 #, python-brace-format
 msgid "Site will be available at <a href=\"https://{0}\">https://{0}</a>"
 msgstr "Сайт будет доступен на <a href=\"https://{0}\">https://{0}</a>"
 
-#: plinth/modules/pagekite/utils.py:70
+#: plinth/modules/pagekite/utils.py:73
 msgid "Secure Shell (SSH)"
 msgstr "Sеcure Shell (SSH)"
 
-#: plinth/modules/pagekite/utils.py:72
+#: plinth/modules/pagekite/utils.py:75
 msgid ""
 "See SSH client setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions</a>"
@@ -5355,8 +5463,8 @@ msgid ""
 "community."
 msgstr ""
 "Частые обновления функций позволяют службе %(box_name)s, а также очень "
-"ограниченному набору программного обеспечения, чаще получать новые функции ("
-"из репозитория backports). Это приводит к получению некоторых новых функций "
+"ограниченному набору программного обеспечения, чаще получать новые функции "
+"(из репозитория backports). Это приводит к получению некоторых новых функций "
 "в течение нескольких недель, а не раз в 2 года или около того. Обратите "
 "внимание, что программное обеспечение с частыми обновлениями функций не "
 "поддерживается командой безопасности Debian. Вместо этого они поддерживаются "
@@ -6305,24 +6413,24 @@ msgstr "Tor Socks прокси"
 msgid "Tor Bridge Relay"
 msgstr "Ретранслятор Tor типа мост"
 
-#: plinth/modules/tor/__init__.py:110
+#: plinth/modules/tor/__init__.py:112
 msgid "Tor relay port available"
 msgstr "Доступен порт трансляции Tor"
 
-#: plinth/modules/tor/__init__.py:120
+#: plinth/modules/tor/__init__.py:122
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 транспорт зарегестрирован"
 
-#: plinth/modules/tor/__init__.py:130
+#: plinth/modules/tor/__init__.py:132
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 транспорт зарегистрирован"
 
-#: plinth/modules/tor/__init__.py:199
+#: plinth/modules/tor/__init__.py:201
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Доступ к {url} по tcp{kind} через Tor"
 
-#: plinth/modules/tor/__init__.py:210
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Подтверждение использования Tor в {url} по tcp {kind}"
@@ -6550,11 +6658,11 @@ msgstr ""
 "выполняется автоматически в 02:00, в результате чего все приложения на "
 "короткое время становятся недоступными."
 
-#: plinth/modules/upgrades/__init__.py:64 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:66 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Обновление"
 
-#: plinth/modules/upgrades/__init__.py:102
+#: plinth/modules/upgrades/__init__.py:106
 msgid "FreedomBox Updated"
 msgstr "FreedomBox обновлён"
 
@@ -6721,21 +6829,37 @@ msgstr "Доступ ко всем сервисам и настройкам си
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Проверьте запись LDAP \"{search_item}\""
 
-#: plinth/modules/users/forms.py:36
+#: plinth/modules/users/forms.py:37
 msgid "Username is taken or is reserved."
 msgstr "Имя пользователя уже занято."
 
-#: plinth/modules/users/forms.py:63
+#: plinth/modules/users/forms.py:64
 msgid "Enter a valid username."
 msgstr "Введите действительное имя пользователя."
 
-#: plinth/modules/users/forms.py:70
+#: plinth/modules/users/forms.py:71
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 "Требуется. 150 символов или меньше. Только английские буквы, цифры и @/./-/_."
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:79
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Authorization Password"
+msgstr "Пароль администратора"
+
+#: plinth/modules/users/forms.py:80
+msgid "Enter your current password to authorize account modifications."
+msgstr ""
+
+#: plinth/modules/users/forms.py:88
+#, fuzzy
+#| msgid "Add password"
+msgid "Invalid password."
+msgstr "Добавить пароль"
+
+#: plinth/modules/users/forms.py:105
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -6749,20 +6873,23 @@ msgstr ""
 "Пользователи в группе администратора имеют доступ ко всем службам. Они также "
 "могут войти в систему через SSH и иметь административные привилегии (sudo)."
 
-#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:347
-msgid "Creating LDAP user failed."
+#: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
+#, fuzzy, python-brace-format
+#| msgid "Creating LDAP user failed."
+msgid "Creating LDAP user failed: {error}"
 msgstr "Создание пользователя LDAP не удалось."
 
-#: plinth/modules/users/forms.py:135
-#, python-brace-format
-msgid "Failed to add new user to {group} group."
+#: plinth/modules/users/forms.py:163
+#, fuzzy, python-brace-format
+#| msgid "Failed to add new user to {group} group."
+msgid "Failed to add new user to {group} group: {error}"
 msgstr "Не удалось добавить нового пользователя в группу {group}."
 
-#: plinth/modules/users/forms.py:149
+#: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
 msgstr "Авторизованные SSH ключи"
 
-#: plinth/modules/users/forms.py:151
+#: plinth/modules/users/forms.py:179
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -6773,43 +6900,47 @@ msgstr ""
 "на каждой строке. Пустые строки и строки, начинающиеся с # будут "
 "игнорироваться."
 
-#: plinth/modules/users/forms.py:235
+#: plinth/modules/users/forms.py:266
 msgid "Renaming LDAP user failed."
 msgstr "Переименование пользователя LDAP не удалось."
 
-#: plinth/modules/users/forms.py:247
+#: plinth/modules/users/forms.py:279
 msgid "Failed to remove user from group."
 msgstr "Не удалось удалить пользователя из группы."
 
-#: plinth/modules/users/forms.py:258
+#: plinth/modules/users/forms.py:291
 msgid "Failed to add user to group."
 msgstr "Не удалось добавить пользователя в группу."
 
-#: plinth/modules/users/forms.py:267
+#: plinth/modules/users/forms.py:304
 msgid "Unable to set SSH keys."
 msgstr "Не удалось задать ключи SSH."
 
-#: plinth/modules/users/forms.py:282
+#: plinth/modules/users/forms.py:322
 msgid "Failed to change user status."
 msgstr "Не удалось изменить статус пользователя."
 
-#: plinth/modules/users/forms.py:290
+#: plinth/modules/users/forms.py:330
 msgid "Cannot delete the only administrator in the system."
 msgstr "Невозможно удалить единственного администратора в системе."
 
-#: plinth/modules/users/forms.py:321
+#: plinth/modules/users/forms.py:365
 msgid "Changing LDAP user password failed."
 msgstr "Изменение LDAP пароля пользователя не удалось."
 
-#: plinth/modules/users/forms.py:356
-msgid "Failed to add new user to admin group."
+#: plinth/modules/users/forms.py:405
+#, fuzzy, python-brace-format
+#| msgid "Failed to add new user to admin group."
+msgid "Failed to add new user to admin group: {error}"
 msgstr "Не удалось добавить нового пользователя в группу администратора."
 
-#: plinth/modules/users/forms.py:373
-msgid "Failed to restrict console access."
+#: plinth/modules/users/forms.py:424
+#, fuzzy, python-brace-format
+#| msgid "Failed to restrict console access."
+msgid "Failed to restrict console access: {error}"
 msgstr "Не удалось ограничить доступ к консоли."
 
-#: plinth/modules/users/forms.py:385
+#: plinth/modules/users/forms.py:437
 msgid "User account created, you are now logged in"
 msgstr "Учетная запись пользователя создана, теперь вы вошли"
 
@@ -6822,15 +6953,16 @@ msgstr "Изменение пароля для <em>%(username)s</em>"
 msgid "Save Password"
 msgstr "Сохранить пароль"
 
-#: plinth/modules/users/templates/users_create.html:17
+#: plinth/modules/users/templates/users_create.html:11
+#: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:27
 #: plinth/modules/users/templates/users_list.html:29
-#: plinth/modules/users/views.py:42
+#: plinth/modules/users/views.py:44
 msgid "Create User"
 msgstr "Создать пользователя"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:120
+#: plinth/modules/users/views.py:122
 msgid "Delete User"
 msgstr "Удаление пользователя"
 
@@ -6848,7 +6980,7 @@ msgstr "Удаление %(username)s"
 msgid "Administrator Account"
 msgstr "Учетная запись администратора"
 
-#: plinth/modules/users/templates/users_firstboot.html:14
+#: plinth/modules/users/templates/users_firstboot.html:15
 msgid ""
 "Choose a username and password to access this web interface. The password "
 "can be changed later. This user will be granted administrative privileges. "
@@ -6858,12 +6990,34 @@ msgstr ""
 "можно изменить позднее. Этому пользователю будут предоставляться "
 "административные привилегии. Другие пользователи могут быть добавлены позже."
 
-#: plinth/modules/users/templates/users_firstboot.html:27
+#: plinth/modules/users/templates/users_firstboot.html:28
 msgid "Create Account"
 msgstr "Создать учетную запись"
 
+#: plinth/modules/users/templates/users_firstboot.html:32
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "An administrator account already exists."
+msgstr "Учетная запись администратора"
+
+#: plinth/modules/users/templates/users_firstboot.html:38
+#, fuzzy
+#| msgid "Cannot delete the only administrator in the system."
+msgid "The following administrator accounts exist in the system."
+msgstr "Невозможно удалить единственного администратора в системе."
+
+#: plinth/modules/users/templates/users_firstboot.html:50
+#, python-format, python-brace-format
+msgid ""
+"Delete these accounts from command line and refresh the page to create an "
+"account that is usable with %(box_name)s. On the command line run the "
+"command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-user "
+"{username}'. If an account is already usable with %(box_name)s, skip this "
+"step."
+msgstr ""
+
 #: plinth/modules/users/templates/users_list.html:23
-#: plinth/modules/users/views.py:59
+#: plinth/modules/users/views.py:61
 msgid "Users"
 msgstr "Пользователи"
 
@@ -6877,7 +7031,13 @@ msgstr "Удалить пользователя %(username)s"
 msgid "Edit user %(username)s"
 msgstr "Редактирование пользователя %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:15
+#: plinth/modules/users/templates/users_update.html:11
+#, fuzzy, python-format
+#| msgid "Edit user %(username)s"
+msgid "Edit User <em>%(username)s</em>"
+msgstr "Редактирование пользователя %(username)s"
+
+#: plinth/modules/users/templates/users_update.html:19
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -6886,39 +7046,39 @@ msgstr ""
 "Используйте <a href='%(change_password_url)s'>форму смены пароля</a> для "
 "смены пароля."
 
-#: plinth/modules/users/templates/users_update.html:27
+#: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: plinth/modules/users/views.py:40
+#: plinth/modules/users/views.py:42
 #, python-format
 msgid "User %(username)s created."
 msgstr "Пользователь %(username)s создан."
 
-#: plinth/modules/users/views.py:74
+#: plinth/modules/users/views.py:76
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Пользователь %(username)s обновлен."
 
-#: plinth/modules/users/views.py:75
+#: plinth/modules/users/views.py:77
 msgid "Edit User"
 msgstr "Редактирование пользователя"
 
-#: plinth/modules/users/views.py:130
+#: plinth/modules/users/views.py:132
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Пользователь {user} удален."
 
-#: plinth/modules/users/views.py:137
+#: plinth/modules/users/views.py:139
 msgid "Deleting LDAP user failed."
 msgstr "Сбой при удалении LDAP пользователя."
 
-#: plinth/modules/users/views.py:146
+#: plinth/modules/users/views.py:148
 msgid "Change Password"
 msgstr "Изменить пароль"
 
-#: plinth/modules/users/views.py:147
+#: plinth/modules/users/views.py:149
 msgid "Password changed successfully."
 msgstr "Пароль успешно изменён."
 
@@ -7366,28 +7526,28 @@ msgstr "Приложения"
 msgid "System"
 msgstr "Система"
 
-#: plinth/templates/base.html:166 plinth/templates/base.html:167
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#: plinth/templates/base.html:176 plinth/templates/base.html:177
 msgid "Restart"
 msgstr "Перезапустить"
 
-#: plinth/templates/base.html:180 plinth/templates/base.html:181
+#: plinth/templates/base.html:182 plinth/templates/base.html:183
 msgid "Shut down"
 msgstr "Завершить работу"
 
-#: plinth/templates/base.html:188 plinth/templates/base.html:189
-#: plinth/templates/base.html:213 plinth/templates/base.html:215
+#: plinth/templates/base.html:190 plinth/templates/base.html:191
+#: plinth/templates/base.html:215 plinth/templates/base.html:217
 msgid "Log out"
 msgstr "Выход"
 
-#: plinth/templates/base.html:197 plinth/templates/base.html:200
+#: plinth/templates/base.html:199 plinth/templates/base.html:202
 msgid "Select language"
 msgstr "Выберите язык"
 
-#: plinth/templates/base.html:205 plinth/templates/base.html:207
+#: plinth/templates/base.html:207 plinth/templates/base.html:209
 msgid "Log in"
 msgstr "Войти"
 

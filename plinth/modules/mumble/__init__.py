@@ -3,22 +3,29 @@
 FreedomBox app to configure Mumble server.
 """
 
+import pathlib
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules import names
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
-version = 1
+version = 2
 
 managed_services = ['mumble-server']
 
 managed_packages = ['mumble-server']
+
+managed_paths = [pathlib.Path('/var/lib/mumble-server')]
 
 _description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
@@ -61,6 +68,15 @@ class MumbleApp(app_module.App):
                             ports=['mumble-plinth'], is_external=True)
         self.add(firewall)
 
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-mumble', domains=get_domains,
+            daemons=managed_services, should_copy_certificates=True,
+            private_key_path='/var/lib/mumble-server/privkey.pem',
+            certificate_path='/var/lib/mumble-server/fullchain.pem',
+            user_owner='mumble-server', group_owner='mumble-server',
+            managing_app='mumble')
+        self.add(letsencrypt)
+
         daemon = Daemon(
             'daemon-mumble', managed_services[0],
             listen_ports=[(64738, 'tcp4'), (64738, 'tcp6'), (64738, 'udp4'),
@@ -75,4 +91,42 @@ class MumbleApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', app.enable)
+    helper.call('post', actions.superuser_run, 'mumble', ['setup'])
+    if not old_version:
+        helper.call('post', app.enable)
+
+    app.get_component('letsencrypt-mumble').setup_certificates()
+
+
+def get_available_domains():
+    """Return an iterator with all domains able to have a certificate."""
+    return (domain.name for domain in names.components.DomainName.list()
+            if domain.domain_type.can_have_certificate)
+
+
+def set_domain(domain):
+    """Set the TLS domain by writing a file to data directory."""
+    if domain:
+        actions.superuser_run('mumble', ['set-domain', domain])
+
+
+def get_domain():
+    """Read TLS domain from config file select first available if none."""
+    domain = actions.superuser_run('mumble', ['get-domain']).strip()
+    if not domain:
+        domain = next(get_available_domains(), None)
+        set_domain(domain)
+
+    return domain
+
+
+def get_domains():
+    """Return a list with the configured domains."""
+    if not pathlib.Path('/var/lib/mumble-server/').exists():
+        return []
+
+    domain = get_domain()
+    if domain:
+        return [domain]
+
+    return []

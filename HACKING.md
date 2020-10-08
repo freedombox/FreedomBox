@@ -1,17 +1,51 @@
 # Hacking
 
-## Requirements for Development OS
+This document provides reference information for FreedomBox **contribution** hacking **procedures**:
+1. [Picking a task to work on](#picking-a-task-to-work-on)
+1. [Setting up and using development environments](#development-environments-setting-up-and-their-usage)
+1. [Contributing translations + how to make/keep FreedomBox international](#makingkeeping-freedombox-international)
+1. [Testing](#testing)
+1. [Building user documentation](#building-the-user-documentation-separately)
+1. [Submitting your changes](#submitting-your-changes)
+1. [Other related stuff](#miscelanea)
+
+It doesn't cover arquitecture, design choices, or other product internals.
+
+## Picking a task to work on
+
+You can report bugs on FreedomBox Service's (Plinth's) [issue
+tracker](https://salsa.debian.org/freedombox-team/freedombox/issues).
+Newcomers will find easy, self-contained tasks tagged as "beginner".
+
+Source code for FreedomBox Service is available from
+[salsa.debian.org](https://salsa.debian.org/freedombox-team/freedombox).
+
+
+
+## Development environments: setting up and their usage
+
+### Requirements for Development OS
 
 FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
 install Debian to do development for FreedomBox. FreedomBox development is
-typically done on a container or a Virtual Machine.
+typically done with a container or a Virtual Machine.
 
-* For running a container, you need systemd containers, Git, Python and a
+* For running a container, you need systemd containers, Git, Python3 and a
 sudo-enabled user. This approach is recommended.
 * For running a VM, you can work on any operating system that can install latest
 versions of Git, Vagrant and VirtualBox.
 
-## Using Containers
+In addition:
+
+- To run code quality checks you need flake8 and yapf. These may be installed
+  inside the container with Python3 and pip but installing them on host leads to
+  smoother development experience.
+- To update translation strings on the host machine, you need Django and gettext
+  to be installed on host machine. These can be installed with Python3 and pip.
+- You need Mumble voice chat software to participate in bi-weekly live
+  development discussions.
+
+### Using Containers
 
 The `./container` script shipped with FreedomBox source code can manage the
 development environment inside a systemd-nspawn container.
@@ -43,7 +77,7 @@ development environment inside a systemd-nspawn container.
     host$ ./container ssh
     ```
 
-### Using after Setup
+#### Using after Setup
 
 After logging into the container, the source code is available in `/freedombox`
 directory:
@@ -71,7 +105,7 @@ guest$ sudo ./setup.py install
 
 Note: This development container has automatic upgrades disabled by default.
 
-### Troubleshooting
+#### Troubleshooting
 
 * Sometimes `host$ ./container destroy && ./container up` doesn't work. In such
   cases, try to delete the hidden `.container` folder and then `host$
@@ -79,13 +113,17 @@ Note: This development container has automatic upgrades disabled by default.
 * Not all kinds of changes are automatically updated. Try `guest$ sudo mount -o
   remount /freedombox`.
 
-## Using Vagrant
+
+[back to index](#hacking)
+
+
+### Using Vagrant
 
 Use VirtualBox and Vagrant if for some reason the container option is not
 suitable, such as when you are running non-GNU/Linux machine or a non-systemd
 machine.
 
-### For Debian GNU/Linux and Derivatives
+#### For Debian GNU/Linux and Derivatives
 
 1. Install Git, Vagrant and VirtualBox using apt.
 
@@ -93,7 +131,7 @@ machine.
    $ sudo apt install git virtualbox vagrant
    ```
 
-#### Installing VirtualBox manually
+##### Installing VirtualBox manually
 
 1. Add Oracle's key to apt's list of accepted keys.
 
@@ -126,11 +164,11 @@ Example for Buster:
    $ sudo apt install virtualbox-6.1
    ```
 
-### For Other GNU/Linux Distributions or *BSDs
+#### For Other GNU/Linux Distributions or *BSDs
 
 1. Install Git, Vagrant and VirtualBox using your favourite package manager.
 
-### For macOS
+#### For macOS
 
 1. Install [Homebrew](https://brew.sh/).
 
@@ -142,7 +180,7 @@ Example for Buster:
    $ brew cask install vagrant
    ```
 
-### For Windows
+#### For Windows
 
 1. Install [Git](https://git-scm.com/download/windows),
    [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
@@ -157,7 +195,7 @@ Example for Buster:
 
 3. Run all the following commands inside Git Bash.
 
-### Setting Up Development Environment Using Vagrant
+#### Setting Up Development Environment Using Vagrant
 
 Vagrant is a free software command line utility for managing the life cycle of
 virtual machines. The FreedomBox project provides ready-made virtual machines
@@ -187,7 +225,7 @@ and requires about 4.5 GB of disk space.
     host$ vagrant ssh
     ```
 
-### Using the Virtual Machine
+#### Using the Virtual Machine
 
 After logging into the virtual machine (VM), the source code is available in
 /vagrant directory:
@@ -216,7 +254,48 @@ vm$ sudo ./setup.py install
 Note: This development virtual machine has automatic upgrades disabled by
 default.
 
-## Running Tests
+
+[back to index](#hacking)
+
+
+## Making/keeping FreedomBox international
+
+### Marking text for translation
+
+To mark text for translation, FreedomBox uses Django's translation strings. A
+module should e.g. `from django.utils.translation import ugettext as _` and wrap
+user-facing text with `_()`. Use it like this:
+
+```python
+message = _('Application successfully installed and configured.')
+```
+
+See [Django
+documentation](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/)
+for more details.
+
+### Translating literals (contributing translations)
+
+The easiest way to start translating is with your browser, by using
+[Weblate](https://hosted.weblate.org/projects/freedombox/plinth/).
+Your changes will automatically get pushed to the code repository.
+
+Alternatively, you can directly edit the `.po` file in your language directory
+`Plinth/plinth/locale/` and create a pull request (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+In that case, consider introducing yourself on #freedombox IRC (irc.debian.org),
+because some work may have been done already on the [Debian translators
+discussion lists](https://www.debian.org/MailingLists/subscribe)
+or the Weblate localization platform.
+
+For more information on translations: https://wiki.debian.org/FreedomBox/Translate
+
+
+[back to index](#hacking)
+
+
+## Testing
+
+### Running Tests
 
 To run all the tests in the container/VM:
 
@@ -249,7 +328,7 @@ guest$ py.test-3 plinth/tests/test_actions.py::TestActions
 guest$ py.test-3 plinth/tests/test_actions.py::TestActions::test_is_package_manager_busy
 ```
 
-## Running the Test Coverage Analysis
+### Running the Test Coverage Analysis
 
 To run the coverage tool in the container/VM:
 
@@ -271,11 +350,15 @@ with color-coding in the left margin to indicate which statements or branches
 were executed via the tests (green) and which statements or branches were not
 executed (red).
 
-## Running Functional Tests
 
-### Install Dependencies
+[back to index](#hacking)
 
-#### For running tests inside the container
+
+### Functional Tests
+
+#### Install Dependencies
+
+##### For running tests inside the container
 
 Inside the container run
 
@@ -283,7 +366,7 @@ Inside the container run
 guest$ cd /freedombox ; sudo plinth/tests/functional/install.sh
 ```
 
-#### For running tests inside the VM
+##### For running tests inside the VM
 
 From the host, provision the virtual machine with tests:
 
@@ -291,7 +374,7 @@ From the host, provision the virtual machine with tests:
 host$ vagrant provision --provision-with tests
 ```
 
-#### For running tests on host machine
+##### For running tests on host machine
 
 Follow the instructions below to run the tests on host machine. If you wish
 perform the tests on host machine, the host machine must be based on Debian
@@ -311,7 +394,7 @@ host$ sudo apt install smbclient  # optional, to test samba
   you can place at /usr/local/bin/geckodriver . Geckodriver will use whichever
   binary is named 'firefox' for launching the browser and interacting with it.
 
-### Run FreedomBox Service
+#### Run FreedomBox Service
 
 *Warning*: Functional tests will change the configuration of the system
  under test, including changing the hostname and users. Therefore you
@@ -324,7 +407,7 @@ interface of FreedomBox should be accessible at https://localhost:4430/.
 To run samba tests, port 4450 on the host should be forwarded to port 445
 on the guest.
 
-### Setup FreedomBox Service for tests
+#### Setup FreedomBox Service for tests
 
 Via Plinth, create a new user as follows:
 
@@ -334,12 +417,12 @@ Via Plinth, create a new user as follows:
 This step is optional if a fresh install of Plinth is being tested. Functional
 tests will create the required user using FreedomBox's first boot process.
 
-### Run Functional Tests
+#### Running Functional Tests
 
 **When inside a container/VM you will need to target the guest**
 
 ```bash
-guest$ export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SAMBA_PORT=445
+guest$ export FREEDOMBOX_URL=https://localhost FREEDOMBOX_SSH_PORT=22 FREEDOMBOX_SAMBA_PORT=445
 ```
 
 You will be running `py.test-3`.
@@ -370,7 +453,11 @@ installed.
 $ py.test-3 -n 4 --dist=loadfile --include-functional -m essential
 ```
 
-## Building the Documentation Separately
+
+[back to index](#hacking)
+
+
+## Building the User Documentation Separately
 
 FreedomBox Service (Plinth) man page is built from DocBook source in the `doc/`
 directory. FreedomBox manual is downloaded from the wiki is also available
@@ -382,47 +469,24 @@ To build the documentation separately, run:
 guest$ make -C doc
 ```
 
-## Repository
 
-FreedomBox Service (Plinth) is available from
-[salsa.debian.org](https://salsa.debian.org/freedombox-team/freedombox).
+[back to index](#hacking)
 
-## Bugs & TODO
 
-You can report bugs on FreedomBox Service's (Plinth's) [issue
-tracker](https://salsa.debian.org/freedombox-team/freedombox/issues).
+## Submitting your changes
 
-See CONTRIBUTING.md for information how to best contribute code.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for information how to best contribute code.
 
-## Internationalization
 
-To mark text for translation, FreedomBox Service (Plinth) uses Django's
-translation strings. A module should e.g. `from django.utils.translation import
-ugettext as _` and wrap user-facing text with `_()`. Use it like this:
+[back to index](#hacking)
 
-```python
-message = _('Application successfully installed and configured.')
-```
 
-## Translations
+## Miscelanea
 
-The easiest way to start translating is with your browser, by using
-[Weblate](https://hosted.weblate.org/projects/freedombox/plinth/).
-Your changes will automatically get pushed to the code repository.
-
-Alternatively, you can directly edit the `.po` file in your language directory
-`Plinth/plinth/locale/` and create a pull request (see CONTRIBUTING.md).
-In that case, consider introducing yourself on #freedombox IRC (irc.debian.org),
-because some work may have been done already on the [Debian translators
-discussion lists](https://www.debian.org/MailingLists/subscribe)
-or the Weblate localization platform.
-
-For more information on translations: https://wiki.debian.org/FreedomBox/Translate
-
-## Application Icons
+### Application Icons
 
 When adding a new App into FreedomBox, an icon is needed to represent the app in
-the application view and for shortcuts in the front page. The following the
+the application view and for shortcuts in the front page. Follow these
 guidelines for creating an app icon:
 
 - Use SVG format.
@@ -433,3 +497,19 @@ guidelines for creating an app icon:
 - Background should be transparent.
 - Leave no margins and prefer a square icon. If the icon is wide, leave top and
   bottom margins. If the icon is tall, leave left and right margins.
+
+### Team Coordination
+
+The project team coordinates by means of bi-weekly [audio
+calls](https://wiki.debian.org/FreedomBox/ProgressCalls) and IRC discussions on
+#freedombox-dev at oftc.net.
+
+### Other Development Informations
+
+* Generic [contribution overview](https://wiki.debian.org/FreedomBox/Contribute)
+  * [How to create apps for FreedomBox (Developer Manual)](https://docs.freedombox.org)
+  * User Experience [design](https://wiki.debian.org/FreedomBox/Design)
+  * [Code contribution](https://wiki.debian.org/FreedomBox/Contribute/Code)
+
+
+[back to index](#hacking)

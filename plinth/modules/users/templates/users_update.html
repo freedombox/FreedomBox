@@ -7,7 +7,11 @@
 {% load i18n %}
 
 {% block content %}
-  <h3>{{ object.username }}</h3>
+  <h3>
+    {% blocktrans trimmed with username=object.username %}
+      Edit User <em>{{ username }}</em>
+    {% endblocktrans %}
+  </h3>
 
   <p>
     {% url 'users:change_password' object.username as change_password_url %}

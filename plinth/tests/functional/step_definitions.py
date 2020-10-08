@@ -13,9 +13,7 @@ from plinth.tests import functional
 
 @given("I'm a logged in user")
 def logged_in_user(session_browser):
-    functional.login(session_browser, functional.base_url,
-                     functional.config['DEFAULT']['username'],
-                     functional.config['DEFAULT']['password'])
+    functional.login(session_browser)
 
 
 @given("I'm a logged out user")
@@ -57,7 +55,7 @@ def disable_application(session_browser, app_name):
 @given(parsers.parse('the {app_name:w} application can be disabled'))
 def app_can_be_disabled(session_browser, app_name):
     if not functional.app_can_be_disabled(session_browser, app_name):
-        pytest.skip(f'network time application can\'t be disabled')
+        pytest.skip('network time application can\'t be disabled')
 
 
 @then(parsers.parse('the {service_name:w} service should be running'))

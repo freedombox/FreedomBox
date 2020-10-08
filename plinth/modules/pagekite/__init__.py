@@ -81,7 +81,9 @@ class PagekiteApp(app_module.App):
         self.add(daemon)
 
         # Register kite name with Name Services module.
-        utils.update_names_module(is_enabled=self.is_enabled())
+        setup_helper = globals()['setup_helper']
+        if setup_helper.get_state() != 'needs-setup' and self.is_enabled():
+            utils.update_names_module(is_enabled=True)
 
     def enable(self):
         """Send domain signals after enabling the app."""

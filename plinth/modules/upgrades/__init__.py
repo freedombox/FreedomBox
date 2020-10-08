@@ -45,7 +45,9 @@ app = None
 
 BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
-SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
+SOURCES_LIST = '/etc/apt/sources.list'
+
+BACKPORTS_SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
 
 logger = logging.getLogger(__name__)
 
@@ -72,8 +74,10 @@ class UpgradesApp(app_module.App):
 
         self._show_new_release_notification()
 
-        # Check every day for setting up apt backport sources, every 3 minutes
-        # in debug mode.
+        # Check every day (every 3 minutes in debug mode):
+        # - backports becomes available -> configure it if selected by user
+        # - new stable release becomes available -> perform dist-upgrade if
+        #   updates are enabled
         interval = 180 if cfg.develop else 24 * 3600
         glib.schedule(interval, setup_repositories)
 
@@ -146,7 +150,7 @@ def disable():
 
 
 def setup_repositories(data):
-    """Setup apt backport repositories."""
+    """Setup apt repositories for backports or new stable release."""
     if is_backports_requested():
         command = ['setup-repositories']
         if cfg.develop:
@@ -170,7 +174,7 @@ def set_backports_requested(requested):
 
 def is_backports_enabled():
     """Return whether backports are enabled in the system configuration."""
-    return os.path.exists(SOURCES_LIST)
+    return os.path.exists(BACKPORTS_SOURCES_LIST)
 
 
 def get_current_release():

@@ -20,6 +20,9 @@ KITE_SECRET = '@kitesecret'
 # Augeas base path for Pagekite configuration files
 CONF_PATH = '/files/etc/pagekite.d'
 
+# Kite name used by default in config. Should be treated as unconfigured.
+UNCONFIGURED_KITE = 'NAME.pagekite.me'
+
 # Parameters that get stored in configuration service_on entries
 SERVICE_PARAMS = [
     'protocol', 'kitename', 'backend_host', 'backend_port', 'secret'
@@ -178,7 +181,7 @@ def update_names_module(is_enabled=None):
         service for service, value in config['predefined_services'].items()
         if value
     ]
-    if config['kite_name']:
+    if config['kite_name'] and config['kite_name'] != UNCONFIGURED_KITE:
         domain_added.send_robust(sender='pagekite',
                                  domain_type='domain-type-pagekite',
                                  name=config['kite_name'],

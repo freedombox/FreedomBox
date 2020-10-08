@@ -22,6 +22,8 @@ config.read(pathlib.Path(__file__).with_name('config.ini'))
 
 config['DEFAULT']['url'] = os.environ.get('FREEDOMBOX_URL',
                                           config['DEFAULT']['url']).rstrip('/')
+config['DEFAULT']['ssh_port'] = os.environ.get('FREEDOMBOX_SSH_PORT',
+                                               config['DEFAULT']['ssh_port'])
 config['DEFAULT']['samba_port'] = os.environ.get(
     'FREEDOMBOX_SAMBA_PORT', config['DEFAULT']['samba_port'])
 
@@ -234,15 +236,25 @@ def _create_admin_account(browser, username, password):
     submit(browser)
 
 
-def login(browser, url, username, password):
+def login(browser):
+    """Login to the interface."""
+    login_with_account(browser, base_url, config['DEFAULT']['username'],
+                       config['DEFAULT']['password'])
+
+
+def login_with_account(browser, url, username, password):
 
     # XXX: Find a way to remove the hardcoded jsxc URL
     if '/plinth/' not in browser.url or '/jsxc/jsxc' in browser.url:
         browser.visit(url)
 
-    apps_link = browser.find_link_by_href('/plinth/apps/')
-    if len(apps_link):
-        return
+    user_menu = browser.find_by_id('id_user_menu')
+
+    if len(user_menu):
+        if user_menu.text == username:
+            return
+
+        visit(browser, '/plinth/accounts/logout/')
 
     login_button = browser.find_link_by_href('/plinth/accounts/login/')
     if login_button:

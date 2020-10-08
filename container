@@ -286,11 +286,11 @@ def _get_systemd_nspawn_version():
 
 def _download_file(url, target_file, force=False):
     """Download a file from remote URL."""
-    if target_file.exists() and not force:
-        return
-
-    if force:
-        os.remove(target_file)
+    if target_file.exists():
+        if force:
+            os.remove(target_file)
+        else:
+            return
 
     partial_file = target_file.with_suffix(target_file.suffix + '.partial')
 
@@ -480,6 +480,7 @@ def _setup_nm_connection(distribution):
         'connection.type': '802-3-ethernet',
         'connection.interface-name': _get_interface_name(distribution),
         'connection.autoconnect': 'yes',
+        'connection.zone': 'trusted',
         'ipv4.method': 'shared',
     }
     subprocess.run(['sudo', 'nmcli', 'connection', 'add'] +
@@ -695,6 +696,11 @@ def _destroy(distribution):
     except FileNotFoundError:
         pass
 
+    connection_name = f'fbx-{distribution}-shared'
+    logger.info('Removing Network Manager connection %s', connection_name)
+    subprocess.run(['sudo', 'nmcli', 'connection', 'delete', connection_name],
+                   stdout=subprocess.DEVNULL)
+
     logger.info('Keeping downloaded image: %s',
                 _get_compressed_image_path(distribution))
 
@@ -805,8 +811,12 @@ def _get_latest_image_timestamp(distribution):
 
 def _is_update_required(distribution):
     """Compare local image timestamp against the latest image timestamp."""
-    filename = URLS[distribution].split('/')[-1]
-    local_image_timestamp = os.path.getmtime(work_directory / filename)
+    file_path = work_directory / URLS[distribution].split('/')[-1]
+
+    if not file_path.exists():
+        return True
+
+    local_image_timestamp = os.path.getmtime(file_path)
     one_day = datetime.timedelta(days=1).total_seconds()
     latest_image_timestamp = _get_latest_image_timestamp(distribution)
     return latest_image_timestamp - local_image_timestamp > one_day

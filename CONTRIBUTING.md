@@ -31,7 +31,7 @@ Naming conventions:
   repository.
 * Before committing your changes ensure that your code conforms to base code
   hygiene by running tests (see HACKING.md) and the automatic code formatting
-  tools `yapf` and `isort`.
+  tools `yapf` and `isort`. Please check also with `flake8`.
 * Please include one single feature per merge request, to keep the review simple
   and focused on one topic. (This might still mean hundreds of lines of code.)
   Use a branch other than `master`, so you can create multiple merge requests

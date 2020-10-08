@@ -115,6 +115,10 @@ def get_domain():
 
 def get_domains():
     """Return a list with the configured domains."""
+    # If not installed, return empty. But work while installing too.
+    if not pathlib.Path('/etc/coturn/freedombox.conf').exists():
+        return []
+
     domain = get_domain()
     if domain:
         return [domain]

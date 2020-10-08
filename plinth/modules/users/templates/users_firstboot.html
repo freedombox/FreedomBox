@@ -10,21 +10,57 @@
 {% block content %}
   <h2>{% trans "Administrator Account" %}</h2>
 
-  <p>
-    {% blocktrans trimmed %}
-      Choose a username and password to access this web interface.
-      The password can be changed later. This user will be granted
-      administrative privileges. Other users can be added later.
-    {% endblocktrans %}
-  </p>
+  {% if not admin_users %}
+    <p>
+      {% blocktrans trimmed %}
+        Choose a username and password to access this web interface.
+        The password can be changed later. This user will be granted
+        administrative privileges. Other users can be added later.
+      {% endblocktrans %}
+    </p>
 
-  <form class="form" method="post">
-    {% csrf_token %}
+    <form class="form" method="post">
+      {% csrf_token %}
 
-    {{ form|bootstrap }}
+      {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Create Account" %}"/>
-  </form>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Create Account" %}"/>
+    </form>
+  {% else %}
+    <div class="alert alert-danger" role="alert">
+      {% blocktrans trimmed %}
+        An administrator account already exists.
+      {% endblocktrans %}
+    </div>
+
+    <p>
+      {% blocktrans trimmed %}
+        The following administrator accounts exist in the system.
+      {% endblocktrans %}
+    </p>
+
+    <ul>
+      {% for user in admin_users %}
+        <li>{{ user }} </li>
+      {% endfor %}
+    </ul>
+
+    <p>
+      {% blocktrans trimmed %}
+        Delete these accounts from command line and refresh the page to create
+        an account that is usable with {{ box_name }}. On the command line run
+        the command 'echo "{password}" | /usr/share/plinth/actions/users
+        remove-user {username}'. If an account is already usable with
+        {{ box_name }}, skip this step.
+      {% endblocktrans %}
+    </p>
+
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      <input type="submit" class="btn btn-link" name="skip"
+             value="{% trans "Skip this step" %}"/>
+    </form>
+  {% endif %}
 {% endblock %}
-

@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 16:55-0400\n"
-"PO-Revision-Date: 2020-09-22 09:39+0000\n"
+"POT-Creation-Date: 2020-10-05 18:59-0400\n"
+"PO-Revision-Date: 2020-10-03 00:41+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/nb_NO/>\n"
@@ -158,10 +158,8 @@ msgid "{app} (No data to backup)"
 msgstr "{app} (Ingen data å sikkerhetskopiere)"
 
 #: plinth/modules/backups/forms.py:50
-#, fuzzy
-#| msgid "Create Repository"
 msgid "Repository"
-msgstr "Opprett depot"
+msgstr "Depot"
 
 #: plinth/modules/backups/forms.py:52
 #: plinth/modules/backups/templates/backups_delete.html:18
@@ -172,10 +170,8 @@ msgid "Name"
 msgstr "Navn"
 
 #: plinth/modules/backups/forms.py:53
-#, fuzzy
-#| msgid "Name for new backup archive."
 msgid "(Optional) Set a name for this backup archive"
-msgstr "Navn på nytt sikkerhetskopiarkiv."
+msgstr "(Valgfritt) Sett navn på dette sikkerhetskopiarkivet"
 
 #: plinth/modules/backups/forms.py:56
 msgid "Included apps"
@@ -233,10 +229,8 @@ msgstr ""
 "sikkerhetskopien."
 
 #: plinth/modules/backups/forms.py:122
-#, fuzzy
-#| msgid "Create Repository"
 msgid "Key in Repository"
-msgstr "Opprett depot"
+msgstr "Nøkkel i depot"
 
 #: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
@@ -423,6 +417,7 @@ msgstr "Slett arkiv %(name)s"
 #: plinth/modules/networks/templates/router_configuration_update.html:19
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
+#: plinth/templates/form.html:19
 msgid "Submit"
 msgstr "Send inn"
 
@@ -479,15 +474,7 @@ msgid "Restore data from"
 msgstr "Gjenopprett data fra"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Upload a backup file downloaded from another %(box_name)s to "
-#| "restore is\n"
-#| "      contents. You can choose the apps you wish to restore after "
-#| "uploading a\n"
-#| "      backup file.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "      Upload a backup file downloaded from another %(box_name)s to restore "
@@ -499,7 +486,7 @@ msgid ""
 msgstr ""
 "\n"
 "      Last opp en sikkerhetskopi hentet fra en annen %(box_name)s for å "
-"tilbakeføre innholdet.\n"
+"tilbakeføre dens innhold.\n"
 "      Du kan velge programmene du ønsker å importere etter å ha lastet opp "
 "en sikkerhetskopifil.\n"
 "    "
@@ -587,9 +574,8 @@ msgid "Restore from uploaded file"
 msgstr "Gjenopprett fra opplastet fil"
 
 #: plinth/modules/backups/views.py:238
-#, fuzzy
 msgid "No additional disks available to add a repository."
-msgstr "Ingen ytterligere disker å legge til i pakkebrønn."
+msgstr "Ingen ytterligere disker tilgjengelig for å opprette et depot."
 
 #: plinth/modules/backups/views.py:246
 msgid "Create backup repository"
@@ -666,6 +652,10 @@ msgid ""
 "password, you can share it with the users who should have the associated "
 "permissions."
 msgstr ""
+"bepastery har ikke brukernavn for å logge in. Den bruker kun passord.  Et "
+"sett med tillatelser kan velges for hvert passord.  Når du har laget et "
+"passord så kan du dele det med brukerne som skal ha de tilhørende "
+"rettighetene."
 
 #: plinth/modules/bepasty/__init__.py:33
 msgid ""
@@ -674,6 +664,10 @@ msgid ""
 "revoke access for a single person or group, by removing their password from "
 "the list."
 msgstr ""
+"Du kan også opprette flere passord med de samme rettighetene, og spre dem "
+"til ulike folk eller grupper. Dette vil la deg trekke tilbake tilgangen "
+"senere for en enkelt person eller gruppe, ved å fjerne passordet deres fra "
+"listen."
 
 #: plinth/modules/bepasty/__init__.py:42 plinth/modules/bepasty/__init__.py:51
 msgid "Read a file, if a web link to the file is available"
@@ -727,7 +721,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:84 plinth/modules/users/forms.py:198
+#: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
 msgid "Permissions"
 msgstr "Tilganger"
 
@@ -911,11 +905,131 @@ msgstr "Oppdater IP-adresse og domener"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
-#: plinth/modules/pagekite/forms.py:90 plinth/modules/quassel/views.py:29
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
+#: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Oppsett oppdatert"
+
+#: plinth/modules/calibre/__init__.py:30
+#, python-brace-format
+msgid ""
+"calibre server provides online access to your e-book collection. You can "
+"store your e-books on your {box_name}, read them online or from any of your "
+"devices."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:33
+msgid ""
+"You can organize your e-books, extract and edit their metadata, and perform "
+"advanced search. calibre can import, export, or convert across a wide range "
+"of formats to make e-books ready for reading on any device. It also provides "
+"an online web reader. It remembers your last read location, bookmarks, and "
+"highlighted text. Content distribution using OPDS is currently not supported."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:39
+msgid ""
+"Only users belonging to <em>calibre</em> group will be able to access the "
+"app. All users with access can use all the libraries."
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:57
+#, fuzzy
+#| msgid "Administer Syncthing application"
+msgid "Administer calibre application"
+msgstr "Administrer Syncthing-programmet"
+
+#: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
+msgid "calibre"
+msgstr ""
+
+#: plinth/modules/calibre/__init__.py:61
+msgid "E-book Library"
+msgstr ""
+
+#: plinth/modules/calibre/forms.py:18
+#, fuzzy
+#| msgid "Name of the repository"
+msgid "Name of the new library"
+msgstr "Navn på depot"
+
+#: plinth/modules/calibre/forms.py:27
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A library with this name already exists."
+msgstr "En deling ved dette navnet finnes allerede."
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:11
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete calibre Library <em>%(name)s</em>"
+msgstr "Slette wiki eller blogg <em>%(name)s</em>"
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:17
+msgid ""
+"Delete this library permanently? All stored e-books and saved data will be "
+"lost."
+msgstr ""
+
+#: plinth/modules/calibre/templates/calibre-delete-library.html:27
+#: plinth/modules/gitweb/templates/gitweb_delete.html:27
+#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
+#, python-format
+msgid "Delete %(name)s"
+msgstr "Slette %(name)s"
+
+#: plinth/modules/calibre/templates/calibre.html:23
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Manage Libraries"
+msgstr "Opprett depot"
+
+#: plinth/modules/calibre/templates/calibre.html:27
+#: plinth/modules/calibre/templates/calibre.html:29
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create Library"
+msgstr "Opprett depot"
+
+#: plinth/modules/calibre/templates/calibre.html:36
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No libraries available."
+msgstr "Tor relay-port tilgjengelig"
+
+#: plinth/modules/calibre/templates/calibre.html:43
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete library %(library)s"
+msgstr "Slette nettstedet %(site)s"
+
+#: plinth/modules/calibre/templates/calibre.html:49
+#, python-format
+msgid "Go to library %(library)s"
+msgstr ""
+
+#: plinth/modules/calibre/views.py:39
+#, fuzzy
+#| msgid "Repository removed."
+msgid "Library created."
+msgstr "Depot fjernet."
+
+#: plinth/modules/calibre/views.py:50
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "An error occurred while creating the library."
+msgstr "En feil oppsto under konfigureringen."
+
+#: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
+#, python-brace-format
+msgid "{name} deleted."
+msgstr "Slettet {name}."
+
+#: plinth/modules/calibre/views.py:68 plinth/modules/gitweb/views.py:142
+#, python-brace-format
+msgid "Could not delete {name}: {error}"
+msgstr "Kunne ikke slette {name}: {error}"
 
 #: plinth/modules/cockpit/__init__.py:32
 #, python-brace-format
@@ -1144,11 +1258,13 @@ msgstr ""
 msgid "VoIP Helper"
 msgstr ""
 
-#: plinth/modules/coturn/forms.py:22 plinth/modules/quassel/forms.py:22
+#: plinth/modules/coturn/forms.py:22 plinth/modules/mumble/forms.py:21
+#: plinth/modules/quassel/forms.py:22
 msgid "TLS domain"
 msgstr "TLS-domene"
 
-#: plinth/modules/coturn/forms.py:24 plinth/modules/quassel/forms.py:24
+#: plinth/modules/coturn/forms.py:24 plinth/modules/mumble/forms.py:23
+#: plinth/modules/quassel/forms.py:24
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -1529,7 +1645,7 @@ msgid "Use HTTP basic authentication"
 msgstr "Bruk HTTP-basisgodkjenning"
 
 #: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:204
-#: plinth/modules/users/forms.py:68
+#: plinth/modules/users/forms.py:69
 msgid "Username"
 msgstr "Brukernavn"
 
@@ -2070,12 +2186,6 @@ msgstr "Slette wiki eller blogg <em>%(name)s</em>"
 msgid "Delete this repository permanently?"
 msgstr "Slett dette depotet for godt?"
 
-#: plinth/modules/gitweb/templates/gitweb_delete.html:27
-#: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
-#, python-format
-msgid "Delete %(name)s"
-msgstr "Slette %(name)s"
-
 #: plinth/modules/gitweb/views.py:45
 #, fuzzy
 #| msgid "Repository removed."
@@ -2095,16 +2205,6 @@ msgstr "Depot opprettet."
 #: plinth/modules/gitweb/views.py:89
 msgid "Edit repository"
 msgstr "Rediger depot"
-
-#: plinth/modules/gitweb/views.py:138
-#, python-brace-format
-msgid "{name} deleted."
-msgstr "Slettet {name}."
-
-#: plinth/modules/gitweb/views.py:142
-#, python-brace-format
-msgid "Could not delete {name}: {error}"
-msgstr "Kunne ikke slette {name}: {error}"
 
 #: plinth/modules/help/__init__.py:33
 msgid "Documentation"
@@ -2686,7 +2786,7 @@ msgid "Chat Client"
 msgstr "Nettpratklient"
 
 #: plinth/modules/jsxc/templates/jsxc_launch.html:118
-#: plinth/templates/base.html:246
+#: plinth/templates/base.html:248
 msgid "JavaScript license information"
 msgstr "JavaScript lisensinformasjon"
 
@@ -3438,7 +3538,7 @@ msgstr "Publisert nøkkel til nøkkeltjener."
 msgid "Error occurred while publishing key."
 msgstr "Feil oppstått under utlegging av nøkkel."
 
-#: plinth/modules/mumble/__init__.py:24
+#: plinth/modules/mumble/__init__.py:31
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3446,7 +3546,7 @@ msgstr ""
 "Mumble er en åpen kildekode, rask, kryptert, høy kvalitets programvare for "
 "nettprat."
 
-#: plinth/modules/mumble/__init__.py:26
+#: plinth/modules/mumble/__init__.py:33
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3456,21 +3556,21 @@ msgstr ""
 "\"http://mumble.info\">Klienter</a> for å koble til Mumble når skrivebordet "
 "og/eller Android-enheter er tilgjengelige."
 
-#: plinth/modules/mumble/__init__.py:43 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:44
+#: plinth/modules/mumble/__init__.py:51
 msgid "Voice Chat"
 msgstr "Talenettprat"
 
-#: plinth/modules/mumble/forms.py:14
+#: plinth/modules/mumble/forms.py:30
 #, fuzzy
 #| msgid "SSH server password"
 msgid "Set SuperUser Password"
 msgstr "SSH-tjenermaskinpassord"
 
-#: plinth/modules/mumble/forms.py:17
+#: plinth/modules/mumble/forms.py:33
 msgid ""
 "Optional. Leave this field blank to keep the current password. SuperUser "
 "password can be used to manage permissions in Mumble."
@@ -3488,7 +3588,7 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
-#: plinth/modules/mumble/views.py:27
+#: plinth/modules/mumble/views.py:39
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "SuperUser password successfully updated."
@@ -3934,7 +4034,7 @@ msgstr "Rediger tilkobling"
 #: plinth/modules/networks/templates/connection_show.html:28
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:68
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:69
-#: plinth/templates/base.html:160 plinth/templates/base.html:161
+#: plinth/templates/base.html:161 plinth/templates/base.html:162
 msgid "Edit"
 msgstr "Rediger"
 
@@ -4210,6 +4310,7 @@ msgstr ""
 #: plinth/modules/networks/templates/internet_connectivity_firstboot.html:19
 #: plinth/modules/networks/templates/network_topology_firstboot.html:19
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:19
+#: plinth/modules/users/templates/users_firstboot.html:63
 msgid "Skip this step"
 msgstr "Hopp over dette steget"
 
@@ -4730,31 +4831,31 @@ msgstr ""
 "alle protokoll-/portkombinasjoner som du kan definere her. For eksempel, "
 "HTTPS på andre ting enn 443 er kjent for å forårsake problemer."
 
-#: plinth/modules/pagekite/utils.py:42
+#: plinth/modules/pagekite/utils.py:45
 msgid "Web Server (HTTP)"
 msgstr "Web-tjener (HTTP)"
 
-#: plinth/modules/pagekite/utils.py:44
+#: plinth/modules/pagekite/utils.py:47
 #, python-brace-format
 msgid "Site will be available at <a href=\"http://{0}\">http://{0}</a>"
 msgstr ""
 "Nettstedet vil være tilgjengelig på <a href=\"http://{0}\">http://{0}</a>"
 
-#: plinth/modules/pagekite/utils.py:56
+#: plinth/modules/pagekite/utils.py:59
 msgid "Web Server (HTTPS)"
 msgstr "Web-tjener (HTTPS)"
 
-#: plinth/modules/pagekite/utils.py:58
+#: plinth/modules/pagekite/utils.py:61
 #, python-brace-format
 msgid "Site will be available at <a href=\"https://{0}\">https://{0}</a>"
 msgstr ""
 "Nettstedet vil bli tilgjengelig på <a href=\"https://{0}\">https://{0}</a>"
 
-#: plinth/modules/pagekite/utils.py:70
+#: plinth/modules/pagekite/utils.py:73
 msgid "Secure Shell (SSH)"
 msgstr "Secure Shell (SSH)"
 
-#: plinth/modules/pagekite/utils.py:72
+#: plinth/modules/pagekite/utils.py:75
 msgid ""
 "See SSH client setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions</a>"
@@ -6367,24 +6468,24 @@ msgstr "Tor Socks-mellomtjener"
 msgid "Tor Bridge Relay"
 msgstr "Tor bro-stafettvideresendingsoppsett"
 
-#: plinth/modules/tor/__init__.py:110
+#: plinth/modules/tor/__init__.py:112
 msgid "Tor relay port available"
 msgstr "Tor relay-port tilgjengelig"
 
-#: plinth/modules/tor/__init__.py:120
+#: plinth/modules/tor/__init__.py:122
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-transport registrert"
 
-#: plinth/modules/tor/__init__.py:130
+#: plinth/modules/tor/__init__.py:132
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-transport registrert"
 
-#: plinth/modules/tor/__init__.py:199
+#: plinth/modules/tor/__init__.py:201
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Adgang til URL {url} på tcp{kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:210
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
@@ -6617,11 +6718,11 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:64 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:66 plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Oppdater"
 
-#: plinth/modules/upgrades/__init__.py:102
+#: plinth/modules/upgrades/__init__.py:106
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
@@ -6788,23 +6889,39 @@ msgstr "Tilgang til alle tjenester og systeminnstillinger"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Sjekk LDAP-oppføring «{search_item}»"
 
-#: plinth/modules/users/forms.py:36
+#: plinth/modules/users/forms.py:37
 msgid "Username is taken or is reserved."
 msgstr "Brukernavnet er opptatt eller reservert."
 
-#: plinth/modules/users/forms.py:63
+#: plinth/modules/users/forms.py:64
 #, fuzzy
 #| msgid "Invalid server name"
 msgid "Enter a valid username."
 msgstr "Ugyldig tjenernavn"
 
-#: plinth/modules/users/forms.py:70
+#: plinth/modules/users/forms.py:71
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 "Påkrevd. 150 tegn eller mindre. Kun engelske bokstaver, tall og @/./-/_."
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:79
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Authorization Password"
+msgstr "Administratorpassord"
+
+#: plinth/modules/users/forms.py:80
+msgid "Enter your current password to authorize account modifications."
+msgstr ""
+
+#: plinth/modules/users/forms.py:88
+#, fuzzy
+#| msgid "Show password"
+msgid "Invalid password."
+msgstr "Vis passord"
+
+#: plinth/modules/users/forms.py:105
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -6825,20 +6942,23 @@ msgstr ""
 "gruppen kan logge seg på alle tjenester. De kan også logge inn på systemet "
 "via SSH, og ha administrative rettigheter (sudo)."
 
-#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:347
-msgid "Creating LDAP user failed."
+#: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
+#, fuzzy, python-brace-format
+#| msgid "Creating LDAP user failed."
+msgid "Creating LDAP user failed: {error}"
 msgstr "Oppretting av LDAP-bruker feilet."
 
-#: plinth/modules/users/forms.py:135
-#, python-brace-format
-msgid "Failed to add new user to {group} group."
+#: plinth/modules/users/forms.py:163
+#, fuzzy, python-brace-format
+#| msgid "Failed to add new user to {group} group."
+msgid "Failed to add new user to {group} group: {error}"
 msgstr "Klarte ikke legge ny bruker til gruppe {group}."
 
-#: plinth/modules/users/forms.py:149
+#: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
 msgstr "Autoriserte SSH-nøkler"
 
-#: plinth/modules/users/forms.py:151
+#: plinth/modules/users/forms.py:179
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -6848,45 +6968,49 @@ msgstr ""
 "på systemet uten å bruke passord. Du kan legge inn multiple  (flere) nøkler, "
 "én på hver linje. Blanke linjer og linjer som starter med # vil bli ignorert."
 
-#: plinth/modules/users/forms.py:235
+#: plinth/modules/users/forms.py:266
 msgid "Renaming LDAP user failed."
 msgstr "Klarte ikke å bytte navn på LDAP-bruker."
 
-#: plinth/modules/users/forms.py:247
+#: plinth/modules/users/forms.py:279
 msgid "Failed to remove user from group."
 msgstr "Klarte ikke å slette bruker fra gruppe."
 
-#: plinth/modules/users/forms.py:258
+#: plinth/modules/users/forms.py:291
 msgid "Failed to add user to group."
 msgstr "Klarte ikke legge bruker til gruppe."
 
-#: plinth/modules/users/forms.py:267
+#: plinth/modules/users/forms.py:304
 msgid "Unable to set SSH keys."
 msgstr "Klarte ikke sette SSH-nøkler."
 
-#: plinth/modules/users/forms.py:282
+#: plinth/modules/users/forms.py:322
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "Klarte ikke legge bruker til gruppe."
 
-#: plinth/modules/users/forms.py:290
+#: plinth/modules/users/forms.py:330
 msgid "Cannot delete the only administrator in the system."
 msgstr "Kan ikke slette kun administratoren i systemet."
 
-#: plinth/modules/users/forms.py:321
+#: plinth/modules/users/forms.py:365
 msgid "Changing LDAP user password failed."
 msgstr "Klarte ikke å bytte passord for LDAP-bruker."
 
-#: plinth/modules/users/forms.py:356
-msgid "Failed to add new user to admin group."
+#: plinth/modules/users/forms.py:405
+#, fuzzy, python-brace-format
+#| msgid "Failed to add new user to admin group."
+msgid "Failed to add new user to admin group: {error}"
 msgstr "Klarte ikke å legge til en ny bruker i admin-gruppen."
 
-#: plinth/modules/users/forms.py:373
-msgid "Failed to restrict console access."
+#: plinth/modules/users/forms.py:424
+#, fuzzy, python-brace-format
+#| msgid "Failed to restrict console access."
+msgid "Failed to restrict console access: {error}"
 msgstr "Klarte ikke begrense konsolltilgang."
 
-#: plinth/modules/users/forms.py:385
+#: plinth/modules/users/forms.py:437
 msgid "User account created, you are now logged in"
 msgstr "Brukerkonto er opprettet, du er nå logget inn"
 
@@ -6899,15 +7023,16 @@ msgstr "Endre passord for <em>%(username)s</em>"
 msgid "Save Password"
 msgstr "Lagre passord"
 
-#: plinth/modules/users/templates/users_create.html:17
+#: plinth/modules/users/templates/users_create.html:11
+#: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:27
 #: plinth/modules/users/templates/users_list.html:29
-#: plinth/modules/users/views.py:42
+#: plinth/modules/users/views.py:44
 msgid "Create User"
 msgstr "Opprett bruker"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:120
+#: plinth/modules/users/views.py:122
 msgid "Delete User"
 msgstr "Slett bruker"
 
@@ -6925,7 +7050,7 @@ msgstr "Slette %(username)s"
 msgid "Administrator Account"
 msgstr "Administratorkonto"
 
-#: plinth/modules/users/templates/users_firstboot.html:14
+#: plinth/modules/users/templates/users_firstboot.html:15
 msgid ""
 "Choose a username and password to access this web interface. The password "
 "can be changed later. This user will be granted administrative privileges. "
@@ -6935,12 +7060,34 @@ msgstr ""
 "nettgrensesnittet. Passordet kan endres senere. Denne brukeren vil bli "
 "innvilget administrative rettigheter. Andre brukere kan legges til senere."
 
-#: plinth/modules/users/templates/users_firstboot.html:27
+#: plinth/modules/users/templates/users_firstboot.html:28
 msgid "Create Account"
 msgstr "Opprett konto"
 
+#: plinth/modules/users/templates/users_firstboot.html:32
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "An administrator account already exists."
+msgstr "Administratorkonto"
+
+#: plinth/modules/users/templates/users_firstboot.html:38
+#, fuzzy
+#| msgid "Cannot delete the only administrator in the system."
+msgid "The following administrator accounts exist in the system."
+msgstr "Kan ikke slette kun administratoren i systemet."
+
+#: plinth/modules/users/templates/users_firstboot.html:50
+#, python-format, python-brace-format
+msgid ""
+"Delete these accounts from command line and refresh the page to create an "
+"account that is usable with %(box_name)s. On the command line run the "
+"command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-user "
+"{username}'. If an account is already usable with %(box_name)s, skip this "
+"step."
+msgstr ""
+
 #: plinth/modules/users/templates/users_list.html:23
-#: plinth/modules/users/views.py:59
+#: plinth/modules/users/views.py:61
 msgid "Users"
 msgstr "Brukere"
 
@@ -6954,7 +7101,13 @@ msgstr "Slette bruker %(username)s"
 msgid "Edit user %(username)s"
 msgstr "Endre bruker %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:15
+#: plinth/modules/users/templates/users_update.html:11
+#, fuzzy, python-format
+#| msgid "Edit user %(username)s"
+msgid "Edit User <em>%(username)s</em>"
+msgstr "Endre bruker %(username)s"
+
+#: plinth/modules/users/templates/users_update.html:19
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -6963,39 +7116,39 @@ msgstr ""
 "Bruk <a href=\"%(change_password_url)s\">passordsendringsskjemaet</a> for å "
 "endre passordet."
 
-#: plinth/modules/users/templates/users_update.html:27
+#: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Lagre endringer"
 
-#: plinth/modules/users/views.py:40
+#: plinth/modules/users/views.py:42
 #, python-format
 msgid "User %(username)s created."
 msgstr "Bruker %(username)s opprettet."
 
-#: plinth/modules/users/views.py:74
+#: plinth/modules/users/views.py:76
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Bruker %(username)s oppdatert."
 
-#: plinth/modules/users/views.py:75
+#: plinth/modules/users/views.py:77
 msgid "Edit User"
 msgstr "Rediger bruker"
 
-#: plinth/modules/users/views.py:130
+#: plinth/modules/users/views.py:132
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Bruker {user} slettet."
 
-#: plinth/modules/users/views.py:137
+#: plinth/modules/users/views.py:139
 msgid "Deleting LDAP user failed."
 msgstr "Klarte ikke slette LDAP-bruker."
 
-#: plinth/modules/users/views.py:146
+#: plinth/modules/users/views.py:148
 msgid "Change Password"
 msgstr "Endre passord"
 
-#: plinth/modules/users/views.py:147
+#: plinth/modules/users/views.py:149
 msgid "Password changed successfully."
 msgstr "Vellykket passordbytte."
 
@@ -7491,28 +7644,28 @@ msgstr "Apps/Programmer"
 msgid "System"
 msgstr "System"
 
-#: plinth/templates/base.html:166 plinth/templates/base.html:167
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
 msgid "Change password"
 msgstr "Endre passord"
 
-#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#: plinth/templates/base.html:176 plinth/templates/base.html:177
 msgid "Restart"
 msgstr "Omstart"
 
-#: plinth/templates/base.html:180 plinth/templates/base.html:181
+#: plinth/templates/base.html:182 plinth/templates/base.html:183
 msgid "Shut down"
 msgstr "Slå av"
 
-#: plinth/templates/base.html:188 plinth/templates/base.html:189
-#: plinth/templates/base.html:213 plinth/templates/base.html:215
+#: plinth/templates/base.html:190 plinth/templates/base.html:191
+#: plinth/templates/base.html:215 plinth/templates/base.html:217
 msgid "Log out"
 msgstr "Logg ut"
 
-#: plinth/templates/base.html:197 plinth/templates/base.html:200
+#: plinth/templates/base.html:199 plinth/templates/base.html:202
 msgid "Select language"
 msgstr "Velg språk"
 
-#: plinth/templates/base.html:205 plinth/templates/base.html:207
+#: plinth/templates/base.html:207 plinth/templates/base.html:209
 msgid "Log in"
 msgstr "Logg inn"
 
@@ -7716,10 +7869,9 @@ msgid "From Router/WAN Ports"
 msgstr "Fra ruter/WAN-porter"
 
 #: plinth/templates/port-forwarding-info.html:38
-#, fuzzy, python-format
-#| msgid "%(box_name)s Setup"
+#, python-format
 msgid "To %(box_name)s Ports"
-msgstr "Oppsett av %(box_name)s"
+msgstr "Til portene for %(box_name)s"
 
 #: plinth/templates/setup.html:24
 msgid "Install this application?"

@@ -66,12 +66,13 @@ def load_modules():
         except KeyError:
             logger.error('Unsatified dependency for module - %s', module_name)
 
-    logger.info('Module load order - %s', ordered_modules)
+    logger.info('Initializing apps - %s', ', '.join(ordered_modules))
 
     for module_name in ordered_modules:
         _initialize_module(module_name, modules[module_name])
         loaded_modules[module_name] = modules[module_name]
 
+    logger.debug('App initialization completed.')
     post_module_loading.send_robust(sender="module_loader")
 
 
@@ -134,8 +135,6 @@ def _initialize_module(module_name, module):
             if module.setup_helper.get_state(
             ) != 'needs-setup' and module.app.is_enabled():
                 module.app.set_enabled(True)
-
-            logger.debug("Initialized %s", module.__name__)
     except Exception as exception:
         logger.exception('Exception while running init for %s: %s', module,
                          exception)

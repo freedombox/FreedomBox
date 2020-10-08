@@ -2,11 +2,6 @@
 
 # TODO Scenario: Add user to wiki group
 # TODO Scenario: Remove user from wiki group
-# TODO Scenario: Set user SSH key
-# TODO Scenario: Clear user SSH key
-# TODO Scenario: Make user inactive
-# TODO Scenario: Make user active
-# TODO Scenario: Change user password
 
 @system @essential @users
 Feature: Users and Groups
@@ -27,10 +22,39 @@ Scenario: Rename user
   Then alice should not be listed as a user
   Then bob should be listed as a user
 
-Scenario: Delete user
+Scenario: Admin users can change their own ssh keys
+  When I change the ssh keys to somekey123
+  Then the ssh keys should be somekey123
+
+Scenario: Non-admin users can change their own ssh keys
+  Given the user alice with password secret123secret123 exists
+  And I'm logged in as the user alice with password secret123secret123
+  When I change my ssh keys to somekey456 with password secret123secret123
+  Then my ssh keys should be somekey456
+
+Scenario: Admin users can change other user's ssh keys
   Given the user alice exists
-  When I delete the user alice
-  Then alice should not be listed as a user
+  When I change the ssh keys to alicesomekey123 for the user alice
+  Then the ssh keys should be alicesomekey123 for the user alice
+
+Scenario: Users can remove ssh keys
+  Given the ssh keys are somekey123
+  When I remove the ssh keys
+  Then the ssh keys should be removed
+
+Scenario: Users can connect passwordless over ssh if the keys are set
+  Given the ssh application is enabled
+  And the client has a ssh key
+  When I configure the ssh keys
+  Then the client should be able to connect passwordless over ssh
+
+Scenario: Users can't connect passwordless over ssh if the keys aren't set
+  Given the ssh application is enabled
+  And the client has a ssh key
+  And the ssh keys are configured
+  When I remove the ssh keys
+  Then the client shouldn't be able to connect passwordless over ssh
+
 
 Scenario Outline: Change language
   When I change the language to <language>
@@ -52,3 +76,30 @@ Scenario Outline: Change language
   | Türkçe         |
   | 简体中文       |
   | None           |
+
+Scenario: Admin users can set other users an inactive
+  Given the user alice with password secret789secret789 exists
+  When I set the user alice as inactive
+  Then I can't log in as the user alice with password secret789secret789
+
+Scenario: Admin users can change their own password
+  Given the admin user testadmin with password testingtesting123 exists
+  And I'm logged in as the user testadmin with password testingtesting123
+  When I change my password from testingtesting123 to testingtesting456
+  Then I can log in as the user testadmin with password testingtesting456
+
+Scenario: Admin user can change other user's password
+  Given the user alice exists
+  When I change the user alice password to secretsecret567
+  Then I can log in as the user alice with password secretsecret567
+
+Scenario: Non-admin users can change their own password
+  Given the user alice with password secret123secret123 exists
+  And I'm logged in as the user alice with password secret123secret123
+  When I change my password from secret123secret123 to secret456secret456
+  Then I can log in as the user alice with password secret456secret456
+
+Scenario: Delete user
+  Given the user alice exists
+  When I delete the user alice
+  Then alice should not be listed as a user

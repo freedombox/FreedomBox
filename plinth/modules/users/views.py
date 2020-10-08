@@ -6,6 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
@@ -25,6 +26,7 @@ from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
 
 class ContextMixin(object):
     """Mixin to add 'title' to the template context."""
+
     def get_context_data(self, **kwargs):
         """Add self.title to template context."""
         context = super(ContextMixin, self).get_context_data(**kwargs)
@@ -183,6 +185,24 @@ class FirstBootView(django.views.generic.CreateView):
     template_name = 'users_firstboot.html'
 
     form_class = FirstBootForm
+
+    def dispatch(self, request, *args, **kwargs):
+        """Check if there is no possibility to create a new admin account."""
+        if request.method == 'POST' and 'skip' in request.POST:
+            first_boot.mark_step_done('users_firstboot')
+            return HttpResponseRedirect(reverse(first_boot.next_step()))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        """Add admin users to context data."""
+        context = super().get_context_data(*args, **kwargs)
+
+        output = actions.superuser_run('users', ['get-group-users', 'admin'])
+        admin_users = output.strip().split('\n') if output.strip() else []
+        context['admin_users'] = admin_users
+
+        return context
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
