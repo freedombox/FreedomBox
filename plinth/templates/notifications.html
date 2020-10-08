@@ -11,7 +11,7 @@
   <div class="notifications dropdown">
     <ul class="dropdown-menu" role="menu">
       {% for note in notifications %}
-        <li class="notification">
+        <li class="notification notification-{{ note.severity }}">
           {% if note.data.app_name %}
             <div class="app-name">
               {% if note.data.app_icon %}

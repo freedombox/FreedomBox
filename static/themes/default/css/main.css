@@ -660,6 +660,7 @@ input[type='submit'].running-status-button {
 .notification {
     padding: 1rem 1.5rem;
     font-size: 15px;
+    border-left: 5px solid;
 }
 
 .notification:not(:first-child) {
@@ -692,8 +693,20 @@ img.notification-icon {
     background-color: #ec971f;
 }
 
-.badge-info, badge-debug {
+.badge-info, .badge-debug {
     background-color: #5bc0de;
+}
+
+.notification-exception, .notification-error {
+    border-left-color: #d9534f;
+}
+
+.notification-warning {
+    border-left-color: #ec971f;
+}
+
+.notification-info, .notification-debug {
+    border-left-color: #5bc0de;
 }
 
 /* Don't collapse notifications on small screens */
