@@ -21,6 +21,8 @@ logger = logging.getLogger(__name__)
 
 _client = None
 
+ZONES = [('external', _('External')), ('internal', _('Internal'))]
+
 CONNECTION_TYPE_NAMES = collections.OrderedDict([
     ('802-3-ethernet', _('Ethernet')),
     ('802-11-wireless', _('Wi-Fi')),
@@ -51,6 +53,7 @@ def ipv4_int_to_string(address_int):
 
 def init():
     """Create and keep a network manager client instance."""
+
     def new_callback(source_object, result, user_data):
         """Called when new() operation is complete."""
         global _client

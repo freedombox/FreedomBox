@@ -71,17 +71,17 @@
         <div class="list-group">
           <div class="list-group-item">
             {% trans "State" %}
-            <span class="pull-right">{{ device.state }}</span>
+            <span class="pull-right">{{ device.state_string }}</span>
           </div>
           {% if device.state_reason != 'none' %}
             <div class="list-group-item">
               {% trans "State reason" %}
-              <span class="pull-right">{{ device.state_reason }}</span>
+              <span class="pull-right">{{ device.state_reason_string }}</span>
             </div>
           {% endif %}
           <div class="list-group-item">
             {% trans "Type" %}
-            <span class="pull-right">{{ device.type }}</span>
+            <span class="pull-right">{{ device.type_string }}</span>
           </div>
           <div class="list-group-item">
             {% trans "MAC address" %}
@@ -140,7 +140,7 @@
             </div>
             <div class="list-group-item">
               {% trans "Mode" %}
-              <span class="pull-right">{{ device.wireless.mode }}</span>
+              <span class="pull-right">{{ device.wireless.mode_string }}</span>
             </div>
           {% endif %}
           {% if access_point.channel %}
@@ -169,7 +169,7 @@
           {% if connection.ipv4.method %}
             <div class="list-group-item">
               {% trans "Method" %}
-              <span class="pull-right">{{ connection.ipv4.method }}</span>
+              <span class="pull-right">{{ connection.ipv4.method_string }}</span>
             </div>
           {% endif %}
 
@@ -210,7 +210,7 @@
           {% if connection.ipv6.method %}
             <div class="list-group-item">
               {% trans "Method" %}
-              <span class="pull-right">{{ connection.ipv6.method }}</span>
+              <span class="pull-right">{{ connection.ipv6.method_string }}</span>
             </div>
           {% endif %}
 
@@ -255,7 +255,7 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-success">{{ connection.zone }}</span>
+              <span class="label label-success">{{ connection.zone_string }}</span>
             </div>
           </div>
         </div>
@@ -275,7 +275,7 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-warning">{{ connection.zone }}</span>
+              <span class="label label-warning">{{ connection.zone_string }}</span>
             </div>
           </div>
         </div>
@@ -294,7 +294,7 @@
           <div class="list-group-item">
             {% trans "Firewall zone" %}
             <div class="pull-right">
-              <span class="label label-warning">external</span>
+              <span class="label label-warning">{% trans "External" %}</span>
             </div>
           </div>
         </div>

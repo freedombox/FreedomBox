@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
@@ -19,6 +20,98 @@ from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     RouterConfigurationForm, WifiForm)
 
 logger = logging.getLogger(__name__)
+
+# i18n for device.state
+# https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceState
+CONNECTION_METHOD_STRINGS = {
+    'disabled': ugettext_lazy('disabled'),
+    'auto': ugettext_lazy('automatic'),
+    'manual': ugettext_lazy('manual'),
+    'shared': ugettext_lazy('shared'),
+    'link-local': ugettext_lazy('link-local'),
+}
+
+# i18n for device.state
+# https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceState
+DEVICE_STATE_STRINGS = {
+    'unknown': ugettext_lazy('unknown'),
+    'unmanaged': ugettext_lazy('unmanaged'),
+    'unavailable': ugettext_lazy('unavailable'),
+    'disconnected': ugettext_lazy('disconnected'),
+    'prepare': ugettext_lazy('preparing'),
+    'config': ugettext_lazy('connecting'),
+    'need-auth': ugettext_lazy('needs authentication'),
+    'ip-config': ugettext_lazy('requesting address'),
+    'ip-check': ugettext_lazy('checking'),
+    'secondaries': ugettext_lazy('waiting for secondary'),
+    'activated': ugettext_lazy('activated'),
+    'deactivating': ugettext_lazy('deactivating'),
+    'failed': ugettext_lazy('failed'),
+}
+
+# i18n for device.state_reason
+# https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceStateReason
+DEVICE_STATE_REASON_STRINGS = {
+    'none':
+        ugettext_lazy('no reason'),
+    'unknown':
+        ugettext_lazy('unknown error'),
+    'now-managed':
+        ugettext_lazy('device is now managed'),
+    'now-unmanaged':
+        ugettext_lazy('device is now unmanaged'),
+    'config-failed':
+        ugettext_lazy('configuration failed'),
+    'no-secrets':
+        ugettext_lazy('secrets required'),
+    'dhcp-start-failed':
+        ugettext_lazy('DHCP client failed to start'),
+    'dhcp-error':
+        ugettext_lazy('DHCP client error'),
+    'dhcp-failed':
+        ugettext_lazy('DHCP client failed'),
+    'shared-start-failed':
+        ugettext_lazy('shared connection service failed to start'),
+    'shared-failed':
+        ugettext_lazy('shared connection service failed'),
+    'removed':
+        ugettext_lazy('device was removed'),
+    'user-requested':
+        ugettext_lazy('device disconnected by user'),
+    'dependency-failed':
+        ugettext_lazy('a dependency of the connection failed'),
+    'ssid-not-found':
+        ugettext_lazy('Wi-Fi network not found'),
+    'secondary-connection-failed':
+        ugettext_lazy('a secondary connection failed'),
+    'new-activation':
+        ugettext_lazy('new connection activation was enqueued'),
+    'ip-address-duplicate':
+        ugettext_lazy('a duplicate IP address was detected'),
+    'ip-method-unsupported':
+        ugettext_lazy('selected IP method is not supported'),
+}
+
+# i18n for device.type
+# https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceType
+DEVICE_TYPE_STRINGS = {
+    'unknown': ugettext_lazy('unknown'),
+    'ethernet': ugettext_lazy('Ethernet'),
+    'wifi': ugettext_lazy('Wi-Fi'),
+    'generic': ugettext_lazy('generic'),
+    'tun': ugettext_lazy('TUN or TAP interface'),
+    'wireguard': ugettext_lazy('WireGuard'),
+}
+
+# i18n for wireless.mode
+# https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NM80211Mode
+WIRELESS_MODE_STRINGS = {
+    'unknown': ugettext_lazy('unknown'),
+    'adhoc': ugettext_lazy('ad-hoc'),
+    'infra': ugettext_lazy('infrastructure'),
+    'ap': ugettext_lazy('access point'),
+    'mesh': ugettext_lazy('mesh point'),
+}
 
 
 def index(request):
@@ -52,6 +145,14 @@ def show(request, uuid):
 
     # Connection status
     connection_status = network.get_status_from_connection(connection)
+    connection_status['zone_string'] = dict(network.ZONES).get(
+        connection_status['zone'], connection_status['zone'])
+    connection_status['ipv4']['method_string'] = CONNECTION_METHOD_STRINGS.get(
+        connection_status['ipv4']['method'],
+        connection_status['ipv4']['method'])
+    connection_status['ipv6']['method_string'] = CONNECTION_METHOD_STRINGS.get(
+        connection_status['ipv6']['method'],
+        connection_status['ipv6']['method'])
 
     # Active connection status
     try:
@@ -72,12 +173,21 @@ def show(request, uuid):
             device = network.get_device_by_interface_name(interface_name)
 
     device_status = network.get_status_from_device(device)
+    device_status['state_string'] = DEVICE_STATE_STRINGS.get(
+        device_status['state'], device_status['state'])
+    device_status['state_reason_string'] = DEVICE_STATE_REASON_STRINGS.get(
+        device_status['state_reason'], device_status['state_reason'])
+    device_status['type_string'] = DEVICE_TYPE_STRINGS.get(
+        device_status['type'], device_status['type'])
 
     # Access point status
     access_point_status = None
     if connection_status['type'] == '802-11-wireless':
         access_point_status = network.get_status_from_wifi_access_point(
             device, connection_status['wireless']['ssid'])
+        connection_status['wireless'][
+            'mode_string'] = WIRELESS_MODE_STRINGS.get(
+                connection['wireless']['mode'], connection['wireless']['mode'])
 
     return TemplateResponse(
         request, 'connection_show.html', {
