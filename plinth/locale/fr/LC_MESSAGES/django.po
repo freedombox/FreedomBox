@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-05 18:59-0400\n"
-"PO-Revision-Date: 2020-10-05 22:58+0000\n"
+"PO-Revision-Date: 2020-10-10 18:20+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -901,6 +901,9 @@ msgid ""
 "store your e-books on your {box_name}, read them online or from any of your "
 "devices."
 msgstr ""
+"Le serveur calibre vous donne un accès en ligne à votre collection de livres "
+"électroniques. Vous pouvez stocker vos livres électroniques sur votre "
+"{box_name} et les lire en ligne ou depuis vos différents appareils."
 
 #: plinth/modules/calibre/__init__.py:33
 msgid ""
@@ -910,50 +913,56 @@ msgid ""
 "an online web reader. It remembers your last read location, bookmarks, and "
 "highlighted text. Content distribution using OPDS is currently not supported."
 msgstr ""
+"Vous pouvez organiser vos livres électroniques, extraire et modifier leurs "
+"métadonnées et effectuer des recherches avancées. calibre peut importer, "
+"exporter et convertir une large gamme de formats pour que vos livres "
+"électroniques soient utilisables avec n’importe quel appareil. Il fournit "
+"également un lecteur web en ligne. Votre dernière position de lecture, vos "
+"signets et le texte surligné sont conservés. La distribution au format OPDS "
+"n’est actuellement pas supportée."
 
 #: plinth/modules/calibre/__init__.py:39
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
 msgstr ""
+"Seuls les utilisateurs membres du groupe <em>calibre</em> pourront accéder à "
+"cette application. Les utilisateurs ayant cet accès pourront utiliser toutes "
+"les collections."
 
 #: plinth/modules/calibre/__init__.py:57
-#, fuzzy
-#| msgid "Administer Syncthing application"
 msgid "Administer calibre application"
-msgstr "Administrer l’application Syncthing"
+msgstr "Administion de l’application calibre"
 
 #: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
 msgid "calibre"
-msgstr ""
+msgstr "calibre"
 
 #: plinth/modules/calibre/__init__.py:61
 msgid "E-book Library"
-msgstr ""
+msgstr "Bibliothèque de livres numériques"
 
 #: plinth/modules/calibre/forms.py:18
-#, fuzzy
-#| msgid "Name of the repository"
 msgid "Name of the new library"
-msgstr "Nom du dépôt"
+msgstr "Nom de la collection"
 
 #: plinth/modules/calibre/forms.py:27
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "A library with this name already exists."
-msgstr "Un partage existe déjà avec ce nom."
+msgstr "Une collection portant ce nom existe déjà."
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:11
-#, fuzzy, python-format
-#| msgid "Delete Git Repository <em>%(name)s</em>"
+#, python-format
 msgid "Delete calibre Library <em>%(name)s</em>"
-msgstr "Supprimer le dépôt Git <em>%(name)s</em>"
+msgstr "Supprimer la collection calibre <em>%(name)s</em>"
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:17
 msgid ""
 "Delete this library permanently? All stored e-books and saved data will be "
 "lost."
 msgstr ""
+"Voulez-vous supprimer cette collection de manière définitive ? Tous les "
+"livres électroniques stockés ainsi que les données afférentes sauvegardées "
+"seront perdus."
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:27
 #: plinth/modules/gitweb/templates/gitweb_delete.html:27
@@ -963,46 +972,35 @@ msgid "Delete %(name)s"
 msgstr "Supprimer %(name)s"
 
 #: plinth/modules/calibre/templates/calibre.html:23
-#, fuzzy
-#| msgid "Manage Repositories"
 msgid "Manage Libraries"
-msgstr "Gérer les dépôts"
+msgstr "Gérer les collections"
 
 #: plinth/modules/calibre/templates/calibre.html:27
 #: plinth/modules/calibre/templates/calibre.html:29
-#, fuzzy
-#| msgid "Create Repository"
 msgid "Create Library"
-msgstr "Créer un dépôt"
+msgstr "Créer une collection"
 
 #: plinth/modules/calibre/templates/calibre.html:36
-#, fuzzy
-#| msgid "No repositories available."
 msgid "No libraries available."
-msgstr "Aucun dépôt disponible."
+msgstr "Vous n’avez actuellement aucune collection."
 
 #: plinth/modules/calibre/templates/calibre.html:43
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete library %(library)s"
-msgstr "Supprimer le site %(site)s"
+msgstr "Supprimer la collection %(library)s"
 
 #: plinth/modules/calibre/templates/calibre.html:49
 #, python-format
 msgid "Go to library %(library)s"
-msgstr ""
+msgstr "Ouvrir la collection %(library)s"
 
 #: plinth/modules/calibre/views.py:39
-#, fuzzy
-#| msgid "Repository created."
 msgid "Library created."
-msgstr "Dépôt créé."
+msgstr "Collection créée."
 
 #: plinth/modules/calibre/views.py:50
-#, fuzzy
-#| msgid "An error occurred while creating the repository."
 msgid "An error occurred while creating the library."
-msgstr "Une erreur est survenue pendant la création du dépôt."
+msgstr "Une erreur est survenue pendant la création de la collection."
 
 #: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
 #, python-brace-format
@@ -1338,7 +1336,7 @@ msgstr ""
 #: plinth/modules/deluge/__init__.py:46
 #: plinth/modules/transmission/__init__.py:48
 msgid "Download files using BitTorrent applications"
-msgstr "Télécharger des fichiers avec des applications BitTorrent"
+msgstr "Téléchargement de fichiers avec les applications BitTorrent"
 
 #: plinth/modules/deluge/__init__.py:50 plinth/modules/deluge/manifest.py:9
 msgid "Deluge"
@@ -1498,7 +1496,7 @@ msgid ""
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
 "Si votre fournisseur d’accès change régulièrement votre adresse IP (par ex. "
-"toutes les 24 h), il pourrait être difficile de vous retrouver sur Internet. "
+"toutes les 24H), il pourrait être difficile de vous retrouver sur Internet. "
 "Et ceci empêchera d’autres utilisateurs de découvrir les services proposés "
 "par cette {box_name}."
 
@@ -1976,7 +1974,7 @@ msgstr ""
 #: plinth/modules/networks/templates/networks_configuration.html:49
 #: plinth/modules/storage/templates/storage.html:94
 msgid "Advanced"
-msgstr "Avancées"
+msgstr "Avancé"
 
 #: plinth/modules/firewall/templates/firewall.html:98
 msgid ""
@@ -2061,7 +2059,7 @@ msgstr ""
 
 #: plinth/modules/gitweb/__init__.py:51
 msgid "Read-write access to Git repositories"
-msgstr "Modification des dépôts Git autorisées"
+msgstr "Accès aux dépôts Git en lecture et en écriture"
 
 #: plinth/modules/gitweb/__init__.py:56 plinth/modules/gitweb/manifest.py:13
 msgid "Gitweb"
@@ -2536,7 +2534,7 @@ msgstr ""
 
 #: plinth/modules/i2p/__init__.py:56
 msgid "Manage I2P application"
-msgstr "Gérer l’application I2P"
+msgstr "Gestion de l’application I2P"
 
 #: plinth/modules/i2p/__init__.py:59 plinth/modules/i2p/manifest.py:16
 msgid "I2P"
@@ -2598,7 +2596,7 @@ msgid ""
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds."
 msgstr ""
-"ikiwiki est une application simple de wiki et de blogues. Elle prend en "
+"ikiwiki est une application simple de wiki et de blogue. Elle prend en "
 "charge plusieurs langages de balisage légers, dont Markdown, et les "
 "fonctionnalités de blogue habituelles telles que les commentaires et les "
 "flux RSS."
@@ -2628,7 +2626,7 @@ msgstr "Wiki et blogue"
 
 #: plinth/modules/ikiwiki/__init__.py:73
 msgid "View and edit wiki applications"
-msgstr "Afficher et modifier des applications wiki"
+msgstr "Consultation et modification des applications de wiki"
 
 #: plinth/modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
@@ -3350,7 +3348,7 @@ msgstr ""
 
 #: plinth/modules/mldonkey/__init__.py:53
 msgid "Download files using eDonkey applications"
-msgstr "Fichiers téléchargés avec les applications eDonkey"
+msgstr "Téléchargement de fichiers avec les applications eDonkey"
 
 #: plinth/modules/mldonkey/__init__.py:56
 #: plinth/modules/mldonkey/manifest.py:12
@@ -5483,7 +5481,7 @@ msgstr ""
 
 #: plinth/modules/searx/__init__.py:45
 msgid "Search the web"
-msgstr "Rechercher sur le Web"
+msgstr "Recherches sur le Web"
 
 #: plinth/modules/searx/__init__.py:48 plinth/modules/searx/manifest.py:9
 msgid "Searx"
@@ -6272,8 +6270,8 @@ msgstr "Le périphérique est monté par un autre utilisateur."
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
-"Espace faible sur la partition système : {percent_used}% utilisés, "
-"{free_space} libre."
+"Espace disque faible sur la partition système : {percent_used}% utilisés, "
+"{free_space} libres."
 
 #: plinth/modules/storage/__init__.py:309
 msgid "Low disk space"
@@ -6330,7 +6328,7 @@ msgstr "Autre répertoire (indiquer ci-dessous)"
 
 #: plinth/modules/storage/templates/storage.html:20
 msgid "The following storage devices are in use:"
-msgstr "Les périphériques de stockage suivants sont en cours d’utilisation :"
+msgstr "Les périphériques de stockage suivants sont utilisés :"
 
 #: plinth/modules/storage/templates/storage.html:26
 msgid "Label"
@@ -6440,7 +6438,7 @@ msgstr ""
 
 #: plinth/modules/syncthing/__init__.py:56
 msgid "Administer Syncthing application"
-msgstr "Administrer l’application Syncthing"
+msgstr "Administration de l’application Syncthing"
 
 #: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:13
@@ -6458,8 +6456,8 @@ msgid ""
 "nodes. Even if some of the nodes fail, your files can be retrieved from the "
 "remaining nodes."
 msgstr ""
-"Tahoe-LAFS est un système de stockage de fichiers décentralisé sécurisé. Il "
-"permet le stockage de fichiers sur un réseau distribué de nœuds, avec un "
+"Tahoe-LAFS est un système de stockage de fichiers décentralisé et sécurisé. "
+"Il permet le stockage de fichiers sur un réseau distribué de nœuds, avec un "
 "modèle de sécurité garanti quel que soit le niveau de confiance dans les "
 "fournisseurs de stockage. Même si certains des nœuds deviennent "
 "indisponibles, vos fichiers pourront être récupérés depuis les nœuds "
@@ -6482,7 +6480,7 @@ msgstr "Tahoe-LAFS"
 
 #: plinth/modules/tahoe/__init__.py:63
 msgid "Distributed File Storage"
-msgstr "Stockage distribué de fichiers"
+msgstr "Stockage de fichiers distribué"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:17
 #, python-format
@@ -6773,7 +6771,7 @@ msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:53
 msgid "Read and subscribe to news feeds"
-msgstr "Lire et souscrire à des abonnements d'infos"
+msgstr "Lecture et abonnement à des flux d’actualités"
 
 #: plinth/modules/ttrss/__init__.py:56 plinth/modules/ttrss/manifest.py:19
 msgid "Tiny Tiny RSS"
@@ -6999,20 +6997,18 @@ msgstr ""
 "uniquement."
 
 #: plinth/modules/users/forms.py:79
-#, fuzzy
-#| msgid "Administrator Password"
 msgid "Authorization Password"
-msgstr "Mot de passe administrateur"
+msgstr "Mot de passe actuel"
 
 #: plinth/modules/users/forms.py:80
 msgid "Enter your current password to authorize account modifications."
 msgstr ""
+"Veuillez saisir votre mot de passe actuel pour confirmer la modification de "
+"votre compte."
 
 #: plinth/modules/users/forms.py:88
-#, fuzzy
-#| msgid "Add password"
 msgid "Invalid password."
-msgstr "Ajouter un mot de passe"
+msgstr "Mot de passe incorrect."
 
 #: plinth/modules/users/forms.py:105
 msgid ""
@@ -7030,16 +7026,14 @@ msgstr ""
 "les privilèges de superutilisateur (sudo)."
 
 #: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
-#, fuzzy, python-brace-format
-#| msgid "Creating LDAP user failed."
+#, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr "La création de l’utilisateur LDAP a échoué."
+msgstr "La création de l’utilisateur LDAP a échoué : {error}"
 
 #: plinth/modules/users/forms.py:163
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to {group} group."
+#, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "Échec de l’ajout du nouvel utilisateur au groupe {group}."
+msgstr "L’ajout du nouvel utilisateur au groupe {group} a échoué : {error}"
 
 #: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
@@ -7062,11 +7056,11 @@ msgstr "Le changement du nom de l’utilisateur LDAP a échoué."
 
 #: plinth/modules/users/forms.py:279
 msgid "Failed to remove user from group."
-msgstr "Échec du retrait de l'utilisateur du groupe."
+msgstr "Échec du retrait de l’utilisateur du groupe."
 
 #: plinth/modules/users/forms.py:291
 msgid "Failed to add user to group."
-msgstr "Échec de l'ajout de l'utilisateur au groupe."
+msgstr "Échec de l’ajout de l’utilisateur au groupe."
 
 #: plinth/modules/users/forms.py:304
 msgid "Unable to set SSH keys."
@@ -7085,16 +7079,15 @@ msgid "Changing LDAP user password failed."
 msgstr "Le changement du mot de passe de l’utilisateur LDAP a échoué."
 
 #: plinth/modules/users/forms.py:405
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to admin group."
+#, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
-msgstr "Échec de l'ajout du nouvel utilisateur au groupe admin."
+msgstr "L’ajout du nouvel utilisateur au groupe admin a échoué : {error}"
 
 #: plinth/modules/users/forms.py:424
-#, fuzzy, python-brace-format
-#| msgid "Failed to restrict console access."
+#, python-brace-format
 msgid "Failed to restrict console access: {error}"
-msgstr "Échec de la restriction de l'accès à la console."
+msgstr ""
+"La mise en place des restrictions d’accès à la console à échoué : {error}"
 
 #: plinth/modules/users/forms.py:437
 msgid "User account created, you are now logged in"
@@ -7107,7 +7100,7 @@ msgstr "Changer le mot de passe de <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_change_password.html:21
 msgid "Save Password"
-msgstr "Sauvegarder Mot de Passe"
+msgstr "Sauvegarder le mot de passe"
 
 #: plinth/modules/users/templates/users_create.html:11
 #: plinth/modules/users/templates/users_create.html:19
@@ -7152,16 +7145,12 @@ msgid "Create Account"
 msgstr "Créer le compte"
 
 #: plinth/modules/users/templates/users_firstboot.html:32
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "An administrator account already exists."
-msgstr "Compte administrateur"
+msgstr "Il y a déjà un compte administrateur."
 
 #: plinth/modules/users/templates/users_firstboot.html:38
-#, fuzzy
-#| msgid "Cannot delete the only administrator in the system."
 msgid "The following administrator accounts exist in the system."
-msgstr "Impossible de supprimer le seul administrateur de ce système."
+msgstr "Les comptes administrateurs suivants sont présents sur le système."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
 #, python-format, python-brace-format
@@ -7172,6 +7161,12 @@ msgid ""
 "{username}'. If an account is already usable with %(box_name)s, skip this "
 "step."
 msgstr ""
+"Veuillez supprimer ces comptes depuis la ligne de commande et rafraîchir "
+"cette page pour pouvoir créer un compte utilisable avec la %(box_name)s. "
+"Depuis la ligne de commande, exécutez la commande 'echo \"{password}\" | /"
+"usr/share/plinth/actions/users remove-user {username}'. Si vous disposez "
+"déjà d’un compte utilisable avec la %(box_name)s, vous pouvez passer cette "
+"étape."
 
 #: plinth/modules/users/templates/users_list.html:23
 #: plinth/modules/users/views.py:61
@@ -7199,13 +7194,13 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
-"Utiliser le <a href='%(change_password_url)s'>formulaire de modification de "
+"Utiliser le <a href='%(change_password_url)s'>formulaire de changement de "
 "mot de passe</a> pour changer votre mot de passe."
 
 #: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
-msgstr "Sauvegarder Modifications"
+msgstr "Appliquer les changements"
 
 #: plinth/modules/users/views.py:42
 #, python-format
@@ -7816,8 +7811,8 @@ msgid ""
 "Version 3 or later."
 msgstr ""
 "Ce portail fait partie de l’interface web de la %(box_name)s. %(box_name)s "
-"est un logiciel libre distribué sous licence GNU Affero General Public "
-"License, Version 3 ou ultérieure."
+"est un logiciel libre distribué sous la licence publique générale GNU "
+"Affero, version 3 ou ultérieure."
 
 #: plinth/templates/index.html:137
 msgid "Homepage"
