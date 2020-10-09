@@ -396,9 +396,11 @@ host$ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening br
 host$ sudo apt install smbclient  # optional, to test samba
 ```
 
-- Install the latest version of geckodriver. It is usually a single binary which
-  you can place at /usr/local/bin/geckodriver . Geckodriver will use whichever
-  binary is named 'firefox' for launching the browser and interacting with it.
+- Install the latest version of
+  [geckodriver](https://github.com/mozilla/geckodriver/releases). It is usually
+  a single binary which you can place at `/usr/local/bin/geckodriver` .
+  Geckodriver will use whichever binary is named 'firefox' for launching the
+  browser and interacting with it.
 
 #### Run FreedomBox Service
 
