@@ -223,7 +223,7 @@ def _warn_about_low_ram_space(request):
     title = ugettext_noop('Low Memory')
     data = {
         'app_icon': 'fa-heartbeat',
-        'app_name': ugettext_noop('Diagnostics'),
+        'app_name': 'translate:' + ugettext_noop('Diagnostics'),
         'percent_used': f'{memory_info["percent_used"]:.1f}',
         'memory_available': f'{memory_available:.1f}',
         'memory_available_unit': 'translate:' + memory_available_unit,

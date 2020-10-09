@@ -100,7 +100,7 @@ class UpgradesApp(app_module.App):
 
         data = {
             'version': plinth.__version__,
-            'app_name': 'Update',
+            'app_name': 'translate:' + ugettext_noop('Updates'),
             'app_icon': 'fa-refresh'
         }
         title = ugettext_noop('FreedomBox Updated')
