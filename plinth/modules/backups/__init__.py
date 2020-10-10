@@ -45,10 +45,11 @@ class BackupsApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               depends=depends, name=_('Backups'),
-                               icon='fa-files-o', description=_description,
-                               manual_page='Backups')
+        info = app_module.Info(
+            app_id=self.app_id, version=version, depends=depends,
+            name=_('Backups'), icon='fa-files-o', description=_description,
+            manual_page='Backups',
+            donation_url='https://www.borgbackup.org/support/fund.html')
         self.add(info)
 
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,

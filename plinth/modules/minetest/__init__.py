@@ -56,11 +56,11 @@ class MinetestApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Minetest'), icon_filename='minetest',
-                               short_description=_('Block Sandbox'),
-                               description=_description,
-                               manual_page='Minetest', clients=clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('Minetest'),
+            icon_filename='minetest', short_description=_('Block Sandbox'),
+            description=_description, manual_page='Minetest', clients=clients,
+            donation_url='https://www.minetest.net/get-involved/#donate')
         self.add(info)
 
         menu_item = menu.Menu('menu-minetest', info.name,

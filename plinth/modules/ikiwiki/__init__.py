@@ -52,7 +52,8 @@ class IkiwikiApp(app_module.App):
                                name=_('ikiwiki'), icon_filename='ikiwiki',
                                short_description=_('Wiki and Blog'),
                                description=_description, manual_page='Ikiwiki',
-                               clients=clients)
+                               clients=clients,
+                               donation_url='https://ikiwiki.info/tipjar/')
         self.add(info)
 
         menu_item = menu.Menu('menu-ikiwiki', info.name,

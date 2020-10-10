@@ -46,11 +46,11 @@ class MumbleApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Mumble'), icon_filename='mumble',
-                               short_description=_('Voice Chat'),
-                               description=_description, manual_page='Mumble',
-                               clients=clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('Mumble'),
+            icon_filename='mumble', short_description=_('Voice Chat'),
+            description=_description, manual_page='Mumble', clients=clients,
+            donation_url='https://wiki.mumble.info/wiki/Donate')
         self.add(info)
 
         menu_item = menu.Menu('menu-mumble', info.name, info.short_description,

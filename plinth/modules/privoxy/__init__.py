@@ -51,10 +51,11 @@ class PrivoxyApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Privoxy'), icon_filename='privoxy',
-                               short_description=_('Web Proxy'),
-                               description=_description, manual_page='Privoxy')
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('Privoxy'),
+            icon_filename='privoxy', short_description=_('Web Proxy'),
+            description=_description, manual_page='Privoxy',
+            donation_url='https://www.privoxy.org/faq/general.html#DONATE')
         self.add(info)
 
         menu_item = menu.Menu('menu-privoxy', info.name,
