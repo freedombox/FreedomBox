@@ -54,7 +54,7 @@ class CalibreApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        groups = {'calibre': _('Administer calibre application')}
+        groups = {'calibre': _('Use calibre e-book libraries')}
 
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('calibre'), icon_filename='calibre',
