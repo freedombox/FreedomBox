@@ -11,7 +11,7 @@
 
       {% include "clients-button.html" with clients=app_info.clients enabled=is_enabled %}
 
-      {% if has_diagnostics or app_info.donation_url %}
+      {% if has_diagnostics %}
         <!-- Single button -->
         <div class="btn-group button-extra-actions">
           <button type="button" class="btn btn-default dropdown-toggle"
@@ -26,18 +26,18 @@
                 {% include "diagnostics_button.html" with app_id=app_id enabled=is_enabled %}
               </li>
             {% endif %}
-
-            {% if app_info.donation_url %}
-              <li>
-                <a target="_blank" rel="noopener noreferrer"
-                   href="{{ app_info.donation_url }}">
-                  {% trans "Donate" %}
-                  <span class="fa fa-external-link"></span>
-                </a>
-              </li>
-            {% endif %}
           </ul>
         </div>
+      {% endif %}
+
+      {% if app_info.donation_url %}
+        <a target="_blank" rel="noopener noreferrer"
+           class="btn btn-default button-donate" role="button"
+           href="{{ app_info.donation_url }}">
+          <span class="fa fa-heart"></span>
+          {% trans "Donate" %}
+          <span class="fa fa-external-link"></span>
+        </a>
       {% endif %}
 
     </div>
