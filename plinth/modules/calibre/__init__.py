@@ -60,7 +60,8 @@ class CalibreApp(app_module.App):
                                name=_('calibre'), icon_filename='calibre',
                                short_description=_('E-book Library'),
                                description=_description, manual_page='calibre',
-                               clients=clients)
+                               clients=clients,
+                               donation_url='https://calibre-ebook.com/donate')
         self.add(info)
 
         menu_item = menu.Menu('menu-calibre', info.name,
