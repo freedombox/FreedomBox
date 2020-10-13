@@ -37,11 +37,15 @@
         {{ results.error }}
       </div>
     {% else %}
-      {% for app_id, app_results in results.results.items %}
-        <h4>{% blocktrans %}App: {{ app_id }}{% endblocktrans %}</h4>
+      {% for app_id, app_data in results.results.items %}
+        <h4>
+          {% blocktrans with app_name=app_data.name %}
+            App: {{app_name}}
+          {% endblocktrans %}
+        </h4>
 
-        {% if app_results %}
-          {% include "diagnostics_results.html" with results=app_results %}
+        {% if app_data.results %}
+          {% include "diagnostics_results.html" with results=app_data.results %}
         {% else %}
           <p><span class="fa fa-hourglass-o"></span></p>
         {% endif %}

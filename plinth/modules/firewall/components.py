@@ -6,6 +6,7 @@ App component for other apps to use firewall functionality.
 import logging
 import re
 
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import app
@@ -129,24 +130,24 @@ class Firewall(app.FollowerComponent):
 
             # Internal zone
             result = 'passed' if port in internal_ports else 'failed'
-            message = _(
-                'Port {name} ({details}) available for internal networks'
-            ).format(name=port, details=details)
-            results.append([message, result])
+            template = _(
+                'Port {name} ({details}) available for internal networks')
+            testname = format_lazy(template, name=port, details=details)
+            results.append([testname, result])
 
             # External zone
             if self.is_external:
                 result = 'passed' if port in external_ports else 'failed'
-                message = _(
-                    'Port {name} ({details}) available for external networks'
-                ).format(name=port, details=details)
+                template = _(
+                    'Port {name} ({details}) available for external networks')
+                testname = format_lazy(template, name=port, details=details)
             else:
                 result = 'passed' if port not in external_ports else 'failed'
-                message = _(
+                template = _(
                     'Port {name} ({details}) unavailable for external networks'
-                ).format(name=port, details=details)
-
-            results.append([message, result])
+                )
+                testname = format_lazy(template, name=port, details=details)
+            results.append([testname, result])
 
         return results
 

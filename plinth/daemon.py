@@ -7,7 +7,8 @@ import socket
 import subprocess
 
 import psutil
-from django.utils.translation import ugettext as _
+from django.utils.text import format_lazy
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import action_utils, actions, app
 
@@ -82,10 +83,12 @@ class Daemon(app.LeaderComponent):
 
     def _diagnose_unit_is_running(self):
         """Check if a daemon is running."""
-        message = _('Service {service_name} is running').format(
-            service_name=self.unit)
         result = 'passed' if self.is_running() else 'failed'
-        return [message, result]
+
+        template = ugettext_lazy('Service {service_name} is running')
+        testname = format_lazy(template, service_name=self.unit)
+
+        return [testname, result]
 
 
 def app_is_running(app_):
@@ -108,13 +111,15 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
     result = _check_port(port, kind, listen_address)
 
     if listen_address:
-        test = _('Listening on {kind} port {listen_address}:{port}') \
-               .format(kind=kind, listen_address=listen_address, port=port)
+        template = ugettext_lazy(
+            'Listening on {kind} port {listen_address}:{port}')
+        testname = format_lazy(template, kind=kind,
+                               listen_address=listen_address, port=port)
     else:
-        test = _('Listening on {kind} port {port}') \
-               .format(kind=kind, port=port)
+        template = ugettext_lazy('Listening on {kind} port {port}')
+        testname = format_lazy(template, kind=kind, port=port)
 
-    return [test, 'passed' if result else 'failed']
+    return [testname, 'passed' if result else 'failed']
 
 
 def _check_port(port, kind='tcp', listen_address=None):

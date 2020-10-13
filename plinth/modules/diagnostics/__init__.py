@@ -129,7 +129,11 @@ def run_on_all_enabled_modules():
 
     current_results['apps'] = apps
     for current_index, (app_id, app) in enumerate(apps):
-        current_results['results'][app_id] = app.diagnose()
+        app_name = app.info.name or _('None')
+        current_results['results'][app_id] = {
+            'name': app_name,
+            'results': app.diagnose()
+        }
         current_results['progress_percentage'] = \
             int((current_index + 1) * 100 / len(apps))
 
