@@ -17,6 +17,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.views.generic import FormView, TemplateView, View
 
 from plinth.errors import PlinthError
@@ -52,7 +53,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     prefix = 'backups'
     template_name = 'backups_form.html'
     success_url = reverse_lazy('backups:index')
-    success_message = _('Archive created.')
+    success_message = ugettext_lazy('Archive created.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -140,7 +141,7 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
     prefix = 'backups'
     template_name = 'backups_restore.html'
     success_url = reverse_lazy('backups:index')
-    success_message = _('Restored files from backup.')
+    success_message = ugettext_lazy('Restored files from backup.')
 
     def get_form_kwargs(self):
         """Pass additional keyword args for instantiating the form."""
