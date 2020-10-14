@@ -2,7 +2,7 @@
 """
 FreedomBox app for upgrades.
 """
-import time
+import subprocess
 
 from apt.cache import Cache
 from django.contrib import messages
@@ -34,7 +34,8 @@ class UpgradesConfigurationView(AppView):
         context = super().get_context_data(*args, **kwargs)
         context['can_activate_backports'] = upgrades.can_activate_backports()
         context['is_backports_requested'] = upgrades.is_backports_requested()
-        context['is_busy'] = package.is_package_manager_busy()
+        context['is_busy'] = (_is_updating()
+                              or package.is_package_manager_busy())
         context['log'] = get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
         context['version'] = __version__
@@ -95,18 +96,19 @@ def get_log():
     return actions.superuser_run('upgrades', ['get-log'])
 
 
+def _is_updating():
+    """Check if manually triggered update is running."""
+    command = ['systemctl', 'is-active', 'freedombox-manual-upgrade']
+    result = subprocess.run(command, capture_output=True, text=True)
+    return str(result.stdout).startswith('activ')  # 'active' or 'activating'
+
+
 def upgrade(request):
     """Serve the upgrade page."""
-    secs_for_package_to_get_busy = 2
     if request.method == 'POST':
         try:
             actions.superuser_run('upgrades', ['run'])
             messages.success(request, _('Upgrade process started.'))
-            # Give the Package module some time to get busy so the page enters
-            # the refreshing loop. XXX: Remove after changing the busy check
-            # implementation include activating state of
-            # freedombox-manual-upgrade.service.
-            time.sleep(secs_for_package_to_get_busy)
         except ActionError:
             messages.error(request, _('Starting upgrade failed.'))
 
