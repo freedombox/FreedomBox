@@ -31,8 +31,6 @@ class UpgradesConfigurationView(AppView):
         return {'auto_upgrades_enabled': upgrades.is_enabled()}
 
     def get_context_data(self, *args, **kwargs):
-        cache = Cache()
-        freedombox = cache['freedombox']
         context = super().get_context_data(*args, **kwargs)
         context['can_activate_backports'] = upgrades.can_activate_backports()
         context['is_backports_requested'] = upgrades.is_backports_requested()
@@ -40,7 +38,7 @@ class UpgradesConfigurationView(AppView):
         context['log'] = get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
         context['version'] = __version__
-        context['new_version'] = not freedombox.candidate.is_installed
+        context['new_version'] = is_newer_version_available()
         context['os_release'] = get_os_release()
         return context
 
@@ -73,11 +71,15 @@ class UpgradesConfigurationView(AppView):
         return super().form_valid(form)
 
 
-def get_os_release():
-    """Returns the Debian release number and name
+def is_newer_version_available():
+    """Returns whether a newer Freedombox version is available."""
+    cache = Cache()
+    freedombox = cache['freedombox']
+    return not freedombox.candidate.is_installed
 
-    Note: The Help module calls this function also.
-    """
+
+def get_os_release():
+    """Returns the Debian release number and name."""
     output = 'Error: Cannot read PRETTY_NAME in /etc/os-release.'
     with open('/etc/os-release', 'r') as release_file:
         for line in release_file:

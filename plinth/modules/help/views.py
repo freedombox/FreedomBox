@@ -7,7 +7,6 @@ import mimetypes
 import os
 import pathlib
 
-from apt.cache import Cache
 from django.core.files.base import File
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -16,7 +15,8 @@ from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _
 
 from plinth import __version__, actions, cfg
-from plinth.modules.upgrades.views import get_os_release
+from plinth.modules.upgrades.views import (get_os_release,
+                                           is_newer_version_available)
 
 
 def index(request):
@@ -45,12 +45,10 @@ def support(request):
 
 def about(request):
     """Serve the about page"""
-    cache = Cache()
-    freedombox = cache['freedombox']
     context = {
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__,
-        'new_version': not freedombox.candidate.is_installed,
+        'new_version': is_newer_version_available(),
         'os_release': get_os_release()
     }
     return TemplateResponse(request, 'help_about.html', context)
