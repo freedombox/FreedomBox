@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-05 18:59-0400\n"
-"PO-Revision-Date: 2020-10-05 22:58+0000\n"
+"PO-Revision-Date: 2020-10-15 22:26+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -894,6 +894,9 @@ msgid ""
 "store your e-books on your {box_name}, read them online or from any of your "
 "devices."
 msgstr ""
+"El servidor Calibre proporciona acceso en línea a tu colección de libros "
+"electrónicos. Puedes almacenarlos en tu {box_name} y leerlos en línea desde "
+"cualquier dispositivo."
 
 #: plinth/modules/calibre/__init__.py:33
 msgid ""
@@ -903,50 +906,53 @@ msgid ""
 "an online web reader. It remembers your last read location, bookmarks, and "
 "highlighted text. Content distribution using OPDS is currently not supported."
 msgstr ""
+"Puedes organizar tus libros electrónicos, extraer y editar metadatos, hacer "
+"búsquedas avanzadas, importar, exportar o convertir libros electrónicos a "
+"una amplia selección de formatos para que se puedan leer en cualquier "
+"dispositivo. También proporciona un lector web en línea que recuerda donde "
+"lo dejaste, tus marca-páginas y los textos que has destacado. Actualmente no "
+"soporta distribución de contenidos con OPDS."
 
 #: plinth/modules/calibre/__init__.py:39
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
 msgstr ""
+"Solo los usuarios del grupo <em>calibre</em> podrán acceder a la app. Todos "
+"los usuarios con acceso pueden usar todas las bibliotecas."
 
 #: plinth/modules/calibre/__init__.py:57
-#, fuzzy
-#| msgid "Administer Syncthing application"
 msgid "Administer calibre application"
-msgstr "Administrar Syncthing"
+msgstr "Administrar Calibre"
 
 #: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
 msgid "calibre"
-msgstr ""
+msgstr "Calibre"
 
 #: plinth/modules/calibre/__init__.py:61
 msgid "E-book Library"
-msgstr ""
+msgstr "Biblioteca de libros electrónicos"
 
 #: plinth/modules/calibre/forms.py:18
-#, fuzzy
-#| msgid "Name of the repository"
 msgid "Name of the new library"
-msgstr "Nombre del repositorio"
+msgstr "Nombre de la nueva biblioteca"
 
 #: plinth/modules/calibre/forms.py:27
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "A library with this name already exists."
-msgstr "Ya existe una compartición con este nombre."
+msgstr "Ya existe una biblioteca con este nombre."
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:11
-#, fuzzy, python-format
-#| msgid "Delete Git Repository <em>%(name)s</em>"
+#, python-format
 msgid "Delete calibre Library <em>%(name)s</em>"
-msgstr "Borrar Repositorio Git <em>%(name)s</em>"
+msgstr "Borrar biblioteca Calibre <em>%(name)s</em>"
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:17
 msgid ""
 "Delete this library permanently? All stored e-books and saved data will be "
 "lost."
 msgstr ""
+"¿Borrar definitivamente esta biblioteca? Se perderán todos sus libros y "
+"datos."
 
 #: plinth/modules/calibre/templates/calibre-delete-library.html:27
 #: plinth/modules/gitweb/templates/gitweb_delete.html:27
@@ -956,46 +962,35 @@ msgid "Delete %(name)s"
 msgstr "Eliminar %(name)s"
 
 #: plinth/modules/calibre/templates/calibre.html:23
-#, fuzzy
-#| msgid "Manage Repositories"
 msgid "Manage Libraries"
-msgstr "Administrar Repositorios"
+msgstr "Administrar bibliotecas"
 
 #: plinth/modules/calibre/templates/calibre.html:27
 #: plinth/modules/calibre/templates/calibre.html:29
-#, fuzzy
-#| msgid "Create Repository"
 msgid "Create Library"
-msgstr "Crear repositorio"
+msgstr "Crear biblioteca"
 
 #: plinth/modules/calibre/templates/calibre.html:36
-#, fuzzy
-#| msgid "No repositories available."
 msgid "No libraries available."
-msgstr "No hay repositorios disponibles."
+msgstr "No hay bibliotecas disponibles."
 
 #: plinth/modules/calibre/templates/calibre.html:43
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete library %(library)s"
-msgstr "Eliminar sitio %(site)s"
+msgstr "Eliminar biblioteca %(library)s"
 
 #: plinth/modules/calibre/templates/calibre.html:49
 #, python-format
 msgid "Go to library %(library)s"
-msgstr ""
+msgstr "Ir a biblioteca %(library)s"
 
 #: plinth/modules/calibre/views.py:39
-#, fuzzy
-#| msgid "Repository created."
 msgid "Library created."
-msgstr "Repositorio creado."
+msgstr "Biblioteca creada."
 
 #: plinth/modules/calibre/views.py:50
-#, fuzzy
-#| msgid "An error occurred while creating the repository."
 msgid "An error occurred while creating the library."
-msgstr "Ha habido un error al crear el repositorio."
+msgstr "Ha habido un error al crear la biblioteca."
 
 #: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
 #, python-brace-format
@@ -1864,17 +1859,17 @@ msgstr "Cortafuegos"
 #: plinth/modules/firewall/components.py:133
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr "Puerto {name}{details} disponible para redes internas"
+msgstr "Puerto {name} ({details}) disponible para redes internas"
 
 #: plinth/modules/firewall/components.py:141
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr "Puerto {name}{details} disponible para redes externas"
+msgstr "Puerto {name} ({details}) disponible para redes externas"
 
 #: plinth/modules/firewall/components.py:146
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
-msgstr "Puerto {name}{details} no disponible para redes externas"
+msgstr "Puerto {name} ({details}) no disponible para redes externas"
 
 #: plinth/modules/firewall/templates/firewall.html:15
 #, python-format
@@ -3605,7 +3600,7 @@ msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
 msgstr ""
-"La zona del firewall controlará qué servicios están disponibles en estas "
+"La zona del cortafuegos controlará qué servicios están disponibles en estas "
 "interfaces. Seleccione Interna solo para redes de confianza."
 
 #: plinth/modules/networks/forms.py:39
@@ -6851,20 +6846,17 @@ msgid ""
 msgstr "Obligatorio. Hasta 150 caracteres. Solo letras, números y @/./-/_ ."
 
 #: plinth/modules/users/forms.py:79
-#, fuzzy
-#| msgid "Administrator Password"
 msgid "Authorization Password"
-msgstr "Clave de Administración"
+msgstr "Contraseña de autorización"
 
 #: plinth/modules/users/forms.py:80
 msgid "Enter your current password to authorize account modifications."
 msgstr ""
+"Introduce tu contraseña actual para autorizar modificaciones en la cuenta."
 
 #: plinth/modules/users/forms.py:88
-#, fuzzy
-#| msgid "Add password"
 msgid "Invalid password."
-msgstr "Añadir contraseña"
+msgstr "Contraseña no válida."
 
 #: plinth/modules/users/forms.py:105
 msgid ""
@@ -6882,16 +6874,14 @@ msgstr ""
 "administración (sudo)."
 
 #: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
-#, fuzzy, python-brace-format
-#| msgid "Creating LDAP user failed."
+#, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr "Ha fallado la creación de usuaria/o LDAP."
+msgstr "Ha fallado la creación de usuaria/o LDAP: {error}"
 
 #: plinth/modules/users/forms.py:163
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to {group} group."
+#, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "Ha fallado añadir usuaria/o nuevo al grupo {group}."
+msgstr "Ha fallado añadir usuaria/o nuevo al grupo {group}: {error}"
 
 #: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
@@ -6936,16 +6926,14 @@ msgid "Changing LDAP user password failed."
 msgstr "Ha fallado cambiar la clave del o de la usuaria LDAP."
 
 #: plinth/modules/users/forms.py:405
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to admin group."
+#, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
-msgstr "Ha fallado añadir usuaria/o nueva/o al grupo admin."
+msgstr "Ha fallado añadir usuaria/o nueva/o al grupo admin: {error}"
 
 #: plinth/modules/users/forms.py:424
-#, fuzzy, python-brace-format
-#| msgid "Failed to restrict console access."
+#, python-brace-format
 msgid "Failed to restrict console access: {error}"
-msgstr "Falló al restringir el acceso a la consola."
+msgstr "Falló al restringir el acceso a la consola: {error}"
 
 #: plinth/modules/users/forms.py:437
 msgid "User account created, you are now logged in"
@@ -7002,16 +6990,12 @@ msgid "Create Account"
 msgstr "Crear cuenta"
 
 #: plinth/modules/users/templates/users_firstboot.html:32
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "An administrator account already exists."
-msgstr "Cuenta de Administración"
+msgstr "Ya existe la cuenta de administración."
 
 #: plinth/modules/users/templates/users_firstboot.html:38
-#, fuzzy
-#| msgid "Cannot delete the only administrator in the system."
 msgid "The following administrator accounts exist in the system."
-msgstr "No se puede eliminar la única cuenta de administración del sistema."
+msgstr "La siguiente cuenta de administración existe en el sistema."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
 #, python-format, python-brace-format
@@ -7022,6 +7006,11 @@ msgid ""
 "{username}'. If an account is already usable with %(box_name)s, skip this "
 "step."
 msgstr ""
+"Si ya hay una cuenta usable con %(box_name)s sáltese este paso: Si no, "
+"elimine estas cuentas desde la línea de órdenes y refresque la página para "
+"crear una cuenta usable con %(box_name)s. Ejecute la órden 'echo \"{password}"
+"\" | /usr/share/plinth/actions/users remove-user {username}' en la línea de "
+"órdenes."
 
 #: plinth/modules/users/templates/users_list.html:23
 #: plinth/modules/users/views.py:61
@@ -7039,10 +7028,9 @@ msgid "Edit user %(username)s"
 msgstr "Editar el usuario %(username)s"
 
 #: plinth/modules/users/templates/users_update.html:11
-#, fuzzy, python-format
-#| msgid "Edit user %(username)s"
+#, python-format
 msgid "Edit User <em>%(username)s</em>"
-msgstr "Editar el usuario %(username)s"
+msgstr "Editar el usuario <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_update.html:19
 #, python-format
