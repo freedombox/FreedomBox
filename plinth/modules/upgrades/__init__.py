@@ -14,11 +14,11 @@ from django.utils.translation import ugettext_noop
 import plinth
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, glib, menu
+from plinth import cfg, glib, kvstore, menu
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
 
-version = 7
+version = 8
 
 is_essential = True
 
@@ -44,6 +44,8 @@ _description = [
 app = None
 
 BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
+
+DIST_UPGRADE_ENABLED_KEY = 'upgrades_dist_upgrade_enabled'
 
 SOURCES_LIST = '/etc/apt/sources.list'
 
@@ -128,6 +130,11 @@ def setup(helper, old_version=None):
     if old_version and old_version < 7:
         set_backports_requested(can_activate_backports())
 
+    # Enable dist upgrade for new installs, and once when upgrading
+    # from version without flag.
+    if not old_version or old_version < 8:
+        set_dist_upgrade_enabled(can_enable_dist_upgrade())
+
     # Try to setup apt repositories, if needed, if possible, on first install
     # and on version increment.
     helper.call('post', setup_repositories, None)
@@ -152,24 +159,40 @@ def disable():
 def setup_repositories(data):
     """Setup apt repositories for backports or new stable release."""
     if is_backports_requested():
-        command = ['setup-repositories']
+        command = ['activate-backports']
         if cfg.develop:
-            command += ['--develop']
+            command.append('--develop')
+
+        actions.superuser_run('upgrades', command)
+
+    if is_dist_upgrade_enabled():
+        command = ['dist-upgrade']
+        if cfg.develop:
+            command.append('--develop')
 
         actions.superuser_run('upgrades', command)
 
 
 def is_backports_requested():
     """Return whether user has chosen to activate backports."""
-    from plinth import kvstore
     return kvstore.get_default(BACKPORTS_REQUESTED_KEY, False)
 
 
 def set_backports_requested(requested):
     """Set whether user has chosen to activate backports."""
-    from plinth import kvstore
     kvstore.set(BACKPORTS_REQUESTED_KEY, requested)
     logger.info('Backports requested - %s', requested)
+
+
+def is_dist_upgrade_enabled():
+    """Return whether user has enabled dist upgrade."""
+    return kvstore.get_default(DIST_UPGRADE_ENABLED_KEY, False)
+
+
+def set_dist_upgrade_enabled(enabled=True):
+    """Set whether user has enabled dist upgrade."""
+    kvstore.set(DIST_UPGRADE_ENABLED_KEY, enabled)
+    logger.info('Distribution upgrade configured - %s', enabled)
 
 
 def is_backports_enabled():
@@ -208,3 +231,9 @@ def can_activate_backports():
         return False
 
     return True
+
+
+def can_enable_dist_upgrade():
+    """Return whether dist upgrade can be enabled."""
+    release, _ = get_current_release()
+    return release not in ['unstable', 'testing']
