@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-05 18:59-0400\n"
+"POT-Creation-Date: 2020-10-19 20:11-0400\n"
 "PO-Revision-Date: 2016-08-12 15:51+0000\n"
 "Last-Translator: Masoud Abkenar <ampbox@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/freedombox/"
@@ -28,27 +28,27 @@ msgstr ""
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:85
+#: plinth/daemon.py:88
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr ""
 
-#: plinth/daemon.py:111
+#: plinth/daemon.py:115
 #, fuzzy, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "در حال گوش دادن به پورت {kind} در {listen_address}:{port}"
 
-#: plinth/daemon.py:114
+#: plinth/daemon.py:119
 #, fuzzy, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "در حال گوش دادن به پورت {kind} یعنی {port}"
 
-#: plinth/daemon.py:182
+#: plinth/daemon.py:187
 #, fuzzy, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "اتصال به {host}:{port}"
 
-#: plinth/daemon.py:184
+#: plinth/daemon.py:189
 #, fuzzy, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "نمی‌توان به {host}:{port} وصل شد"
@@ -104,12 +104,12 @@ msgstr "سرور وب"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr ""
 
-#: plinth/modules/apache/components.py:120
+#: plinth/modules/apache/components.py:122
 #, fuzzy, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "دسترسی به نشانی {url} در tcp{kind}"
 
-#: plinth/modules/apache/components.py:124
+#: plinth/modules/apache/components.py:125
 #, fuzzy, python-brace-format
 msgid "Access URL {url}"
 msgstr "دسترسی به نشانی {url}"
@@ -144,7 +144,7 @@ msgstr ""
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:49
+#: plinth/modules/backups/__init__.py:50
 msgid "Backups"
 msgstr ""
 
@@ -236,7 +236,8 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "ساختن اتصال"
 
-#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122
+#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr ""
 
@@ -934,9 +935,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/calibre/__init__.py:57
-#, fuzzy
-msgid "Administer calibre application"
-msgstr "فعال‌سازی برنامه"
+msgid "Use calibre e-book libraries"
+msgstr ""
 
 #: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
 msgid "calibre"
@@ -1341,7 +1341,7 @@ msgstr ""
 msgid "Deluge"
 msgstr ""
 
-#: plinth/modules/deluge/__init__.py:51
+#: plinth/modules/deluge/__init__.py:52
 #: plinth/modules/transmission/__init__.py:53
 #, fuzzy
 #| msgid "BitTorrent Web Client (Deluge)"
@@ -1356,7 +1356,7 @@ msgstr ""
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:25
+#: plinth/modules/diagnostics/__init__.py:27
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1364,20 +1364,52 @@ msgstr ""
 "برنامهٔ عیب‌یابی با روش‌های مختلفی سیستم شما را می‌آزماید تا مطمئن شود که "
 "برنامه‌های و سرویس‌ها درست کار می‌کنند."
 
-#: plinth/modules/diagnostics/__init__.py:49
+#: plinth/modules/diagnostics/__init__.py:51
+#: plinth/modules/diagnostics/__init__.py:226
 msgid "Diagnostics"
 msgstr "عیب‌یابی"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:108
 msgid "passed"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:109
 msgid "failed"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:104
+#: plinth/modules/diagnostics/__init__.py:110
 msgid "error"
+msgstr ""
+
+#. Translators: This is the unit of computer storage Mebibyte similar to
+#. Megabyte.
+#: plinth/modules/diagnostics/__init__.py:192
+msgid "MiB"
+msgstr ""
+
+#. Translators: This is the unit of computer storage Gibibyte similar to
+#. Gigabyte.
+#: plinth/modules/diagnostics/__init__.py:197
+msgid "GiB"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:204
+msgid "You should disable some apps to reduce memory usage."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:209
+msgid "You should not install any new apps on this system."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:221
+#, no-python-format, python-brace-format
+msgid ""
+"System is low on memory: {percent_used}% used, {memory_available} "
+"{memory_available_unit} free. {advice_message}"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:223
+msgid "Low Memory"
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
@@ -1394,15 +1426,22 @@ msgstr "آزمون عیب‌یابی در حال اجراست"
 msgid "Results"
 msgstr "نتیجه‌ها"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:41
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics.html:42
 #, python-format
-msgid "App: %(app_id)s"
+msgid ""
+"\n"
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
 msgstr "نتیجهٔ عیب‌یابی"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#, python-format
+msgid "App: %(app_id)s"
+msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:17
 #, fuzzy
@@ -1735,6 +1774,7 @@ msgstr "درباره"
 #: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 #, fuzzy
@@ -1861,17 +1901,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "فایروال"
 
-#: plinth/modules/firewall/components.py:133
+#: plinth/modules/firewall/components.py:134
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:141
+#: plinth/modules/firewall/components.py:142
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:146
+#: plinth/modules/firewall/components.py:147
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -2166,21 +2206,21 @@ msgstr "کتاب راهنما"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:42 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr ""
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:36 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
 
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:30 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr ""
@@ -2246,17 +2286,21 @@ msgid "Learn more &raquo;"
 msgstr "بیشتر بدانید &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:63
+#: plinth/modules/upgrades/templates/upgrades_configure.html:42
 #, fuzzy, python-format
 #| msgid "You are running Plinth version %(version)s."
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Plinth نسخهٔ %(version)s در حال اجراست."
 
-#: plinth/modules/help/templates/help_about.html:68
+#: plinth/modules/help/templates/help_about.html:69
 #, python-format
-msgid "There is a new %(box_name)s version available."
+msgid ""
+"There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
+"a>."
 msgstr ""
 
-#: plinth/modules/help/templates/help_about.html:72
+#: plinth/modules/help/templates/help_about.html:74
+#: plinth/modules/upgrades/templates/upgrades_configure.html:53
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
 msgid "%(box_name)s is up to date."
@@ -2423,16 +2467,16 @@ msgid ""
 "before submitting the bug report."
 msgstr ""
 
-#: plinth/modules/help/views.py:24
+#: plinth/modules/help/views.py:25
 msgid "Documentation and FAQ"
 msgstr "راهنما و پرسش‌های رایج"
 
-#: plinth/modules/help/views.py:50
+#: plinth/modules/help/views.py:49
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "دربارهٔ {box_name}"
 
-#: plinth/modules/help/views.py:84
+#: plinth/modules/help/views.py:83
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "کتاب راهنمای {box_name}"
@@ -2550,7 +2594,7 @@ msgstr ""
 msgid "Wiki and Blog"
 msgstr "مدیریت ویکی‌ها و وبلاگ‌ها"
 
-#: plinth/modules/ikiwiki/__init__.py:73
+#: plinth/modules/ikiwiki/__init__.py:74
 #, fuzzy
 msgid "View and edit wiki applications"
 msgstr "سرویس‌ها و برنامه‌ها"
@@ -3499,23 +3543,23 @@ msgstr ""
 msgid "Services"
 msgstr "سرویس"
 
-#: plinth/modules/networks/__init__.py:40
+#: plinth/modules/networks/__init__.py:41
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:42
+#: plinth/modules/networks/__init__.py:43
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:60
+#: plinth/modules/networks/__init__.py:61
 msgid "Networks"
 msgstr "شبکه‌ها"
 
-#: plinth/modules/networks/__init__.py:178
+#: plinth/modules/networks/__init__.py:179
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "در حال استفاده از DNSSEC روی IPv{kind}"
@@ -4421,7 +4465,7 @@ msgid "OpenVPN"
 msgstr "باز"
 
 #: plinth/modules/openvpn/__init__.py:55
-#: plinth/modules/wireguard/__init__.py:51
+#: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr ""
 
@@ -4533,7 +4577,7 @@ msgid ""
 "the future it might be possible to use your buddy's {box_name} for this."
 msgstr ""
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "PageKite"
 msgstr ""
 
@@ -4780,7 +4824,7 @@ msgstr ""
 msgid "Web Proxy"
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:109
+#: plinth/modules/privoxy/__init__.py:110
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
@@ -5208,18 +5252,18 @@ msgstr "امنیت"
 
 #: plinth/modules/security/templates/security.html:17
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:60
 msgid "Frequent Feature Updates"
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:19
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:68
 msgid "Frequent feature updates are activated."
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:24
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:80
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6134,36 +6178,36 @@ msgstr ""
 msgid "Tor"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:66
+#: plinth/modules/tor/__init__.py:67
 msgid "Tor Onion Service"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:70
+#: plinth/modules/tor/__init__.py:71
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:74
+#: plinth/modules/tor/__init__.py:75
 msgid "Tor Bridge Relay"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:112
+#: plinth/modules/tor/__init__.py:113
 msgid "Tor relay port available"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:122
+#: plinth/modules/tor/__init__.py:123
 msgid "Obfs3 transport registered"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:132
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs4 transport registered"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:201
+#: plinth/modules/tor/__init__.py:202
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:212
+#: plinth/modules/tor/__init__.py:213
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr ""
@@ -6373,7 +6417,7 @@ msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr ""
 
 #: plinth/modules/upgrades/forms.py:20
-#: plinth/modules/upgrades/templates/upgrades_configure.html:56
+#: plinth/modules/upgrades/templates/upgrades_configure.html:105
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -6407,18 +6451,33 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:14
+#: plinth/modules/upgrades/templates/upgrades_configure.html:46
+#: plinth/modules/upgrades/templates/upgrades_configure.html:116
+msgid "Updating..."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:48
+#, python-format
+msgid "There is a new %(box_name)s version available."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#, fuzzy
+msgid "Your Freedombox needs an update!"
+msgstr "FreedomBox"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:63
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:23
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -6426,66 +6485,62 @@ msgid ""
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:110
 #, fuzzy
 #| msgid "Last update"
 msgid "Manual Update"
 msgstr "آخرین به‌روزرسانی"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:67
-msgid "Updating..."
-msgstr ""
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:75
+#: plinth/modules/upgrades/templates/upgrades_configure.html:124
 #, fuzzy
 #| msgid "Update URL"
 msgid "Update now"
 msgstr "نشانی به‌روزرسانی"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:81
+#: plinth/modules/upgrades/templates/upgrades_configure.html:130
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:95
+#: plinth/modules/upgrades/templates/upgrades_configure.html:144
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:63
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:61
+#: plinth/modules/upgrades/views.py:67
 msgid "Automatic upgrades enabled"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:64
+#: plinth/modules/upgrades/views.py:70
 msgid "Automatic upgrades disabled"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:111
 msgid "Upgrade process started."
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:113
 msgid "Starting upgrade failed."
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:91
+#: plinth/modules/upgrades/views.py:123
 msgid "Frequent feature updates activated."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:39
+#: plinth/modules/users/__init__.py:38
 msgid ""
 "Create and managed user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:44
+#: plinth/modules/users/__init__.py:43
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -6493,15 +6548,15 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:65
+#: plinth/modules/users/__init__.py:64
 msgid "Users and Groups"
 msgstr ""
 
-#: plinth/modules/users/__init__.py:78
+#: plinth/modules/users/__init__.py:77
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/__init__.py:115
+#: plinth/modules/users/__init__.py:113
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr ""
@@ -7332,7 +7387,7 @@ msgstr ""
 msgid "Source Code"
 msgstr ""
 
-#: plinth/templates/index.html:143
+#: plinth/templates/index.html:143 plinth/templates/toolbar.html:38
 msgid "Donate"
 msgstr ""
 
@@ -7457,6 +7512,10 @@ msgstr ""
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Administer calibre application"
+#~ msgstr "فعال‌سازی برنامه"
 
 #, fuzzy
 #~| msgid "Create"

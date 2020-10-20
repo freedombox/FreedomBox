@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-05 18:59-0400\n"
+"POT-Creation-Date: 2020-10-19 20:11-0400\n"
 "PO-Revision-Date: 2020-10-15 22:26+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -26,28 +26,28 @@ msgstr "Sayfa kaynağı"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:85
+#: plinth/daemon.py:88
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "{service_name} hizmeti çalışıyor"
 
-#: plinth/daemon.py:111
+#: plinth/daemon.py:115
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr ""
 "{kind} üzerinde {listen_address}:{port} nolu bağlantı noktasını dinleme"
 
-#: plinth/daemon.py:114
+#: plinth/daemon.py:119
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "{kind} üzerinde {port} nolu bağlantı noktasını dinleme"
 
-#: plinth/daemon.py:182
+#: plinth/daemon.py:187
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "{host}:{port} adresine bağlı"
 
-#: plinth/daemon.py:184
+#: plinth/daemon.py:189
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "{host}:{port} adresine bağlanamıyor"
@@ -101,12 +101,12 @@ msgstr "Web Sunucusu"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web Arayüzü (Plinth)"
 
-#: plinth/modules/apache/components.py:120
+#: plinth/modules/apache/components.py:122
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde erişim URL'si {url}"
 
-#: plinth/modules/apache/components.py:124
+#: plinth/modules/apache/components.py:125
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Erişim URL'si {url}"
@@ -140,7 +140,7 @@ msgstr "Yerel Ağ Etki Alanı"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Yedeklemeler, yedekleme arşivleri oluşturmayı ve yönetmeyi sağlar."
 
-#: plinth/modules/backups/__init__.py:49
+#: plinth/modules/backups/__init__.py:50
 msgid "Backups"
 msgstr "Yedeklemeler"
 
@@ -224,7 +224,8 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Anahtar Depoda"
 
-#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122
+#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Yok"
 
@@ -912,8 +913,8 @@ msgstr ""
 "kullanabilir."
 
 #: plinth/modules/calibre/__init__.py:57
-msgid "Administer calibre application"
-msgstr "calibre uygulamasını yönet"
+msgid "Use calibre e-book libraries"
+msgstr ""
 
 #: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
 msgid "calibre"
@@ -1311,7 +1312,7 @@ msgstr "BitTorrent uygulamalarını kullanarak dosyaları indir"
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:51
+#: plinth/modules/deluge/__init__.py:52
 #: plinth/modules/transmission/__init__.py:53
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent Web İstemcisi"
@@ -1324,7 +1325,7 @@ msgstr "İndirme dizini"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Python/PyGTK ile yazılmış BitTorrent istemcisi"
 
-#: plinth/modules/diagnostics/__init__.py:25
+#: plinth/modules/diagnostics/__init__.py:27
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1332,21 +1333,55 @@ msgstr ""
 "Sistem tanılama denemesi, uygulamaların ve hizmetlerin beklendiği gibi "
 "çalıştığını doğrulamak için sisteminizde bir dizi denetim gerçekleştirecek."
 
-#: plinth/modules/diagnostics/__init__.py:49
+#: plinth/modules/diagnostics/__init__.py:51
+#: plinth/modules/diagnostics/__init__.py:226
 msgid "Diagnostics"
 msgstr "Tanılama"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:108
 msgid "passed"
 msgstr "geçti"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:109
 msgid "failed"
 msgstr "başarısız"
 
-#: plinth/modules/diagnostics/__init__.py:104
+#: plinth/modules/diagnostics/__init__.py:110
 msgid "error"
 msgstr "hata"
+
+#. Translators: This is the unit of computer storage Mebibyte similar to
+#. Megabyte.
+#: plinth/modules/diagnostics/__init__.py:192
+msgid "MiB"
+msgstr ""
+
+#. Translators: This is the unit of computer storage Gibibyte similar to
+#. Gigabyte.
+#: plinth/modules/diagnostics/__init__.py:197
+#, fuzzy
+#| msgid "Git"
+msgid "GiB"
+msgstr "Git"
+
+#: plinth/modules/diagnostics/__init__.py:204
+msgid "You should disable some apps to reduce memory usage."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:209
+msgid "You should not install any new apps on this system."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:221
+#, no-python-format, python-brace-format
+msgid ""
+"System is low on memory: {percent_used}% used, {memory_available} "
+"{memory_available_unit} free. {advice_message}"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:223
+msgid "Low Memory"
+msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:13
@@ -1362,15 +1397,22 @@ msgstr "Tanılama denemesi şu anda çalışıyor"
 msgid "Results"
 msgstr "Sonuçlar"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:41
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics.html:42
 #, python-format
-msgid "App: %(app_id)s"
-msgstr "Uygulama: %(app_id)s"
+msgid ""
+"\n"
+"            App: %(app_name)s\n"
+"          "
+msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
 msgstr "Tanı Sonuçları"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#, python-format
+msgid "App: %(app_id)s"
+msgstr "Uygulama: %(app_id)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:17
 msgid "This app does not support diagnostics"
@@ -1708,6 +1750,7 @@ msgstr "Hakkında"
 #: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 msgid "Status"
@@ -1851,17 +1894,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Güvenlik Duvarı"
 
-#: plinth/modules/firewall/components.py:133
+#: plinth/modules/firewall/components.py:134
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Dahili ağlar için {name} ({details}) bağlantı noktası kullanılabilir"
 
-#: plinth/modules/firewall/components.py:141
+#: plinth/modules/firewall/components.py:142
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Harici ağlar için {name} ({details}) bağlantı noktası kullanılabilir"
 
-#: plinth/modules/firewall/components.py:146
+#: plinth/modules/firewall/components.py:147
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Harici ağlar için {name} ({details}) bağlantı noktası kullanılamaz"
@@ -2146,21 +2189,21 @@ msgstr "Kılavuz"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:42 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Destek Al"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:36 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Geri Bildirim Gönder"
 
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:30 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Katkıda Bulun"
@@ -2225,16 +2268,21 @@ msgid "Learn more &raquo;"
 msgstr "Daha fazla bilgi edinin &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:63
+#: plinth/modules/upgrades/templates/upgrades_configure.html:42
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "%(os_release)s ve %(box_name)s %(version)s sürümünü çalıştırıyorsunuz."
 
-#: plinth/modules/help/templates/help_about.html:68
-#, python-format
-msgid "There is a new %(box_name)s version available."
+#: plinth/modules/help/templates/help_about.html:69
+#, fuzzy, python-format
+#| msgid "There is a new %(box_name)s version available."
+msgid ""
+"There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
+"a>."
 msgstr "Yeni bir %(box_name)s sürümü mevcut."
 
-#: plinth/modules/help/templates/help_about.html:72
+#: plinth/modules/help/templates/help_about.html:74
+#: plinth/modules/upgrades/templates/upgrades_configure.html:53
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s güncel."
@@ -2430,16 +2478,16 @@ msgstr ""
 "Lütfen hata raporunu göndermeden önce tüm parolaları veya diğer kişisel "
 "bilgileri günlükten kaldırın."
 
-#: plinth/modules/help/views.py:24
+#: plinth/modules/help/views.py:25
 msgid "Documentation and FAQ"
 msgstr "Belgeler ve SSS"
 
-#: plinth/modules/help/views.py:50
+#: plinth/modules/help/views.py:49
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "{box_name} Hakkında"
 
-#: plinth/modules/help/views.py:84
+#: plinth/modules/help/views.py:83
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Kılavuzu"
@@ -2561,7 +2609,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Viki ve Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:73
+#: plinth/modules/ikiwiki/__init__.py:74
 msgid "View and edit wiki applications"
 msgstr "Viki uygulamalarını görüntüle ve düzenle"
 
@@ -3550,7 +3598,7 @@ msgstr "Tüm web uygulamaları"
 msgid "Services"
 msgstr "Hizmetler"
 
-#: plinth/modules/networks/__init__.py:40
+#: plinth/modules/networks/__init__.py:41
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3558,7 +3606,7 @@ msgstr ""
 "Ağ cihazlarını yapılandırın. Internet'e Ethernet, Wi-Fi veya PPPoE ile "
 "bağlanın. Bu bağlantıyı ağdaki diğer cihazlarla paylaşın."
 
-#: plinth/modules/networks/__init__.py:42
+#: plinth/modules/networks/__init__.py:43
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -3566,11 +3614,11 @@ msgstr ""
 "Diğer yöntemler aracılığıyla yönetilen cihazlar burada yapılandırma için "
 "mevcut olmayabilir."
 
-#: plinth/modules/networks/__init__.py:60
+#: plinth/modules/networks/__init__.py:61
 msgid "Networks"
 msgstr "Ağlar"
 
-#: plinth/modules/networks/__init__.py:178
+#: plinth/modules/networks/__init__.py:179
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "IPv{kind} üzerinde DNSSEC kullanma"
@@ -4545,7 +4593,7 @@ msgid "OpenVPN"
 msgstr "OpenVPN"
 
 #: plinth/modules/openvpn/__init__.py:55
-#: plinth/modules/wireguard/__init__.py:51
+#: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Sanal Özel Ağ"
 
@@ -4682,7 +4730,7 @@ msgstr ""
 "\"https://pagekite.net\">pagekite.net</a>. Gelecekte bunun için "
 "arkadaşınızın {box_name} cihazını kullanmak mümkün olabilir."
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "PageKite"
 msgstr "PageKite"
 
@@ -4964,7 +5012,7 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Web Proksi"
 
-#: plinth/modules/privoxy/__init__.py:109
+#: plinth/modules/privoxy/__init__.py:110
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde {proxy} proksi ile {url} adresine erişin"
@@ -5434,18 +5482,18 @@ msgstr "Güvenlik raporunu göster"
 
 #: plinth/modules/security/templates/security.html:17
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:60
 msgid "Frequent Feature Updates"
 msgstr "Sık Yapılan Özellik Güncellemeleri"
 
 #: plinth/modules/security/templates/security.html:19
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:68
 msgid "Frequent feature updates are activated."
 msgstr "Sık yapılan özellik güncellemeleri etkinleştirildi."
 
 #: plinth/modules/security/templates/security.html:24
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:80
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6399,36 +6447,36 @@ msgstr ""
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:66
+#: plinth/modules/tor/__init__.py:67
 msgid "Tor Onion Service"
 msgstr "Tor Onion Hizmeti"
 
-#: plinth/modules/tor/__init__.py:70
+#: plinth/modules/tor/__init__.py:71
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks Proksi"
 
-#: plinth/modules/tor/__init__.py:74
+#: plinth/modules/tor/__init__.py:75
 msgid "Tor Bridge Relay"
 msgstr "Tor Köprüsü Aktarımı"
 
-#: plinth/modules/tor/__init__.py:112
+#: plinth/modules/tor/__init__.py:113
 msgid "Tor relay port available"
 msgstr "Tor aktarımı bağlantı noktası kullanılabilir"
 
-#: plinth/modules/tor/__init__.py:122
+#: plinth/modules/tor/__init__.py:123
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 taşıma kayıtlı"
 
-#: plinth/modules/tor/__init__.py:132
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 taşıma kayıtlı"
 
-#: plinth/modules/tor/__init__.py:201
+#: plinth/modules/tor/__init__.py:202
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tor aracılığıyla tcp{kind} üzerinde erişim URL'si {url}"
 
-#: plinth/modules/tor/__init__.py:212
+#: plinth/modules/tor/__init__.py:213
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde {url} adresinde Tor kullanımını onaylama"
@@ -6677,7 +6725,7 @@ msgstr ""
 "Etkinleştirildiğinde, FreedomBox günde bir kez otomatik olarak güncellenir."
 
 #: plinth/modules/upgrades/forms.py:20
-#: plinth/modules/upgrades/templates/upgrades_configure.html:56
+#: plinth/modules/upgrades/templates/upgrades_configure.html:105
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Sık yapılan özellik güncellemelerini etkinleştir (önerilir)"
 
@@ -6716,14 +6764,30 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Yoksay"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:14
+#: plinth/modules/upgrades/templates/upgrades_configure.html:46
+#: plinth/modules/upgrades/templates/upgrades_configure.html:116
+msgid "Updating..."
+msgstr "Güncelleniyor..."
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:48
+#, python-format
+msgid "There is a new %(box_name)s version available."
+msgstr "Yeni bir %(box_name)s sürümü mevcut."
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#, fuzzy
+#| msgid "FreedomBox Updated"
+msgid "Your Freedombox needs an update!"
+msgstr "FreedomBox Güncellendi"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:63
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 "Sık yapılan özellik güncellemeleri etkinleştirilebilir. Bunların "
 "etkinleştirilmesi önerilir."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:23
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
@@ -6731,7 +6795,7 @@ msgstr ""
 "Sık yapılan özellik güncellemeleri etkinleştirilemez. Dağıtımınızda gerekli "
 "olmayabilirler."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -6743,19 +6807,15 @@ msgstr ""
 "\"%(snapshot_url)s\">Depolama Anlık Görüntülerini</a> kullanarak bir anlık "
 "görüntü almak isteyebilirsiniz."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:110
 msgid "Manual Update"
 msgstr "Elle Güncelleme"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:67
-msgid "Updating..."
-msgstr "Güncelleniyor..."
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:75
+#: plinth/modules/upgrades/templates/upgrades_configure.html:124
 msgid "Update now"
 msgstr "Şimdi güncelle"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:81
+#: plinth/modules/upgrades/templates/upgrades_configure.html:130
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -6766,36 +6826,36 @@ msgstr ""
 "kullanılamayabilir ve bir hata gösterebilir. Bu durumda devam etmek için "
 "sayfayı yenileyin."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:95
+#: plinth/modules/upgrades/templates/upgrades_configure.html:144
 msgid "Show recent update logs"
 msgstr "Son güncelleme günlüklerini göster"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:63
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "unattended-upgrades yapılandırılırken bir hata oldu: {error}"
 
-#: plinth/modules/upgrades/views.py:61
+#: plinth/modules/upgrades/views.py:67
 msgid "Automatic upgrades enabled"
 msgstr "Otomatik yükseltmeler etkinleştirildi"
 
-#: plinth/modules/upgrades/views.py:64
+#: plinth/modules/upgrades/views.py:70
 msgid "Automatic upgrades disabled"
 msgstr "Otomatik yükseltmeler etkisizleştirildi"
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:111
 msgid "Upgrade process started."
 msgstr "Yükseltme işlemi başladı."
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:113
 msgid "Starting upgrade failed."
 msgstr "Yükseltmeyi başlatma başarısız oldu."
 
-#: plinth/modules/upgrades/views.py:91
+#: plinth/modules/upgrades/views.py:123
 msgid "Frequent feature updates activated."
 msgstr "Sık yapılan özellik güncellemeleri etkinleştirildi."
 
-#: plinth/modules/users/__init__.py:39
+#: plinth/modules/users/__init__.py:38
 msgid ""
 "Create and managed user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -6806,7 +6866,7 @@ msgstr ""
 "kullanıcıya, uygulamaya erişme yetkisi vermek için bir kullanıcı hesabının "
 "bir grubun parçası olmasını gerektirir."
 
-#: plinth/modules/users/__init__.py:44
+#: plinth/modules/users/__init__.py:43
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -6818,15 +6878,15 @@ msgstr ""
 "sadece <em>admin</em> grubunun kullanıcıları uygulamaları veya sistem "
 "ayarlarını değiştirebilir."
 
-#: plinth/modules/users/__init__.py:65
+#: plinth/modules/users/__init__.py:64
 msgid "Users and Groups"
 msgstr "Kullanıcılar ve Gruplar"
 
-#: plinth/modules/users/__init__.py:78
+#: plinth/modules/users/__init__.py:77
 msgid "Access to all services and system settings"
 msgstr "Tüm hizmetlere ve sistem ayarlarına erişim"
 
-#: plinth/modules/users/__init__.py:115
+#: plinth/modules/users/__init__.py:113
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "LDAP \"{search_item}\" girişini denetleme"
@@ -7007,10 +7067,10 @@ msgid ""
 "step."
 msgstr ""
 "Bu hesapları komut satırından silin ve %(box_name)s ile kullanılabilen bir "
-"hesap oluşturmak için sayfayı yenileyin. Komut satırında 'echo \"{password}\""
-" | /usr/share/plinth/actions/users remove-user {username}' komutunu "
-"çalıştırın. %(box_name)s ile kullanılabilen bir hesap zaten varsa, bu adımı "
-"atlayın."
+"hesap oluşturmak için sayfayı yenileyin. Komut satırında 'echo "
+"\"{password}\" | /usr/share/plinth/actions/users remove-user {username}' "
+"komutunu çalıştırın. %(box_name)s ile kullanılabilen bir hesap zaten varsa, "
+"bu adımı atlayın."
 
 #: plinth/modules/users/templates/users_list.html:23
 #: plinth/modules/users/views.py:61
@@ -7657,7 +7717,7 @@ msgstr "Ana Sayfa"
 msgid "Source Code"
 msgstr "Kaynak Kodu"
 
-#: plinth/templates/index.html:143
+#: plinth/templates/index.html:143 plinth/templates/toolbar.html:38
 msgid "Donate"
 msgstr "Bağış"
 
@@ -7792,6 +7852,9 @@ msgstr "%%%(percentage)s tamamlandı"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Administer calibre application"
+#~ msgstr "calibre uygulamasını yönet"
 
 #~ msgid "Backports activated."
 #~ msgstr "Arka bağlantı noktaları etkinleştirildi."
