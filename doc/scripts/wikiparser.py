@@ -6,6 +6,7 @@ MoinMoin wiki parser
 
 import logging
 import re
+import sys
 import urllib
 from enum import Enum
 from pathlib import Path
@@ -2060,7 +2061,9 @@ if __name__ == '__main__':
     if not arguments.skip_tests:
         # Make tests verbose if no input files given
         verbose = not arguments.input
-        doctest.testmod(verbose=verbose)
+        num_failed = doctest.testmod(verbose=verbose)[0]
+        if num_failed > 0:
+            sys.exit(1)
 
     for in_file in arguments.input:
         with in_file.open() as wiki_file:
