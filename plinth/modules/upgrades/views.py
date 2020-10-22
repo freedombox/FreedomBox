@@ -2,7 +2,9 @@
 """
 FreedomBox app for upgrades.
 """
+import subprocess
 
+from apt.cache import Cache
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -10,7 +12,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic.edit import FormView
 
-from plinth import actions, package
+from plinth import __version__, actions, package
 from plinth.errors import ActionError
 from plinth.modules import first_boot, upgrades
 from plinth.views import AppView
@@ -32,9 +34,13 @@ class UpgradesConfigurationView(AppView):
         context = super().get_context_data(*args, **kwargs)
         context['can_activate_backports'] = upgrades.can_activate_backports()
         context['is_backports_requested'] = upgrades.is_backports_requested()
-        context['is_busy'] = package.is_package_manager_busy()
+        context['is_busy'] = (_is_updating()
+                              or package.is_package_manager_busy())
         context['log'] = get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
+        context['version'] = __version__
+        context['new_version'] = is_newer_version_available()
+        context['os_release'] = get_os_release()
         return context
 
     def form_valid(self, form):
@@ -66,9 +72,35 @@ class UpgradesConfigurationView(AppView):
         return super().form_valid(form)
 
 
+def is_newer_version_available():
+    """Returns whether a newer Freedombox version is available."""
+    cache = Cache()
+    freedombox = cache['freedombox']
+    return not freedombox.candidate.is_installed
+
+
+def get_os_release():
+    """Returns the Debian release number and name."""
+    output = 'Error: Cannot read PRETTY_NAME in /etc/os-release.'
+    with open('/etc/os-release', 'r') as release_file:
+        for line in release_file:
+            if 'PRETTY_NAME=' in line:
+                line = line.replace('"', '').strip()
+                line = line.split('=')
+                output = line[1]
+    return output
+
+
 def get_log():
     """Return the current log for unattended upgrades."""
     return actions.superuser_run('upgrades', ['get-log'])
+
+
+def _is_updating():
+    """Check if manually triggered update is running."""
+    command = ['systemctl', 'is-active', 'freedombox-manual-upgrade']
+    result = subprocess.run(command, capture_output=True, text=True)
+    return str(result.stdout).startswith('activ')  # 'active' or 'activating'
 
 
 def upgrade(request):

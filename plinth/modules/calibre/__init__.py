@@ -54,13 +54,14 @@ class CalibreApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        groups = {'calibre': _('Administer calibre application')}
+        groups = {'calibre': _('Use calibre e-book libraries')}
 
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('calibre'), icon_filename='calibre',
                                short_description=_('E-book Library'),
                                description=_description, manual_page='calibre',
-                               clients=clients)
+                               clients=clients,
+                               donation_url='https://calibre-ebook.com/donate')
         self.add(info)
 
         menu_item = menu.Menu('menu-calibre', info.name,

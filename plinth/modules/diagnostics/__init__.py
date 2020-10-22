@@ -6,13 +6,15 @@ FreedomBox app for system diagnostics.
 import collections
 import importlib
 import logging
+import pathlib
 import threading
 
+import psutil
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 
 from plinth import app as app_module
-from plinth import daemon, menu
+from plinth import cfg, daemon, glib, menu
 from plinth.modules.apache.components import diagnose_url_on_all
 
 from .manifest import backup  # noqa, pylint: disable=unused-import
@@ -54,6 +56,10 @@ class DiagnosticsApp(app_module.App):
         menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,
                               'diagnostics:index', parent_url_name='system')
         self.add(menu_item)
+
+        # Check periodically for low RAM space
+        interval = 180 if cfg.develop else 3600
+        glib.schedule(interval, _warn_about_low_ram_space)
 
     def diagnose(self):
         """Run diagnostics and return the results."""
@@ -123,6 +129,108 @@ def run_on_all_enabled_modules():
 
     current_results['apps'] = apps
     for current_index, (app_id, app) in enumerate(apps):
-        current_results['results'][app_id] = app.diagnose()
+        app_name = app.info.name or _('None')
+        current_results['results'][app_id] = {
+            'name': app_name,
+            'results': app.diagnose()
+        }
         current_results['progress_percentage'] = \
             int((current_index + 1) * 100 / len(apps))
+
+
+def _get_memory_info_from_cgroups():
+    """Return information about RAM usage from cgroups."""
+    cgroups_memory_path = pathlib.Path('/sys/fs/cgroup/memory')
+    memory_limit_file = cgroups_memory_path / 'memory.limit_in_bytes'
+    memory_usage_file = cgroups_memory_path / 'memory.usage_in_bytes'
+    memory_stat_file = cgroups_memory_path / 'memory.stat'
+
+    try:
+        memory_total = int(memory_limit_file.read_text())
+        memory_usage = int(memory_usage_file.read_text())
+        memory_stat_lines = memory_stat_file.read_text().split('\n')
+    except OSError:
+        return {}
+
+    memory_inactive = int([
+        line.rsplit(maxsplit=1)[1] for line in memory_stat_lines
+        if line.startswith('total_inactive_file')
+    ][0])
+    memory_used = memory_usage - memory_inactive
+
+    return {
+        'total_bytes': memory_total,
+        'percent_used': memory_used * 100 / memory_total,
+        'free_bytes': memory_total - memory_used
+    }
+
+
+def _get_memory_info():
+    """Return RAM usage information."""
+    memory_info = psutil.virtual_memory()
+
+    cgroups_memory_info = _get_memory_info_from_cgroups()
+    if cgroups_memory_info and cgroups_memory_info[
+            'total_bytes'] < memory_info.total:
+        return cgroups_memory_info
+
+    return {
+        'total_bytes': memory_info.total,
+        'percent_used': memory_info.percent,
+        'free_bytes': memory_info.available
+    }
+
+
+def _warn_about_low_ram_space(request):
+    """Warn about insufficient RAM space."""
+    from plinth.notification import Notification
+
+    memory_info = _get_memory_info()
+    if memory_info['free_bytes'] < 1024**3:
+        # Translators: This is the unit of computer storage Mebibyte similar to
+        # Megabyte.
+        memory_available_unit = ugettext_noop('MiB')
+        memory_available = memory_info['free_bytes'] / 1024**2
+    else:
+        # Translators: This is the unit of computer storage Gibibyte similar to
+        # Gigabyte.
+        memory_available_unit = ugettext_noop('GiB')
+        memory_available = memory_info['free_bytes'] / 1024**3
+
+    show = False
+    if memory_info['percent_used'] > 90:
+        severity = 'error'
+        advice_message = ugettext_noop(
+            'You should disable some apps to reduce memory usage.')
+        show = True
+    elif memory_info['percent_used'] > 75:
+        severity = 'warning'
+        advice_message = ugettext_noop(
+            'You should not install any new apps on this system.')
+        show = True
+
+    if not show:
+        try:
+            Notification.get('diagnostics-low-ram-space').delete()
+        except KeyError:
+            pass
+        return
+
+    message = ugettext_noop(
+        # xgettext:no-python-format
+        'System is low on memory: {percent_used}% used, {memory_available} '
+        '{memory_available_unit} free. {advice_message}')
+    title = ugettext_noop('Low Memory')
+    data = {
+        'app_icon': 'fa-heartbeat',
+        'app_name': ugettext_noop('Diagnostics'),
+        'percent_used': f'{memory_info["percent_used"]:.1f}',
+        'memory_available': f'{memory_available:.1f}',
+        'memory_available_unit': 'translate:' + memory_available_unit,
+        'advice_message': 'translate:' + advice_message
+    }
+    actions = [{'type': 'dismiss'}]
+    Notification.update_or_create(id='diagnostics-low-ram-space',
+                                  app_id='diagnostics', severity=severity,
+                                  title=title, message=message,
+                                  actions=actions, data=data, group='admin')

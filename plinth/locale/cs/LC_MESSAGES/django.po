@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-05 18:59-0400\n"
+"POT-Creation-Date: 2020-10-19 20:11-0400\n"
 "PO-Revision-Date: 2020-06-24 11:41+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -27,27 +27,27 @@ msgstr "Zdrojový kód stránky"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:85
+#: plinth/daemon.py:88
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Služba {service_name} je spuštěná"
 
-#: plinth/daemon.py:111
+#: plinth/daemon.py:115
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Spojení očekáváno na {kind} portu {listen_address}:{port}"
 
-#: plinth/daemon.py:114
+#: plinth/daemon.py:119
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Spojení očekáváno na {kind} portu {port}"
 
-#: plinth/daemon.py:182
+#: plinth/daemon.py:187
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Připojit k {host}:{port}"
 
-#: plinth/daemon.py:184
+#: plinth/daemon.py:189
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Nedaří se připojit k {host}:{port}"
@@ -101,12 +101,12 @@ msgstr "Webový server"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Webové rozhraní {box_name} (Plinth)"
 
-#: plinth/modules/apache/components.py:120
+#: plinth/modules/apache/components.py:122
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Přístup na URL adrese {url} na tcp{kind}"
 
-#: plinth/modules/apache/components.py:124
+#: plinth/modules/apache/components.py:125
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Přístup na URL adrese {url}"
@@ -139,7 +139,7 @@ msgstr "Doména místní sítě"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Zálohy umožňují vytváření a správu zálohových archivů."
 
-#: plinth/modules/backups/__init__.py:49
+#: plinth/modules/backups/__init__.py:50
 msgid "Backups"
 msgstr "Zálohy"
 
@@ -229,7 +229,8 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Vytvořit repozitář"
 
-#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122
+#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Žádný"
 
@@ -925,10 +926,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/calibre/__init__.py:57
-#, fuzzy
-#| msgid "Administer Syncthing application"
-msgid "Administer calibre application"
-msgstr "Spravovat aplikaci Syncthing"
+msgid "Use calibre e-book libraries"
+msgstr ""
 
 #: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:9
 msgid "calibre"
@@ -1339,7 +1338,7 @@ msgstr "Stahovat soubory pomocí BitTorrent aplikací"
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:51
+#: plinth/modules/deluge/__init__.py:52
 #: plinth/modules/transmission/__init__.py:53
 msgid "BitTorrent Web Client"
 msgstr "Webový klient sítě BitTorrent"
@@ -1352,7 +1351,7 @@ msgstr "Složka pro stahování"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Bittorent klient napsaný v Python/PyGTK"
 
-#: plinth/modules/diagnostics/__init__.py:25
+#: plinth/modules/diagnostics/__init__.py:27
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1360,24 +1359,58 @@ msgstr ""
 "Diagnostický test systému spustí několik kontrol pro potvrzení, že aplikace "
 "a služby fungují tak, jak mají."
 
-#: plinth/modules/diagnostics/__init__.py:49
+#: plinth/modules/diagnostics/__init__.py:51
+#: plinth/modules/diagnostics/__init__.py:226
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:108
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:109
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "Nastavování se nezdařilo."
 
-#: plinth/modules/diagnostics/__init__.py:104
+#: plinth/modules/diagnostics/__init__.py:110
 msgid "error"
+msgstr ""
+
+#. Translators: This is the unit of computer storage Mebibyte similar to
+#. Megabyte.
+#: plinth/modules/diagnostics/__init__.py:192
+msgid "MiB"
+msgstr ""
+
+#. Translators: This is the unit of computer storage Gibibyte similar to
+#. Gigabyte.
+#: plinth/modules/diagnostics/__init__.py:197
+#, fuzzy
+#| msgid "Git"
+msgid "GiB"
+msgstr "Git"
+
+#: plinth/modules/diagnostics/__init__.py:204
+msgid "You should disable some apps to reduce memory usage."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:209
+msgid "You should not install any new apps on this system."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:221
+#, no-python-format, python-brace-format
+msgid ""
+"System is low on memory: {percent_used}% used, {memory_available} "
+"{memory_available_unit} free. {advice_message}"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:223
+msgid "Low Memory"
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
@@ -1394,15 +1427,22 @@ msgstr "Diagnostické testy právě probíhají"
 msgid "Results"
 msgstr "Výsledky"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:41
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics.html:42
 #, python-format
-msgid "App: %(app_id)s"
+msgid ""
+"\n"
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
 msgstr "Výsledky diagnostiky"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#, python-format
+msgid "App: %(app_id)s"
+msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:17
 #, fuzzy
@@ -1747,6 +1787,7 @@ msgstr "O projektu"
 #: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 msgid "Status"
@@ -1886,21 +1927,21 @@ msgstr ""
 msgid "Firewall"
 msgstr "Brána firewall"
 
-#: plinth/modules/firewall/components.py:133
+#: plinth/modules/firewall/components.py:134
 #, fuzzy, python-brace-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
 msgid "Port {name} ({details}) available for internal networks"
 msgstr ""
 "Služba <em>%(service_name)s</em> je k dispozici pouze na vnitřních sítích."
 
-#: plinth/modules/firewall/components.py:141
+#: plinth/modules/firewall/components.py:142
 #, fuzzy, python-brace-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
 msgid "Port {name} ({details}) available for external networks"
 msgstr ""
 "Služba <em>%(service_name)s</em> je k dispozici pouze na vnitřních sítích."
 
-#: plinth/modules/firewall/components.py:146
+#: plinth/modules/firewall/components.py:147
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -2196,21 +2237,21 @@ msgstr "Příručka"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:42 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Získejte podporu"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:36 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Odeslat zpětnou vazbu"
 
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:30 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Zapojit se"
@@ -2275,16 +2316,21 @@ msgid "Learn more &raquo;"
 msgstr "Zjistit víc o &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:63
+#: plinth/modules/upgrades/templates/upgrades_configure.html:42
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Provozujete %(os_release)s a %(box_name)s verze %(version)s."
 
-#: plinth/modules/help/templates/help_about.html:68
-#, python-format
-msgid "There is a new %(box_name)s version available."
+#: plinth/modules/help/templates/help_about.html:69
+#, fuzzy, python-format
+#| msgid "There is a new %(box_name)s version available."
+msgid ""
+"There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
+"a>."
 msgstr "Je k dispozici nová verze %(box_name)s."
 
-#: plinth/modules/help/templates/help_about.html:72
+#: plinth/modules/help/templates/help_about.html:74
+#: plinth/modules/upgrades/templates/upgrades_configure.html:53
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s je aktuální."
@@ -2479,16 +2525,16 @@ msgstr ""
 "Před odesláním hlášení chyby odeberte ze záznamů událostí veškerá hesla a "
 "ostatní osobní údaje."
 
-#: plinth/modules/help/views.py:24
+#: plinth/modules/help/views.py:25
 msgid "Documentation and FAQ"
 msgstr "Dokumentace a často kladené dotazy"
 
-#: plinth/modules/help/views.py:50
+#: plinth/modules/help/views.py:49
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "O {box_name}"
 
-#: plinth/modules/help/views.py:84
+#: plinth/modules/help/views.py:83
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Příručka k {box_name}"
@@ -2616,7 +2662,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "wiki a blog"
 
-#: plinth/modules/ikiwiki/__init__.py:73
+#: plinth/modules/ikiwiki/__init__.py:74
 msgid "View and edit wiki applications"
 msgstr "Zobrazit a upravit wiki aplikace"
 
@@ -3600,7 +3646,7 @@ msgstr "Všechny webové aplikace"
 msgid "Services"
 msgstr "Služba"
 
-#: plinth/modules/networks/__init__.py:40
+#: plinth/modules/networks/__init__.py:41
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3608,17 +3654,17 @@ msgstr ""
 "Nastavit síťová zařízení. Připojit k Internetu přes ethernet, WiFi nebo "
 "PPPoE. Sdílet toto připojení s ostatními zařízeními na síti."
 
-#: plinth/modules/networks/__init__.py:42
+#: plinth/modules/networks/__init__.py:43
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:60
+#: plinth/modules/networks/__init__.py:61
 msgid "Networks"
 msgstr "Sítě"
 
-#: plinth/modules/networks/__init__.py:178
+#: plinth/modules/networks/__init__.py:179
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "S použitím DNSSEC na IPv{kind}"
@@ -4512,7 +4558,7 @@ msgid "OpenVPN"
 msgstr "OpenVPN"
 
 #: plinth/modules/openvpn/__init__.py:55
-#: plinth/modules/wireguard/__init__.py:51
+#: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Virtuální soukromá síť"
 
@@ -4664,7 +4710,7 @@ msgstr ""
 "\">pagekite.net</a>. V budoucnu si pro toto může být možné s kamarádem "
 "smluvit využití jeho {box_name}."
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:65
 msgid "PageKite"
 msgstr "PageKite"
 
@@ -4947,7 +4993,7 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Webová proxy"
 
-#: plinth/modules/privoxy/__init__.py:109
+#: plinth/modules/privoxy/__init__.py:110
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Přistupte {url} s proxy {proxy} na tcp{kind}"
@@ -5441,18 +5487,18 @@ msgstr "Zobrazit výkaz o zabezpečení"
 
 #: plinth/modules/security/templates/security.html:17
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:11
+#: plinth/modules/upgrades/templates/upgrades_configure.html:60
 msgid "Frequent Feature Updates"
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:19
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:68
 msgid "Frequent feature updates are activated."
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:24
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:80
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6429,38 +6475,38 @@ msgstr ""
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:66
+#: plinth/modules/tor/__init__.py:67
 #, fuzzy
 #| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
 msgstr "Tor skrytá služba"
 
-#: plinth/modules/tor/__init__.py:70
+#: plinth/modules/tor/__init__.py:71
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks proxy"
 
-#: plinth/modules/tor/__init__.py:74
+#: plinth/modules/tor/__init__.py:75
 msgid "Tor Bridge Relay"
 msgstr "Předávájící Tor most"
 
-#: plinth/modules/tor/__init__.py:112
+#: plinth/modules/tor/__init__.py:113
 msgid "Tor relay port available"
 msgstr "Port Tor předávání k dispozici"
 
-#: plinth/modules/tor/__init__.py:122
+#: plinth/modules/tor/__init__.py:123
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:132
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:201
+#: plinth/modules/tor/__init__.py:202
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Přistoupit k URL adrese {url} na tcp{kind} prostřednictvím Tor"
 
-#: plinth/modules/tor/__init__.py:212
+#: plinth/modules/tor/__init__.py:213
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Potvrdit použití Tor na {url} na tcp{kind}"
@@ -6717,7 +6763,7 @@ msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr "Když je zapnuto, FreedomBox se jednou denně automaticky zaktualizuje."
 
 #: plinth/modules/upgrades/forms.py:20
-#: plinth/modules/upgrades/templates/upgrades_configure.html:56
+#: plinth/modules/upgrades/templates/upgrades_configure.html:105
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -6751,18 +6797,34 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:14
+#: plinth/modules/upgrades/templates/upgrades_configure.html:46
+#: plinth/modules/upgrades/templates/upgrades_configure.html:116
+msgid "Updating..."
+msgstr "Aktualizace…"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:48
+#, python-format
+msgid "There is a new %(box_name)s version available."
+msgstr "Je k dispozici nová verze %(box_name)s."
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:51
+#, fuzzy
+#| msgid "FreedomBox Foundation"
+msgid "Your Freedombox needs an update!"
+msgstr "Nadace FreedomBox"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:63
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:23
+#: plinth/modules/upgrades/templates/upgrades_configure.html:72
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:45
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -6770,21 +6832,17 @@ msgid ""
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:110
 #, fuzzy
 #| msgid "Manual update"
 msgid "Manual Update"
 msgstr "Ruční aktualizace"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:67
-msgid "Updating..."
-msgstr "Aktualizace…"
-
-#: plinth/modules/upgrades/templates/upgrades_configure.html:75
+#: plinth/modules/upgrades/templates/upgrades_configure.html:124
 msgid "Update now"
 msgstr "Aktualizovat nyní"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:81
+#: plinth/modules/upgrades/templates/upgrades_configure.html:130
 #, fuzzy
 #| msgid ""
 #| "<strong>This may take a long time to complete</strong>. During an update, "
@@ -6799,45 +6857,45 @@ msgstr ""
 "aktualizace není možné instalovat aplikace. Také webové rozhraní může být "
 "dočasně nedostupné a zobrazovat chybu. V takovém případě ho načtěte znovu."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:95
+#: plinth/modules/upgrades/templates/upgrades_configure.html:144
 #, fuzzy
 #| msgid "Toggle recent update logs"
 msgid "Show recent update logs"
 msgstr "Vyp/zap. záznamy událostí při nedávných aktualizacích"
 
-#: plinth/modules/upgrades/views.py:57
+#: plinth/modules/upgrades/views.py:63
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Chyba při nastavování bezobslužných aktualizací: {error}"
 
-#: plinth/modules/upgrades/views.py:61
+#: plinth/modules/upgrades/views.py:67
 msgid "Automatic upgrades enabled"
 msgstr "Automatické aktualizace zapnuty"
 
-#: plinth/modules/upgrades/views.py:64
+#: plinth/modules/upgrades/views.py:70
 msgid "Automatic upgrades disabled"
 msgstr "Automatické aktualizace vypnuty"
 
-#: plinth/modules/upgrades/views.py:79
+#: plinth/modules/upgrades/views.py:111
 msgid "Upgrade process started."
 msgstr "Proces přechodu na novější verze zahájen."
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:113
 msgid "Starting upgrade failed."
 msgstr "Spouštění přechodu na novější verzi se nezdařilo."
 
-#: plinth/modules/upgrades/views.py:91
+#: plinth/modules/upgrades/views.py:123
 msgid "Frequent feature updates activated."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:39
+#: plinth/modules/users/__init__.py:38
 msgid ""
 "Create and managed user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:44
+#: plinth/modules/users/__init__.py:43
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -6845,15 +6903,15 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:65
+#: plinth/modules/users/__init__.py:64
 msgid "Users and Groups"
 msgstr "Uživatelé a skupiny"
 
-#: plinth/modules/users/__init__.py:78
+#: plinth/modules/users/__init__.py:77
 msgid "Access to all services and system settings"
 msgstr "Přístup ke všem službám a nastavení systému"
 
-#: plinth/modules/users/__init__.py:115
+#: plinth/modules/users/__init__.py:113
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Zkontrolujte LDAP položku „{search_item}“"
@@ -7752,7 +7810,7 @@ msgstr "Domovská stránka"
 msgid "Source Code"
 msgstr "Zdrojové kódy"
 
-#: plinth/templates/index.html:143
+#: plinth/templates/index.html:143 plinth/templates/toolbar.html:38
 msgid "Donate"
 msgstr "Podpořit vývoj darem"
 
@@ -7898,6 +7956,11 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#, fuzzy
+#~| msgid "Administer Syncthing application"
+#~ msgid "Administer calibre application"
+#~ msgstr "Spravovat aplikaci Syncthing"
 
 #, fuzzy
 #~| msgid "Backup archives"

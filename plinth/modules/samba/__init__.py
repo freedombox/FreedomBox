@@ -58,11 +58,11 @@ class SambaApp(app_module.App):
 
         groups = {'freedombox-share': _('Access to the private shares')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Samba'), icon_filename='samba',
-                               short_description=_('Network File Storage'),
-                               manual_page='Samba', description=_description,
-                               clients=clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('Samba'),
+            icon_filename='samba', short_description=_('Network File Storage'),
+            manual_page='Samba', description=_description, clients=clients,
+            donation_url='https://www.samba.org/samba/donations.html')
         self.add(info)
 
         menu_item = menu.Menu('menu-samba', info.name, info.short_description,

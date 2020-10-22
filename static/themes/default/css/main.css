@@ -2,6 +2,17 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
+:root {
+    --background-color: #f1f1f1; /* Light grey */
+    --neutral-light-color: #f5f5f5; /* Light grey */
+    --neutral-dark-color: #d4d4d4; /* Grey */
+    --info-color: #5bc0de; /* Pale blue, almost turquoise */
+    --freedombox-blue-color: #4989D4; /* Blue */
+    --progress-color: #3498db; /* Blue */
+    --error-color: #d9534f; /* Red */
+    --warning-color: #ec971f; /* Orange */
+}
+
 @font-face {
     font-family: 'Lato';
     src: url('../lato/Lato-Italic.woff2') format('woff2');
@@ -64,7 +75,7 @@ body {
     position: relative;
     font-family: Lato, sans-serif;
     font-size: 15px;
-    background: url('../img/noise.png') #f1f1f1;
+    background: url('../img/noise.png') var(--background-color);
 }
 
 @media (max-width: 767px) {
@@ -75,7 +86,7 @@ body {
     body.index-page,
     body.apps-page,
     body.system-page {
-        background: url('../img/noise.png') #f1f1f1;
+        background: url('../img/noise.png') var(--background-color);
     }
 }
 
@@ -114,17 +125,9 @@ body {
     display: inline-block;
 }
 
-.running-status.active {
-    background-color: rgb(0, 167, 0);
-}
-
-.running-status.inactive {
-    background-color: rgb(228, 66, 66);
-}
-
 .running-status.loading {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
+    border: 4px solid var(--neutral-light-color);
+    border-top: 4px solid var(--progress-color);
     border-radius: 50%;
     width: 16px;
     height: 16px;
@@ -159,7 +162,7 @@ body {
 
 .form-diagnostics-button .btn:hover,
 .form-diagnostics-button .btn:focus {
-    background-color:#f5f5f5
+    background-color: var(--neutral-light-color)
 }
 
 /* Hide log out button if user dropdown is available */
@@ -174,6 +177,7 @@ body {
 
 .diagnostics-results .diagnostics-result {
     width: 60px;
+    text-align: center;
 }
 
 /* Sticky footer styles
@@ -272,7 +276,7 @@ footer {
 
 /* applying styles to header - begin */
 .main-header {
-    background: #4989D4;
+    background: var(--freedombox-blue-color);
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
     border: none;
 }
@@ -325,7 +329,7 @@ footer {
     color: white;
     content: '';
     flex: 1;
-    border-bottom: #d4d4d4 solid 2px;
+    border-bottom: var(--neutral-dark-color) solid 2px;
     margin: auto 1.8rem;
 }
 
@@ -514,7 +518,7 @@ a.menu_link_active {
 }
 
 .toggle-button--toggled {
-    background: #4989D4;
+    background: var(--freedombox-blue-color);
 }
 
 .toggle-button--toggled::before {
@@ -527,8 +531,8 @@ a.menu_link_active {
  */
 .running-status-button-before {
     display: inline-block;
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
+    border: 4px solid var(--neutral-light-color);
+    border-top: 4px solid var(--progress-color);
     border-radius: 50%;
     width: 16px;
     height: 16px;
@@ -550,7 +554,8 @@ input[type='submit'].running-status-button {
     margin-bottom: 10px;
 }
 
-.btn-toolbar .button-extra-actions {
+.btn-toolbar .button-extra-actions,
+.btn-toolbar .button-donate {
     float: right;
 }
 
@@ -660,6 +665,7 @@ input[type='submit'].running-status-button {
 .notification {
     padding: 1rem 1.5rem;
     font-size: 15px;
+    border-left: 5px solid;
 }
 
 .notification:not(:first-child) {
@@ -685,15 +691,27 @@ img.notification-icon {
 }
 
 .badge-exception, .badge-error {
-    background-color: #d9534f;
+    background-color: var(--error-color);
 }
 
 .badge-warning {
-    background-color: #ec971f;
+    background-color: var(--warning-color);
 }
 
-.badge-info, badge-debug {
-    background-color: #5bc0de;
+.badge-info, .badge-debug {
+    background-color: var(--info-color);
+}
+
+.notification-exception, .notification-error {
+    border-left-color: var(--error-color);
+}
+
+.notification-warning {
+    border-left-color: var(--warning-color);
+}
+
+.notification-info, .notification-debug {
+    border-left-color: var(--info-color)
 }
 
 /* Don't collapse notifications on small screens */

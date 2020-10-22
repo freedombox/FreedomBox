@@ -65,7 +65,8 @@ class LetsEncryptApp(app_module.App):
                                name=_('Let\'s Encrypt'), icon='fa-lock',
                                short_description=_('Certificates'),
                                description=_description,
-                               manual_page='LetsEncrypt')
+                               manual_page='LetsEncrypt',
+                               donation_url='https://letsencrypt.org/donate/')
         self.add(info)
 
         menu_item = menu.Menu('menu-letsencrypt', info.name,

@@ -6,13 +6,15 @@ App component for other apps to use Apache configuration functionality.
 import re
 import subprocess
 
-from django.utils.translation import ugettext as _
+from django.utils.text import format_lazy
+from django.utils.translation import ugettext_lazy
 
 from plinth import action_utils, actions, app
 
 
 class Webserver(app.LeaderComponent):
     """Component to enable/disable Apache configuration."""
+
     def __init__(self, component_id, web_name, kind='config', urls=None):
         """Initialize the web server component.
 
@@ -71,6 +73,7 @@ class Webserver(app.LeaderComponent):
 
 class Uwsgi(app.LeaderComponent):
     """Component to enable/disable uWSGI configuration."""
+
     def __init__(self, component_id, uwsgi_name):
         """Initialize the uWSGI component.
 
@@ -116,12 +119,13 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
                        wrapper, expected_output)
 
     if kind:
-        return [
-            _('Access URL {url} on tcp{kind}').format(url=url, kind=kind),
-            result
-        ]
+        template = ugettext_lazy('Access URL {url} on tcp{kind}')
+        testname = format_lazy(template, url=url, kind=kind)
+    else:
+        template = ugettext_lazy('Access URL {url}')
+        testname = format_lazy(template, url=url)
 
-    return [_('Access URL {url}').format(url=url), result]
+    return [testname, result]
 
 
 def diagnose_url_on_all(url, **kwargs):

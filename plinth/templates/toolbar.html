@@ -9,24 +9,36 @@
   <section class="toolbar">
     <div class="btn-toolbar" role="toolbar">
 
-        {% include "clients-button.html" with clients=app_info.clients enabled=is_enabled %}
+      {% include "clients-button.html" with clients=app_info.clients enabled=is_enabled %}
 
-        {% if has_diagnostics %}
-          <!-- Single button -->
-          <div class="btn-group button-extra-actions">
-            <button type="button" class="btn btn-default dropdown-toggle"
-                    data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-              <span class="fa fa-cog" aria-hidden="true"></span>
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
+      {% if has_diagnostics %}
+        <!-- Single button -->
+        <div class="btn-group button-extra-actions">
+          <button type="button" class="btn btn-default dropdown-toggle"
+                  data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+            <span class="fa fa-cog" aria-hidden="true"></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            {% if has_diagnostics %}
               <li>
                 {% include "diagnostics_button.html" with app_id=app_id enabled=is_enabled %}
               </li>
-            </ul>
-          </div>
-        {% endif %}
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if app_info.donation_url %}
+        <a target="_blank" rel="noopener noreferrer"
+           class="btn btn-default button-donate" role="button"
+           href="{{ app_info.donation_url }}">
+          <span class="fa fa-heart"></span>
+          {% trans "Donate" %}
+          <span class="fa fa-external-link"></span>
+        </a>
+      {% endif %}
 
     </div>
     <div class="toolbar-collapsed-content">

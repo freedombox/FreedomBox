@@ -65,8 +65,10 @@
     {% endblocktrans %}
 
     {% if new_version %}
+      {% url 'upgrades:index' as upgrades_url %}
       {% blocktrans trimmed %}
-        There is a new {{ box_name }} version available.
+        There is a new {{ box_name }} version
+        <a href="{{ upgrades_url }}">available</a>.
       {% endblocktrans %}
     {% else %}
       {% blocktrans trimmed %}

@@ -59,7 +59,8 @@ class SyncthingApp(app_module.App):
                                name=_('Syncthing'), icon_filename='syncthing',
                                short_description=_('File Synchronization'),
                                description=_description,
-                               manual_page='Syncthing', clients=clients)
+                               manual_page='Syncthing', clients=clients,
+                               donation_url='https://syncthing.net/donations/')
         self.add(info)
 
         menu_item = menu.Menu('menu-syncthing', info.name,

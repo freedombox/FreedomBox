@@ -264,7 +264,7 @@ class Info(FollowerComponent):
     def __init__(self, app_id, version, is_essential=False, depends=None,
                  name=None, icon=None, icon_filename=None,
                  short_description=None, description=None, manual_page=None,
-                 clients=None):
+                 clients=None, donation_url=None):
         """Store the basic properties of an app as a component.
 
         Each app must contain at least one component of this type to provide
@@ -331,6 +331,9 @@ class Info(FollowerComponent):
         compatible clients on desktop, web and mobile. This is a list of
         dictionaries who structure is documented in plinth.clients.
 
+        'donation_url' is a link to a webpage that describes how to
+        donate to the upstream project.
+
         """
         self.component_id = app_id + '-info'
         self.app_id = app_id
@@ -344,3 +347,4 @@ class Info(FollowerComponent):
         self.description = description
         self.manual_page = manual_page
         self.clients = clients
+        self.donation_url = donation_url

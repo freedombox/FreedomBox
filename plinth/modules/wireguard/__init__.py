@@ -46,11 +46,12 @@ class WireguardApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('WireGuard'), icon_filename='wireguard',
-                               short_description=_('Virtual Private Network'),
-                               description=_description,
-                               manual_page='WireGuard', clients=clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('WireGuard'),
+            icon_filename='wireguard',
+            short_description=_('Virtual Private Network'),
+            description=_description, manual_page='WireGuard', clients=clients,
+            donation_url='https://www.wireguard.com/donations/')
         self.add(info)
 
         menu_item = menu.Menu('menu-wireguard', info.name,

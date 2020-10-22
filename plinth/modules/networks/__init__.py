@@ -6,6 +6,7 @@ FreedomBox app to interface with network-manager.
 import subprocess
 from logging import Logger
 
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -175,4 +176,7 @@ def _diagnose_dnssec(kind='4'):
     except subprocess.CalledProcessError:
         pass
 
-    return [_('Using DNSSEC on IPv{kind}').format(kind=kind), result]
+    template = _('Using DNSSEC on IPv{kind}')
+    testname = format_lazy(template, kind=kind)
+
+    return [testname, result]

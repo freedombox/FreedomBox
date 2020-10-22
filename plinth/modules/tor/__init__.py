@@ -55,7 +55,8 @@ class TorApp(app_module.App):
                                name=_('Tor'), icon_filename='tor',
                                short_description=_('Anonymity Network'),
                                description=_description, manual_page='Tor',
-                               clients=clients)
+                               clients=clients,
+                               donation_url='https://donate.torproject.org/')
         self.add(info)
 
         menu_item = menu.Menu('menu-tor', info.name, info.short_description,

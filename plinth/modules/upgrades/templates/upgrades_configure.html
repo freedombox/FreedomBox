@@ -7,6 +7,54 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_head %}
+  <style type="text/css">
+    .warning {
+        color: var(--warning-color);
+    }
+
+    .processing {
+        color: var(--progress-color);
+    }
+
+    .normal {
+        color: var(--neutral-dark-color);
+    }
+  </style>
+{% endblock %}
+
+{% block status %}
+  {{ block.super}}  {% comment %} To extend instead of overwrite {% endcomment %}
+
+  <h3>{% trans "Status" %}</h3>
+  <div class="upgrades-status-frame clearfix">
+    <div class="upgrade-status-icon pull-left">
+      {% if is_busy %}
+        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left processing"></span>
+      {% elif new_version %}
+        <span class="fa fa-frown-o fa-3x fa-pull-left warning"></span>
+      {% else %}
+        <span class="fa fa-smile-o fa-3x fa-pull-left normal"></span>
+      {% endif %}
+    </div>
+    <p>
+      {% blocktrans trimmed %}
+        You are running {{ os_release }} and {{ box_name }} version {{ version }}.
+      {% endblocktrans %}
+      {% if is_busy %}
+        <strong>{% trans "Updating..." %}</strong>
+      {% elif new_version %}
+        {% blocktrans trimmed %}
+          There is a new {{ box_name }} version available.
+        {% endblocktrans %}
+        <strong>{% trans "Your Freedombox needs an update!" %}</strong>
+      {% else %}
+        {% blocktrans %}{{ box_name }} is up to date.{% endblocktrans %}
+      {% endif %}
+    </p>
+  </div>
+{% endblock %}
+
 {% block extra_content %}
   <h3>{% trans "Frequent Feature Updates" %}</h3>
   <p>
