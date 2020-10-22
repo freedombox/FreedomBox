@@ -19,7 +19,7 @@ from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unus
 
 version = 4
 
-managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
+managed_packages = ['searx']
 
 _description = [
     _('Searx is a privacy-respecting Internet metasearch engine. '
