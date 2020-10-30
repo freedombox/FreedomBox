@@ -93,7 +93,6 @@ class OpenVPNApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'openvpn', ['upgrade'])
     if app.is_enabled() and is_setup():
         helper.call('post', app.enable)
 

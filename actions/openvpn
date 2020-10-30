@@ -5,9 +5,7 @@ Configuration helper for OpenVPN server.
 """
 
 import argparse
-import glob
 import os
-import shutil
 import subprocess
 
 import augeas
@@ -16,13 +14,10 @@ from plinth import action_utils, utils
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
-OLD_DH_KEY = '/etc/openvpn/freedombox-keys/dh4096.pem'
 DH_KEY = '/etc/openvpn/freedombox-keys/pki/dh.pem'
 
-OLD_SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
 SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
 
-OLD_SERVICE_NAME = 'openvpn@freedombox'
 SERVICE_NAME = 'openvpn-server@freedombox'
 
 CA_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'ca.crt')
@@ -95,9 +90,6 @@ def parse_arguments():
 
     subparsers.add_parser('is-setup', help='Return whether setup is completed')
     subparsers.add_parser('setup', help='Setup OpenVPN server configuration')
-    subparsers.add_parser(
-        'upgrade',
-        help='Upgrade OpenVPN server configuration from older configuration')
 
     get_profile = subparsers.add_parser(
         'get-profile', help='Return the OpenVPN profile of a user')
@@ -128,77 +120,6 @@ def subcommand_setup(_):
     action_utils.service_restart(SERVICE_NAME)
 
 
-def subcommand_upgrade(_):
-    """Upgrade from an older version if configured.
-
-    Otherwise do nothing.
-    """
-    # Rewrite freedombox.conf due to change in key paths
-    if os.path.exists(OLD_SERVER_CONFIGURATION_PATH):
-        os.remove(OLD_SERVER_CONFIGURATION_PATH)
-
-    # Rewrite to ensure that easy-rsa2 paths are rewritten as easy-rsa3 paths
-    _write_server_config()
-
-    # Move all keys from easy-rsa2 to easy-rsa3 format. Only if the setup is
-    # already completed.
-    pki_dir = os.path.join(KEYS_DIRECTORY, 'pki')
-    if not os.path.exists(pki_dir) and os.path.exists(OLD_DH_KEY):
-        subprocess.run(['chmod', '-R', 'go-rwx', KEYS_DIRECTORY], check=True)
-
-        _init_pki()
-
-        # Move all files and directories under freedombox-keys into
-        # freedombox-keys/pki
-        for entry in os.listdir(KEYS_DIRECTORY):
-            entry = os.path.join(KEYS_DIRECTORY, entry)
-            if entry != pki_dir:
-                shutil.move(entry, pki_dir)
-
-        # The dh params file no longer has the key size in its filename
-        shutil.move(os.path.join(pki_dir, 'dh4096.pem'), DH_KEY)
-
-        directories_to_create = [
-            'reqs', 'private', 'issued', 'certs_by_serial', 'renewed',
-            'revoked', 'revoked/certs_by_serial', 'revoked/private_by_serial',
-            'revoked/reqs_by_serial', 'renewed/certs_by_serial',
-            'renewed/private_by_serial', 'renewed/reqs_by_serial'
-        ]
-        for dir_name in directories_to_create:
-            os.makedirs(os.path.join(pki_dir, dir_name), mode=0o700,
-                        exist_ok=True)
-
-        def _move_by_file_extension(file_extension, directory, excluded=None):
-            excluded = excluded or []
-            for fil in glob.glob(r'{}/*.{}'.format(pki_dir, file_extension)):
-                if fil not in excluded:
-                    shutil.move(fil, os.path.join(pki_dir, directory))
-
-        # Move all .req files to pki/reqs directory
-        _move_by_file_extension('req', 'reqs')
-
-        # All keys go into the pki/private directory
-        _move_by_file_extension('key', 'private')
-
-        # Move all certificate files into pki/issued except ca.crt
-        _move_by_file_extension('crt', 'issued',
-                                [os.path.join(pki_dir, 'ca.crt')])
-
-        # Move all pem files into pki/certs_by_serial except dh.pem
-        _move_by_file_extension('pem', 'certs_by_serial',
-                                [os.path.join(pki_dir, 'dh.pem')])
-
-    if _is_setup():
-        # Fix any issues with firewall. This action is idempotent.
-        _setup_firewall()
-
-    if action_utils.service_is_enabled(OLD_SERVICE_NAME):
-        action_utils.service_disable(OLD_SERVICE_NAME)
-        action_utils.service_enable(SERVICE_NAME)
-
-    action_utils.service_try_restart(SERVICE_NAME)
-
-
 def _write_server_config():
     """Write server configuration."""
     with open(SERVER_CONFIGURATION_PATH, 'w') as file_handle:
@@ -207,6 +128,7 @@ def _write_server_config():
 
 def _setup_firewall():
     """Add TUN device to internal zone in firewalld."""
+
     def _configure_interface(interface, operation):
         """Add or remove an interface into internal zone."""
         command = [
