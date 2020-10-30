@@ -39,11 +39,12 @@ class OpenVPNAppView(AppView):
         }
         context['refresh_page_sec'] = 3 if context['status'][
             'setup_running'] else None
+        context['using_ecc'] = openvpn.is_using_ecc()
         return context
 
 
 @require_POST
-def setup(request):
+def setup(_):
     """Start the setup process."""
     if not openvpn.is_setup() and not openvpn.setup_process:
         openvpn.setup_process = actions.superuser_run('openvpn', ['setup'],
@@ -71,6 +72,15 @@ def profile(request):
         'attachment; filename={username}.ovpn'.format(username=username)
 
     return response
+
+
+@require_POST
+def ecc(_):
+    """Migrate from RSA to ECC."""
+    if openvpn.is_setup():
+        openvpn.setup_process = actions.superuser_run('openvpn', ['setup'],
+                                                      run_in_background=True)
+    return redirect('openvpn:index')
 
 
 def _collect_setup_result(request):

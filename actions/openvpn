@@ -14,7 +14,11 @@ from plinth import action_utils, utils
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
-DH_KEY = '/etc/openvpn/freedombox-keys/pki/dh.pem'
+DH_PARAMS = f'{KEYS_DIRECTORY}/pki/dh.pem'
+
+CURVE = 'secp521r1'
+
+EC_PARAMS = f'{KEYS_DIRECTORY}/pki/ecparams/{CURVE}.pem'
 
 SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
 
@@ -32,16 +36,24 @@ port 1194
 proto udp
 proto udp6
 dev tun
+
 client-to-client
+
 ca /etc/openvpn/freedombox-keys/pki/ca.crt
 cert /etc/openvpn/freedombox-keys/pki/issued/server.crt
 key /etc/openvpn/freedombox-keys/pki/private/server.key
-dh /etc/openvpn/freedombox-keys/pki/dh.pem
+
+dh none
+
 server 10.91.0.0 255.255.255.0
 keepalive 10 120
-cipher AES-256-CBC
-comp-lzo
 verb 3
+
+tls-server
+tls-version-min 1.2
+tls-cipher TLS-ECDHE-ECDSA-WITH-AES-256-GCM-SHA384
+cipher AES-256-GCM
+script-security 2
 '''
 
 CLIENT_CONFIGURATION = '''
@@ -52,8 +64,7 @@ proto udp6
 dev tun
 nobind
 remote-cert-tls server
-cipher AES-256-CBC
-comp-lzo
+cipher AES-256-GCM
 redirect-gateway
 verb 3
 <ca>
@@ -65,7 +76,9 @@ verb 3
 
 CERTIFICATE_CONFIGURATION = {
     'EASYRSA_BATCH': '1',
-    'EASYRSA_KEY_SIZE': '4096',
+    'EASYRSA_ALGO': 'ec',
+    'EASYRSA_CURVE': CURVE,
+    'EASYRSA_DIGEST': 'sha512',
     'KEY_CONFIG': '/usr/share/easy-rsa/openssl-easyrsa.cnf',
     'KEY_DIR': KEYS_DIRECTORY,
     'EASYRSA_OPENSSL': 'openssl',
@@ -103,7 +116,7 @@ def parse_arguments():
 
 def _is_setup():
     """Return whether setup is complete."""
-    return utils.is_non_empty_file(DH_KEY)
+    return any(utils.is_non_empty_file(fil) for fil in [DH_PARAMS, EC_PARAMS])
 
 
 def subcommand_is_setup(_):
@@ -178,12 +191,13 @@ def _create_certificates():
         pass
 
     _init_pki()
-    subprocess.check_call(
-        ['/usr/share/easy-rsa/easyrsa', 'build-ca', 'nopass'], **COMMON_ARGS)
-    subprocess.check_call([
-        '/usr/share/easy-rsa/easyrsa', 'build-server-full', 'server', 'nopass'
-    ], **COMMON_ARGS)
-    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'gen-dh'],
+    easy_rsa = '/usr/share/easy-rsa/easyrsa'
+    subprocess.check_call([easy_rsa, 'build-ca', 'nopass'], **COMMON_ARGS)
+    subprocess.check_call([easy_rsa, 'build-server-full', 'server', 'nopass'],
+                          **COMMON_ARGS)
+    subprocess.check_call([easy_rsa, 'gen-req', 'server', 'nopass'],
+                          **COMMON_ARGS)
+    subprocess.check_call([easy_rsa, 'sign-req', 'server', 'server'],
                           **COMMON_ARGS)
 
 

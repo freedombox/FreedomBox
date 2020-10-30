@@ -85,6 +85,10 @@
              value="{% trans "Download my profile" %}"/>
     </form>
 
+    {% if not using_ecc %}
+      {% include "migrate_to_ecc.inc" %}
+    {% endif %}
+
   {% endif %}
 
 {% endblock %}
