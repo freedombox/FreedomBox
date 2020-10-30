@@ -694,7 +694,8 @@ def resolve_url(url, context):
             link_language = DEFAULT_LANGUAGE
 
         # Check for local file and use local path
-        file_ = Path(f'manual/{link_language}') / (link_page + '.raw.wiki')
+        file_ = Path(__file__).parent.parent
+        file_ = file_ / f'manual/{link_language}' / (link_page + '.raw.wiki')
         if file_.exists():
             help_base = LOCAL_BASE.format(lang=link_language)
             url = f'{help_base}{link_page}'

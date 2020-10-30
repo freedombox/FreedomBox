@@ -21,7 +21,7 @@ run-unit-tests:
     - su -c "cd ~/plinth; python3 -m flake8 --exclude actions/domainname-change,actions/dynamicdns,actions/hostname-change,actions/networks plinth actions/*" tester
     - su -c "cd ~/plinth;PYTHONPATH='.' py.test-3 --cov=plinth --cov-report=html:/home/tester/plinth/htmlcov --cov-report=term" tester
     - cp -r /home/tester/plinth/htmlcov test-coverage-report
-    - su -c "cd ~/plinth/doc;./scripts/wikiparser.py" tester
+    - su -c "doc/scripts/wikiparser.py" tester
 
   coverage: '/^TOTAL\s+.*\s+(\d+\.\d+%)$/'
   artifacts:
