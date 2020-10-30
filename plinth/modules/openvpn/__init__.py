@@ -3,6 +3,8 @@
 FreedomBox app to configure OpenVPN server.
 """
 
+import os
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -35,6 +37,8 @@ _description = [
 app = None
 
 setup_process = None
+
+SERVER_CONFIGURATION_FILE = '/etc/openvpn/server/freedombox.conf'
 
 
 class OpenVPNApp(app_module.App):
@@ -100,3 +104,13 @@ def setup(helper, old_version=None):
 def is_setup():
     """Return whether the service is running."""
     return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
+
+
+def is_using_ecc():
+    """Return whether the service is using RSA."""
+    if os.path.exists(SERVER_CONFIGURATION_FILE):
+        with open(SERVER_CONFIGURATION_FILE, 'r') as file_handle:
+            for line in file_handle:
+                if line.strip() == 'dh none':
+                    return True
+    return False
