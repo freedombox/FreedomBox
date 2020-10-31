@@ -9,54 +9,15 @@
 
 {% block status %}
 
-  {% if status.is_setup and not status.setup_running %}
+  {% if status.is_setup %}
     {{ block.super }}
-  {% endif %}
-
-  {% if not status.is_setup and not status.setup_running %}
-    <h3>{% trans "Status" %}</h3>
-
-    <p>
-      {% blocktrans trimmed %}
-        OpenVPN has not yet been setup.  Performing a secure setup
-        takes a very long time.  Depending on how fast your
-        {{ box_name }} is, it may even take hours.  If the setup
-        is interrupted, you may start it again.
-      {% endblocktrans %}
-    </p>
-
-    <form class="form form-setup" method="post"
-          action="{% url 'openvpn:setup' %}">
-      {% csrf_token %}
-
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Start setup" %}"/>
-    </form>
-  {% endif %}
-
-  {% if status.setup_running %}
-    <h3>{% trans "Status" %}</h3>
-
-    <p class="running-status-parent">
-      <span class='running-status loading'></span>
-      {% trans "OpenVPN setup is running" %}
-    </p>
-
-    <p>
-      {% blocktrans trimmed %}
-        To perform a secure setup, this process takes a very long
-        time.  Depending on how fast your {{ box_name }} is, it may
-        even take hours.  If the setup is interrupted, you may start
-        it again.
-      {% endblocktrans %}
-    </p>
   {% endif %}
 
 {% endblock %}
 
 {% block configuration %}
 
-  {% if status.is_setup and not status.setup_running %}
+  {% if status.is_setup %}
 
     <h3>{% trans "Profile" %}</h3>
 

@@ -36,8 +36,6 @@ _description = [
 
 app = None
 
-setup_process = None
-
 SERVER_CONFIGURATION_FILE = '/etc/openvpn/server/freedombox.conf'
 
 
@@ -49,7 +47,7 @@ class OpenVPNApp(app_module.App):
     @property
     def can_be_disabled(self):
         """Return whether the app can be disabled."""
-        return is_setup() and not setup_process
+        return is_setup()
 
     def __init__(self):
         """Create components for the app."""
@@ -97,8 +95,8 @@ class OpenVPNApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    if app.is_enabled() and is_setup():
-        helper.call('post', app.enable)
+    helper.call('post', actions.superuser_run, 'openvpn', ['setup'])
+    helper.call('post', app.enable)
 
 
 def is_setup():
