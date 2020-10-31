@@ -6,6 +6,8 @@ Forms for configuring unattended-upgrades.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.modules import upgrades
+
 
 class ConfigureForm(forms.Form):
     """Configuration form to enable/disable automatic upgrades."""
@@ -15,8 +17,15 @@ class ConfigureForm(forms.Form):
 
     dist_upgrade_enabled = forms.BooleanField(
         label=_('Enable auto-update to next stable release'), required=False,
-        help_text=_('When enabled, FreedomBox will upgrade to the next stable '
+        help_text=_('When enabled, FreedomBox will update to the next stable '
                     'distribution release when it is available.'))
+
+    def __init__(self, *args, **kwargs):
+        """Disable options as necessary."""
+        super().__init__(*args, **kwargs)
+
+        self.fields['dist_upgrade_enabled'].disabled = \
+            not upgrades.can_enable_dist_upgrade()
 
 
 class BackportsFirstbootForm(forms.Form):
