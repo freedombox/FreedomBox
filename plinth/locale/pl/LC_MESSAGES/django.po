@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-19 20:11-0400\n"
-"PO-Revision-Date: 2020-06-10 15:41+0000\n"
-"Last-Translator: WaldiS <sto@tutanota.de>\n"
-"Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/plinth/"
-"pl/>\n"
+"PO-Revision-Date: 2020-11-01 11:26+0000\n"
+"Last-Translator: Radek Pasiok <rpasiok@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/"
+"freedombox/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -153,7 +153,7 @@ msgstr "{app} (Brak danych do utworzenia kopii zapasowej)"
 #, fuzzy
 #| msgid "Create Repository"
 msgid "Repository"
-msgstr "Utwórz repozytorium"
+msgstr "Repozytorium"
 
 #: plinth/modules/backups/forms.py:52
 #: plinth/modules/backups/templates/backups_delete.html:18
@@ -223,15 +223,13 @@ msgstr ""
 "przechowywany w kopii zapasowej."
 
 #: plinth/modules/backups/forms.py:122
-#, fuzzy
-#| msgid "Create Repository"
 msgid "Key in Repository"
-msgstr "Utwórz repozytorium"
+msgstr "Klucz w repozytorium"
 
 #: plinth/modules/backups/forms.py:122
 #: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
 msgid "None"
-msgstr ""
+msgstr "Brak"
 
 #: plinth/modules/backups/forms.py:124 plinth/modules/networks/forms.py:267
 msgid "Passphrase"
@@ -422,20 +420,18 @@ msgid "This repository is encrypted"
 msgstr "To repozytorium jest szyfrowane"
 
 #: plinth/modules/backups/templates/backups_repository.html:34
-#, fuzzy
-#| msgid "Remove Location"
 msgid "Unmount Location"
-msgstr "Usuń lokalizację"
+msgstr "Odmontuj lokalizację"
 
 #: plinth/modules/backups/templates/backups_repository.html:45
-#, fuzzy
-#| msgid "Mount Point"
 msgid "Mount Location"
-msgstr "Punkt montowania"
+msgstr "Zamontuj lokalizację"
 
 #: plinth/modules/backups/templates/backups_repository.html:56
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
+"Usuń lokalizację kopii zapasowej. Nie oznacza to usunięcia samej kopii "
+"zapasowej."
 
 #: plinth/modules/backups/templates/backups_repository.html:77
 msgid "Download"
@@ -521,6 +517,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Nie można się połączyć z hostem SSH %(hostname)s. Proszę się upewnić, że "
+"host jest uruchomiony i przyjmuje połączenia."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
 #, python-format
@@ -528,6 +526,8 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Nie można potwierdzić tożsamości hosta SSH %(hostname)s. Host ogłasza "
+"następujące publiczne klucze SSH. Proszę potwierdzić którykolwiek z nich."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
@@ -644,6 +644,10 @@ msgid ""
 "audio, video and PDF documents can be previewed in the browser. Shared files "
 "can be set to expire after a time period."
 msgstr ""
+"bepasty jest aplikacją sieciową pozwalającą na przesłanie i udostępnienie "
+"dużych plików. Można również wklejać tekst i fragmenty kodu. Tekst, obrazy, "
+"pliki audio i dokumenty PDF można podejrzeć w przeglądarce. Pliki można "
+"udostępniać na określony czas."
 
 #: plinth/modules/bepasty/__init__.py:29
 msgid ""
@@ -652,6 +656,10 @@ msgid ""
 "password, you can share it with the users who should have the associated "
 "permissions."
 msgstr ""
+"bepasty nie wykorzystuje do logowania nazw użytkowników. Używane są jedynie "
+"hasła. Każdemu hasłu można przypisać określone prawa dostępu. Po utworzeniu "
+"hasła można je przekazać użytkownikom, którzy mają mieć związane z nim prawa "
+"dostępu."
 
 #: plinth/modules/bepasty/__init__.py:33
 msgid ""
@@ -660,95 +668,88 @@ msgid ""
 "revoke access for a single person or group, by removing their password from "
 "the list."
 msgstr ""
+"Można też utworzyć wiele haseł z takimi samymi prawami dostępu i przekazać "
+"je różnym użytkownikom bądź grupom. Umożliwi to w przyszłości odebranie "
+"prawa dostępu określonej osobie lub grupie poprzez usunięcie ich hasła."
 
 #: plinth/modules/bepasty/__init__.py:42 plinth/modules/bepasty/__init__.py:51
 msgid "Read a file, if a web link to the file is available"
-msgstr ""
+msgstr "Odczyt pliku dla posiadaczy linku"
 
 #: plinth/modules/bepasty/__init__.py:43
-#, fuzzy
-#| msgid "Restore from uploaded file"
 msgid "Create or upload files"
-msgstr "Odtwórz z przesłanego pliku"
+msgstr "Utwórz lub prześlij pliki"
 
 #: plinth/modules/bepasty/__init__.py:44
 msgid "List all files and their web links"
-msgstr ""
+msgstr "Pokaż wszystkie pliki i ich linki"
 
 #: plinth/modules/bepasty/__init__.py:45
-#, fuzzy
-#| msgid "Delete Archive"
 msgid "Delete files"
-msgstr "Usuń archiwum"
+msgstr "Usuń pliki"
 
 #: plinth/modules/bepasty/__init__.py:46
 msgid "Administer files: lock/unlock files"
-msgstr ""
+msgstr "Zarządzanie plikami: za/odblokuj pliki"
 
 #: plinth/modules/bepasty/__init__.py:50
 msgid "None, password is always required"
-msgstr ""
+msgstr "Brak, zawsze wymagane jest hasło"
 
 #: plinth/modules/bepasty/__init__.py:52
 msgid "List and read all files"
-msgstr ""
+msgstr "Odczyt i lista plików"
 
 #: plinth/modules/bepasty/__init__.py:65 plinth/modules/bepasty/manifest.py:9
 msgid "bepasty"
-msgstr ""
+msgstr "bepasty"
 
 #: plinth/modules/bepasty/__init__.py:67
-#, fuzzy
-#| msgid "File Sharing"
 msgid "File & Snippet Sharing"
-msgstr "Współdzielenie plików"
+msgstr "Udostępnianie tekstu i plików"
 
 #: plinth/modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
-msgstr ""
+msgstr "Dostęp publiczny (domyślne prawa dostępu)"
 
 #: plinth/modules/bepasty/forms.py:18
 msgid "Permissions for anonymous users, who have not provided a password."
-msgstr ""
+msgstr "Dostęp dla użytkowników anonimowych, którzy nie podali hasła."
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
 #: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
 msgid "Permissions"
-msgstr ""
+msgstr "Prawa dostępu"
 
 #: plinth/modules/bepasty/forms.py:29
 msgid ""
 "Users that log in with this password will have the selected permissions."
 msgstr ""
+"Użytkownicy, którzy zalogują się tym hasłem, będą mieli wybrane prawa "
+"dostępu."
 
 #: plinth/modules/bepasty/forms.py:33
 #: plinth/modules/bepasty/templates/bepasty.html:31
 msgid "Comment"
-msgstr ""
+msgstr "Komentarz"
 
 #: plinth/modules/bepasty/forms.py:34
 msgid "Any comment to help you remember the purpose of this password."
-msgstr ""
+msgstr "Komentarz przypominający do czego służy to hasło."
 
 #: plinth/modules/bepasty/templates/bepasty.html:12
-#, fuzzy
-#| msgid "Change password"
 msgid "Manage Passwords"
-msgstr "Zmień hasło"
+msgstr "Zarządzanie hasłami"
 
 #: plinth/modules/bepasty/templates/bepasty.html:16
 #: plinth/modules/bepasty/templates/bepasty.html:18
-#, fuzzy
-#| msgid "Show password"
 msgid "Add password"
-msgstr "Pokaż hasło"
+msgstr "Dodaj hasło"
 
 #: plinth/modules/bepasty/templates/bepasty.html:23
-#, fuzzy
-#| msgid "No archives currently exist."
 msgid "No passwords currently configured."
-msgstr "Obecnie nie istnieją żadne archiwa."
+msgstr "Obecnie nie ma ustawionych żadnych haseł."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
 #: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:205
@@ -758,15 +759,15 @@ msgstr "Hasło"
 
 #: plinth/modules/bepasty/views.py:42
 msgid "Read"
-msgstr ""
+msgstr "Odczyt"
 
 #: plinth/modules/bepasty/views.py:43
 msgid "Create"
-msgstr "Utwórz"
+msgstr "Tworzenie"
 
 #: plinth/modules/bepasty/views.py:44
 msgid "List"
-msgstr ""
+msgstr "Spis plików"
 
 #: plinth/modules/bepasty/views.py:45
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
@@ -781,37 +782,31 @@ msgstr "Usuń"
 
 #: plinth/modules/bepasty/views.py:46
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: plinth/modules/bepasty/views.py:83 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
 #: plinth/modules/tor/views.py:157
 msgid "Configuration updated."
-msgstr ""
+msgstr "Zaktualizowano ustawienia."
 
 #: plinth/modules/bepasty/views.py:86 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
 #: plinth/modules/tor/views.py:159
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Podczas konfiguracji wystąpił błąd."
 
 #: plinth/modules/bepasty/views.py:97
-#, fuzzy
-#| msgid "Password"
 msgid "Password added."
-msgstr "Hasło"
+msgstr "Dodano hasło."
 
 #: plinth/modules/bepasty/views.py:102
-#, fuzzy
-#| msgid "Password"
 msgid "Add Password"
-msgstr "Hasło"
+msgstr "Dodaj hasło"
 
 #: plinth/modules/bepasty/views.py:119
-#, fuzzy
-#| msgid "Password"
 msgid "Password deleted."
-msgstr "Hasło"
+msgstr "Usunięto hasło."
 
 #: plinth/modules/bind/__init__.py:29
 msgid ""
@@ -843,7 +838,7 @@ msgstr "Serwer nazw domen"
 
 #: plinth/modules/bind/forms.py:20
 msgid "Forwarders"
-msgstr ""
+msgstr "Forwarders"
 
 #: plinth/modules/bind/forms.py:21
 msgid ""
@@ -862,7 +857,7 @@ msgstr "Włącz rozszerzenia zabezpieczeń systemu nazw domen"
 
 #: plinth/modules/bind/templates/bind.html:11
 msgid "Serving Domains"
-msgstr ""
+msgstr "Obsługiwane domeny"
 
 #: plinth/modules/bind/templates/bind.html:16
 #: plinth/modules/ikiwiki/forms.py:12
@@ -906,6 +901,9 @@ msgid ""
 "store your e-books on your {box_name}, read them online or from any of your "
 "devices."
 msgstr ""
+"Serwer calibre umożliwia dostęp online do twoich e-booków. Możesz "
+"przechowywać e-booki na twoim {box_name}, czytać je online lub pobrać na "
+"jedno z twoich urządzeń."
 
 #: plinth/modules/calibre/__init__.py:33
 msgid ""
@@ -915,6 +913,12 @@ msgid ""
 "an online web reader. It remembers your last read location, bookmarks, and "
 "highlighted text. Content distribution using OPDS is currently not supported."
 msgstr ""
+"Możesz uporządkować swoje e-booki, modyfikować ich metadane i korzystać z "
+"zaawansowanego wyszukiwania. calibre umożliwia import, eksport i konwersje "
+"pomiędzy wieloma formatami, abyś mógł korzystać ze swych zbiorów na dowolnym "
+"urządzeniu. Dostępny jest również czytnik online. Zapamiętuje on ostatnio "
+"czytaną stronę, zakładki i zaznaczenia tekstu. Dystrybucja OPDS nie jest "
+"obecnie obsługiwana."
 
 #: plinth/modules/calibre/__init__.py:39
 msgid ""
