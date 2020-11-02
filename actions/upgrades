@@ -346,8 +346,8 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
         return
 
     if check_dist == 'testing' and not test_upgrade:
-        print(f'Skipping dist-upgrade to {check_dist} since --test-upgrade is '
-              'not set.')
+        print(f'Skipping dist-upgrade to {check_dist} since --test is not '
+              'set.')
         return
 
     output = subprocess.check_output(['df', '--output=avail,pcent', '/'])
