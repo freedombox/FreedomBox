@@ -38,7 +38,21 @@ If your !FreedomBox is behind a router, you will need to set up port forwarding 
 
  {{{ 
 client
-remote mybox.sds-ip.de 1194
+remote mybox.freedombox.rocks 1194
+proto udp
+}}}
+
+=== Troubleshooting ===
+
+If your network doesn't support IPv6, you might have to remove the following line from your OpenVPN client configuration. This is especially in cases where your server supports IPv6 but client does not thus confusing the OpenVPN client on which protocol to use.
+
+{{{
+proto udp6
+}}}
+
+To connect via IPv4, ensure that the following line is present.
+
+{{{
 proto udp
 }}}
 
