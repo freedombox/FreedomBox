@@ -6,6 +6,8 @@ FreedomBox app for configuring MediaWiki.
 import pathlib
 
 from django import forms
+from django.forms import Widget
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -19,6 +21,29 @@ def get_skins():
             if skin.is_dir()]
 
 
+class PrependWidget(Widget):
+    """Widget to create input-groups with prepended text."""
+
+    def __init__(self, base_widget, data, *args, **kwargs):
+        """Initialize widget and get base instance"""
+        super(PrependWidget, self).__init__(*args, **kwargs)
+        self.base_widget = base_widget(*args, **kwargs)
+        self.data = data
+
+    def render(self, name, value, attrs=None, renderer=None):
+        """Render base widget and add bootstrap spans."""
+        attrs['class'] = 'form-control'
+        field = self.base_widget.render(name, value, attrs, renderer)
+        widget_html = '''
+            <div class="input-group">
+              <span class="input-group-addon">
+                %(data)s
+              </span>
+              %(field)s
+            </div>'''
+        return mark_safe((widget_html) % {'field': field, 'data': self.data})
+
+
 class MediaWikiForm(forms.Form):  # pylint: disable=W0232
     """MediaWiki configuration form."""
     password = forms.CharField(
@@ -26,6 +51,12 @@ class MediaWikiForm(forms.Form):  # pylint: disable=W0232
             'Set a new password for MediaWiki\'s administrator account '
             '(admin). Leave this field blank to keep the current password.'),
         required=False, widget=forms.PasswordInput)
+
+    server_url = forms.CharField(
+        label=_('Server URL'), required=False, help_text=_(
+            'Used by MediaWiki to generate URLs that point to the wiki '
+            'such as in footer, feeds and emails.'),
+        widget=PrependWidget(base_widget=forms.TextInput, data='https://'))
 
     enable_public_registrations = forms.BooleanField(
         label=_('Enable public registrations'), required=False,

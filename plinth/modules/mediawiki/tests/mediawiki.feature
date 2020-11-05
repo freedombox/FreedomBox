@@ -7,6 +7,7 @@ Feature: MediaWiki Wiki Engine
 Background:
   Given I'm a logged in user
   Given the mediawiki application is installed
+  Given the server url is set to test config url
 
 Scenario: Enable mediawiki application
   Given the mediawiki application is disabled

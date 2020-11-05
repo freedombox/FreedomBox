@@ -28,7 +28,10 @@ class UpgradesConfigurationView(AppView):
     app_id = 'upgrades'
 
     def get_initial(self):
-        return {'auto_upgrades_enabled': upgrades.is_enabled()}
+        return {
+            'auto_upgrades_enabled': upgrades.is_enabled(),
+            'dist_upgrade_enabled': upgrades.is_dist_upgrade_enabled()
+        }
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -68,6 +71,17 @@ class UpgradesConfigurationView(AppView):
             else:
                 messages.success(self.request,
                                  _('Automatic upgrades disabled'))
+
+        if old_status['dist_upgrade_enabled'] \
+           != new_status['dist_upgrade_enabled']:
+            upgrades.set_dist_upgrade_enabled(
+                new_status['dist_upgrade_enabled'])
+            if new_status['dist_upgrade_enabled']:
+                messages.success(self.request,
+                                 _('Distribution upgrade enabled'))
+            else:
+                messages.success(self.request,
+                                 _('Distribution upgrade disabled'))
 
         return super().form_valid(form)
 

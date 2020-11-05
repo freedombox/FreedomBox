@@ -17,9 +17,10 @@ version = 8
 
 is_essential = True
 
-managed_services = ['apache2']
+managed_services = ['apache2', 'uwsgi']
 
-managed_packages = ['apache2', 'php-fpm', 'ssl-cert']
+managed_packages = ['apache2', 'php-fpm', 'ssl-cert', 'uwsgi',
+                    'uwsgi-plugin-python3']
 
 app = None
 

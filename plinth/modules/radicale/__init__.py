@@ -20,9 +20,7 @@ from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 2
 
-managed_packages = ['radicale', 'uwsgi', 'uwsgi-plugin-python3']
-
-managed_services = ['uwsgi']
+managed_packages = ['radicale']
 
 _description = [
     format_lazy(

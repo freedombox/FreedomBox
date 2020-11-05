@@ -152,7 +152,10 @@ def is_available(browser, site_name):
     not_404 = '404' not in browser.title
     # The site might have a default path after the sitename,
     # e.g /mediawiki/Main_Page
-    no_redirect = browser.url.startswith(url_to_visit.strip('/'))
+    print('URL =', browser.url, url_to_visit, browser.title)
+    browser_url = browser.url.partition('://')[2]
+    url_to_visit_without_proto = url_to_visit.strip('/').partition('://')[2]
+    no_redirect = browser_url.startswith(url_to_visit_without_proto)
     return not_404 and no_redirect
 
 

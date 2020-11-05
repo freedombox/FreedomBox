@@ -4,12 +4,19 @@ Functional, browser based tests for mediawiki app.
 """
 
 import pathlib
+from urllib.parse import urlparse
 
-from pytest_bdd import parsers, scenarios, then, when
+from pytest_bdd import given, parsers, scenarios, then, when
 
 from plinth.tests import functional
+from plinth.tests.functional import config
 
 scenarios('mediawiki.feature')
+
+
+@given(parsers.parse('the server url is set to test config url'))
+def set_server_url(session_browser):
+    _set_server_url(session_browser)
 
 
 @when(parsers.parse('I enable mediawiki public registrations'))
@@ -57,8 +64,7 @@ def mediawiki_allows_anonymous_reads_edits(session_browser):
 @then(
     parsers.parse(
         'the mediawiki site should not allow anonymous reads and writes'))
-def mediawiki_does_not_allow__account_creation_anonymous_reads_edits(
-        session_browser):
+def mediawiki_does_not_allow_anonymous_reads_edits(session_browser):
     _verify_no_anonymous_reads_edits_link(session_browser)
 
 
@@ -216,3 +222,11 @@ def __has_main_page(browser):
     functional.visit(browser, '/mediawiki/Main_Page')
     content = browser.find_by_id('mw-content-text').first
     return 'This page has been deleted.' not in content.text
+
+
+def _set_server_url(browser):
+    """Set the value of server url to the value in the given env_var."""
+    functional.nav_to_module(browser, 'mediawiki')
+    server_url = urlparse(config['DEFAULT']['url']).netloc
+    browser.find_by_id('id_server_url').fill(server_url)
+    functional.submit(browser, form_class='form-configuration')

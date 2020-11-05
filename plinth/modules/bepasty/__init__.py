@@ -17,9 +17,7 @@ from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
 version = 2
 
-managed_packages = ['bepasty', 'uwsgi', 'uwsgi-plugin-python3']
-
-managed_services = ['uwsgi']
+managed_packages = ['bepasty']
 
 _description = [
     _('bepasty is a web application that allows large files to be uploaded '

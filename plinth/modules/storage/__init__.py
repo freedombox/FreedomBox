@@ -309,14 +309,14 @@ def warn_about_low_disk_space(request):
         title = ugettext_noop('Low disk space')
         data = {
             'app_icon': 'fa-hdd-o',
-            'app_name': ugettext_noop('Storage'),
+            'app_name': 'translate:' + ugettext_noop('Storage'),
             'percent_used': root_info['percent_used'],
             'free_space': format_bytes(root_info['free_bytes'])
         }
         actions = [{
             'type': 'link',
             'class': 'primary',
-            'text': 'Go to {app_name}',
+            'text': ugettext_noop('Go to {app_name}'),
             'url': 'storage:index'
         }, {
             'type': 'dismiss'
@@ -338,7 +338,11 @@ def report_failing_drive(id, is_failing):
     message = ugettext_noop(
         'Disk {id} is reporting that it is likely to fail in the near future. '
         'Copy any data while you still can and replace the drive.')
-    data = {'id': id}
+    data = {
+        'app_icon': 'fa-hdd-o',
+        'app_name': 'translate:' + ugettext_noop('Storage'),
+        'id': id
+    }
     note = Notification.update_or_create(id=notification_id, app_id='storage',
                                          severity='error', title=title,
                                          message=message, actions=[{

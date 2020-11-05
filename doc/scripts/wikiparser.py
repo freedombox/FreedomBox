@@ -6,6 +6,7 @@ MoinMoin wiki parser
 
 import logging
 import re
+import sys
 import urllib
 from enum import Enum
 from pathlib import Path
@@ -693,7 +694,8 @@ def resolve_url(url, context):
             link_language = DEFAULT_LANGUAGE
 
         # Check for local file and use local path
-        file_ = Path(f'manual/{link_language}') / (link_page + '.raw.wiki')
+        file_ = Path(__file__).parent.parent
+        file_ = file_ / f'manual/{link_language}' / (link_page + '.raw.wiki')
         if file_.exists():
             help_base = LOCAL_BASE.format(lang=link_language)
             url = f'{help_base}{link_page}'
@@ -2060,7 +2062,9 @@ if __name__ == '__main__':
     if not arguments.skip_tests:
         # Make tests verbose if no input files given
         verbose = not arguments.input
-        doctest.testmod(verbose=verbose)
+        num_failed = doctest.testmod(verbose=verbose)[0]
+        if num_failed > 0:
+            sys.exit(1)
 
     for in_file in arguments.input:
         with in_file.open() as wiki_file:

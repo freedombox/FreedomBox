@@ -42,6 +42,19 @@ remote tu.freedombox.org 1194
 proto udp
 }}}
 
+=== Resolución de problemas ===
+
+Si tu red no soporta IPv6 quizá tengas que eliminar la siguiente línea de la configuración del cliente OpenVPN. Especialmente en casos en los que tu servidor soporta IPv6 pero tu cliente no, lo que causa confusión en el cliente respecto a qué protocolo emplear.
+{{{
+proto udp6
+}}}
+
+Para conectar por IPv4, asegúrate de que la siguiente línea consta.
+
+{{{
+proto udp
+}}}
+
 === Navegar por Internet tras conectar a una VPN ===
 
 Tras conectar a la VPN el dispositivo cliente podrá navegar por Internet sin más configuración adicional. No obstante una pre-condición para que esto funcione es que necesitas tener al menos 1 interfaz (tarjeta) de red conectado a Internet en la zona ''Externa'' del cortafuegos. Usa la página de configuración de redes para editar la zona del cortafuegos con los interfaces (tarjetas) de red del dispositivo.
