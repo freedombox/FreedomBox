@@ -10,15 +10,13 @@ import subprocess
 
 import augeas
 
-from plinth import action_utils, utils
+from plinth import action_utils
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
 DH_PARAMS = f'{KEYS_DIRECTORY}/pki/dh.pem'
 
-CURVE = 'secp521r1'
-
-EC_PARAMS = f'{KEYS_DIRECTORY}/pki/ecparams/{CURVE}.pem'
+EC_PARAMS_DIR = f'{KEYS_DIRECTORY}/pki/ecparams'
 
 SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
 
@@ -77,7 +75,6 @@ verb 3
 CERTIFICATE_CONFIGURATION = {
     'EASYRSA_BATCH': '1',
     'EASYRSA_ALGO': 'ec',
-    'EASYRSA_CURVE': CURVE,
     'EASYRSA_DIGEST': 'sha512',
     'KEY_CONFIG': '/usr/share/easy-rsa/openssl-easyrsa.cnf',
     'KEY_DIR': KEYS_DIRECTORY,
@@ -116,7 +113,7 @@ def parse_arguments():
 
 def _is_setup():
     """Return whether setup is complete."""
-    return any(utils.is_non_empty_file(fil) for fil in [DH_PARAMS, EC_PARAMS])
+    return any(os.path.exists(fil) for fil in [DH_PARAMS, EC_PARAMS_DIR])
 
 
 def subcommand_is_setup(_):

@@ -47,7 +47,7 @@ def test_is_setup_with_ecc(keys_directory, call_action):
     """is_setup should work with RSA configuration."""
     with patch('plinth.actions.superuser_run', call_action):
         (keys_directory / 'pki' / 'ecparams').mkdir(parents=True)
-        ec_params_file = keys_directory / 'pki' / 'ecparams' / 'secp521r1.pem'
+        ec_params_file = keys_directory / 'pki' / 'ecparams' / 'somecurve.pem'
         ec_params_file.write_text('some content')
         assert openvpn.is_setup()
         os.remove(ec_params_file)

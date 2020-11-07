@@ -36,7 +36,7 @@ def fixture_call_action(capsys, keys_directory):
 
     def _call_action(module_name, args, **kwargs):
         actions.DH_PARAMS = f'{keys_directory}/pki/dh.pem'
-        actions.EC_PARAMS = f'{keys_directory}/pki/ecparams/secp521r1.pem'
+        actions.EC_PARAMS_DIR = f'{keys_directory}/pki/ecparams'
         with patch('argparse._sys.argv', [module_name] + args):
             actions.main()
             captured = capsys.readouterr()
