@@ -377,6 +377,9 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
 
 def _perform_dist_upgrade():
     """Perform upgrade to next release of Debian."""
+    # Hold freedombox package during entire dist upgrade.
+    subprocess.run(['apt-mark', 'hold', 'freedombox'])
+
     run_apt_command(['update'])
     run_apt_command(['install', 'base-files'])
     run_apt_command(['install', 'unattended-upgrades'])
@@ -396,6 +399,7 @@ def _perform_dist_upgrade():
         subprocess.run(['apt-mark', 'unhold'] + HOLD_PACKAGES)
 
     run_apt_command(['autoremove'])
+    subprocess.run(['apt-mark', 'unhold', 'freedombox'])
 
     print('Dist upgrade complete. Removing flag.')
     if dist_upgrade_flag.exists():
