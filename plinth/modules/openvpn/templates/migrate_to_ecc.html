@@ -1,6 +1,8 @@
-{% load i18n %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
 
-<hr/>
+{% load i18n %}
 
 <h3>{% trans "Migrate to ECC" %}</h3>
 
@@ -15,16 +17,16 @@
 
 <p>
   {% blocktrans trimmed %}
-    Existing client profiles will be invalidated by this operation. All
-    OpenVPN users on {{ box_name }} should download their new profiles. OpenVPN
-    clients compatible with ECC should be used to connect to this server.
+    All new installations of OpenVPN on {{ box_name }} will
+    use ECC by default. We recommend migrating as soon as possible.
   {% endblocktrans %}
 </p>
 
-<p>
+<p class="bg-warning">
   {% blocktrans trimmed %}
-    All new installations of OpenVPN on {{ box_name }} will
-    use ECC by default. We recommend migrating as soon as possible.
+    <b>Warning:</b> Existing client profiles will be invalidated by this operation. All
+    OpenVPN users on {{ box_name }} must download their new profiles. OpenVPN
+    clients compatible with ECC should be used to connect to this server.
   {% endblocktrans %}
 </p>
 
