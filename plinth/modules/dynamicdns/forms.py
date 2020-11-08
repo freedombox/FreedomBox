@@ -115,6 +115,10 @@ class ConfigureForm(forms.Form):
         help_text=help_ip_url,
         validators=[validators.URLValidator(schemes=['http', 'https', 'ftp'])])
 
+    use_ipv6 = forms.BooleanField(
+        label=ugettext_lazy('Use IPv6 instead of IPv4'),
+        required=False)
+
     def clean(self):
         cleaned_data = super(ConfigureForm, self).clean()
         dynamicdns_secret = cleaned_data.get('dynamicdns_secret')

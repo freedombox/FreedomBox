@@ -157,6 +157,11 @@ def get_status():
     else:
         status['use_http_basic_auth'] = False
 
+    if len(details) > 9:
+        status['use_ipv6'] = (output.split()[9] == 'enabled')
+    else:
+        status['use_ipv6'] = False
+
     if not status['dynamicdns_server'] and not status['dynamicdns_update_url']:
         status['service_type'] = 'GnuDIP'
     elif not status['dynamicdns_server'] and status['dynamicdns_update_url']:

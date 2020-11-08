@@ -22,7 +22,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # static values
 WGET=$(which wget)
-WGETOPTIONS="-4 -o /dev/null -t 3 -T 3"
+WGETOPTIONS="-o /dev/null -t 3 -T 3"
 EMPTYSTRING="none"
 NOIP="0.0.0.0"
 # how often do we poll for IP changes if we are behind a NAT?
@@ -51,8 +51,9 @@ doGetOpt()
 {
     basicauth=0
     ignoreCertError=0
+    useIPv6=0
 
-    while getopts ":s:d:u:P:I:U:c:b:p" opt; do
+    while getopts ":s:d:u:P:I:U:c:b:6:p" opt; do
         case ${opt} in
             s)
                 if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
@@ -95,6 +96,9 @@ doGetOpt()
             c)
                 ignoreCertError=${OPTARG}
             ;;            
+            6)
+                useIPv6=${OPTARG}
+            ;;
             \?)
                 echo "Invalid option: -${OPTARG}" >&2
                 exit 1
@@ -137,6 +141,7 @@ doWriteCFG()
         echo "POSTURL ${updateurl}"
         echo "POSTAUTH ${basicauth}"
         echo "POSTSSLIGNORE ${ignoreCertError}"
+        echo "POSTUSEIPV6 ${useIPv6}"
     } > ${HELPERCFG}
     
     # check if we are behind a NAT Router
@@ -187,6 +192,7 @@ doReadCFG()
         updateurl=$(grep POSTURL "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
         basicauth=$(grep POSTAUTH "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
         ignoreCertError=$(grep POSTSSLIGNORE "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
+        useIPv6=$(grep POSTUSEIPV6 "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
     fi  
 }
 
@@ -259,6 +265,11 @@ doStatus()
     else
         echo "${DISABLED_STRING}"
     fi
+    if [ ! -z "${useIPv6}" ];then
+        echo "${useIPv6}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
 }
 
 # ask a public WEB Server for the WAN IP we are comming from
@@ -266,11 +277,18 @@ doStatus()
 doGetWANIP()
 {
     if [ ! -z "${ipurl}" ];then
-        outfile=$(mktemp)
-        local cmd="${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}"
-        $cmd
-        wanip=$(sed s/[^0-9.]//g "${outfile}")
-        rm "${outfile}"
+        local wgetoptions="${WGETOPTIONS}"
+        if [ "${useIPv6}" = "enabled" ];then
+            wgetoptions="${wgetoptions} -6"
+        else
+            wgetoptions="${wgetoptions} -4"
+        fi
+        local cmd="${WGET} ${wgetoptions} -O - ${ipurl}"
+        if [ "${useIPv6}" = "enabled" ];then
+            wanip=$($cmd | tr A-F a-f | sed s/[^0-9a-f:]//g)
+        else
+            wanip=$($cmd | sed s/[^0-9.]//g)
+        fi
         [ -z "${wanip}" ] && wanip=${NOIP}
     else
         # no WAN IP found because of missing check URL
@@ -282,7 +300,11 @@ doGetWANIP()
 # this function is called via cronjob
 doUpdate()
 {
-    local dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
+    if [ "${useIPv6}" = "enabled" ];then
+        local dnsentry="$(host -t AAAA "${host}" | sed 's/.*address\s*//')"
+    else
+        local dnsentry="$(host -t A "${host}" | sed 's/.*address\s*//')"
+    fi
     if [ "${dnsentry}" = "${wanip}" ];then
         return
     fi
@@ -296,6 +318,11 @@ doUpdate()
         fi
         if [ "${ignoreCertError}" = "enabled" ];then
             WGETOPTIONS="${WGETOPTIONS} --no-check-certificate "
+        fi
+        if [ "${useIPv6}" = "enabled" ];then
+            WGETOPTIONS="${WGETOPTIONS} -6"
+        else
+            WGETOPTIONS="${WGETOPTIONS} -4"
         fi
         local cmd="${WGET} -O /dev/null ${WGETOPTIONS} ${updateurl}"
         $cmd
@@ -431,6 +458,7 @@ case ${cmd} in
         echo "-U <update URL>         The update URL (a HTTP GET on this URL will be done)"
         echo "-c <1|0>                disable SSL check on Update URL"
         echo "-b <1|0>                use HTTP basic auth on Update URL"
+        echo "-6                      use IPv6 type address"
         echo ""
         echo "update                  do a one time update"
         echo "clean                   delete configuration"
