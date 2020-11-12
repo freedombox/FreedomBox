@@ -13,6 +13,7 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
@@ -52,6 +53,9 @@ class OpenVPNApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        self.groups = {'vpn': _('Connect to VPN services')}
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('OpenVPN'), icon_filename='openvpn',
                                short_description=_('Virtual Private Network'),
@@ -82,6 +86,10 @@ class OpenVPNApp(app_module.App):
         daemon = Daemon('daemon-openvpn', managed_services[0],
                         listen_ports=[(1194, 'udp4'), (1194, 'udp6')])
         self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-openvpn',
+                                          groups=self.groups)
+        self.add(users_and_groups)
 
     def is_enabled(self):
         """Return whether all the leader components are enabled.
