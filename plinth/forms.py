@@ -27,6 +27,7 @@ class DomainSelectionForm(forms.Form):
     """Form for selecting a domain name to be used for
     distributed federated applications
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -80,6 +81,10 @@ class LanguageSelectionForm(LanguageSelectionFormMixin, forms.Form):
     language = LanguageSelectionFormMixin.language
 
 
+def _get_value_in_parens(string):
+    return string[string.find("(") + 1:string.find(")")]
+
+
 class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
     """
     Subclass of Django's CheckboxSelectMultiple widget that allows setting
@@ -89,6 +94,7 @@ class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
 
     Derived from https://djangosnippets.org/snippets/2786/
     """
+
     def render(self, name, value, attrs=None, choices=(), renderer=None):
         if value is None:
             value = []
@@ -105,7 +111,9 @@ class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
                 if dict.get(option_label, 'readonly'):
                     final_attrs = dict(final_attrs, readonly='readonly')
                 option_label = option_label['label']
-            final_attrs = dict(final_attrs, id='{}_{}'.format(attrs['id'], i))
+            group_name = _get_value_in_parens(option_label)
+            final_attrs = dict(final_attrs,
+                               id='{}_{}'.format(attrs['id'], group_name))
             label_for = u' for="{}"'.format(final_attrs['id'])
             cb = CheckboxInput(final_attrs,
                                check_test=lambda value: value in str_values)
@@ -114,3 +122,18 @@ class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
                           (label_for, rendered_cb, option_label))
         output.append(u'</ul>')
         return mark_safe(u'\n'.join(output))
+
+
+class CheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):
+    """CheckboxSelectMultiple with ids named after choices."""
+
+    def id_for_label(self, id_, index=None):
+        """
+        Make ids looks like id_groups_groupname where
+        a choice is like ('groupname', 'Group description').
+        """
+        if index is None:
+            return ''
+        if id_ and self.add_id_index:
+            id_ = '%s_%s' % (id_, list(self.choices)[int(index)][0])
+        return id_

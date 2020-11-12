@@ -488,3 +488,30 @@ def get_forwarders(browser):
     """Return the forwarders list (space separated) in bind configuration."""
     nav_to_module(browser, 'bind')
     return browser.find_by_name('forwarders').first.value
+
+
+##############################
+# Users and Groups utilities #
+##############################
+
+
+def create_user(browser, name, password, groups=[]):
+    """Create a user with password and user groups."""
+    nav_to_module(browser, 'users')
+    with wait_for_page_update(browser):
+        browser.find_link_by_href('/plinth/sys/users/create/').first.click()
+    browser.find_by_id('id_username').fill(name)
+    browser.find_by_id('id_password1').fill(password)
+    browser.find_by_id('id_password2').fill(password)
+    for group in groups:
+        browser.find_by_id(f'id_groups_{group}').check()
+    browser.find_by_id('id_confirm_password').fill(
+        config['DEFAULT']['password'])
+    submit(browser)
+
+
+def user_exists(browser, name):
+    """Check if a user with a given name exists."""
+    nav_to_module(browser, 'users')
+    links = browser.find_link_by_href(f'/plinth/sys/users/{name}/edit/')
+    return len(links) == 1

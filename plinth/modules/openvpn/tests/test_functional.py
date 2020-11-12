@@ -28,7 +28,9 @@ def openvpn_profile_download_compare(session_browser,
 
 
 def _download_profile(browser):
-    """Download the current user's profile into a file and return path."""
-    functional.nav_to_module(browser, 'openvpn')
-    url = browser.find_by_css('.form-profile')['action']
-    return functional.download_file(browser, url)
+    """Return the content of the current user's OpenVPN profile."""
+    default_url = functional.config['DEFAULT']['URL']
+    browser.visit(default_url)
+    browser.click_link_by_href('?selected=shortcut-openvpn')
+    return functional.download_file(
+        browser, f'{default_url}/plinth/apps/openvpn/profile/')
