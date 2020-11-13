@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
+from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from plinth import __version__, actions, package
@@ -179,14 +180,35 @@ class UpdateFirstbootView(FormView):
     template_name = 'update-firstboot.html'
     form_class = UpdateFirstbootForm
 
+    def __init__(self):
+        """Define instance attribute."""
+        self.update = True
+
     def get_success_url(self):
         """Return next firstboot step."""
+        if self.update:
+            return reverse_lazy('upgrades:update-firstboot-progress')
+
         return reverse_lazy(first_boot.next_step())
 
     def form_valid(self, form):
         """Run update if selected, and mark step as done."""
-        if form.cleaned_data['update_now']:
+        self.update = form.cleaned_data['update_now']
+        if self.update:
             actions.superuser_run('upgrades', ['run'])
 
         first_boot.mark_step_done('initial_update')
         return super().form_valid(form)
+
+
+class UpdateFirstbootProgressView(TemplateView):
+    """View to show initial update progress."""
+    template_name = 'update-firstboot-progress.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['is_busy'] = (_is_updating()
+                              or package.is_package_manager_busy())
+        context['next_step'] = first_boot.next_step()
+        context['refresh_page_sec'] = 3 if context['is_busy'] else None
+        return context
