@@ -17,7 +17,7 @@ from plinth.errors import ActionError
 from plinth.modules import first_boot, upgrades
 from plinth.views import AppView
 
-from .forms import BackportsFirstbootForm, ConfigureForm
+from .forms import BackportsFirstbootForm, ConfigureForm, UpdateFirstbootForm
 
 
 class UpgradesConfigurationView(AppView):
@@ -171,4 +171,22 @@ class BackportsFirstbootView(FormView):
         upgrades.set_backports_requested(enabled)
         upgrades.setup_repositories(None)
         first_boot.mark_step_done('backports_wizard')
+        return super().form_valid(form)
+
+
+class UpdateFirstbootView(FormView):
+    """View to run initial update during first boot wizard."""
+    template_name = 'update-firstboot.html'
+    form_class = UpdateFirstbootForm
+
+    def get_success_url(self):
+        """Return next firstboot step."""
+        return reverse_lazy(first_boot.next_step())
+
+    def form_valid(self, form):
+        """Run update if selected, and mark step as done."""
+        if form.cleaned_data['update_now']:
+            actions.superuser_run('upgrades', ['run'])
+
+        first_boot.mark_step_done('initial_update')
         return super().form_valid(form)
