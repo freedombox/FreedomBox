@@ -11,7 +11,7 @@ import re
 import subprocess
 import sys
 
-from plinth.action_utils import run_apt_command, service_restart
+from plinth.action_utils import apt_hold, run_apt_command, service_restart
 from plinth.modules.apache.components import check_url
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
@@ -378,28 +378,22 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
 def _perform_dist_upgrade():
     """Perform upgrade to next release of Debian."""
     # Hold freedombox package during entire dist upgrade.
-    subprocess.run(['apt-mark', 'hold', 'freedombox'])
+    with apt_hold():
+        run_apt_command(['update'])
+        run_apt_command(['install', 'base-files'])
+        run_apt_command(['install', 'unattended-upgrades'])
+        subprocess.run(['unattended-upgrade', '--verbose'])
 
-    run_apt_command(['update'])
-    run_apt_command(['install', 'base-files'])
-    run_apt_command(['install', 'unattended-upgrades'])
-    subprocess.run(['unattended-upgrade', '--verbose'])
+        # Remove obsolete packages that may prevent other packages from
+        # upgrading.
+        run_apt_command(['remove', 'libgcc1'])
 
-    # Remove obsolete packages that may prevent other packages from
-    # upgrading.
-    run_apt_command(['remove', 'libgcc1'])
+        # Hold packages known to have conffile prompts. FreedomBox service
+        # will handle their upgrade later.
+        with apt_hold(['firewalld', 'radicale']):
+            run_apt_command(['full-upgrade'])
 
-    # Hold packages known to have conffile prompts. FreedomBox service
-    # will handle their upgrade later.
-    HOLD_PACKAGES = ['firewalld', 'radicale']
-    try:
-        subprocess.run(['apt-mark', 'hold'] + HOLD_PACKAGES)
-        run_apt_command(['full-upgrade'])
-    finally:
-        subprocess.run(['apt-mark', 'unhold'] + HOLD_PACKAGES)
-
-    run_apt_command(['autoremove'])
-    subprocess.run(['apt-mark', 'unhold', 'freedombox'])
+        run_apt_command(['autoremove'])
 
     print('Dist upgrade complete. Removing flag.')
     if dist_upgrade_flag.exists():
