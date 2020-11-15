@@ -378,21 +378,31 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
 def _perform_dist_upgrade():
     """Perform upgrade to next release of Debian."""
     # Hold freedombox package during entire dist upgrade.
+    print('Holding freedombox package...')
     with apt_hold():
+        print('Updating Apt cache...')
         run_apt_command(['update'])
+
+        print('Upgrading base-files and unattended-upgrades...')
         run_apt_command(['install', 'base-files'])
         run_apt_command(['install', 'unattended-upgrades'])
+
+        print('Running unattended-upgrade...')
         subprocess.run(['unattended-upgrade', '--verbose'])
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.
+        print('Removing libgcc1...')
         run_apt_command(['remove', 'libgcc1'])
 
         # Hold packages known to have conffile prompts. FreedomBox service
         # will handle their upgrade later.
+        print('Holding firewalld and radicale packages...')
         with apt_hold(['firewalld', 'radicale']):
+            print('Running apt full-upgrade...')
             run_apt_command(['full-upgrade'])
 
+        print('Running apt autoremove...')
         run_apt_command(['autoremove'])
 
     print('Dist upgrade complete. Removing flag.')
@@ -402,6 +412,7 @@ def _perform_dist_upgrade():
     # FreedomBox Service may have tried to restart several times
     # during the upgrade, but failed. It will stop trying after 5
     # retries. Restart it once more to ensure it is running.
+    print('Restarting FreedomBox service...')
     service_restart('plinth')
 
 
