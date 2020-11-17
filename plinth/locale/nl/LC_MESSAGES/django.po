@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 19:02-0500\n"
+"POT-Creation-Date: 2020-11-16 19:46-0500\n"
 "PO-Revision-Date: 2020-11-16 19:57+0000\n"
 "Last-Translator: Reg Me <regmeplus@zoho.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -850,7 +850,7 @@ msgid "Refresh IP address and domains"
 msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
 #: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
 #: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
@@ -1595,19 +1595,23 @@ msgstr "Toon wachtwoord"
 msgid "URL to look up public IP"
 msgstr "URL voor controle van het IP-adres"
 
-#: plinth/modules/dynamicdns/forms.py:138
+#: plinth/modules/dynamicdns/forms.py:119
+msgid "Use IPv6 instead of IPv4"
+msgstr ""
+
+#: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Voer een update URL of GnuDIP Serveradres in"
 
-#: plinth/modules/dynamicdns/forms.py:143
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP username"
 msgstr "Voer een GnuDIP gebruikersnaam in"
 
-#: plinth/modules/dynamicdns/forms.py:147
+#: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide a GnuDIP domain name"
 msgstr "Voer een GnuDIP domeinnaam in"
 
-#: plinth/modules/dynamicdns/forms.py:152
+#: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a password"
 msgstr "Voer een wachtwoord in"
 
@@ -1688,8 +1692,6 @@ msgstr "Over ons"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:17
-#: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -2212,8 +2214,8 @@ msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
 msgstr ""
-"Er is een nieuwe %(box_name)s versie <a href=\"%(upgrades_url)s\""
-">beschikbaar</a>."
+"Er is een nieuwe %(box_name)s versie <a href=\"%(upgrades_url)s"
+"\">beschikbaar</a>."
 
 #: plinth/modules/help/templates/help_about.html:74
 #: plinth/modules/upgrades/templates/upgrades_configure.html:53
@@ -4570,7 +4572,7 @@ msgstr "Verbinding {name} verwijderd."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kan verbinding niet verwijderen: Verbinding niet gevonden."
 
-#: plinth/modules/openvpn/__init__.py:26
+#: plinth/modules/openvpn/__init__.py:28
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4588,16 +4590,16 @@ msgstr ""
 "mogelijk om de rest van het internetgebruik via {box_name} te leiden, voor "
 "meer veiligheid en anonimiteit."
 
-#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Virtual Private Network"
 
-#: plinth/modules/openvpn/__init__.py:66
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4608,41 +4610,45 @@ msgstr ""
 msgid "Tunnelblick"
 msgstr ""
 
-#: plinth/modules/openvpn/templates/openvpn.html:20
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
+msgid "Migrate to ECC"
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
+msgid ""
+"Your OpenVPN installation is currently using RSA. Switching to the modern "
+"Elliptic Curve Cryptography improves speed of establishing a connection and "
+"security. This operation is irreversible. It should only take a few minutes "
+"on most single board computers."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
 #, python-format
 msgid ""
-"OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
-"time.  Depending on how fast your %(box_name)s is, it may even take hours.  "
-"If the setup is interrupted, you may start it again."
+"All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
+"recommend migrating as soon as possible."
 msgstr ""
-"OpenVPN is nog niet ingesteld. Een veilige installatie vergt veel tijd. "
-"Afhankelijk van de snelheid van %(box_name)s kan dit zelfs uren duren. Als "
-"de installatie wordt onderbroken, kan deze opnieuw gestart worden."
 
-#: plinth/modules/openvpn/templates/openvpn.html:33
-msgid "Start setup"
-msgstr "Setup starten"
-
-#: plinth/modules/openvpn/templates/openvpn.html:42
-msgid "OpenVPN setup is running"
-msgstr "OpenVPN setup draait"
-
-#: plinth/modules/openvpn/templates/openvpn.html:46
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
 #, python-format
 msgid ""
-"To perform a secure setup, this process takes a very long time.  Depending "
-"on how fast your %(box_name)s is, it may even take hours.  If the setup is "
-"interrupted, you may start it again."
+"<b>Warning:</b> Existing client profiles will be invalidated by this "
+"operation. All OpenVPN users on %(box_name)s must download their new "
+"profiles. OpenVPN clients compatible with ECC should be used to connect to "
+"this server."
 msgstr ""
-"Een veilige installatie vergt veel tijd. Afhankelijk van de snelheid van "
-"%(box_name)s kan dit soms uren duren. Als de installatie wordt onderbroken, "
-"kan deze weer opnieuw gestart worden."
 
-#: plinth/modules/openvpn/templates/openvpn.html:61
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
+#, fuzzy
+#| msgid "Moderate"
+msgid "Migrate"
+msgstr "Modereren"
+
+#: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
 msgstr "Profiel"
 
-#: plinth/modules/openvpn/templates/openvpn.html:64
+#: plinth/modules/openvpn/templates/openvpn.html:25
 #, fuzzy, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
@@ -4662,23 +4668,15 @@ msgstr ""
 "OpenVPN\" title=\"%(box_name)s Manual - OpenVPN\">handleiding</a> met "
 "aanbevolen cliënts en gebruiksinstructies."
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:35
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr ""
 "Profielen zijn voor iedere gebruiker van %(box_name)s anders. Houd ze geheim."
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:46
 msgid "Download my profile"
 msgstr "Download mijn profiel"
-
-#: plinth/modules/openvpn/views.py:88
-msgid "Setup completed."
-msgstr "Instelling voltooid."
-
-#: plinth/modules/openvpn/views.py:90
-msgid "Setup failed."
-msgstr "Instelling mislukt."
 
 #: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
@@ -5216,8 +5214,8 @@ msgid ""
 msgstr ""
 "Je kan het gebruiken door de gebruikersnaam en wachtwoord in te vullen van "
 "het e-mail account waar je toegang tot wil hebben, gevolgd door de "
-"domeinnaam van de IMAP server van de e-mailprovider, zoals <code>imap.example"
-".com</code>.  Voor IMAP over SSL (aanbevolen): vul het serverveld in, "
+"domeinnaam van de IMAP server van de e-mailprovider, zoals <code>imap."
+"example.com</code>.  Voor IMAP over SSL (aanbevolen): vul het serverveld in, "
 "bijvoorbeeld <code>imaps://imap.example.com</code>."
 
 #: plinth/modules/roundcube/__init__.py:31
@@ -7944,6 +7942,36 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
+#~ "long time.  Depending on how fast your %(box_name)s is, it may even take "
+#~ "hours.  If the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "OpenVPN is nog niet ingesteld. Een veilige installatie vergt veel tijd. "
+#~ "Afhankelijk van de snelheid van %(box_name)s kan dit zelfs uren duren. "
+#~ "Als de installatie wordt onderbroken, kan deze opnieuw gestart worden."
+
+#~ msgid "Start setup"
+#~ msgstr "Setup starten"
+
+#~ msgid "OpenVPN setup is running"
+#~ msgstr "OpenVPN setup draait"
+
+#~ msgid ""
+#~ "To perform a secure setup, this process takes a very long time.  "
+#~ "Depending on how fast your %(box_name)s is, it may even take hours.  If "
+#~ "the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "Een veilige installatie vergt veel tijd. Afhankelijk van de snelheid van "
+#~ "%(box_name)s kan dit soms uren duren. Als de installatie wordt "
+#~ "onderbroken, kan deze weer opnieuw gestart worden."
+
+#~ msgid "Setup completed."
+#~ msgstr "Instelling voltooid."
+
+#~ msgid "Setup failed."
+#~ msgstr "Instelling mislukt."
 
 #, fuzzy
 #~| msgid "Administer Syncthing application"

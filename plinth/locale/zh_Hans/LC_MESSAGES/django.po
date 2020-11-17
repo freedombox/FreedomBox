@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 19:02-0500\n"
+"POT-Creation-Date: 2020-11-16 19:46-0500\n"
 "PO-Revision-Date: 2020-10-08 23:26+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -902,7 +902,7 @@ msgid "Refresh IP address and domains"
 msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
 #: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
 #: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
@@ -1666,19 +1666,23 @@ msgstr "显示密码"
 msgid "URL to look up public IP"
 msgstr "查寻公开 IP 的 URL"
 
-#: plinth/modules/dynamicdns/forms.py:138
+#: plinth/modules/dynamicdns/forms.py:119
+msgid "Use IPv6 instead of IPv4"
+msgstr ""
+
+#: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "请提供一个更新 URL 或者 GnuDIP 服务器地址"
 
-#: plinth/modules/dynamicdns/forms.py:143
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP username"
 msgstr "请提供一个 GnuDIP 用户名"
 
-#: plinth/modules/dynamicdns/forms.py:147
+#: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide a GnuDIP domain name"
 msgstr "请提供一个 GnuDIP 域名"
 
-#: plinth/modules/dynamicdns/forms.py:152
+#: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a password"
 msgstr "请提供一个密码"
 
@@ -1753,8 +1757,6 @@ msgstr "关于"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:17
-#: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4714,7 +4716,7 @@ msgstr "连接 {name} 已删除。"
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
 
-#: plinth/modules/openvpn/__init__.py:26
+#: plinth/modules/openvpn/__init__.py:28
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4729,20 +4731,20 @@ msgstr ""
 "供的私人/内部服务。您还可以通过 {box_name} 访问互联网的其他部分，以增加安全性"
 "和匿名性。"
 
-#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 #, fuzzy
 #| msgid "Open"
 msgid "OpenVPN"
 msgstr "打开"
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:52
 #, fuzzy
 #| msgid "Virtual Private Network (OpenVPN)"
 msgid "Virtual Private Network"
 msgstr "虚拟专用网络（OpenVPN）"
 
-#: plinth/modules/openvpn/__init__.py:66
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4752,39 +4754,45 @@ msgstr ""
 msgid "Tunnelblick"
 msgstr ""
 
-#: plinth/modules/openvpn/templates/openvpn.html:20
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
+msgid "Migrate to ECC"
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
+msgid ""
+"Your OpenVPN installation is currently using RSA. Switching to the modern "
+"Elliptic Curve Cryptography improves speed of establishing a connection and "
+"security. This operation is irreversible. It should only take a few minutes "
+"on most single board computers."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
 #, python-format
 msgid ""
-"OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
-"time.  Depending on how fast your %(box_name)s is, it may even take hours.  "
-"If the setup is interrupted, you may start it again."
+"All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
+"recommend migrating as soon as possible."
 msgstr ""
-"OpenVPN 尚未安装。 执行安全的安装需要很长的时间。 根据您的 %(box_name)s 运行"
-"速度，它甚至可能需要小时。 如果安装程序中断，您可以重新启动。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:33
-msgid "Start setup"
-msgstr "启动安装程序"
-
-#: plinth/modules/openvpn/templates/openvpn.html:42
-msgid "OpenVPN setup is running"
-msgstr "OpenVPN 安装程序正在运行"
-
-#: plinth/modules/openvpn/templates/openvpn.html:46
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
 #, python-format
 msgid ""
-"To perform a secure setup, this process takes a very long time.  Depending "
-"on how fast your %(box_name)s is, it may even take hours.  If the setup is "
-"interrupted, you may start it again."
+"<b>Warning:</b> Existing client profiles will be invalidated by this "
+"operation. All OpenVPN users on %(box_name)s must download their new "
+"profiles. OpenVPN clients compatible with ECC should be used to connect to "
+"this server."
 msgstr ""
-"若要执行更安全的安装，此过程需要很长的时间。根据您的 %(box_name)s 运行速度，"
-"它甚至可能需要数小时。如果安装程序中断，您可以重新启动。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:61
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
+#, fuzzy
+#| msgid "Mode"
+msgid "Migrate"
+msgstr "模式"
+
+#: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
 msgstr "配置文件"
 
-#: plinth/modules/openvpn/templates/openvpn.html:64
+#: plinth/modules/openvpn/templates/openvpn.html:25
 #, fuzzy, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
@@ -4804,22 +4812,14 @@ msgstr ""
 "<a href=\"https://wiki.debian.org/FreedomBox/Manual/OpenVPN\" title="
 "\"%(box_name)s Manual-OpenVPN\">文档</a> 以及有关如何配置它们的说明。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:35
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr "配置文件是特定于每个 %(box_name)s 用户的。请保持其私密。"
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:46
 msgid "Download my profile"
 msgstr "下载我的配置文件"
-
-#: plinth/modules/openvpn/views.py:88
-msgid "Setup completed."
-msgstr "安装已完成。"
-
-#: plinth/modules/openvpn/views.py:90
-msgid "Setup failed."
-msgstr "安装失败。"
 
 #: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
@@ -8137,6 +8137,34 @@ msgstr "已完成 %(percentage)s%%"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid ""
+#~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
+#~ "long time.  Depending on how fast your %(box_name)s is, it may even take "
+#~ "hours.  If the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "OpenVPN 尚未安装。 执行安全的安装需要很长的时间。 根据您的 %(box_name)s 运"
+#~ "行速度，它甚至可能需要小时。 如果安装程序中断，您可以重新启动。"
+
+#~ msgid "Start setup"
+#~ msgstr "启动安装程序"
+
+#~ msgid "OpenVPN setup is running"
+#~ msgstr "OpenVPN 安装程序正在运行"
+
+#~ msgid ""
+#~ "To perform a secure setup, this process takes a very long time.  "
+#~ "Depending on how fast your %(box_name)s is, it may even take hours.  If "
+#~ "the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "若要执行更安全的安装，此过程需要很长的时间。根据您的 %(box_name)s 运行速"
+#~ "度，它甚至可能需要数小时。如果安装程序中断，您可以重新启动。"
+
+#~ msgid "Setup completed."
+#~ msgstr "安装已完成。"
+
+#~ msgid "Setup failed."
+#~ msgstr "安装失败。"
 
 #, fuzzy
 #~| msgid "Install this application?"

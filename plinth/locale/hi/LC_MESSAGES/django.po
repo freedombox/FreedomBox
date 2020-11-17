@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 19:02-0500\n"
+"POT-Creation-Date: 2020-11-16 19:46-0500\n"
 "PO-Revision-Date: 2020-04-03 20:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -918,7 +918,7 @@ msgid "Refresh IP address and domains"
 msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
 #: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
 #: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
@@ -1710,19 +1710,23 @@ msgstr "शो पासवर्ड"
 msgid "URL to look up public IP"
 msgstr "सार्वजनिक आईपी देखने के लियो यूआरएल"
 
-#: plinth/modules/dynamicdns/forms.py:138
+#: plinth/modules/dynamicdns/forms.py:119
+msgid "Use IPv6 instead of IPv4"
+msgstr ""
+
+#: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "अपडेट यूआरएल या एक जीएनयूडीआईपी सर्वर एड्रसॅ प्रदान करें"
 
-#: plinth/modules/dynamicdns/forms.py:143
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP username"
 msgstr "जीएनयूडीआईपी युसरनाम दें"
 
-#: plinth/modules/dynamicdns/forms.py:147
+#: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide a GnuDIP domain name"
 msgstr "एक जीएनयूडीआईपी डोमेन नाम प्रदान करें"
 
-#: plinth/modules/dynamicdns/forms.py:152
+#: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a password"
 msgstr "एक पासवर्ड दें"
 
@@ -1801,8 +1805,6 @@ msgstr "के बारे में"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:17
-#: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4746,7 +4748,7 @@ msgstr "कनेक्शन {name} हटाया गया."
 msgid "Failed to delete connection: Connection not found."
 msgstr "कनेक्शन हटाने में विफल: कनेक्शन नहीं मिला."
 
-#: plinth/modules/openvpn/__init__.py:26
+#: plinth/modules/openvpn/__init__.py:28
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4762,16 +4764,16 @@ msgstr ""
 "आंतरिक सर्विसस उपयोग करने के लिये. आप बाकी सब इंटरनेट {box_name} के जरिए उपयोग कर "
 "सकते हैं अगर अापको और सुरक्षा और गुमनामी चाहिये."
 
-#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "ओपन वीपीएन"
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "वर्चुअल प्राइवेट नेटवर्क"
 
-#: plinth/modules/openvpn/__init__.py:66
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4782,41 +4784,45 @@ msgstr ""
 msgid "Tunnelblick"
 msgstr ""
 
-#: plinth/modules/openvpn/templates/openvpn.html:20
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
+msgid "Migrate to ECC"
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
+msgid ""
+"Your OpenVPN installation is currently using RSA. Switching to the modern "
+"Elliptic Curve Cryptography improves speed of establishing a connection and "
+"security. This operation is irreversible. It should only take a few minutes "
+"on most single board computers."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
 #, python-format
 msgid ""
-"OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
-"time.  Depending on how fast your %(box_name)s is, it may even take hours.  "
-"If the setup is interrupted, you may start it again."
+"All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
+"recommend migrating as soon as possible."
 msgstr ""
-"ओपनवीपीएन अभी तक सेटअप नहीं किया गया है. एक सुरक्षित सेटअप करने के लिये बहूत समय होगा. "
-"इस पर निर्भर करता है कि आपका%(box_name)s कितना तेज़ है, ये घंटों भी लग सकते. अगर सेटअप "
-"बाधित हो गया, फिर से शरु कर सकता है."
 
-#: plinth/modules/openvpn/templates/openvpn.html:33
-msgid "Start setup"
-msgstr "सटअप शुरु करें"
-
-#: plinth/modules/openvpn/templates/openvpn.html:42
-msgid "OpenVPN setup is running"
-msgstr "ओपनवीपीएन सेटअप चल रहा है"
-
-#: plinth/modules/openvpn/templates/openvpn.html:46
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
 #, python-format
 msgid ""
-"To perform a secure setup, this process takes a very long time.  Depending "
-"on how fast your %(box_name)s is, it may even take hours.  If the setup is "
-"interrupted, you may start it again."
+"<b>Warning:</b> Existing client profiles will be invalidated by this "
+"operation. All OpenVPN users on %(box_name)s must download their new "
+"profiles. OpenVPN clients compatible with ECC should be used to connect to "
+"this server."
 msgstr ""
-"एक सुरक्षित सेटअप करने के लिये बहूत समय होगा. इस पर निर्भर करता है कि आपका"
-"%(box_name)s कितना तेज़ है, ये घंटों भी लग सकते. अगर सेटअप बाधित हो गया, फिर से शरु कर "
-"सकता है."
 
-#: plinth/modules/openvpn/templates/openvpn.html:61
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
+#, fuzzy
+#| msgid "Moderate"
+msgid "Migrate"
+msgstr "मॉडरेट"
+
+#: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
 msgstr "प्रोफ़ाइल"
 
-#: plinth/modules/openvpn/templates/openvpn.html:64
+#: plinth/modules/openvpn/templates/openvpn.html:25
 #, fuzzy, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
@@ -4837,22 +4843,14 @@ msgstr ""
 "FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s Manual - OpenVPN"
 "\">documentation</a> देखें अनुशंसित क्लाइंट और उन्हें कॉन्फ़िगर करने के तरीके देखने के लिये."
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:35
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr "प्रोफ़ाइल हर %(box_name)s यूसर के लिए विशिष्ट है. इसे गुप्त रखें."
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:46
 msgid "Download my profile"
 msgstr "मेरी प्रोफ़ाइल डाउनलोड करें"
-
-#: plinth/modules/openvpn/views.py:88
-msgid "Setup completed."
-msgstr "सेटअप पूरा हो गया."
-
-#: plinth/modules/openvpn/views.py:90
-msgid "Setup failed."
-msgstr "सेटअप विफल."
 
 #: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
@@ -8144,6 +8142,36 @@ msgstr "%(percentage)s%% पूर्ण"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid ""
+#~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
+#~ "long time.  Depending on how fast your %(box_name)s is, it may even take "
+#~ "hours.  If the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "ओपनवीपीएन अभी तक सेटअप नहीं किया गया है. एक सुरक्षित सेटअप करने के लिये बहूत समय "
+#~ "होगा. इस पर निर्भर करता है कि आपका%(box_name)s कितना तेज़ है, ये घंटों भी लग सकते. "
+#~ "अगर सेटअप बाधित हो गया, फिर से शरु कर सकता है."
+
+#~ msgid "Start setup"
+#~ msgstr "सटअप शुरु करें"
+
+#~ msgid "OpenVPN setup is running"
+#~ msgstr "ओपनवीपीएन सेटअप चल रहा है"
+
+#~ msgid ""
+#~ "To perform a secure setup, this process takes a very long time.  "
+#~ "Depending on how fast your %(box_name)s is, it may even take hours.  If "
+#~ "the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "एक सुरक्षित सेटअप करने के लिये बहूत समय होगा. इस पर निर्भर करता है कि आपका"
+#~ "%(box_name)s कितना तेज़ है, ये घंटों भी लग सकते. अगर सेटअप बाधित हो गया, फिर से शरु "
+#~ "कर सकता है."
+
+#~ msgid "Setup completed."
+#~ msgstr "सेटअप पूरा हो गया."
+
+#~ msgid "Setup failed."
+#~ msgstr "सेटअप विफल."
 
 #, fuzzy
 #~| msgid "Administer Syncthing application"

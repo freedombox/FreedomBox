@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 19:02-0500\n"
+"POT-Creation-Date: 2020-11-16 19:46-0500\n"
 "PO-Revision-Date: 2020-11-08 15:26+0000\n"
 "Last-Translator: Hetgyl <verven@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -888,7 +888,7 @@ msgid "Refresh IP address and domains"
 msgstr "Rafraîchir l’adresse IP et les domaines"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
 #: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
 #: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
@@ -1697,20 +1697,24 @@ msgstr "Afficher le mot de passe"
 msgid "URL to look up public IP"
 msgstr "URL pour rechercher l’IP publique"
 
-#: plinth/modules/dynamicdns/forms.py:138
+#: plinth/modules/dynamicdns/forms.py:119
+msgid "Use IPv6 instead of IPv4"
+msgstr ""
+
+#: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr ""
 "Veuillez saisir une URL d’actualisation ou une adresse de serveur GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:143
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP username"
 msgstr "Veuillez saisir un nom d’utilisateur GnuDIP (« Username/Hostname »)"
 
-#: plinth/modules/dynamicdns/forms.py:147
+#: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide a GnuDIP domain name"
 msgstr "Veuillez saisir un nom de domaine GnuDIP (« Domain Name »)"
 
-#: plinth/modules/dynamicdns/forms.py:152
+#: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a password"
 msgstr "Veuillez saisir un mot de passe"
 
@@ -1796,8 +1800,6 @@ msgstr "À propos"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:17
-#: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4924,7 +4926,7 @@ msgstr "Connexion {name} supprimée."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Échec de suppression de la connexion : connexion introuvable."
 
-#: plinth/modules/openvpn/__init__.py:26
+#: plinth/modules/openvpn/__init__.py:28
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4942,16 +4944,16 @@ msgstr ""
 "d’accéder au reste d’Internet au travers de la {box_name} pour une sécurité "
 "et un anonymat accrus."
 
-#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Réseau privé virtuel"
 
-#: plinth/modules/openvpn/__init__.py:66
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4963,43 +4965,45 @@ msgstr ""
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
-#: plinth/modules/openvpn/templates/openvpn.html:20
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
+msgid "Migrate to ECC"
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
+msgid ""
+"Your OpenVPN installation is currently using RSA. Switching to the modern "
+"Elliptic Curve Cryptography improves speed of establishing a connection and "
+"security. This operation is irreversible. It should only take a few minutes "
+"on most single board computers."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
 #, python-format
 msgid ""
-"OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
-"time.  Depending on how fast your %(box_name)s is, it may even take hours.  "
-"If the setup is interrupted, you may start it again."
+"All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
+"recommend migrating as soon as possible."
 msgstr ""
-"OpenVPN n’est pas encore installé. Réaliser une installation sûre va prendre "
-"beaucoup de temps. En fonction de la vélocité de votre %(box_name)s, cela "
-"peut prendre jusqu’à plusieurs heures. Si l'installation est interrompue, "
-"vous devrez la relancer intégralement."
 
-#: plinth/modules/openvpn/templates/openvpn.html:33
-msgid "Start setup"
-msgstr "Démarrer l’installation"
-
-#: plinth/modules/openvpn/templates/openvpn.html:42
-msgid "OpenVPN setup is running"
-msgstr "L’installation d’OpenVPN est en cours"
-
-#: plinth/modules/openvpn/templates/openvpn.html:46
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
 #, python-format
 msgid ""
-"To perform a secure setup, this process takes a very long time.  Depending "
-"on how fast your %(box_name)s is, it may even take hours.  If the setup is "
-"interrupted, you may start it again."
+"<b>Warning:</b> Existing client profiles will be invalidated by this "
+"operation. All OpenVPN users on %(box_name)s must download their new "
+"profiles. OpenVPN clients compatible with ECC should be used to connect to "
+"this server."
 msgstr ""
-"Pour réaliser une installation sûre, ce processus va prendre beaucoup de "
-"temps. En fonction de la vélocité de votre %(box_name)s, cela peut prendre "
-"jusqu’à plusieurs heures. Si l’installation est interrompue, vous devrez la "
-"relancer intégralement."
 
-#: plinth/modules/openvpn/templates/openvpn.html:61
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
+#, fuzzy
+#| msgid "Moderate"
+msgid "Migrate"
+msgstr "Modéré"
+
+#: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
 msgstr "Profil"
 
-#: plinth/modules/openvpn/templates/openvpn.html:64
+#: plinth/modules/openvpn/templates/openvpn.html:25
 #, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
@@ -5014,24 +5018,16 @@ msgstr ""
 "pour connaître les clients recommandés et leurs instructions de "
 "configuration."
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:35
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr ""
 "Le profil est propre à chaque utilisateur de la %(box_name)s. Gardez-le "
 "secret."
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:46
 msgid "Download my profile"
 msgstr "Télécharger mon profil"
-
-#: plinth/modules/openvpn/views.py:88
-msgid "Setup completed."
-msgstr "Installation terminée."
-
-#: plinth/modules/openvpn/views.py:90
-msgid "Setup failed."
-msgstr "Échec de l’installation."
 
 #: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
@@ -8316,6 +8312,38 @@ msgstr "%(percentage)s%% effectué"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
+#~ "long time.  Depending on how fast your %(box_name)s is, it may even take "
+#~ "hours.  If the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "OpenVPN n’est pas encore installé. Réaliser une installation sûre va "
+#~ "prendre beaucoup de temps. En fonction de la vélocité de votre "
+#~ "%(box_name)s, cela peut prendre jusqu’à plusieurs heures. Si "
+#~ "l'installation est interrompue, vous devrez la relancer intégralement."
+
+#~ msgid "Start setup"
+#~ msgstr "Démarrer l’installation"
+
+#~ msgid "OpenVPN setup is running"
+#~ msgstr "L’installation d’OpenVPN est en cours"
+
+#~ msgid ""
+#~ "To perform a secure setup, this process takes a very long time.  "
+#~ "Depending on how fast your %(box_name)s is, it may even take hours.  If "
+#~ "the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "Pour réaliser une installation sûre, ce processus va prendre beaucoup de "
+#~ "temps. En fonction de la vélocité de votre %(box_name)s, cela peut "
+#~ "prendre jusqu’à plusieurs heures. Si l’installation est interrompue, vous "
+#~ "devrez la relancer intégralement."
+
+#~ msgid "Setup completed."
+#~ msgstr "Installation terminée."
+
+#~ msgid "Setup failed."
+#~ msgstr "Échec de l’installation."
 
 #~ msgid "Administer calibre application"
 #~ msgstr "Administion de l’application calibre"

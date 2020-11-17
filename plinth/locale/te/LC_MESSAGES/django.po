@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 19:02-0500\n"
+"POT-Creation-Date: 2020-11-16 19:46-0500\n"
 "PO-Revision-Date: 2020-10-26 13:27+0000\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -892,7 +892,7 @@ msgid "Refresh IP address and domains"
 msgstr "IP చిరునామా మరియు డొమైన్‌లను రిఫ్రెష్ చేయండి"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
 #: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
 #: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
@@ -1674,19 +1674,23 @@ msgstr "రహస్యపదం కనబర్చు"
 msgid "URL to look up public IP"
 msgstr "పబ్లిక్ IP చూసేందుకు URL"
 
-#: plinth/modules/dynamicdns/forms.py:138
+#: plinth/modules/dynamicdns/forms.py:119
+msgid "Use IPv6 instead of IPv4"
+msgstr ""
+
+#: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "దయచేసి నవీకరణ యూ.ఆర్.ఎల్ ను లేక ఒక GnuDIP సేవిక ఐ.పీ చిరునామాను  అందించండి"
 
-#: plinth/modules/dynamicdns/forms.py:143
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP username"
 msgstr "దయచేసి గ్నూ.డిప్ వాడుకరిపేరుని అందించండి"
 
-#: plinth/modules/dynamicdns/forms.py:147
+#: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide a GnuDIP domain name"
 msgstr "గ్నూ.డిప్ డోమైన్ పేరును  దయచేసి అందించండి"
 
-#: plinth/modules/dynamicdns/forms.py:152
+#: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a password"
 msgstr "ఒక రహస్యపదం అందించండి దయచేసి"
 
@@ -1766,8 +1770,6 @@ msgstr "గురించి"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:17
-#: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4721,7 +4723,7 @@ msgstr "{name} అనుసంధానం తొలగించబడింద�
 msgid "Failed to delete connection: Connection not found."
 msgstr "అనుసంధానం తొలగించడం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: plinth/modules/openvpn/__init__.py:26
+#: plinth/modules/openvpn/__init__.py:28
 #, fuzzy, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4737,18 +4739,18 @@ msgstr ""
 "మిగిలిన ఇంటర్నెట్ను యాక్సెస్ చేయవచ్చు మీ {box_name} 1 అనుసంధానించవచ్చు అదనపు భద్రత మరియు "
 "అనామకత్వం కోసం."
 
-#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 #, fuzzy
 #| msgid "Open"
 msgid "OpenVPN"
 msgstr "తెరచిన"
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "వర్చువల్ ప్రైవేట్ నెట్వర్క్"
 
-#: plinth/modules/openvpn/__init__.py:66
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4759,40 +4761,45 @@ msgstr ""
 msgid "Tunnelblick"
 msgstr ""
 
-#: plinth/modules/openvpn/templates/openvpn.html:20
-#, fuzzy, python-format
-msgid ""
-"OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
-"time.  Depending on how fast your %(box_name)s is, it may even take hours.  "
-"If the setup is interrupted, you may start it again."
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
+msgid "Migrate to ECC"
 msgstr ""
-"OpenVPN ఇంకా సెటప్ చేయలేదు. సురక్షిత సెటప్ పెర్ఫార్మింగ్ చాలా కాలం పడుతుంది. మీ% ఎంత వేగంగా "
-"(box_name) లు 1 ఆధారపడి, అది కూడా గంటల సమయం పట్టవచ్చు. సెటప్ ఆటకం, మీరు మళ్ళీ దాన్ని మొదలు "
-"పెడతాయి."
 
-#: plinth/modules/openvpn/templates/openvpn.html:33
-msgid "Start setup"
-msgstr "అమర్చిపెట్టు ప్రారంభం"
-
-#: plinth/modules/openvpn/templates/openvpn.html:42
-msgid "OpenVPN setup is running"
-msgstr "అమర్చిపెటినా  తెరిచినVPNనడుస్తుంది"
-
-#: plinth/modules/openvpn/templates/openvpn.html:46
-#, fuzzy, python-format
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
 msgid ""
-"To perform a secure setup, this process takes a very long time.  Depending "
-"on how fast your %(box_name)s is, it may even take hours.  If the setup is "
-"interrupted, you may start it again."
+"Your OpenVPN installation is currently using RSA. Switching to the modern "
+"Elliptic Curve Cryptography improves speed of establishing a connection and "
+"security. This operation is irreversible. It should only take a few minutes "
+"on most single board computers."
 msgstr ""
-"సురక్షిత సెటప్ చెయ్యడానికి, ఈ ప్రక్రియ చాలా కాలం పడుతుంది. మీ% ఎంత వేగంగా (box_name) లు 1 "
-"ఆధారపడి, అది కూడా గంటల సమయం పట్టవచ్చు. సెటప్ ఆటకం, మీరు మళ్ళీ దాన్ని మొదలు పెడతాయి."
 
-#: plinth/modules/openvpn/templates/openvpn.html:61
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
+#, python-format
+msgid ""
+"All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
+"recommend migrating as soon as possible."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
+#, python-format
+msgid ""
+"<b>Warning:</b> Existing client profiles will be invalidated by this "
+"operation. All OpenVPN users on %(box_name)s must download their new "
+"profiles. OpenVPN clients compatible with ECC should be used to connect to "
+"this server."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
+#, fuzzy
+#| msgid "Moderate"
+msgid "Migrate"
+msgstr "మితమైన"
+
+#: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
 msgstr "స్థూల వివరం"
 
-#: plinth/modules/openvpn/templates/openvpn.html:64
+#: plinth/modules/openvpn/templates/openvpn.html:25
 #, fuzzy, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
@@ -4806,22 +4813,14 @@ msgstr ""
 "OpenVPN\"> 2documentation </a> 3 title=\"%(box_name)s ఆకృతీకరించుటకు ఎలా సిఫార్సు "
 "ఖాతాదారులకు మరియు సూచనలతో వాటిని."
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:35
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr "ప్రొఫైల్ ప్రతి %(box_name)s వాడుకరికి నిర్ధిష్టమైనది. దాన్ని రహస్యంగా ఉంచండి."
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:46
 msgid "Download my profile"
 msgstr "నా స్థూలవివరంల దిగుమతి"
-
-#: plinth/modules/openvpn/views.py:88
-msgid "Setup completed."
-msgstr "అమరక పూర్తయ్యింది."
-
-#: plinth/modules/openvpn/views.py:90
-msgid "Setup failed."
-msgstr "అమరక విఫలమైంది."
 
 #: plinth/modules/pagekite/__init__.py:28
 #, fuzzy, python-brace-format
@@ -8052,6 +8051,37 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#, fuzzy
+#~ msgid ""
+#~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
+#~ "long time.  Depending on how fast your %(box_name)s is, it may even take "
+#~ "hours.  If the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "OpenVPN ఇంకా సెటప్ చేయలేదు. సురక్షిత సెటప్ పెర్ఫార్మింగ్ చాలా కాలం పడుతుంది. మీ% ఎంత వేగంగా "
+#~ "(box_name) లు 1 ఆధారపడి, అది కూడా గంటల సమయం పట్టవచ్చు. సెటప్ ఆటకం, మీరు మళ్ళీ దాన్ని "
+#~ "మొదలు పెడతాయి."
+
+#~ msgid "Start setup"
+#~ msgstr "అమర్చిపెట్టు ప్రారంభం"
+
+#~ msgid "OpenVPN setup is running"
+#~ msgstr "అమర్చిపెటినా  తెరిచినVPNనడుస్తుంది"
+
+#, fuzzy
+#~ msgid ""
+#~ "To perform a secure setup, this process takes a very long time.  "
+#~ "Depending on how fast your %(box_name)s is, it may even take hours.  If "
+#~ "the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "సురక్షిత సెటప్ చెయ్యడానికి, ఈ ప్రక్రియ చాలా కాలం పడుతుంది. మీ% ఎంత వేగంగా (box_name) లు 1 "
+#~ "ఆధారపడి, అది కూడా గంటల సమయం పట్టవచ్చు. సెటప్ ఆటకం, మీరు మళ్ళీ దాన్ని మొదలు పెడతాయి."
+
+#~ msgid "Setup completed."
+#~ msgstr "అమరక పూర్తయ్యింది."
+
+#~ msgid "Setup failed."
+#~ msgstr "అమరక విఫలమైంది."
 
 #, fuzzy
 #~| msgid "Install this application?"
