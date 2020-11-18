@@ -71,7 +71,7 @@
                  class="network-type-icon" alt="{% trans "Wi-Fi" %}"/>
           {% endif %}
           <a href="{% url 'networks:show' connection.uuid %}"
-             title="{% blocktrans %}Show connection {{ connection.name }}{% endblocktrans %}">
+             title="{% blocktrans with name=connection.name %}Show connection {{ name }}{% endblocktrans %}">
             {{ connection.name }} ({{ connection.interface_name }})</a>
         {% endif %}
       {% endfor %}

@@ -59,7 +59,7 @@
 
         <a class="connection-show-label"
            href="{% url 'networks:show' connection.uuid %}"
-           title="Show connection {{ connection.name }}">
+           title="{% blocktrans with name=connection.name %}Show connection {{ name }}{% endblocktrans %}">
           {{ connection.name }}
         </a>
 
