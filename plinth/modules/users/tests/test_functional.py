@@ -118,12 +118,6 @@ def generate_ssh_keys(session_browser, tmp_path_factory):
          str(key_file)])
 
 
-@when(
-    parsers.parse('I create a user named {name:w} with password {password:w}'))
-def create_user(session_browser, name, password):
-    functional.create_user(session_browser, name, password)
-
-
 @when(parsers.parse('I rename the user {old_name:w} to {new_name:w}'))
 def rename_user(session_browser, old_name, new_name):
     _rename_user(session_browser, old_name, new_name)

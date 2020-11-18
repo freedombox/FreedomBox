@@ -162,9 +162,16 @@ def bind_assert_forwarders(session_browser, forwarders):
 
 
 @when(
+    parsers.parse('I create a user named {name:w} with password {password:S}'))
+def create_user(session_browser, name, password):
+    if not functional.user_exists(session_browser, name):
+        functional.create_user(session_browser, name, password)
+
+
+@when(
     parsers.parse('I create a user named {name:w} with password {password:S} '
                   'in group {group:w}'))
-def create_user(session_browser, name, password, group):
+def create_user_in_group(session_browser, name, password, group):
     if not functional.user_exists(session_browser, name):
         functional.create_user(session_browser, name, password, groups=[group])
 

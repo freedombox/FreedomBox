@@ -52,6 +52,12 @@ def non_admin_view(func):
     return func
 
 
+def user_group_view(func, group_name):
+    """Decorator to mark a view as accessible by admin or group users."""
+    setattr(func, 'GROUP_NAME', group_name)
+    return func
+
+
 def is_user_admin(request, cached=False):
     """Return whether user is an administrator."""
     if not request.user.is_authenticated:
