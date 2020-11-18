@@ -38,7 +38,7 @@
           <tr id="password-{{ password.password }}" class="password">
             <td class="password-password">{{ password.password }}</td>
             <td class="password-permissions">{{ password.permissions }}</td>
-            <td class="password-comment">{{ password.comment }}</td>
+            <td class="password-comment">{% trans password.comment %}</td>
             <td class="password-operations">
               <form class="form form-inline" method="post"
                     action="{% url 'bepasty:remove' password.password %}">

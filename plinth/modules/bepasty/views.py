@@ -18,6 +18,14 @@ from plinth.views import AppView
 from .forms import AddPasswordForm, SetDefaultPermissionsForm
 
 
+# i18n for permission comments
+PERMISSION_COMMENTS_STRINGS = {
+    'admin': _('admin'),
+    'editor': _('editor'),
+    'viewer': _('viewer'),
+}
+
+
 class BepastyView(AppView):
     """Serve configuration page."""
     app_id = 'bepasty'
