@@ -118,6 +118,7 @@ def _apply_changes(request, old_status, new_status):
     if old_status != new_status:
         disable_ssl_check = "disabled"
         use_http_basic_auth = "disabled"
+        use_ipv6 = "disabled"
 
         if new_status['disable_SSL_cert_check']:
             disable_ssl_check = "enabled"
@@ -125,13 +126,16 @@ def _apply_changes(request, old_status, new_status):
         if new_status['use_http_basic_auth']:
             use_http_basic_auth = "enabled"
 
+        if new_status.get('use_ipv6'):
+            use_ipv6 = "enabled"
+
         _run([
             'configure', '-s', new_status['dynamicdns_server'], '-d',
             new_status['dynamicdns_domain'], '-u',
             new_status['dynamicdns_user'], '-p', '-I',
             new_status['dynamicdns_ipurl'], '-U',
             new_status['dynamicdns_update_url'], '-c', disable_ssl_check, '-b',
-            use_http_basic_auth
+            use_http_basic_auth, '-6', use_ipv6,
         ], input=new_status['dynamicdns_secret'].encode())
 
         if old_status['enabled']:

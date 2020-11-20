@@ -3,23 +3,11 @@
 Functional, browser based tests for openvpn app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then
+from pytest_bdd import given, scenarios, then
 
 from plinth.tests import functional
 
 scenarios('openvpn.feature')
-
-
-@given(parsers.parse('the openvpn application is setup'))
-def openvpn_setup(session_browser):
-    """Setup the OpenVPN application after installation."""
-    functional.nav_to_module(session_browser, 'openvpn')
-    setup_form = session_browser.find_by_css('.form-setup')
-    if not setup_form:
-        return
-
-    functional.submit(session_browser, form_class='form-setup')
-    functional.wait_for_config_update(session_browser, 'openvpn')
 
 
 @given('I download openvpn profile')

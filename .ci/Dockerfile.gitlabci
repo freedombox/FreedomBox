@@ -1,22 +1,28 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# This is an IaC pattern called "reheating a server template".
-# This is very fast but can accumulate cruft over time.
-# Use debian:testing if you want to build a fresh image.
-FROM registry.salsa.debian.org/freedombox-team/freedombox:gitlabci
+FROM debian:testing
 
 USER root
 COPY . /plinth
 WORKDIR /plinth
 
 RUN echo "deb http://deb.debian.org/debian testing main" > /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian testing main" >> /etc/apt/sources.list
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
-RUN apt-get build-dep -y .  # Dependencies of the freedombox Debian package
-RUN apt-get install -y build-essential # Build dependencies
-RUN apt-get install -y sshpass parted # Test dependencies
-RUN apt-get install -y sudo
-RUN apt-get install -y $(./run --list-dependencies) # Module dependencies
+
+# Dependencies of the freedombox Debian package
+RUN apt-get build-dep -y .
+
+# Build dependencies
+RUN apt-get install -y build-essential \
+    # Test dependencies
+    sshpass parted \
+    sudo python3-pip
+
+# Module dependencies
+RUN apt-get install -y $(./run --list-dependencies)
+
+# Coverage should know that test_functional.py files are tests
+RUN pip3 install splinter pytest-bdd

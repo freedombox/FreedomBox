@@ -68,11 +68,14 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
                   graceperiod=None, extra_fields=None):
     """Create and return a signed mod_auth_pubtkt ticket."""
     fields = [
-        'uid={}'.format(uid), 'validuntil={}'.format(validuntil, type='d'), ip
-        and 'cip={}'.format(ip), tokens and 'tokens={}'.format(tokens),
-        graceperiod and 'graceperiod={}'.format(graceperiod, type='d'), udata
-        and 'udata={}'.format(udata), extra_fields
-        and ';'.join(['{}={}'.format(k, v) for k, v in extra_fields])
+        f'uid={uid}',
+        'validuntil={int(validuntil)}',
+        ip and f'cip={ip}',
+        tokens and f'tokens={tokens}',
+        graceperiod and 'graceperiod={int(graceperiod)}',
+        udata and f'udata={udata}',
+        extra_fields and ';'.join(
+            ['{}={}'.format(k, v) for k, v in extra_fields])
     ]
     data = ';'.join(filter(None, fields))
     signature = 'sig={}'.format(sign(pkey, data))

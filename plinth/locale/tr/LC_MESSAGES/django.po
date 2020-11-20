@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 19:02-0500\n"
-"PO-Revision-Date: 2020-10-26 13:27+0000\n"
+"POT-Creation-Date: 2020-11-16 19:46-0500\n"
+"PO-Revision-Date: 2020-11-06 23:26+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -870,7 +870,7 @@ msgid "Refresh IP address and domains"
 msgstr "IP adresi ve etki alanlarını yenile"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:150
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
 #: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:90
 #: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
@@ -1658,19 +1658,23 @@ msgstr "Parolayı göster"
 msgid "URL to look up public IP"
 msgstr "Dış IP'yi aramak için URL"
 
-#: plinth/modules/dynamicdns/forms.py:138
+#: plinth/modules/dynamicdns/forms.py:119
+msgid "Use IPv6 instead of IPv4"
+msgstr ""
+
+#: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Lütfen bir güncelleme URL'si ya da bir GnuDIP sunucu adresi girin"
 
-#: plinth/modules/dynamicdns/forms.py:143
+#: plinth/modules/dynamicdns/forms.py:147
 msgid "Please provide a GnuDIP username"
 msgstr "Lütfen bir GnuDIP kullanıcı adı girin"
 
-#: plinth/modules/dynamicdns/forms.py:147
+#: plinth/modules/dynamicdns/forms.py:151
 msgid "Please provide a GnuDIP domain name"
 msgstr "Lütfen bir GnuDIP etki alanı adı girin"
 
-#: plinth/modules/dynamicdns/forms.py:152
+#: plinth/modules/dynamicdns/forms.py:156
 msgid "Please provide a password"
 msgstr "Lütfen bir parola girin"
 
@@ -1752,8 +1756,6 @@ msgstr "Hakkında"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
-#: plinth/modules/openvpn/templates/openvpn.html:17
-#: plinth/modules/openvpn/templates/openvpn.html:38
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -3079,16 +3081,16 @@ msgstr ""
 "anki parolayı korumak için bu alanı boş bırakın."
 
 #: plinth/modules/mediawiki/forms.py:56
-#, fuzzy
-#| msgid "Server"
 msgid "Server URL"
-msgstr "Sunucu"
+msgstr "Sunucu URL'si"
 
 #: plinth/modules/mediawiki/forms.py:57
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
+"MediaWiki tarafından, altbilgi, bildirimler ve e-postalar gibi viki'yi "
+"işaret eden URL'ler oluşturmak için kullanılır."
 
 #: plinth/modules/mediawiki/forms.py:62
 msgid "Enable public registrations"
@@ -3152,10 +3154,8 @@ msgid "Default skin changed"
 msgstr "Varsayılan kaplama değiştirildi"
 
 #: plinth/modules/mediawiki/views.py:90
-#, fuzzy
-#| msgid "Server deleted."
 msgid "Server URL updated"
-msgstr "Sunucu silindi."
+msgstr "Sunucu URL'si güncellendi"
 
 #: plinth/modules/minetest/__init__.py:38
 #, python-brace-format
@@ -4528,206 +4528,157 @@ msgstr ""
 "gerçekleştirileceğine dair tam talimatlar sağlayacak."
 
 #: plinth/modules/networks/views.py:27
-#, fuzzy
-#| msgid "Disabled"
 msgid "disabled"
-msgstr "Etkisizleştirildi"
+msgstr "etkisizleştirildi"
 
 #: plinth/modules/networks/views.py:28
-#, fuzzy
-#| msgid "Automatic"
 msgid "automatic"
-msgstr "Otomatik"
+msgstr "otomatik"
 
 #: plinth/modules/networks/views.py:29
-#, fuzzy
-#| msgctxt "User guide"
-#| msgid "Manual"
 msgid "manual"
-msgstr "Kılavuz"
+msgstr "elle"
 
 #: plinth/modules/networks/views.py:30
-#, fuzzy
-#| msgid "Shared"
 msgid "shared"
-msgstr "Paylaşılan"
+msgstr "paylaşılmış"
 
 #: plinth/modules/networks/views.py:31
 msgid "link-local"
-msgstr ""
+msgstr "bağlantı-yerel"
 
 #: plinth/modules/networks/views.py:37 plinth/modules/networks/views.py:98
 #: plinth/modules/networks/views.py:109
 msgid "unknown"
-msgstr ""
+msgstr "bilinmiyor"
 
 #: plinth/modules/networks/views.py:38
-#, fuzzy
-#| msgid "Manage"
 msgid "unmanaged"
-msgstr "Yönet"
+msgstr "yönetilmeyen"
 
 #: plinth/modules/networks/views.py:39
-#, fuzzy
-#| msgid "Unavailable Shares"
 msgid "unavailable"
-msgstr "Kullanılamaz Paylaşımlar"
+msgstr "kullanılamaz"
 
 #: plinth/modules/networks/views.py:40
-#, fuzzy
-#| msgid "cable is connected"
 msgid "disconnected"
-msgstr "kablo bağlı"
+msgstr "bağlantısı kesilmiş"
 
 #: plinth/modules/networks/views.py:41
-#, fuzzy
-#| msgid "Sharing"
 msgid "preparing"
-msgstr "Paylaşım"
+msgstr "hazırlanıyor"
 
 #: plinth/modules/networks/views.py:42
-#, fuzzy
-#| msgid "Connection"
 msgid "connecting"
-msgstr "Bağlantı"
+msgstr "bağlanıyor"
 
 #: plinth/modules/networks/views.py:43
-#, fuzzy
-#| msgid "Use HTTP basic authentication"
 msgid "needs authentication"
-msgstr "HTTP temel kimlik doğrulamasını kullan"
+msgstr "kimlik doğrulaması gerekiyor"
 
 #: plinth/modules/networks/views.py:44
 msgid "requesting address"
-msgstr ""
+msgstr "adres isteniyor"
 
 #: plinth/modules/networks/views.py:45
 msgid "checking"
-msgstr ""
+msgstr "denetleniyor"
 
 #: plinth/modules/networks/views.py:46
 msgid "waiting for secondary"
-msgstr ""
+msgstr "ikincil bekleniyor"
 
 #: plinth/modules/networks/views.py:47
-#, fuzzy
-#| msgid "Deactivate"
 msgid "activated"
-msgstr "Devre dışı bırak"
+msgstr "etkinleştirildi"
 
 #: plinth/modules/networks/views.py:48
-#, fuzzy
-#| msgid "Deactivate"
 msgid "deactivating"
-msgstr "Devre dışı bırak"
+msgstr "devre dışı bırakılıyor"
 
 #: plinth/modules/networks/views.py:56
-#, fuzzy
-#| msgid "State reason"
 msgid "no reason"
-msgstr "Durum nedeni"
+msgstr "sebep yok"
 
 #: plinth/modules/networks/views.py:58
 msgid "unknown error"
-msgstr ""
+msgstr "bilinmeyen hata"
 
 #: plinth/modules/networks/views.py:60
-#, fuzzy
-#| msgid "The device is not mounted."
 msgid "device is now managed"
-msgstr "Aygıt bağlı değil."
+msgstr "aygıt artık yönetiliyor"
 
 #: plinth/modules/networks/views.py:62
-#, fuzzy
-#| msgid "The device is not mounted."
 msgid "device is now unmanaged"
-msgstr "Aygıt bağlı değil."
+msgstr "aygıt artık yönetilemiyor"
 
 #: plinth/modules/networks/views.py:64
-#, fuzzy
-#| msgid "configuration file: {file}"
 msgid "configuration failed"
-msgstr "yapılandırma dosyası: {file}"
+msgstr "yapılandırma başarısız oldu"
 
 #: plinth/modules/networks/views.py:66
 msgid "secrets required"
-msgstr ""
+msgstr "gizli anahtarlar gerekli"
 
 #: plinth/modules/networks/views.py:68
 msgid "DHCP client failed to start"
-msgstr ""
+msgstr "DHCP istemcisini başlatma başarısız oldu"
 
 #: plinth/modules/networks/views.py:70
 msgid "DHCP client error"
-msgstr ""
+msgstr "DHCP istemcisi hatası"
 
 #: plinth/modules/networks/views.py:72
-#, fuzzy
-#| msgid "Client deleted."
 msgid "DHCP client failed"
-msgstr "İstemci silindi."
+msgstr "DHCP istemcisi başarısız oldu"
 
 #: plinth/modules/networks/views.py:74
 msgid "shared connection service failed to start"
-msgstr ""
+msgstr "paylaşılan bağlantı hizmetini başlatma başarısız oldu"
 
 #: plinth/modules/networks/views.py:76
-#, fuzzy
-#| msgid "The operation failed."
 msgid "shared connection service failed"
-msgstr "İşlem başarısız oldu."
+msgstr "paylaşılan bağlantı hizmeti başarısız oldu"
 
 #: plinth/modules/networks/views.py:78
-#, fuzzy
-#| msgid "The device is already mounted."
 msgid "device was removed"
-msgstr "Aygıt zaten bağlı."
+msgstr "aygıt kaldırıldı"
 
 #: plinth/modules/networks/views.py:80
-#, fuzzy
-#| msgid "The device is mounted by another user."
 msgid "device disconnected by user"
-msgstr "Aygıt başka bir kullanıcı tarafından bağlandı."
+msgstr "aygıtın bağlantısı kullanıcı tarafından kesildi"
 
 #: plinth/modules/networks/views.py:82
 msgid "a dependency of the connection failed"
-msgstr ""
+msgstr "bağlantının bir bağımlılığı başarısız oldu"
 
 #: plinth/modules/networks/views.py:84
-#, fuzzy
-#| msgid "Client not found"
 msgid "Wi-Fi network not found"
-msgstr "İstemci bulunamadı"
+msgstr "Kablosuz (Wi-Fi) ağı bulunamadı"
 
 #: plinth/modules/networks/views.py:86
-#, fuzzy
-#| msgid "The operation failed."
 msgid "a secondary connection failed"
-msgstr "İşlem başarısız oldu."
+msgstr "ikincil bir bağlantı başarısız oldu"
 
 #: plinth/modules/networks/views.py:88
 msgid "new connection activation was enqueued"
-msgstr ""
+msgstr "yeni bağlantı etkinleştirme sıraya alındı"
 
 #: plinth/modules/networks/views.py:90
 msgid "a duplicate IP address was detected"
-msgstr ""
+msgstr "yinelenen bir IP adresi algılandı"
 
 #: plinth/modules/networks/views.py:92
 msgid "selected IP method is not supported"
-msgstr ""
+msgstr "seçilen IP yöntemi desteklenmiyor"
 
 #: plinth/modules/networks/views.py:101
-#, fuzzy
-#| msgid "Generic"
 msgid "generic"
-msgstr "Genel"
+msgstr "genel"
 
 #: plinth/modules/networks/views.py:102
-#, fuzzy
-#| msgid "Network Interface"
 msgid "TUN or TAP interface"
-msgstr "Ağ Arayüzü"
+msgstr "TUN veya TAP arayüzü"
 
 #: plinth/modules/networks/views.py:103 plinth/modules/wireguard/__init__.py:50
 #: plinth/modules/wireguard/manifest.py:14
@@ -4735,28 +4686,20 @@ msgid "WireGuard"
 msgstr "WireGuard"
 
 #: plinth/modules/networks/views.py:110
-#, fuzzy
-#| msgid "Ad-hoc"
 msgid "ad-hoc"
-msgstr "Geçici"
+msgstr "geçici"
 
 #: plinth/modules/networks/views.py:111
-#, fuzzy
-#| msgid "Infrastructure"
 msgid "infrastructure"
-msgstr "Altyapı"
+msgstr "altyapı"
 
 #: plinth/modules/networks/views.py:112
-#, fuzzy
-#| msgid "Access Point"
 msgid "access point"
-msgstr "Erişim Noktası"
+msgstr "erişim noktası"
 
 #: plinth/modules/networks/views.py:113
-#, fuzzy
-#| msgid "Access Point"
 msgid "mesh point"
-msgstr "Erişim Noktası"
+msgstr "ağ gözü noktası"
 
 #: plinth/modules/networks/views.py:127
 msgid "Network Connections"
@@ -4827,7 +4770,7 @@ msgstr "{name} bağlantısı silindi."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Bağlantının silinmesi başarısız oldu: Bağlantı bulunamadı."
 
-#: plinth/modules/openvpn/__init__.py:26
+#: plinth/modules/openvpn/__init__.py:28
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4844,16 +4787,16 @@ msgstr ""
 "isim gizliliği sayesinde {box_name} aracılığıyla Internet'e de "
 "erişebilirsiniz."
 
-#: plinth/modules/openvpn/__init__.py:54 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:57
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Sanal Özel Ağ"
 
-#: plinth/modules/openvpn/__init__.py:66
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4863,42 +4806,45 @@ msgstr "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Profili İndir</a>"
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
-#: plinth/modules/openvpn/templates/openvpn.html:20
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
+msgid "Migrate to ECC"
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
+msgid ""
+"Your OpenVPN installation is currently using RSA. Switching to the modern "
+"Elliptic Curve Cryptography improves speed of establishing a connection and "
+"security. This operation is irreversible. It should only take a few minutes "
+"on most single board computers."
+msgstr ""
+
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
 #, python-format
 msgid ""
-"OpenVPN has not yet been setup.  Performing a secure setup takes a very long "
-"time.  Depending on how fast your %(box_name)s is, it may even take hours.  "
-"If the setup is interrupted, you may start it again."
+"All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
+"recommend migrating as soon as possible."
 msgstr ""
-"OpenVPN henüz ayarlanmadı. Güvenli bir ayarlama gerçekleştirilmesi çok uzun "
-"zaman alır. %(box_name)s cihazınızın ne kadar hızlı olduğuna bağlı olarak "
-"saatler bile sürebilir. Eğer ayarlama yarıda kesilirse, tekrar "
-"başlatabilirsiniz."
 
-#: plinth/modules/openvpn/templates/openvpn.html:33
-msgid "Start setup"
-msgstr "Ayarlamayı başlat"
-
-#: plinth/modules/openvpn/templates/openvpn.html:42
-msgid "OpenVPN setup is running"
-msgstr "OpenVPN ayarlaması çalışıyor"
-
-#: plinth/modules/openvpn/templates/openvpn.html:46
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
 #, python-format
 msgid ""
-"To perform a secure setup, this process takes a very long time.  Depending "
-"on how fast your %(box_name)s is, it may even take hours.  If the setup is "
-"interrupted, you may start it again."
+"<b>Warning:</b> Existing client profiles will be invalidated by this "
+"operation. All OpenVPN users on %(box_name)s must download their new "
+"profiles. OpenVPN clients compatible with ECC should be used to connect to "
+"this server."
 msgstr ""
-"Güvenli bir ayarlama gerçekleştirmek için bu işlem çok uzun sürer. "
-"%(box_name)s cihazınızın ne kadar hızlı olduğuna bağlı olarak saatler bile "
-"sürebilir. Eğer ayarlama yarıda kesilirse, tekrar başlatabilirsiniz."
 
-#: plinth/modules/openvpn/templates/openvpn.html:61
+#: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
+#, fuzzy
+#| msgid "Moderate"
+msgid "Migrate"
+msgstr "Orta"
+
+#: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
 msgstr "Profil"
 
-#: plinth/modules/openvpn/templates/openvpn.html:64
+#: plinth/modules/openvpn/templates/openvpn.html:25
 #, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
@@ -4912,22 +4858,14 @@ msgstr ""
 "istemciler ve bunların nasıl yapılandırılacağıyla ilgili talimatlar için "
 "yukarıdaki \"Daha fazla bilgi edinin...\" bağlantısına tıklayın."
 
-#: plinth/modules/openvpn/templates/openvpn.html:74
+#: plinth/modules/openvpn/templates/openvpn.html:35
 #, python-format
 msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
 msgstr "Profil, %(box_name)s cihazının her kullanıcısına özgüdür. Gizli tutun."
 
-#: plinth/modules/openvpn/templates/openvpn.html:85
+#: plinth/modules/openvpn/templates/openvpn.html:46
 msgid "Download my profile"
 msgstr "Profilimi indir"
-
-#: plinth/modules/openvpn/views.py:88
-msgid "Setup completed."
-msgstr "Ayarlama tamamlandı."
-
-#: plinth/modules/openvpn/views.py:90
-msgid "Setup failed."
-msgstr "Ayarlama başarısız oldu."
 
 #: plinth/modules/pagekite/__init__.py:28
 #, python-brace-format
@@ -6449,10 +6387,9 @@ msgid "Low disk space"
 msgstr "Düşük disk alanı"
 
 #: plinth/modules/storage/__init__.py:319
-#, fuzzy, python-brace-format
-#| msgid "About {box_name}"
+#, python-brace-format
 msgid "Go to {app_name}"
-msgstr "{box_name} Hakkında"
+msgstr "{app_name} için git"
 
 #: plinth/modules/storage/__init__.py:337
 msgid "Disk failure imminent"
@@ -6586,7 +6523,7 @@ msgid ""
 "other devices that also run Syncthing."
 msgstr ""
 "Syncthing, dosyaları birden çok cihaz arasında eşitlemek için kullanılan bir "
-"uygulamadır, ör.n masaüstü bilgisayarınız ve cep telefonunuz. Bir cihazda "
+"uygulamadır, örn. masaüstü bilgisayarınız ve cep telefonunuz. Bir cihazda "
 "dosyaların oluşturulması, değiştirilmesi veya silinmesi, Syncthing'i de "
 "çalıştıran diğer tüm cihazlarda otomatik olarak tekrarlanacaktır."
 
@@ -6975,10 +6912,8 @@ msgid "Update"
 msgstr "Güncelle"
 
 #: plinth/modules/upgrades/__init__.py:105
-#, fuzzy
-#| msgid "Update"
 msgid "Updates"
-msgstr "Güncelle"
+msgstr "Güncellemeler"
 
 #: plinth/modules/upgrades/__init__.py:108
 msgid "FreedomBox Updated"
@@ -6994,16 +6929,16 @@ msgstr ""
 "Etkinleştirildiğinde, FreedomBox günde bir kez otomatik olarak güncellenir."
 
 #: plinth/modules/upgrades/forms.py:19
-#, fuzzy
-#| msgid "Enable auto-update"
 msgid "Enable auto-update to next stable release"
-msgstr "Otomatik güncellemeyi etkinleştir"
+msgstr "Bir sonraki kararlı yayıma otomatik güncellemeyi etkinleştir"
 
 #: plinth/modules/upgrades/forms.py:20
 msgid ""
 "When enabled, FreedomBox will update to the next stable distribution release "
 "when it is available."
 msgstr ""
+"Etkinleştirildiğinde, FreedomBox, bir sonraki kararlı dağıtım yayımı mevcut "
+"olduğunda buna güncellenecek."
 
 #: plinth/modules/upgrades/forms.py:34
 #: plinth/modules/upgrades/templates/upgrades_configure.html:105
@@ -7123,16 +7058,12 @@ msgid "Automatic upgrades disabled"
 msgstr "Otomatik yükseltmeler etkisizleştirildi"
 
 #: plinth/modules/upgrades/views.py:81
-#, fuzzy
-#| msgid "Automatic upgrades enabled"
 msgid "Distribution upgrade enabled"
-msgstr "Otomatik yükseltmeler etkinleştirildi"
+msgstr "Dağıtım yükseltmesi etkinleştirildi"
 
 #: plinth/modules/upgrades/views.py:84
-#, fuzzy
-#| msgid "Automatic upgrades disabled"
 msgid "Distribution upgrade disabled"
-msgstr "Otomatik yükseltmeler etkisizleştirildi"
+msgstr "Dağıtım yükseltmesi etkisizleştirildi"
 
 #: plinth/modules/upgrades/views.py:125
 msgid "Upgrade process started."
@@ -7548,7 +7479,7 @@ msgstr "Genellikle tüm trafiğin gönderildiği bir VPN hizmeti için denetleni
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
-msgstr "Bir Sunucu olarak"
+msgstr "Bir Sunucu Olarak"
 
 #: plinth/modules/wireguard/templates/wireguard.html:12
 msgid "Peers allowed to connect to this server:"
@@ -7589,7 +7520,7 @@ msgstr "İzin Verilen İstemci Ekle"
 
 #: plinth/modules/wireguard/templates/wireguard.html:64
 msgid "As a Client"
-msgstr "Bir İstemci olarak"
+msgstr "Bir İstemci Olarak"
 
 #: plinth/modules/wireguard/templates/wireguard.html:66
 #, python-format
@@ -8115,7 +8046,7 @@ msgstr "Bu uygulama şu anda dağıtımınızda mevcut değil."
 
 #: plinth/templates/setup.html:50
 msgid "Check again"
-msgstr ""
+msgstr "Tekrar denetle"
 
 #: plinth/templates/setup.html:60
 msgid "Install"
@@ -8142,6 +8073,37 @@ msgstr "%%%(percentage)s tamamlandı"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
+#~ "long time.  Depending on how fast your %(box_name)s is, it may even take "
+#~ "hours.  If the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "OpenVPN henüz ayarlanmadı. Güvenli bir ayarlama gerçekleştirilmesi çok "
+#~ "uzun zaman alır. %(box_name)s cihazınızın ne kadar hızlı olduğuna bağlı "
+#~ "olarak saatler bile sürebilir. Eğer ayarlama yarıda kesilirse, tekrar "
+#~ "başlatabilirsiniz."
+
+#~ msgid "Start setup"
+#~ msgstr "Ayarlamayı başlat"
+
+#~ msgid "OpenVPN setup is running"
+#~ msgstr "OpenVPN ayarlaması çalışıyor"
+
+#~ msgid ""
+#~ "To perform a secure setup, this process takes a very long time.  "
+#~ "Depending on how fast your %(box_name)s is, it may even take hours.  If "
+#~ "the setup is interrupted, you may start it again."
+#~ msgstr ""
+#~ "Güvenli bir ayarlama gerçekleştirmek için bu işlem çok uzun sürer. "
+#~ "%(box_name)s cihazınızın ne kadar hızlı olduğuna bağlı olarak saatler "
+#~ "bile sürebilir. Eğer ayarlama yarıda kesilirse, tekrar başlatabilirsiniz."
+
+#~ msgid "Setup completed."
+#~ msgstr "Ayarlama tamamlandı."
+
+#~ msgid "Setup failed."
+#~ msgstr "Ayarlama başarısız oldu."
 
 #~ msgid "Administer calibre application"
 #~ msgstr "calibre uygulamasını yönet"

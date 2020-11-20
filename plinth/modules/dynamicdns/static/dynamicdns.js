@@ -116,6 +116,7 @@
         $('#id_dynamicdns_update_url').closest('.form-group').hide();
         $('#id_disable_SSL_cert_check').closest('.form-group').hide();
         $('#id_use_http_basic_auth').closest('.form-group').hide();
+        $('#id_use_ipv6').closest('.form-group').hide();
         $('#id_dynamicdns_server').closest('.form-group').show();
     }
 
@@ -123,6 +124,7 @@
         $('#id_dynamicdns_update_url').closest('.form-group').show();
         $('#id_disable_SSL_cert_check').closest('.form-group').show();
         $('#id_use_http_basic_auth').closest('.form-group').show();
+        $('#id_use_ipv6').closest('.form-group').show();
         $('#id_dynamicdns_server').closest('.form-group').hide();
     }
 
@@ -138,5 +140,6 @@
         $('#id_dynamicdns_secret').closest('.form-group').show();
         $('#id_showpw').closest('.form-group').show();
         $('#id_dynamicdns_ipurl').closest('.form-group').show();
+        $('#id_use_ipv6').closest('.form-group').show();
     }
 })(jQuery);

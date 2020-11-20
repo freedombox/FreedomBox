@@ -14,8 +14,8 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import (PUBLIC_ACCESS_SETTING_FILE,  # noqa, pylint: disable=unused-import
-    backup, clients)
+from .manifest import backup  # noqa, pylint: disable=unused-import
+from .manifest import (PUBLIC_ACCESS_SETTING_FILE, clients)
 
 version = 4
 

@@ -7,7 +7,6 @@ Feature: OpenVPN - Virtual Private Network
 Background:
   Given I'm a logged in user
   Given the openvpn application is installed
-  Given the openvpn application is setup
 
 Scenario: Enable openvpn application
   Given the openvpn application is disabled

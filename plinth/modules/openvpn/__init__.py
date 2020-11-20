@@ -3,6 +3,8 @@
 FreedomBox app to configure OpenVPN server.
 """
 
+import os
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -34,7 +36,7 @@ _description = [
 
 app = None
 
-setup_process = None
+SERVER_CONFIGURATION_FILE = '/etc/openvpn/server/freedombox.conf'
 
 
 class OpenVPNApp(app_module.App):
@@ -45,7 +47,7 @@ class OpenVPNApp(app_module.App):
     @property
     def can_be_disabled(self):
         """Return whether the app can be disabled."""
-        return is_setup() and not setup_process
+        return is_setup()
 
     def __init__(self):
         """Create components for the app."""
@@ -93,11 +95,20 @@ class OpenVPNApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'openvpn', ['upgrade'])
-    if app.is_enabled() and is_setup():
-        helper.call('post', app.enable)
+    helper.call('post', actions.superuser_run, 'openvpn', ['setup'])
+    helper.call('post', app.enable)
 
 
 def is_setup():
     """Return whether the service is running."""
     return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
+
+
+def is_using_ecc():
+    """Return whether the service is using ECC."""
+    if os.path.exists(SERVER_CONFIGURATION_FILE):
+        with open(SERVER_CONFIGURATION_FILE, 'r') as file_handle:
+            for line in file_handle:
+                if line.strip() == 'dh none':
+                    return True
+    return False

@@ -12,6 +12,7 @@ from . import views
 urlpatterns = [
     url(r'^apps/openvpn/$', views.OpenVPNAppView.as_view(), name='index'),
     url(r'^apps/openvpn/setup/$', views.setup, name='setup'),
+    url(r'^apps/openvpn/ecc/$', views.ecc, name='ecc'),
     url(r'^apps/openvpn/profile/$', non_admin_view(views.profile),
         name='profile'),
 ]
