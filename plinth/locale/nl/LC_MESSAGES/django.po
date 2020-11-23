@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 19:46-0500\n"
-"PO-Revision-Date: 2020-11-22 18:51+0000\n"
-"Last-Translator: Reg Me <regmeplus@zoho.com>\n"
+"PO-Revision-Date: 2020-11-23 22:49+0000\n"
+"Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
 "Language: nl\n"
@@ -377,8 +377,8 @@ msgid ""
 "if chosen, the encryption passphrase."
 msgstr ""
 "De logingegevens voor dit archief worden bewaard op je %(box_name)s. <br /> "
-"Om een backup terug te zetten op een nieuwe %(box_name)s heb je de ssh "
-"logingegevens en, als je daarvoor gekozen hebt, de encryptie-wachtzin."
+"Om een backup terug te zetten op een nieuwe %(box_name)s zijn de ssh "
+"logingegevens nodig en, als daarvoor gekozen is, de encryptie-wachtzin."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
 msgid "Create Location"
@@ -429,6 +429,8 @@ msgstr "Locatie koppelen"
 #: plinth/modules/backups/templates/backups_repository.html:56
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
+"Verwijder de back-uplocatie. Hierdoor wordt de externe back-up niet "
+"verwijderd."
 
 #: plinth/modules/backups/templates/backups_repository.html:77
 msgid "Download"
@@ -476,6 +478,12 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Upload een back-upbestand dat is gedownload van een andere %(box_name)"
+"s\n"
+"      om de inhoud te herstellen. Na het uploaden van een back-up bestand\n"
+"      kunnen de te herstellen applicaties worden gekozen.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:27
 #: plinth/modules/help/templates/statuslog.html:23
@@ -488,8 +496,8 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
-"U heeft nog %(max_filesize)s beschikbaar om een backup terug te zetten. Als "
-"u deze limiet overschrijdt kan uw %(box_name)s onbruikbaar worden."
+"Er is nog %(max_filesize)s beschikbaar om een backup terug te zetten. Als "
+"deze limiet overschreden wordt kan de %(box_name)s onbruikbaar worden."
 
 #: plinth/modules/backups/templates/backups_upload.html:41
 msgid "Upload file"
@@ -501,6 +509,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Kan SSH-host %(hostname)s niet bereiken. Controleer of de host actief is en "
+"verbindingen accepteert."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
 #, python-format
@@ -508,10 +518,13 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"De authenticiteit van SSH-host %(hostname)s kon niet worden vastgesteld. De "
+"host vermeld de volgende openbare SSH-sleutels. Verifieer alstublieft een "
+"van deze sleutels."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Hoe te verifiëren?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -519,10 +532,14 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Voer de volgende opdracht uit op de SSH-hostcomputer. De uitvoer moet "
+"overeenkomen met een van de aangeboden opties. U kunt ook dsa, ecdsa, "
+"ed25519 etc. gebruiken in plaats van rsa, door het overeenkomstige bestand "
+"te kiezen."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
-msgstr ""
+msgstr "Host verifiëren"
 
 #: plinth/modules/backups/views.py:56
 msgid "Archive created."
@@ -542,7 +559,7 @@ msgstr "Een back-up uploaden en herstellen"
 
 #: plinth/modules/backups/views.py:144
 msgid "Restored files from backup."
-msgstr ""
+msgstr "Herstelde bestanden van de back-up."
 
 #: plinth/modules/backups/views.py:172
 msgid "No backup file found."
@@ -550,11 +567,12 @@ msgstr "Er is geen back-upbestand gevonden."
 
 #: plinth/modules/backups/views.py:180
 msgid "Restore from uploaded file"
-msgstr ""
+msgstr "Herstellen vanuit geüpload bestand"
 
 #: plinth/modules/backups/views.py:239
 msgid "No additional disks available to add a repository."
 msgstr ""
+"Er zijn geen extra schijven beschikbaar om een opslagplaats toe te voegen."
 
 #: plinth/modules/backups/views.py:247
 msgid "Create backup repository"
@@ -562,7 +580,7 @@ msgstr "Maak een back-up repository"
 
 #: plinth/modules/backups/views.py:274
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Maak een back-up repository"
 
 #: plinth/modules/backups/views.py:293
 msgid "Added new remote SSH repository."
@@ -570,23 +588,23 @@ msgstr "Nieuwe externe SSH-repository toegevoegd."
 
 #: plinth/modules/backups/views.py:315
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "SSH-hostkey verifiëren"
 
 #: plinth/modules/backups/views.py:341
 msgid "SSH host already verified."
-msgstr ""
+msgstr "SSH-host is al geverifieerd."
 
 #: plinth/modules/backups/views.py:351
 msgid "SSH host verified."
-msgstr ""
+msgstr "SSH-host geverifieerd."
 
 #: plinth/modules/backups/views.py:365
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "De openbare sleutel van de SSH-host kan niet worden geverifieerd."
 
 #: plinth/modules/backups/views.py:367
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Authenticatie naar externe server is mislukt."
 
 #: plinth/modules/backups/views.py:369
 msgid "Error establishing connection to server: {}"
@@ -598,11 +616,11 @@ msgstr "Repository verwijderd."
 
 #: plinth/modules/backups/views.py:394
 msgid "Remove Repository"
-msgstr ""
+msgstr "Verwijder Repository"
 
 #: plinth/modules/backups/views.py:403
 msgid "Repository removed. Backups were not deleted."
-msgstr ""
+msgstr "Repository verwijderd. Back-ups zijn niet verwijderd."
 
 #: plinth/modules/backups/views.py:413
 msgid "Unmounting failed!"
@@ -659,7 +677,7 @@ msgstr "Maak of upload bestanden"
 
 #: plinth/modules/bepasty/__init__.py:42
 msgid "List all files and their web links"
-msgstr ""
+msgstr "Maak een lijst van alle bestanden en hun weblinks"
 
 #: plinth/modules/bepasty/__init__.py:43
 msgid "Delete files"
@@ -667,7 +685,7 @@ msgstr "Bestanden verwijderen"
 
 #: plinth/modules/bepasty/__init__.py:44
 msgid "Administer files: lock/unlock files"
-msgstr ""
+msgstr "Beheer bestanden: vergrendel / ontgrendel bestanden"
 
 #: plinth/modules/bepasty/__init__.py:48
 msgid "None, password is always required"
@@ -1992,7 +2010,7 @@ msgstr ""
 "broncode en de geschiedenis daarvan bekijken en relevante aanpassingen en "
 "code terugvinden met de zoekfunctie. Je kan ook de codebasis klonen en "
 "aanpassingen in de code uploaden met een Git-client (er zijn zowel command-"
-"line als grafische versies beschikbaar) . En je kan je broncode delen met "
+"line als grafische versies beschikbaar). En je kan je broncode delen met "
 "mensen over de hele wereld."
 
 #: plinth/modules/gitweb/__init__.py:35
@@ -2000,18 +2018,20 @@ msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
+"Bezoek <a href=\"https://git-scm.com/docs/gittutorial\">Git tutorial</a> "
+"voor meer informatie over het gebruik van Git."
 
 #: plinth/modules/gitweb/__init__.py:51
 msgid "Read-write access to Git repositories"
-msgstr ""
+msgstr "Lees- en schrijftoegang tot Git-repositories"
 
 #: plinth/modules/gitweb/__init__.py:56 plinth/modules/gitweb/manifest.py:13
 msgid "Gitweb"
-msgstr ""
+msgstr "Gitweb"
 
 #: plinth/modules/gitweb/__init__.py:57
 msgid "Simple Git Hosting"
-msgstr ""
+msgstr "Eenvoudige Git Hosting"
 
 #: plinth/modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2069,7 +2089,7 @@ msgstr ""
 
 #: plinth/modules/gitweb/manifest.py:21
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:31
 msgid "Manage Repositories"
@@ -2257,10 +2277,10 @@ msgid ""
 msgstr ""
 "Je kan bijdragen door code te schrijven, te testen en fouten te rapporteren, "
 "nieuwe gebruiksmogelijkheden en toepassingen te bespreken, logo's en het "
-"grafisch ontwerp te ontwerpen,hulp te bieden aan je medegebruikers, het "
+"grafisch ontwerp te ontwerpen, hulp te bieden aan je medegebruikers, het "
 "vertalen van FreedomBox en zijn programma's naar jouw taal, het organiseren "
-"van programmeer- of installeerevenementen en door reclame te maken voor het "
-"projekt."
+"van programmeer- of installeerevenementen en door anderen te vertellen over "
+"het projekt."
 
 #: plinth/modules/help/templates/help_contribute.html:28
 msgid ""
@@ -3187,14 +3207,19 @@ msgid ""
 "that the new directory exists and that is readable from the \"minidlna\" "
 "user. Any user media directories (\"/home/username/\") will usually work."
 msgstr ""
+"Map die de MiniDLNA Server zal doorzoeken. Alle submappen hiervan worden ook "
+"doorzocht op mediabestanden. Als de standaardmap verandert, zorg er dan voor "
+"dat de nieuwe directory bestaat en dat deze leesbaar is voor de \"minidlna\" "
+"-gebruiker. Alle mediamappen van gebruikers binnen (\"/ home / "
+"gebruikersnaam /\") zullen meestal werken."
 
 #: plinth/modules/minidlna/manifest.py:10
 msgid "vlc"
-msgstr ""
+msgstr "vlc"
 
 #: plinth/modules/minidlna/manifest.py:49
 msgid "kodi"
-msgstr ""
+msgstr "kodi"
 
 #: plinth/modules/minidlna/manifest.py:88
 msgid "yaacc"
@@ -3813,6 +3838,14 @@ msgid ""
 "connectivity. If you have a public IP address but are unsure if it changes "
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
+"Dit is een openbaar IP-adres dat in de loop van de tijd kan veranderen <p "
+"class=\"help-block\"> Dit betekent dat apparaten op internet deze "
+"aansluiting kunnen bereiken wanneer er een internetverbinding is. Elke keer "
+"dat er via de internetprovider (ISP) verbinding gemaakt wordt met internet, "
+"wordt mogelijk een ander IP-adres toegewezen, vooral na enige tijd offline. "
+"Veel ISP's bieden dit type verbinding aan. Als dit een openbaar IP-adres is "
+"maar niet bekend is of dit in de loop van de tijd verandert, is het veiliger "
+"om deze optie te kiezen. </p>"
 
 #: plinth/modules/networks/forms.py:359
 #, python-brace-format
@@ -3825,6 +3858,13 @@ msgid ""
 "but very few ISPs offer this. You may be able to get this service from your "
 "ISP by making an additional payment.</p>"
 msgstr ""
+"Ik heb een openbaar IP-adres dat niet verandert (aanbevolen) <p class=\"help-"
+"block\"> Dit betekent dat apparaten op internet deze aansluiting kunnen "
+"bereiken wanneer er een internetverbinding is. Elke keer dat er via de "
+"internetprovider (ISP) verbinding gemaakt wordt met internet, wordt "
+"hetzelfde IP-adres toegewezen. Dit is de makkelijkste methode voor veel "
+"{box_name} diensten, maar niet veel ISP's bieden dit type verbinding aan. "
+"Het kan zijn dat de ISP deze service als een betaalde dienst aanbiedt.</p>"
 
 #: plinth/modules/networks/forms.py:372
 #, python-brace-format
@@ -3837,6 +3877,13 @@ msgid ""
 "troublesome situation for hosting services at home. {box_name} provides many "
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
+"Ik heb geen publiek IP-adres <p class=\"help-block\"> Dit betekent dat "
+"apparaten op internet deze aansluiting <b>niet</b> kunnen bereiken met deze "
+"internetverbinding. Als er via deze internetprovider (ISP) verbinding "
+"gemaakt wordt met internet, wordt alleen een lokaal IP-adres toegewezen. "
+"Veel ISP's bieden dit type verbinding aan. Dit is de moeilijkste situatie om "
+"diensten via internet aan te bieden vanuit huis. {box_name} biedt veel "
+"verschillende oplossingen maar ieder daarvan heeft beperkingen.</p>"
 
 #: plinth/modules/networks/forms.py:385
 msgid ""
@@ -5208,6 +5255,10 @@ msgid ""
 "\\{hostname} (on Windows) or smb://{hostname}.local (on Linux and Mac). "
 "There are three types of shares you can choose from: "
 msgstr ""
+"Na de installatie u kiezen welke schijven u wilt gebruiken om te delen. "
+"Ingeschakelde gedeelde schijven zijn toegankelijk in de bestandsbeheerder op "
+"uw computer op locatie \\\\{hostname} (op Windows) of smb://{hostname}.local "
+"(op Linux en Mac). Er zijn drie soorten van delen waaruit u kiezen: "
 
 #: plinth/modules/samba/__init__.py:40
 msgid "Open share - accessible to everyone in your local network."
@@ -5470,6 +5521,8 @@ msgid ""
 "The installed version of FreedomBox has %(count)s reported security "
 "vulnerabilities."
 msgstr ""
+"De geïnstalleerde versie van FreedomBox heeft %(count)s gemelde "
+"beveiligingslekken."
 
 #: plinth/modules/security/templates/security_report.html:18
 msgid ""
@@ -5984,7 +6037,7 @@ msgstr ""
 
 #: plinth/modules/ssh/templates/ssh.html:23
 msgid "Algorithm"
-msgstr ""
+msgstr "Algoritme"
 
 #: plinth/modules/ssh/templates/ssh.html:24
 msgid "Fingerprint"
@@ -6626,6 +6679,11 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
+"Updates worden elke dag om 06:00 uur in de lokale tijdzone uitgevoerd. Stel "
+"de tijdzone in binnen de app Datum & tijd. Apps worden opnieuw gestart na de "
+"update, waardoor ze kort niet beschikbaar zijn. Als het systeem opnieuw moet "
+"worden opgestart, gebeurt dit automatisch om 02:00 uur, waardoor alle apps "
+"even niet beschikbaar zijn."
 
 #: plinth/modules/upgrades/__init__.py:68 plinth/templates/setup.html:62
 msgid "Update"
