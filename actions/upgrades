@@ -358,17 +358,22 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
         return
 
     print(f'Upgrading from {dist} to {codename}...')
-    if check_dist == 'testing':
-        with open(SOURCES_LIST, 'r') as sources_list:
-            lines = sources_list.readlines()
+    with open(SOURCES_LIST, 'r') as sources_list:
+        lines = sources_list.readlines()
 
-        with open(SOURCES_LIST, 'w') as sources_list:
-            for line in lines:
-                new_line = line.replace('stable', codename)
-                if 'security' in new_line:
-                    new_line = new_line.replace('/updates', '-security')
+    with open(SOURCES_LIST, 'w') as sources_list:
+        for line in lines:
+            # E.g. replace 'buster' with 'bullseye'.
+            new_line = line.replace(dist, codename)
+            if check_dist == 'testing':
+                # E.g. replace 'stable' with 'bullseye'.
+                new_line = new_line.replace('stable', codename)
 
-                sources_list.write(new_line)
+            # Security suite name renamed starting with bullseye
+            if 'security' in new_line:
+                new_line = new_line.replace('/updates', '-security')
+
+            sources_list.write(new_line)
 
     print('Dist upgrade in progress. Setting flag.')
     dist_upgrade_flag.touch(mode=0o660)
