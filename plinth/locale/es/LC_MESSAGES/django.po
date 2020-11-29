@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 19:46-0500\n"
-"PO-Revision-Date: 2020-11-23 22:49+0000\n"
+"PO-Revision-Date: 2020-11-30 00:29+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -1411,15 +1411,14 @@ msgid "Results"
 msgstr "Resultados"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:42
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "\n"
 "            App: %(app_name)s\n"
 "          "
 msgstr ""
 "\n"
-"            ………App: %(app_name)s\n"
-"……\n"
+"            App: %(app_name)s\n"
 "          "
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
@@ -1668,7 +1667,7 @@ msgstr "URL para consultar la IP pública"
 
 #: plinth/modules/dynamicdns/forms.py:119
 msgid "Use IPv6 instead of IPv4"
-msgstr ""
+msgstr "Use IPv6 en vez de IPv4"
 
 #: plinth/modules/dynamicdns/forms.py:142
 msgid "Please provide an update URL or a GnuDIP server address"
@@ -4806,7 +4805,7 @@ msgstr "Tunnelblick"
 
 #: plinth/modules/openvpn/templates/migrate_to_ecc.html:7
 msgid "Migrate to ECC"
-msgstr ""
+msgstr "Migrar a crioptografía ECC (basada en curvas elípticas)"
 
 #: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
 msgid ""
@@ -4815,6 +4814,10 @@ msgid ""
 "security. This operation is irreversible. It should only take a few minutes "
 "on most single board computers."
 msgstr ""
+"Actualmemte tu instalación OpenVPN está usando RSA. Cambiar a Criptografía "
+"de Curva Elíptica (ECC) mejora la velocidad y seguridad al establecer "
+"conexiones. Esta operación es irreversible. En la mayoría de computadores "
+"monoplaca debería tardar escasos minutos."
 
 #: plinth/modules/openvpn/templates/migrate_to_ecc.html:19
 #, python-format
@@ -4822,6 +4825,8 @@ msgid ""
 "All new installations of OpenVPN on %(box_name)s will use ECC by default. We "
 "recommend migrating as soon as possible."
 msgstr ""
+"Todas las instalaciones nuevas de OpenVPN sobre %(box_name)s usarán ECC de "
+"serie. Recomendamos migrar cuanto antes."
 
 #: plinth/modules/openvpn/templates/migrate_to_ecc.html:26
 #, python-format
@@ -4831,12 +4836,14 @@ msgid ""
 "profiles. OpenVPN clients compatible with ECC should be used to connect to "
 "this server."
 msgstr ""
+"<b>Aviso:</b> Esta operación invalidará los perfiles de cliente existentes. "
+"Todos los usuarios de OpenVPN en %(box_name)s tienen que descargar sus "
+"perfiles nuevos. Para conectar con este servidor tendrán que usar clientes "
+"OpenVPN compatibles con ECC."
 
 #: plinth/modules/openvpn/templates/migrate_to_ecc.html:38
-#, fuzzy
-#| msgid "Moderate"
 msgid "Migrate"
-msgstr "Moderado"
+msgstr "Migrar"
 
 #: plinth/modules/openvpn/templates/openvpn.html:22
 msgid "Profile"
