@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 19:46-0500\n"
+"POT-Creation-Date: 2020-11-30 17:26-0500\n"
 "PO-Revision-Date: 2020-11-30 22:24+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -54,11 +54,11 @@ msgstr "Verbind met {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "Kan niet verbinden met {host}:{port}"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Select a domain name to be used with this application"
 msgstr "Kies een domeinnaam voor het gebruik van deze toepassing"
 
-#: plinth/forms.py:40
+#: plinth/forms.py:41
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -66,28 +66,28 @@ msgstr ""
 "Waarschuwing! De toepassing werkt mogelijk niet correct als de domeinnaam "
 "later wordt gewijzigd."
 
-#: plinth/forms.py:48
+#: plinth/forms.py:49
 msgid "Language"
 msgstr "Taal"
 
-#: plinth/forms.py:49
+#: plinth/forms.py:50
 msgid "Language to use for presenting this web interface"
 msgstr "Te gebruiken taal voor de weergave van deze webinterface"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid "Use the language preference set in the browser"
 msgstr "Gebruik de taalvoorkeuren die zijn ingesteld in de browser"
 
-#: plinth/middleware.py:57 plinth/templates/setup.html:18
+#: plinth/middleware.py:59 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "De toepassing is geïnstalleerd."
 
-#: plinth/middleware.py:63
+#: plinth/middleware.py:65
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Fout bij het installeren van de toepassing: {string} {details}"
 
-#: plinth/middleware.py:67
+#: plinth/middleware.py:69
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Fout bij het installeren van de toepassing: {error}"
@@ -159,6 +159,7 @@ msgstr "Repository"
 #: plinth/modules/backups/templates/backups_delete.html:18
 #: plinth/modules/ikiwiki/forms.py:15
 #: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/samba/templates/samba.html:77
 #: plinth/modules/sharing/templates/sharing.html:37
 msgid "Name"
 msgstr "Naam"
@@ -479,8 +480,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      Upload een back-upbestand dat is gedownload van een andere %(box_name)"
-"s\n"
+"      Upload een back-upbestand dat is gedownload van een andere "
+"%(box_name)s\n"
 "      om de inhoud te herstellen. Na het uploaden van een back-up bestand\n"
 "      kunnen de te herstellen toepassingen worden gekozen.\n"
 "    "
@@ -709,7 +710,8 @@ msgstr "Openbare toegang (standaardmachtigingen)"
 
 #: plinth/modules/bepasty/forms.py:18
 msgid "Permissions for anonymous users, who have not provided a password."
-msgstr "Rechten voor anonieme gebruikers, die geen wachtwoord hebben opgegeven."
+msgstr ""
+"Rechten voor anonieme gebruikers, die geen wachtwoord hebben opgegeven."
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
@@ -752,22 +754,38 @@ msgstr "Er zijn momenteel geen wachwoorden ingesteld."
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: plinth/modules/bepasty/views.py:42
+#: plinth/modules/bepasty/views.py:23
+#, fuzzy
+#| msgid "Admin"
+msgid "admin"
+msgstr "Admin"
+
+#: plinth/modules/bepasty/views.py:24
+#, fuzzy
+#| msgid "Repository"
+msgid "editor"
+msgstr "Repository"
+
+#: plinth/modules/bepasty/views.py:25
+msgid "viewer"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:50
 msgid "Read"
 msgstr ""
 
-#: plinth/modules/bepasty/views.py:43
+#: plinth/modules/bepasty/views.py:51
 msgid "Create"
 msgstr "Maak"
 
-#: plinth/modules/bepasty/views.py:44
+#: plinth/modules/bepasty/views.py:52
 msgid "List"
 msgstr ""
 
-#: plinth/modules/bepasty/views.py:45
+#: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 #: plinth/modules/networks/templates/connection_show.html:48
-#: plinth/modules/samba/templates/samba.html:127
+#: plinth/modules/samba/templates/samba.html:163
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:33
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:73
@@ -775,31 +793,31 @@ msgstr ""
 msgid "Delete"
 msgstr "Verwijder"
 
-#: plinth/modules/bepasty/views.py:46
+#: plinth/modules/bepasty/views.py:54
 msgid "Admin"
 msgstr "Admin"
 
-#: plinth/modules/bepasty/views.py:83 plinth/modules/searx/views.py:38
+#: plinth/modules/bepasty/views.py:91 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
 #: plinth/modules/tor/views.py:157
 msgid "Configuration updated."
 msgstr "Configuratie bijgewerkt."
 
-#: plinth/modules/bepasty/views.py:86 plinth/modules/gitweb/views.py:117
+#: plinth/modules/bepasty/views.py:94 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
 #: plinth/modules/tor/views.py:159
 msgid "An error occurred during configuration."
 msgstr "Er is een fout opgetreden tijdens de configuratie."
 
-#: plinth/modules/bepasty/views.py:97
+#: plinth/modules/bepasty/views.py:105
 msgid "Password added."
 msgstr "Wachtwoord toegevoegd."
 
-#: plinth/modules/bepasty/views.py:102
+#: plinth/modules/bepasty/views.py:110
 msgid "Add Password"
 msgstr "Wachtwoord toevoegen"
 
-#: plinth/modules/bepasty/views.py:119
+#: plinth/modules/bepasty/views.py:127
 msgid "Password deleted."
 msgstr "Wachtwoord verwijderd."
 
@@ -857,6 +875,7 @@ msgstr "Bediende domeinen"
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:14
 #: plinth/modules/networks/templates/connection_show.html:83
+#: plinth/modules/samba/templates/samba.html:76
 #: plinth/modules/storage/templates/storage.html:28
 msgid "Type"
 msgstr "Soort"
@@ -1077,7 +1096,7 @@ msgstr "Algemene Instellingen"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:37
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "Configureer"
@@ -1165,7 +1184,8 @@ msgstr "Toon geavanceerde toepassingen en functies"
 
 #: plinth/modules/config/forms.py:93
 msgid "Show apps and features that require more technical knowledge."
-msgstr "Laat toepassingen en functies zien die meer technische kennis vereisen."
+msgstr ""
+"Laat toepassingen en functies zien die meer technische kennis vereisen."
 
 #: plinth/modules/config/views.py:46
 #, python-brace-format
@@ -1762,6 +1782,7 @@ msgstr "Over ons"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
+#: plinth/modules/samba/templates/samba.html:78
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -2340,14 +2361,14 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
-"Je kunt het project ook financieel steunen door te <a href=\"https"
-"://freedomboxfoundation.org/donate/\">doneren</a> aan de stichting "
-"FreedomBox. De FreedomBox Foundation is opgericht in 2011 en is een non-"
-"profit organisatie met een 501(c)(3) status, gevestigd in New York City, die "
-"is opgericht om FreedomBox te ondersteunen. Zij biedt technische "
-"infrastructuur en juridische diensten voor het project, streeft "
-"partnerschappen na en pleit voor FreedomBox over de hele wereld. De "
-"FreedomBox Foundation zou niet bestaan zonder haar supporters."
+"Je kunt het project ook financieel steunen door te <a href=\"https://"
+"freedomboxfoundation.org/donate/\">doneren</a> aan de stichting FreedomBox. "
+"De FreedomBox Foundation is opgericht in 2011 en is een non-profit "
+"organisatie met een 501(c)(3) status, gevestigd in New York City, die is "
+"opgericht om FreedomBox te ondersteunen. Zij biedt technische infrastructuur "
+"en juridische diensten voor het project, streeft partnerschappen na en pleit "
+"voor FreedomBox over de hele wereld. De FreedomBox Foundation zou niet "
+"bestaan zonder haar supporters."
 
 #: plinth/modules/help/templates/help_contribute.html:42
 #: plinth/modules/power/templates/power_restart.html:27
@@ -2469,8 +2490,8 @@ msgid ""
 msgstr ""
 "Je kunt ook met ons chatten op onze (gekoppelde) IRC- en Matrix-kanalen: "
 "<ul> <li> #freedombox op irc.oftc.net </li> <li> #freedombox:matrix.org </"
-"li> </ul> Of stuur een e-mail naar onze <a href=\"mailto:freedombox-discuss"
-"@alioth-lists.debian.net\">mailinglijst</a>."
+"li> </ul> Of stuur een e-mail naar onze <a href=\"mailto:freedombox-"
+"discuss@alioth-lists.debian.net\">mailinglijst</a>."
 
 #: plinth/modules/help/templates/statuslog.html:10
 msgid "Status Log"
@@ -3277,8 +3298,8 @@ msgstr ""
 "mediabestanden (muziek, afbeeldingen en video) aan clients op een netwerk. "
 "DLNA / UPnP is een configuratievrij protocol en is compatibel met elk "
 "apparaat dat aan de DLNA-certificering voldoet, zoals draagbare "
-"mediaspelers, smartphones, televisies en spelsystemen (zoals PS3 en Xbox 360)"
-" of programma's zoals totem en Kodi."
+"mediaspelers, smartphones, televisies en spelsystemen (zoals PS3 en Xbox "
+"360) of programma's zoals totem en Kodi."
 
 #: plinth/modules/minidlna/__init__.py:44
 msgid "Media streaming server"
@@ -4035,12 +4056,12 @@ msgid ""
 "static local IP address for your {box_name} in your router's configuration.</"
 "p>"
 msgstr ""
-"Gebruik de DMZ-functie om al het verkeer door te sturen (aanbevolen) <p class"
-"=\"help-block\"> De meeste routers bieden een DMZ configuratie-instelling. "
-"Hierdoor kan de router al het inkomende verkeer van internet doorsturen naar "
-"een enkel IP-adres, bijvoorbeeld het IP-adres van {box_name}. Vergeet niet "
-"om eerst een statisch lokaal IP-adres voor de {box_name} in de router "
-"configuratie aan te maken. </p>"
+"Gebruik de DMZ-functie om al het verkeer door te sturen (aanbevolen) <p "
+"class=\"help-block\"> De meeste routers bieden een DMZ configuratie-"
+"instelling. Hierdoor kan de router al het inkomende verkeer van internet "
+"doorsturen naar een enkel IP-adres, bijvoorbeeld het IP-adres van "
+"{box_name}. Vergeet niet om eerst een statisch lokaal IP-adres voor de "
+"{box_name} in de router configuratie aan te maken. </p>"
 
 #: plinth/modules/networks/forms.py:419
 #, python-brace-format
@@ -4053,8 +4074,8 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
-"Doorsturen van gespecificeerd verkeer per toepassing <p class=\"help-block\""
-">Er kan ook voor gekozen worden om alleen gespecificeerd verkeer door te "
+"Doorsturen van gespecificeerd verkeer per toepassing <p class=\"help-block"
+"\">Er kan ook voor gekozen worden om alleen gespecificeerd verkeer door te "
 "sturen naar uw {box_name}. Dit is ideaal als u andere servers zoals "
 "{box_name} in uw netwerk hebt of als de router geen DMZ-functie ondersteunt. "
 "Voor alle toepassingen die een webinterface bieden, moet verkeer op poorten "
@@ -4297,19 +4318,16 @@ msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
 #: plinth/modules/networks/templates/connections_diagram.html:74
+#: plinth/modules/networks/templates/connections_diagram.html:104
+#: plinth/modules/networks/templates/connections_list.html:62
 #, python-format
-msgid "Show connection %(connection.name)s"
-msgstr "Toon verbinding %(connection.name)s"
+msgid "Show connection %(name)s"
+msgstr "Tonen verbinding %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:92
 #: plinth/network.py:24
 msgid "Internal"
 msgstr "Intern"
-
-#: plinth/modules/networks/templates/connections_diagram.html:104
-#, python-format
-msgid "Show connection %(name)s"
-msgstr "Tonen verbinding %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:116
 msgid "Computer"
@@ -4378,6 +4396,9 @@ msgstr ""
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:46
+#: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "Volgende"
 
@@ -4793,7 +4814,7 @@ msgstr "Verbinding {name} verwijderd."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kan verbinding niet verwijderen: Verbinding niet gevonden."
 
-#: plinth/modules/openvpn/__init__.py:28
+#: plinth/modules/openvpn/__init__.py:29
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4811,16 +4832,22 @@ msgstr ""
 "mogelijk om de rest van het internetgebruik via {box_name} te leiden, voor "
 "meer veiligheid en anonimiteit."
 
-#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:57
+#, fuzzy
+#| msgid "Connection to Server"
+msgid "Connect to VPN services"
+msgstr "Verbinding met server"
+
+#: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:57
+#: plinth/modules/openvpn/__init__.py:61
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Virtual Private Network"
 
-#: plinth/modules/openvpn/__init__.py:68
+#: plinth/modules/openvpn/__init__.py:72
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -4956,9 +4983,9 @@ msgid ""
 msgstr ""
 "PageKite omzeilt NAT, firewalls en IP-adres beperkingen door een combinatie "
 "van tunnels en reverse proxies. Er kan gebruik gemaakt worden van iedere "
-"pagekite service provider, bijvoorbeeld <a href=\"https://pagekite.net\""
-">pagekite.net</a>.  In de toekomst is het misschien mogelijk om de {box_name}"
-" van een van je vrienden te gebruiken."
+"pagekite service provider, bijvoorbeeld <a href=\"https://pagekite.net"
+"\">pagekite.net</a>.  In de toekomst is het misschien mogelijk om de "
+"{box_name} van een van je vrienden te gebruiken."
 
 #: plinth/modules/pagekite/__init__.py:65
 msgid "PageKite"
@@ -5299,9 +5326,9 @@ msgid ""
 msgstr ""
 "Radicale is een CalDAV en CardDAV server. Het biedt synchronisatie en delen "
 "van agenda- en contactgegevens. Om Radicale te gebruiken is een <a href="
-"\"https://radicale.org/master.html#documentation/supported-clients\""
-">ondersteunde clienttoepassing</a> nodig. Radicale kan worden benaderd door "
-"elke {box_name} gebruiker."
+"\"https://radicale.org/master.html#documentation/supported-clients"
+"\">ondersteunde clienttoepassing</a> nodig. Radicale kan worden benaderd "
+"door elke {box_name} gebruiker."
 
 #: plinth/modules/radicale/__init__.py:33
 msgid ""
@@ -5451,7 +5478,7 @@ msgstr "Roundcube"
 msgid "Email Client"
 msgstr "Email Cliënt"
 
-#: plinth/modules/samba/__init__.py:32
+#: plinth/modules/samba/__init__.py:31
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
@@ -5459,7 +5486,7 @@ msgstr ""
 "Met Samba kunnen bestanden en mappen worden gedeeld tussen FreedomBox en "
 "andere computers in het lokale netwerk."
 
-#: plinth/modules/samba/__init__.py:35
+#: plinth/modules/samba/__init__.py:34
 #, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
@@ -5472,11 +5499,11 @@ msgstr ""
 "uw computer op locatie \\\\{hostname} (op Windows) of smb://{hostname}.local "
 "(op Linux en Mac). Er zijn drie soorten van delen waaruit u kiezen: "
 
-#: plinth/modules/samba/__init__.py:40
+#: plinth/modules/samba/__init__.py:39
 msgid "Open share - accessible to everyone in your local network."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:41
+#: plinth/modules/samba/__init__.py:40
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
@@ -5484,7 +5511,7 @@ msgstr ""
 "Groeps deelmap - alleen toegankelijk voor FreedomBox-gebruikers die deel "
 "uitmaken van de freedombox-share-groep."
 
-#: plinth/modules/samba/__init__.py:43
+#: plinth/modules/samba/__init__.py:42
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
@@ -5492,15 +5519,15 @@ msgstr ""
 "Prive-deelmap - - iedere gebruiker in de freedombox-share-groep kan zijn "
 "eigen privéruimte hebben."
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:58
 msgid "Access to the private shares"
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:62
+#: plinth/modules/samba/__init__.py:61
 msgid "Samba"
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:63
+#: plinth/modules/samba/__init__.py:62
 msgid "Network File Storage"
 msgstr "Netwerk bestandenopslag"
 
@@ -5524,12 +5551,11 @@ msgstr "GNOME Bestanden"
 msgid "Dolphin"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:24
-#: plinth/modules/samba/templates/samba.html:35
+#: plinth/modules/samba/templates/samba.html:32
 msgid "Shares"
 msgstr "Gedeelde schijven"
 
-#: plinth/modules/samba/templates/samba.html:26
+#: plinth/modules/samba/templates/samba.html:34
 msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
@@ -5537,20 +5563,11 @@ msgstr ""
 "Opmerking: Niet de gehele schijf wordt gedeeld, maar alleen geselecteerde "
 "mappen."
 
-#: plinth/modules/samba/templates/samba.html:34
-msgid "Disk Name"
-msgstr "Schijfnaam"
-
-#: plinth/modules/samba/templates/samba.html:36
-#: plinth/modules/storage/templates/storage.html:29
-msgid "Used"
-msgstr "Gebruikt"
-
-#: plinth/modules/samba/templates/samba.html:57
+#: plinth/modules/samba/templates/samba.html:95
 msgid "VFAT partitions are not supported"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:88
+#: plinth/modules/samba/templates/samba.html:122
 #, python-format
 msgid ""
 "You can find additional information about disks on the <a href="
@@ -5561,11 +5578,11 @@ msgstr ""
 "informatie over schijven te vinden en toegang tot de gedeelde mappen is te "
 "configureren op de pagina <a href=\"%(users_url)s\">-gebruikers</a>."
 
-#: plinth/modules/samba/templates/samba.html:94
+#: plinth/modules/samba/templates/samba.html:130
 msgid "Users who can currently access group and home shares"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:98
+#: plinth/modules/samba/templates/samba.html:134
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
@@ -5574,11 +5591,11 @@ msgstr ""
 "wachtwoordwijziging om toegang te krijgen tot groeps- en prive gedeelde "
 "mappen"
 
-#: plinth/modules/samba/templates/samba.html:103
+#: plinth/modules/samba/templates/samba.html:139
 msgid "Unavailable Shares"
 msgstr "Niet beschikbare gedeelde mappen"
 
-#: plinth/modules/samba/templates/samba.html:105
+#: plinth/modules/samba/templates/samba.html:141
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
@@ -5587,40 +5604,46 @@ msgstr ""
 "beschikbaar is. Het delen wordt automatisch weer ingeschakeld zodra de "
 "schijf weer is aangesloten."
 
-#: plinth/modules/samba/templates/samba.html:113
+#: plinth/modules/samba/templates/samba.html:149
 msgid "Share name"
 msgstr "Gedeelde map naam"
 
-#: plinth/modules/samba/templates/samba.html:114
+#: plinth/modules/samba/templates/samba.html:150
 msgid "Action"
 msgstr "Actie"
 
-#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:32
+#, fuzzy
+#| msgid "FreedomBox"
+msgid "FreedomBox OS disk"
+msgstr "FreedomBox"
+
+#: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 msgid "Open Share"
 msgstr "Gedeelde map openen"
 
-#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:145
 msgid "Group Share"
 msgstr "Gedeelde map"
 
-#: plinth/modules/samba/views.py:53
+#: plinth/modules/samba/views.py:66
 msgid "Home Share"
 msgstr "Startmap"
 
-#: plinth/modules/samba/views.py:86
+#: plinth/modules/samba/views.py:101
 msgid "Share enabled."
 msgstr "Gedeelde map geaktiveerd."
 
-#: plinth/modules/samba/views.py:91
+#: plinth/modules/samba/views.py:106
 #, python-brace-format
 msgid "Error enabling share: {error_message}"
 msgstr "Fout bij het inschakelen van de gedeelde map: {error_message}"
 
-#: plinth/modules/samba/views.py:96
+#: plinth/modules/samba/views.py:111
 msgid "Share disabled."
 msgstr "Gedeelde map uitgeschakeld."
 
-#: plinth/modules/samba/views.py:101
+#: plinth/modules/samba/views.py:116
 #, python-brace-format
 msgid "Error disabling share: {error_message}"
 msgstr "Fout bij het uitschakelen van de gedeelde map: {error_message}"
@@ -5881,8 +5904,8 @@ msgid ""
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
 "Om na de installatie gebruik te maken van Shadowsocks, stelt u de SOCKS5 "
-"proxy in op uw apparaat, webbrowser of toepassing naar "
-"http://adres_van_uw_freedombox:1080/"
+"proxy in op uw apparaat, webbrowser of toepassing naar http://"
+"adres_van_uw_freedombox:1080/"
 
 #: plinth/modules/shadowsocks/__init__.py:50
 msgid "Shadowsocks"
@@ -6136,8 +6159,8 @@ msgid ""
 "Keep a maximum of this many yearly snapshots. The default value is 0 (keep "
 "no yearly snapshot)."
 msgstr ""
-"Bewaar maximaal dit aantal jaarlijkse snapshots. De standaardwaarde is 0 ("
-"geen jaarlijks snapshot bewaren)."
+"Bewaar maximaal dit aantal jaarlijkse snapshots. De standaardwaarde is 0 "
+"(geen jaarlijks snapshot bewaren)."
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
@@ -6157,7 +6180,7 @@ msgstr "Datum"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:198
 msgid "Delete Snapshots"
 msgstr "Snapshots verwijderen"
 
@@ -6211,42 +6234,56 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Terugdraaien tot Snapshot #%(number)s"
 
-#: plinth/modules/snapshot/views.py:32
+#: plinth/modules/snapshot/views.py:28
+#, fuzzy
+#| msgid "Library created."
+msgid "manually created"
+msgstr "Bibliotheek aangemaakt."
+
+#: plinth/modules/snapshot/views.py:29
+msgid "timeline"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:30
+msgid "apt"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
 msgstr "Beheren van Snapshots"
 
-#: plinth/modules/snapshot/views.py:81
+#: plinth/modules/snapshot/views.py:90
 msgid "Created snapshot."
 msgstr "Gemaakte snapshot."
 
-#: plinth/modules/snapshot/views.py:144
+#: plinth/modules/snapshot/views.py:153
 msgid "Storage snapshots configuration updated"
 msgstr "Opslag van Snapshots configuratie is bijgewerkt"
 
-#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:157 plinth/modules/tor/views.py:60
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Actiefout: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:176
+#: plinth/modules/snapshot/views.py:185
 msgid "Deleted selected snapshots"
 msgstr "Verwijderde geselecteerde snapshots"
 
-#: plinth/modules/snapshot/views.py:181
+#: plinth/modules/snapshot/views.py:190
 msgid "Snapshot is currently in use. Please try again later."
 msgstr "Snapshot is momenteel in gebruik. Probeer het later nog eens."
 
-#: plinth/modules/snapshot/views.py:200
+#: plinth/modules/snapshot/views.py:209
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Teruggezet naar snapshot #{number}."
 
-#: plinth/modules/snapshot/views.py:203
+#: plinth/modules/snapshot/views.py:212
 msgid "The system must be restarted to complete the rollback."
 msgstr ""
 "Het systeem moet opnieuw worden opgestart om het terugdraaien te voltooien."
 
-#: plinth/modules/snapshot/views.py:215
+#: plinth/modules/snapshot/views.py:224
 msgid "Rollback to Snapshot"
 msgstr "Terugdraaien naar Snapshot"
 
@@ -6490,6 +6527,10 @@ msgstr "Label"
 #: plinth/modules/storage/templates/storage.html:27
 msgid "Mount Point"
 msgstr "Koppelpunt"
+
+#: plinth/modules/storage/templates/storage.html:29
+msgid "Used"
+msgstr "Gebruikt"
 
 #: plinth/modules/storage/templates/storage.html:78
 msgid "Partition Expansion"
@@ -6805,8 +6846,8 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Een \"hidden service\" zorgt ervoor dat {box_name} geselecteerde diensten ("
-"zoals wiki of chat) kan aanbieden zonder de locatie te onthullen. Deze "
+"Een \"hidden service\" zorgt ervoor dat {box_name} geselecteerde diensten "
+"(zoals wiki of chat) kan aanbieden zonder de locatie te onthullen. Deze "
 "dienst nog niet gebruiken als sterke anonimiteit vereist is."
 
 #: plinth/modules/tor/forms.py:110
@@ -6933,12 +6974,13 @@ msgstr "News Feed Reader"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:41
+#: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Controleer de nieuwste software- en beveiligingsupdates en pas deze toe."
 
-#: plinth/modules/upgrades/__init__.py:37
+#: plinth/modules/upgrades/__init__.py:42
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6951,15 +6993,18 @@ msgstr ""
 "het systeem opnieuw moet worden opgestart, gebeurt dit automatisch om 02:00 "
 "uur, waardoor alle toepassingen even niet beschikbaar zijn."
 
-#: plinth/modules/upgrades/__init__.py:68 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:73
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Update"
 
-#: plinth/modules/upgrades/__init__.py:105
+#: plinth/modules/upgrades/__init__.py:110
 msgid "Updates"
 msgstr "Updates"
 
-#: plinth/modules/upgrades/__init__.py:108
+#: plinth/modules/upgrades/__init__.py:113
 msgid "FreedomBox Updated"
 msgstr "FreedomBox geaktualiseerd"
 
@@ -6990,6 +7035,12 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Activeer Tussentijdse Software Updates (aanbevolen)"
 
+#: plinth/modules/upgrades/forms.py:40
+#, fuzzy
+#| msgid "Fail2Ban (recommended)"
+msgid "Update now (recommended)"
+msgstr "Fail2Ban (aanbevolen)"
+
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -7006,6 +7057,38 @@ msgstr ""
 "<strong>Opmerking:</strong> Zodra Tussentijdse Software Updates is "
 "geactiveerd, kan het niet worden gedeactiveerd."
 
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+#, fuzzy
+#| msgid "Updating..."
+msgid "Updating, please wait..."
+msgstr "Bezig met bijwerken…"
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
+#: plinth/modules/upgrades/templates/update-firstboot.html:20
+#, fuzzy
+#| msgid ""
+#| "<strong>This may take a long time to complete.</strong> During an update, "
+#| "you cannot install apps. Also, this web interface may be temporarily "
+#| "unavailable and show an error. In that case, refresh the page to continue."
+msgid ""
+"<strong>This may take a long time to complete.</strong> During an update, "
+"this web interface may be temporarily unavailable and show an error. In that "
+"case, refresh the page to continue."
+msgstr ""
+"<strong>Dit proces kan lang duren.</strong> Tijdens softwareupgrades is het "
+"niet mogelijk om andere installaties te starten. Tijdens de upgrade kan deze "
+"webinterface tijdelijk niet beschikbaar zijn, en een foutmelding weergeven. "
+"Vernieuw in dat geval de pagina om door te gaan."
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
+#, fuzzy, python-format
+#| msgid "%(box_name)s is up to date."
+msgid ""
+"\n"
+"\t%(box_name)s is up to date. Press Next to continue.\n"
+"      "
+msgstr "De nieuwste versie van %(box_name)s is geïnstalleerd."
+
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
 msgid "%(box_name)s Updated"
@@ -7017,8 +7100,8 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
-"%(box_name)s is bijgewerkt naar versie %(version)s. Zie de <a href=\"%(url)"
-"s\">release aankondiging</a>."
+"%(box_name)s is bijgewerkt naar versie %(version)s. Zie de <a href=\"%(url)s"
+"\">release aankondiging</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
@@ -7088,36 +7171,36 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:66
+#: plinth/modules/upgrades/views.py:67
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Fout bij het instellen van automatische upgrades: {error}"
 
-#: plinth/modules/upgrades/views.py:70
+#: plinth/modules/upgrades/views.py:71
 msgid "Automatic upgrades enabled"
 msgstr "Automatisch bijwerken ingeschakeld"
 
-#: plinth/modules/upgrades/views.py:73
+#: plinth/modules/upgrades/views.py:74
 msgid "Automatic upgrades disabled"
 msgstr "Automatisch bijwerken uitgeschakeld"
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:82
 msgid "Distribution upgrade enabled"
 msgstr "Distributie bijwerken ingeschakeld"
 
-#: plinth/modules/upgrades/views.py:84
+#: plinth/modules/upgrades/views.py:85
 msgid "Distribution upgrade disabled"
 msgstr "Distributie bijwerken uitgeschakeld"
 
-#: plinth/modules/upgrades/views.py:125
+#: plinth/modules/upgrades/views.py:126
 msgid "Upgrade process started."
 msgstr "Upgrade-proces gestart."
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Starting upgrade failed."
 msgstr "Starten van de upgrade is mislukt."
 
-#: plinth/modules/upgrades/views.py:137
+#: plinth/modules/upgrades/views.py:138
 msgid "Frequent feature updates activated."
 msgstr "Tussentijdse Software Updates zijn ingeschakeld."
 
@@ -7453,8 +7536,8 @@ msgid ""
 "Domain name and port in the form \"ip:port\". Example: demo.wireguard."
 "com:12912 ."
 msgstr ""
-"Domeinnaam en poort in de vorm \"ip:poort\". Voorbeeld: demo.wireguard.com:"
-"12912 ."
+"Domeinnaam en poort in de vorm \"ip:poort\". Voorbeeld: demo.wireguard."
+"com:12912 ."
 
 #: plinth/modules/wireguard/forms.py:76
 msgid "Public key of the server"
@@ -8120,6 +8203,12 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Show connection %(connection.name)s"
+#~ msgstr "Toon verbinding %(connection.name)s"
+
+#~ msgid "Disk Name"
+#~ msgstr "Schijfnaam"
 
 #~ msgid ""
 #~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "

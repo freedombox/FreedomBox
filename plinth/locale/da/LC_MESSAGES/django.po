@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 19:46-0500\n"
+"POT-Creation-Date: 2020-11-30 17:26-0500\n"
 "PO-Revision-Date: 2020-10-27 10:42+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -54,11 +54,11 @@ msgstr "Forbind til {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "Kan ikke forbinde til {host}:{port}"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Select a domain name to be used with this application"
 msgstr "Vælg et domænenavn til brug i denne applikation"
 
-#: plinth/forms.py:40
+#: plinth/forms.py:41
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -66,28 +66,28 @@ msgstr ""
 "Advarsel! Applikationen holder muligvis op med at fungere korrekt hvis "
 "domænenavnet bliver ændret senere."
 
-#: plinth/forms.py:48
+#: plinth/forms.py:49
 msgid "Language"
 msgstr "Sprog"
 
-#: plinth/forms.py:49
+#: plinth/forms.py:50
 msgid "Language to use for presenting this web interface"
 msgstr "Sprog denne web-brugergrænseflade skal vises i"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid "Use the language preference set in the browser"
 msgstr "Benyt browserens sprogindstilling"
 
-#: plinth/middleware.py:57 plinth/templates/setup.html:18
+#: plinth/middleware.py:59 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Applikation installeret."
 
-#: plinth/middleware.py:63
+#: plinth/middleware.py:65
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Kunne ikke installere applikation: {string} {details}"
 
-#: plinth/middleware.py:67
+#: plinth/middleware.py:69
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Kunne ikke installere applikation: {error}"
@@ -160,6 +160,7 @@ msgstr "Lager"
 #: plinth/modules/backups/templates/backups_delete.html:18
 #: plinth/modules/ikiwiki/forms.py:15
 #: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/samba/templates/samba.html:77
 #: plinth/modules/sharing/templates/sharing.html:37
 msgid "Name"
 msgstr "Navn"
@@ -749,22 +750,38 @@ msgstr "Endnu ingen kodeord konfigureret."
 msgid "Password"
 msgstr "Kodeord"
 
-#: plinth/modules/bepasty/views.py:42
+#: plinth/modules/bepasty/views.py:23
+#, fuzzy
+#| msgid "Admin"
+msgid "admin"
+msgstr "Admin"
+
+#: plinth/modules/bepasty/views.py:24
+#, fuzzy
+#| msgid "Repository"
+msgid "editor"
+msgstr "Lager"
+
+#: plinth/modules/bepasty/views.py:25
+msgid "viewer"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:50
 msgid "Read"
 msgstr "Tilgå"
 
-#: plinth/modules/bepasty/views.py:43
+#: plinth/modules/bepasty/views.py:51
 msgid "Create"
 msgstr "Opret"
 
-#: plinth/modules/bepasty/views.py:44
+#: plinth/modules/bepasty/views.py:52
 msgid "List"
 msgstr "Oplist"
 
-#: plinth/modules/bepasty/views.py:45
+#: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 #: plinth/modules/networks/templates/connection_show.html:48
-#: plinth/modules/samba/templates/samba.html:127
+#: plinth/modules/samba/templates/samba.html:163
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:33
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:73
@@ -772,31 +789,31 @@ msgstr "Oplist"
 msgid "Delete"
 msgstr "Slet"
 
-#: plinth/modules/bepasty/views.py:46
+#: plinth/modules/bepasty/views.py:54
 msgid "Admin"
 msgstr "Admin"
 
-#: plinth/modules/bepasty/views.py:83 plinth/modules/searx/views.py:38
+#: plinth/modules/bepasty/views.py:91 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
 #: plinth/modules/tor/views.py:157
 msgid "Configuration updated."
 msgstr "Konfiguration opdateret."
 
-#: plinth/modules/bepasty/views.py:86 plinth/modules/gitweb/views.py:117
+#: plinth/modules/bepasty/views.py:94 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
 #: plinth/modules/tor/views.py:159
 msgid "An error occurred during configuration."
 msgstr "Der opstod en fejl under konfigurationen."
 
-#: plinth/modules/bepasty/views.py:97
+#: plinth/modules/bepasty/views.py:105
 msgid "Password added."
 msgstr "Kodeord tilføjet."
 
-#: plinth/modules/bepasty/views.py:102
+#: plinth/modules/bepasty/views.py:110
 msgid "Add Password"
 msgstr "Tilføj Kodeord"
 
-#: plinth/modules/bepasty/views.py:119
+#: plinth/modules/bepasty/views.py:127
 msgid "Password deleted."
 msgstr "Kodeord slettet"
 
@@ -854,6 +871,7 @@ msgstr "Betjener domæner"
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:14
 #: plinth/modules/networks/templates/connection_show.html:83
+#: plinth/modules/samba/templates/samba.html:76
 #: plinth/modules/storage/templates/storage.html:28
 msgid "Type"
 msgstr "Type"
@@ -1073,7 +1091,7 @@ msgstr "Generel Konfiguration"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:37
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "Konfigurer"
@@ -1753,6 +1771,7 @@ msgstr "Om"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
+#: plinth/modules/samba/templates/samba.html:78
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4257,19 +4276,16 @@ msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
 #: plinth/modules/networks/templates/connections_diagram.html:74
+#: plinth/modules/networks/templates/connections_diagram.html:104
+#: plinth/modules/networks/templates/connections_list.html:62
 #, python-format
-msgid "Show connection %(connection.name)s"
-msgstr "Vis forbindelse %(connection.name)s"
+msgid "Show connection %(name)s"
+msgstr "Vis forbindelse %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:92
 #: plinth/network.py:24
 msgid "Internal"
 msgstr "Intern"
-
-#: plinth/modules/networks/templates/connections_diagram.html:104
-#, python-format
-msgid "Show connection %(name)s"
-msgstr "Vis forbindelse %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:116
 msgid "Computer"
@@ -4337,6 +4353,9 @@ msgstr ""
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:46
+#: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "Næste"
 
@@ -4770,7 +4789,7 @@ msgstr "Slettede forbindelse {name}."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kunne ikke slette forbindelse: Forbindelse ikke fundet."
 
-#: plinth/modules/openvpn/__init__.py:28
+#: plinth/modules/openvpn/__init__.py:29
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4787,20 +4806,26 @@ msgstr ""
 "af {box_name}. Du kan også tilgå resten af internettet igennem {box_name} "
 "for øget sikkerhed og anonymitet."
 
-#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:57
+#, fuzzy
+#| msgid "Connection Type"
+msgid "Connect to VPN services"
+msgstr "Forbindelsestype"
+
+#: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 #, fuzzy
 #| msgid "OpenVPN"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:57
+#: plinth/modules/openvpn/__init__.py:61
 #: plinth/modules/wireguard/__init__.py:52
 #, fuzzy
 #| msgid "Virtual Private Network (OpenVPN)"
 msgid "Virtual Private Network"
 msgstr "Virtuelt Privat Netværk (OpenVPN)"
 
-#: plinth/modules/openvpn/__init__.py:68
+#: plinth/modules/openvpn/__init__.py:72
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5457,13 +5482,13 @@ msgstr "Aktiver Roundcube"
 msgid "Email Client"
 msgstr "Emailklient (Roundcube)"
 
-#: plinth/modules/samba/__init__.py:32
+#: plinth/modules/samba/__init__.py:31
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:35
+#: plinth/modules/samba/__init__.py:34
 #, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
@@ -5472,31 +5497,31 @@ msgid ""
 "There are three types of shares you can choose from: "
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:40
+#: plinth/modules/samba/__init__.py:39
 msgid "Open share - accessible to everyone in your local network."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:41
+#: plinth/modules/samba/__init__.py:40
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:43
+#: plinth/modules/samba/__init__.py:42
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:58
 msgid "Access to the private shares"
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:62
+#: plinth/modules/samba/__init__.py:61
 msgid "Samba"
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:63
+#: plinth/modules/samba/__init__.py:62
 #, fuzzy
 #| msgid "Network Time Server"
 msgid "Network File Storage"
@@ -5524,35 +5549,23 @@ msgstr ""
 msgid "Dolphin"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:24
-#: plinth/modules/samba/templates/samba.html:35
+#: plinth/modules/samba/templates/samba.html:32
 #, fuzzy
 #| msgid "Add Service"
 msgid "Shares"
 msgstr "Tilføj Service"
 
-#: plinth/modules/samba/templates/samba.html:26
+#: plinth/modules/samba/templates/samba.html:34
 msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:34
-#, fuzzy
-#| msgid "Domain Name"
-msgid "Disk Name"
-msgstr "Domænenavn"
-
-#: plinth/modules/samba/templates/samba.html:36
-#: plinth/modules/storage/templates/storage.html:29
-msgid "Used"
-msgstr "Brugt"
-
-#: plinth/modules/samba/templates/samba.html:57
+#: plinth/modules/samba/templates/samba.html:95
 msgid "VFAT partitions are not supported"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:88
+#: plinth/modules/samba/templates/samba.html:122
 #, python-format
 msgid ""
 "You can find additional information about disks on the <a href="
@@ -5560,77 +5573,83 @@ msgid ""
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:94
+#: plinth/modules/samba/templates/samba.html:130
 msgid "Users who can currently access group and home shares"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:98
+#: plinth/modules/samba/templates/samba.html:134
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:103
+#: plinth/modules/samba/templates/samba.html:139
 #, fuzzy
 #| msgid "Available Domains"
 msgid "Unavailable Shares"
 msgstr "Tilgængelige Domæner"
 
-#: plinth/modules/samba/templates/samba.html:105
+#: plinth/modules/samba/templates/samba.html:141
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:113
+#: plinth/modules/samba/templates/samba.html:149
 #, fuzzy
 #| msgid "Kite name"
 msgid "Share name"
 msgstr "Kite-navn"
 
-#: plinth/modules/samba/templates/samba.html:114
+#: plinth/modules/samba/templates/samba.html:150
 #, fuzzy
 #| msgid "Actions"
 msgid "Action"
 msgstr "Handlinger"
 
-#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:32
+#, fuzzy
+#| msgid "FreedomBox"
+msgid "FreedomBox OS disk"
+msgstr "FreedomBox"
+
+#: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Service"
 msgid "Open Share"
 msgstr "Tilføj Service"
 
-#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Service"
 msgid "Group Share"
 msgstr "Tilføj Service"
 
-#: plinth/modules/samba/views.py:53
+#: plinth/modules/samba/views.py:66
 #, fuzzy
 #| msgid "Add Service"
 msgid "Home Share"
 msgstr "Tilføj Service"
 
-#: plinth/modules/samba/views.py:86
+#: plinth/modules/samba/views.py:101
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Share enabled."
 msgstr "{name} slettet."
 
-#: plinth/modules/samba/views.py:91
+#: plinth/modules/samba/views.py:106
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error enabling share: {error_message}"
 msgstr "Kunne ikke installere applikation: {error}"
 
-#: plinth/modules/samba/views.py:96
+#: plinth/modules/samba/views.py:111
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Share disabled."
 msgstr "{name} slettet."
 
-#: plinth/modules/samba/views.py:101
+#: plinth/modules/samba/views.py:116
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error disabling share: {error_message}"
@@ -6167,7 +6186,7 @@ msgstr ""
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:198
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Delete Snapshots"
@@ -6219,47 +6238,61 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:32
+#: plinth/modules/snapshot/views.py:28
+#, fuzzy
+#| msgid "Library created."
+msgid "manually created"
+msgstr "Samling oprettet."
+
+#: plinth/modules/snapshot/views.py:29
+msgid "timeline"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:30
+msgid "apt"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:41
 #, fuzzy
 #| msgid "Create User"
 msgid "Manage Snapshots"
 msgstr "Opret Bruger"
 
-#: plinth/modules/snapshot/views.py:81
+#: plinth/modules/snapshot/views.py:90
 msgid "Created snapshot."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:144
+#: plinth/modules/snapshot/views.py:153
 #, fuzzy
 #| msgid "Configuration updated"
 msgid "Storage snapshots configuration updated"
 msgstr "Konfiguration opdateret"
 
-#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:157 plinth/modules/tor/views.py:60
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Fejl under handling: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:176
+#: plinth/modules/snapshot/views.py:185
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Deleted selected snapshots"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/views.py:181
+#: plinth/modules/snapshot/views.py:190
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:200
+#: plinth/modules/snapshot/views.py:209
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:203
+#: plinth/modules/snapshot/views.py:212
 msgid "The system must be restarted to complete the rollback."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:215
+#: plinth/modules/snapshot/views.py:224
 msgid "Rollback to Snapshot"
 msgstr ""
 
@@ -6514,6 +6547,10 @@ msgstr ""
 #: plinth/modules/storage/templates/storage.html:27
 msgid "Mount Point"
 msgstr "Monteringspunkt"
+
+#: plinth/modules/storage/templates/storage.html:29
+msgid "Used"
+msgstr "Brugt"
 
 #: plinth/modules/storage/templates/storage.html:78
 msgid "Partition Expansion"
@@ -6940,11 +6977,12 @@ msgstr "Nyhedsstrømlæser (Tiny Tiny RSS)"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:41
+#: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:37
+#: plinth/modules/upgrades/__init__.py:42
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6952,17 +6990,20 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:68 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:73
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Opdater"
 
-#: plinth/modules/upgrades/__init__.py:105
+#: plinth/modules/upgrades/__init__.py:110
 #, fuzzy
 #| msgid "Update"
 msgid "Updates"
 msgstr "Opdater"
 
-#: plinth/modules/upgrades/__init__.py:108
+#: plinth/modules/upgrades/__init__.py:113
 #, fuzzy
 #| msgid "FreedomBox Manual"
 msgid "FreedomBox Updated"
@@ -6995,6 +7036,10 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
+#: plinth/modules/upgrades/forms.py:40
+msgid "Update now (recommended)"
+msgstr ""
+
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -7006,6 +7051,38 @@ msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+msgid "Updating, please wait..."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
+#: plinth/modules/upgrades/templates/update-firstboot.html:20
+#, fuzzy
+#| msgid ""
+#| "Depending on the number of packages to install, this may take a long time "
+#| "to complete.  While upgrades are in progress, you will not be able to "
+#| "install other packages.  During the upgrade, this web interface may be "
+#| "temporarily unavailable and show an error.  Refresh the page to continue."
+msgid ""
+"<strong>This may take a long time to complete.</strong> During an update, "
+"this web interface may be temporarily unavailable and show an error. In that "
+"case, refresh the page to continue."
+msgstr ""
+"Afhængigt af antallet af pakker der skal installeres, kan dette tage lang "
+"tid at gennemføre.  Mens opdateringen er i gang vil du ikke være i stand til "
+"at installere andre pakker.  Under opdateringen kan dette web-interface "
+"blive midlertidigt utilgængeligt og vise en fejl.  Genindlæs siden for at "
+"fortsætte."
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
+#, fuzzy, python-format
+#| msgid "%(box_name)s Setup"
+msgid ""
+"\n"
+"\t%(box_name)s is up to date. Press Next to continue.\n"
+"      "
+msgstr "%(box_name)s Konfiguration"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
@@ -7094,41 +7171,41 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:66
+#: plinth/modules/upgrades/views.py:67
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr ""
 "Kunne ikke konfigurere automatisk opdatering (unattended-upgrades): {error}"
 
-#: plinth/modules/upgrades/views.py:70
+#: plinth/modules/upgrades/views.py:71
 msgid "Automatic upgrades enabled"
 msgstr "Automatisk opdatering aktiveret"
 
-#: plinth/modules/upgrades/views.py:73
+#: plinth/modules/upgrades/views.py:74
 msgid "Automatic upgrades disabled"
 msgstr "Automatisk opdatering deaktiveret"
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:82
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Distribution upgrade enabled"
 msgstr "Automatisk opdatering aktiveret"
 
-#: plinth/modules/upgrades/views.py:84
+#: plinth/modules/upgrades/views.py:85
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution upgrade disabled"
 msgstr "Automatisk opdatering deaktiveret"
 
-#: plinth/modules/upgrades/views.py:125
+#: plinth/modules/upgrades/views.py:126
 msgid "Upgrade process started."
 msgstr "Opdateringsprocessen er startet."
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Starting upgrade failed."
 msgstr "Kunne ikke starte opdatering."
 
-#: plinth/modules/upgrades/views.py:137
+#: plinth/modules/upgrades/views.py:138
 msgid "Frequent feature updates activated."
 msgstr ""
 
@@ -8172,6 +8249,14 @@ msgstr "%(percentage)s%% færdig"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Show connection %(connection.name)s"
+#~ msgstr "Vis forbindelse %(connection.name)s"
+
+#, fuzzy
+#~| msgid "Domain Name"
+#~ msgid "Disk Name"
+#~ msgstr "Domænenavn"
 
 #~ msgid ""
 #~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "
