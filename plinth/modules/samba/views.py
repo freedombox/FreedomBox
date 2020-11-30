@@ -4,6 +4,7 @@ Views for samba module.
 """
 
 import logging
+import os
 import urllib.parse
 from collections import defaultdict
 
@@ -20,12 +21,19 @@ logger = logging.getLogger(__name__)
 
 
 def get_share_mounts():
-    """Return list of mount points."""
-    ignore_points = ('/boot', '/boot/efi', '/boot/firmware', '/.snapshots')
-    return [
-        mount for mount in storage.get_mounts()
-        if mount['mount_point'] not in ignore_points
-    ]
+    """Return list of shareable mounts."""
+    ignore_mounts = ('/boot', '/boot/efi', '/boot/firmware', '/.snapshots')
+    mounts = []
+
+    for mount in storage.get_mounts():
+        mount_point = mount['mount_point']
+        if mount_point not in ignore_mounts:
+            basename = os.path.basename(mount_point)
+            mount['name'] = basename or _('FreedomBox OS disk')
+            mount['share_name_prefix'] = basename or 'disk'
+            mounts.append(mount)
+
+    return sorted(mounts, key=lambda k: k['mount_point'])
 
 
 class SambaAppView(views.AppView):
@@ -37,20 +45,27 @@ class SambaAppView(views.AppView):
         """Return template context data."""
         context = super().get_context_data(*args, **kwargs)
         disks = get_share_mounts()
-        shares = samba.get_shares()
-
-        for disk in disks:
-            disk['name'] = samba.disk_name(disk['mount_point'])
         context['disks'] = disks
 
+        shares = samba.get_shares()
         shared_mounts = defaultdict(list)
         for share in shares:
             shared_mounts[share['mount_point']].append(share['share_type'])
         context['shared_mounts'] = shared_mounts
 
-        context['share_types'] = [('open', _('Open Share')),
-                                  ('group', _('Group Share')),
-                                  ('home', _('Home Share'))]
+        context['share_types'] = [{
+            'id': 'open',
+            'type': _('Open Share'),
+            'share_name_suffix': ''
+        }, {
+            'id': 'group',
+            'type': _('Group Share'),
+            'share_name_suffix': '_group'
+        }, {
+            'id': 'home',
+            'type': _('Home Share'),
+            'share_name_suffix': '_home'
+        }]
 
         unavailable_shares = []
         for share in shares:

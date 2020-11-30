@@ -48,17 +48,16 @@ def samba_share_should_not_be_available(share_type):
 def _set_share(browser, share_type, status='enabled'):
     """Enable or disable samba share."""
     disk_name = 'disk'
-    share_type_name = '{0}_share'.format(share_type)
+    share_row_id = 'samba-share-{0}-{1}'.format(disk_name, share_type)
+
     functional.nav_to_module(browser, 'samba')
-    for elem in browser.find_by_tag('td'):
-        if elem.text == disk_name:
-            share_form = elem.find_by_xpath('(..//*)[2]/form').first
-            share_btn = share_form.find_by_name(share_type_name).first
-            if status == 'enabled' and share_btn['value'] == 'enable':
-                share_btn.click()
-            elif status == 'disabled' and share_btn['value'] == 'disable':
-                share_btn.click()
-            break
+    share = browser.find_by_id(share_row_id)
+    share_btn = share.find_by_css('.share-status').find_by_tag('button').first
+
+    if status == 'enabled' and share_btn['value'] == 'enable':
+        share_btn.click()
+    elif status == 'disabled' and share_btn['value'] == 'disable':
+        share_btn.click()
 
 
 def _write_to_share(share_type, as_guest=False):
