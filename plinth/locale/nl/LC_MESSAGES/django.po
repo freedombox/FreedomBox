@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-30 17:26-0500\n"
-"PO-Revision-Date: 2020-11-30 22:24+0000\n"
+"PO-Revision-Date: 2020-12-02 10:29+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -755,16 +755,12 @@ msgid "Password"
 msgstr "Wachtwoord"
 
 #: plinth/modules/bepasty/views.py:23
-#, fuzzy
-#| msgid "Admin"
 msgid "admin"
-msgstr "Admin"
+msgstr "beheerder"
 
 #: plinth/modules/bepasty/views.py:24
-#, fuzzy
-#| msgid "Repository"
 msgid "editor"
-msgstr "Repository"
+msgstr "editor"
 
 #: plinth/modules/bepasty/views.py:25
 msgid "viewer"
@@ -1079,7 +1075,7 @@ msgstr "Toegang"
 
 #: plinth/modules/cockpit/templates/cockpit.html:14
 msgid "Cockpit will only work when accessed using the following URLs."
-msgstr ""
+msgstr "Cockpit werkt alleen wanneer deze wordt geopend met de volgende URL's."
 
 #: plinth/modules/config/__init__.py:23
 msgid ""
@@ -1273,7 +1269,7 @@ msgstr ""
 
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
-msgstr ""
+msgstr "Gebruik de volgende URL's om uw communicatieserver in te stellen:"
 
 #: plinth/modules/coturn/templates/coturn.html:26
 msgid "Use the following shared authentication secret:"
@@ -1407,6 +1403,8 @@ msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
+"Systeem heeft weinig geheugen beschikbaar: {percent_used}% gebruikt, "
+"{memory_available} {memory_available_unit} vrij. {advice_message}"
 
 #: plinth/modules/diagnostics/__init__.py:223
 msgid "Low Memory"
@@ -4428,7 +4426,7 @@ msgstr ""
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:31
 msgid "My ISP does not provide a public IP address."
-msgstr ""
+msgstr "Mijn ISP biedt geen openbaar IP-adres."
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:35
 msgid "I do not know the type of connection my ISP provides."
@@ -4833,10 +4831,8 @@ msgstr ""
 "meer veiligheid en anonimiteit."
 
 #: plinth/modules/openvpn/__init__.py:57
-#, fuzzy
-#| msgid "Connection to Server"
 msgid "Connect to VPN services"
-msgstr "Verbinding met server"
+msgstr "Verbinding maken met VPN-dienst"
 
 #: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
@@ -5501,7 +5497,7 @@ msgstr ""
 
 #: plinth/modules/samba/__init__.py:39
 msgid "Open share - accessible to everyone in your local network."
-msgstr ""
+msgstr "Open deelmap - toegankelijk voor iedereen in uw lokale netwerk."
 
 #: plinth/modules/samba/__init__.py:40
 msgid ""
@@ -5580,7 +5576,7 @@ msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:130
 msgid "Users who can currently access group and home shares"
-msgstr ""
+msgstr "Gebruikers die momenteel toegang hebben tot groeps- en thuisshares"
 
 #: plinth/modules/samba/templates/samba.html:134
 msgid ""
@@ -5613,10 +5609,8 @@ msgid "Action"
 msgstr "Actie"
 
 #: plinth/modules/samba/views.py:32
-#, fuzzy
-#| msgid "FreedomBox"
 msgid "FreedomBox OS disk"
-msgstr "FreedomBox"
+msgstr "FreedomBox OS-schijf"
 
 #: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 msgid "Open Share"
@@ -6235,10 +6229,8 @@ msgid "Rollback to Snapshot #%(number)s"
 msgstr "Terugdraaien tot Snapshot #%(number)s"
 
 #: plinth/modules/snapshot/views.py:28
-#, fuzzy
-#| msgid "Library created."
 msgid "manually created"
-msgstr "Bibliotheek aangemaakt."
+msgstr "handmatig gemaakt"
 
 #: plinth/modules/snapshot/views.py:29
 msgid "timeline"
@@ -7036,10 +7028,8 @@ msgid "Activate frequent feature updates (recommended)"
 msgstr "Activeer Tussentijdse Software Updates (aanbevolen)"
 
 #: plinth/modules/upgrades/forms.py:40
-#, fuzzy
-#| msgid "Fail2Ban (recommended)"
 msgid "Update now (recommended)"
-msgstr "Fail2Ban (aanbevolen)"
+msgstr "Nu bijwerken (aanbevolen)"
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -7058,36 +7048,31 @@ msgstr ""
 "geactiveerd, kan het niet worden gedeactiveerd."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
-#, fuzzy
-#| msgid "Updating..."
 msgid "Updating, please wait..."
-msgstr "Bezig met bijwerken…"
+msgstr "Bezig met bijwerken, even geduld..."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
-#, fuzzy
-#| msgid ""
-#| "<strong>This may take a long time to complete.</strong> During an update, "
-#| "you cannot install apps. Also, this web interface may be temporarily "
-#| "unavailable and show an error. In that case, refresh the page to continue."
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "this web interface may be temporarily unavailable and show an error. In that "
 "case, refresh the page to continue."
 msgstr ""
-"<strong>Dit proces kan lang duren.</strong> Tijdens softwareupgrades is het "
-"niet mogelijk om andere installaties te starten. Tijdens de upgrade kan deze "
+"<strong>Dit proces kan lang duren.</strong> Tijdens de upgrade kan deze "
 "webinterface tijdelijk niet beschikbaar zijn, en een foutmelding weergeven. "
 "Vernieuw in dat geval de pagina om door te gaan."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid ""
 "\n"
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
-msgstr "De nieuwste versie van %(box_name)s is geïnstalleerd."
+msgstr ""
+"\n"
+"\tDe nieuwste versie van %(box_name)s is geïnstalleerd. Klik Volgende om "
+"verder te gaan.\n"
+"      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -7627,6 +7612,8 @@ msgstr "Tijdstip vorige verbinding"
 #, python-format
 msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr ""
+"Er zijn nog geen peers ingesteld om verbinding te maken met deze "
+"%(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard.html:47
 #, python-format
