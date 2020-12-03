@@ -16,6 +16,7 @@ from plinth.modules import names
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
+from plinth.utils import Version
 
 from .manifest import backup, clients  # noqa, pylint: disable=unused-import
 
@@ -96,6 +97,21 @@ def setup(helper, old_version=None):
         helper.call('post', app.enable)
 
     app.get_component('letsencrypt-mumble').setup_certificates()
+
+
+def force_upgrade(helper, packages):
+    """Force upgrade mumble-server to resolve conffile prompts."""
+    if 'mumble-server' not in packages:
+        return False
+
+    # Allow upgrades within 1.3.*
+    package = packages['mumble-server']
+    if Version(package['new_version']) > Version('1.4~'):
+        return False
+
+    helper.install(['mumble-server'], force_configuration='new')
+    helper.call('post', actions.superuser_run, 'mumble', ['setup'])
+    return True
 
 
 def get_available_domains():
