@@ -1,0 +1,36 @@
+{% extends "base_firstboot.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <h2>{% trans "Update" %}</h2>
+
+  <p>
+    {% blocktrans trimmed %}
+      Check for and apply the latest software and security updates.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      <strong>This may take a long time to complete.</strong> During
+      an update, this web interface may be temporarily unavailable and
+      show an error. In that case, refresh the page to continue.
+    {% endblocktrans %}
+  </p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary" name="update"
+           value="{% trans "Next" %}"/>
+  </form>
+
+{% endblock %}

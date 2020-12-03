@@ -11,7 +11,6 @@ import os
 import subprocess
 import sys
 from collections import defaultdict
-from contextlib import contextmanager
 from importlib import import_module
 
 import apt.cache
@@ -19,7 +18,7 @@ import apt.cache
 import apt_inst
 import apt_pkg
 from plinth import cfg
-from plinth.action_utils import run_apt_command
+from plinth.action_utils import apt_hold, run_apt_command
 
 LOCK_FILE = '/var/lib/dpkg/lock'
 
@@ -62,19 +61,6 @@ def parse_arguments():
     return parser.parse_args()
 
 
-@contextmanager
-def _apt_hold():
-    """Do not allow freedombox package to be removed during package install."""
-    current_hold = subprocess.check_output(
-        ['apt-mark', 'showhold', 'freedombox'])
-    try:
-        yield current_hold or subprocess.run(
-            ['apt-mark', 'hold', 'freedombox'], check=True)
-    finally:
-        if not current_hold:
-            subprocess.run(['apt-mark', 'unhold', 'freedombox'], check=True)
-
-
 def subcommand_update(arguments):
     """Update apt package lists."""
     sys.exit(run_apt_command(['update']))
@@ -107,7 +93,7 @@ def subcommand_install(arguments):
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confmiss']
 
     subprocess.run(['dpkg', '--configure', '-a'])
-    with _apt_hold():
+    with apt_hold():
         run_apt_command(['--fix-broken', 'install'])
         returncode = run_apt_command(['install'] + extra_arguments +
                                      arguments.packages)

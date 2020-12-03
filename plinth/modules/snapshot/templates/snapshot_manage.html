@@ -29,8 +29,8 @@
           <th>{% trans "Number" %}</th>
           <th>{% trans "Date" %}</th>
           <th>{% trans "Description" %}</th>
-          <th>{% trans "Rollback" %}</th>
-          <th><input type="checkbox" id="select-all"></th>
+          <th class="centered-column">{% trans "Rollback" %}</th>
+          <th class="centered-column"><input type="checkbox" id="select-all"></th>
         </thead>
         <tbody>
           {% for snapshot in snapshots %}
@@ -49,8 +49,8 @@
                 {% endif %}
               </td>
               <td>{{ snapshot.date }}</td>
-              <td>{{ snapshot.description }}</td>
-              <td>
+              <td>{% trans snapshot.description %}</td>
+              <td class="centered-column">
                 <a href="{% url 'snapshot:rollback' snapshot.number %}"
                    class="btn btn-default btn-sm" role="button"
                    title="{% blocktrans trimmed with number=snapshot.number %}
@@ -60,7 +60,7 @@
                         aria-hidden="true"></span>
                 </a>
               </td>
-              <td>
+              <td class="centered-column">
                 {% if not snapshot.is_default and not snapshot.is_active %}
                   <input type="checkbox" name="snapshot_list" value={{ snapshot.number }} />
                 {% endif %}

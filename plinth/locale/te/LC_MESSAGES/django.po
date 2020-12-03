@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 19:46-0500\n"
+"POT-Creation-Date: 2020-11-30 17:26-0500\n"
 "PO-Revision-Date: 2020-10-26 13:27+0000\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -54,38 +54,38 @@ msgstr "అనుసంధానించండి {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "అనుసంధానించండం సాధ్యంకాదు {host}:{port}"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Select a domain name to be used with this application"
 msgstr "ఈ అనువర్తనానికి కావలసిన డొమైన్ పేరును ఎంచుకోండి"
 
-#: plinth/forms.py:40
+#: plinth/forms.py:41
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr "హెచ్చరిక! డొమైన్ పేరును తరువాత మార్చినచో ఈ అనువర్తనం పనిచేయకపోవచ్చు."
 
-#: plinth/forms.py:48
+#: plinth/forms.py:49
 msgid "Language"
 msgstr "భాష"
 
-#: plinth/forms.py:49
+#: plinth/forms.py:50
 msgid "Language to use for presenting this web interface"
 msgstr "ఈ జాల అంతరవర్తి కోసం వాడాల్సిన భాష"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid "Use the language preference set in the browser"
 msgstr "బ్రౌజర్లో ఉన్న భాషాప్రాధాన్యతనే ఉపయోగించు"
 
-#: plinth/middleware.py:57 plinth/templates/setup.html:18
+#: plinth/middleware.py:59 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "అనువర్తనం స్థాపించబడింది."
 
-#: plinth/middleware.py:63
+#: plinth/middleware.py:65
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
 
-#: plinth/middleware.py:67
+#: plinth/middleware.py:69
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "అనువర్తనం స్థాపించుటలో దోషం: {error}"
@@ -155,6 +155,7 @@ msgstr "భాండాగారము"
 #: plinth/modules/backups/templates/backups_delete.html:18
 #: plinth/modules/ikiwiki/forms.py:15
 #: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/samba/templates/samba.html:77
 #: plinth/modules/sharing/templates/sharing.html:37
 msgid "Name"
 msgstr "పేరు"
@@ -755,22 +756,36 @@ msgstr "ప్రస్తుతం ఏ షేర్లు ఏర్పాటు
 msgid "Password"
 msgstr "రహస్యపదం"
 
-#: plinth/modules/bepasty/views.py:42
+#: plinth/modules/bepasty/views.py:23
+msgid "admin"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:24
+#, fuzzy
+#| msgid "Repository"
+msgid "editor"
+msgstr "భాండాగారము"
+
+#: plinth/modules/bepasty/views.py:25
+msgid "viewer"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:50
 msgid "Read"
 msgstr ""
 
-#: plinth/modules/bepasty/views.py:43
+#: plinth/modules/bepasty/views.py:51
 msgid "Create"
 msgstr "సృష్టించు"
 
-#: plinth/modules/bepasty/views.py:44
+#: plinth/modules/bepasty/views.py:52
 msgid "List"
 msgstr ""
 
-#: plinth/modules/bepasty/views.py:45
+#: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 #: plinth/modules/networks/templates/connection_show.html:48
-#: plinth/modules/samba/templates/samba.html:127
+#: plinth/modules/samba/templates/samba.html:163
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:33
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:73
@@ -778,35 +793,35 @@ msgstr ""
 msgid "Delete"
 msgstr "తొలగించు"
 
-#: plinth/modules/bepasty/views.py:46
+#: plinth/modules/bepasty/views.py:54
 msgid "Admin"
 msgstr ""
 
-#: plinth/modules/bepasty/views.py:83 plinth/modules/searx/views.py:38
+#: plinth/modules/bepasty/views.py:91 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
 #: plinth/modules/tor/views.py:157
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
-#: plinth/modules/bepasty/views.py:86 plinth/modules/gitweb/views.py:117
+#: plinth/modules/bepasty/views.py:94 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
 #: plinth/modules/tor/views.py:159
 msgid "An error occurred during configuration."
 msgstr "అక్రుతీకరణలో ఒక పొరపాటు జరిగింది."
 
-#: plinth/modules/bepasty/views.py:97
+#: plinth/modules/bepasty/views.py:105
 #, fuzzy
 #| msgid "Password updated"
 msgid "Password added."
 msgstr "అనుమతిపదం నవీకరించబడింది"
 
-#: plinth/modules/bepasty/views.py:102
+#: plinth/modules/bepasty/views.py:110
 #, fuzzy
 #| msgid "Password"
 msgid "Add Password"
 msgstr "రహస్యపదం"
 
-#: plinth/modules/bepasty/views.py:119
+#: plinth/modules/bepasty/views.py:127
 #, fuzzy
 #| msgid "Password updated"
 msgid "Password deleted."
@@ -864,6 +879,7 @@ msgstr "సర్వర్ డొమైన్"
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:14
 #: plinth/modules/networks/templates/connection_show.html:83
+#: plinth/modules/samba/templates/samba.html:76
 #: plinth/modules/storage/templates/storage.html:28
 msgid "Type"
 msgstr "రకం"
@@ -1092,7 +1108,7 @@ msgstr "సాధారణ ఆకృతీకరణ"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:37
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
@@ -1770,6 +1786,7 @@ msgstr "గురించి"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
+#: plinth/modules/samba/templates/samba.html:78
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4206,19 +4223,16 @@ msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
 #: plinth/modules/networks/templates/connections_diagram.html:74
+#: plinth/modules/networks/templates/connections_diagram.html:104
+#: plinth/modules/networks/templates/connections_list.html:62
 #, python-format
-msgid "Show connection %(connection.name)s"
-msgstr "అనుసంధానం చూపించు %(connection.name)s"
+msgid "Show connection %(name)s"
+msgstr "అనుసంధానం చూపించు %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:92
 #: plinth/network.py:24
 msgid "Internal"
 msgstr "అంతర్గత"
-
-#: plinth/modules/networks/templates/connections_diagram.html:104
-#, python-format
-msgid "Show connection %(name)s"
-msgstr "అనుసంధానం చూపించు %(name)s"
 
 #: plinth/modules/networks/templates/connections_diagram.html:116
 msgid "Computer"
@@ -4288,6 +4302,9 @@ msgstr "ఈ దశను దాటవేయి"
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:46
+#: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "తర్వాత"
 
@@ -4723,7 +4740,7 @@ msgstr "{name} అనుసంధానం తొలగించబడింద�
 msgid "Failed to delete connection: Connection not found."
 msgstr "అనుసంధానం తొలగించడం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: plinth/modules/openvpn/__init__.py:28
+#: plinth/modules/openvpn/__init__.py:29
 #, fuzzy, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4739,18 +4756,24 @@ msgstr ""
 "మిగిలిన ఇంటర్నెట్ను యాక్సెస్ చేయవచ్చు మీ {box_name} 1 అనుసంధానించవచ్చు అదనపు భద్రత మరియు "
 "అనామకత్వం కోసం."
 
-#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:57
+#, fuzzy
+#| msgid "Connection Type"
+msgid "Connect to VPN services"
+msgstr "అనుసంధాన రకం"
+
+#: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 #, fuzzy
 #| msgid "Open"
 msgid "OpenVPN"
 msgstr "తెరచిన"
 
-#: plinth/modules/openvpn/__init__.py:57
+#: plinth/modules/openvpn/__init__.py:61
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "వర్చువల్ ప్రైవేట్ నెట్వర్క్"
 
-#: plinth/modules/openvpn/__init__.py:68
+#: plinth/modules/openvpn/__init__.py:72
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5348,7 +5371,7 @@ msgstr "రౌండ్ క్యూబ్"
 msgid "Email Client"
 msgstr "ఇమెయిల్ క్లయింట్"
 
-#: plinth/modules/samba/__init__.py:32
+#: plinth/modules/samba/__init__.py:31
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
@@ -5356,7 +5379,7 @@ msgstr ""
 "మీ స్థానిక నెట్‌వర్క్‌లోని ఫ్రీడమ్‌బాక్స్ మరియు ఇతర కంప్యూటర్ల మధ్య ఫైల్‌లు మరియు ఫోల్డర్‌లను పంచుకోవడానికి సాంబా "
 "అనుమతిస్తుంది."
 
-#: plinth/modules/samba/__init__.py:35
+#: plinth/modules/samba/__init__.py:34
 #, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
@@ -5365,11 +5388,11 @@ msgid ""
 "There are three types of shares you can choose from: "
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:40
+#: plinth/modules/samba/__init__.py:39
 msgid "Open share - accessible to everyone in your local network."
 msgstr "ఓపెన్ షేర్ - మీ స్థానిక నెట్‌వర్క్‌లోని ప్రతి ఒక్కరికీ అందుబాటులో ఉంటుంది."
 
-#: plinth/modules/samba/__init__.py:41
+#: plinth/modules/samba/__init__.py:40
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
@@ -5377,7 +5400,7 @@ msgstr ""
 "గ్రూప్ షేర్ - freedombox-share గ్రూపులో ఉన్న ఫ్రీడమ్‌బాక్స్ వినియోగదారులకు మాత్రమే అందుబాటులో "
 "ఉంటుంది."
 
-#: plinth/modules/samba/__init__.py:43
+#: plinth/modules/samba/__init__.py:42
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
@@ -5385,15 +5408,15 @@ msgstr ""
 "హోమ్ షేర్ - freedombox-share గ్రూపులో ఉన్న ప్రతి వినియోగదారుడు వారి స్వంత ప్రైవేట్ స్థలాన్ని కలిగి "
 "ఉంటారు."
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:58
 msgid "Access to the private shares"
 msgstr "ప్రైవేటు షేర్లలో ప్రవేశం"
 
-#: plinth/modules/samba/__init__.py:62
+#: plinth/modules/samba/__init__.py:61
 msgid "Samba"
 msgstr "సాంబా"
 
-#: plinth/modules/samba/__init__.py:63
+#: plinth/modules/samba/__init__.py:62
 #, fuzzy
 #| msgid "Network Time Server"
 msgid "Network File Storage"
@@ -5422,14 +5445,13 @@ msgstr "కేలండర్"
 msgid "Dolphin"
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:24
-#: plinth/modules/samba/templates/samba.html:35
+#: plinth/modules/samba/templates/samba.html:32
 #, fuzzy
 #| msgid "Shared"
 msgid "Shares"
 msgstr "పంచుకోబడ్డ"
 
-#: plinth/modules/samba/templates/samba.html:26
+#: plinth/modules/samba/templates/samba.html:34
 msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
@@ -5437,22 +5459,11 @@ msgstr ""
 "గమనిక: ప్రత్యేకంగా సృష్టించిన డైరెక్టరీలు మాత్రమే ఎంచుకున్న డిస్కులలో భాగస్వామ్యం చేయబడతాయి, మొత్తం డిస్క్‌ "
 "కాదు."
 
-#: plinth/modules/samba/templates/samba.html:34
-#, fuzzy
-#| msgid "Domain Name"
-msgid "Disk Name"
-msgstr "డొమైను పేరు"
-
-#: plinth/modules/samba/templates/samba.html:36
-#: plinth/modules/storage/templates/storage.html:29
-msgid "Used"
-msgstr "ఉపయోగించబడినది"
-
-#: plinth/modules/samba/templates/samba.html:57
+#: plinth/modules/samba/templates/samba.html:95
 msgid "VFAT partitions are not supported"
 msgstr "VFAT విభజనలకు మద్దతు లేదు"
 
-#: plinth/modules/samba/templates/samba.html:88
+#: plinth/modules/samba/templates/samba.html:122
 #, python-format
 msgid ""
 "You can find additional information about disks on the <a href="
@@ -5460,11 +5471,11 @@ msgid ""
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
 
-#: plinth/modules/samba/templates/samba.html:94
+#: plinth/modules/samba/templates/samba.html:130
 msgid "Users who can currently access group and home shares"
 msgstr "ప్రస్తుతం గ్రూప్ మరియు హోమ్ షేర్లను యాక్సెస్ చేయగల వినియోగదారులు"
 
-#: plinth/modules/samba/templates/samba.html:98
+#: plinth/modules/samba/templates/samba.html:134
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
@@ -5472,13 +5483,13 @@ msgstr ""
 "గ్రూపు మరియు హోమ్ షేర్లను యాక్సెస్ చేసుకోవడానికి పాస్వర్డ్ ఛేంజ్ పేజీపై తమ పాస్వర్డ్ ని తిరిగి నమోదు చేయాల్సిన "
 "అవసరం ఉన్న వినియోగదారులు"
 
-#: plinth/modules/samba/templates/samba.html:103
+#: plinth/modules/samba/templates/samba.html:139
 #, fuzzy
 #| msgid "Available Domains"
 msgid "Unavailable Shares"
 msgstr "అందుబాటులో ఉన్న డొమైన్లు"
 
-#: plinth/modules/samba/templates/samba.html:105
+#: plinth/modules/samba/templates/samba.html:141
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
@@ -5486,55 +5497,61 @@ msgstr ""
 "కాన్ఫిగర్ చేయబడిన షేర్లు కానీ డిస్క్ అందుబాటులో లేదు. డిస్క్ తిరిగి ప్లగిన్ చేయబడితే, భాగస్వామ్యం స్వయంచాలకంగా "
 "ప్రారంభించబడుతుంది."
 
-#: plinth/modules/samba/templates/samba.html:113
+#: plinth/modules/samba/templates/samba.html:149
 #, fuzzy
 #| msgid "Shared"
 msgid "Share name"
 msgstr "పంచుకోబడ్డ"
 
-#: plinth/modules/samba/templates/samba.html:114
+#: plinth/modules/samba/templates/samba.html:150
 #, fuzzy
 #| msgid "Actions"
 msgid "Action"
 msgstr "చర్యలు"
 
-#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:32
+#, fuzzy
+#| msgid "FreedomBox"
+msgid "FreedomBox OS disk"
+msgstr "ఫ్రీడమ్‌బాక్స్"
+
+#: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 #, fuzzy
 #| msgid "Add Service"
 msgid "Open Share"
 msgstr "సేవ జోడించండి"
 
-#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:145
 #, fuzzy
 #| msgid "Add Service"
 msgid "Group Share"
 msgstr "సేవ జోడించండి"
 
-#: plinth/modules/samba/views.py:53
+#: plinth/modules/samba/views.py:66
 #, fuzzy
 #| msgid "Homepage"
 msgid "Home Share"
 msgstr "హోంపేజ్"
 
-#: plinth/modules/samba/views.py:86
+#: plinth/modules/samba/views.py:101
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Share enabled."
 msgstr "{name} తొలగించబడింది."
 
-#: plinth/modules/samba/views.py:91
+#: plinth/modules/samba/views.py:106
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error enabling share: {error_message}"
 msgstr "అనువర్తనం స్థాపించుటలో దోషం: {error}"
 
-#: plinth/modules/samba/views.py:96
+#: plinth/modules/samba/views.py:111
 #, fuzzy
 #| msgid "Shared"
 msgid "Share disabled."
 msgstr "పంచుకోబడ్డ"
 
-#: plinth/modules/samba/views.py:101
+#: plinth/modules/samba/views.py:116
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error disabling share: {error_message}"
@@ -6081,7 +6098,7 @@ msgstr "తేదీ"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:198
 msgid "Delete Snapshots"
 msgstr "స్నాప్షాట్‌లను తొలగించు"
 
@@ -6132,47 +6149,61 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "స్నాప్షాట్ #%(number)s కు రోల్‌బ్యాక్ చేయండి"
 
-#: plinth/modules/snapshot/views.py:32
+#: plinth/modules/snapshot/views.py:28
+#, fuzzy
+#| msgid "Repository created."
+msgid "manually created"
+msgstr "రిపోజిటరీ సృష్టించబడింది."
+
+#: plinth/modules/snapshot/views.py:29
+msgid "timeline"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:30
+msgid "apt"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:41
 #, fuzzy
 #| msgid "Storage Snapshots"
 msgid "Manage Snapshots"
 msgstr "నిల్వ దృశ్యములు"
 
-#: plinth/modules/snapshot/views.py:81
+#: plinth/modules/snapshot/views.py:90
 msgid "Created snapshot."
 msgstr "స్నాప్షాట్‌ సృష్టించబడినది."
 
-#: plinth/modules/snapshot/views.py:144
+#: plinth/modules/snapshot/views.py:153
 #, fuzzy
 #| msgid "Configuration updated"
 msgid "Storage snapshots configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
 
-#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:157 plinth/modules/tor/views.py:60
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "చర్య లోపం:{0}{1}{2}"
 
-#: plinth/modules/snapshot/views.py:176
+#: plinth/modules/snapshot/views.py:185
 #, fuzzy
 #| msgid "Delete all the snapshots"
 msgid "Deleted selected snapshots"
 msgstr "అన్ని స్నాప్షాట్‌లను  తొలగించు"
 
-#: plinth/modules/snapshot/views.py:181
+#: plinth/modules/snapshot/views.py:190
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:200
+#: plinth/modules/snapshot/views.py:209
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "స్నాప్షాట్ #{number} కు తీస్కుని వెళ్ళబడింది."
 
-#: plinth/modules/snapshot/views.py:203
+#: plinth/modules/snapshot/views.py:212
 msgid "The system must be restarted to complete the rollback."
 msgstr "రొల్ల్బచ్క్ ని పూర్తి చేయడానికి వ్యవస్థను పునరుద్ధరించాలి."
 
-#: plinth/modules/snapshot/views.py:215
+#: plinth/modules/snapshot/views.py:224
 msgid "Rollback to Snapshot"
 msgstr "చాయాచిత్రం కు రొల్ల్బచ్క్ చేయండి"
 
@@ -6421,6 +6452,10 @@ msgstr "లేబుల్"
 #: plinth/modules/storage/templates/storage.html:27
 msgid "Mount Point"
 msgstr "ఆరొహించు కోన"
+
+#: plinth/modules/storage/templates/storage.html:29
+msgid "Used"
+msgstr "ఉపయోగించబడినది"
 
 #: plinth/modules/storage/templates/storage.html:78
 msgid "Partition Expansion"
@@ -6850,11 +6885,12 @@ msgstr "న్యూస్ ఫీడ్ రీడర్"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "టైనీ టైనీ RSS"
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:41
+#: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:37
+#: plinth/modules/upgrades/__init__.py:42
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6862,17 +6898,20 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:68 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:73
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
 msgid "Update"
 msgstr "నవీకరణ యూ.ఆర్.ఎల్"
 
-#: plinth/modules/upgrades/__init__.py:105
+#: plinth/modules/upgrades/__init__.py:110
 #, fuzzy
 #| msgid "Update"
 msgid "Updates"
 msgstr "నవీకరణ యూ.ఆర్.ఎల్"
 
-#: plinth/modules/upgrades/__init__.py:108
+#: plinth/modules/upgrades/__init__.py:113
 #, fuzzy
 #| msgid "FreedomBox Manual"
 msgid "FreedomBox Updated"
@@ -6905,6 +6944,12 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
+#: plinth/modules/upgrades/forms.py:40
+#, fuzzy
+#| msgid "Fail2Ban (recommended)"
+msgid "Update now (recommended)"
+msgstr "ఫెయిల్2బ్యాన్ (సిఫారసుచేయబడినవి)"
+
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -6916,6 +6961,27 @@ msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+msgid "Updating, please wait..."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
+#: plinth/modules/upgrades/templates/update-firstboot.html:20
+msgid ""
+"<strong>This may take a long time to complete.</strong> During an update, "
+"this web interface may be temporarily unavailable and show an error. In that "
+"case, refresh the page to continue."
+msgstr ""
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
+#, fuzzy, python-format
+#| msgid "%(box_name)s is up to date."
+msgid ""
+"\n"
+"\t%(box_name)s is up to date. Press Next to continue.\n"
+"      "
+msgstr "%(box_name)s తాజాగా ఉంది."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
@@ -6993,40 +7059,40 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:66
+#: plinth/modules/upgrades/views.py:67
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "గమనింపబడని-నవీకరణలు ఆకృతీకరించునప్పుడు దోషం: {error}"
 
-#: plinth/modules/upgrades/views.py:70
+#: plinth/modules/upgrades/views.py:71
 msgid "Automatic upgrades enabled"
 msgstr "స్వయంచాలక నవీకరణలు ప్రారంభించబడ్డాయి"
 
-#: plinth/modules/upgrades/views.py:73
+#: plinth/modules/upgrades/views.py:74
 msgid "Automatic upgrades disabled"
 msgstr "స్వయంచాలక నవీకరణలు నిలిపివేయబడ్డాయి"
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:82
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Distribution upgrade enabled"
 msgstr "స్వయంచాలక నవీకరణలు ప్రారంభించబడ్డాయి"
 
-#: plinth/modules/upgrades/views.py:84
+#: plinth/modules/upgrades/views.py:85
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution upgrade disabled"
 msgstr "స్వయంచాలక నవీకరణలు నిలిపివేయబడ్డాయి"
 
-#: plinth/modules/upgrades/views.py:125
+#: plinth/modules/upgrades/views.py:126
 msgid "Upgrade process started."
 msgstr "అప్గ్రేడ్ ప్రక్రియ ప్రారంభించబడింది."
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Starting upgrade failed."
 msgstr "నవీకరణ ప్రారంభం విఫలమైంది."
 
-#: plinth/modules/upgrades/views.py:137
+#: plinth/modules/upgrades/views.py:138
 msgid "Frequent feature updates activated."
 msgstr ""
 
@@ -8051,6 +8117,14 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Show connection %(connection.name)s"
+#~ msgstr "అనుసంధానం చూపించు %(connection.name)s"
+
+#, fuzzy
+#~| msgid "Domain Name"
+#~ msgid "Disk Name"
+#~ msgstr "డొమైను పేరు"
 
 #, fuzzy
 #~ msgid ""

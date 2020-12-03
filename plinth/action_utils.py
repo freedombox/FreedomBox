@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+from contextlib import contextmanager
 
 logger = logging.getLogger(__name__)
 
@@ -409,3 +410,18 @@ def run_apt_command(arguments):
                              stdout=subprocess.DEVNULL, close_fds=False,
                              env=env)
     return process.returncode
+
+
+@contextmanager
+def apt_hold(packages=None):
+    """Prevent packages from being removed during apt operations."""
+    if not packages:
+        packages = ['freedombox']
+
+    current_hold = subprocess.check_output(['apt-mark', 'showhold'] + packages)
+    try:
+        yield current_hold or subprocess.run(['apt-mark', 'hold'] + packages,
+                                             check=True)
+    finally:
+        if not current_hold:
+            subprocess.run(['apt-mark', 'unhold'] + packages, check=True)

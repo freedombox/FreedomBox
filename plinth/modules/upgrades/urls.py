@@ -14,5 +14,10 @@ urlpatterns = [
         name='activate-backports'),
     url(r'^sys/upgrades/firstboot/backports/$',
         views.BackportsFirstbootView.as_view(), name='backports-firstboot'),
+    url(r'^sys/upgrades/firstboot/update/$',
+        views.UpdateFirstbootView.as_view(), name='update-firstboot'),
+    url(r'^sys/upgrades/firstboot/update/progress/$',
+        views.UpdateFirstbootProgressView.as_view(),
+        name='update-firstboot-progress'),
     url(r'^sys/upgrades/upgrade/$', views.upgrade, name='upgrade'),
 ]

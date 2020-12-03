@@ -17,6 +17,18 @@ Scenario: Download openvpn profile
   Given the openvpn application is enabled
   Then the openvpn profile should be downloadable
 
+Scenario: User of 'vpn' group
+  Given the openvpn application is enabled
+  When I create a user named vpnuser with password openvpnrock$0 in group vpn
+  And I'm logged in as the user vpnuser with password openvpnrock$0
+  Then the openvpn profile should be downloadable
+
+Scenario: User not of 'vpn' group
+  Given the openvpn application is enabled
+  When I create a user named nonvpnuser with password whatever@123
+  And I'm logged in as the user nonvpnuser with password whatever@123
+  Then openvpn app should not be visible on the front page
+
 @backups
 Scenario: Backup and restore openvpn
   Given the openvpn application is enabled

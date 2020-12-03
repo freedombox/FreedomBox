@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 19:46-0500\n"
+"POT-Creation-Date: 2020-11-30 17:26-0500\n"
 "PO-Revision-Date: 2020-11-23 22:49+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -52,11 +52,11 @@ msgstr "{host}:{port} adresine bağlı"
 msgid "Cannot connect to {host}:{port}"
 msgstr "{host}:{port} adresine bağlanamıyor"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:39
 msgid "Select a domain name to be used with this application"
 msgstr "Bu uygulama ile kullanılacak bir etki alanı adı seçin"
 
-#: plinth/forms.py:40
+#: plinth/forms.py:41
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -64,28 +64,28 @@ msgstr ""
 "Uyarı! Etki alan adı daha sonra değiştirilirse uygulama düzgün olarak "
 "çalışmayabilir."
 
-#: plinth/forms.py:48
+#: plinth/forms.py:49
 msgid "Language"
 msgstr "Dil"
 
-#: plinth/forms.py:49
+#: plinth/forms.py:50
 msgid "Language to use for presenting this web interface"
 msgstr "Bu web arayüzünü sunmak için kullanılacak dil"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:57
 msgid "Use the language preference set in the browser"
 msgstr "Tarayıcıda ayarlanan dil tercihini kullan"
 
-#: plinth/middleware.py:57 plinth/templates/setup.html:18
+#: plinth/middleware.py:59 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Uygulama yüklendi."
 
-#: plinth/middleware.py:63
+#: plinth/middleware.py:65
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Uygulama yüklenirken hata oldu: {string} {details}"
 
-#: plinth/middleware.py:67
+#: plinth/middleware.py:69
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Uygulama yüklenirken hata oldu: {error}"
@@ -157,6 +157,7 @@ msgstr "Depo"
 #: plinth/modules/backups/templates/backups_delete.html:18
 #: plinth/modules/ikiwiki/forms.py:15
 #: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/samba/templates/samba.html:77
 #: plinth/modules/sharing/templates/sharing.html:37
 msgid "Name"
 msgstr "Ad"
@@ -743,22 +744,38 @@ msgstr "Şu anda yapılandırılmış parolalar yok."
 msgid "Password"
 msgstr "Parola"
 
-#: plinth/modules/bepasty/views.py:42
+#: plinth/modules/bepasty/views.py:23
+#, fuzzy
+#| msgid "Admin"
+msgid "admin"
+msgstr "Yönetici"
+
+#: plinth/modules/bepasty/views.py:24
+#, fuzzy
+#| msgid "Repository"
+msgid "editor"
+msgstr "Depo"
+
+#: plinth/modules/bepasty/views.py:25
+msgid "viewer"
+msgstr ""
+
+#: plinth/modules/bepasty/views.py:50
 msgid "Read"
 msgstr "Oku"
 
-#: plinth/modules/bepasty/views.py:43
+#: plinth/modules/bepasty/views.py:51
 msgid "Create"
 msgstr "Oluştur"
 
-#: plinth/modules/bepasty/views.py:44
+#: plinth/modules/bepasty/views.py:52
 msgid "List"
 msgstr "Listele"
 
-#: plinth/modules/bepasty/views.py:45
+#: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 #: plinth/modules/networks/templates/connection_show.html:48
-#: plinth/modules/samba/templates/samba.html:127
+#: plinth/modules/samba/templates/samba.html:163
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:33
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:73
@@ -766,31 +783,31 @@ msgstr "Listele"
 msgid "Delete"
 msgstr "Sil"
 
-#: plinth/modules/bepasty/views.py:46
+#: plinth/modules/bepasty/views.py:54
 msgid "Admin"
 msgstr "Yönetici"
 
-#: plinth/modules/bepasty/views.py:83 plinth/modules/searx/views.py:38
+#: plinth/modules/bepasty/views.py:91 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
 #: plinth/modules/tor/views.py:157
 msgid "Configuration updated."
 msgstr "Yapılandırma güncellendi."
 
-#: plinth/modules/bepasty/views.py:86 plinth/modules/gitweb/views.py:117
+#: plinth/modules/bepasty/views.py:94 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
 #: plinth/modules/tor/views.py:159
 msgid "An error occurred during configuration."
 msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
-#: plinth/modules/bepasty/views.py:97
+#: plinth/modules/bepasty/views.py:105
 msgid "Password added."
 msgstr "Parola eklendi."
 
-#: plinth/modules/bepasty/views.py:102
+#: plinth/modules/bepasty/views.py:110
 msgid "Add Password"
 msgstr "Parola Ekle"
 
-#: plinth/modules/bepasty/views.py:119
+#: plinth/modules/bepasty/views.py:127
 msgid "Password deleted."
 msgstr "Parola silindi."
 
@@ -848,6 +865,7 @@ msgstr "Hizmet Veren Etki Alanları"
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:14
 #: plinth/modules/networks/templates/connection_show.html:83
+#: plinth/modules/samba/templates/samba.html:76
 #: plinth/modules/storage/templates/storage.html:28
 msgid "Type"
 msgstr "Tür"
@@ -1069,7 +1087,7 @@ msgstr "Genel Yapılandırma"
 #: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:37
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 msgid "Configure"
 msgstr "Yapılandır"
@@ -1756,6 +1774,7 @@ msgstr "Hakkında"
 #: plinth/modules/firewall/templates/firewall.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:23
 #: plinth/modules/networks/templates/connection_show.html:246
+#: plinth/modules/samba/templates/samba.html:78
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:26
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
@@ -4276,19 +4295,16 @@ msgid "Wi-Fi"
 msgstr "Kablosuz (Wi-Fi)"
 
 #: plinth/modules/networks/templates/connections_diagram.html:74
+#: plinth/modules/networks/templates/connections_diagram.html:104
+#: plinth/modules/networks/templates/connections_list.html:62
 #, python-format
-msgid "Show connection %(connection.name)s"
-msgstr "%(connection.name)s bağlantısını göster"
+msgid "Show connection %(name)s"
+msgstr "%(name)s bağlantısını göster"
 
 #: plinth/modules/networks/templates/connections_diagram.html:92
 #: plinth/network.py:24
 msgid "Internal"
 msgstr "Dahili"
-
-#: plinth/modules/networks/templates/connections_diagram.html:104
-#, python-format
-msgid "Show connection %(name)s"
-msgstr "%(name)s bağlantısını göster"
 
 #: plinth/modules/networks/templates/connections_diagram.html:116
 msgid "Computer"
@@ -4356,6 +4372,9 @@ msgstr "Bu adımı atla"
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:46
+#: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "İleri"
 
@@ -4770,7 +4789,7 @@ msgstr "{name} bağlantısı silindi."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Bağlantının silinmesi başarısız oldu: Bağlantı bulunamadı."
 
-#: plinth/modules/openvpn/__init__.py:28
+#: plinth/modules/openvpn/__init__.py:29
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -4787,16 +4806,22 @@ msgstr ""
 "isim gizliliği sayesinde {box_name} aracılığıyla Internet'e de "
 "erişebilirsiniz."
 
-#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:18
+#: plinth/modules/openvpn/__init__.py:57
+#, fuzzy
+#| msgid "Connection to Server"
+msgid "Connect to VPN services"
+msgstr "Sunucuya Bağlantı"
+
+#: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:57
+#: plinth/modules/openvpn/__init__.py:61
 #: plinth/modules/wireguard/__init__.py:52
 msgid "Virtual Private Network"
 msgstr "Sanal Özel Ağ"
 
-#: plinth/modules/openvpn/__init__.py:68
+#: plinth/modules/openvpn/__init__.py:72
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5422,7 +5447,7 @@ msgstr "Roundcube"
 msgid "Email Client"
 msgstr "E-posta İstemcisi"
 
-#: plinth/modules/samba/__init__.py:32
+#: plinth/modules/samba/__init__.py:31
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
@@ -5430,7 +5455,7 @@ msgstr ""
 "Samba, FreedomBox ile yerel ağınızdaki diğer bilgisayarlar arasında dosya ve "
 "klasör paylaşmayı sağlar."
 
-#: plinth/modules/samba/__init__.py:35
+#: plinth/modules/samba/__init__.py:34
 #, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
@@ -5444,11 +5469,11 @@ msgstr ""
 "(Linux ve Mac'te) konumunda erişilebilir. Aralarından seçim yapabileceğiniz "
 "üç tür paylaşım vardır: "
 
-#: plinth/modules/samba/__init__.py:40
+#: plinth/modules/samba/__init__.py:39
 msgid "Open share - accessible to everyone in your local network."
 msgstr "Açık paylaşım - yerel ağınızdaki herkes tarafından erişilebilir."
 
-#: plinth/modules/samba/__init__.py:41
+#: plinth/modules/samba/__init__.py:40
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
@@ -5456,7 +5481,7 @@ msgstr ""
 "Grup paylaşımı - sadece Freedombox paylaşım grubundaki FreedomBox "
 "kullanıcıları tarafından erişilebilir."
 
-#: plinth/modules/samba/__init__.py:43
+#: plinth/modules/samba/__init__.py:42
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
@@ -5464,15 +5489,15 @@ msgstr ""
 "Ev paylaşımı - Freedombox paylaşım grubundaki her kullanıcı kendi özel "
 "alanına sahip olabilir."
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:58
 msgid "Access to the private shares"
 msgstr "Özel paylaşımlara erişim"
 
-#: plinth/modules/samba/__init__.py:62
+#: plinth/modules/samba/__init__.py:61
 msgid "Samba"
 msgstr "Samba"
 
-#: plinth/modules/samba/__init__.py:63
+#: plinth/modules/samba/__init__.py:62
 msgid "Network File Storage"
 msgstr "Ağ Dosya Depolama"
 
@@ -5496,12 +5521,11 @@ msgstr "GNOME Dosyaları"
 msgid "Dolphin"
 msgstr "Dolphin"
 
-#: plinth/modules/samba/templates/samba.html:24
-#: plinth/modules/samba/templates/samba.html:35
+#: plinth/modules/samba/templates/samba.html:32
 msgid "Shares"
 msgstr "Paylaşımlar"
 
-#: plinth/modules/samba/templates/samba.html:26
+#: plinth/modules/samba/templates/samba.html:34
 msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
@@ -5509,20 +5533,11 @@ msgstr ""
 "Not: Sadece özel olarak oluşturulmuş dizinler, bütün diskte değil, seçilen "
 "disklerde paylaşılacaktır."
 
-#: plinth/modules/samba/templates/samba.html:34
-msgid "Disk Name"
-msgstr "Disk Adı"
-
-#: plinth/modules/samba/templates/samba.html:36
-#: plinth/modules/storage/templates/storage.html:29
-msgid "Used"
-msgstr "Kullanılan"
-
-#: plinth/modules/samba/templates/samba.html:57
+#: plinth/modules/samba/templates/samba.html:95
 msgid "VFAT partitions are not supported"
 msgstr "VFAT bölümleri desteklenmiyor"
 
-#: plinth/modules/samba/templates/samba.html:88
+#: plinth/modules/samba/templates/samba.html:122
 #, python-format
 msgid ""
 "You can find additional information about disks on the <a href="
@@ -5533,11 +5548,11 @@ msgstr ""
 "ek bilgi bulabilir ve <a href=\"%(users_url)s\">kullanıcılar</a> modülü "
 "sayfasında paylaşımlara erişimi yapılandırabilirsiniz."
 
-#: plinth/modules/samba/templates/samba.html:94
+#: plinth/modules/samba/templates/samba.html:130
 msgid "Users who can currently access group and home shares"
 msgstr "Şu anda grup ve ev paylaşımlarına erişebilen kullanıcılar"
 
-#: plinth/modules/samba/templates/samba.html:98
+#: plinth/modules/samba/templates/samba.html:134
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
@@ -5545,11 +5560,11 @@ msgstr ""
 "Grup ve ev paylaşımlarına erişmek için parola değiştirme sayfasında "
 "parolalarını yeniden girmesi gereken kullanıcılar"
 
-#: plinth/modules/samba/templates/samba.html:103
+#: plinth/modules/samba/templates/samba.html:139
 msgid "Unavailable Shares"
 msgstr "Kullanılamaz Paylaşımlar"
 
-#: plinth/modules/samba/templates/samba.html:105
+#: plinth/modules/samba/templates/samba.html:141
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
@@ -5557,40 +5572,46 @@ msgstr ""
 "Yapılandırılan ancak disk kullanılabilir olmayan paylaşımlar. Eğer disk "
 "tekrar takılırsa paylaşım otomatik olarak etkinleştirilecektir."
 
-#: plinth/modules/samba/templates/samba.html:113
+#: plinth/modules/samba/templates/samba.html:149
 msgid "Share name"
 msgstr "Paylaşım adı"
 
-#: plinth/modules/samba/templates/samba.html:114
+#: plinth/modules/samba/templates/samba.html:150
 msgid "Action"
 msgstr "Eylem"
 
-#: plinth/modules/samba/views.py:51 plinth/modules/storage/forms.py:147
+#: plinth/modules/samba/views.py:32
+#, fuzzy
+#| msgid "FreedomBox"
+msgid "FreedomBox OS disk"
+msgstr "FreedomBox"
+
+#: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 msgid "Open Share"
 msgstr "Açık Paylaşım"
 
-#: plinth/modules/samba/views.py:52 plinth/modules/storage/forms.py:145
+#: plinth/modules/samba/views.py:62 plinth/modules/storage/forms.py:145
 msgid "Group Share"
 msgstr "Grup Paylaşımı"
 
-#: plinth/modules/samba/views.py:53
+#: plinth/modules/samba/views.py:66
 msgid "Home Share"
 msgstr "Ev Paylaşımı"
 
-#: plinth/modules/samba/views.py:86
+#: plinth/modules/samba/views.py:101
 msgid "Share enabled."
 msgstr "Paylaşım etkinleştirildi."
 
-#: plinth/modules/samba/views.py:91
+#: plinth/modules/samba/views.py:106
 #, python-brace-format
 msgid "Error enabling share: {error_message}"
 msgstr "Paylaşımı etkinleştirirken hata oldu: {error_message}"
 
-#: plinth/modules/samba/views.py:96
+#: plinth/modules/samba/views.py:111
 msgid "Share disabled."
 msgstr "Paylaşım etkisizleştirildi."
 
-#: plinth/modules/samba/views.py:101
+#: plinth/modules/samba/views.py:116
 #, python-brace-format
 msgid "Error disabling share: {error_message}"
 msgstr "Paylaşımı etkisizleştirirken hata oldu: {error_message}"
@@ -6128,7 +6149,7 @@ msgstr "Tarih"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:40
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
-#: plinth/modules/snapshot/views.py:189
+#: plinth/modules/snapshot/views.py:198
 msgid "Delete Snapshots"
 msgstr "Anlık Görüntüleri Sil"
 
@@ -6182,42 +6203,56 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "#%(number)s Nolu Anlık Görüntüye Geri Al"
 
-#: plinth/modules/snapshot/views.py:32
+#: plinth/modules/snapshot/views.py:28
+#, fuzzy
+#| msgid "Library created."
+msgid "manually created"
+msgstr "Kütüphane oluşturuldu."
+
+#: plinth/modules/snapshot/views.py:29
+msgid "timeline"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:30
+msgid "apt"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
 msgstr "Anlık Görüntüleri Yönet"
 
-#: plinth/modules/snapshot/views.py:81
+#: plinth/modules/snapshot/views.py:90
 msgid "Created snapshot."
 msgstr "Anlık görüntü oluşturuldu."
 
-#: plinth/modules/snapshot/views.py:144
+#: plinth/modules/snapshot/views.py:153
 msgid "Storage snapshots configuration updated"
 msgstr "Depolama anlık görüntü yapılandırması güncellendi"
 
-#: plinth/modules/snapshot/views.py:148 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:157 plinth/modules/tor/views.py:60
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Eylem hatası: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:176
+#: plinth/modules/snapshot/views.py:185
 msgid "Deleted selected snapshots"
 msgstr "Seçilen anlık görüntüler silindi"
 
-#: plinth/modules/snapshot/views.py:181
+#: plinth/modules/snapshot/views.py:190
 msgid "Snapshot is currently in use. Please try again later."
 msgstr "Anlık görüntü şu anda kullanımda. Lütfen daha sonra tekrar deneyin."
 
-#: plinth/modules/snapshot/views.py:200
+#: plinth/modules/snapshot/views.py:209
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "#{number} nolu anlık görüntüye geri alındı."
 
-#: plinth/modules/snapshot/views.py:203
+#: plinth/modules/snapshot/views.py:212
 msgid "The system must be restarted to complete the rollback."
 msgstr ""
 "Geri alma işlemini tamamlamak için sistem yeniden başlatılmak zorundadır."
 
-#: plinth/modules/snapshot/views.py:215
+#: plinth/modules/snapshot/views.py:224
 msgid "Rollback to Snapshot"
 msgstr "Anlık Görüntüye Geri Al"
 
@@ -6458,6 +6493,10 @@ msgstr "Etiket"
 #: plinth/modules/storage/templates/storage.html:27
 msgid "Mount Point"
 msgstr "Bağlama Noktası"
+
+#: plinth/modules/storage/templates/storage.html:29
+msgid "Used"
+msgstr "Kullanılan"
 
 #: plinth/modules/storage/templates/storage.html:78
 msgid "Partition Expansion"
@@ -6897,11 +6936,12 @@ msgstr "Haber Bildirim Okuyucusu"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:41
+#: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "En son yazılım ve güvenlik güncellemelerini denetleyin ve uygulayın."
 
-#: plinth/modules/upgrades/__init__.py:37
+#: plinth/modules/upgrades/__init__.py:42
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6914,15 +6954,18 @@ msgstr ""
 "Eğer sistemin yeniden başlatılması gerekli görülürse, saat 02:00'da otomatik "
 "olarak yapılır ve tüm uygulamalar kısa bir süre için kullanılamaz hale gelir."
 
-#: plinth/modules/upgrades/__init__.py:68 plinth/templates/setup.html:62
+#: plinth/modules/upgrades/__init__.py:73
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
 msgid "Update"
 msgstr "Güncelle"
 
-#: plinth/modules/upgrades/__init__.py:105
+#: plinth/modules/upgrades/__init__.py:110
 msgid "Updates"
 msgstr "Güncellemeler"
 
-#: plinth/modules/upgrades/__init__.py:108
+#: plinth/modules/upgrades/__init__.py:113
 msgid "FreedomBox Updated"
 msgstr "FreedomBox Güncellendi"
 
@@ -6952,6 +6995,12 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Sık yapılan özellik güncellemelerini etkinleştir (önerilir)"
 
+#: plinth/modules/upgrades/forms.py:40
+#, fuzzy
+#| msgid "Fail2Ban (recommended)"
+msgid "Update now (recommended)"
+msgstr "Fail2Ban (önerilir)"
+
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -6967,6 +7016,38 @@ msgid ""
 msgstr ""
 "<strong>Not:</strong> Sık yapılan özellik güncellemeleri "
 "etkinleştirildiğinde, devre dışı bırakılamazlar."
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+#, fuzzy
+#| msgid "Updating..."
+msgid "Updating, please wait..."
+msgstr "Güncelleniyor..."
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
+#: plinth/modules/upgrades/templates/update-firstboot.html:20
+#, fuzzy
+#| msgid ""
+#| "<strong>This may take a long time to complete.</strong> During an update, "
+#| "you cannot install apps. Also, this web interface may be temporarily "
+#| "unavailable and show an error. In that case, refresh the page to continue."
+msgid ""
+"<strong>This may take a long time to complete.</strong> During an update, "
+"this web interface may be temporarily unavailable and show an error. In that "
+"case, refresh the page to continue."
+msgstr ""
+"<strong>Bu işlemin tamamlanması uzun zaman alabilir.</strong> Güncelleme "
+"sırasında uygulama yükleyemezsiniz. Ayrıca, bu web arayüzü geçici olarak "
+"kullanılamayabilir ve bir hata gösterebilir. Bu durumda devam etmek için "
+"sayfayı yenileyin."
+
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
+#, fuzzy, python-format
+#| msgid "%(box_name)s is up to date."
+msgid ""
+"\n"
+"\t%(box_name)s is up to date. Press Next to continue.\n"
+"      "
+msgstr "%(box_name)s güncel."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -7051,36 +7132,36 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr "Son güncelleme günlüklerini göster"
 
-#: plinth/modules/upgrades/views.py:66
+#: plinth/modules/upgrades/views.py:67
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "unattended-upgrades yapılandırılırken bir hata oldu: {error}"
 
-#: plinth/modules/upgrades/views.py:70
+#: plinth/modules/upgrades/views.py:71
 msgid "Automatic upgrades enabled"
 msgstr "Otomatik yükseltmeler etkinleştirildi"
 
-#: plinth/modules/upgrades/views.py:73
+#: plinth/modules/upgrades/views.py:74
 msgid "Automatic upgrades disabled"
 msgstr "Otomatik yükseltmeler etkisizleştirildi"
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:82
 msgid "Distribution upgrade enabled"
 msgstr "Dağıtım yükseltmesi etkinleştirildi"
 
-#: plinth/modules/upgrades/views.py:84
+#: plinth/modules/upgrades/views.py:85
 msgid "Distribution upgrade disabled"
 msgstr "Dağıtım yükseltmesi etkisizleştirildi"
 
-#: plinth/modules/upgrades/views.py:125
+#: plinth/modules/upgrades/views.py:126
 msgid "Upgrade process started."
 msgstr "Yükseltme işlemi başladı."
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Starting upgrade failed."
 msgstr "Yükseltmeyi başlatma başarısız oldu."
 
-#: plinth/modules/upgrades/views.py:137
+#: plinth/modules/upgrades/views.py:138
 msgid "Frequent feature updates activated."
 msgstr "Sık yapılan özellik güncellemeleri etkinleştirildi."
 
@@ -8080,6 +8161,12 @@ msgstr "%%%(percentage)s tamamlandı"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Show connection %(connection.name)s"
+#~ msgstr "%(connection.name)s bağlantısını göster"
+
+#~ msgid "Disk Name"
+#~ msgstr "Disk Adı"
 
 #~ msgid ""
 #~ "OpenVPN has not yet been setup.  Performing a secure setup takes a very "

@@ -22,6 +22,15 @@ from plinth.modules import storage
 from . import get_configuration
 from .forms import SnapshotForm
 
+
+# i18n for snapshot descriptions
+SNAPSHOT_DESCRIPTION_STRINGS = {
+    'manually created': ugettext_lazy('manually created'),
+    'timeline': ugettext_lazy('timeline'),
+    'apt': ugettext_lazy('apt'),
+}
+
+
 subsubmenu = [
     {
         'url': reverse_lazy('snapshot:index'),

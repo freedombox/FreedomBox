@@ -27,6 +27,7 @@ def fixture_kwargs():
 
 class TestSetupMiddleware:
     """Test cases for setup middleware."""
+
     @staticmethod
     @pytest.fixture(name='middleware')
     def fixture_middleware(load_cfg):
@@ -119,6 +120,7 @@ class TestSetupMiddleware:
 
 class TestAdminMiddleware:
     """Test cases for admin middleware."""
+
     @staticmethod
     @pytest.fixture(name='middleware')
     def fixture_middleware(load_cfg):
@@ -143,6 +145,30 @@ class TestAdminMiddleware:
             middleware.process_view(web_request, **kwargs)
 
     @staticmethod
+    def test_group_view_is_denied_for_non_group_user(web_request, middleware,
+                                                     kwargs):
+        """Test that group view is allowed for an admin user."""
+        web_request.user.groups.filter().exists = Mock(return_value=False)
+        web_request.session = MagicMock()
+        with patch(
+                'plinth.middleware.AdminRequiredMiddleware.check_user_group',
+                lambda x, y: False):
+            with pytest.raises(PermissionDenied):
+                middleware.process_view(web_request, **kwargs)
+
+    @staticmethod
+    def test_group_view_is_allowed_for_group_user(web_request, middleware,
+                                                  kwargs):
+        """Test that group view is allowed for an admin user."""
+        web_request.user.groups.filter().exists = Mock(return_value=False)
+        web_request.session = MagicMock()
+        with patch(
+                'plinth.middleware.AdminRequiredMiddleware.check_user_group',
+                lambda x, y: True):
+            response = middleware.process_view(web_request, **kwargs)
+            assert response is None
+
+    @staticmethod
     def test_that_admin_view_is_allowed_for_admin_user(web_request, middleware,
                                                        kwargs):
         """Test that admin user is allowed for an admin view"""
@@ -152,8 +178,8 @@ class TestAdminMiddleware:
         assert response is None
 
     @staticmethod
-    def test_that_public_view_is_allowed_for_normal_user(
-            web_request, middleware, kwargs):
+    def test_that_public_view_is_allowed_for_normal_user(web_request,
+                                                         middleware, kwargs):
         """Test that normal user is allowed for an public view"""
         kwargs = dict(kwargs)
         kwargs['view_func'] = public(HttpResponse)

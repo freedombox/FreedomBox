@@ -5,7 +5,6 @@ FreedomBox app to configure samba.
 
 import grp
 import json
-import os
 import pwd
 import socket
 
@@ -149,15 +148,6 @@ def get_shares():
     output = actions.superuser_run('samba', ['get-shares'])
 
     return json.loads(output)
-
-
-def disk_name(mount_point):
-    """Get a disk name."""
-    share_name = os.path.basename(mount_point)
-    if not share_name:
-        share_name = 'disk'
-
-    return share_name
 
 
 def backup_pre(packet):

@@ -66,7 +66,7 @@ def test_user_exists(session_browser, name):
     if user_link:
         _delete_user(session_browser, name)
 
-    _create_user(session_browser, name, _random_string())
+    functional.create_user(session_browser, name, _random_string())
 
 
 @given(
@@ -78,7 +78,7 @@ def test_admin_user_exists(session_browser, name, password):
     if user_link:
         _delete_user(session_browser, name)
 
-    _create_user(session_browser, name, password, is_admin=True)
+    functional.create_user(session_browser, name, password, groups=['admin'])
 
 
 @given(parsers.parse('the user {name:w} with password {password:w} exists'))
@@ -89,7 +89,7 @@ def user_exists(session_browser, name, password):
     if user_link:
         _delete_user(session_browser, name)
 
-    _create_user(session_browser, name, password)
+    functional.create_user(session_browser, name, password)
 
 
 @given(
@@ -116,12 +116,6 @@ def generate_ssh_keys(session_browser, tmp_path_factory):
     subprocess.check_call(
         ['ssh-keygen', '-t', 'ed25519', '-N', '', '-q', '-f',
          str(key_file)])
-
-
-@when(
-    parsers.parse('I create a user named {name:w} with password {password:w}'))
-def create_user(session_browser, name, password):
-    _create_user(session_browser, name, password)
 
 
 @when(parsers.parse('I rename the user {old_name:w} to {new_name:w}'))
@@ -259,19 +253,6 @@ def new_user_is_listed(session_browser, name):
 @then(parsers.parse('{name:w} should not be listed as a user'))
 def new_user_is_not_listed(session_browser, name):
     assert not _is_user(session_browser, name)
-
-
-def _create_user(browser, name, password, is_admin=False):
-    functional.nav_to_module(browser, 'users')
-    with functional.wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/sys/users/create/').first.click()
-    browser.find_by_id('id_username').fill(name)
-    browser.find_by_id('id_password1').fill(password)
-    browser.find_by_id('id_password2').fill(password)
-    if is_admin:
-        browser.find_by_id('id_groups_0').check()
-    browser.find_by_id('id_confirm_password').fill(_admin_password)
-    functional.submit(browser)
 
 
 def _rename_user(browser, old_name, new_name):

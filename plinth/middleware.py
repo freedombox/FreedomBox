@@ -3,6 +3,8 @@
 Common Django middleware.
 """
 
+import logging
+
 from django import urls
 from django.conf import settings
 from django.contrib import messages
@@ -11,14 +13,13 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.translation import ugettext_lazy as _
-import logging
-
 from stronghold.utils import is_view_func_public
 
 import plinth
 from plinth import setup
 from plinth.package import PackageException
 from plinth.utils import is_user_admin
+
 from . import views
 
 logger = logging.getLogger(__name__)
@@ -26,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 class SetupMiddleware(MiddlewareMixin):
     """Django middleware to show pre-setup message and setup progress."""
+
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Handle a request as Django middleware request handler."""
@@ -80,6 +82,13 @@ class SetupMiddleware(MiddlewareMixin):
 
 class AdminRequiredMiddleware(MiddlewareMixin):
     """Django middleware for authenticating requests for admin areas."""
+
+    @staticmethod
+    def check_user_group(view_func, request):
+        if hasattr(view_func, 'GROUP_NAME'):
+            return request.user.groups.filter(
+                name=getattr(view_func, 'GROUP_NAME')).exists()
+
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Reject non-admin access to views that are private and not marked."""
@@ -88,11 +97,14 @@ class AdminRequiredMiddleware(MiddlewareMixin):
             return
 
         if not is_user_admin(request):
-            raise PermissionDenied
+            if not AdminRequiredMiddleware.check_user_group(
+                    view_func, request):
+                raise PermissionDenied
 
 
 class FirstSetupMiddleware(MiddlewareMixin):
     """Django middleware to block all interactions before first setup."""
+
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Block all user interactions when first setup is pending."""
