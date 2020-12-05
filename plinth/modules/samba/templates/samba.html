@@ -69,7 +69,7 @@
           {% csrf_token %}
           <input type="hidden" name="filesystem_type"
                  value="{{ disk.filesystem_type }}">
-          <table class="table table-condensed"
+          <table class="table"
                  aria-describedby="{{ disk.name }}">
             <thead>
               <tr>
@@ -143,7 +143,7 @@
           is plugged back in, sharing will be automatically enabled.
         {% endblocktrans %}
       </p>
-      <table class="table table-bordered table-condensed table-striped">
+      <table class="table">
         <thead>
           <tr>
             <th>{% trans "Share name" %}</th>
