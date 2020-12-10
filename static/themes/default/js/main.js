@@ -41,6 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /*
+ * Return all submit buttons on the page
+ */
+function getSubmitButtons(){
+    return document.querySelectorAll(
+        "form input[type='submit'], form button[type='submit'].toggle-button");
+}
+
+/*
  * Disable submit button on click.
  */
 function onSubmitAddProgress(event) {
@@ -62,23 +70,33 @@ function onSubmitAddProgress(event) {
     // for the next event loop run which will happen after current event is
     // processed.
     window.setTimeout(() => {
-        const beforeElement = document.createElement('div');
-        beforeElement.classList.add('running-status-button-before');
-        button.parentNode.insertBefore(beforeElement, button);
+        if (button.tagName == "INPUT"){
+            // For push buttons
+            const beforeElement = document.createElement('div');
+            beforeElement.classList.add('running-status-button-before');
+            button.parentNode.insertBefore(beforeElement, button);
+        } else if (button.tagName == "BUTTON"){
+            // For toggle buttons
+            button.classList.toggle('toggle-button--toggled');
+        }
 
         button.classList.add('running-status-button');
-        button.setAttribute('disabled', 'disabled');
+
+        // Disable all form submit buttons on the page
+        for (const formbutton of getSubmitButtons()) {
+            if (!(formbutton.classList.contains('btn-link') ||
+                  formbutton.classList.contains('no-running-status'))) {
+                formbutton.setAttribute('disabled', 'disabled');
+            }
+        }
     }, 0);
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
-    const submitButtons = document.querySelectorAll("input[type='submit']");
-    for (const button of submitButtons) {
-        if (button.form) {
-            // Don't listen for 'click' event on buttons as they are triggered
-            // even when the form is invalid.
-            button.form.addEventListener('submit', onSubmitAddProgress);
-        }
+    for (const button of getSubmitButtons()) {
+        // Don't listen for 'click' event on buttons as they are triggered
+        // even when the form is invalid.
+        button.form.addEventListener('submit', onSubmitAddProgress);
     }
 });
 
