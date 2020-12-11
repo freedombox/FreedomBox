@@ -70,17 +70,17 @@ def setup(helper, old_version=None):
 # (U)ser (W)eb (S)ites
 
 
-def uws_usr2dir(user):
+def uws_directory_of_user(user):
     """Returns the directory of the given user's website."""
     return '/home/{}/public_html'.format(user)
 
 
-def uws_usr2url(user):
+def uws_url_of_user(user):
     """Returns the url path of the given user's website."""
     return '/~{}/'.format(user)
 
 
-def uws_dir2usr(directory):
+def user_of_uws_directory(directory):
     """Returns the user of a given user website directory."""
     if directory.startswith('/home/'):
         pos_ini = 6
@@ -97,7 +97,7 @@ def uws_dir2usr(directory):
     return user if is_valid_user_name(user) else None
 
 
-def uws_url2usr(url):
+def user_of_uws_url(url):
     """Returns the user of a given user website url path."""
     MISSING = -1
 
@@ -113,20 +113,20 @@ def uws_url2usr(url):
     return user if is_valid_user_name(user) else None
 
 
-def uws_url2dir(url):
+def uws_directory_of_url(url):
     """Returns the directory of the user's website for the given url path.
 
     Note: It doesn't return the full OS file path to the url path!
     """
-    return uws_usr2dir(uws_url2usr(url))
+    return uws_directory_of_user(user_of_uws_url(url))
 
 
-def uws_dir2url(directory):
+def uws_url_of_directory(directory):
     """Returns the url base path of the user's website for the given OS path.
 
     Note: It doesn't return the url path for the file!
     """
-    return uws_usr2url(uws_dir2usr(directory))
+    return uws_url_of_user(user_of_uws_directory(directory))
 
 
 def get_users_with_website():
@@ -140,6 +140,7 @@ def get_users_with_website():
         ]
 
     return {
-        name: uws_usr2url(name)
-        for name in lst_sub_dirs('/home') if os.path.isdir(uws_usr2dir(name))
+        name: uws_url_of_user(name)
+        for name in lst_sub_dirs('/home')
+        if os.path.isdir(uws_directory_of_user(name))
     }

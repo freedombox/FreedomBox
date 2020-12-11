@@ -9,7 +9,7 @@ import os
 from unittest.mock import (patch, MagicMock)
 
 from plinth import __main__ as plinth_main
-from plinth.modules.apache import uws_usr2dir
+from plinth.modules.apache import uws_directory_of_user
 from plinth.modules.config import (home_page_url2scid, get_home_page,
                                    _home_page_scid2url, change_home_page)
 from plinth.modules.config.forms import ConfigurationForm
@@ -92,7 +92,7 @@ def test_homepage_mapping_skip_ci():
     """Special tests for homepage functions."""
 
     try:
-        UWS_DIRECTORY = uws_usr2dir(os.getlogin())
+        UWS_DIRECTORY = uws_directory_of_user(os.getlogin())
     except OSError:
         reason = "Needs access to ~/ directory. " \
                + "CI sandboxed workspace doesn't provide it."
@@ -143,7 +143,7 @@ def test_homepage_field():
              Currently they share the same test case.
     """
     try:
-        UWS_DIRECTORY = uws_usr2dir(os.getlogin())
+        UWS_DIRECTORY = uws_directory_of_user(os.getlogin())
     except OSError:
         reason = "Needs access to ~/ directory, etc. " \
                + "CI sandboxed workspace doesn't provide it."

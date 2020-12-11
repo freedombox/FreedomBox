@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth.modules.apache import (uws_url2usr, uws_usr2url,
+from plinth.modules.apache import (user_of_uws_url, uws_url_of_user,
                                    get_users_with_website)
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added
@@ -93,7 +93,7 @@ def home_page_url2scid(url):
         return 'apache-default'
 
     if url and url.startswith('/~'):
-        return 'uws-{}'.format(uws_url2usr(url))
+        return 'uws-{}'.format(user_of_uws_url(url))
 
     shortcuts = frontpage.Shortcut.list()
     for shortcut in shortcuts:
@@ -114,7 +114,7 @@ def _home_page_scid2url(shortcut_id):
     elif shortcut_id.startswith('uws-'):
         user = shortcut_id[4:]
         if user in get_users_with_website():
-            url = uws_usr2url(user)
+            url = uws_url_of_user(user)
         else:
             url = None
     else:
