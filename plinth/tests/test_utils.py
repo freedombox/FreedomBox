@@ -10,11 +10,26 @@ import pytest
 import ruamel.yaml
 from django.test.client import RequestFactory
 
-from plinth.utils import YAMLFile, is_user_admin
+from plinth.utils import YAMLFile, is_user_admin, is_valid_user_name
+
+
+def test_is_valid_user_name():
+    """Test valid user names in Debian."""
+    f = is_valid_user_name
+    assert not f('this_user_name_is_too_long_to_be_valid')
+    assert not f('-invalid')
+    assert not f('not\tvalid')
+    assert not f('not\nvalid')
+    assert not f('not valid')
+    assert not f('not:valid')
+    assert not f('not/valid')
+    assert not f('not\\valid')
+    assert f('€.;#@|')
 
 
 class TestIsAdminUser:
     """Test class for is_user_admin utility."""
+
     @staticmethod
     @pytest.fixture(name='web_request')
     def fixture_web_request():

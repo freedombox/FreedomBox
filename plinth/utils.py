@@ -58,6 +58,24 @@ def user_group_view(func, group_name):
     return func
 
 
+def is_valid_user_name(user_name):
+    """Check if the given username is valid.
+
+    Note: Debian is VERY flexible with user names.
+    """
+    if 32 < len(user_name):
+        return False
+
+    if user_name.startswith('-'):
+        return False
+
+    for forbidden in (' \n\t/\\:'):
+        if forbidden in user_name:
+            return False
+
+    return True
+
+
 def is_user_admin(request, cached=False):
     """Return whether user is an administrator."""
     if not request.user.is_authenticated:

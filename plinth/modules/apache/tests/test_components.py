@@ -72,6 +72,7 @@ def test_webserver_disable(superuser_run):
 @patch('plinth.modules.apache.components.diagnose_url_on_all')
 def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     """Test running diagnostics."""
+
     def on_all_side_effect(url, check_certificate):
         return [('test-result-' + url, 'success')]
 

@@ -2,6 +2,7 @@
 """
 FreedomBox app for Apache server.
 """
+import os
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,7 +12,7 @@ from plinth import cfg
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, is_valid_user_name
 
 version = 8
 
@@ -19,8 +20,9 @@ is_essential = True
 
 managed_services = ['apache2', 'uwsgi']
 
-managed_packages = ['apache2', 'php-fpm', 'ssl-cert', 'uwsgi',
-                    'uwsgi-plugin-python3']
+managed_packages = [
+    'apache2', 'php-fpm', 'ssl-cert', 'uwsgi', 'uwsgi-plugin-python3'
+]
 
 app = None
 
@@ -63,3 +65,81 @@ def setup(helper, old_version=None):
     actions.superuser_run(
         'apache',
         ['setup', '--old-version', str(old_version)])
+
+
+# (U)ser (W)eb (S)ites
+
+
+def uws_usr2dir(user):
+    """Returns the directory of the given user's website."""
+    return '/home/{}/public_html'.format(user)
+
+
+def uws_usr2url(user):
+    """Returns the url path of the given user's website."""
+    return '/~{}/'.format(user)
+
+
+def uws_dir2usr(directory):
+    """Returns the user of a given user website directory."""
+    if directory.startswith('/home/'):
+        pos_ini = 6
+    elif directory.startswith('home/'):
+        pos_ini = 5
+    else:
+        return None
+
+    pos_end = directory.find('/public_html')
+    if pos_end == -1:
+        return None
+
+    user = directory[pos_ini:pos_end]
+    return user if is_valid_user_name(user) else None
+
+
+def uws_url2usr(url):
+    """Returns the user of a given user website url path."""
+    MISSING = -1
+
+    pos_ini = url.find('~')
+    if pos_ini == MISSING:
+        return None
+
+    pos_end = url.find('/', pos_ini)
+    if pos_end == MISSING:
+        pos_end = len(url)
+
+    user = url[pos_ini + 1:pos_end]
+    return user if is_valid_user_name(user) else None
+
+
+def uws_url2dir(url):
+    """Returns the directory of the user's website for the given url path.
+
+    Note: It doesn't return the full OS file path to the url path!
+    """
+    return uws_usr2dir(uws_url2usr(url))
+
+
+def uws_dir2url(directory):
+    """Returns the url base path of the user's website for the given OS path.
+
+    Note: It doesn't return the url path for the file!
+    """
+    return uws_usr2url(uws_dir2usr(directory))
+
+
+def get_users_with_website():
+    """Returns a dictionary of users with actual website subdirectory."""
+
+    def lst_sub_dirs(directory):
+        """Returns the list of subdirectories of the given directory."""
+        return [
+            name for name in os.listdir(directory)
+            if os.path.isdir(os.path.join(directory, name))
+        ]
+
+    return {
+        name: uws_usr2url(name)
+        for name in lst_sub_dirs('/home') if os.path.isdir(uws_usr2dir(name))
+    }

@@ -14,6 +14,9 @@ from django.utils.translation import ugettext_lazy
 
 from plinth import cfg, frontpage
 from plinth.utils import format_lazy
+from plinth.modules.apache import get_users_with_website
+
+from . import home_page_url2scid
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +35,13 @@ def get_homepage_choices():
     shortcuts = frontpage.Shortcut.list(web_apps_only=True)
     shortcut_choices = [(shortcut.component_id, shortcut.name)
                         for shortcut in shortcuts if shortcut.is_enabled()]
+    uws_choices = \
+        [(home_page_url2scid(url),
+         format_lazy(ugettext_lazy("{user}'s website"), user=user))
+         for user, url in get_users_with_website().items()]
     apache_default = ('apache-default', _('Apache Default'))
     plinth = ('plinth', _('FreedomBox Service (Plinth)'))
-    return [apache_default, plinth] + shortcut_choices
+    return [apache_default, plinth] + uws_choices + shortcut_choices
 
 
 class ConfigurationForm(forms.Form):
