@@ -19,24 +19,26 @@
     {{ block.super }}
 
     {% if status.hs_enabled %}
-      <table class="table tor-hs">
-        <thead>
-          <tr>
-            <th>{% trans "Onion Service" %}</th>
-            <th>{% trans "Status" %}</th>
-            <th>{% trans "Ports" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="tor-hs-hostname">{{ status.hs_hostname }}</td>
-            <td class="tor-hs-status">{{ status.hs_status }}</td>
-            <td class="tor-hs-services">
-              {{ status.hs_services|join:', ' }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table tor-hs">
+          <thead>
+            <tr>
+              <th>{% trans "Onion Service" %}</th>
+              <th>{% trans "Status" %}</th>
+              <th>{% trans "Ports" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tor-hs-hostname">{{ status.hs_hostname }}</td>
+              <td class="tor-hs-status">{{ status.hs_status }}</td>
+              <td class="tor-hs-services">
+                {{ status.hs_services|join:', ' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     {% endif %}
   {% endif %}
 {% endblock %}
@@ -62,25 +64,23 @@
           necessary:
         {% endblocktrans %}
       </p>
-      <div class="row">
-        <div class="col-md-6">
-          <table class="table tor-relay-ports">
-            <thead>
+      <div class="table-responsive">
+        <table class="table tor-relay-ports">
+          <thead>
+            <tr>
+              <th>{% trans "Service" %}</th>
+              <th>{% trans "Port" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for name, port in status.ports.items %}
               <tr>
-                <th>{% trans "Service" %}</th>
-                <th>{% trans "Port" %}</th>
+                <td class="tor-relay-port-name">{{ name }}</td>
+                <td class="tor-relay-port-number">{{ port }}</td>
               </tr>
-            </thead>
-            <tbody>
-              {% for name, port in status.ports.items %}
-                <tr>
-                  <td class="tor-relay-port-name">{{ name }}</td>
-                  <td class="tor-relay-port-number">{{ port }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     {% endif %}
 

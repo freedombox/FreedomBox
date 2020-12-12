@@ -11,22 +11,24 @@
 
   <p>{% trans "Delete the following snapshots permanently?" %}</p>
 
-  <table class="table">
-    <thead>
-      <th>{% trans "Number" %}</th>
-      <th>{% trans "Date" %}</th>
-      <th>{% trans "Description" %}</th>
-    </thead>
-    <tbody>
-      {% for snapshot in snapshots %}
-        <tr>
-          <td>{{ snapshot.number }}</td>
-          <td>{{ snapshot.date }}</td>
-          <td>{{ snapshot.description }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th>{% trans "Number" %}</th>
+        <th>{% trans "Date" %}</th>
+        <th>{% trans "Description" %}</th>
+      </thead>
+      <tbody>
+        {% for snapshot in snapshots %}
+          <tr>
+            <td>{{ snapshot.number }}</td>
+            <td>{{ snapshot.date }}</td>
+            <td>{{ snapshot.description }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   <p>
     <form class="form" method="post">

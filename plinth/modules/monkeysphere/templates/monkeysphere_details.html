@@ -10,58 +10,60 @@
 
   <h2>{% trans "Monkeysphere" %}</h2>
 
-  <table class="table">
-    <tbody>
-      <tr>
-        <td>{% trans "OpenPGP Fingerprint" %}</td>
-        <td>{{ key.openpgp_fingerprint }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "OpenPGP User IDs" %}</td>
-        <td>{{ key.uids|join:', ' }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "Key Import Date" %}</td>
-        <td>{{ key.date }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "SSH Key Type" %}</td>
-        <td>{{ key.ssh_key_type }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "SSH Key Size" %}</td>
-        <td>{{ key.ssh_key_size }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "SSH Fingerprint" %}</td>
-        <td>{{ key.ssh_fingerprint }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "Service" %}</td>
-        <td>
-          {% if key.service == 'ssh' %}
-            {% trans "Secure Shell" %}
-          {% elif key.service == 'https' %}
-            {% trans "Web Server" %}
-          {% else %}
-            {% trans "Other" %}
-          {% endif %}
-        </td>
-      </tr>
-      <tr>
-        <td>{% trans "Key File" %}</td>
-        <td>{{ key.key_file }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "Available Domains" %}</td>
-        <td>{{ key.available_domains|join:', ' }}</td>
-      </tr>
-      <tr>
-        <td>{% trans "Added Domains" %}</td>
-        <td>{{ key.imported_domains|join:', ' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>{% trans "OpenPGP Fingerprint" %}</td>
+          <td>{{ key.openpgp_fingerprint }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "OpenPGP User IDs" %}</td>
+          <td>{{ key.uids|join:', ' }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "Key Import Date" %}</td>
+          <td>{{ key.date }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "SSH Key Type" %}</td>
+          <td>{{ key.ssh_key_type }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "SSH Key Size" %}</td>
+          <td>{{ key.ssh_key_size }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "SSH Fingerprint" %}</td>
+          <td>{{ key.ssh_fingerprint }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "Service" %}</td>
+          <td>
+            {% if key.service == 'ssh' %}
+              {% trans "Secure Shell" %}
+            {% elif key.service == 'https' %}
+              {% trans "Web Server" %}
+            {% else %}
+              {% trans "Other" %}
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans "Key File" %}</td>
+          <td>{{ key.key_file }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "Available Domains" %}</td>
+          <td>{{ key.available_domains|join:', ' }}</td>
+        </tr>
+        <tr>
+          <td>{% trans "Added Domains" %}</td>
+          <td>{{ key.imported_domains|join:', ' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <p>
     {% blocktrans trimmed %}

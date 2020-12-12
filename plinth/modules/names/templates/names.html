@@ -8,44 +8,46 @@
 
 {% block configuration %}
 
-  <table class="table names-table">
-    <thead>
-      <tr>
-        <th>{% trans "Type" %}</th>
-        <th class="names-domain-column">{% trans "Domain Name" %}</th>
-        <th>{% trans "Services" %}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for domain in status.domains|dictsort:"domain_type.display_name" %}
+  <div class="table-responsive">
+    <table class="table names-table">
+      <thead>
         <tr>
-          <td>{{ domain.domain_type.display_name }}</td>
-          <td class="names-domain-column">{{ domain.name }}</td>
-          <td>{{ domain.get_readable_services|join:', ' }}</td>
-          <td>
-            <a href="{% url domain.domain_type.configuration_url %}"
-               role="button" class="btn btn-md btn-default">
-              {% trans "Configure" %}
-            </a>
-          </td>
+          <th>{% trans "Type" %}</th>
+          <th class="names-domain-column">{% trans "Domain Name" %}</th>
+          <th>{% trans "Services" %}</th>
+          <th></th>
         </tr>
-      {% endfor %}
+      </thead>
+      <tbody>
+        {% for domain in status.domains|dictsort:"domain_type.display_name" %}
+          <tr>
+            <td>{{ domain.domain_type.display_name }}</td>
+            <td class="names-domain-column">{{ domain.name }}</td>
+            <td>{{ domain.get_readable_services|join:', ' }}</td>
+            <td>
+              <a href="{% url domain.domain_type.configuration_url %}"
+                 role="button" class="btn btn-md btn-default">
+                {% trans "Configure" %}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
 
-      {% for domain_type in status.unused_domain_types %}
-        <tr>
-          <td>{{ domain_type.display_name }}</td>
-          <td>-</td>
-          <td>-</td>
-          <td>
-            <a href="{% url domain_type.configuration_url %}"
-               role="button" class="btn btn-md btn-default">
-              {% trans "Configure" %}
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        {% for domain_type in status.unused_domain_types %}
+          <tr>
+            <td>{{ domain_type.display_name }}</td>
+            <td>-</td>
+            <td>-</td>
+            <td>
+              <a href="{% url domain_type.configuration_url %}"
+                 role="button" class="btn btn-md btn-default">
+                {% trans "Configure" %}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
 {% endblock %}

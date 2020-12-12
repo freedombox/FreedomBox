@@ -10,26 +10,28 @@
 
   <h3>{% trans "Serving Domains" %}</h3>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>{% trans "Type" %}</th>
-        <th>{% trans "Domain Names" %}</th>
-        <th>{% trans "Serving" %}</th>
-        <th>{% trans "IP addresses" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for domain in domains_table %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ domain.type}}</td>
-          <td>{{ domain.domain_name}}</td>
-          <td>{{ domain.serving }}</td>
-          <td>{{ domain.ip_address }}</td>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Domain Names" %}</th>
+          <th>{% trans "Serving" %}</th>
+          <th>{% trans "IP addresses" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for domain in domains_table %}
+          <tr>
+            <td>{{ domain.type}}</td>
+            <td>{{ domain.domain_name}}</td>
+            <td>{{ domain.serving }}</td>
+            <td>{{ domain.ip_address }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   <div>
   <a href="{% url 'bind:index' %}" class="btn btn-default"
      role="button" title="{% trans 'Refresh IP address and domains' %}">

@@ -27,18 +27,20 @@
   {{ block.super }}
 
   <h4>{% trans "Local introducer" %}</h4>
-  <table class="table local-introducers">
-    <thead>
+  <div class="table-responsive">
+    <table class="table local-introducers">
+      <thead>
+        <tr>
+          <th>{% trans "Pet Name" %}</th>
+          <th> furl </th>
+        </tr>
+      </thead>
       <tr>
-        <th>{% trans "Pet Name" %}</th>
-        <th> furl </th>
+        <td class="introducer-pet-name">{{ local_introducer.0 }}</td>
+        <td class="introducer-furl">{{ local_introducer.1 }}</td>
       </tr>
-    </thead>
-    <tr>
-      <td class="introducer-pet-name">{{ local_introducer.0 }}</td>
-      <td class="introducer-furl">{{ local_introducer.1 }}</td>
-    </tr>
-  </table>
+    </table>
+  </div>
 
   <form class="form form-add-introducer" method="post"
         action="{% url 'tahoe:add-introducer' %}">
@@ -60,28 +62,30 @@
   <br/>
 
   <h4>{% trans "Connected introducers" %}</h4>
-  <table class="table connected-introducers">
-    <thead>
-      <tr>
-        <th>{% trans "Pet Name" %}</th>
-        <th> furl </th>
-      </tr>
-    </thead>
-    {% for introducer, furl in introducers %}
-      <tr>
-        <td class="introducer-pet-name">{{ introducer }}</td>
-        <td class="introducer-furl">{{ furl }}</td>
-        <td class="introducer-operations">
-          <form class="form form-remove" method="post"
-                action="{% url 'tahoe:remove-introducer' introducer %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">
-              {% trans "Remove" %}
-            </button>
-          </form>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+  <div class="table-responsive">
+    <table class="table connected-introducers">
+      <thead>
+        <tr>
+          <th>{% trans "Pet Name" %}</th>
+          <th> furl </th>
+        </tr>
+      </thead>
+      {% for introducer, furl in introducers %}
+        <tr>
+          <td class="introducer-pet-name">{{ introducer }}</td>
+          <td class="introducer-furl">{{ furl }}</td>
+          <td class="introducer-operations">
+            <form class="form form-remove" method="post"
+                  action="{% url 'tahoe:remove-introducer' introducer %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">
+                {% trans "Remove" %}
+              </button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 
 {% endblock %}

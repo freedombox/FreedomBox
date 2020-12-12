@@ -4,29 +4,31 @@
 
 {% load i18n %}
 
-<table class="table diagnostics-results">
-  <thead>
-    <tr>
-      <th class="diagnostic-test">{% trans "Test" %}</th>
-      <th class="diagnostics-result">{% trans "Result" %}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for test, result in results %}
+<div class="table-responsive">
+  <table class="table diagnostics-results">
+    <thead>
       <tr>
-        <td>{{ test }}</td>
-        <td class="diagnostics-result">
-          {% if result == 'passed' %}
-            <span class="badge badge-success">{% trans result %}</span>
-          {% elif result == 'failed' %}
-            <span class="badge badge-danger">{% trans result %}</span>
-          {% elif result == 'error' %}
-            <span class="badge badge-warning">{% trans result %}</span>
-          {% else %}
-            {{ result }}
-          {% endif %}
-        </td>
+        <th class="diagnostic-test">{% trans "Test" %}</th>
+        <th class="diagnostics-result">{% trans "Result" %}</th>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {% for test, result in results %}
+        <tr>
+          <td>{{ test }}</td>
+          <td class="diagnostics-result">
+            {% if result == 'passed' %}
+              <span class="badge badge-success">{% trans result %}</span>
+            {% elif result == 'failed' %}
+              <span class="badge badge-danger">{% trans result %}</span>
+            {% elif result == 'error' %}
+              <span class="badge badge-warning">{% trans result %}</span>
+            {% else %}
+              {{ result }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

@@ -34,40 +34,42 @@
       running.
     {% endblocktrans %}
   </p>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>{% trans "App Name" %}</th>
-        <th>{% trans "Current Vulnerabilities" %}</th>
-        <th>{% trans "Past Vulnerabilities" %}</th>
-        <th>{% trans "Sandboxed" %}</th>
-        <th>{% trans "Sandbox Coverage" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for app in apps_report %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ app.name }}</td>
-          <td>{{ app.vulns }}</td>
-          <td>{{ app.past_vulns|default_if_none:"❗"}}</td>
-          <td>
-            {% if app.sandboxed is None %}
-              {% trans "N/A" %}
-            {% elif app.sandboxed %}
-              {% trans "Yes" %}
-            {% else %}
-              {% trans "No" %}
-            {% endif %}
-          </td>
-          <td>
-            {% if app.sandbox_coverage %}
-              {{ app.sandbox_coverage }}%
-            {% elif app.sandboxed %}
-              {% trans "Not running" %}
-            {% endif %}
-          </td>
+          <th>{% trans "App Name" %}</th>
+          <th>{% trans "Current Vulnerabilities" %}</th>
+          <th>{% trans "Past Vulnerabilities" %}</th>
+          <th>{% trans "Sandboxed" %}</th>
+          <th>{% trans "Sandbox Coverage" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for app in apps_report %}
+          <tr>
+            <td>{{ app.name }}</td>
+            <td>{{ app.vulns }}</td>
+            <td>{{ app.past_vulns|default_if_none:"❗"}}</td>
+            <td>
+              {% if app.sandboxed is None %}
+                {% trans "N/A" %}
+              {% elif app.sandboxed %}
+                {% trans "Yes" %}
+              {% else %}
+                {% trans "No" %}
+              {% endif %}
+            </td>
+            <td>
+              {% if app.sandbox_coverage %}
+                {{ app.sandbox_coverage }}%
+              {% elif app.sandboxed %}
+                {% trans "Not running" %}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

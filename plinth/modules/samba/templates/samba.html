@@ -69,49 +69,51 @@
           {% csrf_token %}
           <input type="hidden" name="filesystem_type"
                  value="{{ disk.filesystem_type }}">
-          <table class="table"
-                 aria-describedby="{{ disk.name }}">
-            <thead>
-              <tr>
-                <th scope="col">{% trans 'Type' %}</th>
-                <th scope="col">{% trans 'Name' %}</th>
-                <th scope="col">{% trans 'Status' %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for share_type in share_types %}
-                <tr id="samba-share-{{ disk.share_name_prefix }}-{{ share_type.id }}"
-                    class="share">
-                  <td class="share-type">
-                    {{ share_type.type }}
-                  </td>
-                  <td class="share-name">
-                    {{ disk.share_name_prefix }}{{ share_type.share_name_suffix }}
-                  </td>
-                  <td class="share-status">
-                    <button type="submit"
-                      {% if disk.filesystem_type == 'vfat' %}
-                        class="btn toggle-button"
-                        title='{% trans "VFAT partitions are not supported" %}'
-                        disabled
-                        aria-readonly="true"
-                      {% elif share_type.id in shared_mounts|lookup:disk.mount_point %}
-                        class="btn toggle-button toggle-button--toggled"
-                        name="{{ share_type.id }}_share"
-                        value="disable"
-                        aria-pressed="true"
-                      {% else %}
-                        class="btn toggle-button"
-                        name="{{ share_type.id }}_share"
-                        value="enable"
-                        aria-pressed="false"
-                      {% endif %}>
-                    </button>
-                  </td>
+          <div class="table-responsive">
+            <table class="table"
+                   aria-describedby="{{ disk.name }}">
+              <thead>
+                <tr>
+                  <th scope="col">{% trans 'Type' %}</th>
+                  <th scope="col">{% trans 'Name' %}</th>
+                  <th scope="col">{% trans 'Status' %}</th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for share_type in share_types %}
+                  <tr id="samba-share-{{ disk.share_name_prefix }}-{{ share_type.id }}"
+                      class="share">
+                    <td class="share-type">
+                      {{ share_type.type }}
+                    </td>
+                    <td class="share-name">
+                      {{ disk.share_name_prefix }}{{ share_type.share_name_suffix }}
+                    </td>
+                    <td class="share-status">
+                      <button type="submit"
+                        {% if disk.filesystem_type == 'vfat' %}
+                          class="btn toggle-button"
+                          title='{% trans "VFAT partitions are not supported" %}'
+                          disabled
+                          aria-readonly="true"
+                        {% elif share_type.id in shared_mounts|lookup:disk.mount_point %}
+                          class="btn toggle-button toggle-button--toggled"
+                          name="{{ share_type.id }}_share"
+                          value="disable"
+                          aria-pressed="true"
+                        {% else %}
+                          class="btn toggle-button"
+                          name="{{ share_type.id }}_share"
+                          value="enable"
+                          aria-pressed="false"
+                        {% endif %}>
+                      </button>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </form>
       </div>
     {% endfor %}
@@ -143,31 +145,33 @@
           is plugged back in, sharing will be automatically enabled.
         {% endblocktrans %}
       </p>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>{% trans "Share name" %}</th>
-            <th>{% trans "Action" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for share in unavailable_shares %}
-          <tr>
-            <td>{{ share.name }}</td>
-            <td>
-              <form class="form" method="post"
-                    action="{% url 'samba:share' share.mount_point|urlencode:'' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger"
-                        name="{{ share.share_type }}_share"
-                        value="disable">{% trans "Delete" %}
-                </button>
-              </form>
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{% trans "Share name" %}</th>
+              <th>{% trans "Action" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for share in unavailable_shares %}
+            <tr>
+              <td>{{ share.name }}</td>
+              <td>
+                <form class="form" method="post"
+                      action="{% url 'samba:share' share.mount_point|urlencode:'' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger"
+                          name="{{ share.share_type }}_share"
+                          value="disable">{% trans "Delete" %}
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% endif %}
   {% endif %}
 {% endblock %}

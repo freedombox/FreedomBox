@@ -17,20 +17,22 @@
     {% endblocktrans %}
   </p>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>{% trans "Algorithm" %}</th>
-        <th>{% trans "Fingerprint" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for host_key in host_keys %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ host_key.algorithm }}</td>
-          <td><samp>{{ host_key.fingerprint }}</samp></td>
+          <th>{% trans "Algorithm" %}</th>
+          <th>{% trans "Fingerprint" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for host_key in host_keys %}
+          <tr>
+            <td>{{ host_key.algorithm }}</td>
+            <td><samp>{{ host_key.fingerprint }}</samp></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

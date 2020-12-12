@@ -22,34 +22,36 @@
   {% if not passwords %}
     <p>{% trans 'No passwords currently configured.' %}</p>
   {% else %}
-    <table class="table" id="passwords-list">
-      <thead>
-        <tr>
-          <th>{% trans "Password" %}</th>
-          <th>{% trans "Permissions" %}</th>
-          <th>{% trans "Comment" %}</th>
-          <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for password in passwords %}
-          <tr id="password-{{ password.password }}" class="password">
-            <td class="password-password">{{ password.password }}</td>
-            <td class="password-permissions">{{ password.permissions }}</td>
-            <td class="password-comment">{% trans password.comment %}</td>
-            <td class="password-operations">
-              <form class="form form-inline" method="post"
-                    action="{% url 'bepasty:remove' password.password %}">
-                {% csrf_token %}
-                <button class="password-remove btn btn-sm btn-default fa fa-trash-o"
-                        type="submit"></button>
-              </form>
-            </td>
+    <div class="table-responsive">
+      <table class="table" id="passwords-list">
+        <thead>
+          <tr>
+            <th>{% trans "Password" %}</th>
+            <th>{% trans "Permissions" %}</th>
+            <th>{% trans "Comment" %}</th>
+            <th></th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {% for password in passwords %}
+            <tr id="password-{{ password.password }}" class="password">
+              <td class="password-password">{{ password.password }}</td>
+              <td class="password-permissions">{{ password.permissions }}</td>
+              <td class="password-comment">{% trans password.comment %}</td>
+              <td class="password-operations">
+                <form class="form form-inline" method="post"
+                      action="{% url 'bepasty:remove' password.password %}">
+                  {% csrf_token %}
+                  <button class="password-remove btn btn-sm btn-default fa fa-trash-o"
+                          type="submit"></button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endif %}
 
 {% endblock %}

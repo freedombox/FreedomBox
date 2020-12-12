@@ -23,65 +23,67 @@
 
   {% else %}
 
-    <table class='table table-autowidth'>
-      <thead>
-        <th><center>{% trans "Show Ports" %}</center></th>
-        <th>{% trans "Service/Port" %}</th>
-        <th>{% trans "Status" %}</th>
-      </thead>
+    <div class="table-responsive">
+      <table class='table table-autowidth'>
+        <thead>
+          <th><center>{% trans "Show Ports" %}</center></th>
+          <th>{% trans "Service/Port" %}</th>
+          <th>{% trans "Status" %}</th>
+        </thead>
 
-      <tbody>
-        {% for component in components|dictsort:"name" %}
-          {% if component.ports %}
-            <tr>
-              <td>
-                <center>
-                  <button data-toggle="collapse"
-                          data-target=".{{component.component_id}}"
-                          class="btn btn-info btn-sm">+</button>
-                </center>
-              </td>
-              <td><strong>{{ component.name }}</strong></td>
-              <td>
-                {% if component.is_enabled %}
-                  <span class='badge badge-success'>
-                    {% trans "Enabled" %}</span>
-                {% else %}
-                  <span class='badge badge-warning'>
-                    {% trans "Disabled" %}</span>
-                {% endif %}
-              </td>
-            </tr>
-            {% for port in component.ports_details %}
-              <tr class="collapse {{component.component_id}}"
-                  style="background-color: #f9f9f9" >
-                <td></td>
-                <td class='cell-indented'><em>{{ port.name }}</em>:
-                  {% for port_number, protocol in port.details %}
-                    {{ port_number }}/{{ protocol }}
-                  {% endfor %}
-                </td>
+        <tbody>
+          {% for component in components|dictsort:"name" %}
+            {% if component.ports %}
+              <tr>
                 <td>
-                  {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
+                  <center>
+                    <button data-toggle="collapse"
+                            data-target=".{{component.component_id}}"
+                            class="btn btn-info btn-sm">+</button>
+                  </center>
+                </td>
+                <td><strong>{{ component.name }}</strong></td>
+                <td>
+                  {% if component.is_enabled %}
                     <span class='badge badge-success'>
-                      {% trans "Permitted" %}</span>
-                  {% elif port.name in internal_enabled_ports %}
-                    <span class='badge badge-warning'>
-                      {% trans "Permitted (internal only)" %}</span>
-                  {% elif port.name in external_enabled_ports %}
-                    <span class='badge badge-warning'>
-                      {% trans "Permitted (external only)" %}</span>
+                      {% trans "Enabled" %}</span>
                   {% else %}
-                    <span class='badge badge-danger'>
-                      {% trans "Blocked" %}</span>
+                    <span class='badge badge-warning'>
+                      {% trans "Disabled" %}</span>
                   {% endif %}
                 </td>
               </tr>
-            {% endfor %}
-          {% endif %}
-        {% endfor %}
-      </tbody>
-    </table>
+              {% for port in component.ports_details %}
+                <tr class="collapse {{component.component_id}}"
+                    style="background-color: #f9f9f9" >
+                  <td></td>
+                  <td class='cell-indented'><em>{{ port.name }}</em>:
+                    {% for port_number, protocol in port.details %}
+                      {{ port_number }}/{{ protocol }}
+                    {% endfor %}
+                  </td>
+                  <td>
+                    {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
+                      <span class='badge badge-success'>
+                        {% trans "Permitted" %}</span>
+                    {% elif port.name in internal_enabled_ports %}
+                      <span class='badge badge-warning'>
+                        {% trans "Permitted (internal only)" %}</span>
+                    {% elif port.name in external_enabled_ports %}
+                      <span class='badge badge-warning'>
+                        {% trans "Permitted (external only)" %}</span>
+                    {% else %}
+                      <span class='badge badge-danger'>
+                        {% trans "Blocked" %}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
     <p>
       <em>

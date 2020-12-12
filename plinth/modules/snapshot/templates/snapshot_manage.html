@@ -21,51 +21,53 @@
                {{ has_deletable_snapshots|yesno:',disabled="disabled"' }}/>
       </div>
 
-      <table class="table">
-        <thead>
-          <th>{% trans "Number" %}</th>
-          <th>{% trans "Date" %}</th>
-          <th>{% trans "Description" %}</th>
-          <th class="centered-column">{% trans "Rollback" %}</th>
-          <th class="centered-column"><input type="checkbox" id="select-all"></th>
-        </thead>
-        <tbody>
-          {% for snapshot in snapshots %}
-            <tr>
-              <td>
-                {{ snapshot.number }}
-                {% if snapshot.is_default %}
-                  <span class="badge badge-secondary">
-                    {% trans "will be used at next boot" %}
-                  </span>
-                {% endif %}
-                {% if snapshot.is_active %}
-                  <span class="badge badge-success">
-                    {% trans "in use" %}
-                  </span>
-                {% endif %}
-              </td>
-              <td>{{ snapshot.date }}</td>
-              <td>{% trans snapshot.description %}</td>
-              <td class="centered-column">
-                <a href="{% url 'snapshot:rollback' snapshot.number %}"
-                   class="btn btn-default btn-sm" role="button"
-                   title="{% blocktrans trimmed with number=snapshot.number %}
-                         Rollback to snapshot #{{ number }}
-                   {% endblocktrans %}">
-                  <span class="fa fa-repeat"
-                        aria-hidden="true"></span>
-                </a>
-              </td>
-              <td class="centered-column">
-                {% if not snapshot.is_default and not snapshot.is_active %}
-                  <input type="checkbox" name="snapshot_list" value={{ snapshot.number }} />
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <th>{% trans "Number" %}</th>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Description" %}</th>
+            <th class="centered-column">{% trans "Rollback" %}</th>
+            <th class="centered-column"><input type="checkbox" id="select-all"></th>
+          </thead>
+          <tbody>
+            {% for snapshot in snapshots %}
+              <tr>
+                <td>
+                  {{ snapshot.number }}
+                  {% if snapshot.is_default %}
+                    <span class="badge badge-secondary">
+                      {% trans "will be used at next boot" %}
+                    </span>
+                  {% endif %}
+                  {% if snapshot.is_active %}
+                    <span class="badge badge-success">
+                      {% trans "in use" %}
+                    </span>
+                  {% endif %}
+                </td>
+                <td>{{ snapshot.date }}</td>
+                <td>{% trans snapshot.description %}</td>
+                <td class="centered-column">
+                  <a href="{% url 'snapshot:rollback' snapshot.number %}"
+                     class="btn btn-default btn-sm" role="button"
+                     title="{% blocktrans trimmed with number=snapshot.number %}
+                           Rollback to snapshot #{{ number }}
+                     {% endblocktrans %}">
+                    <span class="fa fa-repeat"
+                          aria-hidden="true"></span>
+                  </a>
+                </td>
+                <td class="centered-column">
+                  {% if not snapshot.is_default and not snapshot.is_active %}
+                    <input type="checkbox" name="snapshot_list" value={{ snapshot.number }} />
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 </form>
 {% endblock %}

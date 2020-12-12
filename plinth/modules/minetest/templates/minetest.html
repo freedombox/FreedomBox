@@ -10,23 +10,25 @@
   {{ block.super }}
 
   {% if domains %}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>{% trans "Address" %}</th>
-          <th>{% trans "Port" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for domain in domains %}
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
           <tr>
-            <td>
-              {{ domain }}
-            </td>
-            <td>{{ 30000 }}</td>
+            <th>{% trans "Address" %}</th>
+            <th>{% trans "Port" %}</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for domain in domains %}
+            <tr>
+              <td>
+                {{ domain }}
+              </td>
+              <td>{{ 30000 }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endif %}
 {% endblock %}

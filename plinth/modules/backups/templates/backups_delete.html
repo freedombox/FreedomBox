@@ -11,18 +11,20 @@
 
   <p>{% trans "Delete this archive permanently?" %}</p>
 
-  <table class="table">
-    <thead>
-      <th>{% trans "Name" %}</th>
-      <th>{% trans "Time" %}</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ archive.name }}</td>
-        <td>{{ archive.time }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th>{% trans "Name" %}</th>
+        <th>{% trans "Time" %}</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ archive.name }}</td>
+          <td>{{ archive.time }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <p>
     <form class="form" method="post">

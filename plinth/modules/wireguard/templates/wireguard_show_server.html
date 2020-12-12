@@ -17,48 +17,52 @@
           {{ box_name }}'s public key and IP address.
         {% endblocktrans %}
       </p>
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>{% trans "Server endpoint:" %}</th>
-            <td>{{ peer.endpoint }}</td>
-          </tr>
-          <tr>
-            <th>{% trans "Server public key:" %}</th>
-            <td>{{ peer.public_key }}</td>
-          </tr>
-          <tr>
-            <th>{% trans "Pre-shared key:" %}</th>
-            <td>{{ peer.preshared_key }}</td>
-          </tr>
-          <tr>
-            <th>{% trans "Public key of this machine:" %}</th>
-            <td>{{ server.public_key }}</td>
-          </tr>
-          <tr>
-            <th>{% trans "IP address of this machine:" %}</th>
-            <td>{{ server.ip_address }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>{% trans "Server endpoint:" %}</th>
+              <td>{{ peer.endpoint }}</td>
+            </tr>
+            <tr>
+              <th>{% trans "Server public key:" %}</th>
+              <td>{{ peer.public_key }}</td>
+            </tr>
+            <tr>
+              <th>{% trans "Pre-shared key:" %}</th>
+              <td>{{ peer.preshared_key }}</td>
+            </tr>
+            <tr>
+              <th>{% trans "Public key of this machine:" %}</th>
+              <td>{{ server.public_key }}</td>
+            </tr>
+            <tr>
+              <th>{% trans "IP address of this machine:" %}</th>
+              <td>{{ server.ip_address }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3>{% trans "Status" %}</h3>
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>{% trans "Data transmitted:" %}</th>
-            <td>{{ peer.status.transfer_tx|filesizeformat }}</td>
-          </tr>
-          <tr>
-            <th>{% trans "Data received:" %}</th>
-            <td>{{ peer.status.transfer_rx|filesizeformat }}</td>
-          </tr>
-          <tr>
-            <th>{% trans "Latest handshake:" %}</th>
-            <td>{{ peer.status.latest_handshake|default:'' }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>{% trans "Data transmitted:" %}</th>
+              <td>{{ peer.status.transfer_tx|filesizeformat }}</td>
+            </tr>
+            <tr>
+              <th>{% trans "Data received:" %}</th>
+              <td>{{ peer.status.transfer_rx|filesizeformat }}</td>
+            </tr>
+            <tr>
+              <th>{% trans "Latest handshake:" %}</th>
+              <td>{{ peer.status.latest_handshake|default:'' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     {% endif %}
   {% endfor %}
 

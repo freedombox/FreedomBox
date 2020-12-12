@@ -31,50 +31,52 @@
   {% if not shares %}
     <p>{% trans 'No shares currently configured.' %}</p>
   {% else %}
-    <table class="table" id="shares-list">
-      <thead>
-        <tr>
-          <th>{% trans "Name" %}</th>
-          <th>{% trans "Disk Path" %}</th>
-          <th>{% trans "Shared Over" %}</th>
-          <th>{% trans "With Groups" %}</th>
-          <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for share in shares %}
-          <tr id="share-{{ share.name }}" class="share">
-            <td class="share-name">{{ share.name }}</td>
-            <td class="share-path">{{ share.path }}</td>
-            <td class="share-url">
-              <a href="{{ share.url }}" title="{{ share.url}}">
-                {{ share.url }}
-              </a>
-            </td>
-            <td class="share-groups">
-            {% if not share.groups %}
-              <i>{% trans "public access" %}</i>
-            {% else %}
-              {{ share.groups|join:", " }}
-            {% endif %}
-            </td>
-            <td class="share-operations">
-              <a class="share-edit btn btn-sm btn-default"
-                 href="{% url 'sharing:edit' share.name %}">
-                <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
-              </a>
-              <form class="form form-inline" method="post"
-                    action="{% url 'sharing:remove' share.name %}">
-                {% csrf_token %}
-                <button class="share-remove btn btn-sm btn-default fa fa-trash-o"
-                        type="submit"></button>
-              </form>
-            </td>
+    <div class="table-responsive">
+      <table class="table" id="shares-list">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Disk Path" %}</th>
+            <th>{% trans "Shared Over" %}</th>
+            <th>{% trans "With Groups" %}</th>
+            <th></th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {% for share in shares %}
+            <tr id="share-{{ share.name }}" class="share">
+              <td class="share-name">{{ share.name }}</td>
+              <td class="share-path">{{ share.path }}</td>
+              <td class="share-url">
+                <a href="{{ share.url }}" title="{{ share.url}}">
+                  {{ share.url }}
+                </a>
+              </td>
+              <td class="share-groups">
+              {% if not share.groups %}
+                <i>{% trans "public access" %}</i>
+              {% else %}
+                {{ share.groups|join:", " }}
+              {% endif %}
+              </td>
+              <td class="share-operations">
+                <a class="share-edit btn btn-sm btn-default"
+                   href="{% url 'sharing:edit' share.name %}">
+                  <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                </a>
+                <form class="form form-inline" method="post"
+                      action="{% url 'sharing:remove' share.name %}">
+                  {% csrf_token %}
+                  <button class="share-remove btn btn-sm btn-default fa fa-trash-o"
+                          type="submit"></button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endif %}
 
 {% endblock %}
