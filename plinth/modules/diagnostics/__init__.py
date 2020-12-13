@@ -112,7 +112,7 @@ def run_on_all_enabled_modules():
             continue
 
         apps.append((app.app_id, app))
-        app_name = app.info.name or _('None')
+        app_name = app.info.name or app.app_id
         current_results['results'][app.app_id] = {'name': app_name}
 
     current_results['apps'] = apps

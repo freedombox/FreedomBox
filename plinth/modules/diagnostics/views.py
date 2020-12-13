@@ -38,6 +38,7 @@ def diagnose_app(request, app_id):
         app = App.get(app_id)
     except KeyError:
         raise Http404('App does not exist')
+    app_name = app.info.name or app_id
 
     diagnosis = None
     diagnosis_exception = None
@@ -51,7 +52,7 @@ def diagnose_app(request, app_id):
     return TemplateResponse(
         request, 'diagnostics_app.html', {
             'title': _('Diagnostic Test'),
-            'app_id': app_id,
+            'app_name': app_name,
             'results': diagnosis,
             'exception': diagnosis_exception,
         })
