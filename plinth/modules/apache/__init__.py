@@ -37,7 +37,8 @@ class ApacheApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential)
+                               is_essential=is_essential,
+                               name=_('Apache HTTP Server'))
         self.add(info)
 
         web_server_ports = Firewall('firewall-web', _('Web Server'),
