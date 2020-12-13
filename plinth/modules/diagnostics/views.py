@@ -3,6 +3,8 @@
 FreedomBox app for running diagnostics.
 """
 
+import logging
+
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
@@ -10,6 +12,8 @@ from django.views.decorators.http import require_POST
 
 from plinth.app import App
 from plinth.modules import diagnostics
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -35,8 +39,19 @@ def diagnose_app(request, app_id):
     except KeyError:
         raise Http404('App does not exist')
 
-    return TemplateResponse(request, 'diagnostics_app.html', {
-        'title': _('Diagnostic Test'),
-        'app_id': app_id,
-        'results': app.diagnose()
-    })
+    diagnosis = None
+    diagnosis_exception = None
+    try:
+        diagnosis = app.diagnose()
+    except Exception as exception:
+        logger.exception('Error running %s diagnostics - %s', app_id,
+                         exception)
+        diagnosis_exception = str(exception)
+
+    return TemplateResponse(
+        request, 'diagnostics_app.html', {
+            'title': _('Diagnostic Test'),
+            'app_id': app_id,
+            'results': diagnosis,
+            'exception': diagnosis_exception,
+        })

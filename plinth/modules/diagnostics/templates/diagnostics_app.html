@@ -13,6 +13,10 @@
 
   {% if results %}
     {% include "diagnostics_results.html" with results=results %}
+  {% elif exception %}
+    <div class="alert alert-danger" role="alert">
+      {{ exception }}
+    </div>
   {% else %}
     <p>{% trans "This app does not support diagnostics" %}</p>
   {% endif %}

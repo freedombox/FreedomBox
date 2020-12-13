@@ -31,26 +31,23 @@
 
   {% if results %}
     <h3>{% trans "Results" %}</h3>
-    {% if results.error %}
-      <div class="alert alert-danger alert-dismissable">
-        <a class="close" data-dismiss="alert">&times;</a>
-        {{ results.error }}
-      </div>
-    {% else %}
-      {% for app_id, app_data in results.results.items %}
-        <h4>
-          {% blocktrans with app_name=app_data.name %}
-            App: {{app_name}}
-          {% endblocktrans %}
-        </h4>
+    {% for app_id, app_data in results.results.items %}
+      <h4>
+        {% blocktrans with app_name=app_data.name %}
+          App: {{app_name}}
+        {% endblocktrans %}
+      </h4>
 
-        {% if app_data.results %}
-          {% include "diagnostics_results.html" with results=app_data.results %}
-        {% else %}
-          <p><span class="fa fa-hourglass-o"></span></p>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+      {% if app_data.diagnosis %}
+        {% include "diagnostics_results.html" with results=app_data.diagnosis %}
+      {% elif app_data.exception %}
+        <div class="alert alert-danger" role="alert">
+          {{ app_data.exception }}
+        </div>
+      {% else %}
+        <p><span class="fa fa-hourglass-o"></span></p>
+      {% endif %}
+    {% endfor %}
   {% endif %}
 
 {% endblock %}
