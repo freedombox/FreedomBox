@@ -116,10 +116,14 @@ class Dict2Obj(object):
         self.__dict__ = a_dict
 
 
-@patch('plinth.frontpage.Shortcut.list', MagicMock(return_value=[
-            Dict2Obj({'url': 'url/for/'+id, 'component_id': id})
-            for id in ('a', 'b')
-        ]))
+@patch('plinth.frontpage.Shortcut.list',
+       MagicMock(return_value=[
+           Dict2Obj({
+               'url': 'url/for/' + id,
+               'component_id': id
+           }) for id in ('a', 'b')
+       ]))
+@pytest.mark.usefixtures('needs_root')
 def test_homepage_field():
     """Test homepage changes.
 
