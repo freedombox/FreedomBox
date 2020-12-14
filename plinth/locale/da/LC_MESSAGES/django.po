@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
 "PO-Revision-Date: 2020-10-27 10:42+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -93,12 +93,18 @@ msgid "Error installing application: {error}"
 msgstr "Kunne ikke installere applikation: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "Web Server"
+msgid "Apache HTTP Server"
+msgstr "Webserver"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Webserver"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web-brugerflade (Plinth)"
@@ -228,8 +234,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Nøgle i lager"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Ingen"
 
@@ -1076,7 +1081,7 @@ msgstr "Adgang"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr "Cockpit vil kun fungere når det tilgås gennem de følgende webadresser."
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1084,11 +1089,11 @@ msgstr ""
 "Her kan du konfigurere nogle generelle indstillinger såsom værtsnavn, "
 "domænenavn, webserverens hjemmeside osv."
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Generel Konfiguration"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1096,30 +1101,35 @@ msgstr "Generel Konfiguration"
 msgid "Configure"
 msgstr "Konfigurer"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Domænenavn"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Ugyldigt domænenavn"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Apaches standardside"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox-tjenesten (Plinth)"
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Værtsnavn"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1132,11 +1142,11 @@ msgstr ""
 "derimellem må kun være bogstaver, tal og bindestreger. Den samlede længde "
 "skal være 63 tegn eller derunder."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Ugyldigt værtsnavn"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1152,11 +1162,11 @@ msgstr ""
 "bogstaver, tal og bindestreger. Hvert ord skal være på 63 tegn eller "
 "derunder. Den samlede længde skal være 253 tegn eller derunder."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Webserverens hjemmeside"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1172,11 +1182,11 @@ msgstr ""
 "brugere eksplicit tilføje /plinth eller /freedombox for at nå {box_name}-"
 "tjenesten (Plinth)."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Vis avancerede applikationer og funktionalitet"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Vis applikationer og funktionalitet som kræver mere teknisk viden."
 
@@ -1355,44 +1365,44 @@ msgstr ""
 "afgøre om applikationer og tjenester virker som forventet."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Diagnosticering"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 msgid "passed"
 msgstr "lykkedes"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "mislykkedes"
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr "fejl"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bør deaktivere nogle applikationer for at frigøre hukommelse."
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr "Du bør ikke installere flere applikationer på dette system."
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1402,7 +1412,7 @@ msgstr ""
 "{memory_available} {memory_available_unit} fri{percent_used}{percent_used}. "
 "{advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr "Lav hukommelse"
 
@@ -1420,12 +1430,16 @@ msgstr "Diagnostisk test kører"
 msgid "Results"
 msgstr "Resultater"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "            App: %(app_name)s\n"
+#| "          "
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 "\n"
 "            Applikation: %(app_name)s\n"
@@ -1436,11 +1450,12 @@ msgid "Diagnostic Results"
 msgstr "Diagnostiske Resultater"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
-#, python-format
-msgid "App: %(app_id)s"
+#, fuzzy, python-format
+#| msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr "Applikation: %(app_id)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 msgid "This app does not support diagnostics"
 msgstr "Denne applikation understøtter ikke diagnostik"
 
@@ -1452,7 +1467,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultat"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Diagnostisk Test"
 
@@ -3567,7 +3582,7 @@ msgstr "Nøgle distribueret til nøgleserver."
 msgid "Error occurred while publishing key."
 msgstr "Fejl under distribuering af nøgle."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3575,7 +3590,7 @@ msgstr ""
 "Mumble er open source software der tilbyder en højkvalitets tale-tjeneste "
 "med lav forsinkelse og kryptering."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3585,11 +3600,11 @@ msgstr ""
 "<a href=\"http://mumble.info\">Klienter</a> til computere og Android-enheder "
 "er tilgængelige."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr ""
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 #, fuzzy
 #| msgid "Voice Chat (Mumble)"
 msgid "Voice Chat"
@@ -6058,14 +6073,14 @@ msgstr "Rediger Bruger"
 msgid "Share deleted."
 msgstr "{name} slettet."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
 "of unwanted changes to the system."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6073,14 +6088,14 @@ msgid ""
 "cleaned up according to the settings below."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 #, fuzzy
 #| msgid "Create User"
 msgid "Storage Snapshots"

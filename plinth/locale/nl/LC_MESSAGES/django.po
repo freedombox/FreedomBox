@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
 "PO-Revision-Date: 2020-12-14 23:40+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -93,12 +93,18 @@ msgid "Error installing application: {error}"
 msgstr "Fout bij het installeren van de toepassing: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "As a Server"
+msgid "Apache HTTP Server"
+msgstr "Als server"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Webserver"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web Interface (Plinth)"
@@ -227,8 +233,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Sleutel in archief"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Geen"
 
@@ -1077,7 +1082,7 @@ msgstr "Toegang"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr "Cockpit werkt alleen wanneer deze wordt geopend met de volgende URL's."
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1085,11 +1090,11 @@ msgstr ""
 "Hier kunnen een aantal algemene configuratieopties worden ingesteld, zoals "
 "hostname, domeinnaam, startpagina etc."
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Algemene Instellingen"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1097,30 +1102,35 @@ msgstr "Algemene Instellingen"
 msgid "Configure"
 msgstr "Configureer"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Domeinnaam"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Foutieve domeinnaam"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Apache standaard"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr ""
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Hostnaam"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1133,11 +1143,11 @@ msgstr ""
 "cijfer, er tussenin mogen ook koppeltekens gezet worden. De totale lengte "
 "mag niet langer zijn dan 63 tekens."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Foutieve hostnaam"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1154,11 +1164,11 @@ msgstr ""
 "per naam mag niet langer zijn dan 63 tekens. De totale domeinnaamlengte mag "
 "niet langer zijn dan 253 tekens."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Startpagina van de webserver"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1174,11 +1184,11 @@ msgstr ""
 "gebruikers expliciet /plinth of /freedombox moeten typen om de {box_name} "
 "service (Plinth) te bereiken."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Toon geavanceerde toepassingen en functies"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 "Laat toepassingen en functies zien die meer technische kennis vereisen."
@@ -1359,45 +1369,45 @@ msgstr ""
 "bevestigen dat de toepassingen en diensten zoals verwacht functioneren."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Diagnose"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 msgid "passed"
 msgstr "geslaagd"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "mislukt"
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr "fout"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Door toepassingen uit te schakelen kan het geheugengebruik worden verminderd."
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr "Extra toepassingen installeren wordt afgeraden."
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1406,7 +1416,7 @@ msgstr ""
 "Systeem heeft weinig geheugen beschikbaar: {percent_used}% gebruikt, "
 "{memory_available} {memory_available_unit} vrij. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr ""
 
@@ -1424,12 +1434,16 @@ msgstr "Diagnosetests worden doorlopen"
 msgid "Results"
 msgstr "Resultaten"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "            App: %(app_name)s\n"
+#| "          "
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 "\n"
 "            Toepassing: %(app_name)s\n"
@@ -1440,11 +1454,12 @@ msgid "Diagnostic Results"
 msgstr "Resultaten Diagnostische test"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
-#, python-format
-msgid "App: %(app_id)s"
+#, fuzzy, python-format
+#| msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr "Toepassing: %(app_id)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 msgid "This app does not support diagnostics"
 msgstr "Deze toepassing heeft geen diagnosetests"
 
@@ -1456,7 +1471,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultaat"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Diagnostische test"
 
@@ -1596,7 +1611,8 @@ msgstr ""
 #: plinth/modules/dynamicdns/forms.py:42
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
-msgstr "De openbare domeinnaam die gebruikt wordt om {box_name} aan te spreken."
+msgstr ""
+"De openbare domeinnaam die gebruikt wordt om {box_name} aan te spreken."
 
 #: plinth/modules/dynamicdns/forms.py:45
 msgid "Use this option if your provider uses self signed certificates."
@@ -3324,8 +3340,8 @@ msgstr ""
 "Map die de MiniDLNA Server zal doorzoeken. Alle submappen hiervan worden ook "
 "doorzocht op mediabestanden. Als de standaardmap verandert, zorg er dan voor "
 "dat de nieuwe map bestaat en dat deze leesbaar is voor de \"minidlna\" -"
-"gebruiker. Alle mediamappen van gebruikers binnen (\"/ home / gebruikersnaam "
-"/\") zullen meestal werken."
+"gebruiker. Alle mediamappen van gebruikers binnen (\"/ home / "
+"gebruikersnaam /\") zullen meestal werken."
 
 #: plinth/modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -3573,7 +3589,7 @@ msgstr "Sleutel gepubliceerd op keyserver."
 msgid "Error occurred while publishing key."
 msgstr "Er is een fout opgetreden tijdens het publiceren van de sleutel."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3581,7 +3597,7 @@ msgstr ""
 "Mumble is een Open Source, snelle, versleutelde, hoge kwaliteit "
 "groepsgespreksserver."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3592,11 +3608,11 @@ msgstr ""
 "programma's waarmee de Mumble dienst gebruikt kan worden. Er zijn "
 "programma's voor zowel desktop en Android machines."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "Voice Chat"
 
@@ -6041,7 +6057,7 @@ msgstr "Gedeelde map bewerken"
 msgid "Share deleted."
 msgstr "Gedeelde map verwijderd."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6051,7 +6067,7 @@ msgstr ""
 "kunnen worden gebruikt om in geval van ongewenste wijzigingen aan het "
 "systeem terug te keren naar een voorheen goed werkende staat."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6062,7 +6078,7 @@ msgstr ""
 "voor en na een software-installatie. Oudere Snapshots worden automatisch "
 "opgeschoond volgens de onderstaande instellingen."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6073,7 +6089,7 @@ msgstr ""
 "backups\">backups</a> aangezien ze op dezelfde partitie als hun bron worden "
 "bewaard. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "Opslag Snapshots"
 
@@ -7510,8 +7526,8 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"Openbare sleutel van de peer. Voorbeeld: MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+"Openbare sleutel van de peer. Voorbeeld: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:70
 msgid "Endpoint of the server"

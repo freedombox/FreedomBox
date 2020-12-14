@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
 "PO-Revision-Date: 2020-04-03 20:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -91,12 +91,18 @@ msgid "Error installing application: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Apache HTTP Server"
+msgstr "चाट सर्वर"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "वेब सर्वर"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} वेब इंटरफेस (प्लिंथ)"
@@ -234,8 +240,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "यूसर बनाये"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "कोई नहीं"
 
@@ -1121,17 +1126,17 @@ msgstr "अभिगम केंद्र"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "सामान्य कॉन्फ़िगरेशन"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1139,32 +1144,37 @@ msgstr "सामान्य कॉन्फ़िगरेशन"
 msgid "Configure"
 msgstr "कॉन्फ़िगर करें"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "डोमेन नाम"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "अमान्य डोमेन नाम"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 #, fuzzy
 #| msgid "Default"
 msgid "Apache Default"
 msgstr "डिफ़ॉल्ट"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr ""
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "होस्टनाम"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1176,11 +1186,11 @@ msgstr ""
 "मिल सकते हैं । होस्ट नाम आल्फ़बेट या एक संख्या से शुरु और अंत करना पड़ता है आैर इसमे सिर्फ "
 "आल्फ़बेट,संख्या आैर हैफ़ेन होना पड़ता है. कुल अक्षर का लंबाई ६३ या कम होनी पड़ती है।"
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "अमान्य होस्टनाम"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1195,13 +1205,13 @@ msgstr ""
 "करना पड़ता है आैर इसमे सिर्फ आल्फ़बेट,संख्या आैर हैफ़ेन होना पड़ता है.हर लेबल का लंबाई ६३ अक्षर "
 "या कम होनी पड़ती है. डोमेन नाम कि कुल लंबाई २५३ अक्षर या कम होनी पड़ती है."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 #, fuzzy
 #| msgid "Web Server (HTTP)"
 msgid "Webserver Home Page"
 msgstr "वेब सर्वर (HTTP)"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Choose the default web application that must be served when someone "
@@ -1223,11 +1233,11 @@ msgstr ""
 "{box_name} के अलावा कुछ पर सेट करना है, आपके यूसकस {box_name} सर्विस (प्लिंथ) पहुचते के "
 "लिये प्लिंथ या फ्रीडमबॉक्स स्पष्ट रूप से टाइप करना पढ़ेगा."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr ""
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 
@@ -1408,55 +1418,55 @@ msgstr ""
 "चेकों करोगे."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "निदानिकी"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "क्वासेल"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "सेटअप विफल."
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 msgid "GiB"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr ""
 
@@ -1474,12 +1484,12 @@ msgstr "निदानिकी परिक्षा अभी चल रह�
 msgid "Results"
 msgstr "परिणाम"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
 #, python-format
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
@@ -1488,10 +1498,10 @@ msgstr "निदानिकी का परिणाम"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
 #, python-format
-msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr ""
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 #, fuzzy
 #| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
@@ -1505,7 +1515,7 @@ msgstr "परीक्षा"
 msgid "Result"
 msgstr "परिणाम"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "निदान परिक्षा"
 
@@ -3569,13 +3579,13 @@ msgstr "चाबी किसर्वर पर प्रकाशित क�
 msgid "Error occurred while publishing key."
 msgstr "चाबी प्रकाशित करते समय एरर हो गया."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
 msgstr "ममबल एक खुला सोरस, कम विलंबता, एन्क्रिप्टेड अच्छा गुणवत्ता आवाज चैट सॉफ्टवेयर है."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3585,11 +3595,11 @@ msgstr ""
 "mumble.info\">Clients</a> अापके डेस्कटॉप और एंड्रॉयड डिवाइस से ममबल से कनेक्ट होने के "
 "लिए उपलब्ध हैं."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "ममबल"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "वॉयस चैट"
 
@@ -6016,7 +6026,7 @@ msgstr "शेयर संपादित करें"
 msgid "Share deleted."
 msgstr "शेयर हटाया गया."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6026,7 +6036,7 @@ msgstr ""
 "को वापस रोल करने के लिए इस्तेमाल किया जा सकता है, एक पहले अच्छी स्थिति ज्ञात है अगर "
 "सिस्टम पर अवांछित बदलाव किया गया."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6034,7 +6044,7 @@ msgid ""
 "cleaned up according to the settings below."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 #, fuzzy
 #| msgid ""
 #| "Snapshots work on btrfs file systems only and on the root partition only. "
@@ -6048,7 +6058,7 @@ msgstr ""
 "स्नैपशॉट्स सिर्फ btrfs फाइल सिस्टम और रूट पार्टीशन पर काम करते हैं. स्नैपशॉट बैकअप के लिए "
 "प्रतिस्थापन नहीं है क्योंकि वे उसी पार्टीशन पर संग्रहित होते हैं. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "स्टोरेज स्नैपशॉटस"
 
