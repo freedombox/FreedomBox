@@ -17,6 +17,19 @@
 
   <div class="row">
     <div class="col-md-8 offset-md-2">
+      {% if connection.primary %}
+        <div class="alert alert-warning" role="alert">
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+          <span class="sr-only">{% trans "Caution:" %}</span>
+          {% blocktrans trimmed %}
+            This is the primary connection that {{ box_name }} relies on for
+            Internet connectivity. Altering it may render your {{ box_name }}
+            unreachable. Ensure that you have other means to access
+            {{ box_name }} before altering this connection.
+          {% endblocktrans %}
+        </div>
+      {% endif %}
+
       <div class="btn-toolbar">
         <a href="{% url 'networks:edit' connection.uuid %}"
            class="btn btn-primary" role="button"
