@@ -5,6 +5,31 @@
 
 {% load i18n %}
 
+{% block page_head %}
+  <style type="text/css">
+   a.dropdown-toggle {
+       color: black;
+   }
+
+   a.dropdown-toggle:hover {
+       text-decoration: none;
+   }
+
+   td.service {
+       padding-left: 2rem;
+   }
+
+   .service-name {
+       font-style: italic;
+   }
+
+   .app-status,
+   .service-status {
+       width: 11rem;
+   }
+  </style>
+{% endblock %}
+
 {% block configuration %}
 
   <h3>{% trans "Status" %}</h3>
@@ -26,7 +51,6 @@
     <div class="table-responsive">
       <table class='table table-autowidth'>
         <thead>
-          <th><center>{% trans "Show Ports" %}</center></th>
           <th>{% trans "Service/Port" %}</th>
           <th>{% trans "Status" %}</th>
         </thead>
@@ -35,15 +59,15 @@
           {% for component in components|dictsort:"name" %}
             {% if component.ports %}
               <tr>
-                <td>
-                  <center>
-                    <button data-toggle="collapse"
-                            data-target=".{{component.component_id}}"
-                            class="btn btn-info btn-sm">+</button>
-                  </center>
+                <td class="app-name">
+                  <a class="dropdown-toggle" href="#"
+                     data-toggle="collapse" role="button"
+                     data-target=".{{component.component_id}}"
+                     aria-expanded="false"
+                     aria-controls="{{component.component_id}}">
+                    {{ component.name }}</a>
                 </td>
-                <td><strong>{{ component.name }}</strong></td>
-                <td>
+                <td class="app-status">
                   {% if component.is_enabled %}
                     <span class='badge badge-success'>
                       {% trans "Enabled" %}</span>
@@ -56,13 +80,13 @@
               {% for port in component.ports_details %}
                 <tr class="collapse {{component.component_id}}"
                     style="background-color: #f9f9f9" >
-                  <td></td>
-                  <td class='cell-indented'><em>{{ port.name }}</em>:
+                  <td class='service'>
+                    <span class="service-name">{{ port.name }}</span>:
                     {% for port_number, protocol in port.details %}
                       {{ port_number }}/{{ protocol }}
                     {% endfor %}
                   </td>
-                  <td>
+                  <td class="service-status">
                     {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
                       <span class='badge badge-success'>
                         {% trans "Permitted" %}</span>
