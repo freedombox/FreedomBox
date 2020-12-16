@@ -20,13 +20,13 @@
 
   {% include "app-header.html" with icon_filename=icon_filename name=title description=description %}
 
-  <p>
+  <div class="btn-toolbar">
     <a title="{% trans 'Add share' %}"
        role="button" class="btn btn-primary"
        href="{% url 'sharing:add' %}">
       {% trans 'Add share' %}
     </a>
-  </p>
+  </div>
 
   {% if not shares %}
     <p>{% trans 'No shares currently configured.' %}</p>

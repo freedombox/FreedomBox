@@ -55,12 +55,14 @@
     {% endif %}
   </p>
 
-  <a title="{% trans 'Add a new peer' %}"
-     role="button" class="btn btn-default"
-     href="{% url 'wireguard:add-client' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans "Add Allowed Client" %}
-  </a>
+  <div class="btn-toolbar">
+    <a title="{% trans 'Add a new peer' %}"
+       role="button" class="btn btn-default"
+       href="{% url 'wireguard:add-client' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans "Add Allowed Client" %}
+    </a>
+  </div>
 
   <h3>{% trans "As a Client" %}</h3>
   <p>
@@ -103,12 +105,14 @@
     </table>
   </div>
 
-  <a title="{% trans 'Add a new server' %}"
-     role="button" class="btn btn-default"
-     href="{% url 'wireguard:add-server' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans "Add Connection to Server" %}
-  </a>
+  <div class="btn-toolbar">
+    <a title="{% trans 'Add a new server' %}"
+       role="button" class="btn btn-default"
+       href="{% url 'wireguard:add-server' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans "Add Connection to Server" %}
+    </a>
+  </div>
 
   {{ block.super }}
 

@@ -27,33 +27,35 @@
 
 {% block configuration %}
 
-  <a title="{% trans 'Create a new backup' %}"
-     role="button" class="btn btn-primary"
-     href="{% url 'backups:create' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Create Backup' %}
-  </a>
+  <div class="btn-toolbar">
+    <a title="{% trans 'Create a new backup' %}"
+       role="button" class="btn btn-primary"
+       href="{% url 'backups:create' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create Backup' %}
+    </a>
 
-  <a title="{% trans 'Upload and restore a backup archive' %}"
-     role="button" class="btn btn-default"
-     href="{% url 'backups:upload' %}">
-    <span class="fa fa-upload" aria-hidden="true"></span>
-    {% trans 'Upload and Restore' %}
-  </a>
+    <a title="{% trans 'Upload and restore a backup archive' %}"
+       role="button" class="btn btn-default"
+       href="{% url 'backups:upload' %}">
+      <span class="fa fa-upload" aria-hidden="true"></span>
+      {% trans 'Upload and Restore' %}
+    </a>
 
-  <a title="{% trans 'Add a backup location' %}"
-     role="button" class="btn btn-default"
-     href="{% url 'backups:add-repository' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Add Backup Location' %}
-  </a>
+    <a title="{% trans 'Add a backup location' %}"
+       role="button" class="btn btn-default"
+       href="{% url 'backups:add-repository' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Add Backup Location' %}
+    </a>
 
-  <a title="{% trans 'Add a remote backup location' %}"
-     role="button" class="btn btn-default"
-     href="{% url 'backups:add-remote-repository' %}">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    {% trans 'Add Remote Backup Location' %}
-  </a>
+    <a title="{% trans 'Add a remote backup location' %}"
+       role="button" class="btn btn-default"
+       href="{% url 'backups:add-remote-repository' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Add Remote Backup Location' %}
+    </a>
+  </div>
 
   <h3>{% trans 'Existing Backups' %}</h3>
 

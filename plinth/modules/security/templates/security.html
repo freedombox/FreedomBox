@@ -7,11 +7,13 @@
 {% load i18n %}
 
 {% block status %}
-  <a class="btn btn-default" role="button" href="{% url 'security:report' %}"
-     title="{% trans 'Show security report' %}">
-    <span class="fa fa-line-chart" aria-hidden="true"></span>
-    {% trans "Show security report" %}
-  </a>
+  <div class="btn-toolbar">
+    <a class="btn btn-default" role="button" href="{% url 'security:report' %}"
+       title="{% trans 'Show security report' %}">
+      <span class="fa fa-line-chart" aria-hidden="true"></span>
+      {% trans "Show security report" %}
+    </a>
+  </div>
 
   {% if is_backports_requested %}
     <h3>{% trans "Frequent Feature Updates" %}</h3>
