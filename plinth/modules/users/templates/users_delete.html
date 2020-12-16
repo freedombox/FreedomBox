@@ -19,11 +19,8 @@
   <form class="form" method="post">
     {% csrf_token %}
 
-    <input type="submit" class="btn btn-md btn-primary"
+    <input type="submit" class="btn btn-md btn-danger"
            value="{% blocktrans with username=object.username %}Delete {{ username }}{% endblocktrans %}"/>
-
-    <a href="{% url 'users:index' %}" role="button"
-       class="btn btn-md btn-primary">{% trans "Cancel" %}</a>
   </form>
 
 {% endblock %}
