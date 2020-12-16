@@ -17,13 +17,13 @@
       {% include 'messages.html' %}
 
       {% if not shortcuts %}
-        <h4>
+        <p>
           {% url 'apps' as apps_url %}
           {% blocktrans trimmed %}
             Enable some <a href="{{ apps_url }}">applications</a> to add
             shortcuts to this page.
           {% endblocktrans %}
-        </h4>
+        </p>
       {% endif %}
 
       {% if selected_shortcut.description %}
