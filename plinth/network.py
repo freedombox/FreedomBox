@@ -217,8 +217,10 @@ def _get_wifi_channel_from_frequency(frequency):
 
 def get_connection_list():
     """Get a list of active and available connections."""
-    active_uuids = []
     client = get_nm_client()
+    primary_connection = client.get_primary_connection()
+
+    active_uuids = []
     for connection in client.get_active_connections():
         active_uuids.append(connection.get_uuid())
 
@@ -241,6 +243,9 @@ def get_connection_list():
             'type': connection_type,
             'type_name': connection_type_name,
             'is_active': connection.get_uuid() in active_uuids,
+            'primary':
+                (primary_connection
+                 and primary_connection.get_uuid() == connection.get_uuid()),
             'zone': zone,
         })
     connections.sort(key=lambda connection: connection['is_active'],
