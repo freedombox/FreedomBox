@@ -24,22 +24,6 @@ class TrimmedCharField(forms.CharField):
         return super(TrimmedCharField, self).clean(value)
 
 
-class SubdomainWidget(forms.widgets.TextInput):
-    """Append the domain to the subdomain bootstrap input field"""
-    def __init__(self, domain, *args, **kwargs):
-        """Initialize the widget by storing the domain value."""
-        super().__init__(*args, **kwargs)
-        self.domain = domain
-
-    def render(self, *args, **kwargs):
-        """Return the HTML for the widget."""
-        inputfield = super().render(*args, **kwargs)
-        return """<div class="input-group">
-                  {0}
-                  <span class="input-group-addon">{1}</span>
-               </div>""".format(inputfield, self.domain)
-
-
 class ConfigurationForm(forms.Form):
     """Configure PageKite credentials and frontend"""
 
