@@ -103,7 +103,11 @@ def test_homepage_mapping_skip_ci():
         pytest.skip(reason)
 
     f = _home_page_scid2url
-    os.mkdir(UWS_DIRECTORY)
+    try:
+        os.mkdir(UWS_DIRECTORY)
+    except FileNotFoundError:
+        pytest.skip('Home folder cannot be accessed on buildd.')
+
     assert '/~fbx/' == f('uws-fbx')
     os.rmdir(UWS_DIRECTORY)
     assert f('uws-fbx') is None
