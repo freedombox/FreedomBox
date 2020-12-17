@@ -16,6 +16,7 @@ from . import utils
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
+
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
@@ -49,6 +50,7 @@ class ConfigurationForm(forms.Form):
 
     def save(self, request):
         """Save the form on submission after validation."""
+
         def _filter(data):
             return {
                 key: str(value)
@@ -119,6 +121,7 @@ class BaseCustomServiceForm(forms.Form):
 
 class DeleteCustomServiceForm(BaseCustomServiceForm):
     """Form to remove custom service."""
+
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         utils.run(['remove-service', '--service', json.dumps(service)])
@@ -127,6 +130,7 @@ class DeleteCustomServiceForm(BaseCustomServiceForm):
 
 class AddCustomServiceForm(BaseCustomServiceForm):
     """Adds the save() method and validation to not add predefined services"""
+
     def matches_predefined_service(self, formdata):
         """Returns whether the user input matches a predefined service"""
         service = self.convert_formdata_to_service(formdata)
