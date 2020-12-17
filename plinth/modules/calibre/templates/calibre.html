@@ -5,18 +5,6 @@
 
 {% load i18n %}
 
-{% block page_head %}
-  <style type="text/css">
-    .library-label {
-        display: inline-block;
-        width: 40%;
-    }
-    .list-group-item .btn {
-        margin: -0.3125rem 0.125rem;
-    }
-  </style>
-{% endblock %}
-
 {% block configuration %}
   {{ block.super }}
 
@@ -35,19 +23,19 @@
       {% if not libraries %}
         <p>{% trans 'No libraries available.' %}</p>
       {% else %}
-        <div id="calibre-libraries" class="list-group">
+        <div id="calibre-libraries" class="list-group list-group-two-column">
           {% for library in libraries %}
-            <div class="list-group-item clearfix">
-              <a href="{% url 'calibre:delete-library' library %}"
-                 class="btn btn-default btn-sm pull-right" role="button"
-                 title="{% blocktrans %}Delete library {{ library }}{% endblocktrans %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
-              </a>
-
-              <a class="library-label"
+            <div class="list-group-item">
+              <a class="primary"
                  href="/calibre/#library_id={{ library }}&panel=book_list"
                  title="{% blocktrans %}Go to library {{ library }}{% endblocktrans %}">
-                  {{ library }}
+                {{ library }}
+              </a>
+
+              <a href="{% url 'calibre:delete-library' library %}"
+                 class="btn btn-default btn-sm secondary" role="button"
+                 title="{% blocktrans %}Delete library {{ library }}{% endblocktrans %}">
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
               </a>
             </div>
           {% endfor %}
