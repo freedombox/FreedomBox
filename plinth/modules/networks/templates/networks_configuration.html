@@ -3,40 +3,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
+{% load static %}
 {% load bootstrap %}
 {% load i18n %}
 
 {% block page_head %}
-  <style type="text/css">
-    .connection-status-label {
-        display: inline-block;
-        width: 4.125rem;
-        padding: 0.3125rem 0;
-        text-align: center;
-        margin-right: 0.625rem;
-    }
-
-    .connection-show-label {
-        display: inline-block;
-        width: 40%;
-    }
-
-    .connection-type-label {
-        display: inline-block;
-    }
-
-    .list-group-item .btn {
-        margin: -0.125rem 0;
-    }
-
-    .form-action.pull-right {
-        margin-right: 1.25rem;
-    }
-
-    .form-action button {
-        min-width: 6.125rem;
-    }
-  </style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'networks/networks.css' %}"/>
 {% endblock %}
 
 {% block configuration %}
