@@ -85,7 +85,9 @@ function onSubmitAddProgress(event) {
         // Disable all form submit buttons on the page
         for (const formbutton of getSubmitButtons()) {
             if (!(formbutton.classList.contains('btn-link') ||
-                  formbutton.classList.contains('no-running-status'))) {
+                  formbutton.classList.contains('no-running-status') ||
+                  formbutton.hasAttribute('disabled'))) {
+                formbutton.classList.add('temporarily-disabled');
                 formbutton.setAttribute('disabled', 'disabled');
             }
         }
@@ -105,11 +107,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 // back/forward we want them to be able to submit the forms again. So clear all
 // the button disabling.
 window.addEventListener('pageshow', function(event) {
-    const selector = "input[type='submit'].running-status-button";
-    const submitButtons = document.querySelectorAll(selector);
-    for (const button of submitButtons) {
+    for (const button of getSubmitButtons()) {
         button.classList.remove('running-status-button');
-        button.removeAttribute('disabled');
+        if (button.classList.contains('temporarily-disabled')) {
+            button.classList.remove('temporarily-disabled');
+            button.removeAttribute('disabled');
+        }
     }
 
     const beforeSelector = ".running-status-button-before";
