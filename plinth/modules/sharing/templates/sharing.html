@@ -4,16 +4,11 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
-  <style type="text/css">
-    .share-operations form {
-      display: inline-block;
-    }
-    .share-operations {
-      text-align: right;
-    }
-  </style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'sharing/sharing.css' %}"/>
 {% endblock %}
 
 {% block content %}
@@ -65,7 +60,7 @@
                    href="{% url 'sharing:edit' share.name %}">
                   <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
                 </a>
-                <form class="form form-inline" method="post"
+                <form class="form" method="post"
                       action="{% url 'sharing:remove' share.name %}">
                   {% csrf_token %}
                   <button class="share-remove btn btn-sm btn-default fa fa-trash-o"
