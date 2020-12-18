@@ -4,30 +4,11 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
-  <style type="text/css">
-   a.dropdown-toggle {
-       color: black;
-   }
-
-   a.dropdown-toggle:hover {
-       text-decoration: none;
-   }
-
-   td.service {
-       padding-left: 2rem;
-   }
-
-   .service-name {
-       font-style: italic;
-   }
-
-   .app-status,
-   .service-status {
-       width: 11rem;
-   }
-  </style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'firewall/firewall.css' %}"/>
 {% endblock %}
 
 {% block configuration %}
@@ -78,8 +59,7 @@
                 </td>
               </tr>
               {% for port in component.ports_details %}
-                <tr class="collapse {{component.component_id}}"
-                    style="background-color: #f9f9f9" >
+                <tr class="collapse {{component.component_id}}">
                   <td class='service'>
                     <span class="service-name">{{ port.name }}</span>:
                     {% for port_number, protocol in port.details %}
