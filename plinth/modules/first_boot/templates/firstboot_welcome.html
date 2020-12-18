@@ -11,19 +11,10 @@
 no-brand
 {% endblock %}
 
-{% block page_head %}
-  <style type="text/css">
-   img.firstboot {
-       display: block;
-       max-width: 100%;
-   }
-  </style>
-{% endblock %}
-
 {% block content %}
   <div class="logo">
-    <img class="firstboot" src="{% static 'theme/img/freedombox-logo-standard.svg' %}"
-         alt="{{ box_name }}" />
+    <img class="firstboot img-fluid" alt="{{ box_name }}"
+         src="{% static 'theme/img/freedombox-logo-standard.svg' %}"/>
   </div>
 
   <form class="form text-center" method="post">
