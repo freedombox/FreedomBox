@@ -4,25 +4,11 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
-  <style type="text/css">
-    .mount-error, .mount-success, .encrypted {
-      padding: 0 0.3125rem;
-    }
-    .mount-error {
-      color: orange;
-    }
-    .mount-success {
-      color: black;
-    }
-    .encrypted {
-      color: green;
-    }
-    .inline-block {
-      display: inline-block;
-    }
-  </style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'backups/backups.css' %}"/>
 {% endblock %}
 
 {% block configuration %}
