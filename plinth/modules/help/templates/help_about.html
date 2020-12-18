@@ -13,6 +13,24 @@
          class="main-graphic" />
   </p>
 
+  <div class="alert {% if new_version %}alert-warning{% else %}alert-success{% endif %}">
+    {% blocktrans trimmed %}
+      You are running {{ os_release }} and {{ box_name }} version {{ version }}.
+    {% endblocktrans %}
+
+    {% if new_version %}
+      {% url 'upgrades:index' as upgrades_url %}
+      {% blocktrans trimmed %}
+        There is a new {{ box_name }} version
+        <a href="{{ upgrades_url }}">available</a>.
+      {% endblocktrans %}
+    {% else %}
+      {% blocktrans trimmed %}
+        {{ box_name }} is up to date.
+      {% endblocktrans %}
+    {% endif %}
+  </div>
+
   <p>
     {% blocktrans trimmed %}
       {{ box_name }} is a community project to develop, design and
@@ -59,21 +77,4 @@
         href="https://wiki.debian.org/FreedomBox"
         target="_blank">{% trans "Learn more" %}</a></p>
 
-  <p style='margin-top:1.875rem'>
-    {% blocktrans trimmed %}
-      You are running {{ os_release }} and {{ box_name }} version {{ version }}.
-    {% endblocktrans %}
-
-    {% if new_version %}
-      {% url 'upgrades:index' as upgrades_url %}
-      {% blocktrans trimmed %}
-        There is a new {{ box_name }} version
-        <a href="{{ upgrades_url }}">available</a>.
-      {% endblocktrans %}
-    {% else %}
-      {% blocktrans trimmed %}
-        {{ box_name }} is up to date.
-      {% endblocktrans %}
-    {% endif %}
-  </p>
 {% endblock %}
