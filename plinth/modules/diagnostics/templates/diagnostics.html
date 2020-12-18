@@ -19,10 +19,10 @@
   {% else %}
     <p>{% trans "Diagnostics test is currently running" %}</p>
     <div class="progress">
-      <div class="progress-bar progress-bar-striped active"
+      <div class="progress-bar progress-bar-striped active
+                  w-{{ results.progress_percentage }}"
            role="progressbar" aria-valuemin="0" aria-valuemax="100"
-           aria-valuenow="{{ results.progress_percentage }}"
-           style="width: {{ results.progress_percentage }}%">
+           aria-valuenow="{{ results.progress_percentage }}">
         {{ results.progress_percentage }}%
       </div>
     </div>

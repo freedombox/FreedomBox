@@ -82,10 +82,10 @@
           {% endblocktrans %}
         </div>
         <div class="progress">
-          <div class="progress-bar progress-bar-striped active"
+          <div class="progress-bar progress-bar-striped active
+                      w-{{ transaction.percentage }}"
                role="progressbar" aria-valuemin="0" aria-valuemax="100"
-               aria-valuenow="{{ transaction.percentage }}"
-               style="width: {{ transaction.percentage }}%">
+               aria-valuenow="{{ transaction.percentage }}">
             <span class="sr-only">
               {% blocktrans trimmed with percentage=transaction.percentage %}
                 {{ percentage }}% complete

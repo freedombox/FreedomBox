@@ -45,10 +45,10 @@
                                 bg-warning
                               {% else %}
                                 bg-danger
-                              {% endif %}"
+                              {% endif %}
+                              w-{{ disk.percent_used }}"
                        role="progressbar" aria-valuenow="disk.percent_used"
-                       aria-valuemin="0" aria-valuemax="100"
-                       style="width: {{ disk.percent_used }}%;">
+                       aria-valuemin="0" aria-valuemax="100">
                     {{ disk.percent_used }}%
                   </div>
                 </div>
