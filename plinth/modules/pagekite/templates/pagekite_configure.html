@@ -39,8 +39,8 @@
           </span>
           <form class="form secondary" method="post"
                 action="{% url 'pagekite:delete-custom-service' %}">
-            <div style='display:none'>
-              {% csrf_token %}
+            {% csrf_token %}
+            <div class='d-none'>
               {{ service.delete_form.as_p }}
             </div>
             <button type="submit" class="btn btn-default"
