@@ -5,17 +5,11 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
-<style type="text/css">
- .table .form .btn {
-     width: 6.125rem;
- }
-
- .form-inline {
-     display: inline;
- }
-</style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'letsencrypt/letsencrypt.css' %}"/>
 {% endblock %}
 
 {% block configuration %}
@@ -77,22 +71,22 @@
                   <span class="badge badge-warning">{% trans "Disabled" %}</span>
                 {% endif %}
               </td>
-              <td>
+              <td class="operations">
                 {% if domain_status.certificate_available %}
-                  <form class="form form-inline" method="post"
+                  <form class="form" method="post"
                         action="{% url 'letsencrypt:re-obtain' domain %}">
                     {% csrf_token %}
                     <button class="btn btn-sm btn-default" type="submit">
                       {% trans "Re-obtain" %}</button>
                   </form>
-                  <form class="form form-inline" method="post"
+                  <form class="form" method="post"
                         action="{% url 'letsencrypt:delete' domain %}">
                     {% csrf_token %}
                     <button class="btn btn-sm btn-default" type="submit">
                       {% trans "Delete" %}</button>
                   </form>
                   {% if "revoked" not in domain_status.validity %}
-                    <form class="form form-inline" method="post"
+                    <form class="form" method="post"
                           action="{% url 'letsencrypt:revoke' domain %}">
                       {% csrf_token %}
                       <button class="btn btn-sm btn-default" type="submit">
@@ -100,7 +94,7 @@
                     </form>
                   {% endif %}
                 {% else %}
-                  <form class="form form-inline" method="post"
+                  <form class="form" method="post"
                         action="{% url 'letsencrypt:obtain' domain %}">
                     {% csrf_token %}
                     <button class="btn btn-sm btn-primary" type="submit">
