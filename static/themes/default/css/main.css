@@ -322,6 +322,29 @@ footer {
 }
 
 /*
+ * Bootstrap extensions
+ */
+/* Use .list-group-two-column when there are some items aligned to right */
+.list-group-two-column .list-group-item {
+    display: flex;
+    align-items: center;
+}
+
+.list-group-two-column .list-group-item > :not(:last-child) {
+    margin-right: 0.25rem;
+}
+
+.list-group-two-column .list-group-item > .secondary {
+    margin-left: auto;
+    margin-top: -0.25rem;
+    margin-bottom: -0.25rem;
+}
+
+.list-group-two-column .list-group-item > .secondary ~ .secondary {
+    margin-left: 0;
+}
+
+/*
  * Clients information
  */
 .client-icon {
