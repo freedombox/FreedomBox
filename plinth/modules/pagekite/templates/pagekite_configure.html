@@ -7,18 +7,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-  <style type="text/css">
-    div.custom-services span.service {
-        display: inline-block;
-        padding-top: 0.375rem;
-    }
-    form.pull-right button {
-        margin: 0.625rem 0.3125rem;
-    }
-  </style>
-{% endblock %}
-
 {% block configuration %}
   {{ block.super }}
 
@@ -33,10 +21,10 @@
   </div>
 
   {% if custom_services %}
-    <div class="list-group custom-services">
+    <div class="list-group list-group-two-column custom-services">
       {% for service in custom_services %}
-        <div class="list-group-item clearfix">
-          <span class="service">
+        <div class="list-group-item">
+          <span class="service primary">
             <span title="Connects {{ service.url }} to {{ service.backend_host }}:{{ service.backend_port }}">
               {% if service.url|slice:":4" == "http" %}
                 <a href="{{ service.url }}">{{ service.url }}</a>
@@ -49,7 +37,7 @@
               {% endblocktrans %}
             </span>
           </span>
-          <form class="form pull-right" method="post"
+          <form class="form secondary" method="post"
                 action="{% url 'pagekite:delete-custom-service' %}">
             <div style='display:none'>
               {% csrf_token %}
