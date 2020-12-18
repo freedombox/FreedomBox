@@ -7,24 +7,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-  <style type="text/css">
-    .repo-label {
-        display: inline-block;
-        width: 40%;
-    }
-    .repo-private-icon {
-        margin: 0.25rem 0.625rem;
-    }
-    .list-group-item .btn {
-        margin: -0.3125rem 0.125rem;
-    }
-    .repo-cloning {
-        margin: 0 0.625rem;
-    }
-  </style>
-{% endblock %}
-
 {% block configuration %}
   {{ block.super }}
 
@@ -43,37 +25,40 @@
       {% if not repos %}
         <p>{% trans 'No repositories available.' %}</p>
       {% else %}
-        <div id="gitweb-repo-list" class="list-group">
+        <div id="gitweb-repo-list" class="list-group list-group-two-column">
           {% for repo in repos %}
-            <div class="list-group-item clearfix">
-              <a href="{% url 'gitweb:delete' repo.name %}"
-                class="btn btn-default btn-sm pull-right {% if 'clone_progress' in repo %} disabled {% endif %}"
-                role="button"
-                title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
-              </a>
+            <div class="list-group-item">
+              {% if 'clone_progress' in repo %}
+                <span class="repo-label">{{ repo.name }}</span>
+              {% else %}
+                <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
+                   title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
+                  {{ repo.name }}
+                </a>
+              {% endif %}
 
-              <a class="repo-edit btn btn-sm btn-default pull-right {% if 'clone_progress' in repo %} disabled {% endif %}"
+              {% if 'clone_progress' in repo %}
+                <span class="repo-cloning secondary">
+                  {% trans 'Cloning…' %} {{ repo.clone_progress }}%
+                </span>
+              {% endif %}
+
+              {% if repo.access == 'private' %}
+                <span class="repo-private-icon fa fa-lock secondary"
+                      aria-label="private"></span>
+              {% endif %}
+
+              <a class="repo-edit btn btn-sm btn-default secondary {% if 'clone_progress' in repo %} disabled {% endif %}"
                 href="{% url 'gitweb:edit' repo.name %}">
                 <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
               </a>
 
-              {% if repo.access == 'private' %}
-                <span class="repo-private-icon fa fa-lock pull-right"
-                      aria-label="private"></span>
-              {% endif %}
-
-              {% if 'clone_progress' in repo %}
-                <span class="repo-cloning pull-right">
-                    {% trans 'Cloning…' %} {{ repo.clone_progress }}%
-                </span>
-                <span class="repo-label">{{ repo.name }}<span>
-              {% else %}
-                <a class="repo-label" href="/gitweb/{{ repo.name }}.git"
-                  title="{% blocktrans %}Go to repository {{ repo.name }}{% endblocktrans %}">
-                  {{ repo.name }}
-                </a>
-              {% endif %}
+              <a href="{% url 'gitweb:delete' repo.name %}"
+                 class="btn btn-default btn-sm secondary {% if 'clone_progress' in repo %} disabled {% endif %}"
+                 role="button"
+                 title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
+              </a>
             </div>
           {% endfor %}
         </div>
