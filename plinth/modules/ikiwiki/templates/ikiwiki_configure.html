@@ -24,20 +24,20 @@
       {% if not sites %}
         <p>{% trans "No wikis or blogs available." %}</p>
       {% else %}
-        <div class="list-group">
+        <div class="list-group list-group-two-column">
           {% for site in sites %}
-            <div class="list-group-item clearfix">
+            <div class="list-group-item">
+              <a class="wiki-label primary" href="/ikiwiki/{{ site.0 }}"
+                 title="{% blocktrans with site=site.1 %}Go to site {{ site }}{% endblocktrans %}">
+                {{ site.1 }}
+              </a>
+
               <a href="{% url 'ikiwiki:delete' site.0 %}"
-                 class="btn btn-default btn-sm pull-right"
+                 class="btn btn-default btn-sm secondary"
                  role="button"
                  title="{% blocktrans with site=site.1 %}Delete site {{ site }}{% endblocktrans %}">
                 <span class="fa fa-trash-o"
                       aria-hidden="true"></span>
-              </a>
-
-              <a class="wiki-label" href="/ikiwiki/{{ site.0 }}"
-                 title="{% blocktrans with site=site.1 %}Go to site {{ site }}{% endblocktrans %}">
-                {{ site.1 }}
               </a>
             </div>
           {% endfor %}
