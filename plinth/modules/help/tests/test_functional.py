@@ -25,4 +25,5 @@ def _go_to_status_logs(browser):
 
 
 def _are_status_logs_shown(browser):
-    return browser.is_text_present('Logs begin')
+    return (browser.is_text_present('Logs begin')
+            or browser.is_text_present('Journal begins'))
