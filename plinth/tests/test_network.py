@@ -135,10 +135,11 @@ def fixture_pppoe_uuid(network):
 def test_get_connection_list(network):
     """Check that we can get a list of available connections."""
     connections = network.get_connection_list()
+    connection_names = [conn['name'] for conn in connections]
 
-    assert 'plinth_test_eth' in [x['name'] for x in connections]
-    assert 'plinth_test_wifi' in [x['name'] for x in connections]
-    assert 'plinth_test_pppoe' in [x['name'] for x in connections]
+    assert 'plinth_test_eth' in connection_names
+    assert 'plinth_test_wifi' in connection_names
+    assert 'plinth_test_pppoe' in connection_names
 
 
 def test_get_connection(network, ethernet_uuid, wifi_uuid):
