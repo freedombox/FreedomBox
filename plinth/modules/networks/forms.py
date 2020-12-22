@@ -37,15 +37,20 @@ class ConnectionForm(forms.Form):
                     'available over this interfaces. Select Internal only '
                     'for trusted networks.'), choices=network.ZONES)
     ipv4_method = forms.ChoiceField(
-        label=_('IPv4 Addressing Method'), help_text=format_lazy(
-            _('"Automatic" method will make {box_name} acquire '
-              'configuration from this network making it a client. "Shared" '
-              'method will make {box_name} act as a router, configure '
-              'clients on this network and share its Internet connection.'),
-            box_name=_(cfg.box_name)),
-        choices=[('auto', _('Automatic (DHCP)')), ('shared', _('Shared')),
-                 ('manual', pgettext_lazy('Not automatically', 'Manual')),
-                 ('disabled', _('Disabled'))])
+        label=_('IPv4 Addressing Method'), widget=forms.RadioSelect, choices=[
+            ('auto',
+             _('Automatic (DHCP): Configure automatically, use Internet '
+               'connection from this network')),
+            ('shared',
+             _('Shared: Act as a router, provide Internet connection to other '
+               'devices on this network')),
+            ('manual',
+             _('Manual: Use manually specified parameters, use Internet '
+               'connection from this network')),
+            ('disabled',
+             _('Disabled: Do not configure this addressing method')),
+        ], initial='auto')
+
     ipv4_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv4_address],
         required=False)
@@ -70,13 +75,18 @@ class ConnectionForm(forms.Form):
                     'provided by a DHCP server will be ignored.'),
         validators=[validators.validate_ipv4_address], required=False)
     ipv6_method = forms.ChoiceField(
-        label=_('IPv6 Addressing Method'), help_text=format_lazy(
-            _('"Automatic" methods will make {box_name} acquire '
-              'configuration from this network making it a client.'),
-            box_name=_(cfg.box_name)),
-        choices=[('auto', _('Automatic')), ('dhcp', _('Automatic, DHCP only')),
-                 ('manual', pgettext_lazy('Not automatically', 'Manual')),
-                 ('ignore', _('Ignore'))])
+        label=_('IPv6 Addressing Method'), widget=forms.RadioSelect, choices=[
+            ('auto',
+             _('Automatic: Configure automatically, use Internet connection '
+               'from this network')),
+            ('dhcp',
+             _('Automatic (DHCP only): Configure automatically, use Internet '
+               'connection from this network')),
+            ('manual',
+             _('Manual: Use manually specified parameters, use Internet '
+               'connection from this network')),
+            ('ignore', _('Ignore: Ignore this addressing method')),
+        ])
     ipv6_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv6_address],
         required=False)
