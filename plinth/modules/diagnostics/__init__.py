@@ -78,20 +78,8 @@ def start_task():
     if running_task:
         raise Exception('Task already running')
 
-    running_task = threading.Thread(target=_run_on_all_enabled_modules_wrapper)
+    running_task = threading.Thread(target=run_on_all_enabled_modules)
     running_task.start()
-
-
-def _run_on_all_enabled_modules_wrapper():
-    """Wrapper over actual task to catch exceptions."""
-    try:
-        run_on_all_enabled_modules()
-    except Exception as exception:
-        logger.exception('Error running diagnostics - %s', exception)
-        current_results['error'] = str(exception)
-
-    global running_task
-    running_task = None
 
 
 def run_on_all_enabled_modules():
@@ -111,7 +99,6 @@ def run_on_all_enabled_modules():
 
     apps = []
     for app in app_module.App.list():
-        # XXX: Implement more cleanly.
         # Don't run diagnostics on apps have not been setup yet.
         # However, run on apps that need an upgrade.
         module = importlib.import_module(app.__class__.__module__)
@@ -125,17 +112,29 @@ def run_on_all_enabled_modules():
             continue
 
         apps.append((app.app_id, app))
-        current_results['results'][app.app_id] = None
+        app_name = app.info.name or app.app_id
+        current_results['results'][app.app_id] = {'name': app_name}
 
     current_results['apps'] = apps
     for current_index, (app_id, app) in enumerate(apps):
-        app_name = app.info.name or _('None')
-        current_results['results'][app_id] = {
-            'name': app_name,
-            'results': app.diagnose()
+        app_results = {
+            'diagnosis': None,
+            'exception': None,
         }
+
+        try:
+            app_results['diagnosis'] = app.diagnose()
+        except Exception as exception:
+            logger.exception('Error running %s diagnostics - %s', app_id,
+                             exception)
+            app_results['exception'] = str(exception)
+
+        current_results['results'][app_id].update(app_results)
         current_results['progress_percentage'] = \
             int((current_index + 1) * 100 / len(apps))
+
+    global running_task
+    running_task = None
 
 
 def _get_memory_info_from_cgroups():

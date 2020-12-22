@@ -4,45 +4,45 @@
 
 {% load i18n %}
 
-<li class="dropdown">
+<li id="id_help_menu" class="dropdown nav-item">
   <a href="{% url 'help:index' %}" title="{% trans "Help" %}"
-     class="dropdown-toggle" data-toggle="dropdown"
-     role="button" aria-expanded="false">
+     class="nav-link dropdown-toggle" data-toggle="dropdown"
+     role="button" aria-expanded="false" aria-haspopup="true"
+     id="id_help_menu_link">
     <span class="fa fa-question-circle nav-icon"></span>
-    <span class="nav-text hidden-sm hidden-md hidden-lg">
+    <span class="nav-text d-md-none">
       {% trans "Help" %}
     </span>
-    <span class="caret"></span>
   </a>
-  <ul class="dropdown-menu" role="menu">
+  <ul class="dropdown-menu" role="menu" aria-labelledby="id_help_menu_link">
     <li>
-      <a href="{% url 'help:manual' %}"
+      <a href="{% url 'help:manual' %}" class="dropdown-item"
          title="{% trans "Manual" context "User guide" %}">
         {% trans "Manual" context "User guide" %}
       </a>
     </li>
-    <li role="separator" class="divider hidden-xs"></li>
+    <li role="separator" class="dropdown-divider d-none d-md-block"></li>
     <li>
-      <a href="{% url 'help:support' %}"
+      <a href="{% url 'help:support' %}" class="dropdown-item"
          title="{% trans "Get Support" %}">
         {% trans "Get Support" %}
       </a>
     </li>
     <li>
-      <a href="{% url 'help:feedback' %}"
+      <a href="{% url 'help:feedback' %}" class="dropdown-item"
          title="{% trans "Submit Feedback" %}">
         {% trans "Submit Feedback" %}
       </a>
     </li>
     <li>
-      <a href="{% url 'help:contribute' %}"
+      <a href="{% url 'help:contribute' %}" class="dropdown-item"
          title="{% trans "Contribute" %}">
         {% trans "Contribute" %}
       </a>
     </li>
-    <li role="separator" class="divider hidden-xs"></li>
+    <li role="separator" class="dropdown-divider d-none d-md-block"></li>
     <li>
-      <a href="{% url 'help:about' %}"
+      <a href="{% url 'help:about' %}" class="dropdown-item"
          title="{% trans "About" %}">
         {% trans "About" %}
       </a>

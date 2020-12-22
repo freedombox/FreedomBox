@@ -36,8 +36,10 @@ class PrependWidget(Widget):
         field = self.base_widget.render(name, value, attrs, renderer)
         widget_html = '''
             <div class="input-group">
-              <span class="input-group-addon">
-                %(data)s
+              <span class="input-group-prepend">
+                <span class="input-group-text">
+                  %(data)s
+                </span>
               </span>
               %(field)s
             </div>'''

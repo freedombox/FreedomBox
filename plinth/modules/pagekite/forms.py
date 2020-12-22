@@ -16,28 +16,13 @@ from . import utils
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
+
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
             value = value.strip()
 
         return super(TrimmedCharField, self).clean(value)
-
-
-class SubdomainWidget(forms.widgets.TextInput):
-    """Append the domain to the subdomain bootstrap input field"""
-    def __init__(self, domain, *args, **kwargs):
-        """Initialize the widget by storing the domain value."""
-        super().__init__(*args, **kwargs)
-        self.domain = domain
-
-    def render(self, *args, **kwargs):
-        """Return the HTML for the widget."""
-        inputfield = super().render(*args, **kwargs)
-        return """<div class="input-group">
-                  {0}
-                  <span class="input-group-addon">{1}</span>
-               </div>""".format(inputfield, self.domain)
 
 
 class ConfigurationForm(forms.Form):
@@ -65,6 +50,7 @@ class ConfigurationForm(forms.Form):
 
     def save(self, request):
         """Save the form on submission after validation."""
+
         def _filter(data):
             return {
                 key: str(value)
@@ -135,6 +121,7 @@ class BaseCustomServiceForm(forms.Form):
 
 class DeleteCustomServiceForm(BaseCustomServiceForm):
     """Form to remove custom service."""
+
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         utils.run(['remove-service', '--service', json.dumps(service)])
@@ -143,6 +130,7 @@ class DeleteCustomServiceForm(BaseCustomServiceForm):
 
 class AddCustomServiceForm(BaseCustomServiceForm):
     """Adds the save() method and validation to not add predefined services"""
+
     def matches_predefined_service(self, formdata):
         """Returns whether the user input matches a predefined service"""
         service = self.convert_formdata_to_service(formdata)

@@ -483,6 +483,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for information how to best contribute co
 
 ## Miscelanea
 
+### Styling
+
+FreedomBox uses Bootstrap as the CSS library for basic styling. However,
+Bootstrap seems to encourage writing CSS within HTML by adding "utility"
+classes. This is a bad practice that violates the separation of semantics from
+presentation. It also leads to repetition of code that further leads to
+inconsistencies. These utility classes must be used sparingly. Instead, CSS must
+be written separately either for a specific page or for the entire interface
+aiming for reuse.
+
 ### Application Icons
 
 When adding a new App into FreedomBox, an icon is needed to represent the app in

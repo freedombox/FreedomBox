@@ -402,8 +402,10 @@ def _perform_dist_upgrade():
 
         # Hold packages known to have conffile prompts. FreedomBox service
         # will handle their upgrade later.
-        print('Holding firewalld and radicale packages...')
-        with apt_hold(['firewalld', 'radicale']):
+        packages_with_prompts = ['firewalld', 'mumble-server', 'radicale']
+        print('Holding packages with conffile prompts: ' +
+              ', '.join(packages_with_prompts) + '...')
+        with apt_hold(packages_with_prompts):
             print('Running apt full-upgrade...')
             run_apt_command(['full-upgrade'])
 

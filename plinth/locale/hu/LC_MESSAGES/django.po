@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
 "PO-Revision-Date: 2020-07-20 02:41+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -91,12 +91,18 @@ msgid "Error installing application: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Apache HTTP Server"
+msgstr "Chat szerver"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Webszerver"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Webes felület (Plinth)"
@@ -229,8 +235,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Tároló létrehozása"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Nincs"
 
@@ -1089,7 +1094,7 @@ msgstr ""
 "A Cockpit csak akkor fog működni, ha az alábbi URL-ek valamelyikével "
 "történik a hozzáférés."
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1097,11 +1102,11 @@ msgstr ""
 "Itt beállíthatsz néhány általános konfigurációs beállítást, például "
 "gazdagépnév, domain név, webszerver kezdőoldala stb."
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Általános beállítások"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1109,30 +1114,35 @@ msgstr "Általános beállítások"
 msgid "Configure"
 msgstr "Beállítások"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Domain név"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Érvénytelen domain név"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Apache alapértelmezett"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox Szolgáltatás (Plinth)"
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Állomásnév"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1145,11 +1155,11 @@ msgstr ""
 "végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
 "Teljes hossza nem lehet több 63 karakternél."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Érvénytelen állomásnév"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1166,11 +1176,11 @@ msgstr ""
 "Minden egyes címkének a hossza nem lehet több 63 karakternél. A domain név "
 "teljes hossza nem lehet több 253 karakternél."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Webkiszolgáló kezdőoldala"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1187,11 +1197,11 @@ msgstr ""
 "felhasználóknak külön meg kell adniuk a /plinth vagy a /freedombox elérési "
 "utat."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók mutatása"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Több műszaki ismeretet igénylő alkalmazások és funkciók megjelenítése."
 
@@ -1373,57 +1383,57 @@ msgstr ""
 "módon működnek."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "Beállítás sikertelen."
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr ""
 
@@ -1441,12 +1451,12 @@ msgstr "Az ellenőrzés jelenleg fut"
 msgid "Results"
 msgstr "Eredmények"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
 #, python-format
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
@@ -1454,11 +1464,12 @@ msgid "Diagnostic Results"
 msgstr "Az ellenőrzés eredménye"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
-#, python-format
-msgid "App: %(app_id)s"
+#, fuzzy, python-format
+#| msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr "Alkalmazás: %(app_id)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 msgid "This app does not support diagnostics"
 msgstr "Ez az alkalmazás nem támogatja a hibaellenőrzést"
 
@@ -1470,7 +1481,7 @@ msgstr "Teszt"
 msgid "Result"
 msgstr "Eredmény"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Ellenőrző tesz"
 
@@ -3604,7 +3615,7 @@ msgstr "Kulcs közzétéve a kulcskiszolgálónak."
 msgid "Error occurred while publishing key."
 msgstr "Hiba történt a kulcs közzététele során."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3612,7 +3623,7 @@ msgstr ""
 "A Mumble egy nyílt forráskódú, alacsony késéssel működő, titkosított, magas "
 "hangminőségű audiokonferencia szoftver."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3622,11 +3633,11 @@ msgstr ""
 "kapcsolódhatsz. Mumble <a href=\"http://mumble.info\">kliensek</a> "
 "elérhetőek az asztali és Android eszközökhöz."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "Audiókonferencia"
 
@@ -6144,7 +6155,7 @@ msgstr "Megosztás szerkesztése"
 msgid "Share deleted."
 msgstr "Megosztás törölve."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6155,7 +6166,7 @@ msgstr ""
 "működő állapotába való visszaállítására abban az esetben, ha nem kívánt "
 "változtatások történtek a rendszerben."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6167,7 +6178,7 @@ msgstr ""
 "pillanatképek automatikusan ki lesznek takarítva az alábbi beállítások "
 "szerint."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6178,7 +6189,7 @@ msgstr ""
 "backups\">Biztonsági mentést</a>, mivel a pillanatképek csak ugyanazon a "
 "partíción tárolhatók amikről készülnek. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "Háttértár-pillanatképek"
 

@@ -25,7 +25,7 @@
   {% block status %}
     {% if is_running is not None and not is_running %}
       <div id='service-not-running' role="alert"
-           class="alert alert-danger {{ is_enabled|yesno:',hidden' }}">
+           class="alert alert-danger {{ is_enabled|yesno:',d-none' }}">
         {% blocktrans trimmed with service_name=app_info.name %}
           Service <em>{{ service_name }}</em> is not running.
         {% endblocktrans %}

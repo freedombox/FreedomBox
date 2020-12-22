@@ -12,6 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.modules.apache import (user_of_uws_url, uws_url_of_user,
+                                   get_users_with_website)
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added
 
@@ -81,13 +83,56 @@ def get_hostname():
     return socket.gethostname()
 
 
-def _get_home_page_url():
+def home_page_url2scid(url):
+    """Returns the shortcut ID of the given home page url."""
+
+    if url in ('/plinth/', '/plinth', 'plinth'):
+        return 'plinth'
+
+    if url == '/index.html':
+        return 'apache-default'
+
+    if url and url.startswith('/~'):
+        return 'uws-{}'.format(user_of_uws_url(url))
+
+    shortcuts = frontpage.Shortcut.list()
+    for shortcut in shortcuts:
+        if shortcut.url == url:
+            return shortcut.component_id
+
+    return None
+
+
+def _home_page_scid2url(shortcut_id):
+    """Returns the url for the given home page shortcut ID."""
+    if shortcut_id is None:
+        url = None
+    elif shortcut_id == 'plinth':
+        url = '/plinth/'
+    elif shortcut_id == 'apache-default':
+        url = '/index.html'
+    elif shortcut_id.startswith('uws-'):
+        user = shortcut_id[4:]
+        if user in get_users_with_website():
+            url = uws_url_of_user(user)
+        else:
+            url = None
+    else:
+        shortcuts = frontpage.Shortcut.list()
+        aux = [
+            shortcut.url for shortcut in shortcuts
+            if shortcut_id == shortcut.component_id
+        ]
+        url = aux[0] if 1 == len(aux) else None
+
+    return url
+
+
+def _get_home_page_url(conf_file):
     """Get the default application for the domain."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    conf_file = APACHE_HOMEPAGE_CONFIG if os.path.exists(
-        APACHE_HOMEPAGE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
     aug.set('/augeas/load/Httpd/incl[last() + 1]', conf_file)
     aug.load()
 
@@ -103,35 +148,20 @@ def _get_home_page_url():
 
 def get_home_page():
     """Return the shortcut ID that is set as current home page."""
-    url = _get_home_page_url()
-    if url in ['/plinth/', '/plinth', 'plinth']:
-        return 'plinth'
+    CONF_FILE = APACHE_HOMEPAGE_CONFIG if os.path.exists(
+        APACHE_HOMEPAGE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
 
-    if url == '/index.html':
-        return 'apache-default'
-
-    shortcuts = frontpage.Shortcut.list()
-    for shortcut in shortcuts:
-        if shortcut.url == url:
-            return shortcut.component_id
-
-    return None
+    url = _get_home_page_url(CONF_FILE)
+    return home_page_url2scid(url)
 
 
 def change_home_page(shortcut_id):
     """Change the FreedomBox's default redirect to URL of the shortcut
        specified.
     """
-    if shortcut_id == 'plinth':
-        url = '/plinth/'
-    elif shortcut_id == 'apache-default':
-        url = '/index.html'
-    else:
-        shortcuts = frontpage.Shortcut.list()
-        url = [
-            shortcut.url for shortcut in shortcuts
-            if shortcut.component_id == shortcut_id
-        ][0]
+    url = _home_page_scid2url(shortcut_id)
+    if url is None:
+        url = '/plinth/'  	# fall back to default url if scid is unknown.
 
     # URL may be a reverse_lazy() proxy
     actions.superuser_run('config', ['set-home-page', str(url)])

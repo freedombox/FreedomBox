@@ -4,6 +4,7 @@ FreedomBox app to manage filesystem snapshots.
 """
 
 import json
+import pathlib
 
 import augeas
 from django.utils.translation import ugettext_lazy as _
@@ -64,7 +65,11 @@ class SnapshotApp(app_module.App):
 def is_supported():
     """Return whether snapshots are support on current setup."""
     fs_type = storage.get_filesystem_type()
-    return fs_type in fs_types_supported
+    # Check that / is not a bind mounted btrfs filesystem similar to how
+    # snapper does the check: https://github.com/openSUSE/snapper/blob/
+    # 77eb6565d3d8df95a06cd52ce31174d98994939c/snapper/BtrfsUtils.cc#L61
+    root_inode_number = pathlib.Path('/').stat().st_ino
+    return fs_type in fs_types_supported and root_inode_number == 256
 
 
 def setup(helper, old_version=None):

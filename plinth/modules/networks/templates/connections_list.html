@@ -20,51 +20,65 @@
     </a>
   </div>
 
-  <div class="list-group">
-    {% for connection in connections %}
-      <div class="list-group-item clearfix">
-        <a href="{% url 'networks:delete' connection.uuid %}"
-           class="btn btn-default btn-sm pull-right"
-           role="button"
-           title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
-          <span class="fa fa-trash-o"
-                aria-hidden="true"></span>
-        </a>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+        {% for connection in connections %}
+          <tr>
+            <td class="connection-status-cell">
+              {% if connection.is_active %}
+                <span class="badge badge-success connection-status-label">
+                  {% trans "Active" %}
+                </span>
+              {% else %}
+                <span class="badge badge-warning connection-status-label">
+                  {% trans "Inactive" %}
+                </span>
+              {% endif %}
+            </td>
 
-        {% if connection.is_active %}
-          <form class="form form-action pull-right" method="post"
-                action="{% url 'networks:deactivate' connection.uuid %}">
-            {% csrf_token %}
+            <td>
+              <a class="connection-show-label"
+                 href="{% url 'networks:show' connection.uuid %}"
+                 title="{% blocktrans with name=connection.name %}Show connection {{ name }}{% endblocktrans %}">
+                {{ connection.name }}
+              </a>
+            </td>
 
-            <button type="submit" class="btn btn-default btn-sm">
-              {% trans "Deactivate" %}</button>
-          </form>
-        {% else %}
-          <form class="form form-action pull-right" method="post"
-                action="{% url 'networks:activate' connection.uuid %}">
-            {% csrf_token %}
+            <td>
+              <span class="connection-type-label">
+                {{ connection.type_name }}
+              </span>
+            </td>
 
-            <button type="submit" class="btn btn-default btn-sm">
-              {% trans "Activate" %}</button>
-          </form>
-        {% endif %}
+            <td class="connection-actions">
+              {% if connection.is_active %}
+                <form class="form form-action" method="post"
+                      action="{% url 'networks:deactivate' connection.uuid %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-default btn-sm">
+                    {% trans "Deactivate" %}</button>
+                </form>
+              {% else %}
+                <form class="form form-action" method="post"
+                      action="{% url 'networks:activate' connection.uuid %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-default btn-sm">
+                    {% trans "Activate" %}</button>
+                </form>
+              {% endif %}
 
-        {% if connection.is_active %}
-          <span class="label label-success connection-status-label">
-            {% trans "Active" %}</span>
-        {% else %}
-          <span class="label label-warning connection-status-label">
-            {% trans "Inactive" %}</span>
-        {% endif %}
-
-        <a class="connection-show-label"
-           href="{% url 'networks:show' connection.uuid %}"
-           title="{% blocktrans with name=connection.name %}Show connection {{ name }}{% endblocktrans %}">
-          {{ connection.name }}
-        </a>
-
-        <span class="connection-type-label">{{ connection.type_name }}</span>
-      </div>
-    {% endfor %}
+              <a href="{% url 'networks:delete' connection.uuid %}"
+                 class="btn btn-default btn-sm"
+                 role="button"
+                 title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
+                <span class="fa fa-trash-o"
+                      aria-hidden="true"></span>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   {% include "connections_diagram.html" %}

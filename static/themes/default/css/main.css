@@ -69,12 +69,120 @@
     font-weight: 800;
 }
 
+/*
+ * Bootstrap override
+ */
+/* Heading margins from bootstrap 3 */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.25rem;
+    margin-bottom: 0.625rem;
+}
 
+/* Warning colors from bootstrap 3 */
+.badge-warning,
+.bg-warning,
+.btn-warning {
+    background-color: #f0ad4e !important;
+    color: #fff !important;
+}
+
+.btn-warning:hover,
+.btn-warning:active,
+.btn-warning:focus,
+.btn-warning:disabled,
+.btn-warning.disabled,
+.btn-warning[disabled] {
+    background-color: var(--warning-color) !important;
+    color: #fff !important;
+}
+
+.btn[disabled] {
+    cursor: not-allowed !important;
+    opacity: .65;
+    box-shadow: none;
+}
+
+/* Primary color changed in bootstrap 4 */
+.btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:disabled,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+/* Default style removed in bootstrap 4 */
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+/* Help block removed from bootstrap 4, needs updated django-bootstrap-from */
+.help-block {
+    display: block;
+    margin-top: 0.3125rem;
+    margin-bottom: 0.625rem;
+    color: #737373;
+}
+
+/* form-horizontal removed in bootstrap, needs updated django-bootstrap-form */
+.form-horizontal > .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.9375rem;
+    margin-left: -0.9375rem;
+}
+
+.radio .help-block {
+    padding-left: 1.2rem;
+}
+
+.checkbox .help-block {
+    padding-left: 1.4rem;
+}
+
+/* Form error display was changed in bootstrap 4, provide compatibility */
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label {
+    color: #a94442;
+}
+
+.has-error .form-control {
+    border-color: #a94442;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+/*
+ * Basic styling
+ */
 body {
-    padding-top: 6em;
+    padding-top: 6rem;
     position: relative;
     font-family: Lato, sans-serif;
-    font-size: 15px;
     background: url('../img/noise.png') var(--background-color);
 }
 
@@ -94,23 +202,37 @@ body {
     list-style-type: none;
 }
 
-.nav .fa {
-    margin-right: 4px;
+.navbar .fa:not(.fa-bars) {
+    margin-right: 0.25rem;
+}
+
+.no-brand .navbar-brand {
+    display: none;
 }
 
 .navbar-brand .fa {
     float: left;
-    margin-top: -19px;
-    padding: 8px;
+    margin-top: -0.4375rem;
+    padding: 0.5rem;
 }
 
 .navbar-brand {
-    height: 53px;
-    margin-right: -30px;
+    height: 3.3125rem;
+    margin-right: -1.25rem;
+}
+
+@media (max-width: 767px) {
+    .navbar-brand {
+        margin-right: auto;
+    }
 }
 
 .nav-tabs {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+}
+
+.dropdown-toggle::after {
+    vertical-align: middle;
 }
 
 .running-status-parent {
@@ -120,17 +242,17 @@ body {
 .running-status {
     border-radius: 50%;
     border: 1px solid black;
-    width: 8px;
-    height: 8px;
+    width: 0.5rem;
+    height: 0.5rem;
     display: inline-block;
 }
 
 .running-status.loading {
-    border: 4px solid var(--neutral-light-color);
-    border-top: 4px solid var(--progress-color);
+    border: 0.25rem solid var(--neutral-light-color);
+    border-top: 0.25rem solid var(--progress-color);
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
     display: inline-block;
     animation: spin 1s linear infinite;
 }
@@ -148,35 +270,18 @@ body {
     }
 }
 
-.form-diagnostics-button {
-    display: block;
-}
-
-.form-diagnostics-button .btn {
-    width: 100%;
-    border-radius: 0;
-    border: none;
-    text-align: left;
-    padding: 3px 20px;
-}
-
-.form-diagnostics-button .btn:hover,
-.form-diagnostics-button .btn:focus {
-    background-color: var(--neutral-light-color)
-}
-
 /* Hide log out button if user dropdown is available */
 .js #logout-nojs {
     display: none;
 }
 
 /* Hide the dropdown icon when javascript is not available */
-.no-js .nav .dropdown .caret {
+.no-js .dropdown-toggle:after {
     display: none;
 }
 
 .diagnostics-results .diagnostics-result {
-    width: 60px;
+    width: 3.75rem;
     text-align: center;
 }
 
@@ -187,7 +292,7 @@ body {
 /* Sticky footer styles
 -------------------------------------------------- */
 .footer-logo {
-    width: 140px;
+    width: 8.75rem;
 }
 
 html {
@@ -209,15 +314,15 @@ html {
 }
 
 .content-container {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 @media (min-width: 768px) {
     .content-container {
-        padding: 25px 50px 50px;
+        padding: 1.5rem 3rem 3rem;
         background-color: white;
         border: 1px solid #ddd;
-        border-radius: 4px;
+        border-radius: 0.25rem;
     }
 }
 
@@ -226,13 +331,60 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-    height: 150px;
-    padding-top: 150px;
+    height: 9.375rem;
+    padding-top: 9.375rem;
 }
 
-.shortcut-label {
-    min-height: 50px;
+/*
+ * Bootstrap extensions
+ */
+/* Use .list-group-two-column when there are some items aligned to right */
+.list-group-two-column .list-group-item {
+    display: flex;
+    align-items: center;
 }
+
+.list-group-two-column .list-group-item > :not(:last-child) {
+    margin-right: 0.25rem;
+}
+
+.list-group-two-column .list-group-item > .secondary {
+    margin-left: auto;
+    margin-top: -0.25rem;
+    margin-bottom: -0.25rem;
+}
+
+.list-group-two-column .list-group-item > .secondary ~ .secondary {
+    margin-left: 0;
+}
+
+/* Hack to avoid inline styling on bootstrap progress bars */
+.w-0 {width: 0%;} .w-1 {width: 1%;} .w-2 {width: 2%;} .w-3 {width: 3%;}
+.w-4 {width: 4%;} .w-5 {width: 5%;} .w-6 {width: 6%;} .w-7 {width: 7%;}
+.w-8 {width: 8%;} .w-9 {width: 9%;} .w-10 {width: 10%;} .w-11 {width: 11%;}
+.w-12 {width: 12%;} .w-13 {width: 13%;} .w-14 {width: 14%;} .w-15 {width: 15%;}
+.w-16 {width: 16%;} .w-17 {width: 17%;} .w-18 {width: 18%;} .w-19 {width: 19%;}
+.w-20 {width: 20%;} .w-21 {width: 21%;} .w-22 {width: 22%;} .w-23 {width: 23%;}
+.w-24 {width: 24%;} .w-25 {width: 25%;} .w-26 {width: 26%;} .w-27 {width: 27%;}
+.w-28 {width: 28%;} .w-29 {width: 29%;} .w-30 {width: 30%;} .w-31 {width: 31%;}
+.w-32 {width: 32%;} .w-33 {width: 33%;} .w-34 {width: 34%;} .w-35 {width: 35%;}
+.w-36 {width: 36%;} .w-37 {width: 37%;} .w-38 {width: 38%;} .w-39 {width: 39%;}
+.w-40 {width: 40%;} .w-41 {width: 41%;} .w-42 {width: 42%;} .w-43 {width: 43%;}
+.w-44 {width: 44%;} .w-45 {width: 45%;} .w-46 {width: 46%;} .w-47 {width: 47%;}
+.w-48 {width: 48%;} .w-49 {width: 49%;} .w-50 {width: 50%;} .w-51 {width: 51%;}
+.w-52 {width: 52%;} .w-53 {width: 53%;} .w-54 {width: 54%;} .w-55 {width: 55%;}
+.w-56 {width: 56%;} .w-57 {width: 57%;} .w-58 {width: 58%;} .w-59 {width: 59%;}
+.w-60 {width: 60%;} .w-61 {width: 61%;} .w-62 {width: 62%;} .w-63 {width: 63%;}
+.w-64 {width: 64%;} .w-65 {width: 65%;} .w-66 {width: 66%;} .w-67 {width: 67%;}
+.w-68 {width: 68%;} .w-69 {width: 69%;} .w-70 {width: 70%;} .w-71 {width: 71%;}
+.w-72 {width: 72%;} .w-73 {width: 73%;} .w-74 {width: 74%;} .w-75 {width: 75%;}
+.w-76 {width: 76%;} .w-77 {width: 77%;} .w-78 {width: 78%;} .w-79 {width: 79%;}
+.w-80 {width: 80%;} .w-81 {width: 81%;} .w-82 {width: 82%;} .w-83 {width: 83%;}
+.w-84 {width: 84%;} .w-85 {width: 85%;} .w-86 {width: 86%;} .w-87 {width: 87%;}
+.w-88 {width: 88%;} .w-89 {width: 89%;} .w-90 {width: 90%;} .w-91 {width: 91%;}
+.w-92 {width: 92%;} .w-93 {width: 93%;} .w-94 {width: 94%;} .w-95 {width: 95%;}
+.w-96 {width: 96%;} .w-97 {width: 97%;} .w-98 {width: 98%;} .w-99 {width: 99%;}
+.w-100 {width: 100%;}
 
 /*
  * Clients information
@@ -241,23 +393,23 @@ footer {
     display: inline-block;
     width: 100%;
     height: auto;
-    max-height: 20px;
-    max-width: 20px;
+    max-height: 1.25rem;
+    max-width: 1.25rem;
     margin: auto;
 }
 
 #clients .btn {
-    width: 8em;
-    margin-right: 1em;
+    width: 9rem;
+    margin-right: 1rem;
 }
 
 #clients th, #clients td {
-    line-height: 3.1em;
+    line-height: 3rem;
 }
 
 /* Icon when collapsible content is shown */
 .collapsible-button .fa {
-    margin-left: 5px;
+    margin-left: 0.3125rem;
 }
 
 .collapsible-button .fa-chevron-right:before,
@@ -278,42 +430,49 @@ footer {
     text-align: right;
 }
 
-/* applying styles to header - begin */
+/*
+ * Top navigation
+ */
 .main-header {
     background: var(--freedombox-blue-color);
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.25rem 0.375rem 0 rgba(0, 0, 0, 0.25);
     border: none;
 }
 
-.main-header .navbar-nav>li>a {
+.main-header > .container > nav.navbar {
+    padding: 0;
+}
+
+.main-header .navbar-nav > li > a,
+.main-header .navbar-toggler {
     color: #FFF;
 }
 
-.main-header.navbar-default .navbar-nav>li>a:focus,
-.main-header.navbar-default .navbar-nav>li>a:hover,
-.main-header.navbar-default .navbar-nav>.active>a,
-.main-header.navbar-default .navbar-nav>.active>a:hover,
-.main-header.navbar-default .navbar-nav>.active>a:focus,
-.main-header.navbar-default .navbar-nav>.open>a,
-.main-header.navbar-default .navbar-nav>.open>a:hover,
-.main-header.navbar-default .navbar-nav>.open>a:focus {
-    color: #FFF;
-    background: transparent;
+.main-header .nav-item .nav-link {
+    padding: 0.9375rem !important;
+    height: 3.25rem;
+}
+
+.main-header .navbar-toggler {
+    border: 1px solid #ddd;
 }
 
 @media screen and (max-width: 767px) {
-    .main-header.navbar-default .navbar-nav>.open .dropdown-menu > li > a,
-    .main-header.navbar-default .navbar-nav>.open .dropdown-menu > li > a:hover {
+    .main-header .navbar-nav .dropdown-menu {
+        background-color: var(--freedombox-blue-color);
+    }
+
+    .main-header .navbar-nav > li > a:focus,
+    .main-header .navbar-nav > li > a:hover,
+    .main-header .navbar-nav .show a,
+    .main-header .navbar-nav .show a:hover,
+    .main-header .navbar-nav .show a:focus {
         color: #FFF;
+        background: transparent;
     }
 }
 
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #FFF;
-}
-
-/* applying styles to header - end */
-
+/* Cards in Apps, System and Help pages */
 .card-list {
   display: flex;
   flex-wrap: wrap;
@@ -322,11 +481,10 @@ footer {
 
 .card-section-title {
     display: flex;
-    font-style: italic;
     font-weight: 800;
-    font-size: 20px;
-    padding: 0 4.6rem;
-    margin: 2rem 0;
+    font-size: 1.25rem;
+    padding: 0 2.875rem;
+    margin: 1.25rem 0;
 }
 
 .card-section-title:before, .card-section-title:after {
@@ -334,7 +492,7 @@ footer {
     content: '';
     flex: 1;
     border-bottom: var(--neutral-dark-color) solid 2px;
-    margin: auto 1.8rem;
+    margin: auto 1.125rem;
 }
 
 a.menu_link {
@@ -350,75 +508,64 @@ a.menu_link_active {
 }
 
 .card {
+    display: block;
+    line-height: 1.42857143;
     text-align: center;
-    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.12);
-    width: 16rem;
+    box-shadow: 0 0.1875rem 0.3125rem 0 rgba(0,0,0,0.12);
+    width: 10rem;
     padding: 0;
-    margin: 0 10px 20px;
+    margin: 0 0.625rem 1.25rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 0.5rem;
+    transition: border .2s ease-in-out;
 }
 
 .card:hover {
-    box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.3125rem 0.9375rem 0.125rem rgba(0, 0, 0, 0.2);
 }
 
 .card .nav-link {
     display: block;
-    padding: 4px;
+    padding: 0.25rem;
     color: #646464;
 }
 
 .card-title {
-    font-style: italic;
     font-weight: 800;
-    font-size: 20px;
-    padding: 12px 0;
+    font-size: 1.25rem;
+    padding: 0.75rem 0;
+    margin-bottom: 0;
 }
 
 .card-description {
-   font-size: 18px;
-   font-weight: 400;
-   padding: 12px 0;
-}
-
-.card-description {
+    font-weight: 400;
+    padding: 0.75rem 0;
     color: #646464;
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 
+.card-icon span,
 .card-icon img {
-    width: 128px;
-    height: 128px;
-}
-
-.card-icon span {
-    width: 100px;
-    height: 100px;
-    font-size: 80px;
-}
-
-.card-icon img {
-    width: 100px;
-    height: 100px;
-    font-size: 80px;
+    width: 6.25rem;
+    height: 6.25rem;
+    font-size: 5rem;
 }
 
 /* System page - special card styling */
 .system-page .card {
     text-align: left;
-    width: 23rem;
+    width: 14.375rem;
 }
 
 .system-page .card .nav-link {
     display: grid;
-    grid-template-columns: 35px auto;
-    grid-column-gap: 10px;
-    padding: 13px;
+    grid-template-columns: 2.1875rem auto;
+    grid-column-gap: 0.625rem;
+    padding: 0.8125rem;
 }
 
 .system-page .card-title {
-    font-size: 18px;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: bold;
     overflow: hidden;
@@ -436,40 +583,27 @@ a.menu_link_active {
 
 .system-page .card-icon span {
     height: auto;
-    font-size: 35px;
+    font-size: 2.1875rem;
 }
 
 .system-page .card-description {
     grid-row: 2;
     grid-column: 2;
     padding: 0;
-    min-height: 1.8rem;
+    min-height: 1.125rem;
 }
 
 /* Button table - Tables with a list of actions as buttons on top */
-.button-table > .button-row + .table {
-    margin-top: 10px;
-}
-
-.bg-warning {
-    margin: 10px 0;
-    padding: 15px;
-}
-
-.bg-warning p:last-child {
-    margin: 0;
-}
-
 .index-page .card-list:before,
 .apps-page .card-list:before,
 .system-page .card-list:before {
     position: relative;
-    width: 40rem;
-    height: 40rem;
-    margin-left: -40rem;
-    margin-bottom: -40rem;
-    left: 30rem;
-    top: -2rem;
+    width: 25rem;
+    height: 25rem;
+    margin-left: -25rem;
+    margin-bottom: -25rem;
+    left: 18.75rem;
+    top: -1.25rem;
     content: " ";
     background-size: 100%;
     background-repeat: no-repeat;
@@ -501,9 +635,9 @@ a.menu_link_active {
  * Toggle button
  */
 .toggle-button {
-    border-radius: 13px;
-    width: 50px;
-    height: 26px;
+    border-radius: 0.8125rem;
+    width: 3.125rem;
+    height: 1.625rem;
     background: #ccc;
     position: relative;
 }
@@ -511,8 +645,8 @@ a.menu_link_active {
 .toggle-button::before {
     content: '';
     display: block;
-    height: 24px;
-    width: 24px;
+    height: 1.5rem;
+    width: 1.5rem;
     border-radius: 100%;
     background: #fff;
     position: absolute;
@@ -527,7 +661,18 @@ a.menu_link_active {
 
 .toggle-button--toggled::before {
     left: 100%;
-    transform: translateY(-50%) translateX(-100%)
+    transform: translateY(-50%) translateX(-100%);
+}
+
+.toggle-button.running-status-button::before {
+    top: 0;
+    border: 0.25rem solid var(--neutral-light-color);
+    border-top: 0.25rem solid var(--progress-color);
+    animation: spin 1s linear infinite;
+}
+
+.toggle-button.toggle-button--toggled.running-status-button::before {
+    margin-left: -1.5rem;
 }
 
 /*
@@ -535,32 +680,46 @@ a.menu_link_active {
  */
 .running-status-button-before {
     display: inline-block;
-    border: 4px solid var(--neutral-light-color);
-    border-top: 4px solid var(--progress-color);
+    border: 0.25rem solid var(--neutral-light-color);
+    border-top: 0.25rem solid var(--progress-color);
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
     animation: spin 1s linear infinite;
-    margin-left: 10px;
-    margin-bottom: -4px;
-    margin-right: -26px;
+    margin-left: 0.625rem;
+    margin-bottom: -0.25rem;
+    margin-right: -1.625rem;
+}
+
+.running-status-button:disabled {
+    cursor: default;
 }
 
 input[type='submit'].running-status-button {
-    padding-left: 32px;
+    padding-left: 2rem;
 }
 
 /*
  * Button toolbar
  */
 .btn-toolbar {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
 }
 
-.btn-toolbar .button-extra-actions,
-.btn-toolbar .button-donate {
-    float: right;
+.btn-toolbar > :not(:last-child):not(.running-status-button-before) {
+    margin-right: 0.5rem;
+}
+
+.btn-toolbar .button-secondary:first-child,
+.btn-toolbar .btn:not(.button-secondary) + .button-secondary,
+.btn-toolbar .btn:not(.button-secondary) + .running-status-button-before {
+    margin-left: auto;
+}
+
+.btn-toolbar > .running-status-button-before {
+    margin-bottom: 0;
+    align-self: center;
 }
 
 /*
@@ -569,12 +728,12 @@ input[type='submit'].running-status-button {
 .app-header {
     display: grid;
     grid-template-columns: 0.2fr 1fr;
-    column-gap: 20px;
-    margin-bottom: 20px;
+    column-gap: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
 .app-header > img {
-    margin: 25px auto 0;
+    margin: 1.5625rem auto 0;
     width: 100%;
 }
 
@@ -596,9 +755,9 @@ input[type='submit'].running-status-button {
 }
 
 .app-titles h3 {
-    margin-top: -0.5rem;
-    margin-bottom: 1.6rem;
-    font-size: 1.6rem;
+    margin-top: -0.3125rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
     font-weight: normal;
     font-style: italic;
 }
@@ -614,8 +773,8 @@ input[type='submit'].running-status-button {
     }
 
     .app-header img {
-        width: 150px;
-        height: 150px;
+        width: 9.375rem;
+        height: 9.375rem;
         margin-top: 0;
     }
 
@@ -627,11 +786,11 @@ input[type='submit'].running-status-button {
     }
 
     .app-titles h2 {
-        margin: 0 0 15px 0;
+        margin: 0 0 0.9375rem 0;
     }
 
     .app-titles .form-app-enable-disable {
-        margin: 30px auto;
+        margin: 1.875rem auto;
     }
 
     .app-titles .toggle-button {
@@ -643,8 +802,8 @@ input[type='submit'].running-status-button {
 *[id^='idm']:before {
     display: block;
     content: " ";
-    margin-top: -60px;
-    height: 60px;
+    margin-top: -3.75rem;
+    height: 3.75rem;
     visibility: hidden;
 }
 
@@ -652,8 +811,8 @@ input[type='submit'].running-status-button {
  * Notifications
  */
 .notifications {
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -0.9375rem;
+    margin-right: -0.9375rem;
 }
 
 .notifications .dropdown-menu {
@@ -663,13 +822,13 @@ input[type='submit'].running-status-button {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     margin-top: 0;
+    background-clip: border-box;
 }
 
 /* Style for individual notification */
 .notification {
-    padding: 1rem 1.5rem;
-    font-size: 15px;
-    border-left: 5px solid;
+    padding: 0.625rem 0.9375rem;
+    border-left: 0.3125rem solid;
 }
 
 .notification:not(:first-child) {
@@ -682,18 +841,19 @@ input[type='submit'].running-status-button {
 
 img.notification-icon {
     display: inline-block;
-    width: 1.4rem;
-    height: 1.4rem;
-    margin-top: -0.4rem;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-top: -0.25rem;
 }
 
 /* Show badge with various colors and overlap it onto icon */
 .notifications-dropdown .badge {
-    padding: 2px 5px;
-    margin-left: -12px;
+    padding: 0.125rem 0.3125rem;
+    margin-left: -0.75rem;
     color: #fff;
 }
 
+/* TODO: match with or use bootstrap 4 colors */
 .badge-exception, .badge-error {
     background-color: var(--error-color);
 }
@@ -718,19 +878,21 @@ img.notification-icon {
     border-left-color: var(--info-color)
 }
 
-/* Don't collapse notifications on small screens */
-.collapsing .notifications-dropdown,
-.collapse.in .notifications-dropdown {
+/* Two different notifications for each small and one for large screens */
+.notifications-dropdown {
     display: none;
 }
 
-.navbar-header .navbar-nav {
-    float: right;
-    margin: 6px 10px;
+.collapse .notifications-dropdown {
+    display: block;
 }
 
-@media(min-width:768px) {
-    .navbar-header .navbar-nav {
+@media screen and (max-width: 767px) {
+    .notifications-dropdown {
+        display: block;
+    }
+
+    .collapse .notifications-dropdown {
         display: none;
     }
 }

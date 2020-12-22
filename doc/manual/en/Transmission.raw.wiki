@@ -13,7 +13,13 @@
 
 === What is Transmission ? ===
 
-!BitTorrent is a communications protocol using peer-to-peer (P2P) file sharing. It is not anonymous; you should assume that others can see what files you are sharing. There are two !BitTorrent web clients available in !FreedomBox: Transmission and [[FreedomBox/Manual/Deluge|Deluge]]. They have similar features, but you may prefer one over the other.
+Transmission is a !BitTorrent node (both, client and server at the same time).
+
+!BitTorrent is a communications protocol for peer-to-peer (P2P) file sharing.
+ * It is '''not anonymous'''; you should assume that others can see what files you are sharing.
+ * This technology works best for big, popular files.
+
+There are two !BitTorrent web nodes available in !FreedomBox: Transmission and [[FreedomBox/Manual/Deluge|Deluge]]. They have similar features, but you may prefer one over the other.
 
 Transmission is a lightweight !BitTorrent client that is well known for its simplicity and a default configuration that "Just Works".
 
@@ -29,8 +35,12 @@ After installing Transmission, it can be accessed at {{{https://<your freedombox
 
 ==== Transferring Downloads from the FreedomBox ====
 
- 1. Transmission's downloads directory can be added as a shared folder in the "Sharing" app. You can then access your downloads from this shared folder using a web browser.
- 2. (Advanced) If you have the ssh access to your !FreedomBox, you can use sftp to browse the downloads directory using a suitable file manager or web browser (e.g. dolphin or Konqueror).
+ 1. Transmission's downloads directory can be added as a shared folder in the [[FreedomBox/Manual/Sharing|Sharing]] app. You can then access your downloads from this shared folder using a web browser.
+ 2. (Advanced) If you have the ssh access to your !FreedomBox, you can use sftp or scp to browse the downloads directory using a suitable file manager or web browser:
+    * [[https://apps.kde.org/en/dolphin|Dolphin]] or [[https://apps.kde.org/es/konqueror|Konqueror]], if you access from a KDE desktop
+    * The ''Other locations'' option in the default file manager, if you're on Gnome
+    * [[https://winscp.net|WinSCP]] or [[https://filezilla-project.org|FileZilla]], if you're on Windows
+    * [[https://f-droid.org/es/packages/com.ghostsq.commander.sftp/|Ghost Commander]] or [[https://f-droid.org/es/packages/org.kknickkk.spider/|Spider]], if you're on Android.
 
 
 === Port Forwarding ===
@@ -41,7 +51,12 @@ If your !FreedomBox is behind a router you optionally might want to set up port 
 
 === External Links ===
 
- * Website: https://transmissionbt.com
+ * Upstream projects:
+   * Transmission: https://transmissionbt.com
+   * !BitTorrent: https://www.bittorrent.org
+ * Protocol description:
+  * Upstream: https://www.bittorrent.org/introduction.html
+  * At Wikipedia: https://en.wikipedia.org/wiki/BitTorrent
 
 
 ## END_INCLUDE

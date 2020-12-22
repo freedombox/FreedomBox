@@ -14,7 +14,13 @@
 
 === ¿Qué es Transmission ? ===
 
-''!BitTorrent'' es un protocolo de comunicaciones para compartir ficheros entre pares (P2P = ''peer-to-peer''). No es anónimo; debes asumir que otros puedan ver qué ficheros estás comprtiendo. Hay 2 clientes web para !BitTorrent disponibles en !FreedomBox: ''Transmission'' y [[es/FreedomBox/Manual/Deluge|Deluge]]. Tienen funcionalidades similares pero quizá prefieras uno sobre otro.
+''Transmission'' es un nodo (servidor y cliente, ambos a la vez) !BitTorrent. 
+
+''!BitTorrent'' es un protocolo de comunicaciones para compartir ficheros entre pares (P2P = ''peer-to-peer'').
+ * '''No es anónimo'''; debes asumir que otros puedan ver qué ficheros estás compartiendo.
+ * Este protocolo destaca compartiendo ficheros grandes y populares.
+
+Hay 2 nodos web para !BitTorrent disponibles en !FreedomBox: ''Transmission'' y [[es/FreedomBox/Manual/Deluge|Deluge]]. Tienen funcionalidades similares pero quizá prefieras uno sobre otro.
 
 ''Transmission'' es un cliente !BitTorrent ligero, famoso por su simplicidad y una configuración por defecto que "símplemente funciona".
 
@@ -30,8 +36,12 @@ Tras instalar ''Transmission'' está accesible en {{{https://<tu freedombox>/tra
 
 ==== Transferir Descargas desde la FreedomBox ====
 
- * Se puede añadir el directorio de descargas de ''Transmission'' como directorio compartido en la app "Compartir" y así acceder a tus descargas en este directorio compartido empleando un navegador web.
- * (Avanzado) Si tienes acceso SSH a tu !FreedomBox puedes usar `sftp` para ver el directorio de descargas usando un gestor de archivos o un navegador apropiados (p.ej. ''dolphin'' o ''Konqueror'').
+ * Se puede añadir el directorio de descargas de ''Transmission'' como directorio compartido en la app [[es/FreedomBox/Manual/Sharing|Sharing]] y así acceder a tus descargas en este directorio compartido empleando un navegador web.
+ * (Avanzado) Si tienes acceso SSH a tu !FreedomBox puedes usar `sftp` o `scp` para ver el directorio de descargas usando un gestor de archivos o un navegador apropiados
+    * [[https://apps.kde.org/en/dolphin|Dolphin]] o [[https://apps.kde.org/es/konqueror|Konqueror]], si accedes desde un escritorio KDE
+    * La opción ''Otras ubicaciones'' del administrador de archivos de serie, si estás en Gnome
+    * [[https://winscp.net|WinSCP]] o [[https://filezilla-project.org|FileZilla]], si estás en Windows
+    * [[https://f-droid.org/es/packages/com.ghostsq.commander.sftp/|Ghost Commander]] o [[https://f-droid.org/es/packages/org.kknickkk.spider/|Spider]], si estás en Android.
 
 === Redirección de puertos ===
 
@@ -41,7 +51,12 @@ Si tu !FreedomBox está detras de un router quizá quieras mejorar la comunicaci
 
 === Enlaces externos ===
 
- * Sitio web: https://transmissionbt.com
+ * Proyectos originales:
+   * Transmission: https://transmissionbt.com
+   * !BitTorrent: https://www.bittorrent.org
+ * Descripciones del protocolo:
+  * Del proyecto original: https://www.bittorrent.org/introduction.html
+  * De Wikipedia: https://es.wikipedia.org/wiki/BitTorrent
 
 
 ## END_INCLUDE

@@ -279,6 +279,10 @@ def login_with_account(browser, url, username, password):
         if '/firstboot/backports' in browser.url:
             submit(browser, element=browser.find_by_name('next')[0])
 
+        if '/firstboot/update' in browser.url:
+            browser.find_by_id('id_update_now').uncheck()
+            submit(browser, element=browser.find_by_name('next')[0])
+
 
 #################
 # App utilities #
@@ -464,7 +468,7 @@ def networks_set_firewall_zone(browser, zone):
     """"Set the network device firewall zone as internal or external."""
     nav_to_module(browser, 'networks')
     device = browser.find_by_xpath(
-        '//span[contains(@class, "label-success") '
+        '//span[contains(@class, "badge-success") '
         'and contains(@class, "connection-status-label")]/following::a').first
     network_id = device['href'].split('/')[-3]
     device.click()

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
 "PO-Revision-Date: 2020-06-24 11:41+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -91,12 +91,18 @@ msgid "Error installing application: {error}"
 msgstr "Chyba při instalaci aplikace: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Apache HTTP Server"
+msgstr "Chat server"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Webový server"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Webové rozhraní {box_name} (Plinth)"
@@ -230,8 +236,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Vytvořit repozitář"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Žádný"
 
@@ -1100,17 +1105,17 @@ msgstr "Přístupový bod"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Obecná nastavení"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1118,30 +1123,35 @@ msgstr "Obecná nastavení"
 msgid "Configure"
 msgstr "Nastavit"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Doménový název"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Výchozí pro Apache"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr "Služba FreedomBox (Plinth)"
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Název stroje"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1154,11 +1164,11 @@ msgstr ""
 "písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
 "Celková délka může být nejvýše 63 znaků."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Neplatný název stroje"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1175,11 +1185,11 @@ msgstr ""
 "ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
 "nejvýše 253 znaků."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Domovská stránka domovského serveru"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1195,11 +1205,11 @@ msgstr ""
 "{box_name} (Plinth), uživatelé budou potřebovat výslovně zadávat /plinth "
 "nebo /freedombox, aby se dostali na službu {box_name} (Plinth)."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Zobrazit pokročilé aplikace a funkce"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Zobrazit aplikace a funkce, které vyžadují techničtější znalosti."
 
@@ -1379,57 +1389,57 @@ msgstr ""
 "a služby fungují tak, jak mají."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "Nastavování se nezdařilo."
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr ""
 
@@ -1447,12 +1457,12 @@ msgstr "Diagnostické testy právě probíhají"
 msgid "Results"
 msgstr "Výsledky"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
 #, python-format
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
@@ -1461,10 +1471,10 @@ msgstr "Výsledky diagnostiky"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
 #, python-format
-msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr ""
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 #, fuzzy
 #| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
@@ -1478,7 +1488,7 @@ msgstr "Vyzkoušet"
 msgid "Result"
 msgstr "Výsledek"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Diagnostické testy"
 
@@ -3594,7 +3604,7 @@ msgstr "Klíč zveřejněn na server s klíči."
 msgid "Error occurred while publishing key."
 msgstr "Při zveřejňování klíče došlo k chybě."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3602,7 +3612,7 @@ msgstr ""
 "Mumble je open source software pro šifrovanou, vysoce kvalitní hlasovou "
 "komunikaci s nízkou prodlevou."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3612,11 +3622,11 @@ msgstr ""
 "dispozici jsou <a href=\"http://mumble.info\">klienti</a> pro připojení z "
 "desktopu a Android zařízení."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "Hlasový chat"
 
@@ -6072,7 +6082,7 @@ msgstr "Upravit sdílení"
 msgid "Share deleted."
 msgstr "Sdílení smazáno."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6082,7 +6092,7 @@ msgstr ""
 "souborového systému btrfs. Ty je možné použít pro vrácení systému do "
 "dřívějšího funkčního stavu v případě nechtěných změn."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6093,7 +6103,7 @@ msgstr ""
 "osy) a také před a po instalaci software. Nejstarší zachycené stavy budou "
 "automaticky mazány podle níže uvedených nastavení."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6104,7 +6114,7 @@ msgstr ""
 "backups\">backups</a>, protože mohou být ukládány pouze na stejném oddílu, "
 "jako živá data. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "Zachycené stavy datového úložiště"
 

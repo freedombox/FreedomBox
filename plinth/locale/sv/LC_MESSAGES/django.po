@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
-"PO-Revision-Date: 2020-11-23 22:49+0000\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
+"PO-Revision-Date: 2020-12-10 15:29+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
@@ -91,12 +91,18 @@ msgid "Error installing application: {error}"
 msgstr "Installationen misslyckades: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "As a Server"
+msgid "Apache HTTP Server"
+msgstr "Som en server"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Webbserver"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Webbgränssnitt (Plinth)"
@@ -225,8 +231,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Key i databasen"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Ingen"
 
@@ -753,20 +758,16 @@ msgid "Password"
 msgstr "Lösenord"
 
 #: plinth/modules/bepasty/views.py:23
-#, fuzzy
-#| msgid "Admin"
 msgid "admin"
 msgstr "Admin"
 
 #: plinth/modules/bepasty/views.py:24
-#, fuzzy
-#| msgid "Repository"
 msgid "editor"
-msgstr "Databasen"
+msgstr "Redigerare"
 
 #: plinth/modules/bepasty/views.py:25
 msgid "viewer"
-msgstr ""
+msgstr "Visare"
 
 #: plinth/modules/bepasty/views.py:50
 msgid "Read"
@@ -1077,7 +1078,7 @@ msgstr "Tillgång"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr "Cockpit fungerar bara vid åtkomst med följande webbadresser."
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1085,11 +1086,11 @@ msgstr ""
 "Här kan du ställa in några allmänna konfigurationsalternativ som värdnamn, "
 "domännamn, webserver, hemsida etc."
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Allmän Konfiguration"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1097,30 +1098,35 @@ msgstr "Allmän Konfiguration"
 msgid "Configure"
 msgstr "Konfigurera"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Domännamn"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Ogiltigt domännamn"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Apache standard"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox Service (Plinth)"
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Värdnamn"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1133,11 +1139,11 @@ msgstr ""
 "bindestreck, men får inte börja eller sluta med bindestreck. Värdnamn får "
 "vara max 63 tecken."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Ogiltigt värdnamn"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1153,11 +1159,11 @@ msgstr ""
 "sluta med bindestreck. Varje ord får vara max 63 tecken. Total längd på "
 "domännamnet får max vara 253 tecken."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Webbserverens hemsida"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1173,11 +1179,11 @@ msgstr ""
 "uttryckligen skriva / Plinth eller / freedombox för att nå {box_name} "
 "Service (Plinth)."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Visa avancerade appar och funktioner"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Visa appar och funktioner som kräver mer teknisk kunskap."
 
@@ -1358,44 +1364,44 @@ msgstr ""
 "bekräfta att program och tjänster fungerar som de ska."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Diagnostik"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 msgid "passed"
 msgstr "passerade"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "misslyckades"
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr "fel"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bör inaktivera vissa appar för att minska minnesanvändningen."
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr "Du bör inte installera några nya appar på det här systemet."
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1404,7 +1410,7 @@ msgstr ""
 "Systemet är ont om minne: {percent_used}% används, {memory_available}"
 "·{memory_available_unit} ledig. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr "Låg minne"
 
@@ -1422,12 +1428,16 @@ msgstr "Diagnotiktest körs för närvarande"
 msgid "Results"
 msgstr "Resultat"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "            App: %(app_name)s\n"
+#| "          "
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 "\n"
 "            Appen: %(app_name)s\n"
@@ -1438,11 +1448,12 @@ msgid "Diagnostic Results"
 msgstr "Diagnostikresultat"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
-#, python-format
-msgid "App: %(app_id)s"
+#, fuzzy, python-format
+#| msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr "App:%(app_id)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 msgid "This app does not support diagnostics"
 msgstr "Den här appen stöder inte diagnostik"
 
@@ -1454,7 +1465,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultat"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Diagnostiktest"
 
@@ -3541,7 +3552,7 @@ msgstr "Publicerade nyckeln till nyckelserver."
 msgid "Error occurred while publishing key."
 msgstr "Fel uppstod när nyckeln publicerades."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3549,7 +3560,7 @@ msgstr ""
 "Mumble är ett program för röstchatt med öppen källkod, låg latens, "
 "kryptering och hög ljudkvalitet."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3559,11 +3570,11 @@ msgstr ""
 "\"http://mumble.info\"> Appar</a> finns för att ansluta till Mumble från din "
 "dator- och Android-enheter."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "Röstchatt"
 
@@ -4792,10 +4803,8 @@ msgstr ""
 "{box_name} för ökad säkerhet och anonymitet."
 
 #: plinth/modules/openvpn/__init__.py:57
-#, fuzzy
-#| msgid "Connection to Server"
 msgid "Connect to VPN services"
-msgstr "Anslutning till server"
+msgstr "Ansluta till VPN-tjänster"
 
 #: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
@@ -5567,10 +5576,8 @@ msgid "Action"
 msgstr "Åtgärder"
 
 #: plinth/modules/samba/views.py:32
-#, fuzzy
-#| msgid "FreedomBox"
 msgid "FreedomBox OS disk"
-msgstr "FreedomBox"
+msgstr "FreedomBox OS-disk"
 
 #: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 msgid "Open Share"
@@ -5996,7 +6003,7 @@ msgstr "Redigera share"
 msgid "Share deleted."
 msgstr "Share borttagen."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6006,7 +6013,7 @@ msgstr ""
 "Dessa kan användas för att återställa systemet till ett tidigare känt skick "
 "i händelse av oönskade ändringar i systemet."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6017,7 +6024,7 @@ msgstr ""
 "även före och efter en programvaruinstallation. Äldre ögonblicksbilder "
 "kommer att rensas automatiskt enligt inställningarna nedan."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6028,7 +6035,7 @@ msgstr ""
 "\"/plinth/sys/backups\">säkerhetskopior</a> eftersom de bara kan lagras på "
 "samma partition. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "Ögonblicksbilder av lagring"
 
@@ -6184,18 +6191,16 @@ msgid "Rollback to Snapshot #%(number)s"
 msgstr "Återställning till ögonblicksbild #%(number)s"
 
 #: plinth/modules/snapshot/views.py:28
-#, fuzzy
-#| msgid "Library created."
 msgid "manually created"
-msgstr "Bibliotek skapat."
+msgstr "manuellt skapad"
 
 #: plinth/modules/snapshot/views.py:29
 msgid "timeline"
-msgstr ""
+msgstr "Tidslinjen"
 
 #: plinth/modules/snapshot/views.py:30
 msgid "apt"
-msgstr ""
+msgstr "apt"
 
 #: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
@@ -6972,10 +6977,8 @@ msgid "Activate frequent feature updates (recommended)"
 msgstr "Aktivera frekventa uppdateringar (rekommenderas)"
 
 #: plinth/modules/upgrades/forms.py:40
-#, fuzzy
-#| msgid "Fail2Ban (recommended)"
 msgid "Update now (recommended)"
-msgstr "Fail2Ban (rekommenderas)"
+msgstr "Uppdatera nu (rekommenderas)"
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -6994,36 +6997,30 @@ msgstr ""
 "kan de inte avaktiveras."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
-#, fuzzy
-#| msgid "Updating..."
 msgid "Updating, please wait..."
-msgstr "Uppdatera..."
+msgstr "Uppdaterar, vänta ..."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
-#, fuzzy
-#| msgid ""
-#| "<strong>This may take a long time to complete.</strong> During an update, "
-#| "you cannot install apps. Also, this web interface may be temporarily "
-#| "unavailable and show an error. In that case, refresh the page to continue."
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "this web interface may be temporarily unavailable and show an error. In that "
 "case, refresh the page to continue."
 msgstr ""
 "<strong>Detta kan ta lång tid att slutföra.</strong> Under en uppdatering "
-"kan du inte installera appar. Webbgränssnittet kan också vara tillfälligt "
-"otillgängligt och visa ett fel. I så fall uppdaterar du sidan för att "
-"fortsätta."
+"kan det här webbgränssnittet vara tillfälligt otillgängligt och ett fel "
+"visas. I så fall uppdaterar du sidan för att fortsätta."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid ""
 "\n"
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
-msgstr "%(box_name)s är uppdaterad."
+msgstr ""
+"\n"
+"\t%(box_name)s är aktuell. Tryck på Nästa för att fortsätta.\n"
+"      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format

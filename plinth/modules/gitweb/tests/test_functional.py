@@ -54,7 +54,8 @@ def gitweb_all_repositories_private(session_browser):
     _set_all_repos_private(session_browser)
 
 
-@given(parsers.parse('a repository metadata:\n{metadata}'))
+@given(parsers.parse('a repository metadata:\n{metadata}'),
+       target_fixture='gitweb_repo_metadata')
 def gitweb_repo_metadata(session_browser, metadata):
     metadata_dict = {}
     for item in metadata.split('\n'):
@@ -108,8 +109,8 @@ def gitweb_private_repo_should_exists(session_browser):
 
 
 @then('the repository should not be listed')
-def gitweb_repo_should_not_exist(session_browser, gitweb_repo):
-    assert not _repo_exists(session_browser, gitweb_repo)
+def gitweb_repo_should_not_exist(session_browser):
+    assert not _repo_exists(session_browser, 'Test-repo')
 
 
 @then('the public repository should be listed on gitweb')

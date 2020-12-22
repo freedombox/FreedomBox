@@ -111,5 +111,8 @@ class FirstSetupMiddleware(MiddlewareMixin):
         if not setup.is_first_setup_running:
             return
 
-        context = {'is_first_setup_running': setup.is_first_setup_running}
+        context = {
+            'is_first_setup_running': setup.is_first_setup_running,
+            'refresh_page_sec': 3
+        }
         return render(request, 'first_setup.html', context)

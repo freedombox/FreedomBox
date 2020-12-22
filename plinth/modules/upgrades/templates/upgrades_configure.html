@@ -8,19 +8,8 @@
 {% load static %}
 
 {% block page_head %}
-  <style type="text/css">
-    .warning {
-        color: var(--warning-color);
-    }
-
-    .processing {
-        color: var(--progress-color);
-    }
-
-    .normal {
-        color: var(--neutral-dark-color);
-    }
-  </style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'upgrades/upgrades.css' %}"/>
 {% endblock %}
 
 {% block status %}
@@ -108,21 +97,21 @@
 
   <h3>{% trans "Manual Update" %}</h3>
   {% if is_busy %}
-    <p>
+    <div class="btn-toolbar">
       <button type="button" disabled="disabled"
               class="running-status-parent btn btn-default" >
         <span class="running-status loading"></span>
         {% trans "Updating..." %}
       </button>
-    </p>
+    </div>
   {% else %}
-    <p>
+    <div class="btn-toolbar">
       <form class="form" method="post" action="{% url 'upgrades:upgrade' %}">
         {% csrf_token %}
         <input type="submit" class="btn btn-default"
                value="{% trans "Update now" %}"/>
       </form>
-    </p>
+    </div>
   {% endif %}
 
   <p>

@@ -7,7 +7,7 @@
 {% block internal_zone_warning %}
   {% for component in firewall %}
     {% if not component.is_external %}
-      <div class="bg-warning">
+      <div class="alert alert-warning" role="alert">
         {% blocktrans trimmed with service_name=component.name %}
           <em>{{ service_name }}</em> is available only on internal networks or when the client is connected to {{ box_name }} through VPN.
         {% endblocktrans %}

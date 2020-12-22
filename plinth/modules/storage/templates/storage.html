@@ -8,71 +8,70 @@
 {% load static %}
 
 {% block page_head %}
-  <style type="text/css">
-    .progress {
-        margin-bottom: 0;
-    }
-  </style>
+  <link type="text/css" rel="stylesheet"
+        href="{% static 'storage/storage.css' %}"/>
 {% endblock %}
 
 {% block configuration %}
 
   <p>{% trans "The following storage devices are in use:" %}</p>
 
-  <table class="table table-bordered table-condensed table-striped">
-    <thead>
-      <tr>
-        <th>{% trans "Device" %}</th>
-        <th>{% trans "Label" %}</th>
-        <th>{% trans "Mount Point" %}</th>
-        <th>{% trans "Type" %}</th>
-        <th>{% trans "Used" %}</th>
-        <th>{% trans "Actions" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for disk in disks %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ disk.device }}</td>
-          <td>{{ disk.label|default_if_none:"" }}</td>
-          <td>{{ disk.mount_points|join:"<br>" }}</td>
-          <td>{{ disk.filesystem_type }}</td>
-          <td>
-            {% if 'percent_used' in disk %}
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped
-                            {% if disk.percent_used < 75 %}
-                              progress-bar-success
-                            {% elif disk.percent_used < 90 %}
-                              progress-bar-warning
-                            {% else %}
-                              progress-bar-danger
-                            {% endif %}"
-                     role="progressbar" aria-valuenow="disk.percent_used"
-                     aria-valuemin="0" aria-valuemax="100"
-                     style="width: {{ disk.percent_used }}%;">
-                  {{ disk.percent_used }}%
-                </div>
-              </div>
-              <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
-            {% endif %}
-          </td>
-          <td>
-            {% if disk.is_removable %}
-              <form class="form" method="post"
-                    action="{% url 'storage:eject' disk.device|urlencode:'' %}">
-                {% csrf_token %}
-
-                <button type="submit"
-                        class="btn btn-sm btn-default fa fa-eject">
-                </button>
-              </form>
-            {% endif %}
-          </td>
+          <th>{% trans "Device" %}</th>
+          <th>{% trans "Label" %}</th>
+          <th>{% trans "Mount Point" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Used" %}</th>
+          <th>{% trans "Actions" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for disk in disks %}
+          <tr>
+            <td>{{ disk.device }}</td>
+            <td>{{ disk.label|default_if_none:"" }}</td>
+            <td>{{ disk.mount_points|join:"<br>" }}</td>
+            <td>{{ disk.filesystem_type }}</td>
+            <td>
+              {% if 'percent_used' in disk %}
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped
+                              {% if disk.percent_used < 75 %}
+                                bg-success
+                              {% elif disk.percent_used < 90 %}
+                                bg-warning
+                              {% else %}
+                                bg-danger
+                              {% endif %}
+                              w-{{ disk.percent_used }}"
+                       role="progressbar" aria-valuenow="disk.percent_used"
+                       aria-valuemin="0" aria-valuemax="100">
+                    {{ disk.percent_used }}%
+                  </div>
+                </div>
+                <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
+              {% endif %}
+            </td>
+            <td>
+              {% if disk.is_removable %}
+                <form class="form" method="post"
+                      action="{% url 'storage:eject' disk.device|urlencode:'' %}">
+                  {% csrf_token %}
+
+                  <button type="submit"
+                          class="btn btn-sm btn-default fa fa-eject">
+                  </button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   {% if expandable_root_size %}
     <h3>{% trans "Partition Expansion" %}</h3>

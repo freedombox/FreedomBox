@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
-"PO-Revision-Date: 2020-11-30 00:29+0000\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
+"PO-Revision-Date: 2020-12-11 19:29+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -91,12 +91,18 @@ msgid "Error installing application: {error}"
 msgstr "Error al instalar la aplicación: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "As a Server"
+msgid "Apache HTTP Server"
+msgstr "Como servidor"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Servidor Web"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Interfaz web (Plinth) de {box_name}"
@@ -228,8 +234,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Clave en repositorio"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Ninguno"
 
@@ -755,20 +760,16 @@ msgid "Password"
 msgstr "Clave de acceso"
 
 #: plinth/modules/bepasty/views.py:23
-#, fuzzy
-#| msgid "Admin"
 msgid "admin"
-msgstr "Admin"
+msgstr "admin"
 
 #: plinth/modules/bepasty/views.py:24
-#, fuzzy
-#| msgid "Repository"
 msgid "editor"
-msgstr "Repositorio"
+msgstr "editor"
 
 #: plinth/modules/bepasty/views.py:25
 msgid "viewer"
-msgstr ""
+msgstr "visualizador"
 
 #: plinth/modules/bepasty/views.py:50
 msgid "Read"
@@ -1081,7 +1082,7 @@ msgstr "Acceso"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr "Cockpit solo funciona cuando se usan las siguientes URL."
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1089,11 +1090,11 @@ msgstr ""
 "Opciones de configuración general como el nombre del host, el del dominio, "
 "la página de inicio del servidor web, etc."
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Configuración general"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1101,30 +1102,35 @@ msgstr "Configuración general"
 msgid "Configure"
 msgstr "Configurar"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Nombre de dominio"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Nombre de dominio no válido"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Apache por defecto"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr "Servicio de FreedomBox (Plinth)"
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Nombre de anfitrión"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1137,11 +1143,11 @@ msgstr ""
 "número y solo puede contener letras, números y guiones. Su longitud puede "
 "ser de hasta 63 caracteres."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Nombre de anfitrión no válido"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1158,11 +1164,11 @@ msgstr ""
 "La longitud de cada palabra puede ser de hasta 63 caracteres y la del nombre "
 "de dominio de hasta 253."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Página de inicio del servidor web"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1179,11 +1185,11 @@ msgstr ""
 "explícitamente «/plinth» o «/freedombox» para acceder al servicio (Plinth) "
 "de {box_name}."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Mostrar aplicaciones y funciones avanzadas"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 "Muestra aplicaciones y funciones que requieren mayor conocimiento técnico."
@@ -1363,45 +1369,45 @@ msgstr ""
 "confirmar que las aplicaciones y servicios están funcionando como se espera."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Diagnósticos"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 msgid "passed"
 msgstr "ok."
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "Falló"
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr "error"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Habría que deshabilitar algunas apps para reducir el consumo de memoria."
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr "Hay que evitar instalar más apps en este sistema."
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1410,7 +1416,7 @@ msgstr ""
 "El sistema va justo de memoria: {percent_used}% usada, {memory_available} "
 "{memory_available_unit} libres. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr "Poca memoria libre"
 
@@ -1428,12 +1434,12 @@ msgstr "El test de diagnósticos está ejecutándose"
 msgid "Results"
 msgstr "Resultados"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
 #, fuzzy, python-format
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 "\n"
 "            App: %(app_name)s\n"
@@ -1444,11 +1450,12 @@ msgid "Diagnostic Results"
 msgstr "Resultado del diagnóstico"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
-#, python-format
-msgid "App: %(app_id)s"
+#, fuzzy, python-format
+#| msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr "Aplicación: %(app_id)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 msgid "This app does not support diagnostics"
 msgstr "Esta aplicación no soporta diagnósticos"
 
@@ -1460,7 +1467,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultado"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Test de diagnóstico"
 
@@ -3559,7 +3566,7 @@ msgstr "Publicada la clave en el servidor de claves."
 msgid "Error occurred while publishing key."
 msgstr "Se ha producido un error al publicar la clave."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3567,7 +3574,7 @@ msgstr ""
 "Mumble es un software libre de gran calidad para chat de voz, de baja "
 "latencia y con cifrado."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3577,11 +3584,11 @@ msgstr ""
 "disponibles <a href=\"http://mumble.info\">Clientes</a> para conectar desde "
 "sus dispositivos de escritorio o Android."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "Chat de voz"
 
@@ -4803,10 +4810,8 @@ msgstr ""
 "para añadir protección y anonimato."
 
 #: plinth/modules/openvpn/__init__.py:57
-#, fuzzy
-#| msgid "Connection to Server"
 msgid "Connect to VPN services"
-msgstr "Conexión al servidor"
+msgstr "Conectar a servicios VPN"
 
 #: plinth/modules/openvpn/__init__.py:60 plinth/modules/openvpn/manifest.py:18
 msgid "OpenVPN"
@@ -5578,10 +5583,8 @@ msgid "Action"
 msgstr "Acción"
 
 #: plinth/modules/samba/views.py:32
-#, fuzzy
-#| msgid "FreedomBox"
 msgid "FreedomBox OS disk"
-msgstr "FreedomBox"
+msgstr "Disco de sistema de FreedomBox"
 
 #: plinth/modules/samba/views.py:58 plinth/modules/storage/forms.py:147
 msgid "Open Share"
@@ -6013,7 +6016,7 @@ msgstr "Editar compartición"
 msgid "Share deleted."
 msgstr "Compartición eliminada."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6023,7 +6026,7 @@ msgstr ""
 "btrfs. Éstas pueden emplearse para recuperar el sistema a un estado anterior "
 "correcto en caso de cambios no deseados."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6035,7 +6038,7 @@ msgstr ""
 "instantáneas más antiguas se eliminarán automáticamente según la siguiente "
 "configuración."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6046,7 +6049,7 @@ msgstr ""
 "plinth/sys/backups\">las copias de seguridad</a> ya que se almacenan en la "
 "misma partición. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "Instantáneas"
 
@@ -6202,18 +6205,16 @@ msgid "Rollback to Snapshot #%(number)s"
 msgstr "Restaurar a instantánea %(number)s"
 
 #: plinth/modules/snapshot/views.py:28
-#, fuzzy
-#| msgid "Library created."
 msgid "manually created"
-msgstr "Biblioteca creada."
+msgstr "creada a mano"
 
 #: plinth/modules/snapshot/views.py:29
 msgid "timeline"
-msgstr ""
+msgstr "linea de tiempo"
 
 #: plinth/modules/snapshot/views.py:30
 msgid "apt"
-msgstr ""
+msgstr "APT"
 
 #: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
@@ -6999,10 +7000,8 @@ msgid "Activate frequent feature updates (recommended)"
 msgstr "Activar las actualizaciones funcionales frecuentes (recomendado)"
 
 #: plinth/modules/upgrades/forms.py:40
-#, fuzzy
-#| msgid "Fail2Ban (recommended)"
 msgid "Update now (recommended)"
-msgstr "Fail2Ban (recomendado)"
+msgstr "Actualizar ahora (recomendado)"
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -7021,36 +7020,30 @@ msgstr ""
 "funcionales frecuentes no se pueden desactivar."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
-#, fuzzy
-#| msgid "Updating..."
 msgid "Updating, please wait..."
-msgstr "Actualizando..."
+msgstr "Actualizando, espere por favor..."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:30
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
-#, fuzzy
-#| msgid ""
-#| "<strong>This may take a long time to complete.</strong> During an update, "
-#| "you cannot install apps. Also, this web interface may be temporarily "
-#| "unavailable and show an error. In that case, refresh the page to continue."
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "this web interface may be temporarily unavailable and show an error. In that "
 "case, refresh the page to continue."
 msgstr ""
 "<strong>Esto puede tardar un buen rato en finalizar</strong>. Durante una "
-"actualización no puede instalar aplicaciones. Además, esta interfaz web "
-"puede estar temporalmente inaccesible y mostrar un error. En ese caso, "
-"vuelva a cargar la página para continuar."
+"actualización esta interfaz web puede estar temporalmente inaccesible y "
+"mostrar un error. En ese caso, vuelva a cargar la página para continuar."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:39
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid ""
 "\n"
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
-msgstr "%(box_name)s está actualizado."
+msgstr ""
+"\n"
+"\t%(box_name)s está actualizado. Pulse Siguente para continuar.\n"
+"      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format

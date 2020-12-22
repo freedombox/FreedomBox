@@ -10,31 +10,33 @@
 
   <h3>{% trans "Serving Domains" %}</h3>
 
-  <table class="table table-bordered table-condensed table-striped">
-    <thead>
-      <tr>
-        <th>{% trans "Type" %}</th>
-        <th>{% trans "Domain Names" %}</th>
-        <th>{% trans "Serving" %}</th>
-        <th>{% trans "IP addresses" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for domain in domains_table %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ domain.type}}</td>
-          <td>{{ domain.domain_name}}</td>
-          <td>{{ domain.serving }}</td>
-          <td>{{ domain.ip_address }}</td>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Domain Names" %}</th>
+          <th>{% trans "Serving" %}</th>
+          <th>{% trans "IP addresses" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div>
-  <a href="{% url 'bind:index' %}" class="btn btn-default"
-     role="button" title="{% trans 'Refresh IP address and domains' %}">
-    <span class="fa" aria-hidden="true"></span>
-      {% trans 'Refresh IP address and domains' %}
-  </a>
+      </thead>
+      <tbody>
+        {% for domain in domains_table %}
+          <tr>
+            <td>{{ domain.type}}</td>
+            <td>{{ domain.domain_name}}</td>
+            <td>{{ domain.serving }}</td>
+            <td>{{ domain.ip_address }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="btn-toolbar">
+    <a href="{% url 'bind:index' %}" class="btn btn-default"
+       role="button" title="{% trans 'Refresh IP address and domains' %}">
+      <span class="fa" aria-hidden="true"></span>
+        {% trans 'Refresh IP address and domains' %}
+    </a>
   </div>
 {% endblock %}

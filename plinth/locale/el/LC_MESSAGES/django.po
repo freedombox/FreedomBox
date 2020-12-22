@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 17:26-0500\n"
+"POT-Creation-Date: 2020-12-14 18:42-0500\n"
 "PO-Revision-Date: 2020-10-08 23:26+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
@@ -95,12 +95,18 @@ msgid "Error installing application: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
 #: plinth/modules/apache/__init__.py:41
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Apache HTTP Server"
+msgstr "Διακομιστής συνομιλίας"
+
+#: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:67
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:45
 msgid "Web Server"
 msgstr "Διακομιστής Διαδικτύου (Web Server)"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Εφαρμογή Διαδικτύου (Πλίνθος)"
@@ -238,8 +244,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Δημιουργία Αποθετηρίου"
 
-#: plinth/modules/backups/forms.py:122
-#: plinth/modules/diagnostics/__init__.py:132 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:122 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Κανένα"
 
@@ -1120,7 +1125,7 @@ msgstr ""
 "To Cockpit θα λειτουργήσει μόνο όταν έχετε πρόσβαση σε αυτό χρησιμοποιώντας "
 "τις ακόλουθες διευθύνσεις URL."
 
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1129,11 +1134,11 @@ msgstr ""
 "υπολογιστή, το όνομα διαδικτύου σας, την κεντρική ιστοσελίδα του διακομιστή "
 "διαδικτύου κλπ."
 
-#: plinth/modules/config/__init__.py:52
+#: plinth/modules/config/__init__.py:54
 msgid "General Configuration"
 msgstr "Γενικές ρυθμίσεις"
 
-#: plinth/modules/config/__init__.py:57 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:29
 #: plinth/modules/names/templates/names.html:43
 #: plinth/modules/snapshot/views.py:37
@@ -1141,30 +1146,35 @@ msgstr "Γενικές ρυθμίσεις"
 msgid "Configure"
 msgstr "Ρυθμίσετε"
 
-#: plinth/modules/config/__init__.py:61 plinth/modules/config/forms.py:61
+#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:15
 msgid "Domain Name"
 msgstr "Όνομα διαδικτύου"
 
-#: plinth/modules/config/forms.py:27 plinth/modules/config/forms.py:73
+#: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
 msgstr "Μη έγκυρο όνομα διαδικτύου"
 
-#: plinth/modules/config/forms.py:35
+#: plinth/modules/config/forms.py:40
+#, python-brace-format
+msgid "{user}'s website"
+msgstr ""
+
+#: plinth/modules/config/forms.py:42
 msgid "Apache Default"
 msgstr "Προκαθορισμένες ρυθμίσεις Apache"
 
-#: plinth/modules/config/forms.py:36
+#: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
 msgstr "Υπηρεσία Freedombox (Plinth)"
 
-#: plinth/modules/config/forms.py:48
+#: plinth/modules/config/forms.py:55
 msgid "Hostname"
 msgstr "Όνομα υπολογιστή"
 
-#: plinth/modules/config/forms.py:50
+#: plinth/modules/config/forms.py:57
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -1178,11 +1188,11 @@ msgstr ""
 "εσωτερικούς χαρακτήρες μόνο ψηφία της αλφαβήτου, νούμερα και παύλες.  Το "
 "συνολικό μήκος πρέπει να είναι 63 χαρακτήρες ή λιγότεροι."
 
-#: plinth/modules/config/forms.py:57
+#: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
 msgstr "Μη έγκυρο όνομα υπολογιστή"
 
-#: plinth/modules/config/forms.py:63
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -1200,11 +1210,11 @@ msgstr ""
 "λιγότερο από 63 χαρακτήρες. Το συνολικό μήκος πρέπει να είναι λιγότερο από "
 "253 χαρακτήρες."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
 msgstr "Αρχική σελίδα του διακομιστή διαδικτύου"
 
-#: plinth/modules/config/forms.py:80
+#: plinth/modules/config/forms.py:87
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1219,11 +1229,11 @@ msgstr ""
 "διαφορετικό από την υπηρεσία {box_name} (Plinth), οι χρήστεσ πρέπει να "
 "γράψουν /plinth ή /freedombox για να αποκτήσουν πρόσβαση σε αυτή."
 
-#: plinth/modules/config/forms.py:91
+#: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
 msgstr "Εμφάνιση προηγμένων εφαρμογών και δυνατοτήτων"
 
-#: plinth/modules/config/forms.py:93
+#: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 "Εμφάνιση εφαρμογών και δυνατοτήτων που απαιτούν περισσότερες τεχνικές "
@@ -1405,57 +1415,57 @@ msgstr ""
 "λειτουργούν όπως αναμένεται."
 
 #: plinth/modules/diagnostics/__init__.py:51
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "Diagnostics"
 msgstr "Διαγνωστικά"
 
-#: plinth/modules/diagnostics/__init__.py:108
+#: plinth/modules/diagnostics/__init__.py:96
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: plinth/modules/diagnostics/__init__.py:109
+#: plinth/modules/diagnostics/__init__.py:97
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "Η εγκατάσταση απέτυχε."
 
-#: plinth/modules/diagnostics/__init__.py:110
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "error"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:192
+#: plinth/modules/diagnostics/__init__.py:191
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:197
+#: plinth/modules/diagnostics/__init__.py:196
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:203
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:208
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:220
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:223
+#: plinth/modules/diagnostics/__init__.py:222
 msgid "Low Memory"
 msgstr ""
 
@@ -1473,12 +1483,12 @@ msgstr "Τα διαγνωστικά τεστ εκτελούνται αυτήν �
 msgid "Results"
 msgstr "Αποτελέσματα"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:42
+#: plinth/modules/diagnostics/templates/diagnostics.html:36
 #, python-format
 msgid ""
 "\n"
-"            App: %(app_name)s\n"
-"          "
+"          App: %(app_name)s\n"
+"        "
 msgstr ""
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
@@ -1486,11 +1496,12 @@ msgid "Diagnostic Results"
 msgstr "Αποτελέσματα διαγνωστικών τεστ"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:12
-#, python-format
-msgid "App: %(app_id)s"
+#, fuzzy, python-format
+#| msgid "App: %(app_id)s"
+msgid "App: %(app_name)s"
 msgstr "Εφαρμογή: %(app_id)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
 msgid "This app does not support diagnostics"
 msgstr "Αυτή η εφαρμογή δεν υποστηρίζει διαγνωστικά τεστ"
 
@@ -1502,7 +1513,7 @@ msgstr "Τεστ"
 msgid "Result"
 msgstr "Αποτέλεσμα"
 
-#: plinth/modules/diagnostics/views.py:39
+#: plinth/modules/diagnostics/views.py:54
 msgid "Diagnostic Test"
 msgstr "Διαγνωστικός έλεγχος"
 
@@ -3677,7 +3688,7 @@ msgstr "Δημοσιεύθηκε το κλειδί στο διακομιστή �
 msgid "Error occurred while publishing key."
 msgstr "Παρουσιάστηκε σφάλμα κατά τη δημοσίευση του κλειδιού."
 
-#: plinth/modules/mumble/__init__.py:31
+#: plinth/modules/mumble/__init__.py:32
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3685,7 +3696,7 @@ msgstr ""
 "Το mumble είναι ένα ανοικτού πηγαίου κώδικα, χαμηλής καθυστέρησης, "
 "κρυπτογραφημένο και υπηλής ποιότητας προγραμμα φωνητικής συνομιλίας."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3695,11 +3706,11 @@ msgstr ""
 "href=\"http://mumble.info\"> Πελάτες </a> για να συνδεθείτε με το Mumble από "
 "τον υπολογιστή και τις συσκευές Android είναι διαθέσιμες."
 
-#: plinth/modules/mumble/__init__.py:50 plinth/modules/mumble/manifest.py:12
+#: plinth/modules/mumble/__init__.py:51 plinth/modules/mumble/manifest.py:12
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:51
+#: plinth/modules/mumble/__init__.py:52
 msgid "Voice Chat"
 msgstr "Φωνητική συνομιλία"
 
@@ -6183,7 +6194,7 @@ msgstr "Επεξεργασία μερίσματος"
 msgid "Share deleted."
 msgstr "Το μέρισμα διαγράφηκε."
 
-#: plinth/modules/snapshot/__init__.py:25
+#: plinth/modules/snapshot/__init__.py:26
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6194,7 +6205,7 @@ msgstr ""
 "σε μια προηγουμένως γνωστή καλή κατάσταση σε περίπτωση ανεπιθύμητων αλλαγών "
 "στο σύστημα."
 
-#: plinth/modules/snapshot/__init__.py:29
+#: plinth/modules/snapshot/__init__.py:30
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6205,7 +6216,7 @@ msgstr ""
 "και επίσης πριν και μετά από μια εγκατάσταση λογισμικού. Τα παλαιότερα "
 "στιγμιότυπα θα καθαρίζονται αυτόματα σύμφωνα με τις παρακάτω ρυθμίσεις."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6216,7 +6227,7 @@ msgstr ""
 "τα <a href = \"/plinth/sys/backups\"> αντίγραφα ασφαλείας </a> επειδή "
 "μπορούν να αποθηκευτούν μόνο στο ίδιο διαμέρισμα του δίσκου. "
 
-#: plinth/modules/snapshot/__init__.py:54
+#: plinth/modules/snapshot/__init__.py:55
 msgid "Storage Snapshots"
 msgstr "Στιγμιότυπα συστήματος αρχείων"
 
