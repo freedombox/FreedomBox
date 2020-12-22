@@ -365,13 +365,11 @@ def set_samba_user(username, password):
 
     If a user already exists, update password.
     """
-    proc = subprocess.Popen(['smbpasswd', '-a', '-s', username],
-                            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-    _, stderr = proc.communicate(input='{0}\n{0}\n'.format(password).encode(),
-                                 timeout=10)
+    proc = subprocess.run(['smbpasswd', '-a', '-s', username],
+                          input='{0}\n{0}\n'.format(password).encode(),
+                          stderr=subprocess.PIPE)
     if proc.returncode != 0:
-        raise RuntimeError('Unable to add Samba user: ', stderr)
+        raise RuntimeError('Unable to add Samba user: ', proc.stderr)
 
 
 def subcommand_set_user_password(arguments):
