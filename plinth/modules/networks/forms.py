@@ -14,7 +14,7 @@ nm = import_from_gi('NM', '1.0')
 class ConnectionTypeSelectForm(forms.Form):
     """Form to select type for new connection."""
     connection_type = forms.ChoiceField(
-        label=_('Connection Type'),
+        label=_('Connection Type'), widget=forms.RadioSelect,
         choices=[(key, value)
                  for key, value in network.CONNECTION_TYPE_NAMES.items()])
 
