@@ -11,7 +11,8 @@ import re
 import subprocess
 import sys
 
-from plinth.action_utils import apt_hold, run_apt_command, service_restart
+from plinth.action_utils import (apt_hold, debconf_set_selections,
+                                 run_apt_command, service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
@@ -392,7 +393,12 @@ def _perform_dist_upgrade():
         run_apt_command(['install', 'base-files'])
         run_apt_command(['install', 'unattended-upgrades'])
 
-        print('Running unattended-upgrade...')
+        # Tell grub-pc to continue without installing grub again.
+        print('Set grub-pc to not require re-installing grub...', flush=True)
+        debconf_set_selections(
+            ['grub-pc grub-pc/install_devices_empty boolean true'])
+
+        print('Running unattended-upgrade...', flush=True)
         subprocess.run(['unattended-upgrade', '--verbose'])
 
         # Remove obsolete packages that may prevent other packages from
