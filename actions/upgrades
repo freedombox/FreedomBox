@@ -434,6 +434,11 @@ def _perform_dist_upgrade():
     print('Restarting FreedomBox service...', flush=True)
     service_restart('plinth')
 
+    # Finally, run unattended-upgrade once more in a separate process
+    # to handle upgrading the freedombox package.
+    print('Running unattended-upgrade in separate process...', flush=True)
+    _run()
+
 
 def subcommand_setup(_):
     """Setup apt preferences."""
