@@ -12,7 +12,8 @@ import subprocess
 import sys
 
 from plinth.action_utils import (apt_hold, debconf_set_selections,
-                                 run_apt_command, service_restart)
+                                 run_apt_command, service_is_running,
+                                 service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
@@ -93,6 +94,8 @@ def parse_arguments():
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
 
     subparsers.add_parser('setup', help='Setup apt preferences')
+    subparsers.add_parser('start-dist-upgrade',
+                          help='Start dist upgrade process')
 
     activate_backports = subparsers.add_parser(
         'activate-backports', help='Activate backports if possible')
@@ -102,8 +105,6 @@ def parse_arguments():
 
     dist_upgrade = subparsers.add_parser(
         'dist-upgrade', help='Perform dist upgrade if possible')
-    dist_upgrade.add_argument('--develop', required=False, default=False,
-                              action='store_true', help='Development mode')
     dist_upgrade.add_argument('--test', required=False, default=False,
                               action='store_true',
                               help='Test dist-upgrade from stable to testing')
@@ -294,12 +295,11 @@ def _add_apt_preferences():
             file_handle.write(APT_PREFERENCES_APPS)
 
 
-def _check_and_dist_upgrade(develop=False, test_upgrade=False):
+def _check_and_dist_upgrade(test_upgrade=False):
     """Check for new stable release. If there is one, and updates are
     enabled, perform dist-upgrade.
 
-    If develop is True, check for possible upgrade from stable to testing.
-    If test_upgrade is True, also perform the upgrade to testing.
+    If test_upgrade is True, perform upgrade to testing if possible.
     """
     if dist_upgrade_flag.exists():
         print('Continuing previously interrupted dist-upgrade.')
@@ -313,7 +313,7 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
         return
 
     check_dists = ['stable']
-    if develop:
+    if test_upgrade:
         check_dists.append('testing')
 
     codename = None
@@ -424,20 +424,18 @@ def _perform_dist_upgrade():
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])
 
+    # Run unattended-upgrade once more to handle upgrading the
+    # freedombox package.
+    print('Running unattended-upgrade...', flush=True)
+    subprocess.run(['unattended-upgrade', '--verbose'])
+
+    # Update apt cache again to trigger force_upgrades.
+    print('Updating Apt cache...', flush=True)
+    run_apt_command(['update'])
+
     print('Dist upgrade complete. Removing flag.', flush=True)
     if dist_upgrade_flag.exists():
         dist_upgrade_flag.unlink()
-
-    # FreedomBox Service may have tried to restart several times
-    # during the upgrade, but failed. It will stop trying after 5
-    # retries. Restart it once more to ensure it is running.
-    print('Restarting FreedomBox service...', flush=True)
-    service_restart('plinth')
-
-    # Finally, run unattended-upgrade once more in a separate process
-    # to handle upgrading the freedombox package.
-    print('Running unattended-upgrade in separate process...', flush=True)
-    _run()
 
 
 def subcommand_setup(_):
@@ -455,6 +453,15 @@ def subcommand_activate_backports(arguments):
     _check_and_backports_sources(arguments.develop)
 
 
+def subcommand_start_dist_upgrade(_):
+    """Start dist upgrade process."""
+    if not service_is_running('freedombox-dist-upgrade'):
+        subprocess.Popen(['systemctl', 'start', 'freedombox-dist-upgrade'],
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, close_fds=True,
+                         start_new_session=True)
+
+
 def subcommand_dist_upgrade(arguments):
     """Perform major distribution upgrade.
 
@@ -462,7 +469,7 @@ def subcommand_dist_upgrade(arguments):
     updates are enabled.
 
     """
-    _check_and_dist_upgrade(arguments.develop, arguments.test)
+    _check_and_dist_upgrade(arguments.test)
 
 
 def main():

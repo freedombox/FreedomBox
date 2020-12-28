@@ -25,6 +25,8 @@ is_essential = True
 
 managed_packages = ['unattended-upgrades', 'needrestart']
 
+managed_services = ['freedombox-dist-upgrade']
+
 first_boot_steps = [
     {
         'id': 'backports_wizard',
@@ -176,11 +178,7 @@ def setup_repositories(data):
         actions.superuser_run('upgrades', command)
 
     if is_dist_upgrade_enabled():
-        command = ['dist-upgrade']
-        if cfg.develop:
-            command.append('--develop')
-
-        actions.superuser_run('upgrades', command)
+        actions.superuser_run('upgrades', ['start-dist-upgrade'])
 
 
 def is_backports_requested():
