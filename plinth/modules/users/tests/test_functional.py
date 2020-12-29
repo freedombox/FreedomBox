@@ -58,7 +58,7 @@ def new_user_does_not_exist(session_browser, name):
 
 
 @given(parsers.parse('the user {name:w} exists'))
-def test_user_exists(session_browser, name):
+def user_exists(session_browser, name):
     functional.nav_to_module(session_browser, 'users')
     user_link = session_browser.find_link_by_href(
         '/plinth/sys/users/{}/edit/'.format(name))
@@ -71,7 +71,7 @@ def test_user_exists(session_browser, name):
 
 @given(
     parsers.parse('the admin user {name:w} with password {password:w} exists'))
-def test_admin_user_exists(session_browser, name, password):
+def admin_user_exists(session_browser, name, password):
     functional.nav_to_module(session_browser, 'users')
     user_link = session_browser.find_link_by_href('/plinth/sys/users/' + name +
                                                   '/edit/')
@@ -82,7 +82,7 @@ def test_admin_user_exists(session_browser, name, password):
 
 
 @given(parsers.parse('the user {name:w} with password {password:w} exists'))
-def user_exists(session_browser, name, password):
+def user_exists_with_password(session_browser, name, password):
     functional.nav_to_module(session_browser, 'users')
     user_link = session_browser.find_link_by_href('/plinth/sys/users/' + name +
                                                   '/edit/')
