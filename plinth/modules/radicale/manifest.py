@@ -79,6 +79,9 @@ clients = [{
 }]
 
 backup = {
+    'config': {
+        'directories': ['/etc/radicale/']
+    },
     'data': {
         'directories': ['/var/lib/radicale/']
     },
