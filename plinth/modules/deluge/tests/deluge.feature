@@ -13,6 +13,18 @@ Scenario: Enable deluge application
   When I enable the deluge application
   Then the deluge site should be available
 
+Scenario: User of 'bit-torrent' group
+  Given the deluge application is enabled
+  When I create a user named delugeuser with password deluge&456 in group bit-torrent
+  And I'm logged in as the user delugeuser with password deluge&456
+  Then the deluge site should be available
+
+Scenario: User not of 'bit-torrent' group
+  Given the deluge application is enabled
+  When I create a user named nogroupuser with password somep@ssw6
+  And I'm logged in as the user nogroupuser with password somep@ssw6
+  Then the deluge site should not be available
+
 Scenario: Upload a torrent to deluge
   Given the deluge application is enabled
   When all torrents are removed from deluge
