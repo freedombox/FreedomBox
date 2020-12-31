@@ -67,7 +67,7 @@ Creating the App class
 ^^^^^^^^^^^^^^^^^^^^^^
 
 In the FreedomBox framework, each app must be a class derived from the
-:class:`plinth.app.App`. Let us to that in ``__init__.py``. We will fill up the
+:class:`plinth.app.App`. Let us do that in ``__init__.py``. We will fill up the
 class later.
 
 .. code-block:: python3

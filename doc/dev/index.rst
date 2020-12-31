@@ -26,7 +26,7 @@ External References
 
 #. `systemd System and Service Manager <https://www.freedesktop.org/wiki/Software/systemd/>`_
 
-#. `Bootstrap - CSS Library <http://getbootstrap.com/css/>`_
+#. `Bootstrap - CSS Library <http://getbootstrap.com/>`_
 
 #. `FreedomBox User Manual <https://wiki.debian.org/FreedomBox/Manual>`_
 

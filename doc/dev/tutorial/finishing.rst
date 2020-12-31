@@ -32,9 +32,11 @@ Coding standards
 
 For readability and easy collaboration it is important to follow common coding
 standards. FreedomBox uses the Python coding standards and uses the ``pylint``
-and ``flake8`` tools to check if the there are any violations. Run these tools
-on our application and fix any errors and warnings. Better yet, integrate these
-tools into your favorite IDE for on-the-fly checking.
+and ``flake8`` tools to check if the there are any violations. ``yapf`` and
+``isort`` tools are used to automatically format the code to ensure that all
+developers produce similarly formatted code. Run these tools on our application
+and fix any errors and warnings. Better yet, integrate these tools into your
+favorite IDE for on-the-fly checking.
 
 For the most part, the code we have written so far, is already compliant with
 the coding standards. This includes variable/method naming, indentation,

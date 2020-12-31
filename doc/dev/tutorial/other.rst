@@ -3,67 +3,6 @@
 Part 7: Other Changes
 ---------------------
 
-Showing information about app clients
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-It would be helpful to our users if we can show how they can use our app. If
-there are desktop and mobile clients that can used to access our service, we
-need to list them and present them. Let's add this information to
-``manifest.py``.
-
-.. code-block:: python3
-
-  clients = [{
-      'name': _('Transmission'),
-      'platforms': [{
-          'type': 'web',
-          'url': '/transmission'
-      }]
-  }]
-
-Since our app is a simple web application with no clients needed, we just list
-that. We need to include this into the main app view. In ``__init__.py``, add:
-
-.. code-block:: python3
-
-   from . import manifest
-
-In ``views.py``, add:
-
-.. code-block:: python3
-
-  from plinth.modules import transmission
-
-  class TransmissionAppView(views.AppView):
-      ...
-      clients = transmission.clients
-
-Writing a manual page
-^^^^^^^^^^^^^^^^^^^^^
-
-The description of app should provide basic information on what the app is about
-and how to use it. It is impractical, however, to explain everything about the
-app in a few short paragraphs. So, we need to write a page about the app in the
-FreedomBox manual. This page will be available to the users from within the
-FreedomBox web interface. To make this happen, let us write a `manual page entry
-<https://wiki.debian.org/FreedomBox/Manual/Transmission>`_ for our app in the
-`FreedomBox Wiki <https://wiki.debian.org/FreedomBox/Manual>`_ and then provide
-a link to it from app page. In ``__init__.py``, add:
-
-.. code-block:: python3
-
-  manual_page = 'Transmission'
-
-Then, in ``views.py``, add:
-
-.. code-block:: python3
-
-  from plinth.modules import transmission
-
-  class TransmissionAppView(views.AppView):
-      ...
-      manual_page = transmission.manual_page
-
 Creating diagnostics
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -139,16 +78,17 @@ the Django's localization methods to make that happen.
 
   from django.utils.translation import ugettext_lazy as _
 
-  name = _('Transmission')
+  class TransmissionApp(app_module.App):
+      ...
 
-  short_description = _('BitTorrent Web Client')
+      def __init__(self):
+        ...
 
-  description = [
-      _('BitTorrent is a peer-to-peer file sharing protocol. '
-        'Transmission daemon handles Bitorrent file sharing.  Note that '
-        'BitTorrent is not anonymous.'),
-      _('Access the web interface at <a href="/transmission">/transmission</a>.')
-  ]
+        info = app_module.Info(...
+                               name=_('Transmission'),
+                               ...
+                               short_description=_('BitTorrent Web Client'),
+                               ...)
 
 Notice that the app's name, description, etc. are wrapped in the ``_()`` method
 call. This needs to be done for the rest of our app. We use the
