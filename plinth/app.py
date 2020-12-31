@@ -23,11 +23,18 @@ class App:
     the user. Enable/disable button for this app will not be shown. Default
     value is True, so the app can be disabled.
 
+    'locked' is a boolean indicating whether the user can perform operations on
+    the app. This flag is currently set during backup and restore operations
+    but UI changes are currently not implemented.
+
     """
 
     app_id = None
 
     can_be_disabled = True
+
+    locked = False  # Whether user interaction with the app is allowed.
+    # XXX: Lockdown the application UI by implementing a middleware
 
     _all_apps = collections.OrderedDict()
 
