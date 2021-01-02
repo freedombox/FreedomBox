@@ -71,7 +71,13 @@ development environment inside a systemd-nspawn container.
     host$ ./container up
     ```
 
-4.  SSH into the running container with the following command:
+4.  To run unit and functional tests for an app:
+
+    ```bash
+    host$ ./container run-tests --pytest-args -v --include-functional --no-xvfb plinth/modules/{app name}
+    ```
+
+5.  SSH into the running container with the following command:
 
     ```bash
     host$ ./container ssh
