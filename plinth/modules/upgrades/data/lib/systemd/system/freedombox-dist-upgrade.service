@@ -2,8 +2,7 @@
 Description=Upgrade to new stable Debian release
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/usr/share/plinth/actions/upgrades dist-upgrade
-KillMode=none
-TimeoutStopSec=3600
-Restart=no
+KillMode=process
+TimeoutStopSec=900
