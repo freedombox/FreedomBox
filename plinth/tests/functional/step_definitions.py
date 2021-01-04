@@ -12,7 +12,7 @@ from plinth.tests import functional
 
 
 @given("I'm a logged in user")
-def logged_in_user(session_browser):
+def logged_in(session_browser):
     functional.login(session_browser)
 
 
@@ -161,24 +161,21 @@ def bind_assert_forwarders(session_browser, forwarders):
     assert functional.get_forwarders(session_browser) == forwarders
 
 
-@when(
-    parsers.parse('I create a user named {name:w} with password {password:S}'))
-def create_user(session_browser, name, password):
-    if not functional.user_exists(session_browser, name):
-        functional.create_user(session_browser, name, password)
+@given(parsers.parse('the user {name:w} exists'))
+def user_exists(session_browser, name):
+    if functional.user_exists(session_browser, name):
+        functional.delete_user(session_browser, name)
+    functional.create_user(session_browser, name)
 
 
-@when(
-    parsers.parse('I create a user named {name:w} with password {password:S} '
-                  'in group {group:S}'))
-def create_user_in_group(session_browser, name, password, group):
-    if not functional.user_exists(session_browser, name):
-        functional.create_user(session_browser, name, password, groups=[group])
+@given(parsers.parse('the user {name:w} in group {group:S} exists'))
+def user_in_group_exists(session_browser, name, group):
+    if functional.user_exists(session_browser, name):
+        functional.delete_user(session_browser, name)
+    functional.create_user(session_browser, name, groups=[group])
 
 
-@when(
-    parsers.parse(
-        "I'm logged in as the user {username:w} with password {password:S}"))
-def logged_in_user_with_account(session_browser, username, password):
-    functional.login_with_account(session_browser, functional.base_url,
-                                  username, password)
+@given(parsers.parse("I'm logged in as the user {name:w}"))
+@when(parsers.parse("I'm logged in as the user {name:w}"))
+def logged_in_user(session_browser, name):
+    functional.login_with_account(session_browser, functional.base_url, name)

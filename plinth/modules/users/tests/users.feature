@@ -12,7 +12,7 @@ Background:
 
 Scenario: Create user
   Given the user alice doesn't exist
-  When I create a user named alice with password secret123secret123
+  When I create a user named alice
   Then alice should be listed as a user
 
 Scenario: Rename user
@@ -20,16 +20,16 @@ Scenario: Rename user
   Given the user bob doesn't exist
   When I rename the user alice to bob
   Then alice should not be listed as a user
-  Then bob should be listed as a user
+  And bob should be listed as a user
 
 Scenario: Admin users can change their own ssh keys
   When I change the ssh keys to somekey123
   Then the ssh keys should be somekey123
 
 Scenario: Non-admin users can change their own ssh keys
-  Given the user alice with password secret123secret123 exists
-  And I'm logged in as the user alice with password secret123secret123
-  When I change my ssh keys to somekey456 with password secret123secret123
+  Given the user alice exists
+  And I'm logged in as the user alice
+  When I change my ssh keys to somekey456
   Then my ssh keys should be somekey456
 
 Scenario: Admin users can change other user's ssh keys
@@ -78,15 +78,15 @@ Scenario Outline: Change language
   | None           |
 
 Scenario: Admin users can set other users an inactive
-  Given the user alice with password secret789secret789 exists
+  Given the user alice exists
   When I set the user alice as inactive
-  Then I can't log in as the user alice with password secret789secret789
+  Then I can't log in as the user alice
 
 Scenario: Admin users can change their own password
-  Given the admin user testadmin with password testingtesting123 exists
-  And I'm logged in as the user testadmin with password testingtesting123
-  When I change my password from testingtesting123 to testingtesting456
-  Then I can log in as the user testadmin with password testingtesting456
+  Given the user testadmin in group admin exists
+  And I'm logged in as the user testadmin
+  When I change my password to newpassword456
+  Then I can log in as the user testadmin with password newpassword456
 
 Scenario: Admin user can change other user's password
   Given the user alice exists
@@ -94,10 +94,10 @@ Scenario: Admin user can change other user's password
   Then I can log in as the user alice with password secretsecret567
 
 Scenario: Non-admin users can change their own password
-  Given the user alice with password secret123secret123 exists
-  And I'm logged in as the user alice with password secret123secret123
-  When I change my password from secret123secret123 to secret456secret456
-  Then I can log in as the user alice with password secret456secret456
+  Given the user alice exists
+  And I'm logged in as the user alice
+  When I change my password to newpassword123
+  Then I can log in as the user alice with password newpassword123
 
 Scenario: Delete user
   Given the user alice exists
