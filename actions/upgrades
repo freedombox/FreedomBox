@@ -391,7 +391,7 @@ def _perform_dist_upgrade():
 
         print('Upgrading base-files and unattended-upgrades...', flush=True)
         run_apt_command(['install', 'base-files'])
-        run_apt_command(['install', 'unattended-upgrades'])
+        run_apt_command(['install', 'python3-systemd', 'unattended-upgrades'])
 
         # Tell grub-pc to continue without installing grub again.
         print('Set grub-pc to not require re-installing grub...', flush=True)
