@@ -12,7 +12,8 @@ import subprocess
 import sys
 
 from plinth.action_utils import (apt_hold, debconf_set_selections,
-                                 run_apt_command, service_daemon_reload)
+                                 run_apt_command, service_daemon_reload,
+                                 service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
@@ -439,6 +440,11 @@ def _perform_dist_upgrade():
     # freedombox package.
     print('Running unattended-upgrade...', flush=True)
     subprocess.run(['unattended-upgrade', '--verbose'])
+
+    # Restart FreedomBox service to ensure it is using the latest
+    # dependencies.
+    print('Restarting FreedomBox service...', flush=True)
+    service_restart('plinth')
 
     # Update apt cache again to trigger force_upgrades.
     print('Updating Apt cache...', flush=True)
