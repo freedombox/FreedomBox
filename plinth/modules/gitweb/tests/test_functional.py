@@ -288,7 +288,11 @@ def _gitweb_temp_directory():
 
 def _gitweb_git_command_is_successful(command, cwd):
     """Check if a command runs successfully or gives authentication error"""
-    process = subprocess.run(command, capture_output=True, cwd=cwd)
+    # Tell OS not to translate command return messages
+    env = os.environ.copy()
+    env['LC_ALL'] = 'C'
+
+    process = subprocess.run(command, capture_output=True, cwd=cwd, env=env)
     if process.returncode != 0:
         if 'Authentication failed' in process.stderr.decode():
             return False
