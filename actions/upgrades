@@ -12,7 +12,7 @@ import subprocess
 import sys
 
 from plinth.action_utils import (apt_hold, debconf_set_selections,
-                                 run_apt_command)
+                                 run_apt_command, service_daemon_reload)
 from plinth.modules.apache.components import check_url
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
@@ -75,6 +75,20 @@ Package: python3-canonicaljson
 Pin: release a=buster-backports
 Pin-Priority: 500
 '''
+
+DIST_UPGRADE_SERVICE = '''
+[Unit]
+Description=Upgrade to new stable Debian release
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/plinth/actions/upgrades dist-upgrade
+KillMode=process
+TimeoutSec=12hr
+'''
+
+DIST_UPGRADE_SERVICE_PATH = \
+    '/run/systemd/system/freedombox-dist-upgrade.service'
 
 dist_upgrade_flag = pathlib.Path(
     '/var/lib/freedombox/dist-upgrade-in-progress')
@@ -457,6 +471,10 @@ def subcommand_start_dist_upgrade(arguments):
     if updates are enabled.
     """
     if _check_dist_upgrade(arguments.test):
+        with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
+            service_file.write(DIST_UPGRADE_SERVICE)
+
+        service_daemon_reload()
         subprocess.Popen(['systemctl', 'start', 'freedombox-dist-upgrade'],
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL, close_fds=True,
