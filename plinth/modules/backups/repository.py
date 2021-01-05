@@ -21,6 +21,7 @@ from plinth.utils import format_lazy
 
 from . import (_backup_handler, api, errors, get_known_hosts_path,
                restore_archive_handler, split_path, store)
+from .schedule import Schedule
 
 logger = logging.getLogger(__name__)
 
@@ -79,12 +80,16 @@ class BaseBorgRepository(abc.ABC):
     is_mounted = True
     known_credentials = []
 
-    def __init__(self, path, credentials=None, uuid=None, **kwargs):
+    def __init__(self, path, credentials=None, uuid=None, schedule=None,
+                 **kwargs):
         """Instantiate a new repository."""
         self._path = path
         self.credentials = credentials or {}
         self.uuid = uuid or str(uuid1())
         self.kwargs = kwargs
+        schedule = schedule or {}
+        schedule['repository_uuid'] = self.uuid
+        self.schedule = Schedule(**schedule)
 
     @classmethod
     def load(cls, uuid):
@@ -94,8 +99,10 @@ class BaseBorgRepository(abc.ABC):
         storage.pop('uuid')
         credentials = storage.setdefault('credentials', {})
         storage.pop('credentials')
+        schedule = storage.setdefault('schedule', {})
+        storage.pop('schedule')
 
-        return cls(path, credentials, uuid, **storage)
+        return cls(path, credentials, uuid, schedule, **storage)
 
     @property
     def name(self):
@@ -298,6 +305,7 @@ class BaseBorgRepository(abc.ABC):
             'storage_type': self.storage_type,
             'added_by_module': 'backups',
             'credentials': self.credentials,
+            'schedule': self.schedule.get_storage_format()
         }
         if self.uuid:
             storage['uuid'] = self.uuid
@@ -321,9 +329,10 @@ class RootBorgRepository(BaseBorgRepository):
     sort_order = 10
     is_mounted = True
 
-    def __init__(self, credentials=None):
+    def __init__(self, path=None, credentials=None, uuid=None, schedule=None,
+                 **kwargs):
         """Initialize the repository object."""
-        super().__init__(self.PATH, credentials, self.UUID)
+        super().__init__(self.PATH, credentials, self.UUID, schedule, **kwargs)
 
 
 class BorgRepository(BaseBorgRepository):
