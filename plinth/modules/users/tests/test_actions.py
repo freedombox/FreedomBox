@@ -24,10 +24,13 @@ _cleanup_groups = None
 
 def _is_ldap_set_up():
     """Return whether LDAP is set up."""
-    return subprocess.call([
-        'ldapsearch', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-b',
-        'ou=groups,dc=thisbox'
-    ]) == 0
+    try:
+        return subprocess.call([
+            'ldapsearch', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-b',
+            'ou=groups,dc=thisbox'
+        ]) == 0
+    except FileNotFoundError:
+        return False
 
 
 pytestmark = [
