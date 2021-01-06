@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
         let label = document.createElement('label');
         label.for = "select_all";
+        label.setAttribute('class', 'select-all-label');
 
         let checkbox = document.createElement('input');
         checkbox.type = "checkbox";
