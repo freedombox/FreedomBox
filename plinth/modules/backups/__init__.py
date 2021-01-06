@@ -4,6 +4,7 @@ FreedomBox app to manage backup archives.
 """
 
 import json
+import logging
 import os
 import pathlib
 import re
@@ -14,9 +15,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, glib, menu
 
 from . import api
+
+logger = logging.getLogger(__name__)
 
 version = 2
 
@@ -55,6 +58,11 @@ class BackupsApp(app_module.App):
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
+
+        # Check every hour (every 3 minutes in debug mode) to perform scheduled
+        # backups.
+        interval = 180 if cfg.develop else 3600
+        glib.schedule(interval, backup_by_schedule)
 
 
 def setup(helper, old_version=None):
@@ -96,6 +104,17 @@ def _backup_handler(packet, encryption_passphrase=None):
             {'encryption_passphrase': encryption_passphrase})
 
     actions.superuser_run('backups', arguments, input=input_data.encode())
+
+
+def backup_by_schedule(data):
+    """Check if backups need to be taken and run the operation."""
+    from . import repository as repository_module
+    for repository in repository_module.get_repositories():
+        try:
+            repository.schedule.run_schedule()
+        except Exception as exception:
+            logger.exception('Error running scheduled backup: %s', exception)
+            # XXX: Create a notification
 
 
 def get_exported_archive_apps(path):
