@@ -262,6 +262,13 @@ def parse_arguments():
     subparser.add_argument('--image-size', default='12G',
                            help='Disk image size to resize to after download')
 
+    # Print IP address
+    subparser = subparsers.add_parser(
+        'ip', help='Print the IP address of the container.')
+    subparser.add_argument(
+        '--distribution', choices=distributions, default='testing',
+        help='Distribution of the container to print IP address')
+
     # ssh
     subparser = subparsers.add_parser('ssh', help='SSH into the container')
     subparser.add_argument('--distribution', choices=distributions,
@@ -924,6 +931,11 @@ def subcommand_up(arguments):
     _launch(image_file, arguments.distribution)
     _provision(image_file, arguments.distribution)
     _print_banner(arguments.distribution)
+
+
+def subcommand_ip(arguments):
+    """Print the IP address of the container."""
+    print(_get_ip_address(arguments.distribution) or '')
 
 
 def subcommand_ssh(arguments):
