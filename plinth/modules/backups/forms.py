@@ -54,7 +54,7 @@ class CreateArchiveForm(forms.Form):
         regex=r'^[^{}/]*$', required=False, strip=True)
     selected_apps = forms.MultipleChoiceField(
         label=_('Included apps'), help_text=_('Apps to include in the backup'),
-        widget=forms.CheckboxSelectMultiple)
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'has-select-all'}))
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
@@ -71,7 +71,7 @@ class CreateArchiveForm(forms.Form):
 class RestoreForm(forms.Form):
     selected_apps = forms.MultipleChoiceField(
         label=_('Select the apps you want to restore'),
-        widget=forms.CheckboxSelectMultiple)
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'has-select-all'}))
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
