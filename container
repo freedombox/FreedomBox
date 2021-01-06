@@ -913,6 +913,7 @@ def subcommand_up(arguments):
     machine_name = f'fbx-{arguments.distribution}'
     if _get_machine_status(machine_name):
         logger.info('Container is already running')
+        _print_banner(arguments.distribution)
         return
 
     _verify_dependencies()
