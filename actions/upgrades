@@ -431,7 +431,8 @@ def _perform_dist_upgrade():
         # If searx is installed, update search engines list.
         if pathlib.Path('/etc/searx/settings.yml').exists():
             print('Updating searx search engines list...', flush=True)
-            subprocess.run(['./searx', 'setup'], check=True)
+            subprocess.run(['/usr/share/plinth/actions/searx', 'setup'],
+                           check=True)
 
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])
