@@ -484,9 +484,13 @@ def _ssh_connection(hostname, username, password):
 
 def get_repositories():
     """Get all repositories of a given storage type."""
-    repositories = [get_instance(RootBorgRepository.UUID)]
-    for uuid in store.get_storages():
+    repositories = []
+    storages = store.get_storages()
+    for uuid in storages:
         repositories.append(get_instance(uuid))
+
+    if RootBorgRepository.UUID not in storages:
+        repositories.append(get_instance(RootBorgRepository.UUID))
 
     return sorted(repositories, key=lambda x: x.sort_order)
 
@@ -494,7 +498,10 @@ def get_repositories():
 def get_instance(uuid):
     """Create a local or SSH repository object instance."""
     if uuid == RootBorgRepository.UUID:
-        return RootBorgRepository()
+        try:
+            return RootBorgRepository.load(uuid)
+        except KeyError:
+            return RootBorgRepository()
 
     storage = store.get(uuid)
     if storage['storage_type'] == 'ssh':
