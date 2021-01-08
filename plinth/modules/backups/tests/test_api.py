@@ -64,10 +64,20 @@ class TestBackupProcesses:
     """Test cases for backup processes"""
 
     @staticmethod
+    def test_packet_init():
+        """Test that packet is initialized properly."""
+        packet = api.Packet('backup', 'apps', '/', [])
+        assert packet.archive_comment is None
+        packet = api.Packet('backup', 'apps', '/', [],
+                            archive_comment='test comment')
+        assert packet.archive_comment == 'test comment'
+
+    @staticmethod
     def test_packet_collected_files_directories():
         """Test that directories/files are collected from manifests."""
         components = [_get_backup_component('a'), _get_backup_component('b')]
-        packet = api.Packet('backup', 'apps', '/', components)
+        packet = api.Packet('backup', 'apps', '/', components,
+                            archive_comment='test comment')
         for component in components:
             for section in ['config', 'data', 'secrets']:
                 for directory in getattr(component, section)['directories']:

@@ -85,7 +85,11 @@ def _backup_handler(packet, encryption_passphrase=None):
 
     paths = packet.directories + packet.files
     paths.append(manifest_path)
-    arguments = ['create-archive', '--path', packet.path, '--paths'] + paths
+    arguments = ['create-archive', '--path', packet.path]
+    if packet.archive_comment:
+        arguments += ['--comment', packet.archive_comment]
+
+    arguments += ['--paths'] + paths
     input_data = ''
     if encryption_passphrase:
         input_data = json.dumps(

@@ -166,12 +166,13 @@ class BaseBorgRepository(abc.ABC):
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
 
-    def create_archive(self, archive_name, app_ids):
+    def create_archive(self, archive_name, app_ids, archive_comment=None):
         """Create a new archive in this repository with given name."""
         archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
         api.backup_apps(_backup_handler, path=archive_path, app_ids=app_ids,
-                        encryption_passphrase=passphrase)
+                        encryption_passphrase=passphrase,
+                        archive_comment=archive_comment)
 
     def delete_archive(self, archive_name):
         """Delete an archive with given name from this repository."""

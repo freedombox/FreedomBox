@@ -13,6 +13,7 @@ import sys
 import tarfile
 
 from plinth.modules.backups import MANIFESTS_FOLDER
+from plinth.utils import Version
 
 TIMEOUT = 30
 
@@ -38,6 +39,9 @@ def parse_arguments():
                                            help='Create archive')
     create_archive.add_argument('--paths', help='Paths to include in archive',
                                 nargs='+')
+    create_archive.add_argument('--comment',
+                                help='Comment text to add to archive',
+                                default='')
 
     delete_archive = subparsers.add_parser('delete-archive',
                                            help='Delete archive')
@@ -112,13 +116,32 @@ def subcommand_info(arguments):
 
 def subcommand_list_repo(arguments):
     """List repository contents."""
-    run(['borg', 'list', '--json', arguments.path], arguments)
+    run(['borg', 'list', '--json', '--format="{comment}"', arguments.path],
+        arguments)
+
+
+def _get_borg_version(arugments):
+    """Return the version of borgbackup."""
+    process = run(['borg', '--version'], arugments, stdout=subprocess.PIPE)
+    return process.stdout.decode().split()[1]  # Example: "borg 1.1.9"
 
 
 def subcommand_create_archive(arguments):
     """Create archive."""
     paths = filter(os.path.exists, arguments.paths)
-    run(['borg', 'create', '--json', arguments.path] + list(paths), arguments)
+    command = ['borg', 'create', '--json']
+    if arguments.comment:
+        comment = arguments.comment
+        if Version(_get_borg_version(arguments)) < Version('1.1.10'):
+            # Undo any placeholder escape sequences in comments as this version
+            # of borg does not support placeholders. XXX: Drop this code when
+            # support for borg < 1.1.10 is dropped.
+            comment = comment.replace('{{', '{').replace('}}', '}')
+
+        command += ['--comment', comment]
+
+    command += [arguments.path] + list(paths)
+    run(command, arguments)
 
 
 def subcommand_delete_archive(arguments):
