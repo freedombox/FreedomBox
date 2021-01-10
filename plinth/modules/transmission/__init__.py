@@ -19,7 +19,7 @@ from plinth.modules.users.components import UsersAndGroups
 
 from . import manifest
 
-version = 3
+version = 4
 
 managed_services = ['transmission-daemon']
 
@@ -70,15 +70,21 @@ class TransmissionApp(app_module.App):
         self.add(shortcut)
 
         firewall = Firewall('firewall-transmission', info.name,
-                            ports=['http', 'https'], is_external=True)
+                            ports=['http', 'https',
+                                   'transmission-client'], is_external=True)
         self.add(firewall)
 
         webserver = Webserver('webserver-transmission', 'transmission-plinth',
                               urls=['https://{host}/transmission'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-transmission', managed_services[0],
-                        listen_ports=[(9091, 'tcp4')])
+        daemon = Daemon(
+            'daemon-transmission', managed_services[0], listen_ports=[
+                (9091, 'tcp4'),
+                (51413, 'tcp4'),
+                (51413, 'tcp6'),
+                (51413, 'udp4'),
+            ])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-transmission',
@@ -94,6 +100,9 @@ class TransmissionApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+
+    if old_version and old_version <= 3 and app.is_enabled():
+        app.get_component('firewall-transmission').enable()
 
     new_configuration = {
         'rpc-whitelist-enabled': False,
