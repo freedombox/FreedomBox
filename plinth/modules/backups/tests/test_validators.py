@@ -63,7 +63,7 @@ def test_repository_dir_path_validation():
     _validate_repository(valid_dir_paths, invalid_dir_paths, path_string)
 
 
-def test_respository_with_colon_path():
+def test_repository_with_colon_path():
     """Test that a colon is possible in directory path."""
     _, hostname, path = split_path('user@fe80::2078:6c26:498a:1fa5:/foo:bar')
     assert hostname == 'fe80::2078:6c26:498a:1fa5'
