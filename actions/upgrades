@@ -425,8 +425,10 @@ def _perform_dist_upgrade():
             'Holding packages with conffile prompts: ' +
             ', '.join(packages_with_prompts) + '...', flush=True)
         with apt_hold(packages_with_prompts):
-            print('Running apt full-upgrade...', flush=True)
-            run_apt_command(['full-upgrade'])
+            print('Holding tt-rss package if available...', flush=True)
+            with apt_hold(['tt-rss'], ignore_errors=True):
+                print('Running apt full-upgrade...', flush=True)
+                run_apt_command(['full-upgrade'])
 
         # If searx is installed, update search engines list.
         if pathlib.Path('/etc/searx/settings.yml').exists():
