@@ -26,9 +26,10 @@ managed_services = ['transmission-daemon']
 managed_packages = ['transmission-daemon']
 
 _description = [
+    _('Transmission is a BitTorrent client with a web interface.'),
     _('BitTorrent is a peer-to-peer file sharing protocol. '
-      'Transmission daemon handles Bitorrent file sharing.  Note that '
-      'BitTorrent is not anonymous.'),
+      'Note that BitTorrent is not anonymous.'),
+    _('Please do not change the default port of the transmission daemon.'),
 ]
 
 app = None
