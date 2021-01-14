@@ -127,6 +127,7 @@ def _remove_folder(browser, folder_name):
     functional.eventually(lambda: folder.find_by_css('div.collapse.in'))
     edit_folder_xpath = './/button[contains(@ng-click, "editFolder")]'
     edit_folder_button = folder.find_by_xpath(edit_folder_xpath).first
+    edit_folder_button.scroll_to()
     edit_folder_button.click()
 
     # Edit folder dialog

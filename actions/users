@@ -56,6 +56,12 @@ def parse_arguments():
     subparser.add_argument('groupname',
                            help='Name of the LDAP group to create')
 
+    subparser = subparsers.add_parser('rename-group',
+                                      help='Rename an LDAP group')
+    subparser.add_argument('old_groupname',
+                           help='Name of the LDAP group to rename')
+    subparser.add_argument('new_groupname', help='Name of the new LDAP group')
+
     subparser = subparsers.add_parser('remove-group',
                                       help='Delete an LDAP group')
     subparser.add_argument('groupname',
@@ -476,6 +482,22 @@ def subcommand_create_group(arguments):
     """Add an LDAP group."""
     create_group(arguments.groupname)
     flush_cache()
+
+
+def subcommand_rename_group(arguments):
+    """Rename an LDAP group.
+
+    Skip if the group to rename from doesn't exist.
+    """
+    old_groupname = arguments.old_groupname
+    new_groupname = arguments.new_groupname
+
+    if old_groupname == 'admin' or new_groupname == 'admin':
+        raise argparse.ArgumentTypeError('Can\'t rename the group "admin"')
+
+    if group_exists(old_groupname):
+        _run(['ldaprenamegroup', old_groupname, new_groupname])
+        flush_cache()
 
 
 def subcommand_remove_group(arguments):

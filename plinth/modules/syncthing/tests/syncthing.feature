@@ -35,6 +35,18 @@ Scenario: Backup and restore syncthing
   And I restore the syncthing app data backup with name test_syncthing
   Then syncthing folder Test should be present
 
+Scenario: User of syncthing-access group can access syncthing site
+  Given the syncthing application is enabled
+  And the user syncthinguser in group syncthing-access exists
+  When I'm logged in as the user syncthinguser
+  Then the syncthing site should be available
+
+Scenario: User not of syncthing-access group can't access syncthing site
+  Given the syncthing application is enabled
+  And the user nogroupuser exists
+  When I'm logged in as the user nogroupuser
+  Then the syncthing site should not be available
+
 Scenario: Disable syncthing application
   Given the syncthing application is enabled
   When I disable the syncthing application
