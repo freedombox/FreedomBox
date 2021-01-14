@@ -12,6 +12,7 @@ import re
 import paramiko
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_noop
 
 from plinth import actions
 from plinth import app as app_module
@@ -21,7 +22,7 @@ from . import api
 
 logger = logging.getLogger(__name__)
 
-version = 2
+version = 3
 
 is_essential = True
 
@@ -72,6 +73,10 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'backups',
                 ['setup', '--path', repository.RootBorgRepository.PATH])
     helper.call('post', app.enable)
+
+    # First time setup or upgrading from older versions.
+    if old_version <= 2:
+        _show_schedule_setup_notification()
 
 
 def _backup_handler(packet, encryption_passphrase=None):
@@ -181,3 +186,41 @@ def split_path(path):
 
     """
     return re.findall(r'^(.*)@([^/]*):(.*)$', path)[0]
+
+
+def _show_schedule_setup_notification():
+    """Show a notification hinting to setup a remote backup schedule."""
+    from plinth.notification import Notification
+    message = ugettext_noop(
+        'Enable an automatic backup schedule for data safety. Prefer an '
+        'encrypted remote backup location or an extra attached disk.')
+    data = {
+        'app_name': 'translate:' + ugettext_noop('Backups'),
+        'app_icon': 'fa-files-o'
+    }
+    title = ugettext_noop('Enable a Backup Schedule')
+    actions_ = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': ugettext_noop('Go to {app_name}'),
+        'url': 'backups:index'
+    }, {
+        'type': 'dismiss'
+    }]
+    Notification.update_or_create(id='backups-remote-schedule',
+                                  app_id='backups', severity='info',
+                                  title=title, message=message,
+                                  actions=actions_, data=data, group='admin')
+
+
+def on_schedule_save(repository):
+    """Dismiss notification. Called when repository's schedule is updated."""
+    if not repository.schedule.enabled:
+        return
+
+    from plinth.notification import Notification
+    try:
+        note = Notification.get('backups-remote-schedule')
+        note.dismiss()
+    except KeyError:
+        pass

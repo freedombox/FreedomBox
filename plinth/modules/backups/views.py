@@ -93,6 +93,7 @@ class ScheduleView(SuccessMessageMixin, FormView):
         schedule.unselected_apps = unselected_apps
 
         repository.save()
+        backups.on_schedule_save(repository)
         return super().form_valid(form)
 
 
