@@ -117,9 +117,11 @@ def backup_by_schedule(data):
     for repository in repository_module.get_repositories():
         try:
             repository.schedule.run_schedule()
+            _show_schedule_error_notification(repository, is_error=False)
         except Exception as exception:
             logger.exception('Error running scheduled backup: %s', exception)
-            # XXX: Create a notification
+            _show_schedule_error_notification(repository, is_error=True,
+                                              exception=exception)
 
 
 def get_exported_archive_apps(path):
@@ -224,3 +226,38 @@ def on_schedule_save(repository):
         note.dismiss()
     except KeyError:
         pass
+
+
+def _show_schedule_error_notification(repository, is_error, exception=None):
+    """Show or hide a notification related scheduled backup operation."""
+    from plinth.notification import Notification
+    id_ = 'backups-schedule-error-' + repository.uuid
+    try:
+        note = Notification.get(id_)
+        error_count = note.data['error_count']
+    except KeyError:
+        error_count = 0
+
+    message = ugettext_noop(
+        'A scheduled backup failed. Past {error_count} attempts for backup '
+        'did not succeed. The latest error is: {error_message}')
+    data = {
+        'app_name': 'translate:' + ugettext_noop('Backups'),
+        'app_icon': 'fa-files-o',
+        'error_count': error_count + 1 if is_error else 0,
+        'error_message': str(exception)
+    }
+    title = ugettext_noop('Error During Backup')
+    actions_ = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': ugettext_noop('Go to {app_name}'),
+        'url': 'backups:index'
+    }, {
+        'type': 'dismiss'
+    }]
+    note = Notification.update_or_create(id=id_, app_id='backups',
+                                         severity='error', title=title,
+                                         message=message, actions=actions_,
+                                         data=data, group='admin')
+    note.dismiss(should_dismiss=not is_error)
