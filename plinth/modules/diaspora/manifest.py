@@ -2,11 +2,11 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 from plinth.modules import diaspora
 from plinth.utils import format_lazy
 
-clients = validate([{
+clients = [{
     'name':
         _('dandelion*'),
     'description':
@@ -30,4 +30,4 @@ clients = validate([{
                 host=diaspora.get_configured_domain_name()
                 if diaspora.is_setup() else "<please-setup-domain-name>")
     }]
-}])
+}]

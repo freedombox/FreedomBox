@@ -15,11 +15,12 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -60,7 +61,8 @@ class SambaApp(app_module.App):
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Samba'),
             icon_filename='samba', short_description=_('Network File Storage'),
-            manual_page='Samba', description=_description, clients=clients,
+            manual_page='Samba', description=_description,
+            clients=manifest.clients,
             donation_url='https://www.samba.org/samba/donations.html')
         self.add(info)
 
@@ -95,6 +97,23 @@ class SambaApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-samba',
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = SambaBackupRestore('backup-restore-samba',
+                                            **manifest.backup)
+        self.add(backup_restore)
+
+
+class SambaBackupRestore(BackupRestore):
+    """Component to backup/restore Samba."""
+
+    def backup_pre(self, packet):
+        """Save registry share configuration."""
+        actions.superuser_run('samba', ['dump-shares'])
+
+    def restore_post(self, packet):
+        """Restore configuration."""
+        actions.superuser_run('samba', ['setup'])
+        actions.superuser_run('samba', ['restore-shares'])
 
 
 def setup(helper, old_version=None):
@@ -148,14 +167,3 @@ def get_shares():
     output = actions.superuser_run('samba', ['get-shares'])
 
     return json.loads(output)
-
-
-def backup_pre(packet):
-    """Save registry share configuration."""
-    actions.superuser_run('samba', ['dump-shares'])
-
-
-def restore_post(packet):
-    """Restore configuration."""
-    actions.superuser_run('samba', ['setup'])
-    actions.superuser_run('samba', ['restore-shares'])

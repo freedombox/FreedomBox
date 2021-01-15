@@ -3,11 +3,9 @@
 Application manfiest for tahoe-lafs.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'secrets': {
         'directories': ['/var/lib/tahoe-lafs/']
     },
     'services': ['tahoe-lafs']
-})
+}

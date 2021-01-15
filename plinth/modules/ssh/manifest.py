@@ -3,9 +3,7 @@
 Application manifest for ssh.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'secrets': {
         'files': [
             '/etc/ssh/ssh_host_ecdsa_key', '/etc/ssh/ssh_host_ecdsa_key.pub',
@@ -14,4 +12,4 @@ backup = validate_backup({
             '/etc/ssh/ssh_host_rsa_key.pub'
         ]
     }
-})
+}

@@ -52,8 +52,6 @@ _description = [
         ' federate with other diaspora* pods.')
 ]
 
-from .manifest import clients  # noqa pylint:disable=E402 isort:skip
-
 app = None
 
 
@@ -65,10 +63,12 @@ class DiasporaApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+        from . import manifest
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('diaspora*'), icon_filename='diaspora',
                                short_description=_('Federated Social Network'),
-                               description=_description, clients=clients)
+                               description=_description,
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-diaspora', info.name,

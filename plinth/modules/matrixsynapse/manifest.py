@@ -2,13 +2,12 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
+from plinth.clients import store_url
 
 _android_package_id = 'im.vector.app'
 _element_desktop_download_url = 'https://element.io/get-started'
 
-clients = validate([{
+clients = [{
     'name':
         _('Element'),
     'platforms': [{
@@ -42,9 +41,9 @@ clients = validate([{
         'os': 'windows',
         'url': _element_desktop_download_url,
     }]
-}])
+}]
 
-backup = validate_backup({
+backup = {
     'config': {
         'directories': ['/etc/matrix-synapse/conf.d/'],
         'files': [
@@ -68,4 +67,4 @@ backup = validate_backup({
         ]
     },
     'services': ['matrix-synapse']
-})
+}

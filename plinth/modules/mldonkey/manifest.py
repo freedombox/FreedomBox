@@ -5,10 +5,9 @@ Application manifest for mldonkey.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
+from plinth.clients import store_url
 
-clients = validate([{
+clients = [{
     'name': _('MLDonkey'),
     'platforms': [{
         'type': 'web',
@@ -35,9 +34,9 @@ clients = validate([{
         'store_name': 'google-play',
         'url': store_url('google-play', 'com.devwom.amldonkey'),
     }]
-}])
+}]
 
-backup = validate_backup({
+backup = {
     'config': {
         'files': [
             '/var/lib/mldonkey/bittorrent.ini', '/var/lib/mldonkey/bt_dht.ini',
@@ -55,4 +54,4 @@ backup = validate_backup({
         ]
     },
     'services': ['mldonkey-server']
-})
+}

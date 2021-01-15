@@ -10,11 +10,12 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -58,7 +59,8 @@ class I2PApp(app_module.App):
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('I2P'),
             icon_filename='i2p', short_description=_('Anonymity Network'),
-            description=_description, manual_page='I2P', clients=clients,
+            description=_description, manual_page='I2P',
+            clients=manifest.clients,
             donation_url='https://geti2p.net/en/get-involved/donate')
         self.add(info)
 
@@ -95,6 +97,9 @@ class I2PApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-i2p',
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-i2p', **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

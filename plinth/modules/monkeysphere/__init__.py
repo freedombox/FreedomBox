@@ -7,9 +7,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import menu
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -59,6 +60,10 @@ class MonkeysphereApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-monkeysphere',
                                           reserved_usernames=['monkeysphere'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-monkeysphere',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

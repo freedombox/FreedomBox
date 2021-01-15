@@ -16,10 +16,11 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 6
 
@@ -63,12 +64,11 @@ class MatrixSynapseApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Matrix Synapse'),
-                               icon_filename='matrixsynapse',
-                               short_description=_('Chat Server'),
-                               description=_description,
-                               manual_page='MatrixSynapse', clients=clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=version, name=_('Matrix Synapse'),
+            icon_filename='matrixsynapse', short_description=_('Chat Server'),
+            description=_description, manual_page='MatrixSynapse',
+            clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-matrixsynapse', info.name,
@@ -105,6 +105,10 @@ class MatrixSynapseApp(app_module.App):
         daemon = Daemon('daemon-matrixsynapse', managed_services[0],
                         listen_ports=[(8008, 'tcp4'), (8448, 'tcp4')])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-matrixsynapse',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

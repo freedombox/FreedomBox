@@ -24,16 +24,16 @@ from .repository import get_repositories
 logger = logging.getLogger(__name__)
 
 
-def _get_app_choices(apps):
-    """Return a list of check box multiple choices from list of apps."""
+def _get_app_choices(components):
+    """Return a list of check box multiple choices from list of components."""
     choices = []
-    for app in apps:
-        name = app.app.app.info.name
-        if not app.has_data:
+    for component in components:
+        name = component.app.info.name
+        if not component.has_data:
             name = ugettext('{app} (No data to backup)').format(
-                app=app.app.app.info.name)
+                app=component.app.info.name)
 
-        choices.append((app.name, name))
+        choices.append((component.app_id, name))
 
     return choices
 
@@ -59,9 +59,12 @@ class CreateArchiveForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
         super().__init__(*args, **kwargs)
-        apps = api.get_all_apps_for_backup()
-        self.fields['selected_apps'].choices = _get_app_choices(apps)
-        self.fields['selected_apps'].initial = [app.name for app in apps]
+        components = api.get_all_components_for_backup()
+        choices = _get_app_choices(components)
+        self.fields['selected_apps'].choices = choices
+        self.fields['selected_apps'].initial = [
+            choice[0] for choice in choices
+        ]
         self.fields['repository'].choices = _get_repository_choices()
 
 
@@ -72,10 +75,13 @@ class RestoreForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
-        apps = kwargs.pop('apps')
+        components = kwargs.pop('components')
         super().__init__(*args, **kwargs)
-        self.fields['selected_apps'].choices = _get_app_choices(apps)
-        self.fields['selected_apps'].initial = [app.name for app in apps]
+        choices = _get_app_choices(components)
+        self.fields['selected_apps'].choices = choices
+        self.fields['selected_apps'].initial = [
+            choice[0] for choice in choices
+        ]
 
 
 class UploadForm(forms.Form):

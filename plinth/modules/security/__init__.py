@@ -13,8 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import menu, module_loader
+from plinth.modules.backups.components import BackupRestore
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 6
 
@@ -49,6 +50,10 @@ class SecurityApp(app_module.App):
         menu_item = menu.Menu('menu-security', info.name, None, info.icon,
                               'security:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-security',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

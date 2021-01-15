@@ -10,9 +10,10 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.modules.backups.components import BackupRestore
 from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -43,6 +44,10 @@ class SharingApp(app_module.App):
                               info.icon_filename, 'sharing:index',
                               parent_url_name='apps')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-sharing',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def list_shares():

@@ -9,11 +9,11 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.utils import format_lazy
 
-from . import utils
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest, utils
 
 version = 2
 
@@ -79,6 +79,10 @@ class PagekiteApp(app_module.App):
 
         daemon = Daemon('daemon-pagekite', managed_services[0])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-pagekite',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         # Register kite name with Name Services module.
         setup_helper = globals()['setup_helper']

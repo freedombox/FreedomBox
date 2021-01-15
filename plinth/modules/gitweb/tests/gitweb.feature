@@ -70,7 +70,6 @@ Scenario: Edit default branch of the repository
   When I set branch1 as a default branch
   Then the gitweb site should show branch1 as a default repo branch
 
-
 Scenario: Access public repository with git client
   Given the gitweb application is enabled
   And a public repository
@@ -87,6 +86,20 @@ Scenario: Access private repository with git client
   And the repository should not be publicly writable
   And the repository should be privately readable
   And the repository should be privately writable
+
+Scenario: User of git-access group can access gitweb site
+  Given the gitweb application is enabled
+  And all repositories are private
+  And the user gituser in group git-access exists
+  When I'm logged in as the user gituser
+  Then the gitweb site should be available
+
+Scenario: User not of git-access group can't access gitweb site
+  Given the gitweb application is enabled
+  And all repositories are private
+  And the user nogroupuser exists
+  When I'm logged in as the user nogroupuser
+  Then the gitweb site should not be available
 
 Scenario: Delete repository
   Given the gitweb application is enabled

@@ -10,6 +10,8 @@ import pytest
 
 from plinth.app import App, Component, FollowerComponent, Info, LeaderComponent
 
+# pylint: disable=protected-access
+
 
 class AppTest(App):
     """Sample App for testing."""
@@ -71,6 +73,7 @@ def test_app_add():
     return_value = app.add(component)
     assert len(app.components) == 1
     assert app.components['test-component'] == component
+    assert component.app_id == app.app_id
     assert return_value == app
 
 
@@ -79,6 +82,7 @@ def test_app_remove(app_with_components):
     app = app_with_components
     component = app.components['test-leader-1']
     assert app.remove('test-leader-1') == component
+    assert component.app_id is None
     assert 'test-leader-1' not in app.components
 
 
@@ -206,6 +210,18 @@ def test_component_initialization():
     assert not component.is_leader
 
 
+def test_component_app_property():
+    """Test component's app property."""
+    component = Component('test-component')
+    assert component.app_id is None
+    with pytest.raises(KeyError):
+        assert not component.app
+
+    app = AppTest()
+    app.add(component)
+    assert component.app == app
+
+
 def test_component_diagnose():
     """Test running diagnostics on component."""
     component = Component('test-component')
@@ -288,10 +304,17 @@ def test_info_initialization_without_args():
 
 def test_info_initialization_with_args():
     """Test initializing the Info component with arguments."""
+    clients = [{
+        'name': 'test',
+        'platforms': [{
+            'type': 'web',
+            'url': 'test-url'
+        }]
+    }]
     info = Info('test-app', 3, is_essential=True, depends=['test-app-2'],
                 name='Test App', icon='fa-test', icon_filename='test-icon',
                 short_description='For Test', description='Test description',
-                manual_page='Test', clients=['test'])
+                manual_page='Test', clients=clients)
     assert info.is_essential
     assert info.depends == ['test-app-2']
     assert info.name == 'Test App'
@@ -300,4 +323,19 @@ def test_info_initialization_with_args():
     assert info.short_description == 'For Test'
     assert info.description == 'Test description'
     assert info.manual_page == 'Test'
-    assert info.clients == ['test']
+    assert info.clients == clients
+
+
+def test_info_clients_validation():
+    """Test clients parameter validation during initialization."""
+    with pytest.raises(AssertionError):
+        Info('test-app', 3, clients='invalid')
+
+    clients = [{
+        'name': 'test',
+        'platforms': [{
+            'type': 'web',
+            'url': 'test-url'
+        }]
+    }]
+    Info('test-app', 3, clients=clients)

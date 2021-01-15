@@ -49,6 +49,18 @@ def _disable_message_archive_management(browser):
                                       'disabled')
 
 
+def _is_jsxc_buddy_list_loaded(browser):
+    """Return whether the jsxc buddy list has been loaded."""
+    if browser.find_by_text('new contact'):
+        # no contacts
+        return True
+
+    buddy_list = browser.find_by_id('jsxc_buddylist').first
+    contacts = buddy_list.find_by_css('.jsxc_rosteritem')
+
+    return len(contacts) > 0
+
+
 def _jsxc_login(browser):
     """Login to JSXC."""
     username = functional.config['DEFAULT']['username']
@@ -71,6 +83,7 @@ def _jsxc_add_contact(browser):
     functional.set_domain_name(browser, 'localhost')
     functional.install(browser, 'jsxc')
     _jsxc_login(browser)
+    functional.eventually(_is_jsxc_buddy_list_loaded, args=[browser])
     new = browser.find_by_text('new contact')
     if new:  # roster is empty
         new.first.click()

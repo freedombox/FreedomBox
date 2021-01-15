@@ -15,12 +15,12 @@ from plinth import cfg, menu
 from plinth.errors import ActionError
 from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed, post_module_loading
 from plinth.utils import format_lazy
 
-from . import components
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import components, manifest
 
 version = 3
 
@@ -73,6 +73,10 @@ class LetsEncryptApp(app_module.App):
                               info.short_description, info.icon,
                               'letsencrypt:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-letsencrypt',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)

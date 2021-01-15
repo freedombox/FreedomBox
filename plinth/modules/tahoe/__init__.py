@@ -14,11 +14,12 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver, diagnose_url
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
+from . import manifest
 from .errors import TahoeConfigurationError
-from .manifest import backup  # noqa, pylint: disable=unused-import
 
 version = 1
 
@@ -86,6 +87,10 @@ class TahoeApp(app_module.App):
 
         daemon = Daemon('daemon-tahoe', managed_services[0])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-tahoe',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
     def is_enabled(self):
         """Return whether all the leader components are enabled.

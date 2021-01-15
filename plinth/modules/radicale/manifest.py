@@ -2,10 +2,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
+from plinth.clients import store_url
 
-clients = validate([{
+clients = [{
     'name':
         _('DAVx5'),
     'usage':
@@ -77,11 +76,14 @@ clients = validate([{
         'type': 'web',
         'url': '/radicale/'
     }]
-}])
+}]
 
-backup = validate_backup({
+backup = {
+    'config': {
+        'directories': ['/etc/radicale/']
+    },
     'data': {
         'directories': ['/var/lib/radicale/']
     },
     'services': ['uwsgi']
-})
+}

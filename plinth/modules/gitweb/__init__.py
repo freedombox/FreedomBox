@@ -13,12 +13,13 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.errors import ActionError
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 
+from . import manifest
 from .forms import is_repo_url
-from .manifest import (  # noqa, pylint: disable=unused-import
-    GIT_REPO_PATH, backup, clients)
+from .manifest import GIT_REPO_PATH
 
 version = 1
 
@@ -56,7 +57,7 @@ class GitwebApp(app_module.App):
                                name=_('Gitweb'), icon_filename='gitweb',
                                short_description=_('Simple Git Hosting'),
                                description=_description, manual_page='GitWeb',
-                               clients=clients)
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-gitweb', info.name, info.short_description,
@@ -87,6 +88,10 @@ class GitwebApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-gitweb',
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = GitwebBackupRestore('backup-restore-gitweb',
+                                             **manifest.backup)
+        self.add(backup_restore)
 
         setup_helper = globals()['setup_helper']
         if setup_helper.get_state() != 'needs-setup':
@@ -140,16 +145,19 @@ class GitwebWebserverAuth(Webserver):
             super().enable()
 
 
+class GitwebBackupRestore(BackupRestore):
+    """Component to handle backup/restore for Gitweb."""
+
+    def restore_post(self, packet):
+        """Update access after restoration of backups."""
+        app.update_service_access()
+
+
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'gitweb', ['setup'])
     helper.call('post', app.enable)
-
-
-def restore_post(packet):
-    """Update access after restoration of backups."""
-    app.update_service_access()
 
 
 def repo_exists(name):

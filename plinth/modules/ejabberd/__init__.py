@@ -16,6 +16,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules import config
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
@@ -23,7 +24,7 @@ from plinth.signals import (domain_added, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 3
 
@@ -63,7 +64,8 @@ class EjabberdApp(app_module.App):
                                name=_('ejabberd'), icon_filename='ejabberd',
                                short_description=_('Chat Server'),
                                description=_description,
-                               manual_page='ejabberd', clients=clients)
+                               manual_page='ejabberd',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-ejabberd', info.name,
@@ -106,6 +108,10 @@ class EjabberdApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-ejabberd',
                                           reserved_usernames=['ejabberd'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-ejabberd',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         pre_hostname_change.connect(on_pre_hostname_change)
         post_hostname_change.connect(on_post_hostname_change)

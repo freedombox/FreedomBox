@@ -2,12 +2,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import validate
-
-clients = validate([{
+clients = [{
     'name': _('Shaarli'),
     'platforms': [{
         'type': 'web',
         'url': '/shaarli'
     }]
-}])
+}]

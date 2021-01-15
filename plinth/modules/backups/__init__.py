@@ -75,10 +75,10 @@ def _backup_handler(packet, encryption_passphrase=None):
                                  get_valid_filename(packet.path) + '.json')
     manifests = {
         'apps': [{
-            'name': app.name,
-            'version': app.app.app.info.version,
-            'backup': app.manifest
-        } for app in packet.apps]
+            'name': component.app.app_id,
+            'version': component.app.info.version,
+            'backup': component.manifest
+        } for component in packet.components]
     }
     with open(manifest_path, 'w') as manifest_file:
         json.dump(manifests, manifest_file)
@@ -124,9 +124,9 @@ def restore_archive_handler(packet, encryption_passphrase=None):
     actions.superuser_run('backups', arguments, input=locations_data.encode())
 
 
-def restore_from_upload(path, apps=None):
+def restore_from_upload(path, app_ids=None):
     """Restore files from an uploaded .tar.gz backup file"""
-    api.restore_apps(_restore_exported_archive_handler, app_names=apps,
+    api.restore_apps(_restore_exported_archive_handler, app_ids=app_ids,
                      create_subvolume=False, backup_file=path)
 
 

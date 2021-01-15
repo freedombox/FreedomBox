@@ -18,7 +18,7 @@ def is_snapshots_supported(session_browser):
     assert True
 
 
-@given('the list of snapshots is empty')
+@given('the list of snapshots is empty', target_fixture='empty_snapshots_list')
 def empty_snapshots_list(session_browser):
     _delete_all(session_browser)
     return _get_count(session_browser)

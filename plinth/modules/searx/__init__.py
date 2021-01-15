@@ -11,11 +11,11 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
-from .manifest import (PUBLIC_ACCESS_SETTING_FILE, clients)
+from . import manifest
 
 version = 4
 
@@ -47,7 +47,8 @@ class SearxApp(app_module.App):
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Searx'),
             icon_filename='searx', short_description=_('Web Search'),
-            description=_description, manual_page='Searx', clients=clients,
+            description=_description, manual_page='Searx',
+            clients=manifest.clients,
             donation_url='https://searx.me/static/donate.html')
         self.add(info)
 
@@ -82,6 +83,10 @@ class SearxApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-searx',
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-searx',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
@@ -122,7 +127,7 @@ def get_safe_search_setting():
 
 def is_public_access_enabled():
     """Check whether public access is enabled for Searx."""
-    return os.path.exists(PUBLIC_ACCESS_SETTING_FILE)
+    return os.path.exists(manifest.PUBLIC_ACCESS_SETTING_FILE)
 
 
 def enable_public_access():

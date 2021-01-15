@@ -12,12 +12,12 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules import names
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import utils
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest, utils
 
 version = 1
 
@@ -65,7 +65,7 @@ class CockpitApp(app_module.App):
                                icon='fa-wrench', icon_filename='cockpit',
                                short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',
-                               clients=clients)
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-cockpit', info.name,
@@ -91,6 +91,10 @@ class CockpitApp(app_module.App):
 
         daemon = Daemon('daemon-cockpit', managed_services[0])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-cockpit',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)

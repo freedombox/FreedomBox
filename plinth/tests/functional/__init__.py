@@ -144,6 +144,13 @@ def access_url(browser, site_name):
     browser.visit(config['DEFAULT']['url'] + _get_site_url(site_name))
 
 
+def get_password(username):
+    """Get a user password."""
+    if username == config['DEFAULT']['username']:
+        return config['DEFAULT']['password']
+    return 'password@&123_{}'.format(username)
+
+
 def is_available(browser, site_name):
     url_to_visit = config['DEFAULT']['url'] + _get_site_url(site_name)
     browser.visit(url_to_visit)
@@ -245,8 +252,10 @@ def login(browser):
                        config['DEFAULT']['password'])
 
 
-def login_with_account(browser, url, username, password):
+def login_with_account(browser, url, username, password=None):
 
+    if password is None:
+        password = get_password(username)
     # XXX: Find a way to remove the hardcoded jsxc URL
     if '/plinth/' not in browser.url or '/jsxc/jsxc' in browser.url:
         browser.visit(url)
@@ -499,18 +508,37 @@ def get_forwarders(browser):
 ##############################
 
 
-def create_user(browser, name, password, groups=[]):
+def create_user(browser, name, password=None, groups=[]):
     """Create a user with password and user groups."""
     nav_to_module(browser, 'users')
+
+    if password is None:
+        password = get_password(name)
+
     with wait_for_page_update(browser):
         browser.find_link_by_href('/plinth/sys/users/create/').first.click()
+
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
+
     for group in groups:
         browser.find_by_id(f'id_groups_{group}').check()
+
     browser.find_by_id('id_confirm_password').fill(
         config['DEFAULT']['password'])
+
+    submit(browser)
+
+
+def delete_user(browser, name):
+    """Delete a user."""
+    nav_to_module(browser, 'users')
+    delete_link = browser.find_link_by_href(
+        f'/plinth/sys/users/{name}/delete/')
+
+    with wait_for_page_update(browser):
+        delete_link.first.click()
     submit(browser)
 
 

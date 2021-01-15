@@ -2,12 +2,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
+from plinth.clients import store_url
 
-_plumble_package_id = 'com.morlunk.mumbleclient'
-
-clients = validate([{
+clients = [{
     'name':
         _('Mumble'),
     'platforms': [{
@@ -34,20 +31,6 @@ clients = validate([{
     }]
 }, {
     'name':
-        _('Plumble'),
-    'platforms': [{
-        'type': 'store',
-        'os': 'android',
-        'store_name': 'f-droid',
-        'url': store_url('f-droid', _plumble_package_id)
-    }, {
-        'type': 'store',
-        'os': 'android',
-        'store_name': 'google-play',
-        'url': store_url('google-play', _plumble_package_id)
-    }]
-}, {
-    'name':
         _('Mumblefly'),
     'platforms': [{
         'type': 'store',
@@ -63,12 +46,17 @@ clients = validate([{
         'os': 'android',
         'store_name': 'f-droid',
         'url': store_url('f-droid', 'se.lublin.mumla')
+    }, {
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'se.lublin.mumla')
     }]
-}])
+}]
 
-backup = validate_backup({
+backup = {
     'data': {
         'directories': ['/var/lib/mumble-server']
     },
     'services': ['mumble-server']
-})
+}

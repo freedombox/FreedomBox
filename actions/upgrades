@@ -12,7 +12,8 @@ import subprocess
 import sys
 
 from plinth.action_utils import (apt_hold, debconf_set_selections,
-                                 run_apt_command, service_restart)
+                                 run_apt_command, service_daemon_reload,
+                                 service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
@@ -76,6 +77,20 @@ Pin: release a=buster-backports
 Pin-Priority: 500
 '''
 
+DIST_UPGRADE_SERVICE = '''
+[Unit]
+Description=Upgrade to new stable Debian release
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/plinth/actions/upgrades dist-upgrade
+KillMode=process
+TimeoutSec=12hr
+'''
+
+DIST_UPGRADE_SERVICE_PATH = \
+    '/run/systemd/system/freedombox-dist-upgrade.service'
+
 dist_upgrade_flag = pathlib.Path(
     '/var/lib/freedombox/dist-upgrade-in-progress')
 
@@ -100,13 +115,12 @@ def parse_arguments():
                                     action='store_true',
                                     help='Development mode')
 
-    dist_upgrade = subparsers.add_parser(
-        'dist-upgrade', help='Perform dist upgrade if possible')
-    dist_upgrade.add_argument('--develop', required=False, default=False,
-                              action='store_true', help='Development mode')
-    dist_upgrade.add_argument('--test', required=False, default=False,
-                              action='store_true',
-                              help='Test dist-upgrade from stable to testing')
+    start_dist_upgrade = subparsers.add_parser(
+        'start-dist-upgrade', help='Check and start dist upgrade process')
+    start_dist_upgrade.add_argument(
+        '--test', required=False, default=False, action='store_true',
+        help='Test dist-upgrade from stable to testing')
+    subparsers.add_parser('dist-upgrade', help='Perform dist upgrade')
 
     subparsers.required = True
     return parser.parse_args()
@@ -294,26 +308,24 @@ def _add_apt_preferences():
             file_handle.write(APT_PREFERENCES_APPS)
 
 
-def _check_and_dist_upgrade(develop=False, test_upgrade=False):
+def _check_dist_upgrade(test_upgrade=False):
     """Check for new stable release. If there is one, and updates are
-    enabled, perform dist-upgrade.
+    enabled, return True.
 
-    If develop is True, check for possible upgrade from stable to testing.
-    If test_upgrade is True, also perform the upgrade to testing.
+    If test_upgrade is True, also check for upgrade to testing.
     """
     if dist_upgrade_flag.exists():
-        print('Continuing previously interrupted dist-upgrade.')
-        _perform_dist_upgrade()
-        return
+        print('Found previously interrupted dist-upgrade.')
+        return True
 
     release, dist = get_current_release()
     if release in ['unstable', 'testing']:
         print(f'System release is {release}. Skip checking for new stable '
               'release.')
-        return
+        return False
 
     check_dists = ['stable']
-    if develop:
+    if test_upgrade:
         check_dists.append('testing')
 
     codename = None
@@ -336,27 +348,27 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
 
     if not codename:
         print('"Codename:" not found in release file.')
-        return
+        return False
 
     if codename == dist:
         print(f'{dist} is already the latest release.')
-        return
+        return False
 
     if not _check_auto():
         print('Automatic updates are not enabled.')
-        return
+        return False
 
     if check_dist == 'testing' and not test_upgrade:
         print(f'Skipping dist-upgrade to {check_dist} since --test is not '
               'set.')
-        return
+        return False
 
     output = subprocess.check_output(['df', '--output=avail,pcent', '/'])
     output = output.decode().split('\n')[1].split()
     free_space, free_percent = int(output[0]), int(output[1][:-1])
     if free_space < 1000000 or free_percent < 10:
         print('Not enough free space in /.')
-        return
+        return False
 
     print(f'Upgrading from {dist} to {codename}...')
     with open(SOURCES_LIST, 'r') as sources_list:
@@ -378,7 +390,7 @@ def _check_and_dist_upgrade(develop=False, test_upgrade=False):
 
     print('Dist upgrade in progress. Setting flag.')
     dist_upgrade_flag.touch(mode=0o660)
-    _perform_dist_upgrade()
+    return True
 
 
 def _perform_dist_upgrade():
@@ -391,7 +403,7 @@ def _perform_dist_upgrade():
 
         print('Upgrading base-files and unattended-upgrades...', flush=True)
         run_apt_command(['install', 'base-files'])
-        run_apt_command(['install', 'unattended-upgrades'])
+        run_apt_command(['install', 'python3-systemd', 'unattended-upgrades'])
 
         # Tell grub-pc to continue without installing grub again.
         print('Set grub-pc to not require re-installing grub...', flush=True)
@@ -413,26 +425,37 @@ def _perform_dist_upgrade():
             'Holding packages with conffile prompts: ' +
             ', '.join(packages_with_prompts) + '...', flush=True)
         with apt_hold(packages_with_prompts):
-            print('Running apt full-upgrade...', flush=True)
-            run_apt_command(['full-upgrade'])
+            print('Holding tt-rss package if available...', flush=True)
+            with apt_hold(['tt-rss'], ignore_errors=True):
+                print('Running apt full-upgrade...', flush=True)
+                run_apt_command(['full-upgrade'])
 
         # If searx is installed, update search engines list.
         if pathlib.Path('/etc/searx/settings.yml').exists():
             print('Updating searx search engines list...', flush=True)
-            subprocess.run(['./searx', 'setup'], check=True)
+            subprocess.run(['/usr/share/plinth/actions/searx', 'setup'],
+                           check=True)
 
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])
 
+    # Run unattended-upgrade once more to handle upgrading the
+    # freedombox package.
+    print('Running unattended-upgrade...', flush=True)
+    subprocess.run(['unattended-upgrade', '--verbose'])
+
+    # Restart FreedomBox service to ensure it is using the latest
+    # dependencies.
+    print('Restarting FreedomBox service...', flush=True)
+    service_restart('plinth')
+
+    # Update apt cache again to trigger force_upgrades.
+    print('Updating Apt cache...', flush=True)
+    run_apt_command(['update'])
+
     print('Dist upgrade complete. Removing flag.', flush=True)
     if dist_upgrade_flag.exists():
         dist_upgrade_flag.unlink()
-
-    # FreedomBox Service may have tried to restart several times
-    # during the upgrade, but failed. It will stop trying after 5
-    # retries. Restart it once more to ensure it is running.
-    print('Restarting FreedomBox service...', flush=True)
-    service_restart('plinth')
 
 
 def subcommand_setup(_):
@@ -450,14 +473,27 @@ def subcommand_activate_backports(arguments):
     _check_and_backports_sources(arguments.develop)
 
 
-def subcommand_dist_upgrade(arguments):
-    """Perform major distribution upgrade.
+def subcommand_start_dist_upgrade(arguments):
+    """Start dist upgrade process.
 
-    Check if a new stable release is available, and perform dist-upgrade if
-    updates are enabled.
-
+    Check if a new stable release is available, and start dist-upgrade process
+    if updates are enabled.
     """
-    _check_and_dist_upgrade(arguments.develop, arguments.test)
+    if _check_dist_upgrade(arguments.test):
+        with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
+            service_file.write(DIST_UPGRADE_SERVICE)
+
+        service_daemon_reload()
+        subprocess.Popen(['systemctl', 'start', 'freedombox-dist-upgrade'],
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, close_fds=True,
+                         start_new_session=True)
+
+
+def subcommand_dist_upgrade(_):
+    """Perform major distribution upgrade.
+    """
+    _perform_dist_upgrade()
 
 
 def main():

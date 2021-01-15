@@ -2,11 +2,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.clients import store_url, validate
-from plinth.modules.backups.api import validate as validate_backup
+from plinth.clients import store_url
 from plinth.modules.jsxc import manifest as jsxc_manifest
 
-_clients = validate([{
+_clients = [{
     'name':
         _('Conversations'),
     'platforms': [{
@@ -100,13 +99,13 @@ _clients = validate([{
         'os': 'windows',
         'url': 'https://gajim.org/downloads.php'
     }]
-}])
+}]
 
 _clients.extend(jsxc_manifest.clients)
 
 clients = _clients
 
-backup = validate_backup({
+backup = {
     'config': {
         'files': ['/etc/ejabberd/ejabberd.yml']
     },
@@ -118,4 +117,4 @@ backup = validate_backup({
         'directories': ['/etc/ejabberd/letsencrypt/']
     },
     'services': ['ejabberd']
-})
+}

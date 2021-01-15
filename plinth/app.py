@@ -5,6 +5,8 @@ Base class for all Freedombox applications.
 
 import collections
 
+from . import clients as clients_module
+
 
 class App:
     """Implement common functionality for an app.
@@ -23,11 +25,18 @@ class App:
     the user. Enable/disable button for this app will not be shown. Default
     value is True, so the app can be disabled.
 
+    'locked' is a boolean indicating whether the user can perform operations on
+    the app. This flag is currently set during backup and restore operations
+    but UI changes are currently not implemented.
+
     """
 
     app_id = None
 
     can_be_disabled = True
+
+    locked = False  # Whether user interaction with the app is allowed.
+    # XXX: Lockdown the application UI by implementing a middleware
 
     _all_apps = collections.OrderedDict()
 
@@ -53,12 +62,14 @@ class App:
 
     def add(self, component):
         """Add a component to an app."""
+        component.app_id = self.app_id
         self.components[component.component_id] = component
         return self
 
     def remove(self, component_id):
         """Remove a component from the app."""
         component = self.components[component_id]
+        component.app_id = None
         del self.components[component_id]
         return component
 
@@ -167,7 +178,13 @@ class App:
 
 
 class Component:
-    """Interface for an app component."""
+    """Interface for an app component.
+
+    `app_id` is a string which is set to the value of the application's app_id
+    to which this component belongs. It is set when the component is added to
+    an app. When the component is removed from an app, it set to None.
+
+    """
 
     is_leader = False
 
@@ -177,6 +194,16 @@ class Component:
             raise ValueError('Invalid component ID')
 
         self.component_id = component_id
+        self.app_id = None
+
+    @property
+    def app(self):
+        """Return the app this component is part of.
+
+        Raises KeyError if this component is not part of any app.
+
+        """
+        return App.get(self.app_id)
 
     def enable(self):
         """Run operations to enable the component."""
@@ -348,3 +375,5 @@ class Info(FollowerComponent):
         self.manual_page = manual_page
         self.clients = clients
         self.donation_url = donation_url
+        if clients:
+            clients_module.validate(clients)

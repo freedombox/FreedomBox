@@ -16,8 +16,9 @@ from django.utils.translation import ugettext_noop
 from plinth import app as app_module
 from plinth import cfg, daemon, glib, menu
 from plinth.modules.apache.components import diagnose_url_on_all
+from plinth.modules.backups.components import BackupRestore
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -56,6 +57,10 @@ class DiagnosticsApp(app_module.App):
         menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,
                               'diagnostics:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-diagnostics',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         # Check periodically for low RAM space
         interval = 180 if cfg.develop else 3600

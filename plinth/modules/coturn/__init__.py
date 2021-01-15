@@ -13,11 +13,12 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules import names
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -85,6 +86,10 @@ class CoturnApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-coturn',
                                           reserved_usernames=['turnserver'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-coturn',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

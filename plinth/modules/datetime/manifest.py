@@ -3,6 +3,4 @@
 Application manifest for datetime.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({'data': {'files': ['/etc/timezone']}})
+backup = {'data': {'files': ['/etc/timezone']}}

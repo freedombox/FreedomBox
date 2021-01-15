@@ -15,10 +15,10 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.errors import ActionError, PlinthError
+from plinth.modules.backups.components import BackupRestore
 from plinth.utils import format_lazy
 
-from . import udisks2
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest, udisks2
 
 version = 4
 
@@ -58,6 +58,10 @@ class StorageApp(app_module.App):
         menu_item = menu.Menu('menu-storage', info.name, None, info.icon,
                               'storage:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-storage',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         # Check every hour for low disk space, every 3 minutes in debug mode
         interval = 180 if cfg.develop else 3600

@@ -161,10 +161,84 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
   $(sudo -u plinth /freedombox/run --develop --list-dependencies)
 sudo apt-mark unhold freedombox
 # Install ncurses-term
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term
+sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term sshpass
 
 echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' \
   >> /home/fbx/.bashrc
+
+# Make some pytest related files and directories writable to the fbx user
+sudo touch geckodriver.log
+sudo chmod a+rw geckodriver.log
+sudo mkdir -p .pytest_cache/
+sudo chmod --recursive a+rw .pytest_cache/
+'''
+
+SETUP_AND_RUN_TESTS_SCRIPT = '''
+BACKPORTS_SOURCES_LIST=/etc/apt/sources.list.d/freedombox2.list
+LDAPSCRIPTS_CONF=/etc/ldapscripts/freedombox-ldapscripts.conf
+
+# Remount /freedoombox to be up to date
+echo "> In container: Remounting /freedombox"
+mount -o remount /freedombox
+
+# Activate backports if Debian stable
+if [[ "{distribution}" == "stable"  && ! -e $BACKPORTS_SOURCES_LIST ]]
+then
+    echo "> In container: Enable backports"
+    /freedombox/actions/upgrades activate-backports
+fi
+
+echo "> In container: Upgrade packages"
+apt-get update
+apt-get -yq --with-new-pkgs upgrade
+
+# Install requirements for tests if not already installed as root
+if ! [[ -e /usr/local/bin/geckodriver && -e /usr/local/bin/pytest-bdd ]]
+then
+    # sshpass for Debian Buster
+    apt-get install -yq --no-install-recommends sshpass
+    /freedombox/plinth/tests/functional/install.sh
+fi
+
+# Run the plinth server if functional tests are requested
+if [[ "{pytest_command}" =~ "--include-functional" ]]
+then
+    is_plinth_running=0
+    ps -ax -o cmd | grep -q "^sudo -u plinth /freedombox/run" && \
+    is_plinth_running=1
+    ps -ax -o cmd | grep -q "^/usr/bin/python3 /usr/bin/plinth" && \
+    is_plinth_running=1
+
+    if [[ $is_plinth_running -eq 1 ]]
+    then
+        echo "> In container: Plinth is already running"
+    else
+        echo -n "> In container: Starting plinth ... "
+        sudo -u plinth /freedombox/run --develop > plinth.log 2>&1 &
+        while ! grep -q "Setup thread finished" plinth.log
+        do
+            sleep 1
+            echo -n .
+        done
+        echo
+    fi
+
+    if [[ "{pytest_command}" =~ "--no-xvfb" ]]
+    then
+        # Use the X11 authority file from the fbx user to run GUI programs
+        xauth merge /home/fbx/.Xauthority
+    fi
+fi
+
+# Run pytest
+cd /freedombox
+export FREEDOMBOX_URL=https://localhost
+export FREEDOMBOX_SSH_PORT=22
+export FREEDOMBOX_SAMBA_PORT=445
+{pytest_command}
+
+# Make pytest cache files writable to the fbx user
+chmod --recursive --silent a+rw .pytest_cache/
 '''
 
 logger = logging.getLogger(__name__)
@@ -185,14 +259,31 @@ def parse_arguments():
     subparser.add_argument(
         '--distribution', choices=distributions, default='testing',
         help='Distribution of the image to download and setup')
-    subparser.add_argument('--image-size', default='8G',
+    subparser.add_argument('--image-size', default='12G',
                            help='Disk image size to resize to after download')
+
+    # Print IP address
+    subparser = subparsers.add_parser(
+        'ip', help='Print the IP address of the container.')
+    subparser.add_argument(
+        '--distribution', choices=distributions, default='testing',
+        help='Distribution of the container to print IP address')
 
     # ssh
     subparser = subparsers.add_parser('ssh', help='SSH into the container')
     subparser.add_argument('--distribution', choices=distributions,
                            default='testing',
                            help='Distribution of the container to SSH into')
+
+    # Run tests
+    subparser = subparsers.add_parser('run-tests',
+                                      help='Run tests in the container')
+    subparser.add_argument('--distribution', choices=distributions,
+                           default='testing',
+                           help='Distribution of the container to run tests')
+    subparser.add_argument(
+        '--pytest-args', nargs='...',
+        help='Additional arguments to pass to the pytest command')
 
     # Stop
     subparser = subparsers.add_parser('stop', help='Stop the container')
@@ -739,6 +830,7 @@ Folder overlay        :    (host, read-only){project_folder}
                         -> (container)/freedombox
 
 SSH easily            : {script} ssh {options}
+Run tests             : {script} run-tests {options} [ --pytest-args ... ]
 Run FreedomBox inside : freedombox-develop
 
 Web access            : https://{ip_address}/
@@ -779,9 +871,10 @@ def _get_ssh_command(ip_address, distribution):
         ip_address = f'{ip_address}%' + _get_interface_name(distribution)
 
     return [
-        'ssh', '-i',
-        str(public_key), '-o', 'StrictHostKeyChecking=no', '-o',
-        'UserKnownHostsFile=/dev/null', f'fbx@{ip_address}'
+        'ssh', '-Y', '-C', '-t', '-i',
+        str(public_key), '-o', 'LogLevel=error', '-o',
+        'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null',
+        f'fbx@{ip_address}'
     ]
 
 
@@ -827,6 +920,7 @@ def subcommand_up(arguments):
     machine_name = f'fbx-{arguments.distribution}'
     if _get_machine_status(machine_name):
         logger.info('Container is already running')
+        _print_banner(arguments.distribution)
         return
 
     _verify_dependencies()
@@ -839,11 +933,34 @@ def subcommand_up(arguments):
     _print_banner(arguments.distribution)
 
 
+def subcommand_ip(arguments):
+    """Print the IP address of the container."""
+    print(_get_ip_address(arguments.distribution) or '')
+
+
 def subcommand_ssh(arguments):
     """Open an SSH shell into the container."""
     ip_address = _wait_for(lambda: _get_ip_address(arguments.distribution))
     command = _get_ssh_command(ip_address, arguments.distribution)
     logger.info('Running command: %s', ' '.join(command))
+    os.execlp('ssh', *command)
+
+
+def subcommand_run_tests(arguments):
+    """Run tests in the container."""
+    distribution = arguments.distribution
+    pytest_args = ' '.join(arguments.pytest_args or [])
+    ip_address = _wait_for(lambda: _get_ip_address(distribution))
+    ssh_command = _get_ssh_command(ip_address, distribution)
+
+    # Disable cache as root has no rights to overwrite files on /freedombox
+    pytest_command = f'py.test-3 {pytest_args}'
+    logger.info('Pytest command: %s', pytest_command)
+
+    test_script = SETUP_AND_RUN_TESTS_SCRIPT.format(
+        pytest_command=pytest_command, distribution=distribution)
+    setup_and_run_command = ['sudo', 'bash', '-c', f"'{test_script}'"]
+    command = ssh_command + setup_and_run_command
     os.execlp('ssh', *command)
 
 

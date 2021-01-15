@@ -10,10 +10,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.web_server import StaticFiles
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -43,7 +44,7 @@ class JSXCApp(app_module.App):
                                name=_('JSXC'), icon_filename='jsxc',
                                short_description=_('Chat Client'),
                                description=_description, manual_page='JSXC',
-                               clients=clients)
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-jsxc', info.name, info.short_description,
@@ -71,6 +72,10 @@ class JSXCApp(app_module.App):
         static_files = StaticFiles('static-files-jsxc',
                                    directory_map=directory_map)
         self.add(static_files)
+
+        backup_restore = BackupRestore('backup-restore-jsxc',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

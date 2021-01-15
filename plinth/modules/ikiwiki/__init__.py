@@ -10,11 +10,12 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -52,7 +53,7 @@ class IkiwikiApp(app_module.App):
                                name=_('ikiwiki'), icon_filename='ikiwiki',
                                short_description=_('Wiki and Blog'),
                                description=_description, manual_page='Ikiwiki',
-                               clients=clients,
+                               clients=manifest.clients,
                                donation_url='https://ikiwiki.info/tipjar/')
         self.add(info)
 
@@ -75,6 +76,10 @@ class IkiwikiApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-ikiwiki',
                                           groups=groups)
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-ikiwiki',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
     def add_shortcut(self, site, title):
         """Add an ikiwiki shortcut to frontpage."""

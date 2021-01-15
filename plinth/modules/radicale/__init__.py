@@ -12,11 +12,12 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import Version, format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 2
 
@@ -54,7 +55,8 @@ class RadicaleApp(app_module.App):
                                name=_('Radicale'), icon_filename='radicale',
                                short_description=_('Calendar and Addressbook'),
                                description=_description,
-                               manual_page='Radicale', clients=clients)
+                               manual_page='Radicale',
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-radicale', info.name,
@@ -83,6 +85,10 @@ class RadicaleApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-radicale',
                                           reserved_usernames=['radicale'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-radicale',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
     def enable(self):
         """Fix missing directories before enabling radicale."""

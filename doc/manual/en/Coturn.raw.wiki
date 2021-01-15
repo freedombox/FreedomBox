@@ -1,6 +1,8 @@
 #language en
 
-~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/Coturn|Español]] -~
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/Coturn|English]] - [[es/FreedomBox/Manual/Coturn|Español]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+##TAG:TRANSLATION-HEADER-END
 
 <<TableOfContents()>>
 
@@ -11,7 +13,7 @@
 
 '''Available since''': version 20.8
 
-Coturn is a server to facilitate audio/video calls and conferences by providing an implementation of TURN and STUN protocols. WebRTC, SIP and other communication servers can use it to establish a call between parties who are otherwise unable connect to each other.
+Coturn is a server to facilitate audio/video calls and conferences by providing an implementation of [[https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT|TURN]] and [[https://en.wikipedia.org/wiki/STUN|STUN]] protocols. WebRTC, SIP and other communication servers can use it to establish a call between parties who are otherwise unable connect to each other.
 
 It is not meant to be used directly by users. Servers such as Matrix Synapse need to be configured with the details provided on the Coturn app page. Apart from Matrix Synapse, Jitsi, Ejabberd, Nextcloud Talk, etc. can use Coturn server for audio/video calls and conferences. There is no need for the servers to be running on the same machine as !FreedomBox and external servers can use Coturn running on !FreedomBox.
 
@@ -21,9 +23,9 @@ Coturn is configured in !FreedomBox as an advanced app. This means that you need
 
 When making an audio/video call, it is best to route the media streams between two peers directly. This will give the best possible latency (better signal quality) and avoid depending on a centralized server (privacy). It scales well because a simple chat server can host thousands of calls without involving the server in any way other than to setup the call. However, this approach does not work most of the time to due to how networks are configured. Most peers on the network do not have a unique IP address allocated to them. They work hidden behind a network device that performs "Network Address Translation" (NAT) for them. This means that the two peers have no way of reaching each other.
 
-To address this problem, a simple technique known as STUN was introduced. With the help of a third party STUN server, the peers can trick the NAT devices, to carry the traffic between the two peers. Unfortunately, this trick only works about 80% of the time. So, if STUN fails, peers have no choice but to route their traffic through an intermediary server called TURN server. All the mechanism of trying out STUN first and then falling back to TURN is described in a protocol known as ICE.
+To address this problem, a simple technique known as STUN was introduced. With the help of a third party STUN server, the peers can trick the NAT devices, to carry the traffic between the two peers. Unfortunately, this trick only works about 80% of the time. So, if STUN fails, peers have no choice but to route their traffic through an intermediary server called TURN server. All the mechanism of trying out STUN first and then falling back to TURN is described in a protocol known as [[https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment|ICE]].
 
-On !FreedomBox, Coturn provides both STUN and TURN servers. Both services are provided over TCP as well as UDP. They are provided on unencrypted as well as encrypted channels (with have a higher chance of success). Since STUN servers are very inexpensive and don't consume a lot of server resources, there is no authentication needed to use them. TURN servers on the other hand need authentication. This authentication is highly simplified and does not require maintaining a database of users. A server such as matrix-synapse which is about to setup an audio/video call between two peers will generate a username and password using a shared secret. When the peers use the TURN server, they will be validated using these credentials because the TURN server also knows the same secret.
+On !FreedomBox, Coturn provides both STUN and TURN servers. Both services are provided over TCP as well as UDP. They are provided on unencrypted as well as encrypted channels (which have a higher chance of success). Since STUN servers are very inexpensive and don't consume a lot of server resources, there is no authentication needed to use them. TURN servers on the other hand need authentication. This authentication is highly simplified and does not require maintaining a database of users. A server such as matrix-synapse which is about to setup an audio/video call between two peers will generate a username and password using a shared secret. When the peers use the TURN server, they will be validated using these credentials because the TURN server also knows the same secret.
 
 In summary, a communication server needs to know the URLs of the STUN/TURN servers along with a shared authentication secret for TURN. After that, during audio/video call setup, they will correctly guide the peers to use STUN/TURN servers. Coturn app in !FreedomBox provides exactly this information. This information can be used to configure a communication server irrespective of whether it is running on the same !FreedomBox or on another server.
 

@@ -10,10 +10,11 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 3
 
@@ -75,6 +76,10 @@ class ShadowsocksApp(app_module.App):
         daemon = Daemon('daemon-shadowsocks', managed_services[0],
                         listen_ports=[(1080, 'tcp4'), (1080, 'tcp6')])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-shadowsocks',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

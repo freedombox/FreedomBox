@@ -13,13 +13,13 @@ from plinth import menu
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
 from plinth.modules.apache.components import diagnose_url
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added, domain_removed
 
-from . import utils
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest, utils
 
 version = 5
 
@@ -55,7 +55,7 @@ class TorApp(app_module.App):
                                name=_('Tor'), icon_filename='tor',
                                short_description=_('Anonymity Network'),
                                description=_description, manual_page='Tor',
-                               clients=clients,
+                               clients=manifest.clients,
                                donation_url='https://donate.torproject.org/')
         self.add(info)
 
@@ -86,6 +86,9 @@ class TorApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-tor',
                                           reserved_usernames=['debian-tor'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-tor', **manifest.backup)
+        self.add(backup_restore)
 
         # Register hidden service name with Name Services module.
         setup_helper = globals()['setup_helper']

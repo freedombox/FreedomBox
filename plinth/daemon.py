@@ -34,12 +34,12 @@ class Daemon(app.LeaderComponent):
         is renamed, the new unit file usually contains an Alias= setting in
         [Install] section with value of old unit name. When the unit is
         enabled, a symlink with the name of the alias is created. All
-        operations such as is-enabled, is-running and disable work with the
-        alias along with the primary unit name. However, for the case of
-        enabling the unit file, the alias does not work. To be able to provide
-        management for multiple versions of the unit file with different names,
-        specify an alias. Both the names are taken into consideration when
-        enabling the unit file.
+        operations such as is-running and disable work with the alias along
+        with the primary unit name. However, for the case of enabling the unit
+        file or checking its enabled status, the alias does not work. To be
+        able to provide management for multiple versions of the unit file with
+        different names, specify an alias. Both the names are taken into
+        consideration when enabling the unit file.
 
         """
         super().__init__(component_id)
@@ -51,6 +51,19 @@ class Daemon(app.LeaderComponent):
 
     def is_enabled(self):
         """Return if the daemon/unit is enabled."""
+        if self.alias:
+            # XXX: Handling alias should not be done here. service_is_enabled()
+            # should return True even for an alias. Currently, in addition to
+            # return code we are also checking the printed value. This makes
+            # the implementation less future-proof as new values could printed
+            # by the command. A fixed systemd bug
+            # https://github.com/systemd/systemd/issues/18134 also currently
+            # gives incorrect exit code for 'alias' case. See:
+            # https://salsa.debian.org/freedombox-team/freedombox/-/merge_requests/1980
+            if action_utils.service_is_enabled(self.alias,
+                                               strict_check=self.strict_check):
+                return True
+
         return action_utils.service_is_enabled(self.unit,
                                                strict_check=self.strict_check)
 

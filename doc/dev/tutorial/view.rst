@@ -36,26 +36,15 @@ a link in FreedomBox web interface. Let us add a link in the apps list. In
 
   from plinth.menu import main_menu
 
-  name = 'Transmission'
-
-  short_description = 'BitTorrent Web Client'
-
-  description = [
-      'BitTorrent is a peer-to-peer file sharing protocol. '
-      'Transmission daemon handles Bitorrent file sharing.  Note that '
-      'BitTorrent is not anonymous.',
-      'Access the web interface at <a href="/transmission">/transmission</a>.'
-  ]
-
   class TransmissionApp(app_module.App):
       ...
 
       def __init__(self):
           ...
 
-          menu_item = menu.Menu('menu-transmission', name, short_description,
-                                'transmission', 'transmission:index',
-                                parent_url_name='apps')
+          menu_item = menu.Menu('menu-transmission', 'Transmission',
+                                'BitTorrrent Web Client', 'transmission',
+                                'transmission:index', parent_url_name='apps')
           self.add(menu_item)
 
 What this does is add a menu item component into the our app. In FreedomBox

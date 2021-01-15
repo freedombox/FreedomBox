@@ -3,9 +3,7 @@
 Application manifest for sharing.
 """
 
-from plinth.modules.backups.api import validate as validate_backup
-
-backup = validate_backup({
+backup = {
     'config': {
         'files': ['/etc/apache2/conf-available/sharing-freedombox.conf']
     },
@@ -14,4 +12,4 @@ backup = validate_backup({
         'kind': 'config',
         'name': 'sharing-freedombox'
     }]
-})
+}

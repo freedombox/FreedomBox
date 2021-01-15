@@ -15,14 +15,17 @@ import plinth
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
+from plinth.modules.backups.components import BackupRestore
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 8
 
 is_essential = True
 
 managed_packages = ['unattended-upgrades', 'needrestart']
+
+managed_services = ['freedombox-dist-upgrade']
 
 first_boot_steps = [
     {
@@ -78,6 +81,10 @@ class UpgradesApp(app_module.App):
         menu_item = menu.Menu('menu-upgrades', info.name, None, info.icon,
                               'upgrades:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-upgrades',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         self._show_new_release_notification()
 
@@ -171,11 +178,7 @@ def setup_repositories(data):
         actions.superuser_run('upgrades', command)
 
     if is_dist_upgrade_enabled():
-        command = ['dist-upgrade']
-        if cfg.develop:
-            command.append('--develop')
-
-        actions.superuser_run('upgrades', command)
+        actions.superuser_run('upgrades', ['start-dist-upgrade'])
 
 
 def is_backports_requested():

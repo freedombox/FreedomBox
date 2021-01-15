@@ -147,7 +147,7 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
         included_apps = self._get_included_apps()
-        kwargs['apps'] = api.get_apps_in_order(included_apps)
+        kwargs['components'] = api.get_components_in_order(included_apps)
         return kwargs
 
     def get_context_data(self, **kwargs):

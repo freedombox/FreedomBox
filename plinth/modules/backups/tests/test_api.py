@@ -8,13 +8,18 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from plinth.app import App
+
 from .. import api, forms, repository
+from ..components import BackupRestore
 
 # pylint: disable=protected-access
 
+setup_helper = MagicMock()
+
 
 def _get_test_manifest(name):
-    return api.validate({
+    return {
         'config': {
             'directories': ['/etc/' + name + '/config.d/'],
             'files': ['/etc/' + name + '/config'],
@@ -32,50 +37,42 @@ def _get_test_manifest(name):
             'name': name,
             'kind': 'site'
         }]
-    })
+    }
 
 
-def _get_backup_app(name):
-    """Return a dummy BackupApp object."""
-    return api.BackupApp(name, MagicMock(backup=_get_test_manifest(name)))
+def _get_backup_component(name):
+    """Return a BackupRestore component."""
+    return BackupRestore(name, **_get_test_manifest(name))
 
 
-class TestBackupApp:
-    """Test the BackupApp class."""
-    @staticmethod
-    def test_run_hook():
-        """Test running a hook on an application."""
-        packet = api.Packet('backup', 'apps', '/', [])
-        hook = 'testhook_pre'
-        app = MagicMock()
-        backup_app = api.BackupApp('app_name', app)
-        backup_app.run_hook(hook, packet)
+class AppTest(App):
+    """Sample App for testing."""
+    app_id = 'test-app'
 
-        app.testhook_pre.assert_has_calls([call(packet)])
-        assert not packet.errors
 
-        app.testhook_pre.reset_mock()
-        app.testhook_pre.side_effect = Exception()
-        backup_app.run_hook(hook, packet)
-        assert packet.errors == [api.BackupError('hook', app, hook=hook)]
-
-        del app.testhook_pre
-        backup_app.run_hook(hook, packet)
+def _get_test_app(name):
+    """Return an App."""
+    app = AppTest()
+    app.app_id = name
+    app._all_apps[name] = app
+    app.add(_get_backup_component(name + '-component'))
+    return app
 
 
 @pytest.mark.usefixtures('load_cfg')
 class TestBackupProcesses:
     """Test cases for backup processes"""
+
     @staticmethod
-    def test_packet_process_manifests():
+    def test_packet_collected_files_directories():
         """Test that directories/files are collected from manifests."""
-        apps = [_get_backup_app('a'), _get_backup_app('b')]
-        packet = api.Packet('backup', 'apps', '/', apps)
-        for app in apps:
+        components = [_get_backup_component('a'), _get_backup_component('b')]
+        packet = api.Packet('backup', 'apps', '/', components)
+        for component in components:
             for section in ['config', 'data', 'secrets']:
-                for directory in app.manifest[section]['directories']:
+                for directory in getattr(component, section)['directories']:
                     assert directory in packet.directories
-                for file_path in app.manifest[section]['files']:
+                for file_path in getattr(component, section)['files']:
                     assert file_path in packet.files
 
     @staticmethod
@@ -97,50 +94,56 @@ class TestBackupProcesses:
         restore_handler.assert_called_once()
 
     @staticmethod
-    @patch('plinth.module_loader.loaded_modules.items')
-    def test_get_all_apps_for_backup(modules):
-        """Test listing apps supporting backup and needing backup."""
-        apps = [
-            ('a', MagicMock(backup=_get_test_manifest('a'))),
-            ('b', MagicMock(backup=_get_test_manifest('b'))),
-            ('c', MagicMock(backup=None)),
-            ('d', MagicMock()),
-        ]
-        del apps[3][1].backup
-        modules.return_value = apps
+    @patch('importlib.import_module')
+    @patch('plinth.app.App.list')
+    def test_get_all_components_for_backup(apps_list, import_module):
+        """Test listing components supporting backup and needing backup."""
+        modules = [MagicMock(), MagicMock(), MagicMock()]
+        import_module.side_effect = modules
+        apps = [_get_test_app('a'), _get_test_app('b'), _get_test_app('c')]
+        modules[1].setup_helper.get_state.side_effect = ['needs-setup']
+        apps_list.return_value = apps
 
-        returned_apps = api.get_all_apps_for_backup()
-        expected_apps = [
-            api.BackupApp('a', apps[0][1]),
-            api.BackupApp('b', apps[1][1]),
-            api.BackupApp('c', apps[2][1])
+        returned_components = api.get_all_components_for_backup()
+        expected_components = [
+            apps[0].components['a-component'],
+            apps[2].components['c-component']
         ]
-        assert returned_apps == expected_apps
+        assert returned_components == expected_components
 
     @staticmethod
-    @patch('plinth.module_loader.loaded_modules.items')
-    def test_get_apps_in_order(modules):
-        """Test that apps are listed in correct dependency order."""
+    @patch('plinth.app.App.list')
+    def test_get_components_in_order(apps_list):
+        """Test that components are listed in correct dependency order."""
         apps = [
-            ('names', MagicMock(backup=_get_test_manifest('names'))),
-            ('config', MagicMock(backup=_get_test_manifest('config'))),
+            _get_test_app('names'),
+            _get_test_app('other'),
+            _get_test_app('config')
         ]
-        modules.return_value = apps
+        apps_list.return_value = apps
 
-        app_names = ['config', 'names']
-        apps = api.get_apps_in_order(app_names)
-        assert apps[0].name == 'names'
-        assert apps[1].name == 'config'
+        app_ids = ['config', 'names']
+        components = api.get_components_in_order(app_ids)
+        assert len(components) == 2
+        assert components[0].app_id == 'names'
+        assert components[1].app_id == 'config'
 
     @staticmethod
     def test__lockdown_apps():
         """Test that locked flag is set for each app."""
-        app_a = MagicMock(locked=False)
-        app_b = MagicMock(locked=None)
-        apps = [MagicMock(app=app_a), MagicMock(app=app_b)]
-        api._lockdown_apps(apps, True)
-        assert app_a.locked is True
-        assert app_b.locked is True
+        apps = [_get_test_app('test-app-1'), _get_test_app('test-app-2')]
+        components = [
+            apps[0].components['test-app-1-component'],
+            apps[1].components['test-app-2-component']
+        ]
+
+        api._lockdown_apps(components, True)
+        assert apps[0].locked
+        assert apps[1].locked
+
+        api._lockdown_apps(components, False)
+        assert not apps[0].locked
+        assert not apps[1].locked
 
     @staticmethod
     @patch('plinth.action_utils.webserver_is_enabled')
@@ -148,19 +151,20 @@ class TestBackupProcesses:
     @patch('plinth.actions.superuser_run')
     def test__shutdown_services(run, service_is_running, webserver_is_enabled):
         """Test that services are stopped in correct order."""
-        apps = [_get_backup_app('a'), _get_backup_app('b')]
+        components = [_get_backup_component('a'), _get_backup_component('b')]
         service_is_running.return_value = True
         webserver_is_enabled.return_value = True
-        state = api._shutdown_services(apps)
+        state = api._shutdown_services(components)
 
         expected_state = [
-            api.ServiceHandler.create(apps[0],
-                                      apps[0].manifest['services'][0]),
-            api.ServiceHandler.create(apps[0],
-                                      apps[0].manifest['services'][1]),
-            api.ServiceHandler.create(apps[1],
-                                      apps[1].manifest['services'][0]),
-            api.ServiceHandler.create(apps[1], apps[1].manifest['services'][1])
+            api.ServiceHandler.create(components[0],
+                                      components[0].services[0]),
+            api.ServiceHandler.create(components[0],
+                                      components[0].services[1]),
+            api.ServiceHandler.create(components[1],
+                                      components[1].services[0]),
+            api.ServiceHandler.create(components[1],
+                                      components[1].services[1]),
         ]
         assert state == expected_state
 
@@ -207,21 +211,26 @@ class TestBackupProcesses:
     @staticmethod
     def test__run_operation():
         """Test that operation runs handler and app hooks."""
-        apps = [_get_backup_app('a'), _get_backup_app('b')]
-        packet = api.Packet('backup', 'apps', '/', apps)
-        packet.apps[0].run_hook = MagicMock()
-        packet.apps[1].run_hook = MagicMock()
+        components = [_get_backup_component('a'), _get_backup_component('b')]
+        packet = api.Packet('backup', 'apps', '/', components)
+        packet.components[0].backup_pre = MagicMock()
+        packet.components[0].backup_post = MagicMock()
+        packet.components[1].backup_pre = MagicMock()
+        packet.components[1].backup_post = MagicMock()
         handler = MagicMock()
         api._run_operation(handler, packet)
         handler.assert_has_calls([call(packet, encryption_passphrase=None)])
 
-        calls = [call('backup_pre', packet), call('backup_post', packet)]
-        packet.apps[0].run_hook.assert_has_calls(calls)
-        packet.apps[1].run_hook.assert_has_calls(calls)
+        calls = [call(packet)]
+        packet.components[0].backup_pre.assert_has_calls(calls)
+        packet.components[0].backup_post.assert_has_calls(calls)
+        packet.components[1].backup_pre.assert_has_calls(calls)
+        packet.components[1].backup_post.assert_has_calls(calls)
 
 
 class TestBackupModule:
     """Tests of the backups django module, like views or forms."""
+
     @staticmethod
     def test_file_upload():
         # posting a video should fail

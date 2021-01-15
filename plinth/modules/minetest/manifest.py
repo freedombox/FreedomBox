@@ -2,10 +2,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
-from plinth.clients import store_url, validate
+from plinth.clients import store_url
 
-clients = validate([{
+clients = [{
     'name':
         _('Minetest'),
     'platforms': [{
@@ -35,9 +34,9 @@ clients = validate([{
         'format': 'deb',
         'name': 'minetest'
     }]
-}])
+}]
 
-backup = validate_backup({
+backup = {
     'config': {
         'files': ['/etc/minetest/minetest.conf']
     },
@@ -45,4 +44,4 @@ backup = validate_backup({
         'directories': ['/var/games/minetest-server/']
     },
     'services': ['minetest-server']
-})
+}

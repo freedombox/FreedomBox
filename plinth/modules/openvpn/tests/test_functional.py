@@ -13,7 +13,7 @@ base_url = functional.config['DEFAULT']['URL']
 shortcut_href = '?selected=shortcut-openvpn'
 
 
-@given('I download openvpn profile')
+@given('I download openvpn profile', target_fixture='openvpn_profile')
 def openvpn_download_profile(session_browser):
     return _download_profile(session_browser)
 
@@ -31,10 +31,9 @@ def openvpn_app_not_on_front_page(session_browser):
 
 
 @then('the openvpn profile downloaded should be same as before')
-def openvpn_profile_download_compare(session_browser,
-                                     openvpn_download_profile):
+def openvpn_profile_download_compare(session_browser, openvpn_profile):
     new_profile = _download_profile(session_browser)
-    assert openvpn_download_profile == new_profile
+    assert openvpn_profile == new_profile
 
 
 def _download_profile(browser):

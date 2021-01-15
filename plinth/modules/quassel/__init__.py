@@ -13,12 +13,13 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules import names
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
 from plinth.utils import format_lazy
 
-from .manifest import backup, clients  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 1
 
@@ -59,7 +60,7 @@ class QuasselApp(app_module.App):
                                name=_('Quassel'), icon_filename='quassel',
                                short_description=_('IRC Client'),
                                description=_description, manual_page='Quassel',
-                               clients=clients)
+                               clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-quassel', info.name,
@@ -95,6 +96,10 @@ class QuasselApp(app_module.App):
         users_and_groups = UsersAndGroups('users-and-groups-quasselcore',
                                           reserved_usernames=['quasselcore'])
         self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-quassel',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
 
 def setup(helper, old_version=None):

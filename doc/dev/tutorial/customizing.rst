@@ -64,18 +64,21 @@ provide options to the user. Add the following to ``forms.py``.
   from django import forms
 
 
-  class TransmissionForm(forms.Form):  # pylint: disable=W0232
+  class TransmissionForm(DirectorySelectForm):  # pylint: disable=W0232
       """Transmission configuration form"""
-      download_dir = forms.CharField(
-          label='Download directory',
-          help_text='Directory where downloads are saved.  If you change the '
-                    'default directory, ensure that the new directory exists '
-                    'and is writable by "debian-transmission" user.')
 
-This creates a Django form that shows a single option to set the download
-directory for our Transmission app. This is how a regular Django form is built.
-See :doc:`Django Forms documentation <django:topics/forms/index>` for more
-information.
+      def __init__(self, *args, **kw):
+          validator = DirectoryValidator(username=SYSTEM_USER,
+                                         check_creatable=True)
+        super(TransmissionForm,
+              self).__init__(title=_('Download directory'),
+                             default='/var/lib/transmission-daemon/downloads',
+                             validator=validator, *args, **kw)
+
+This uses a utility provided by the framework and creates a Django form that
+shows a single option to set the download directory for our Transmission app.
+This is similar to how a regular Django form is built. See :doc:`Django Forms
+documentation <django:topics/forms/index>` for more information.
 
 .. tip: Too many options
 
@@ -100,8 +103,9 @@ the user submits it. Let us implement that in ``views.py``.
   from .forms import TransmissionForm
 
   class TransmissionAppView(views.AppView):
-      ...
+      """Serve configuration page."""
       form_class = TransmissionForm
+      app_id = 'transmission'
 
       def get_initial(self):
           """Get the current settings from Transmission server."""
@@ -109,22 +113,18 @@ the user submits it. Let us implement that in ``views.py``.
           configuration = actions.superuser_run('transmission',
                                                 ['get-configuration'])
           configuration = json.loads(configuration)
-          status.update({
-              key.translate(str.maketrans({
-                  '-': '_'
-              })): value
-              for key, value in configuration.items()
-          })
+          status['storage_path'] = configuration['download-dir']
+          status['hostname'] = socket.gethostname()
+
           return status
 
       def form_valid(self, form):
           """Apply the changes submitted in the form."""
           old_status = form.initial
           new_status = form.cleaned_data
-
-          if old_status['download_dir'] != new_status['download_dir']:
+          if old_status['storage_path'] != new_status['storage_path']:
               new_configuration = {
-                  'download-dir': new_status['download_dir'],
+                  'download-dir': new_status['storage_path'],
               }
 
               actions.superuser_run('transmission', ['merge-configuration'],

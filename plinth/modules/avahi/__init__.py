@@ -9,13 +9,14 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.config import get_hostname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added, domain_removed, post_hostname_change
 from plinth.utils import format_lazy
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 # pylint: disable=C0103
 
@@ -75,6 +76,10 @@ class AvahiApp(app_module.App):
 
         daemon = Daemon('daemon-avahi', managed_services[0])
         self.add(daemon)
+
+        backup_restore = BackupRestore('backup-restore-avahi',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         if self.is_enabled():
             domain_added.send_robust(sender='avahi',

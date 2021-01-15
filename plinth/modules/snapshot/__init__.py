@@ -13,8 +13,9 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.modules import storage
+from plinth.modules.backups.components import BackupRestore
 
-from .manifest import backup  # noqa, pylint: disable=unused-import
+from . import manifest
 
 version = 4
 
@@ -60,6 +61,18 @@ class SnapshotApp(app_module.App):
         menu_item = menu.Menu('menu-snapshot', info.name, None, info.icon,
                               'snapshot:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = SnapshotBackupRestore('backup-restore-snapshot',
+                                               **manifest.backup)
+        self.add(backup_restore)
+
+
+class SnapshotBackupRestore(BackupRestore):
+    """Component to backup/restore snapshot module."""
+
+    def restore_post(self, packet):
+        """Run after restore."""
+        actions.superuser_run('snapshot', ['kill-daemon'])
 
 
 def is_supported():
@@ -129,8 +142,3 @@ def get_configuration():
         'free_space':
             output['FREE_LIMIT'],
     }
-
-
-def restore_post(packet):
-    """Run after restore."""
-    actions.superuser_run('snapshot', ['kill-daemon'])

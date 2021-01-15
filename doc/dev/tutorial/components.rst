@@ -5,7 +5,9 @@ Part 4: Components
 
 Each :class:`~plinth.app.App` contains various :class:`~plinth.app.Component`
 components that each provide one small functionality needed by the app. Each of
-these components are instantiated and added to the app as children.
+these components are instantiated and added to the app as children. The
+:class:`~plinth.menu.Menu` object added in the previous step is one such
+component.
 
 Providing basic information about the app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -16,6 +18,8 @@ function normally.
 .. code-block:: python3
 
   from plinth import app as app_module
+
+  from . import manifest
 
   class TransmissionApp(app_module.App):
       ...
@@ -28,15 +32,45 @@ function normally.
                                icon_filename='transmission',
                                short_description=_('BitTorrent Web Client'),
                                description=description,
-                               manual_page='Transmission', clients=clients)
+                               manual_page='Transmission',
+                               clients=manifest.clients,
+                               donation_url='https://transmissionbt.com/donate/')
         self.add(info)
 
 The first argument is app_id that is same as the ID for the app. The version is
 the version number for this app that must be incremented whenever setup() method
 needs to be called again. name, icon_filename, short_description, description,
 manual_page and clients provide information that is shown on the app's main
-page. More information the parameters is available in :class:`~plinth.app.Info`
-class documentation.
+page. The donation_url encourages our users to contribute to upstream projects
+in order ensure their long term sustainability. More information about the
+parameters is available in :class:`~plinth.app.Info` class documentation.
+
+The description of app should provide basic information on what the app is about
+and how to use it. It is impractical, however, to explain everything about the
+app in a few short paragraphs. So, we need to write a page about the app in the
+FreedomBox manual. This page will be available to the users from within the
+FreedomBox web interface. To make this happen, let us write a `manual page entry
+<https://wiki.debian.org/FreedomBox/Manual/Transmission>`_ for our app in the
+`FreedomBox Wiki <https://wiki.debian.org/FreedomBox/Manual>`_ and then provide
+a link to it from app page.
+
+It would be helpful to our users if we can show how they can use our app. If
+there are desktop and mobile clients that can used to access our service, we
+need to list them and present them. Let's add this information to
+``manifest.py``.
+
+.. code-block:: python3
+
+  clients = [{
+      'name': _('Transmission'),
+      'platforms': [{
+          'type': 'web',
+          'url': '/transmission'
+      }]
+  }]
+
+Since our app is a simple web application with no clients needed, we just list
+that.
 
 Managing a daemon
 ^^^^^^^^^^^^^^^^^
@@ -229,3 +263,49 @@ a later section of this tutorial. The next parameter specifies whether anonymous
 users who are not logged into FreedomBox should be shown this shortcut. The
 final parameter further restricts to which group of users this shortcut must be
 shown.
+
+Adding backup/restore functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each app in FreedomBox needs to provide the ability to backup and restore its
+configuration and data. Apart from providing durability to users' data, this
+allows the user to migrate from one machine to another. FreedomBox framework
+provides a component for handling these operations. Create the
+:class:`~plinth.modules.backups.components.BackupRestore` component during app
+initialization.
+
+In ``__init__.py``, add:
+
+.. code-block:: python3
+
+  from plinth.modules.backups.components import BackupRestore
+
+  from . import manifest
+
+  class TransmissionApp(app_module.App):
+    ...
+
+    def __init__(self):
+        ...
+
+        backup_restore = BackupRestore('backup-restore-transmission',
+                                       **manifest.backup)
+        self.add(backup_restore)
+
+In ``manifest.py``, add:
+
+.. code-block:: python3
+
+  backup = {
+      'data': {
+          'directories': ['/var/lib/transmission-daemon/.config']
+      },
+      'secrets': {
+          'files': ['/etc/transmission-daemon/settings.json']
+      },
+      'services': ['transmission-daemon']
+  }
+
+The data and secrets information specifies which list of files and directories
+FreedomBox framework needs to backup and restore. The list of services specifies
+which daemons should be stopped during the backup and restore process.

@@ -19,14 +19,14 @@ Scenario: Download openvpn profile
 
 Scenario: User of 'vpn' group
   Given the openvpn application is enabled
-  When I create a user named vpnuser with password openvpnrock$0 in group vpn
-  And I'm logged in as the user vpnuser with password openvpnrock$0
+  And the user vpnuser in group vpn exists
+  When I'm logged in as the user vpnuser
   Then the openvpn profile should be downloadable
 
 Scenario: User not of 'vpn' group
   Given the openvpn application is enabled
-  When I create a user named nonvpnuser with password whatever@123
-  And I'm logged in as the user nonvpnuser with password whatever@123
+  And the user nonvpnuser exists
+  When I'm logged in as the user nonvpnuser
   Then openvpn app should not be visible on the front page
 
 @backups
