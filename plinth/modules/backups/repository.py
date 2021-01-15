@@ -126,6 +126,10 @@ class BaseBorgRepository(abc.ABC):
         """Return the repository that the backups action script should use."""
         return self._path
 
+    @staticmethod
+    def prepare():
+        """Prepare the repository for operations."""
+
     def get_info(self):
         """Return Borg information about a repository."""
         output = self.run(['info', '--path', self.borg_path])
@@ -372,6 +376,13 @@ class SshBorgRepository(BaseBorgRepository):
 
         """
         return self._mountpoint
+
+    def prepare(self):
+        """Prepare the repository for operations by mounting."""
+        if not self.is_usable():
+            raise errors.SshfsError('Remote host not verified')
+
+        self.mount()
 
     @property
     def hostname(self):
