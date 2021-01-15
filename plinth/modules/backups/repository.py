@@ -80,11 +80,7 @@ class BaseBorgRepository(abc.ABC):
     known_credentials = []
 
     def __init__(self, path, credentials=None, uuid=None, **kwargs):
-        """Instantiate a new repository.
-
-        If only a uuid is given, load the values from kvstore.
-
-        """
+        """Instantiate a new repository."""
         self._path = path
         self.credentials = credentials or {}
         self.uuid = uuid or str(uuid1())
@@ -295,28 +291,22 @@ class BaseBorgRepository(abc.ABC):
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 
-    def _get_storage_format(self, store_credentials, verified):
+    def _get_storage_format(self):
+        """Return a dict representing the repository."""
         storage = {
             'path': self._path,
             'storage_type': self.storage_type,
             'added_by_module': 'backups',
-            'verified': verified
+            'credentials': self.credentials,
         }
         if self.uuid:
             storage['uuid'] = self.uuid
 
-        if store_credentials:
-            storage['credentials'] = self.credentials
-
         return storage
 
-    def save(self, store_credentials=True, verified=False):
-        """Save the repository in store (kvstore).
-
-        - store_credentials: Boolean whether credentials should be stored.
-
-        """
-        storage = self._get_storage_format(store_credentials, verified)
+    def save(self):
+        """Save the repository in store (kvstore)."""
+        storage = self._get_storage_format()
         self.uuid = store.update_or_add(storage)
 
 
@@ -364,9 +354,21 @@ class SshBorgRepository(BaseBorgRepository):
     sort_order = 30
     flags = {'removable': True, 'mountable': True}
 
+    def __init__(self, path, credentials=None, uuid=None, schedule=None,
+                 verified=None, **kwargs):
+        """Instantiate a new repository."""
+        super().__init__(path, credentials, uuid, schedule, **kwargs)
+        self.verified = verified or False
+
+    def _get_storage_format(self):
+        """Return a dict representing the repository."""
+        storage = super()._get_storage_format()
+        storage['verified'] = self.verified
+        return storage
+
     def is_usable(self):
         """Return whether repository is usable."""
-        return self.kwargs.get('verified')
+        return self.verified
 
     @property
     def borg_path(self):

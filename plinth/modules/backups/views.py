@@ -289,7 +289,8 @@ class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
             'encryption_passphrase': encryption_passphrase
         }
         repository = SshBorgRepository(path, credentials)
-        repository.save(verified=False)
+        repository.verfied = False
+        repository.save()
         messages.success(self.request, _('Added new remote SSH repository.'))
 
         url = reverse('backups:verify-ssh-hostkey', args=[repository.uuid])
@@ -359,7 +360,8 @@ def _save_repository(request, repository):
     """Initialize and save a repository. Convert errors to messages."""
     try:
         repository.initialize()
-        repository.save(verified=True)
+        repository.verified = True
+        repository.save()
         return True
     except paramiko.BadHostKeyException:
         message = _('SSH host public key could not be verified.')
