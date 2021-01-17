@@ -13,6 +13,12 @@ Scenario: Enable syncthing application
   When I enable the syncthing application
   Then the syncthing service should be running
 
+Scenario: Authentication and usage reporting notifications not shown
+  Given the syncthing application is enabled
+  When I access syncthing application
+  Then the usage reporting notification is not shown
+  And the authentication notification is not shown
+
 Scenario: Add a syncthing folder
   Given the syncthing application is enabled
   And syncthing folder Test is not present

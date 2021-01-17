@@ -18,7 +18,7 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 4
+version = 5
 
 managed_services = ['syncthing@syncthing']
 
@@ -108,8 +108,12 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
+    add_user_to_share_group(SYSTEM_USER, managed_services[0])
+
     if not old_version:
         helper.call('post', app.enable)
+
+    helper.call('post', actions.superuser_run, 'syncthing', ['setup-config'])
 
     if old_version == 1 and app.is_enabled():
         app.get_component('firewall-syncthing-ports').enable()
@@ -138,5 +142,3 @@ def setup(helper, old_version=None):
                 sharing.remove_share(name)
                 sharing.add_share(name, share['path'], new_groups,
                                   share['is_public'])
-
-    add_user_to_share_group(SYSTEM_USER, managed_services[0])
