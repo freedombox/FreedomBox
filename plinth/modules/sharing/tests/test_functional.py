@@ -17,7 +17,7 @@ def remove_share(session_browser, name):
     _remove_share(session_browser, name)
 
 
-@when(parsers.parse('I add a share {name:w} from path {path} for {group:w}'))
+@when(parsers.parse('I add a share {name:w} from path {path} for {group:S}'))
 def add_share(session_browser, name, path, group):
     _add_share(session_browser, name, path, group)
 
@@ -41,7 +41,7 @@ def edit_share_public_access(session_browser, name):
 
 @then(
     parsers.parse(
-        'the share {name:w} should be listed from path {path} for {group:w}'))
+        'the share {name:w} should be listed from path {path} for {group:S}'))
 def verify_share(session_browser, name, path, group):
     _verify_share(session_browser, name, path, group)
 

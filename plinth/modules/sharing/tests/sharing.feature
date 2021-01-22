@@ -32,8 +32,8 @@ Scenario: Remove a share
 
 Scenario: Share permissions
   When I remove share tmp
-  And I add a share tmp from path /tmp for syncthing
-  Then the share tmp should be listed from path /tmp for syncthing
+  And I add a share tmp from path /tmp for syncthing-access
+  Then the share tmp should be listed from path /tmp for syncthing-access
   And the share tmp should not be accessible
 
 Scenario: Public share
