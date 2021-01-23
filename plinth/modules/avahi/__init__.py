@@ -98,6 +98,7 @@ def setup(helper, old_version=None):
     # available and require restart.
     helper.call('post', actions.superuser_run, 'service',
                 ['reload', 'avahi-daemon'])
+    helper.call('post', app.enable)
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):

@@ -68,6 +68,7 @@ class SSHApp(app_module.App):
 def setup(helper, old_version=None):
     """Configure the module."""
     actions.superuser_run('ssh', ['setup'])
+    helper.call('post', app.enable)
 
 
 def get_host_keys():
