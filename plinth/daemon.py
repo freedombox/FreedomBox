@@ -76,6 +76,8 @@ class Daemon(app.LeaderComponent):
     def disable(self):
         """Run operations to disable the daemon/unit."""
         actions.superuser_run('service', ['disable', self.unit])
+        if self.alias:
+            actions.superuser_run('service', ['disable', self.alias])
 
     def is_running(self):
         """Return whether the daemon/unit is running."""
