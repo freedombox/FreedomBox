@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.utils import Version
 
 
-@lru_cache
+@lru_cache()
 def _get_url():
     """Return the web client URL based on Cockpit version."""
     process = subprocess.run(
