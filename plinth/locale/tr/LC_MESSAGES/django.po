@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-23 17:44+0000\n"
-"Last-Translator: John Doe <thraex@numericable.fr>\n"
+"PO-Revision-Date: 2021-01-26 06:13+0000\n"
+"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
 "Language: tr\n"
@@ -154,10 +154,12 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Veri güvenliği için otomatik bir yedekleme planı etkinleştirin. Şifrelenmiş "
+"bir uzak yedekleme konumu veya fazladan eklenmiş bir disk tercih edin."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Bir Yedekleme Planını etkinleştir"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -172,12 +174,12 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Planlanmış bir yedekleme başarısız oldu. Geçen {error_count} yedekleme "
+"denemesi başarılı olmadı. En son hata: {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
-#, fuzzy
-#| msgid "Existing Backups"
 msgid "Error During Backup"
-msgstr "Varolan Yedekler"
+msgstr "Yedekleme Sırasında Hata"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
@@ -186,37 +188,43 @@ msgstr "{app} (Yedeklenecek veri yok)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Planlanmış yedeklemeleri etkinleştir"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Eğer etkinleştirildiyse, her gün, her hafta ve her ay bir yedekleme alınır. "
+"Daha eski yedeklemeler kaldırılır."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Saklanacak günlük yedekleme sayısı"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Bu birçok son yedekleme saklanır ve geri kalanı kaldırılır. \"0\" değeri, bu "
+"tür yedeklemeleri etkisizleştirir. Her gün belirtilen saatte tetiklenir."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Saklanacak haftalık yedekleme sayısı"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"Bu birçok son yedekleme saklanır ve geri kalanı kaldırılır. \"0\" değeri, bu "
+"tür yedeklemeleri etkisizleştirir. Her Pazar belirtilen saatte tetiklenir."
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Saklanacak aylık yedekleme sayısı"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -224,14 +232,17 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"Bu birçok son yedekleme saklanır ve geri kalanı kaldırılır. \"0\" değeri, bu "
+"tür yedeklemeleri etkisizleştirir. Her ayın ilk günü belirtilen saatte "
+"tetiklenir."
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Yedekleme işlemini tetikleme saati"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "24 saat biçiminde."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -501,7 +512,7 @@ msgstr "Bu depo şifreli"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Zamanla"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -634,13 +645,11 @@ msgstr "Anamakineyi Doğrula"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Yedekleme planı güncellendi."
 
 #: plinth/modules/backups/views.py:74
-#, fuzzy
-#| msgid "Create Backup"
 msgid "Schedule Backups"
-msgstr "Yedek Oluştur"
+msgstr "Yedeklemeleri Zamanla"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
@@ -3802,22 +3811,28 @@ msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Otomatik (DHCP): Otomatik olarak yapılandır, bu ağdan İnternet bağlantısını "
+"kullan"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
+"Paylaşılan: Yönlendirici gibi davran, bu ağdaki diğer cihazlara İnternet "
+"bağlantısı sağla"
 
 #: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
+"Elle: El ile belirtilen parametreleri kullan, bu ağdan İnternet bağlantısını "
+"kullan"
 
 #: plinth/modules/networks/forms.py:50
 msgid "Disabled: Do not configure this addressing method"
-msgstr ""
+msgstr "Etkisizleştirildi: Bu adresleme yöntemini yapılandırma"
 
 #: plinth/modules/networks/forms.py:57
 msgid "Netmask"
@@ -3875,16 +3890,19 @@ msgstr "IPv6 Adresleme Yöntemi"
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
+"Otomatik: Otomatik olarak yapılandır, bu ağdan İnternet bağlantısını kullan"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
+"Otomatik (sadece DHCP): Otomatik olarak yapılandır, bu ağdan İnternet "
+"bağlantısını kullan"
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Yoksay: Bu adresleme yöntemini yoksay"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
@@ -4173,6 +4191,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
+"Bu %(box_name)s cihazının İnternet bağlantısına dayanan birincil "
+"bağlantıdır. Bunu değiştirmek %(box_name)s cihazınızı erişilemez hale "
+"getirebilir. Bu bağlantıyı değiştirmeden önce %(box_name)s cihazına erişmek "
+"için başka yollarınız olduğundan emin olun."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -6667,15 +6689,7 @@ msgstr ""
 "çalıştıran diğer tüm cihazlarda otomatik olarak tekrarlanacaktır."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" or "
-#| "\"syncthing\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6690,8 +6704,8 @@ msgstr ""
 "daha sık eşitlenmesine izin verir. {box_name}, birden çok kullanıcı "
 "tarafından kullanılabilen tek bir Syncthing örneği çalıştırır. Her "
 "kullanıcının cihaz grubu, farklı bir klasör grubuyla eşitlenebilir. "
-"{box_name} cihazındaki web arayüzü sadece \"admin\" veya \"syncthing\" "
-"grubuna ait kullanıcılar tarafından kullanılabilir."
+"{box_name} cihazındaki web arayüzü sadece \"admin\" veya \"syncthing-access\""
+" grubuna ait kullanıcılar tarafından kullanılabilir."
 
 #: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
