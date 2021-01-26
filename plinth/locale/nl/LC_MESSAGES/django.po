@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 18:57-0500\n"
+"POT-Creation-Date: 2021-01-25 20:15-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -29,27 +29,27 @@ msgstr "Paginabron"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:101
+#: plinth/daemon.py:103
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Service {service_name} wordt uitgevoerd"
 
-#: plinth/daemon.py:128
+#: plinth/daemon.py:130
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Luistert op {kind} poort {listen_address}:{port}"
 
-#: plinth/daemon.py:132
+#: plinth/daemon.py:134
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Luistert op {kind} poort {port}"
 
-#: plinth/daemon.py:200
+#: plinth/daemon.py:202
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Verbind met {host}:{port}"
 
-#: plinth/daemon.py:202
+#: plinth/daemon.py:204
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Kan niet verbinden met {host}:{port}"
@@ -142,84 +142,164 @@ msgstr "Service Discovery"
 msgid "Local Network Domain"
 msgstr "Lokaal netwerkdomein"
 
-#: plinth/modules/backups/__init__.py:30
+#: plinth/modules/backups/__init__.py:34
 msgid "Backups allows creating and managing backup archives."
 msgstr "Met back-ups kun je back-uparchieven maken en beheren."
 
-#: plinth/modules/backups/__init__.py:50
+#: plinth/modules/backups/__init__.py:54 plinth/modules/backups/__init__.py:200
+#: plinth/modules/backups/__init__.py:245
 msgid "Backups"
 msgstr "Back-ups"
+
+#: plinth/modules/backups/__init__.py:197
+msgid ""
+"Enable an automatic backup schedule for data safety. Prefer an encrypted "
+"remote backup location or an extra attached disk."
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:203
+msgid "Enable a Backup Schedule"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:207
+#: plinth/modules/backups/__init__.py:254
+#: plinth/modules/storage/__init__.py:323
+#, python-brace-format
+msgid "Go to {app_name}"
+msgstr "Ga naar {app_name}"
+
+#: plinth/modules/backups/__init__.py:242
+#, python-brace-format
+msgid ""
+"A scheduled backup failed. Past {error_count} attempts for backup did not "
+"succeed. The latest error is: {error_message}"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:250
+#, fuzzy
+#| msgid "Existing Backups"
+msgid "Error During Backup"
+msgstr "Bestaande back-ups"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app} (geen gegevens voor back-up)"
 
-#: plinth/modules/backups/forms.py:50
+#: plinth/modules/backups/forms.py:53
+msgid "Enable scheduled backups"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:54
+msgid ""
+"If enabled, a backup is taken every day, every week and every month. Older "
+"backups are removed."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:58
+msgid "Number of daily backups to keep"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:59
+msgid ""
+"This many latest backups are kept and the rest are removed. A value of \"0\" "
+"disables backups of this type. Triggered at specified hour every day."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:64
+msgid "Number of weekly backups to keep"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:66
+msgid ""
+"This many latest backups are kept and the rest are removed. A value of \"0\" "
+"disables backups of this type. Triggered at specified hour every Sunday."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:71
+msgid "Number of monthly backups to keep"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:73
+msgid ""
+"This many latest backups are kept and the rest are removed. A value of \"0\" "
+"disables backups of this type. Triggered at specified hour first day of "
+"every month."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:78
+msgid "Hour of the day to trigger backup operation"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:79
+msgid "In 24 hour format."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
+msgid "Included apps"
+msgstr "Beschikbare toepassingen"
+
+#: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
+msgid "Apps to include in the backup"
+msgstr "Toepassingen die in de back-up moeten worden opgenomen"
+
+#: plinth/modules/backups/forms.py:98
 msgid "Repository"
 msgstr "Repository"
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:100
 #: plinth/modules/backups/templates/backups_delete.html:17
 #: plinth/modules/ikiwiki/forms.py:15
-#: plinth/modules/networks/templates/connection_show.html:58
+#: plinth/modules/networks/templates/connection_show.html:71
 #: plinth/modules/samba/templates/samba.html:66
 #: plinth/modules/sharing/templates/sharing.html:33
 msgid "Name"
 msgstr "Naam"
 
-#: plinth/modules/backups/forms.py:53
+#: plinth/modules/backups/forms.py:101
 msgid "(Optional) Set a name for this backup archive"
 msgstr "(Optioneel) Geef dit backup-archief een naam"
 
-#: plinth/modules/backups/forms.py:56
-msgid "Included apps"
-msgstr "Beschikbare toepassingen"
-
-#: plinth/modules/backups/forms.py:56
-msgid "Apps to include in the backup"
-msgstr "Toepassingen die in de back-up moeten worden opgenomen"
-
-#: plinth/modules/backups/forms.py:73
+#: plinth/modules/backups/forms.py:121
 msgid "Select the apps you want to restore"
 msgstr "Selecteer de te herstellen toepassingen"
 
-#: plinth/modules/backups/forms.py:89
+#: plinth/modules/backups/forms.py:137
 msgid "Upload File"
 msgstr "Bestand uploaden"
 
-#: plinth/modules/backups/forms.py:91
+#: plinth/modules/backups/forms.py:139
 msgid "Backup files have to be in .tar.gz format"
 msgstr "Back-up bestanden moeten in .tar.gz formaat zijn"
 
-#: plinth/modules/backups/forms.py:92
+#: plinth/modules/backups/forms.py:140
 msgid "Select the backup file you want to upload"
 msgstr "Selecteer het back-upbestand dat je wilt uploaden"
 
-#: plinth/modules/backups/forms.py:98
+#: plinth/modules/backups/forms.py:146
 msgid "Repository path format incorrect."
 msgstr "Repository pad-indeling is onjuist."
 
-#: plinth/modules/backups/forms.py:105
+#: plinth/modules/backups/forms.py:153
 #, python-brace-format
 msgid "Invalid username: {username}"
 msgstr "Ongeldige gebruikersnaam: {username}"
 
-#: plinth/modules/backups/forms.py:115
+#: plinth/modules/backups/forms.py:163
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
 msgstr "Ongeldige hostnaam: {hostname}"
 
-#: plinth/modules/backups/forms.py:119
+#: plinth/modules/backups/forms.py:167
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
 msgstr "Ongeldig pad: {dir_path}"
 
-#: plinth/modules/backups/forms.py:125
+#: plinth/modules/backups/forms.py:173
 msgid "Encryption"
 msgstr "Encryptie"
 
-#: plinth/modules/backups/forms.py:126
+#: plinth/modules/backups/forms.py:174
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -227,51 +307,51 @@ msgstr ""
 "\"Sleutel in archief\" wil zeggen dat een sleutel, beschermd met een "
 "wachtwoord, is opgeslagen in de backup."
 
-#: plinth/modules/backups/forms.py:128
+#: plinth/modules/backups/forms.py:176
 msgid "Key in Repository"
 msgstr "Sleutel in archief"
 
-#: plinth/modules/backups/forms.py:128 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:176 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Geen"
 
-#: plinth/modules/backups/forms.py:130 plinth/modules/networks/forms.py:266
+#: plinth/modules/backups/forms.py:178 plinth/modules/networks/forms.py:275
 msgid "Passphrase"
 msgstr "Wachtwoordzin"
 
-#: plinth/modules/backups/forms.py:131
+#: plinth/modules/backups/forms.py:179
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Wachtwoordzin; Alleen nodig bij het gebruik van versleuteling."
 
-#: plinth/modules/backups/forms.py:134
+#: plinth/modules/backups/forms.py:182
 msgid "Confirm Passphrase"
 msgstr "Wachtwoordzin bevestigen"
 
-#: plinth/modules/backups/forms.py:134
+#: plinth/modules/backups/forms.py:182
 msgid "Repeat the passphrase."
 msgstr "Herhaal de wachtwoordzin."
 
-#: plinth/modules/backups/forms.py:145
+#: plinth/modules/backups/forms.py:193
 msgid "The entered encryption passphrases do not match"
 msgstr "De ingevoerde coderingswachtwoorden komen niet overeen"
 
-#: plinth/modules/backups/forms.py:149
+#: plinth/modules/backups/forms.py:197
 msgid "Passphrase is needed for encryption."
 msgstr "Wachtwoordzin is nodig voor versleuteling."
 
-#: plinth/modules/backups/forms.py:184
+#: plinth/modules/backups/forms.py:232
 msgid "Select Disk or Partition"
 msgstr "Schijf of partitie selecteren"
 
-#: plinth/modules/backups/forms.py:185
+#: plinth/modules/backups/forms.py:233
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "Back-ups worden opgeslagen in de map FreedomBoxBackups"
 
-#: plinth/modules/backups/forms.py:194
+#: plinth/modules/backups/forms.py:242
 msgid "SSH Repository Path"
 msgstr "SSH Repository Pad"
 
-#: plinth/modules/backups/forms.py:195
+#: plinth/modules/backups/forms.py:243
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -279,11 +359,11 @@ msgstr ""
 "Pad naar een nieuwe of bestaande repository.Voorbeeld: <i>user@host:~/pad/"
 "naar/repo/</i>"
 
-#: plinth/modules/backups/forms.py:199
+#: plinth/modules/backups/forms.py:247
 msgid "SSH server password"
 msgstr "SSH-server wachtwoord"
 
-#: plinth/modules/backups/forms.py:200
+#: plinth/modules/backups/forms.py:248
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -291,15 +371,15 @@ msgstr ""
 "Wachtwoord van de SSH Server.<br />SSH-sleutel-gebaseerde authenticatie is "
 "nog niet mogelijk."
 
-#: plinth/modules/backups/forms.py:219
+#: plinth/modules/backups/forms.py:267
 msgid "Remote backup repository already exists."
 msgstr "Externe backup repository bestaat al."
 
-#: plinth/modules/backups/forms.py:225
+#: plinth/modules/backups/forms.py:273
 msgid "Select verified SSH public key"
 msgstr "Selecteer geverifieerde SSH openbare sleutel"
 
-#: plinth/modules/backups/repository.py:33
+#: plinth/modules/backups/repository.py:34
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -307,37 +387,37 @@ msgstr ""
 "Verbinding geweigerd - zorg ervoor dat de juiste inloggegevens zijn "
 "opgegeven en dat de server actief is."
 
-#: plinth/modules/backups/repository.py:40
+#: plinth/modules/backups/repository.py:41
 msgid "Connection refused"
 msgstr "Verbinding geweigerd"
 
-#: plinth/modules/backups/repository.py:47
+#: plinth/modules/backups/repository.py:48
 msgid "Repository not found"
 msgstr "Repository niet gevonden"
 
-#: plinth/modules/backups/repository.py:52
+#: plinth/modules/backups/repository.py:53
 msgid "Incorrect encryption passphrase"
 msgstr "Onjuiste wachtwoordzin voor versleuteling"
 
-#: plinth/modules/backups/repository.py:57
+#: plinth/modules/backups/repository.py:58
 msgid "SSH access denied"
 msgstr "SSH toegang geweigerd"
 
-#: plinth/modules/backups/repository.py:63
+#: plinth/modules/backups/repository.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr "Het opslag pad is niet leeg, en ook geen lege bestaande backup opslag."
 
-#: plinth/modules/backups/repository.py:136
+#: plinth/modules/backups/repository.py:143
 msgid "Existing repository is not encrypted."
 msgstr "Bestaande repository is niet versleuteld."
 
-#: plinth/modules/backups/repository.py:324
+#: plinth/modules/backups/repository.py:327
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} opslag"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:61
+#: plinth/modules/backups/views.py:111
 msgid "Create a new backup"
 msgstr "Maak een nieuwe back-up"
 
@@ -422,31 +502,35 @@ msgstr "Invoeren"
 msgid "This repository is encrypted"
 msgstr "Deze repository is versleuteld"
 
-#: plinth/modules/backups/templates/backups_repository.html:34
+#: plinth/modules/backups/templates/backups_repository.html:29
+msgid "Schedule"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
 msgstr "Locatie loskoppelen"
 
-#: plinth/modules/backups/templates/backups_repository.html:45
+#: plinth/modules/backups/templates/backups_repository.html:51
 msgid "Mount Location"
 msgstr "Locatie koppelen"
 
-#: plinth/modules/backups/templates/backups_repository.html:56
+#: plinth/modules/backups/templates/backups_repository.html:62
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 "Verwijder de back-uplocatie. Hierdoor wordt de externe back-up niet "
 "verwijderd."
 
-#: plinth/modules/backups/templates/backups_repository.html:77
+#: plinth/modules/backups/templates/backups_repository.html:83
 msgid "Download"
 msgstr "Downloaden"
 
-#: plinth/modules/backups/templates/backups_repository.html:81
+#: plinth/modules/backups/templates/backups_repository.html:87
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:156
+#: plinth/modules/backups/views.py:206
 msgid "Restore"
 msgstr "Herstellen"
 
-#: plinth/modules/backups/templates/backups_repository.html:103
+#: plinth/modules/backups/templates/backups_repository.html:109
 msgid "No archives currently exist."
 msgstr "Er bestaan momenteel geen archiefbestanden."
 
@@ -471,6 +555,14 @@ msgstr "Locatie verwijderen"
 msgid "Restore data from"
 msgstr "Gegevens herstellen van"
 
+#: plinth/modules/backups/templates/backups_schedule.html:19
+#: plinth/modules/upgrades/__init__.py:76
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr "Update"
+
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
 msgid ""
@@ -491,6 +583,7 @@ msgstr ""
 
 #: plinth/modules/backups/templates/backups_upload.html:27
 #: plinth/modules/help/templates/statuslog.html:23
+#: plinth/modules/networks/templates/connection_show.html:23
 msgid "Caution:"
 msgstr "Let op:"
 
@@ -545,92 +638,102 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Host verifiëren"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:55
+msgid "Backup schedule updated."
+msgstr ""
+
+#: plinth/modules/backups/views.py:74
+#, fuzzy
+#| msgid "Create Backup"
+msgid "Schedule Backups"
+msgstr "Maak een back-up"
+
+#: plinth/modules/backups/views.py:106
 msgid "Archive created."
 msgstr "Archief aangemaakt."
 
-#: plinth/modules/backups/views.py:84
+#: plinth/modules/backups/views.py:134
 msgid "Delete Archive"
 msgstr "Archief verwijderen"
 
-#: plinth/modules/backups/views.py:96
+#: plinth/modules/backups/views.py:146
 msgid "Archive deleted."
 msgstr "Archief verwijderd."
 
-#: plinth/modules/backups/views.py:109
+#: plinth/modules/backups/views.py:159
 msgid "Upload and restore a backup"
 msgstr "Een back-up uploaden en herstellen"
 
-#: plinth/modules/backups/views.py:144
+#: plinth/modules/backups/views.py:194
 msgid "Restored files from backup."
 msgstr "Herstelde bestanden van de back-up."
 
-#: plinth/modules/backups/views.py:172
+#: plinth/modules/backups/views.py:222
 msgid "No backup file found."
 msgstr "Er is geen back-upbestand gevonden."
 
-#: plinth/modules/backups/views.py:180
+#: plinth/modules/backups/views.py:230
 msgid "Restore from uploaded file"
 msgstr "Herstellen vanuit geüpload bestand"
 
-#: plinth/modules/backups/views.py:239
+#: plinth/modules/backups/views.py:289
 msgid "No additional disks available to add a repository."
 msgstr ""
 "Er zijn geen extra schijven beschikbaar om een opslagplaats toe te voegen."
 
-#: plinth/modules/backups/views.py:247
+#: plinth/modules/backups/views.py:297
 msgid "Create backup repository"
 msgstr "Maak een back-up repository"
 
-#: plinth/modules/backups/views.py:274
+#: plinth/modules/backups/views.py:324
 msgid "Create remote backup repository"
 msgstr "Maak een back-up repository"
 
-#: plinth/modules/backups/views.py:293
+#: plinth/modules/backups/views.py:344
 msgid "Added new remote SSH repository."
 msgstr "Nieuwe externe SSH-repository toegevoegd."
 
-#: plinth/modules/backups/views.py:315
+#: plinth/modules/backups/views.py:366
 msgid "Verify SSH hostkey"
 msgstr "SSH-hostkey verifiëren"
 
-#: plinth/modules/backups/views.py:341
+#: plinth/modules/backups/views.py:392
 msgid "SSH host already verified."
 msgstr "SSH-host is al geverifieerd."
 
-#: plinth/modules/backups/views.py:351
+#: plinth/modules/backups/views.py:402
 msgid "SSH host verified."
 msgstr "SSH-host geverifieerd."
 
-#: plinth/modules/backups/views.py:365
+#: plinth/modules/backups/views.py:417
 msgid "SSH host public key could not be verified."
 msgstr "De openbare sleutel van de SSH-host kan niet worden geverifieerd."
 
-#: plinth/modules/backups/views.py:367
+#: plinth/modules/backups/views.py:419
 msgid "Authentication to remote server failed."
 msgstr "Authenticatie naar externe server is mislukt."
 
-#: plinth/modules/backups/views.py:369
+#: plinth/modules/backups/views.py:421
 msgid "Error establishing connection to server: {}"
 msgstr "Fout bij het tot stand brengen van een verbinding met de server: {}"
 
-#: plinth/modules/backups/views.py:380
+#: plinth/modules/backups/views.py:432
 msgid "Repository removed."
 msgstr "Repository verwijderd."
 
-#: plinth/modules/backups/views.py:394
+#: plinth/modules/backups/views.py:446
 msgid "Remove Repository"
 msgstr "Verwijder Repository"
 
-#: plinth/modules/backups/views.py:403
+#: plinth/modules/backups/views.py:455
 msgid "Repository removed. Backups were not deleted."
 msgstr "Repository verwijderd. Back-ups zijn niet verwijderd."
 
-#: plinth/modules/backups/views.py:413
+#: plinth/modules/backups/views.py:465
 msgid "Unmounting failed!"
 msgstr "Ontkoppelen is mislukt!"
 
-#: plinth/modules/backups/views.py:428 plinth/modules/backups/views.py:432
+#: plinth/modules/backups/views.py:480 plinth/modules/backups/views.py:484
 msgid "Mounting failed"
 msgstr "Aankoppelen is mislukt"
 
@@ -752,7 +855,7 @@ msgid "No passwords currently configured."
 msgstr "Er zijn momenteel geen wachwoorden ingesteld."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:204
+#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:44
 msgid "Password"
 msgstr "Wachtwoord"
@@ -783,7 +886,7 @@ msgstr "Overzicht"
 
 #: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
-#: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:35
@@ -873,7 +976,7 @@ msgstr "Bediende domeinen"
 #: plinth/modules/bind/templates/bind.html:17
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
-#: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/networks/templates/connection_show.html:91
 #: plinth/modules/samba/templates/samba.html:65
 #: plinth/modules/storage/templates/storage.html:26
 msgid "Type"
@@ -1064,7 +1167,7 @@ msgstr ""
 "werken wanneer je toegang krijgt via een IP-adres als onderdeel van de URL."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
-#: plinth/modules/performance/manifest.py:9
+#: plinth/modules/performance/manifest.py:33
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -1685,12 +1788,12 @@ msgstr "Accepteer alle SSL certificaten"
 msgid "Use HTTP basic authentication"
 msgstr "Gebruik HTTP-basisverificatie"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:203
+#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:69
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:206
+#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Toon wachtwoord"
 
@@ -1794,7 +1897,7 @@ msgstr "Over ons"
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
-#: plinth/modules/networks/templates/connection_show.html:241
+#: plinth/modules/networks/templates/connection_show.html:254
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:27
@@ -1979,8 +2082,8 @@ msgstr "Ingeschakeld"
 
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/networks/forms.py:48 plinth/modules/snapshot/forms.py:23
-#: plinth/modules/snapshot/forms.py:29 plinth/templates/cards.html:34
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
 msgid "Disabled"
 msgstr "Uitgeschakeld"
 
@@ -3086,8 +3189,8 @@ msgstr ""
 "MediaWiki heeft na installatie een willekeurig beheerder-wachtwoord "
 "gekregen. Je kunt een nieuw wachtwoord instellen bij Configuratie en "
 "inloggen als beheerder (admin). Je kunt daarna andere gebruikers registreren "
-"vanuit MediaWiki op de <a href=\"/mediawiki/index.php/Special:CreateAccount\""
-">Speciaal:GebruikerRegistreren</a> pagina."
+"vanuit MediaWiki op de <a href=\"/mediawiki/index.php/Special:CreateAccount"
+"\">Speciaal:GebruikerRegistreren</a> pagina."
 
 #: plinth/modules/mediawiki/__init__.py:38
 msgid ""
@@ -3260,7 +3363,7 @@ msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "Indien uitgeschakeld, kunnen spelers niet sterven of schade oplopen."
 
 #: plinth/modules/minetest/templates/minetest.html:17
-#: plinth/modules/networks/forms.py:50 plinth/modules/networks/forms.py:81
+#: plinth/modules/networks/forms.py:54 plinth/modules/networks/forms.py:90
 msgid "Address"
 msgstr "Adres"
 
@@ -3683,27 +3786,27 @@ msgstr "Netwerken"
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "Gebruikt DNSSEC op IPv{kind}"
 
-#: plinth/modules/networks/forms.py:17
+#: plinth/modules/networks/forms.py:16
 msgid "Connection Type"
 msgstr "Verbindingssoort"
 
-#: plinth/modules/networks/forms.py:29
+#: plinth/modules/networks/forms.py:28
 msgid "Connection Name"
 msgstr "Verbindingsnaam"
 
-#: plinth/modules/networks/forms.py:31
+#: plinth/modules/networks/forms.py:30
 msgid "Network Interface"
 msgstr "Netwerkinterface"
 
-#: plinth/modules/networks/forms.py:32
+#: plinth/modules/networks/forms.py:31
 msgid "The network device that this connection should be bound to."
 msgstr "De netwerkapparatuur waar deze verbinding mee moet worden verbonden."
 
-#: plinth/modules/networks/forms.py:35
+#: plinth/modules/networks/forms.py:34
 msgid "Firewall Zone"
 msgstr "Firewall Zone"
 
-#: plinth/modules/networks/forms.py:36
+#: plinth/modules/networks/forms.py:35
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -3711,40 +3814,37 @@ msgstr ""
 "De firewall zone controleert welke machines beschikbaar zijn via deze "
 "verbinding. Selecteer \"Allen Intern\" voor vertrouwde netwerken."
 
-#: plinth/modules/networks/forms.py:40
+#: plinth/modules/networks/forms.py:39
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 Adresseringsmethode"
 
 #: plinth/modules/networks/forms.py:41
-#, python-brace-format
 msgid ""
-"\"Automatic\" method will make {box_name} acquire configuration from this "
-"network making it a client. \"Shared\" method will make {box_name} act as a "
-"router, configure clients on this network and share its Internet connection."
+"Automatic (DHCP): Configure automatically, use Internet connection from this "
+"network"
 msgstr ""
-"De \"Automatische\" methode zorgt dat {box_name} de configuratie van dit "
-"netwerk gebruikt waardoor het een client wordt. De 'Gedeeld' methode zorgt "
-"ervoor dat {box_name} fungeert als een router, die het configureren van "
-"clients op dit netwerk regelt en de Internet-verbinding deelt."
 
-#: plinth/modules/networks/forms.py:46
-msgid "Automatic (DHCP)"
-msgstr "Automatisch (DHCP)"
+#: plinth/modules/networks/forms.py:44
+msgid ""
+"Shared: Act as a router, provide Internet connection to other devices on "
+"this network"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:46
-msgid "Shared"
-msgstr "Gedeeld"
+#: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
+msgid ""
+"Manual: Use manually specified parameters, use Internet connection from this "
+"network"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:78
-msgctxt "Not automatically"
-msgid "Manual"
-msgstr "Handleiding"
+#: plinth/modules/networks/forms.py:50
+msgid "Disabled: Do not configure this addressing method"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:53
+#: plinth/modules/networks/forms.py:57
 msgid "Netmask"
 msgstr "Netmask"
 
-#: plinth/modules/networks/forms.py:54
+#: plinth/modules/networks/forms.py:58
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -3752,21 +3852,21 @@ msgstr ""
 "Optionele waarde. Indien leeg, zal een standaard netmask op basis van het "
 "adres worden gebruikt."
 
-#: plinth/modules/networks/forms.py:58 plinth/modules/networks/forms.py:88
-#: plinth/modules/networks/templates/connection_show.html:180
-#: plinth/modules/networks/templates/connection_show.html:221
+#: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:97
+#: plinth/modules/networks/templates/connection_show.html:193
+#: plinth/modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Gateway"
 
-#: plinth/modules/networks/forms.py:58 plinth/modules/networks/forms.py:88
+#: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:97
 msgid "Optional value."
 msgstr "Optionele waarde."
 
-#: plinth/modules/networks/forms.py:61 plinth/modules/networks/forms.py:91
+#: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:100
 msgid "DNS Server"
 msgstr "DNS Server"
 
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:66
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3775,11 +3875,11 @@ msgstr ""
 "adresseringsmethode is \"Automatisch\", zullen de DNS-Servers van de DHCP-"
 "server worden genegeerd."
 
-#: plinth/modules/networks/forms.py:67 plinth/modules/networks/forms.py:97
+#: plinth/modules/networks/forms.py:71 plinth/modules/networks/forms.py:106
 msgid "Second DNS Server"
 msgstr "Tweede DNS Server"
 
-#: plinth/modules/networks/forms.py:68
+#: plinth/modules/networks/forms.py:72
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3788,40 +3888,34 @@ msgstr ""
 "methode is \"Automatisch\", zullen de DNS-Servers van de DHCP-server worden "
 "genegeerd."
 
-#: plinth/modules/networks/forms.py:73
+#: plinth/modules/networks/forms.py:77
 msgid "IPv6 Addressing Method"
 msgstr "IPv6 Adresseringsmethode"
 
-#: plinth/modules/networks/forms.py:74
-#, python-brace-format
-msgid ""
-"\"Automatic\" methods will make {box_name} acquire configuration from this "
-"network making it a client."
-msgstr ""
-"De \"Automatische\" methoden zorgen dat {box_name} de configuratie van dit "
-"netwerk gebruikt waardoor het een client wordt."
-
-#: plinth/modules/networks/forms.py:77 plinth/modules/networks/forms.py:245
-msgid "Automatic"
-msgstr "Automatisch"
-
-#: plinth/modules/networks/forms.py:77
-msgid "Automatic, DHCP only"
-msgstr "Automatisch, alleen DHCP"
-
 #: plinth/modules/networks/forms.py:79
-msgid "Ignore"
-msgstr "Negeren"
+msgid ""
+"Automatic: Configure automatically, use Internet connection from this network"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:83
+#: plinth/modules/networks/forms.py:82
+msgid ""
+"Automatic (DHCP only): Configure automatically, use Internet connection from "
+"this network"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:87
+msgid "Ignore: Ignore this addressing method"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:92
 msgid "Prefix"
 msgstr "Voorvoegsel"
 
-#: plinth/modules/networks/forms.py:84
+#: plinth/modules/networks/forms.py:93
 msgid "Value between 1 and 128."
 msgstr "Waarde tussen 1 en 128."
 
-#: plinth/modules/networks/forms.py:92
+#: plinth/modules/networks/forms.py:101
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3830,7 +3924,7 @@ msgstr ""
 "adresseringsmethode is \"Automatisch\", zullen de DNS-Servers van de DHCP-"
 "server worden genegeerd."
 
-#: plinth/modules/networks/forms.py:98
+#: plinth/modules/networks/forms.py:107
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3839,54 +3933,58 @@ msgstr ""
 "methode is \"Automatisch\", zullen de DNS-Servers van de DHCP-server worden "
 "genegeerd."
 
-#: plinth/modules/networks/forms.py:111
+#: plinth/modules/networks/forms.py:120
 msgid "-- select --"
 msgstr "-- selecteer --"
 
-#: plinth/modules/networks/forms.py:238
-#: plinth/modules/networks/templates/connection_show.html:122
+#: plinth/modules/networks/forms.py:247
+#: plinth/modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:239
+#: plinth/modules/networks/forms.py:248
 msgid "The visible name of the network."
 msgstr "De zichtbare netwerknaam."
 
-#: plinth/modules/networks/forms.py:241
-#: plinth/modules/networks/templates/connection_show.html:135
+#: plinth/modules/networks/forms.py:250
+#: plinth/modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Modus"
 
-#: plinth/modules/networks/forms.py:241
+#: plinth/modules/networks/forms.py:250
 msgid "Infrastructure"
 msgstr "Infrastructuur"
 
-#: plinth/modules/networks/forms.py:242
+#: plinth/modules/networks/forms.py:251
 msgid "Access Point"
 msgstr "Access Point"
 
-#: plinth/modules/networks/forms.py:243
+#: plinth/modules/networks/forms.py:252
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:245
+#: plinth/modules/networks/forms.py:254
 msgid "Frequency Band"
 msgstr "Frequentieband"
 
-#: plinth/modules/networks/forms.py:246
+#: plinth/modules/networks/forms.py:254
+msgid "Automatic"
+msgstr "Automatisch"
+
+#: plinth/modules/networks/forms.py:255
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:247
+#: plinth/modules/networks/forms.py:256
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:249
-#: plinth/modules/networks/templates/connection_show.html:149
+#: plinth/modules/networks/forms.py:258
+#: plinth/modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Kanaal"
 
-#: plinth/modules/networks/forms.py:250
+#: plinth/modules/networks/forms.py:259
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -3894,11 +3992,11 @@ msgstr ""
 "Optionele waarde. Beperken van draadloos kanaal tot de geselecteerde "
 "frequentieband. Waarde leeg of 0 betekent automatische selectie."
 
-#: plinth/modules/networks/forms.py:255
+#: plinth/modules/networks/forms.py:264
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:256
+#: plinth/modules/networks/forms.py:265
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -3909,11 +4007,11 @@ msgstr ""
 "toegangspunt overeenkomt met degene die hier wordt ingevuld. Voorbeeld: "
 "00:11:22:aa:bb:cc."
 
-#: plinth/modules/networks/forms.py:262
+#: plinth/modules/networks/forms.py:271
 msgid "Authentication Mode"
 msgstr "Authentificatiemodus"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:272
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -3921,20 +4019,20 @@ msgstr ""
 "Selecteer WPA indien het netwerk beveiligd is en gebruikerswachtwoorden "
 "gebruikt om te verbinden."
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:274
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:274
 msgid "Open"
 msgstr "Open"
 
-#: plinth/modules/networks/forms.py:301
+#: plinth/modules/networks/forms.py:310
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Geef aan hoe jouw {box_name} verbonden is met jouw netwerk"
 
-#: plinth/modules/networks/forms.py:308
+#: plinth/modules/networks/forms.py:317
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -3945,7 +4043,7 @@ msgstr ""
 "internetverbinding van de router via Wi-Fi of Ethernet-kabel. Dit is een "
 "typische thuisopstelling. </p>"
 
-#: plinth/modules/networks/forms.py:315
+#: plinth/modules/networks/forms.py:324
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -3958,7 +4056,7 @@ msgstr ""
 "{box_name} is rechtstreeks verbonden met het internet en alle apparaten "
 "maken verbinding met {box_name} voor hun internetverbinding. </p>"
 
-#: plinth/modules/networks/forms.py:324
+#: plinth/modules/networks/forms.py:333
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -3970,11 +4068,11 @@ msgstr ""
 "andere apparaten op het netwerk. Dit komt voor in community- of "
 "cloudopstellingen. </p>"
 
-#: plinth/modules/networks/forms.py:343
+#: plinth/modules/networks/forms.py:352
 msgid "Choose your internet connection type"
 msgstr "Het type internetverbinding kiezen"
 
-#: plinth/modules/networks/forms.py:347
+#: plinth/modules/networks/forms.py:356
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-block"
 "\">This means that devices on the Internet can reach you when you are "
@@ -3993,7 +4091,7 @@ msgstr ""
 "maar niet bekend is of dit in de loop van de tijd verandert, is het veiliger "
 "om deze optie te kiezen. </p>"
 
-#: plinth/modules/networks/forms.py:359
+#: plinth/modules/networks/forms.py:368
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4012,7 +4110,7 @@ msgstr ""
 "{box_name} diensten, maar niet veel ISP's bieden dit type verbinding aan. "
 "Het kan zijn dat de ISP deze service als een betaalde dienst aanbiedt.</p>"
 
-#: plinth/modules/networks/forms.py:372
+#: plinth/modules/networks/forms.py:381
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4031,7 +4129,7 @@ msgstr ""
 "diensten via internet aan te bieden vanuit huis. {box_name} biedt veel "
 "verschillende oplossingen maar ieder daarvan heeft beperkingen.</p>"
 
-#: plinth/modules/networks/forms.py:385
+#: plinth/modules/networks/forms.py:394
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-block"
 "\">You will be suggested the most conservative actions.</p>"
@@ -4039,11 +4137,11 @@ msgstr ""
 "Ik weet niet welk type verbinding mijn ISP biedt <p class=\"help-block\">De "
 "meest conservatieve maatregelen zullen worden voorgesteld.</p>"
 
-#: plinth/modules/networks/forms.py:402
+#: plinth/modules/networks/forms.py:411
 msgid "Preferred router configuration"
 msgstr "Voorkeurs routerconfiguratie"
 
-#: plinth/modules/networks/forms.py:407
+#: plinth/modules/networks/forms.py:416
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
@@ -4060,7 +4158,7 @@ msgstr ""
 "{box_name}. Vergeet niet om eerst een statisch lokaal IP-adres voor de "
 "{box_name} in de router configuratie aan te maken. </p>"
 
-#: plinth/modules/networks/forms.py:419
+#: plinth/modules/networks/forms.py:428
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
@@ -4071,8 +4169,8 @@ msgid ""
 "443 to work. Each of the other applications will suggest which port(s) need "
 "to be forwarded for that application to work.</p>"
 msgstr ""
-"Doorsturen van gespecificeerd verkeer per toepassing <p class=\"help-block\""
-">Er kan ook voor gekozen worden om alleen gespecificeerd verkeer door te "
+"Doorsturen van gespecificeerd verkeer per toepassing <p class=\"help-block"
+"\">Er kan ook voor gekozen worden om alleen gespecificeerd verkeer door te "
 "sturen naar deze {box_name}. Dit is ideaal als je andere servers zoals "
 "{box_name} in dit netwerk hebt of als de router geen DMZ-functie "
 "ondersteunt. Voor alle toepassingen die een webinterface bieden, moet "
@@ -4080,7 +4178,7 @@ msgstr ""
 "geven aan welke poort(en) moeten worden doorgestuurd voor correcte werking "
 "van die toepassing. </p>"
 
-#: plinth/modules/networks/forms.py:433
+#: plinth/modules/networks/forms.py:442
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4091,32 +4189,41 @@ msgstr ""
 "eraan herinnerd wilt worden. Sommige van de andere configuratiestappen "
 "kunnen mislukken. </p>"
 
-#: plinth/modules/networks/templates/connection_show.html:23
+#: plinth/modules/networks/templates/connection_show.html:24
+#, python-format
+msgid ""
+"This is the primary connection that %(box_name)s relies on for Internet "
+"connectivity. Altering it may render your %(box_name)s unreachable. Ensure "
+"that you have other means to access %(box_name)s before altering this "
+"connection."
+msgstr ""
+
+#: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
 msgstr "Wijzig verbinding"
 
-#: plinth/modules/networks/templates/connection_show.html:23
+#: plinth/modules/networks/templates/connection_show.html:36
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:72
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:73
 #: plinth/templates/base.html:156 plinth/templates/base.html:157
 msgid "Edit"
 msgstr "Wijzig"
 
-#: plinth/modules/networks/templates/connection_show.html:30
-#: plinth/modules/networks/templates/connections_list.html:60
+#: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/networks/templates/connections_list.html:61
 msgid "Deactivate"
 msgstr "Deactiveer"
 
-#: plinth/modules/networks/templates/connection_show.html:37
-#: plinth/modules/networks/templates/connections_list.html:67
+#: plinth/modules/networks/templates/connection_show.html:50
+#: plinth/modules/networks/templates/connections_list.html:69
 msgid "Activate"
 msgstr "Activeer"
 
-#: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/networks/templates/connection_show.html:56
 msgid "Delete connection"
 msgstr "Verwijder verbinding"
 
-#: plinth/modules/networks/templates/connection_show.html:46
+#: plinth/modules/networks/templates/connection_show.html:59
 #: plinth/modules/networks/templates/connections_diagram.html:19
 #: plinth/modules/networks/templates/connections_diagram.html:22
 #: plinth/modules/networks/templates/connections_diagram.html:51
@@ -4124,125 +4231,125 @@ msgstr "Verwijder verbinding"
 msgid "Connection"
 msgstr "Verbinding"
 
-#: plinth/modules/networks/templates/connection_show.html:51
+#: plinth/modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
 msgstr "Primaire Verbinding"
 
-#: plinth/modules/networks/templates/connection_show.html:53
-#: plinth/modules/networks/templates/connection_show.html:195
-#: plinth/modules/networks/templates/connection_show.html:236
+#: plinth/modules/networks/templates/connection_show.html:66
+#: plinth/modules/networks/templates/connection_show.html:208
+#: plinth/modules/networks/templates/connection_show.html:249
 msgid "yes"
 msgstr "ja"
 
-#: plinth/modules/networks/templates/connection_show.html:64
+#: plinth/modules/networks/templates/connection_show.html:77
 #: plinth/modules/storage/templates/storage.html:23
 msgid "Device"
 msgstr "Apparaat"
 
-#: plinth/modules/networks/templates/connection_show.html:68
+#: plinth/modules/networks/templates/connection_show.html:81
 msgid "State"
 msgstr "Status"
 
-#: plinth/modules/networks/templates/connection_show.html:73
+#: plinth/modules/networks/templates/connection_show.html:86
 msgid "State reason"
 msgstr "Reden van status"
 
-#: plinth/modules/networks/templates/connection_show.html:82
+#: plinth/modules/networks/templates/connection_show.html:95
 msgid "MAC address"
 msgstr "MAC adres"
 
-#: plinth/modules/networks/templates/connection_show.html:86
+#: plinth/modules/networks/templates/connection_show.html:99
 msgid "Interface"
 msgstr "Interface"
 
-#: plinth/modules/networks/templates/connection_show.html:90
+#: plinth/modules/networks/templates/connection_show.html:103
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:19
 #: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
 msgstr "Omschrijving"
 
-#: plinth/modules/networks/templates/connection_show.html:96
+#: plinth/modules/networks/templates/connection_show.html:109
 msgid "Physical Link"
 msgstr "Fysieke Verbinding"
 
-#: plinth/modules/networks/templates/connection_show.html:101
+#: plinth/modules/networks/templates/connection_show.html:114
 msgid "Link state"
 msgstr "Verbindingsstatus"
 
-#: plinth/modules/networks/templates/connection_show.html:104
+#: plinth/modules/networks/templates/connection_show.html:117
 msgid "cable is connected"
 msgstr "kabel is verbonden"
 
-#: plinth/modules/networks/templates/connection_show.html:107
+#: plinth/modules/networks/templates/connection_show.html:120
 msgid "please check cable"
 msgstr "controleer kabel"
 
-#: plinth/modules/networks/templates/connection_show.html:111
-#: plinth/modules/networks/templates/connection_show.html:127
+#: plinth/modules/networks/templates/connection_show.html:124
+#: plinth/modules/networks/templates/connection_show.html:140
 msgid "Speed"
 msgstr "Snelheid"
 
-#: plinth/modules/networks/templates/connection_show.html:113
+#: plinth/modules/networks/templates/connection_show.html:126
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
 msgstr "%(ethernet_speed)s Mbit/s"
 
-#: plinth/modules/networks/templates/connection_show.html:129
+#: plinth/modules/networks/templates/connection_show.html:142
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
 msgstr "%(wireless_bitrate)s Mbit/s"
 
-#: plinth/modules/networks/templates/connection_show.html:141
+#: plinth/modules/networks/templates/connection_show.html:154
 msgid "Signal strength"
 msgstr "Signaalsterkte"
 
-#: plinth/modules/networks/templates/connection_show.html:157
+#: plinth/modules/networks/templates/connection_show.html:170
 msgid "IPv4"
 msgstr "IPv4"
 
-#: plinth/modules/networks/templates/connection_show.html:162
-#: plinth/modules/networks/templates/connection_show.html:205
+#: plinth/modules/networks/templates/connection_show.html:175
+#: plinth/modules/networks/templates/connection_show.html:218
 #: plinth/modules/shadowsocks/forms.py:48
 msgid "Method"
 msgstr "Methode"
 
-#: plinth/modules/networks/templates/connection_show.html:171
-#: plinth/modules/networks/templates/connection_show.html:212
+#: plinth/modules/networks/templates/connection_show.html:184
+#: plinth/modules/networks/templates/connection_show.html:225
 msgid "IP address"
 msgstr "IP adres"
 
-#: plinth/modules/networks/templates/connection_show.html:187
-#: plinth/modules/networks/templates/connection_show.html:228
+#: plinth/modules/networks/templates/connection_show.html:200
+#: plinth/modules/networks/templates/connection_show.html:241
 msgid "DNS server"
 msgstr "DNS server"
 
-#: plinth/modules/networks/templates/connection_show.html:194
-#: plinth/modules/networks/templates/connection_show.html:235
+#: plinth/modules/networks/templates/connection_show.html:207
+#: plinth/modules/networks/templates/connection_show.html:248
 #: plinth/modules/storage/forms.py:139
 msgid "Default"
 msgstr "Standaard"
 
-#: plinth/modules/networks/templates/connection_show.html:200
+#: plinth/modules/networks/templates/connection_show.html:213
 msgid "IPv6"
 msgstr "IPv6"
 
-#: plinth/modules/networks/templates/connection_show.html:243
+#: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "Deze verbinding is niet actief."
 
-#: plinth/modules/networks/templates/connection_show.html:246
+#: plinth/modules/networks/templates/connection_show.html:259
 #: plinth/modules/security/__init__.py:46
 msgid "Security"
 msgstr "Security"
 
-#: plinth/modules/networks/templates/connection_show.html:251
-#: plinth/modules/networks/templates/connection_show.html:271
-#: plinth/modules/networks/templates/connection_show.html:290
+#: plinth/modules/networks/templates/connection_show.html:264
+#: plinth/modules/networks/templates/connection_show.html:284
+#: plinth/modules/networks/templates/connection_show.html:303
 msgid "Firewall zone"
 msgstr "Firewall zone"
 
-#: plinth/modules/networks/templates/connection_show.html:260
+#: plinth/modules/networks/templates/connection_show.html:273
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -4253,8 +4360,8 @@ msgstr ""
 "bedoeld zijn om intern beschikbaar te zijn van buitenaf bereikbaar. Dit is "
 "een veiligheidsrisico."
 
-#: plinth/modules/networks/templates/connection_show.html:280
-#: plinth/modules/networks/templates/connection_show.html:303
+#: plinth/modules/networks/templates/connection_show.html:293
+#: plinth/modules/networks/templates/connection_show.html:316
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -4264,13 +4371,13 @@ msgstr ""
 "wordt met een lokaal netwerk/machine, zijn veel diensten die alleen lokaal "
 "beschikbaar zijn niet bereikbaar."
 
-#: plinth/modules/networks/templates/connection_show.html:292
+#: plinth/modules/networks/templates/connection_show.html:305
 #: plinth/modules/networks/templates/connections_diagram.html:24
 #: plinth/network.py:24
 msgid "External"
 msgstr "Extern"
 
-#: plinth/modules/networks/templates/connection_show.html:299
+#: plinth/modules/networks/templates/connection_show.html:312
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -4360,7 +4467,7 @@ msgstr "Aktief"
 msgid "Inactive"
 msgstr "Inactief"
 
-#: plinth/modules/networks/templates/connections_list.html:74
+#: plinth/modules/networks/templates/connections_list.html:77
 #, python-format
 msgid "Delete connection %(name)s"
 msgstr "Verwijder verbinding %(name)s"
@@ -5416,9 +5523,9 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 "Voeg een nieuwe kalender en/of adresboek toe aan Evolution door middel van "
-"WebDAV. Voer de URL van de Radicale server in (bijv. https://<your.freedombox"
-".address>) en je gebruikersnaam. Klikken op de zoekknop zal de bestaande "
-"kalenders en adresboeken weergeven."
+"WebDAV. Voer de URL van de Radicale server in (bijv. https://<your."
+"freedombox.address>) en je gebruikersnaam. Klikken op de zoekknop zal de "
+"bestaande kalenders en adresboeken weergeven."
 
 #: plinth/modules/radicale/views.py:35
 msgid "Access rights configuration updated"
@@ -5898,8 +6005,8 @@ msgid ""
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
 "Om na de installatie gebruik te maken van Shadowsocks, stel dan de SOCKS5 "
-"proxy in op het apparaat, webbrowser of toepassing naar "
-"http://adres_van_de_freedombox:1080/"
+"proxy in op het apparaat, webbrowser of toepassing naar http://"
+"adres_van_de_freedombox:1080/"
 
 #: plinth/modules/shadowsocks/__init__.py:51
 msgid "Shadowsocks"
@@ -6455,11 +6562,6 @@ msgstr ""
 msgid "Low disk space"
 msgstr "Weinig schijfruimte"
 
-#: plinth/modules/storage/__init__.py:323
-#, python-brace-format
-msgid "Go to {app_name}"
-msgstr "Ga naar {app_name}"
-
 #: plinth/modules/storage/__init__.py:341
 msgid "Disk failure imminent"
 msgstr "Schijffout dreigt"
@@ -6602,7 +6704,15 @@ msgstr ""
 "waarop Syncthing draait."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Running Syncthing on {box_name} provides an extra synchronization point "
+#| "for your data that is available most of the time, allowing your devices "
+#| "to synchronize more often.  {box_name} runs a single instance of "
+#| "Syncthing that may be used by multiple users.  Each user's set of devices "
+#| "may be synchronized with a distinct set of folders.  The web interface on "
+#| "{box_name} is only available for users belonging to the \"admin\" or "
+#| "\"syncthing\" group."
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6610,7 +6720,7 @@ msgid ""
 "may be used by multiple users.  Each user's set of devices may be "
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" or "
-"\"syncthing\" group."
+"\"syncthing-access\" group."
 msgstr ""
 "Syncthing op {box_name} biedt een extra synchronisatiepunt voor gegevens. "
 "{box_name} draait een enkel exemplaar van Syncthing die gebruikt kan worden "
@@ -6619,16 +6729,16 @@ msgstr ""
 "{box_name} is alleen beschikbaar voor gebruikers die tot de \"admin\"- of de "
 "\"syncthing\"-groep behoren."
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
 msgstr "Beheer Syncthing toepassing"
 
-#: plinth/modules/syncthing/__init__.py:60
+#: plinth/modules/syncthing/__init__.py:62
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:61
+#: plinth/modules/syncthing/__init__.py:63
 msgid "File Synchronization"
 msgstr "Bestandssynchronisatie"
 
@@ -6791,8 +6901,8 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
-"Je kunt Tor-bruggen verkrijgen op <a href=\"https://bridges.torproject.org/\""
-">https://bridges.torproject.org/</a> en de bruggegevens kopiëren/plakken. "
+"Je kunt Tor-bruggen verkrijgen op <a href=\"https://bridges.torproject.org/"
+"\">https://bridges.torproject.org/</a> en de bruggegevens kopiëren/plakken. "
 "Momenteel worden de volgende transportmethoden ondersteund; geen, obfs3, "
 "obfs4 en scamblesuit."
 
@@ -6990,13 +7100,6 @@ msgstr ""
 "opnieuw gestart na de update, waardoor ze kort niet beschikbaar zijn. Als "
 "het systeem opnieuw moet worden opgestart, gebeurt dit automatisch om 02:00 "
 "uur, waardoor alle toepassingen even niet beschikbaar zijn."
-
-#: plinth/modules/upgrades/__init__.py:76
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
-msgstr "Update"
 
 #: plinth/modules/upgrades/__init__.py:117
 msgid "Updates"
@@ -8201,6 +8304,42 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-brace-format
+#~ msgid ""
+#~ "\"Automatic\" method will make {box_name} acquire configuration from this "
+#~ "network making it a client. \"Shared\" method will make {box_name} act as "
+#~ "a router, configure clients on this network and share its Internet "
+#~ "connection."
+#~ msgstr ""
+#~ "De \"Automatische\" methode zorgt dat {box_name} de configuratie van dit "
+#~ "netwerk gebruikt waardoor het een client wordt. De 'Gedeeld' methode "
+#~ "zorgt ervoor dat {box_name} fungeert als een router, die het configureren "
+#~ "van clients op dit netwerk regelt en de Internet-verbinding deelt."
+
+#~ msgid "Automatic (DHCP)"
+#~ msgstr "Automatisch (DHCP)"
+
+#~ msgid "Shared"
+#~ msgstr "Gedeeld"
+
+#~ msgctxt "Not automatically"
+#~ msgid "Manual"
+#~ msgstr "Handleiding"
+
+#, python-brace-format
+#~ msgid ""
+#~ "\"Automatic\" methods will make {box_name} acquire configuration from "
+#~ "this network making it a client."
+#~ msgstr ""
+#~ "De \"Automatische\" methoden zorgen dat {box_name} de configuratie van "
+#~ "dit netwerk gebruikt waardoor het een client wordt."
+
+#~ msgid "Automatic, DHCP only"
+#~ msgstr "Automatisch, alleen DHCP"
+
+#~ msgid "Ignore"
+#~ msgstr "Negeren"
 
 #~ msgid "Plumble"
 #~ msgstr "Plumble"

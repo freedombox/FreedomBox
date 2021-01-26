@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 18:57-0500\n"
+"POT-Creation-Date: 2021-01-25 20:15-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -27,27 +27,27 @@ msgstr "Pagina di origine"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:101
+#: plinth/daemon.py:103
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Il servizio {service_name} è in esecuzione"
 
-#: plinth/daemon.py:128
+#: plinth/daemon.py:130
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "In ascolto sulla porta {kind}{listen_address}:{port}"
 
-#: plinth/daemon.py:132
+#: plinth/daemon.py:134
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "In ascolto sulla porta{port}:{kind}"
 
-#: plinth/daemon.py:200
+#: plinth/daemon.py:202
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Connessione a {host}:{port}"
 
-#: plinth/daemon.py:202
+#: plinth/daemon.py:204
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Impossibile connettersi a {host}:{port}"
@@ -143,84 +143,164 @@ msgstr "Servizio Scoperta"
 msgid "Local Network Domain"
 msgstr "Dominio rete locale"
 
-#: plinth/modules/backups/__init__.py:30
+#: plinth/modules/backups/__init__.py:34
 msgid "Backups allows creating and managing backup archives."
 msgstr "Backups consente di creare e gestire archivi di backup."
 
-#: plinth/modules/backups/__init__.py:50
+#: plinth/modules/backups/__init__.py:54 plinth/modules/backups/__init__.py:200
+#: plinth/modules/backups/__init__.py:245
 msgid "Backups"
 msgstr "Backup"
+
+#: plinth/modules/backups/__init__.py:197
+msgid ""
+"Enable an automatic backup schedule for data safety. Prefer an encrypted "
+"remote backup location or an extra attached disk."
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:203
+msgid "Enable a Backup Schedule"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:207
+#: plinth/modules/backups/__init__.py:254
+#: plinth/modules/storage/__init__.py:323
+#, python-brace-format
+msgid "Go to {app_name}"
+msgstr "Vai a {app_name}"
+
+#: plinth/modules/backups/__init__.py:242
+#, python-brace-format
+msgid ""
+"A scheduled backup failed. Past {error_count} attempts for backup did not "
+"succeed. The latest error is: {error_message}"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:250
+#, fuzzy
+#| msgid "Existing Backups"
+msgid "Error During Backup"
+msgstr "Backups esistenti"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app} (Nessun dato da salvare)"
 
-#: plinth/modules/backups/forms.py:50
+#: plinth/modules/backups/forms.py:53
+msgid "Enable scheduled backups"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:54
+msgid ""
+"If enabled, a backup is taken every day, every week and every month. Older "
+"backups are removed."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:58
+msgid "Number of daily backups to keep"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:59
+msgid ""
+"This many latest backups are kept and the rest are removed. A value of \"0\" "
+"disables backups of this type. Triggered at specified hour every day."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:64
+msgid "Number of weekly backups to keep"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:66
+msgid ""
+"This many latest backups are kept and the rest are removed. A value of \"0\" "
+"disables backups of this type. Triggered at specified hour every Sunday."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:71
+msgid "Number of monthly backups to keep"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:73
+msgid ""
+"This many latest backups are kept and the rest are removed. A value of \"0\" "
+"disables backups of this type. Triggered at specified hour first day of "
+"every month."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:78
+msgid "Hour of the day to trigger backup operation"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:79
+msgid "In 24 hour format."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
+msgid "Included apps"
+msgstr "Apps incluse"
+
+#: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
+msgid "Apps to include in the backup"
+msgstr "Apps da includere nel backup"
+
+#: plinth/modules/backups/forms.py:98
 msgid "Repository"
 msgstr "Deposito"
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:100
 #: plinth/modules/backups/templates/backups_delete.html:17
 #: plinth/modules/ikiwiki/forms.py:15
-#: plinth/modules/networks/templates/connection_show.html:58
+#: plinth/modules/networks/templates/connection_show.html:71
 #: plinth/modules/samba/templates/samba.html:66
 #: plinth/modules/sharing/templates/sharing.html:33
 msgid "Name"
 msgstr "Nome"
 
-#: plinth/modules/backups/forms.py:53
+#: plinth/modules/backups/forms.py:101
 msgid "(Optional) Set a name for this backup archive"
 msgstr "(Opzionale) Imposta un nome per l'archivio di backup"
 
-#: plinth/modules/backups/forms.py:56
-msgid "Included apps"
-msgstr "Apps incluse"
-
-#: plinth/modules/backups/forms.py:56
-msgid "Apps to include in the backup"
-msgstr "Apps da includere nel backup"
-
-#: plinth/modules/backups/forms.py:73
+#: plinth/modules/backups/forms.py:121
 msgid "Select the apps you want to restore"
 msgstr "Selezionare le app che si desidera ristabilire"
 
-#: plinth/modules/backups/forms.py:89
+#: plinth/modules/backups/forms.py:137
 msgid "Upload File"
 msgstr "Carica file"
 
-#: plinth/modules/backups/forms.py:91
+#: plinth/modules/backups/forms.py:139
 msgid "Backup files have to be in .tar.gz format"
 msgstr "I file di backup devono essere in formato .tar.gz"
 
-#: plinth/modules/backups/forms.py:92
+#: plinth/modules/backups/forms.py:140
 msgid "Select the backup file you want to upload"
 msgstr "Selezionare il file di backup che si desidera caricare"
 
-#: plinth/modules/backups/forms.py:98
+#: plinth/modules/backups/forms.py:146
 msgid "Repository path format incorrect."
 msgstr "Il formato del percorso di deposito non è corretto."
 
-#: plinth/modules/backups/forms.py:105
+#: plinth/modules/backups/forms.py:153
 #, python-brace-format
 msgid "Invalid username: {username}"
 msgstr "Nome utente non valido: {username}"
 
-#: plinth/modules/backups/forms.py:115
+#: plinth/modules/backups/forms.py:163
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
 msgstr "Hostname non valido: {hostname}"
 
-#: plinth/modules/backups/forms.py:119
+#: plinth/modules/backups/forms.py:167
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
 msgstr "Percorso della directory non valido: {dir_path}"
 
-#: plinth/modules/backups/forms.py:125
+#: plinth/modules/backups/forms.py:173
 msgid "Encryption"
 msgstr "Crittografia"
 
-#: plinth/modules/backups/forms.py:126
+#: plinth/modules/backups/forms.py:174
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -228,51 +308,51 @@ msgstr ""
 "\"Key in Repository\" significa che con il backup viene memorizzata una "
 "chiave protetta da password."
 
-#: plinth/modules/backups/forms.py:128
+#: plinth/modules/backups/forms.py:176
 msgid "Key in Repository"
 msgstr "Chiave in deposito"
 
-#: plinth/modules/backups/forms.py:128 plinth/modules/searx/forms.py:15
+#: plinth/modules/backups/forms.py:176 plinth/modules/searx/forms.py:15
 msgid "None"
 msgstr "Nessun"
 
-#: plinth/modules/backups/forms.py:130 plinth/modules/networks/forms.py:266
+#: plinth/modules/backups/forms.py:178 plinth/modules/networks/forms.py:275
 msgid "Passphrase"
 msgstr "Passphrase"
 
-#: plinth/modules/backups/forms.py:131
+#: plinth/modules/backups/forms.py:179
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Passphrase; Necessaria solo quando si utilizza la crittografia."
 
-#: plinth/modules/backups/forms.py:134
+#: plinth/modules/backups/forms.py:182
 msgid "Confirm Passphrase"
 msgstr "Conferma la Passphrase"
 
-#: plinth/modules/backups/forms.py:134
+#: plinth/modules/backups/forms.py:182
 msgid "Repeat the passphrase."
 msgstr "Ripetere la passphrase."
 
-#: plinth/modules/backups/forms.py:145
+#: plinth/modules/backups/forms.py:193
 msgid "The entered encryption passphrases do not match"
 msgstr "Le passphrase di cifratura inserite non corrispondono"
 
-#: plinth/modules/backups/forms.py:149
+#: plinth/modules/backups/forms.py:197
 msgid "Passphrase is needed for encryption."
 msgstr "La passphrase è necessaria per la crittografia."
 
-#: plinth/modules/backups/forms.py:184
+#: plinth/modules/backups/forms.py:232
 msgid "Select Disk or Partition"
 msgstr "Seleziona disco o partizione"
 
-#: plinth/modules/backups/forms.py:185
+#: plinth/modules/backups/forms.py:233
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "I backup saranno memorizzati nella directory FreedomBoxBackups"
 
-#: plinth/modules/backups/forms.py:194
+#: plinth/modules/backups/forms.py:242
 msgid "SSH Repository Path"
 msgstr "Percorso del deposito SSH"
 
-#: plinth/modules/backups/forms.py:195
+#: plinth/modules/backups/forms.py:243
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -280,11 +360,11 @@ msgstr ""
 "Percorso di un deposito nuovo o esistente. Esempio: <i>user@host:~/path/to/"
 "repo/</i>"
 
-#: plinth/modules/backups/forms.py:199
+#: plinth/modules/backups/forms.py:247
 msgid "SSH server password"
 msgstr "Password server SSH"
 
-#: plinth/modules/backups/forms.py:200
+#: plinth/modules/backups/forms.py:248
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -292,15 +372,15 @@ msgstr ""
 "La password del Server SSH.<br />L'autenticazione basata su chiave SSH non è "
 "ancora possibile."
 
-#: plinth/modules/backups/forms.py:219
+#: plinth/modules/backups/forms.py:267
 msgid "Remote backup repository already exists."
 msgstr "Il repository di backup remoto esiste già."
 
-#: plinth/modules/backups/forms.py:225
+#: plinth/modules/backups/forms.py:273
 msgid "Select verified SSH public key"
 msgstr "Selezionare la chiave pubblica SSH verificata"
 
-#: plinth/modules/backups/repository.py:33
+#: plinth/modules/backups/repository.py:34
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -308,39 +388,39 @@ msgstr ""
 "Connessione rifiutata - assicurarsi di aver fornito le credenziali corrette "
 "e che il server sia in funzione."
 
-#: plinth/modules/backups/repository.py:40
+#: plinth/modules/backups/repository.py:41
 msgid "Connection refused"
 msgstr "Connessione rifiutata"
 
-#: plinth/modules/backups/repository.py:47
+#: plinth/modules/backups/repository.py:48
 msgid "Repository not found"
 msgstr "Repository non trovato"
 
-#: plinth/modules/backups/repository.py:52
+#: plinth/modules/backups/repository.py:53
 msgid "Incorrect encryption passphrase"
 msgstr "Passphrase di crittografia errata"
 
-#: plinth/modules/backups/repository.py:57
+#: plinth/modules/backups/repository.py:58
 msgid "SSH access denied"
 msgstr "Accesso SSH rifiutato"
 
-#: plinth/modules/backups/repository.py:63
+#: plinth/modules/backups/repository.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
 "Il percorso del repository non è né vuoto né un repository di backup "
 "esistente."
 
-#: plinth/modules/backups/repository.py:136
+#: plinth/modules/backups/repository.py:143
 msgid "Existing repository is not encrypted."
 msgstr "Il repository esistente non è criptato."
 
-#: plinth/modules/backups/repository.py:324
+#: plinth/modules/backups/repository.py:327
 #, fuzzy, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} archiviazione"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:61
+#: plinth/modules/backups/views.py:111
 msgid "Create a new backup"
 msgstr "Creare un nuovo backup"
 
@@ -429,30 +509,34 @@ msgstr "Invia"
 msgid "This repository is encrypted"
 msgstr "Il repository è criptato"
 
-#: plinth/modules/backups/templates/backups_repository.html:34
+#: plinth/modules/backups/templates/backups_repository.html:29
+msgid "Schedule"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
 msgstr "Rimuovi la destinazione"
 
-#: plinth/modules/backups/templates/backups_repository.html:45
+#: plinth/modules/backups/templates/backups_repository.html:51
 msgid "Mount Location"
 msgstr "Montare la posizione"
 
-#: plinth/modules/backups/templates/backups_repository.html:56
+#: plinth/modules/backups/templates/backups_repository.html:62
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr "Elimina la destinazione. Questo non cancellerà il backup remoto."
 
-#: plinth/modules/backups/templates/backups_repository.html:77
+#: plinth/modules/backups/templates/backups_repository.html:83
 msgid "Download"
 msgstr "Scarica"
 
-#: plinth/modules/backups/templates/backups_repository.html:81
+#: plinth/modules/backups/templates/backups_repository.html:87
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:156
+#: plinth/modules/backups/views.py:206
 #, fuzzy
 msgid "Restore"
 msgstr "Restaurare"
 
-#: plinth/modules/backups/templates/backups_repository.html:103
+#: plinth/modules/backups/templates/backups_repository.html:109
 msgid "No archives currently exist."
 msgstr "Al momento non esiste nessun archivio."
 
@@ -477,6 +561,14 @@ msgstr "Rimuovere la posizione"
 msgid "Restore data from"
 msgstr "Recupero dei dati da"
 
+#: plinth/modules/backups/templates/backups_schedule.html:19
+#: plinth/modules/upgrades/__init__.py:76
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr ""
+
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
 msgid ""
@@ -498,6 +590,7 @@ msgstr ""
 
 #: plinth/modules/backups/templates/backups_upload.html:27
 #: plinth/modules/help/templates/statuslog.html:23
+#: plinth/modules/networks/templates/connection_show.html:23
 msgid "Caution:"
 msgstr "Attenzione:"
 
@@ -551,91 +644,101 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Verificare l'host"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:55
+msgid "Backup schedule updated."
+msgstr ""
+
+#: plinth/modules/backups/views.py:74
+#, fuzzy
+#| msgid "Create Backup"
+msgid "Schedule Backups"
+msgstr "Creare backup"
+
+#: plinth/modules/backups/views.py:106
 msgid "Archive created."
 msgstr "Archivio creato."
 
-#: plinth/modules/backups/views.py:84
+#: plinth/modules/backups/views.py:134
 msgid "Delete Archive"
 msgstr "Cancella archivio"
 
-#: plinth/modules/backups/views.py:96
+#: plinth/modules/backups/views.py:146
 msgid "Archive deleted."
 msgstr "Archivio cancellato."
 
-#: plinth/modules/backups/views.py:109
+#: plinth/modules/backups/views.py:159
 msgid "Upload and restore a backup"
 msgstr "Caricare e ripristinare un backup"
 
-#: plinth/modules/backups/views.py:144
+#: plinth/modules/backups/views.py:194
 msgid "Restored files from backup."
 msgstr "File ripristinati da backup."
 
-#: plinth/modules/backups/views.py:172
+#: plinth/modules/backups/views.py:222
 msgid "No backup file found."
 msgstr "Nessun file di backup trovato."
 
-#: plinth/modules/backups/views.py:180
+#: plinth/modules/backups/views.py:230
 msgid "Restore from uploaded file"
 msgstr "Ripristina dal file caricato"
 
-#: plinth/modules/backups/views.py:239
+#: plinth/modules/backups/views.py:289
 msgid "No additional disks available to add a repository."
 msgstr "Non sono disponibili dischi aggiuntivi per aggiungere un repository."
 
-#: plinth/modules/backups/views.py:247
+#: plinth/modules/backups/views.py:297
 msgid "Create backup repository"
 msgstr "Creare un repository di backup"
 
-#: plinth/modules/backups/views.py:274
+#: plinth/modules/backups/views.py:324
 msgid "Create remote backup repository"
 msgstr "Creare un repository di backup remoto"
 
-#: plinth/modules/backups/views.py:293
+#: plinth/modules/backups/views.py:344
 msgid "Added new remote SSH repository."
 msgstr "Aggiunto nuovo repository SSH remoto."
 
-#: plinth/modules/backups/views.py:315
+#: plinth/modules/backups/views.py:366
 msgid "Verify SSH hostkey"
 msgstr "Verificare la chiave host SSH"
 
-#: plinth/modules/backups/views.py:341
+#: plinth/modules/backups/views.py:392
 msgid "SSH host already verified."
 msgstr "Host SSH già verificato."
 
-#: plinth/modules/backups/views.py:351
+#: plinth/modules/backups/views.py:402
 msgid "SSH host verified."
 msgstr "Host SSH verificato."
 
-#: plinth/modules/backups/views.py:365
+#: plinth/modules/backups/views.py:417
 msgid "SSH host public key could not be verified."
 msgstr "Non è stato possibile verificare la chiave pubblica dell'host SSH."
 
-#: plinth/modules/backups/views.py:367
+#: plinth/modules/backups/views.py:419
 msgid "Authentication to remote server failed."
 msgstr "Autenticazione al server remoto fallita."
 
-#: plinth/modules/backups/views.py:369
+#: plinth/modules/backups/views.py:421
 msgid "Error establishing connection to server: {}"
 msgstr "Errore di connessione al server: {}"
 
-#: plinth/modules/backups/views.py:380
+#: plinth/modules/backups/views.py:432
 msgid "Repository removed."
 msgstr "Deposito rimosso."
 
-#: plinth/modules/backups/views.py:394
+#: plinth/modules/backups/views.py:446
 msgid "Remove Repository"
 msgstr "Rimuovere il repository"
 
-#: plinth/modules/backups/views.py:403
+#: plinth/modules/backups/views.py:455
 msgid "Repository removed. Backups were not deleted."
 msgstr "Deposito rimosso. I backup non sono stati cancellati."
 
-#: plinth/modules/backups/views.py:413
+#: plinth/modules/backups/views.py:465
 msgid "Unmounting failed!"
 msgstr "Smontaggio fallito!"
 
-#: plinth/modules/backups/views.py:428 plinth/modules/backups/views.py:432
+#: plinth/modules/backups/views.py:480 plinth/modules/backups/views.py:484
 msgid "Mounting failed"
 msgstr "Montaggio fallito"
 
@@ -755,7 +858,7 @@ msgid "No passwords currently configured."
 msgstr "Nessuna password attualmente configurata."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:204
+#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:44
 msgid "Password"
 msgstr "Password"
@@ -788,7 +891,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
-#: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:35
@@ -884,7 +987,7 @@ msgstr "Dominio server"
 #: plinth/modules/bind/templates/bind.html:17
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
-#: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/networks/templates/connection_show.html:91
 #: plinth/modules/samba/templates/samba.html:65
 #: plinth/modules/storage/templates/storage.html:26
 msgid "Type"
@@ -1060,7 +1163,7 @@ msgstr ""
 "quando si accede utilizzando un indirizzo IP come parte dell'URL."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
-#: plinth/modules/performance/manifest.py:9
+#: plinth/modules/performance/manifest.py:33
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -1679,12 +1782,12 @@ msgstr "Accetta tutti i certificati SSL"
 msgid "Use HTTP basic authentication"
 msgstr "Usa l'autenticazione HTTP base"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:203
+#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:69
 msgid "Username"
 msgstr "Nome utente"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:206
+#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Mostra password"
 
@@ -1796,7 +1899,7 @@ msgstr "Circa"
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
-#: plinth/modules/networks/templates/connection_show.html:241
+#: plinth/modules/networks/templates/connection_show.html:254
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:27
@@ -1986,8 +2089,8 @@ msgstr "Abilitato"
 
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/networks/forms.py:48 plinth/modules/snapshot/forms.py:23
-#: plinth/modules/snapshot/forms.py:29 plinth/templates/cards.html:34
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -3280,7 +3383,7 @@ msgstr ""
 "danno."
 
 #: plinth/modules/minetest/templates/minetest.html:17
-#: plinth/modules/networks/forms.py:50 plinth/modules/networks/forms.py:81
+#: plinth/modules/networks/forms.py:54 plinth/modules/networks/forms.py:90
 msgid "Address"
 msgstr "Indirizzo"
 
@@ -3670,28 +3773,28 @@ msgstr "Reti"
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "Utilizzo DNSSEC su IPv{kind}"
 
-#: plinth/modules/networks/forms.py:17
+#: plinth/modules/networks/forms.py:16
 msgid "Connection Type"
 msgstr "Tipo Connessione"
 
-#: plinth/modules/networks/forms.py:29
+#: plinth/modules/networks/forms.py:28
 msgid "Connection Name"
 msgstr "Nome Connessione"
 
-#: plinth/modules/networks/forms.py:31
+#: plinth/modules/networks/forms.py:30
 msgid "Network Interface"
 msgstr "Interfaccia rete"
 
-#: plinth/modules/networks/forms.py:32
+#: plinth/modules/networks/forms.py:31
 msgid "The network device that this connection should be bound to."
 msgstr ""
 "Il dispositivo di rete a cui dovrebbe essere legata questa connessione."
 
-#: plinth/modules/networks/forms.py:35
+#: plinth/modules/networks/forms.py:34
 msgid "Firewall Zone"
 msgstr "Firewall Zone"
 
-#: plinth/modules/networks/forms.py:36
+#: plinth/modules/networks/forms.py:35
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -3699,41 +3802,37 @@ msgstr ""
 "La firewall zone controlla quali servizi sono disponibili su questa "
 "interfaccia. Selezione Interna solo per le reti fidate."
 
-#: plinth/modules/networks/forms.py:40
+#: plinth/modules/networks/forms.py:39
 msgid "IPv4 Addressing Method"
 msgstr "Metodo d'indirizzamento IPv4"
 
 #: plinth/modules/networks/forms.py:41
-#, python-brace-format
 msgid ""
-"\"Automatic\" method will make {box_name} acquire configuration from this "
-"network making it a client. \"Shared\" method will make {box_name} act as a "
-"router, configure clients on this network and share its Internet connection."
+"Automatic (DHCP): Configure automatically, use Internet connection from this "
+"network"
 msgstr ""
-"Col metodo \"Automatico\" {box_name} acquisisce la configurazione dalla rete "
-"come client. Col metodo \"Condiviso\" {box_name} agisce come router, "
-"configura i client nella sua rete e condivide la sua connessione Internet."
 
-#: plinth/modules/networks/forms.py:46
-msgid "Automatic (DHCP)"
-msgstr "Automatico (DHCP)"
+#: plinth/modules/networks/forms.py:44
+msgid ""
+"Shared: Act as a router, provide Internet connection to other devices on "
+"this network"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:46
-msgid "Shared"
-msgstr "Condiviso"
+#: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
+msgid ""
+"Manual: Use manually specified parameters, use Internet connection from this "
+"network"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:78
-#, fuzzy
-#| msgid "Manual"
-msgctxt "Not automatically"
-msgid "Manual"
-msgstr "Manuale"
+#: plinth/modules/networks/forms.py:50
+msgid "Disabled: Do not configure this addressing method"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:53
+#: plinth/modules/networks/forms.py:57
 msgid "Netmask"
 msgstr "Netmask"
 
-#: plinth/modules/networks/forms.py:54
+#: plinth/modules/networks/forms.py:58
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -3741,21 +3840,21 @@ msgstr ""
 "Valore opzionale. Le lasciato vuoto, sarà usato un valore predefinito basato "
 "sull'indirizzo IP."
 
-#: plinth/modules/networks/forms.py:58 plinth/modules/networks/forms.py:88
-#: plinth/modules/networks/templates/connection_show.html:180
-#: plinth/modules/networks/templates/connection_show.html:221
+#: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:97
+#: plinth/modules/networks/templates/connection_show.html:193
+#: plinth/modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Gateway"
 
-#: plinth/modules/networks/forms.py:58 plinth/modules/networks/forms.py:88
+#: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:97
 msgid "Optional value."
 msgstr "Valore opzionale."
 
-#: plinth/modules/networks/forms.py:61 plinth/modules/networks/forms.py:91
+#: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:100
 msgid "DNS Server"
 msgstr "DNS Server"
 
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:66
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3764,11 +3863,11 @@ msgstr ""
 "indirizzamento è \"Automatico\", i server DNS assegnati dal server DHCP "
 "saranno ignorati."
 
-#: plinth/modules/networks/forms.py:67 plinth/modules/networks/forms.py:97
+#: plinth/modules/networks/forms.py:71 plinth/modules/networks/forms.py:106
 msgid "Second DNS Server"
 msgstr "Server DNS secondario"
 
-#: plinth/modules/networks/forms.py:68
+#: plinth/modules/networks/forms.py:72
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3776,40 +3875,34 @@ msgstr ""
 "Valore opzionale. Se viene assegnato un valore e il metodo d'indirizzamento "
 "è \"Automatico\", i server DNS assegnati dal server DHCP saranno ignorati."
 
-#: plinth/modules/networks/forms.py:73
+#: plinth/modules/networks/forms.py:77
 msgid "IPv6 Addressing Method"
 msgstr "Metodo Indirizzamento IPv6"
 
-#: plinth/modules/networks/forms.py:74
-#, python-brace-format
-msgid ""
-"\"Automatic\" methods will make {box_name} acquire configuration from this "
-"network making it a client."
-msgstr ""
-"Con la modalità \"Automatica\" il {box_name} otterrà la configurazione di "
-"rete come client."
-
-#: plinth/modules/networks/forms.py:77 plinth/modules/networks/forms.py:245
-msgid "Automatic"
-msgstr "Automatica"
-
-#: plinth/modules/networks/forms.py:77
-msgid "Automatic, DHCP only"
-msgstr "Automatica, solo DHCP"
-
 #: plinth/modules/networks/forms.py:79
-msgid "Ignore"
-msgstr "Ignora"
+msgid ""
+"Automatic: Configure automatically, use Internet connection from this network"
+msgstr ""
 
-#: plinth/modules/networks/forms.py:83
+#: plinth/modules/networks/forms.py:82
+msgid ""
+"Automatic (DHCP only): Configure automatically, use Internet connection from "
+"this network"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:87
+msgid "Ignore: Ignore this addressing method"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:92
 msgid "Prefix"
 msgstr "Prefisso"
 
-#: plinth/modules/networks/forms.py:84
+#: plinth/modules/networks/forms.py:93
 msgid "Value between 1 and 128."
 msgstr "Valore compreso tra 1 e 128."
 
-#: plinth/modules/networks/forms.py:92
+#: plinth/modules/networks/forms.py:101
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3818,7 +3911,7 @@ msgstr ""
 "d'indirizzamento IPv6 è \"automatico\", i server DNS forniti dal server DHCP "
 "saranno ignorati."
 
-#: plinth/modules/networks/forms.py:98
+#: plinth/modules/networks/forms.py:107
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -3827,54 +3920,58 @@ msgstr ""
 "d'indirizzamento IPv6 è \"automatico\", i server DNS forniti dal server DHCP "
 "saranno ignorati."
 
-#: plinth/modules/networks/forms.py:111
+#: plinth/modules/networks/forms.py:120
 msgid "-- select --"
 msgstr "-- seleziona--"
 
-#: plinth/modules/networks/forms.py:238
-#: plinth/modules/networks/templates/connection_show.html:122
+#: plinth/modules/networks/forms.py:247
+#: plinth/modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:239
+#: plinth/modules/networks/forms.py:248
 msgid "The visible name of the network."
 msgstr "Il nome visibile sella rete."
 
-#: plinth/modules/networks/forms.py:241
-#: plinth/modules/networks/templates/connection_show.html:135
+#: plinth/modules/networks/forms.py:250
+#: plinth/modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Modalità"
 
-#: plinth/modules/networks/forms.py:241
+#: plinth/modules/networks/forms.py:250
 msgid "Infrastructure"
 msgstr "Infrastruttura"
 
-#: plinth/modules/networks/forms.py:242
+#: plinth/modules/networks/forms.py:251
 msgid "Access Point"
 msgstr "Access Point"
 
-#: plinth/modules/networks/forms.py:243
+#: plinth/modules/networks/forms.py:252
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:245
+#: plinth/modules/networks/forms.py:254
 msgid "Frequency Band"
 msgstr "Banda di frequenza"
 
-#: plinth/modules/networks/forms.py:246
+#: plinth/modules/networks/forms.py:254
+msgid "Automatic"
+msgstr "Automatica"
+
+#: plinth/modules/networks/forms.py:255
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:247
+#: plinth/modules/networks/forms.py:256
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:249
-#: plinth/modules/networks/templates/connection_show.html:149
+#: plinth/modules/networks/forms.py:258
+#: plinth/modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Canale"
 
-#: plinth/modules/networks/forms.py:250
+#: plinth/modules/networks/forms.py:259
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -3883,11 +3980,11 @@ msgstr ""
 "selezionata. Il valore 0, o l'assenza di valore, significa che sarà "
 "impostata la selezione automatica."
 
-#: plinth/modules/networks/forms.py:255
+#: plinth/modules/networks/forms.py:264
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:256
+#: plinth/modules/networks/forms.py:265
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -3897,11 +3994,11 @@ msgstr ""
 "connessione ad un access point, connettersi solo se il BSSID dell'access "
 "point combacia con quello fornito. Per esempio: 00:11:22:aa:bb:cc."
 
-#: plinth/modules/networks/forms.py:262
+#: plinth/modules/networks/forms.py:271
 msgid "Authentication Mode"
 msgstr "Modalità Autenticazione"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:272
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -3909,20 +4006,20 @@ msgstr ""
 "Scegli WPA se la rete wireless è protetta e richiede che i client abbiano la "
 "password WiFi."
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:274
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:274
 msgid "Open"
 msgstr "Aperta"
 
-#: plinth/modules/networks/forms.py:301
+#: plinth/modules/networks/forms.py:310
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Specificare come il vostro {box_name} è connesso alla vostra rete"
 
-#: plinth/modules/networks/forms.py:308
+#: plinth/modules/networks/forms.py:317
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -3930,7 +4027,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:315
+#: plinth/modules/networks/forms.py:324
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -3939,7 +4036,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:324
+#: plinth/modules/networks/forms.py:333
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -3947,11 +4044,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:343
+#: plinth/modules/networks/forms.py:352
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:347
+#: plinth/modules/networks/forms.py:356
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-block"
 "\">This means that devices on the Internet can reach you when you are "
@@ -3962,7 +4059,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:359
+#: plinth/modules/networks/forms.py:368
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -3974,7 +4071,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:372
+#: plinth/modules/networks/forms.py:381
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -3986,17 +4083,17 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:385
+#: plinth/modules/networks/forms.py:394
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-block"
 "\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:402
+#: plinth/modules/networks/forms.py:411
 msgid "Preferred router configuration"
 msgstr "Configurazione del router preferito"
 
-#: plinth/modules/networks/forms.py:407
+#: plinth/modules/networks/forms.py:416
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-block"
@@ -4007,7 +4104,7 @@ msgid ""
 "p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:419
+#: plinth/modules/networks/forms.py:428
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-block"
@@ -4019,39 +4116,48 @@ msgid ""
 "to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:433
+#: plinth/modules/networks/forms.py:442
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
 
-#: plinth/modules/networks/templates/connection_show.html:23
+#: plinth/modules/networks/templates/connection_show.html:24
+#, python-format
+msgid ""
+"This is the primary connection that %(box_name)s relies on for Internet "
+"connectivity. Altering it may render your %(box_name)s unreachable. Ensure "
+"that you have other means to access %(box_name)s before altering this "
+"connection."
+msgstr ""
+
+#: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
 msgstr "Modifica Connessione"
 
-#: plinth/modules/networks/templates/connection_show.html:23
+#: plinth/modules/networks/templates/connection_show.html:36
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:72
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:73
 #: plinth/templates/base.html:156 plinth/templates/base.html:157
 msgid "Edit"
 msgstr "Modifica"
 
-#: plinth/modules/networks/templates/connection_show.html:30
-#: plinth/modules/networks/templates/connections_list.html:60
+#: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/networks/templates/connections_list.html:61
 msgid "Deactivate"
 msgstr "Disattiva"
 
-#: plinth/modules/networks/templates/connection_show.html:37
-#: plinth/modules/networks/templates/connections_list.html:67
+#: plinth/modules/networks/templates/connection_show.html:50
+#: plinth/modules/networks/templates/connections_list.html:69
 msgid "Activate"
 msgstr "Attiva"
 
-#: plinth/modules/networks/templates/connection_show.html:43
+#: plinth/modules/networks/templates/connection_show.html:56
 msgid "Delete connection"
 msgstr "Cancella connessione"
 
-#: plinth/modules/networks/templates/connection_show.html:46
+#: plinth/modules/networks/templates/connection_show.html:59
 #: plinth/modules/networks/templates/connections_diagram.html:19
 #: plinth/modules/networks/templates/connections_diagram.html:22
 #: plinth/modules/networks/templates/connections_diagram.html:51
@@ -4059,126 +4165,126 @@ msgstr "Cancella connessione"
 msgid "Connection"
 msgstr "Connessione"
 
-#: plinth/modules/networks/templates/connection_show.html:51
+#: plinth/modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
 msgstr "Connessione primaria"
 
-#: plinth/modules/networks/templates/connection_show.html:53
-#: plinth/modules/networks/templates/connection_show.html:195
-#: plinth/modules/networks/templates/connection_show.html:236
+#: plinth/modules/networks/templates/connection_show.html:66
+#: plinth/modules/networks/templates/connection_show.html:208
+#: plinth/modules/networks/templates/connection_show.html:249
 msgid "yes"
 msgstr "si"
 
-#: plinth/modules/networks/templates/connection_show.html:64
+#: plinth/modules/networks/templates/connection_show.html:77
 #: plinth/modules/storage/templates/storage.html:23
 msgid "Device"
 msgstr "Dispositivo"
 
-#: plinth/modules/networks/templates/connection_show.html:68
+#: plinth/modules/networks/templates/connection_show.html:81
 msgid "State"
 msgstr "Stato"
 
-#: plinth/modules/networks/templates/connection_show.html:73
+#: plinth/modules/networks/templates/connection_show.html:86
 msgid "State reason"
 msgstr "Causa stato"
 
-#: plinth/modules/networks/templates/connection_show.html:82
+#: plinth/modules/networks/templates/connection_show.html:95
 msgid "MAC address"
 msgstr "Indirizzo MAC"
 
-#: plinth/modules/networks/templates/connection_show.html:86
+#: plinth/modules/networks/templates/connection_show.html:99
 msgid "Interface"
 msgstr "Interfaccia"
 
-#: plinth/modules/networks/templates/connection_show.html:90
+#: plinth/modules/networks/templates/connection_show.html:103
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:19
 #: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
 msgstr "Descrizione"
 
-#: plinth/modules/networks/templates/connection_show.html:96
+#: plinth/modules/networks/templates/connection_show.html:109
 msgid "Physical Link"
 msgstr "Collegamento fisico"
 
-#: plinth/modules/networks/templates/connection_show.html:101
+#: plinth/modules/networks/templates/connection_show.html:114
 msgid "Link state"
 msgstr "Stato collegamenti"
 
-#: plinth/modules/networks/templates/connection_show.html:104
+#: plinth/modules/networks/templates/connection_show.html:117
 msgid "cable is connected"
 msgstr "il cavo è connesso"
 
-#: plinth/modules/networks/templates/connection_show.html:107
+#: plinth/modules/networks/templates/connection_show.html:120
 #, fuzzy
 msgid "please check cable"
 msgstr "controlla il cavo per favore"
 
-#: plinth/modules/networks/templates/connection_show.html:111
-#: plinth/modules/networks/templates/connection_show.html:127
+#: plinth/modules/networks/templates/connection_show.html:124
+#: plinth/modules/networks/templates/connection_show.html:140
 msgid "Speed"
 msgstr "Velocità"
 
-#: plinth/modules/networks/templates/connection_show.html:113
+#: plinth/modules/networks/templates/connection_show.html:126
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
 msgstr "%(ethernet_speed)s Mbit/s"
 
-#: plinth/modules/networks/templates/connection_show.html:129
+#: plinth/modules/networks/templates/connection_show.html:142
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
 msgstr "%(wireless_bitrate)s Mbit/s"
 
-#: plinth/modules/networks/templates/connection_show.html:141
+#: plinth/modules/networks/templates/connection_show.html:154
 msgid "Signal strength"
 msgstr "Potenza segnale"
 
-#: plinth/modules/networks/templates/connection_show.html:157
+#: plinth/modules/networks/templates/connection_show.html:170
 msgid "IPv4"
 msgstr "IPv4"
 
-#: plinth/modules/networks/templates/connection_show.html:162
-#: plinth/modules/networks/templates/connection_show.html:205
+#: plinth/modules/networks/templates/connection_show.html:175
+#: plinth/modules/networks/templates/connection_show.html:218
 #: plinth/modules/shadowsocks/forms.py:48
 msgid "Method"
 msgstr "Metodo"
 
-#: plinth/modules/networks/templates/connection_show.html:171
-#: plinth/modules/networks/templates/connection_show.html:212
+#: plinth/modules/networks/templates/connection_show.html:184
+#: plinth/modules/networks/templates/connection_show.html:225
 msgid "IP address"
 msgstr "Indirizso IP"
 
-#: plinth/modules/networks/templates/connection_show.html:187
-#: plinth/modules/networks/templates/connection_show.html:228
+#: plinth/modules/networks/templates/connection_show.html:200
+#: plinth/modules/networks/templates/connection_show.html:241
 msgid "DNS server"
 msgstr "Server DNS"
 
-#: plinth/modules/networks/templates/connection_show.html:194
-#: plinth/modules/networks/templates/connection_show.html:235
+#: plinth/modules/networks/templates/connection_show.html:207
+#: plinth/modules/networks/templates/connection_show.html:248
 #: plinth/modules/storage/forms.py:139
 msgid "Default"
 msgstr "Default"
 
-#: plinth/modules/networks/templates/connection_show.html:200
+#: plinth/modules/networks/templates/connection_show.html:213
 msgid "IPv6"
 msgstr "IPv6"
 
-#: plinth/modules/networks/templates/connection_show.html:243
+#: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "Questa connessione non è attiva."
 
-#: plinth/modules/networks/templates/connection_show.html:246
+#: plinth/modules/networks/templates/connection_show.html:259
 #: plinth/modules/security/__init__.py:46
 msgid "Security"
 msgstr "Sicurezza"
 
-#: plinth/modules/networks/templates/connection_show.html:251
-#: plinth/modules/networks/templates/connection_show.html:271
-#: plinth/modules/networks/templates/connection_show.html:290
+#: plinth/modules/networks/templates/connection_show.html:264
+#: plinth/modules/networks/templates/connection_show.html:284
+#: plinth/modules/networks/templates/connection_show.html:303
 msgid "Firewall zone"
 msgstr "Zona firewall"
 
-#: plinth/modules/networks/templates/connection_show.html:260
+#: plinth/modules/networks/templates/connection_show.html:273
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -4189,8 +4295,8 @@ msgstr ""
 "essere disponibili solo internamente, saranno disponibili anche "
 "esternamente. Questo rappresenta un rischio per la sicurezza."
 
-#: plinth/modules/networks/templates/connection_show.html:280
-#: plinth/modules/networks/templates/connection_show.html:303
+#: plinth/modules/networks/templates/connection_show.html:293
+#: plinth/modules/networks/templates/connection_show.html:316
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -4200,13 +4306,13 @@ msgstr ""
 "connessa ad una rete/macchina locale, molti servizi impostati per funzionare "
 "solo internamente, non saranno disponibili."
 
-#: plinth/modules/networks/templates/connection_show.html:292
+#: plinth/modules/networks/templates/connection_show.html:305
 #: plinth/modules/networks/templates/connections_diagram.html:24
 #: plinth/network.py:24
 msgid "External"
 msgstr "Esterna"
 
-#: plinth/modules/networks/templates/connection_show.html:299
+#: plinth/modules/networks/templates/connection_show.html:312
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -4294,7 +4400,7 @@ msgstr "Attiva"
 msgid "Inactive"
 msgstr "Inattiva"
 
-#: plinth/modules/networks/templates/connections_list.html:74
+#: plinth/modules/networks/templates/connections_list.html:77
 #, python-format
 msgid "Delete connection %(name)s"
 msgstr "Cancella connessione %(name)s"
@@ -6260,11 +6366,6 @@ msgstr ""
 msgid "Low disk space"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:323
-#, python-brace-format
-msgid "Go to {app_name}"
-msgstr "Vai a {app_name}"
-
 #: plinth/modules/storage/__init__.py:341
 msgid "Disk failure imminent"
 msgstr ""
@@ -6400,19 +6501,19 @@ msgid ""
 "may be used by multiple users.  Each user's set of devices may be "
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" or "
-"\"syncthing\" group."
+"\"syncthing-access\" group."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:60
+#: plinth/modules/syncthing/__init__.py:62
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:61
+#: plinth/modules/syncthing/__init__.py:63
 msgid "File Synchronization"
 msgstr ""
 
@@ -6717,13 +6818,6 @@ msgid ""
 "time zone in Date & Time app. Apps are restarted after update causing them "
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
-msgstr ""
-
-#: plinth/modules/upgrades/__init__.py:76
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:117
@@ -7821,6 +7915,43 @@ msgstr "%(percentage)s%% completata"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr ""
+
+#, python-brace-format
+#~ msgid ""
+#~ "\"Automatic\" method will make {box_name} acquire configuration from this "
+#~ "network making it a client. \"Shared\" method will make {box_name} act as "
+#~ "a router, configure clients on this network and share its Internet "
+#~ "connection."
+#~ msgstr ""
+#~ "Col metodo \"Automatico\" {box_name} acquisisce la configurazione dalla "
+#~ "rete come client. Col metodo \"Condiviso\" {box_name} agisce come router, "
+#~ "configura i client nella sua rete e condivide la sua connessione Internet."
+
+#~ msgid "Automatic (DHCP)"
+#~ msgstr "Automatico (DHCP)"
+
+#~ msgid "Shared"
+#~ msgstr "Condiviso"
+
+#, fuzzy
+#~| msgid "Manual"
+#~ msgctxt "Not automatically"
+#~ msgid "Manual"
+#~ msgstr "Manuale"
+
+#, python-brace-format
+#~ msgid ""
+#~ "\"Automatic\" methods will make {box_name} acquire configuration from "
+#~ "this network making it a client."
+#~ msgstr ""
+#~ "Con la modalità \"Automatica\" il {box_name} otterrà la configurazione di "
+#~ "rete come client."
+
+#~ msgid "Automatic, DHCP only"
+#~ msgstr "Automatica, solo DHCP"
+
+#~ msgid "Ignore"
+#~ msgstr "Ignora"
 
 #~ msgid "Plumble"
 #~ msgstr "Plumble"
