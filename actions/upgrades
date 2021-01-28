@@ -5,6 +5,7 @@ Configures or runs unattended-upgrades
 """
 
 import argparse
+import logging
 import os
 import pathlib
 import re
@@ -309,20 +310,21 @@ def _add_apt_preferences():
 
 
 def _check_dist_upgrade(test_upgrade=False):
-    """Check for new stable release. If there is one, and updates are
-    enabled, return True.
+    """Check for new stable release, if updates are enabled, and if there is
+    enough free space for the dist upgrade.
 
     If test_upgrade is True, also check for upgrade to testing.
+
+    Returns (boolean, string) indicating if the upgrade is ready, and a reason
+    if not.
     """
     if dist_upgrade_flag.exists():
-        print('Found previously interrupted dist-upgrade.')
-        return True
+        return (True, 'Found previously interrupted dist-upgrade.')
 
     release, dist = get_current_release()
     if release in ['unstable', 'testing']:
-        print(f'System release is {release}. Skip checking for new stable '
-              'release.')
-        return False
+        return (False, f'System release is {release}. Skip checking for new '
+                'stable release.')
 
     check_dists = ['stable']
     if test_upgrade:
@@ -335,42 +337,38 @@ def _check_dist_upgrade(test_upgrade=False):
         protocol = _get_protocol()
         if protocol == 'tor+http':
             command.insert(0, 'torsocks')
-            print('Package download over Tor is enabled.')
+            logging.info('Package download over Tor is enabled.')
 
         try:
             output = subprocess.check_output(command).decode()
         except (subprocess.CalledProcessError, FileNotFoundError):
-            print(f'Error while checking for new {check_dist} release')
+            logging.warning('Error while checking for new %s release',
+                            check_dist)
         else:
             for line in output.split('\n'):
                 if line.startswith('Codename:'):
                     codename = line.split()[1]
 
     if not codename:
-        print('"Codename:" not found in release file.')
-        return False
+        return (False, '"Codename:" not found in release file.')
 
     if codename == dist:
-        print(f'{dist} is already the latest release.')
-        return False
+        return (False, f'{dist} is already the latest release.')
 
     if not _check_auto():
-        print('Automatic updates are not enabled.')
-        return False
+        return (False, 'Automatic updates are not enabled.')
 
     if check_dist == 'testing' and not test_upgrade:
-        print(f'Skipping dist-upgrade to {check_dist} since --test is not '
-              'set.')
-        return False
+        return (False, f'Skipping dist-upgrade to {check_dist} since --test is'
+                ' not set.')
 
     output = subprocess.check_output(['df', '--output=avail,pcent', '/'])
     output = output.decode().split('\n')[1].split()
     free_space, free_percent = int(output[0]), int(output[1][:-1])
     if free_space < 5000000 or free_percent < 10:
-        print('Not enough free space in /.')
-        return False
+        return (False, 'Not enough free space in /.')
 
-    print(f'Upgrading from {dist} to {codename}...')
+    logging.info('Upgrading from %s to %s...', dist, codename)
     with open(SOURCES_LIST, 'r') as sources_list:
         lines = sources_list.readlines()
 
@@ -388,9 +386,9 @@ def _check_dist_upgrade(test_upgrade=False):
 
             sources_list.write(new_line)
 
-    print('Dist upgrade in progress. Setting flag.')
+    logging.info('Dist upgrade in progress. Setting flag.')
     dist_upgrade_flag.touch(mode=0o660)
-    return True
+    return (True, 'Started dist upgrade.')
 
 
 def _perform_dist_upgrade():
@@ -479,7 +477,9 @@ def subcommand_start_dist_upgrade(arguments):
     Check if a new stable release is available, and start dist-upgrade process
     if updates are enabled.
     """
-    if _check_dist_upgrade(arguments.test):
+    upgrade_ready, reason = _check_dist_upgrade(arguments.test)
+    print(reason)
+    if upgrade_ready:
         with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
             service_file.write(DIST_UPGRADE_SERVICE)
 
