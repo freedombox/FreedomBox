@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-18 12:32+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2021-02-01 18:42+0000\n"
+"Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
 "Language: fr\n"
@@ -91,10 +91,8 @@ msgid "Error installing application: {error}"
 msgstr "Erreur lors de l’installation de l’application : {error}"
 
 #: plinth/modules/apache/__init__.py:41
-#, fuzzy
-#| msgid "As a Server"
 msgid "Apache HTTP Server"
-msgstr "En tant que serveur"
+msgstr "Serveur HTTP Apache"
 
 #: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:49
@@ -157,10 +155,13 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Activer les sauvegardes automatiques régulières pour la sécurité de vos "
+"données. Il est préférable d’utiliser un emplacement de sauvegarde distant "
+"et chiffré, ou un disque externe additionnel."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Activer les sauvegardes régulières"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -175,12 +176,12 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Une sauvegarde régulière a échoué après {error_count} tentatives. Le dernier "
+"message d'erreur était : {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
-#, fuzzy
-#| msgid "Existing Backups"
 msgid "Error During Backup"
-msgstr "Sauvegardes existantes"
+msgstr "Erreur pendant la sauvegarde"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
@@ -189,37 +190,46 @@ msgstr "{app} (pas de données à sauvegarder)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Activer les sauvegardes régulières"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"En activant cette option, une sauvegarde est automatiquement réalisée chaque "
+"jour, chaque semaine et chaque mois. Les sauvegardes les plus anciennes sont "
+"purgées."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Nombre de sauvegardes quotidiennes à conserver"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Autant de sauvegardes sont conservées parmi les plus récentes, les autres "
+"sont supprimées. Une valeur de 0 désactive ce type de sauvegarde. "
+"Déclenchées chaque jour à l’heure spécifiée."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Nombre de sauvegardes hebdomadaires à conserver"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"Autant de sauvegardes sont conservées parmi les plus récentes, les autres "
+"sont supprimées. Une valeur de 0 désactive ce type de sauvegarde. "
+"Déclenchées chaque dimanche à l’heure spécifiée."
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Nombre de sauvegardes mensuelles â conserver"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -227,14 +237,17 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"Autant de sauvegardes sont conservées parmi les plus récentes, les autres "
+"sont supprimées. Une valeur de 0 désactive ce type de sauvegarde. "
+"Déclenchées chaque mois à l’heure spécifiée."
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Heure de déclenchement des opérations de sauvegarde"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "Au format 24 heures."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -510,7 +523,7 @@ msgstr "Ce dépôt est chiffré"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Planification"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -646,13 +659,11 @@ msgstr "Vérifier le serveur"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Planification des sauvegardes mise à jour."
 
 #: plinth/modules/backups/views.py:74
-#, fuzzy
-#| msgid "Create Backup"
 msgid "Schedule Backups"
-msgstr "Créer une sauvegarde"
+msgstr "Planifier des sauvegardes"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
@@ -1233,7 +1244,7 @@ msgstr "Nom de domaine invalide"
 #: plinth/modules/config/forms.py:40
 #, python-brace-format
 msgid "{user}'s website"
-msgstr ""
+msgstr "Site web de {user}"
 
 #: plinth/modules/config/forms.py:42
 msgid "Apache Default"
@@ -2223,7 +2234,7 @@ msgid ""
 "available graphical clients. And you can share your code with people around "
 "the world."
 msgstr ""
-"Git est un système distribué de gestion de versions destiné à suivre les "
+"Git est un système de gestion de versions distribué, destiné à suivre les "
 "changements du code source pendant le développement de logiciels. Gitweb "
 "offre une interface web pour gérer des dépôts Git. Il vous permet de "
 "parcourir l’historique et le contenu du code source, d’effectuer des "
@@ -3873,29 +3884,35 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:39
 msgid "IPv4 Addressing Method"
-msgstr "Méthode d'adressage IPv4"
+msgstr "Méthode d’adressage IPv4"
 
 #: plinth/modules/networks/forms.py:41
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Automatique (DHCP) : configurer automatiquement, utiliser la connexion "
+"Internet de ce réseau"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
+"Partagée : fonctionner comme un routeur, fournir la connexion Internet aux "
+"autres appareils de ce réseau"
 
 #: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
+"Manuelle : définir manuellement la configuration, utiliser la connexion "
+"Internet de ce réseau"
 
 #: plinth/modules/networks/forms.py:50
 msgid "Disabled: Do not configure this addressing method"
-msgstr ""
+msgstr "Désactivée : ne pas configurer cette méthode d’adressage"
 
 #: plinth/modules/networks/forms.py:57
 msgid "Netmask"
@@ -3906,8 +3923,8 @@ msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr ""
-"Paramètre optionnel. Si laissée vide, un masque de sous-réseau basé sur "
-"l’adresse sera utilisé par défaut."
+"Paramètre optionnel. Si laissé vide, un masque de sous-réseau par défaut "
+"basé sur l’adresse sera utilisé."
 
 #: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:97
 #: plinth/modules/networks/templates/connection_show.html:193
@@ -3953,16 +3970,20 @@ msgstr "Méthode d’adressage IPv6"
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
+"Automatique : configurer automatiquement, utiliser la connexion Internet de "
+"ce réseau"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
+"Automatique (DHCP seulement) : configurer automatiquement, utiliser la "
+"connexion Internet de ce réseau"
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Ignorer : ignorer cette méthode d’adressage"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
@@ -4094,7 +4115,7 @@ msgid ""
 "Internet connection from your router via Wi-Fi or Ethernet cable. This is a "
 "typical home setup.</p>"
 msgstr ""
-"Connecté à un routeur <p class=\"help-block\">Votre {box_name} tire son "
+"Connectée à un routeur <p class=\"help-block\">Votre {box_name} tire son "
 "accès à Internet de votre routeur grâce au Wi-Fi ou à un câble Ethernet. Il "
 "s’agit de la configuration domestique classique.</p>"
 
@@ -4257,6 +4278,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
+"Ceci est la connexion principale dont la %(box_name)s dépend pour se "
+"connecter à Internet. La modifier pourrait rendre votre %(box_name)s "
+"inaccessible. Assurez-vous que vous avez d’autres moyens de vous connecter à "
+"votre %(box_name)s avant d’apporter des modification à cette connexion."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -6812,15 +6837,7 @@ msgstr ""
 "Syncthing."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" or "
-#| "\"syncthing\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6836,8 +6853,8 @@ msgstr ""
 "une unique instance de Syncthing qui peut servir à plusieurs utilisateurs.  "
 "Chaque utilisateur peut choisir un ensemble de dossiers qui lui est propre, "
 "à synchroniser entre ses appareils.  L’interface web sur la {box_name} est "
-"accessible uniquement aux utilisateurs membres des groupes « admin » ou "
-"« syncthing »."
+"accessible uniquement aux utilisateurs membres des groupes « admin » ou « "
+"syncthing-access »."
 
 #: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
@@ -7144,7 +7161,7 @@ msgstr ""
 
 #: plinth/modules/transmission/__init__.py:32
 msgid "Please do not change the default port of the transmission daemon."
-msgstr ""
+msgstr "Veuillez ne pas changer le port par défaut du démon de Transmission."
 
 #: plinth/modules/transmission/__init__.py:53
 #: plinth/modules/transmission/manifest.py:6
@@ -8332,7 +8349,7 @@ msgstr ""
 
 #: plinth/templates/messages.html:11
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: plinth/templates/notifications-dropdown.html:11
 msgid "Notifications"
