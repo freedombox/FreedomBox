@@ -120,6 +120,7 @@ import logging
 import os
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -160,8 +161,9 @@ sudo apt-mark hold freedombox
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
   $(sudo -u plinth /freedombox/run --develop --list-dependencies)
 sudo apt-mark unhold freedombox
-# Install ncurses-term
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term sshpass
+# Install additional packages
+sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
+  sshpass bash-completion
 
 echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' \
   >> /home/fbx/.bashrc
@@ -171,6 +173,11 @@ sudo touch geckodriver.log
 sudo chmod a+rw geckodriver.log
 sudo mkdir -p .pytest_cache/
 sudo chmod --recursive a+rw .pytest_cache/
+sudo chmod a+w /freedombox
+sudo chmod --recursive --silent a+w htmlcov
+sudo chmod --silent a+w .coverage
+
+exit 0
 '''
 
 SETUP_AND_RUN_TESTS_SCRIPT = '''
@@ -190,13 +197,11 @@ fi
 
 echo "> In container: Upgrade packages"
 apt-get update
-apt-get -yq --with-new-pkgs upgrade
+DEBIAN_FRONTEND=noninteractive apt-get -yq --with-new-pkgs upgrade
 
 # Install requirements for tests if not already installed as root
 if ! [[ -e /usr/local/bin/geckodriver && -e /usr/local/bin/pytest-bdd ]]
 then
-    # sshpass for Debian Buster
-    apt-get install -yq --no-install-recommends sshpass
     /freedombox/plinth/tests/functional/install.sh
 fi
 
@@ -239,6 +244,8 @@ export FREEDOMBOX_SAMBA_PORT=445
 
 # Make pytest cache files writable to the fbx user
 chmod --recursive --silent a+rw .pytest_cache/
+chmod --recursive --silent a+w htmlcov
+chmod --silent a+w .coverage
 '''
 
 logger = logging.getLogger(__name__)
@@ -259,7 +266,7 @@ def parse_arguments():
     subparser.add_argument(
         '--distribution', choices=distributions, default='testing',
         help='Distribution of the image to download and setup')
-    subparser.add_argument('--image-size', default='12G',
+    subparser.add_argument('--image-size', default='16G',
                            help='Disk image size to resize to after download')
 
     # Print IP address
@@ -494,10 +501,16 @@ def _resize_disk_image(image_file, new_size):
         raise ValueError(f'Invalid size: {new_size}')
 
     new_size_bytes = int(new_size.strip('G')) * 1024 * 1024 * 1024
-    if image_file.stat().st_size >= new_size_bytes:
+    image_size = image_file.stat().st_size
+    if image_size >= new_size_bytes:
         return
 
     logger.info('Resizing disk image to %s', new_size)
+
+    disk_free = shutil.disk_usage(work_directory).free
+    if disk_free < new_size_bytes - image_size:
+        raise ValueError(f'Not enough free space on disk: {disk_free} bytes')
+
     subprocess.run(
         ['truncate', '--size',
          str(new_size_bytes),

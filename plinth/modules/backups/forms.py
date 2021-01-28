@@ -46,6 +46,54 @@ def _get_repository_choices():
     return choices
 
 
+class ScheduleForm(forms.Form):
+    """Form to edit backups schedule."""
+
+    enabled = forms.BooleanField(
+        label=_('Enable scheduled backups'), required=False,
+        help_text=_('If enabled, a backup is taken every day, every week and '
+                    'every month. Older backups are removed.'))
+
+    daily_to_keep = forms.IntegerField(
+        label=_('Number of daily backups to keep'), required=True, min_value=0,
+        help_text=_('This many latest backups are kept and the rest are '
+                    'removed. A value of "0" disables backups of this type. '
+                    'Triggered at specified hour every day.'))
+
+    weekly_to_keep = forms.IntegerField(
+        label=_('Number of weekly backups to keep'), required=True,
+        min_value=0,
+        help_text=_('This many latest backups are kept and the rest are '
+                    'removed. A value of "0" disables backups of this type. '
+                    'Triggered at specified hour every Sunday.'))
+
+    monthly_to_keep = forms.IntegerField(
+        label=_('Number of monthly backups to keep'), required=True,
+        min_value=0,
+        help_text=_('This many latest backups are kept and the rest are '
+                    'removed. A value of "0" disables backups of this type. '
+                    'Triggered at specified hour first day of every month.'))
+
+    run_at_hour = forms.IntegerField(
+        label=_('Hour of the day to trigger backup operation'), required=True,
+        min_value=0, max_value=23, help_text=_('In 24 hour format.'))
+
+    selected_apps = forms.MultipleChoiceField(
+        label=_('Included apps'), help_text=_('Apps to include in the backup'),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'has-select-all'}))
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with selectable apps."""
+        super().__init__(*args, **kwargs)
+        components = api.get_all_components_for_backup()
+        choices = _get_app_choices(components)
+        self.fields['selected_apps'].choices = choices
+        self.fields['selected_apps'].initial = [
+            choice[0] for choice in choices
+            if choice[0] not in self.initial.get('unselected_apps', [])
+        ]
+
+
 class CreateArchiveForm(forms.Form):
     repository = forms.ChoiceField(label=_('Repository'))
     name = forms.RegexField(
@@ -54,7 +102,7 @@ class CreateArchiveForm(forms.Form):
         regex=r'^[^{}/]*$', required=False, strip=True)
     selected_apps = forms.MultipleChoiceField(
         label=_('Included apps'), help_text=_('Apps to include in the backup'),
-        widget=forms.CheckboxSelectMultiple)
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'has-select-all'}))
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
@@ -71,7 +119,7 @@ class CreateArchiveForm(forms.Form):
 class RestoreForm(forms.Form):
     selected_apps = forms.MultipleChoiceField(
         label=_('Select the apps you want to restore'),
-        widget=forms.CheckboxSelectMultiple)
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'has-select-all'}))
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""

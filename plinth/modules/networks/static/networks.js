@@ -22,7 +22,7 @@
  * in this page.
  */
 
-(function($) {
+jQuery(function($) {
 
     function ip_required(required, ip_version, fields) {
         var prefix = '#id_' + ip_version + '_';
@@ -43,16 +43,17 @@
     }
 
     function on_ipv4_method_change() {
-        if ($("#id_ipv4_method").prop("value") == "manual") {
+        var selected = $("input[name=ipv4_method]:checked");
+        if (selected.prop("value") == "manual") {
             ip_required(true, 'ipv4', ['address']);
             ip_readonly(false, 'ipv4', ['address', 'netmask', 'gateway',
                 'dns', 'second_dns'
             ]);
-        } else if ($("#id_ipv4_method").prop("value") == "shared") {
+        } else if (selected.prop("value") == "shared") {
             ip_required(false, 'ipv4', ['address']);
             ip_readonly(false, 'ipv4', ['address', 'netmask']);
             ip_readonly(true, 'ipv4', ['gateway', 'dns', 'second_dns']);
-        } else if ($("#id_ipv4_method").prop("value") == "auto") {
+        } else if (selected.prop("value") == "auto") {
             ip_readonly(true, 'ipv4', ['address', 'netmask', 'gateway']);
             ip_readonly(false, 'ipv4', ['dns', 'second_dns']);
         } else {
@@ -63,12 +64,13 @@
     }
 
     function on_ipv6_method_change() {
-        if ($("#id_ipv6_method").prop("value") == "manual") {
+        var selected = $("input[name=ipv6_method]:checked");
+        if (selected.prop("value") == "manual") {
             ip_required(true, 'ipv6', ['address', 'prefix']);
             ip_readonly(false, 'ipv6', ['address', 'prefix', 'gateway',
                 'dns', 'second_dns'
             ]);
-        } else if ($("#id_ipv6_method").prop("value") == "auto" ||
+        } else if (selected.prop("value") == "auto" ||
             $("#id_ipv6_method").prop("value") == "dhcp") {
             ip_readonly(true, 'ipv6', ['address', 'prefix', 'gateway']);
             ip_readonly(false, 'ipv6', ['dns', 'second_dns']);
@@ -81,8 +83,8 @@
 
     $("#id_name").focus();
 
-    $("#id_ipv4_method").change(on_ipv4_method_change).change();
-    $("#id_ipv6_method").change(on_ipv6_method_change).change();
+    $("input[name=ipv4_method]").change(on_ipv4_method_change).change();
+    $("input[name=ipv6_method]").change(on_ipv6_method_change).change();
 
     $('#id_show_password').change(function() {
         // Changing type attribute from password to text is prevented by
@@ -95,4 +97,4 @@
             $('#id_password').clone().attr('type', new_type));
     });
 
-})(jQuery);
+});

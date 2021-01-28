@@ -9,7 +9,7 @@ import urllib.parse
 
 import requests
 from pytest import fixture
-from pytest_bdd import parsers, scenarios, then, when
+from pytest_bdd import given, parsers, scenarios, then, when
 
 from plinth.tests import functional
 
@@ -50,6 +50,42 @@ def backup_restore_from_upload(session_browser, app_name,
         os.remove(path)
 
 
+@given(
+    parsers.parse('the backup schedule is set to {enable:w} for {daily:d} '
+                  'daily, {weekly:d} weekly and {monthly:d} monthly at '
+                  '{run_at:d}:00 without app {without_app:w}'))
+def backup_schedule_set(session_browser, enable, daily, weekly, monthly,
+                        run_at, without_app):
+    _backup_schedule_set(session_browser, enable == 'enable', daily, weekly,
+                         monthly, run_at, without_app)
+
+
+@when(
+    parsers.parse('I set the backup schedule to {enable:w} for {daily:d} '
+                  'daily, {weekly:d} weekly and {monthly:d} monthly at '
+                  '{run_at:d}:00 without app {without_app:w}'))
+def backup_schedule_set2(session_browser, enable, daily, weekly, monthly,
+                         run_at, without_app):
+    _backup_schedule_set(session_browser, enable == 'enable', daily, weekly,
+                         monthly, run_at, without_app)
+
+
+@then(
+    parsers.parse('the schedule should be set to {enable:w} for {daily:d} '
+                  'daily, {weekly:d} weekly and {monthly:d} monthly at '
+                  '{run_at:d}:00 without app {without_app:w}'))
+def backup_schedule_assert(session_browser, enable, daily, weekly, monthly,
+                           run_at, without_app):
+    schedule = _backup_schedule_get(session_browser)
+    assert schedule['enable'] == (enable == 'enable')
+    assert schedule['daily'] == daily
+    assert schedule['weekly'] == weekly
+    assert schedule['monthly'] == monthly
+    assert schedule['run_at'] == run_at
+    assert len(schedule['without_apps']) == 1
+    assert schedule['without_apps'][0] == without_app
+
+
 def _open_main_page(browser):
     with functional.wait_for_page_update(browser):
         browser.find_link_by_href('/plinth/').first.click()
@@ -88,3 +124,53 @@ def _upload_and_restore(browser, app_name, downloaded_file_path):
     with functional.wait_for_page_update(browser,
                                          expected_url='/plinth/sys/backups/'):
         functional.submit(browser)
+
+
+def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
+                         without_app):
+    """Set the schedule for root repository."""
+    functional.nav_to_module(browser, 'backups')
+    browser.find_link_by_href(
+        '/plinth/sys/backups/root/schedule/').first.click()
+    if enable:
+        browser.find_by_name('backups_schedule-enabled').check()
+    else:
+        browser.find_by_name('backups_schedule-enabled').uncheck()
+
+    browser.fill('backups_schedule-daily_to_keep', daily)
+    browser.fill('backups_schedule-weekly_to_keep', weekly)
+    browser.fill('backups_schedule-monthly_to_keep', monthly)
+    browser.fill('backups_schedule-run_at_hour', run_at)
+    functional.eventually(browser.find_by_css, args=['.select-all'])
+    browser.find_by_css('.select-all').first.check()
+    browser.find_by_css(f'input[value="{without_app}"]').first.uncheck()
+    functional.submit(browser)
+
+
+def _backup_schedule_get(browser):
+    """Return the current schedule set for the root repository."""
+    functional.nav_to_module(browser, 'backups')
+    browser.find_link_by_href(
+        '/plinth/sys/backups/root/schedule/').first.click()
+    without_apps = []
+    elements = browser.find_by_name('backups_schedule-selected_apps')
+    for element in elements:
+        if not element.checked:
+            without_apps.append(element.value)
+
+    return {
+        'enable':
+            browser.find_by_name('backups_schedule-enabled').checked,
+        'daily':
+            int(browser.find_by_name('backups_schedule-daily_to_keep').value),
+        'weekly':
+            int(browser.find_by_name('backups_schedule-weekly_to_keep').value),
+        'monthly':
+            int(
+                browser.find_by_name('backups_schedule-monthly_to_keep').value
+            ),
+        'run_at':
+            int(browser.find_by_name('backups_schedule-run_at_hour').value),
+        'without_apps':
+            without_apps
+    }

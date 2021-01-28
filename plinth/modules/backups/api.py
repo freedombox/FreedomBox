@@ -41,7 +41,8 @@ class BackupError:
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
 
-    def __init__(self, operation, scope, root, components=None, path=None):
+    def __init__(self, operation, scope, root, components=None, path=None,
+                 archive_comment=None):
         """Initialize the packet.
 
         operation is either 'backup' or 'restore.
@@ -62,6 +63,7 @@ class Packet:
         self.root = root
         self.components = components
         self.path = path
+        self.archive_comment = archive_comment
         self.errors = []
 
         self.directories = []
@@ -105,8 +107,8 @@ def restore_full(restore_handler):
     _switch_to_subvolume(subvolume)
 
 
-def backup_apps(backup_handler, path, app_ids=None,
-                encryption_passphrase=None):
+def backup_apps(backup_handler, path, app_ids=None, encryption_passphrase=None,
+                archive_comment=None):
     """Backup data belonging to a set of applications."""
     if not app_ids:
         components = get_all_components_for_backup()
@@ -123,7 +125,8 @@ def backup_apps(backup_handler, path, app_ids=None,
         backup_root = '/'
         snapshotted = False
 
-    packet = Packet('backup', 'apps', backup_root, components, path)
+    packet = Packet('backup', 'apps', backup_root, components, path,
+                    archive_comment)
     _run_operation(backup_handler, packet,
                    encryption_passphrase=encryption_passphrase)
 

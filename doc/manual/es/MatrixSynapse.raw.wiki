@@ -1,6 +1,6 @@
 #language es
 
-~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/MatrixSynapse|English]] - Español -~
+<<Include(FreedomBox/Manual/MatrixSynapse, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
 
 <<TableOfContents()>>
 
@@ -21,11 +21,13 @@ Para acceder al servidor Matrix Synapse recomendamos el cliente [[https://elemen
 
 === Configurar Matrix Synapse en tu FreedomBox ===
 
-Para habilitar Matrix, primero navega a la página de tu servidor de chat (Matrix Synapse) e instálalo. Matrix necesita un nombre de dominio válido configurado.  Tras la instalación, se te pedirá que lo configures seleccionandolo de entre un menú desplegable con dominios disponibles.  Los dominios se configuran en la página Sistema -> Configuración y '''actualmente no podrás cambiar el dominio''' una vez esté configurado.  Tras configurar un dominio verás que el servicio se está ejecutando. El servicio estará accesible en el dominio de !FreedomBox configurado.
+Para habilitar Matrix, primero navega a la página de tu servidor de chat (Matrix Synapse) e instálalo. Matrix necesita un nombre de dominio válido configurado.  Tras la instalación, se te pedirá que lo configures seleccionandolo de entre un menú desplegable con dominios disponibles.  Los dominios se configuran en la página [[es/FreedomBox/Manual/Configure|Sistema -> Configuración]] y '''actualmente no podrás cambiar el dominio''' una vez esté configurado.  Tras configurar un dominio verás que el servicio se está ejecutando. El servicio estará accesible en el dominio de !FreedomBox configurado.
 
 Tendrás que configurar tu router para que reenvíe el puerto 8448 a tu !FreedomBox.
 
 Todos los usuarios registrados en tu !FreedomBox tendrán sus IDs Matrix  `@usuario:dominio`. Si está habilitado el registro público tu cliente se puede usar también para registrar una cuenta de usuario nueva.
+ 	
+Si tu !FreedomBox está detrás de un router (NAT), quizá necesites [[es/FreedomBox/Manual/Coturn|Coturn]] para hacer llamadas de voz sobre IP.
 
 === Federarse con otras instancias Matrix ===
 

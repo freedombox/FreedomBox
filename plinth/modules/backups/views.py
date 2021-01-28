@@ -47,6 +47,56 @@ class IndexView(TemplateView):
         return context
 
 
+class ScheduleView(SuccessMessageMixin, FormView):
+    form_class = forms.ScheduleForm
+    prefix = 'backups_schedule'
+    template_name = 'backups_schedule.html'
+    success_url = reverse_lazy('backups:index')
+    success_message = ugettext_lazy('Backup schedule updated.')
+
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        schedule = get_instance(self.kwargs['uuid']).schedule
+        initial.update({
+            'enabled': schedule.enabled,
+            'daily_to_keep': schedule.daily_to_keep,
+            'weekly_to_keep': schedule.weekly_to_keep,
+            'monthly_to_keep': schedule.monthly_to_keep,
+            'run_at_hour': schedule.run_at_hour,
+            'unselected_apps': schedule.unselected_apps,
+        })
+        return initial
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Schedule Backups')
+        return context
+
+    def form_valid(self, form):
+        """Update backup schedule."""
+        repository = get_instance(self.kwargs['uuid'])
+        schedule = repository.schedule
+        data = form.cleaned_data
+        schedule.enabled = data['enabled']
+        schedule.daily_to_keep = data['daily_to_keep']
+        schedule.weekly_to_keep = data['weekly_to_keep']
+        schedule.monthly_to_keep = data['monthly_to_keep']
+        schedule.run_at_hour = data['run_at_hour']
+
+        components = api.get_all_components_for_backup()
+        unselected_apps = [
+            component.app_id for component in components
+            if component.app_id not in data['selected_apps']
+        ]
+        schedule.unselected_apps = unselected_apps
+
+        repository.save()
+        backups.on_schedule_save(repository)
+        return super().form_valid(form)
+
+
 class CreateArchiveView(SuccessMessageMixin, FormView):
     """View to create a new archive."""
     form_class = forms.CreateArchiveForm
@@ -289,7 +339,8 @@ class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
             'encryption_passphrase': encryption_passphrase
         }
         repository = SshBorgRepository(path, credentials)
-        repository.save(verified=False)
+        repository.verfied = False
+        repository.save()
         messages.success(self.request, _('Added new remote SSH repository.'))
 
         url = reverse('backups:verify-ssh-hostkey', args=[repository.uuid])
@@ -359,7 +410,8 @@ def _save_repository(request, repository):
     """Initialize and save a repository. Convert errors to messages."""
     try:
         repository.initialize()
-        repository.save(verified=True)
+        repository.verified = True
+        repository.save()
         return True
     except paramiko.BadHostKeyException:
         message = _('SSH host public key could not be verified.')

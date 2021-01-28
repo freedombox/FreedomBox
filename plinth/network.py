@@ -89,6 +89,12 @@ def get_interface_list(device_type):
     return interfaces
 
 
+def _is_primary(connection):
+    """Return whether a connection is primary connection."""
+    primary = get_nm_client().get_primary_connection()
+    return (primary and primary.get_uuid() == connection.get_uuid())
+
+
 def get_status_from_connection(connection):
     """Return the current status of a connection."""
     status = collections.defaultdict(dict)
@@ -98,6 +104,7 @@ def get_status_from_connection(connection):
     status['type'] = connection.get_connection_type()
     status['zone'] = connection.get_setting_connection().get_zone()
     status['interface_name'] = connection.get_interface_name()
+    status['primary'] = _is_primary(connection)
 
     status['ipv4']['method'] = connection.get_setting_ip4_config().get_method()
     status['ipv6']['method'] = connection.get_setting_ip6_config().get_method()
@@ -105,11 +112,6 @@ def get_status_from_connection(connection):
     if status['type'] == '802-11-wireless':
         setting_wireless = connection.get_setting_wireless()
         status['wireless']['ssid'] = setting_wireless.get_ssid().get_data()
-
-    primary_connection = get_nm_client().get_primary_connection()
-    status['primary'] = (
-        primary_connection
-        and primary_connection.get_uuid() == connection.get_uuid())
 
     return status
 
@@ -215,8 +217,10 @@ def _get_wifi_channel_from_frequency(frequency):
 
 def get_connection_list():
     """Get a list of active and available connections."""
-    active_uuids = []
     client = get_nm_client()
+    primary_connection = client.get_primary_connection()
+
+    active_uuids = []
     for connection in client.get_active_connections():
         active_uuids.append(connection.get_uuid())
 
@@ -239,6 +243,9 @@ def get_connection_list():
             'type': connection_type,
             'type_name': connection_type_name,
             'is_active': connection.get_uuid() in active_uuids,
+            'primary':
+                (primary_connection
+                 and primary_connection.get_uuid() == connection.get_uuid()),
             'zone': zone,
         })
     connections.sort(key=lambda connection: connection['is_active'],

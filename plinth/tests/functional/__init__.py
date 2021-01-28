@@ -454,7 +454,8 @@ def backup_create(browser, app_name, archive_name=None):
 
     buttons = browser.find_link_by_href('/plinth/sys/backups/create/')
     submit(browser, buttons.first)
-    browser.find_by_id('select-all').uncheck()
+    eventually(browser.find_by_css, args=['.select-all'])
+    browser.find_by_css('.select-all').first.uncheck()
     if archive_name:
         browser.find_by_id('id_backups-name').fill(archive_name)
 

@@ -4,6 +4,7 @@ FreedomBox app to manage backup archives.
 """
 
 import json
+import logging
 import os
 import pathlib
 import re
@@ -11,14 +12,17 @@ import re
 import paramiko
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_noop
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, glib, menu
 
 from . import api
 
-version = 2
+logger = logging.getLogger(__name__)
+
+version = 3
 
 is_essential = True
 
@@ -56,6 +60,11 @@ class BackupsApp(app_module.App):
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
 
+        # Check every hour (every 3 minutes in debug mode) to perform scheduled
+        # backups.
+        interval = 180 if cfg.develop else 3600
+        glib.schedule(interval, backup_by_schedule)
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
@@ -64,6 +73,10 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'backups',
                 ['setup', '--path', repository.RootBorgRepository.PATH])
     helper.call('post', app.enable)
+
+    # First time setup or upgrading from older versions.
+    if old_version <= 2:
+        _show_schedule_setup_notification()
 
 
 def _backup_handler(packet, encryption_passphrase=None):
@@ -85,13 +98,30 @@ def _backup_handler(packet, encryption_passphrase=None):
 
     paths = packet.directories + packet.files
     paths.append(manifest_path)
-    arguments = ['create-archive', '--path', packet.path, '--paths'] + paths
+    arguments = ['create-archive', '--path', packet.path]
+    if packet.archive_comment:
+        arguments += ['--comment', packet.archive_comment]
+
+    arguments += ['--paths'] + paths
     input_data = ''
     if encryption_passphrase:
         input_data = json.dumps(
             {'encryption_passphrase': encryption_passphrase})
 
     actions.superuser_run('backups', arguments, input=input_data.encode())
+
+
+def backup_by_schedule(data):
+    """Check if backups need to be taken and run the operation."""
+    from . import repository as repository_module
+    for repository in repository_module.get_repositories():
+        try:
+            repository.schedule.run_schedule()
+            _show_schedule_error_notification(repository, is_error=False)
+        except Exception as exception:
+            logger.exception('Error running scheduled backup: %s', exception)
+            _show_schedule_error_notification(repository, is_error=True,
+                                              exception=exception)
 
 
 def get_exported_archive_apps(path):
@@ -158,3 +188,76 @@ def split_path(path):
 
     """
     return re.findall(r'^(.*)@([^/]*):(.*)$', path)[0]
+
+
+def _show_schedule_setup_notification():
+    """Show a notification hinting to setup a remote backup schedule."""
+    from plinth.notification import Notification
+    message = ugettext_noop(
+        'Enable an automatic backup schedule for data safety. Prefer an '
+        'encrypted remote backup location or an extra attached disk.')
+    data = {
+        'app_name': 'translate:' + ugettext_noop('Backups'),
+        'app_icon': 'fa-files-o'
+    }
+    title = ugettext_noop('Enable a Backup Schedule')
+    actions_ = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': ugettext_noop('Go to {app_name}'),
+        'url': 'backups:index'
+    }, {
+        'type': 'dismiss'
+    }]
+    Notification.update_or_create(id='backups-remote-schedule',
+                                  app_id='backups', severity='info',
+                                  title=title, message=message,
+                                  actions=actions_, data=data, group='admin')
+
+
+def on_schedule_save(repository):
+    """Dismiss notification. Called when repository's schedule is updated."""
+    if not repository.schedule.enabled:
+        return
+
+    from plinth.notification import Notification
+    try:
+        note = Notification.get('backups-remote-schedule')
+        note.dismiss()
+    except KeyError:
+        pass
+
+
+def _show_schedule_error_notification(repository, is_error, exception=None):
+    """Show or hide a notification related scheduled backup operation."""
+    from plinth.notification import Notification
+    id_ = 'backups-schedule-error-' + repository.uuid
+    try:
+        note = Notification.get(id_)
+        error_count = note.data['error_count']
+    except KeyError:
+        error_count = 0
+
+    message = ugettext_noop(
+        'A scheduled backup failed. Past {error_count} attempts for backup '
+        'did not succeed. The latest error is: {error_message}')
+    data = {
+        'app_name': 'translate:' + ugettext_noop('Backups'),
+        'app_icon': 'fa-files-o',
+        'error_count': error_count + 1 if is_error else 0,
+        'error_message': str(exception)
+    }
+    title = ugettext_noop('Error During Backup')
+    actions_ = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': ugettext_noop('Go to {app_name}'),
+        'url': 'backups:index'
+    }, {
+        'type': 'dismiss'
+    }]
+    note = Notification.update_or_create(id=id_, app_id='backups',
+                                         severity='error', title=title,
+                                         message=message, actions=actions_,
+                                         data=data, group='admin')
+    note.dismiss(should_dismiss=not is_error)

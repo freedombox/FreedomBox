@@ -18,7 +18,7 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 3
+version = 5
 
 managed_services = ['syncthing@syncthing']
 
@@ -36,7 +36,7 @@ _description = [
           'instance of Syncthing that may be used by multiple users.  Each '
           'user\'s set of devices may be synchronized with a distinct set of '
           'folders.  The web interface on {box_name} is only available for '
-          'users belonging to the "admin" or "syncthing" group.'),
+          'users belonging to the "admin" or "syncthing-access" group.'),
         box_name=_(cfg.box_name)),
 ]
 
@@ -54,7 +54,9 @@ class SyncthingApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        self.groups = {'syncthing': _('Administer Syncthing application')}
+        self.groups = {
+            'syncthing-access': _('Administer Syncthing application')
+        }
 
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Syncthing'), icon_filename='syncthing',
@@ -106,10 +108,37 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
+    add_user_to_share_group(SYSTEM_USER, managed_services[0])
+
     if not old_version:
         helper.call('post', app.enable)
+
+    helper.call('post', actions.superuser_run, 'syncthing', ['setup-config'])
 
     if old_version == 1 and app.is_enabled():
         app.get_component('firewall-syncthing-ports').enable()
 
-    add_user_to_share_group(SYSTEM_USER, managed_services[0])
+    if old_version and old_version <= 3:
+        # rename LDAP and Django group
+        old_groupname = 'syncthing'
+        new_groupname = 'syncthing-access'
+
+        actions.superuser_run(
+            'users', options=['rename-group', old_groupname, new_groupname])
+
+        from django.contrib.auth.models import Group
+        Group.objects.filter(name=old_groupname).update(name=new_groupname)
+
+        # update web shares to have new group name
+        from plinth.modules import sharing
+        shares = sharing.list_shares()
+        for share in shares:
+            if old_groupname in share['groups']:
+                new_groups = share['groups']
+                new_groups.remove(old_groupname)
+                new_groups.append(new_groupname)
+
+                name = share['name']
+                sharing.remove_share(name)
+                sharing.add_share(name, share['path'], new_groups,
+                                  share['is_public'])

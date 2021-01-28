@@ -3,6 +3,8 @@
 Functional, browser based tests for syncthing app.
 """
 
+import time
+
 from pytest_bdd import given, parsers, scenarios, then, when
 
 from plinth.tests import functional
@@ -37,6 +39,19 @@ def syncthing_remove_folder(session_browser, folder_name):
     _remove_folder(session_browser, folder_name)
 
 
+@then('the usage reporting notification is not shown')
+def syncthing_assert_usage_report_notification_not_shown(session_browser):
+    _load_main_interface(session_browser)
+    assert session_browser.find_by_id('ur').visible is False
+
+
+@then('the authentication notification is not shown')
+def syncthing_assert_authentication_notification_not_shown(session_browser):
+    _load_main_interface(session_browser)
+    assert bool(session_browser.find_by_css(
+        '#authenticationUserAndPassword *')) is False
+
+
 @then(parsers.parse('syncthing folder {folder_name:w} should be present'))
 def syncthing_assert_folder_present(session_browser, folder_name):
     assert _folder_is_present(session_browser, folder_name)
@@ -63,28 +78,12 @@ def _load_main_interface(browser):
     functional.eventually(service_is_available)
 
     # Wait for javascript loading process to complete
-    browser.execute_script('''
-        document.is_ui_online = false;
-        var old_console_log = console.log;
-        console.log = function(message) {
-            old_console_log.apply(null, arguments);
-            if (message == 'UIOnline') {
-                document.is_ui_online = true;
-                console.log = old_console_log;
-            }
-        };
-    ''')
-    functional.eventually(
-        lambda: browser.evaluate_script('document.is_ui_online'), timeout=5)
+    functional.eventually(lambda: browser.evaluate_script(
+        'angular.element("[ng-controller=SyncthingController]").scope()'
+        '.thisDevice().name'))
 
-    # Dismiss the Usage Reporting consent dialog
-    functional.eventually(browser.find_by_id, ['ur'])
-    usage_reporting = browser.find_by_id('ur').first
-    functional.eventually(lambda: usage_reporting.visible, timeout=2)
-    if usage_reporting.visible:
-        yes_xpath = './/button[contains(@ng-click, "declineUR")]'
-        usage_reporting.find_by_xpath(yes_xpath).first.click()
-        functional.eventually(lambda: not usage_reporting.visible)
+    # Give browser additional time to setup site
+    time.sleep(1)
 
 
 def _folder_is_present(browser, folder_name):
@@ -127,6 +126,7 @@ def _remove_folder(browser, folder_name):
     functional.eventually(lambda: folder.find_by_css('div.collapse.in'))
     edit_folder_xpath = './/button[contains(@ng-click, "editFolder")]'
     edit_folder_button = folder.find_by_xpath(edit_folder_xpath).first
+    edit_folder_button.scroll_to()
     edit_folder_button.click()
 
     # Edit folder dialog

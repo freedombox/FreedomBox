@@ -23,6 +23,12 @@
           {{ repository.name }}
 
           <span class="pull-right">
+            <a class="repository-schedule btn btn-sm btn-primary"
+               href="{% url 'backups:schedule' uuid %}">
+              <span class="fa fa-clock-o" aria-hidden="true"></span>
+              {% trans "Schedule" %}
+            </a>
+
             {% if repository.flags.mountable %}
 
               {% if repository.mounted %}

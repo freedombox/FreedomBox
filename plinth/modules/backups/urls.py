@@ -8,11 +8,13 @@ from django.conf.urls import url
 from .views import (AddRemoteRepositoryView, AddRepositoryView,
                     CreateArchiveView, DeleteArchiveView, DownloadArchiveView,
                     IndexView, RemoveRepositoryView, RestoreArchiveView,
-                    RestoreFromUploadView, UploadArchiveView,
+                    RestoreFromUploadView, ScheduleView, UploadArchiveView,
                     VerifySshHostkeyView, mount_repository, umount_repository)
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
+    url(r'^sys/backups/(?P<uuid>[^/]+)/schedule/$', ScheduleView.as_view(),
+        name='schedule'),
     url(r'^sys/backups/create/$', CreateArchiveView.as_view(), name='create'),
     url(r'^sys/backups/(?P<uuid>[^/]+)/download/(?P<name>[^/]+)/$',
         DownloadArchiveView.as_view(), name='download'),

@@ -66,6 +66,7 @@ def setup(helper, old_version=None):
     actions.superuser_run(
         'apache',
         ['setup', '--old-version', str(old_version)])
+    helper.call('post', app.enable)
 
 
 # (U)ser (W)eb (S)ites

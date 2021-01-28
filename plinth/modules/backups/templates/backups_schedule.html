@@ -8,8 +8,7 @@
 {% load static %}
 
 {% block content %}
-
-  <h3>{{ title }}</h3>
+  <h2>{{ title }}</h2>
 
   <form class="form" method="post">
     {% csrf_token %}
@@ -17,7 +16,6 @@
     {{ form|bootstrap }}
 
     <input type="submit" class="btn btn-primary"
-           value="{% trans "Submit" %}"/>
+           value="{% trans 'Update' %}" />
   </form>
-
 {% endblock %}

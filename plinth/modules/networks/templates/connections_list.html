@@ -53,12 +53,14 @@
 
             <td class="connection-actions">
               {% if connection.is_active %}
-                <form class="form form-action" method="post"
-                      action="{% url 'networks:deactivate' connection.uuid %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-default btn-sm">
-                    {% trans "Deactivate" %}</button>
-                </form>
+                {% if not connection.primary %}
+                  <form class="form form-action" method="post"
+                        action="{% url 'networks:deactivate' connection.uuid %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-default btn-sm">
+                      {% trans "Deactivate" %}</button>
+                  </form>
+                {% endif %}
               {% else %}
                 <form class="form form-action" method="post"
                       action="{% url 'networks:activate' connection.uuid %}">
@@ -68,13 +70,14 @@
                 </form>
               {% endif %}
 
-              <a href="{% url 'networks:delete' connection.uuid %}"
-                 class="btn btn-default btn-sm"
-                 role="button"
-                 title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
-                <span class="fa fa-trash-o"
-                      aria-hidden="true"></span>
-              </a>
+              {% if not connection.primary %}
+                <a href="{% url 'networks:delete' connection.uuid %}"
+                   class="btn btn-default btn-sm"
+                   role="button"
+                   title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
+                  <span class="fa fa-trash-o" aria-hidden="true"></span>
+                </a>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

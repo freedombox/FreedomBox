@@ -1,6 +1,8 @@
 #language en
 
-~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: English - [[es/FreedomBox/Manual/MatrixSynapse|Español]] -~
+##TAG:TRANSLATION-HEADER-START
+~- [[de/FreedomBox/Manual/MatrixSynapse|Deutsch]] - [[FreedomBox/Manual/MatrixSynapse|English]] - [[es/FreedomBox/Manual/MatrixSynapse|Español]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+##TAG:TRANSLATION-HEADER-END
 
 <<TableOfContents()>>
 
@@ -26,11 +28,13 @@ If your !FreedomBox is behind a router, you will need to set up port forwarding 
 
 === Setting up Matrix Synapse on your FreedomBox ===
 
-To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -> Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured !FreedomBox domain. Currently, you will not be able to change the domain once is it configured.
+To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using [[FreedomBox/Manual/Configure|System -> Configure page]].  After configuring a domain, you will see that the service is running. The service will be accessible on the configured !FreedomBox domain. Currently, you will not be able to change the domain once is it configured.
 
 Your router has to be configured to forward port 8448.
 
 All the registered users of your !FreedomBox will have their Matrix IDs as `@username:domain`. If public registration is enabled, also your chosen client can be used to register a user account.
+
+If your !FreedomBox is behind a router (NAT) you might need [[FreedomBox/Manual/Coturn|Coturn]] for Voice over IP calls.
 
 === Federating with other Matrix instances ===
 

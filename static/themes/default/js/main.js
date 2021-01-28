@@ -121,3 +121,67 @@ window.addEventListener('pageshow', function(event) {
         element.remove();
     }
 });
+
+/*
+ * Select all option for multiple checkboxes.
+ */
+document.addEventListener('DOMContentLoaded', function(event) {
+    let parents = document.querySelectorAll('ul.has-select-all');
+    for (const parent of parents) {
+        let li = document.createElement('li');
+
+        let label = document.createElement('label');
+        label.for = "select_all";
+        label.setAttribute('class', 'select-all-label');
+
+        let checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.setAttribute('class', 'select-all');
+
+        label.appendChild(checkbox);
+        li.appendChild(label);
+
+        parent.insertBefore(li, parent.childNodes[0]);
+        setSelectAllValue(parent);
+
+        checkbox.addEventListener('change', onSelectAllChanged);
+
+        options = parent.querySelectorAll('input.has-select-all');
+        for (const option of options) {
+            option.addEventListener('change', onSelectAllOptionsChanged);
+        }
+    }
+});
+
+// When there is a change on the "select all" checkbox, set the checked property
+// of all the checkboxes to the value of the "select all" checkbox
+function onSelectAllChanged(event) {
+    const selectAllCheckbox = event.currentTarget;
+    const parent = selectAllCheckbox.parentElement.parentElement.parentElement;
+    const options = parent.querySelectorAll('input.has-select-all');
+    for (const option of options) {
+        option.checked = selectAllCheckbox.checked;
+    }
+}
+
+// When there is a change on a checkbox controlled by a select all checkbox,
+// update the value of checkbox.
+function onSelectAllOptionsChanged(event) {
+    const parent = event.currentTarget.parentElement.parentElement.parentElement;
+    setSelectAllValue(parent);
+}
+
+// Set/reset the checked property of "select all" checkbox based on whether all
+// checkboxes it controls are checked.
+function setSelectAllValue(parent) {
+    const options = parent.querySelectorAll('input.has-select-all');
+    let enableSelectAll = true;
+    for (const option of options) {
+        if (!option.checked) {
+            enableSelectAll = false;
+            break;
+        }
+    }
+
+    parent.querySelector('.select-all').checked = enableSelectAll;
+}

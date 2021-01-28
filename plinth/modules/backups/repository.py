@@ -21,6 +21,7 @@ from plinth.utils import format_lazy
 
 from . import (_backup_handler, api, errors, get_known_hosts_path,
                restore_archive_handler, split_path, store)
+from .schedule import Schedule
 
 logger = logging.getLogger(__name__)
 
@@ -79,16 +80,16 @@ class BaseBorgRepository(abc.ABC):
     is_mounted = True
     known_credentials = []
 
-    def __init__(self, path, credentials=None, uuid=None, **kwargs):
-        """Instantiate a new repository.
-
-        If only a uuid is given, load the values from kvstore.
-
-        """
+    def __init__(self, path, credentials=None, uuid=None, schedule=None,
+                 **kwargs):
+        """Instantiate a new repository."""
         self._path = path
         self.credentials = credentials or {}
         self.uuid = uuid or str(uuid1())
         self.kwargs = kwargs
+        schedule = schedule or {}
+        schedule['repository_uuid'] = self.uuid
+        self.schedule = Schedule(**schedule)
 
     @classmethod
     def load(cls, uuid):
@@ -98,8 +99,10 @@ class BaseBorgRepository(abc.ABC):
         storage.pop('uuid')
         credentials = storage.setdefault('credentials', {})
         storage.pop('credentials')
+        schedule = storage.setdefault('schedule', {})
+        storage.pop('schedule')
 
-        return cls(path, credentials, uuid, **storage)
+        return cls(path, credentials, uuid, schedule, **storage)
 
     @property
     def name(self):
@@ -125,6 +128,10 @@ class BaseBorgRepository(abc.ABC):
     def borg_path(self):
         """Return the repository that the backups action script should use."""
         return self._path
+
+    @staticmethod
+    def prepare():
+        """Prepare the repository for operations."""
 
     def get_info(self):
         """Return Borg information about a repository."""
@@ -166,12 +173,13 @@ class BaseBorgRepository(abc.ABC):
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
 
-    def create_archive(self, archive_name, app_ids):
+    def create_archive(self, archive_name, app_ids, archive_comment=None):
         """Create a new archive in this repository with given name."""
         archive_path = self._get_archive_path(archive_name)
         passphrase = self.credentials.get('encryption_passphrase', None)
         api.backup_apps(_backup_handler, path=archive_path, app_ids=app_ids,
-                        encryption_passphrase=passphrase)
+                        encryption_passphrase=passphrase,
+                        archive_comment=archive_comment)
 
     def delete_archive(self, archive_name):
         """Delete an archive with given name from this repository."""
@@ -290,28 +298,23 @@ class BaseBorgRepository(abc.ABC):
                          create_subvolume=False, backup_file=archive_path,
                          encryption_passphrase=passphrase)
 
-    def _get_storage_format(self, store_credentials, verified):
+    def _get_storage_format(self):
+        """Return a dict representing the repository."""
         storage = {
             'path': self._path,
             'storage_type': self.storage_type,
             'added_by_module': 'backups',
-            'verified': verified
+            'credentials': self.credentials,
+            'schedule': self.schedule.get_storage_format()
         }
         if self.uuid:
             storage['uuid'] = self.uuid
 
-        if store_credentials:
-            storage['credentials'] = self.credentials
-
         return storage
 
-    def save(self, store_credentials=True, verified=False):
-        """Save the repository in store (kvstore).
-
-        - store_credentials: Boolean whether credentials should be stored.
-
-        """
-        storage = self._get_storage_format(store_credentials, verified)
+    def save(self):
+        """Save the repository in store (kvstore)."""
+        storage = self._get_storage_format()
         self.uuid = store.update_or_add(storage)
 
 
@@ -326,9 +329,10 @@ class RootBorgRepository(BaseBorgRepository):
     sort_order = 10
     is_mounted = True
 
-    def __init__(self, credentials=None):
+    def __init__(self, path=None, credentials=None, uuid=None, schedule=None,
+                 **kwargs):
         """Initialize the repository object."""
-        super().__init__(self.PATH, credentials, self.UUID)
+        super().__init__(self.PATH, credentials, self.UUID, schedule, **kwargs)
 
 
 class BorgRepository(BaseBorgRepository):
@@ -359,9 +363,21 @@ class SshBorgRepository(BaseBorgRepository):
     sort_order = 30
     flags = {'removable': True, 'mountable': True}
 
+    def __init__(self, path, credentials=None, uuid=None, schedule=None,
+                 verified=None, **kwargs):
+        """Instantiate a new repository."""
+        super().__init__(path, credentials, uuid, schedule, **kwargs)
+        self.verified = verified or False
+
+    def _get_storage_format(self):
+        """Return a dict representing the repository."""
+        storage = super()._get_storage_format()
+        storage['verified'] = self.verified
+        return storage
+
     def is_usable(self):
         """Return whether repository is usable."""
-        return self.kwargs.get('verified')
+        return self.verified
 
     @property
     def borg_path(self):
@@ -371,6 +387,13 @@ class SshBorgRepository(BaseBorgRepository):
 
         """
         return self._mountpoint
+
+    def prepare(self):
+        """Prepare the repository for operations by mounting."""
+        if not self.is_usable():
+            raise errors.SshfsError('Remote host not verified')
+
+        self.mount()
 
     @property
     def hostname(self):
@@ -483,9 +506,13 @@ def _ssh_connection(hostname, username, password):
 
 def get_repositories():
     """Get all repositories of a given storage type."""
-    repositories = [get_instance(RootBorgRepository.UUID)]
-    for uuid in store.get_storages():
+    repositories = []
+    storages = store.get_storages()
+    for uuid in storages:
         repositories.append(get_instance(uuid))
+
+    if RootBorgRepository.UUID not in storages:
+        repositories.append(get_instance(RootBorgRepository.UUID))
 
     return sorted(repositories, key=lambda x: x.sort_order)
 
@@ -493,7 +520,10 @@ def get_repositories():
 def get_instance(uuid):
     """Create a local or SSH repository object instance."""
     if uuid == RootBorgRepository.UUID:
-        return RootBorgRepository()
+        try:
+            return RootBorgRepository.load(uuid)
+        except KeyError:
+            return RootBorgRepository()
 
     storage = store.get(uuid)
     if storage['storage_type'] == 'ssh':

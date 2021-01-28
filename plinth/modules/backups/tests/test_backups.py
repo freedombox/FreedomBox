@@ -88,18 +88,21 @@ def test_create_export_delete_archive(data_directory, backup_directory):
     """
     repo_name = 'test_create_and_delete'
     archive_name = 'first_archive'
+    archive_comment = 'test_archive_comment'
     path = backup_directory / repo_name
 
     repository = BorgRepository(str(path))
     repository.initialize()
     archive_path = "::".join([str(path), archive_name])
     actions.superuser_run('backups', [
-        'create-archive', '--path', archive_path, '--paths',
+        'create-archive', '--path', archive_path, '--comment', archive_comment,
+        '--paths',
         str(data_directory)
     ])
 
     archive = repository.list_archives()[0]
     assert archive['name'] == archive_name
+    assert archive['comment'] == archive_comment
 
     repository.delete_archive(archive_name)
     content = repository.list_archives()
