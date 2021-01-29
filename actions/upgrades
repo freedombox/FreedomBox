@@ -5,6 +5,7 @@ Configures or runs unattended-upgrades
 """
 
 import argparse
+import json
 import logging
 import os
 import pathlib
@@ -478,7 +479,6 @@ def subcommand_start_dist_upgrade(arguments):
     if updates are enabled.
     """
     upgrade_ready, reason = _check_dist_upgrade(arguments.test)
-    print(reason)
     if upgrade_ready:
         with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
             service_file.write(DIST_UPGRADE_SERVICE)
@@ -488,6 +488,12 @@ def subcommand_start_dist_upgrade(arguments):
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL, close_fds=True,
                          start_new_session=True)
+
+    print(
+        json.dumps({
+            'dist_upgrade_started': upgrade_ready,
+            'reason': reason,
+        }))
 
 
 def subcommand_dist_upgrade(_):

@@ -3,6 +3,7 @@
 FreedomBox app for upgrades.
 """
 
+import json
 import logging
 import os
 import subprocess
@@ -178,7 +179,12 @@ def setup_repositories(data):
         actions.superuser_run('upgrades', command)
 
     if is_dist_upgrade_enabled():
-        actions.superuser_run('upgrades', ['start-dist-upgrade'])
+        output = actions.superuser_run('upgrades', ['start-dist-upgrade'])
+        result = json.loads(output)
+        dist_upgrade_started = result['dist_upgrade_started']
+        reason = result['reason']
+        logger.info('Result of start-dist-upgrade: %s, %s',
+                    dist_upgrade_started, reason)
 
 
 def is_backports_requested():
