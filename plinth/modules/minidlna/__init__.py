@@ -93,3 +93,13 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
     if not old_version:
         helper.call('post', app.enable)
+
+
+def get_media_dir():
+    """Return the currently set media directory."""
+    return actions.superuser_run('minidlna', ['get-media-dir'])
+
+
+def set_media_dir(media_dir):
+    """Set the media directory from which files will be scanned for sharing."""
+    actions.superuser_run('minidlna', ['set-media-dir', '--dir', media_dir])
