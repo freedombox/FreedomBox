@@ -185,6 +185,7 @@ def setup_repositories(_):
 
 def check_dist_upgrade(_):
     """Check for upgrade to new stable release."""
+    from plinth.notification import Notification
     if is_dist_upgrade_enabled():
         output = actions.superuser_run('upgrades', ['start-dist-upgrade'])
         result = json.loads(output)
@@ -206,8 +207,29 @@ def check_dist_upgrade(_):
             logger.info('Skip dist upgrade: --test is not set.')
         elif 'not-enough-free-space' in reason:
             logger.warning('Skip dist upgrade: Not enough free space in /.')
+            title = ugettext_noop('Could not start distribution update')
+            message = ugettext_noop(
+                'There is not enough free space in the root partition to '
+                'start the distribution update. Please ensure at least 5 GB, '
+                'and at least 10% of the total space, is free. Distribution '
+                'update will be retried after 24 hours, if enabled.')
+            Notification.update_or_create(
+                id='upgrades-dist-upgrade-free-space', app_id='upgrades',
+                severity='warning', title=title, message=message, actions=[{
+                    'type': 'dismiss'
+                }], group='admin')
         elif 'started-dist-upgrade' in reason:
             logger.info('Started dist upgrade.')
+            title = ugettext_noop('Distribution update started')
+            message = ugettext_noop(
+                'Started update to next stable release. This may take a long '
+                'time to complete.')
+            Notification.update_or_create(id='upgrades-dist-upgrade-started',
+                                          app_id='upgrades', severity='info',
+                                          title=title, message=message,
+                                          actions=[{
+                                              'type': 'dismiss'
+                                          }], group='admin')
         else:
             logger.warning('Unhandled result of start-dist-upgrade: %s, %s',
                            dist_upgrade_started, reason)
