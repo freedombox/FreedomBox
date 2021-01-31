@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-18 12:32+0000\n"
+"PO-Revision-Date: 2021-02-01 18:42+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -156,10 +156,13 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Schakel een automatisch back-upschema om de veiligheid van gegevens te "
+"verhogen. Gebruik bij voorkeur een versleutelde externe back-uplocatie of "
+"een extra aangesloten schijf."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Een back-upschema inschakelen"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -174,12 +177,12 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Een geplande back-up is mislukt. De vorige {error_count} back-up pogingen "
+"zijn ook niet gelukt. De laatste fout was: {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
-#, fuzzy
-#| msgid "Existing Backups"
 msgid "Error During Backup"
-msgstr "Bestaande back-ups"
+msgstr "Fout tijdens back-up"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
@@ -188,37 +191,45 @@ msgstr "{app} (geen gegevens voor back-up)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Geplande back-ups inschakelen"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Als dit is ingeschakeld wordt elke dag, elke week en elke maand een back-up "
+"gemaakt. Oudere back-ups worden verwijderd."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Aantal dagelijkse back-ups dat moet worden bewaard"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Dit aantal van de laatste back-ups worden bewaard en de rest wordt "
+"verwijderd. Een waarde van \"0\" schakelt back-ups van dit type uit. "
+"Uitvoering is op een gekozen uur van iedere dag."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Aantal wekelijkse back-ups dat moet worden bewaard"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"Dit aantal van de laatste back-ups worden bewaard en de rest wordt "
+"verwijderd. Een waarde van \"0\" schakelt back-ups van dit type uit. "
+"Uitvoering is op een gekozen uur van iedere zondag."
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Aantal maandelijkse back-ups dat moet worden bewaard"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -226,14 +237,17 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"Dit aantal van de laatste back-ups worden bewaard en de rest wordt "
+"verwijderd. Een waarde van \"0\" schakelt back-ups van dit type uit. "
+"Uitvoering is op een gekozen uur van iedere eerste dag van de maand."
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Uur van de dag om de back-up te activeren"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "In 24-uurs formaat."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -504,7 +518,7 @@ msgstr "Deze repository is versleuteld"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Schema"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -640,13 +654,11 @@ msgstr "Host verifiëren"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Back-upschema bijgewerkt."
 
 #: plinth/modules/backups/views.py:74
-#, fuzzy
-#| msgid "Create Backup"
 msgid "Schedule Backups"
-msgstr "Maak een back-up"
+msgstr "Back-ups plannen"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
@@ -3523,14 +3535,14 @@ msgid ""
 msgstr ""
 "Met Monkeysphere kan een OpenPGP sleutel worden gegenereerd voor elk "
 "geconfigureerd domein dat gebruik maakt van SSH. De openbare sleutel van de "
-"OpenPGP kan vervolgens worden geüpload naar de OpenPGP keyservers. "
+"OpenPGP kan vervolgens worden ge-upload naar de OpenPGP keyservers. "
 "Gebruikers die verbinding maken met deze machine via SSH kunnen verifiëren "
-"dat zij verbinden met de juiste host.  Om gebruikers vertrouwen te bieden in "
+"dat zij verbinden met de juiste host. Om gebruikers vertrouwen te bieden in "
 "de sleutel, moet ten minste één persoon (meestal de eigenaar van de machine) "
 "de sleutel met behulp van het reguliere OpenPGP sleutel "
-"ondertekeneningsproces ondertekenen.  Zie de <a href=\"http://web."
-"monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentatie</a> "
-"voor meer details."
+"ondertekeneningsproces ondertekenen. Zie de <a href=\"http://web.monkeysphere"
+".info/getting-started-ssh/\"> Monkeysphere SSH documentatie</a> voor meer "
+"details."
 
 #: plinth/modules/monkeysphere/__init__.py:28
 msgid ""
@@ -3823,22 +3835,28 @@ msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Automatisch (DHCP): Automatisch configureren, internetverbinding van dit "
+"netwerk gebruiken"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
+"Gedeeld: Fungeert als router, biedt internetverbinding aan andere apparaten "
+"op dit netwerk"
 
 #: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
+"Handmatig: Gebruik handmatig opgegeven parameters, gebruik de "
+"internetverbinding van dit netwerk"
 
 #: plinth/modules/networks/forms.py:50
 msgid "Disabled: Do not configure this addressing method"
-msgstr ""
+msgstr "Uitgeschakeld: deze adresseringsmethode niet configureren"
 
 #: plinth/modules/networks/forms.py:57
 msgid "Netmask"
@@ -3896,16 +3914,20 @@ msgstr "IPv6 Adresseringsmethode"
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
+"Automatisch: Automatisch configureren, internetverbinding van dit netwerk "
+"gebruiken"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
+"Automatisch (alleen DHCP): Automatisch configureren, internetverbinding van "
+"dit netwerk gebruiken"
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Negeren: Deze adresseringsmethode negeren"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
@@ -4197,6 +4219,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
+"Dit is de primaire verbinding waar %(box_name)s op vertrouwt voor Internet "
+"connectiviteit. Als deze wijzigt, kan de %(box_name)s onbereikbaar worden. "
+"Zorg ervoor dat er op een andere manier toegang is tot %(box_name)s voordat "
+"u deze verbinding wijzigt."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -6704,15 +6730,7 @@ msgstr ""
 "waarop Syncthing draait."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" or "
-#| "\"syncthing\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6727,7 +6745,7 @@ msgstr ""
 "door meerdere gebruikers. Elke gebruiker kan de eigen apparaten "
 "synchroniseren met een eigen verzameling mappen. De webinterface op "
 "{box_name} is alleen beschikbaar voor gebruikers die tot de \"admin\"- of de "
-"\"syncthing\"-groep behoren."
+"\"syncthing-access\"-groep behoren."
 
 #: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
