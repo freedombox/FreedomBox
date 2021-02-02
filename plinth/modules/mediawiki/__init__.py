@@ -106,8 +106,8 @@ class Shortcut(frontpage.Shortcut):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('setup', actions.superuser_run, 'mediawiki', ['setup'])
-    helper.call('update', actions.superuser_run, 'mediawiki', ['update'])
+    helper.call('post', actions.superuser_run, 'mediawiki', ['setup'])
+    helper.call('post', actions.superuser_run, 'mediawiki', ['update'])
     helper.call('post', app.enable)
 
 
