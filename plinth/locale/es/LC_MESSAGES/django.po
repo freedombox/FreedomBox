@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-02-01 18:42+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2021-02-03 16:41+0000\n"
+"Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
 "Language: es\n"
@@ -156,10 +156,12 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Por la seguridad de sus datos habilite un respaldo agendado. Preferíblemente "
+"uno remoto o en un disco externo."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Habilitar un respaldo agendado"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -174,6 +176,8 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Falló un respaldo agendado. Los últimos {error_count} intentos no lo "
+"lograron. El último fallo es: {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
 #, fuzzy
@@ -188,37 +192,45 @@ msgstr "{app} (Sin datos que respaldar)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Habilitar respaldos agendados"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Habilitándolo, se respalda cada día, semana y mes. Los respaldos antiguos se "
+"eliminan."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Cantidad de respaldos diarios a conservar"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Se conservarán los últimos tantos respaldos y se eliminará el resto. \"0\" "
+"deshabilita los respaldos de este tipo. Se disparan cada día a la hora "
+"especificada."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Cantidad de respaldos semanales a conservar"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"Se conservarán los últimos tantos respaldos y se eliminará el resto. \"0\" "
+"deshabilita los respaldos de este tipo. Se disparan cada domingo a la hora "
+"especificada."
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Cantidad de respaldos mensuales a conservar"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -226,14 +238,17 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"Se conservarán los últimos tantos respaldos y se eliminará el resto. \"0\" "
+"deshabilita los respaldos de este tipo. Se disparan cada 1º de mes a la hora "
+"especificada."
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Hora a la que lanzar la operación de respaldo"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "En formato 24 horas."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -508,7 +523,7 @@ msgstr "Este repositorio está cifrado"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Calendario"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -642,7 +657,7 @@ msgstr "Verificar anfitrión"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Calendario de respaldos actualizado."
 
 #: plinth/modules/backups/views.py:74
 #, fuzzy
@@ -3802,22 +3817,28 @@ msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Automática (DHCP): Configurar automáticamente y usar la conexión a internet "
+"de esta red"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
+"Compartida: Actuar como router, proporcionar conexión a internet a los otros "
+"dispositivos de esta red"
 
 #: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
+"Manual: Usar parámetros especificados a mano, usar la conexión a internet de "
+"esta red"
 
 #: plinth/modules/networks/forms.py:50
 msgid "Disabled: Do not configure this addressing method"
-msgstr ""
+msgstr "Desactivada: No configurar este método de direccionamiento"
 
 #: plinth/modules/networks/forms.py:57
 msgid "Netmask"
@@ -3873,16 +3894,20 @@ msgstr "Direccionamiento IPv6"
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
+"Automática: Configurar automáticamente, usar la conexión a internet de esta "
+"red"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
+"Automática (sólo DHCP): Configurar automáticamente y usar la conexión a "
+"internet de esta red"
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Ignorar: Ignorar este método de direccionamiento"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
