@@ -422,7 +422,9 @@ def _perform_dist_upgrade():
 
         # Hold packages known to have conffile prompts. FreedomBox service
         # will handle their upgrade later.
-        packages_with_prompts = ['firewalld', 'mumble-server', 'radicale']
+        packages_with_prompts = [
+            'firewalld', 'mumble-server', 'radicale', 'roundcube-core'
+        ]
         print(
             'Holding packages with conffile prompts: ' +
             ', '.join(packages_with_prompts) + '...', flush=True)

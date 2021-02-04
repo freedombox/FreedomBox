@@ -11,6 +11,7 @@ from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.utils import Version
 
 from . import manifest
 
@@ -89,3 +90,18 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
     helper.call('post', app.enable)
+
+
+def force_upgrade(helper, packages):
+    """Force upgrade package to resolve conffile prompts."""
+    if 'roundcube-core' not in packages:
+        return False
+
+    # Allow roundcube any lower version to upgrade to 1.4.*
+    package = packages['roundcube-core']
+    if Version(package['new_version']) > Version('1.5~'):
+        return False
+
+    helper.install(['roundcube-core'], force_configuration='new')
+    actions.superuser_run('roundcube', ['setup'])
+    return True
