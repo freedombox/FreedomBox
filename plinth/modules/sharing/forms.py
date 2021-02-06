@@ -31,7 +31,7 @@ class AddShareForm(forms.Form):
     groups = forms.MultipleChoiceField(
         choices=UsersAndGroups.get_group_choices,
         widget=forms.CheckboxSelectMultiple, required=False,
-        label=_('User groups that can read the files in the share'),
+        label=_('User groups that can read the files in the share:'),
         help_text=_(
             'Users of the selected user groups will be able to read the '
             'files in the share.'))
