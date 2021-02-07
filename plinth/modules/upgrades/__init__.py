@@ -209,6 +209,7 @@ def check_dist_upgrade(_):
             logger.warning('Skip dist upgrade: Not enough free space in /.')
             title = ugettext_noop('Could not start distribution update')
             message = ugettext_noop(
+                # xgettext:no-python-format
                 'There is not enough free space in the root partition to '
                 'start the distribution update. Please ensure at least 5 GB, '
                 'and at least 10% of the total space, is free. Distribution '
