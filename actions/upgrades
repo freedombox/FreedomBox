@@ -18,6 +18,9 @@ from plinth.action_utils import (apt_hold, debconf_set_selections,
                                  run_apt_command, service_daemon_reload,
                                  service_restart)
 from plinth.modules.apache.components import check_url
+from plinth.modules.snapshot import (is_apt_snapshots_enabled, is_supported as
+                                     snapshot_is_supported, load_augeas as
+                                     snapshot_load_augeas)
 from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
                                      get_current_release, is_backports_current)
 
@@ -397,6 +400,26 @@ def _check_dist_upgrade(test_upgrade=False):
 
 def _perform_dist_upgrade():
     """Perform upgrade to next release of Debian."""
+    # Take a snapshot if supported and enabled, then disable snapshots.
+    snapshots_supported = snapshot_is_supported()
+    if snapshots_supported:
+        print('Taking a snapshot before dist upgrade...', flush=True)
+        subprocess.run(['/usr/share/plinth/actions/snapshot', 'create'],
+                       check=True)
+        aug = snapshot_load_augeas()
+        apt_snapshots_enabled = is_apt_snapshots_enabled(aug)
+        if apt_snapshots_enabled:
+            print('Disable apt snapshots during dist upgrade...', flush=True)
+            subprocess.run([
+                '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot',
+                'yes'
+            ], check=True)
+        else:
+            print('Apt snapshots already disabled.', flush=True)
+    else:
+        print('Snapshots are not supported, skip taking a snapshot.',
+              flush=True)
+
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
     with apt_hold():
@@ -447,6 +470,13 @@ def _perform_dist_upgrade():
     # freedombox package.
     print('Running unattended-upgrade...', flush=True)
     subprocess.run(['unattended-upgrade', '--verbose'])
+
+    # Restore original snapshots configuration.
+    if snapshots_supported and apt_snapshots_enabled:
+        print('Re-enable apt snapshots...', flush=True)
+        subprocess.run([
+            '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot', 'no'
+        ], check=True)
 
     # Restart FreedomBox service to ensure it is using the latest
     # dependencies.
