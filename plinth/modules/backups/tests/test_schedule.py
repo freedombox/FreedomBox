@@ -83,9 +83,7 @@ def _get_archives_from_test_data(data):
     archives = []
     for index, item in enumerate(data):
         archive_time = item['time']
-        if isinstance(archive_time, timedelta):
-            archive_time = datetime.now() + archive_time
-        elif isinstance(archive_time, str):
+        if isinstance(archive_time, str):
             archive_time = datetime.strptime(archive_time,
                                              '%Y-%m-%d %H:%M:%S+0000')
         archive = {
@@ -114,7 +112,7 @@ cases = [
     [
         [False, 10, 10, 10, 0],
         [],
-        datetime.now(),
+        datetime(2021, 1, 1),
         [],
         [],
     ],
@@ -122,7 +120,7 @@ cases = [
     [
         [True, 10, 10, 10, 0],
         [],
-        datetime.now(),
+        datetime(2021, 1, 1),
         ['daily', 'weekly', 'monthly'],
         [],
     ],
@@ -131,9 +129,9 @@ cases = [
         [True, 10, 10, 10, 0],
         [{
             'periods': ['daily'],
-            'time': timedelta(seconds=-600)
+            'time': datetime(2021, 1, 1) - timedelta(seconds=600)
         }],
-        datetime.now(),
+        datetime(2021, 1, 1),
         [],
         [],
     ],
@@ -142,9 +140,9 @@ cases = [
         [True, 10, 10, 10, 0],
         [{
             'periods': ['weekly'],
-            'time': timedelta(seconds=-600)
+            'time': datetime(2021, 1, 1) - timedelta(seconds=600)
         }],
-        datetime.now(),
+        datetime(2021, 1, 1),
         [],
         [],
     ],
@@ -153,9 +151,9 @@ cases = [
         [True, 10, 10, 10, 0],
         [{
             'periods': ['monthly'],
-            'time': timedelta(seconds=-600)
+            'time': datetime(2021, 1, 1) - timedelta(seconds=600)
         }],
-        datetime.now(),
+        datetime(2021, 1, 1),
         [],
         [],
     ],

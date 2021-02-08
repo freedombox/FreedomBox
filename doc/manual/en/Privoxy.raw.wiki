@@ -37,16 +37,16 @@ Watch the [[attachment:Privoxy_Installation.webm|screencast]] on how to setup an
 
 === Advanced Users ===
 
- 1. The default installation should provide a reasonable starting point for most. There will undoubtedly be occasions where you will want to adjust the configuration, that can be dealt with as the need arises. 
+The default installation should provide a reasonable starting point for most. There will undoubtedly be occasions where you will want to adjust the configuration, that can be dealt with as the need arises. 
 
- 1. While using Privoxy, you can see its configuration details and documentation at http://config.privoxy.org/ or http://p.p.
-
- 1. To enable changing these configurations, you first have to change the value of `enable-edit-actions` in `/etc/privoxy/config` to `1`. Before doing so, read carefully the manual, especially:   
-   ''Access to the editor can not be controlled separately by "ACLs" or HTTP authentication, so that everybody who can access Privoxy can modify its configuration for all users. This option is not recommended for environments with untrusted users. Note that malicious client side code (e.g Java) is also capable of using the actions editor and you shouldn't enable this options unless you understand the consequences and are sure your browser is configured correctly.''
-
- 1. Now you find an `EDIT` button on the configuration screen in `http://config.privoxy.org/`.
-
- 1. The [[https://www.privoxy.org/user-manual/quickstart.html|Quickstart]] is a good starting point to read on how to define own blocking and filtering rules.
+ 1. Plan first:
+    * While using Privoxy, you can see its configuration details and documentation at http://config.privoxy.org/ or http://p.p.
+    * The [[https://www.privoxy.org/user-manual/quickstart.html|Quickstart]] is a good starting point to read on how to define own blocking and filtering rules.
+    * Read carefully the manual, especially this '''security warning''':   
+       ''Access to the editor can not be controlled separately by "ACLs" or HTTP authentication, so that everybody who can access Privoxy can modify its configuration for all users. This option is not recommended for environments with untrusted users. Note that malicious client side code (e.g Java) is also capable of using the actions editor and you shouldn't enable this options unless you understand the consequences and are sure your browser is configured correctly.''
+ 1. Only when you are ready, perform the changes:
+    1. To enable changing these configurations, you first have to change the value of `enable-edit-actions` in `/etc/privoxy/config` to `1`. 
+    1. Now you find an `EDIT` button on the configuration screen in `http://config.privoxy.org/`.
 
 
 === External links ===

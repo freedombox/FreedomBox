@@ -1,28 +1,26 @@
 #language es
 
-~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Apache_userdir|English]] - Español -~
+<<Include(FreedomBox/Manual/Apache_userdir, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
 
 <<TableOfContents()>>
 
 ## BEGIN_INCLUDE
 
-== Sitios Web de Usuario (User websites) ==
+== Sitios web de usuario (User Websites) ==
 
-=== ¿Qué es User websites? ===
+'''Disponible desde''': versión 0.9.4
 
-''User websites'' es un módulo del servidor web ''Apache'' habilitado para permitir a los usuarios definidos en el sistema !FreedomBox exponer un conjunto de archivos del sistema de ficheros de !FreedomBox como sitio web a la red local y/o a internet de acuerdo a la configuración de la red y el cortafuegos.
+=== ¿Qué es User Websites? ===
 
-||||<tablestyle="border:1px solid black;width: 80%">'''Datos básicos de la aplicación'''||
-||Categoría|| Compartición de archivos ||
-||Disponible desde la versión || 0.9.4||
-||Sitio web del proyecto original || https://httpd.apache.org/docs/2.4/mod/mod_userdir.html||
-||Documentación original de usuario || https://httpd.apache.org/docs/2.4/howto/public_html.html||
+''User Websites'' es una ubicación del sistema de ficheros prefijada para que los servidores web permitan a los usuarios del sistema anfitrión exponer archivos estáticos a modo de sitio web a la red local y/o a internet de acuerdo a la configuración de la red y el cortafuegos.
+
+El servidor web predeterminado en !FreedomBox es Apache e implementa esto mediante un módulo específico.
 
 === Captura de pantalla ===
 
 /* Añadir cuando/si se crea un interfaz para FreedomBox */
 
-=== Usar User websites ===
+=== Usar User Websites ===
 
 El módulo está siempre activado y el interfaz web de !FreedomBox no ofrece configuración ni página de estado para este módulo.
 Para servir documentos con el módulo solo se necesita poner los documentos en un subdirectorio designado '''`/home/<un_usuario_de_plinth>/public_html`'''.
@@ -30,9 +28,94 @@ Para servir documentos con el módulo solo se necesita poner los documentos en u
 `User websites` servirá los archivos que haya en este directorio cuando se reciban peticiones con la URI `~<un_usuario_de_freedombox>`. Por tanto para un dominio `ejemplo.org` con un usuario `pepe` una petición `ejemplo.org/~pepe/index.html` transferirá el fichero `/home/pepe/public_html/index.html`.
 
 
-=== Usar SFTP para crear public_html y subir archivos ===
+===  Crear la carpeta public_html y subir documentos ===
 
-/* Pendiente de redactar */
+==== Visualmente desde Linux ====
+
+Los administradores de archivos predeterminados de los escritorios Linux suelen soportar de serie el acceso a sistemas de ficheros remotos mediante SFTP. Entre otros, Nautilus en Gnome, Dolphin en KDE/Plasma y Thunar en XFCE. Esta estandarización permite usar procedimientos muy fáciles, similares y obvios:
+
+ 1. Conectar con el administrador de archivos a tu !FreedomBox:
+    * Nautilus en Gnome:
+      1. Para lanzar Nautilus puedes buscar su icono de archivador, o buscar su nombre o la palabra "archivo".
+      1. Al final del panel izquierdo encontrarás la opción "+ Otras ubicaciones".
+      1. Te lleva a una lista de ubicaciones. Encuentra "`freedombox SFTP server`" (así, en inglés) y dale.
+      1. La primera vez se te pedirán usuario y contraseña. Introduce tu usuario de !FreedomBox y su contraseña. El diálogo te ofrecerá algunas opciones para recordarlos un cierto tiempo.
+    * Administrador de archivos de Plasma, alias Dolphin:
+      1. Haz clic en la barra de ubicación en el extremo superior de la ventana.
+      1. Introduce `ftp://freedombox.local`
+      1. La primera vez se te pedirán usuario y contraseña. Introduce tu usuario de !FreedomBox y su contraseña. El diálogo te ofrecerá alguna opción para recordarlos.
+    * Thunar en XFCE:
+      1. Teclea esto en la barra de navegación: `sftp://usuario@freedombox.local`, reemplazando 'usuario' por el nombre real de '''tu''' usuario en !FreedomBox.
+      1. Imagino que la primera vez se te pedirán usuario y contraseña. Introduce tu usuario de !FreedomBox y su contraseña.
+ 1. Se te debería mostrar el sistema de ficheros de !FreedomBox. Entra en la carpeta `home` y luego entra en la subcarpeta de su usuario.
+ 1. Si no hay una carpeta `public_html` créala: clic con el botón derecho del ratón, etc.
+ 1. Arrastra tu(s) archivo(s) a la carpeta `public_html`.
+ 1. Deberías poder ir con tu navegador a la URL correspondiente y ver tus archivos.
+
+==== Visualmente desde otras plataformas ====
+
+Si quieres emplear clientes gráficos que sean software libre, instala:
+ * [[https://filezilla-project.org|FileZilla]] o [[https://winscp.net/eng/index.php|WinSCP]] para Windows.
+ * [[https://filezilla-project.org|FileZilla]] para Mac.
+ * Spider o Ghost Commander, disponibles ambos en el repositorio de aplicaciones libres para Android [[https://f-droid.org|F-Droid]].
+
+Su uso es similar al descrito para los escritorios Linux.
+
+/* ¿Describir cómo usar conectividad nativa a ubicaciones remotas de plataformas privativas? */
+
+==== Mediante interfaz de linea de órdenes (CLI) ====
+
+Normalmente cualquier sistema Unix, incluyendo a Linux en (casi) todos sus sabores y a Mac, traen de serie las utilidades [[https://linux.die.net/man/1/ssh|ssh]], [[https://linux.die.net/man/1/scp|scp]] y [[https://linux.die.net/man/1/sftp|sftp]]. FreeDOS trae SSH2DOS. ¡No hace falta instalar nada. Ya está todo ahí!
+
+Ejemplos:
+
+Conectar con !FreedomBox mediante SSH:
+ 1. (reemplazando `usuario` por un nombre de usuario válido en !FreedomBox y `freedombox.local` por el nombre de dominio o la IP de tu !FreedomBox): {{{
+$ ssh usuario@freedombox.local
+}}}
+ 1. Si tus datos son correctos y tu !FreedomBox está accesible la primera vez se te pedirá confirmar su identificación.
+ 1. Luego se te pedira el usuario de !FreedomBox y su contraseña.
+ 1. A continuación se te mostrará el mensaje de bienvenida con el logotipo de la mariposa de !FreedomBox's en arte ASCII (dibujada con letras).
+ 1. El prompt cambia a `usuario@freedombox:~$`.
+
+Una vez conectado crea la carpeta de tu sitio web mediante:
+ {{{
+usuario@freedombox:~$ mkdir ~/public_html
+}}}
+
+...o crea la del sitio de otro usuario:
+ 1. Usa el prefijo `sudo` así: {{{
+usuario@freedombox:~$ sudo mkdir /home/<el_otro_usuario>/public_html
+}}}, e introduce tu contraseña.
+ 1. Al crear una carpeta, por defecto te pertenece a tí la crees donde la crées. Por tanto, necesitarás poner como dueño al otro usuario: {{{
+usuario@freedombox:~$ sudo chown <el_otro_usuario>:<el_otro_usuario> /home/<el_otro_usuario>/public_htm
+}}}
+ 1. Antes de desconectar mejor verificas que `public_html' se muestra entre los contenidos de la carpeta `home` del otro usuario.
+ {{{
+usuario@freedombox:~$ ls -l /home/<el_otro_usuario>
+...
+drwxr-xr-x  2 <el_otro_usuario> <el_otro_usuario>   4096 jan 29 17:39  public_html
+...
+}}}. El nombre del otro usuario tiene que aparecer '''por duplicado''' en la línea de `public_html` y sus permisos deben ser '''`drwxr-xr-x`'''.
+
+Ahora el otro usuario puede subir sus archivos con cualquiera de los clientes gráficos. Pídeles que lo comprueben.
+
+Es una buena práctica de seguridad salir en vez de esperar simplemente a que la conexión caduque:
+ {{{
+usuario@freedombox:~$ exit
+}}}
+
+Si quieres emplear la linea de órdenes también para subir contenido puedes
+{{{
+$ scp ruta/a/los/archivos usuario@freedombox.local:public_html/
+}}}. Te pedirá tu contraseña en !FreedomBox. A continuación deberías poder ir con tu navegador a la URL correspondiente y ver tus archivos.
+
+Más acerca de ssh, scp y sftp con `$ man ssh`, `$ man scp` y `$ man sftp`.
+
+
+=== Enlaces externos ===
+ * Sitio web del proyecto original: https://httpd.apache.org/docs/2.4/mod/mod_userdir.html
+ * Documentación de uso: https://httpd.apache.org/docs/2.4/howto/public_html.html
 
 ## END_INCLUDE
 

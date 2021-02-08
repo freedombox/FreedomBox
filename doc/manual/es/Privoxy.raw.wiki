@@ -35,16 +35,16 @@ Mira el [[attachment:Privoxy_Installation.webm|vídeo]] acerca de como configura
 
 === Usuarios Avanzados ===
 
- 1. La instalación de serie debería proporcionar un punto de partida razonable para la mayoría de los usuarios. Indudablemente habrá ocasiones en las que quieras ajustar la configuración. Eso se puede afrontar cuando surja la necesidad. 
+La instalación de serie debería proporcionar un punto de partida razonable para la mayoría de los usuarios. Indudablemente habrá ocasiones en las que quieras ajustar la configuración. Eso se puede afrontar cuando surja la necesidad. 
 
- 1. Con Privoxy activado puedes ver su documentación y los detalles de su configuración en `http://config.privoxy.org/` o en `http://p.p`.
-
- 1. Para habilitar los cambios en estas configuraciones primero tienes que cambiar el valor de ''habilitar-acciones-de-edición'' en `/etc/privoxy/config` a `1`. Antes de hacerlo lee el manual con atención, especialmente:   
-   ''No se puede controlar por separado el accesso al editor por "ACLs" o authenticación HTTP, así que cualquiera con acceso a Privoxy puede modificar la configuración de todos los usuarios. Esta opción no se recomienda para entornos con usuarios no confiables. Nota que un código de cliente malicioso (p.ej. Java) también puede usar el editor de acciones y no deberías habilitar estas opciones a no ser que entiendas las consecuencias y estés seguro de que los navegadores están correctamente configurados.''
-
- 1. Ahora encontrarás un botón `EDITAR` en la pantalla de configuración de `http://config.privoxy.org/`.
-
- 1. La [[https://www.privoxy.org/user-manual/quickstart.html|Guía rápida]] es un buen punto de partida para leer acerca de cómo definir reglas de bloqueo y filtrado propias.
+ 1. Planifica primero:
+    * Con Privoxy activado puedes ver su documentación y los detalles de su configuración en `http://config.privoxy.org/` o en `http://p.p`.
+    * La [[https://www.privoxy.org/user-manual/quickstart.html|Guía rápida]] es un buen punto de partida para leer acerca de cómo definir reglas de bloqueo y filtrado propias.
+    * Lee el manual con atención, especialmente esre '''aviso de seguridad''':   
+      ''No se puede controlar por separado el accesso al editor por "ACLs" o authenticación HTTP, así que cualquiera con acceso a Privoxy puede modificar la configuración de todos los usuarios. Esta opción no se recomienda para entornos con usuarios no confiables. Nota que un código de cliente malicioso (p.ej. Java) también puede usar el editor de acciones y no deberías habilitar estas opciones a no ser que entiendas las consecuencias y estés seguro de que los navegadores están correctamente configurados.''
+ 1. Solo cuando ya estés preparado, realiza los cambios:
+    1. Para habilitar los cambios en estas configuraciones primero tienes que cambiar el valor de ''habilitar-acciones-de-edición'' en `/etc/privoxy/config` a `1`.
+    1. Ahora encontrarás un botón `EDITAR` en la pantalla de configuración de http://config.privoxy.org/.
 
 
 === Enlaces externos ===

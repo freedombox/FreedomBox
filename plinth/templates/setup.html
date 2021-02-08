@@ -68,15 +68,18 @@
 
     {% if setup_current_operation.step == 'pre' %}
       <div class="installing install-state-pre">
+        <span class="fa fa-refresh fa-spin processing"></span>
         {% trans "Performing pre-install operation" %}
       </div>
     {% elif setup_current_operation.step == 'post' %}
       <div class="installing install-state-post">
+        <span class="fa fa-refresh fa-spin processing"></span>
         {% trans "Performing post-install operation" %}
       </div>
     {% elif setup_current_operation.step == 'install' %}
       {% with transaction=setup_current_operation.transaction %}
         <div class="installing install-state-installing">
+          <span class="fa fa-refresh fa-spin processing"></span>
           {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
             Installing {{ package_names }}: {{ status }}
           {% endblocktrans %}

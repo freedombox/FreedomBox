@@ -3,6 +3,7 @@
 FreedomBox app for upgrades.
 """
 
+import json
 import logging
 import os
 import subprocess
@@ -19,7 +20,7 @@ from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
 
-version = 8
+version = 9
 
 is_essential = True
 
@@ -90,10 +91,14 @@ class UpgradesApp(app_module.App):
 
         # Check every day (every 3 minutes in debug mode):
         # - backports becomes available -> configure it if selected by user
+        interval = 180 if cfg.develop else 24 * 3600
+        glib.schedule(interval, setup_repositories)
+
+        # Check every day (every 3 minutes in debug mode):
         # - new stable release becomes available -> perform dist-upgrade if
         #   updates are enabled
         interval = 180 if cfg.develop else 24 * 3600
-        glib.schedule(interval, setup_repositories)
+        glib.schedule(interval, check_dist_upgrade)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
@@ -168,8 +173,8 @@ def disable():
     actions.superuser_run('upgrades', ['disable-auto'])
 
 
-def setup_repositories(data):
-    """Setup apt repositories for backports or new stable release."""
+def setup_repositories(_):
+    """Setup apt repositories for backports."""
     if is_backports_requested():
         command = ['activate-backports']
         if cfg.develop:
@@ -177,8 +182,57 @@ def setup_repositories(data):
 
         actions.superuser_run('upgrades', command)
 
+
+def check_dist_upgrade(_):
+    """Check for upgrade to new stable release."""
+    from plinth.notification import Notification
     if is_dist_upgrade_enabled():
-        actions.superuser_run('upgrades', ['start-dist-upgrade'])
+        output = actions.superuser_run('upgrades', ['start-dist-upgrade'])
+        result = json.loads(output)
+        dist_upgrade_started = result['dist_upgrade_started']
+        reason = result['reason']
+        if 'found-previous' in reason:
+            logger.info(
+                'Found previous dist-upgrade. If it was interrupted, it will '
+                'be restarted.')
+        elif 'already-' in reason:
+            logger.info('Skip dist upgrade: System is already up-to-date.')
+        elif 'codename-not-found' in reason:
+            logger.warning('Skip dist upgrade: Codename not found in release '
+                           'file.')
+        elif 'upgrades-not-enabled' in reason:
+            logger.info('Skip dist upgrade: Automatic updates are not '
+                        'enabled.')
+        elif 'test-not-set' in reason:
+            logger.info('Skip dist upgrade: --test is not set.')
+        elif 'not-enough-free-space' in reason:
+            logger.warning('Skip dist upgrade: Not enough free space in /.')
+            title = ugettext_noop('Could not start distribution update')
+            message = ugettext_noop(
+                'There is not enough free space in the root partition to '
+                'start the distribution update. Please ensure at least 5 GB, '
+                'and at least 10% of the total space, is free. Distribution '
+                'update will be retried after 24 hours, if enabled.')
+            Notification.update_or_create(
+                id='upgrades-dist-upgrade-free-space', app_id='upgrades',
+                severity='warning', title=title, message=message, actions=[{
+                    'type': 'dismiss'
+                }], group='admin')
+        elif 'started-dist-upgrade' in reason:
+            logger.info('Started dist upgrade.')
+            title = ugettext_noop('Distribution update started')
+            message = ugettext_noop(
+                'Started update to next stable release. This may take a long '
+                'time to complete.')
+            Notification.update_or_create(id='upgrades-dist-upgrade-started',
+                                          app_id='upgrades', severity='info',
+                                          title=title, message=message,
+                                          actions=[{
+                                              'type': 'dismiss'
+                                          }], group='admin')
+        else:
+            logger.warning('Unhandled result of start-dist-upgrade: %s, %s',
+                           dist_upgrade_started, reason)
 
 
 def is_backports_requested():

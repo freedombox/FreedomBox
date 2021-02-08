@@ -7,7 +7,7 @@ import os
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
+from plinth.modules import minidlna
 from plinth.views import AppView
 
 from .forms import MiniDLNAServerForm
@@ -20,9 +20,7 @@ class MiniDLNAAppView(AppView):
     def get_initial(self):
         """Initial form value as found in the minidlna.conf"""
         initial = super().get_initial()
-        initial.update({
-            'media_dir': actions.superuser_run('minidlna', ['get-media-dir']),
-        })
+        initial.update({'media_dir': minidlna.get_media_dir()})
 
         return initial
 
@@ -36,9 +34,7 @@ class MiniDLNAAppView(AppView):
                 messages.error(self.request,
                                _('Specified directory does not exist.'))
             else:
-                actions.superuser_run(
-                    'minidlna',
-                    ['set-media-dir', '--dir', new_config['media_dir']])
+                minidlna.set_media_dir(new_config['media_dir'])
                 messages.success(self.request, _('Updated media directory'))
 
         return super().form_valid(form)

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-18 12:32+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2021-02-05 23:02-0500\n"
+"PO-Revision-Date: 2021-02-06 03:51+0000\n"
+"Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
 "Language: fr\n"
@@ -91,10 +91,8 @@ msgid "Error installing application: {error}"
 msgstr "Erreur lors de l’installation de l’application : {error}"
 
 #: plinth/modules/apache/__init__.py:41
-#, fuzzy
-#| msgid "As a Server"
 msgid "Apache HTTP Server"
-msgstr "En tant que serveur"
+msgstr "Serveur HTTP Apache"
 
 #: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:49
@@ -157,10 +155,13 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Activer les sauvegardes automatiques régulières pour la sécurité de vos "
+"données. Il est préférable d’utiliser un emplacement de sauvegarde distant "
+"et chiffré, ou un disque externe additionnel."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Activer les sauvegardes régulières"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -175,12 +176,12 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Une sauvegarde régulière a échoué après {error_count} tentatives. Le dernier "
+"message d'erreur était : {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
-#, fuzzy
-#| msgid "Existing Backups"
 msgid "Error During Backup"
-msgstr "Sauvegardes existantes"
+msgstr "Erreur pendant la sauvegarde"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
@@ -189,37 +190,46 @@ msgstr "{app} (pas de données à sauvegarder)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Activer les sauvegardes régulières"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"En activant cette option, une sauvegarde est automatiquement réalisée chaque "
+"jour, chaque semaine et chaque mois. Les sauvegardes les plus anciennes sont "
+"purgées."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Nombre de sauvegardes quotidiennes à conserver"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Autant de sauvegardes sont conservées parmi les plus récentes, les autres "
+"sont supprimées. Une valeur de 0 désactive ce type de sauvegarde. "
+"Déclenchées chaque jour à l’heure spécifiée."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Nombre de sauvegardes hebdomadaires à conserver"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"Autant de sauvegardes sont conservées parmi les plus récentes, les autres "
+"sont supprimées. Une valeur de 0 désactive ce type de sauvegarde. "
+"Déclenchées chaque dimanche à l’heure spécifiée."
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Nombre de sauvegardes mensuelles â conserver"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -227,14 +237,17 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"Autant de sauvegardes sont conservées parmi les plus récentes, les autres "
+"sont supprimées. Une valeur de 0 désactive ce type de sauvegarde. "
+"Déclenchées chaque mois à l’heure spécifiée."
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Heure de déclenchement des opérations de sauvegarde"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "Au format 24 heures."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -510,7 +523,7 @@ msgstr "Ce dépôt est chiffré"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Planification"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -562,8 +575,8 @@ msgid "Restore data from"
 msgstr "Restaurer les données depuis"
 
 #: plinth/modules/backups/templates/backups_schedule.html:19
-#: plinth/modules/upgrades/__init__.py:76
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 #: plinth/templates/setup.html:62
 msgid "Update"
@@ -646,13 +659,11 @@ msgstr "Vérifier le serveur"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Planification des sauvegardes mise à jour."
 
 #: plinth/modules/backups/views.py:74
-#, fuzzy
-#| msgid "Create Backup"
 msgid "Schedule Backups"
-msgstr "Créer une sauvegarde"
+msgstr "Planifier des sauvegardes"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
@@ -1233,7 +1244,7 @@ msgstr "Nom de domaine invalide"
 #: plinth/modules/config/forms.py:40
 #, python-brace-format
 msgid "{user}'s website"
-msgstr ""
+msgstr "Site web de {user}"
 
 #: plinth/modules/config/forms.py:42
 msgid "Apache Default"
@@ -1937,7 +1948,7 @@ msgstr "À propos"
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:27
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
@@ -2223,7 +2234,7 @@ msgid ""
 "available graphical clients. And you can share your code with people around "
 "the world."
 msgstr ""
-"Git est un système distribué de gestion de versions destiné à suivre les "
+"Git est un système de gestion de versions distribué, destiné à suivre les "
 "changements du code source pendant le développement de logiciels. Gitweb "
 "offre une interface web pour gérer des dépôts Git. Il vous permet de "
 "parcourir l’historique et le contenu du code source, d’effectuer des "
@@ -2393,7 +2404,7 @@ msgid "Contribute"
 msgstr "Participer"
 
 #: plinth/modules/help/templates/help_about.html:17
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr ""
@@ -2409,7 +2420,7 @@ msgstr ""
 "\">disponible</a>."
 
 #: plinth/modules/help/templates/help_about.html:28
-#: plinth/modules/upgrades/templates/upgrades_configure.html:42
+#: plinth/modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "Votre %(box_name)s est à jour."
@@ -3443,7 +3454,7 @@ msgstr "Configuration PVP mise à jour"
 msgid "Damage configuration updated"
 msgstr "Configuration des blessures mise à jour"
 
-#: plinth/modules/minidlna/__init__.py:24
+#: plinth/modules/minidlna/__init__.py:25
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3461,15 +3472,15 @@ msgstr ""
 "portables, les smartphones, les télévisions et les systèmes de jeu (comme la "
 "PS3 ou la Xbox 360) ainsi que les applications telles que Totem ou Kodi."
 
-#: plinth/modules/minidlna/__init__.py:45
+#: plinth/modules/minidlna/__init__.py:46
 msgid "Media streaming server"
 msgstr "Serveur de streaming de médias"
 
-#: plinth/modules/minidlna/__init__.py:48
+#: plinth/modules/minidlna/__init__.py:49
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:49
+#: plinth/modules/minidlna/__init__.py:50
 msgid "Simple Media Server"
 msgstr "Serveur de médias simple"
 
@@ -3507,11 +3518,11 @@ msgstr "yaacc"
 msgid "totem"
 msgstr "totem"
 
-#: plinth/modules/minidlna/views.py:37
+#: plinth/modules/minidlna/views.py:35
 msgid "Specified directory does not exist."
 msgstr "Le répertoire indiqué n’existe pas."
 
-#: plinth/modules/minidlna/views.py:42
+#: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Répertoire multimédia mis à jour"
 
@@ -3873,29 +3884,35 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:39
 msgid "IPv4 Addressing Method"
-msgstr "Méthode d'adressage IPv4"
+msgstr "Méthode d’adressage IPv4"
 
 #: plinth/modules/networks/forms.py:41
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Automatique (DHCP) : configurer automatiquement, utiliser la connexion "
+"Internet de ce réseau"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
+"Partagée : fonctionner comme un routeur, fournir la connexion Internet aux "
+"autres appareils de ce réseau"
 
 #: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
+"Manuelle : définir manuellement la configuration, utiliser la connexion "
+"Internet de ce réseau"
 
 #: plinth/modules/networks/forms.py:50
 msgid "Disabled: Do not configure this addressing method"
-msgstr ""
+msgstr "Désactivée : ne pas configurer cette méthode d’adressage"
 
 #: plinth/modules/networks/forms.py:57
 msgid "Netmask"
@@ -3906,8 +3923,8 @@ msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr ""
-"Paramètre optionnel. Si laissée vide, un masque de sous-réseau basé sur "
-"l’adresse sera utilisé par défaut."
+"Paramètre optionnel. Si laissé vide, un masque de sous-réseau par défaut "
+"basé sur l’adresse sera utilisé."
 
 #: plinth/modules/networks/forms.py:62 plinth/modules/networks/forms.py:97
 #: plinth/modules/networks/templates/connection_show.html:193
@@ -3953,16 +3970,20 @@ msgstr "Méthode d’adressage IPv6"
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
+"Automatique : configurer automatiquement, utiliser la connexion Internet de "
+"ce réseau"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
+"Automatique (DHCP seulement) : configurer automatiquement, utiliser la "
+"connexion Internet de ce réseau"
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Ignorer : ignorer cette méthode d’adressage"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
@@ -4094,7 +4115,7 @@ msgid ""
 "Internet connection from your router via Wi-Fi or Ethernet cable. This is a "
 "typical home setup.</p>"
 msgstr ""
-"Connecté à un routeur <p class=\"help-block\">Votre {box_name} tire son "
+"Connectée à un routeur <p class=\"help-block\">Votre {box_name} tire son "
 "accès à Internet de votre routeur grâce au Wi-Fi ou à un câble Ethernet. Il "
 "s’agit de la configuration domestique classique.</p>"
 
@@ -4257,6 +4278,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
+"Ceci est la connexion principale dont la %(box_name)s dépend pour se "
+"connecter à Internet. La modifier pourrait rendre votre %(box_name)s "
+"inaccessible. Assurez-vous que vous avez d’autres moyens de vous connecter à "
+"votre %(box_name)s avant d’apporter des modification à cette connexion."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -4560,8 +4585,8 @@ msgstr "Passer cette étape"
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:40
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:35
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:38
 #: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "Suivant"
@@ -5617,7 +5642,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Configuration des droits d’accès mise à jour"
 
-#: plinth/modules/roundcube/__init__.py:22
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5631,7 +5656,7 @@ msgstr ""
 "carnet d’adresses, une gestion des dossiers, un outil de recherche dans les "
 "messages et un correcteur orthographique."
 
-#: plinth/modules/roundcube/__init__.py:27
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5646,7 +5671,7 @@ msgstr ""
 "(recommandé), remplissez le champ serveur avec une adresse du type "
 "<code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:32
+#: plinth/modules/roundcube/__init__.py:33
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5662,12 +5687,12 @@ msgstr ""
 "settings/security/lesssecureapps\">https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:56
 msgid "Email Client"
 msgstr "Client de courriel"
 
@@ -5932,18 +5957,18 @@ msgstr "Afficher le rapport de sécurité"
 
 #: plinth/modules/security/templates/security.html:19
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:49
+#: plinth/modules/upgrades/templates/upgrades_configure.html:44
 msgid "Frequent Feature Updates"
 msgstr "Mise à jour régulière des fonctionnalités"
 
 #: plinth/modules/security/templates/security.html:21
-#: plinth/modules/upgrades/templates/upgrades_configure.html:57
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
 msgid "Frequent feature updates are activated."
 msgstr "La mise à jour régulière des fonctionnalités est activée."
 
 #: plinth/modules/security/templates/security.html:26
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:69
+#: plinth/modules/upgrades/templates/upgrades_configure.html:64
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6182,12 +6207,12 @@ msgstr "Partage public"
 #: plinth/modules/sharing/forms.py:29
 msgid "Make files in this folder available to anyone with the link."
 msgstr ""
-"Les fichiers de ce répertoire seront disponibles à n'importe qui avec le "
-"lien."
+"Les fichiers de ce répertoire seront accessible à toute personne possédant "
+"le lien vers ce partage."
 
 #: plinth/modules/sharing/forms.py:34
 msgid "User groups that can read the files in the share"
-msgstr "Groupes d’utilisateurs autorisés à consulter les fichiers du partage"
+msgstr "Groupes d’utilisateurs autorisés à consulter les fichiers du partage :"
 
 #: plinth/modules/sharing/forms.py:36
 msgid ""
@@ -6812,15 +6837,7 @@ msgstr ""
 "Syncthing."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" or "
-#| "\"syncthing\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6837,7 +6854,7 @@ msgstr ""
 "Chaque utilisateur peut choisir un ensemble de dossiers qui lui est propre, "
 "à synchroniser entre ses appareils.  L’interface web sur la {box_name} est "
 "accessible uniquement aux utilisateurs membres des groupes « admin » ou "
-"« syncthing »."
+"« syncthing-access »."
 
 #: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
@@ -7144,7 +7161,7 @@ msgstr ""
 
 #: plinth/modules/transmission/__init__.py:32
 msgid "Please do not change the default port of the transmission daemon."
-msgstr ""
+msgstr "Veuillez ne pas changer le port par défaut du démon de Transmission."
 
 #: plinth/modules/transmission/__init__.py:53
 #: plinth/modules/transmission/manifest.py:6
@@ -7196,14 +7213,14 @@ msgstr "Lecteur de flux d'informations"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:44
+#: plinth/modules/upgrades/__init__.py:45
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Rechercher et installer les dernières mises à jour logicielles et les "
 "correctifs de sécurité."
 
-#: plinth/modules/upgrades/__init__.py:45
+#: plinth/modules/upgrades/__init__.py:46
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7217,13 +7234,37 @@ msgstr ""
 "nécessaire, il est effectué à 2h00, rendant indisponible l’ensemble des "
 "applications pour une courte période."
 
-#: plinth/modules/upgrades/__init__.py:117
+#: plinth/modules/upgrades/__init__.py:122
 msgid "Updates"
 msgstr "Mises à jour"
 
-#: plinth/modules/upgrades/__init__.py:120
+#: plinth/modules/upgrades/__init__.py:125
 msgid "FreedomBox Updated"
 msgstr "FreedomBox mise à jour"
+
+#: plinth/modules/upgrades/__init__.py:210
+msgid "Could not start distribution update"
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:212
+#, python-format
+msgid ""
+"There is not enough free space in the root partition to start the "
+"distribution update. Please ensure at least 5 GB, and at least 10% of the "
+"total space, is free. Distribution update will be retried after 24 hours, if "
+"enabled."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:223
+#, fuzzy
+#| msgid "Distribution upgrade disabled"
+msgid "Distribution update started"
+msgstr "Mise à niveau de la distribution désactivée"
+
+#: plinth/modules/upgrades/__init__.py:225
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
 
 #: plinth/modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -7248,7 +7289,7 @@ msgstr ""
 "FreedomBox s'effectuera quand celle-ci sera disponible."
 
 #: plinth/modules/upgrades/forms.py:34
-#: plinth/modules/upgrades/templates/upgrades_configure.html:94
+#: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Activer la mise à jour régulière des fonctionnalités (recommandé)"
 
@@ -7273,11 +7314,11 @@ msgstr ""
 "<strong>Remarque :</strong> Une fois activée, la mise à jour régulière des "
 "fonctionnalités ne peut plus être désactivée."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:24
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
 msgstr "Mise à jour en cours, veuillez patienter…"
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:22
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
@@ -7289,7 +7330,7 @@ msgstr ""
 "indisponible ou d’afficher une erreur. Si cela se produit, rafraîchissez la "
 "page pour continuer."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:36
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
 #, python-format
 msgid ""
 "\n"
@@ -7319,28 +7360,28 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Fermer"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:35
-#: plinth/modules/upgrades/templates/upgrades_configure.html:105
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
+#: plinth/modules/upgrades/templates/upgrades_configure.html:100
 msgid "Updating..."
 msgstr "Mise à jour en cours…"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:37
+#: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Une nouvelle version de %(box_name)s est disponible."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
+#: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
 msgstr "Votre FreedomBox a besoin d’une mise à jour !"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 "Vous pouvez activer la mise à jour régulière des fonctionnalités. Cette "
 "option est recommandée."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:56
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
@@ -7348,7 +7389,7 @@ msgstr ""
 "La mise à jour régulière des fonctionnalités n’est pas disponibles. Elle "
 "n’est sans doute pas nécessaire pour votre distribution."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:83
+#: plinth/modules/upgrades/templates/upgrades_configure.html:78
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -7360,15 +7401,15 @@ msgstr ""
 "un instantané du système via la fonction d’<a href=\"%(snapshot_url)s"
 "\">Instantanés de disque</a> avant de poursuivre."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:99
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 msgid "Manual Update"
 msgstr "Mise à jour manuelle"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:113
+#: plinth/modules/upgrades/templates/upgrades_configure.html:108
 msgid "Update now"
 msgstr "Lancer la mise à jour"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:119
+#: plinth/modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -7379,7 +7420,7 @@ msgstr ""
 "web risque aussi d’être temporairement indisponible ou d’afficher une "
 "erreur. Si cela se produit, rafraîchissez la page pour continuer."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:133
+#: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
 msgstr "Afficher les derniers journaux de mises à jour"
 
@@ -7476,8 +7517,8 @@ msgstr "Mot de passe actuel"
 #: plinth/modules/users/forms.py:80
 msgid "Enter your current password to authorize account modifications."
 msgstr ""
-"Veuillez saisir votre mot de passe actuel pour confirmer la modification de "
-"votre compte."
+"Veuillez saisir votre mot de passe actuel pour confirmer ces modifications "
+"de compte."
 
 #: plinth/modules/users/forms.py:88
 msgid "Invalid password."
@@ -7581,7 +7622,7 @@ msgstr "Sauvegarder le mot de passe"
 #: plinth/modules/users/templates/users_list.html:17
 #: plinth/modules/users/views.py:44
 msgid "Create User"
-msgstr "Créer Utilisateur"
+msgstr "Créer un utilisateur"
 
 #: plinth/modules/users/templates/users_delete.html:11
 #: plinth/modules/users/views.py:122
@@ -8332,7 +8373,7 @@ msgstr ""
 
 #: plinth/templates/messages.html:11
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: plinth/templates/notifications-dropdown.html:11
 msgid "Notifications"
@@ -8417,20 +8458,20 @@ msgstr "Vérifier à nouveau"
 msgid "Install"
 msgstr "Installer"
 
-#: plinth/templates/setup.html:71
+#: plinth/templates/setup.html:72
 msgid "Performing pre-install operation"
 msgstr "Préinstallation en cours"
 
-#: plinth/templates/setup.html:75
+#: plinth/templates/setup.html:77
 msgid "Performing post-install operation"
 msgstr "Postinstallation en cours"
 
-#: plinth/templates/setup.html:80
+#: plinth/templates/setup.html:83
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "Installation de %(package_names)s : %(status)s"
 
-#: plinth/templates/setup.html:90
+#: plinth/templates/setup.html:93
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% effectué"

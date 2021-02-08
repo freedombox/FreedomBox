@@ -10,7 +10,7 @@ CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SETUID CAP_SETGID CAP_SE
 DevicePolicy=closed
 Environment=HOME="/var/lib/calibre-server-freedombox"
 Environment=DEFAULT_LIBRARY="/var/lib/calibre-server-freedombox/libraries/Library"
-Environment=ARGS="--listen-on 127.0.0.1 --url-prefix /calibre --port 8844 --enable-local-write --disable-auth"
+Environment=ARGS="--listen-on 127.0.0.1 --url-prefix /calibre --port 8844 --enable-local-write --disable-auth --disable-use-bonjour"
 ExecStartPre=sh -e -c "files=$$(ls ${HOME}/libraries/*/metadata.db 2>/dev/null || true); [ \"x$${files}\" = \"x\" ] && (mkdir -p \"${DEFAULT_LIBRARY}\" && calibredb --with-library=\"${DEFAULT_LIBRARY}\" list_categories > /dev/null) || true"
 ExecStart=sh -e -c "files=${HOME}/libraries/*/metadata.db; libraries=$$(dirname $${files}) ; exec /usr/bin/calibre-server $ARGS $${libraries}"
 Restart=on-failure

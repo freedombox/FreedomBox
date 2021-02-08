@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-16 18:32+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2021-02-05 23:02-0500\n"
+"PO-Revision-Date: 2021-02-01 18:42+0000\n"
+"Last-Translator: Stanisław Stefan Krukowski <pet209a1@riseup.net>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/pl/>\n"
 "Language: pl\n"
@@ -162,10 +162,9 @@ msgstr ""
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
 #: plinth/modules/storage/__init__.py:323
-#, fuzzy, python-brace-format
-#| msgid "About {box_name}"
+#, python-brace-format
 msgid "Go to {app_name}"
-msgstr "O {box_name}"
+msgstr "Idź do {app_name}"
 
 #: plinth/modules/backups/__init__.py:242
 #, python-brace-format
@@ -555,8 +554,8 @@ msgid "Restore data from"
 msgstr "Odtwórz dane z"
 
 #: plinth/modules/backups/templates/backups_schedule.html:19
-#: plinth/modules/upgrades/__init__.py:76
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 #: plinth/templates/setup.html:62
 msgid "Update"
@@ -1887,7 +1886,7 @@ msgstr "O FreedomBox"
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:27
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
@@ -2024,16 +2023,14 @@ msgid "Firewall"
 msgstr "Firewall"
 
 #: plinth/modules/firewall/components.py:134
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is not running."
+#, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
-msgstr "Usługa <em>%(service_name)s</em> nie jest uruchomiona."
+msgstr "Port {name} ({details}) jest dostępny dla sieci wewnętrznych"
 
 #: plinth/modules/firewall/components.py:142
-#, fuzzy, python-brace-format
-#| msgid "Service <em>%(service_name)s</em> is not running."
+#, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
-msgstr "Usługa <em>%(service_name)s</em> nie jest uruchomiona."
+msgstr "Port {name} ({details}) jest dostępny dla sieci zewnętrznych"
 
 #: plinth/modules/firewall/components.py:147
 #, python-brace-format
@@ -2282,10 +2279,9 @@ msgid "Cloning…"
 msgstr ""
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:59
-#, fuzzy, python-format
-#| msgid "Delete Archive %(name)s"
+#, python-format
 msgid "Delete repository %(repo.name)s"
-msgstr "Usuń archiwum %(name)s"
+msgstr "Usuń repozytorium %(repo.name)s"
 
 #: plinth/modules/gitweb/templates/gitweb_delete.html:12
 #, fuzzy, python-format
@@ -2355,21 +2351,21 @@ msgid "Contribute"
 msgstr ""
 
 #: plinth/modules/help/templates/help_about.html:17
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Używasz %(os_release)s i %(box_name)s w wersji %(version)s."
 
 #: plinth/modules/help/templates/help_about.html:23
-#, fuzzy, python-format
-#| msgid "There is a new Plinth version available."
+#, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
-msgstr "Nowsza wersja %(box_name)s jest dostępna."
+msgstr ""
+"Nowa %(box_name)s wersja jest <a href=\"%(upgrades_url)s\">dostępna</a>."
 
 #: plinth/modules/help/templates/help_about.html:28
-#: plinth/modules/upgrades/templates/upgrades_configure.html:42
+#: plinth/modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s jest aktualny."
@@ -2559,22 +2555,17 @@ msgid "Status Log"
 msgstr "Logi stanu"
 
 #: plinth/modules/help/templates/statuslog.html:13
-#, fuzzy, python-format
-#| msgid ""
-#| "This is an internal error and not something you caused or can fix.  "
-#| "Please report the error on the <a href=\"https://github.com/freedombox/"
-#| "Plinth/issues\">bug tracker</a> so we can fix it. Also, please attach the "
-#| "<a href=\"%(status_log_url)s\">status log</a> to the bug report."
+#, python-format
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
 "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
 "attach this status log to the bug report."
 msgstr ""
-"To jest wewnętrzny błąd którego nie został spowodowany ani nie może być "
-"naprawiony przez Ciebie. <a href=\"https://github.com/freedombox/Plinth/"
-"issues\">Zgłoś błąd</a> abyśmy mogli go naprawić. Dołącz również <a href="
-"\"%(status_log_url)s\">plik dziennika</a> do raportu błędu."
+"To są ostatnie %(num_lines)s wiersze dziennika statusu dla tego interfejsu "
+"web. Jeśli chcesz przesłać raport o błędzie, użyj proszę <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\">programu do śledzenia "
+"błędów</a> i dołącz ten dziennik statusu do raportu."
 
 #: plinth/modules/help/templates/statuslog.html:24
 msgid ""
@@ -3262,7 +3253,7 @@ msgstr "Zaktualizowano ustawienia PVP"
 msgid "Damage configuration updated"
 msgstr "Zaktualizowano ustawienia zniszczeń"
 
-#: plinth/modules/minidlna/__init__.py:24
+#: plinth/modules/minidlna/__init__.py:25
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3273,15 +3264,15 @@ msgid ""
 "Kodi."
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:45
+#: plinth/modules/minidlna/__init__.py:46
 msgid "Media streaming server"
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:48
+#: plinth/modules/minidlna/__init__.py:49
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:49
+#: plinth/modules/minidlna/__init__.py:50
 msgid "Simple Media Server"
 msgstr ""
 
@@ -3313,11 +3304,11 @@ msgstr "yaacc"
 msgid "totem"
 msgstr "totem"
 
-#: plinth/modules/minidlna/views.py:37
+#: plinth/modules/minidlna/views.py:35
 msgid "Specified directory does not exist."
 msgstr ""
 
-#: plinth/modules/minidlna/views.py:42
+#: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr ""
 
@@ -3822,10 +3813,9 @@ msgid "Open"
 msgstr ""
 
 #: plinth/modules/networks/forms.py:310
-#, fuzzy, python-brace-format
-#| msgid "Direct connection to the Internet."
+#, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
-msgstr "Bezpośrednie połłączenie z internetem."
+msgstr "Określ, jak {box_name} jest podłączona do sieci komputerowej"
 
 #: plinth/modules/networks/forms.py:317
 #, python-brace-format
@@ -4234,8 +4224,8 @@ msgstr ""
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:40
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:35
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:38
 #: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr ""
@@ -4269,16 +4259,13 @@ msgstr ""
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:41
 #: plinth/modules/networks/templates/network_topology_main.html:41
-#, fuzzy
-#| msgid "Update URL"
 msgid "Update..."
 msgstr "Uaktualnij..."
 
 #: plinth/modules/networks/templates/network_topology_content.html:10
-#, fuzzy, python-format
-#| msgid "Direct connection to the Internet."
+#, python-format
 msgid "How is Your %(box_name)s Connected to the Internet?"
-msgstr "Bezpośrednie połłączenie z internetem."
+msgstr "Jak Twój %(box_name)s Jest Podłączony do Internetu?"
 
 #: plinth/modules/networks/templates/network_topology_content.html:16
 #, python-format
@@ -4329,10 +4316,9 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/networks/templates/router_configuration_content.html:10
-#, fuzzy, python-format
-#| msgid "Plinth is up to date."
+#, python-format
 msgid "Setup %(box_name)s Behind a Router"
-msgstr "Plinth jest aktualny."
+msgstr "Instalacja %(box_name)s za router'em"
 
 #: plinth/modules/networks/templates/router_configuration_content.html:16
 #, python-format
@@ -5153,7 +5139,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Zaktualizowano ustawienia praw dostępu"
 
-#: plinth/modules/roundcube/__init__.py:22
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5161,7 +5147,7 @@ msgid ""
 "manipulation, message searching and spell checking."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:27
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5170,7 +5156,7 @@ msgid ""
 "code>."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:32
+#: plinth/modules/roundcube/__init__.py:33
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5180,12 +5166,12 @@ msgid ""
 "a>)."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:56
 #, fuzzy
 #| msgid "Dynamic DNS Client"
 msgid "Email Client"
@@ -5333,10 +5319,9 @@ msgid "Share enabled."
 msgstr ""
 
 #: plinth/modules/samba/views.py:106
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error enabling share: {error_message}"
-msgstr "Błąd podczas instalowania aplikacji: {error_message}"
+msgstr "Błąd włączenia udziału: {error_message}"
 
 #: plinth/modules/samba/views.py:111
 #, fuzzy
@@ -5345,10 +5330,9 @@ msgid "Share disabled."
 msgstr "Aplikacja wyłączona"
 
 #: plinth/modules/samba/views.py:116
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error disabling share: {error_message}"
-msgstr "Błąd podczas instalowania aplikacji: {error_message}"
+msgstr "Błąd wyłączenia udziału: {error_message}"
 
 #: plinth/modules/searx/__init__.py:25
 msgid ""
@@ -5427,18 +5411,18 @@ msgstr ""
 
 #: plinth/modules/security/templates/security.html:19
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:49
+#: plinth/modules/upgrades/templates/upgrades_configure.html:44
 msgid "Frequent Feature Updates"
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:21
-#: plinth/modules/upgrades/templates/upgrades_configure.html:57
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
 msgid "Frequent feature updates are activated."
 msgstr ""
 
 #: plinth/modules/security/templates/security.html:26
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:69
+#: plinth/modules/upgrades/templates/upgrades_configure.html:64
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6529,18 +6513,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Jeśli Cockpit zostanie włączony, dostępny jest na serwerze pod adresem <a "
-"href=\"/_cockpit/\">/_cockpit/</a>. Dostęp do niego mają <a href="
-"\"{users_url}\">użytkownicy</a> {box_name} z do grupy administratorów."
+"Dowolny <a href=\"{users_url}\">użytkownik za pomocą {box_name} loginu</a> "
+"może mieć dostęp do Tiny Tiny RSS, gdy ten jest włączony."
 
 #: plinth/modules/ttrss/__init__.py:38
 msgid ""
@@ -6564,12 +6543,12 @@ msgstr ""
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:44
+#: plinth/modules/upgrades/__init__.py:45
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:45
+#: plinth/modules/upgrades/__init__.py:46
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6577,17 +6556,41 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:117
+#: plinth/modules/upgrades/__init__.py:122
 #, fuzzy
 #| msgid "Update URL"
 msgid "Updates"
 msgstr "Uaktualnij URL"
 
-#: plinth/modules/upgrades/__init__.py:120
+#: plinth/modules/upgrades/__init__.py:125
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
 msgstr "Fundacja FreedomBox"
+
+#: plinth/modules/upgrades/__init__.py:210
+msgid "Could not start distribution update"
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:212
+#, python-format
+msgid ""
+"There is not enough free space in the root partition to start the "
+"distribution update. Please ensure at least 5 GB, and at least 10% of the "
+"total space, is free. Distribution update will be retried after 24 hours, if "
+"enabled."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:223
+#, fuzzy
+#| msgid "User registrations disabled"
+msgid "Distribution update started"
+msgstr "Rejestracja użytkowników wyłączona"
+
+#: plinth/modules/upgrades/__init__.py:225
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
 
 #: plinth/modules/upgrades/forms.py:15
 #, fuzzy
@@ -6612,7 +6615,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/forms.py:34
-#: plinth/modules/upgrades/templates/upgrades_configure.html:94
+#: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -6632,11 +6635,11 @@ msgid ""
 "cannot be deactivated."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:24
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:22
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
@@ -6644,23 +6647,21 @@ msgid ""
 "case, refresh the page to continue."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:36
-#, fuzzy, python-format
-#| msgid "Plinth is up to date."
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
+#, python-format
 msgid ""
 "\n"
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
 msgstr ""
 "\n"
-"\t%(box_name)s jest aktualny. Press Next to continue.\n"
+"\t%(box_name)s jest aktualna. Naciśnij Next, aby kontynuować.\n"
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, fuzzy, python-format
-#| msgid "Plinth is up to date."
+#, python-format
 msgid "%(box_name)s Updated"
-msgstr "Plinth jest aktualny."
+msgstr "%(box_name)s Zaktualizowana"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
 #, python-format
@@ -6674,34 +6675,32 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:35
-#: plinth/modules/upgrades/templates/upgrades_configure.html:105
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
+#: plinth/modules/upgrades/templates/upgrades_configure.html:100
 msgid "Updating..."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:37
+#: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Nowsza wersja %(box_name)s jest dostępna."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
-#, fuzzy
-#| msgid "FreedomBox Foundation"
+#: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
-msgstr "Fundacja FreedomBox"
+msgstr "Twój Freedombox potrzebuje aktualizacji!"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:56
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:83
+#: plinth/modules/upgrades/templates/upgrades_configure.html:78
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -6709,26 +6708,26 @@ msgid ""
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:99
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 #, fuzzy
 #| msgid "Last update"
 msgid "Manual Update"
 msgstr "Ostatnie uaktualnienie"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:113
+#: plinth/modules/upgrades/templates/upgrades_configure.html:108
 #, fuzzy
 #| msgid "Update URL"
 msgid "Update now"
 msgstr "Uaktualnij URL"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:119
+#: plinth/modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:133
+#: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
 msgstr ""
 
@@ -6836,16 +6835,14 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
-#, fuzzy, python-brace-format
-#| msgid "Creating LDAP user failed."
+#, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr "Tworzenie użytkownika LDAP się nie udało: {error}"
+msgstr "Tworzenie użytkownika LDAP nie udało się: {error}"
 
 #: plinth/modules/users/forms.py:163
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to admin group."
+#, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "Nieudane dodawanie użytkownika do {group} grupy:{error}"
+msgstr "Nieudane dodanie użytkownika do {group} grupy:{error}"
 
 #: plinth/modules/users/forms.py:177
 msgid "Authorized SSH Keys"
@@ -6988,10 +6985,9 @@ msgid "Delete user %(username)s"
 msgstr ""
 
 #: plinth/modules/users/templates/users_update.html:11
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Edit User <em>%(username)s</em>"
-msgstr "Usuń wiki lub blog <em>%(username)s</em>"
+msgstr "Edytuj Użytkownika <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_update.html:19
 #, python-format
@@ -7264,17 +7260,13 @@ msgid "Pre-shared key:"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:33
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Server endpoints:"
-msgstr "Konto Administratora"
+msgstr "Punkty końcowe serwera:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:41
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:28
-#, fuzzy
-#| msgid "Select verified SSH public key"
 msgid "Server public key:"
-msgstr "Wybierz zweryfikowany klucz publiczny SSH"
+msgstr "Klucz publiczny serwera:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:53
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:52
@@ -7300,10 +7292,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:24
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Server endpoint:"
-msgstr "Konto Administratora"
+msgstr "Punkt końcowy serwera:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:36
 msgid "Public key of this machine:"
@@ -7673,12 +7663,13 @@ msgid "Mailing list"
 msgstr ""
 
 #: plinth/templates/internal-zone.html:11
-#, fuzzy, python-format
-#| msgid "Service <em>%(service_name)s</em> is not running."
+#, python-format
 msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
 "client is connected to %(box_name)s through VPN."
-msgstr "Usługa <em>%(service_name)s</em> nie jest uruchomiona."
+msgstr ""
+"<em>%(service_name)s</em> jest dostępna tylko w komputerowych sieciach "
+"wewnętrznych, lub gdy klient jest podłączony do %(box_name)s poprzez VPN."
 
 #: plinth/templates/internal-zone.html:17
 msgid "Currently there are no network interfaces configured as internal."
@@ -7775,20 +7766,20 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
-#: plinth/templates/setup.html:71
+#: plinth/templates/setup.html:72
 msgid "Performing pre-install operation"
 msgstr ""
 
-#: plinth/templates/setup.html:75
+#: plinth/templates/setup.html:77
 msgid "Performing post-install operation"
 msgstr ""
 
-#: plinth/templates/setup.html:80
+#: plinth/templates/setup.html:83
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr ""
 
-#: plinth/templates/setup.html:90
+#: plinth/templates/setup.html:93
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr ""

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-13 15:32+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2021-02-05 23:02-0500\n"
+"PO-Revision-Date: 2021-02-06 03:51+0000\n"
+"Last-Translator: nautilusx <translate@disroot.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -144,22 +144,25 @@ msgstr "Lokale Netzwerkdomäne"
 
 #: plinth/modules/backups/__init__.py:34
 msgid "Backups allows creating and managing backup archives."
-msgstr "Erzeugen und Verwalten von Backup-Archiven."
+msgstr "Erstellen und Verwalten von Sicherungs-Archiven."
 
 #: plinth/modules/backups/__init__.py:54 plinth/modules/backups/__init__.py:200
 #: plinth/modules/backups/__init__.py:245
 msgid "Backups"
-msgstr "Backups"
+msgstr "Sicherungen"
 
 #: plinth/modules/backups/__init__.py:197
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Aktivieren eines automatischen Sicherungsplans für die Datensicherheit. "
+"Bevorzugen Sie einen verschlüsselten Remote-Backup-Speicherort oder einen "
+"zusätzlich angeschlossenen Datenträger."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Aktivieren eines Sicherungszeitplans"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -174,12 +177,13 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Eine geplante Sicherung ist fehlgeschlagen. Die letzten {error_count} "
+"Versuche zur Sicherung waren nicht erfolgreich. Der letzte Fehler ist: "
+"{error_message}"
 
 #: plinth/modules/backups/__init__.py:250
-#, fuzzy
-#| msgid "Existing Backups"
 msgid "Error During Backup"
-msgstr "Vorhandene Sicherungen"
+msgstr "Fehler beim Sichern"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
@@ -188,37 +192,45 @@ msgstr "{app} (Keine Dateien zu sichern)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Aktivieren geplanter Sicherungen"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Wenn aktiviert, wird jeden Tag, jede Woche und jeden Monat eine Sicherung "
+"erstellt. Ältere Sicherungen werden entfernt."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Anzahl der zu haltenden täglichen Sicherungen"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"So viele letzte Sicherungen werden aufbewahrt und der Rest wird entfernt. "
+"Ein Wert von \"0\" deaktiviert Sicherungen dieses Typs. Wird jeden Tag zur "
+"angegebenen Stunde ausgelöst."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Anzahl der wöchentlichen Sicherungen, die aufbewahrt werden sollen"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"So viele letzte Sicherungen werden aufbewahrt und der Rest wird entfernt. "
+"Ein Wert von \"0\" deaktiviert Sicherungen dieses Typs. Wird jeden Sonntag "
+"zur angegebenen Stunde ausgelöst."
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Anzahl der zu haltenden monatlichen Sicherungen"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -226,14 +238,17 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"So viele letzte Sicherungen werden aufbewahrt und der Rest wird entfernt. "
+"Ein Wert von \"0\" deaktiviert Sicherungen dieses Typs. Wird zur angegebenen "
+"Stunde am ersten Tag eines jeden Monats ausgelöst."
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Uhrzeit, zu der der Sicherungsvorgang ausgelöst werden soll"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "Im 24-Stunden-Format."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -241,7 +256,7 @@ msgstr "Einbezogene Apps"
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Apps to include in the backup"
-msgstr "Apps, die in das Backup einbezogen werden"
+msgstr "Apps, die in die Sicherung einbezogen werden"
 
 #: plinth/modules/backups/forms.py:98
 msgid "Repository"
@@ -270,7 +285,7 @@ msgstr "Datei hochladen"
 
 #: plinth/modules/backups/forms.py:139
 msgid "Backup files have to be in .tar.gz format"
-msgstr "Backup-Dateien müssen im Format .tar.gz vorliegen"
+msgstr "Sicherungs-Dateien müssen im Format .tar.gz vorliegen"
 
 #: plinth/modules/backups/forms.py:140
 msgid "Select the backup file you want to upload"
@@ -305,7 +320,7 @@ msgid ""
 "backup."
 msgstr ""
 "„Schlüssel im Archiv“ bedeutet, dass ein passwortgeschützter Schlüssel mit "
-"dem Backup gespeichert wird."
+"der Sicherung gespeichert wird."
 
 #: plinth/modules/backups/forms.py:176
 msgid "Key in Repository"
@@ -345,7 +360,7 @@ msgstr "Festplatte oder Partition auswählen"
 
 #: plinth/modules/backups/forms.py:233
 msgid "Backups will be stored in the directory FreedomBoxBackups"
-msgstr "Backups werden im Verzeichnis FreedomBoxBackups gespeichert"
+msgstr "Sicherungen werden im Verzeichnis FreedomBoxBackups gespeichert"
 
 #: plinth/modules/backups/forms.py:242
 msgid "SSH Repository Path"
@@ -373,7 +388,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:267
 msgid "Remote backup repository already exists."
-msgstr "Remote-Backup-Archiv existiert bereits."
+msgstr "Remote-Sicherungs-Archiv existiert bereits."
 
 #: plinth/modules/backups/forms.py:273
 msgid "Select verified SSH public key"
@@ -406,7 +421,8 @@ msgstr "SSH-Zugriff verweigert"
 #: plinth/modules/backups/repository.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
-"Pfad zum Archiv ist weder leer, noch ist ein existierendes Backup-Archiv."
+"Der Repository-Pfad ist weder leer noch ein vorhandenes Sicherungs-"
+"Repository."
 
 #: plinth/modules/backups/repository.py:143
 msgid "Existing repository is not encrypted."
@@ -436,19 +452,19 @@ msgstr "Hochladen und Wiederherstellen"
 
 #: plinth/modules/backups/templates/backups.html:31
 msgid "Add a backup location"
-msgstr "Einen Backup-Speicherort hinzufügen"
+msgstr "Einen Sicherungs-Speicherort hinzufügen"
 
 #: plinth/modules/backups/templates/backups.html:35
 msgid "Add Backup Location"
-msgstr "Backup-Speicherort hinzufügen"
+msgstr "Sicherungs-Speicherort hinzufügen"
 
 #: plinth/modules/backups/templates/backups.html:38
 msgid "Add a remote backup location"
-msgstr "Hinzufügen eines entfernten Backup-Standorts"
+msgstr "Hinzufügen eines entfernten Sicherungs-Standorts"
 
 #: plinth/modules/backups/templates/backups.html:42
 msgid "Add Remote Backup Location"
-msgstr "Hinzufügen eines entfernten Backup-Standorts"
+msgstr "Hinzufügen eines entfernten Sicherungs-Standorts"
 
 #: plinth/modules/backups/templates/backups.html:46
 msgid "Existing Backups"
@@ -462,7 +478,7 @@ msgid ""
 "if chosen, the encryption passphrase."
 msgstr ""
 "Die Anmeldeinformationen für dieses Archiv sind auf Ihrer %(box_name)s "
-"gespeichert. <br /> Um ein Backup auf einer neuen %(box_name)s "
+"gespeichert. <br /> Um eine Sicherung auf einer neuen %(box_name)s "
 "wiederherzustellen, benötigen Sie die SSH-Anmeldeinformationen und, sofern "
 "ausgewählt, die Verschlüsselungs-Passphrase."
 
@@ -506,7 +522,7 @@ msgstr "Dieses Repository ist verschlüsselt"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Zeitplan"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -546,8 +562,8 @@ msgid ""
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
 "Das Remote-Archiv wird nicht gelöscht. Diese Aktion entfernt das Archiv "
-"lediglich aus der Liste auf der Backup-Seite, Sie können es später erneut "
-"hinzufügen."
+"lediglich aus der Liste auf der Sicherungs-Seite; Sie können es später "
+"erneut hinzufügen."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:31
 msgid "Remove Location"
@@ -558,8 +574,8 @@ msgid "Restore data from"
 msgstr "Wiederherstellen von Daten aus"
 
 #: plinth/modules/backups/templates/backups_schedule.html:19
-#: plinth/modules/upgrades/__init__.py:76
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 #: plinth/templates/setup.html:62
 msgid "Update"
@@ -577,11 +593,11 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      Eine Backup-Datei von einer anderen %(box_name)s hochladen, um deren "
-"Inhalt\n"
+"      Eine Sicherungs-Datei von einer anderen %(box_name)s hochladen, um "
+"deren Inhalt\n"
 "      wiederherzustellen. Sie können die Apps auswählen, die Sie nach dem "
 "Hochladen einer\n"
-"      Backup-Datei wiederherstellen möchten.\n"
+"      Sicherung wieder herstellen möchten.\n"
 "    "
 
 #: plinth/modules/backups/templates/backups_upload.html:27
@@ -596,9 +612,9 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
-"Sie haben %(max_filesize)s zur Verfügung, um ein Backup wiederherzustellen. "
-"Eine Überschreitung dieser Grenze kann dazu führen, dass Ihre %(box_name)s "
-"unbrauchbar wird."
+"Sie haben %(max_filesize)s zur Verfügung, um eine Sicherung "
+"wiederherzustellen. Eine Überschreitung dieser Grenze kann dazu führen, dass "
+"Ihre %(box_name)s unbrauchbar wird."
 
 #: plinth/modules/backups/templates/backups_upload.html:41
 msgid "Upload file"
@@ -643,13 +659,11 @@ msgstr "Host verifizieren"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Sicherungsplan aktualisiert."
 
 #: plinth/modules/backups/views.py:74
-#, fuzzy
-#| msgid "Create Backup"
 msgid "Schedule Backups"
-msgstr "Sicherung erstellen"
+msgstr "Zeitplan für Sicherungen"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
@@ -669,7 +683,7 @@ msgstr "Hochladen und Wiederherstellen einer Sicherung"
 
 #: plinth/modules/backups/views.py:194
 msgid "Restored files from backup."
-msgstr "Dateien aus Backup wiederhergestellt."
+msgstr "Dateien aus Sicherung wiederhergestellt."
 
 #: plinth/modules/backups/views.py:222
 msgid "No backup file found."
@@ -687,11 +701,11 @@ msgstr ""
 
 #: plinth/modules/backups/views.py:297
 msgid "Create backup repository"
-msgstr "Backup-Repository erstellen"
+msgstr "Sicherungs-Repository erstellen"
 
 #: plinth/modules/backups/views.py:324
 msgid "Create remote backup repository"
-msgstr "Remote-Backup-Archiv anlegen"
+msgstr "Remote-Sicherungs-Archiv anlegen"
 
 #: plinth/modules/backups/views.py:344
 msgid "Added new remote SSH repository."
@@ -732,7 +746,7 @@ msgstr "Archiv entfernen"
 
 #: plinth/modules/backups/views.py:455
 msgid "Repository removed. Backups were not deleted."
-msgstr "Repository entfernt. Backups wurden nicht gelöscht."
+msgstr "Repository entfernt. Sicherungen wurden nicht gelöscht."
 
 #: plinth/modules/backups/views.py:465
 msgid "Unmounting failed!"
@@ -753,8 +767,8 @@ msgstr ""
 "gemeinsam genutzt werden können. Es können auch Text- und Codeschnipsel "
 "eingefügt und ausgetauscht werden. Text-, Bild-, Audio-, Video- und PDF-"
 "Dokumente können in der Vorschau im Browser angezeigt werden. Freigegebene "
-"Dateien können so eingestellt werden, dass sie nach einer bestimmten "
-"Zeitspanne ablaufen und gelöscht werden."
+"Dateien können so eingestellt werden, dass sie nach einer bestimmten Zeit "
+"ablaufen und gelöscht werden."
 
 #: plinth/modules/bepasty/__init__.py:28
 msgid ""
@@ -1036,11 +1050,12 @@ msgid ""
 "highlighted text. Content distribution using OPDS is currently not supported."
 msgstr ""
 "Sie können Ihre E-Books organisieren, deren Metadaten extrahieren und "
-"bearbeiten und eine erweiterte Suche durchführen. Calibre kann in einer "
-"Vielzahl von Formaten importieren, exportieren oder konvertieren, um E-Books "
-"auf jedem Gerät lesebereit zu machen. Es bietet auch einen Online-Webreader. "
-"Es merkt sich Ihren letzten Leseort, Lesezeichen und hervorgehobenen Text. "
-"Die Inhaltsverteilung mit OPDS wird derzeit nicht unterstützt."
+"bearbeiten und eine erweiterte Suche durchführen. Calibre kann eine Vielzahl "
+"von Formaten importieren, exportieren oder konvertieren, um E-Books für das "
+"Lesen auf verschiedensten Geräten bereitzustellen. Es bietet auch einen "
+"Online-Webreader. Es merkt sich Ihren letzten Leseort, Lesezeichen und "
+"hervorgehobenen Text. Die Verteilung von Inhalten mit OPDS wird derzeit "
+"nicht unterstützt."
 
 #: plinth/modules/calibre/__init__.py:40
 msgid ""
@@ -1048,7 +1063,7 @@ msgid ""
 "app. All users with access can use all the libraries."
 msgstr ""
 "Nur Benutzer der <em>calibre</em> Gruppe können auf die App zugreifen. Alle "
-"Benutzer mit Zugang können alle Bibliotheken nutzen."
+"Benutzer mit Zugangsberechtigung können alle Bibliotheken nutzen."
 
 #: plinth/modules/calibre/__init__.py:58
 msgid "Use calibre e-book libraries"
@@ -1276,7 +1291,7 @@ msgstr ""
 "{box_name} erreichen können. Er muss aus durch Punkte getrennte Kennungen "
 "bestehen. Jede Kennung muss alphanumerisch beginnen und enden und aus "
 "alphanumerischen Zeichen und Bindestrichen bestehen. Jede Kennung darf "
-"maximal 63 Zeichen lang sein, die Gesamtlänge des Domainnamen 253 Zeichen."
+"maximal 63 Zeichen lang sein, die Gesamtlänge des Domainnamens 253 Zeichen."
 
 #: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
@@ -1294,9 +1309,9 @@ msgstr ""
 "Wählen Sie die Standard-Web-Anwendung die angezeigt wird wenn jemand ihre "
 "{box_name} im Web aufruft. Ein typischer Anwendungsfall ist ihren Blog oder "
 "Wiki als die Einstiegsseite einzustellen wenn jemand die Domain besucht. "
-"Beachten Sie dass wenn eine andere Standard-Anwendung als {box_name}-Dienst "
-"(Plinth) eingestellt ist, die Benutzer explizit /plinth oder /freedombox "
-"eingeben müssen um den {box_name}-Dienst (Plinth) zu erreichen."
+"Beachten Sie, dass, wenn die Startseite auf etwas anderes als {box_name}-"
+"Dienst (Plinth) eingestellt ist, die Benutzer explizit /plinth oder /"
+"freedombox eingeben müssen um den {box_name}-Dienst (Plinth) zu erreichen."
 
 #: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
@@ -1649,7 +1664,7 @@ msgstr "Konfiguration"
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:43
 #: plinth/templates/app.html:54
 msgid "Update setup"
-msgstr "Update-Einstellungen"
+msgstr "Übernehmen der Änderungen"
 
 #: plinth/modules/diaspora/views.py:74
 msgid "User registrations enabled"
@@ -1858,10 +1873,9 @@ msgid ""
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
-"Wenn Ihre FreedomBox %(box_name)s hinter einem NAT-Router angeschlossen ist, "
-"muss zusätzlich im Router das Portforwarding für Standardports, "
-"einschließlich TCP-Port 80 (HTTP) und TCP-Port 443 (HTTPS), eingerichtet "
-"werden."
+"Wenn Ihre %(box_name)s hinter einem NAT-Router angeschlossen ist, muss "
+"zusätzlich im Router das Portforwarding für Standardports, einschließlich "
+"TCP-Port 80 (HTTP) und TCP-Port 443 (HTTPS), eingerichtet werden."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
 msgid ""
@@ -1919,7 +1933,7 @@ msgstr "Info"
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:27
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
@@ -2055,9 +2069,8 @@ msgid ""
 "configured reduces risk of security threat from the Internet."
 msgstr ""
 "Eine Firewall ist ein Sicherheitssystem, das den ein- und ausgehenden "
-"Verkehr Ihrer FreedomBox {box_name} kontrolliert. Die Firewall aktiv und "
-"korrekt konfiguriert zu halten, reduziert Sicherheitsrisiken aus dem "
-"Internet."
+"Verkehr Ihrer {box_name} kontrolliert. Die Firewall aktiv und korrekt "
+"konfiguriert halten reduziert Sicherheitsrisiken aus dem Internet."
 
 #: plinth/modules/firewall/__init__.py:66
 msgid "Firewall"
@@ -2369,7 +2382,7 @@ msgstr "Unterstützung erhalten"
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
-msgstr "Feedback abgeben"
+msgstr "Feedback geben"
 
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
@@ -2379,7 +2392,7 @@ msgid "Contribute"
 msgstr "Mitwirken"
 
 #: plinth/modules/help/templates/help_about.html:17
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Es läuft %(os_release)s und %(box_name)s Version %(version)s."
@@ -2394,7 +2407,7 @@ msgstr ""
 "\">verfügbar</a>."
 
 #: plinth/modules/help/templates/help_about.html:28
-#: plinth/modules/upgrades/templates/upgrades_configure.html:42
+#: plinth/modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s ist auf dem neuesten Stand."
@@ -2429,7 +2442,7 @@ msgid ""
 "returning the Internet to its intended peer-to-peer architecture."
 msgstr ""
 "Wir leben in einer Welt, in der unsere Nutzung des Netzes von denen "
-"ermöglicht wird, die nicht immer unsere Bestes im Sinn haben. Durch den "
+"ermöglicht wird, die nicht immer unser Bestes im Sinn haben. Durch den "
 "Aufbau von Software, die nicht auf einen zentralen Dienst angewiesen ist, "
 "können wir die Kontrolle und Privatsphäre zurückgewinnen. Indem wir unsere "
 "Daten zu Hause behalten, erlangen wir rechtmäßig Schutz über sie. Indem wir "
@@ -2498,7 +2511,7 @@ msgid ""
 msgstr ""
 "Sie können das Projekt auch finanziell unterstützen, indem Sie an die "
 "gemeinnützige FreedomBox Foundation <a href=\"https://freedomboxfoundation."
-"org/donate/\">spenden</a> . Die FreedomBox Foundation wurde 2011 gegründet "
+"org/donate/\">spenden</a>. Die FreedomBox Foundation wurde 2011 gegründet "
 "und ist eine gemeinnützige Organisation mit 501(c)(3) Status mit Sitz in New "
 "York City zur Unterstützung der FreedomBox. Sie stellt die technische "
 "Infrastruktur und rechtliche Dienstleistungen für das Projekt zur Verfügung, "
@@ -2538,8 +2551,7 @@ msgstr ""
 "\"https://salsa.debian.org/freedombox-team/freedombox/issues\" target="
 "\"_blank\">issue tracker</a>, um unsere Entwickler darüber zu informieren. "
 "Um einen Bericht zu erstellen, überprüfen Sie zunächst, ob das Problem "
-"bereits gemeldet wurde und klicken Sie dann auf die Schaltfläche \"New issue"
-"\"."
+"bereits gemeldet wurde und klicken dann auf die Schaltfläche \"New issue\"."
 
 #: plinth/modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
@@ -2762,7 +2774,7 @@ msgid ""
 "functionality such as comments and RSS feeds."
 msgstr ""
 "ikiwiki ist eine einfache Wiki- und Blog-Anwendung. Es unterstützt mehrere "
-"einfache Markup-Sprachen, einschließlich Markdown, und gemeinsame Blogging-"
+"einfache Markup-Sprachen, einschließlich Markdown, und gängige Blogging-"
 "Funktionalität wie Kommentare und RSS-Feeds."
 
 #: plinth/modules/ikiwiki/__init__.py:32
@@ -3077,12 +3089,12 @@ msgid ""
 msgstr ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> ist ein neues "
 "Software-Ökosystem für quell-offenen, föderierten Nachrichtensofortversand "
-"und IP-Telefonie. Es bietet Chatgruppen, Audio- und Videotelefonie mit Ende-"
-"zu-Ende Verschlüsselung, Synchronisation der Nachrichten zwischen "
-"verschiedenen Geräten, und benötigt keine Telefonnummer. Benutzer mit "
-"Nutzerkonto auf einem bestimmten Matrix Server können dank Föderation "
-"zwischen den Servern mit Nutzerkonten auf einem beliebigen anderen Server "
-"kommunizieren."
+"und IP-Telefonie. Synapse ist ein Server, der das Matrix-Protokoll "
+"implementiert. Es bietet Chatgruppen, Audio- und Videotelefonie mit Ende-zu-"
+"Ende Verschlüsselung, Synchronisation der Nachrichten zwischen verschiedenen "
+"Geräten, und benötigt keine Telefonnummer. Benutzer mit Nutzerkonto auf "
+"einem bestimmten Matrix Server können dank Föderation zwischen den Servern "
+"mit Nutzerkonten auf einem beliebigen anderen Server kommunizieren."
 
 #: plinth/modules/matrixsynapse/__init__.py:41
 msgid ""
@@ -3212,7 +3224,7 @@ msgid ""
 "CreateAccount\">Special:CreateAccount</a> page."
 msgstr ""
 "Diese MediaWiki-Instanz hat zunächst ein zufällig generiertes "
-"Administratorpasswort. Sie können ein neues Passwort in der Sektion "
+"Administratorpasswort. Sie können ein neues Passwort im Abschnitt "
 "„Konfiguration“ erstellen und sich mit dem „admin“-Konto anmelden. Dann "
 "können Sie weitere Benutzerkonten direkt in MediaWiki anlegen, indem Sie die "
 "Seite <a href=\"/mediawiki/index.php/Special:CreateAccount\">Spezial: Konto-"
@@ -3415,7 +3427,7 @@ msgstr "Spieler-gegen-Spieler-Konfiguration aktualisiert"
 msgid "Damage configuration updated"
 msgstr "Schaden-Konfiguration aktualisiert"
 
-#: plinth/modules/minidlna/__init__.py:24
+#: plinth/modules/minidlna/__init__.py:25
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3433,15 +3445,15 @@ msgstr ""
 "Smartphones, Fernseher und Gaming-Systeme (wie PS3 und Xbox 360) oder "
 "Anwendungen wie Totem und Kodi."
 
-#: plinth/modules/minidlna/__init__.py:45
+#: plinth/modules/minidlna/__init__.py:46
 msgid "Media streaming server"
 msgstr "Medien-Streaming-Server"
 
-#: plinth/modules/minidlna/__init__.py:48
+#: plinth/modules/minidlna/__init__.py:49
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:49
+#: plinth/modules/minidlna/__init__.py:50
 msgid "Simple Media Server"
 msgstr "Einfacher Medienserver"
 
@@ -3479,11 +3491,11 @@ msgstr "Yaacc"
 msgid "totem"
 msgstr "Totem"
 
-#: plinth/modules/minidlna/views.py:37
+#: plinth/modules/minidlna/views.py:35
 msgid "Specified directory does not exist."
 msgstr "Das angegebene Verzeichnis ist nicht vorhanden."
 
-#: plinth/modules/minidlna/views.py:42
+#: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Aktualisiertes Medienverzeichnis"
 
@@ -3849,22 +3861,28 @@ msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Automatisch (DHCP): Automatisch konfigurieren, Internetverbindung aus diesem "
+"Netzwerk verwenden"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
+"Shared: Als Router arbeiten, Internetverbindung für andere Geräte in diesem "
+"Netzwerk bereitstellen"
 
 #: plinth/modules/networks/forms.py:47 plinth/modules/networks/forms.py:85
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
+"Manuell: Manuell festgelegte Parameter verwenden, Internetverbindung aus "
+"diesem Netzwerk verwenden"
 
 #: plinth/modules/networks/forms.py:50
 msgid "Disabled: Do not configure this addressing method"
-msgstr ""
+msgstr "Deaktiviert: Diese Adressierungsmethode nicht konfigurieren"
 
 #: plinth/modules/networks/forms.py:57
 msgid "Netmask"
@@ -3922,16 +3940,20 @@ msgstr "IPv6-Adressierungsmethode"
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
+"Automatisch: Automatisch konfigurieren, Internetverbindung aus diesem "
+"Netzwerk verwenden"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
+"Automatisch (nur DHCP): Automatisch konfigurieren, Internetverbindung aus "
+"diesem Netzwerk verwenden"
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Ignorieren: Diese Adressierungsmethode ignorieren"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
@@ -4228,6 +4250,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
+"Dies ist die primäre Verbindung, auf die sich die %(box_name)s für die "
+"Internetverbindung verlässt. Eine Änderung kann dazu führen, dass Ihre "
+"%(box_name)s unerreichbar werden. Stellen Sie sicher, dass Sie auf andere "
+"Weise auf %(box_name)s zugreifen können, bevor Sie diese Verbindung ändern."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -4530,8 +4556,8 @@ msgstr "Ãœberspringen Sie diesen Schritt"
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:40
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:35
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:38
 #: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "Weiter"
@@ -5482,8 +5508,9 @@ msgid ""
 "which must be done using a separate client."
 msgstr ""
 "Radicale bietet ein einfaches Web-Interface, mit dem neue Kalender und "
-"Adressbücher nur erstellt werden können. Um Termine und Kontakte zu "
-"erstellen und zu bearbeiten, benötigst du ein entsprechendes Programm."
+"Adressbücher nur erstellt werden können. Das Hinzufügen von Ereignissen oder "
+"Kontaktdaten wird nicht unterstützt; dies muss über einen separaten Client "
+"erfolgen."
 
 #: plinth/modules/radicale/__init__.py:55
 #: plinth/modules/radicale/manifest.py:74
@@ -5572,7 +5599,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Konfiguration der Zugangsrechte aktualisiert"
 
-#: plinth/modules/roundcube/__init__.py:22
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5585,7 +5612,7 @@ msgstr ""
 "wie zum Beispiel MIME-Unterstützung, Adressbuch, Ordnerverwaltung, Suche in "
 "den Nachrichten und Rechtschreibprüfung."
 
-#: plinth/modules/roundcube/__init__.py:27
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5599,7 +5626,7 @@ msgstr ""
 "code>.  Bei IMAP über SSL (empfohlen) füllen Sie das Server-Feld aus, z. B. "
 "<code>imaps://imap.beispiel.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:32
+#: plinth/modules/roundcube/__init__.py:33
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5616,12 +5643,12 @@ msgstr ""
 "lesssecureapps\" >https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:56
 msgid "Email Client"
 msgstr "E-Mail-Client"
 
@@ -5884,18 +5911,18 @@ msgstr "Berichte über Sicherheitslücken anzeigen"
 
 #: plinth/modules/security/templates/security.html:19
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:49
+#: plinth/modules/upgrades/templates/upgrades_configure.html:44
 msgid "Frequent Feature Updates"
-msgstr "Häufige Funktionsaktualisierungen"
+msgstr "Häufige Funktions-Updates"
 
 #: plinth/modules/security/templates/security.html:21
-#: plinth/modules/upgrades/templates/upgrades_configure.html:57
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
 msgid "Frequent feature updates are activated."
 msgstr "Häufige Funktions-Updates sind aktiviert."
 
 #: plinth/modules/security/templates/security.html:26
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:69
+#: plinth/modules/upgrades/templates/upgrades_configure.html:64
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6573,7 +6600,7 @@ msgstr "Der Vorgang beendet wegen Zeitüberschreitung."
 #: plinth/modules/storage/__init__.py:248
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
-"Dieser Vorgang würde ein Gerät aufwecken, dass sich in einem Tiefschlaf-"
+"Dieser Vorgang würde ein Gerät aufwecken, welches sich in einem Tiefschlaf-"
 "Zustand befindet."
 
 #: plinth/modules/storage/__init__.py:251
@@ -6761,15 +6788,7 @@ msgstr ""
 "allen anderen Geräten reproduziert, auf denen Syncthing läuft."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" or "
-#| "\"syncthing\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6785,8 +6804,8 @@ msgstr ""
 "{box_name} läuft eine einzige Instanz von Syncthing, welche von mehreren "
 "Benutzern genutzt werden kann. Die Geräte jedes einzelnen Benutzers können "
 "mit unterschiedlichen Ordnern synchronisiert werden. Die Weboberfläche auf "
-"{box_name} ist nur für Benutzer der \"Admin\" oder \"Syncthing\"-Gruppe "
-"zugänglich."
+"{box_name} ist nur für Benutzer der \"Admin\" oder \"Syncthing-access\"-"
+"Gruppe zugänglich."
 
 #: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
@@ -7088,7 +7107,7 @@ msgid ""
 "not anonymous."
 msgstr ""
 "BitTorrent ist ein Peer-to-Peer Protokoll zum Teilen von Dateien. Es gilt zu "
-"beachten: BitTorrent ist nicht anonym!"
+"beachten: BitTorrent ist nicht anonym."
 
 #: plinth/modules/transmission/__init__.py:32
 msgid "Please do not change the default port of the transmission daemon."
@@ -7142,14 +7161,14 @@ msgstr "Feedreader"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:44
+#: plinth/modules/upgrades/__init__.py:45
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Suchen Sie nach den neuesten Software- und Sicherheitsupdates und "
 "installieren Sie diese."
 
-#: plinth/modules/upgrades/__init__.py:45
+#: plinth/modules/upgrades/__init__.py:46
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7163,13 +7182,37 @@ msgstr ""
 "erachtet wird, erfolgt dieser automatisch um 02:00 Uhr, so dass alle "
 "Anwendungen kurzzeitig nicht verfügbar sind."
 
-#: plinth/modules/upgrades/__init__.py:117
+#: plinth/modules/upgrades/__init__.py:122
 msgid "Updates"
 msgstr "Aktualisierungen"
 
-#: plinth/modules/upgrades/__init__.py:120
+#: plinth/modules/upgrades/__init__.py:125
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualisiert"
+
+#: plinth/modules/upgrades/__init__.py:210
+msgid "Could not start distribution update"
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:212
+#, python-format
+msgid ""
+"There is not enough free space in the root partition to start the "
+"distribution update. Please ensure at least 5 GB, and at least 10% of the "
+"total space, is free. Distribution update will be retried after 24 hours, if "
+"enabled."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:223
+#, fuzzy
+#| msgid "Distribution upgrade disabled"
+msgid "Distribution update started"
+msgstr "Distributions-Upgrade deaktiviert"
+
+#: plinth/modules/upgrades/__init__.py:225
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
 
 #: plinth/modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -7193,7 +7236,7 @@ msgstr ""
 "aktualisiert, sobald diese verfügbar ist."
 
 #: plinth/modules/upgrades/forms.py:34
-#: plinth/modules/upgrades/templates/upgrades_configure.html:94
+#: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Aktivieren häufigen feature-updates (empfohlen)"
 
@@ -7217,11 +7260,11 @@ msgstr ""
 "<strong>Hinweis:</strong> Sobald häufige Funktions-Updates aktiviert sind, "
 "können sie nicht deaktiviert werden."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:24
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
 msgstr "Aktualisierung läuft, bitte warten…"
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:22
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
@@ -7233,7 +7276,7 @@ msgstr ""
 "und zeigt einen Fehler an. In diesem Fall aktualisieren Sie die Seite, um "
 "fortzufahren."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:36
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
 #, python-format
 msgid ""
 "\n"
@@ -7264,28 +7307,28 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Verwerfen"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:35
-#: plinth/modules/upgrades/templates/upgrades_configure.html:105
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
+#: plinth/modules/upgrades/templates/upgrades_configure.html:100
 msgid "Updating..."
 msgstr "Aktualisierung läuft …"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:37
+#: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Eine neue %(box_name)s Version ist verfügbar."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
+#: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
 msgstr "Ihre Freedombox benötigt ein Update!"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 "Häufige updates können aktiviert werden. Sie zu aktivieren ist "
 "empfehlenswert."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:56
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
@@ -7293,7 +7336,7 @@ msgstr ""
 "Häufige Funktions-Updates können nicht aktiviert werden. Sie sind bei Ihrer "
 "Distribution möglicherweise nicht erforderlich."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:83
+#: plinth/modules/upgrades/templates/upgrades_configure.html:78
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -7304,15 +7347,15 @@ msgstr ""
 "können sie nicht deaktiviert werden. Sie können einen Snapshot mit <a href="
 "\"%(snapshot_url)s\">Speicherauszüge</a> erstellen, bevor Sie fortfahren."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:99
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 msgid "Manual Update"
 msgstr "Manuelle Aktualisierung"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:113
+#: plinth/modules/upgrades/templates/upgrades_configure.html:108
 msgid "Update now"
 msgstr "Jetzt aktualisieren"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:119
+#: plinth/modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -7323,7 +7366,7 @@ msgstr ""
 "Weboberfläche möglicherweise vorübergehend nicht verfügbar und zeigt einen "
 "Fehler an. In diesem Fall aktualisieren Sie die Seite, um fortzufahren."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:133
+#: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
 msgstr "Letzte Update-Protokolle anzeigen"
 
@@ -8359,20 +8402,20 @@ msgstr "Erneut prüfen"
 msgid "Install"
 msgstr "Installieren"
 
-#: plinth/templates/setup.html:71
+#: plinth/templates/setup.html:72
 msgid "Performing pre-install operation"
 msgstr "Installationsvorbereitungen werden ausgeführt"
 
-#: plinth/templates/setup.html:75
+#: plinth/templates/setup.html:77
 msgid "Performing post-install operation"
 msgstr "Installationsnachbereitungen werden ausgeführt"
 
-#: plinth/templates/setup.html:80
+#: plinth/templates/setup.html:83
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "%(package_names)s wird installiert: %(status)s"
 
-#: plinth/templates/setup.html:90
+#: plinth/templates/setup.html:93
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% abgeschlossen"

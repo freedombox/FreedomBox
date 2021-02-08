@@ -107,9 +107,9 @@ def force_upgrade(helper, packages):
     if 'radicale' not in packages:
         return False
 
-    # Allow upgrade from 2.* to newer 2.*
+    # Allow upgrade from 2.* to newer 2.* and 3.*
     package = packages['radicale']
-    if Version(package['new_version']) > Version('3~'):
+    if Version(package['new_version']) > Version('4~'):
         return False
 
     rights = get_rights_value()

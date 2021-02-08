@@ -40,9 +40,15 @@ Once you have a Domain Name, you can tell your !FreedomBox to use it by setting 
 
 Please note that [[FreedomBox/Manual/PageKite|PageKite]] does not support the XMPP protocol at this time.
 
+=== Use Let's encrypt certificate for ejabberd ===
+
+If your !FreedomBox server uses a Let's Encrypt certificate, you will also want to use it for ejabberd. To do so, as your !FreedomBox admin, go to '''System''' > '''Let's Encrypt''', and select the checkbox at `Use certificate for ejabberd`:
+
+{{attachment:certificate-for-ejabberd.png|Use of certificate for Ejabberd}}
+
 === Registering FreedomBox users to use XMPP ===
 
-Currently, all users created through !FreedomBox will be able to login to the XMPP server. You can add new users through the System Users and Groups module. It does not matter which Groups are selected for the new user.
+Currently, all users created through !FreedomBox will be able to login to the XMPP server. You can add new users through the System module [[FreedomBox/Manual/Users|Users and Groups]]. It does not matter which Groups are selected for the new user.
 
 === Port Forwarding ===
 
@@ -56,11 +62,61 @@ If your !FreedomBox is behind a router, you will need to set up port forwarding 
  * !FreedomBox provides a web client: [[FreedomBox/Manual/JSXC|JSXC]].
  * [[https://xmpp.org/software/clients.html|XMPP clients]] are available for various desktop and mobile platforms.
 
+==== Mobile clients ====
+
+You can download an XMPP client for your smartphone or tablet among the ones listed below.
+
+===== Conversations (Android) =====
+
+[[https://conversations.im/|Conversations]] is an Android XMPP client available on [[https://f-droid.org/packages/eu.siacs.conversations|F-Droid]] or the [[https://play.google.com/store/apps/details?id=eu.siacs.conversations|Play Store]]. In addition to text messaging, you can use Conversations to send images and have group chats.
+
+||<tablestyle="background:transparent; margin: 0 0 1em 1em;" style="text-align: center; padding:0.5em; border-style:none;"> {{attachment:conversations-first-screen.png|Conversations - First screen|width=200}} {{attachment:conversations-login.png|Conversations - Login|width=200}} {{attachment:conversations-add-contacts.png|Conversations - Add contacts|width=200}}||
+
+''From left to right: (1) First screen - (2) Login screen - (3) Add contacts.''
+
+When first starting the Conversations app, you will be asked whether you want to create a new account or if you want to use an existing account. Choose "I already have an account" (1)
+
+With ejabberd installed, the !FreedomBox provides an XMPP account for every !FreedomBox user. Additional (non-admin) !FreedomBox user accounts can be created under '''System''' > [[FreedomBox/Manual/Users|Users and Groups]].
+
+Once logged into a FreedomBox/XMPP account (2), the Conversation app provides a + button that brings up a few choices to contact other people (3).
+
+==== Desktop clients ====
+
+===== Gajim (Windows, MacOS, Linux) =====
+
+[[https://gajim.org/|Gajim]] is a XMPP open-source client for the desktop, available for Windows, MacOS and Linux. This application is available in Debian, and for other operating systems you can download it from [[https://gajim.org/download/|this page]] and find instructions about installation.
+
+||<tablestyle="background:transparent; margin: 0 0 1em 1em;" style="text-align: center; padding:0.5em; border-style:none;"> {{attachment:gajim-first-screen.png|Gajim - First screen|width=300}} {{attachment:gajim-login.png|Gajim - Login|width=300}} {{attachment:gajim-main-window.png|Gajim - Main Window|width=200}}||
+
+''From left to right: (1) First screen - (2) Login screen - (3) Main window''
+
+A popup shows up right after you start Gajim for the first time (1), asking you to either login to your XMPP (!FreedomBox) account or to register for a new account. 
+When you choose to login, after clicking "Forward", you will be asked a Jabber ID and a password (2): you have to enter your !FreedomBox account and password here.
+
+Finally, after logging in successfully, you will see the main Gajim screen (3). From there, you can add a contact (''Account'' > ''Add contact...'') then you can start a conversation (''Gajim'' > ''Start chat'').
+
+===== Dino (Linux) =====
+
+[[https://dino.im/|Dino]] is another XMPP free software client for the desktop. It is available for [[https://github.com/dino/dino/wiki/Distribution-Packages||multiple Linux distributions]].
+
+||<tablestyle="background:transparent; margin: 0 0 1em 1em;" style="text-align: center; padding:0.5em; border-style:none;"> {{attachment:dino-first-screen.png|Dino - First screen|width=200}} {{attachment:dino-login.png|Dino - Login|width=300}} {{attachment:dino-start-conversation.png|Dino - Start a conversation|width=200}}||
+
+''From left to right: (1) First screen - (2) Login screen - (3) Start conversation''
+
+When first starting Dino after installation, click on the `Setup account` button. You will be then asked your `JID`: this is your !FreedomBox account. Enter it then click `Next` (2). Alternatively, you can click on `Create account` if you don't have a !FreedomBox account.
+
+Once you have logged in, you will be able to either start a conversation with one of your XMPP contacts or to join a channel (3).
+
 
 === External links ===
 
  * Website: https://www.ejabberd.im
  * User documentation: https://docs.ejabberd.im
+
+Clients' sites:
+ * Conversations: https://conversations.im
+ * Gajim: https://gajim.org
+ * Dino: https://github.com/dino/dino
 
 
 ## END_INCLUDE

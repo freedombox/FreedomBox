@@ -9,6 +9,9 @@
 */
 
 # Default logo
+# wgLogos takes precedence over wgLogo.
+$wgLogos = [ '1x' => "$wgResourceBasePath/resources/assets/mediawiki.png" ];
+# TODO wgLogo can be removed from Debian 11
 $wgLogo = "$wgResourceBasePath/resources/assets/mediawiki.png";
 
 # Enable file uploads

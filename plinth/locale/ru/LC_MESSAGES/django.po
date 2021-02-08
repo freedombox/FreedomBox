@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-25 20:15-0500\n"
-"PO-Revision-Date: 2021-01-18 12:32+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2021-02-05 23:02-0500\n"
+"PO-Revision-Date: 2021-02-01 18:42+0000\n"
+"Last-Translator: Алексей Докучаев <deathlike333@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
 "Language: ru\n"
@@ -156,10 +156,14 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Включите автоматическое расписание резервного копирования для безопасности "
+"данных. Предпочтительно зашифрованное удаленное место резервного копирования "
+"или дополнительный подключенный диск."
 
 #: plinth/modules/backups/__init__.py:203
+#, fuzzy
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Включить расписание резервного копирования"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -175,6 +179,9 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Запланированное резервное копирование не удалось. Прошлые {error_count} "
+"попытки резервного копирования не увенчались успехом. Последняя ошибка: "
+"{error_message}"
 
 #: plinth/modules/backups/__init__.py:250
 #, fuzzy
@@ -188,18 +195,23 @@ msgid "{app} (No data to backup)"
 msgstr "{app} (Нет данных для резервного сохранения)"
 
 #: plinth/modules/backups/forms.py:53
+#, fuzzy
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Включить резервное копирование по расписанию"
 
 #: plinth/modules/backups/forms.py:54
+#, fuzzy
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Если эта функция включена, резервное копирование выполняется каждый день, "
+"каждую неделю и каждый месяц. Более старые резервные копии удаляются."
 
 #: plinth/modules/backups/forms.py:58
+#, fuzzy
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Количество ежедневных резервных копий для хранения"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
@@ -209,7 +221,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Количество хранимых еженедельных резервных копий"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
@@ -557,8 +569,8 @@ msgid "Restore data from"
 msgstr "Восстановить данные из"
 
 #: plinth/modules/backups/templates/backups_schedule.html:19
-#: plinth/modules/upgrades/__init__.py:76
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:16
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 #: plinth/templates/setup.html:62
 msgid "Update"
@@ -1897,7 +1909,7 @@ msgstr "О проекте"
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:12
 #: plinth/modules/tor/templates/tor.html:27
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
+#: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
@@ -2350,7 +2362,7 @@ msgid "Contribute"
 msgstr "Помощь проекту"
 
 #: plinth/modules/help/templates/help_about.html:17
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Вы используете %(os_release)s и %(box_name)s версии %(version)s."
@@ -2363,7 +2375,7 @@ msgid ""
 msgstr "<a href=\"%(upgrades_url)s\">Доступна новая версия</a> %(box_name)s."
 
 #: plinth/modules/help/templates/help_about.html:28
-#: plinth/modules/upgrades/templates/upgrades_configure.html:42
+#: plinth/modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s в актуальном состоянии."
@@ -3371,7 +3383,7 @@ msgstr "Конфигурация PVP обновлена"
 msgid "Damage configuration updated"
 msgstr "Конфигурация урона обновлена"
 
-#: plinth/modules/minidlna/__init__.py:24
+#: plinth/modules/minidlna/__init__.py:25
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3389,15 +3401,15 @@ msgstr ""
 "медиаплеерами, смартфонами, телевизорами и игровыми системами (такими как "
 "PS3 и Xbox 360) или такими приложениями, как totem и Kodi."
 
-#: plinth/modules/minidlna/__init__.py:45
+#: plinth/modules/minidlna/__init__.py:46
 msgid "Media streaming server"
 msgstr "Сервер потоковой передачи мультимедиа"
 
-#: plinth/modules/minidlna/__init__.py:48
+#: plinth/modules/minidlna/__init__.py:49
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:49
+#: plinth/modules/minidlna/__init__.py:50
 msgid "Simple Media Server"
 msgstr "Простой медиа-сервер"
 
@@ -3434,11 +3446,11 @@ msgstr "yaacc"
 msgid "totem"
 msgstr "totem"
 
-#: plinth/modules/minidlna/views.py:37
+#: plinth/modules/minidlna/views.py:35
 msgid "Specified directory does not exist."
 msgstr "Указанный каталог не существует."
 
-#: plinth/modules/minidlna/views.py:42
+#: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Обновленный каталог медиа"
 
@@ -4471,8 +4483,8 @@ msgstr "Пропустить этот шаг"
 #: plinth/modules/networks/templates/network_topology_firstboot.html:21
 #: plinth/modules/networks/templates/router_configuration_firstboot.html:21
 #: plinth/modules/upgrades/templates/backports-firstboot.html:45
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:40
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:43
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:35
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:38
 #: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
 msgstr "Следующий"
@@ -5554,7 +5566,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Конфигурация прав доступа обновлена"
 
-#: plinth/modules/roundcube/__init__.py:22
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5566,7 +5578,7 @@ msgstr ""
 "которую вы ожидаете от почтового клиента, включая поддержку MIME, адресную "
 "книгу, управление папками, поиск сообщений и проверку орфографии."
 
-#: plinth/modules/roundcube/__init__.py:27
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5580,7 +5592,7 @@ msgstr ""
 "example.com</code>. Для IMAP через SSL (рекомендуется) заполните поле "
 "сервера, например <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:32
+#: plinth/modules/roundcube/__init__.py:33
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5596,12 +5608,12 @@ msgstr ""
 "security/lesssecureapps\" >https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:56
 msgid "Email Client"
 msgstr "Почтовый клиент"
 
@@ -5864,18 +5876,18 @@ msgstr "Показать отчёт о безопасности"
 
 #: plinth/modules/security/templates/security.html:19
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:49
+#: plinth/modules/upgrades/templates/upgrades_configure.html:44
 msgid "Frequent Feature Updates"
 msgstr "Частые обновления функций"
 
 #: plinth/modules/security/templates/security.html:21
-#: plinth/modules/upgrades/templates/upgrades_configure.html:57
+#: plinth/modules/upgrades/templates/upgrades_configure.html:52
 msgid "Frequent feature updates are activated."
 msgstr "Активированы частые обновления функций."
 
 #: plinth/modules/security/templates/security.html:26
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:69
+#: plinth/modules/upgrades/templates/upgrades_configure.html:64
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -6725,15 +6737,7 @@ msgstr ""
 "на все другие устройства, на которых работает Syncthing."
 
 #: plinth/modules/syncthing/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Syncthing on {box_name} provides an extra synchronization point "
-#| "for your data that is available most of the time, allowing your devices "
-#| "to synchronize more often.  {box_name} runs a single instance of "
-#| "Syncthing that may be used by multiple users.  Each user's set of devices "
-#| "may be synchronized with a distinct set of folders.  The web interface on "
-#| "{box_name} is only available for users belonging to the \"admin\" or "
-#| "\"syncthing\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -6749,7 +6753,7 @@ msgstr ""
 "один экземпляр Syncthing и он может быть использован многими "
 "пользователями.  Устройства каждого пользователя будут синхронизированы в "
 "собственный набор папок.  Веб-интерфейс доступен только для пользователей, "
-"принадлежащих к группе «admin» или «syncthing»."
+"принадлежащих к группе «admin» или «syncthing-access»."
 
 #: plinth/modules/syncthing/__init__.py:58
 msgid "Administer Syncthing application"
@@ -7098,12 +7102,12 @@ msgstr "Чтение ленты новостей"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:44
+#: plinth/modules/upgrades/__init__.py:45
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "Проверьте и установите новейшие программы и обновления безопасности."
 
-#: plinth/modules/upgrades/__init__.py:45
+#: plinth/modules/upgrades/__init__.py:46
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7117,15 +7121,39 @@ msgstr ""
 "выполняется автоматически в 02:00, в результате чего все приложения на "
 "короткое время становятся недоступными."
 
-#: plinth/modules/upgrades/__init__.py:117
+#: plinth/modules/upgrades/__init__.py:122
 #, fuzzy
 #| msgid "Update"
 msgid "Updates"
 msgstr "Обновление"
 
-#: plinth/modules/upgrades/__init__.py:120
+#: plinth/modules/upgrades/__init__.py:125
 msgid "FreedomBox Updated"
 msgstr "FreedomBox обновлён"
+
+#: plinth/modules/upgrades/__init__.py:210
+msgid "Could not start distribution update"
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:212
+#, python-format
+msgid ""
+"There is not enough free space in the root partition to start the "
+"distribution update. Please ensure at least 5 GB, and at least 10% of the "
+"total space, is free. Distribution update will be retried after 24 hours, if "
+"enabled."
+msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:223
+#, fuzzy
+#| msgid "Automatic upgrades disabled"
+msgid "Distribution update started"
+msgstr "Автоматические обновления отключены"
+
+#: plinth/modules/upgrades/__init__.py:225
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
 
 #: plinth/modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -7149,7 +7177,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/forms.py:34
-#: plinth/modules/upgrades/templates/upgrades_configure.html:94
+#: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Активировать частые обновления функций (рекомендуется)"
 
@@ -7175,13 +7203,13 @@ msgstr ""
 "<strong>Примечание:</strong> После активации частых обновлений функций их "
 "нельзя деактивировать."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:24
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 #, fuzzy
 #| msgid "Updating..."
 msgid "Updating, please wait..."
 msgstr "Обновляется..."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:27
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:22
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
 #, fuzzy
 #| msgid ""
@@ -7198,7 +7226,7 @@ msgstr ""
 "временно недоступен и показывать ошибку. В таком случае, чтобы продолжить, "
 "обновите страницу."
 
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:36
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
 #, fuzzy, python-format
 #| msgid "%(box_name)s is up to date."
 msgid ""
@@ -7226,27 +7254,27 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Отклонить"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:35
-#: plinth/modules/upgrades/templates/upgrades_configure.html:105
+#: plinth/modules/upgrades/templates/upgrades_configure.html:30
+#: plinth/modules/upgrades/templates/upgrades_configure.html:100
 msgid "Updating..."
 msgstr "Обновляется..."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:37
+#: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Доступна новая версия %(box_name)s."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
+#: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
 msgstr "Ваш Freedombox нуждается в обновлении!"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#: plinth/modules/upgrades/templates/upgrades_configure.html:47
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 "Можно активировать частые обновления функций. Их рекомендуется активировать."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:56
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
@@ -7254,7 +7282,7 @@ msgstr ""
 "Частые обновления функций не могут быть активированы. Они могут не "
 "понадобиться в вашем дистрибутиве."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:83
+#: plinth/modules/upgrades/templates/upgrades_configure.html:78
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -7265,15 +7293,15 @@ msgstr ""
 "их нельзя деактивировать. Перед продолжением вы можете сделать снимок с "
 "помощью <a href=\"%(snapshot_url)s\">снимки хранилища</a>."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:99
+#: plinth/modules/upgrades/templates/upgrades_configure.html:94
 msgid "Manual Update"
 msgstr "Ручное обновление"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:113
+#: plinth/modules/upgrades/templates/upgrades_configure.html:108
 msgid "Update now"
 msgstr "Обновить сейчас"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:119
+#: plinth/modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -7284,7 +7312,7 @@ msgstr ""
 "временно недоступен и показывать ошибку. В таком случае, чтобы продолжить, "
 "обновите страницу."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:133
+#: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
 msgstr "Показать журналы последних обновлений"
 
@@ -8309,20 +8337,20 @@ msgstr ""
 msgid "Install"
 msgstr "Установка"
 
-#: plinth/templates/setup.html:71
+#: plinth/templates/setup.html:72
 msgid "Performing pre-install operation"
 msgstr "Выполнение операции предварительной установки"
 
-#: plinth/templates/setup.html:75
+#: plinth/templates/setup.html:77
 msgid "Performing post-install operation"
 msgstr "Выполнение операции после установки"
 
-#: plinth/templates/setup.html:80
+#: plinth/templates/setup.html:83
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "Установка %(package_names)s: %(status)s"
 
-#: plinth/templates/setup.html:90
+#: plinth/templates/setup.html:93
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% завершено"
