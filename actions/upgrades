@@ -12,6 +12,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import time
 
 from plinth.action_utils import (apt_hold, debconf_set_selections,
                                  run_apt_command, service_daemon_reload,
@@ -452,7 +453,9 @@ def _perform_dist_upgrade():
     print('Restarting FreedomBox service...', flush=True)
     service_restart('plinth')
 
-    # Update apt cache again to trigger force_upgrades.
+    # After 10 minutes, update apt cache again to trigger force_upgrades.
+    print('Waiting for 10 minutes...', flush=True)
+    time.sleep(10 * 60)
     print('Updating Apt cache...', flush=True)
     run_apt_command(['update'])
 
