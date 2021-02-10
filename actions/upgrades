@@ -366,10 +366,9 @@ def _check_dist_upgrade(test_upgrade=False):
     if check_dist == 'testing' and not test_upgrade:
         return (False, 'test-not-set')
 
-    output = subprocess.check_output(['df', '--output=avail,pcent', '/'])
-    output = output.decode().split('\n')[1].split()
-    free_space, free_percent = int(output[0]), int(output[1][:-1])
-    if free_space < 5000000 or free_percent < 10:
+    output = subprocess.check_output(['df', '--output=avail', '/'])
+    free_space = int(output.decode().split('\n')[1])
+    if free_space < 5000000:
         return (False, 'not-enough-free-space')
 
     logging.info('Upgrading from %s to %s...', dist, codename)
