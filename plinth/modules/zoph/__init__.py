@@ -22,7 +22,11 @@ logger = logging.getLogger(__name__)
 
 version = 1
 
-managed_packages = ['zoph']
+# XXX: This implementation of Zoph does not work with version 0.9.9 in Buster.
+# As an easy hack to make the app only available in Bullseye, php7.4 dependency
+# has been added. After making the last release for Buster, this can be removed
+# to allow compatibility with newer versions of PHP that become available.
+managed_packages = ['zoph', 'php7.4']
 
 _description = [
     format_lazy(
