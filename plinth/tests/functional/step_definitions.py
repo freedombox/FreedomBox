@@ -58,6 +58,13 @@ def app_can_be_disabled(session_browser, app_name):
         pytest.skip('network time application can\'t be disabled')
 
 
+@then(parsers.parse('the {app_name:w} application is {enabled:w}'))
+def app_assert_is_enabled(session_browser, app_name, enabled):
+    assert enabled in ('enabled', 'disabled')
+    enabled = (enabled == 'enabled')
+    assert functional.app_is_enabled(session_browser, app_name) == enabled
+
+
 @then(parsers.parse('the {service_name:w} service should be running'))
 def service_should_be_running(session_browser, service_name):
     assert functional.eventually(functional.service_is_running,
