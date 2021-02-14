@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-11 17:23-0500\n"
-"PO-Revision-Date: 2021-02-06 03:51+0000\n"
+"PO-Revision-Date: 2021-02-16 04:50+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -155,9 +155,9 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
-"Activer les sauvegardes automatiques régulières pour la sécurité de vos "
-"données. Il est préférable d’utiliser un emplacement de sauvegarde distant "
-"et chiffré, ou un disque externe additionnel."
+"Activer les sauvegardes automatiques régulières pour sécuriser vos données. "
+"Il est préférable d’utiliser un emplacement de sauvegarde distant et "
+"chiffré, ou un disque externe additionnel."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
@@ -1155,11 +1155,11 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
-"Cockpit est un gestionnaire de serveur qui simplifie l’administration de "
-"serveurs GNU/Linux à l’aide d’un navigateur web. Sur une {box_name}, des "
-"contrôles sont disponibles pour de nombreuses fonctions avancées qui ne sont "
-"pas nécessaires dans la plupart des cas. Un terminal web est également "
-"fourni pour les opérations d’administration réalisables via une console."
+"Cockpit est un outil de gestion de serveurs qui simplifie l’administration "
+"de serveurs GNU/Linux au travers d’un navigateur web. Sur une {box_name}, "
+"des contrôles sont disponibles pour de nombreuses fonctions avancées qui ne "
+"sont pas nécessaires dans la majorité des cas. Un terminal web est également "
+"fourni pour pouvoir réaliser des opérations d’administration via une console."
 
 #: plinth/modules/cockpit/__init__.py:38
 msgid ""
@@ -1171,9 +1171,9 @@ msgstr ""
 "Cockpit peut être utilisé pour des opérations avancées sur le stockage "
 "telles que le partitionnement de disques et la gestion de grappes de disques "
 "RAID. Il peut aussi être utilisé pour l’ouverture de ports personnalisés sur "
-"le pare-feu, ainsi que les opérations de réseau avancées telles que "
-"l’agrégation de liens (« bonding »), la création de ponts (« bridging ») et "
-"la gestion de réseaux virtuels VLAN."
+"le pare-feu, ainsi que les opérations réseau avancées telles que l’"
+"agrégation de liens (« bonding »), la création de ponts (« bridging ») et la "
+"gestion de réseaux virtuels VLAN."
 
 #: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
@@ -1181,8 +1181,8 @@ msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"Il peut être consulté par tout <a href=\"{users_url}\">utilisateur</a> "
-"faisant partie du groupe admin sur la {box_name}."
+"L’accès est autorisé à tout <a href=\"{users_url}\">utilisateur</a> faisant "
+"partie du groupe admin sur la {box_name}."
 
 #: plinth/modules/cockpit/__init__.py:47
 msgid ""
@@ -1190,7 +1190,8 @@ msgid ""
 "when accessed using an IP address as part of the URL."
 msgstr ""
 "Cockpit nécessite que vous y accédiez depuis un nom de domaine. Il ne "
-"fonctionnera pas si vous y accédez en utilisant une adresse IP dans son URL."
+"fonctionnera pas si vous tentez d’y accédez en utilisant une adresse IP dans "
+"son URL."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:33
@@ -6211,8 +6212,6 @@ msgstr ""
 "le lien vers ce partage."
 
 #: plinth/modules/sharing/forms.py:34
-#, fuzzy
-#| msgid "User groups that can read the files in the share"
 msgid "User groups that can read the files in the share:"
 msgstr "Groupes d’utilisateurs autorisés à consulter les fichiers du partage :"
 
@@ -7246,7 +7245,7 @@ msgstr "FreedomBox mise à jour"
 
 #: plinth/modules/upgrades/__init__.py:210
 msgid "Could not start distribution update"
-msgstr ""
+msgstr "Impossible de lancer la mise à niveau de la distribution"
 
 #: plinth/modules/upgrades/__init__.py:212
 msgid ""
@@ -7254,17 +7253,21 @@ msgid ""
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
+"L’espace disponible sur la partition racine est insuffisant pour lancer la "
+"mise à niveau de la distribution. Veuillez vous assurer qu’au moins 5 Go "
+"sont disponibles. Si activée, la mise à niveau automatique de la "
+"distribution sera retentée dans 24H."
 
 #: plinth/modules/upgrades/__init__.py:223
-#, fuzzy
-#| msgid "Distribution upgrade disabled"
 msgid "Distribution update started"
-msgstr "Mise à niveau de la distribution désactivée"
+msgstr "Mise à niveau de la distribution démarrée"
 
 #: plinth/modules/upgrades/__init__.py:225
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
+"La mise à niveau vers la nouvelle version stable a été lancée. Cette "
+"opération peut prendre beaucoup de temps."
 
 #: plinth/modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -8098,6 +8101,16 @@ msgid ""
 "location using search, map and calendar views. Individual photos can be "
 "shared with others by sending a direct link."
 msgstr ""
+"Zoph vous permet de gérer votre photothèque. Les photos sont stockées sur "
+"votre {box_name}, sous votre contrôle. Au lieu de proposer des galeries pour "
+"partager vos photos à l’extérieur, Zoph se concentre sur leur gestion pour "
+"votre propre usage, en les organisant par auteur, lieu de prise de vue, "
+"personnes photographiées. Les photos peuvent être liées à plusieurs albums "
+"et catégories, organisés de manière hiérarchique. Il est aisé de trouver "
+"toutes les photos sur lesquelles une personne est présente, ou prises à une "
+"certaine date, ou dans un lieu particulier grâce aux modes de vue de "
+"recherche, de carte et de calendrier. Les photos peuvent être partagées "
+"unitairement avec d’autres en leur envoyant un lien direct."
 
 #: plinth/modules/zoph/__init__.py:44
 #, python-brace-format
@@ -8106,31 +8119,35 @@ msgid ""
 "Zoph. For additional users, accounts must be created both in {box_name} and "
 "in Zoph with the same user name."
 msgstr ""
+"L’utilisateur {box_name} qui configure Zoph deviendra également l’"
+"administrateur Zoph. Pour ajouter des utilisateurs ceux-ci doivent être "
+"créés à la fois sur la {box_name} et dans Zoph avec le même identifiant."
 
 #: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
+msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:63
 msgid "Photo Organizer"
-msgstr ""
+msgstr "Photothèque"
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
-msgstr ""
+msgstr "Activer OpenStreetMap pour les cartes"
 
 #: plinth/modules/zoph/forms.py:15
 msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Lorsqu’activé, des requêtes seront faites à OpenStreetMap depuis le "
+"navigateur de l’utilisateurice. Cela peut impacter la protection de la vie "
+"privée."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
-#, fuzzy
-#| msgid "Start Setup"
 msgid "Setup"
-msgstr "Démarrer la configuration initiale"
+msgstr "Configuration"
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:18
 #, python-format
@@ -8138,6 +8155,8 @@ msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
 msgstr ""
+"L’utilisateur <strong>%(username)s</strong> deviendra le compte "
+"administrateur pour Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
