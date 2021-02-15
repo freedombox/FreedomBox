@@ -36,6 +36,7 @@ def parse_arguments():
     add_service_action(subparsers, 'reload', 'reload a service')
     add_service_action(subparsers, 'is-running', 'status of a service')
     add_service_action(subparsers, 'is-enabled', 'status a service')
+    add_service_action(subparsers, 'mask', 'unmask a service')
     add_service_action(subparsers, 'unmask', 'unmask a service')
 
     subparsers.add_parser('list', help='List of running system services')
@@ -70,6 +71,10 @@ def subcommand_try_restart(arguments):
 
 def subcommand_reload(arguments):
     action_utils.service_reload(arguments.service)
+
+
+def subcommand_mask(arguments):
+    action_utils.service_mask(arguments.service)
 
 
 def subcommand_unmask(arguments):

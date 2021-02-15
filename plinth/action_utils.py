@@ -83,6 +83,11 @@ def service_disable(service_name):
         pass
 
 
+def service_mask(service_name):
+    """Mask a service"""
+    subprocess.call(['systemctl', 'mask', service_name])
+
+
 def service_unmask(service_name):
     """Unmask a service"""
     subprocess.call(['systemctl', 'unmask', service_name])
