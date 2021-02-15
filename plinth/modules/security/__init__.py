@@ -17,7 +17,7 @@ from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
 
-version = 6
+version = 7
 
 is_essential = True
 
