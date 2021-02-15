@@ -59,7 +59,10 @@ class SecurityApp(app_module.App):
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
-    setup_fail2ban()
+    if not old_version:
+        enable_fail2ban()
+
+    actions.superuser_run('service', ['reload', 'fail2ban'])
 
     # Migrate to new config file.
     enabled = get_restricted_access_enabled()
@@ -68,10 +71,9 @@ def setup(helper, old_version=None):
         set_restricted_access(True)
 
 
-def setup_fail2ban():
+def enable_fail2ban():
     actions.superuser_run('service', ['unmask', 'fail2ban'])
     actions.superuser_run('service', ['enable', 'fail2ban'])
-    actions.superuser_run('service', ['reload', 'fail2ban'])
 
 
 def get_restricted_access_enabled():
