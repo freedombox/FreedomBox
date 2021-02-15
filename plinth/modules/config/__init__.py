@@ -12,14 +12,16 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth.modules.apache import (user_of_uws_url, uws_url_of_user,
-                                   get_users_with_website)
+from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
+                                   uws_url_of_user)
 from plinth.modules.names.components import DomainType
 from plinth.signals import domain_added
 
-version = 2
+version = 3
 
 is_essential = True
+
+managed_services = ['systemd-journald', 'rsyslog']
 
 _description = [
     _('Here you can set some general configuration options '
@@ -161,7 +163,7 @@ def change_home_page(shortcut_id):
     """
     url = _home_page_scid2url(shortcut_id)
     if url is None:
-        url = '/plinth/'  	# fall back to default url if scid is unknown.
+        url = '/plinth/'  # fall back to default url if scid is unknown.
 
     # URL may be a reverse_lazy() proxy
     actions.superuser_run('config', ['set-home-page', str(url)])
@@ -182,6 +184,16 @@ def set_advanced_mode(advanced_mode):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     _migrate_home_page_config()
+
+    # systemd-journald is socket activated, it may not be running and it does
+    # not support reload.
+    actions.superuser_run('service', ['try-restart', 'systemd-journald'])
+    # rsyslog when enabled, is activated by syslog.socket (shipped by systemd).
+    # See: https://www.freedesktop.org/wiki/Software/systemd/syslog/ .
+    actions.superuser_run('service', ['disable', 'rsyslog'])
+    # Ensure that rsyslog is not started by something else as it is installed
+    # by default on Debian systems.
+    actions.superuser_run('service', ['mask', 'rsyslog'])
 
 
 def _migrate_home_page_config():
