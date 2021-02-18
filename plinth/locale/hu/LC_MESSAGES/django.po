@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-11 17:23-0500\n"
-"PO-Revision-Date: 2021-02-01 18:42+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2021-02-19 15:50+0000\n"
+"Last-Translator: Benedek Nagy <nbenedek@protonmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hu/>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.5\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -154,10 +154,12 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Automatikus biztonsági mentések ütemezésének engedélyezése. Ha lehet, "
+"használj egy titkosított távoli helyet, vagy egy extra külső lemezt."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Ütemezett biztonsági mentés engedélyezése"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -172,12 +174,13 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"Egy biztonsági mentés kudarcot vallott. Az elmúlt {error_count} biztonsági "
+"mentésre tett próbálkozás nem sikerült. A legutóbbi hibaüzenet: "
+"{error_message}"
 
 #: plinth/modules/backups/__init__.py:250
-#, fuzzy
-#| msgid "Existing Backups"
 msgid "Error During Backup"
-msgstr "Meglévő biztonsági másolatok"
+msgstr "Hiba történt a biztonsági másolat készítése közben"
 
 #: plinth/modules/backups/forms.py:33
 #, python-brace-format
@@ -186,27 +189,33 @@ msgstr "{app} (Nincs mit menteni)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Ütemezett biztonsági másolatok engedélyezése"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Ha engedélyezed, a rendszer mindennap, minden héten, vagy pedig minden "
+"hónapban készít egy biztonsági másolatot. A régi biztonsági másolatok "
+"törlődnek."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "A megörzendő napi biztonsági másolatok száma"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Ennyi biztonsági másolatot őriz meg a rendszer, az összes többit pedig "
+"törli. Ha \"0\"-ás érték letiltja az ilyen típusú biztonsági másolatokat. Ez "
+"mindennap egy meghatározott órában lép működésbe."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Megörzendő heti biztonsági másolatok száma"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
@@ -216,7 +225,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Megörzendő havi biztonsági másolatok száma"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -505,7 +514,7 @@ msgstr "Ez a tároló titkosított"
 
 #: plinth/modules/backups/templates/backups_repository.html:29
 msgid "Schedule"
-msgstr ""
+msgstr "Ütemezés"
 
 #: plinth/modules/backups/templates/backups_repository.html:40
 msgid "Unmount Location"
@@ -640,13 +649,11 @@ msgstr "Állomás ellenőrzése"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "A biztonsági másolatok készítésének ütemezése frissült."
 
 #: plinth/modules/backups/views.py:74
-#, fuzzy
-#| msgid "Create Backup"
 msgid "Schedule Backups"
-msgstr "Biztonsági másolat létrehozása"
+msgstr "Biztonsági másolatok ütemezése"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
@@ -3829,6 +3836,8 @@ msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
+"Automatikus (DHCP): Automatikus konfigurálás, a hálózat "
+"internetkapcsolatának használata"
 
 #: plinth/modules/networks/forms.py:44
 msgid ""
