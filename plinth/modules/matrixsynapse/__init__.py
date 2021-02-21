@@ -21,7 +21,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.utils import is_non_empty_file
+from plinth.utils import format_lazy, is_non_empty_file
 
 from . import manifest
 
@@ -41,10 +41,10 @@ _description = [
       'synchronization and does not require phone numbers to work. Users on a '
       'given Matrix server can converse with users on all other Matrix '
       'servers via federation.'),
-    _('To communicate, you can use the '
-      '<a href="https://matrix.org/docs/projects/">available clients</a> '
-      'for mobile, desktop and the web. '
-      '<a href="https://element.io/">Element</a> client is recommended.')
+    format_lazy(
+        _('Matrix Synapse needs a STUN/TURN server for audio/video calls. '
+          'Install the <a href={coturn_url}>Coturn</a> app or configure '
+          'an external server.'), coturn_url=reverse_lazy('coturn:index'))
 ]
 
 depends = ['coturn']
