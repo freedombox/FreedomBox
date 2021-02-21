@@ -6,7 +6,6 @@ Feature: Coturn STUN/TURN Server
 
 Background:
   Given I'm a logged in user
-  And advanced mode is on
   And the coturn application is installed
 
 Scenario: Enable coturn application

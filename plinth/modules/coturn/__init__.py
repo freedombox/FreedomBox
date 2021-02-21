@@ -61,7 +61,7 @@ class CoturnApp(app_module.App):
 
         menu_item = menu.Menu('menu-coturn', info.name, info.short_description,
                               info.icon_filename, 'coturn:index',
-                              parent_url_name='apps', advanced=True)
+                              parent_url_name='apps')
         self.add(menu_item)
 
         firewall = Firewall('firewall-coturn', info.name,
