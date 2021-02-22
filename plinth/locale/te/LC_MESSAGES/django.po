@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-05 23:02-0500\n"
+"POT-Creation-Date: 2021-02-11 17:23-0500\n"
 "PO-Revision-Date: 2020-10-26 13:27+0000\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -908,13 +908,13 @@ msgstr ""
 
 #: plinth/modules/bepasty/views.py:91 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
-#: plinth/modules/tor/views.py:157
+#: plinth/modules/tor/views.py:157 plinth/modules/zoph/views.py:69
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
 #: plinth/modules/bepasty/views.py:94 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
-#: plinth/modules/tor/views.py:159
+#: plinth/modules/tor/views.py:159 plinth/modules/zoph/views.py:72
 msgid "An error occurred during configuration."
 msgstr "అక్రుతీకరణలో ఒక పొరపాటు జరిగింది."
 
@@ -5997,7 +5997,7 @@ msgstr "ఈ ఫోల్డర్‌లోని ఫైల్‌లను లి
 #: plinth/modules/sharing/forms.py:34
 #, fuzzy
 #| msgid "User groups who can read the files in the share"
-msgid "User groups that can read the files in the share"
+msgid "User groups that can read the files in the share:"
 msgstr "వాటాలోని ఫైళ్లను చదవగలిగే వినియోగదారు సమూహాలు"
 
 #: plinth/modules/sharing/forms.py:36
@@ -7034,12 +7034,10 @@ msgid "Could not start distribution update"
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:212
-#, python-format
 msgid ""
 "There is not enough free space in the root partition to start the "
-"distribution update. Please ensure at least 5 GB, and at least 10% of the "
-"total space, is free. Distribution update will be retried after 24 hours, if "
-"enabled."
+"distribution update. Please ensure at least 5 GB is free. Distribution "
+"update will be retried after 24 hours, if enabled."
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:223
@@ -7864,6 +7862,59 @@ msgstr "అనుసంధానం తొలగించు"
 #| msgid "{name} deleted."
 msgid "Server deleted."
 msgstr "{name} తొలగించబడింది."
+
+#: plinth/modules/zoph/__init__.py:33
+#, python-brace-format
+msgid ""
+"Zoph manages your photo collection. Photos are stored on your {box_name}, "
+"under your control. Instead of focusing on galleries for public display, "
+"Zoph focuses on managing them for your own use, organizing them by who took "
+"them, where they were taken, and who is in them. Photos can be linked to "
+"multiple hierarchical albums and categories. It is easy to find all photos "
+"containing a person, or photos taken on a date, or photos taken at a "
+"location using search, map and calendar views. Individual photos can be "
+"shared with others by sending a direct link."
+msgstr ""
+
+#: plinth/modules/zoph/__init__.py:44
+#, python-brace-format
+msgid ""
+"The {box_name} user who setup Zoph will also become the administrator in "
+"Zoph. For additional users, accounts must be created both in {box_name} and "
+"in Zoph with the same user name."
+msgstr ""
+
+#: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
+msgid "Zoph"
+msgstr ""
+
+#: plinth/modules/zoph/__init__.py:63
+msgid "Photo Organizer"
+msgstr ""
+
+#: plinth/modules/zoph/forms.py:14
+msgid "Enable OpenStreetMap for maps"
+msgstr ""
+
+#: plinth/modules/zoph/forms.py:15
+msgid ""
+"When enabled, requests will be made to OpenStreetMap servers from user's "
+"browser. This impacts privacy."
+msgstr ""
+
+#: plinth/modules/zoph/templates/zoph-pre-setup.html:15
+#: plinth/modules/zoph/templates/zoph-pre-setup.html:28
+#, fuzzy
+#| msgid "Start Setup"
+msgid "Setup"
+msgstr "అమరికను ప్రారంభించు"
+
+#: plinth/modules/zoph/templates/zoph-pre-setup.html:18
+#, python-format
+msgid ""
+"User account <strong>%(username)s</strong> will become the administrator "
+"account for Zoph."
+msgstr ""
 
 #: plinth/network.py:29
 msgid "PPPoE"

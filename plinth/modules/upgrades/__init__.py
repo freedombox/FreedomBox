@@ -210,9 +210,9 @@ def check_dist_upgrade(_):
             title = ugettext_noop('Could not start distribution update')
             message = ugettext_noop(
                 'There is not enough free space in the root partition to '
-                'start the distribution update. Please ensure at least 5 GB, '
-                'and at least 10% of the total space, is free. Distribution '
-                'update will be retried after 24 hours, if enabled.')
+                'start the distribution update. Please ensure at least 5 GB '
+                'is free. Distribution update will be retried after 24 hours,'
+                ' if enabled.')
             Notification.update_or_create(
                 id='upgrades-dist-upgrade-free-space', app_id='upgrades',
                 severity='warning', title=title, message=message, actions=[{

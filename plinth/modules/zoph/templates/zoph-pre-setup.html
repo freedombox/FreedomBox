@@ -1,0 +1,31 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block pagetitle %}
+  <h2>{{ name }}</h2>
+{% endblock %}
+
+
+{% block configuration %}
+  <h3>{% trans "Setup" %}</h3>
+
+  <p>
+    {% blocktrans trimmed with username=request.user.username %}
+      User account <strong>{{ username }}</strong> will become the administrator
+      account for Zoph.
+    {% endblocktrans %}
+  </p>
+
+  <form class="form form-configuration" method="post">
+    {% csrf_token %}
+
+    <input type="submit" class="btn btn-primary" name="zoph_setup"
+           value="{% trans "Setup" %}"/>
+  </form>
+
+{% endblock %}

@@ -379,6 +379,13 @@ def app_disable(browser, app_name):
     _change_app_status(browser, app_name, 'disabled')
 
 
+def app_is_enabled(browser, app_name):
+    """Return whether the app is enabled."""
+    nav_to_module(browser, app_name)
+    should_enable_field = browser.find_by_id('id_should_enable')
+    return should_enable_field.value == 'False'
+
+
 def app_can_be_disabled(browser, app_name):
     """Return whether the application can be disabled."""
     nav_to_module(browser, app_name)
