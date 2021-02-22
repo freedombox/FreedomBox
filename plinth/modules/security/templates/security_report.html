@@ -10,14 +10,18 @@
   <h3>{% trans "Security Report" %}</h3>
   <p>
     {% blocktrans trimmed with count=freedombox_report.vulns %}
-      The installed version of FreedomBox has {{ count }} reported security
-      vulnerabilities.
+      There are {{ count }} reported security vulnerabilities in the FreedomBox
+      app, which provides the core services and user interface for a FreedomBox
+      server.
     {% endblocktrans %}
   </p>
   <p>
     {% blocktrans trimmed %}
       The following table lists the current reported number, and historical
       count, of security vulnerabilities for each installed app.
+      More information on the vulnerabilities can be found on the
+      <a href="https://security-tracker.debian.org/tracker/">Debian Security
+	Bug Tracker</a>.
     {% endblocktrans %}
   </p>
   <p>
