@@ -83,6 +83,29 @@ development environment inside a systemd-nspawn container.
     host$ ./container ssh
     ```
 
+6. The default distribution used by the container script is "testing", but you
+   can choose a different distribution (e.g. "stable") in two ways.
+
+   1. Using an environment variable.
+
+   ```bash
+   host$ DISTRIBUTION=stable ./container up
+   host$ DISTRIBUTION=stable ./container ssh
+   ```
+
+   ```bash
+   host$ export DISTRIBUTION=stable
+   host$ ./container up
+   host$ ./container ssh
+   ```
+
+   2. Using the `--distribution` option for each command.
+
+   ```bash
+   host$ ./container up --distribution=stable
+   host$ ./container ssh --distribution=stable
+   ```
+
 #### Using after Setup
 
 After logging into the container, the source code is available in `/freedombox`

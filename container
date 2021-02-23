@@ -261,10 +261,16 @@ def parse_arguments():
 
     distributions = list(URLS.keys())
 
+    distribution = os.environ.get('DISTRIBUTION')
+
+    default_distribution = 'testing'
+    if distribution and distribution in distributions:
+        default_distribution = distribution
+
     # Up
     subparser = subparsers.add_parser('up', help='Bring up the container')
     subparser.add_argument(
-        '--distribution', choices=distributions, default='testing',
+        '--distribution', choices=distributions, default=default_distribution,
         help='Distribution of the image to download and setup')
     subparser.add_argument('--image-size', default='16G',
                            help='Disk image size to resize to after download')
@@ -273,20 +279,20 @@ def parse_arguments():
     subparser = subparsers.add_parser(
         'ip', help='Print the IP address of the container.')
     subparser.add_argument(
-        '--distribution', choices=distributions, default='testing',
+        '--distribution', choices=distributions, default=default_distribution,
         help='Distribution of the container to print IP address')
 
     # ssh
     subparser = subparsers.add_parser('ssh', help='SSH into the container')
     subparser.add_argument('--distribution', choices=distributions,
-                           default='testing',
+                           default=default_distribution,
                            help='Distribution of the container to SSH into')
 
     # Run tests
     subparser = subparsers.add_parser('run-tests',
                                       help='Run tests in the container')
     subparser.add_argument('--distribution', choices=distributions,
-                           default='testing',
+                           default=default_distribution,
                            help='Distribution of the container to run tests')
     subparser.add_argument(
         '--pytest-args', nargs='...',
@@ -295,21 +301,21 @@ def parse_arguments():
     # Stop
     subparser = subparsers.add_parser('stop', help='Stop the container')
     subparser.add_argument('--distribution', choices=distributions,
-                           default='testing',
+                           default=default_distribution,
                            help='Distribution of the container to stop')
 
     # Destroy
     subparser = subparsers.add_parser('destroy',
                                       help='Destroy the container image')
     subparser.add_argument('--distribution', choices=distributions,
-                           default='testing',
+                           default=default_distribution,
                            help='Distribution of the image to delete')
 
     # Update
     subparser = subparsers.add_parser(
         'update', help='Update the container image to the latest version')
     subparser.add_argument('--distribution', choices=distributions,
-                           default='testing',
+                           default=default_distribution,
                            help='Distribution of the image to update')
 
     return parser.parse_args()
