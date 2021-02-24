@@ -1,23 +1,28 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+include: https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/salsa-ci.yml
+
 image: registry.salsa.debian.org/freedombox-team/freedombox:gitlabci
 
-before_script:
-  - export DEBIAN_FRONTEND=noninteractive
-  - apt-get update
-  - apt-get build-dep -y .  # Dependencies of the plinth Debian package
-  - apt-get install -y $(./run --list-dependencies)  # Module dependencies
-
 stages:
+  - provisioning
+  - build
+  - publish
   - test
-  - package
 
-run-code-quality-tests:
+code-quality:
   stage: test
+  needs: []
   script:
     - python3 -m flake8 --exclude actions/domainname-change,actions/dynamicdns,actions/hostname-change,actions/networks plinth actions/*
 
-run-unit-tests:
+unit-tests:
   stage: test
+  needs: []
+  before_script:
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get update
+    - apt-get build-dep -y .  # Dependencies of the freedombox Debian package
+    - apt-get install -y $(./run --list-dependencies)  # Module dependencies
   script:
     - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
     - echo "tester:password" | chpasswd
@@ -30,18 +35,51 @@ run-unit-tests:
     paths:
       - test-coverage-report/*
 
-run-doc-tests:
+doc-tests:
   stage: test
+  needs: []
   script:
     - doc/scripts/wikiparser.py
 
-build-debian-package:
-  stage: package
-  script:
-    - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -us -uc -b
-    - mkdir debian-package
-    - mv ../freedombox*.deb debian-package
+extract-source:
+    extends: .provisioning-extract-source
 
-  artifacts:
-    paths:
-      - debian-package/*
+build:
+    extends: .build-package
+
+build i386:
+    extends: .build-package-i386
+
+build source:
+    extends: .build-source-only
+
+test-build-any:
+    extends: .test-build-package-any
+
+test-build-all:
+    extends: .test-build-package-all
+
+# reprotest causes the pipeline to take too long (over 1 hour)
+#reprotest:
+#    extends: .test-reprotest
+
+lintian:
+    extends: .test-lintian
+
+autopkgtest:
+    extends: .test-autopkgtest
+
+blhc:
+    extends: .test-blhc
+
+piuparts:
+    extends: .test-piuparts
+
+missing-breaks:
+    extends: .test-missing-breaks
+
+rc-bugs:
+    extends: .test-rc-bugs
+
+aptly:
+    extends: .publish-aptly
