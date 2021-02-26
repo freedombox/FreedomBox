@@ -6,6 +6,7 @@ FreedomBox app to configure matrix-synapse server.
 import logging
 import os
 import pathlib
+from typing import List
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -17,12 +18,14 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.utils import is_non_empty_file
 
 from . import manifest
 
-version = 6
+version = 7
 
 managed_services = ['matrix-synapse']
 
@@ -44,14 +47,19 @@ _description = [
       '<a href="https://element.io/">Element</a> client is recommended.')
 ]
 
+depends = ['coturn']
+
 logger = logging.getLogger(__name__)
 
-SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
+CONF_DIR = "/etc/matrix-synapse/conf.d/"
+
 ORIG_CONF_PATH = '/etc/matrix-synapse/homeserver.yaml'
-STATIC_CONF_PATH = '/etc/matrix-synapse/conf.d/freedombox-static.yaml'
-LISTENERS_CONF_PATH = '/etc/matrix-synapse/conf.d/freedombox-listeners.yaml'
-REGISTRATION_CONF_PATH = \
-    '/etc/matrix-synapse/conf.d/freedombox-registration.yaml'
+SERVER_NAME_PATH = CONF_DIR + 'server_name.yaml'
+STATIC_CONF_PATH = CONF_DIR + 'freedombox-static.yaml'
+LISTENERS_CONF_PATH = CONF_DIR + 'freedombox-listeners.yaml'
+REGISTRATION_CONF_PATH = CONF_DIR + 'freedombox-registration.yaml'
+TURN_CONF_PATH = CONF_DIR + 'freedombox-turn.yaml'
+OVERRIDDEN_TURN_CONF_PATH = CONF_DIR + 'turn.yaml'
 
 app = None
 
@@ -110,6 +118,17 @@ class MatrixSynapseApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+        turn = MatrixSynapseTurnConsumer('turn-matrixsynapse')
+        self.add(turn)
+
+
+class MatrixSynapseTurnConsumer(TurnConsumer):
+    """Component to manage Coturn configuration for Matrix Synapse."""
+
+    def on_config_change(self, config: TurnConfiguration):
+        """Add or update STUN/TURN configuration."""
+        update_turn_configuration(config)
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
@@ -124,6 +143,10 @@ def setup(helper, old_version=None):
         helper.call('post', app.enable)
 
     app.get_component('letsencrypt-matrixsynapse').setup_certificates()
+
+    # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
+    config = app.get_component('turn-matrixsynapse').get_configuration()
+    update_turn_configuration(config, force=True)
 
 
 def upgrade(helper):
@@ -171,7 +194,21 @@ def get_configured_domain_name():
     return config['server_name']
 
 
-def get_public_registration_status():
+def get_turn_configuration() -> (List[str], str, bool):
+    """Return TurnConfiguration if setup else empty."""
+    for file_path, managed in ((OVERRIDDEN_TURN_CONF_PATH, False),
+                               (TURN_CONF_PATH, True)):
+        if is_non_empty_file(file_path):
+            with open(file_path) as config_file:
+                config, _, _ = load_yaml_guess_indent(config_file)
+                return (TurnConfiguration(None, config['turn_uris'],
+                                          config['turn_shared_secret']),
+                        managed)
+
+    return (TurnConfiguration(), True)
+
+
+def get_public_registration_status() -> bool:
     """Return whether public registration is enabled."""
     output = actions.superuser_run('matrixsynapse',
                                    ['public-registration', 'status'])
@@ -185,3 +222,16 @@ def get_certificate_status():
         return 'no-domains'
 
     return list(status.values())[0]
+
+
+def update_turn_configuration(config: TurnConfiguration, managed=True,
+                              force=False):
+    """Update the STUN/TURN server configuration."""
+    setup_helper = globals()['setup_helper']
+    if not force and setup_helper.get_state() == 'needs-setup':
+        return
+
+    params = ['configure-turn']
+    params += ['--managed'] if managed else []
+    actions.superuser_run('matrixsynapse', params,
+                          input=config.to_json().encode())

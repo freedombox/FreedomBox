@@ -4,7 +4,10 @@ Forms for the Matrix Synapse module.
 """
 
 from django import forms
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+
+from plinth.utils import format_lazy
 
 
 class MatrixSynapseForm(forms.Form):
@@ -13,3 +16,28 @@ class MatrixSynapseForm(forms.Form):
             'Enabling public registration means that anyone on the Internet '
             'can register a new account on your Matrix server. Disable this '
             'if you only want existing users to be able to use it.'))
+
+    enable_managed_turn = forms.BooleanField(
+        label=_('Automatically manage audio/video call setup'), required=False,
+        help_text=format_lazy(
+            _('Configures the local <a href={coturn_url}>coturn</a> app as '
+              'the STUN/TURN server for Matrix Synapse. Disable this if you '
+              'want to use a different STUN/TURN server.'),
+            coturn_url=reverse_lazy('coturn:index')))
+
+    # STUN/TURN server setup
+    turn_uris = forms.CharField(
+        label=_('STUN/TURN Server URIs'), required=False, strip=True,
+        widget=forms.Textarea(attrs={'rows': 4}),
+        help_text=_('List of public URIs of the STUN/TURN server, one on each '
+                    'line.'))
+
+    shared_secret = forms.CharField(
+        label=_('Shared Authentication Secret'), required=False, strip=True,
+        help_text=_('Shared secret used to compute passwords for the '
+                    'TURN server.'))
+
+    def clean_turn_uris(self):
+        """Normalize newlines in URIs."""
+        data = self.cleaned_data['turn_uris']
+        return '\n'.join([uri.strip() for uri in data.splitlines()])

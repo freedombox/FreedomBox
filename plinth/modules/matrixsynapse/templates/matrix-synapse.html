@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load static %}
 
 {% block description %}
   {% for paragraph in description %}
@@ -35,4 +36,9 @@
       {% endblocktrans %}
     </div>
   {% endif %}
+{% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript"
+          src="{% static 'matrixsynapse/matrixsynapse.js' %}"></script>
 {% endblock %}
