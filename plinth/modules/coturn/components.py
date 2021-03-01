@@ -73,7 +73,7 @@ class TurnConsumer(app.FollowerComponent):
         self._all[component_id] = self
 
     @classmethod
-    def list(cls) -> List[TurnConsumer]:
+    def list(cls) -> List[TurnConsumer]:  # noqa
         """Return a list of all Coturn components."""
         return cls._all.values()
 
