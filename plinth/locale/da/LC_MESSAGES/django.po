@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 17:23-0500\n"
+"POT-Creation-Date: 2021-02-28 20:13-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -1002,8 +1002,9 @@ msgstr "Opfrisk IP-adresse og domæner"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
-#: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:76
-#: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/pagekite/forms.py:76 plinth/modules/quassel/views.py:29
+#: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Konfiguration opdateret"
@@ -1333,7 +1334,7 @@ msgstr "Viser avancerede applikationer og funktionalitet"
 msgid "Hiding advanced apps and features"
 msgstr "Skjuler avancerede applikationer og funktionalitet"
 
-#: plinth/modules/coturn/__init__.py:32
+#: plinth/modules/coturn/__init__.py:34
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1345,7 +1346,7 @@ msgstr ""
 "WebRTC, SIP og andre kommunikationsservere kan bruge dette til at oprette et "
 "opkald mellem parter der ellers ikke kan oprette forbindelse til hinanden."
 
-#: plinth/modules/coturn/__init__.py:36
+#: plinth/modules/coturn/__init__.py:38
 msgid ""
 "It is not meant to be used directly by users. Servers such as matrix-synapse "
 "need to be configured with the details provided here."
@@ -1353,11 +1354,11 @@ msgstr ""
 "Den er ikke beregnet til at blive anvendt direkte af brugerne. Servere såsom "
 "matrix-synapse skal konfigureres med detaljerne som er angivet her."
 
-#: plinth/modules/coturn/__init__.py:53
+#: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
 msgstr "Coturn"
 
-#: plinth/modules/coturn/__init__.py:54
+#: plinth/modules/coturn/__init__.py:58
 msgid "VoIP Helper"
 msgstr "VoIP-hjælper"
 
@@ -1380,7 +1381,7 @@ msgid "Use the following URLs to configure your communication server:"
 msgstr ""
 "Brug de følgende webadresser til at konfigurere din kommunikationsserver:"
 
-#: plinth/modules/coturn/templates/coturn.html:26
+#: plinth/modules/coturn/templates/coturn.html:24
 msgid "Use the following shared authentication secret:"
 msgstr "Brug den følgende delte autentifikationshemmelighed:"
 
@@ -1934,7 +1935,7 @@ msgid "ejabberd"
 msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:65
-#: plinth/modules/matrixsynapse/__init__.py:69
+#: plinth/modules/matrixsynapse/__init__.py:77
 msgid "Chat Server"
 msgstr "Chatserver"
 
@@ -3060,7 +3061,7 @@ msgstr "Certifikatet for domænet {domain} blev trukket tilbage"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Fejl ved tilbagetrækning af certifikatet for domænet {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:37
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3070,30 +3071,60 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:41
+#: plinth/modules/matrixsynapse/__init__.py:45
+#, python-brace-format
 msgid ""
-"To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
-"\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
-"element.io/\">Element</a> client is recommended."
+"Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
+"<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:68
+#: plinth/modules/matrixsynapse/__init__.py:76
 #, fuzzy
 #| msgid "Chat Server (XMPP)"
 msgid "Matrix Synapse"
 msgstr "Chat-server (XMPP)"
 
-#: plinth/modules/matrixsynapse/forms.py:12
+#: plinth/modules/matrixsynapse/forms.py:15
 #, fuzzy
 #| msgid "Enable application"
 msgid "Enable Public Registration"
 msgstr "Aktiver applikation"
 
-#: plinth/modules/matrixsynapse/forms.py:13
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:21
+msgid "Automatically manage audio/video call setup"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:23
+#, python-brace-format
+msgid ""
+"Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
+"server for Matrix Synapse. Disable this if you want to use a different STUN/"
+"TURN server."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:30
+msgid "STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:32
+msgid "List of public URIs of the STUN/TURN server, one on each line."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:36
+#, fuzzy
+#| msgid "Authentication Mode"
+msgid "Shared Authentication Secret"
+msgstr "Autentificeringstilstand"
+
+#: plinth/modules/matrixsynapse/forms.py:37
+msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:12
@@ -3122,7 +3153,7 @@ msgid ""
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:14
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:15
 #, fuzzy, python-format
 #| msgid ""
 #| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
@@ -3137,31 +3168,19 @@ msgstr ""
 "vil se ud som <i>brugernavn@%(domainname)s</i>. Du kan konfigurere systemets "
 "domæne på <a href=\"%(index_url)s\">Konfigurer</a> siden."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:21
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:22
 msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
-
-#: plinth/modules/matrixsynapse/views.py:85
-#, fuzzy
-#| msgid "Application enabled"
-msgid "Public registration enabled"
-msgstr "Applikation aktiveret"
-
-#: plinth/modules/matrixsynapse/views.py:90
-#, fuzzy
-#| msgid "Application disabled"
-msgid "Public registration disabled"
-msgstr "Applikation deaktiveret"
 
 #: plinth/modules/mediawiki/__init__.py:28
 msgid ""
@@ -8416,6 +8435,16 @@ msgstr "%(percentage)s%% færdig"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Application enabled"
+#~ msgid "Public registration enabled"
+#~ msgstr "Applikation aktiveret"
+
+#, fuzzy
+#~| msgid "Application disabled"
+#~ msgid "Public registration disabled"
+#~ msgstr "Applikation deaktiveret"
 
 #, python-brace-format
 #~ msgid ""
