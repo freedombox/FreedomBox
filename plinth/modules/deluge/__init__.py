@@ -98,6 +98,6 @@ class DelugeApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'deluge', ['setup'])
     add_user_to_share_group(SYSTEM_USER)
+    helper.call('post', actions.superuser_run, 'deluge', ['setup'])
     helper.call('post', app.enable)
