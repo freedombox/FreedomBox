@@ -5,7 +5,7 @@ This document provides reference information for FreedomBox **contribution** hac
 1. [Setting up and using development environments](#development-environments-setting-up-and-their-usage)
 1. [Contributing translations + how to make/keep FreedomBox international](#makingkeeping-freedombox-international)
 1. [Testing](#testing)
-1. [Building user documentation](#building-the-user-documentation-separately)
+1. [Documentation](#documentation)
 1. [Submitting your changes](#submitting-your-changes)
 1. [Other related stuff](#miscelanea)
 
@@ -465,7 +465,9 @@ $ py.test-3 -n 4 --dist=loadfile --include-functional -m essential
 [back to index](#hacking)
 
 
-## Building the User Documentation Separately
+## Documentation
+
+### Building the User Documentation Separately
 
 FreedomBox Service (Plinth) man page is built from DocBook source in the `doc/`
 directory. FreedomBox manual is downloaded from the wiki is also available
@@ -476,6 +478,10 @@ To build the documentation separately, run:
 ```bash
 guest$ make -C doc
 ```
+
+### Building Developer documentation
+
+See [README.rst](doc/dev/README.rst) in `doc/dev` directory.
 
 
 [back to index](#hacking)
