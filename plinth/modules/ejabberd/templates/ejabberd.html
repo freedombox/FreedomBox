@@ -3,8 +3,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
-{% load i18n %}
 {% load bootstrap %}
+{% load i18n %}
+{% load static %}
 
 {% block description %}
 
@@ -27,4 +28,9 @@
     {% endif %}
   </p>
 
+{% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript"
+          src="{% static 'ejabberd/ejabberd.js' %}"></script>
 {% endblock %}

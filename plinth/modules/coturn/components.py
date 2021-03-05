@@ -2,11 +2,10 @@
 """App component for other apps to manage their STUN/TURN server configuration.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # Can be removed in Python 3.10
 
 import json
 from dataclasses import dataclass, field
-from typing import List
 
 from plinth import app
 
@@ -27,15 +26,15 @@ class TurnConfiguration:
 
     """
     domain: str = None
-    uris: List[str] = field(default_factory=list)
+    uris: list[str] = field(default_factory=list)
     shared_secret: str = None
 
     def __post_init__(self):
         """Generate URIs after object initialization if necessary."""
         if self.domain and not self.uris:
             self.uris = [
-                f'{proto1}:{self.domain}:3478?transport={proto2}'
-                for proto1 in ['stun', 'turn'] for proto2 in ['tcp', 'udp']
+                f'{typ}:{self.domain}:3478?transport={transport}'
+                for typ in ['stun', 'turn'] for transport in ['tcp', 'udp']
             ]
 
     def to_json(self) -> str:
@@ -73,7 +72,7 @@ class TurnConsumer(app.FollowerComponent):
         self._all[component_id] = self
 
     @classmethod
-    def list(cls) -> List[TurnConsumer]:  # noqa
+    def list(cls) -> list[TurnConsumer]:  # noqa
         """Return a list of all Coturn components."""
         return cls._all.values()
 

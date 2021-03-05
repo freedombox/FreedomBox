@@ -9,7 +9,6 @@ import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
@@ -17,6 +16,7 @@ from plinth.daemon import Daemon
 from plinth.modules import config
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
@@ -26,7 +26,7 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 3
+version = 4
 
 managed_services = ['ejabberd']
 
@@ -44,8 +44,14 @@ _description = [
           'When enabled, ejabberd can be accessed by any '
           '<a href="{users_url}"> user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'),
-        jsxc_url=reverse_lazy('jsxc:index'))
+        jsxc_url=reverse_lazy('jsxc:index')),
+    format_lazy(
+        _('ejabberd needs a STUN/TURN server for audio/video calls. '
+          'Install the <a href={coturn_url}>Coturn</a> app or configure '
+          'an external server.'), coturn_url=reverse_lazy('coturn:index'))
 ]
+
+depends = ['coturn']
 
 logger = logging.getLogger(__name__)
 
@@ -113,9 +119,20 @@ class EjabberdApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+        turn = EjabberdTurnConsumer('turn-ejabberd')
+        self.add(turn)
+
         pre_hostname_change.connect(on_pre_hostname_change)
         post_hostname_change.connect(on_post_hostname_change)
         domain_added.connect(on_domain_added)
+
+
+class EjabberdTurnConsumer(TurnConsumer):
+    """Component to manage Coturn configuration for ejabberd."""
+
+    def on_config_change(self, config):
+        """Add or update STUN/TURN configuration."""
+        update_turn_configuration(config)
 
 
 def setup(helper, old_version=None):
@@ -133,6 +150,10 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'ejabberd',
                 ['setup', '--domainname', domainname])
     helper.call('post', app.enable)
+
+    # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
+    configuration = app.get_component('turn-ejabberd').get_configuration()
+    update_turn_configuration(configuration, force=True)
 
 
 def get_domains():
@@ -194,3 +215,23 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     if name not in conf['domains']:
         actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
         app.get_component('letsencrypt-ejabberd').setup_certificates()
+
+
+def update_turn_configuration(config: TurnConfiguration, managed=True,
+                              force=False):
+    """Update ejabberd's STUN/TURN server configuration."""
+    setup_helper = globals()['setup_helper']
+    if not force and setup_helper.get_state() == 'needs-setup':
+        return
+
+    params = ['configure-turn']
+    params += ['--managed'] if managed else []
+    actions.superuser_run('ejabberd', params, input=config.to_json().encode())
+
+
+def get_turn_configuration() -> (TurnConfiguration, bool):
+    """Get the latest STUN/TURN configuration."""
+    json_config = actions.superuser_run('ejabberd', ['get-turn-config'])
+    tc, managed = json.loads(json_config)
+    return (TurnConfiguration(tc['domain'], tc['uris'],
+                              tc['shared_secret']), managed)

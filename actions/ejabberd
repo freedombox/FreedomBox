@@ -7,20 +7,22 @@ Configuration helper for the ejabberd service
 import argparse
 import json
 import os
-import pathlib
+import re
 import shutil
 import socket
 import subprocess
+import sys
 from distutils.version import LooseVersion as LV
-
-from ruamel.yaml import YAML, scalarstring
+from pathlib import Path
 
 from plinth import action_utils
+from ruamel.yaml import YAML, scalarstring
 
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
 EJABBERD_ORIG_CERT = '/etc/ejabberd/ejabberd.pem'
+EJABBERD_MANAGED_COTURN = '/etc/ejabberd/freedombox_managed_coturn'
 IQDISC_DEPRECATED_VERSION = LV('18.03')
 MOD_IRC_DEPRECATED_VERSION = LV('18.06')
 
@@ -70,6 +72,18 @@ def parse_arguments():
                                        help='Add a domain name to ejabberd')
     add_domain.add_argument('--domainname', help='New domain name')
 
+    # Configure STUN/TURN server for use with ejabberd
+    turn = subparsers.add_parser(
+        'configure-turn', help='Configure a TURN server for use with ejabberd')
+    turn.add_argument(
+        '--managed', required=False, default=False, action='store_true',
+        help='Whether configuration is provided by user or auto-managed by '
+        'FreedomBox')
+
+    subparsers.add_parser(
+        'get-turn-config',
+        help='Get the latest STUN/TURN configuration in JSON format')
+
     # Switch/check Message Archive Management (MAM) in ejabberd config
     help_MAM = 'Switch or check Message Archive Management (MAM).'
     mam = subparsers.add_parser('mam', help=help_MAM)
@@ -107,6 +121,8 @@ def subcommand_setup(arguments):
     for listen_port in conf['listen']:
         if 'tls' in listen_port:
             listen_port['tls'] = False
+        if 'use_turn' in listen_port:
+            conf['listen'].remove(listen_port)  # Use coturn instead
 
     conf['auth_method'] = 'ldap'
     conf['ldap_servers'] = [scalarstring.DoubleQuotedScalarString('localhost')]
@@ -154,7 +170,7 @@ def upgrade_config(domain):
             if listen_port['port'] == 5280:
                 listen_port['port'] = 5443
 
-    cert_dir = pathlib.Path('/etc/ejabberd/letsencrypt') / domain
+    cert_dir = Path('/etc/ejabberd/letsencrypt') / domain
     cert_file = str(cert_dir / 'ejabberd.pem')
     cert_file = scalarstring.DoubleQuotedScalarString(cert_file)
     conf['s2s_certfile'] = cert_file
@@ -280,6 +296,81 @@ def subcommand_mam(argument):
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         yaml.dump(conf, file_handle)
+
+    if action_utils.service_is_running('ejabberd'):
+        subprocess.call(['ejabberdctl', 'reload_config'])
+
+
+def _generate_service(uri: str) -> dict:
+    """Generate ejabberd mod_stun_disco service config from Coturn URI."""
+    pattern = re.compile(r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)')
+    typ, domain, port, transport = pattern.match(uri).groups()
+    return {
+        "host": domain,
+        "port": int(port),
+        "type": typ,
+        "transport": transport,
+        "restricted": False
+    }
+
+
+def _generate_uris(services: list[dict]) -> list[str]:
+    """Generate STUN/TURN URIs from ejabberd mod_stun_disco service config."""
+    return [
+        f"{s['type']}:{s['host']}:{s['port']}?transport={s['transport']}"
+        for s in services
+    ]
+
+
+def subcommand_get_turn_config(_):
+    """Get the latest STUN/TURN configuration in JSON format."""
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = yaml.load(file_handle)
+
+    mod_stun_disco_config = conf['modules']['mod_stun_disco']
+    managed = os.path.exists(EJABBERD_MANAGED_COTURN)
+
+    if bool(mod_stun_disco_config):
+        print(
+            json.dumps([{
+                'domain': '',
+                'uris': _generate_uris(mod_stun_disco_config['services']),
+                'shared_secret': mod_stun_disco_config['secret'],
+            }, managed]))
+    else:
+        print(
+            json.dumps([{
+                'domain': None,
+                'uris': [],
+                'shared_secret': None
+            }, managed]))
+
+
+def subcommand_configure_turn(arguments):
+    """Set parameters for the STUN/TURN server to use with ejabberd."""
+    turn_server_config = json.loads(''.join(sys.stdin))
+    uris = turn_server_config['uris']
+    mod_stun_disco_config = {}
+
+    if turn_server_config['uris'] and turn_server_config['shared_secret']:
+        mod_stun_disco_config = {
+            'credentials_lifetime': '1000d',
+            'secret': turn_server_config['shared_secret'],
+            'services': [_generate_service(uri) for uri in uris]
+        }
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = yaml.load(file_handle)
+
+    conf['modules']['mod_stun_disco'] = mod_stun_disco_config
+
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        yaml.dump(conf, file_handle)
+
+    if arguments.managed:
+        Path(EJABBERD_MANAGED_COTURN).touch()
+    else:
+        Path(EJABBERD_MANAGED_COTURN).unlink(missing_ok=True)
 
     if action_utils.service_is_running('ejabberd'):
         subprocess.call(['ejabberdctl', 'reload_config'])
