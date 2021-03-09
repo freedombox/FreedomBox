@@ -21,6 +21,9 @@ from plinth.tests import config as test_config
 _cleanup_users = None
 _cleanup_groups = None
 
+# Temporary admin user created if an admin doesn't already exist
+PYTEST_ADMIN_USERNAME = 'pytest_admin'
+
 
 def _is_ldap_set_up():
     """Return whether LDAP is set up."""
@@ -115,9 +118,19 @@ def fixture_auto_cleanup_users_groups(needs_root, load_cfg):
     _cleanup_groups = set()
     yield
 
+    pytest_admin_exists = PYTEST_ADMIN_USERNAME in _cleanup_users
+
     for user in _cleanup_users:
+        if user == PYTEST_ADMIN_USERNAME:
+            continue
         try:
             _delete_user(user)
+        except Exception:
+            pass
+
+    if pytest_admin_exists:
+        try:
+            _delete_user(PYTEST_ADMIN_USERNAME)
         except Exception:
             pass
 
@@ -169,8 +182,7 @@ def _create_admin_if_does_not_exist():
     """Create a main admin user"""
     admin_user, _ = _get_admin_user_password()
     if not admin_user:
-        username = "pytest_admin"
-        _create_user(username, ['admin'])
+        _create_user(PYTEST_ADMIN_USERNAME, ['admin'])
 
 
 def _get_admin_user_password():
@@ -184,9 +196,8 @@ def _get_admin_user_password():
     if test_config.admin_username in admin_users:
         return (test_config.admin_username, test_config.admin_password)
 
-    pytest_admin_username = 'pytest_admin'
-    if pytest_admin_username in admin_users:
-        return (pytest_admin_username, pytest_admin_username + '_passwd')
+    if PYTEST_ADMIN_USERNAME in admin_users:
+        return (PYTEST_ADMIN_USERNAME, PYTEST_ADMIN_USERNAME + '_passwd')
 
     return (admin_users[0], admin_users[0] + '_passwd')
 
