@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 17:23-0500\n"
-"PO-Revision-Date: 2021-01-23 17:44+0000\n"
+"POT-Creation-Date: 2021-02-28 20:13-0500\n"
+"PO-Revision-Date: 2021-02-14 10:50+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/nb_NO/>\n"
@@ -164,6 +164,9 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Skru på automatisk og regelmessig sikkerhetskopiering for tryggere data. "
+"Bruke helst et kryptert fjernlager eller en ekstern ekstradisk som "
+"sikkerhetslager."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
@@ -206,7 +209,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
-msgstr ""
+msgstr "Antall daglige sikkerhetskopier som tas vare på"
 
 #: plinth/modules/backups/forms.py:59
 msgid ""
@@ -216,7 +219,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Antall ukentlige sikkerhetskopier å ta vare på"
 
 #: plinth/modules/backups/forms.py:66
 msgid ""
@@ -226,7 +229,7 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:71
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Antall månedlige sikkerhetskopier å ta vare på"
 
 #: plinth/modules/backups/forms.py:73
 msgid ""
@@ -237,11 +240,11 @@ msgstr ""
 
 #: plinth/modules/backups/forms.py:78
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Tidspunkt sikkerhetskopiering skal starte"
 
 #: plinth/modules/backups/forms.py:79
 msgid "In 24 hour format."
-msgstr ""
+msgstr "I 24-timersformat."
 
 #: plinth/modules/backups/forms.py:82 plinth/modules/backups/forms.py:104
 msgid "Included apps"
@@ -586,9 +589,10 @@ msgid ""
 msgstr ""
 "\n"
 "      Last opp en sikkerhetskopi hentet fra en annen %(box_name)s for å "
-"tilbakeføre dens innhold.\n"
-"      Du kan velge programmene du ønsker å importere etter å ha lastet opp "
-"en sikkerhetskopifil.\n"
+"tilbakeføre dens\n"
+"      innhold. Du kan velge programmene du ønsker å importere etter å ha "
+"lastet opp en\n"
+"      sikkerhetskopifil.\n"
 "    "
 
 #: plinth/modules/backups/templates/backups_upload.html:27
@@ -1012,8 +1016,9 @@ msgstr "Oppdater IP-adresse og domener"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
-#: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:76
-#: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/pagekite/forms.py:76 plinth/modules/quassel/views.py:29
+#: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Oppsett oppdatert"
@@ -1349,7 +1354,7 @@ msgstr "Viser avanserte programmer og funksjoner"
 msgid "Hiding advanced apps and features"
 msgstr "Viser ikke avanserte programmer og funksjoner"
 
-#: plinth/modules/coturn/__init__.py:32
+#: plinth/modules/coturn/__init__.py:34
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1361,7 +1366,7 @@ msgstr ""
 "kommunikasjonstjenere kan bruke det for å etablere en samtale mellom parter "
 "som ellers ikke ville kunne kontakte hverandre."
 
-#: plinth/modules/coturn/__init__.py:36
+#: plinth/modules/coturn/__init__.py:38
 msgid ""
 "It is not meant to be used directly by users. Servers such as matrix-synapse "
 "need to be configured with the details provided here."
@@ -1369,11 +1374,11 @@ msgstr ""
 "Det er ikke ment å brukes direkte av brukere. Tjenere som matrix-synapse må "
 "settes opp med detaljene herfra."
 
-#: plinth/modules/coturn/__init__.py:53
+#: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
 msgstr "Coturn"
 
-#: plinth/modules/coturn/__init__.py:54
+#: plinth/modules/coturn/__init__.py:58
 msgid "VoIP Helper"
 msgstr "VoIP-hjelper"
 
@@ -1395,7 +1400,7 @@ msgstr ""
 msgid "Use the following URLs to configure your communication server:"
 msgstr "Bruk følgende nettadresser for å sette opp din kommunikasjonstjener:"
 
-#: plinth/modules/coturn/templates/coturn.html:26
+#: plinth/modules/coturn/templates/coturn.html:24
 #, fuzzy
 #| msgid "The following storage devices are in use:"
 msgid "Use the following shared authentication secret:"
@@ -1545,7 +1550,7 @@ msgstr ""
 
 #: plinth/modules/diagnostics/__init__.py:227
 msgid "Low Memory"
-msgstr ""
+msgstr "Lite minne"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:11
@@ -1567,6 +1572,9 @@ msgid ""
 "          App: %(app_name)s\n"
 "        "
 msgstr ""
+"\n"
+"          Program: %(app_name)s\n"
+"        "
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
@@ -1965,7 +1973,7 @@ msgid "ejabberd"
 msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:65
-#: plinth/modules/matrixsynapse/__init__.py:69
+#: plinth/modules/matrixsynapse/__init__.py:77
 msgid "Chat Server"
 msgstr "Nettprat-tjener"
 
@@ -3081,7 +3089,7 @@ msgstr "Vellykket sletting av sertifikatet for domenet {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Klarte ikke å slette sertifikatet for domenet {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:37
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3097,30 +3105,22 @@ msgstr ""
 "enheter, og krever ikke telefonnumre for å virke. Brukere på en gitt Matrix-"
 "tjener kan snakke med brukere på alle andre samvirkende Matrix-tjenere."
 
-#: plinth/modules/matrixsynapse/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "To communicate, you can use the <a href=\"https://matrix.org/docs/"
-#| "projects/\">available clients</a> for mobile, desktop and the web. <a "
-#| "href=\"https://riot.im/\">Riot</a> client is recommended."
+#: plinth/modules/matrixsynapse/__init__.py:45
+#, python-brace-format
 msgid ""
-"To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
-"\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
-"element.io/\">Element</a> client is recommended."
+"Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
+"<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
-"For å kommunisere kan du bruke <a href=\"https://matrix.org/docs/projects/"
-"\">available clients (tilgjengelige klienter)</a> for mobil, PC og "
-"Internett. <a href=\"https://riot.im/\"> Riot</a>-klient anbefales."
 
-#: plinth/modules/matrixsynapse/__init__.py:68
+#: plinth/modules/matrixsynapse/__init__.py:76
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:12
+#: plinth/modules/matrixsynapse/forms.py:15
 msgid "Enable Public Registration"
 msgstr "Skru på offentlig registrering"
 
-#: plinth/modules/matrixsynapse/forms.py:13
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3129,6 +3129,36 @@ msgstr ""
 "Å skru på offentlig registrering betyr at enhver på Internett kan registrere "
 "en ny konto på din Matrix-tjener. Skru dette av hvis du vil at kun "
 "eksisterende brukere skal kunne bruke den."
+
+#: plinth/modules/matrixsynapse/forms.py:21
+msgid "Automatically manage audio/video call setup"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:23
+#, python-brace-format
+msgid ""
+"Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
+"server for Matrix Synapse. Disable this if you want to use a different STUN/"
+"TURN server."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:30
+msgid "STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:32
+msgid "List of public URIs of the STUN/TURN server, one on each line."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:36
+#, fuzzy
+#| msgid "Authentication Mode"
+msgid "Shared Authentication Secret"
+msgstr "Autentiseringsmodus"
+
+#: plinth/modules/matrixsynapse/forms.py:37
+msgid "Shared secret used to compute passwords for the TURN server."
+msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:12
 msgid "Element"
@@ -3166,7 +3196,7 @@ msgstr ""
 "Det finnes ingen domener. <a href=\"%(config_url)s\">Configure (Konfigurer)</"
 "a> minst ett domene for å kunne bruke Matrix Synapse."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:14
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:15
 #, python-format
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
@@ -3177,7 +3207,7 @@ msgstr ""
 "se slik ut <em>@username:%(domain_name)s</em>. Endring av domenenavnet etter "
 "det første oppsettet støttes ikke for øyeblikket."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:21
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:22
 msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
@@ -3185,7 +3215,7 @@ msgstr ""
 "Nye brukere kan registrere seg fra enhver klient hvis offentlig registrering "
 "er påskrudd."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3195,14 +3225,6 @@ msgstr ""
 "Oppsatt domene bruker et selv-signert sertifikat. Samhørighet med andre "
 "Matrix Synapse-instanser krever et gyldig TLS-sertifikat. Gå til <a href="
 "\"%(letsencrypt_url)s\">Let's Encrypt</a> for å skaffe deg det."
-
-#: plinth/modules/matrixsynapse/views.py:85
-msgid "Public registration enabled"
-msgstr "Offentlig registrering påskrudd"
-
-#: plinth/modules/matrixsynapse/views.py:90
-msgid "Public registration disabled"
-msgstr "Offentlig registrering avskrudd"
 
 #: plinth/modules/mediawiki/__init__.py:28
 msgid ""
@@ -4688,7 +4710,7 @@ msgstr ""
 #: plinth/modules/networks/views.py:37 plinth/modules/networks/views.py:98
 #: plinth/modules/networks/views.py:109
 msgid "unknown"
-msgstr ""
+msgstr "ukjent"
 
 #: plinth/modules/networks/views.py:38
 #, fuzzy
@@ -4732,7 +4754,7 @@ msgstr ""
 
 #: plinth/modules/networks/views.py:45
 msgid "checking"
-msgstr ""
+msgstr "sjekker"
 
 #: plinth/modules/networks/views.py:46
 msgid "waiting for secondary"
@@ -5409,11 +5431,10 @@ msgid ""
 "\">http://p.p</a>."
 msgstr ""
 "Du kan bruke Privoxy ved å endre nettleserens mellomlagerinnstillinger til "
-"ditt {box_name} \n"
-"vertsnavn (eller IP-adresse) med port 8118. Mens du bruker Privoxy, kan du "
-"se konfigurasjonsdetaljer og dokumentasjon via <a href=\"http://config."
-"privoxy.org\">http://config.privoxy.org/</a> eller <a href=\"http://p.p"
-"\">http://p.p</a>."
+"ditt {box_name}-vertsnavn (eller IP-adresse) med port 8118. Mens du bruker "
+"Privoxy, kan du se konfigurasjonsdetaljer og dokumentasjon via <a href="
+"\"http://config.privoxy.org\">http://config.privoxy.org/</a> eller <a href="
+"\"http://p.p\">http://p.p</a>."
 
 #: plinth/modules/privoxy/__init__.py:56
 msgid "Privoxy"
@@ -6416,7 +6437,7 @@ msgstr "Bibliotek opprettet."
 
 #: plinth/modules/snapshot/views.py:29
 msgid "timeline"
-msgstr ""
+msgstr "tidslinje"
 
 #: plinth/modules/snapshot/views.py:30
 msgid "apt"
@@ -7275,13 +7296,15 @@ msgstr ""
 "Oppdater siden for å fortsette."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid ""
 "\n"
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
-msgstr "%(box_name)s er oppdatert."
+msgstr ""
+"\n"
+"\t%(box_name)s er oppdatert. Trykk «Neste» for å fortsette.\n"
+"      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
@@ -8086,7 +8109,7 @@ msgstr ""
 
 #: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
+msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:63
 msgid "Photo Organizer"
@@ -8094,7 +8117,7 @@ msgstr ""
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
-msgstr ""
+msgstr "Skru på OpenStreetMap for kart"
 
 #: plinth/modules/zoph/forms.py:15
 msgid ""
@@ -8114,7 +8137,7 @@ msgstr "Gå i gang med oppsett"
 msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
-msgstr ""
+msgstr "Brukerkontoen %(username)s vil bli administratorkonto for Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
@@ -8404,7 +8427,7 @@ msgstr ""
 
 #: plinth/templates/messages.html:11
 msgid "Close"
-msgstr ""
+msgstr "Lukk"
 
 #: plinth/templates/notifications-dropdown.html:11
 msgid "Notifications"
@@ -8483,7 +8506,7 @@ msgstr "Dette programmet er for tiden ikke tilgjengelig for din distribusjon."
 
 #: plinth/templates/setup.html:50
 msgid "Check again"
-msgstr ""
+msgstr "Sjekk på nytt"
 
 #: plinth/templates/setup.html:60
 msgid "Install"
@@ -8510,6 +8533,26 @@ msgstr "%(percentage)s%% fullført"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid ""
+#~| "To communicate, you can use the <a href=\"https://matrix.org/docs/"
+#~| "projects/\">available clients</a> for mobile, desktop and the web. <a "
+#~| "href=\"https://riot.im/\">Riot</a> client is recommended."
+#~ msgid ""
+#~ "To communicate, you can use the <a href=\"https://matrix.org/docs/"
+#~ "projects/\">available clients</a> for mobile, desktop and the web. <a "
+#~ "href=\"https://element.io/\">Element</a> client is recommended."
+#~ msgstr ""
+#~ "For å kommunisere kan du bruke <a href=\"https://matrix.org/docs/projects/"
+#~ "\">available clients (tilgjengelige klienter)</a> for mobil, PC og "
+#~ "Internett. <a href=\"https://riot.im/\"> Riot</a>-klient anbefales."
+
+#~ msgid "Public registration enabled"
+#~ msgstr "Offentlig registrering påskrudd"
+
+#~ msgid "Public registration disabled"
+#~ msgstr "Offentlig registrering avskrudd"
 
 #, python-brace-format
 #~ msgid ""

@@ -420,6 +420,16 @@ def _perform_dist_upgrade():
         print('Snapshots are not supported, skip taking a snapshot.',
               flush=True)
 
+    # If searx is enabled, disable it until we can upgrade it properly.
+    searx_is_enabled = pathlib.Path(
+        '/etc/uwsgi/apps-enabled/searx.ini').exists()
+    if searx_is_enabled:
+        print('Disabling searx...', flush=True)
+        subprocess.run([
+            '/usr/share/plinth/actions/apache', 'uwsgi-disable', '--name',
+            'searx'
+        ], check=True)
+
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
     with apt_hold():
@@ -462,6 +472,12 @@ def _perform_dist_upgrade():
             print('Updating searx search engines list...', flush=True)
             subprocess.run(['/usr/share/plinth/actions/searx', 'setup'],
                            check=True)
+            if searx_is_enabled:
+                print('Re-enabling searx after upgrade...', flush=True)
+                subprocess.run([
+                    '/usr/share/plinth/actions/apache', 'uwsgi-enable',
+                    '--name', 'searx'
+                ], check=True)
 
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])

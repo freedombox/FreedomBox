@@ -4,6 +4,7 @@ FreedomBox app to configure Coturn server.
 """
 
 import json
+import logging
 import pathlib
 
 from django.utils.translation import ugettext_lazy as _
@@ -14,6 +15,7 @@ from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules import names
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
@@ -39,6 +41,8 @@ _description = [
 
 app = None
 
+logger = logging.getLogger(__name__)
+
 
 class CoturnApp(app_module.App):
     """FreedomBox app for Coturn."""
@@ -57,7 +61,7 @@ class CoturnApp(app_module.App):
 
         menu_item = menu.Menu('menu-coturn', info.name, info.short_description,
                               info.icon_filename, 'coturn:index',
-                              parent_url_name='apps', advanced=True)
+                              parent_url_name='apps')
         self.add(menu_item)
 
         firewall = Firewall('firewall-coturn', info.name,
@@ -98,6 +102,7 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'coturn', ['setup'])
     helper.call('post', app.enable)
     app.get_component('letsencrypt-coturn').setup_certificates()
+    notify_configuration_change()
 
 
 def get_available_domains():
@@ -109,8 +114,8 @@ def get_available_domains():
 def get_domain():
     """Read TLS domain from config file select first available if none."""
     config = get_config()
-    if config['realm']:
-        return get_config()['realm']
+    if config.domain:
+        return config.domain
 
     domain = next(get_available_domains(), None)
     set_domain(domain)
@@ -135,9 +140,19 @@ def set_domain(domain):
     """Set the TLS domain by writing a file to data directory."""
     if domain:
         actions.superuser_run('coturn', ['set-domain', domain])
+        notify_configuration_change()
 
 
 def get_config():
     """Return the coturn server configuration."""
     output = actions.superuser_run('coturn', ['get-config'])
-    return json.loads(output)
+    config = json.loads(output)
+    return TurnConfiguration(config['realm'], [], config['static_auth_secret'])
+
+
+def notify_configuration_change():
+    """Notify all coturn components about the new configuration."""
+    logger.info('Notifying STUN/TURN consumers about configuration change')
+    config = get_config()
+    for component in TurnConsumer.list():
+        component.on_config_change(config)

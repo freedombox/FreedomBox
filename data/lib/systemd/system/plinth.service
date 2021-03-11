@@ -4,10 +4,12 @@
 Description=FreedomBox Service (Plinth)
 Documentation=man:plinth(1)
 After=network.target
+StartLimitIntervalSec=0
 
 [Service]
 ExecStart=/usr/bin/plinth
 Restart=on-failure
+RestartSec=5
 ExecReload=/bin/kill -HUP $MAINPID
 User=plinth
 Group=plinth

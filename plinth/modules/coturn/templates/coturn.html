@@ -16,10 +16,8 @@
       Use the following URLs to configure your communication server:
     {% endblocktrans %}
 
-    <pre>stun:{{ config.realm }}:3478?transport=udp
-stun:{{ config.realm }}:3478?transport=tcp
-turn:{{ config.realm }}:3478?transport=udp
-turn:{{ config.realm }}:3478?transport=tcp</pre>
+    <pre>{% for uri in config.uris %}{{ uri }}
+{% endfor %}</pre>
   </p>
 
   <p>
@@ -27,6 +25,6 @@ turn:{{ config.realm }}:3478?transport=tcp</pre>
       Use the following shared authentication secret:
     {% endblocktrans %}
 
-    <pre>{{ config.static_auth_secret }}</pre>
+    <pre>{{ config.shared_secret }}</pre>
   </p>
 {% endblock %}

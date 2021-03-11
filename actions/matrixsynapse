@@ -5,7 +5,10 @@ Configuration helper for Matrix-Synapse server.
 """
 
 import argparse
+import json
+import os
 import pathlib
+import sys
 
 import yaml
 
@@ -13,6 +16,9 @@ from plinth import action_utils
 from plinth.modules.matrixsynapse import (LISTENERS_CONF_PATH, ORIG_CONF_PATH,
                                           REGISTRATION_CONF_PATH,
                                           STATIC_CONF_PATH)
+
+TURN_CONF_PATH = '/etc/matrix-synapse/conf.d/freedombox-turn.yaml'
+OVERRIDDEN_TURN_CONF_PATH = '/etc/matrix-synapse/conf.d/turn.yaml'
 
 STATIC_CONFIG = {
     'max_upload_size':
@@ -52,6 +58,14 @@ def parse_arguments():
     subparsers.add_parser(
         'move-old-conf',
         help='Move old configuration file to backup before reinstall')
+
+    turn = subparsers.add_parser(
+        'configure-turn',
+        help='Configure a TURN server for use with Matrix Synapse')
+    turn.add_argument(
+        '--managed', required=False, default=False, action='store_true',
+        help='Whether configuration is provided by user or auto-managed by '
+        'FreedomBox')
 
     subparsers.required = True
     return parser.parse_args()
@@ -112,8 +126,7 @@ def subcommand_public_registration(argument):
     with open(REGISTRATION_CONF_PATH, 'w') as reg_conf_file:
         yaml.dump(config, reg_conf_file)
 
-    if action_utils.service_is_running('matrix-synapse'):
-        action_utils.service_restart('matrix-synapse')
+    action_utils.service_try_restart('matrix-synapse')
 
 
 def subcommand_move_old_conf(_arguments):
@@ -122,6 +135,39 @@ def subcommand_move_old_conf(_arguments):
     if conf_file.exists():
         backup_file = conf_file.with_suffix(conf_file.suffix + '.fbx-bak')
         conf_file.replace(backup_file)
+
+
+def _set_turn_config(conf_file):
+    turn_server_config = json.loads(''.join(sys.stdin))
+
+    if not turn_server_config['uris']:
+        # No valid configuration, remove the configuration file
+        try:
+            os.remove(conf_file)
+        except FileNotFoundError:
+            pass
+
+        return
+
+    config = {
+        'turn_uris': turn_server_config['uris'],
+        'turn_shared_secret': turn_server_config['shared_secret'],
+        'turn_user_lifetime': 86400000,
+        'turn_allow_guests': True
+    }
+
+    with open(conf_file, 'w+') as turn_config:
+        yaml.dump(config, turn_config)
+
+
+def subcommand_configure_turn(arguments):
+    """Set parameters for the STUN/TURN server to use with Matrix Synapse."""
+    if arguments.managed:
+        _set_turn_config(TURN_CONF_PATH)
+    else:
+        _set_turn_config(OVERRIDDEN_TURN_CONF_PATH)
+
+    action_utils.service_try_restart('matrix-synapse')
 
 
 def main():

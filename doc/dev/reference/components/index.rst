@@ -16,6 +16,7 @@ Components
    letsencrypt
    staticfiles
    backups
+   coturn
 
 Base Classes
 ^^^^^^^^^^^^

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 17:23-0500\n"
-"PO-Revision-Date: 2021-02-06 03:51+0000\n"
-"Last-Translator: nautilusx <translate@disroot.org>\n"
+"POT-Creation-Date: 2021-02-28 20:13-0500\n"
+"PO-Revision-Date: 2021-02-19 15:50+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.5\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1024,8 +1024,9 @@ msgstr "IP-Adresse und Domänen aktualisieren"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
-#: plinth/modules/mumble/views.py:28 plinth/modules/pagekite/forms.py:76
-#: plinth/modules/quassel/views.py:29 plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/pagekite/forms.py:76 plinth/modules/quassel/views.py:29
+#: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
 msgstr "Konfiguration aktualisiert"
@@ -1362,7 +1363,7 @@ msgstr "Zeige erweiterte Anwendungen und Funktionen an"
 msgid "Hiding advanced apps and features"
 msgstr "Ausblenden von erweiterten Apps und Funktionen"
 
-#: plinth/modules/coturn/__init__.py:32
+#: plinth/modules/coturn/__init__.py:34
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1375,7 +1376,7 @@ msgstr ""
 "verwenden, um eine Verbindung zwischen Parteien herzustellen, die sich sonst "
 "nicht miteinander verbinden können."
 
-#: plinth/modules/coturn/__init__.py:36
+#: plinth/modules/coturn/__init__.py:38
 msgid ""
 "It is not meant to be used directly by users. Servers such as matrix-synapse "
 "need to be configured with the details provided here."
@@ -1383,11 +1384,11 @@ msgstr ""
 "Sie ist nicht für die direkte Nutzung durch Benutzer gedacht. Server wie "
 "Matrix-Synapse müssen mit den hier gemachten Angaben konfiguriert werden."
 
-#: plinth/modules/coturn/__init__.py:53
+#: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
 msgstr "Coturn"
 
-#: plinth/modules/coturn/__init__.py:54
+#: plinth/modules/coturn/__init__.py:58
 msgid "VoIP Helper"
 msgstr "VoIP-Helfer"
 
@@ -1411,7 +1412,7 @@ msgstr ""
 "Verwenden Sie die folgenden URLs zur Konfiguration Ihres "
 "Kommunikationsservers:"
 
-#: plinth/modules/coturn/templates/coturn.html:26
+#: plinth/modules/coturn/templates/coturn.html:24
 msgid "Use the following shared authentication secret:"
 msgstr "Verwenden Sie das folgende geteilte Authentifizierungsgeheimnis:"
 
@@ -1974,7 +1975,7 @@ msgid "ejabberd"
 msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:65
-#: plinth/modules/matrixsynapse/__init__.py:69
+#: plinth/modules/matrixsynapse/__init__.py:77
 msgid "Chat Server"
 msgstr "Chatserver"
 
@@ -3078,7 +3079,7 @@ msgstr "Zertifikat erfolgreich widerrufen für Domain {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Fehler beim Widerrufen des Zertifikats für Domain {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:37
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3096,26 +3097,22 @@ msgstr ""
 "einem bestimmten Matrix Server können dank Föderation zwischen den Servern "
 "mit Nutzerkonten auf einem beliebigen anderen Server kommunizieren."
 
-#: plinth/modules/matrixsynapse/__init__.py:41
+#: plinth/modules/matrixsynapse/__init__.py:45
+#, python-brace-format
 msgid ""
-"To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
-"\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
-"element.io/\">Element</a> client is recommended."
+"Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
+"<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
-"Zur Kommunikation nutzen Sie eine der <a href=\"https://matrix.org/docs/"
-"projects/\">verfügbaren Clientanwendungen</a> für ihr Handy, Desktop oder im "
-"Web. Die Clientanwendung <a href=\"https://element.io/\">Element</a> wird "
-"empfohlen."
 
-#: plinth/modules/matrixsynapse/__init__.py:68
+#: plinth/modules/matrixsynapse/__init__.py:76
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:12
+#: plinth/modules/matrixsynapse/forms.py:15
 msgid "Enable Public Registration"
 msgstr "Öffentliche Registrierung aktivieren"
 
-#: plinth/modules/matrixsynapse/forms.py:13
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3125,6 +3122,36 @@ msgstr ""
 "ein neues Nutzerkonto auf ihrem Matrix-Server registrieren kann. "
 "Deaktivieren Sie diese Option, wenn Sie ausschließlich bereits existierende "
 "Benutzer zulassen möchten."
+
+#: plinth/modules/matrixsynapse/forms.py:21
+msgid "Automatically manage audio/video call setup"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:23
+#, python-brace-format
+msgid ""
+"Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
+"server for Matrix Synapse. Disable this if you want to use a different STUN/"
+"TURN server."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:30
+msgid "STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:32
+msgid "List of public URIs of the STUN/TURN server, one on each line."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:36
+#, fuzzy
+#| msgid "Authentication Mode"
+msgid "Shared Authentication Secret"
+msgstr "Authentifizierungsmodus"
+
+#: plinth/modules/matrixsynapse/forms.py:37
+msgid "Shared secret used to compute passwords for the TURN server."
+msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:12
 msgid "Element"
@@ -3163,7 +3190,7 @@ msgstr ""
 "\">Konfigurieren</a> Sie mindestens eine Domain, um Matrix Synapse nutzen zu "
 "können."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:14
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:15
 #, python-format
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
@@ -3174,7 +3201,7 @@ msgstr ""
 "IDs erscheinen als <em>Nutzername:%(domain_name)s</em>. Änderungen der "
 "Domain nach der ersten Konfiguration werden derzeit nicht unterstützt."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:21
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:22
 msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
@@ -3182,7 +3209,7 @@ msgstr ""
 "Neue Nutzer können von beliebigen Geräten registriert werden, wenn "
 "öffentliche Registrierung aktiviert ist."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3193,14 +3220,6 @@ msgstr ""
 "Föderation mit anderen Matrix-Synapse-Instanzen erfordert ein gültiges TLS-"
 "Zertifikat. Bitte gehen Sie zu <a href=\"%(letsencrypt_url)s\">Let's "
 "Encrypt</a>, um eines zu beziehen."
-
-#: plinth/modules/matrixsynapse/views.py:85
-msgid "Public registration enabled"
-msgstr "Öffentliche Registrierung aktiviert"
-
-#: plinth/modules/matrixsynapse/views.py:90
-msgid "Public registration disabled"
-msgstr "Öffentliche Registrierung deaktiviert"
 
 #: plinth/modules/mediawiki/__init__.py:28
 msgid ""
@@ -6161,10 +6180,8 @@ msgstr ""
 "verfügt."
 
 #: plinth/modules/sharing/forms.py:34
-#, fuzzy
-#| msgid "User groups that can read the files in the share"
 msgid "User groups that can read the files in the share:"
-msgstr "Benutzergruppen, die Dateien in der Freigabe lesen können"
+msgstr "Benutzergruppen, die Dateien in der Freigabe lesen können:"
 
 #: plinth/modules/sharing/forms.py:36
 msgid ""
@@ -7194,7 +7211,7 @@ msgstr "FreedomBox aktualisiert"
 
 #: plinth/modules/upgrades/__init__.py:210
 msgid "Could not start distribution update"
-msgstr ""
+msgstr "Distributions-Update konnte nicht gestartet werden"
 
 #: plinth/modules/upgrades/__init__.py:212
 msgid ""
@@ -7202,17 +7219,21 @@ msgid ""
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
+"Es ist nicht genügend freier Speicherplatz in der Root-Partition vorhanden, "
+"um das Distributions-Update zu starten. Bitte stellen Sie sicher, dass "
+"mindestens 5 GB frei sind. Das Distributions-Update wird nach 24 Stunden "
+"erneut versucht, falls aktiviert."
 
 #: plinth/modules/upgrades/__init__.py:223
-#, fuzzy
-#| msgid "Distribution upgrade disabled"
 msgid "Distribution update started"
-msgstr "Distributions-Upgrade deaktiviert"
+msgstr "Distributions-Upgrade gestartet"
 
 #: plinth/modules/upgrades/__init__.py:225
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
+"Das Update auf die nächste stabile Version wurde gestartet. Dies kann eine "
+"lange Zeit in Anspruch nehmen."
 
 #: plinth/modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -8044,6 +8065,18 @@ msgid ""
 "location using search, map and calendar views. Individual photos can be "
 "shared with others by sending a direct link."
 msgstr ""
+"Zoph verwaltet Ihre Fotosammlung. Fotos werden auf Ihrer {box_name} "
+"gespeichert, unter Ihrer Kontrolle. Anstatt sich auf Galerien für die "
+"öffentliche Darstellung zu konzentrieren, konzentriert sich Zoph auf die "
+"Verwaltung der Fotos für Ihren eigenen Gebrauch, indem es sie danach "
+"organisiert, wer sie aufgenommen hat, wo sie aufgenommen wurden und wer auf "
+"ihnen zu sehen ist. Fotos können mit mehreren hierarchischen Alben und "
+"Kategorien verknüpft werden. Es ist einfach, alle Fotos zu finden, auf denen "
+"eine Person zu sehen ist, oder Fotos, die an einem bestimmten Datum "
+"aufgenommen wurden, oder Fotos, die an einem bestimmten Ort aufgenommen "
+"wurden. Dazu stehen Such-, Karten- und Kalenderansichten zur Verfügung. "
+"Einzelne Fotos können mit anderen geteilt werden, indem ein direkter Link "
+"gesendet wird."
 
 #: plinth/modules/zoph/__init__.py:44
 #, python-brace-format
@@ -8052,31 +8085,35 @@ msgid ""
 "Zoph. For additional users, accounts must be created both in {box_name} and "
 "in Zoph with the same user name."
 msgstr ""
+"Der Benutzer {box_name}, der Zoph eingerichtet hat, wird auch der "
+"Administrator in Zoph. Für zusätzliche Benutzer müssen Konten sowohl in "
+"{box_name} als auch in Zoph mit demselben Benutzernamen erstellt werden."
 
 #: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
+msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:63
 msgid "Photo Organizer"
-msgstr ""
+msgstr "Foto-Manager"
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
-msgstr ""
+msgstr "Aktivieren von OpenStreetMap für Karten"
 
 #: plinth/modules/zoph/forms.py:15
 msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Wenn diese Option aktiviert ist, werden vom Browser des Benutzers Anfragen "
+"an die OpenStreetMap-Server gestellt. Dies hat Auswirkungen auf die "
+"Privatsphäre."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
-#, fuzzy
-#| msgid "Start Setup"
 msgid "Setup"
-msgstr "Einrichten beginnen"
+msgstr "Einrichten"
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:18
 #, python-format
@@ -8084,6 +8121,8 @@ msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
 msgstr ""
+"Das Benutzerkonto <strong>%(username)s</strong> wird das Administratorkonto "
+"für Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
@@ -8476,6 +8515,22 @@ msgstr "%(percentage)s %% abgeschlossen"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "To communicate, you can use the <a href=\"https://matrix.org/docs/"
+#~ "projects/\">available clients</a> for mobile, desktop and the web. <a "
+#~ "href=\"https://element.io/\">Element</a> client is recommended."
+#~ msgstr ""
+#~ "Zur Kommunikation nutzen Sie eine der <a href=\"https://matrix.org/docs/"
+#~ "projects/\">verfügbaren Clientanwendungen</a> für ihr Handy, Desktop oder "
+#~ "im Web. Die Clientanwendung <a href=\"https://element.io/\">Element</a> "
+#~ "wird empfohlen."
+
+#~ msgid "Public registration enabled"
+#~ msgstr "Öffentliche Registrierung aktiviert"
+
+#~ msgid "Public registration disabled"
+#~ msgstr "Öffentliche Registrierung deaktiviert"
 
 #, python-brace-format
 #~ msgid ""
