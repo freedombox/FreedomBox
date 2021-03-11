@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-28 20:13-0500\n"
-"PO-Revision-Date: 2021-02-11 18:50+0000\n"
+"PO-Revision-Date: 2021-03-12 13:03+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -3067,6 +3067,9 @@ msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
+"Matrix Synapse necesita un servidor STUN/TURN para llamadas de audio/video. "
+"Instalar la app <a href=\"{coturn_url}\">Coturn</a> o configurar un servidor "
+"externo."
 
 #: plinth/modules/matrixsynapse/__init__.py:76
 msgid "Matrix Synapse"
@@ -3088,7 +3091,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/forms.py:21
 msgid "Automatically manage audio/video call setup"
-msgstr ""
+msgstr "Administrar la configuración de llamada de audio/video automáticamente"
 
 #: plinth/modules/matrixsynapse/forms.py:23
 #, python-brace-format
@@ -3097,24 +3100,25 @@ msgid ""
 "server for Matrix Synapse. Disable this if you want to use a different STUN/"
 "TURN server."
 msgstr ""
+"Configura la app local <a href=\"{coturn_url}\">coturn</a> como servidor "
+"STUN/TURN para Matrix Synapse. Deshabilita esto si quieres usar un servidor "
+"STUN/TURN diferente."
 
 #: plinth/modules/matrixsynapse/forms.py:30
 msgid "STUN/TURN Server URIs"
-msgstr ""
+msgstr "URIs de servidor STUN/TURN"
 
 #: plinth/modules/matrixsynapse/forms.py:32
 msgid "List of public URIs of the STUN/TURN server, one on each line."
-msgstr ""
+msgstr "Lista de URIs públicas de servidor STUN/TURN, una en cada línea."
 
 #: plinth/modules/matrixsynapse/forms.py:36
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "Shared Authentication Secret"
-msgstr "Modo de autenticación"
+msgstr "Secreto compartido de autenticación"
 
 #: plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared secret used to compute passwords for the TURN server."
-msgstr ""
+msgstr "Secreto compartido para resolver contraseñas para el servidor TURN."
 
 #: plinth/modules/matrixsynapse/manifest.py:12
 msgid "Element"
@@ -6087,10 +6091,8 @@ msgid "Make files in this folder available to anyone with the link."
 msgstr "Dar acceso a los archivos de esta carpeta a quien tenga el enlace."
 
 #: plinth/modules/sharing/forms.py:34
-#, fuzzy
-#| msgid "User groups that can read the files in the share"
 msgid "User groups that can read the files in the share:"
-msgstr "Grupos de usuarias/os que pueden leer los archivos compartidos"
+msgstr "Grupos de usuarias/os que pueden leer los archivos compartidos:"
 
 #: plinth/modules/sharing/forms.py:36
 msgid ""
@@ -6230,7 +6232,7 @@ msgstr ""
 
 #: plinth/modules/snapshot/forms.py:32
 msgid "Hourly Snapshots Limit"
-msgstr "Límite de instantáneas por hora"
+msgstr "Límite de instantáneas horarias"
 
 #: plinth/modules/snapshot/forms.py:33
 msgid "Keep a maximum of this many hourly snapshots."
@@ -6238,7 +6240,7 @@ msgstr "Conservar el máximo número de instantáneas por hora."
 
 #: plinth/modules/snapshot/forms.py:36
 msgid "Daily Snapshots Limit"
-msgstr "Límite diario de instantáneas"
+msgstr "Límite de instantáneas diarias"
 
 #: plinth/modules/snapshot/forms.py:37
 msgid "Keep a maximum of this many daily snapshots."
@@ -6246,7 +6248,7 @@ msgstr "Conservar el máximo número de instantáneas diarias."
 
 #: plinth/modules/snapshot/forms.py:40
 msgid "Weekly Snapshots Limit"
-msgstr "Límite semanal de instantáneas"
+msgstr "Límite de instantáneas semanales"
 
 #: plinth/modules/snapshot/forms.py:41
 msgid "Keep a maximum of this many weekly snapshots."
@@ -6254,7 +6256,7 @@ msgstr "Conservar el máximo número de instantáneas semanales."
 
 #: plinth/modules/snapshot/forms.py:44
 msgid "Monthly Snapshots Limit"
-msgstr "Límite mensual de instantáneas"
+msgstr "Límite de instantáneas mensuales"
 
 #: plinth/modules/snapshot/forms.py:45
 msgid "Keep a maximum of this many monthly snapshots."
@@ -6262,7 +6264,7 @@ msgstr "Conservar el máximo número de instantáneas mensuales."
 
 #: plinth/modules/snapshot/forms.py:48
 msgid "Yearly Snapshots Limit"
-msgstr "Límite anual de instantáneas"
+msgstr "Límite de instantáneas anuales"
 
 #: plinth/modules/snapshot/forms.py:49
 msgid ""
@@ -7113,21 +7115,15 @@ msgid "Could not start distribution update"
 msgstr "No se pudo iniciar la actualización de la distribución"
 
 #: plinth/modules/upgrades/__init__.py:212
-#, fuzzy
-#| msgid ""
-#| "There is not enough free space in the root partition to start the "
-#| "distribution update. Please ensure at least 5 GB, and at least 10% of the "
-#| "total space, is free. Distribution update will be retried after 24 hours, "
-#| "if enabled."
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 "No hay suficiente espacio libre en la partición raíz para iniciar la "
-"actualización de la distrbución. Por favor, asegure que al menos 5 GB y un "
-"10% del espacio libre total están libres. Si está habilitada, la "
-"actualización de la distribución se reintentará tras 24h ."
+"actualización de la distribución. Por favor, asegure que hay al menos 5 GB "
+"libres. Si está habilitada, la actualización de la distribución se "
+"reintentará tras 24h ."
 
 #: plinth/modules/upgrades/__init__.py:223
 msgid "Distribution update started"
@@ -7954,6 +7950,15 @@ msgid ""
 "location using search, map and calendar views. Individual photos can be "
 "shared with others by sending a direct link."
 msgstr ""
+"Zoph administra tu colección de fotografías. Las fotos se almacenan en tu "
+"{box_name}, bajo tu control. En vez de centrarse en galerías para exposición "
+"pública Zoph se centra en administrarlas para tu propio uso, organizándolas "
+"por quién las tomó, dónde se tomaron y quién aparece en ellas. Las fotos se "
+"pueden enlazar a múltiples álbumes y categorías jerárquicos. Es fácil "
+"encontrar fotos en las que aparezca determinada persona , o tomadas un día "
+"determinado, o en determinada ubicación empleando la búsqueda y las vistas "
+"de mapa y calendario. Se pueden compartir fotos sueltas con otras personas "
+"enviándoles un enlace directo."
 
 #: plinth/modules/zoph/__init__.py:44
 #, python-brace-format
@@ -7962,38 +7967,41 @@ msgid ""
 "Zoph. For additional users, accounts must be created both in {box_name} and "
 "in Zoph with the same user name."
 msgstr ""
+"El usuario de {box_name} que instaló Zoph será el administrador en Zoph. "
+"Para añadir más usuarios hay que crear cuentas con el mismo nombre tanto en "
+"Zoph como en {box_name} ."
 
 #: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
+msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:63
 msgid "Photo Organizer"
-msgstr ""
+msgstr "Organizador de fotografías"
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
-msgstr ""
+msgstr "Habilitar mapas OpenStreetMap"
 
 #: plinth/modules/zoph/forms.py:15
 msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Si se habilita se harán peticiones a los servidores OpenStreetMap desde el "
+"navegador del usuario. Esto impacta en la privacidad."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
-#, fuzzy
-#| msgid "Start Setup"
 msgid "Setup"
-msgstr "Iniciar configuración"
+msgstr "Configurar"
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:18
 #, python-format
 msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
-msgstr ""
+msgstr "El usuario <strong>%(username)s</strong> será el administrador de Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
