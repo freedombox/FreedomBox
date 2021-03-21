@@ -38,6 +38,8 @@ running_task = None
 
 current_results = {}
 
+results_lock = threading.Lock()
+
 
 class DiagnosticsApp(app_module.App):
     """FreedomBox app for diagnostics."""
@@ -90,11 +92,6 @@ def start_task():
 def run_on_all_enabled_modules():
     """Run diagnostics on all the enabled modules and store the result."""
     global current_results
-    current_results = {
-        'apps': [],
-        'results': collections.OrderedDict(),
-        'progress_percentage': 0
-    }
 
     # Four result strings returned by tests, mark for translation and
     # translate later.
@@ -104,29 +101,50 @@ def run_on_all_enabled_modules():
     ugettext_noop('warning')
 
     apps = []
-    for app in app_module.App.list():
-        # Don't run diagnostics on apps have not been setup yet.
-        # However, run on apps that need an upgrade.
-        module = importlib.import_module(app.__class__.__module__)
-        if module.setup_helper.get_state() == 'needs-setup':
-            continue
 
-        if not app.is_enabled():
-            continue
+    with results_lock:
+        current_results = {
+            'apps': [],
+            'results': collections.OrderedDict(),
+            'progress_percentage': 0
+        }
 
-        if not app.has_diagnostics():
-            continue
+        for app in app_module.App.list():
+            # Don't run diagnostics on apps have not been setup yet.
+            # However, run on apps that need an upgrade.
+            module = importlib.import_module(app.__class__.__module__)
+            if module.setup_helper.get_state() == 'needs-setup':
+                continue
 
-        apps.append((app.app_id, app))
-        app_name = app.info.name or app.app_id
-        current_results['results'][app.app_id] = {'name': app_name}
+            if not app.is_enabled():
+                continue
 
-    current_results['apps'] = apps
+            if not app.has_diagnostics():
+                continue
+
+            apps.append((app.app_id, app))
+            app_name = app.info.name or app.app_id
+            current_results['results'][app.app_id] = {'name': app_name}
+
+        current_results['apps'] = apps
+
     for current_index, (app_id, app) in enumerate(apps):
         app_results = {
             'diagnosis': None,
             'exception': None,
         }
+
+        try:
+            app_results['diagnosis'] = app.diagnose()
+        except Exception as exception:
+            logger.exception('Error running %s diagnostics - %s', app_id,
+                             exception)
+            app_results['exception'] = str(exception)
+
+        with results_lock:
+            current_results['results'][app_id].update(app_results)
+            current_results['progress_percentage'] = \
+                int((current_index + 1) * 100 / len(apps))
 
     global running_task
     running_task = None

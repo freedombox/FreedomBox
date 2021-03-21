@@ -22,11 +22,14 @@ def index(request):
         diagnostics.start_task()
 
     is_running = diagnostics.running_task is not None
+    with diagnostics.results_lock:
+        results = diagnostics.current_results
+
     return TemplateResponse(
         request, 'diagnostics.html', {
             'app_info': diagnostics.app.info,
             'is_running': is_running,
-            'results': diagnostics.current_results,
+            'results': results,
             'refresh_page_sec': 3 if is_running else None
         })
 
