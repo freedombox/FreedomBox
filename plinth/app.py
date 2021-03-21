@@ -131,8 +131,8 @@ class App:
 
         Return value must be a list of results. Each result is a two-tuple with
         first value as user visible description of the test followed by the
-        result. The test result is a string enumeration from 'failed', 'passed'
-        and 'error'.
+        result. The test result is a string enumeration from 'failed',
+        'passed', 'error' and 'warning'.
 
         Results are typically collected by diagnosing each component of the app
         and then supplementing the results with any app level diagnostic tests.

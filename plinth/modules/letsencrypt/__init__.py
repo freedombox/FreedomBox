@@ -91,6 +91,10 @@ class LetsEncryptApp(app_module.App):
             if domain.domain_type.can_have_certificate:
                 results.append(diagnose_url('https://' + domain.name))
 
+        if not results:
+            results.append(
+                (_('Cannot test: No domains are configured.'), 'warning'))
+
         return results
 
 

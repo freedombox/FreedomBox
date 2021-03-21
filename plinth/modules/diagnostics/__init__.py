@@ -96,11 +96,12 @@ def run_on_all_enabled_modules():
         'progress_percentage': 0
     }
 
-    # Three result strings returned by tests, mark for translation and
+    # Four result strings returned by tests, mark for translation and
     # translate later.
     ugettext_noop('passed')
     ugettext_noop('failed')
     ugettext_noop('error')
+    ugettext_noop('warning')
 
     apps = []
     for app in app_module.App.list():
@@ -126,17 +127,6 @@ def run_on_all_enabled_modules():
             'diagnosis': None,
             'exception': None,
         }
-
-        try:
-            app_results['diagnosis'] = app.diagnose()
-        except Exception as exception:
-            logger.exception('Error running %s diagnostics - %s', app_id,
-                             exception)
-            app_results['exception'] = str(exception)
-
-        current_results['results'][app_id].update(app_results)
-        current_results['progress_percentage'] = \
-            int((current_index + 1) * 100 / len(apps))
 
     global running_task
     running_task = None
