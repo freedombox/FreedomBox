@@ -15,6 +15,10 @@ Scenario: Change domain name
   When I change the domain name to mydomain.example
   Then the domain name should be mydomain.example
 
+Scenario: Capitalized domain name
+  When I change the domain name to Mydomain.example
+  Then the domain name should be mydomain.example
+
 Scenario: Change webserver home page
   Given the syncthing application is installed
   And the syncthing application is enabled

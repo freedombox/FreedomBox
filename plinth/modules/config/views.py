@@ -120,6 +120,10 @@ def set_domainname(domainname, old_domainname):
     # Domain name should be ASCII. If it's unicode, convert to ASCII.
     domainname = str(domainname)
 
+    # Domain name is not case sensitive, but Let's Encrypt certificate
+    # paths use lower-case domain name.
+    domainname = domainname.lower()
+
     LOGGER.info('Changing domain name to - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])
 
