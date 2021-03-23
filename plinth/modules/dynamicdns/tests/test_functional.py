@@ -39,6 +39,10 @@ def _configure(browser):
         'http://myip.datasystems24.de')
     functional.submit(browser)
 
+    # After a domain name change, Let's Encrypt will restart the web
+    # server and could cause a connection failure.
+    functional.eventually(functional.nav_to_module, [browser, 'dynamicdns'])
+
 
 def _has_original_config(browser):
     functional.nav_to_module(browser, 'dynamicdns')
@@ -71,3 +75,7 @@ def _change_config(browser):
     browser.find_by_id('id_dynamicdns_ipurl').fill(
         'http://myip2.datasystems24.de')
     functional.submit(browser)
+
+    # After a domain name change, Let's Encrypt will restart the web
+    # server and could cause a connection failure.
+    functional.eventually(functional.nav_to_module, [browser, 'dynamicdns'])
