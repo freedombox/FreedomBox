@@ -23,6 +23,11 @@ Scenario: Configure pagekite application
   When I configure pagekite with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
   Then pagekite should be configured with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
 
+Scenario: Capitalized kite name
+  Given the pagekite application is enabled
+  When I configure pagekite with host pagekite.example.com, port 8080, kite name Mykite.example.com and kite secret mysecret
+  Then pagekite should be configured with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
+
 @backups
 Scenario: Backup and restore pagekite
   Given the pagekite application is enabled
