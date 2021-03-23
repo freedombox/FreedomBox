@@ -3,7 +3,9 @@
 Functional, browser based tests for dynamicdns app.
 """
 
-from pytest_bdd import given, scenarios, then, when
+import time
+
+from pytest_bdd import given, parsers, scenarios, then, when
 
 from plinth.tests import functional
 
@@ -20,9 +22,19 @@ def dynamicdns_change_config(session_browser):
     _change_config(session_browser)
 
 
+@when(parsers.parse('I change the domain name to {domain:S}'))
+def dynamicdns_change_domain(session_browser, domain):
+    _configure_domain(session_browser, domain)
+
+
 @then('dynamicdns should have the original configuration')
 def dynamicdns_has_original_config(session_browser):
     assert _has_original_config(session_browser)
+
+
+@then(parsers.parse('the domain name should be {domain:S}'))
+def dynamicdns_has_domain(session_browser, domain):
+    assert _get_domain(session_browser) == domain
 
 
 def _configure(browser):
@@ -41,6 +53,7 @@ def _configure(browser):
 
     # After a domain name change, Let's Encrypt will restart the web
     # server and could cause a connection failure.
+    time.sleep(1)
     functional.eventually(functional.nav_to_module, [browser, 'dynamicdns'])
 
 
@@ -78,4 +91,25 @@ def _change_config(browser):
 
     # After a domain name change, Let's Encrypt will restart the web
     # server and could cause a connection failure.
+    time.sleep(1)
     functional.eventually(functional.nav_to_module, [browser, 'dynamicdns'])
+
+
+def _configure_domain(browser, domain):
+    functional.nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    browser.find_by_id('id_dynamicdns_domain').fill(domain)
+    functional.submit(browser)
+
+    # After a domain name change, Let's Encrypt will restart the web
+    # server and could cause a connection failure.
+    time.sleep(1)
+    functional.eventually(functional.nav_to_module, [browser, 'dynamicdns'])
+
+
+def _get_domain(browser):
+    functional.nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    return browser.find_by_id('id_dynamicdns_domain').value

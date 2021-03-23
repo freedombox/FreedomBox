@@ -14,6 +14,11 @@ Background:
   Given I'm a logged in user
   And the dynamicdns application is installed
 
+Scenario: Capitalized domain name
+  Given dynamicdns is configured
+  When I change the domain name to FreedomBox.example.com
+  Then the domain name should be freedombox.example.com
+
 @backups
 Scenario: Backup and restore configuration
   Given dynamicdns is configured

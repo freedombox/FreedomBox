@@ -129,13 +129,33 @@ def _apply_changes(request, old_status, new_status):
         if new_status.get('use_ipv6'):
             use_ipv6 = "enabled"
 
+        # Domain name should be ASCII. If it's unicode, convert to
+        # ASCII.
+        new_domain_name = str(new_status['dynamicdns_domain'])
+
+        # Domain name is not case sensitive, but Let's Encrypt
+        # certificate paths use lower-case domain name.
+        new_domain_name = new_domain_name.lower()
+
         _run([
-            'configure', '-s', new_status['dynamicdns_server'], '-d',
-            new_status['dynamicdns_domain'], '-u',
-            new_status['dynamicdns_user'], '-p', '-I',
-            new_status['dynamicdns_ipurl'], '-U',
-            new_status['dynamicdns_update_url'], '-c', disable_ssl_check, '-b',
-            use_http_basic_auth, '-6', use_ipv6,
+            'configure',
+            '-s',
+            new_status['dynamicdns_server'],
+            '-d',
+            new_domain_name,
+            '-u',
+            new_status['dynamicdns_user'],
+            '-p',
+            '-I',
+            new_status['dynamicdns_ipurl'],
+            '-U',
+            new_status['dynamicdns_update_url'],
+            '-c',
+            disable_ssl_check,
+            '-b',
+            use_http_basic_auth,
+            '-6',
+            use_ipv6,
         ], input=new_status['dynamicdns_secret'].encode())
 
         if old_status['enabled']:
@@ -147,8 +167,7 @@ def _apply_changes(request, old_status, new_status):
         if new_status['enabled']:
             domain_added.send_robust(sender='dynamicdns',
                                      domain_type='domain-type-dynamic',
-                                     name=new_status['dynamicdns_domain'],
-                                     services='__all__')
+                                     name=new_domain_name, services='__all__')
             _run(['start'])
 
         messages.success(request, _('Configuration updated'))
