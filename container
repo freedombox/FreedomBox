@@ -382,8 +382,12 @@ def _verify_dependencies():
 
 def _get_systemd_nspawn_version():
     """Retrieve and store systemd-nspawn version (same as systemd)."""
-    process = subprocess.run(['systemd', '--version'], stdout=subprocess.PIPE,
-                             check=True)
+    try:
+        process = subprocess.run(['systemd', '--version'], stdout=subprocess.PIPE,
+                                 check=True)
+    except FileNotFoundError:
+        process = subprocess.run(['/usr/lib/systemd/systemd', '--version'], stdout=subprocess.PIPE,
+                                 check=True)
     global systemd_version
     systemd_version = float(process.stdout.decode().split()[1])
 
