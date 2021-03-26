@@ -28,6 +28,7 @@ from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 
 from plinth.modules import first_boot
+from plinth.utils import is_user_admin
 
 LOGGER = logging.getLogger(__name__)
 
@@ -51,6 +52,15 @@ class FirstBootMiddleware(MiddlewareMixin):
 
         firstboot_completed = first_boot.is_completed()
         user_requests_firstboot = first_boot.is_firstboot_url(request.path)
+
+        # If user requests a step other than the welcome step, verify that they
+        # indeed completed the secret verification by looking at the session.
+        if (user_requests_firstboot and
+                not request.path.startswith(reverse('first_boot:welcome')) and
+                first_boot.firstboot_wizard_secret_exists() and
+                not request.session.get('firstboot_secret_provided', False) and
+                not is_user_admin(request)):
+            return HttpResponseRedirect(reverse('first_boot:welcome'))
 
         # Redirect to first boot if requesting normal page and first
         # boot is not complete.
