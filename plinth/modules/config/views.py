@@ -117,9 +117,6 @@ def set_domainname(domainname, old_domainname):
     """Sets machine domain name to domainname"""
     old_domainname = config.get_domainname()
 
-    # Domain name should be ASCII. If it's unicode, convert to ASCII.
-    domainname = str(domainname)
-
     # Domain name is not case sensitive, but Let's Encrypt certificate
     # paths use lower-case domain name.
     domainname = domainname.lower()

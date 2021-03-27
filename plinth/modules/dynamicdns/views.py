@@ -129,13 +129,9 @@ def _apply_changes(request, old_status, new_status):
         if new_status.get('use_ipv6'):
             use_ipv6 = "enabled"
 
-        # Domain name should be ASCII. If it's unicode, convert to
-        # ASCII.
-        new_domain_name = str(new_status['dynamicdns_domain'])
-
         # Domain name is not case sensitive, but Let's Encrypt
         # certificate paths use lower-case domain name.
-        new_domain_name = new_domain_name.lower()
+        new_domain_name = new_status['dynamicdns_domain'].lower()
 
         _run([
             'configure',

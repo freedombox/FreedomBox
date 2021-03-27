@@ -67,12 +67,8 @@ class ConfigurationForm(forms.Form):
         old = _filter(self.initial)
         new = _filter(self.cleaned_data)
 
-        # Kite name should be ASCII. If it's unicode, convert to
-        # ASCII.
-        kite_name = str(new['kite_name'])
-
         # Let's Encrypt certificate paths use lower-case kite name.
-        kite_name = kite_name.lower()
+        kite_name = new['kite_name'].lower()
 
         if old != new:
             frontend = f"{new['server_domain']}:{new['server_port']}"
