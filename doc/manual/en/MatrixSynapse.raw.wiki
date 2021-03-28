@@ -14,8 +14,8 @@
 '''Available since''': version 0.14.0
 
 === What is Matrix? ===
-[[https://matrix.org/|Matrix]] is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on !FreedomBox to host large chat rooms, end-to-end encrypted communication and audio/video calls.  
-Matrix Synapse is a federated application where chat rooms can exist on any server and users from any server in the federated network can join them.  [[https://matrix.org/docs/guides/faq.html|Learn more]] about Matrix.
+[[https://matrix.org/|Matrix]] is an open protocol for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on !FreedomBox to host chat rooms with end-to-end encrypted communication and audio/video calls.  
+Matrix Synapse is a federated application where chat rooms can exist on any server and users from any server in the federated network can join them. [[https://matrix.org/docs/guides/faq.html|Learn more]] about Matrix.
 
 === How to access your Matrix Synapse server? ===
 
@@ -28,13 +28,19 @@ If your !FreedomBox is behind a router, you will need to set up port forwarding 
 
 === Setting up Matrix Synapse on your FreedomBox ===
 
-To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using [[FreedomBox/Manual/Configure|System -> Configure page]].  After configuring a domain, you will see that the service is running. The service will be accessible on the configured !FreedomBox domain. Currently, you will not be able to change the domain once is it configured.
+To enable Matrix Synapse, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured. After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using [[FreedomBox/Manual/Configure|System -> Configure]] page. After configuring a domain, you will see that the service is running. The service will be accessible on the configured !FreedomBox domain. Currently, you will not be able to change the domain once is it configured.
 
 Your router has to be configured to forward port 8448.
 
 All the registered users of your !FreedomBox will have their Matrix IDs as `@username:domain`. If public registration is enabled, also your chosen client can be used to register a user account.
 
-If your !FreedomBox is behind a router (NAT) you might need [[FreedomBox/Manual/Coturn|Coturn]] for Voice over IP calls.
+=== Setting up Audio/Video calls ===
+
+The Matrix Synapse server is only responsible for establishing calls between participants in rooms. Matrix clients such as Element are actually responsible for the transfer of the audio/video traffic. Element supports calling in both one-to-one conversations and in groups.
+
+For one-to-one conversations, Element tries to make a peer-to-peer connection between the two participants. This works when both the participants are using Element on computers with a public IP address or if they're on the same network. If both the participants are behind different NAT devices, establishing a direct peer-to-peer connection between them will not be possible. This problem can be solved by configuring Matrix Synapse with a STUN/TURN server. !FreedomBox provides an app called [[FreedomBox/Manual/Coturn|Coturn]] for this purpose. !FreedomBox doesn't automatically install Coturn on installing Matrix Synapse. However, as soon as Coturn app is installed, !FreedomBox automatically configures Matrix Synapse to use it for audio/video calls. It is possible to override this configuration with a different STUN/TURN server in the web interface.
+
+For calling groups with more than two participants (i.e. not one-on-one conversations), Element uses an external Jitsi Meet instance. Element uses jitsi.riot.im as its default Jitsi Meet instance. If the Matrix Synapse server is configured to use a different Jitsi Meet instance as the default, Element will use it instead for all users on that server. 
 
 === Federating with other Matrix instances ===
 
