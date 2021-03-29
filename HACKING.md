@@ -65,7 +65,7 @@ development environment inside a systemd-nspawn container.
 
 3.  To download, setup, run, and configure a container for FreedomBox
     development, simply execute in your FreedomBox Service (Plinth) development
-    folder:
+    folder: (This step requires at least 16GB of free disk space)
 
     ```bash
     host$ ./container up
@@ -141,10 +141,23 @@ Note: This development container has automatic upgrades disabled by default.
   ./container up`.
 * Not all kinds of changes are automatically updated. Try `guest$ sudo mount -o
   remount /freedombox`.
+* I am getting an error that says `lo` is not managed by Network Manager
+  * By default, Network Manager will not touch any interface mentioned in
+    `/etc/network/interfaces`. <sup>[(src)][DebianNetworkManager]</sup>
+    To workaround this error, you must override Network Manager's behavior.
+    <sup>[(src)][GloballyManagedDevices]</sup>
 
+    ```
+    # On host machine
+    $ sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+    $ sudo service network-manager restart
+    $ ./container destroy && ./container up
+    ```
 
 [back to index](#hacking)
 
+[DebianNetworkManager]: https://wiki.debian.org/NetworkManager#Wired_Networks_are_Unmanaged
+[GloballyManagedDevices]: https://askubuntu.com/a/893614
 
 ### Using Vagrant
 
