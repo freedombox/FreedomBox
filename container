@@ -383,11 +383,11 @@ def _verify_dependencies():
 def _get_systemd_nspawn_version():
     """Retrieve and store systemd-nspawn version (same as systemd)."""
     try:
-        process = subprocess.run(['systemd', '--version'], stdout=subprocess.PIPE,
-                                 check=True)
+        process = subprocess.run(['systemd', '--version'],
+                                 stdout=subprocess.PIPE, check=True)
     except FileNotFoundError:
-        process = subprocess.run(['/usr/lib/systemd/systemd', '--version'], stdout=subprocess.PIPE,
-                                 check=True)
+        process = subprocess.run(['/usr/lib/systemd/systemd', '--version'],
+                                 stdout=subprocess.PIPE, check=True)
     global systemd_version
     systemd_version = float(process.stdout.decode().split()[1])
 
@@ -484,7 +484,8 @@ def _get_overlay_folder(distribution):
     """Return the writable folder that should be exposed into container."""
     default_data_dir = pathlib.Path.home() / '.local' / 'share'
     data_folder = os.environ.get('XDG_DATA_HOME', default_data_dir)
-    folder = data_folder / 'freedombox-container' / 'overlay' / distribution
+    folder = pathlib.Path(data_folder) / \
+        'freedombox-container' / 'overlay' / distribution
     return folder.resolve()
 
 
