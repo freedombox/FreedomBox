@@ -3,15 +3,15 @@
 Tests for config module.
 """
 
-import pytest
 import os
+from unittest.mock import MagicMock, patch
 
-from unittest.mock import (patch, MagicMock)
+import pytest
 
 from plinth import __main__ as plinth_main
-from plinth.modules.apache import uws_directory_of_user
-from plinth.modules.config import (home_page_url2scid, get_home_page,
-                                   _home_page_scid2url, change_home_page)
+from plinth.modules.apache import uws_directory_of_user, uws_url_of_user
+from plinth.modules.config import (_home_page_scid2url, change_home_page,
+                                   get_home_page, home_page_url2scid)
 from plinth.modules.config.forms import ConfigurationForm
 
 
@@ -71,46 +71,53 @@ def test_domainname_field():
 
 def test_homepage_mapping():
     """Basic tests for homepage functions."""
-    f = home_page_url2scid
-    assert f(None) is None
-    assert f('/unknown/url') is None
-    assert 'plinth' == f('/plinth/')
-    assert 'plinth' == f('/plinth')
-    assert 'plinth' == f('plinth')
-    assert 'apache-default' == f('/index.html')
-    assert 'uws-user' == f('/~user')
-    assert 'uws-user' == f('/~user/whatever/else')
-    # assert 'config' == f('/plinth/apps/sharing/')
+    func = home_page_url2scid
+    assert func(None) is None
+    assert func('/unknown/url') is None
+    assert func('/plinth/') == 'plinth'
+    assert func('/plinth') == 'plinth'
+    assert func('plinth') == 'plinth'
+    assert func('/index.html') == 'apache-default'
+    assert func('/~user') == 'uws-user'
+    assert func('/~user/whatever/else') == 'uws-user'
 
-    f = _home_page_scid2url
-    assert f(None) is None
-    assert '/plinth/' == f('plinth')
-    assert '/index.html' == f('apache-default')
+    func = _home_page_scid2url
+    assert func(None) is None
+    assert func('plinth') == '/plinth/'
+    assert func('apache-default') == '/index.html'
 
 
 def test_homepage_mapping_skip_ci():
     """Special tests for homepage functions."""
-
     try:
-        UWS_DIRECTORY = uws_directory_of_user(os.getlogin())
+        user = os.getlogin()
     except OSError:
+        # See msg383161 in https://bugs.python.org/issue40821
         reason = "Needs access to ~/ directory. " \
                + "CI sandboxed workspace doesn't provide it."
         pytest.skip(reason)
+    uws_directory = uws_directory_of_user(user)
+    uws_url = uws_url_of_user(user)
+    uws_scid = home_page_url2scid(uws_url)
 
-    if os.path.exists(UWS_DIRECTORY):
-        reason = "UWS dir {} exists already.".format(UWS_DIRECTORY)
+    # Check test's precondition:
+    if os.path.exists(uws_directory):
+        # Don't blindly remove a pre-existing directory. Just skip the test.
+        reason = "UWS directory {} exists already.".format(uws_directory)
         pytest.skip(reason)
 
-    f = _home_page_scid2url
+    # AC: Return scid if UWS directory exists:
     try:
-        os.mkdir(UWS_DIRECTORY)
-    except FileNotFoundError:
-        pytest.skip('Home folder cannot be accessed on buildd.')
+        os.mkdir(uws_directory)
+    except Exception:
+        reason = "Needs access to ~/ directory. " \
+               + "CI sandboxed workspace doesn't provide it."
+        pytest.skip(reason)
+    assert _home_page_scid2url(uws_scid) == uws_url
 
-    assert '/~fbx/' == f('uws-fbx')
-    os.rmdir(UWS_DIRECTORY)
-    assert f('uws-fbx') is None
+    # AC: Return None if it doesn't:
+    os.rmdir(uws_directory)
+    assert _home_page_scid2url(uws_scid) is None
 
 
 class Dict2Obj(object):
@@ -147,39 +154,50 @@ def test_homepage_field():
     Note: If run on a pristine unconfigured FreedomBox, this test will leave
           the homepage default-configured. (Imperfect cleanup in such case).
 
-    Pending: Specific test cases to distiguish 4.1,2,3.
-             Currently they share the same test case.
+    Note: We take fbx as website user because of our testing container.
+
+    Pending: - Specific test cases to distinguish 4.1,2,3.
+               Currently they share the same test case.
+             - Search for another valid user apart from fbx.
     """
+    user = 'fbx'
+    uws_directory = uws_directory_of_user(user)
+    uws_url = uws_url_of_user(user)
+    uws_scid = home_page_url2scid(uws_url)
+
+    default_home_page = 'plinth'
+    original_home_page = get_home_page() or default_home_page
+
+    # Check test's preconditions:
+    if original_home_page not in (default_home_page, None):
+        reason = "Unexpected home page {}.".format(original_home_page)
+        pytest.skip(reason)
+
+    if os.path.exists(uws_directory):
+        # Don't blindly remove a pre-existing directory. Just skip the test.
+        reason = "UWS directory {} exists already.".format(uws_directory)
+        pytest.skip(reason)
+
+    # AC: invalid changes fall back to default:
+    for scid in ('uws-unexisting', uws_scid, 'missing_app'):
+        change_home_page(scid)
+        assert get_home_page() == default_home_page
+
+    # AC: valid changes actually happen:
     try:
-        UWS_DIRECTORY = uws_directory_of_user(os.getlogin())
-    except OSError:
-        reason = "Needs access to ~/ directory, etc. " \
+        os.mkdir(uws_directory)
+    except Exception:
+        reason = "Needs access to ~/ directory. " \
                + "CI sandboxed workspace doesn't provide it."
         pytest.skip(reason)
-
-    DEFAULT_HOME_PAGE = 'plinth'
-    ORIGINAL_HOME_PAGE = get_home_page() or DEFAULT_HOME_PAGE
-
-    if ORIGINAL_HOME_PAGE not in (DEFAULT_HOME_PAGE, None):
-        reason = "Unexpected home page {}.".format(ORIGINAL_HOME_PAGE)
-        pytest.skip(reason)
-
-    # invalid changes fall back to default:
-    for scid in ('uws-unexisting', 'uws-fbx', 'missing_app'):
-        change_home_page(scid)
-        assert get_home_page() == DEFAULT_HOME_PAGE
-
-    os.mkdir(UWS_DIRECTORY)
-
-    # valid changes actually happen:
-    for scid in ('b', 'a', 'uws-fbx', 'apache-default', 'plinth'):
+    for scid in ('b', 'a', uws_scid, 'apache-default', 'plinth'):
         change_home_page(scid)
         assert get_home_page() == scid
 
     # cleanup:
-    change_home_page(ORIGINAL_HOME_PAGE)
-    os.rmdir(UWS_DIRECTORY)
-    assert get_home_page() == ORIGINAL_HOME_PAGE
+    change_home_page(original_home_page)
+    os.rmdir(uws_directory)
+    assert get_home_page() == original_home_page
 
 
 def test_locale_path():

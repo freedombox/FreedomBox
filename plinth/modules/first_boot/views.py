@@ -18,6 +18,7 @@ class WelcomeView(FormView):
 
     def form_valid(self, form):
         """If form is valid, mark this step as done and move to next step."""
+        self.request.session['firstboot_secret_provided'] = True
         first_boot.mark_step_done('firstboot_welcome')
         return http.HttpResponseRedirect(reverse(first_boot.next_step()))
 
