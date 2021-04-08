@@ -66,8 +66,10 @@ test-build-all:
 lintian:
     extends: .test-lintian
 
-autopkgtest:
-    extends: .test-autopkgtest
+# autopkgtest is flaky due to
+# https://salsa.debian.org/freedombox-team/freedombox/-/issues/2077
+#autopkgtest:
+#    extends: .test-autopkgtest
 
 blhc:
     extends: .test-blhc
