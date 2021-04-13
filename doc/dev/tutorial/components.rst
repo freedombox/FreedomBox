@@ -16,6 +16,7 @@ We need to provide some basic information about the application for the app to
 function normally.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth import app as app_module
 
@@ -60,6 +61,7 @@ need to list them and present them. Let's add this information to
 ``manifest.py``.
 
 .. code-block:: python3
+  :caption: ``manifest.py``
 
   clients = [{
       'name': _('Transmission'),
@@ -84,6 +86,7 @@ concerns are automatically handled by the framework if a
 our app's class.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth.daemon import Daemon
 
@@ -120,6 +123,7 @@ these concerns are automatically handled by the framework if a
 app. Let us do that in our app's class.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth.modules.apache.components import Webserver
 
@@ -143,6 +147,7 @@ This information is used to check if the URLs are accessible as expected when
 the user requests diagnostic tests on the app.
 
 .. code-block:: apache
+  :caption: ``data/etc/apache2/conf-available/transmission-freedombox.conf``
 
   ## On all sites, provide Transmission on a default path: /transmission
   <Location /transmission>
@@ -166,6 +171,7 @@ available over Internet. Create the
 initialization.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth.modules.firewall.components import Firewall
 
@@ -196,6 +202,7 @@ and we simply need to declare and use. First we need to register a user group
 with the FreedomBox framework in ``__init.py__``.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth.modules.users.components import UsersAndGroups
 
@@ -216,6 +223,7 @@ group (and, of course, admin users) should be allowed to access our app. In the
 file ``tranmission-freedombox.conf``, add the following.
 
 .. code-block:: apache
+  :caption: ``data/etc/apache2/conf-available/transmission-freedombox.conf``
 
   <Location /transmission>
       ...
@@ -236,6 +244,7 @@ when they visit FreedomBox. To provide this shortcut, a
 :class:`~plinth.frontpage.Shortcut` component can added to the app.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth import frontpage
 
@@ -277,6 +286,7 @@ initialization.
 In ``__init__.py``, add:
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth.modules.backups.components import BackupRestore
 
@@ -295,6 +305,7 @@ In ``__init__.py``, add:
 In ``manifest.py``, add:
 
 .. code-block:: python3
+  :caption: ``manifest.py``
 
   backup = {
       'data': {

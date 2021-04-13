@@ -11,6 +11,7 @@ user visits this URL, a view is executed and a page is displayed. In ``urls.py``
 write the following:
 
 .. code-block:: python3
+  :caption: ``urls.py``
 
   from django.conf.urls import url
 
@@ -33,6 +34,7 @@ a link in FreedomBox web interface. Let us add a link in the apps list. In
 ``__init__.py`` add the following:
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth.menu import main_menu
 
@@ -83,6 +85,7 @@ section of the web interface that points to our view. We now need to create a
 view to show the app page for our app. In ``views.py``, let us add a view.
 
 .. code-block:: python3
+  :caption: ``views.py``
 
   from plinth import views
   from plinth.modules import transmission

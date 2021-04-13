@@ -14,6 +14,7 @@ Debian packages required in the ``setup()`` method that is called during
 installation:
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   managed_packages = ['transmission-daemon']
 

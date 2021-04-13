@@ -21,6 +21,7 @@ itself is a two-tuple containing the display name of the test followed by the
 result as ``passed``, ``failed`` or ``error``.
 
 .. code-block:: python3
+  :caption: ``views.py``
 
   class TransmissionAppView(views.AppView):
       ...
@@ -47,6 +48,7 @@ system logs. Doing this in FreedomBox is just like doing this any other Python
 application.
 
 .. code-block:: python3
+  :caption: ``views.py``
 
   import logging
 
@@ -75,6 +77,7 @@ requires marking the user visible messages for translation. FreedomBox apps use
 the Django's localization methods to make that happen.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from django.utils.translation import ugettext_lazy as _
 

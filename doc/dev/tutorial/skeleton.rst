@@ -52,7 +52,10 @@ Tell FreedomBox that our app exists
 The first thing to do is tell FreedomBox that our app exists. This is done by
 writing a small file with the Python import path to our app and placing it in
 ``plinth/modules/transmission/data/etc/plinth/modules-enabled/``. Let us create
-this file ``transmission``::
+this file ``transmission``:
+
+.. code-block:: text
+  :caption: ``plinth/modules/transmission/data/etc/plinth/modules-enabled/transmission``
 
   plinth.modules.transmission
 
@@ -71,6 +74,7 @@ In the FreedomBox framework, each app must be a class derived from the
 class later.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   from plinth import app as app_module
 
@@ -89,6 +93,7 @@ itself by calling the ``init()`` method if there is such a method available as
 ``<module>.init()``. The app class must be instantiated here.
 
 .. code-block:: python3
+  :caption: ``__init__.py``
 
   app = None
 

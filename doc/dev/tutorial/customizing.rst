@@ -11,6 +11,7 @@ file is provided by the framework. In some cases, we will need to customize this
 template. Let us create a custom template file in ``transmission.html``.
 
 .. code-block:: django
+  :caption: ``templates/transmission.html``
 
   {% extends "app.html" %}
 
@@ -48,6 +49,7 @@ To start using our custom template, we need to pass this to our view. In
 ``views.py``, add the following line:
 
 .. code-block:: python3
+  :caption: ``views.py``
 
   class TransmissionAppView(AppView):
       ...
@@ -60,6 +62,7 @@ Our app needs some configuration. So, we need to write a configuration form to
 provide options to the user. Add the following to ``forms.py``.
 
 .. code-block:: python3
+  :caption: ``forms.py``
 
   from django import forms
 
@@ -95,6 +98,7 @@ The view we have created needs to display the form and process the form after
 the user submits it. Let us implement that in ``views.py``.
 
 .. code-block:: python3
+  :caption: ``views.py``
 
   from django.contrib import messages
 
@@ -157,6 +161,7 @@ enable and disable the web configuration. We will do this by creating a file
 ``actions/transmission``.
 
 .. code-block:: python3
+  :caption: ``actions/transmission``
 
   import argparse
   import json
