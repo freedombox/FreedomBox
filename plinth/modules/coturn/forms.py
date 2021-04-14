@@ -4,14 +4,22 @@ Forms for Coturn app.
 """
 
 from django import forms
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules import coturn
+from plinth.modules.coturn.components import TurnConfiguration
 
 
 def get_domain_choices():
     """Double domain entries for inclusion in the choice field."""
     return ((domain, domain) for domain in coturn.get_available_domains())
+
+
+def turn_uris_validator(turn_uris):
+    """Validate list of STUN/TURN Server URIs."""
+    if not TurnConfiguration.validate_turn_uris(turn_uris.split("\n")):
+        raise ValidationError(_('Invalid list of STUN/TURN Server URIs'))
 
 
 class CoturnForm(forms.Form):

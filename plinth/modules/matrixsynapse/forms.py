@@ -5,8 +5,9 @@ Forms for the Matrix Synapse module.
 
 from django import forms
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
 
+from plinth.modules.coturn.forms import turn_uris_validator
+from django.utils.translation import ugettext_lazy as _
 from plinth.utils import format_lazy
 
 
@@ -30,7 +31,7 @@ class MatrixSynapseForm(forms.Form):
         label=_('STUN/TURN Server URIs'), required=False, strip=True,
         widget=forms.Textarea(attrs={'rows': 4}),
         help_text=_('List of public URIs of the STUN/TURN server, one on each '
-                    'line.'))
+                    'line.'), validators=[turn_uris_validator])
 
     shared_secret = forms.CharField(
         label=_('Shared Authentication Secret'), required=False, strip=True,

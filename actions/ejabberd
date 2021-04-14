@@ -30,6 +30,8 @@ yaml = YAML()
 yaml.allow_duplicate_keys = True
 yaml.preserve_quotes = True
 
+TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
@@ -303,7 +305,7 @@ def subcommand_mam(argument):
 
 def _generate_service(uri: str) -> dict:
     """Generate ejabberd mod_stun_disco service config from Coturn URI."""
-    pattern = re.compile(r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)')
+    pattern = re.compile(TURN_URI_REGEX)
     typ, domain, port, transport = pattern.match(uri).groups()
     return {
         "host": domain,

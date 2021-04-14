@@ -5,9 +5,12 @@
 from __future__ import annotations  # Can be removed in Python 3.10
 
 import json
+import re
 from dataclasses import dataclass, field
 
 from plinth import app
+
+TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
 
 
 @dataclass
@@ -44,6 +47,12 @@ class TurnConfiguration:
             'uris': self.uris,
             'shared_secret': self.shared_secret
         })
+
+    @staticmethod
+    def validate_turn_uris(turn_uris: list[str]) -> bool:
+        """Return whether the given TURN URI is valid."""
+        pattern = re.compile(TURN_URI_REGEX)
+        return all(map(pattern.match, turn_uris))
 
 
 class TurnConsumer(app.FollowerComponent):
