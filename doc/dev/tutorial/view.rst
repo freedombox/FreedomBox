@@ -36,7 +36,7 @@ a link in FreedomBox web interface. Let us add a link in the apps list. In
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.menu import main_menu
+  from plinth import menu
 
   class TransmissionApp(app_module.App):
       ...

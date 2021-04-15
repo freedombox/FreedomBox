@@ -18,6 +18,8 @@ function normally.
 .. code-block:: python3
   :caption: ``__init__.py``
 
+  from django.utils.translation import ugettext_lazy as _
+
   from plinth import app as app_module
 
   from . import manifest
