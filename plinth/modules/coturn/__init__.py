@@ -7,6 +7,7 @@ import json
 import logging
 import pathlib
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -19,6 +20,7 @@ from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
+from plinth.utils import format_lazy
 
 from . import manifest
 
@@ -35,8 +37,11 @@ _description = [
       'providing an implementation of TURN and STUN protocols. WebRTC, SIP '
       'and other communication servers can use it to establish a call between '
       'parties who are otherwise unable connect to each other.'),
-    _('It is not meant to be used directly by users. Servers such as '
-      'matrix-synapse need to be configured with the details provided here.'),
+    format_lazy(
+        _('It is not meant to be used directly by users. Servers such as '
+          '<a href="{ms_url}">Matrix Synapse</a> or <a href="{e_url}">ejabberd'
+          '</a> need to be configured with the details provided here.'),
+        ms_url=reverse_lazy('matrixsynapse:index'), e_url=('ejabberd:index')),
 ]
 
 app = None
