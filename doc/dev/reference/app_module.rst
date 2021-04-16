@@ -27,7 +27,7 @@ will be removed in the future.
 <app-module>.version
 ^^^^^^^^^^^^^^^^^^^^
 
-Optional. Version number of an app. Increasing the version number of an app
+Required. Version number of an app. Increasing the version number of an app
 triggers the setup() logic allowing the app to run upgrade scripts. This
 attribute is part of the :class:`~plinth.app.Info` component. Need for this
 attribute at the module level will be removed in the future.
