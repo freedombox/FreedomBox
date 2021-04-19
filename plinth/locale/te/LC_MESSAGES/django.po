@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-28 20:13-0500\n"
+"POT-Creation-Date: 2021-04-19 18:51-0400\n"
 "PO-Revision-Date: 2020-10-26 13:27+0000\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -1017,9 +1017,10 @@ msgid "Refresh IP address and domains"
 msgstr "IP చిరునామా మరియు డొమైన్‌లను రిఫ్రెష్ చేయండి"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/ejabberd/views.py:85
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
-#: plinth/modules/pagekite/forms.py:76 plinth/modules/quassel/views.py:29
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
@@ -1205,17 +1206,17 @@ msgstr "ప్రాప్తి సూచి"
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:25
+#: plinth/modules/config/__init__.py:27
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:54
+#: plinth/modules/config/__init__.py:58
 msgid "General Configuration"
 msgstr "సాధారణ ఆకృతీకరణ"
 
-#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:63 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:37
@@ -1224,7 +1225,7 @@ msgstr "సాధారణ ఆకృతీకరణ"
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
-#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
@@ -1349,7 +1350,7 @@ msgstr "అధునాతన అనువర్తనాలు మరియు 
 msgid "Hiding advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలు దాచబడుతున్నాయి"
 
-#: plinth/modules/coturn/__init__.py:34
+#: plinth/modules/coturn/__init__.py:36
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1357,28 +1358,34 @@ msgid ""
 "who are otherwise unable connect to each other."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:38
+#: plinth/modules/coturn/__init__.py:41
+#, python-brace-format
 msgid ""
-"It is not meant to be used directly by users. Servers such as matrix-synapse "
-"need to be configured with the details provided here."
+"It is not meant to be used directly by users. Servers such as <a href="
+"\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
+"be configured with the details provided here."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:57
+#: plinth/modules/coturn/__init__.py:62
 msgid "Coturn"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:58
+#: plinth/modules/coturn/__init__.py:63
 msgid "VoIP Helper"
 msgstr ""
 
-#: plinth/modules/coturn/forms.py:22 plinth/modules/mumble/forms.py:21
+#: plinth/modules/coturn/forms.py:22
+msgid "Invalid list of STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
 #: plinth/modules/quassel/forms.py:22
 #, fuzzy
 #| msgid "Subdomain"
 msgid "TLS domain"
 msgstr "ఉప డోమైన్ పేరు"
 
-#: plinth/modules/coturn/forms.py:24 plinth/modules/mumble/forms.py:23
+#: plinth/modules/coturn/forms.py:32 plinth/modules/mumble/forms.py:23
 #: plinth/modules/quassel/forms.py:24
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1486,58 +1493,62 @@ msgstr ""
 "వ్యవస్థ నిర్ధారణ పరీక్ష అనేది మీ కంప్యూటర్లో అన్ని సేవలు మరియు అప్లికేషన్లు అనుకున్న విధంగా పని "
 "చేస్తున్నాయో లేదో ధృవీకరించడం కోసం అనేక తనిఖీలు చేస్తుంది."
 
-#: plinth/modules/diagnostics/__init__.py:52
-#: plinth/modules/diagnostics/__init__.py:230
+#: plinth/modules/diagnostics/__init__.py:54
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "లక్షణాలు"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:98
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "క్వాసెల్"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:99
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "అమరక విఫలమైంది."
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:100
 msgid "error"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:101
+msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:196
+#: plinth/modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:201
+#: plinth/modules/diagnostics/__init__.py:209
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "గిట్"
 
-#: plinth/modules/diagnostics/__init__.py:208
+#: plinth/modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:213
+#: plinth/modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:225
+#: plinth/modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:227
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr ""
 
@@ -1585,7 +1596,7 @@ msgstr "పరీక్ష"
 msgid "Result"
 msgstr "ఫలితం"
 
-#: plinth/modules/diagnostics/views.py:54
+#: plinth/modules/diagnostics/views.py:57
 msgid "Diagnostic Test"
 msgstr "లక్షణాల పరీక్ష"
 
@@ -1948,20 +1959,27 @@ msgstr ""
 "నిజానికి సమాచార మార్పిడి చేయడానికి, మీరు వెబ్ క్లయింట్ లేదా ఏ ఇతర <a href='http://xmpp.org/xmpp-"
 "software/clients/' target='_blank'> XMPP క్లయింట్  </a> ఉపయోగించవచ్చు."
 
-#: plinth/modules/ejabberd/__init__.py:64
+#: plinth/modules/ejabberd/__init__.py:49
+#, python-brace-format
+msgid ""
+"ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
+"href={coturn_url}>Coturn</a> app or configure an external server."
+msgstr ""
+
+#: plinth/modules/ejabberd/__init__.py:70
 msgid "ejabberd"
 msgstr "ఈజాబ్బర్డి"
 
-#: plinth/modules/ejabberd/__init__.py:65
+#: plinth/modules/ejabberd/__init__.py:71
 #: plinth/modules/matrixsynapse/__init__.py:77
 msgid "Chat Server"
 msgstr "కబుర్ల సేవిక"
 
-#: plinth/modules/ejabberd/forms.py:16
+#: plinth/modules/ejabberd/forms.py:18
 msgid "Enable Message Archive Management"
 msgstr "ప్రాచీన సందేశ నిర్వహణ ప్రారంభించండి"
 
-#: plinth/modules/ejabberd/forms.py:18
+#: plinth/modules/ejabberd/forms.py:20
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -1972,6 +1990,36 @@ msgstr ""
 "ప్రారంభించబడితే, మీ {box_name} చాట్ సందేశ చరిత్రలను నిల్వ చేస్తుంది. ఇది బహుళ క్లయింట్ల మధ్య "
 "సంభాషణల సమకాలీకరణను అనుమతిస్తుంది మరియు బహుళ వినియోగదారు చాట్ రూమ్ చరిత్రను చదవగలదు. చరిత్రలు "
 "సాదా టెక్స్ట్ లేదా గుప్తీకరించబడినాయినా లేదో క్లయింట్ సెట్టింగ్లపై ఆధారపడి ఉంటుంది."
+
+#: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
+msgid "Automatically manage audio/video call setup"
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:29
+#, python-brace-format
+msgid ""
+"Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
+"server for ejabberd. Disable this if you want to use a different STUN/TURN "
+"server."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
+msgid "STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
+msgid "List of public URIs of the STUN/TURN server, one on each line."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
+#, fuzzy
+#| msgid "Authentication Mode"
+msgid "Shared Authentication Secret"
+msgstr "ప్రామాణీకరణ విధం"
+
+#: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
+msgid "Shared secret used to compute passwords for the TURN server."
+msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:10
 msgid "Conversations"
@@ -2016,7 +2064,7 @@ msgstr "డినో"
 msgid "Gajim"
 msgstr "గజీం"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:18
+#: plinth/modules/ejabberd/templates/ejabberd.html:19
 #, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
@@ -2027,14 +2075,6 @@ msgstr ""
 "<b>%(domainname)s</b>.వినియోగదారు ఐడిలు <i>username@%(domainname)s</i> లాగా "
 "కనిపిస్తాయి \n"
 "మీరు మీ డొమైన్ను <a href=\"%(index_url)s\">kaanfigar</a> పేజీలో సెటప్ చేయవచ్చు."
-
-#: plinth/modules/ejabberd/views.py:44
-msgid "Message Archive Management enabled"
-msgstr "ప్రాచీన సందేశ నిర్వహణ ప్రారంభించబడింది"
-
-#: plinth/modules/ejabberd/views.py:48
-msgid "Message Archive Management disabled"
-msgstr "ప్రాచీన సందేశ నిర్వహణ నిలిపివేయబడింది"
 
 #: plinth/modules/firewall/__init__.py:33
 #, python-brace-format
@@ -2171,7 +2211,7 @@ msgstr ""
 msgid "Start Setup"
 msgstr "అమరికను ప్రారంభించు"
 
-#: plinth/modules/first_boot/views.py:49
+#: plinth/modules/first_boot/views.py:50
 msgid "Setup Complete"
 msgstr "అమరక పూర్తయ్యింది"
 
@@ -2938,6 +2978,10 @@ msgstr "లెట్స్ ఎన్క్రిప్ట్"
 msgid "Certificates"
 msgstr "యోగ్యతాపత్రాలు"
 
+#: plinth/modules/letsencrypt/__init__.py:96
+msgid "Cannot test: No domains are configured."
+msgstr ""
+
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "డొమైన్"
@@ -3057,11 +3101,11 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "మ్యాట్రిక్స్ సినాప్స్"
 
-#: plinth/modules/matrixsynapse/forms.py:15
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్ ప్రారంభించండి"
 
-#: plinth/modules/matrixsynapse/forms.py:16
+#: plinth/modules/matrixsynapse/forms.py:17
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3070,34 +3114,12 @@ msgstr ""
 "ప్రజా నమోదును సశక్త పరచడం అంటే అంతర్జాలం లో ఉన్న ఎవరైనా కూడా మీ మాట్రిక్స్ సర్వర్ మీద ఖాతాను "
 "సృష్టించుకోగలరు. ప్రస్తుతం ఉండే వినియోగదారులు మాత్రమే వినియోగించాలి అనుకుంటే దీనిని నిర్వీర్యం చేయగలరు."
 
-#: plinth/modules/matrixsynapse/forms.py:21
-msgid "Automatically manage audio/video call setup"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:23
+#: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
 "server for Matrix Synapse. Disable this if you want to use a different STUN/"
 "TURN server."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:30
-msgid "STUN/TURN Server URIs"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:32
-msgid "List of public URIs of the STUN/TURN server, one on each line."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:36
-#, fuzzy
-#| msgid "Authentication Mode"
-msgid "Shared Authentication Secret"
-msgstr "ప్రామాణీకరణ విధం"
-
-#: plinth/modules/matrixsynapse/forms.py:37
-msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:12
@@ -5093,39 +5115,39 @@ msgid ""
 "no secret is set on the kite."
 msgstr "గాలిపటం లేదా రహస్యం గాలిపటం సెట్ అయితే మీ ఖాతా కోసం డిఫాల్ట్ రహస్య అనుబంధించబడిన ఒక రహస్య."
 
-#: plinth/modules/pagekite/forms.py:86
+#: plinth/modules/pagekite/forms.py:88
 msgid "protocol"
 msgstr "ప్రోటోకాల్"
 
-#: plinth/modules/pagekite/forms.py:89
+#: plinth/modules/pagekite/forms.py:91
 msgid "external (frontend) port"
 msgstr "బాహ్య (ఫ్రంటెండ్) పోర్ట్"
 
-#: plinth/modules/pagekite/forms.py:92
+#: plinth/modules/pagekite/forms.py:94
 msgid "internal (freedombox) port"
 msgstr "అంతర్గత (ఫ్రీడమ్బాక్స్) పోర్ట్"
 
-#: plinth/modules/pagekite/forms.py:93
+#: plinth/modules/pagekite/forms.py:95
 msgid "Enable Subdomains"
 msgstr "సబ్డొమైన్లు క్రియాశీలీకరించు"
 
-#: plinth/modules/pagekite/forms.py:128
+#: plinth/modules/pagekite/forms.py:130
 #, fuzzy
 msgid "Deleted custom service"
 msgstr "తొలగించినవి కస్టమ్ సేవ"
 
-#: plinth/modules/pagekite/forms.py:162
+#: plinth/modules/pagekite/forms.py:164
 #, fuzzy
 msgid "This service is already available as a standard service."
 msgstr ""
 "ఈ సేవను ప్రమాణం సేవగా అందుబాటులో ఉంది. దయచేసి దాన్ని ఎనేబుల్ \"ప్రామాణిక సేవలు\" పేజీ ఉపయోగించడానికి."
 
-#: plinth/modules/pagekite/forms.py:170
+#: plinth/modules/pagekite/forms.py:172
 #, fuzzy
 msgid "Added custom service"
 msgstr "కస్టమ్ సేవ చేర్చబడింది"
 
-#: plinth/modules/pagekite/forms.py:173
+#: plinth/modules/pagekite/forms.py:175
 msgid "This service already exists"
 msgstr "ఈ సేవ ఇప్పటికే ఉంది"
 
@@ -5804,73 +5826,75 @@ msgstr "భద్రత"
 #: plinth/modules/security/templates/security_report.html:12
 #, python-format
 msgid ""
-"The installed version of FreedomBox has %(count)s reported security "
-"vulnerabilities."
+"There are %(count)s reported security vulnerabilities in the FreedomBox app, "
+"which provides the core services and user interface for a FreedomBox server."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:18
+#: plinth/modules/security/templates/security_report.html:19
 msgid ""
 "The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app."
+"of security vulnerabilities for each installed app. More information on the "
+"vulnerabilities can be found on the <a href=\"https://security-tracker."
+"debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:24
+#: plinth/modules/security/templates/security_report.html:28
 msgid ""
 "For apps that provide services, the \"Sandboxed\" column shows whether "
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:31
+#: plinth/modules/security/templates/security_report.html:35
 msgid ""
 "\"Sandbox Coverage\" is a score of how effectively the service is isolated "
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:41
+#: plinth/modules/security/templates/security_report.html:45
 #, fuzzy
 #| msgid "Name"
 msgid "App Name"
 msgstr "పేరు"
 
-#: plinth/modules/security/templates/security_report.html:42
+#: plinth/modules/security/templates/security_report.html:46
 msgid "Current Vulnerabilities"
 msgstr "ప్రస్తుత దుర్బలతలు"
 
-#: plinth/modules/security/templates/security_report.html:43
+#: plinth/modules/security/templates/security_report.html:47
 msgid "Past Vulnerabilities"
 msgstr "గత దుర్బలతలు"
 
-#: plinth/modules/security/templates/security_report.html:44
+#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Sandboxed"
 msgstr "స్యాండ్ బాక్స్ ను అడ్డగించు (మైన్ పరీక్ష)"
 
-#: plinth/modules/security/templates/security_report.html:45
+#: plinth/modules/security/templates/security_report.html:49
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Sandbox Coverage"
 msgstr "స్యాండ్ బాక్స్ ను అడ్డగించు (మైన్ పరీక్ష)"
 
-#: plinth/modules/security/templates/security_report.html:56
+#: plinth/modules/security/templates/security_report.html:60
 msgid "N/A"
 msgstr "N/A"
 
-#: plinth/modules/security/templates/security_report.html:58
+#: plinth/modules/security/templates/security_report.html:62
 #, fuzzy
 #| msgid "yes"
 msgid "Yes"
 msgstr "అవును"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:64
 #, fuzzy
 #| msgid "None"
 msgid "No"
 msgstr "ఏమీ లేదు"
 
-#: plinth/modules/security/templates/security_report.html:67
+#: plinth/modules/security/templates/security_report.html:71
 #, fuzzy
 #| msgid "is not running"
 msgid "Not running"
@@ -8327,6 +8351,12 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Message Archive Management enabled"
+#~ msgstr "ప్రాచీన సందేశ నిర్వహణ ప్రారంభించబడింది"
+
+#~ msgid "Message Archive Management disabled"
+#~ msgstr "ప్రాచీన సందేశ నిర్వహణ నిలిపివేయబడింది"
 
 #, fuzzy
 #~| msgid ""

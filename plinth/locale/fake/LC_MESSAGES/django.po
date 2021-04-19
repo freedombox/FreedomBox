@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-28 20:13-0500\n"
+"POT-Creation-Date: 2021-04-19 18:51-0400\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -1068,9 +1068,10 @@ msgid "Refresh IP address and domains"
 msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:154
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/ejabberd/views.py:85
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
-#: plinth/modules/pagekite/forms.py:76 plinth/modules/quassel/views.py:29
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47
 msgid "Configuration updated"
@@ -1249,17 +1250,17 @@ msgstr ""
 msgid "Cockpit will only work when accessed using the following URLs."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:25
+#: plinth/modules/config/__init__.py:27
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:54
+#: plinth/modules/config/__init__.py:58
 msgid "General Configuration"
 msgstr "GENERAL CONFIGURATION"
 
-#: plinth/modules/config/__init__.py:59 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:63 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:37
@@ -1268,7 +1269,7 @@ msgstr "GENERAL CONFIGURATION"
 msgid "Configure"
 msgstr "CONFIGURE"
 
-#: plinth/modules/config/__init__.py:63 plinth/modules/config/forms.py:68
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
@@ -1398,7 +1399,7 @@ msgstr ""
 msgid "Hiding advanced apps and features"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:34
+#: plinth/modules/coturn/__init__.py:36
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1406,28 +1407,34 @@ msgid ""
 "who are otherwise unable connect to each other."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:38
+#: plinth/modules/coturn/__init__.py:41
+#, python-brace-format
 msgid ""
-"It is not meant to be used directly by users. Servers such as matrix-synapse "
-"need to be configured with the details provided here."
+"It is not meant to be used directly by users. Servers such as <a href="
+"\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
+"be configured with the details provided here."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:57
+#: plinth/modules/coturn/__init__.py:62
 msgid "Coturn"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:58
+#: plinth/modules/coturn/__init__.py:63
 msgid "VoIP Helper"
 msgstr ""
 
-#: plinth/modules/coturn/forms.py:22 plinth/modules/mumble/forms.py:21
+#: plinth/modules/coturn/forms.py:22
+msgid "Invalid list of STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
 #: plinth/modules/quassel/forms.py:22
 #, fuzzy
 #| msgid "Enable Subdomains"
 msgid "TLS domain"
 msgstr "ENABLE SUBDOMAINS"
 
-#: plinth/modules/coturn/forms.py:24 plinth/modules/mumble/forms.py:23
+#: plinth/modules/coturn/forms.py:32 plinth/modules/mumble/forms.py:23
 #: plinth/modules/quassel/forms.py:24
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1546,54 +1553,58 @@ msgstr ""
 "THE SYSTEM DIAGNOSTIC TEST WILL RUN A NUMBER OF CHECKS ON YOUR SYSTEM TO "
 "CONFIRM THAT APPLICATIONS AND SERVICES ARE WORKING AS EXPECTED."
 
-#: plinth/modules/diagnostics/__init__.py:52
-#: plinth/modules/diagnostics/__init__.py:230
+#: plinth/modules/diagnostics/__init__.py:54
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "DIAGNOSTICS"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "passed"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:99
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "SETUP FAILED."
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:100
 msgid "error"
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:101
+msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:196
+#: plinth/modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:201
+#: plinth/modules/diagnostics/__init__.py:209
 msgid "GiB"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:208
+#: plinth/modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:213
+#: plinth/modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:225
+#: plinth/modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:227
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr ""
 
@@ -1641,7 +1652,7 @@ msgstr "TEST"
 msgid "Result"
 msgstr "RESULT"
 
-#: plinth/modules/diagnostics/views.py:54
+#: plinth/modules/diagnostics/views.py:57
 msgid "Diagnostic Test"
 msgstr "DIAGNOSTIC TEST"
 
@@ -2066,28 +2077,65 @@ msgstr ""
 "ANY OTHER <a href='http://xmpp.org/xmpp-software/clients/' "
 "target='_blank'>XMPP CLIENT</a>."
 
-#: plinth/modules/ejabberd/__init__.py:64
+#: plinth/modules/ejabberd/__init__.py:49
+#, python-brace-format
+msgid ""
+"ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
+"href={coturn_url}>Coturn</a> app or configure an external server."
+msgstr ""
+
+#: plinth/modules/ejabberd/__init__.py:70
 msgid "ejabberd"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:65
+#: plinth/modules/ejabberd/__init__.py:71
 #: plinth/modules/matrixsynapse/__init__.py:77
 #, fuzzy
 #| msgid "Web Server"
 msgid "Chat Server"
 msgstr "WEB SERVER"
 
-#: plinth/modules/ejabberd/forms.py:16
+#: plinth/modules/ejabberd/forms.py:18
 msgid "Enable Message Archive Management"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:18
+#: plinth/modules/ejabberd/forms.py:20
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
 "synchronization of conversations between multiple clients, and reading the "
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
+msgid "Automatically manage audio/video call setup"
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:29
+#, python-brace-format
+msgid ""
+"Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
+"server for ejabberd. Disable this if you want to use a different STUN/TURN "
+"server."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
+msgid "STUN/TURN Server URIs"
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
+msgid "List of public URIs of the STUN/TURN server, one on each line."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
+#, fuzzy
+#| msgid "Authentication Mode"
+msgid "Shared Authentication Secret"
+msgstr "AUTHENTICATION MODE"
+
+#: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
+msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:10
@@ -2132,7 +2180,7 @@ msgstr ""
 msgid "Gajim"
 msgstr ""
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:18
+#: plinth/modules/ejabberd/templates/ejabberd.html:19
 #, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
@@ -2142,14 +2190,6 @@ msgstr ""
 "YOUR XMPP SERVER DOMAIN IS SET TO <b>%(domainname)s</b>. USER IDS WILL LOOK "
 "LIKE <i>USERNAME@%(domainname)s</i>. YOU CAN SETUP YOUR DOMAIN ON THE SYSTEM "
 "<a href=\"%(index_url)s\">CONFIGURE</a> PAGE."
-
-#: plinth/modules/ejabberd/views.py:44
-msgid "Message Archive Management enabled"
-msgstr ""
-
-#: plinth/modules/ejabberd/views.py:48
-msgid "Message Archive Management disabled"
-msgstr ""
 
 #: plinth/modules/firewall/__init__.py:33
 #, fuzzy, python-brace-format
@@ -2293,7 +2333,7 @@ msgstr ""
 msgid "Start Setup"
 msgstr "START SETUP"
 
-#: plinth/modules/first_boot/views.py:49
+#: plinth/modules/first_boot/views.py:50
 msgid "Setup Complete"
 msgstr "SETUP COMPLETE"
 
@@ -3065,6 +3105,10 @@ msgstr "CERTIFICATES (LET'S ENCRYPT)"
 msgid "Certificates"
 msgstr "CERTIFICATE STATUS"
 
+#: plinth/modules/letsencrypt/__init__.py:96
+msgid "Cannot test: No domains are configured."
+msgstr ""
+
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "DOMAIN"
@@ -3196,47 +3240,25 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "CHAT SERVER (XMPP)"
 
-#: plinth/modules/matrixsynapse/forms.py:15
+#: plinth/modules/matrixsynapse/forms.py:16
 #, fuzzy
 #| msgid "Applications"
 msgid "Enable Public Registration"
 msgstr "APPLICATIONS"
 
-#: plinth/modules/matrixsynapse/forms.py:16
+#: plinth/modules/matrixsynapse/forms.py:17
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/forms.py:21
-msgid "Automatically manage audio/video call setup"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:23
+#: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
 "server for Matrix Synapse. Disable this if you want to use a different STUN/"
 "TURN server."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:30
-msgid "STUN/TURN Server URIs"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:32
-msgid "List of public URIs of the STUN/TURN server, one on each line."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:36
-#, fuzzy
-#| msgid "Authentication Mode"
-msgid "Shared Authentication Secret"
-msgstr "AUTHENTICATION MODE"
-
-#: plinth/modules/matrixsynapse/forms.py:37
-msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:12
@@ -5306,27 +5328,27 @@ msgstr ""
 "A SECRET ASSOCIATED WITH THE KITE OR THE DEFAULT SECRET FOR YOUR ACCOUNT IF "
 "NO SECRET IS SET ON THE KITE."
 
-#: plinth/modules/pagekite/forms.py:86
+#: plinth/modules/pagekite/forms.py:88
 msgid "protocol"
 msgstr "PROTOCOL"
 
-#: plinth/modules/pagekite/forms.py:89
+#: plinth/modules/pagekite/forms.py:91
 msgid "external (frontend) port"
 msgstr "EXTERNAL (FRONTEND) PORT"
 
-#: plinth/modules/pagekite/forms.py:92
+#: plinth/modules/pagekite/forms.py:94
 msgid "internal (freedombox) port"
 msgstr "INTERNAL (FREEDOMBOX) PORT"
 
-#: plinth/modules/pagekite/forms.py:93
+#: plinth/modules/pagekite/forms.py:95
 msgid "Enable Subdomains"
 msgstr "ENABLE SUBDOMAINS"
 
-#: plinth/modules/pagekite/forms.py:128
+#: plinth/modules/pagekite/forms.py:130
 msgid "Deleted custom service"
 msgstr "DELETED CUSTOM SERVICE"
 
-#: plinth/modules/pagekite/forms.py:162
+#: plinth/modules/pagekite/forms.py:164
 #, fuzzy
 #| msgid ""
 #| "This service is available as a standard service. Please use the "
@@ -5336,11 +5358,11 @@ msgstr ""
 "THIS SERVICE IS AVAILABLE AS A STANDARD SERVICE. PLEASE USE THE \"STANDARD "
 "SERVICES\" PAGE TO ENABLE IT. "
 
-#: plinth/modules/pagekite/forms.py:170
+#: plinth/modules/pagekite/forms.py:172
 msgid "Added custom service"
 msgstr "ADDED CUSTOM SERVICE"
 
-#: plinth/modules/pagekite/forms.py:173
+#: plinth/modules/pagekite/forms.py:175
 msgid "This service already exists"
 msgstr "THIS SERVICE ALREADY EXISTS"
 
@@ -6055,71 +6077,73 @@ msgstr "SECURITY"
 #: plinth/modules/security/templates/security_report.html:12
 #, python-format
 msgid ""
-"The installed version of FreedomBox has %(count)s reported security "
-"vulnerabilities."
+"There are %(count)s reported security vulnerabilities in the FreedomBox app, "
+"which provides the core services and user interface for a FreedomBox server."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:18
+#: plinth/modules/security/templates/security_report.html:19
 msgid ""
 "The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app."
+"of security vulnerabilities for each installed app. More information on the "
+"vulnerabilities can be found on the <a href=\"https://security-tracker."
+"debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:24
+#: plinth/modules/security/templates/security_report.html:28
 msgid ""
 "For apps that provide services, the \"Sandboxed\" column shows whether "
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:31
+#: plinth/modules/security/templates/security_report.html:35
 msgid ""
 "\"Sandbox Coverage\" is a score of how effectively the service is isolated "
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:41
+#: plinth/modules/security/templates/security_report.html:45
 #, fuzzy
 #| msgid "Name"
 msgid "App Name"
 msgstr "NAME"
 
-#: plinth/modules/security/templates/security_report.html:42
+#: plinth/modules/security/templates/security_report.html:46
 msgid "Current Vulnerabilities"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:43
+#: plinth/modules/security/templates/security_report.html:47
 msgid "Past Vulnerabilities"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:44
+#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Blocked"
 msgid "Sandboxed"
 msgstr "BLOCKED"
 
-#: plinth/modules/security/templates/security_report.html:45
+#: plinth/modules/security/templates/security_report.html:49
 #, fuzzy
 #| msgid "Blocked"
 msgid "Sandbox Coverage"
 msgstr "BLOCKED"
 
-#: plinth/modules/security/templates/security_report.html:56
+#: plinth/modules/security/templates/security_report.html:60
 msgid "N/A"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:58
+#: plinth/modules/security/templates/security_report.html:62
 #, fuzzy
 #| msgid "yes"
 msgid "Yes"
 msgstr "YES"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:64
 msgid "No"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:67
+#: plinth/modules/security/templates/security_report.html:71
 #, fuzzy
 #| msgid "Tor is not running"
 msgid "Not running"
