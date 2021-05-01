@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-19 18:51-0400\n"
-"PO-Revision-Date: 2021-02-16 04:50+0000\n"
+"PO-Revision-Date: 2021-05-01 23:15+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -155,13 +155,13 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
-"Activer les sauvegardes automatiques régulières pour sécuriser vos données. "
-"Il est préférable d’utiliser un emplacement de sauvegarde distant et "
-"chiffré, ou un disque externe additionnel."
+"Active la planification de sauvegardes automatiques pour sécuriser vos "
+"données. Il est préférable d’utiliser un emplacement de sauvegarde distant "
+"et chiffré, ou un disque externe additionnel."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr "Activer les sauvegardes régulières"
+msgstr "Activer la planification des sauvegardes"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -190,7 +190,7 @@ msgstr "{app} (pas de données à sauvegarder)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr "Activer les sauvegardes régulières"
+msgstr "Activer les sauvegardes planifiées"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
@@ -384,7 +384,7 @@ msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
-"Mot de passe du serveur SSH.<br/>L’authentification par clé SSH n’est pas "
+"Mot de passe du serveur SSH.<br>L’authentification par clé SSH n’est pas "
 "encore supportée."
 
 #: plinth/modules/backups/forms.py:267
@@ -515,7 +515,7 @@ msgstr "Supprimer l’archive %(name)s"
 #: plinth/modules/sharing/templates/sharing_add_edit.html:20
 #: plinth/templates/form.html:19
 msgid "Submit"
-msgstr "Envoyer"
+msgstr "Valider"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
 msgid "This repository is encrypted"
@@ -1376,25 +1376,23 @@ msgid ""
 "other communication servers can use it to establish a call between parties "
 "who are otherwise unable connect to each other."
 msgstr ""
-"Coturn est un serveur facilitant les appels audios/vidéos ainsi que les "
-"conférences, en fournissant une implémentation des protocoles TURN et STUN. "
-"Les autres types de serveurs de communication, comme WebRTC et SIP, peuvent "
-"l’utiliser afin d'établir un appel entre plusieurs parties qui n’auraient "
-"pas pu se connecter entre elles autrement."
+"Coturn est un serveur destiné à faciliter les appels audios/vidéos et les "
+"conférences, grâce à la mise en œuvre des protocoles TURN et STUN. Les "
+"serveurs pour d’autres protocoles de communication tels que WebRTC ou SIP "
+"peuvent l’utiliser afin de mettre en relation des participants pour qui cela "
+"aurait été impossible autrement."
 
 #: plinth/modules/coturn/__init__.py:41
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It is not meant to be used directly by users. Servers such as matrix-"
-#| "synapse need to be configured with the details provided here."
+#, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
-"Il n’est pas destiné à être utilisé directement par les utilisateurs finaux. "
-"Les serveurs du type matrix-synapse nécessitent d’être configurés avec les "
-"détails fournis ici."
+"Il n’est pas destiné aux utilisateurs finaux. Ce sont les autres serveurs "
+"tels que <a href=\"{ms_url}\">Matrix Synapse</a> ou <a href=\"{e_url}\""
+">ejabberd</a> qui peuvent l’utiliser en reportant les détails fournis ici "
+"dans leur configuration."
 
 #: plinth/modules/coturn/__init__.py:62
 msgid "Coturn"
@@ -1406,7 +1404,7 @@ msgstr "Assistant de VoIP"
 
 #: plinth/modules/coturn/forms.py:22
 msgid "Invalid list of STUN/TURN Server URIs"
-msgstr ""
+msgstr "Liste d’URI STUN/TURN invalide"
 
 #: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
 #: plinth/modules/quassel/forms.py:22
@@ -1537,7 +1535,7 @@ msgstr "erreur"
 
 #: plinth/modules/diagnostics/__init__.py:101
 msgid "warning"
-msgstr ""
+msgstr "avertissement"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
@@ -2006,6 +2004,9 @@ msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
+"ejabberd nécessite un serveur STUN/TURN pour les appels audio/vidéo. "
+"Installez pour cela l’application <a href=\"{coturn_url}\">Coturn</a> ou "
+"bien configurez un serveur externe."
 
 #: plinth/modules/ejabberd/__init__.py:70
 msgid "ejabberd"
@@ -2036,7 +2037,7 @@ msgstr ""
 
 #: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
-msgstr ""
+msgstr "Gérer automatiquement la configuration des appels audio/vidéo"
 
 #: plinth/modules/ejabberd/forms.py:29
 #, python-brace-format
@@ -2045,24 +2046,26 @@ msgid ""
 "server for ejabberd. Disable this if you want to use a different STUN/TURN "
 "server."
 msgstr ""
+"Configure l’application locale <a href=\"{coturn_url}\">coturn</a> comme "
+"serveur STUN/TURN pour ejabberd. Désactivez cette option si vous souhaitez "
+"utiliser un serveur STUN/TURN différent."
 
 #: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
-msgstr ""
+msgstr "URI du serveur STUN/TURN"
 
 #: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
-msgstr ""
+msgstr "Liste des URI publiques du serveur STUN/TURN, une par ligne."
 
 #: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "Shared Authentication Secret"
-msgstr "Mode Authentification"
+msgstr "Secret partagé pour l’authentification"
 
 #: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
+"Secret partagé utilisé pour générer les mots de passe pour le serveur TURN."
 
 #: plinth/modules/ejabberd/manifest.py:10
 msgid "Conversations"
@@ -2439,7 +2442,7 @@ msgstr "Obtenir de l’aide"
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
-msgstr "Partagez vos impressions"
+msgstr "Partager vos impressions"
 
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
@@ -3049,7 +3052,7 @@ msgstr "Certificats"
 
 #: plinth/modules/letsencrypt/__init__.py:96
 msgid "Cannot test: No domains are configured."
-msgstr ""
+msgstr "Test impossible : aucun domaine n’est configuré."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
@@ -3178,6 +3181,9 @@ msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
+"Matrix Synapse nécessite un serveur STUN/TURN pour les appels audio/vidéo. "
+"Installez pour cela l’application <a href=\"{coturn_url}\">Coturn</a> ou "
+"bien configurez un serveur externe."
 
 #: plinth/modules/matrixsynapse/__init__.py:76
 msgid "Matrix Synapse"
@@ -3204,6 +3210,9 @@ msgid ""
 "server for Matrix Synapse. Disable this if you want to use a different STUN/"
 "TURN server."
 msgstr ""
+"Configure l’application locale <a href=\"{coturn_url}\">coturn</a> comme "
+"serveur STUN/TURN pour Matrix Synapse. Désactivez cette option si vous "
+"souhaitez utiliser un serveur STUN/TURN différent."
 
 #: plinth/modules/matrixsynapse/manifest.py:12
 msgid "Element"
@@ -3893,7 +3902,7 @@ msgstr ""
 
 #: plinth/modules/networks/__init__.py:61
 msgid "Networks"
-msgstr "Réseaux"
+msgstr "Réseau"
 
 #: plinth/modules/networks/__init__.py:179
 #, python-brace-format
@@ -4152,7 +4161,7 @@ msgstr "Ouvert"
 #: plinth/modules/networks/forms.py:310
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
-msgstr "Précisez comment votre {box_name} est connectée à votre réseau"
+msgstr "Précisez comment votre {box_name} est connectée à votre réseau :"
 
 #: plinth/modules/networks/forms.py:317
 #, python-brace-format
@@ -4324,10 +4333,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
-"Ceci est la connexion principale dont la %(box_name)s dépend pour se "
-"connecter à Internet. La modifier pourrait rendre votre %(box_name)s "
-"inaccessible. Assurez-vous que vous avez d’autres moyens de vous connecter à "
-"votre %(box_name)s avant d’apporter des modification à cette connexion."
+"Cette connexion est la connexion principale dont la %(box_name)s dépend pour "
+"son accès à Internet. Vous risquez de rendre votre %(box_name)s inaccessible "
+"en la modifiant. Assurez-vous d’avoir d’autres moyens d’accéder à votre "
+"%(box_name)s avant d’apporter des modifications à cette connexion."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -4364,7 +4373,7 @@ msgstr "Connexion"
 
 #: plinth/modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
-msgstr "Connexion primaire"
+msgstr "Connexion principale"
 
 #: plinth/modules/networks/templates/connection_show.html:66
 #: plinth/modules/networks/templates/connection_show.html:208
@@ -4488,8 +4497,8 @@ msgid ""
 msgstr ""
 "Cette interface doit être connectée à une machine ou à un réseau local. Si "
 "vous connectez cette interface à un réseau public, les services conçus pour "
-"un usage interne seront rendus accessibles à l’extérieur. Ceci constitue une "
-"faille de sécurité."
+"un usage interne seront rendus accessibles à l’extérieur ce qui vous expose "
+"à des risques de sécurité."
 
 #: plinth/modules/networks/templates/connection_show.html:293
 #: plinth/modules/networks/templates/connection_show.html:316
@@ -4571,7 +4580,7 @@ msgstr "Machine"
 #: plinth/modules/networks/templates/connections_edit.html:20
 #: plinth/modules/networks/views.py:236 plinth/modules/networks/views.py:320
 msgid "Edit Connection"
-msgstr "Modifier connexion"
+msgstr "Modifier la connexion"
 
 #: plinth/modules/networks/templates/connections_list.html:8
 msgid "Connections"
@@ -4588,15 +4597,15 @@ msgstr "Réseaux Wi-Fi à proximité"
 #: plinth/modules/networks/views.py:393
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
-msgstr "Ajouter connexion"
+msgstr "Ajouter une connexion"
 
 #: plinth/modules/networks/templates/connections_list.html:31
 msgid "Active"
-msgstr "Actif"
+msgstr "Active"
 
 #: plinth/modules/networks/templates/connections_list.html:35
 msgid "Inactive"
-msgstr "Inactif"
+msgstr "Inactive"
 
 #: plinth/modules/networks/templates/connections_list.html:77
 #, python-format
@@ -4679,7 +4688,7 @@ msgstr "Modifier…"
 #: plinth/modules/networks/templates/network_topology_content.html:10
 #, python-format
 msgid "How is Your %(box_name)s Connected to the Internet?"
-msgstr "Comment votre %(box_name)s est-ell connectée à Internet ?"
+msgstr "Comment votre %(box_name)s est-elle connectée à Internet ?"
 
 #: plinth/modules/networks/templates/network_topology_content.html:16
 #, python-format
@@ -6045,12 +6054,11 @@ msgid ""
 "There are %(count)s reported security vulnerabilities in the FreedomBox app, "
 "which provides the core services and user interface for a FreedomBox server."
 msgstr ""
+"Il y a %(count)s vulnérabilités connues dans l’application FreedomBox qui "
+"fournit les services essentiels et l’interface utilisateur du serveur "
+"FreedomBox."
 
 #: plinth/modules/security/templates/security_report.html:19
-#, fuzzy
-#| msgid ""
-#| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app."
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app. More information on the "
@@ -6059,7 +6067,9 @@ msgid ""
 msgstr ""
 "Le tableau qui suit liste le nombre de failles de sécurité actuellement "
 "identifiées ainsi que le décompte historique, pour chaque application "
-"installée."
+"installée. Vous trouverez davantage d’informations sur ces vulnérabilités "
+"dans l’outil de suivi des vulnérabilités <a href=\"https://security-tracker."
+"debian.org/tracker/\">Debian Security Tracker (en)</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -7742,7 +7752,7 @@ msgstr "Utilisateurs"
 #: plinth/modules/users/templates/users_list.html:28
 #, python-format
 msgid "Edit user %(username)s"
-msgstr "Modifier l'utilisateur %(username)s"
+msgstr "Paramètres du compte %(username)s"
 
 #: plinth/modules/users/templates/users_list.html:41
 #, python-format
