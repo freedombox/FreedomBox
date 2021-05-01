@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-19 18:51-0400\n"
-"PO-Revision-Date: 2021-04-12 13:27+0000\n"
+"PO-Revision-Date: 2021-05-01 23:15+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1378,17 +1378,15 @@ msgstr ""
 "nicht miteinander verbinden können."
 
 #: plinth/modules/coturn/__init__.py:41
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It is not meant to be used directly by users. Servers such as matrix-"
-#| "synapse need to be configured with the details provided here."
+#, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
-"Sie ist nicht für die direkte Nutzung durch Benutzer gedacht. Server wie "
-"Matrix-Synapse müssen mit den hier gemachten Angaben konfiguriert werden."
+"Es ist nicht dafür gedacht, direkt von Benutzern verwendet zu werden. Server "
+"wie <a href=\"{ms_url}\">Matrix Synapse</a> oder <a href=\"{e_url}\""
+">ejabberd</a> müssen mit den hier angegebenen Details konfiguriert werden."
 
 #: plinth/modules/coturn/__init__.py:62
 msgid "Coturn"
@@ -1399,10 +1397,8 @@ msgid "VoIP Helper"
 msgstr "VoIP-Helfer"
 
 #: plinth/modules/coturn/forms.py:22
-#, fuzzy
-#| msgid "STUN/TURN Server URIs"
 msgid "Invalid list of STUN/TURN Server URIs"
-msgstr "STUN/TURN Server URIs"
+msgstr "Ungültige Liste von STUN/TURN-Server-URIs"
 
 #: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
 #: plinth/modules/quassel/forms.py:22
@@ -1531,7 +1527,7 @@ msgstr "Fehler"
 
 #: plinth/modules/diagnostics/__init__.py:101
 msgid "warning"
-msgstr ""
+msgstr "Warnung"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
@@ -1987,17 +1983,14 @@ msgstr ""
 "{box_name} Login</a> aufgerufen werden."
 
 #: plinth/modules/ejabberd/__init__.py:49
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install "
-#| "the <a href={coturn_url}>Coturn</a> app or configure an external server."
+#, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
-"Matrix Synapse benötigt einen STUN/TURN-Server für Audio-/Videoanrufe. "
-"Installiere die <a href=\"{coturn_url}\">Coturn</a>-App oder konfiguriere "
-"einen externen Server."
+"ejabberd benötigt einen STUN/TURN-Server für Audio-/Videoanrufe. Installiere "
+"die <a href=\"{coturn_url}\">Coturn</a>-App oder konfiguriere einen externen "
+"Server."
 
 #: plinth/modules/ejabberd/__init__.py:70
 msgid "ejabberd"
@@ -2031,19 +2024,15 @@ msgid "Automatically manage audio/video call setup"
 msgstr "Automatischer Aufbau von Audio-/Videoanrufen"
 
 #: plinth/modules/ejabberd/forms.py:29
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
-#| "server for Matrix Synapse. Disable this if you want to use a different "
-#| "STUN/TURN server."
+#, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
 "server for ejabberd. Disable this if you want to use a different STUN/TURN "
 "server."
 msgstr ""
 "Konfiguriert die lokale <a href=\"{coturn_url}\">coturn</a>-App als STUN/"
-"TURN-Server für Matrix Synapse. Deaktiviere dies, wenn du einen anderen STUN/"
-"TURN-Server verwenden möchtest."
+"TURN-Server für ejabberd. Deaktiviere dies, wenn du einen anderen STUN/TURN-"
+"Server verwenden möchtest."
 
 #: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
@@ -3039,7 +3028,7 @@ msgstr "Zertifikate"
 
 #: plinth/modules/letsencrypt/__init__.py:96
 msgid "Cannot test: No domains are configured."
-msgstr ""
+msgstr "Kann nicht testen: Es sind keine Domains konfiguriert."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
@@ -6018,20 +6007,22 @@ msgid ""
 "There are %(count)s reported security vulnerabilities in the FreedomBox app, "
 "which provides the core services and user interface for a FreedomBox server."
 msgstr ""
+"Es gibt %(count)s gemeldete Sicherheitslücken in der FreedomBox-App, die die "
+"Kerndienste und die Benutzeroberfläche für einen FreedomBox-Server "
+"bereitstellt."
 
 #: plinth/modules/security/templates/security_report.html:19
-#, fuzzy
-#| msgid ""
-#| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app."
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app. More information on the "
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
-"In der folgenden Tabelle sind die aktuell gemeldete Anzahl und der Verlauf "
-"der Sicherheitsanfälligkeiten für jede installierte App aufgeführt."
+"Die folgende Tabelle listet die aktuell gemeldete Anzahl und die vergangene "
+"Anzahl von Sicherheitslücken für jede installierte App auf. Weitere "
+"Informationen zu den Sicherheitslücken können auf dem <a href=\"https"
+"://security-tracker.debian.org/tracker/\">Debian Security Bug Tracker</a> "
+"gefunden werden."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
