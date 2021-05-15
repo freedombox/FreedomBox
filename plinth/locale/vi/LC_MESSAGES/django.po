@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-19 18:51-0400\n"
-"PO-Revision-Date: 2021-05-12 23:47+0000\n"
+"PO-Revision-Date: 2021-05-16 11:33+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/vi/>\n"
@@ -538,29 +538,31 @@ msgstr "Tải xuống"
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:206
 msgid "Restore"
-msgstr ""
+msgstr "Khôi phục"
 
 #: plinth/modules/backups/templates/backups_repository.html:109
 msgid "No archives currently exist."
-msgstr ""
+msgstr "Không có tệp nào hiện đang tồn tại."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:13
 msgid "Are you sure that you want to remove this repository?"
-msgstr ""
+msgstr "Bạn có chắc rằng bạn muốn xoá kho này không?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:19
 msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
+"Kho trên mạng sẽ không bị xoá. Việc này chỉ xoá kho đó khỏi danh sách trên "
+"trang sao lưu, bạn có thể thêm nó lại vào lúc sau."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:31
 msgid "Remove Location"
-msgstr ""
+msgstr "Xoá vị trí"
 
 #: plinth/modules/backups/templates/backups_restore.html:15
 msgid "Restore data from"
-msgstr ""
+msgstr "Khôi phục dữ liệu từ"
 
 #: plinth/modules/backups/templates/backups_schedule.html:19
 #: plinth/modules/upgrades/__init__.py:77
@@ -568,7 +570,7 @@ msgstr ""
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 #: plinth/templates/setup.html:62
 msgid "Update"
-msgstr ""
+msgstr "Cập nhật"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
@@ -581,12 +583,19 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Tải lên một tệp sao lưu đã được tải xuống từ một %(box_name)s khác để "
+"khôi phục\n"
+"      nội dung của nó. Bạn có thể chọn các ứng dụng bạn muốn khôi phục sau "
+"khi tải lên một\n"
+"      tệp sao lưu.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:27
 #: plinth/modules/help/templates/statuslog.html:23
 #: plinth/modules/networks/templates/connection_show.html:23
 msgid "Caution:"
-msgstr ""
+msgstr "Chú ý:"
 
 #: plinth/modules/backups/templates/backups_upload.html:28
 #, python-format
@@ -594,10 +603,12 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"Bạn có %(max_filesize)s có sẵn để khôi phục một bản sao lưu. Việc vượt quá "
+"giới hạn này có thể làm cho %(box_name)s của bạn không thể sử dụng được."
 
 #: plinth/modules/backups/templates/backups_upload.html:41
 msgid "Upload file"
-msgstr ""
+msgstr "Tải tệp lên"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:18
 #, python-format
@@ -605,6 +616,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Không thể kết nối đến máy chủ SSH %(hostname)s. Vui lòng xác minh rằng máy "
+"chủ đang chạy và đang chấp nhận các kết nối."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
 #, python-format
@@ -612,10 +625,13 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Tính xác thực của máy chủ SSH %(hostname)s không thể được lập. Máy chủ công "
+"bố các mã khoá SSH công khai sau. Vui lòng xác minh bất kỳ một mã nào trong "
+"số chúng."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
-msgstr ""
+msgstr "Xác minh như thế nào?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
 msgid ""
@@ -623,106 +639,109 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Hãy chạy lệnh sau trên máy chủ SSH. Đầu ra có thể sẽ khớp với một trong số "
+"những tuỳ chọn được cung cấp. Bạn cũng có thể sử dụng dsa, ecdsa, ed25519, "
+"v.v. thay vì rsa, bằng cách chọn tệp tương ứng."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
-msgstr ""
+msgstr "Xác minh máy chủ"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
-msgstr ""
+msgstr "Đã cập nhật lịch trình sao lưu."
 
 #: plinth/modules/backups/views.py:74
 msgid "Schedule Backups"
-msgstr ""
+msgstr "Lên lịch sao lưu"
 
 #: plinth/modules/backups/views.py:106
 msgid "Archive created."
-msgstr ""
+msgstr "Đã tạo tệp."
 
 #: plinth/modules/backups/views.py:134
 msgid "Delete Archive"
-msgstr ""
+msgstr "Xoá tệp"
 
 #: plinth/modules/backups/views.py:146
 msgid "Archive deleted."
-msgstr ""
+msgstr "Đã xoá tệp."
 
 #: plinth/modules/backups/views.py:159
 msgid "Upload and restore a backup"
-msgstr ""
+msgstr "Tải lên và khôi phục một bản sao lưu"
 
 #: plinth/modules/backups/views.py:194
 msgid "Restored files from backup."
-msgstr ""
+msgstr "Đã khôi phục các tệp từ bản sao lưu."
 
 #: plinth/modules/backups/views.py:222
 msgid "No backup file found."
-msgstr ""
+msgstr "Không tìm thấy tệp sao lưu nào."
 
 #: plinth/modules/backups/views.py:230
 msgid "Restore from uploaded file"
-msgstr ""
+msgstr "Khôi phục từ tệp đã tải lên"
 
 #: plinth/modules/backups/views.py:289
 msgid "No additional disks available to add a repository."
-msgstr ""
+msgstr "Không có ổ đĩa bổ sung nào có sẵn để thêm một kho."
 
 #: plinth/modules/backups/views.py:297
 msgid "Create backup repository"
-msgstr ""
+msgstr "Tạo kho sao lưu"
 
 #: plinth/modules/backups/views.py:324
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Tạo kho sao lưu trên mạng"
 
 #: plinth/modules/backups/views.py:344
 msgid "Added new remote SSH repository."
-msgstr ""
+msgstr "Đã thêm kho SSH trên mạng mới."
 
 #: plinth/modules/backups/views.py:366
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Xác minh mã khoá máy chủ SSH"
 
 #: plinth/modules/backups/views.py:392
 msgid "SSH host already verified."
-msgstr ""
+msgstr "Máy chủ SSH đã được xác minh rồi."
 
 #: plinth/modules/backups/views.py:402
 msgid "SSH host verified."
-msgstr ""
+msgstr "Đã xác minh máy chủ SSH."
 
 #: plinth/modules/backups/views.py:417
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "Mã khoá công khai của máy chủ SSH không thể được xác minh."
 
 #: plinth/modules/backups/views.py:419
 msgid "Authentication to remote server failed."
-msgstr ""
+msgstr "Xác thực đến máy chủ trên mạng thất bại."
 
 #: plinth/modules/backups/views.py:421
 msgid "Error establishing connection to server: {}"
-msgstr ""
+msgstr "Lỗi khi lập kết nối đến máy chủ: {}"
 
 #: plinth/modules/backups/views.py:432
 msgid "Repository removed."
-msgstr ""
+msgstr "Đã xoá kho."
 
 #: plinth/modules/backups/views.py:446
 msgid "Remove Repository"
-msgstr ""
+msgstr "Xoá kho"
 
 #: plinth/modules/backups/views.py:455
 msgid "Repository removed. Backups were not deleted."
-msgstr ""
+msgstr "Đã xoá kho. Các bản sao lưu đã không bị xoá."
 
 #: plinth/modules/backups/views.py:465
 msgid "Unmounting failed!"
-msgstr ""
+msgstr "Bỏ gắn thất bại!"
 
 #: plinth/modules/backups/views.py:480 plinth/modules/backups/views.py:484
 msgid "Mounting failed"
-msgstr ""
+msgstr "Gắn thất bại"
 
 #: plinth/modules/bepasty/__init__.py:24
 msgid ""
@@ -5685,6 +5704,9 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
+"Mô-đun này cho phép bạn quản lý phương tiện lưu trữ được cắm vào {box_name} "
+"của bạn. Bạn có thể xem phương tiện lưu trữ hiện đang sử dụng, gắn và bỏ gắn "
+"phương tiện có thể rút ra, mở rộng phân vùng root, v.v."
 
 #: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:316
 #: plinth/modules/storage/__init__.py:347
@@ -5726,7 +5748,7 @@ msgstr ""
 
 #: plinth/modules/storage/__init__.py:241
 msgid "The device is already unmounting."
-msgstr ""
+msgstr "Thiết bị này đã đang bỏ gắn rồi."
 
 #: plinth/modules/storage/__init__.py:243
 msgid "The operation is not supported due to missing driver/tool support."
@@ -5742,7 +5764,7 @@ msgstr ""
 
 #: plinth/modules/storage/__init__.py:251
 msgid "Attempting to unmount a device that is busy."
-msgstr ""
+msgstr "Đang thử bỏ gắn một thiết bị đang bận."
 
 #: plinth/modules/storage/__init__.py:253
 msgid "The operation has already been cancelled."
@@ -5756,11 +5778,11 @@ msgstr ""
 
 #: plinth/modules/storage/__init__.py:261
 msgid "The device is already mounted."
-msgstr ""
+msgstr "Thiết bị này đã được gắn rồi."
 
 #: plinth/modules/storage/__init__.py:263
 msgid "The device is not mounted."
-msgstr ""
+msgstr "Thiết bị này chưa được gắn."
 
 #: plinth/modules/storage/__init__.py:265
 msgid "Not permitted to use the requested option."
@@ -5768,7 +5790,7 @@ msgstr ""
 
 #: plinth/modules/storage/__init__.py:267
 msgid "The device is mounted by another user."
-msgstr ""
+msgstr "Thiết bị này được một người dùng khác gắn."
 
 #: plinth/modules/storage/__init__.py:311
 #, no-python-format, python-brace-format
@@ -5836,7 +5858,7 @@ msgstr ""
 
 #: plinth/modules/storage/templates/storage.html:25
 msgid "Mount Point"
-msgstr ""
+msgstr "Điểm gắn"
 
 #: plinth/modules/storage/templates/storage.html:27
 msgid "Used"
