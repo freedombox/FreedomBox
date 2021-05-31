@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-19 18:51-0400\n"
+"POT-Creation-Date: 2021-05-31 18:14-0400\n"
 "PO-Revision-Date: 2021-05-31 22:13+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -372,7 +372,8 @@ msgstr "SSH Server Kata Sandi"
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
-msgstr "Kata sandi server SSH.<br> Otentikasi berbasis kunci SSH belum mungkin."
+msgstr ""
+"Kata sandi server SSH.<br> Otentikasi berbasis kunci SSH belum mungkin."
 
 #: plinth/modules/backups/forms.py:267
 msgid "Remote backup repository already exists."
@@ -491,6 +492,7 @@ msgid "Delete Archive %(name)s"
 msgstr "Hapus arsip %(name)s"
 
 #: plinth/modules/backups/templates/backups_form.html:20
+#: plinth/modules/backups/templates/backups_schedule.html:19
 #: plinth/modules/bepasty/templates/bepasty_add.html:20
 #: plinth/modules/gitweb/templates/gitweb_create_edit.html:20
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
@@ -555,14 +557,6 @@ msgstr "Hapus Lokasi"
 #: plinth/modules/backups/templates/backups_restore.html:15
 msgid "Restore data from"
 msgstr "Kembalikan data dari"
-
-#: plinth/modules/backups/templates/backups_schedule.html:19
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
-msgstr "Memperbarui"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
 #, python-format
@@ -1346,8 +1340,9 @@ msgid ""
 "be configured with the details provided here."
 msgstr ""
 "Itu tidak dimaksudkan untuk digunakan secara langsung oleh pengguna. Server "
-"seperti <a href=\"{ms_url}\">Matrix Synapse</a> atau <a href=\"{e_url}\""
-">ejabberd</a> memerlukan dikonfigurasi dengan rincian yang disediakan disini."
+"seperti <a href=\"{ms_url}\">Matrix Synapse</a> atau <a href="
+"\"{e_url}\">ejabberd</a> memerlukan dikonfigurasi dengan rincian yang "
+"disediakan disini."
 
 #: plinth/modules/coturn/__init__.py:62
 msgid "Coturn"
@@ -1618,8 +1613,8 @@ msgstr ""
 "akan terlihat seperti <i>namapengguna@diaspora.%(domain_name)s</i><br>Jika "
 "nama domain FreedomBox diubah, semua data pengguna yang terdaftar dengan "
 "nama pod sebelumnya tidak akan dapat diakses. <br>Anda dapat mengakses pod "
-"diaspora* di <a href=\"https://diaspora.%(domain_name)s\"> "
-"diaspora.%(domain_name)s</a></i>"
+"diaspora* di <a href=\"https://diaspora.%(domain_name)s\"> diaspora."
+"%(domain_name)s</a></i>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:36
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -1745,8 +1740,8 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
-"Nilai opsional. Jika {box_name} Anda tidak terhubung langsung ke Internet ("
-"yaitu terhubung ke router NAT) URL ini digunakan untuk menentukan alamat IP "
+"Nilai opsional. Jika {box_name} Anda tidak terhubung langsung ke Internet "
+"(yaitu terhubung ke router NAT) URL ini digunakan untuk menentukan alamat IP "
 "asli. URL harus mengembalikan IP di mana klien berasal (Contoh: http://myip."
 "datasystems24.de)."
 
@@ -1866,8 +1861,8 @@ msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
 msgstr ""
-"Tipe NAT belum terdeteksi. Jika Anda tidak menyediakan \"URL Pemeriksaan IP\""
-", kami tidak akan mendeteksi tipe NAT."
+"Tipe NAT belum terdeteksi. Jika Anda tidak menyediakan \"URL Pemeriksaan IP"
+"\", kami tidak akan mendeteksi tipe NAT."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
 msgid "Direct connection to the Internet."
@@ -1934,10 +1929,10 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
-"Untuk benar-benar berkomunikasi, Anda dapat menggunakan <a href=\"{jsxc_url}"
-"\">klien web</a> atau <a href=\"https://xmpp.org/software/clients\" target="
-"\"_blank\">Klien XMPP</a>. Saat diaktifkan, ejabberd dapat diakses oleh <a "
-"href=\"{users_url}\"> pengguna dengan sebuah {box_name} login</a>."
+"Untuk benar-benar berkomunikasi, Anda dapat menggunakan <a href="
+"\"{jsxc_url}\">klien web</a> atau <a href=\"https://xmpp.org/software/clients"
+"\" target=\"_blank\">Klien XMPP</a>. Saat diaktifkan, ejabberd dapat diakses "
+"oleh <a href=\"{users_url}\"> pengguna dengan sebuah {box_name} login</a>."
 
 #: plinth/modules/ejabberd/__init__.py:49
 #, python-brace-format
@@ -2099,8 +2094,8 @@ msgid ""
 "system with systemd 'systemctl start firewalld'."
 msgstr ""
 "Daemon firewall tidak berjalan. Silakan jalankan. Firewall datang diaktifkan "
-"secara default pada %(box_name)s. Pada sistem berbasis debian apa pun ("
-"seperti %(box_name)s) Anda dapat menjalankannya menggunakan perintah "
+"secara default pada %(box_name)s. Pada sistem berbasis debian apa pun "
+"(seperti %(box_name)s) Anda dapat menjalankannya menggunakan perintah "
 "'Service firewalld start' atau Dalam hal sistem dengan systemd 'systemctl "
 "mulai firewalld'."
 
@@ -2497,8 +2492,8 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
-"Anda juga dapat membantu proyek secara finansial oleh <a href=\"https"
-"://freedomboxfoundation.org/donate/\"> menyumbang </a> ke freebox fondasi "
+"Anda juga dapat membantu proyek secara finansial oleh <a href=\"https://"
+"freedomboxfoundation.org/donate/\"> menyumbang </a> ke freebox fondasi "
 "nirlaba. Didirikan pada tahun 2011, Freedombox Foundation adalah a "
 "Organisasi nirlaba dengan 501 (c) (3) status berbasis di New York City yang "
 "ada untuk mendukung FreedomBox. Ini menyediakan infrastruktur teknis dan "
@@ -2524,8 +2519,8 @@ msgid ""
 "\"_blank\"> discussion forum</a>."
 msgstr ""
 "Beri tahu kami tentang fitur yang hilang, aplikasi favorit Anda dan "
-"bagaimana kami dapat memperbaikinya pada <a href=\"https://discuss.freedombox"
-".org\" target=\"_blank\">.forum diskusi</a>."
+"bagaimana kami dapat memperbaikinya pada <a href=\"https://discuss."
+"freedombox.org\" target=\"_blank\">.forum diskusi</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
 msgid ""
@@ -2534,11 +2529,11 @@ msgid ""
 "tracker</a> to let our developers know. To report, first check if the issue "
 "is already reported and then use the \"New issue\" button."
 msgstr ""
-"Jika Anda menemukan bug atau masalah, silakan gunakan <a href=\"https://salsa"
-".debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">pelacak "
-"masalah</a> agar pengembang kami tahu tentang itu. Untuk melaporkan, periksa "
-"dulu apakah masalah tersebut sudah pernah dilaporkan dan kemudian gunakan "
-"tombol \"Masalah baru\"."
+"Jika Anda menemukan bug atau masalah, silakan gunakan <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\" target=\"_blank"
+"\">pelacak masalah</a> agar pengembang kami tahu tentang itu. Untuk "
+"melaporkan, periksa dulu apakah masalah tersebut sudah pernah dilaporkan dan "
+"kemudian gunakan tombol \"Masalah baru\"."
 
 #: plinth/modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
@@ -2564,8 +2559,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"<a href=\"http://wiki.debian.org/freedombox\" target=\"_blank\"> %(box_name)"
-"s Project wiki </a> berisi informasi lebih lanjut."
+"<a href=\"http://wiki.debian.org/freedombox\" target=\"_blank\"> "
+"%(box_name)s Project wiki </a> berisi informasi lebih lanjut."
 
 #: plinth/modules/help/templates/help_index.html:30
 #, python-format
@@ -2589,8 +2584,8 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Banyak kontributor %(box_name)s dan pengguna juga tersedia di jaringan IRC "
-"irc.oftc.net. Bergabung dan minta bantuan pada channel <a href=\"https"
-"://webchat.oftc.net/?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> "
+"irc.oftc.net. Bergabung dan minta bantuan pada channel <a href=\"https://"
+"webchat.oftc.net/?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> "
 "#freedombox</a> menggunakan antarmuka web IRC."
 
 #: plinth/modules/help/templates/help_manual.html:18
@@ -2624,9 +2619,9 @@ msgid ""
 "debian.net\">mailing list</a>."
 msgstr ""
 "Anda juga dapat mengobrol dengan kami di channel IRC dan Matriks kami "
-"(dijembatani): <ul> 3<li>#freedombox on irc.oftc.net4</li> "
-"5<li>#freedombox:matrix.org6</li> 7</ul>. Atau kirim email ke<a href=\"mailto"
-":freedombox-discuss@alioth-lists.debian.net\">daftar mail</a>."
+"(dijembatani): <ul> 3<li>#freedombox on irc.oftc.net4</li> 5<li>#freedombox:"
+"matrix.org6</li> 7</ul>. Atau kirim email ke<a href=\"mailto:freedombox-"
+"discuss@alioth-lists.debian.net\">daftar mail</a>."
 
 #: plinth/modules/help/templates/statuslog.html:10
 msgid "Status Log"
@@ -2730,9 +2725,9 @@ msgid ""
 "For this, your browser, preferably a Tor Browser, needs to be configured for "
 "a proxy."
 msgstr ""
-"I2p memungkinkan Anda menjelajahi Internet dan layanan tersembunyi (eepsites)"
-" secara anonim. Untuk ini, browser Anda, lebih disukai browser Tor, perlu "
-"dikonfigurasi untuk proxy."
+"I2p memungkinkan Anda menjelajahi Internet dan layanan tersembunyi "
+"(eepsites) secara anonim. Untuk ini, browser Anda, lebih disukai browser "
+"Tor, perlu dikonfigurasi untuk proxy."
 
 #: plinth/modules/i2p/views.py:19
 msgid ""
@@ -2772,8 +2767,8 @@ msgid ""
 msgstr ""
 "Hanya pengguna {box_name} yang berada dalam grup <b>admin</b> dapat "
 "<i>membuat<i> dan <i>mengelola</i> blog dan wiki, tetapi setiap pengguna "
-"pada grup <b>wiki</b> dapat <i>mengedit|</i>yang sudah ada. Dalam <a href=\""
-"{users_url}\">Konfigurasi Pengguna</a>, Anda dapat mengubah izin ini atau "
+"pada grup <b>wiki</b> dapat <i>mengedit|</i>yang sudah ada. Dalam <a href="
+"\"{users_url}\">Konfigurasi Pengguna</a>, Anda dapat mengubah izin ini atau "
 "menambahkan pengguna baru.</i></i>"
 
 #: plinth/modules/ikiwiki/__init__.py:53 plinth/modules/ikiwiki/manifest.py:6
@@ -6638,6 +6633,13 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
+
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr "Memperbarui"
 
 #: plinth/modules/upgrades/__init__.py:122
 #, fuzzy
