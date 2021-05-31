@@ -12,6 +12,21 @@ Currently, on !FreedomBox, BIND is only used to resolve DNS queries for other ma
 
 Note: This service is available only on networks configured as "internal" zone. It is not available when connected via OpenVPN. 
 
+=== Using BIND ===
+
+When BIND is enabled, that does not automatically mean that anything is using it. The following can be configured:
+ * !FreedomBox can be configured to use the local BIND service for its own DNS lookups.
+ * Clients on the Local Area Network can be configured to use the !FreedomBox's BIND service for their DNS lookups.
+
+The !FreedomBox can be set to use its own BIND service for DNS lookups through [[FreedomBox/Manual/Networks|Networks]]:
+ 1. Go to System page, and then select Networks.
+ 1. Select the "!FreedomBox WAN" connection and press Edit.
+ 1. Under "IPv4 Addressing Method", there is a field "DNS Server". Set it to {{{127.0.0.1}}}.
+    /* TODO: Add IPv6 instructions. */
+ 1. Press "Edit Connection" at the bottom to save the changes.
+ 1. Restart the !FreedomBox from the user drop-down menu.
+
+/* TODO: Add instructions for serving clients on LAN. */
 
 === External links ===
 
