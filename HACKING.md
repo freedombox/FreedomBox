@@ -57,13 +57,13 @@ development environment inside a systemd-nspawn container.
     host$ cd freedombox
     ```
 
-2.  Work in a specific branch:
+1.  Work in a specific branch:
     ```bash
     host$ git branch YOUR-FEATURE-BRANCH
     host$ git checkout YOUR-FEATURE-BRANCH
     ```
 
-3.  To download, setup, run, and configure a container for FreedomBox
+1.  To download, setup, run, and configure a container for FreedomBox
     development, simply execute in your FreedomBox Service (Plinth) development
     folder: (This step requires at least 16GB of free disk space)
 
@@ -93,7 +93,7 @@ development environment inside a systemd-nspawn container.
     host$ ./container ssh
     ```
 
-6. The default distribution used by the container script is "testing", but you
+1. The default distribution used by the container script is "testing", but you
    can choose a different distribution (e.g. "stable") in two ways.
 
    1. Using an environment variable.
@@ -156,12 +156,16 @@ Note: This development container has automatic upgrades disabled by default.
     To workaround this error, you must override Network Manager's behavior.
     <sup>[(src)][GloballyManagedDevices]</sup>
 
+    ```bash
+    host$ sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+    host$ sudo service network-manager restart
+    host$ ./container destroy && ./container up
     ```
-    # On host machine
-    $ sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
-    $ sudo service network-manager restart
-    $ ./container destroy && ./container up
-    ```
+* File/directory not found errors when running tests can be fixed by clearing `__pycache__` directories.
+
+  ```bash
+  host$ sudo find -iname '__pycache__' | sudo xargs rm -rf {} ;
+  ```
 
 [back to index](#hacking)
 
