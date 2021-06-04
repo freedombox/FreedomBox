@@ -5,10 +5,9 @@ IFS=$'\n\t'
 echo "Installing requirements"
 sudo apt-get install -yq --no-install-recommends \
     python3-pytest python3-pytest-django python3-pytest-xdist \
-    python3-pip python3-wheel firefox-esr git smbclient\
-    xvfb
+    python3-pip python3-wheel firefox-esr git smbclient
 
-pip3 install splinter pytest-splinter pytest-xvfb pytest-reporter-html1
+pip3 install --user splinter pytest-splinter pytest-reporter-html1
 
 echo "Installing geckodriver"
 (

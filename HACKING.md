@@ -71,13 +71,23 @@ development environment inside a systemd-nspawn container.
     host$ ./container up
     ```
 
-4.  To run unit and functional tests for an app:
+1. To run unit tests:
 
     ```bash
-    host$ ./container run-tests --pytest-args -v --include-functional --no-xvfb plinth/modules/{app name}
+    host$ ./container run-tests
     ```
 
-5.  SSH into the running container with the following command:
+1.  To run unit and functional tests for an app:
+
+    ```bash
+    host$ ./container run-tests --pytest-args -v --include-functional --splinter-headless plinth/modules/{app-name}
+    ```
+
+    Drop the option `--splinter-headless` if you want to see the tests running
+    in browser windows. Not specifying a module in the above command would run
+    functional tests for all the apps and also unit tests.
+
+1.  SSH into the running container with the following command:
 
     ```bash
     host$ ./container ssh
@@ -443,7 +453,6 @@ host$ pip3 install splinter
 host$ pip3 install pytest-splinter
 host$ pip3 install pytest-xdist  # optional, to run tests in parallel
 host$ sudo apt install firefox
-host$ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening browser windows
 host$ sudo apt install smbclient  # optional, to test samba
 ```
 
