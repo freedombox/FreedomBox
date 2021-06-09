@@ -7,6 +7,7 @@ import configparser
 import logging
 import os
 import pathlib
+import subprocess
 import tempfile
 import time
 from contextlib import contextmanager
@@ -422,6 +423,13 @@ def service_is_running(browser, app_name):
 def service_is_not_running(browser, app_name):
     nav_to_module(browser, app_name)
     return len(browser.find_by_id('service-not-running')) != 0
+
+
+def running_inside_container():
+    """Check if freedombox is running inside a container"""
+    result = subprocess.run(['systemd-detect-virt', '--container'],
+                            stdout=subprocess.PIPE)
+    return bool(result.stdout.decode('utf-8').lower() != "none\n")
 
 
 ##############################
