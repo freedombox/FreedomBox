@@ -1,0 +1,67 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+import logging
+import os
+import signal
+import sys
+
+import plinth.modules.email_server.postconf as postconf
+
+logger = logging.getLogger(__name__)
+
+EXIT_SYNTAX = 10
+EXIT_TIMEOUT = 20
+
+
+def main():
+    if len(sys.argv) != 3:
+        sys.exit(EXIT_SYNTAX)
+    if sys.argv[1] != 'ipc':
+        sys.exit(EXIT_SYNTAX)
+
+    function_name = 'ipc_' + sys.argv[2]
+    globals()[function_name]()
+
+
+def ipc_postconf_set_many_v1():
+    """Set postconf values"""
+    if os.getuid() != 0:
+        logger.warning('Run as root?')
+    new_config = _postconf_parse_stdin()
+    with postconf.postconf_mutex.lock_all():
+        for key, value in new_config.items():
+            postconf.set_no_lock_assuming_root(key, value)
+
+
+def _postconf_parse_stdin():
+    new_config = {}
+    # Set timeout handler
+    signal.signal(signal.SIGALRM, _timeout_handler)
+    while True:
+        key = _timed_input('Key: ')
+        if not key: break
+        postconf.validate_key(key)
+        value = _timed_input('Value: ')
+        postconf.validate_value(value)
+        new_config[key] = value
+    return new_config
+
+
+def _timed_input(prompt):
+    # Set timeout
+    signal.alarm(3)
+    result = input(prompt)
+    # Disable timeout
+    signal.alarm(0)
+    return result
+
+
+def _timeout_handler(signum, frame):
+    # https://stackoverflow.com/a/1336751
+    logger.critical('[Time out]')
+    sys.exit(EXIT_TIMEOUT)
+
+
+if __name__ == '__main__':
+    main()

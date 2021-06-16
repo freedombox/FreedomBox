@@ -10,6 +10,7 @@ import plinth.frontpage
 import plinth.menu
 from plinth.modules.firewall.components import Firewall
 
+from . import audit
 from . import manifest
 
 version = 1
@@ -82,7 +83,15 @@ class EmailServerApp(plinth.app.App):
                             ports=all_firewalld_ports, is_external=True)
         self.add(firewall)
 
+    def diagnose(self):
+        """Run diagnostics and return the results"""
+        results = super().diagnose()
+        results.append(audit.domain.get().summarize())
+        results.append(audit.ldap.get().summarize())
+        return results
+
 
 def setup(helper, old_version=None):
     """Installs and configures module"""
     helper.install(managed_packages)
+    helper.call('post', audit.ldap.repair)
