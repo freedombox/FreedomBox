@@ -6,7 +6,7 @@ from . import models
 
 def get():
     # Stub
-    return models.Result('Email domains')
+    return [models.Result('Email domains')]
 
 
 def repair():

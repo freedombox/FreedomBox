@@ -3,15 +3,23 @@
 
 import logging
 import os
-import signal
 import sys
 
-import plinth.modules.email_server.postconf as postconf
+import plinth.modules.email_server.audit as audit
 
 logger = logging.getLogger(__name__)
 
 EXIT_SYNTAX = 10
-EXIT_TIMEOUT = 20
+EXIT_PERM = 20
+
+
+def reserved_for_root(fun):
+    def wrapped(*args, **kwargs):
+        if os.getuid() != 0:
+            logger.critical('This action is reserved for root')
+            sys.exit(EXIT_PERM)
+        return fun(*args, **kwargs)
+    return wrapped
 
 
 def main():
@@ -24,43 +32,14 @@ def main():
     globals()[function_name]()
 
 
-def ipc_postconf_set_many_v1():
-    """Set postconf values"""
-    if os.getuid() != 0:
-        logger.warning('Run as root?')
-    new_config = _postconf_parse_stdin()
-    with postconf.postconf_mutex.lock_all():
-        for key, value in new_config.items():
-            postconf.set_no_lock_assuming_root(key, value)
+@reserved_for_root
+def ipc_set_sasl():
+    audit.ldap.action_set_sasl()
 
 
-def _postconf_parse_stdin():
-    new_config = {}
-    # Set timeout handler
-    signal.signal(signal.SIGALRM, _timeout_handler)
-    while True:
-        key = _timed_input('Key: ')
-        if not key: break
-        postconf.validate_key(key)
-        value = _timed_input('Value: ')
-        postconf.validate_value(value)
-        new_config[key] = value
-    return new_config
-
-
-def _timed_input(prompt):
-    # Set timeout
-    signal.alarm(3)
-    result = input(prompt)
-    # Disable timeout
-    signal.alarm(0)
-    return result
-
-
-def _timeout_handler(signum, frame):
-    # https://stackoverflow.com/a/1336751
-    logger.critical('[Time out]')
-    sys.exit(EXIT_TIMEOUT)
+@reserved_for_root
+def ipc_set_submission():
+    audit.ldap.action_set_submission()
 
 
 if __name__ == '__main__':

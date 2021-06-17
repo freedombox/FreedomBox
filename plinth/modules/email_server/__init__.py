@@ -13,7 +13,7 @@ from plinth.modules.firewall.components import Firewall
 from . import audit
 from . import manifest
 
-version = 1
+version = 31
 managed_packages = ['postfix', 'dovecot-pop3d', 'dovecot-imapd',
                     'dovecot-lmtpd', 'dovecot-ldap', 'dovecot-managesieved']
 managed_services = ['postfix', 'dovecot']
@@ -86,8 +86,8 @@ class EmailServerApp(plinth.app.App):
     def diagnose(self):
         """Run diagnostics and return the results"""
         results = super().diagnose()
-        results.append(audit.domain.get().summarize())
-        results.append(audit.ldap.get().summarize())
+        results.extend([r.summarize() for r in audit.domain.get()])
+        results.extend([r.summarize() for r in audit.ldap.get()])
         return results
 
 

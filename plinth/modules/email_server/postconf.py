@@ -1,6 +1,7 @@
 """Postconf wrapper providing thread-safe operations"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import dataclasses
 import re
 import subprocess
 import plinth.actions
@@ -9,38 +10,67 @@ from .lock import Mutex
 postconf_mutex = Mutex('plinth-email-postconf.lock')
 
 
+@dataclasses.dataclass
+class ServiceFlags:
+    service: str
+    type: str
+    private: str
+    unpriv: str
+    chroot: str
+    wakeup: str
+    maxproc: str
+    command_args: str
+
+    def serialize(self) -> str:
+        return ' '.join([self.service, self.type, self.private, self.unpriv,
+                         self.chroot, self.wakeup, self.maxproc,
+                         self.command_args])
+
+
 def get_many(key_list):
     """Acquire resource lock. Get the list of postconf values as specified.
     Return a key-value map"""
     result = {}
+    for key in key_list:
+        validate_key(key)
     with postconf_mutex.lock_all():
         for key in key_list:
-            result[key] = get_no_lock(key)
+            result[key] = get_unsafe(key)
         return result
 
 
 def set_many(kv_map):
     """Acquire resource lock. Set the list of postconf values as specified"""
-    # Encode email_server ipc input
-    lines = []
     for key, value in kv_map.items():
         validate_key(key)
         validate_value(value)
-        lines.append(key)
-        lines.append(value)
-    lines.append('\n')
-    stdin = '\n'.join(lines).encode('utf-8')
 
-    # Run action script as root
-    args = ['ipc', 'postconf_set_many_v1']
-    with postconf_mutex.lock_threads_only():
-        # The action script will take care of file locking
-        plinth.actions.superuser_run('email_server', args, input=stdin)
+    with postconf_mutex.lock_all():
+        for key, value in kv_map.items():
+            set_unsafe(key, value)
 
 
-def get_no_lock(key):
-    """Get postconf value (no locking)"""
-    validate_key(key)
+def set_master_cf_options(service_flags, options):
+    """Acquire resource lock. Set master.cf service options"""
+    if not isinstance(service_flags, ServiceFlags):
+        raise TypeError('service_flags')
+    for key, value in options.items():
+        validate_key(key)
+        validate_value(value)
+
+    service_slash_type = service_flags.service + '/' + service_flags.type
+    flag_string = service_flags.serialize()
+
+    with postconf_mutex.lock_all():
+        # /sbin/postconf -M "service/type=flag_string"
+        set_unsafe(service_slash_type, flag_string, '-M')
+        for short_key, value in options.items():
+            # /sbin/postconf -P "service/type/short_key=value"
+            set_unsafe(service_slash_type + '/' + short_key, value, '-P')
+
+
+def get_unsafe(key):
+    """Get postconf value (no locking, no sanitization)"""
     result = _run(['/sbin/postconf', key])
     match = key + ' = '
     if not result.startswith(match):
@@ -48,11 +78,12 @@ def get_no_lock(key):
     return result[len(match):].strip()
 
 
-def set_no_lock_assuming_root(key, value):
-    """Set postconf value (assuming root and no locking)"""
-    validate_key(key)
-    validate_value(value)
-    _run(['/sbin/postconf', '{}={}'.format(key, value)])
+def set_unsafe(key, value, flag=''):
+    """Set postconf value (assuming root, no locking, no sanitization)"""
+    if flag:
+        _run(['/sbin/postconf', flag, '{}={}'.format(key, value)])
+    else:
+        _run(['/sbin/postconf', '{}={}'.format(key, value)])
 
 
 def _run(args):
