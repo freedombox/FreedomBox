@@ -4,7 +4,6 @@
 import dataclasses
 import re
 import subprocess
-import plinth.actions
 from .lock import Mutex
 
 postconf_mutex = Mutex('plinth-email-postconf.lock')

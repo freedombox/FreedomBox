@@ -14,7 +14,7 @@ from plinth.modules.firewall.components import Firewall
 from . import audit
 from . import manifest
 
-version = 31
+version = 1
 managed_packages = ['postfix', 'dovecot-pop3d', 'dovecot-imapd',
                     'dovecot-lmtpd', 'dovecot-ldap', 'dovecot-managesieved']
 managed_services = ['postfix', 'dovecot']
