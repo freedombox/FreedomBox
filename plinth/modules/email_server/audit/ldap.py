@@ -9,7 +9,9 @@ from . import models
 default_config = {
     'smtpd_sasl_auth_enable': 'yes',
     'smtpd_sasl_type': 'dovecot',
-    'smtpd_sasl_path': 'private/auth'
+    'smtpd_sasl_path': 'private/auth',
+    'mailbox_transport': 'lmtp:unix:private/dovecot-lmtp',
+    'virtual_transport': 'lmtp:unix:private/dovecot-lmtp'
 }
 
 submission_flags = postconf.ServiceFlags(

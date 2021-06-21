@@ -8,6 +8,7 @@ import plinth.app
 import plinth.daemon
 import plinth.frontpage
 import plinth.menu
+from plinth import actions
 from plinth.modules.firewall.components import Firewall
 
 from . import audit
@@ -95,3 +96,6 @@ def setup(helper, old_version=None):
     """Installs and configures module"""
     helper.install(managed_packages)
     helper.call('post', audit.ldap.repair)
+    helper.call('post', app.enable)
+    for service_name in managed_services:
+        actions.superuser_run('service', ['reload', service_name])
