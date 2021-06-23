@@ -413,11 +413,8 @@ def run_apt_command(arguments):
 
 
 @contextmanager
-def apt_hold(packages=None, ignore_errors=False):
+def apt_hold(packages, ignore_errors=False):
     """Prevent packages from being removed during apt operations."""
-    if not packages:
-        packages = ['freedombox']
-
     current_hold = subprocess.check_output(['apt-mark', 'showhold'] + packages)
     try:
         yield current_hold or subprocess.run(['apt-mark', 'hold'] + packages,
@@ -426,3 +423,16 @@ def apt_hold(packages=None, ignore_errors=False):
         if not current_hold:
             subprocess.run(['apt-mark', 'unhold'] + packages,
                            check=not ignore_errors)
+
+
+@contextmanager
+def apt_hold_freedombox():
+    """Prevent freedombox package from being removed during apt operations."""
+    current_hold = subprocess.check_output(
+        ['apt-mark', 'showhold', 'freedombox'])
+    try:
+        yield current_hold or subprocess.check_call(
+            ['apt-mark', 'hold', 'freedombox'])
+    finally:
+        if not current_hold:
+            subprocess.check_call(['apt-mark', 'unhold', 'freedombox'])
