@@ -18,7 +18,7 @@ import apt.cache
 import apt_inst
 import apt_pkg
 from plinth import cfg
-from plinth.action_utils import apt_hold, run_apt_command
+from plinth.action_utils import apt_hold_freedombox, run_apt_command
 
 LOCK_FILE = '/var/lib/dpkg/lock'
 
@@ -93,7 +93,7 @@ def subcommand_install(arguments):
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confmiss']
 
     subprocess.run(['dpkg', '--configure', '-a'])
-    with apt_hold():
+    with apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
         returncode = run_apt_command(['install'] + extra_arguments +
                                      arguments.packages)

@@ -14,9 +14,9 @@ import subprocess
 import sys
 import time
 
-from plinth.action_utils import (apt_hold, debconf_set_selections,
-                                 run_apt_command, service_daemon_reload,
-                                 service_restart)
+from plinth.action_utils import (apt_hold, apt_hold_freedombox,
+                                 debconf_set_selections, run_apt_command,
+                                 service_daemon_reload, service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.snapshot import (is_apt_snapshots_enabled, is_supported as
                                      snapshot_is_supported, load_augeas as
@@ -432,7 +432,7 @@ def _perform_dist_upgrade():
 
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
-    with apt_hold():
+    with apt_hold_freedombox():
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
