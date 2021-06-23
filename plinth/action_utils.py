@@ -5,6 +5,7 @@ Python action utility functions.
 
 import logging
 import os
+import pathlib
 import shutil
 import subprocess
 import tempfile
@@ -433,11 +434,23 @@ def apt_hold(packages, ignore_errors=False):
 @contextmanager
 def apt_hold_freedombox():
     """Prevent freedombox package from being removed during apt operations."""
+    # This flag is a backup indicator that we held the package, in
+    # case the process is interrupted and the 'finally' is not run.
+    apt_hold_flag = pathlib.Path('/var/lib/freedombox/package-held')
     current_hold = subprocess.check_output(
         ['apt-mark', 'showhold', 'freedombox'])
     try:
-        yield current_hold or subprocess.check_call(
-            ['apt-mark', 'hold', 'freedombox'])
+        if current_hold:
+            # Package is already held, possibly by administrator.
+            yield current_hold
+        else:
+            # Set the flag.
+            apt_hold_flag.touch(mode=0o660)
+            yield subprocess.check_call(['apt-mark', 'hold', 'freedombox'])
     finally:
-        if not current_hold:
+        # Was the package held, either in this process or a previous one?
+        if not current_hold or apt_hold_flag.exists():
             subprocess.check_call(['apt-mark', 'unhold', 'freedombox'])
+            # Clear the flag.
+            if apt_hold_flag.exists():
+                apt_hold_flag.unlink()
