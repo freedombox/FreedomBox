@@ -16,6 +16,11 @@ logger = logging.getLogger(__name__)
 UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
 UWSGI_AVAILABLE_PATH = '/etc/uwsgi/apps-available/{config_name}.ini'
 
+# Flag on disk to indicate if freedombox package was held by
+# plinth. This is a backup in case the process is interrupted and hold
+# is not released.
+apt_hold_flag = pathlib.Path('/var/lib/freedombox/package-held')
+
 
 def is_systemd_running():
     """Return if we are running under systemd."""
@@ -434,9 +439,6 @@ def apt_hold(packages, ignore_errors=False):
 @contextmanager
 def apt_hold_freedombox():
     """Prevent freedombox package from being removed during apt operations."""
-    # This flag is a backup indicator that we held the package, in
-    # case the process is interrupted and the 'finally' is not run.
-    apt_hold_flag = pathlib.Path('/var/lib/freedombox/package-held')
     current_hold = subprocess.check_output(
         ['apt-mark', 'showhold', 'freedombox'])
     try:
@@ -450,7 +452,11 @@ def apt_hold_freedombox():
     finally:
         # Was the package held, either in this process or a previous one?
         if not current_hold or apt_hold_flag.exists():
-            subprocess.check_call(['apt-mark', 'unhold', 'freedombox'])
-            # Clear the flag.
-            if apt_hold_flag.exists():
-                apt_hold_flag.unlink()
+            apt_unhold_freedombox()
+
+
+def apt_unhold_freedombox():
+    """Remove any hold on freedombox package, and clear flag."""
+    subprocess.check_call(['apt-mark', 'unhold', 'freedombox'])
+    if apt_hold_flag.exists():
+        apt_hold_flag.unlink()
