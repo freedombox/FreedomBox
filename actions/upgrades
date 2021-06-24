@@ -14,9 +14,10 @@ import subprocess
 import sys
 import time
 
-from plinth.action_utils import (apt_hold, apt_hold_freedombox,
-                                 debconf_set_selections, run_apt_command,
-                                 service_daemon_reload, service_restart)
+from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
+                                 apt_unhold_freedombox, debconf_set_selections,
+                                 run_apt_command, service_daemon_reload,
+                                 service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.snapshot import (is_apt_snapshots_enabled, is_supported as
                                      snapshot_is_supported, load_augeas as
@@ -141,6 +142,12 @@ def _run():
     """Run unattended-upgrades"""
     subprocess.run(['dpkg', '--configure', '-a'])
     run_apt_command(['--fix-broken', 'install'])
+
+    # In case freedombox package was left in held state by an
+    # interrupted process, release it.
+    if apt_hold_flag.exists():
+        apt_unhold_freedombox()
+
     subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                      stderr=subprocess.DEVNULL, close_fds=True,
