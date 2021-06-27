@@ -1,6 +1,8 @@
 """Audit of LDAP and mail submission settings"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import logging
+
 from plinth import actions
 
 import plinth.modules.email_server.postconf as postconf
@@ -26,6 +28,20 @@ default_submission_options = {
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
 
+smtps_flags = postconf.ServiceFlags(
+    service='smtps', type='inet', private='n', unpriv='-', chroot='y',
+    wakeup='-', maxproc='-', command_args='smtpd'
+)
+
+default_smtps_options = {
+    'syslog_name': 'postfix/smtps',
+    'smtpd_tls_wrappermode': 'yes',
+    'smtpd_sasl_auth_enable': 'yes',
+    'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
+}
+
+logger = logging.getLogger(__name__)
+
 
 def get():
     """Compare current values with the default. Generate an audit report
@@ -47,7 +63,13 @@ def repair():
     Recommended endpoint name:
     POST /audit/ldap/repair
     """
+    logger.debug('Updating postconf: %r', default_config)
     actions.superuser_run('email_server', ['ipc', 'set_sasl'])
+
+    logger.debug('Setting up postfix %s service in master.cf: %r',
+                 submission_flags.service, default_submission_options)
+    logger.debug('And postfix %s service: %r', smtps_flags.service,
+                 default_smtps_options)
     actions.superuser_run('email_server', ['ipc', 'set_submission'])
 
 
@@ -60,3 +82,5 @@ def action_set_submission():
     """Called by email_server ipc set_submission"""
     postconf.set_master_cf_options(service_flags=submission_flags,
                                    options=default_submission_options)
+    postconf.set_master_cf_options(service_flags=smtps_flags,
+                                   options=default_smtps_options)

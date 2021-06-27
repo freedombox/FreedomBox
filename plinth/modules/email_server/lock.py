@@ -2,10 +2,13 @@
 import contextlib
 import errno
 import fcntl
+import logging
 import os
 import pwd
 import threading
 import time
+
+logger = logging.getLogger(__name__)
 
 
 class Mutex:
@@ -18,7 +21,8 @@ class Mutex:
     @contextlib.contextmanager
     def lock_threads_only(self):
         """Acquire the thread lock but not the file lock"""
-        self.thread_mutex.acquire(timeout=5)
+        if not self.thread_mutex.acquire(timeout=5):
+            raise RuntimeError('Could not acquire thread lock')
         try:
             yield
         finally:
@@ -65,7 +69,10 @@ class Mutex:
             fd.truncate(0)
             os.fchown(fd.fileno(), user_info.pw_uid, user_info.pw_gid)
         else:
-            self._try(lambda: os.fchmod(fd.fileno(), 0o660))  # rw-rw----
+            errno, _ = self._try(lambda: os.fchmod(fd.fileno(), 0o660))
+            if errno != 0:
+                logger.warning('chmod failed, lock path %s, errno %d',
+                               self.lock_path, errno)
 
     def _try(self, function):
         try:

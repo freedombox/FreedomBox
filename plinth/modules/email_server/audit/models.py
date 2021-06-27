@@ -25,7 +25,7 @@ class Result:
 
     def write_logs(self):
         """Log errors and failures"""
-        logger.debug('Ran audit: ' + self.title)
+        logger.debug('Ran audit: %s', self.title)
         for message in self.errors:
             logger.critical(message)
         for message in self.fails:
