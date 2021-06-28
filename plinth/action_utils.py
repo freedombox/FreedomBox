@@ -460,3 +460,15 @@ def apt_unhold_freedombox():
     subprocess.check_call(['apt-mark', 'unhold', 'freedombox'])
     if apt_hold_flag.exists():
         apt_hold_flag.unlink()
+
+
+def is_package_manager_busy():
+    """Return whether package manager is busy.
+    This command uses the `lsof` command to check whether the dpkg lock file
+    is open which indicates that the package manager is busy"""
+    LOCK_FILE = '/var/lib/dpkg/lock'
+    try:
+        subprocess.check_output(['lsof', LOCK_FILE])
+        return True
+    except subprocess.CalledProcessError:
+        return False

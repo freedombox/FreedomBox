@@ -18,9 +18,8 @@ import apt.cache
 import apt_inst
 import apt_pkg
 from plinth import cfg
-from plinth.action_utils import apt_hold_freedombox, run_apt_command
-
-LOCK_FILE = '/var/lib/dpkg/lock'
+from plinth.action_utils import (apt_hold_freedombox, is_package_manager_busy,
+                                 run_apt_command)
 
 logger = logging.getLogger(__name__)
 
@@ -115,12 +114,10 @@ def _assert_managed_packages(module, packages):
 
 
 def subcommand_is_package_manager_busy(_):
-    """Return whether package manager is busy.
-    This command uses the `lsof` command to check whether the dpkg lock file
-    is open which indicates that the package manager is busy"""
-    try:
-        subprocess.check_output(['lsof', LOCK_FILE])
-    except subprocess.CalledProcessError:
+    """Check whether package manager is busy.
+
+    An exit code of zero indicates that package manager is busy."""
+    if not is_package_manager_busy():
         sys.exit(-1)
 
 

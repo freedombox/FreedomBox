@@ -16,8 +16,8 @@ import time
 
 from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
                                  apt_unhold_freedombox, debconf_set_selections,
-                                 run_apt_command, service_daemon_reload,
-                                 service_restart)
+                                 is_package_manager_busy, run_apt_command,
+                                 service_daemon_reload, service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.snapshot import (is_apt_snapshots_enabled, is_supported as
                                      snapshot_is_supported, load_augeas as
@@ -145,7 +145,7 @@ def _run():
 
     # In case freedombox package was left in held state by an
     # interrupted process, release it.
-    if apt_hold_flag.exists():
+    if apt_hold_flag.exists() and not is_package_manager_busy():
         apt_unhold_freedombox()
 
     subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
@@ -538,6 +538,11 @@ def subcommand_start_dist_upgrade(arguments):
     Check if a new stable release is available, and start dist-upgrade process
     if updates are enabled.
     """
+    # In case freedombox package was left in held state by an
+    # interrupted process, release it.
+    if apt_hold_flag.exists() and not is_package_manager_busy():
+        apt_unhold_freedombox()
+
     upgrade_ready, reason = _check_dist_upgrade(arguments.test)
     if upgrade_ready:
         with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
