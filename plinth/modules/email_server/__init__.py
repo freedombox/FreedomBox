@@ -9,6 +9,7 @@ import plinth.daemon
 import plinth.frontpage
 import plinth.menu
 from plinth import actions
+from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
 
 from . import audit
@@ -16,7 +17,8 @@ from . import manifest
 
 version = 1
 managed_packages = ['postfix', 'dovecot-pop3d', 'dovecot-imapd',
-                    'dovecot-lmtpd', 'dovecot-ldap', 'dovecot-managesieved']
+                    'dovecot-lmtpd', 'dovecot-ldap', 'dovecot-managesieved',
+                    'rspamd']
 managed_services = ['postfix', 'dovecot']
 app = None
 
@@ -49,6 +51,11 @@ class EmailServerApp(plinth.app.App):
             parent_url_name='apps'
         )
         self.add(menu_item)
+
+        # /rspamd location
+        webserver = Webserver('webserver-email', 'email-server-freedombox',
+                              urls=['https://{host}/rspamd'])
+        self.add(webserver)
 
         shortcut = plinth.frontpage.Shortcut(
             'shortcut_' + self.app_id,
@@ -96,6 +103,7 @@ def setup(helper, old_version=None):
     """Installs and configures module"""
     helper.install(managed_packages)
     helper.call('post', audit.ldap.repair)
+    helper.call('post', audit.spam.repair)
     helper.call('post', app.enable)
     for service_name in managed_services:
         actions.superuser_run('service', ['reload', service_name])
