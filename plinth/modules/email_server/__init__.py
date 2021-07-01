@@ -33,7 +33,7 @@ class EmailServerApp(plinth.app.App):
             app_id=self.app_id,
             version=version,
             name=_('Email Server'),
-            short_description=_('An email server for FreedomBox'),
+            short_description=_('Powered by Postfix, Dovecot & Rspamd'),
             manual_page='EmailServer',
             clients=manifest.clients,
             donation_url='https://freedomboxfoundation.org/donate/'

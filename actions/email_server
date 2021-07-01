@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import argparse
 import logging
 import os
 import sys
-
-import plinth.modules.email_server.audit as audit
 
 logger = logging.getLogger(__name__)
 
@@ -23,23 +22,29 @@ def reserved_for_root(fun):
 
 
 def main():
-    if len(sys.argv) != 3:
-        sys.exit(EXIT_SYNTAX)
-    if sys.argv[1] != 'ipc':
-        sys.exit(EXIT_SYNTAX)
-
-    function_name = 'ipc_' + sys.argv[2]
-    globals()[function_name]()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('ipc', nargs=3)
+    arguments = parser.parse_args()
+    subcommand_ipc(arguments)
 
 
 @reserved_for_root
-def ipc_set_sasl():
-    audit.ldap.action_set_sasl()
+def subcommand_ipc(arguments):
+    import plinth.modules.email_server.audit as audit
 
+    _, module_name, action_name = arguments.ipc
+    # We only run actions defined in the audit module
+    if module_name not in audit.__all__:
+        logger.critical('Bad module name: %r', module_name)
+        sys.exit(EXIT_SYNTAX)
 
-@reserved_for_root
-def ipc_set_submission():
-    audit.ldap.action_set_submission()
+    module = getattr(audit, module_name)
+    function = getattr(module, 'action_' + action_name, None)
+    if function is None:
+        logger.critical('Bad action: %s/%r', module_name, action_name)
+        sys.exit(EXIT_SYNTAX)
+
+    function()
 
 
 if __name__ == '__main__':
