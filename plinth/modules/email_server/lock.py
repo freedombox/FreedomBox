@@ -5,8 +5,8 @@ import fcntl
 import logging
 import os
 import pwd
+import subprocess
 import threading
-import time
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +35,6 @@ class Mutex:
             # Set up
             fd = self._open_lock_file()
             fcntl.lockf(fd, fcntl.LOCK_EX)
-            self._chmod_and_chown(fd)
             # Enter context
             try:
                 yield
@@ -46,33 +45,30 @@ class Mutex:
 
     def _open_lock_file(self):
         """Attempt to open lock file for R&W. Raises OSError on failure"""
-        attempts = 10
-        errno = -1
-        fd = None
-        # Simulate a spin lock
-        while attempts > 0:
-            errno, fd = self._try(lambda: open(self.lock_path, 'wb'))
-            if errno == 0:
-                return fd
-            else:
-                attempts -= 1
-                time.sleep(0.25)
-        raise OSError(errno, os.strerror(errno))
-
-    def _chmod_and_chown(self, fd):
-        """If the process UID is root, set fd's mode and ownership to
-        appropriate values. If we are not root, only set the mode"""
         if os.getuid() == 0:
-            user_info = pwd.getpwnam('plinth')
-            os.fchown(fd.fileno(), 0, 0)
-            os.fchmod(fd.fileno(), 0o660)  # rw-rw----
-            fd.truncate(0)
-            os.fchown(fd.fileno(), user_info.pw_uid, user_info.pw_gid)
-        else:
-            errno, _ = self._try(lambda: os.fchmod(fd.fileno(), 0o660))
-            if errno != 0:
-                logger.warning('chmod failed, lock path %s, errno %d',
-                               self.lock_path, errno)
+            if os.path.exists(self.lock_path):
+                # Check its owner and mode
+                stat = os.stat(self.lock_path)
+                owner = pwd.getpwuid(stat.st_uid).pw_name
+                mode = stat.st_mode & 0o777
+                if owner != 'plinth' or mode != 0o600:
+                    logger.warning('Clean up bad file %s', self.lock_path)
+                    os.unlink(self.lock_path)
+                    self._create_lock_file_as_plinth()
+            else:
+                self._create_lock_file_as_plinth()
+
+        return open(self.lock_path, 'wb+')
+
+    def _create_lock_file_as_plinth(self):
+        args = ['sudo', '-n', '-u', 'plinth', 'touch', self.lock_path]
+        completed = subprocess.run(args, capture_output=True)
+        if completed.returncode != 0:
+            logger.critical('Process returned %d', completed.returncode)
+            logger.critical('Stdout: %r', completed.stdout)
+            logger.critical('Stderr: %r', completed.stderr)
+            raise OSError('Could not create ' + self.lock_path)
+        os.chmod(self.lock_path, 0o600)
 
     def _try(self, function):
         try:
