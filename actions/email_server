@@ -23,16 +23,22 @@ def reserved_for_root(fun):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('ipc', nargs=3)
-    arguments = parser.parse_args()
-    subcommand_ipc(arguments)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-i', nargs=2, dest='ipc')
+    group.add_argument('-t', nargs=1, dest='touch_file')
+
+    adict = vars(parser.parse_args())
+    generator = (kv for kv in adict.items() if kv[1] is not None)
+    subcommand, arguments = next(generator)
+
+    function = globals()['subcommand_' + subcommand]
+    function(*arguments)
 
 
 @reserved_for_root
-def subcommand_ipc(arguments):
+def subcommand_ipc(module_name, action_name):
     import plinth.modules.email_server.audit as audit
 
-    _, module_name, action_name = arguments.ipc
     # We only run actions defined in the audit module
     if module_name not in audit.__all__:
         logger.critical('Bad module name: %r', module_name)
@@ -45,6 +51,17 @@ def subcommand_ipc(arguments):
         sys.exit(EXIT_SYNTAX)
 
     function()
+
+
+def subcommand_touch_file(path):
+    import pathlib
+
+    if os.getuid == 0:
+        logger.critical('Do not run as root')
+        sys.exit(EXIT_PERM)
+
+    # mode is influenced by umask
+    pathlib.Path(path).touch(mode=0o660, exist_ok=True)
 
 
 if __name__ == '__main__':

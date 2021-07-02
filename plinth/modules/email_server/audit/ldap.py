@@ -64,11 +64,11 @@ def repair():
     POST /audit/ldap/repair
     """
     logger.debug('Updating postconf: %r', default_config)
-    actions.superuser_run('email_server', ['ipc', 'ldap', 'set_sasl'])
+    actions.superuser_run('email_server', ['-i', 'ldap', 'set_sasl'])
 
     logger.debug('Setting up postfix services:\n    %r\n    %r',
                  default_submission_options, default_smtps_options)
-    actions.superuser_run('email_server', ['ipc', 'ldap', 'set_submission'])
+    actions.superuser_run('email_server', ['-i', 'ldap', 'set_submission'])
 
 
 def action_set_sasl():

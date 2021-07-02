@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 def repair():
     logger.debug('Updating postconf: %r', milter_config)
-    actions.superuser_run('email_server', ['ipc', 'spam', 'set_filter'])
+    actions.superuser_run('email_server', ['-i', 'spam', 'set_filter'])
 
 
 def action_set_filter():
