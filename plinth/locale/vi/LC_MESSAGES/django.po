@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-31 18:14-0400\n"
-"PO-Revision-Date: 2021-05-27 14:32+0000\n"
+"PO-Revision-Date: 2021-07-05 16:33+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/vi/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1133,6 +1133,10 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
+"Cockpit là một trình quản lý máy chủ giúp việc quản trị các máy chủ GNU/"
+"Linux qua một trình duyệt web được dễ dàng. Trên một {box_name}, nhiều chức "
+"năng nâng cao thường không bắt buộc phải có đều có thể được điều khiển. Cũng "
+"có một ứng dụng dòng lệnh dựa trên web cho các hoạt động dòng lệnh."
 
 #: plinth/modules/cockpit/__init__.py:38
 msgid ""
@@ -1141,6 +1145,10 @@ msgid ""
 "firewall ports and advanced networking such as bonding, bridging and VLAN "
 "management."
 msgstr ""
+"Cockpit có thể được sử dụng để thực hiện các hoạt động nâng cao về kho lưu "
+"trữ như là phân vùng ổ đĩa và quản lý RAID. Nó cũng có thể được sử dụng để "
+"mở các cổng tường lửa tùy chỉnh và các hoạt động mạng nâng cao như là gắn "
+"kết, bắc cầu và quản lý VLAN."
 
 #: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
@@ -1148,39 +1156,45 @@ msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
+"Nó có thể được truy cập bởi <a href=\"{users_url}\">bất kỳ người dùng nào</"
+"a> trên {box_name} thuộc về nhóm admin."
 
 #: plinth/modules/cockpit/__init__.py:47
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
+"Cockpit yêu cầu bạn truy cập nó qua một tên miền. Nó sẽ không hoạt động khi "
+"được truy cập vào bằng một địa chỉ IP với tư cách là một phần của URL."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:33
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:66
 msgid "Server Administration"
-msgstr ""
+msgstr "Quản trị máy chủ"
 
 #: plinth/modules/cockpit/templates/cockpit.html:11
 msgid "Access"
-msgstr ""
+msgstr "Truy cập"
 
 #: plinth/modules/cockpit/templates/cockpit.html:14
 msgid "Cockpit will only work when accessed using the following URLs."
-msgstr ""
+msgstr "Cockpit sẽ chỉ hoạt động khi được truy cập bằng các URL sau."
 
 #: plinth/modules/config/__init__.py:27
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
+"Ở đây bạn có thể đặt một số tùy chọn thiết lập chung như tên máy chủ, tên "
+"miền, trang chủ của máy chủ web, v.v."
 
 #: plinth/modules/config/__init__.py:58
 msgid "General Configuration"
-msgstr ""
+msgstr "Thiết lập chung"
 
 #: plinth/modules/config/__init__.py:63 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:30
@@ -1189,35 +1203,35 @@ msgstr ""
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
 #: plinth/templates/index.html:46
 msgid "Configure"
-msgstr ""
+msgstr "Thiết lập"
 
 #: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
-msgstr ""
+msgstr "Tên miền"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
-msgstr ""
+msgstr "Tên miền không hợp lệ"
 
 #: plinth/modules/config/forms.py:40
 #, python-brace-format
 msgid "{user}'s website"
-msgstr ""
+msgstr "Trang web của {user}"
 
 #: plinth/modules/config/forms.py:42
 msgid "Apache Default"
-msgstr ""
+msgstr "Mặc định của Apache"
 
 #: plinth/modules/config/forms.py:43
 msgid "FreedomBox Service (Plinth)"
-msgstr ""
+msgstr "Dịch vụ FreedomBox (Plinth)"
 
 #: plinth/modules/config/forms.py:55
 msgid "Hostname"
-msgstr ""
+msgstr "Tên máy chủ"
 
 #: plinth/modules/config/forms.py:57
 #, python-brace-format
@@ -1227,10 +1241,14 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
+"Tên máy chủ là tên cục bộ mà các thiết bị khác trên mạng cục bộ có thể kết "
+"nối đến {box_name} của bạn qua đó.  Nó phải bắt đầu và kết thúc bằng một chữ "
+"cái hoặc chữ số và các ký tự chỉ có chữ cái, chữ số và dấu gạch ngang.  Tổng "
+"độ dài phải là 63 ký tự hoặc ít hơn."
 
 #: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
-msgstr ""
+msgstr "Tên máy chủ không hợp lệ"
 
 #: plinth/modules/config/forms.py:70
 #, python-brace-format
@@ -1242,10 +1260,16 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
+"Tên miền là tên toàn cầu mà các thiết bị khác trên mạng Internet có thể kết "
+"nối đến {box_name} của bạn qua đó.  Nó phải chứa các nhãn được ngăn cách bởi "
+"dấu chấm.  Mỗi nhãn phải bắt đầu và kết thúc bằng một chữ cái hoặc chữ số và "
+"các ký tự chỉ có chữ cái, chữ số và dấu gạch ngang.  Độ dài mỗi nhãn phải là "
+"63 ký tự hoặc ít hơn.  Tổng độ dài của tên miền phải là 253 ký tự hoặc ít "
+"hơn."
 
 #: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
-msgstr ""
+msgstr "Trang chủ của máy chủ web"
 
 #: plinth/modules/config/forms.py:87
 #, python-brace-format
@@ -1256,54 +1280,60 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
+"Chọn trang mặc định mà phải xuất hiện khi có ai đó đi đến {box_name} của bạn "
+"trên web. Một trường hợp sử dụng điển hình là đặt blog hoặc wiki của bạn làm "
+"trang chủ khi có ai đó đi đến tên miền. Lưu ý rằng một khi trang chủ được "
+"đặt là gì đó ngoài Dịch vụ {box_name} (Plinth), những người dùng của bạn "
+"phải nhập /plinth hoặc /freedombox để kết nối đến Dịch vụ {box_name} "
+"(Plinth)."
 
 #: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
-msgstr ""
+msgstr "Hiện các ứng dụng và tính năng nâng cao"
 
 #: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
-msgstr ""
+msgstr "Hiện các ứng dụng và tính năng yêu cầu nhiều kiến thức kĩ thuật hơn."
 
 #: plinth/modules/config/views.py:46
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
-msgstr ""
+msgstr "Lỗi khi đặt tên máy chủ: {exception}"
 
 #: plinth/modules/config/views.py:49
 msgid "Hostname set"
-msgstr ""
+msgstr "Đã đặt tên máy chủ"
 
 #: plinth/modules/config/views.py:58
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
-msgstr ""
+msgstr "Lỗi khi đặt tên miền: {exception}"
 
 #: plinth/modules/config/views.py:61
 msgid "Domain name set"
-msgstr ""
+msgstr "Đã đặt tên miền"
 
 #: plinth/modules/config/views.py:69
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
-msgstr ""
+msgstr "Lỗi khi đặt trang chủ của máy chủ web: {exception}"
 
 #: plinth/modules/config/views.py:72
 msgid "Webserver home page set"
-msgstr ""
+msgstr "Đã đặt trang chủ của máy chủ web"
 
 #: plinth/modules/config/views.py:80
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
-msgstr ""
+msgstr "Lỗi khi thay đổi chế độ nâng cao: {exception}"
 
 #: plinth/modules/config/views.py:85
 msgid "Showing advanced apps and features"
-msgstr ""
+msgstr "Đang hiện các ứng dụng và tính năng nâng cao"
 
 #: plinth/modules/config/views.py:88
 msgid "Hiding advanced apps and features"
-msgstr ""
+msgstr "Đang ẩn các ứng dụng và tính năng nâng cao"
 
 #: plinth/modules/coturn/__init__.py:36
 msgid ""
