@@ -457,7 +457,8 @@ def apt_hold_freedombox():
 
 def apt_unhold_freedombox():
     """Remove any hold on freedombox package, and clear flag."""
-    subprocess.check_call(['apt-mark', 'unhold', 'freedombox'])
+    subprocess.run(['apt-mark', 'unhold', 'freedombox'],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if apt_hold_flag.exists():
         apt_hold_flag.unlink()
 
