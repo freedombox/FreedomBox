@@ -5,6 +5,8 @@ Setup logging for the application.
 
 import importlib
 import logging
+import logging.handlers
+import sys
 import warnings
 
 import cherrypy
@@ -127,3 +129,24 @@ def get_configuration():
         configuration['root']['handlers'].append('journal')
 
     return configuration
+
+
+def pipe_to_syslog(level=logging.INFO, to_stderr=True):
+    """Make the root logger write to syslog and stderr. Useful in actions"""
+    logger = logging.getLogger()
+    logger.setLevel(level)
+
+    fmt = '/freedombox/%(name)s[%(process)d]: %(levelname)s: %(message)s'
+    formatter = logging.Formatter(fmt=fmt)
+
+    # Using syslog in Python: https://stackoverflow.com/q/3968669
+    syslog_handler = logging.handlers.SysLogHandler(address='/dev/log')
+    syslog_handler.setFormatter(formatter)
+    logger.addHandler(syslog_handler)
+
+    if to_stderr == 'tty' and sys.stdin.isatty():
+        to_stderr = True
+    if to_stderr is True:
+        stderr_handler = logging.StreamHandler()
+        stderr_handler.setFormatter(formatter)
+        logger.addHandler(stderr_handler)
