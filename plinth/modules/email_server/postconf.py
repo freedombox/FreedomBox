@@ -71,7 +71,7 @@ def set_master_cf_options(service_flags, options):
 def get_unsafe(key):
     """Get postconf value (no locking, no sanitization)"""
     result = _run(['/sbin/postconf', key])
-    match = key + ' = '
+    match = key + ' ='
     if not result.startswith(match):
         raise KeyError(key)
     return result[len(match):].strip()
