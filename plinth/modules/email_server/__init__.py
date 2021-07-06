@@ -96,6 +96,7 @@ class EmailServerApp(plinth.app.App):
         results = super().diagnose()
         results.extend([r.summarize() for r in audit.domain.get()])
         results.extend([r.summarize() for r in audit.ldap.get()])
+        results.extend([r.summarize() for r in audit.spam.get()])
         return results
 
 

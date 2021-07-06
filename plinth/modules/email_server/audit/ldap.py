@@ -49,12 +49,10 @@ def get():
     Recommended endpoint name:
     GET /audit/ldap
     """
-    results = models.Result('Postfix uses Dovecot for SASL authentication')
-    current_config = postconf.get_many(list(default_config.keys()))
-    for key, value in default_config.items():
-        if current_config[key] != value:
-            results.fails.append('{} should equal {}'.format(key, value))
-    return [results]
+    results = []
+    with postconf.postconf_mutex.lock_all():
+        results.append(check_sasl())
+    return results
 
 
 def repair():
@@ -63,22 +61,35 @@ def repair():
     Recommended endpoint name:
     POST /audit/ldap/repair
     """
-    logger.debug('Updating postconf: %r', default_config)
     actions.superuser_run('email_server', ['-i', 'ldap', 'set_sasl'])
-
-    logger.debug('Setting up postfix services:\n    %r\n    %r',
-                 default_submission_options, default_smtps_options)
     actions.superuser_run('email_server', ['-i', 'ldap', 'set_submission'])
 
 
+def check_sasl():
+    diagnosis = models.MainCfDiagnosis('Postfix-Dovecot SASL integration')
+    current = postconf.get_many_unsafe(default_config.keys())
+    diagnosis.compare_and_advise(current=current, default=default_config)
+    return diagnosis
+
+
+def fix_sasl(diagnosis):
+    diagnosis.assert_resolved()
+    logger.info('Setting postconf: %r', diagnosis.advice)
+    postconf.set_many_unsafe(diagnosis.advice)
+
+
 def action_set_sasl():
-    """Called by email_server ipc set_sasl"""
-    postconf.set_many(default_config)
+    """Called by email_server ipc ldap set_sasl"""
+    with postconf.postconf_mutex.lock_all():
+        fix_sasl(check_sasl())
 
 
 def action_set_submission():
     """Called by email_server ipc set_submission"""
+    logger.info('Set postfix service: %r', default_submission_options)
     postconf.set_master_cf_options(service_flags=submission_flags,
                                    options=default_submission_options)
+
+    logger.info('Set postfix service: %r', default_smtps_options)
     postconf.set_master_cf_options(service_flags=smtps_flags,
                                    options=default_smtps_options)

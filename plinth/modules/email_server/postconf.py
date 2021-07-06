@@ -29,13 +29,17 @@ class ServiceFlags:
 def get_many(key_list):
     """Acquire resource lock. Get the list of postconf values as specified.
     Return a key-value map"""
-    result = {}
     for key in key_list:
         validate_key(key)
     with postconf_mutex.lock_all():
-        for key in key_list:
-            result[key] = get_unsafe(key)
-        return result
+        return get_many_unsafe(key_list)
+
+
+def get_many_unsafe(key_iterator):
+    result = {}
+    for key in key_iterator:
+        result[key] = get_unsafe(key)
+    return result
 
 
 def set_many(kv_map):
@@ -45,8 +49,12 @@ def set_many(kv_map):
         validate_value(value)
 
     with postconf_mutex.lock_all():
-        for key, value in kv_map.items():
-            set_unsafe(key, value)
+        set_many_unsafe(kv_map)
+
+
+def set_many_unsafe(kv_map):
+    for key, value in kv_map.items():
+        set_unsafe(key, value)
 
 
 def set_master_cf_options(service_flags, options):
