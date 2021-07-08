@@ -1,0 +1,13 @@
+{% extends "app.html" %}
+
+{% load i18n %}
+
+{% block configuration %}
+  {{ tabs|safe }}
+  <p>
+    <a href="/rspamd/">
+      {% trans "Visit Rspamd administration interface" %}
+    </a>
+  </p>
+  {{ block.super }}
+{% endblock %}
