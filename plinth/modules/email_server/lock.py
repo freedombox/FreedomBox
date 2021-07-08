@@ -60,7 +60,7 @@ class Mutex:
         if og_euid == 0 and threading.active_count() > 1:
             raise RaceCondition('setuid in a multi-threaded process')
         if not os.path.exists(self.lock_path):
-            self._create_lock_file_as_plinth()
+            self._create_lock_file_as_plinth(og_euid)
 
         fd = None
         try:
@@ -78,10 +78,13 @@ class Mutex:
 
         return fd
 
-    def _create_lock_file_as_plinth(self):
+    def _create_lock_file_as_plinth(self, your_euid):
         # Don't change the current processes umask
         # Do create a new process
-        args = ['sudo', '-n', '-u', 'plinth', '/bin/sh', '-c']
+        args = []
+        if your_euid == 0:
+            args.extend(['sudo', '-n', '-u', 'plinth'])
+        args.extend(['/bin/sh', '-c'])
         args.append('umask 177 && > ' + self.lock_path)
 
         completed = subprocess.run(args, capture_output=True)
