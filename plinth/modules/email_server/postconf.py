@@ -6,7 +6,7 @@ import re
 import subprocess
 from .lock import Mutex
 
-postconf_mutex = Mutex('email-postconf')
+mutex = Mutex('email-postconf')
 
 
 @dataclasses.dataclass
@@ -31,7 +31,7 @@ def get_many(key_list):
     Return a key-value map"""
     for key in key_list:
         validate_key(key)
-    with postconf_mutex.lock_all():
+    with mutex.lock_all():
         return get_many_unsafe(key_list)
 
 
@@ -48,7 +48,7 @@ def set_many(kv_map):
         validate_key(key)
         validate_value(value)
 
-    with postconf_mutex.lock_all():
+    with mutex.lock_all():
         set_many_unsafe(kv_map)
 
 
@@ -57,7 +57,7 @@ def set_many_unsafe(kv_map):
         set_unsafe(key, value)
 
 
-def set_master_cf_options(service_flags, options):
+def set_master_cf_options(service_flags, options={}):
     """Acquire resource lock. Set master.cf service options"""
     if not isinstance(service_flags, ServiceFlags):
         raise TypeError('service_flags')
@@ -68,7 +68,7 @@ def set_master_cf_options(service_flags, options):
     service_slash_type = service_flags.service + '/' + service_flags.type
     flag_string = service_flags.serialize()
 
-    with postconf_mutex.lock_all():
+    with mutex.lock_all():
         # /sbin/postconf -M "service/type=flag_string"
         set_unsafe(service_slash_type, flag_string, '-M')
         for short_key, value in options.items():
@@ -91,6 +91,23 @@ def set_unsafe(key, value, flag=''):
         _run(['/sbin/postconf', flag, '{}={}'.format(key, value)])
     else:
         _run(['/sbin/postconf', '{}={}'.format(key, value)])
+
+
+def parse_maps(raw_value):
+    if '{' in raw_value or '}' in raw_value:
+        raise ValueError('Unsupported map list format')
+
+    value_list = []
+    for segment in raw_value.split(','):
+        for sub_segment in segment.strip().split(' '):
+            sub_segment = sub_segment.strip()
+            if sub_segment:
+                value_list.append(sub_segment)
+    return value_list
+
+
+def parse_maps_by_key_unsafe(key):
+    return parse_maps(get_unsafe(key))
 
 
 def _run(args):

@@ -1,6 +1,8 @@
 """Audit models"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
+import dataclasses
 import logging
+import typing
 
 logger = logging.getLogger(__name__)
 
@@ -57,8 +59,15 @@ class MainCfDiagnosis(Diagnosis):
         self.user = {}
 
     def flag(self, key, corrected_value=None, user=None):
-        self.advice[key] = corrected_value
-        self.user[key] = user
+        if key in self.advice:
+            raise ValueError('Key has been flagged')
+        else:
+            self.advice[key] = corrected_value
+            self.user[key] = user
+
+    def flag_once(self, key, **kwargs):
+        if key not in self.advice:
+            self.flag(key, **kwargs)
 
     def unresolved_issues(self):
         """Returns an interator of dictionary keys"""
@@ -79,3 +88,14 @@ class MainCfDiagnosis(Diagnosis):
         unresolved issue"""
         if None in self.advice.values():
             raise UnresolvedIssueError('Assertion failed')
+
+
+@dataclasses.dataclass(init=False)
+class AliasMapsAnalysis:
+    parsed = typing.List[str]
+    ibefore = int
+    isystem = int
+    iafter = int
+
+    def __init__(self):
+        pass

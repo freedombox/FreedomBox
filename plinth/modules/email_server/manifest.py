@@ -50,3 +50,14 @@ clients = [{
         'url': store_url('google-play', 'eu.faircode.email')
     }]
 }]
+
+backup = {
+    'data': {
+        'directories': [
+            '/var/lib/plinth/mailsrv',
+            '/etc/postfix',
+            '/etc/dovecot'
+        ]
+    },
+    'services': ['postfix', 'dovecot']
+}

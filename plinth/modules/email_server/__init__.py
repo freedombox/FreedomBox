@@ -17,9 +17,10 @@ from . import manifest
 
 version = 1
 managed_packages = ['postfix', 'dovecot-pop3d', 'dovecot-imapd',
-                    'dovecot-lmtpd', 'dovecot-ldap', 'dovecot-managesieved',
-                    'rspamd']
-managed_services = ['postfix', 'dovecot']
+                    'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved',
+                    'rspamd', 'clamav', 'clamav-daemon']
+managed_services = ['postfix', 'dovecot', 'rspamd', 'redis', 'clamav-daemon',
+                    'clamav-freshclam']
 app = None
 
 
@@ -62,7 +63,7 @@ class EmailServerApp(plinth.app.App):
             name=info.name,
             short_description=info.short_description,
             icon='roundcube',
-            configure_url=reverse_lazy('email_server'),
+            url=reverse_lazy('email_server:my_aliases'),
             clients=manifest.clients,
             login_required=True
         )
@@ -85,6 +86,9 @@ class EmailServerApp(plinth.app.App):
                                         listen_ports=dovecot_ports)
         self.add(postfixd)
         self.add(dovecotd)
+        for name in ('rspamd', 'redis', 'clamav-daemon', 'clamav-freshclam'):
+            daemon = plinth.daemon.Daemon('daemon-' + name, name)
+            self.add(daemon)
 
         # Ports
         firewall = Firewall('firewall-email', info.name,

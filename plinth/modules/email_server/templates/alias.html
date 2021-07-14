@@ -1,0 +1,52 @@
+{% extends "app.html" %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+
+  {{ tabs|safe }}
+  <h3>{% trans "Alias Management" %}</h3>
+
+  {% if error %}
+    <div class="alert alert-danger" role="alert">
+      <p>
+        {% trans "There was a problem with your request. Please try again." %}
+      </p>
+      {% for message in error %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if no_alias %}
+    <p>{% trans "You have no email aliases." %}</p>
+  {% else %}
+    <form action="{{ request.path }}" method="post">
+      {% csrf_token %}
+      {{ alias_boxes|safe }}
+
+      <input type="hidden" name="form" value="Checkboxes">
+
+      <input class="btn btn-secondary" type="submit" name="btn_disable"
+             value="{% trans 'Disable selected' %}">
+
+      <input class="btn btn-secondary" type="submit" name="btn_enable"
+             value="{% trans 'Enable selected' %}">
+
+      <input class="btn btn-danger" type="submit" name="btn_delete"
+             value="{% trans 'Delete selected' %}">
+    </form>
+  {% endif %}
+
+  <h4>{% trans "Create a new email alias" %}</h4>
+
+  <form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <input type="hidden" name="form" value="AliasCreationForm">
+    <input class="btn btn-primary" type="submit" name="btn_add"
+           value="{% trans 'Add' %}">
+  </form>
+
+{% endblock %}

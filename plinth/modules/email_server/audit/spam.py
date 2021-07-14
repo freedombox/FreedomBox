@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 def get():
     results = []
-    with postconf.postconf_mutex.lock_all():
+    with postconf.mutex.lock_all():
         results.append(check_filter())
     return results
 
@@ -48,5 +48,5 @@ def fix_filter(diagnosis):
 
 
 def action_set_filter():
-    with postconf.postconf_mutex.lock_all():
+    with postconf.mutex.lock_all():
         fix_filter(check_filter())
