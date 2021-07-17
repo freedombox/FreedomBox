@@ -45,36 +45,49 @@ class AliasView(TemplateView):
             self.models = initial
             self.post = post
             self.cleaned_data = {}
+            # HTML rendering
+            self.sb = io.StringIO()
+            self.counter = 0
 
         def render(self):
             if self.models is None:
                 raise RuntimeError('Uninitialized form')
-            sb = io.StringIO()
+            if self.sb.tell() > 0:
+                raise RuntimeError('render has been called')
+
             enabled = [a.email_name for a in self.models if a.enabled]
             disabled = [a.email_name for a in self.models if not a.enabled]
 
-            if len(enabled) > 0:
-                sb.write('<fieldset>')
-                sb.write('<legend>%s</legend>' % escape(_('Enabled')))
-                self._render_boxes(enabled, 'enabled', sb)
-                sb.write('</fieldset>')
-            if len(disabled) > 0:
-                sb.write('<fieldset>')
-                sb.write('<legend>%s</legend>' % escape(_('Disabled')))
-                self._render_boxes(disabled, 'disabled', sb)
-                sb.write('</fieldset>')
-            return sb.getvalue()
+            self._render_fieldset(enabled, _('Enabled aliases'))
+            self._render_fieldset(disabled, _('Disabled aliases'))
 
-        @staticmethod
-        def _render_boxes(email_names, suffix, sb):
-            for i, email_name in enumerate(email_names):
-                input_id = 'cb_alias_%s_%d' % (suffix, i)
+            return self.sb.getvalue()
+
+        def _render_fieldset(self, email_names, legend):
+            if len(email_names) > 0:
+                self.sb.write('<fieldset class="form-group">')
+                self.sb.write('<legend>%s</legend>' % escape(legend))
+                self._render_boxes(email_names)
+                self.sb.write('</fieldset>')
+
+        def _render_boxes(self, email_names):
+            for email_name in email_names:
+                input_id = 'cb_alias_%d' % self._count()
                 value = escape(email_name)
-                sb.write('<div>')
-                sb.write('<input type="checkbox" name="alias" ')
-                sb.write('id="%s" value="%s">' % (input_id, value))
-                sb.write('<label for="%s">%s</label>' % (input_id, value))
-                sb.write('</div>')
+                self.sb.write('<div class="form-check">')
+
+                self.sb.write('<input type="checkbox" name="alias" ')
+                self.sb.write('class="form-check-input" ')
+                self.sb.write('id="%s" value="%s">' % (input_id, value))
+
+                self.sb.write('<label class="form-check-label" ')
+                self.sb.write('for="%s">%s</label>' % (input_id, value))
+
+                self.sb.write('</div>')
+
+        def _count(self):
+            self.counter += 1
+            return self.counter
 
         def is_valid(self):
             lst = list(filter(None, self.post.getlist('alias')))

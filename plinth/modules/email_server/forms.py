@@ -2,6 +2,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+
 class EmailServerForm(forms.Form):
     domain = forms.CharField(label=_('domain'), max_length=256)
 

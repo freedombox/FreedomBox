@@ -148,4 +148,3 @@ def _create_db_schema_if_not_exists():
     # Create schema if not exists
     with db_cursor() as cur:
         cur.executescript(map_db_schema_script)
-
