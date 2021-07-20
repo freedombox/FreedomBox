@@ -1,24 +1,12 @@
 {# SPDX-License-Identifier: AGPL-3.0-or-later #}
-{% extends "app.html" %}
+{% extends "form_base.html" %}
 
 {% load bootstrap %}
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
 
-  {{ tabs|safe }}
-  <h3>{% trans "Alias Management" %}</h3>
-
-  {% if error %}
-    <div class="alert alert-danger" role="alert">
-      <p>
-        {% trans "There was a problem with your request. Please try again." %}
-      </p>
-      {% for message in error %}
-        <p>{{ message }}</p>
-      {% endfor %}
-    </div>
-  {% endif %}
+  {{ block.super }}
 
   {% if no_alias %}
     <p>{% trans "You have no email aliases." %}</p>

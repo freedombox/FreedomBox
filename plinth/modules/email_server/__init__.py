@@ -63,7 +63,7 @@ class EmailServerApp(plinth.app.App):
             name=info.name,
             short_description=info.short_description,
             icon='roundcube',
-            url=reverse_lazy('email_server:my_aliases'),
+            url=reverse_lazy('email_server:my_mail'),
             clients=manifest.clients,
             login_required=True
         )

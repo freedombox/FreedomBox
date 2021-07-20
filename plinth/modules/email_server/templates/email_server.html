@@ -3,8 +3,12 @@
 
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
   {{ tabs|safe }}
+  {{ block.super }}
+{% endblock %}
+
+{% block extra_content %}
   <p>
     <a href="/rspamd/">
       {% trans "Visit Rspamd administration interface" %}

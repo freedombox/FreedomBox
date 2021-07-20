@@ -1,0 +1,19 @@
+{# SPDX-License-Identifier: AGPL-3.0-or-later #}
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+  {{ tabs|safe }}
+  {{ block.super }}
+  {% if error %}
+    <div class="alert alert-danger" role="alert">
+      <p>
+        {% trans "There was a problem with your request. Please try again." %}
+      </p>
+      {% for message in error %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

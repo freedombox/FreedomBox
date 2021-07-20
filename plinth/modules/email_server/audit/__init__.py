@@ -3,8 +3,9 @@
 Provides diagnosis and repair of email server configuration issues
 """
 
-from . import ldap
 from . import domain
+from . import home
+from . import ldap
 from . import spam
 
-__all__ = ['ldap', 'domain', 'spam']
+__all__ = ['domain', 'home', 'ldap', 'spam']

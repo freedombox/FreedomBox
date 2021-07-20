@@ -32,9 +32,9 @@ def main():
 
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-i', nargs=2, dest='ipc')
-    group.add_argument('-t', nargs=1, dest='touch_file')
+    group.add_argument('-i', nargs='+', dest='ipc')
 
+    # Select the first non-empty dict item
     adict = vars(parser.parse_args())
     generator = (kv for kv in adict.items() if kv[1] is not None)
     subcommand, arguments = next(generator)
@@ -49,7 +49,7 @@ def main():
 
 
 @reserved_for_root
-def subcommand_ipc(module_name, action_name):
+def subcommand_ipc(module_name, action_name, *args):
     import plinth.modules.email_server.audit as audit
 
     # We only run actions defined in the audit module
@@ -63,18 +63,7 @@ def subcommand_ipc(module_name, action_name):
         logger.critical('Bad action: %s/%r', module_name, action_name)
         sys.exit(EXIT_SYNTAX)
 
-    function()
-
-
-def subcommand_touch_file(path):
-    import pathlib
-
-    if os.getuid() == 0:
-        logger.critical('Do not run the `-t` option as root')
-        sys.exit(EXIT_PERM)
-
-    # mode is influenced by umask
-    pathlib.Path(path).touch(mode=0o660, exist_ok=True)
+    function(*args)
 
 
 def _log_additional_info():

@@ -3,6 +3,7 @@ import io
 import itertools
 import pwd
 
+import plinth.utils
 import plinth.views
 
 from django.core.exceptions import ValidationError
@@ -10,33 +11,62 @@ from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
 
-from . import forms
 from . import aliases
+from . import audit
+from . import forms
 
-tabs = [
+admin_tabs = [
     ('', _('Home')),
-    ('alias', _('Alias')),
-    ('relay', _('Relay')),
-    ('security', _('Security'))
+    ('my_mail', _('My Mail')),
+    ('my_aliases', _('My Aliases'))
+]
+
+user_tabs = [
+    ('my_mail', _('Home')),
+    ('my_aliases', _('My Aliases'))
 ]
 
 
 class EmailServerView(plinth.views.AppView):
     """Server configuration page"""
     app_id = 'email_server'
-    form_class = forms.EmailServerForm
     template_name = 'email_server.html'
-
-    def form_valid(self, form):
-        # old_settings = form.initial
-        # new_status = form.cleaned_data
-        # plinth.actions.superuser_run('email_server', ['--help'])
-        return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['tabs'] = render_tabs(self.request)
         return context
+
+
+class MyMailView(TemplateView):
+    template_name = 'my_mail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['tabs'] = render_tabs(self.request)
+
+        nam = self.request.user.username
+        context['has_homedir'] = audit.home.exists_nam(nam)
+
+        return context
+
+    def post(self, request):
+        try:
+            return self._post(request)
+        except ValidationError as validation_error:
+            context = self.get_context_data()
+            context['error'] = validation_error
+            return self.render_to_response(context, status=400)
+        except RuntimeError as runtime_error:
+            context = self.get_context_data()
+            context['error'] = [str(runtime_error)]
+            return self.render_to_response(context, status=500)
+
+    def _post(self, request):
+        if not 'btn_mkhome' in request.POST:
+            raise ValidationError('Bad post data')
+        audit.home.put_nam(request.user.username)
+        return self.render_to_response(self.get_context_data())
 
 
 class AliasView(TemplateView):
@@ -103,6 +133,7 @@ class AliasView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['form'] = forms.AliasCreationForm()
+        context['tabs'] = render_tabs(self.request)
 
         uid = pwd.getpwnam(self.request.user.username).pw_uid
         models = aliases.get(uid)
@@ -173,9 +204,16 @@ class AliasView(TemplateView):
 
 
 def render_tabs(request):
+    if plinth.utils.is_user_admin(request):
+        return _render_tabs(request, admin_tabs)
+    else:
+        return _render_tabs(request, user_tabs)
+
+
+def _render_tabs(request, tab_data):
     sb = io.StringIO()
     sb.write('<ul class="nav nav-tabs">')
-    for page_name, link_text in tabs:
+    for page_name, link_text in tab_data:
         if request.path.endswith('/' + page_name):
             cls = 'active'
         else:
