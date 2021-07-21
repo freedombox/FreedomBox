@@ -1,0 +1,46 @@
+{# SPDX-License-Identifier: AGPL-3.0-or-later #}
+{% extends "form_base.html" %}
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+  {{ block.super }}
+
+    <div class="form-group">
+      <strong>/etc/mailname</strong>
+      <span> = {{ mailname }}</span>
+      <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        {{ mailname_form|bootstrap }}
+        <input type="hidden" name="form" value="MailnameForm">
+        <input class="btn btn-primary" type="submit" name="btn_mailname"
+               value="{% trans 'Change' %}">
+      </form>
+    </div>
+
+    <div class="form-group">
+      <strong>$mydomain</strong>
+      <span> = {{ mydomain }}</span>
+      <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        {{ mydomain_form|bootstrap }}
+        <input type="hidden" name="form" value="MydomainForm">
+        <input class="btn btn-primary" type="submit" name="btn_mydomain"
+               value="{% trans 'Change' %}">
+      </form>
+    </div>
+
+    <div class="form-group">
+      <strong>$mydestination</strong>
+      <span> = {{ mydestination }}</span>
+      <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        {{ mydestination_form|bootstrap }}
+        <input type="hidden" name="form" value="MydestinationForm">
+        <input class="btn btn-primary" type="submit" name="btn_mydestination"
+               value="{% trans 'Change' %}">
+      </form>
+    </div>
+
+{% endblock %}

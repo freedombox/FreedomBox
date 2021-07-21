@@ -4,12 +4,12 @@ import itertools
 import pwd
 
 import plinth.utils
-import plinth.views
 
 from django.core.exceptions import ValidationError
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
+from plinth.views import AppView
 
 from . import aliases
 from . import audit
@@ -18,7 +18,9 @@ from . import forms
 admin_tabs = [
     ('', _('Home')),
     ('my_mail', _('My Mail')),
-    ('my_aliases', _('My Aliases'))
+    ('my_aliases', _('My Aliases')),
+    ('security', _('Security')),
+    ('domains', _('Domains'))
 ]
 
 user_tabs = [
@@ -27,23 +29,74 @@ user_tabs = [
 ]
 
 
-class EmailServerView(plinth.views.AppView):
+class TabMixin(View):
+    def get_context_data(self, *args, **kwargs):
+        # Retrieve context data from the next method in the MRO
+        context = super().get_context_data(*args, **kwargs)
+        # Populate context with customized data
+        context['tabs'] = self.render_tabs()
+        return context
+
+    def render_tabs(self):
+        if plinth.utils.is_user_admin(self.request):
+            return self.__render_tabs(self.request.path, admin_tabs)
+        else:
+            return self.__render_tabs(self.request.path, user_tabs)
+
+    @staticmethod
+    def __render_tabs(path, tab_data):
+        sb = io.StringIO()
+        sb.write('<ul class="nav nav-tabs">')
+
+        for page_name, link_text in tab_data:
+            cls = 'active' if path.endswith('/' + page_name) else ''
+            href = '#' if cls == 'active' else ('./' + page_name)
+            # -- Begin list
+            sb.write('<li class="nav-item">')
+            # -- Begin link
+            sb.write('<a class="nav-link {}" '.format(cls))
+            sb.write('href="{}">'.format(escape(href)))
+            sb.write('{}</a>'.format(escape(link_text)))
+            # -- End link
+            sb.write('</li>')
+            # -- End list
+
+        sb.write('</ul>')
+        return sb.getvalue()
+
+    def render_validation_error(self, validation_error, status=400):
+        context = self.get_context_data()
+        context['error'] = validation_error
+        return self.render_to_response(context, status=status)
+
+    def find_button(self, post):
+        key_filter = (k for k in post.keys() if k.startswith('btn_'))
+        lst = list(itertools.islice(key_filter, 2))
+        if len(lst) != 1:
+            raise ValidationError('Bad post data')
+        if not isinstance(lst[0], str):
+            raise ValidationError('Bad post data')
+        return lst[0][len('btn_'):]
+
+    def find_form(self, post):
+        form_name = post.get('form')
+        for cls in self.form_classes:
+            if cls.__name__ == form_name:
+                return cls(post)
+        raise ValidationError('Form was unspecified')
+
+
+class EmailServerView(TabMixin, AppView):
     """Server configuration page"""
     app_id = 'email_server'
     template_name = 'email_server.html'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['tabs'] = render_tabs(self.request)
-        return context
 
-
-class MyMailView(TemplateView):
+class MyMailView(TabMixin, TemplateView):
     template_name = 'my_mail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['tabs'] = render_tabs(self.request)
 
         nam = self.request.user.username
         context['has_homedir'] = audit.home.exists_nam(nam)
@@ -54,22 +107,20 @@ class MyMailView(TemplateView):
         try:
             return self._post(request)
         except ValidationError as validation_error:
-            context = self.get_context_data()
-            context['error'] = validation_error
-            return self.render_to_response(context, status=400)
+            return self.render_validation_error(validation_error)
         except RuntimeError as runtime_error:
             context = self.get_context_data()
             context['error'] = [str(runtime_error)]
             return self.render_to_response(context, status=500)
 
     def _post(self, request):
-        if not 'btn_mkhome' in request.POST:
+        if 'btn_mkhome' not in request.POST:
             raise ValidationError('Bad post data')
         audit.home.put_nam(request.user.username)
         return self.render_to_response(self.get_context_data())
 
 
-class AliasView(TemplateView):
+class AliasView(TabMixin, TemplateView):
     class Checkboxes:
         def __init__(self, post=None, initial=None):
             self.models = initial
@@ -133,7 +184,6 @@ class AliasView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['form'] = forms.AliasCreationForm()
-        context['tabs'] = render_tabs(self.request)
 
         uid = pwd.getpwnam(self.request.user.username).pw_uid
         models = aliases.get(uid)
@@ -144,29 +194,11 @@ class AliasView(TemplateView):
             context['no_alias'] = True
         return context
 
-    def find_form(self, post):
-        form_name = post.get('form')
-        for cls in self.form_classes:
-            if cls.__name__ == form_name:
-                return cls(post)
-        raise ValidationError('Form was unspecified')
-
-    def find_button(self, post):
-        key_filter = (k for k in post.keys() if k.startswith('btn_'))
-        lst = list(itertools.islice(key_filter, 2))
-        if len(lst) != 1:
-            raise ValidationError('Bad post data')
-        if not isinstance(lst[0], str):
-            raise ValidationError('Bad post data')
-        return lst[0][len('btn_'):]
-
     def post(self, request):
         try:
             return self._post(request)
         except ValidationError as e:
-            context = self.get_context_data()
-            context['error'] = e
-            return self.render_to_response(context, status=400)
+            return self.render_validation_error(e)
 
     def _post(self, request):
         form = self.find_form(request.POST)
@@ -203,30 +235,23 @@ class AliasView(TemplateView):
         return self.render_to_response(self.get_context_data())
 
 
-def render_tabs(request):
-    if plinth.utils.is_user_admin(request):
-        return _render_tabs(request, admin_tabs)
-    else:
-        return _render_tabs(request, user_tabs)
+class TLSView(TabMixin, TemplateView):
+    template_name = 'security.html'
 
 
-def _render_tabs(request, tab_data):
-    sb = io.StringIO()
-    sb.write('<ul class="nav nav-tabs">')
-    for page_name, link_text in tab_data:
-        if request.path.endswith('/' + page_name):
-            cls = 'active'
-        else:
-            cls = ''
-        if cls == 'active':
-            href = '#'
-        else:
-            href = escape('./' + page_name)
+class DomainView(TabMixin, TemplateView):
+    template_name = 'domains.html'
+    form_classes = (forms.MailnameForm, forms.MydomainForm,
+                    forms.MydestinationForm)
 
-        sb.write('<li class="nav-item">')
-        sb.write('<a class="nav-link {cls}" href="{href}">{text}</a>'.format(
-            cls=cls, href=href, text=escape(link_text)
-        ))
-        sb.write('</li>')
-    sb.write('</ul>')
-    return sb.getvalue()
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['mailname'] = 'placeholder'
+        context['mydomain'] = 'placeholder.exmaple.com'
+        context['mydestination'] = '$mydomain, placeholder.example'
+
+        context['mailname_form'] = forms.MailnameForm()
+        context['mydomain_form'] = forms.MydomainForm()
+        context['mydestination_form'] = forms.MydestinationForm()
+
+        return context
