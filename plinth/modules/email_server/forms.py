@@ -13,15 +13,3 @@ class EmailServerForm(forms.Form):
 class AliasCreationForm(forms.Form):
     email_name = forms.CharField(label=_('New alias (without @domain)'),
                                  max_length=50)
-
-
-class MailnameForm(forms.Form):
-    mailname = forms.CharField(label=_('New value'), max_length=256)
-
-
-class MydomainForm(forms.Form):
-    mydomain = forms.CharField(label=_('New value'), max_length=256)
-
-
-class MydestinationForm(forms.Form):
-    mydestination = forms.CharField(label=_('New value'), max_length=4000)

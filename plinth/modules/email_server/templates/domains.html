@@ -7,40 +7,29 @@
 
   {{ block.super }}
 
-    <div class="form-group">
-      <strong>/etc/mailname</strong>
-      <span> = {{ mailname }}</span>
-      <form action="{{ request.path }}" method="post">
-        {% csrf_token %}
-        {{ mailname_form|bootstrap }}
-        <input type="hidden" name="form" value="MailnameForm">
-        <input class="btn btn-primary" type="submit" name="btn_mailname"
-               value="{% trans 'Change' %}">
-      </form>
-    </div>
+  <form action="{{ request.path }}" method="post">
 
-    <div class="form-group">
-      <strong>$mydomain</strong>
-      <span> = {{ mydomain }}</span>
-      <form action="{{ request.path }}" method="post">
-        {% csrf_token %}
-        {{ mydomain_form|bootstrap }}
-        <input type="hidden" name="form" value="MydomainForm">
-        <input class="btn btn-primary" type="submit" name="btn_mydomain"
-               value="{% trans 'Change' %}">
-      </form>
-    </div>
+    {% for data in fields %}
+      <div class="form-group">
+        <div class="form-text">
+          <strong>{{ data.name }}</strong> = {{ data.value }}
+        </div> <!-- end form-text -->
+        <div class="row">
+          <label for="text_{{ data.key }}" class="col-sm-2 col-form-label">
+            {% trans "New value" %}
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="text_{{ data.key }}"
+                   name="{{ data.key }}" value="{{ data.new_value }}">
+          </div>
+        </div> <!-- end row -->
+      </div> <!-- end form-group -->
+    {% endfor %}
 
-    <div class="form-group">
-      <strong>$mydestination</strong>
-      <span> = {{ mydestination }}</span>
-      <form action="{{ request.path }}" method="post">
-        {% csrf_token %}
-        {{ mydestination_form|bootstrap }}
-        <input type="hidden" name="form" value="MydestinationForm">
-        <input class="btn btn-primary" type="submit" name="btn_mydestination"
-               value="{% trans 'Change' %}">
-      </form>
-    </div>
+    {% csrf_token %}
+    <input class="btn btn-primary" type="submit" name="btn_update"
+           value="{% trans 'Update' %}">
+  </form>
+
 
 {% endblock %}

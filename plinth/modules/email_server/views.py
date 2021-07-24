@@ -69,6 +69,11 @@ class TabMixin(View):
         context['error'] = validation_error
         return self.render_to_response(context, status=status)
 
+    def render_exception(self, exception, status=500):
+        context = self.get_context_data()
+        context['error'] = [str(exception)]
+        return self.render_to_response(context, status=status)
+
     def find_button(self, post):
         key_filter = (k for k in post.keys() if k.startswith('btn_'))
         lst = list(itertools.islice(key_filter, 2))
@@ -109,9 +114,7 @@ class MyMailView(TabMixin, TemplateView):
         except ValidationError as validation_error:
             return self.render_validation_error(validation_error)
         except RuntimeError as runtime_error:
-            context = self.get_context_data()
-            context['error'] = [str(runtime_error)]
-            return self.render_to_response(context, status=500)
+            return self.render_exception(runtime_error)
 
     def _post(self, request):
         if 'btn_mkhome' not in request.POST:
@@ -197,8 +200,10 @@ class AliasView(TabMixin, TemplateView):
     def post(self, request):
         try:
             return self._post(request)
-        except ValidationError as e:
-            return self.render_validation_error(e)
+        except ValidationError as validation_error:
+            return self.render_validation_error(validation_error)
+        except Exception as exception:
+            return self.render_exception(exception)
 
     def _post(self, request):
         form = self.find_form(request.POST)
@@ -241,17 +246,30 @@ class TLSView(TabMixin, TemplateView):
 
 class DomainView(TabMixin, TemplateView):
     template_name = 'domains.html'
-    form_classes = (forms.MailnameForm, forms.MydomainForm,
-                    forms.MydestinationForm)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['mailname'] = 'placeholder'
-        context['mydomain'] = 'placeholder.exmaple.com'
-        context['mydestination'] = '$mydomain, placeholder.example'
-
-        context['mailname_form'] = forms.MailnameForm()
-        context['mydomain_form'] = forms.MydomainForm()
-        context['mydestination_form'] = forms.MydestinationForm()
-
+        fields = audit.domain.get_domain_config()
+        # If having post data, display the posted values
+        for field in fields:
+            field.new_value = self.request.POST.get(field.key, '')
+        context['fields'] = fields
         return context
+
+    def post(self, request):
+        try:
+            return self._post(request)
+        except ValidationError as validation_error:
+            return self.render_validation_error(validation_error)
+        except RuntimeError as runtime_error:
+            return self.render_exception(runtime_error)
+
+    def _post(self, request):
+        changed = {}
+        # Skip blank fields
+        for key, value in request.POST.items():
+            value = value.strip()
+            if value:
+                changed[key] = value
+        audit.domain.set_keys(changed)
+        return self.render_to_response(self.get_context_data())
