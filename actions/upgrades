@@ -14,9 +14,10 @@ import subprocess
 import sys
 import time
 
-from plinth.action_utils import (apt_hold, debconf_set_selections,
-                                 run_apt_command, service_daemon_reload,
-                                 service_restart)
+from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
+                                 apt_unhold_freedombox, debconf_set_selections,
+                                 is_package_manager_busy, run_apt_command,
+                                 service_daemon_reload, service_restart)
 from plinth.modules.apache.components import check_url
 from plinth.modules.snapshot import (is_apt_snapshots_enabled, is_supported as
                                      snapshot_is_supported, load_augeas as
@@ -141,6 +142,12 @@ def _run():
     """Run unattended-upgrades"""
     subprocess.run(['dpkg', '--configure', '-a'])
     run_apt_command(['--fix-broken', 'install'])
+
+    # In case freedombox package was left in held state by an
+    # interrupted process, release it.
+    if apt_hold_flag.exists() and not is_package_manager_busy():
+        apt_unhold_freedombox()
+
     subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                      stderr=subprocess.DEVNULL, close_fds=True,
@@ -432,7 +439,7 @@ def _perform_dist_upgrade():
 
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
-    with apt_hold():
+    with apt_hold_freedombox():
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
@@ -531,6 +538,11 @@ def subcommand_start_dist_upgrade(arguments):
     Check if a new stable release is available, and start dist-upgrade process
     if updates are enabled.
     """
+    # In case freedombox package was left in held state by an
+    # interrupted process, release it.
+    if apt_hold_flag.exists() and not is_package_manager_busy():
+        apt_unhold_freedombox()
+
     upgrade_ready, reason = _check_dist_upgrade(arguments.test)
     if upgrade_ready:
         with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:

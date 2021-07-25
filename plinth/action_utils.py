@@ -5,6 +5,7 @@ Python action utility functions.
 
 import logging
 import os
+import pathlib
 import shutil
 import subprocess
 import tempfile
@@ -14,6 +15,11 @@ logger = logging.getLogger(__name__)
 
 UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
 UWSGI_AVAILABLE_PATH = '/etc/uwsgi/apps-available/{config_name}.ini'
+
+# Flag on disk to indicate if freedombox package was held by
+# plinth. This is a backup in case the process is interrupted and hold
+# is not released.
+apt_hold_flag = pathlib.Path('/var/lib/freedombox/package-held')
 
 
 def is_systemd_running():
@@ -413,11 +419,8 @@ def run_apt_command(arguments):
 
 
 @contextmanager
-def apt_hold(packages=None, ignore_errors=False):
+def apt_hold(packages, ignore_errors=False):
     """Prevent packages from being removed during apt operations."""
-    if not packages:
-        packages = ['freedombox']
-
     current_hold = subprocess.check_output(['apt-mark', 'showhold'] + packages)
     try:
         yield current_hold or subprocess.run(['apt-mark', 'hold'] + packages,
@@ -426,3 +429,42 @@ def apt_hold(packages=None, ignore_errors=False):
         if not current_hold:
             subprocess.run(['apt-mark', 'unhold'] + packages,
                            check=not ignore_errors)
+
+
+@contextmanager
+def apt_hold_freedombox():
+    """Prevent freedombox package from being removed during apt operations."""
+    current_hold = subprocess.check_output(
+        ['apt-mark', 'showhold', 'freedombox'])
+    try:
+        if current_hold:
+            # Package is already held, possibly by administrator.
+            yield current_hold
+        else:
+            # Set the flag.
+            apt_hold_flag.touch(mode=0o660)
+            yield subprocess.check_call(['apt-mark', 'hold', 'freedombox'])
+    finally:
+        # Was the package held, either in this process or a previous one?
+        if not current_hold or apt_hold_flag.exists():
+            apt_unhold_freedombox()
+
+
+def apt_unhold_freedombox():
+    """Remove any hold on freedombox package, and clear flag."""
+    subprocess.run(['apt-mark', 'unhold', 'freedombox'],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if apt_hold_flag.exists():
+        apt_hold_flag.unlink()
+
+
+def is_package_manager_busy():
+    """Return whether package manager is busy.
+    This command uses the `lsof` command to check whether the dpkg lock file
+    is open which indicates that the package manager is busy"""
+    LOCK_FILE = '/var/lib/dpkg/lock'
+    try:
+        subprocess.check_output(['lsof', LOCK_FILE])
+        return True
+    except subprocess.CalledProcessError:
+        return False
