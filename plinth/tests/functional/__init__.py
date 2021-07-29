@@ -248,13 +248,13 @@ def _create_admin_account(browser, username, password):
 
 
 def login(browser):
-    """Login to the interface."""
+    """Login to the FreedomBox interface with default test account."""
     login_with_account(browser, base_url, config['DEFAULT']['username'],
                        config['DEFAULT']['password'])
 
 
 def login_with_account(browser, url, username, password=None):
-
+    """Login to the FreedomBox interface with provided account."""
     if password is None:
         password = get_password(username)
     # XXX: Find a way to remove the hardcoded jsxc URL
@@ -292,6 +292,11 @@ def login_with_account(browser, url, username, password=None):
         if '/firstboot/update' in browser.url:
             browser.find_by_id('id_update_now').uncheck()
             submit(browser, element=browser.find_by_name('next')[0])
+
+
+def logout(browser):
+    """Log out of the FreedomBox interface."""
+    visit(browser, '/plinth/accounts/logout/')
 
 
 #################
@@ -356,10 +361,9 @@ def _change_app_status(browser, app_name, change_status_to='enabled'):
 
     if button:
         should_enable_field = browser.find_by_id('id_should_enable')
-        if (should_enable_field.value == 'False'
-                and change_status_to == 'disabled') or (
-                    should_enable_field.value == 'True'
-                    and change_status_to == 'enabled'):
+        if (should_enable_field.value == 'False' and change_status_to
+                == 'disabled') or (should_enable_field.value == 'True'
+                                   and change_status_to == 'enabled'):
             submit(browser, element=button)
     else:
         checkbox_id = _app_checkbox_id[app_name]
