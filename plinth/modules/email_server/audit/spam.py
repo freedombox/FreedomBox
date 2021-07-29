@@ -1,7 +1,9 @@
 """Configures spam filters and the virus scanner"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import glob
 import logging
+import subprocess
 
 from plinth import actions
 
@@ -50,3 +52,21 @@ def fix_filter(diagnosis):
 def action_set_filter():
     with postconf.mutex.lock_all():
         fix_filter(check_filter())
+    _compile_sieve()
+
+
+def _compile_sieve():
+    sieve_list = glob.glob('/etc/dovecot/freedombox-sieve-after/*.sieve')
+    for sieve_file in sieve_list:
+        _run_sievec(sieve_file)
+
+
+def _run_sievec(sieve_file):
+    logger.info('Compiling sieve script %s', sieve_file)
+    args = ['sievec', '--', sieve_file]
+    completed = subprocess.run(args, capture_output=True)
+    if completed.returncode != 0:
+        logger.critical('Subprocess returned %d', completed.returncode)
+        logger.critical('Stdout: %r', completed.stdout)
+        logger.critical('Stderr: %r', completed.stderr)
+        raise OSError('Sieve compilation failed: ' + sieve_file)
