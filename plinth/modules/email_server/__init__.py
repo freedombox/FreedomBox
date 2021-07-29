@@ -16,7 +16,7 @@ from . import audit
 from . import manifest
 
 version = 1
-managed_packages = ['postfix', 'dovecot-pop3d', 'dovecot-imapd',
+managed_packages = ['postfix-ldap', 'dovecot-pop3d', 'dovecot-imapd',
                     'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved',
                     'rspamd', 'clamav', 'clamav-daemon']
 managed_services = ['postfix', 'dovecot', 'rspamd', 'redis', 'clamav-daemon',
