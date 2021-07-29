@@ -273,3 +273,18 @@ class DomainView(TabMixin, TemplateView):
                 changed[key] = value
         audit.domain.set_keys(changed)
         return self.render_to_response(self.get_context_data())
+
+
+class XmlView(TemplateView):
+    template_name = 'config.xml'
+
+    def render_to_response(self, *args, **kwargs):
+        if 200 <= kwargs.get('status', 200) < 300:
+            kwargs['content_type'] = 'text/xml; charset=utf-8'
+        response = super().render_to_response(*args, **kwargs)
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['host'] = self.request.get_host()
+        return context
