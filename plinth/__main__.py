@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import argparse
-import importlib
 import logging
 import sys
 
@@ -36,8 +35,6 @@ def parse_arguments():
     parser.add_argument(
         '--setup-no-install', default=False, nargs='*',
         help='run setup tasks without installing packages and exit')
-    parser.add_argument('--diagnose', action='store_true', default=False,
-                        help='run diagnostic tests and exit')
     parser.add_argument('--list-dependencies', default=False, nargs='*',
                         help='list package dependencies for essential modules')
     parser.add_argument('--list-modules', default=False, nargs='*',
@@ -82,26 +79,6 @@ def list_modules(modules_type):
             continue
         print('{module_name}'.format(module_name=module_name))
     sys.exit()
-
-
-def run_diagnostics_and_exit():
-    """Run diagostics on all modules and exit."""
-    module = importlib.import_module('plinth.modules.diagnostics.diagnostics')
-    error_code = 0
-    try:
-        module.run_on_all_modules()
-    except Exception as exception:
-        logger.exception('Error running diagnostics - %s', exception)
-        error_code = 2
-
-    for module, results in module.current_results['results'].items():
-        for test, result_value in results:
-            print('{result_value}: {module}: {test}'.format(
-                result_value=result_value, test=test, module=module))
-            if result_value != 'passed':
-                error_code = 1
-
-    sys.exit(error_code)
 
 
 def adapt_config(arguments):
@@ -159,9 +136,6 @@ def main():
 
     if arguments.list_modules is not False:
         list_modules(arguments.list_modules)
-
-    if arguments.diagnose:
-        run_diagnostics_and_exit()
 
     setup.run_setup_in_background()
 
