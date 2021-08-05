@@ -10,6 +10,8 @@ user_attrs = \
   =gid=%{ldap:gidNumber}, \
   =mail=maildir:~/Maildir:LAYOUT=index
 
+# Support user lookup by username
+
 user_filter = (&(objectClass=posixAccount)(uid=%Ln)(!(uidNumber=0)))
 
 # For doveadm

@@ -8,6 +8,8 @@ import re
 import subprocess
 import threading
 
+from . import interproc
+
 lock_name_pattern = re.compile('^[0-9a-zA-Z_-]+$')
 logger = logging.getLogger(__name__)
 
@@ -89,9 +91,7 @@ class Mutex:
 
         completed = subprocess.run(args, capture_output=True)
         if completed.returncode != 0:
-            logger.critical('Subprocess returned %d', completed.returncode)
-            logger.critical('Stdout: %r', completed.stdout)
-            logger.critical('Stderr: %r', completed.stderr)
+            interproc.log_subprocess(completed)
             raise OSError('Could not create ' + self.lock_path)
 
     def _checked_setresuid(self, ruid, euid, suid):

@@ -1,7 +1,6 @@
 """Configure email domains"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-import contextlib
 import io
 import json
 import os
@@ -9,7 +8,6 @@ import re
 import select
 import sys
 import time
-import uuid
 
 from types import SimpleNamespace
 
@@ -18,7 +16,7 @@ from plinth.errors import ActionError
 from plinth.actions import superuser_run
 
 from . import models
-from plinth.modules.email_server import postconf
+from plinth.modules.email_server import interproc, postconf
 
 EXIT_VALIDATION = 40
 
@@ -140,7 +138,7 @@ def clean_mydestination(raw):
 
 
 def su_set_mailname(cleaned):
-    with _atomically_rewrite('/etc/mailname', 'x') as fd:
+    with interproc.atomically_rewrite('/etc/mailname') as fd:
         fd.write(cleaned)
         fd.write('\n')
 
@@ -176,28 +174,3 @@ def _stdin_readline():
         return line.decode('utf8')
     except ValueError as e:
         raise ClientError('UTF-8 decode failed') from e
-
-
-@contextlib.contextmanager
-def _atomically_rewrite(filepath, mode):
-    successful = False
-    tmp = '%s.%s.plinth-tmp' % (filepath, uuid.uuid4().hex)
-    fd = open(tmp, mode)
-
-    try:
-        # Let client write to a temporary file
-        yield fd
-        successful = True
-    finally:
-        fd.close()
-
-    try:
-        if successful:
-            # Invoke rename(2) to atomically replace the original
-            os.rename(tmp, filepath)
-    finally:
-        # Delete temp file
-        try:
-            os.unlink(tmp)
-        except FileNotFoundError:
-            pass

@@ -9,60 +9,39 @@ from django.core.exceptions import ValidationError
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView, View
-from plinth.views import AppView
+from plinth.views import AppView, render_tabs
 
 from . import aliases
 from . import audit
 from . import forms
 
-admin_tabs = [
-    ('', _('Home')),
-    ('my_mail', _('My Mail')),
-    ('my_aliases', _('My Aliases')),
-    ('security', _('Security')),
-    ('domains', _('Domains'))
-]
-
-user_tabs = [
-    ('my_mail', _('Home')),
-    ('my_aliases', _('My Aliases'))
-]
-
 
 class TabMixin(View):
+    admin_tabs = [
+        ('', _('Home')),
+        ('my_mail', _('My Mail')),
+        ('my_aliases', _('My Aliases')),
+        ('security', _('Security')),
+        ('domains', _('Domains'))
+    ]
+
+    user_tabs = [
+        ('my_mail', _('Home')),
+        ('my_aliases', _('My Aliases'))
+    ]
+
     def get_context_data(self, *args, **kwargs):
         # Retrieve context data from the next method in the MRO
         context = super().get_context_data(*args, **kwargs)
         # Populate context with customized data
-        context['tabs'] = self.render_tabs()
+        context['tabs'] = self.render_dynamic_tabs()
         return context
 
-    def render_tabs(self):
+    def render_dynamic_tabs(self):
         if plinth.utils.is_user_admin(self.request):
-            return self.__render_tabs(self.request.path, admin_tabs)
+            return render_tabs(self.request.path, self.admin_tabs)
         else:
-            return self.__render_tabs(self.request.path, user_tabs)
-
-    @staticmethod
-    def __render_tabs(path, tab_data):
-        sb = io.StringIO()
-        sb.write('<ul class="nav nav-tabs">')
-
-        for page_name, link_text in tab_data:
-            cls = 'active' if path.endswith('/' + page_name) else ''
-            href = '#' if cls == 'active' else ('./' + page_name)
-            # -- Begin list
-            sb.write('<li class="nav-item">')
-            # -- Begin link
-            sb.write('<a class="nav-link {}" '.format(cls))
-            sb.write('href="{}">'.format(escape(href)))
-            sb.write('{}</a>'.format(escape(link_text)))
-            # -- End link
-            sb.write('</li>')
-            # -- End list
-
-        sb.write('</ul>')
-        return sb.getvalue()
+            return render_tabs(self.request.path, self.user_tabs)
 
     def render_validation_error(self, validation_error, status=400):
         context = self.get_context_data()
@@ -73,6 +52,14 @@ class TabMixin(View):
         context = self.get_context_data()
         context['error'] = [str(exception)]
         return self.render_to_response(context, status=status)
+
+    def catch_exceptions(self, function, request):
+        try:
+            return function(request)
+        except ValidationError as validation_error:
+            return self.render_validation_error(validation_error)
+        except Exception as error:
+            return self.render_exception(error)
 
     def find_button(self, post):
         key_filter = (k for k in post.keys() if k.startswith('btn_'))
@@ -109,12 +96,7 @@ class MyMailView(TabMixin, TemplateView):
         return context
 
     def post(self, request):
-        try:
-            return self._post(request)
-        except ValidationError as validation_error:
-            return self.render_validation_error(validation_error)
-        except RuntimeError as runtime_error:
-            return self.render_exception(runtime_error)
+        return self.catch_exceptions(self._post, request)
 
     def _post(self, request):
         if 'btn_mkhome' not in request.POST:
@@ -198,12 +180,7 @@ class AliasView(TabMixin, TemplateView):
         return context
 
     def post(self, request):
-        try:
-            return self._post(request)
-        except ValidationError as validation_error:
-            return self.render_validation_error(validation_error)
-        except Exception as exception:
-            return self.render_exception(exception)
+        return self.catch_exceptions(self._post, request)
 
     def _post(self, request):
         form = self.find_form(request.POST)
@@ -257,12 +234,7 @@ class DomainView(TabMixin, TemplateView):
         return context
 
     def post(self, request):
-        try:
-            return self._post(request)
-        except ValidationError as validation_error:
-            return self.render_validation_error(validation_error)
-        except RuntimeError as runtime_error:
-            return self.render_exception(runtime_error)
+        return self.catch_exceptions(self._post, request)
 
     def _post(self, request):
         changed = {}

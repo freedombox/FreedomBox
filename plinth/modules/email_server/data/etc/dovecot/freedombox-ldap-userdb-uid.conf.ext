@@ -11,8 +11,10 @@ user_attrs = \
   =user=%{ldap:uid}, \
   =mail=maildir:~/Maildir:LAYOUT=index
 
+# Support user lookup by UID number
+
 user_filter = \
-  (&(objectClass=posixAccount)(!(uidNumber=0))(uidNumber=%n)(!(uid=%n)))
+  (&(objectClass=posixAccount)(!(uidNumber=0))(uidNumber=%n))
 
 # doveadm -A
 

@@ -10,6 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.actions import superuser_run
 from plinth.errors import ActionError
 
+from plinth.modules.email_server import interproc
+
 logger = logging.getLogger(__name__)
 
 
@@ -65,7 +67,5 @@ def action_mk(arg_type, user_info):
     args.extend(['/bin/sh', '-c', 'mkdir -p ~'])
     completed = subprocess.run(args, capture_output=True)
     if completed.returncode != 0:
-        logger.critical('Subprocess returned %d', completed.returncode)
-        logger.critical('Stdout: %r', completed.stdout)
-        logger.critical('Stderr: %r', completed.stderr)
+        interproc.log_subprocess(completed)
         raise OSError('Could not create home directory')
