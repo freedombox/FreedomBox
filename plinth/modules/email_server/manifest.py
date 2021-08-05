@@ -55,9 +55,12 @@ backup = {
     'data': {
         'directories': [
             '/var/lib/plinth/mailsrv',
+            '/var/spool/postfix/fbx-managed',
             '/etc/postfix',
-            '/etc/dovecot'
+            '/etc/dovecot',
+            '/etc/rspamd',
+            '/var/lib/rspamd',
         ]
     },
-    'services': ['postfix', 'dovecot']
+    'services': ['postfix', 'dovecot', 'rspamd']
 }

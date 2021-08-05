@@ -3,12 +3,13 @@
 
 import glob
 import logging
+import re
 import subprocess
 
 from plinth import actions
 
-import plinth.modules.email_server.postconf as postconf
 from . import models
+from plinth.modules.email_server import interproc, lock, postconf
 
 milter_config = {
     'milter_mail_macros': 'i ' + ' '.join([
@@ -19,9 +20,56 @@ milter_config = {
     # XXX In postconf this field is a list
     'smtpd_milters': 'inet:127.0.0.1:11332',
     # XXX In postconf this field is a list
-    'non_smtpd_milters': 'inet:127.0.0.1:11332'
+    'non_smtpd_milters': 'inet:127.0.0.1:11332',
+    'milter_header_checks': 'regexp:fbx-managed/pre-queue-milter-headers',
+
+    # Last-resort internal header cleanup at smtp client
+    'smtp_header_checks': 'regexp:/etc/postfix/freedombox-internal-cleanup',
+    # Reserved mail transports
+    # XXX This field is a list
+    'transport_maps': 'regexp:/etc/postfix/freedombox-transport-to',
+    # XXX This field is a list
+    'sender_dependent_default_transport_maps': \
+    'regexp:/etc/postfix/freedombox-transport-from',
 }
 
+# FreedomBox egress filtering
+
+egress_filter = postconf.ServiceFlags(
+    service='127.0.0.1:10025', type='inet', private='n', unpriv='-',
+    chroot='y', wakeup='-', maxproc='-', command_args='smtpd'
+)
+
+egress_filter_options = {
+    'syslog_name': 'postfix/fbxout',
+    'cleanup_service_name': 'fbxcleanup',
+    'content_filter': '',
+    'receive_override_options': 'no_unknown_recipient_checks',
+    'smtpd_helo_restrictions': '',
+    'smtpd_client_restrictions': '',
+    'smtpd_relay_restrictions': '',
+    'smtpd_recipient_restrictions': 'permit_mynetworks,reject',
+    'mynetworks': '127.0.0.0/8,[::1]/128'
+}
+
+egress_filter_cleanup = postconf.ServiceFlags(
+    service='fbxcleanup', type='unix', private='n', unpriv='-',
+    chroot='y', wakeup='-', maxproc='0', command_args='cleanup'
+)
+
+egress_filter_cleanup_options = {
+    'syslog_name': 'postfix/fbxout',
+    'header_checks': 'regexp:/etc/postfix/freedombox-header-cleanup',
+    'nested_header_checks': ''
+}
+
+# Rspamd config
+
+rspamd_boundary = re.compile('#[ ]*--[ ]*([A-Z]{3,5})[ ]+FREEDOMBOX CONFIG$')
+rspamd_header = '#-- BEGIN FREEDOMBOX CONFIG\n'
+rspamd_footer = '#-- END FREEDOMBOX CONFIG\n'
+
+rspamd_mutex = lock.Mutex('rspamd-config')
 logger = logging.getLogger(__name__)
 
 
@@ -37,7 +85,7 @@ def repair():
 
 
 def check_filter():
-    diagnosis = models.MainCfDiagnosis('Postfix milter')
+    diagnosis = models.MainCfDiagnosis('Inbound and outbound mail filters')
     current = postconf.get_many_unsafe(milter_config.keys())
     diagnosis.compare_and_advise(current=current, default=milter_config)
     return diagnosis
@@ -50,9 +98,69 @@ def fix_filter(diagnosis):
 
 
 def action_set_filter():
+    _compile_sieve()
+    postconf.set_master_cf_options(egress_filter, egress_filter_options)
+    postconf.set_master_cf_options(egress_filter_cleanup,
+                                   egress_filter_cleanup_options)
+
     with postconf.mutex.lock_all():
         fix_filter(check_filter())
-    _compile_sieve()
+
+    with rspamd_mutex.lock_all():
+        # XXX Maybe use globbing?
+        _inject_rspamd_config('override', 'options.inc')
+        _inject_rspamd_config('local', 'milter_headers.conf')
+
+
+def _inject_rspamd_config(type, name):
+    template_path = '/etc/plinth/rspamd-config/%s_%s' % (type, name)
+    config_path = '/etc/rspamd/%s.d/%s' % (type, name)
+
+    logger.info('Opening Rspamd config file %s', config_path)
+
+    template = None
+    config = None
+    try:
+        template = open(template_path, 'r')
+        config = open(config_path, 'a+')
+        with interproc.atomically_rewrite(config_path) as scratch:
+            config.seek(0)
+            inject_rspamd_config3(template, config, scratch)
+    finally:
+        if config is not None:
+            config.close()
+        if template is not None:
+            template.close()
+
+
+def inject_rspamd_config3(template, config, scratch):
+    """Write modified rspamd config to the `scratch` stream"""
+    # Copy the original up to the config header line
+    for line in config:
+        match = rspamd_boundary.match(line.strip())
+        if match and match.group(1) == 'BEGIN':
+            break
+        scratch.write(line)
+        if not line.endswith('\n'):  # in case no new line was at the eof
+            scratch.write('\n')
+
+    # Inject template data
+    scratch.write(rspamd_header)
+    for line in template:
+        scratch.write(line)
+        if not line.endswith('\n'):  # in case no new line was at the eof
+            scratch.write('\n')
+    scratch.write(rspamd_footer)
+
+    # Find the config trailer line
+    for line in config:
+        match = rspamd_boundary.match(line.strip())
+        if match and match.group(1) == 'END':
+            break
+
+    # Copy the original
+    for line in config:
+        scratch.write(line)  # keep original file ending style
 
 
 def _compile_sieve():
@@ -66,7 +174,5 @@ def _run_sievec(sieve_file):
     args = ['sievec', '--', sieve_file]
     completed = subprocess.run(args, capture_output=True)
     if completed.returncode != 0:
-        logger.critical('Subprocess returned %d', completed.returncode)
-        logger.critical('Stdout: %r', completed.stdout)
-        logger.critical('Stderr: %r', completed.stderr)
+        interproc.log_subprocess(completed)
         raise OSError('Sieve compilation failed: ' + sieve_file)
