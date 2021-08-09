@@ -6,6 +6,7 @@ import json
 import os
 import re
 import select
+import subprocess
 import sys
 import time
 
@@ -110,6 +111,15 @@ def _action_set_keys():
         if key.startswith('_'):
             set_function = globals()['su_set' + key]
             set_function(value)
+
+    # Important: reload postfix after acquiring lock
+    with postconf.mutex.lock_all():
+        # systemctl reload postfix
+        args = ['systemctl', 'reload', 'postfix']
+        completed = subprocess.run(args, capture_output=True)
+        if completed.returncode != 0:
+            interproc.log_subprocess(completed)
+            raise OSError('Could not reload postfix')
 
 
 def clean_mailname(mailname):
