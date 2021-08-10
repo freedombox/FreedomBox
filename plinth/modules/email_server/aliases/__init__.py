@@ -125,7 +125,8 @@ def schedule_hash_update():
                 alias = models.Alias(**row)
                 key = alias.email_name.encode('ascii') + b'\0'
                 if alias.enabled:
-                    value = str(alias.uid_number).encode('ascii') + b'\0'
+                    value = str(alias.uid_number).encode('ascii')
+                    value +=  b'@localhost\0'
                 else:
                     value = b'/dev/null\0'
                 db[key] = value
