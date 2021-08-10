@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path('apps/email_server/', views.EmailServerView.as_view(), name='index'),
-    path('apps/email_server/security', views.TLSView.as_view()),
+    path('apps/email_server/email_security', views.TLSView.as_view()),
     path('apps/email_server/domains', views.DomainView.as_view()),
 
     path('apps/email_server/my_mail',

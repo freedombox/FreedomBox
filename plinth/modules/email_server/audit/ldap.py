@@ -102,11 +102,8 @@ def action_set_sasl():
 
 def action_set_submission():
     """Handles email_server -i ldap set_submission"""
-    logger.info('Set postfix service: %r', default_submission_options)
     postconf.set_master_cf_options(service_flags=submission_flags,
                                    options=default_submission_options)
-
-    logger.info('Set postfix service: %r', default_smtps_options)
     postconf.set_master_cf_options(service_flags=smtps_flags,
                                    options=default_smtps_options)
 
@@ -139,7 +136,7 @@ def fix_alias_maps(diagnosis):
         for i in range(len(analysis.parsed)):
             if analysis.parsed[i] in (BEFORE_ALIASES, AFTER_ALIASES):
                 analysis.parsed[i] = ''
-        # Does hash:/etc/aliases exist?
+        # Does hash:/etc/aliases exist in list?
         if analysis.isystem >= 0:
             # Put the maps around hash:/etc/aliases
             val = '%s %s %s' % (BEFORE_ALIASES, ETC_ALIASES, AFTER_ALIASES)

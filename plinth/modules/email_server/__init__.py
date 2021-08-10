@@ -16,26 +16,51 @@ from . import audit
 from . import manifest
 
 version = 1
-managed_packages = ['postfix-ldap', 'dovecot-pop3d', 'dovecot-imapd',
-                    'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved',
-                    'rspamd', 'clamav', 'clamav-daemon']
-managed_services = ['postfix', 'dovecot', 'rspamd', 'redis', 'clamav-daemon',
-                    'clamav-freshclam']
+
+packages = [
+    'postfix-ldap', 'dovecot-pop3d', 'dovecot-imapd',
+    'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved',
+]
+
+packages_bloat = ['rspamd']
+
+clamav_packages = ['clamav', 'clamav-daemon']
+clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
+
+port_info = {
+    'postfix': ('smtp', 25, 'smtps', 465, 'smtp-submission', 587),
+    'dovecot': ('imaps', 993, 'pop3s', 995),
+}
+
+managed_services = ['postfix', 'dovecot', 'rspamd']
+
+managed_packages = packages + packages_bloat
 app = None
 
 
 class EmailServerApp(plinth.app.App):
     """FreedomBox email server app"""
     app_id = 'email_server'
+    app_name = _('Email Server')
 
     def __init__(self):
         """The app's constructor"""
         super().__init__()
+        self._add_ui_components()
+        self._add_daemons()
+        self._add_firewall_ports()
 
+        # /rspamd location
+        webserver = Webserver('webserver-email',  # unique id
+                              'email-server-freedombox',  # config file name
+                              urls=['https://{host}/rspamd'])
+        self.add(webserver)
+
+    def _add_ui_components(self):
         info = plinth.app.Info(
             app_id=self.app_id,
             version=version,
-            name=_('Email Server'),
+            name=self.app_name,
             short_description=_('Powered by Postfix, Dovecot & Rspamd'),
             manual_page='EmailServer',
             clients=manifest.clients,
@@ -53,11 +78,6 @@ class EmailServerApp(plinth.app.App):
         )
         self.add(menu_item)
 
-        # /rspamd location
-        webserver = Webserver('webserver-email', 'email-server-freedombox',
-                              urls=['https://{host}/rspamd'])
-        self.add(webserver)
-
         shortcut = plinth.frontpage.Shortcut(
             'shortcut_' + self.app_id,
             name=info.name,
@@ -69,30 +89,28 @@ class EmailServerApp(plinth.app.App):
         )
         self.add(shortcut)
 
-        postfix_ports = []
-        dovecot_ports = []
-        all_firewalld_ports = []
-        for port in (25, 465, 587):
-            postfix_ports.extend([(port, 'tcp4'), (port, 'tcp6')])
-        for port in (993, 995):
-            dovecot_ports.extend([(port, 'tcp4'), (port, 'tcp6')])
-        all_firewalld_ports.extend(['smtp', 'smtps', 'smtp-submission'])
-        all_firewalld_ports.extend(['pop3s', 'imaps'])
-
-        # Manage daemons
-        postfixd = plinth.daemon.Daemon('daemon-postfix', 'postfix',
-                                        listen_ports=postfix_ports)
-        dovecotd = plinth.daemon.Daemon('daemon-dovecot', 'dovecot',
-                                        listen_ports=dovecot_ports)
-        self.add(postfixd)
-        self.add(dovecotd)
-        for name in ('rspamd', 'redis', 'clamav-daemon', 'clamav-freshclam'):
-            daemon = plinth.daemon.Daemon('daemon-' + name, name)
+    def _add_daemons(self):
+        for srvname in managed_services:
+            # Construct `listen_ports` parameter for the daemon
+            mixed = port_info.get(srvname, ())
+            port_numbers = [v for v in mixed if isinstance(v, int)]
+            listen = []
+            for n in port_numbers:
+                listen.append((n, 'tcp4'))
+                listen.append((n, 'tcp6'))
+            # Add daemon
+            daemon = plinth.daemon.Daemon('daemon-' + srvname, srvname,
+                                          listen_ports=listen)
             self.add(daemon)
 
-        # Ports
-        firewall = Firewall('firewall-email', info.name,
-                            ports=all_firewalld_ports, is_external=True)
+    def _add_firewall_ports(self):
+        all_port_names = []
+        for mixed in port_info.values():
+            port_names = [v for v in mixed if isinstance(v, str)]
+            all_port_names.extend(port_names)
+
+        firewall = Firewall('firewall-email', self.app_name,
+                            ports=all_port_names, is_external=True)
         self.add(firewall)
 
     def diagnose(self):
@@ -106,9 +124,11 @@ class EmailServerApp(plinth.app.App):
 
 def setup(helper, old_version=None):
     """Installs and configures module"""
-    helper.install(managed_packages)
+    helper.install(packages)
+    helper.install(packages_bloat, skip_recommends=True)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
+    for srvname in managed_services:
+        actions.superuser_run('service', ['reload', srvname])
+    # Final step: expose service daemons to public internet
     helper.call('post', app.enable)
-    for service_name in managed_services:
-        actions.superuser_run('service', ['reload', service_name])

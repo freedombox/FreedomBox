@@ -21,7 +21,7 @@ class TabMixin(View):
         ('', _('Home')),
         ('my_mail', _('My Mail')),
         ('my_aliases', _('My Aliases')),
-        ('security', _('Security')),
+        ('email_security', _('Security')),
         ('domains', _('Domains'))
     ]
 
@@ -218,7 +218,7 @@ class AliasView(TabMixin, TemplateView):
 
 
 class TLSView(TabMixin, TemplateView):
-    template_name = 'security.html'
+    template_name = 'email_security.html'
 
 
 class DomainView(TabMixin, TemplateView):

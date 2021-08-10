@@ -1,15 +1,20 @@
 """Postconf wrapper providing thread-safe operations"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-import dataclasses
+import logging
 import re
 import subprocess
+from dataclasses import dataclass
+from typing import ClassVar
+
+from . import interproc
 from .lock import Mutex
 
+logger = logging.getLogger(__name__)
 mutex = Mutex('email-postconf')
 
 
-@dataclasses.dataclass
+@dataclass
 class ServiceFlags:
     service: str
     type: str
@@ -20,10 +25,31 @@ class ServiceFlags:
     maxproc: str
     command_args: str
 
+    crash_handler: ClassVar[str] = '/dev/null/plinth-crash'
+
+    def _get_flags_ordered(self):
+        return [self.service, self.type, self.private, self.unpriv,
+                self.chroot, self.wakeup, self.maxproc, self.command_args]
+
     def serialize(self) -> str:
-        return ' '.join([self.service, self.type, self.private, self.unpriv,
-                         self.chroot, self.wakeup, self.maxproc,
-                         self.command_args])
+        ordered = self._get_flags_ordered()
+        return ' '.join(ordered)
+
+    def serialize_temp(self) -> str:
+        ordered = self._get_flags_ordered()
+        ordered[-1] = self.crash_handler
+        return ' '.join(ordered)
+
+    def try_remove_crash_handler(self, line) -> str:
+        pattern = re.compile('([^ \\t]+)[ \\t]+([a-z]+)[ \\t]+')
+        match = pattern.match(line)
+        if match is None:
+            return None
+        if match.group(1) != self.service or match.group(2) != self.type:
+            return None
+        if not line.rstrip().endswith(self.crash_handler):
+            return None
+        return line.replace(self.crash_handler, self.command_args)
 
 
 def get_many(key_list):
@@ -52,9 +78,16 @@ def set_many(kv_map):
         set_many_unsafe(kv_map)
 
 
-def set_many_unsafe(kv_map):
+def set_many_unsafe(kv_map, flag=''):
+    args = ['/sbin/postconf']
+
+    if not kv_map:
+        return
+    if flag:
+        args.append(flag)
     for key, value in kv_map.items():
-        set_unsafe(key, value)
+        args.append('{}={}'.format(key, value))
+    _run(args)
 
 
 def set_master_cf_options(service_flags, options={}):
@@ -65,15 +98,19 @@ def set_master_cf_options(service_flags, options={}):
         validate_key(key)
         validate_value(value)
 
-    service_slash_type = service_flags.service + '/' + service_flags.type
-    flag_string = service_flags.serialize()
+    service_key = service_flags.service + '/' + service_flags.type
+    long_opts = {service_key + '/' + k: v for (k, v) in options.items()}
 
+    logger.info('Setting %s service: %r', service_flags.service, options)
+
+    # Crash resistant config setting:
+    # /sbin/postconf -M "service/type=<temp flag string>"
+    # /sbin/postconf -P "service/type/k=v" ...
+    # Delete placeholder string /dev/null/plinth-crash
     with mutex.lock_all():
-        # /sbin/postconf -M "service/type=flag_string"
-        set_unsafe(service_slash_type, flag_string, '-M')
-        for short_key, value in options.items():
-            # /sbin/postconf -P "service/type/short_key=value"
-            set_unsafe(service_slash_type + '/' + short_key, value, '-P')
+        set_unsafe(service_key, service_flags.serialize_temp(), '-M')
+        set_many_unsafe(long_opts, '-P')
+        _master_remove_crash_handler(service_flags)
 
 
 def get_unsafe(key):
@@ -120,6 +157,14 @@ def _run(args):
         raise RuntimeError('Subprocess failed') from subprocess_error
     except UnicodeDecodeError as unicode_error:
         raise RuntimeError('Unicode decoding failed') from unicode_error
+
+
+def _master_remove_crash_handler(service_flags):
+    with interproc.atomically_rewrite('/etc/postfix/master.cf') as writer:
+        with open('/etc/postfix/master.cf') as reader:
+            for line in reader:
+                cleaned = service_flags.try_remove_crash_handler(line)
+                writer.write(line if cleaned is None else cleaned)
 
 
 def validate_key(key):
