@@ -1,6 +1,8 @@
 """FreedomBox email server app"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import logging
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -10,7 +12,9 @@ import plinth.frontpage
 import plinth.menu
 from plinth import actions
 from plinth.modules.apache.components import Webserver
+from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.letsencrypt.components import LetsEncrypt
 
 from . import audit
 from . import manifest
@@ -36,6 +40,7 @@ managed_services = ['postfix', 'dovecot', 'rspamd']
 
 managed_packages = packages + packages_bloat
 app = None
+logger = logging.getLogger(__name__)
 
 
 class EmailServerApp(plinth.app.App):
@@ -55,6 +60,18 @@ class EmailServerApp(plinth.app.App):
                               'email-server-freedombox',  # config file name
                               urls=['https://{host}/rspamd'])
         self.add(webserver)
+
+        # Let's Encrypt event hook
+        default_domain = get_domainname()
+        domains = [default_domain] if default_domain else []
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-email-server', domains=domains,
+            daemons=['postfix', 'dovecot'], should_copy_certificates=False,
+            managing_app='email_server')
+        self.add(letsencrypt)
+
+        if not domains:
+            logger.warning('Could not fetch the FreedomBox domain name!')
 
     def _add_ui_components(self):
         info = plinth.app.Info(
@@ -119,6 +136,7 @@ class EmailServerApp(plinth.app.App):
         results.extend([r.summarize() for r in audit.domain.get()])
         results.extend([r.summarize() for r in audit.ldap.get()])
         results.extend([r.summarize() for r in audit.spam.get()])
+        results.extend([r.summarize() for r in audit.tls.get()])
         return results
 
 
@@ -128,6 +146,7 @@ def setup(helper, old_version=None):
     helper.install(packages_bloat, skip_recommends=True)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
+    helper.call('post', audit.tls.repair)
     for srvname in managed_services:
         actions.superuser_run('service', ['reload', srvname])
     # Final step: expose service daemons to public internet

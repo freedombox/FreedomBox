@@ -126,7 +126,7 @@ def schedule_hash_update():
                 key = alias.email_name.encode('ascii') + b'\0'
                 if alias.enabled:
                     value = str(alias.uid_number).encode('ascii')
-                    value +=  b'@localhost\0'
+                    value += b'@localhost\0'
                 else:
                     value = b'/dev/null\0'
                 db[key] = value

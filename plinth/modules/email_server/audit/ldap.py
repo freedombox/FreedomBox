@@ -15,7 +15,11 @@ default_config = {
     'smtpd_sasl_type': 'dovecot',
     'smtpd_sasl_path': 'private/auth',
     'mailbox_transport': 'lmtp:unix:private/dovecot-lmtp',
-    'virtual_transport': 'lmtp:unix:private/dovecot-lmtp'
+    'virtual_transport': 'lmtp:unix:private/dovecot-lmtp',
+
+    'smtpd_relay_restrictions': ','.join([
+        'permit_sasl_authenticated', 'defer_unauth_destination',
+    ])
 }
 
 submission_flags = postconf.ServiceFlags(

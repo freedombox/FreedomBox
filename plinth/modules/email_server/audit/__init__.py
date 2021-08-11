@@ -7,5 +7,6 @@ from . import domain
 from . import home
 from . import ldap
 from . import spam
+from . import tls
 
-__all__ = ['domain', 'home', 'ldap', 'spam']
+__all__ = ['domain', 'home', 'ldap', 'spam', 'tls']
