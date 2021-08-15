@@ -21,7 +21,7 @@ class TabMixin(View):
         ('', _('Home')),
         ('my_mail', _('My Mail')),
         ('my_aliases', _('My Aliases')),
-        ('email_security', _('Security')),
+        ('security', _('Security')),
         ('domains', _('Domains'))
     ]
 
@@ -163,7 +163,7 @@ class AliasView(TabMixin, TemplateView):
                 self.cleaned_data['alias'] = lst
                 return True
 
-    template_name = 'alias.html'
+    template_name = 'email_alias.html'
     form_classes = (forms.AliasCreationForm, Checkboxes)
 
     def get_context_data(self, *args, **kwargs):
@@ -222,7 +222,7 @@ class TLSView(TabMixin, TemplateView):
 
 
 class DomainView(TabMixin, TemplateView):
-    template_name = 'domains.html'
+    template_name = 'email_domains.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -248,12 +248,12 @@ class DomainView(TabMixin, TemplateView):
 
 
 class XmlView(TemplateView):
-    template_name = 'config.xml'
+    template_name = 'email_autoconfig.xml'
 
     def render_to_response(self, *args, **kwargs):
-        if 200 <= kwargs.get('status', 200) < 300:
-            kwargs['content_type'] = 'text/xml; charset=utf-8'
+        kwargs['content_type'] = 'text/xml; charset=utf-8'
         response = super().render_to_response(*args, **kwargs)
+        response['X-Robots-Tag'] = 'noindex, nofollow, noarchive'
         return response
 
     def get_context_data(self, **kwargs):

@@ -86,15 +86,12 @@ def repair():
 
 def check_filter():
     diagnosis = models.MainCfDiagnosis('Inbound and outbound mail filters')
-    current = postconf.get_many_unsafe(milter_config.keys())
-    diagnosis.compare_and_advise(current=current, default=milter_config)
+    diagnosis.compare(milter_config, postconf.get_many_unsafe)
     return diagnosis
 
 
 def fix_filter(diagnosis):
-    diagnosis.assert_resolved()
-    logger.info('Setting postconf: %r', diagnosis.advice)
-    postconf.set_many_unsafe(diagnosis.advice)
+    diagnosis.apply_changes(postconf.set_many_unsafe)
 
 
 def action_set_filter():

@@ -87,15 +87,12 @@ def action_set_up():
 
 def check_sasl():
     diagnosis = models.MainCfDiagnosis('Postfix-Dovecot SASL integration')
-    current = postconf.get_many_unsafe(default_config.keys())
-    diagnosis.compare_and_advise(current=current, default=default_config)
+    diagnosis.compare(default_config, postconf.get_many_unsafe)
     return diagnosis
 
 
 def fix_sasl(diagnosis):
-    diagnosis.assert_resolved()
-    logger.info('Setting postconf: %r', diagnosis.advice)
-    postconf.set_many_unsafe(diagnosis.advice)
+    diagnosis.apply_changes(postconf.set_many_unsafe)
 
 
 def action_set_sasl():
@@ -133,29 +130,26 @@ def check_alias_maps():
 
 
 def fix_alias_maps(diagnosis):
-    unresolved_issues = list(diagnosis.unresolved_issues())
-    if 'alias_maps' in unresolved_issues:
-        analysis = diagnosis.user['alias_maps']
-        # Delete *all* references to BEFORE_ALIASES and AFTER_ALIASES
-        for i in range(len(analysis.parsed)):
-            if analysis.parsed[i] in (BEFORE_ALIASES, AFTER_ALIASES):
-                analysis.parsed[i] = ''
-        # Does hash:/etc/aliases exist in list?
-        if analysis.isystem >= 0:
-            # Put the maps around hash:/etc/aliases
-            val = '%s %s %s' % (BEFORE_ALIASES, ETC_ALIASES, AFTER_ALIASES)
-            analysis.parsed[analysis.isystem] = val
-        else:
-            # To the end
-            analysis.parsed.append(BEFORE_ALIASES)
-            analysis.parsed.append(AFTER_ALIASES)
-        # List -> string
-        fixed = ' '.join(filter(None, analysis.parsed))
-        diagnosis.advice['alias_maps'] = fixed
+    diagnosis.repair('alias_maps', rearrange_alias_maps)
+    diagnosis.apply_changes(postconf.set_many_unsafe)
 
-    diagnosis.assert_resolved()
-    logging.info('Setting postfix config: %r', diagnosis.advice)
-    postconf.set_many_unsafe(diagnosis.advice)
+
+def rearrange_alias_maps(analysis):
+    # Delete *all* references to BEFORE_ALIASES and AFTER_ALIASES
+    for i in range(len(analysis.parsed)):
+        if analysis.parsed[i] in (BEFORE_ALIASES, AFTER_ALIASES):
+            analysis.parsed[i] = ''
+    # Does hash:/etc/aliases exist in list?
+    if analysis.isystem >= 0:
+        # Put the maps around hash:/etc/aliases
+        val = '%s %s %s' % (BEFORE_ALIASES, ETC_ALIASES, AFTER_ALIASES)
+        analysis.parsed[analysis.isystem] = val
+    else:
+        # To the end
+        analysis.parsed.append(BEFORE_ALIASES)
+        analysis.parsed.append(AFTER_ALIASES)
+    # List -> string
+    return ' '.join(filter(None, analysis.parsed))
 
 
 def check_local_recipient_maps():
@@ -180,9 +174,7 @@ def check_local_recipient_maps():
 
 
 def fix_local_recipient_maps(diagnosis):
-    diagnosis.assert_resolved()
-    logging.info('Setting postfix config: %r', diagnosis.advice)
-    postconf.set_many_unsafe(diagnosis.advice)
+    diagnosis.apply_changes(postconf.set_many_unsafe)
 
 
 def action_set_ulookup():

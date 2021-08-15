@@ -76,15 +76,12 @@ def repair():
 
 def check_tls():
     diagnosis = models.MainCfDiagnosis('Postfix TLS')
-    current = postconf.get_many_unsafe(list(postfix_config.keys()))
-    diagnosis.compare_and_advise(current=current, default=postfix_config)
+    diagnosis.compare(postfix_config, postconf.get_many_unsafe)
     return diagnosis
 
 
 def repair_tls(diagnosis):
-    diagnosis.assert_resolved()
-    logger.info('Setting postconf: %r', diagnosis.advice)
-    postconf.set_many_unsafe(diagnosis.advice)
+    diagnosis.apply_changes(postconf.set_many_unsafe)
 
 
 def try_set_up_certificates():
