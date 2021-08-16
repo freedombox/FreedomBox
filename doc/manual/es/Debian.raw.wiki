@@ -10,7 +10,7 @@
 
 !FreedomBox is a [[DebianPureBlends|pure blend]] of Debian.  This means that all the work on !FreedomBox is available in Debian as packages.  It also means that any machine running Debian can be turned into a !FreedomBox.
 
-This page describes the process of installing !FreedomBox on a Debian system. Currently, !FreedomBox works in Debian Stable (Buster), Testing (Bullseye), and Unstable (Sid).
+This page describes the process of installing !FreedomBox on a Debian system. Currently, !FreedomBox works in Debian Stable (Bullseye), Testing (Bookworm), and Unstable (Sid).
 
 '''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this approach.
 
@@ -26,11 +26,11 @@ Installing !FreedomBox changes your Debian system in many important ways.  This 
 After !FreedomBox is fully setup, your system will no longer allow users not belonging to the ''admin'' group to log in to the system via console, secure shell (SSH) or graphical login. This behaviour can be disabled from the [[FreedomBox/Manual/Security|Security]] page. Use the administrator account created during !FreedomBox first boot for console logins and add further user accounts to ''admin'' group, if necessary.
 }}}
 
-=== Installing on Debian 10.0 (Buster) or newer ===
+=== Installing on Debian 11 (Bullseye) or newer ===
 
 Check the Troubleshooting section below, for any tips or workarounds that might help during the install.
 
- 1. [[InstallingDebianOn|Install Debian]] 10.0 (Buster), or Unstable (Sid) on your hardware.
+ 1. [[InstallingDebianOn|Install Debian]] 11 (Bullseye), or Unstable (Sid) on your hardware.
 
  1. Update your package list.
 
@@ -59,7 +59,7 @@ auto lo
 iface lo inet loopback
 }}}
 
- If you have already completed the setup process without doing this step, you will need to clear out the `/etc/network/interfaces` file keeping only the above lines.  Then perform a reboot.  On Debian 9 (Stretch), after this network connections configured by the `setup` step above will configure your network.  Network interfaces will then be in the `internal` or `external` firewall zone.  This is essential for the !FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the `nmtui` command if you wish. 
+ If you have already completed the setup process without doing this step, you will need to clear out the `/etc/network/interfaces` file keeping only the above lines.  Then perform a reboot.  Network interfaces will then be in the `internal` or `external` firewall zone.  This is essential for the !FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the `nmtui` command if you wish. 
 
  1. !FreedomBox will use an automatically configured IP address by default. You can assign a static IP address if necessary. Network configuration changes can be done using !FreedomBox web interface or by using the `nmtui` or `nmcli` commands. `nmcli` can be used as follows:
 

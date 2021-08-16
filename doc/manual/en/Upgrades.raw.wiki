@@ -55,13 +55,37 @@ Password: <enter user password here>
 # apt update
 }}}
 
-If `apt-get update` asks for a confirmation to change ''Codename'' or other release information, confirm ''yes''. If during update of ''freedombox'' package, if a question about overwriting configuration files is asked, answer to install new configuration files from the latest version of the package. This process will upgrade only packages that don't require configuration file questions (except for ''freedombox'' package). After this, let !FreedomBox handle the upgrade of remaining packages. Be patient while new releases of !FreedomBox are made to handle packages that require manual intervention.
+If `apt update` asks for a confirmation to change ''Codename'' or other release information, confirm ''yes''. If during update of ''freedombox'' package, if a question about overwriting configuration files is asked, answer to install new configuration files from the latest version of the package. This process will upgrade only packages that don't require configuration file questions (except for ''freedombox'' package). After this, let !FreedomBox handle the upgrade of remaining packages. Be patient while new releases of !FreedomBox are made to handle packages that require manual intervention.
 
 If you want to go beyond the recommendation to upgrade all the packages on your !FreedomBox and if you are really sure about handling the configuration changes for packages yourself, run the following command:
 
 {{{
-$ apt dist-upgrade
+$ apt full-upgrade
 }}}
+
+=== Auto-Update to Next Stable Release ===
+
+!FreedomBox can automatically update itself when there is a new stable release of Debian. This update feature is recommended, and enabled by default for stable systems. Note that it also requires "Enable auto-update" to be enabled, and that there is 5 GB free space on the root partition.
+
+In some special cases, such as advanced customization made to the system, the automatic update could fail. If you wish, you can disable it on the System -> Update page, by clearing the “Enable auto-update to next stable release” checkbox.
+
+If you decide to stay on an older release, you should check DebianReleases#Production_Releases to see how long it will be supported by Debian security team. Note that older releases will not have new versions of !FreedomBox, even through backports.
+
+=== Manual Update to Next Stable Release ===
+
+Auto-update is recommended for most users. However if you want to do the update manually, here are some tips:
+
+General:
+ * Create a system snapshot before you begin.
+ * Consider placing a temporary hold (using `apt-mark`) on the freedombox package, to prevent its removal when other packages are being updated. Remember to remove the hold later, so that `freedombox` package can be updated.
+
+Updating from Debian 10 (Buster) to Debian 11 (Bullseye):
+ * If Searx is installed, after the package is updated, you will need to update its list of search engines.
+ * You may need to configure `grub-pc` package (using `dpkg-reconfigure`) so that it does not require to install `grub` again.
+ * You may need to remove the obsolete package `libgcc1`.
+ * Consider placing temporary holds on the following packages, and let !FreedomBox handle updating them later:
+   * `firewalld`, `mumble-server`, `radicale`, `roundcube-core`, `tt-rss`
+
 
 ## END_INCLUDE
 

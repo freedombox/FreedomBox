@@ -43,14 +43,38 @@ Password: <introduce la contraseña aquí>
 # apt update
 }}}
 
-Si `apt-get update` te pide confirmación para algo responde que ''Sí''. Si durante la actualización del paquete `freedombox` te pregunta acerca de los archivos de configuración responde que instale los archivos de configuración nuevos que vienen con la última versión del paquete. Este proceso solo actualizará los paquetes que no necesitan preguntar (excepto el paquete `freedombox`). Después, deja que !FreedomBox se encargue de la actualización de los demás paquetes. Sé paciente mientras se crean nuevas versiones de !FreedomBox para tratar los paquetes que necesitan intervención manual.
+Si `apt update` te pide confirmación para algo responde que ''Sí''. Si durante la actualización del paquete `freedombox` te pregunta acerca de los archivos de configuración responde que instale los archivos de configuración nuevos que vienen con la última versión del paquete. Este proceso solo actualizará los paquetes que no necesitan preguntar (excepto el paquete `freedombox`). Después, deja que !FreedomBox se encargue de la actualización de los demás paquetes. Sé paciente mientras se crean nuevas versiones de !FreedomBox para tratar los paquetes que necesitan intervención manual.
 
 Si quieres ir más allá de la recomendación e instalar todos los paquetes en tu !FreedomBox y realmente estás muy seguro de poder tratar los cambios de configuración de paquetes por tí mismo, ejecuta el siguiente comando:
 
 
 {{{
-$ apt dist-upgrade
+$ apt full-upgrade
 }}}
+
+
+=== Autoactualización a la próxima publicación estable ===
+
+!FreedomBox puede actualizarse automaticamente cuando se publica una nueva versión estable de Debian. Esta funcionalidad de actualización se recomienda y viene activada por omisión para sistemas estables. Nótese que se requiere activar la autoactualización y que haya 5 GB de espacio libre en la partición raíz.
+
+En algunos casos especiales como en los que se haya efectuado una personalización del sistema avanzada la actualización automática podría fallar. Si quieres puedes desactivarla en la página ''Sistema'' -> ''Actualización'' vaciando la caja “Activar autoactualización a la próxima publicación estable”.
+
+Si decides permanecer en una publicación anterior deberías mirar DebianReleases#Production_Releases para ver cuánto tiempo va a soportarla el equipo de seguridad de Debian. Ten en cuenta que las publicaciones antiguas no tendrán nuevas versiones de !FreedomBox, ni siquiera mediante ''backports''.
+
+=== Actualización manual a la próxima publicación estable ===
+
+Para la mayoría de los usuarios se recomienda la autoactualización. Si no obstante quieres realizar la actualización manualmente aquí tienes algunos consejos:
+
+General:
+ * Toma una instantánea del sistema antes de empezar.
+ * Considera retener provisionalmente el paquete `freedombox` (mediante `apt-mark`) para evitar que se elimine al actualizar otros paquetes. Recuerda quitar la retención cuando termines para que se pueda actualizar el paquete `freedombox`.
+
+Actualizar desde Debian 10 (Buster) a Debian 11 (Bullseye):
+ * Si Searx está instalado, tras su actualización tendrás que actualizar su lista de motores de búsqueda.
+ * Quizá tengas que configurar el paquete `grub-pc` (mediante `dpkg-reconfigure`) para que no requiera reinstalar grub.
+ * Quizá tengas que eliminar el paquete obsoleto `libgcc1`.
+ * Considera retener provisionalmente los siguientes paquetes y dejar que !FreedomBox se encargue luego de actualizarlos:
+   * `firewalld`, `mumble-server`, `radicale`, `roundcube-core`, `tt-rss`
 
 
 ## END_INCLUDE

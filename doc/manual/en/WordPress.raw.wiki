@@ -1,0 +1,85 @@
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/WordPress|English]] - [[es/FreedomBox/Manual/WordPress|Español]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== WordPress (Website and Blog) ==
+||<tablestyle="float: right;"> {{attachment:WordPress-icon_en_V01.png|WordPress icon}} ||
+
+'''Available since''': version 21.7
+
+=== What is WordPress? ===
+!WordPress is a popular way to create and manage websites and blogs. It is a content management system that allows editing content using a visual web-based interface. No knowledge of HTML or other markup is needed to create websites. Complete layout and functionality of the web pages can be customized. Appearance can be chosen using themes. Administration interface and produced web pages are suitable for mobile devices.
+
+{{attachment:wordpress-site.png|A Simple Site}}
+
+{{attachment:wordpress-edit.png|Content Editing Interface}}
+
+{{attachment:wordpress-admin.png|Administration Interface}}
+
+=== Setting up WordPress on FreedomBox ===
+
+To setup !WordPress, navigate to the !WordPress (Website and Blog) page and install it. !WordPress needs a valid domain name to be configured. Before proceeding further, setup a proper domain name. Domains are configured using [[FreedomBox/Manual/Configure|System -> Configure]] page. Access your !FreedomBox web interface using the domain you have configured. After this, visit the !WordPress web interface. This will show a setup page asking for the name of the site and details for a new administrator account. After this step, !WordPress is fully configured and ready. You can then return to the !FreedomBox's !WordPress app page and optionally make the !WordPress installation available to public.
+
+{{attachment:wordpress-setup.png|Initial Setup Page}}
+
+=== Public Access ===
+
+In the !WordPress app page in !FreedomBox, the app can be made publicly available. It is, by default, not publicly available. It is only available to users who login as administrators in !FreedomBox interface. This is to protect the initial setup process from becoming publicly available. If the setup process is publicly available, any visitor will be able to create themselves an administrator account which is undesirable. Administrators must take care not to enable public access until !WordPress' setup process has been completed.
+
+=== Users ===
+
+At the moment, !WordPress has its own user accounts that are unrelated to !FreedomBox accounts. The first account created during the setup process is an administrator account. After logging in with the administrator account, separate accounts for viewing, publishing, or administering may be created from within !WordPress interface.
+
+Changes to content and configuration of !WordPress can only be done after logging into !WordPress. However, by default, there is no link from the website or blog to reach the login page. Bookmark or directly type into the browser '''https://<mydomainname>/wordpress/wp-admin/''' to reach administration interface.
+
+=== WordPress as Home Page ===
+
+A beautiful, well customized !WordPress website can be set as the home page for your !FreedomBox. This can be done in [[FreedomBox/Manual/Configure|System -> Configure]] page of the !FreedomBox web interface. For example, if your !FreedomBox's domain name is myfreedombox.rocks and you set !WordPress as the home page, visiting https://myfreedombox.rocks will take you to https://myfreedombox.rocks/wordpress/ instead of the !FreedomBox interface.
+
+=== Domain Name ===
+
+When !WordPress is setup for the first time, the domain name through which you access it is noted and !WordPress gets configured with that domain name. Be sure to setup your domain name properly and access the !WordPress setup process using the domain name and not a local IP address or domain name. Currently, !FreedomBox does not provide an easy way to change the domain name once the app is installed.
+
+=== Permalinks ===
+
+By default, web addresses for newly created blog posts and pages look like '''/wordpress/?p=1'''. They can be made to look prettier like '''/wordpress/2021/08/06/sample-post/''' instead. This can be done from the ''Settings -> Permalinks'' configuration page in !WordPress interface. The necessary web server configuration changes are handled by !FreedomBox during app installation.
+
+{{attachment:wordpress-permalinks.png|Enabling Permalinks}}
+
+=== Automatic Upgrades ===
+
+Similar to all other apps, feature and security upgrades for !WordPress are automatically handled by !FreedomBox (when not disabled). After a minor version upgrade, changes to the database structure are automatically done by !WordPress. However, after a major version upgrade, such as during major distribution upgrade every two years, database changes are not done automatically. For this, you need to login to !WordPress and trigger the changes manually.
+
+=== Plugins and Themes ===
+
+!WordPress in itself is quite powerful and sufficient to create and manage a simple website or blog. It's true power, however, lies in the thousands of plugins and themes. Plugins extend the functionality of !WordPress. For example, a contact form can be added to !WordPress by installing the appropriate plugin. Themes change the appearance and layout of the site. Installing a new theme will provide an extra administration option for how your site will appear to your visitors.
+
+Since there are few plugins/themes packaged for Debian, !FreedomBox does not provide a simple way to install and manage them. You need to install them manually. This can be done as follows:
+
+ 1. Note the URL of the plugin or theme to download by browsing them from !WordPress administration interface or the official website. Be sure to select trustworthy ones with a free software license.
+ 1. Log in via SSH using a !FreedomBox administrator account.
+ 1. Download the plugin or theme and unpack into a directory using the command line.
+ 1. Move the directory under '''/var/lib/wordpress/wp-content/plugins/''' or '''/var/lib/wordpress/wp-content/themes/''' as appropriate.
+ 1. Watch for upgrades to these plugins from !WordPress and repeat the process for installing newer versions.
+
+=== External links ===
+
+ * !WordPress website: https://wordpress.org
+ * Discover !WordPress plugins: https://wordpress.org/plugins/
+ * Explore !WordPress themes: https://wordpress.org/themes/
+ * !WordPress documentation: https://wordpress.org/support/
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
