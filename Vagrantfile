@@ -5,7 +5,7 @@
 require 'etc'
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "freedombox/plinth-dev"
+  config.vm.box = "freedombox/freedombox-testing-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
   config.vm.network "forwarded_port", guest: 445, host: 4450
   config.vm.synced_folder ".", "/vagrant", owner: "plinth", group: "plinth"
