@@ -22,7 +22,9 @@ tls_medium_cipherlist = [
 postfix_config = {
     # Enable TLS
     'smtpd_tls_security_level': 'may',
-    'smtpd_tls_auth_only': 'yes',
+
+    # Allow unencrypted auth on port 25, needed by Roundcube
+    'smtpd_tls_auth_only': 'no',
 
     # Debugging information
     'smtpd_tls_received_header': 'yes',

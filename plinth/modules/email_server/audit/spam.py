@@ -10,6 +10,7 @@ from plinth import actions
 
 from . import models
 from plinth.modules.email_server import interproc, lock, postconf
+from plinth.modules.email_server.modconf import ConfigInjector
 
 milter_config = {
     'milter_mail_macros': 'i ' + ' '.join([
@@ -65,9 +66,8 @@ egress_filter_cleanup_options = {
 
 # Rspamd config
 
-rspamd_boundary = re.compile('#[ ]*--[ ]*([A-Z]{3,5})[ ]+FREEDOMBOX CONFIG$')
-rspamd_header = '#-- BEGIN FREEDOMBOX CONFIG\n'
-rspamd_footer = '#-- END FREEDOMBOX CONFIG\n'
+rspamd_re = re.compile('#[ ]*--[ ]*([A-Z]{3,5})[ ]+FREEDOMBOX CONFIG$')
+rspamd_format = '#-- {} FREEDOMBOX CONFIG'
 
 rspamd_mutex = lock.Mutex('rspamd-config')
 logger = logging.getLogger(__name__)
@@ -103,61 +103,19 @@ def action_set_filter():
     with postconf.mutex.lock_all():
         fix_filter(check_filter())
 
+    injector = ConfigInjector(rspamd_re, rspamd_format)
     with rspamd_mutex.lock_all():
         # XXX Maybe use globbing?
-        _inject_rspamd_config('override', 'options.inc')
-        _inject_rspamd_config('local', 'milter_headers.conf')
+        _inject_rspamd_config(injector, 'override', 'options.inc')
+        _inject_rspamd_config(injector, 'local', 'milter_headers.conf')
 
 
-def _inject_rspamd_config(type, name):
+def _inject_rspamd_config(injector, type, name):
     template_path = '/etc/plinth/rspamd-config/%s_%s' % (type, name)
     config_path = '/etc/rspamd/%s.d/%s' % (type, name)
 
     logger.info('Opening Rspamd config file %s', config_path)
-
-    template = None
-    config = None
-    try:
-        template = open(template_path, 'r')
-        config = open(config_path, 'a+')
-        with interproc.atomically_rewrite(config_path) as scratch:
-            config.seek(0)
-            inject_rspamd_config3(template, config, scratch)
-    finally:
-        if config is not None:
-            config.close()
-        if template is not None:
-            template.close()
-
-
-def inject_rspamd_config3(template, config, scratch):
-    """Write modified rspamd config to the `scratch` stream"""
-    # Copy the original up to the config header line
-    for line in config:
-        match = rspamd_boundary.match(line.strip())
-        if match and match.group(1) == 'BEGIN':
-            break
-        scratch.write(line)
-        if not line.endswith('\n'):  # in case no new line was at the eof
-            scratch.write('\n')
-
-    # Inject template data
-    scratch.write(rspamd_header)
-    for line in template:
-        scratch.write(line)
-        if not line.endswith('\n'):  # in case no new line was at the eof
-            scratch.write('\n')
-    scratch.write(rspamd_footer)
-
-    # Find the config trailer line
-    for line in config:
-        match = rspamd_boundary.match(line.strip())
-        if match and match.group(1) == 'END':
-            break
-
-    # Copy the original
-    for line in config:
-        scratch.write(line)  # keep original file ending style
+    injector.do_template_file(template_path, config_path)
 
 
 def _compile_sieve():

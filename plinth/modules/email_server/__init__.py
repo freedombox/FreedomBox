@@ -137,6 +137,7 @@ class EmailServerApp(plinth.app.App):
         results.extend([r.summarize() for r in audit.ldap.get()])
         results.extend([r.summarize() for r in audit.spam.get()])
         results.extend([r.summarize() for r in audit.tls.get()])
+        results.extend([r.summarize() for r in audit.rcube.get()])
         return results
 
 
@@ -147,6 +148,7 @@ def setup(helper, old_version=None):
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
     helper.call('post', audit.tls.repair)
+    helper.call('post', audit.rcube.repair)
     for srvname in managed_services:
         actions.superuser_run('service', ['reload', srvname])
     # Final step: expose service daemons to public internet
