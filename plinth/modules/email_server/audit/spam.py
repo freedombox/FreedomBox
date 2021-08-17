@@ -60,6 +60,13 @@ egress_filter_cleanup = postconf.ServiceFlags(
 
 egress_filter_cleanup_options = {
     'syslog_name': 'postfix/fbxout',
+    # "From" domain rewriting
+    'sender_canonical_maps': 'regexp:/etc/postfix/freedombox-rewrite-sender',
+    'local_header_rewrite_clients': 'static:all',
+    # "From" domain masquerading
+    'masquerade_domains': '$mydomain',
+    'masquerade_classes': 'envelope_sender,header_sender',
+    # Header privacy
     'header_checks': 'regexp:/etc/postfix/freedombox-header-cleanup',
     'nested_header_checks': ''
 }
