@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-16 18:38-0400\n"
-"PO-Revision-Date: 2021-08-10 19:32+0000\n"
+"PO-Revision-Date: 2021-08-17 21:29+0000\n"
 "Last-Translator: Andrij Mizyk <andmizyk@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/uk/>\n"
@@ -117,7 +117,7 @@ msgid "Access URL {url}"
 msgstr "Доступ до URL {url}"
 
 #: plinth/modules/avahi/__init__.py:35
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
 "{box_name} and services running on it.  It also allows {box_name} to "
@@ -126,11 +126,11 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
-"Виявлення служб дозволяє іншим пристроям в мережі знаходити ваш {box_name} "
-"та запущені на ньому служби. Це дозволяє {box_name} знаходити інші пристрої "
-"та служби запущені у вашій локальній мережі. Знаходження служб не головне і "
-"працює лише у внутрішніх мережах.  Це можна виключити, для підвищення "
-"безпеки, особливо при підключенні до не довіреної мережі."
+"Виявлення сервісів дозволяє іншим пристроям у мережі знаходити ваш {box_name}"
+" та запущені на ньому сервіси. Це дозволяє {box_name} знаходити інші "
+"пристрої та сервіси запущені у вашій локальній мережі. Знаходження сервісів "
+"не головне і працює лише у внутрішніх мережах.  Це можна вимкнути для "
+"підвищення безпеки, особливо при підключенні до не довіреної мережі."
 
 #: plinth/modules/avahi/__init__.py:59
 msgid "Service Discovery"
@@ -397,6 +397,8 @@ msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
+"У зʼєднані відмовлено - переконайтеся, що ви надали правильні облікові дані "
+"і чи сервер працює."
 
 #: plinth/modules/backups/repository.py:41
 msgid "Connection refused"
@@ -417,6 +419,7 @@ msgstr "Доступ SSH відхилено"
 #: plinth/modules/backups/repository.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
+"Шлях репозиторію непорожній і не є наявним репозиторієм резервних копій."
 
 #: plinth/modules/backups/repository.py:143
 msgid "Existing repository is not encrypted."
@@ -471,6 +474,9 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Облікові дані для цього репозиторію зберігаються на вашому %(box_name)s. "
+"<br> Щоб відновити резервну копію на новому %(box_name)s вам потрібні "
+"облікові дані ssh та, якщо вибрано, парольна фраза для шифрування."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
 msgid "Create Location"
@@ -552,6 +558,8 @@ msgid ""
 "The remote repository will not be deleted. This just removes the repository "
 "from the listing on the backup page, you can add it again later on."
 msgstr ""
+"Віддалений репозиторій не видалиться. Це лише вилучить репозиторій зі списку "
+"на сторінці резервування, ви можете додати його пізніше."
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:31
 msgid "Remove Location"
@@ -572,12 +580,19 @@ msgid ""
 "      backup file.\n"
 "    "
 msgstr ""
+"\n"
+"      Вивантажити файл резервної копії від іншого %(box_name)s, щоб "
+"відновити\n"
+"      його вміст. Можете обрати застосунки, які бажаєте відновити, після "
+"вивантажування\n"
+"      файлу резервної копії.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:27
 #: plinth/modules/help/templates/statuslog.html:23
 #: plinth/modules/networks/templates/connection_show.html:23
 msgid "Caution:"
-msgstr ""
+msgstr "Обережно:"
 
 #: plinth/modules/backups/templates/backups_upload.html:28
 #, python-format
@@ -585,6 +600,8 @@ msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
+"У вас доступно %(max_filesize)s для відновлення резервної копії. Перевищення "
+"цього обмеження може зробити ваш %(box_name)s не придатним для використання."
 
 #: plinth/modules/backups/templates/backups_upload.html:41
 msgid "Upload file"
@@ -596,6 +613,8 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
+"Не вдалося звʼязатися з власником SSH %(hostname)s. Перевірте чи компʼютер "
+"працює і приймає зʼєднання."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
 #, python-format
@@ -603,6 +622,8 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Не вдалося встановити автентифікацію власника SSH %(hostname)s. Компʼютер "
+"повідомляє про такі публічні ключі SSH. Перевірте будь-який з них."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
@@ -614,10 +635,13 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
+"Запустіть наступні команди на машині, що розміщує SSH. Вивід має відповідати "
+"одному з наведених параметрів. Ви також можете використовувати dsa, ecdsa, "
+"ed25519 і т.п. замість rsa, обравши відповідний файл."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
-msgstr ""
+msgstr "Перевірити власника"
 
 #: plinth/modules/backups/views.py:55
 msgid "Backup schedule updated."
@@ -673,19 +697,19 @@ msgstr "Додано новий віддалений SSH-репозиторій.
 
 #: plinth/modules/backups/views.py:366
 msgid "Verify SSH hostkey"
-msgstr ""
+msgstr "Перевірити ключ власника SSH"
 
 #: plinth/modules/backups/views.py:392
 msgid "SSH host already verified."
-msgstr ""
+msgstr "Власника SSH вже перевірено."
 
 #: plinth/modules/backups/views.py:402
 msgid "SSH host verified."
-msgstr ""
+msgstr "Власника SSH перевірено."
 
 #: plinth/modules/backups/views.py:417
 msgid "SSH host public key could not be verified."
-msgstr ""
+msgstr "Публічний ключ власника SSH не можливо перевірити."
 
 #: plinth/modules/backups/views.py:419
 msgid "Authentication to remote server failed."
@@ -722,6 +746,11 @@ msgid ""
 "audio, video and PDF documents can be previewed in the browser. Shared files "
 "can be set to expire after a time period."
 msgstr ""
+"bepasty — це вебзастосунок, що дозволяє відвантажувати і ділитися великими "
+"файлами. Текст і фрагменти коду також можна вставляти і ширити. Текст, "
+"картинки, звук, відеозаписи та документи PDF можна попередньо переглянути в "
+"оглядачі. Поширювані файли можна позначати застарілими після певного періоду "
+"часу."
 
 #: plinth/modules/bepasty/__init__.py:28
 msgid ""
@@ -730,6 +759,9 @@ msgid ""
 "password, you can share it with the users who should have the associated "
 "permissions."
 msgstr ""
+"bepasty не використовує імена користувачів для входу. Використовує лише "
+"паролі. Для кожного пароля можна вибирати набір дозволів. Створивши пароль, "
+"ви зможете ділитися ним із користувачами, які мають відповідні дозволи."
 
 #: plinth/modules/bepasty/__init__.py:32
 msgid ""
@@ -738,18 +770,21 @@ msgid ""
 "revoke access for a single person or group, by removing their password from "
 "the list."
 msgstr ""
+"Можна створити декілька паролів з однаковим набором привілеїв і роздати їх "
+"різним людям або групам. Це дозволить скасувати доступ до певної особи або "
+"групи видаливши її пароль зі списку."
 
 #: plinth/modules/bepasty/__init__.py:41 plinth/modules/bepasty/__init__.py:50
 msgid "Read a file, if a web link to the file is available"
-msgstr ""
+msgstr "Прочитати файл, якщо вебпосилання на файл доступне"
 
 #: plinth/modules/bepasty/__init__.py:42
 msgid "Create or upload files"
-msgstr ""
+msgstr "Створити або відвантажити файли"
 
 #: plinth/modules/bepasty/__init__.py:43
 msgid "List all files and their web links"
-msgstr ""
+msgstr "Показати всі файли і їхні вебпосилання"
 
 #: plinth/modules/bepasty/__init__.py:44
 msgid "Delete files"
@@ -757,42 +792,42 @@ msgstr "Видалити файли"
 
 #: plinth/modules/bepasty/__init__.py:45
 msgid "Administer files: lock/unlock files"
-msgstr ""
+msgstr "Адміністрування файлів: блокувати/розблокувати файли"
 
 #: plinth/modules/bepasty/__init__.py:49
 msgid "None, password is always required"
-msgstr ""
+msgstr "Нічого, пароль обовʼязковий"
 
 #: plinth/modules/bepasty/__init__.py:51
 msgid "List and read all files"
-msgstr ""
+msgstr "Показати і зчитати всі файли"
 
 #: plinth/modules/bepasty/__init__.py:64 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
-msgstr ""
+msgstr "bepasty"
 
 #: plinth/modules/bepasty/__init__.py:66
 msgid "File & Snippet Sharing"
-msgstr ""
+msgstr "Обмін файлами і фрагментами коду"
 
 #: plinth/modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
-msgstr ""
+msgstr "Публічний доступ (типові дозволи)"
 
 #: plinth/modules/bepasty/forms.py:18
 msgid "Permissions for anonymous users, who have not provided a password."
-msgstr ""
+msgstr "Дозволи для анонімних користувачів, що не надали пароль."
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
 #: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
 msgid "Permissions"
-msgstr ""
+msgstr "Дозволи"
 
 #: plinth/modules/bepasty/forms.py:29
 msgid ""
 "Users that log in with this password will have the selected permissions."
-msgstr ""
+msgstr "Користувачі, що ввійдуть із цим паролем матимуть вибрані дозволи."
 
 #: plinth/modules/bepasty/forms.py:33
 #: plinth/modules/bepasty/templates/bepasty.html:31
@@ -801,7 +836,7 @@ msgstr "Коментар"
 
 #: plinth/modules/bepasty/forms.py:34
 msgid "Any comment to help you remember the purpose of this password."
-msgstr ""
+msgstr "Будь-який коментар, що допоможе запамʼятати призначення цього пароля."
 
 #: plinth/modules/bepasty/templates/bepasty.html:12
 msgid "Manage Passwords"
@@ -814,7 +849,7 @@ msgstr "Додати пароль"
 
 #: plinth/modules/bepasty/templates/bepasty.html:23
 msgid "No passwords currently configured."
-msgstr ""
+msgstr "Не налаштовано жодного пароля."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
 #: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
@@ -824,7 +859,7 @@ msgstr "Пароль"
 
 #: plinth/modules/bepasty/views.py:23
 msgid "admin"
-msgstr ""
+msgstr "адміністратор"
 
 #: plinth/modules/bepasty/views.py:24
 msgid "editor"
@@ -832,11 +867,11 @@ msgstr "редактор"
 
 #: plinth/modules/bepasty/views.py:25
 msgid "viewer"
-msgstr ""
+msgstr "переглядач"
 
 #: plinth/modules/bepasty/views.py:50
 msgid "Read"
-msgstr ""
+msgstr "Читати"
 
 #: plinth/modules/bepasty/views.py:51
 msgid "Create"
@@ -844,7 +879,7 @@ msgstr "Створити"
 
 #: plinth/modules/bepasty/views.py:52
 msgid "List"
-msgstr ""
+msgstr "Показати"
 
 #: plinth/modules/bepasty/views.py:53
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
@@ -855,23 +890,23 @@ msgstr ""
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:77
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:78
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: plinth/modules/bepasty/views.py:54
 msgid "Admin"
-msgstr ""
+msgstr "Адміністратор"
 
 #: plinth/modules/bepasty/views.py:91 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
 #: plinth/modules/tor/views.py:157 plinth/modules/zoph/views.py:69
 msgid "Configuration updated."
-msgstr ""
+msgstr "Налаштування оновлено."
 
 #: plinth/modules/bepasty/views.py:94 plinth/modules/gitweb/views.py:117
 #: plinth/modules/searx/views.py:41 plinth/modules/searx/views.py:52
 #: plinth/modules/tor/views.py:159 plinth/modules/zoph/views.py:72
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Під час налаштування відбулася помилка."
 
 #: plinth/modules/bepasty/views.py:105
 msgid "Password added."
@@ -2573,7 +2608,7 @@ msgstr ""
 
 #: plinth/modules/infinoted/__init__.py:26
 msgid "infinoted is a server for Gobby, a collaborative text editor."
-msgstr ""
+msgstr "infinoted — це сервер для Gobby, колективного редактора тексту."
 
 #: plinth/modules/infinoted/__init__.py:28
 #, python-brace-format
