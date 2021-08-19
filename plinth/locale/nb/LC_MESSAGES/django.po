@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-16 18:38-0400\n"
-"PO-Revision-Date: 2021-07-30 08:35+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-08-19 13:51+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/nb_NO/>\n"
 "Language: nb\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -170,7 +170,7 @@ msgstr ""
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Aktiver sikkerhetskopitidsplan"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -185,6 +185,8 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"En sikkerhetskopi på tidsplanen feilet. De {error_count} foregående "
+"forsøkene lyktes heller ikke.  Den siste feilen er: {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
 #, fuzzy
@@ -199,13 +201,15 @@ msgstr "{app} (Ingen data å sikkerhetskopiere)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Aktiver regelmessige sikkerhetskopier"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Med dette aktivert tas det sikkerhetskopi hver dag, uke og måned, og eldre "
+"sikkerhetskopier fjernes."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
@@ -379,8 +383,8 @@ msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
-"Passord til SSH-tjeneren.<br>Nøkkelbasert SSH-autentisering er så langt ikke "
-"mulig."
+"Passord til SSH-tjeneren.<br>Nøkkelbasert SSH-autentisering er foreløbig "
+"ikke mulig."
 
 #: plinth/modules/backups/forms.py:267
 msgid "Remote backup repository already exists."
@@ -1361,17 +1365,15 @@ msgstr ""
 "som ellers ikke ville kunne kontakte hverandre."
 
 #: plinth/modules/coturn/__init__.py:41
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It is not meant to be used directly by users. Servers such as matrix-"
-#| "synapse need to be configured with the details provided here."
+#, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
-"Det er ikke ment å brukes direkte av brukere. Tjenere som matrix-synapse må "
-"settes opp med detaljene herfra."
+"Det er ikke ment å brukes direkte av brukere. Tjenere som <a href=\"{ms_url}"
+"\">Matrix Synapse</a> eller <a href=\"{e_url}\">ejabberd</a> må settes opp "
+"med detaljene herfra."
 
 #: plinth/modules/coturn/__init__.py:62
 msgid "Coturn"
@@ -5957,18 +5959,16 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:19
-#, fuzzy
-#| msgid ""
-#| "The following table lists the reported number of security vulnerabilities "
-#| "for each installed app."
 msgid ""
 "The following table lists the current reported number, and historical count, "
 "of security vulnerabilities for each installed app. More information on the "
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
-"Følgende tabell lister antall innrapporterte sikkerhetssårbarheter for hver "
-"installerte program."
+"Følgende tabell lister gjeldende innrapporterte og historiske antall "
+"sikkerhetssårbarheter for hver installerte program. Mer informasjon om "
+"sårbarehetene kan finnes i <a href=\"https://security-tracker.debian.org/"
+"tracker/\">Debians sikkerhetsfeiloversikt</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -6164,10 +6164,8 @@ msgid "Make files in this folder available to anyone with the link."
 msgstr "Gjør filene i denne mappen tilgjengelig for alle som har lenken."
 
 #: plinth/modules/sharing/forms.py:34
-#, fuzzy
-#| msgid "User groups that can read the files in the share"
 msgid "User groups that can read the files in the share:"
-msgstr "Brukergrupper som kan lese filene på det delte området"
+msgstr "Brukergrupper som kan lese filene på det delte området:"
 
 #: plinth/modules/sharing/forms.py:36
 msgid ""
@@ -8115,7 +8113,7 @@ msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:63
 msgid "Photo Organizer"
-msgstr ""
+msgstr "Foto-organiserer"
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -8126,6 +8124,8 @@ msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Når dette er aktivt gjøres det forespørsler til tjenere hos OpenStreetMap "
+"fra brukerens nettleser. Dette gir inngrep i privatsværen."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
@@ -8139,7 +8139,9 @@ msgstr "Gå i gang med oppsett"
 msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
-msgstr "Brukerkontoen %(username)s vil bli administratorkonto for Zoph."
+msgstr ""
+"Brukerkontoen <strong>%(username)s</strong> vil bli administratorkonto for "
+"Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
