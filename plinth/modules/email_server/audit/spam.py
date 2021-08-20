@@ -6,6 +6,7 @@ import logging
 import re
 import subprocess
 
+from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 
 from . import models
@@ -81,9 +82,13 @@ logger = logging.getLogger(__name__)
 
 
 def get():
+    translation_table = [
+        (check_filter, _('Inbound and outbound mail filters')),
+    ]
     results = []
     with postconf.mutex.lock_all():
-        results.append(check_filter())
+        for check, title in translation_table:
+            results.append(check(title))
     return results
 
 
@@ -91,8 +96,8 @@ def repair():
     actions.superuser_run('email_server', ['-i', 'spam', 'set_filter'])
 
 
-def check_filter():
-    diagnosis = models.MainCfDiagnosis('Inbound and outbound mail filters')
+def check_filter(title=''):
+    diagnosis = models.MainCfDiagnosis(title)
     diagnosis.compare(milter_config, postconf.get_many_unsafe)
     return diagnosis
 

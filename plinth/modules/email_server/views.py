@@ -3,9 +3,12 @@ import io
 import itertools
 import pwd
 
+import plinth.actions
 import plinth.utils
 
 from django.core.exceptions import ValidationError
+from django.http import HttpResponseBadRequest
+from django.shortcuts import redirect
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView, View
@@ -82,6 +85,57 @@ class EmailServerView(TabMixin, AppView):
     """Server configuration page"""
     app_id = 'email_server'
     template_name = 'email_server.html'
+    audit_modules = ('tls', 'rcube')
+
+    def get_context_data(self, *args, **kwargs):
+        dlist = []
+        for module_name in self.audit_modules:
+            self._get_audit_results(module_name, dlist)
+        dlist.sort(key=audit.models.Diagnosis.sorting_key)
+
+        context = super().get_context_data(*args, **kwargs)
+        context['related_diagnostics'] = dlist
+        return context
+
+    def _get_audit_results(self, module_name, dlist):
+        try:
+            results = getattr(audit, module_name).get()
+        except Exception as e:
+            title = _('Internal error in {0}').format('audit.' + module_name)
+            diagnosis = audit.models.Diagnosis(title)
+            diagnosis.critical(str(e))
+            diagnosis.critical(_('Check syslog for more information'))
+            results = [diagnosis]
+
+        for diagnosis in results:
+            if diagnosis.action:
+                diagnosis.action = '%s.%s' % (module_name, diagnosis.action)
+            if diagnosis.has_failed:
+                dlist.append(diagnosis)
+
+    def post(self, request):
+        repair_field = request.POST.get('repair')
+        module_name, sep, action_name = repair_field.partition('.')
+        if not sep or module_name not in self.audit_modules:
+            return HttpResponseBadRequest('Bad post data')
+
+        self._repair(module_name, action_name)
+        return redirect(request.path)
+
+    def _repair(self, module_name, action_name):
+        module = getattr(audit, module_name)
+        if not hasattr(module, 'repair_component'):
+            return
+
+        reload_list = []
+        try:
+            reload_list = module.repair_component(action_name)
+        except Exception:
+            pass
+
+        for service in reload_list:
+            # plinth.action_utils.service_reload(service)
+            plinth.actions.superuser_run('service', ['reload', service])
 
 
 class MyMailView(TabMixin, TemplateView):

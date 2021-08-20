@@ -15,18 +15,47 @@ class UnresolvedIssueError(AssertionError):
 class Diagnosis:
     """Records a diagnosis: what went wrong and how to fix them"""
 
-    def __init__(self, title):
+    def __init__(self, title='', action=''):
         """Class constructor"""
         self.title = title
-        self.fails = []
+        self.action = action
+        self.critical = []
         self.errors = []
 
+    def to_json(self):
+        """Serialize object to JSON"""
+        return {
+            'class': self.__class__.__name__,
+            'title': self.title,
+            'action': self.action,
+            'errors': self.errors,
+            'critical': self.critical
+        }
+
+    @classmethod
+    def from_json(cls, valid_dict, translate=None):
+        """Construct a Diagnosis instance from a valid JSON dictionary.
+
+        :type valid_dict: dict
+        :param valid_dict: a valid dictionary representation
+        :type translate: str -> Union[str, None]
+        :param translate: optional; if specified, should be a function that
+          accepts the title and returns a new title or None.
+        """
+        title = valid_dict['title']
+        if translate:
+            title = translate(title) or title
+        result = cls(title, action=valid_dict['action'])
+        result.errors.extend(valid_dict['errors'])
+        result.critical.extend(valid_dict['critical'])
+        return result
+
     def critical(self, message_fmt, *args):
-        """Append a message to the fails list"""
+        """Append a message to the critical errors list"""
         if args:
-            self.fails.append(message_fmt % args)
+            self.critical.append(message_fmt % args)
         else:
-            self.fails.append(message_fmt)
+            self.critical.append(message_fmt)
 
     def error(self, message_fmt, *args):
         """Append a message to the errors list"""
@@ -40,28 +69,37 @@ class Diagnosis:
         if log:
             self.write_logs()
 
-        if self.errors:
+        if self.critical:
             return [self.title, 'error']
-        elif self.fails:
+        elif self.errors:
             return [self.title, 'failed']
         else:
             return [self.title, 'passed']
 
+    @property
+    def has_failed(self):
+        """True if the diagnosis has failed or contains an error"""
+        return (self.critical or self.errors)
+
     def write_logs(self):
         """Log errors and failures"""
         logger.debug('Ran audit: %s', self.title)
-        for message in self.errors:
+        for message in self.critical:
             logger.critical(message)
-        for message in self.fails:
+        for message in self.errors:
             logger.error(message)
+
+    def sorting_key(self):
+        """The key function for list.sort"""
+        return (-len(self.critical), -len(self.errors), self.title)
 
 
 class MainCfDiagnosis(Diagnosis):
     """Diagnosis for a set of main.cf configuration keys"""
 
-    def __init__(self, title):
-        """Class constructor"""
-        super().__init__(title)
+    def __init__(self, *args, **kwargs):
+        """Class constructor. See :class:`.Diagnosis` for method signature"""
+        super().__init__(*args, **kwargs)
         self.advice = {}
         self.user = {}
 

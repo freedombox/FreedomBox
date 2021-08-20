@@ -4,6 +4,7 @@ configurations"""
 
 import logging
 
+from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 
 import plinth.modules.email_server.postconf as postconf
@@ -61,11 +62,15 @@ def get():
     Recommended endpoint name:
     GET /audit/ldap
     """
+    translation_table = [
+        (check_sasl, _('Postfix-Dovecot SASL integration')),
+        (check_alias_maps, _('Postfix alias maps')),
+        (check_local_recipient_maps, _('Postfix local recipient maps')),
+    ]
     results = []
     with postconf.mutex.lock_all():
-        results.append(check_sasl())
-        results.append(check_alias_maps())
-        results.append(check_local_recipient_maps())
+        for check, title in translation_table:
+            results.append(check(title))
     return results
 
 
@@ -85,8 +90,8 @@ def action_set_up():
     action_set_ulookup()
 
 
-def check_sasl():
-    diagnosis = models.MainCfDiagnosis('Postfix-Dovecot SASL integration')
+def check_sasl(title=''):
+    diagnosis = models.MainCfDiagnosis(title)
     diagnosis.compare(default_config, postconf.get_many_unsafe)
     return diagnosis
 
@@ -109,9 +114,9 @@ def action_set_submission():
                                    options=default_smtps_options)
 
 
-def check_alias_maps():
+def check_alias_maps(title=''):
     """Check the ability to mail to usernames and user aliases"""
-    diagnosis = models.MainCfDiagnosis('Postfix alias maps')
+    diagnosis = models.MainCfDiagnosis(title)
 
     analysis = models.AliasMapsAnalysis()
     analysis.parsed = postconf.parse_maps_by_key_unsafe('alias_maps')
@@ -152,8 +157,8 @@ def rearrange_alias_maps(analysis):
     return ' '.join(filter(None, analysis.parsed))
 
 
-def check_local_recipient_maps():
-    diagnosis = models.MainCfDiagnosis('Postfix local recipient maps')
+def check_local_recipient_maps(title=''):
+    diagnosis = models.MainCfDiagnosis(title)
     lrcpt_maps = postconf.parse_maps_by_key_unsafe('local_recipient_maps')
     list_modified = False
 

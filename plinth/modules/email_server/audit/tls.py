@@ -1,9 +1,12 @@
 """TLS configuration"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import json
 import logging
 import os
+import sys
 
+from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 
 from . import models
@@ -67,17 +70,44 @@ logger = logging.getLogger(__name__)
 
 def get():
     results = []
-    with postconf.mutex.lock_all():
-        results.append(check_tls())
+    _get_regular_results(results)
+    _get_superuser_results(results)
     return results
+
+
+def _get_regular_results(results):
+    translation_table = [
+        (check_tls, _('Postfix TLS parameters')),
+        (check_postfix_cert_usage, _('Postfix uses a TLS certificate')),
+    ]
+    with postconf.mutex.lock_all():
+        for check, title in translation_table:
+            results.append(check(title))
+
+
+def _get_superuser_results(results):
+    translation = {
+        'cert_availability': _('Has a TLS certificate'),
+    }
+    dump = actions.superuser_run('email_server', ['-i', 'tls', 'check'])
+    for jmap in json.loads(dump):
+        results.append(models.Diagnosis.from_json(jmap, translation.get))
 
 
 def repair():
     actions.superuser_run('email_server', ['-i', 'tls', 'set_up'])
 
 
-def check_tls():
-    diagnosis = models.MainCfDiagnosis('Postfix TLS')
+def repair_component(action):
+    action_to_services = {'set_cert': ['dovecot', 'postfix']}
+    if action not in action_to_services:  # action not allowed
+        return
+    actions.superuser_run('email_server', ['-i', 'tls', action])
+    return action_to_services[action]
+
+
+def check_tls(title=''):
+    diagnosis = models.MainCfDiagnosis(title)
     diagnosis.compare(postfix_config, postconf.get_many_unsafe)
     return diagnosis
 
@@ -102,7 +132,12 @@ def try_set_up_certificates():
 def find_cert_folder() -> str:
     directory = '/etc/letsencrypt/live'
     domains_available = []
-    for item in os.listdir(directory):
+    try:
+        listdir_result = os.listdir(directory)
+    except OSError:
+        return ''
+
+    for item in listdir_result:
         if item[0] != '.' and os.path.isdir(directory + '/' + item):
             domains_available.append(item)
     domains_available.sort()
@@ -129,7 +164,41 @@ def write_dovecot_cert_config(cert, key):
         fd.write(content)
 
 
+def check_postfix_cert_usage(title=''):
+    prefix = '/etc/letsencrypt/live/'
+    diagnosis = models.Diagnosis(title, action='set_cert')
+    conf = postconf.get_many_unsafe(['smtpd_tls_cert_file',
+                                     'smtpd_tls_key_file'])
+    if not conf['smtpd_tls_cert_file'].startswith(prefix):
+        diagnosis.error("Cert file not in Let's Encrypt directory")
+    if not conf['smtpd_tls_key_file'].startswith(prefix):
+        diagnosis.error("Privkey file not in Let's Encrypt directory")
+
+    return diagnosis
+
+
+def su_check_cert_availability(title=''):
+    diagnosis = models.Diagnosis(title)
+    if find_cert_folder() == '':
+        diagnosis.error("Could not find a Let's Encrypt certificate")
+    return diagnosis
+
+
 def action_set_up():
     with postconf.mutex.lock_all():
         repair_tls(check_tls())
         try_set_up_certificates()
+
+
+def action_set_cert():
+    with postconf.mutex.lock_all():
+        try_set_up_certificates()
+
+
+def action_check():
+    checks = ('cert_availability',)
+    results = []
+    for check_name in checks:
+        check_function = globals()['su_check_' + check_name]
+        results.append(check_function(check_name).to_json())
+    json.dump(results, sys.stdout, indent=0)  # indent=0 adds a new line

@@ -27,18 +27,15 @@ rcube_mutex = Mutex('rcube-config')
 
 
 def get():
-    translation_table = {
+    translation = {
         'rc_installed': _('RoundCube availability'),
-        'rc_config_header': _('FreedomBox header in RoundCube config'),
+        'rc_config_header': _('RoundCube configured for FreedomBox email'),
     }
+
     output = actions.superuser_run('email_server', ['-i', 'rcube', 'check'])
     results = json.loads(output)
     for i in range(0, len(results)):
-        name = translation_table.get(results[i][0], results[i][0])
-        diagnosis = models.Diagnosis(name)
-        if results[i][1] == 'error':
-            diagnosis.error('Failed')
-        results[i] = diagnosis
+        results[i] = models.Diagnosis.from_json(results[i], translation.get)
 
     return results
 
@@ -47,23 +44,35 @@ def repair():
     actions.superuser_run('email_server', ['-i', 'rcube', 'set_up'])
 
 
+def repair_component(action):
+    action_to_services = {'set_up': []}
+    if action not in action_to_services:
+        return
+    actions.superuser_run('email_server', ['-i', 'rcube', action])
+    return action_to_services[action]
+
+
 def action_check():
     results = _action_check()
+    for i in range(0, len(results)):
+        results[i] = results[i].to_json()
     print(json.dumps(results))
 
 
 def _action_check():
     results = []
     if not os.path.exists(config_path):
-        results.append(['rc_installed', 'error'])
+        diagnosis = models.Diagnosis('rc_installed')
+        diagnosis.error('Config file was missing')
+        diagnosis.error('Check that RoundCube has been installed')
+        results.append(diagnosis)
         return results
 
+    diagnosis = models.Diagnosis('rc_config_header', action='set_up')
     injector = ConfigInjector(boundary_pattern, boundary_format)
-    if injector.has_header_line(config_path):
-        results.append(['rc_config_header', 'pass'])
-    else:
-        results.append(['rc_config_header', 'error'])
-
+    if not injector.has_header_line(config_path):
+        diagnosis.error('FreedomBox header line was missing')
+    results.append(diagnosis)
     return results
 
 
