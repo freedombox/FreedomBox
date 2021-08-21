@@ -61,10 +61,26 @@ def get_many(key_list):
         return get_many_unsafe(key_list)
 
 
-def get_many_unsafe(key_iterator):
+def get_many_unsafe(key_iterator, flag=''):
     result = {}
+    args = ['/sbin/postconf']
+    if flag:
+        args.append(flag)
+
+    number_of_keys = 0
     for key in key_iterator:
-        result[key] = get_unsafe(key)
+        args.append(key)
+        number_of_keys += 1
+
+    stdout = _run(args)
+    for line in filter(None, stdout.split('\n')):
+        key, sep, value = line.partition('=')
+        if not sep:
+            raise ValueError('Invalid output detected')
+        result[key.strip()] = value.strip()
+
+    if len(result) != number_of_keys:
+        raise ValueError('Some keys were missing from the output')
     return result
 
 
