@@ -85,7 +85,7 @@ class EmailServerView(TabMixin, AppView):
     """Server configuration page"""
     app_id = 'email_server'
     template_name = 'email_server.html'
-    audit_modules = ('tls', 'rcube')
+    audit_modules = ('domain', 'tls', 'rcube')
 
     def get_context_data(self, *args, **kwargs):
         dlist = []

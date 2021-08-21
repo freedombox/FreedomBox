@@ -145,6 +145,7 @@ def setup(helper, old_version=None):
     """Installs and configures module"""
     helper.install(packages)
     helper.install(packages_bloat, skip_recommends=True)
+    helper.call('post', audit.domain.repair)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
     helper.call('post', audit.tls.repair)
