@@ -21,7 +21,7 @@
         <li class="list-group-item clearfix">
 
           <span>{{ model.title }}</span>
-          {% if model.critical %}
+          {% if model.critical_errors %}
             <span class="badge badge-danger">{% trans "error" %}</span>
           {% elif model.errors %}
             <span class="badge badge-warning">{% trans "failed" %}</span>
@@ -41,7 +41,7 @@
           {% endif %}
 
           <ul>
-            {% for message in model.critical %}
+            {% for message in model.critical_errors %}
               <li>{{ message }}</li>
             {% endfor %}
             {% for message in model.errors %}

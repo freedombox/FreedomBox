@@ -19,7 +19,7 @@ class Diagnosis:
         """Class constructor"""
         self.title = title
         self.action = action
-        self.critical = []
+        self.critical_errors = []
         self.errors = []
 
     def to_json(self):
@@ -29,7 +29,7 @@ class Diagnosis:
             'title': self.title,
             'action': self.action,
             'errors': self.errors,
-            'critical': self.critical
+            'critical_errors': self.critical_errors
         }
 
     @classmethod
@@ -47,15 +47,15 @@ class Diagnosis:
             title = translate(title) or title
         result = cls(title, action=valid_dict['action'])
         result.errors.extend(valid_dict['errors'])
-        result.critical.extend(valid_dict['critical'])
+        result.critical_errors.extend(valid_dict['critical_errors'])
         return result
 
     def critical(self, message_fmt, *args):
         """Append a message to the critical errors list"""
         if args:
-            self.critical.append(message_fmt % args)
+            self.critical_errors.append(message_fmt % args)
         else:
-            self.critical.append(message_fmt)
+            self.critical_errors.append(message_fmt)
 
     def error(self, message_fmt, *args):
         """Append a message to the errors list"""
@@ -69,7 +69,7 @@ class Diagnosis:
         if log:
             self.write_logs()
 
-        if self.critical:
+        if self.critical_errors:
             return [self.title, 'error']
         elif self.errors:
             return [self.title, 'failed']
@@ -79,19 +79,19 @@ class Diagnosis:
     @property
     def has_failed(self):
         """True if the diagnosis has failed or contains an error"""
-        return (self.critical or self.errors)
+        return (self.critical_errors or self.errors)
 
     def write_logs(self):
         """Log errors and failures"""
         logger.debug('Ran audit: %s', self.title)
-        for message in self.critical:
+        for message in self.critical_errors:
             logger.critical(message)
         for message in self.errors:
             logger.error(message)
 
     def sorting_key(self):
         """The key function for list.sort"""
-        return (-len(self.critical), -len(self.errors), self.title)
+        return (-len(self.critical_errors), -len(self.errors), self.title)
 
 
 class MainCfDiagnosis(Diagnosis):
