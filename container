@@ -812,8 +812,16 @@ def _destroy(distribution):
 
     connection_name = f'fbx-{distribution}-shared'
     logger.info('Removing Network Manager connection %s', connection_name)
-    subprocess.run(['sudo', 'nmcli', 'connection', 'delete', connection_name],
-                   stdout=subprocess.DEVNULL)
+    result = subprocess.run(
+        ['sudo', 'nmcli', 'connection', 'delete', connection_name],
+        capture_output=True)
+    if result.returncode not in (0, 10):
+        # nmcli failed and not due to 'Connection, device, or access point does
+        # not exist.' See
+        # https://developer-old.gnome.org/NetworkManager/stable/nmcli.html
+        logger.error('nmcli returned code %d', result.returncode)
+        logger.error('Error message:\n%s', result.stderr.decode())
+        logger.error('Output:\n%s', result.stdout.decode())
 
     logger.info('Keeping downloaded image: %s',
                 _get_compressed_image_path(distribution))
