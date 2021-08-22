@@ -164,7 +164,7 @@ sudo apt-mark unhold freedombox
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
   sshpass bash-completion
 
-echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' \
+echo 'alias freedombox-develop="cd /freedombox; sudo -u plinth /freedombox/run --develop"' \
   >> /home/fbx/.bashrc
 
 # Make some pytest related files and directories writable to the fbx user
