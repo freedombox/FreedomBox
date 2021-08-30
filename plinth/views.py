@@ -275,11 +275,17 @@ class SetupView(TemplateView):
         context['setup_helper'] = setup_helper
         context['app_info'] = setup_helper.module.app.info
 
+        # Report any installed conflicting packages that will be removed.
+        package_conflicts, package_conflicts_action = \
+            setup_helper.get_package_conflicts()
+        context['package_conflicts'] = package_conflicts
+        context['package_conflicts_action'] = package_conflicts_action
+
         # Reuse the value of setup_state throughout the view for consistency.
         context['setup_state'] = setup_helper.get_state()
         context['setup_current_operation'] = setup_helper.current_operation
 
-        # Perform expensive operation only if needed
+        # Perform expensive operation only if needed.
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
