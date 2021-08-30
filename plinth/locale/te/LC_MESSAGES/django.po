@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-16 18:38-0400\n"
+"POT-Creation-Date: 2021-08-30 19:29-0400\n"
 "PO-Revision-Date: 2021-05-17 18:31+0000\n"
 "Last-Translator: chilumula vamshi krishna <kannakrishna1625@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Page source"
 msgstr "పుట ఆధారం"
 
-#: plinth/context_processors.py:23 plinth/views.py:78
+#: plinth/context_processors.py:23 plinth/views.py:80
 msgid "FreedomBox"
 msgstr "ఫ్రీడంబాక్స్"
 
@@ -999,7 +999,7 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47
+#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:36
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
 
@@ -1476,12 +1476,14 @@ msgid "Diagnostics"
 msgstr "లక్షణాలు"
 
 #: plinth/modules/diagnostics/__init__.py:98
+#: plinth/modules/email_server/templates/email_server.html:29
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "క్వాసెల్"
 
 #: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/email_server/templates/email_server.html:27
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
@@ -1489,6 +1491,7 @@ msgid "failed"
 msgstr "అమరక విఫలమైంది."
 
 #: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/email_server/templates/email_server.html:25
 msgid "error"
 msgstr ""
 
@@ -2052,6 +2055,287 @@ msgstr ""
 "<b>%(domainname)s</b>.వినియోగదారు ఐడిలు <i>username@%(domainname)s</i> లాగా "
 "కనిపిస్తాయి \n"
 "మీరు మీ డొమైన్ను <a href=\"%(index_url)s\">kaanfigar</a> పేజీలో సెటప్ చేయవచ్చు."
+
+#: plinth/modules/email_server/__init__.py:49
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Email Server"
+msgstr "కబుర్ల సేవిక"
+
+#: plinth/modules/email_server/__init__.py:81
+msgid "Powered by Postfix, Dovecot & Rspamd"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/__init__.py:66
+#: plinth/modules/email_server/aliases/__init__.py:73
+msgid "The alias was taken"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:13
+msgid "Must be at least 2 characters long"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:15
+msgid "Contains illegal characters"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:17
+msgid "Must start and end with a-z or 0-9"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:19
+msgid "Cannot be a number"
+msgstr ""
+
+#: plinth/modules/email_server/audit/home.py:23
+#: plinth/modules/email_server/audit/home.py:32
+#, fuzzy
+#| msgid "Directory does not exist."
+msgid "User does not exist"
+msgstr "డైరెక్టరీ ఉనికిలో లేదు."
+
+#: plinth/modules/email_server/audit/ldap.py:66
+msgid "Postfix-Dovecot SASL integration"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:67
+msgid "Postfix alias maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:68
+msgid "Postfix local recipient maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/rcube.py:31
+#, fuzzy
+#| msgid "Available Domains"
+msgid "RoundCube availability"
+msgstr "అందుబాటులో ఉన్న డొమైన్లు"
+
+#: plinth/modules/email_server/audit/rcube.py:32
+msgid "RoundCube configured for FreedomBox email"
+msgstr ""
+
+#: plinth/modules/email_server/audit/spam.py:86
+msgid "Inbound and outbound mail filters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:80
+msgid "Postfix TLS parameters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:81
+msgid "Postfix uses a TLS certificate"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:90
+#, fuzzy
+#| msgid "No certificate"
+msgid "Has a TLS certificate"
+msgstr "ధృవీకరణ పత్రం లేదు"
+
+#: plinth/modules/email_server/forms.py:7
+#, fuzzy
+#| msgid "Domain"
+msgid "domain"
+msgstr "డొమైన్"
+
+#: plinth/modules/email_server/forms.py:14
+msgid "New alias (without @domain)"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:6
+#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/manifest.py:6
+msgid "Roundcube"
+msgstr "రౌండ్ క్యూబ్"
+
+#: plinth/modules/email_server/manifest.py:12
+#, fuzzy
+#| msgid "Mozilla Thunderbird"
+msgid "Thunderbird"
+msgstr "మొజిల్లా థండర్ బర్డ్"
+
+#: plinth/modules/email_server/manifest.py:27
+msgid "K-9 Mail"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:40
+msgid "FairEmail"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:12
+msgid "You have no email aliases."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:21
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disable selected"
+msgstr "నిలిపివేయబడింది"
+
+#: plinth/modules/email_server/templates/email_alias.html:24
+#, fuzzy
+#| msgid "cable is connected"
+msgid "Enable selected"
+msgstr "కేబుల్ అనుసంధానించబడిన"
+
+#: plinth/modules/email_server/templates/email_alias.html:27
+#, fuzzy
+#| msgid "Delete all the snapshots"
+msgid "Delete selected"
+msgstr "అన్ని స్నాప్షాట్‌లను  తొలగించు"
+
+#: plinth/modules/email_server/templates/email_alias.html:31
+#, fuzzy
+#| msgid "Create a new backup"
+msgid "Create a new email alias"
+msgstr "క్రొత్త బ్యాకప్‌ను సృష్టించండి"
+
+#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
+msgid "Add"
+msgstr "జోడించు"
+
+#: plinth/modules/email_server/templates/email_domains.html:19
+#, fuzzy
+#| msgid "Backups"
+msgid "New value"
+msgstr "బ్యాకప్స్"
+
+#: plinth/modules/email_server/templates/email_domains.html:31
+#: plinth/modules/email_server/templates/email_security.html:23
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr "నవీకరణ"
+
+#: plinth/modules/email_server/templates/email_form_base.html:12
+msgid "There was a problem with your request. Please try again."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:13
+msgid "Postfix TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:18
+msgid "Dovecot TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:14
+msgid "Visit Rspamd administration interface"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:18
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Alert"
+msgstr "సేవా రకం"
+
+#: plinth/modules/email_server/templates/email_server.html:38
+msgid "Repair"
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:15
+#, fuzzy
+#| msgid "Download directory"
+msgid "You do not have a home directory."
+msgstr "డైరెక్టరీని దిగుమతి చేయు"
+
+#: plinth/modules/email_server/templates/my_mail.html:17
+msgid "Create one to begin receiving emails."
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:22
+#, fuzzy
+#| msgid "Updated media directory"
+msgid "Create home directory"
+msgstr "మీడియా డైరెక్టరీని నవీకరించబడింది"
+
+#: plinth/modules/email_server/templates/tls_form.html:10
+#, fuzzy
+#| msgid "Current status:"
+msgid "Keep current settings"
+msgstr "ప్రస్తుత స్థితి:"
+
+#: plinth/modules/email_server/templates/tls_form.html:19
+#, fuzzy
+#| msgid "Let's Encrypt"
+msgid "Use Let's Encrypt"
+msgstr "లెట్స్ ఎన్క్రిప్ట్"
+
+#: plinth/modules/email_server/templates/tls_form.html:24
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Common name"
+msgstr "అధికారక్షేత్రం పేరు అమర్పు"
+
+#: plinth/modules/email_server/templates/tls_form.html:38
+msgid "Use custom values"
+msgstr ""
+
+#: plinth/modules/email_server/templates/tls_form.html:43
+#, fuzzy
+#| msgid "Certificate Status"
+msgid "Certificate path"
+msgstr "యోగ్యతాపత్రం స్థితి"
+
+#: plinth/modules/email_server/templates/tls_form.html:53
+#, fuzzy
+#| msgid "Create User"
+msgid "Private key path"
+msgstr "వినియోగదారుని సృష్టించు"
+
+#: plinth/modules/email_server/templates/tls_form.html:67
+msgid "Use system default"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:24
+#: plinth/modules/email_server/views.py:32 plinth/templates/base.html:110
+msgid "Home"
+msgstr "ముంగిలి"
+
+#: plinth/modules/email_server/views.py:25
+msgid "My Mail"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:26
+#: plinth/modules/email_server/views.py:33
+msgid "My Aliases"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:27
+#: plinth/modules/networks/templates/connection_show.html:259
+#: plinth/modules/security/__init__.py:45
+msgid "Security"
+msgstr "భద్రత"
+
+#: plinth/modules/email_server/views.py:28
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
+msgid "Domains"
+msgstr "డొమైన్లు"
+
+#: plinth/modules/email_server/views.py:104
+#, python-brace-format
+msgid "Internal error in {0}"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:107
+msgid "Check syslog for more information"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:181
+#, fuzzy
+msgid "Enabled aliases"
+msgstr "PageKite ప్రారంభించు"
+
+#: plinth/modules/email_server/views.py:182
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disabled aliases"
+msgstr "నిలిపివేయబడింది"
 
 #: plinth/modules/firewall/__init__.py:33
 #, python-brace-format
@@ -3549,10 +3833,6 @@ msgstr "రద్దుచేయి"
 msgid "Service"
 msgstr "సేవ"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "డొమైన్లు"
-
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
 msgid "OpenPGP Fingerprint"
@@ -4263,11 +4543,6 @@ msgstr "IPv6"
 #: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "ఈ అనుసంధానం చురుకుగాలేదు."
-
-#: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:46
-msgid "Security"
-msgstr "భద్రత"
 
 #: plinth/modules/networks/templates/connection_show.html:264
 #: plinth/modules/networks/templates/connection_show.html:284
@@ -5487,11 +5762,6 @@ msgid ""
 "a>)."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:55
-#: plinth/modules/roundcube/manifest.py:6
-msgid "Roundcube"
-msgstr "రౌండ్ క్యూబ్"
-
 #: plinth/modules/roundcube/__init__.py:56
 msgid "Email Client"
 msgstr "ఇమెయిల్ క్లయింట్"
@@ -5809,8 +6079,8 @@ msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:19
 msgid ""
-"The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. More information on the "
+"The following table lists the current reported number of security "
+"vulnerabilities for each installed app. More information on the "
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
@@ -5840,38 +6110,34 @@ msgid "Current Vulnerabilities"
 msgstr "ప్రస్తుత దుర్బలతలు"
 
 #: plinth/modules/security/templates/security_report.html:47
-msgid "Past Vulnerabilities"
-msgstr "గత దుర్బలతలు"
-
-#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Sandboxed"
 msgstr "స్యాండ్ బాక్స్ ను అడ్డగించు (మైన్ పరీక్ష)"
 
-#: plinth/modules/security/templates/security_report.html:49
+#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Sandbox Coverage"
 msgstr "స్యాండ్ బాక్స్ ను అడ్డగించు (మైన్ పరీక్ష)"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:58
 msgid "N/A"
 msgstr "N/A"
 
-#: plinth/modules/security/templates/security_report.html:62
+#: plinth/modules/security/templates/security_report.html:60
 #, fuzzy
 #| msgid "yes"
 msgid "Yes"
 msgstr "అవును"
 
-#: plinth/modules/security/templates/security_report.html:64
+#: plinth/modules/security/templates/security_report.html:62
 #, fuzzy
 #| msgid "None"
 msgid "No"
 msgstr "ఏమీ లేదు"
 
-#: plinth/modules/security/templates/security_report.html:71
+#: plinth/modules/security/templates/security_report.html:69
 #, fuzzy
 #| msgid "is not running"
 msgid "Not running"
@@ -6727,10 +6993,6 @@ msgstr "ముద్దుపేరు"
 msgid "Add new introducer"
 msgstr "కొత్త పరిచయకర్తని జోడించండి"
 
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
-msgid "Add"
-msgstr "జోడించు"
-
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
 msgid "Connected introducers"
 msgstr "కనెక్ట్ చేసిన పరిచయకర్తలు"
@@ -6942,7 +7204,7 @@ msgstr "సాక్స్‌లు"
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "టిసిపి  పోర్ట్ 9050 పై ఒక టార్ సొక్స్ పోర్ట్ మీ %(box_name)sలో అందుబాటులో ఉంది."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:216
+#: plinth/modules/tor/views.py:137 plinth/views.py:218
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
@@ -7033,13 +7295,6 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
-
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
-msgstr "నవీకరణ"
 
 #: plinth/modules/upgrades/__init__.py:122
 #, fuzzy
@@ -7884,6 +8139,63 @@ msgstr "అనుసంధానం తొలగించు"
 msgid "Server deleted."
 msgstr "{name} తొలగించబడింది."
 
+#: plinth/modules/wordpress/__init__.py:36
+msgid ""
+"WordPress is a popular way to create and manage websites and blogs. Content "
+"can be managed using a visual interface. Layout and functionality of the web "
+"pages can be customized. Appearance can be chosen using themes. "
+"Administration interface and produced web pages are suitable for mobile "
+"devices."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:42
+#, python-brace-format
+msgid ""
+"You need to run WordPress setup by visiting the app before making the site "
+"publicly available below. Setup must be run when accessing {box_name} with "
+"the correct domain name. Enable permalinks in administrator interface for "
+"better URLs to your pages and posts."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:47
+msgid ""
+"WordPress has its own user accounts. First administrator account is created "
+"during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
+"to reach administration interface in the future."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:51
+msgid ""
+"After a major version upgrade, you need to manually run database upgrade "
+"from administrator interface. Additional plugins or themes may be installed "
+"and upgraded at your own risk."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:69
+#: plinth/modules/wordpress/manifest.py:6
+#, fuzzy
+#| msgid "Address"
+msgid "WordPress"
+msgstr "చిరునామా"
+
+#: plinth/modules/wordpress/__init__.py:70
+#, fuzzy
+#| msgid "Wiki and Blog"
+msgid "Website and Blog"
+msgstr "వికీ మరియు బ్లాగ్"
+
+#: plinth/modules/wordpress/forms.py:14
+#, fuzzy
+#| msgid "public access"
+msgid "Public access"
+msgstr "ప్రజా ప్రాప్తి"
+
+#: plinth/modules/wordpress/forms.py:15
+msgid ""
+"Allow all visitors. Disabling allows only administrators to view the "
+"WordPress site or blog. Enable only after performing initial WordPress setup."
+msgstr ""
+
 #: plinth/modules/zoph/__init__.py:33
 #, python-brace-format
 msgid ""
@@ -8025,10 +8337,6 @@ msgstr ""
 #, fuzzy
 #| msgid "Home"
 msgid " Home"
-msgstr "ముంగిలి"
-
-#: plinth/templates/base.html:110
-msgid "Home"
 msgstr "ముంగిలి"
 
 #: plinth/templates/base.html:115
@@ -8327,6 +8635,9 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Past Vulnerabilities"
+#~ msgstr "గత దుర్బలతలు"
 
 #~ msgid "Message Archive Management enabled"
 #~ msgstr "ప్రాచీన సందేశ నిర్వహణ ప్రారంభించబడింది"
@@ -9087,9 +9398,6 @@ msgstr "గుజరాతీ"
 #~ msgid "Web Server over Secure Socket Layer"
 #~ msgstr "సెక్యుర్ సాకెట్ లేయర్ పై వెబ్ సర్వర్"
 
-#~ msgid "Current status:"
-#~ msgstr "ప్రస్తుత స్థితి:"
-
 #~ msgid "Delete Wiki or Blog"
 #~ msgstr "వికీ లేదా బ్లాగును తొలగించు"
 
@@ -9113,11 +9421,6 @@ msgstr "గుజరాతీ"
 #~| msgid "Default"
 #~ msgid "Default app set"
 #~ msgstr "అప్రమేయం"
-
-#, fuzzy
-#~| msgid "Backups"
-#~ msgid "New Backup"
-#~ msgstr "బ్యాకప్స్"
 
 #, fuzzy
 #~| msgid "NTP client in contact with servers"

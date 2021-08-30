@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-16 18:38-0400\n"
+"POT-Creation-Date: 2021-08-30 19:29-0400\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Sidens kildekode"
 
-#: plinth/context_processors.py:23 plinth/views.py:78
+#: plinth/context_processors.py:23 plinth/views.py:80
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -999,7 +999,7 @@ msgstr "Opfrisk IP-adresse og domæner"
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47
+#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:36
 msgid "Configuration updated"
 msgstr "Konfiguration opdateret"
 
@@ -1477,15 +1477,18 @@ msgid "Diagnostics"
 msgstr "Diagnosticering"
 
 #: plinth/modules/diagnostics/__init__.py:98
+#: plinth/modules/email_server/templates/email_server.html:29
 msgid "passed"
 msgstr "lykkedes"
 
 #: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/email_server/templates/email_server.html:27
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "mislykkedes"
 
 #: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/email_server/templates/email_server.html:25
 msgid "error"
 msgstr "fejl"
 
@@ -2055,6 +2058,286 @@ msgstr ""
 "Domænet for din XMPP-server er sat til <b>%(domainname)s</b>. Brugernavne "
 "vil se ud som <i>brugernavn@%(domainname)s</i>. Du kan konfigurere systemets "
 "domæne på <a href=\"%(index_url)s\">Konfigurer</a> siden."
+
+#: plinth/modules/email_server/__init__.py:49
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Email Server"
+msgstr "Chatserver"
+
+#: plinth/modules/email_server/__init__.py:81
+msgid "Powered by Postfix, Dovecot & Rspamd"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/__init__.py:66
+#: plinth/modules/email_server/aliases/__init__.py:73
+msgid "The alias was taken"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:13
+msgid "Must be at least 2 characters long"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:15
+msgid "Contains illegal characters"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:17
+msgid "Must start and end with a-z or 0-9"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:19
+msgid "Cannot be a number"
+msgstr ""
+
+#: plinth/modules/email_server/audit/home.py:23
+#: plinth/modules/email_server/audit/home.py:32
+msgid "User does not exist"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:66
+msgid "Postfix-Dovecot SASL integration"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:67
+msgid "Postfix alias maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:68
+msgid "Postfix local recipient maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/rcube.py:31
+#, fuzzy
+#| msgid "Available Domains"
+msgid "RoundCube availability"
+msgstr "Tilgængelige Domæner"
+
+#: plinth/modules/email_server/audit/rcube.py:32
+msgid "RoundCube configured for FreedomBox email"
+msgstr ""
+
+#: plinth/modules/email_server/audit/spam.py:86
+msgid "Inbound and outbound mail filters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:80
+msgid "Postfix TLS parameters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:81
+msgid "Postfix uses a TLS certificate"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:90
+#, fuzzy
+#| msgid "No certficate"
+msgid "Has a TLS certificate"
+msgstr "Intet certifikat"
+
+#: plinth/modules/email_server/forms.py:7
+#, fuzzy
+#| msgid "Domain"
+msgid "domain"
+msgstr "Domæne"
+
+#: plinth/modules/email_server/forms.py:14
+msgid "New alias (without @domain)"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:6
+#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/manifest.py:6
+#, fuzzy
+#| msgid "Enable Roundcube"
+msgid "Roundcube"
+msgstr "Aktiver Roundcube"
+
+#: plinth/modules/email_server/manifest.py:12
+msgid "Thunderbird"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:27
+msgid "K-9 Mail"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:40
+msgid "FairEmail"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:12
+msgid "You have no email aliases."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:21
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disable selected"
+msgstr "Deaktiveret"
+
+#: plinth/modules/email_server/templates/email_alias.html:24
+#, fuzzy
+#| msgid "cable is connected"
+msgid "Enable selected"
+msgstr "kabel forbundet"
+
+#: plinth/modules/email_server/templates/email_alias.html:27
+#, fuzzy
+#| msgid "Delete %(name)s"
+msgid "Delete selected"
+msgstr "Slet %(name)s"
+
+#: plinth/modules/email_server/templates/email_alias.html:31
+#, fuzzy
+#| msgid "Create a new backup"
+msgid "Create a new email alias"
+msgstr "Opret en ny sikkerhedskopi"
+
+#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
+#, fuzzy
+#| msgid "Address"
+msgid "Add"
+msgstr "Adresse"
+
+#: plinth/modules/email_server/templates/email_domains.html:19
+msgid "New value"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_domains.html:31
+#: plinth/modules/email_server/templates/email_security.html:23
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr "Opdater"
+
+#: plinth/modules/email_server/templates/email_form_base.html:12
+msgid "There was a problem with your request. Please try again."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:13
+msgid "Postfix TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:18
+msgid "Dovecot TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:14
+msgid "Visit Rspamd administration interface"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:18
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Alert"
+msgstr "Servicetype"
+
+#: plinth/modules/email_server/templates/email_server.html:38
+msgid "Repair"
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:15
+#, fuzzy
+#| msgid "Download directory"
+msgid "You do not have a home directory."
+msgstr "Download-mappe"
+
+#: plinth/modules/email_server/templates/my_mail.html:17
+msgid "Create one to begin receiving emails."
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:22
+#, fuzzy
+#| msgid "Create Repository"
+msgid "Create home directory"
+msgstr "Opret lager"
+
+#: plinth/modules/email_server/templates/tls_form.html:10
+#, fuzzy
+#| msgid "Current status:"
+msgid "Keep current settings"
+msgstr "Nuværende status:"
+
+#: plinth/modules/email_server/templates/tls_form.html:19
+#, fuzzy
+#| msgid "Certificates (Let's Encrypt)"
+msgid "Use Let's Encrypt"
+msgstr "Certifikater (Let's Encrypt)"
+
+#: plinth/modules/email_server/templates/tls_form.html:24
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Common name"
+msgstr "Domænenavn gemt"
+
+#: plinth/modules/email_server/templates/tls_form.html:38
+msgid "Use custom values"
+msgstr ""
+
+#: plinth/modules/email_server/templates/tls_form.html:43
+#, fuzzy
+#| msgid "Certificate Status"
+msgid "Certificate path"
+msgstr "Certifikat Status"
+
+#: plinth/modules/email_server/templates/tls_form.html:53
+#, fuzzy
+#| msgid "Create User"
+msgid "Private key path"
+msgstr "Opret Bruger"
+
+#: plinth/modules/email_server/templates/tls_form.html:67
+msgid "Use system default"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:24
+#: plinth/modules/email_server/views.py:32 plinth/templates/base.html:110
+msgid "Home"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:25
+msgid "My Mail"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:26
+#: plinth/modules/email_server/views.py:33
+msgid "My Aliases"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:27
+#: plinth/modules/networks/templates/connection_show.html:259
+#: plinth/modules/security/__init__.py:45
+msgid "Security"
+msgstr "Sikkerhed"
+
+#: plinth/modules/email_server/views.py:28
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
+msgid "Domains"
+msgstr "Domæner"
+
+#: plinth/modules/email_server/views.py:104
+#, python-brace-format
+msgid "Internal error in {0}"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:107
+msgid "Check syslog for more information"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:181
+#, fuzzy
+#| msgid "Enable PageKite"
+msgid "Enabled aliases"
+msgstr "Aktiver PageKite"
+
+#: plinth/modules/email_server/views.py:182
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disabled aliases"
+msgstr "Deaktiveret"
 
 #: plinth/modules/firewall/__init__.py:33
 #, python-brace-format
@@ -3602,10 +3885,6 @@ msgstr "Annuller"
 msgid "Service"
 msgstr "Tjeneste"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "Domæner"
-
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
 msgid "OpenPGP Fingerprint"
@@ -4326,11 +4605,6 @@ msgstr "IPv6"
 #: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "Denne forbindelse er ikke aktiv."
-
-#: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:46
-msgid "Security"
-msgstr "Sikkerhed"
 
 #: plinth/modules/networks/templates/connection_show.html:264
 #: plinth/modules/networks/templates/connection_show.html:284
@@ -5605,13 +5879,6 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:55
-#: plinth/modules/roundcube/manifest.py:6
-#, fuzzy
-#| msgid "Enable Roundcube"
-msgid "Roundcube"
-msgstr "Aktiver Roundcube"
-
 #: plinth/modules/roundcube/__init__.py:56
 #, fuzzy
 #| msgid "Email Client (Roundcube)"
@@ -5913,8 +6180,8 @@ msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:19
 msgid ""
-"The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. More information on the "
+"The following table lists the current reported number of security "
+"vulnerabilities for each installed app. More information on the "
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
@@ -5944,36 +6211,32 @@ msgid "Current Vulnerabilities"
 msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:47
-msgid "Past Vulnerabilities"
-msgstr ""
-
-#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Sandboxed"
 msgstr "Block Testområde (Minetest)"
 
-#: plinth/modules/security/templates/security_report.html:49
+#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Sandbox Coverage"
 msgstr "Block Testområde (Minetest)"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:58
 msgid "N/A"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:62
+#: plinth/modules/security/templates/security_report.html:60
 #, fuzzy
 #| msgid "yes"
 msgid "Yes"
 msgstr "ja"
 
-#: plinth/modules/security/templates/security_report.html:64
+#: plinth/modules/security/templates/security_report.html:62
 msgid "No"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:71
+#: plinth/modules/security/templates/security_report.html:69
 #, fuzzy
 #| msgid "is not running"
 msgid "Not running"
@@ -6827,12 +7090,6 @@ msgstr "Navn"
 msgid "Add new introducer"
 msgstr ""
 
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
-#, fuzzy
-#| msgid "Address"
-msgid "Add"
-msgstr "Adresse"
-
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
 msgid "Connected introducers"
 msgstr ""
@@ -7041,7 +7298,7 @@ msgstr "SOCKS"
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "En Tor SOCKS-port er tilgængelig på din %(box_name)s TCP-port 9050."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:216
+#: plinth/modules/tor/views.py:137 plinth/views.py:218
 msgid "Setting unchanged"
 msgstr "Indstilling uændret"
 
@@ -7127,13 +7384,6 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
-
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
-msgstr "Opdater"
 
 #: plinth/modules/upgrades/__init__.py:122
 #, fuzzy
@@ -8017,6 +8267,63 @@ msgstr "Slet Forbindelse"
 msgid "Server deleted."
 msgstr "{name} slettet."
 
+#: plinth/modules/wordpress/__init__.py:36
+msgid ""
+"WordPress is a popular way to create and manage websites and blogs. Content "
+"can be managed using a visual interface. Layout and functionality of the web "
+"pages can be customized. Appearance can be chosen using themes. "
+"Administration interface and produced web pages are suitable for mobile "
+"devices."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:42
+#, python-brace-format
+msgid ""
+"You need to run WordPress setup by visiting the app before making the site "
+"publicly available below. Setup must be run when accessing {box_name} with "
+"the correct domain name. Enable permalinks in administrator interface for "
+"better URLs to your pages and posts."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:47
+msgid ""
+"WordPress has its own user accounts. First administrator account is created "
+"during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
+"to reach administration interface in the future."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:51
+msgid ""
+"After a major version upgrade, you need to manually run database upgrade "
+"from administrator interface. Additional plugins or themes may be installed "
+"and upgraded at your own risk."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:69
+#: plinth/modules/wordpress/manifest.py:6
+#, fuzzy
+#| msgid "Address"
+msgid "WordPress"
+msgstr "Adresse"
+
+#: plinth/modules/wordpress/__init__.py:70
+#, fuzzy
+#| msgid "Wiki & Blog"
+msgid "Website and Blog"
+msgstr "Wiki & Blog"
+
+#: plinth/modules/wordpress/forms.py:14
+#, fuzzy
+#| msgid "Publish Key"
+msgid "Public access"
+msgstr "Distribuer Nøgle"
+
+#: plinth/modules/wordpress/forms.py:15
+msgid ""
+"Allow all visitors. Disabling allows only administrators to view the "
+"WordPress site or blog. Enable only after performing initial WordPress setup."
+msgstr ""
+
 #: plinth/modules/zoph/__init__.py:33
 #, python-brace-format
 msgid ""
@@ -8170,10 +8477,6 @@ msgstr "Plinth administrationsværktøj til %(box_name)s"
 
 #: plinth/templates/base.html:107
 msgid " Home"
-msgstr ""
-
-#: plinth/templates/base.html:110
-msgid "Home"
 msgstr ""
 
 #: plinth/templates/base.html:115
@@ -9035,9 +9338,6 @@ msgstr ""
 
 #~ msgid "Web Server over Secure Socket Layer"
 #~ msgstr "Sikker Webserver (via SSL)"
-
-#~ msgid "Current status:"
-#~ msgstr "Nuværende status:"
 
 #~ msgid "Delete Wiki or Blog"
 #~ msgstr "Slet Wiki eller Blog"
