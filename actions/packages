@@ -48,6 +48,11 @@ def parse_arguments():
         'module', help='name of module for which package is being installed')
     subparser.add_argument('packages', nargs='+',
                            help='list of packages to install')
+
+    subparser = subparsers.add_parser('remove', help='remove the package(s)')
+    subparser.add_argument('--packages', required=True,
+                           help='List of packages to remove', nargs='+')
+
     subparsers.add_parser('is-package-manager-busy',
                           help='Return whether package manager is busy')
     subparser = subparsers.add_parser(
@@ -100,6 +105,11 @@ def subcommand_install(arguments):
     sys.exit(returncode)
 
 
+def subcommand_remove(arguments):
+    """Remove apt package(s)."""
+    sys.exit(run_apt_command(['remove'] + arguments.packages))
+
+
 def _assert_managed_packages(module, packages):
     """Check that list of packages are in fact managed by module."""
     cfg.read()
@@ -116,7 +126,8 @@ def _assert_managed_packages(module, packages):
 def subcommand_is_package_manager_busy(_):
     """Check whether package manager is busy.
 
-    An exit code of zero indicates that package manager is busy."""
+    An exit code of zero indicates that package manager is busy.
+    """
     if not is_package_manager_busy():
         sys.exit(-1)
 
