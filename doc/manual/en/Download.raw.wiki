@@ -44,25 +44,11 @@ It is important to verify the images you have downloaded to ensure that the file
 
   * First open a terminal and import the public keys of the !FreedomBox developers who built the images:
   {{{
-$ gpg --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
-
-$ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
-
-# This is the FreedomBox CI server's key
-$ gpg --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-}}}
-  If this command shows an error such as ''new key but contains no user ID - skipped'', then use a different keyserver to download the keys:
-  {{{
-$ gpg --keyserver keys.gnupg.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
-$ gpg --keyserver keys.gnupg.net --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
-$ gpg --keyserver keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-  }}}
-  Or
-  {{{
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+# This is the FreedomBox CI server's key
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-  }}}
+}}}
   * Next, verify the fingerprint of the public keys:
   {{{
 $ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
