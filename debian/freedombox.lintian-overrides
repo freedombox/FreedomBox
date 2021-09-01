@@ -18,3 +18,12 @@ freedombox binary: web-application-works-only-with-apache
 
 # Temporary workaround for https://bugs.debian.org/992465
 freedombox: systemd-service-file-outside-lib usr/lib/systemd/system/*.service
+
+# Since dpkg 1.20.6, there is support for a flag called remove-on-upgrade in
+# DEBIAN/conffiles. debhelper 13.5+ will generate conffiles with flag from
+# .maintscript instead of using postinst scripts. Lintian does not yet
+# understand this flag and generates several errors. Ignore all errors related
+# to this flag until lintian is fixed.
+freedombox: conffile-is-not-in-package remove-on-upgrade *
+freedombox: non-etc-file-marked-as-conffile remove-on-upgrade *
+freedombox: relative-conffile remove-on-upgrade *
