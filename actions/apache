@@ -129,6 +129,10 @@ def subcommand_setup(arguments):
         # Enable HTTP/2 protocol
         webserver.enable('http2', kind='module')
 
+        # Enable shared object cache needed for OSCP stapling. Needed by
+        # mod_ssl.
+        webserver.enable('socache_shmcb', kind='module')
+
         # switch to mod_ssl from mod_gnutls
         webserver.disable('gnutls', kind='module')
         webserver.enable('ssl', kind='module')
