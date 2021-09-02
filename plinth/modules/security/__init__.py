@@ -7,7 +7,6 @@ import re
 import subprocess
 from collections import defaultdict
 
-import requests
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -109,12 +108,6 @@ def get_apps_report():
             (label, package, *_) = line.split()
             cves[label].add(package)
 
-    try:
-        past_cves = requests.get(
-            'https://security-tracker.debian.org/tracker/data/json').json()
-    except Exception:
-        past_cves = None
-
     service_exposure_lines = subprocess.check_output(
         ['systemd-analyze', 'security']).decode().strip().split('\n')
     service_exposure_lines.pop(0)
@@ -130,12 +123,8 @@ def get_apps_report():
             'name': 'freedombox',
             'packages': {'freedombox'},
             'vulns': 0,
-            'past_vulns': 0 if past_cves else None,
         }
     }
-    if past_cves and 'freedombox' in past_cves:
-        apps['freedombox']['past_vulns'] = len(past_cves['freedombox'])
-
     for module_name, module in module_loader.loaded_modules.items():
         try:
             packages = module.managed_packages
@@ -155,13 +144,8 @@ def get_apps_report():
             'name': module_name,
             'packages': set(packages),
             'vulns': 0,
-            'past_vulns': 0 if past_cves else None,
             'sandboxed': None,
         }
-
-        for package in packages:
-            if past_cves and package in past_cves:
-                apps[module_name]['past_vulns'] += len(past_cves[package])
 
         if services:
             apps[module_name]['sandboxed'] = False

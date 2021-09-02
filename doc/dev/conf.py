@@ -16,23 +16,7 @@ list see the documentation: http://www.sphinx-doc.org/en/master/config
 import os
 import sys
 
-import django
-import django.conf
-
 sys.path.insert(0, os.path.abspath('../../'))
-
-# -- Django setup ------------------------------------------------------------
-
-# Ensure that Django models can be imported by Sphinx
-import plinth.settings  # noqa pylint: disable=E402 isort:skip
-
-kwargs = {}
-for setting in dir(plinth.settings):
-    if setting.isupper():
-        kwargs[setting] = getattr(plinth.settings, setting)
-
-django.conf.settings.configure(**kwargs)
-django.setup(set_prefix=True)
 
 # -- Project information -----------------------------------------------------
 
@@ -208,5 +192,30 @@ todo_include_todos = True
 autodoc_default_options = {
     'special-members': '__init__',
 }
+
+# Mock importing packages
+autodoc_mock_imports = [
+    'apt',
+    'augeas',
+    'axes',
+    'bootstrapform',
+    'captcha',
+    'cherrypy',
+    'configobj',
+    'dbus',
+    'django',
+    'gi',
+    'markupsafe',
+    'OpenSSL',
+    'pam',
+    'paramiko',
+    'psutil',
+    'pytest',
+    'requests',
+    'ruamel',
+    'setuptools',
+    'stronghold',
+    'yaml',
+]
 
 html_favicon = './_static/favicon.ico'

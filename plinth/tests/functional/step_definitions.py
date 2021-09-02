@@ -18,12 +18,12 @@ def logged_in(session_browser):
 
 @given("I'm a logged out user")
 def logged_out_user(session_browser):
-    functional.visit(session_browser, '/plinth/accounts/logout/')
+    functional.logout(session_browser)
 
 
 @when("I log out")
 def log_out_user(session_browser):
-    functional.visit(session_browser, '/plinth/accounts/logout/')
+    functional.logout(session_browser)
 
 
 @given(parsers.parse('the {app_name:w} application is installed'))

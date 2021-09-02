@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-16 18:38-0400\n"
-"PO-Revision-Date: 2021-07-30 08:35+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"POT-Creation-Date: 2021-08-30 19:29-0400\n"
+"PO-Revision-Date: 2021-08-19 13:51+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/nb_NO/>\n"
 "Language: nb\n"
@@ -25,13 +25,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr "Sidekilde"
 
-#: plinth/context_processors.py:23 plinth/views.py:78
+#: plinth/context_processors.py:23 plinth/views.py:80
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -170,7 +170,7 @@ msgstr ""
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
-msgstr ""
+msgstr "Aktiver sikkerhetskopitidsplan"
 
 #: plinth/modules/backups/__init__.py:207
 #: plinth/modules/backups/__init__.py:254
@@ -185,6 +185,8 @@ msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
+"En sikkerhetskopi på tidsplanen feilet. De {error_count} foregående "
+"forsøkene lyktes heller ikke.  Den siste feilen er: {error_message}"
 
 #: plinth/modules/backups/__init__.py:250
 #, fuzzy
@@ -199,13 +201,15 @@ msgstr "{app} (Ingen data å sikkerhetskopiere)"
 
 #: plinth/modules/backups/forms.py:53
 msgid "Enable scheduled backups"
-msgstr ""
+msgstr "Aktiver regelmessige sikkerhetskopier"
 
 #: plinth/modules/backups/forms.py:54
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
+"Med dette aktivert tas det sikkerhetskopi hver dag, uke og måned, og eldre "
+"sikkerhetskopier fjernes."
 
 #: plinth/modules/backups/forms.py:58
 msgid "Number of daily backups to keep"
@@ -379,8 +383,8 @@ msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
-"Passord til SSH-tjeneren.<br>Nøkkelbasert SSH-autentisering er så langt ikke "
-"mulig."
+"Passord til SSH-tjeneren.<br>Nøkkelbasert SSH-autentisering er foreløbig "
+"ikke mulig."
 
 #: plinth/modules/backups/forms.py:267
 msgid "Remote backup repository already exists."
@@ -1013,7 +1017,7 @@ msgstr "Oppdater IP-adresse og domener"
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47
+#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:36
 msgid "Configuration updated"
 msgstr "Oppsett oppdatert"
 
@@ -1361,16 +1365,14 @@ msgstr ""
 "som ellers ikke ville kunne kontakte hverandre."
 
 #: plinth/modules/coturn/__init__.py:41
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It is not meant to be used directly by users. Servers such as matrix-"
-#| "synapse need to be configured with the details provided here."
+#, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
-"Det er ikke ment å brukes direkte av brukere. Tjenere som matrix-synapse må "
+"Det er ikke ment å brukes direkte av brukere. Tjenere som <a href="
+"\"{ms_url}\">Matrix Synapse</a> eller <a href=\"{e_url}\">ejabberd</a> må "
 "settes opp med detaljene herfra."
 
 #: plinth/modules/coturn/__init__.py:62
@@ -1498,12 +1500,14 @@ msgid "Diagnostics"
 msgstr "Diagnostikk"
 
 #: plinth/modules/diagnostics/__init__.py:98
+#: plinth/modules/email_server/templates/email_server.html:29
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
 #: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/email_server/templates/email_server.html:27
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
@@ -1511,6 +1515,7 @@ msgid "failed"
 msgstr "Oppsettet mislyktes."
 
 #: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/email_server/templates/email_server.html:25
 msgid "error"
 msgstr "feil"
 
@@ -2084,6 +2089,288 @@ msgstr ""
 "Ditt XMPP-tjenerdomene er satt til <b>%(domainname)s</b>. Bruker-ID-ene vil "
 "se slik ut: <i>username@%(domainname)s</i>. Du kan sette opp ditt domene på "
 "systemsiden <a href=\"%(index_url)s\"> Configure </a>."
+
+#: plinth/modules/email_server/__init__.py:49
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Email Server"
+msgstr "Nettprat-tjener"
+
+#: plinth/modules/email_server/__init__.py:81
+msgid "Powered by Postfix, Dovecot & Rspamd"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/__init__.py:66
+#: plinth/modules/email_server/aliases/__init__.py:73
+msgid "The alias was taken"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:13
+msgid "Must be at least 2 characters long"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:15
+msgid "Contains illegal characters"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:17
+msgid "Must start and end with a-z or 0-9"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:19
+msgid "Cannot be a number"
+msgstr ""
+
+#: plinth/modules/email_server/audit/home.py:23
+#: plinth/modules/email_server/audit/home.py:32
+#, fuzzy
+#| msgid "Directory does not exist."
+msgid "User does not exist"
+msgstr "Mappen finnes ikke."
+
+#: plinth/modules/email_server/audit/ldap.py:66
+msgid "Postfix-Dovecot SASL integration"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:67
+msgid "Postfix alias maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:68
+msgid "Postfix local recipient maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/rcube.py:31
+#, fuzzy
+#| msgid "Available Domains"
+msgid "RoundCube availability"
+msgstr "Tilgjengelige domener"
+
+#: plinth/modules/email_server/audit/rcube.py:32
+msgid "RoundCube configured for FreedomBox email"
+msgstr ""
+
+#: plinth/modules/email_server/audit/spam.py:86
+msgid "Inbound and outbound mail filters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:80
+msgid "Postfix TLS parameters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:81
+msgid "Postfix uses a TLS certificate"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:90
+#, fuzzy
+#| msgid "No certificate"
+msgid "Has a TLS certificate"
+msgstr "Sertifikat mangler"
+
+#: plinth/modules/email_server/forms.py:7
+#, fuzzy
+#| msgid "Domain"
+msgid "domain"
+msgstr "Domene"
+
+#: plinth/modules/email_server/forms.py:14
+msgid "New alias (without @domain)"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:6
+#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/manifest.py:6
+msgid "Roundcube"
+msgstr "Roundcube"
+
+#: plinth/modules/email_server/manifest.py:12
+#, fuzzy
+#| msgid "Mozilla Thunderbird"
+msgid "Thunderbird"
+msgstr "Mozilla Thunderbird"
+
+#: plinth/modules/email_server/manifest.py:27
+msgid "K-9 Mail"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:40
+msgid "FairEmail"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:12
+msgid "You have no email aliases."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:21
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disable selected"
+msgstr "Deaktivert"
+
+#: plinth/modules/email_server/templates/email_alias.html:24
+#, fuzzy
+#| msgid "cable is connected"
+msgid "Enable selected"
+msgstr "kabel er tilknyttet"
+
+#: plinth/modules/email_server/templates/email_alias.html:27
+#, fuzzy
+#| msgid "Deleted selected snapshots"
+msgid "Delete selected"
+msgstr "Slettet alle valgte avbildninger"
+
+#: plinth/modules/email_server/templates/email_alias.html:31
+#, fuzzy
+#| msgid "Create a new backup"
+msgid "Create a new email alias"
+msgstr "Lag ny sikkerhetskopi"
+
+#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
+msgid "Add"
+msgstr "Legg til"
+
+#: plinth/modules/email_server/templates/email_domains.html:19
+#, fuzzy
+#| msgid "New Backup"
+msgid "New value"
+msgstr "Ny sikkerhetskopi"
+
+#: plinth/modules/email_server/templates/email_domains.html:31
+#: plinth/modules/email_server/templates/email_security.html:23
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr "Oppdater"
+
+#: plinth/modules/email_server/templates/email_form_base.html:12
+msgid "There was a problem with your request. Please try again."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:13
+msgid "Postfix TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:18
+msgid "Dovecot TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:14
+msgid "Visit Rspamd administration interface"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:18
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Alert"
+msgstr "Type tjeneste"
+
+#: plinth/modules/email_server/templates/email_server.html:38
+msgid "Repair"
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:15
+#, fuzzy
+#| msgid "Path is not a directory."
+msgid "You do not have a home directory."
+msgstr "Stien er ikke en katalog."
+
+#: plinth/modules/email_server/templates/my_mail.html:17
+msgid "Create one to begin receiving emails."
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:22
+#, fuzzy
+#| msgid "Updated media directory"
+msgid "Create home directory"
+msgstr "Oppdatert mediekatalog"
+
+#: plinth/modules/email_server/templates/tls_form.html:10
+#, fuzzy
+#| msgid "Current status:"
+msgid "Keep current settings"
+msgstr "Nåværende status:"
+
+#: plinth/modules/email_server/templates/tls_form.html:19
+#, fuzzy
+#| msgid "Let's Encrypt"
+msgid "Use Let's Encrypt"
+msgstr "Let's Encrypt"
+
+#: plinth/modules/email_server/templates/tls_form.html:24
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Common name"
+msgstr "Domenenavn satt"
+
+#: plinth/modules/email_server/templates/tls_form.html:38
+msgid "Use custom values"
+msgstr ""
+
+#: plinth/modules/email_server/templates/tls_form.html:43
+#, fuzzy
+#| msgid "Certificate Status"
+msgid "Certificate path"
+msgstr "Sertifikatsstatus"
+
+#: plinth/modules/email_server/templates/tls_form.html:53
+#, fuzzy
+#| msgid "Private key of this machine"
+msgid "Private key path"
+msgstr "Privatnøkkel tilhørende denne maskinen"
+
+#: plinth/modules/email_server/templates/tls_form.html:67
+msgid "Use system default"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:24
+#: plinth/modules/email_server/views.py:32 plinth/templates/base.html:110
+msgid "Home"
+msgstr "Hjem"
+
+#: plinth/modules/email_server/views.py:25
+msgid "My Mail"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:26
+#: plinth/modules/email_server/views.py:33
+msgid "My Aliases"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:27
+#: plinth/modules/networks/templates/connection_show.html:259
+#: plinth/modules/security/__init__.py:45
+msgid "Security"
+msgstr "Sikkerhet"
+
+#: plinth/modules/email_server/views.py:28
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
+msgid "Domains"
+msgstr "Domener"
+
+#: plinth/modules/email_server/views.py:104
+#, python-brace-format
+msgid "Internal error in {0}"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:107
+msgid "Check syslog for more information"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:181
+#, fuzzy
+#| msgid "Enable damage"
+msgid "Enabled aliases"
+msgstr "Aktiver skade"
+
+#: plinth/modules/email_server/views.py:182
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disabled aliases"
+msgstr "Deaktivert"
 
 #: plinth/modules/firewall/__init__.py:33
 #, python-brace-format
@@ -3633,10 +3920,6 @@ msgstr "Kanseller"
 msgid "Service"
 msgstr "Tjeneste"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "Domener"
-
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
 msgid "OpenPGP Fingerprint"
@@ -4370,11 +4653,6 @@ msgstr "IPv6"
 #: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "Denne forbindelsen er ikke aktiv."
-
-#: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:46
-msgid "Security"
-msgstr "Sikkerhet"
 
 #: plinth/modules/networks/templates/connection_show.html:264
 #: plinth/modules/networks/templates/connection_show.html:284
@@ -5650,11 +5928,6 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:55
-#: plinth/modules/roundcube/manifest.py:6
-msgid "Roundcube"
-msgstr "Roundcube"
-
 #: plinth/modules/roundcube/__init__.py:56
 msgid "Email Client"
 msgstr "E-postklient"
@@ -5959,16 +6232,20 @@ msgstr ""
 #: plinth/modules/security/templates/security_report.html:19
 #, fuzzy
 #| msgid ""
-#| "The following table lists the reported number of security vulnerabilities "
-#| "for each installed app."
+#| "The following table lists the current reported number, and historical "
+#| "count, of security vulnerabilities for each installed app. More "
+#| "information on the vulnerabilities can be found on the <a href=\"https://"
+#| "security-tracker.debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgid ""
-"The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. More information on the "
+"The following table lists the current reported number of security "
+"vulnerabilities for each installed app. More information on the "
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
-"Følgende tabell lister antall innrapporterte sikkerhetssårbarheter for hver "
-"installerte program."
+"Følgende tabell lister gjeldende innrapporterte og historiske antall "
+"sikkerhetssårbarheter for hver installerte program. Mer informasjon om "
+"sårbarehetene kan finnes i <a href=\"https://security-tracker.debian.org/"
+"tracker/\">Debians sikkerhetsfeiloversikt</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -5996,36 +6273,30 @@ msgstr "Vis sikkerhetssårbarheter"
 
 #: plinth/modules/security/templates/security_report.html:47
 #, fuzzy
-#| msgid "Show security vulnerabilities"
-msgid "Past Vulnerabilities"
-msgstr "Vis sikkerhetssårbarheter"
-
-#: plinth/modules/security/templates/security_report.html:48
-#, fuzzy
 #| msgid "Block Sandbox"
 msgid "Sandboxed"
 msgstr "Block-sandkassen"
 
-#: plinth/modules/security/templates/security_report.html:49
+#: plinth/modules/security/templates/security_report.html:48
 #, fuzzy
 #| msgid "Block Sandbox"
 msgid "Sandbox Coverage"
 msgstr "Block-sandkassen"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:58
 #, fuzzy
 msgid "N/A"
 msgstr "I/t"
 
-#: plinth/modules/security/templates/security_report.html:62
+#: plinth/modules/security/templates/security_report.html:60
 msgid "Yes"
 msgstr "Ja"
 
-#: plinth/modules/security/templates/security_report.html:64
+#: plinth/modules/security/templates/security_report.html:62
 msgid "No"
 msgstr "Nei"
 
-#: plinth/modules/security/templates/security_report.html:71
+#: plinth/modules/security/templates/security_report.html:69
 msgid "Not running"
 msgstr "Kjører ikke"
 
@@ -6164,10 +6435,8 @@ msgid "Make files in this folder available to anyone with the link."
 msgstr "Gjør filene i denne mappen tilgjengelig for alle som har lenken."
 
 #: plinth/modules/sharing/forms.py:34
-#, fuzzy
-#| msgid "User groups that can read the files in the share"
 msgid "User groups that can read the files in the share:"
-msgstr "Brukergrupper som kan lese filene på det delte området"
+msgstr "Brukergrupper som kan lese filene på det delte området:"
 
 #: plinth/modules/sharing/forms.py:36
 msgid ""
@@ -6895,10 +7164,6 @@ msgstr "Kjæledyrnavn"
 msgid "Add new introducer"
 msgstr "Legg til en ny introduserer"
 
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
-msgid "Add"
-msgstr "Legg til"
-
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
 msgid "Connected introducers"
 msgstr "Tilknyttede introduserere"
@@ -7105,7 +7370,7 @@ msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
 "En Tor SOCKS-port er tilgjengelig på din %(box_name)s på TCP port 9050."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:216
+#: plinth/modules/tor/views.py:137 plinth/views.py:218
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
@@ -7189,13 +7454,6 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
-
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
-msgstr "Oppdater"
 
 #: plinth/modules/upgrades/__init__.py:122
 #, fuzzy
@@ -8088,6 +8346,63 @@ msgstr "Slett tilkobling"
 msgid "Server deleted."
 msgstr "Tjener slettet."
 
+#: plinth/modules/wordpress/__init__.py:36
+msgid ""
+"WordPress is a popular way to create and manage websites and blogs. Content "
+"can be managed using a visual interface. Layout and functionality of the web "
+"pages can be customized. Appearance can be chosen using themes. "
+"Administration interface and produced web pages are suitable for mobile "
+"devices."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:42
+#, python-brace-format
+msgid ""
+"You need to run WordPress setup by visiting the app before making the site "
+"publicly available below. Setup must be run when accessing {box_name} with "
+"the correct domain name. Enable permalinks in administrator interface for "
+"better URLs to your pages and posts."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:47
+msgid ""
+"WordPress has its own user accounts. First administrator account is created "
+"during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
+"to reach administration interface in the future."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:51
+msgid ""
+"After a major version upgrade, you need to manually run database upgrade "
+"from administrator interface. Additional plugins or themes may be installed "
+"and upgraded at your own risk."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:69
+#: plinth/modules/wordpress/manifest.py:6
+#, fuzzy
+#| msgid "Address"
+msgid "WordPress"
+msgstr "Adresse"
+
+#: plinth/modules/wordpress/__init__.py:70
+#, fuzzy
+#| msgid "Wiki and Blog"
+msgid "Website and Blog"
+msgstr "Wiki og Blogg"
+
+#: plinth/modules/wordpress/forms.py:14
+#, fuzzy
+#| msgid "public access"
+msgid "Public access"
+msgstr "Offentlig tilgang"
+
+#: plinth/modules/wordpress/forms.py:15
+msgid ""
+"Allow all visitors. Disabling allows only administrators to view the "
+"WordPress site or blog. Enable only after performing initial WordPress setup."
+msgstr ""
+
 #: plinth/modules/zoph/__init__.py:33
 #, python-brace-format
 msgid ""
@@ -8115,7 +8430,7 @@ msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:63
 msgid "Photo Organizer"
-msgstr ""
+msgstr "Foto-organiserer"
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -8126,6 +8441,8 @@ msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Når dette er aktivt gjøres det forespørsler til tjenere hos OpenStreetMap "
+"fra brukerens nettleser. Dette gir inngrep i privatsværen."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
@@ -8139,7 +8456,9 @@ msgstr "Gå i gang med oppsett"
 msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
-msgstr "Brukerkontoen %(username)s vil bli administratorkonto for Zoph."
+msgstr ""
+"Brukerkontoen <strong>%(username)s</strong> vil bli administratorkonto for "
+"Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
@@ -8239,10 +8558,6 @@ msgstr "Kjernefunksjonalitet og nettbrukergrensesnitt for %(box_name)s"
 #: plinth/templates/base.html:107
 msgid " Home"
 msgstr " Hjem"
-
-#: plinth/templates/base.html:110
-msgid "Home"
-msgstr "Hjem"
 
 #: plinth/templates/base.html:115
 msgid " Apps"
@@ -8535,6 +8850,11 @@ msgstr "%(percentage)s%% fullført"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Show security vulnerabilities"
+#~ msgid "Past Vulnerabilities"
+#~ msgstr "Vis sikkerhetssårbarheter"
 
 #~ msgid "Message Archive Management enabled"
 #~ msgstr "Meldingsarkivhåndtering aktivert"
@@ -9295,9 +9615,6 @@ msgstr "Gujarati"
 #~ msgid "Web Server over Secure Socket Layer"
 #~ msgstr "Webtjener over SSL"
 
-#~ msgid "Current status:"
-#~ msgstr "Nåværende status:"
-
 #~ msgid "Delete Wiki or Blog"
 #~ msgstr "Slette wiki eller blogg"
 
@@ -9318,9 +9635,6 @@ msgstr "Gujarati"
 
 #~ msgid "Abort"
 #~ msgstr "Anuller"
-
-#~ msgid "New Backup"
-#~ msgstr "Ny sikkerhetskopi"
 
 #~ msgid "chrony client in contact with servers"
 #~ msgstr "chrony-klient har kontakt med tjenere"

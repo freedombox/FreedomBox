@@ -15,3 +15,6 @@ freedombox binary: non-standard-apache2-configuration-name *
 # web servers. At some point we would like to work with other web servers but
 # that requires significant effort.
 freedombox binary: web-application-works-only-with-apache
+
+# Temporary workaround for https://bugs.debian.org/992465
+freedombox: systemd-service-file-outside-lib usr/lib/systemd/system/*.service

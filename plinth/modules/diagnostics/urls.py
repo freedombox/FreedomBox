@@ -9,6 +9,6 @@ from . import views
 
 urlpatterns = [
     url(r'^sys/diagnostics/$', views.index, name='index'),
-    url(r'^sys/diagnostics/(?P<app_id>[1-9a-z\-]+)/$', views.diagnose_app,
+    url(r'^sys/diagnostics/(?P<app_id>[1-9a-z\-_]+)/$', views.diagnose_app,
         name='app'),
 ]

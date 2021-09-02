@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-16 18:38-0400\n"
+"POT-Creation-Date: 2021-08-30 19:29-0400\n"
 "PO-Revision-Date: 2021-04-22 21:32+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Oldal forrása"
 
-#: plinth/context_processors.py:23 plinth/views.py:78
+#: plinth/context_processors.py:23 plinth/views.py:80
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -1005,7 +1005,7 @@ msgstr "IP címek és tartományok frissítése"
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47
+#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:36
 msgid "Configuration updated"
 msgstr "A beállítások frissültek"
 
@@ -1491,15 +1491,18 @@ msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
 #: plinth/modules/diagnostics/__init__.py:98
+#: plinth/modules/email_server/templates/email_server.html:29
 msgid "passed"
 msgstr "sikerült"
 
 #: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/email_server/templates/email_server.html:27
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "sikertelen"
 
 #: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/email_server/templates/email_server.html:25
 msgid "error"
 msgstr "hiba"
 
@@ -2083,6 +2086,288 @@ msgstr ""
 "Az XMPP kiszolgálód domain neve <b>%(domainname)s</b>. A felhasználói ID-k "
 "így fognak kinézni: <i>username@%(domainname)s</i>. Beállíthatod a "
 "rendszered domain nevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
+
+#: plinth/modules/email_server/__init__.py:49
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Email Server"
+msgstr "Chat szerver"
+
+#: plinth/modules/email_server/__init__.py:81
+msgid "Powered by Postfix, Dovecot & Rspamd"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/__init__.py:66
+#: plinth/modules/email_server/aliases/__init__.py:73
+msgid "The alias was taken"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:13
+msgid "Must be at least 2 characters long"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:15
+msgid "Contains illegal characters"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:17
+msgid "Must start and end with a-z or 0-9"
+msgstr ""
+
+#: plinth/modules/email_server/aliases/models.py:19
+msgid "Cannot be a number"
+msgstr ""
+
+#: plinth/modules/email_server/audit/home.py:23
+#: plinth/modules/email_server/audit/home.py:32
+#, fuzzy
+#| msgid "Specified directory does not exist."
+msgid "User does not exist"
+msgstr "A megadott könyvtár nem létezik."
+
+#: plinth/modules/email_server/audit/ldap.py:66
+msgid "Postfix-Dovecot SASL integration"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:67
+msgid "Postfix alias maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/ldap.py:68
+msgid "Postfix local recipient maps"
+msgstr ""
+
+#: plinth/modules/email_server/audit/rcube.py:31
+#, fuzzy
+#| msgid "unavailable"
+msgid "RoundCube availability"
+msgstr "elérhetetlen"
+
+#: plinth/modules/email_server/audit/rcube.py:32
+msgid "RoundCube configured for FreedomBox email"
+msgstr ""
+
+#: plinth/modules/email_server/audit/spam.py:86
+msgid "Inbound and outbound mail filters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:80
+msgid "Postfix TLS parameters"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:81
+msgid "Postfix uses a TLS certificate"
+msgstr ""
+
+#: plinth/modules/email_server/audit/tls.py:90
+#, fuzzy
+#| msgid "No certificate"
+msgid "Has a TLS certificate"
+msgstr "Nincs tanúsítvány"
+
+#: plinth/modules/email_server/forms.py:7
+#, fuzzy
+#| msgid "Domain"
+msgid "domain"
+msgstr "Domain"
+
+#: plinth/modules/email_server/forms.py:14
+msgid "New alias (without @domain)"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:6
+#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/manifest.py:6
+msgid "Roundcube"
+msgstr "Roundcube"
+
+#: plinth/modules/email_server/manifest.py:12
+#, fuzzy
+#| msgid "Mozilla Thunderbird"
+msgid "Thunderbird"
+msgstr "Mozilla Thunderbird"
+
+#: plinth/modules/email_server/manifest.py:27
+msgid "K-9 Mail"
+msgstr ""
+
+#: plinth/modules/email_server/manifest.py:40
+msgid "FairEmail"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:12
+msgid "You have no email aliases."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_alias.html:21
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disable selected"
+msgstr "Letiltva"
+
+#: plinth/modules/email_server/templates/email_alias.html:24
+#, fuzzy
+#| msgid "cable is connected"
+msgid "Enable selected"
+msgstr "kábel csatlakoztatva"
+
+#: plinth/modules/email_server/templates/email_alias.html:27
+#, fuzzy
+#| msgid "Deleted selected snapshots"
+msgid "Delete selected"
+msgstr "Kiválasztott pillanatképek törölve"
+
+#: plinth/modules/email_server/templates/email_alias.html:31
+#, fuzzy
+#| msgid "Create a new backup"
+msgid "Create a new email alias"
+msgstr "Új biztonsági másolat létrehozása"
+
+#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: plinth/modules/email_server/templates/email_domains.html:19
+#, fuzzy
+#| msgid "New Backup"
+msgid "New value"
+msgstr "Új biztonsági másolat"
+
+#: plinth/modules/email_server/templates/email_domains.html:31
+#: plinth/modules/email_server/templates/email_security.html:23
+#: plinth/modules/upgrades/__init__.py:77
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:62
+msgid "Update"
+msgstr "Frissítés"
+
+#: plinth/modules/email_server/templates/email_form_base.html:12
+msgid "There was a problem with your request. Please try again."
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:13
+msgid "Postfix TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_security.html:18
+msgid "Dovecot TLS"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:14
+msgid "Visit Rspamd administration interface"
+msgstr ""
+
+#: plinth/modules/email_server/templates/email_server.html:18
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Alert"
+msgstr "Szolgáltatás típusa"
+
+#: plinth/modules/email_server/templates/email_server.html:38
+msgid "Repair"
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:15
+#, fuzzy
+#| msgid "Path is not a directory."
+msgid "You do not have a home directory."
+msgstr "Az elérési út nem könyvtár."
+
+#: plinth/modules/email_server/templates/my_mail.html:17
+msgid "Create one to begin receiving emails."
+msgstr ""
+
+#: plinth/modules/email_server/templates/my_mail.html:22
+#, fuzzy
+#| msgid "Updated media directory"
+msgid "Create home directory"
+msgstr "Médiakönyvtár frissítve"
+
+#: plinth/modules/email_server/templates/tls_form.html:10
+#, fuzzy
+#| msgid "Current status:"
+msgid "Keep current settings"
+msgstr "Jelenlegi állapot:"
+
+#: plinth/modules/email_server/templates/tls_form.html:19
+#, fuzzy
+#| msgid "Let's Encrypt"
+msgid "Use Let's Encrypt"
+msgstr "Let's Encrypt"
+
+#: plinth/modules/email_server/templates/tls_form.html:24
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Common name"
+msgstr "Domain név beállítva"
+
+#: plinth/modules/email_server/templates/tls_form.html:38
+msgid "Use custom values"
+msgstr ""
+
+#: plinth/modules/email_server/templates/tls_form.html:43
+#, fuzzy
+#| msgid "Certificate Status"
+msgid "Certificate path"
+msgstr "Tanúsítvány állapot"
+
+#: plinth/modules/email_server/templates/tls_form.html:53
+#, fuzzy
+#| msgid "Private repository"
+msgid "Private key path"
+msgstr "Privát tároló"
+
+#: plinth/modules/email_server/templates/tls_form.html:67
+msgid "Use system default"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:24
+#: plinth/modules/email_server/views.py:32 plinth/templates/base.html:110
+msgid "Home"
+msgstr "Kezdőlap"
+
+#: plinth/modules/email_server/views.py:25
+msgid "My Mail"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:26
+#: plinth/modules/email_server/views.py:33
+msgid "My Aliases"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:27
+#: plinth/modules/networks/templates/connection_show.html:259
+#: plinth/modules/security/__init__.py:45
+msgid "Security"
+msgstr "Biztonság"
+
+#: plinth/modules/email_server/views.py:28
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
+msgid "Domains"
+msgstr "Domainek"
+
+#: plinth/modules/email_server/views.py:104
+#, python-brace-format
+msgid "Internal error in {0}"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:107
+msgid "Check syslog for more information"
+msgstr ""
+
+#: plinth/modules/email_server/views.py:181
+#, fuzzy
+#| msgid "Enable damage"
+msgid "Enabled aliases"
+msgstr "Sérülés engedélyezése"
+
+#: plinth/modules/email_server/views.py:182
+#, fuzzy
+#| msgid "Disabled"
+msgid "Disabled aliases"
+msgstr "Letiltva"
 
 #: plinth/modules/firewall/__init__.py:33
 #, python-brace-format
@@ -3623,10 +3908,6 @@ msgstr "Mégse"
 msgid "Service"
 msgstr "Szolgáltatás"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "Domainek"
-
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
 msgid "OpenPGP Fingerprint"
@@ -4402,11 +4683,6 @@ msgstr "IPv6"
 #: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "Ez a kapcsolat nem aktív."
-
-#: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:46
-msgid "Security"
-msgstr "Biztonság"
 
 #: plinth/modules/networks/templates/connection_show.html:264
 #: plinth/modules/networks/templates/connection_show.html:284
@@ -5587,11 +5863,6 @@ msgstr ""
 "href=\"https://www.google.com/settings/security/lesssecureapps\">https://www."
 "google.com/settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:55
-#: plinth/modules/roundcube/manifest.py:6
-msgid "Roundcube"
-msgstr "Roundcube"
-
 #: plinth/modules/roundcube/__init__.py:56
 msgid "Email Client"
 msgstr "E-mail kliens"
@@ -5874,8 +6145,8 @@ msgstr ""
 #| "The following table lists the current reported number, and historical "
 #| "count, of security vulnerabilities for each installed app."
 msgid ""
-"The following table lists the current reported number, and historical count, "
-"of security vulnerabilities for each installed app. More information on the "
+"The following table lists the current reported number of security "
+"vulnerabilities for each installed app. More information on the "
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
@@ -5905,30 +6176,26 @@ msgid "Current Vulnerabilities"
 msgstr "Jelenlegi biztonsági rések"
 
 #: plinth/modules/security/templates/security_report.html:47
-msgid "Past Vulnerabilities"
-msgstr "Múltbéli biztonsági rések"
-
-#: plinth/modules/security/templates/security_report.html:48
 msgid "Sandboxed"
 msgstr "Virtuális környezetben"
 
-#: plinth/modules/security/templates/security_report.html:49
+#: plinth/modules/security/templates/security_report.html:48
 msgid "Sandbox Coverage"
 msgstr "Virtuális környezet lefedettsége"
 
-#: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/security/templates/security_report.html:58
 msgid "N/A"
 msgstr ""
 
-#: plinth/modules/security/templates/security_report.html:62
+#: plinth/modules/security/templates/security_report.html:60
 msgid "Yes"
 msgstr "Igen"
 
-#: plinth/modules/security/templates/security_report.html:64
+#: plinth/modules/security/templates/security_report.html:62
 msgid "No"
 msgstr "Nem"
 
-#: plinth/modules/security/templates/security_report.html:71
+#: plinth/modules/security/templates/security_report.html:69
 msgid "Not running"
 msgstr "Nem fut"
 
@@ -6781,10 +7048,6 @@ msgstr "Becenév"
 msgid "Add new introducer"
 msgstr "Új bevezető hozzáadása"
 
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
-msgid "Add"
-msgstr "Hozzáadás"
-
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
 msgid "Connected introducers"
 msgstr "Csatlakozott bevezetők"
@@ -6992,7 +7255,7 @@ msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
 "Egy Tor SOCKS port elérhető a te %(box_name)s eszközöd 9050-es TCP portján."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:216
+#: plinth/modules/tor/views.py:137 plinth/views.py:218
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
@@ -7074,13 +7337,6 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
-
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
-msgid "Update"
-msgstr "Frissítés"
 
 #: plinth/modules/upgrades/__init__.py:122
 msgid "Updates"
@@ -7860,6 +8116,63 @@ msgstr "Kapcsolat törlése a kiszolgálóval"
 msgid "Server deleted."
 msgstr "Kiszolgáló törölve."
 
+#: plinth/modules/wordpress/__init__.py:36
+msgid ""
+"WordPress is a popular way to create and manage websites and blogs. Content "
+"can be managed using a visual interface. Layout and functionality of the web "
+"pages can be customized. Appearance can be chosen using themes. "
+"Administration interface and produced web pages are suitable for mobile "
+"devices."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:42
+#, python-brace-format
+msgid ""
+"You need to run WordPress setup by visiting the app before making the site "
+"publicly available below. Setup must be run when accessing {box_name} with "
+"the correct domain name. Enable permalinks in administrator interface for "
+"better URLs to your pages and posts."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:47
+msgid ""
+"WordPress has its own user accounts. First administrator account is created "
+"during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
+"to reach administration interface in the future."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:51
+msgid ""
+"After a major version upgrade, you need to manually run database upgrade "
+"from administrator interface. Additional plugins or themes may be installed "
+"and upgraded at your own risk."
+msgstr ""
+
+#: plinth/modules/wordpress/__init__.py:69
+#: plinth/modules/wordpress/manifest.py:6
+#, fuzzy
+#| msgid "Address"
+msgid "WordPress"
+msgstr "Cím"
+
+#: plinth/modules/wordpress/__init__.py:70
+#, fuzzy
+#| msgid "Wiki and Blog"
+msgid "Website and Blog"
+msgstr "Wiki és blog"
+
+#: plinth/modules/wordpress/forms.py:14
+#, fuzzy
+#| msgid "public access"
+msgid "Public access"
+msgstr "nyilvános hozzáférés"
+
+#: plinth/modules/wordpress/forms.py:15
+msgid ""
+"Allow all visitors. Disabling allows only administrators to view the "
+"WordPress site or blog. Enable only after performing initial WordPress setup."
+msgstr ""
+
 #: plinth/modules/zoph/__init__.py:33
 #, python-brace-format
 msgid ""
@@ -8005,10 +8318,6 @@ msgstr "Alapvető funkcionalitás és webes felület %(box_name)s eszközére"
 #: plinth/templates/base.html:107
 msgid " Home"
 msgstr " Kezdőlap"
-
-#: plinth/templates/base.html:110
-msgid "Home"
-msgstr "Kezdőlap"
 
 #: plinth/templates/base.html:115
 msgid " Apps"
@@ -8298,6 +8607,9 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:113
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Past Vulnerabilities"
+#~ msgstr "Múltbéli biztonsági rések"
 
 #~ msgid "Message Archive Management enabled"
 #~ msgstr "Üzenetarchívum kezelése engedélyezve"
@@ -9073,9 +9385,6 @@ msgstr "Gudzsaráti"
 #~ msgid "Web Server over Secure Socket Layer"
 #~ msgstr "Webszerver Secure Socket Layer-en keresztül"
 
-#~ msgid "Current status:"
-#~ msgstr "Jelenlegi állapot:"
-
 #~ msgid "Delete Wiki or Blog"
 #~ msgstr "Wiki vagy Blog törlése"
 
@@ -9096,9 +9405,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Abort"
 #~ msgstr "Megszakítás"
-
-#~ msgid "New Backup"
-#~ msgstr "Új biztonsági másolat"
 
 #, fuzzy
 #~| msgid "NTP client in contact with servers"

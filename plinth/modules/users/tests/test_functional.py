@@ -158,7 +158,7 @@ def can_log_in(session_browser, username):
     parsers.parse(
         'I can log in as the user {username:w} with password {password:w}'))
 def can_log_in_with_password(session_browser, username, password):
-    functional.visit(session_browser, '/plinth/accounts/logout/')
+    functional.logout(session_browser)
     functional.login_with_account(session_browser, functional.base_url,
                                   username, password)
     assert len(session_browser.find_by_id('id_user_menu')) > 0

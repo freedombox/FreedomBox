@@ -1,0 +1,22 @@
+# Direct edits to this file will be lost!
+# Manage your settings on Plinth https://localhost/plinth/apps/email_server
+
+uris = ldap://127.0.0.1
+base = dc=thisbox
+
+user_attrs = \
+  =home=%{ldap:homeDirectory}, \
+  =uid=%{ldap:uidNumber}, \
+  =gid=%{ldap:gidNumber}, \
+  =user=%{ldap:uid}, \
+  =mail=maildir:~/Maildir:LAYOUT=index
+
+# Support user lookup by UID number
+
+user_filter = \
+  (&(objectClass=posixAccount)(!(uidNumber=0))(uidNumber=%n))
+
+# doveadm -A
+
+iterate_attrs = =user=%{ldap:uid}
+iterate_filter = (objectClass=posixAccount)

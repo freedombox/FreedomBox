@@ -20,5 +20,3 @@ and are updated when the API is updated.
    views
    forms
    notifications
-
-.. automodule:: plinth.modules.ttrss

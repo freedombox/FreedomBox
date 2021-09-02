@@ -1,0 +1,82 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+import argparse
+import logging
+import os
+import sys
+
+import plinth.log
+
+EXIT_SYNTAX = 10
+EXIT_PERM = 20
+
+# Set up logging
+plinth.log.pipe_to_syslog(to_stderr='tty')
+logger = logging.getLogger(os.path.basename(__file__))
+
+
+def reserved_for_root(fun):
+    def wrapped(*args, **kwargs):
+        if os.getuid() != 0:
+            logger.critical('This action is reserved for root')
+            sys.exit(EXIT_PERM)
+        return fun(*args, **kwargs)
+    return wrapped
+
+
+def main():
+    if not sys.stdin.isatty():
+        print('WARNING: Output will not be shown. Check syslog for logs',
+              file=sys.stderr)
+
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-i', nargs='+', dest='ipc')
+
+    # Select the first non-empty dict item
+    adict = vars(parser.parse_args())
+    generator = (kv for kv in adict.items() if kv[1] is not None)
+    subcommand, arguments = next(generator)
+
+    function = globals()['subcommand_' + subcommand]
+    try:
+        function(*arguments)
+    except Exception as e:
+        logger.exception(e)
+        _log_additional_info()
+        sys.exit(1)
+
+
+@reserved_for_root
+def subcommand_ipc(module_name, action_name, *args):
+    import plinth.modules.email_server.audit as audit
+
+    # We only run actions defined in the audit module
+    if module_name not in audit.__all__:
+        logger.critical('Bad module name: %r', module_name)
+        sys.exit(EXIT_SYNTAX)
+
+    module = getattr(audit, module_name)
+    function = getattr(module, 'action_' + action_name, None)
+    if function is None:
+        logger.critical('Bad action: %s/%r', module_name, action_name)
+        sys.exit(EXIT_SYNTAX)
+
+    function(*args)
+
+
+def _log_additional_info():
+    import grp
+    import pwd
+    resu = ','.join(pwd.getpwuid(uid).pw_name for uid in os.getresuid())
+    resg = ','.join(grp.getgrgid(gid).gr_name for gid in os.getresgid())
+    pyver = sys.version.replace('\n', ' ')
+    logger.error('--- Additional Information ---')
+    logger.error('resuid=%s, resgid=%s', resu, resg)
+    logger.error('argv=%r, cwd=%r', sys.argv, os.getcwd())
+    logger.error('pyver=%s (%s)', pyver, os.uname().machine)
+
+
+if __name__ == '__main__':
+    main()

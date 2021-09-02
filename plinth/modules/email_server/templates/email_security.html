@@ -1,0 +1,27 @@
+{# SPDX-License-Identifier: AGPL-3.0-or-later #}
+{% extends "email_form_base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+  {{ block.super }}
+
+  <form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>{% trans "Postfix TLS" %}</legend>
+      {% include "tls_form.html" with prefix="postfix" proto="smtp" %}
+    </fieldset>
+
+    <fieldset>
+      <legend>{% trans "Dovecot TLS" %}</legend>
+      {% include "tls_form.html" with prefix="dovecot" proto="imap" %}
+    </fieldset>
+
+    <input class="btn btn-primary" type="submit"
+           name="btn_update" value="{% trans 'Update' %}">
+  </form>
+
+{% endblock %}
+

@@ -41,25 +41,11 @@ Es importante verificar las imágenes que has descargado para asegurar que el fi
 
   * Primero abre un terminal e importa las claves publicas de los desarrolladores de !FreedomBox que construyeron las imágenes:
   {{{
-$ gpg --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
-
-$ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
-
-# Esta es la clave del servidor de integración contínua de FreedomBox
-$ gpg --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-}}}
-  Si este comando muestra un error como ''new key but contains no user ID - skipped'' usa un servidor de claves diferente para descargarlas:
-  {{{
-$ gpg --keyserver keys.gnupg.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
-$ gpg --keyserver keys.gnupg.net --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
-$ gpg --keyserver keys.gnupg.net --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-  }}}
-  O
-  {{{
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+# Esta es la clave del servidor de integración contínua de FreedomBox
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-  }}}
+}}}
   * A continuación, verifica la huella de las claves públicas:
   {{{
 $ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
