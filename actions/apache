@@ -126,6 +126,9 @@ def subcommand_setup(arguments):
         # Disable /server-status page to avoid leaking private info.
         webserver.disable('status', kind='module')
 
+        # Enable HTTP/2 protocol
+        webserver.enable('http2', kind='module')
+
         # switch to mod_ssl from mod_gnutls
         webserver.disable('gnutls', kind='module')
         webserver.enable('ssl', kind='module')
