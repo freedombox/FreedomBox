@@ -6,10 +6,10 @@ Functional, browser based tests for mediawiki app.
 import pathlib
 from urllib.parse import urlparse
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import requests
 from plinth.tests import functional
 from plinth.tests.functional import config
+from pytest_bdd import given, parsers, scenarios, then, when
 
 scenarios('mediawiki.feature')
 
@@ -76,9 +76,18 @@ def login_to_mediawiki_with_credentials(session_browser, username, password):
     _login_with_credentials(session_browser, username, password)
 
 
-@when('I delete the mediawiki main page')
-def mediawiki_delete_main_page(session_browser):
-    _delete_main_page(session_browser)
+@when(
+    parsers.parse('I delete the mediawiki main page with credentials '
+                  '{username:w} and {password:w}'))
+def mediawiki_delete_main_page(session_browser, username, password):
+    _delete_main_page(session_browser, username, password)
+
+
+@when(
+    parsers.parse('I delete {image:S} image with credentials '
+                  '{username:w} and {password:w}'))
+def delete_image(session_browser, username, password, image):
+    _delete_image(session_browser, username, password, image)
 
 
 @then('the mediawiki main page should be restored')
@@ -94,10 +103,17 @@ def upload_image(session_browser, username, password, image):
     _upload_image(session_browser, username, password, image)
 
 
+@given(
+    parsers.parse('I ensure that there is {image:S} image with credentials '
+                  '{username:w} and {password:w}'))
+def ensure_image_exists(session_browser, username, password, image):
+    if not _image_exists(session_browser, image):
+        _upload_image(session_browser, username, password, image)
+
+
 @then(parsers.parse('there should be {image:S} image'))
 def uploaded_image_should_be_available(session_browser, image):
-    uploaded_image = _get_uploaded_image(session_browser, image)
-    assert image.lower() == uploaded_image.lower()
+    assert _image_exists(session_browser, image)
 
 
 def _enable_public_registrations(browser):
@@ -179,7 +195,7 @@ def _login_with_credentials(browser, username, password):
                                  args=['t-upload'])
 
 
-def _upload_image(browser, username, password, image):
+def _upload_image(browser, username, password, image, ignore_warnings=True):
     """Upload an image to MediaWiki. Idempotent."""
     functional.visit(browser, '/mediawiki')
     _login(browser, username, password)
@@ -187,9 +203,20 @@ def _upload_image(browser, username, password, image):
     # Upload file
     functional.visit(browser, '/mediawiki/Special:Upload')
     file_path = pathlib.Path(__file__).parent
-    file_path /= '../../../../static/themes/default/img/' + image
+    file_path /= '../../../../static/themes/default/img/' + image.lower()
     browser.attach_file('wpUploadFile', str(file_path.resolve()))
+    if ignore_warnings:  # allow uploading file with the same name
+        browser.find_by_name('wpIgnoreWarning').first.click()
     functional.submit(browser, element=browser.find_by_name('wpUpload')[0])
+
+
+def _delete_image(browser, username, password, image):
+    """Delete an image from MediaWiki."""
+    _login(browser, username, password)
+    path = f'/mediawiki/index.php?title=File:{image}&action=delete'
+    functional.visit(browser, path)
+    delete_button = browser.find_by_id('mw-filedelete-submit')
+    functional.submit(browser, element=delete_button)
 
 
 def _get_number_of_uploaded_images(browser):
@@ -197,15 +224,22 @@ def _get_number_of_uploaded_images(browser):
     return len(browser.find_by_css('.TablePager_col_img_timestamp'))
 
 
-def _get_uploaded_image(browser, image):
+def _image_exists(browser, image):
+    """Check whether the given image exists."""
     functional.visit(browser, '/mediawiki/Special:ListFiles')
     elements = browser.find_link_by_partial_href(image)
-    return elements[0].value
+    if not elements:  # Necessary but insufficient check.
+        # Special:ListFiles also shows deleted images.
+        return False
+
+    # The second hyperlink is a direct link to the image.
+    response = requests.get(elements[1]['href'], verify=False)
+    return response.status_code != 404
 
 
-def _delete_main_page(browser):
+def _delete_main_page(browser, username, password):
     """Delete the mediawiki main page."""
-    _login(browser, 'admin', 'whatever123')
+    _login(browser, username, password)
     functional.visit(browser,
                      '/mediawiki/index.php?title=Main_Page&action=delete')
     with functional.wait_for_page_update(browser):

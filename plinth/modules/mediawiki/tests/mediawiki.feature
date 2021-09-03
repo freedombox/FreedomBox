@@ -67,12 +67,15 @@ Scenario: Upload SVG image
 @backups
 Scenario: Backup and restore mediawiki
   Given the mediawiki application is enabled
+  And I ensure that there is Noise.png image with credentials admin and whatever123
   When I create a backup of the mediawiki app data with name test_mediawiki
-  When I enable mediawiki public registrations
-  And I delete the mediawiki main page
+  And I enable mediawiki public registrations
+  And I delete Noise.png image with credentials admin and whatever123
+  And I delete the mediawiki main page with credentials admin and whatever123
   And I restore the mediawiki app data backup with name test_mediawiki
   Then the mediawiki main page should be restored
-  Then the mediawiki site should allow creating accounts
+  And there should be Noise.png image
+  And the mediawiki site should allow creating accounts
 
 Scenario: Disable mediawiki application
   Given the mediawiki application is enabled
