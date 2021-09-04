@@ -44,3 +44,11 @@ $wgDefaultSkin = "timeless";
 
 # Domain Name
 $wgServer = "https://freedombox.local";
+
+# Enable default extensions
+wfLoadExtension( 'Cite' );
+wfLoadExtension( 'Interwiki' );
+wfLoadExtension( 'MultimediaViewer' );
+wfLoadExtension( 'Renameuser' );
+wfLoadExtension( 'VisualEditor' );
+wfLoadExtension( 'WikiEditor' );
