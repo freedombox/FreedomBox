@@ -153,30 +153,35 @@ def _set_admin_password(browser, password):
     functional.submit(browser, form_class='form-configuration')
 
 
-def _verify_create_account_link(browser):
+def _is_create_account_available(browser):
+    """Load the create account page and return whether creating is allowed."""
     functional.visit(browser, '/mediawiki/index.php/Special:CreateAccount')
-    assert functional.eventually(browser.is_element_present_by_id,
-                                 args=['wpCreateaccount'])
+    return browser.is_element_present_by_id('wpCreateaccount')
+
+
+def _verify_create_account_link(browser):
+    assert functional.eventually(_is_create_account_available, args=[browser])
 
 
 def _verify_no_create_account_link(browser):
-    functional.visit(browser, '/mediawiki/index.php/Special:CreateAccount')
-    assert functional.eventually(browser.is_element_not_present_by_id,
-                                 args=['wpCreateaccount'])
+    assert functional.eventually(
+        lambda: not _is_create_account_available(browser))
+
+
+def _is_anonymouse_read_allowed(browser):
+    """Load the main page and check if anonymous reading is allowed."""
+    functional.visit(browser, '/mediawiki')
+    return browser.is_element_present_by_id('ca-nstab-main')
 
 
 def _verify_anonymous_reads_edits_link(browser):
-    functional.visit(browser, '/mediawiki')
-    assert functional.eventually(browser.is_element_present_by_id,
-                                 args=['ca-nstab-main'])
+    assert functional.eventually(_is_anonymouse_read_allowed, args=[browser])
 
 
 def _verify_no_anonymous_reads_edits_link(browser):
-    functional.visit(browser, '/mediawiki')
-    assert functional.eventually(browser.is_element_not_present_by_id,
-                                 args=['ca-nstab-main'])
-    assert functional.eventually(browser.is_element_present_by_id,
-                                 args=['ca-nstab-special'])
+    assert functional.eventually(
+        lambda: not _is_anonymouse_read_allowed(browser))
+    assert browser.is_element_present_by_id('ca-nstab-special')
 
 
 def _login(browser, username, password):
