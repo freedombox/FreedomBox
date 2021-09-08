@@ -928,9 +928,8 @@ def _get_latest_image_timestamp(distribution):
     url = URLS[distribution]
     response = urlopen(url[0:url.rindex('/')])
     page_contents = response.read().decode()
-    str_time = re.findall(r'\d{2}-[A-Z][a-z]{2}-\d{4} \d{2}:\d{2}',
-                          page_contents)[0]
-    return datetime.datetime.strptime(str_time, '%d-%b-%Y %H:%M').timestamp()
+    str_time = re.findall(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}', page_contents)[0]
+    return datetime.datetime.strptime(str_time, '%Y-%m-%d %H:%M').timestamp()
 
 
 def _is_update_required(distribution):
