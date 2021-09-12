@@ -12,7 +12,10 @@ omit = ["*/tests/*"]
 [tool.pytest.ini_options]
 addopts = "--ds=plinth.tests.data.django_test_settings"
 markers = [
+    "essential",
     "functional",
+    "skip",
+    "heavy",
     "apps",
     "avahi",
     "backups",
@@ -26,7 +29,6 @@ markers = [
     "deluge",
     "dynamicdns",
     "ejabberd",
-    "essential",
     "gitweb",
     "help",
     "i2p",
@@ -52,7 +54,6 @@ markers = [
     "security",
     "shadowsocks",
     "sharing",
-    "skip",
     "snapshot",
     "ssh",
     "sso",

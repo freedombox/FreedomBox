@@ -338,7 +338,7 @@ For more information on translations: https://wiki.debian.org/FreedomBox/Transla
 
 ### Running Tests
 
-To run all the tests in the container/VM:
+To run all the standard unit tests in the container/VM:
 
 ```bash
 guest$ py.test-3
@@ -367,6 +367,29 @@ guest$ py.test-3 plinth/tests/test_actions.py::TestActions
 
 # Run one test in a class or module
 guest$ py.test-3 plinth/tests/test_actions.py::TestActions::test_is_package_manager_busy
+```
+
+Some tests are skipped by default:
+* tests that need root privileges,
+* functional tests (they need additional preparation to run. See next section),
+* tests that take much time to run.
+
+Use `sudo` to run the ones that need root access:
+```bash
+guest$ sudo py.test-3
+```
+
+To force functional tests and tests that take long to run, set the environment
+variable EXTENDED_TESTING=1:
+
+```bash
+guest$ EXTENDED_TESTING=1 py.test-3
+```
+
+To really run all tests, combine sudo with EXTENDED_TESTING:
+
+```bash
+guest$ sudo EXTENDED_TESTING=1 py.test-3
 ```
 
 ### Running the Test Coverage Analysis
