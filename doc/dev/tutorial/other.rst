@@ -79,7 +79,7 @@ the Django's localization methods to make that happen.
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from django.utils.translation import ugettext_lazy as _
+  from django.utils.translation import gettext_lazy as _
 
   class TransmissionApp(app_module.App):
       ...
@@ -95,8 +95,8 @@ the Django's localization methods to make that happen.
 
 Notice that the app's name, description, etc. are wrapped in the ``_()`` method
 call. This needs to be done for the rest of our app. We use the
-:obj:`~django.utils.translation.ugettext_lazy` in some cases and we use the
-regular :obj:`~django.utils.translation.ugettext` in other cases. This is
+:obj:`~django.utils.translation.gettext_lazy` in some cases and we use the
+regular :obj:`~django.utils.translation.gettext` in other cases. This is
 because in the second case the :obj:`~django.utils.translation.gettext` lookup
 is made once and reused for every user looking at the interface. These users may
 each have a different language set for their interface. Lookup made for one

@@ -4,7 +4,7 @@ Views for radicale module.
 """
 
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth.views import AppView

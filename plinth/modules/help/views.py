@@ -12,7 +12,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import get_language_from_request
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from plinth import __version__, actions, cfg
 from plinth.modules.upgrades.views import (get_os_release,

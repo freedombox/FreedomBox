@@ -16,8 +16,8 @@ from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from django.views.generic import FormView, TemplateView, View
 
 from plinth.errors import PlinthError
@@ -52,7 +52,7 @@ class ScheduleView(SuccessMessageMixin, FormView):
     prefix = 'backups_schedule'
     template_name = 'backups_schedule.html'
     success_url = reverse_lazy('backups:index')
-    success_message = ugettext_lazy('Backup schedule updated.')
+    success_message = gettext_lazy('Backup schedule updated.')
 
     def get_initial(self):
         """Return the values to fill in the form."""
@@ -103,7 +103,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     prefix = 'backups'
     template_name = 'backups_form.html'
     success_url = reverse_lazy('backups:index')
-    success_message = ugettext_lazy('Archive created.')
+    success_message = gettext_lazy('Archive created.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -191,7 +191,7 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
     prefix = 'backups'
     template_name = 'backups_restore.html'
     success_url = reverse_lazy('backups:index')
-    success_message = ugettext_lazy('Restored files from backup.')
+    success_message = gettext_lazy('Restored files from backup.')
 
     def get_form_kwargs(self):
         """Pass additional keyword args for instantiating the form."""

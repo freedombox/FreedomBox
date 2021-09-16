@@ -8,8 +8,8 @@ import logging
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 from plinth import actions
 from plinth.modules import dynamicdns
@@ -23,13 +23,13 @@ EMPTYSTRING = 'none'
 
 subsubmenu = [{
     'url': reverse_lazy('dynamicdns:index'),
-    'text': ugettext_lazy('About')
+    'text': gettext_lazy('About')
 }, {
     'url': reverse_lazy('dynamicdns:configure'),
-    'text': ugettext_lazy('Configure')
+    'text': gettext_lazy('Configure')
 }, {
     'url': reverse_lazy('dynamicdns:statuspage'),
-    'text': ugettext_lazy('Status')
+    'text': gettext_lazy('Status')
 }]
 
 

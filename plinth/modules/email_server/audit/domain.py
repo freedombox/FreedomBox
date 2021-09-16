@@ -9,17 +9,17 @@ import select
 import subprocess
 import sys
 import time
-
 from types import SimpleNamespace
 
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 from plinth.actions import superuser_run
 from plinth.errors import ActionError
 from plinth.modules.config import get_domainname
+from plinth.modules.email_server import interproc, postconf
 
 from . import models
-from plinth.modules.email_server import interproc, postconf
 
 EXIT_VALIDATION = 40
 

@@ -3,12 +3,12 @@
 Views for the Ejabberd module
 """
 
-from plinth.modules.coturn.components import TurnConfiguration
 from django.contrib import messages
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from plinth import actions
 from plinth.modules import coturn, ejabberd
+from plinth.modules.coturn.components import TurnConfiguration
 from plinth.views import AppView
 
 from .forms import EjabberdForm

@@ -12,7 +12,7 @@ from django.forms import CheckboxInput
 from django.utils import translation
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language_info
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import plinth
 

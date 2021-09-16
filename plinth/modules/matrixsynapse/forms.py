@@ -5,9 +5,9 @@ Forms for the Matrix Synapse module.
 
 from django import forms
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 from plinth.modules.coturn.forms import turn_uris_validator
-from django.utils.translation import ugettext_lazy as _
 from plinth.utils import format_lazy
 
 

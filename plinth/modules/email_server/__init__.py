@@ -4,7 +4,7 @@
 import logging
 
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import plinth.app
 import plinth.daemon
@@ -16,8 +16,7 @@ from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 
-from . import audit
-from . import manifest
+from . import audit, manifest
 
 version = 1
 

@@ -8,8 +8,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 
@@ -39,9 +39,9 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
     form_class = CreateUserForm
     template_name = 'users_create.html'
     model = User
-    success_message = ugettext_lazy('User %(username)s created.')
+    success_message = gettext_lazy('User %(username)s created.')
     success_url = reverse_lazy('users:create')
-    title = ugettext_lazy('Create User')
+    title = gettext_lazy('Create User')
 
     def get_form_kwargs(self):
         """Make the request object available to the form."""
@@ -58,7 +58,7 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
     """View to list users."""
     model = User
     template_name = 'users_list.html'
-    title = ugettext_lazy('Users')
+    title = gettext_lazy('Users')
     app_id = 'users'
 
     def get_context_data(self, *args, **kwargs):
@@ -73,8 +73,8 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     slug_field = 'username'
-    success_message = ugettext_lazy('User %(username)s updated.')
-    title = ugettext_lazy('Edit User')
+    success_message = gettext_lazy('User %(username)s updated.')
+    title = gettext_lazy('Edit User')
 
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
@@ -119,7 +119,7 @@ class UserDelete(ContextMixin, DeleteView):
     model = User
     slug_field = 'username'
     success_url = reverse_lazy('users:index')
-    title = ugettext_lazy('Delete User')
+    title = gettext_lazy('Delete User')
 
     def delete(self, *args, **kwargs):
         """Set the success message of deleting the user.
@@ -145,8 +145,8 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     """View to change user password."""
     template_name = 'users_change_password.html'
     form_class = UserChangePasswordForm
-    title = ugettext_lazy('Change Password')
-    success_message = ugettext_lazy('Password changed successfully.')
+    title = gettext_lazy('Change Password')
+    success_message = gettext_lazy('Password changed successfully.')
 
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""

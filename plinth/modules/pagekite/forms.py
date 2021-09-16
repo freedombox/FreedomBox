@@ -6,8 +6,8 @@ import json
 from django import forms
 from django.contrib import messages
 from django.core import validators
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 from plinth.errors import ActionError
 
@@ -29,22 +29,22 @@ class ConfigurationForm(forms.Form):
     """Configure PageKite credentials and frontend"""
 
     server_domain = forms.CharField(
-        label=ugettext_lazy('Server domain'), required=False,
-        help_text=ugettext_lazy(
+        label=gettext_lazy('Server domain'), required=False,
+        help_text=gettext_lazy(
             'Select your pagekite server. Set "pagekite.net" to use '
             'the default pagekite.net server.'), widget=forms.TextInput())
     server_port = forms.IntegerField(
-        label=ugettext_lazy('Server port'), required=False,
-        help_text=ugettext_lazy('Port of your pagekite server (default: 80)'))
+        label=gettext_lazy('Server port'), required=False,
+        help_text=gettext_lazy('Port of your pagekite server (default: 80)'))
     kite_name = TrimmedCharField(
-        label=ugettext_lazy('Kite name'),
-        help_text=ugettext_lazy('Example: mybox.pagekite.me'), validators=[
+        label=gettext_lazy('Kite name'),
+        help_text=gettext_lazy('Example: mybox.pagekite.me'), validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
-                                      ugettext_lazy('Invalid kite name'))
+                                      gettext_lazy('Invalid kite name'))
         ])
 
     kite_secret = TrimmedCharField(
-        label=ugettext_lazy('Kite secret'), help_text=ugettext_lazy(
+        label=gettext_lazy('Kite secret'), help_text=gettext_lazy(
             'A secret associated with the kite or the default secret '
             'for your account if no secret is set on the kite.'))
 
@@ -85,14 +85,14 @@ class BaseCustomServiceForm(forms.Form):
     """Basic form functionality to handle a custom service"""
     choices = [('http', 'http'), ('https', 'https'), ('raw', 'raw')]
     protocol = forms.ChoiceField(choices=choices,
-                                 label=ugettext_lazy('protocol'))
+                                 label=gettext_lazy('protocol'))
     frontend_port = forms.IntegerField(
         min_value=0, max_value=65535,
-        label=ugettext_lazy('external (frontend) port'), required=True)
+        label=gettext_lazy('external (frontend) port'), required=True)
     backend_port = forms.IntegerField(
         min_value=0, max_value=65535,
-        label=ugettext_lazy('internal (freedombox) port'))
-    subdomains = forms.BooleanField(label=ugettext_lazy('Enable Subdomains'),
+        label=gettext_lazy('internal (freedombox) port'))
+    subdomains = forms.BooleanField(label=gettext_lazy('Enable Subdomains'),
                                     required=False)
 
     def convert_formdata_to_service(self, formdata):

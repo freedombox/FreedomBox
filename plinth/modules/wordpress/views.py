@@ -6,7 +6,8 @@ FreedomBox app for configuring WordPress.
 import pathlib
 
 from django.contrib import messages
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
+
 from plinth import actions, views
 
 from . import PUBLIC_ACCESS_FILE

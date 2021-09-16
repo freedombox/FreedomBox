@@ -2,7 +2,7 @@
 """
 FreedomBox app to configure minidlna.
 """
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import plinth.app as app_module
 from plinth import actions, frontpage, menu

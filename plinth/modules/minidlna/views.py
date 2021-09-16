@@ -5,7 +5,7 @@ Views for the minidlna module
 import os
 
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth.modules import minidlna
 from plinth.views import AppView

@@ -5,7 +5,7 @@ Forms for configuring Ejabberd.
 
 from django import forms
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
 from plinth.modules.coturn.forms import turn_uris_validator

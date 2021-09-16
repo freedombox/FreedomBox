@@ -4,7 +4,7 @@ FreedomBox app for configuring Tor.
 """
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from plinth import actions
 from plinth.errors import ActionError

@@ -8,8 +8,8 @@ import logging
 import subprocess
 import threading
 
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 from plinth import actions
 from plinth.utils import format_lazy
@@ -155,13 +155,13 @@ class Transaction(object):
 
         status_map = {
             'pmstatus':
-                ugettext_lazy('installing'),
+                gettext_lazy('installing'),
             'dlstatus':
-                ugettext_lazy('downloading'),
+                gettext_lazy('downloading'),
             'media-change':
-                ugettext_lazy('media change'),
+                gettext_lazy('media change'),
             'pmconffile':
-                format_lazy(ugettext_lazy('configuration file: {file}'),
+                format_lazy(gettext_lazy('configuration file: {file}'),
                             file=parts[1]),
         }
         self.status_string = status_map.get(parts[0], '')

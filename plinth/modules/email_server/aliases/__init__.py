@@ -9,9 +9,10 @@ import pwd
 import sqlite3
 
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth.modules.email_server import lock
+
 from . import models
 
 map_db_schema_script = """
@@ -49,7 +50,7 @@ def db_cursor():
 def get(uid_number):
     s = 'SELECT * FROM Alias WHERE uid_number=?'
     with db_cursor() as cur:
-        rows = cur.execute(s, (uid_number,))
+        rows = cur.execute(s, (uid_number, ))
         result = [models.Alias(**r) for r in rows]
         return result
 

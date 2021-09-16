@@ -7,8 +7,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
@@ -24,93 +24,93 @@ logger = logging.getLogger(__name__)
 # i18n for device.state
 # https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceState
 CONNECTION_METHOD_STRINGS = {
-    'disabled': ugettext_lazy('disabled'),
-    'auto': ugettext_lazy('automatic'),
-    'manual': ugettext_lazy('manual'),
-    'shared': ugettext_lazy('shared'),
-    'link-local': ugettext_lazy('link-local'),
+    'disabled': gettext_lazy('disabled'),
+    'auto': gettext_lazy('automatic'),
+    'manual': gettext_lazy('manual'),
+    'shared': gettext_lazy('shared'),
+    'link-local': gettext_lazy('link-local'),
 }
 
 # i18n for device.state
 # https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceState
 DEVICE_STATE_STRINGS = {
-    'unknown': ugettext_lazy('unknown'),
-    'unmanaged': ugettext_lazy('unmanaged'),
-    'unavailable': ugettext_lazy('unavailable'),
-    'disconnected': ugettext_lazy('disconnected'),
-    'prepare': ugettext_lazy('preparing'),
-    'config': ugettext_lazy('connecting'),
-    'need-auth': ugettext_lazy('needs authentication'),
-    'ip-config': ugettext_lazy('requesting address'),
-    'ip-check': ugettext_lazy('checking'),
-    'secondaries': ugettext_lazy('waiting for secondary'),
-    'activated': ugettext_lazy('activated'),
-    'deactivating': ugettext_lazy('deactivating'),
-    'failed': ugettext_lazy('failed'),
+    'unknown': gettext_lazy('unknown'),
+    'unmanaged': gettext_lazy('unmanaged'),
+    'unavailable': gettext_lazy('unavailable'),
+    'disconnected': gettext_lazy('disconnected'),
+    'prepare': gettext_lazy('preparing'),
+    'config': gettext_lazy('connecting'),
+    'need-auth': gettext_lazy('needs authentication'),
+    'ip-config': gettext_lazy('requesting address'),
+    'ip-check': gettext_lazy('checking'),
+    'secondaries': gettext_lazy('waiting for secondary'),
+    'activated': gettext_lazy('activated'),
+    'deactivating': gettext_lazy('deactivating'),
+    'failed': gettext_lazy('failed'),
 }
 
 # i18n for device.state_reason
 # https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceStateReason
 DEVICE_STATE_REASON_STRINGS = {
     'none':
-        ugettext_lazy('no reason'),
+        gettext_lazy('no reason'),
     'unknown':
-        ugettext_lazy('unknown error'),
+        gettext_lazy('unknown error'),
     'now-managed':
-        ugettext_lazy('device is now managed'),
+        gettext_lazy('device is now managed'),
     'now-unmanaged':
-        ugettext_lazy('device is now unmanaged'),
+        gettext_lazy('device is now unmanaged'),
     'config-failed':
-        ugettext_lazy('configuration failed'),
+        gettext_lazy('configuration failed'),
     'no-secrets':
-        ugettext_lazy('secrets required'),
+        gettext_lazy('secrets required'),
     'dhcp-start-failed':
-        ugettext_lazy('DHCP client failed to start'),
+        gettext_lazy('DHCP client failed to start'),
     'dhcp-error':
-        ugettext_lazy('DHCP client error'),
+        gettext_lazy('DHCP client error'),
     'dhcp-failed':
-        ugettext_lazy('DHCP client failed'),
+        gettext_lazy('DHCP client failed'),
     'shared-start-failed':
-        ugettext_lazy('shared connection service failed to start'),
+        gettext_lazy('shared connection service failed to start'),
     'shared-failed':
-        ugettext_lazy('shared connection service failed'),
+        gettext_lazy('shared connection service failed'),
     'removed':
-        ugettext_lazy('device was removed'),
+        gettext_lazy('device was removed'),
     'user-requested':
-        ugettext_lazy('device disconnected by user'),
+        gettext_lazy('device disconnected by user'),
     'dependency-failed':
-        ugettext_lazy('a dependency of the connection failed'),
+        gettext_lazy('a dependency of the connection failed'),
     'ssid-not-found':
-        ugettext_lazy('Wi-Fi network not found'),
+        gettext_lazy('Wi-Fi network not found'),
     'secondary-connection-failed':
-        ugettext_lazy('a secondary connection failed'),
+        gettext_lazy('a secondary connection failed'),
     'new-activation':
-        ugettext_lazy('new connection activation was enqueued'),
+        gettext_lazy('new connection activation was enqueued'),
     'ip-address-duplicate':
-        ugettext_lazy('a duplicate IP address was detected'),
+        gettext_lazy('a duplicate IP address was detected'),
     'ip-method-unsupported':
-        ugettext_lazy('selected IP method is not supported'),
+        gettext_lazy('selected IP method is not supported'),
 }
 
 # i18n for device.type
 # https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NMDeviceType
 DEVICE_TYPE_STRINGS = {
-    'unknown': ugettext_lazy('unknown'),
-    'ethernet': ugettext_lazy('Ethernet'),
-    'wifi': ugettext_lazy('Wi-Fi'),
-    'generic': ugettext_lazy('generic'),
-    'tun': ugettext_lazy('TUN or TAP interface'),
-    'wireguard': ugettext_lazy('WireGuard'),
+    'unknown': gettext_lazy('unknown'),
+    'ethernet': gettext_lazy('Ethernet'),
+    'wifi': gettext_lazy('Wi-Fi'),
+    'generic': gettext_lazy('generic'),
+    'tun': gettext_lazy('TUN or TAP interface'),
+    'wireguard': gettext_lazy('WireGuard'),
 }
 
 # i18n for wireless.mode
 # https://developer.gnome.org/libnm/1.29/libnm-nm-dbus-interface.html#NM80211Mode
 WIRELESS_MODE_STRINGS = {
-    'unknown': ugettext_lazy('unknown'),
-    'adhoc': ugettext_lazy('ad-hoc'),
-    'infra': ugettext_lazy('infrastructure'),
-    'ap': ugettext_lazy('access point'),
-    'mesh': ugettext_lazy('mesh point'),
+    'unknown': gettext_lazy('unknown'),
+    'adhoc': gettext_lazy('ad-hoc'),
+    'infra': gettext_lazy('infrastructure'),
+    'ap': gettext_lazy('access point'),
+    'mesh': gettext_lazy('mesh point'),
 }
 
 

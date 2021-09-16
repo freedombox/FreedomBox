@@ -5,7 +5,7 @@ Forms for BIND module.
 
 from django import forms
 from django.core.validators import validate_ipv46_address
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 def validate_ips(ips):

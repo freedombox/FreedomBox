@@ -8,8 +8,8 @@ import logging
 import subprocess
 
 import psutil
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import actions
 from plinth import app as app_module
@@ -306,21 +306,21 @@ def warn_about_low_disk_space(request):
         except KeyError:
             pass
     else:
-        message = ugettext_noop(
+        message = gettext_noop(
             # xgettext:no-python-format
             'Low space on system partition: {percent_used}% used, '
             '{free_space} free.')
-        title = ugettext_noop('Low disk space')
+        title = gettext_noop('Low disk space')
         data = {
             'app_icon': 'fa-hdd-o',
-            'app_name': 'translate:' + ugettext_noop('Storage'),
+            'app_name': 'translate:' + gettext_noop('Storage'),
             'percent_used': root_info['percent_used'],
             'free_space': format_bytes(root_info['free_bytes'])
         }
         actions = [{
             'type': 'link',
             'class': 'primary',
-            'text': ugettext_noop('Go to {app_name}'),
+            'text': gettext_noop('Go to {app_name}'),
             'url': 'storage:index'
         }, {
             'type': 'dismiss'
@@ -338,13 +338,13 @@ def report_failing_drive(id, is_failing):
         id.encode()).decode()
 
     from plinth.notification import Notification
-    title = ugettext_noop('Disk failure imminent')
-    message = ugettext_noop(
+    title = gettext_noop('Disk failure imminent')
+    message = gettext_noop(
         'Disk {id} is reporting that it is likely to fail in the near future. '
         'Copy any data while you still can and replace the drive.')
     data = {
         'app_icon': 'fa-hdd-o',
-        'app_name': 'translate:' + ugettext_noop('Storage'),
+        'app_name': 'translate:' + gettext_noop('Storage'),
         'id': id
     }
     note = Notification.update_or_create(id=notification_id, app_id='storage',

@@ -334,8 +334,8 @@ def test_list_filter_user_and_group(note, user):
     assert list(Notification.list(user=user)) == [note]
 
 
-@patch('plinth.notification.ugettext')
-def test_display_context(ugettext, note, user, rf):
+@patch('plinth.notification.gettext')
+def test_display_context(gettext, note, user, rf):
     """Test display context for a notification."""
     request = rf.get('/plinth/help/about/')
 
@@ -361,7 +361,7 @@ def test_display_context(ugettext, note, user, rf):
         'text': 'translated Test text',
         'url': 'Test url'
     }]
-    ugettext.side_effect = lambda string: 'translated ' + string
+    gettext.side_effect = lambda string: 'translated ' + string
 
     note.severity = 'error'
     note.title = 'Test Title {test-key1}'

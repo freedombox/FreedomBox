@@ -4,7 +4,7 @@ FreedomBox app for configuring Shadowsocks.
 """
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth.utils import format_lazy
 
@@ -23,6 +23,7 @@ METHODS = [('chacha20-ietf-poly1305',
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
+
     def clean(self, value):
         """Clean and validate the field value"""
         if value:

@@ -3,20 +3,18 @@ import io
 import itertools
 import pwd
 
-import plinth.actions
-import plinth.utils
-
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.utils.html import escape
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView, View
+
+import plinth.actions
+import plinth.utils
 from plinth.views import AppView, render_tabs
 
-from . import aliases
-from . import audit
-from . import forms
+from . import aliases, audit, forms
 
 
 class TabMixin(View):

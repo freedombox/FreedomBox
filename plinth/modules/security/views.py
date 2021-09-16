@@ -5,7 +5,7 @@ Views for security module
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from plinth import action_utils, actions
 from plinth.modules import security
