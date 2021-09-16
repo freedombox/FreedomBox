@@ -4,6 +4,7 @@ Functional, browser based tests for minidlna app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.minidlna]

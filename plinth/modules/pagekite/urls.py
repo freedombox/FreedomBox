@@ -5,7 +5,7 @@ URLs for the PageKite module
 
 from django.conf.urls import url
 
-from .views import (ConfigurationView, AddCustomServiceView, DeleteServiceView)
+from .views import AddCustomServiceView, ConfigurationView, DeleteServiceView
 
 urlpatterns = [
     url(r'^sys/pagekite/$', ConfigurationView.as_view(), name='index'),

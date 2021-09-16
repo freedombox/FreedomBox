@@ -7,9 +7,10 @@ import pathlib
 from urllib.parse import urlparse
 
 import requests
+from pytest_bdd import given, parsers, scenarios, then, when
+
 from plinth.tests import functional
 from plinth.tests.functional import config
-from pytest_bdd import given, parsers, scenarios, then, when
 
 scenarios('mediawiki.feature')
 

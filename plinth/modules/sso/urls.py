@@ -4,10 +4,11 @@ URLs for the Single Sign On module.
 """
 
 from django.conf.urls import url
+from stronghold.decorators import public
+
+from plinth.utils import non_admin_view
 
 from .views import SSOLoginView, refresh
-from stronghold.decorators import public
-from plinth.utils import non_admin_view
 
 urlpatterns = [
     url(r'^accounts/sso/login/$', public(SSOLoginView.as_view()),

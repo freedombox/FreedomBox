@@ -17,7 +17,6 @@ from plinth.views import AppView
 
 from .forms import AddPasswordForm, SetDefaultPermissionsForm
 
-
 # i18n for permission comments
 PERMISSION_COMMENTS_STRINGS = {
     'admin': _('admin'),

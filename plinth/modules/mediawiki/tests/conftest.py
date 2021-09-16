@@ -3,9 +3,9 @@
 Common test fixtures for MediaWiki.
 """
 
-import shutil
 import importlib
 import pathlib
+import shutil
 import types
 from unittest.mock import patch
 

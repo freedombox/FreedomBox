@@ -3,7 +3,6 @@
 Functional, browser based tests for storage app.
 """
 import pytest
-
 from pytest_bdd import given, parsers, scenarios, then
 
 from plinth.tests import functional

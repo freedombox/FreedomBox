@@ -4,6 +4,7 @@ Functional, browser based tests for WordPress.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 

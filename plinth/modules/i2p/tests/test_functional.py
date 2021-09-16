@@ -4,6 +4,7 @@ Functional, browser based tests for i2p app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.i2p]

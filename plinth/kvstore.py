@@ -7,6 +7,7 @@ Simple key/value store using Django models
 def get(key):
     """Return the value of a key"""
     from plinth.models import KVStore
+
     # pylint: disable-msg=E1101
     return KVStore.objects.get(pk=key).value
 

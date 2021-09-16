@@ -10,6 +10,7 @@ from unittest.mock import patch
 import pytest
 from django import urls
 from django.contrib.messages.storage.fallback import FallbackStorage
+
 from plinth import module_loader
 from plinth.errors import ActionError
 from plinth.modules.samba import views

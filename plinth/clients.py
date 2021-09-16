@@ -3,8 +3,9 @@
 Utility methods for providing client information.
 """
 
-from django.utils.functional import Promise
 from enum import Enum
+
+from django.utils.functional import Promise
 
 
 class Desktop_OS(Enum):

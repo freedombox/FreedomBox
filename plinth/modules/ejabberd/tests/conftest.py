@@ -10,6 +10,7 @@ import types
 from unittest.mock import MagicMock, patch
 
 import pytest
+
 from plinth.modules import ejabberd
 
 current_directory = pathlib.Path(__file__).parent
