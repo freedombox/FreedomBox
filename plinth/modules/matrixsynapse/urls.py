@@ -3,12 +3,12 @@
 URLs for the matrix-synapse module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import MatrixSynapseAppView, SetupView
 
 urlpatterns = [
-    url(r'^apps/matrixsynapse/setup/$', SetupView.as_view(), name='setup'),
-    url(r'^apps/matrixsynapse/$', MatrixSynapseAppView.as_view(),
-        name='index'),
+    re_path(r'^apps/matrixsynapse/setup/$', SetupView.as_view(), name='setup'),
+    re_path(r'^apps/matrixsynapse/$', MatrixSynapseAppView.as_view(),
+            name='index'),
 ]

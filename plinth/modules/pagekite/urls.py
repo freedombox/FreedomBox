@@ -3,14 +3,14 @@
 URLs for the PageKite module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import AddCustomServiceView, ConfigurationView, DeleteServiceView
 
 urlpatterns = [
-    url(r'^sys/pagekite/$', ConfigurationView.as_view(), name='index'),
-    url(r'^sys/pagekite/services/custom/add/$', AddCustomServiceView.as_view(),
-        name='add-custom-service'),
-    url(r'^sys/pagekite/services/custom/delete/$', DeleteServiceView.as_view(),
-        name='delete-custom-service'),
+    re_path(r'^sys/pagekite/$', ConfigurationView.as_view(), name='index'),
+    re_path(r'^sys/pagekite/services/custom/add/$',
+            AddCustomServiceView.as_view(), name='add-custom-service'),
+    re_path(r'^sys/pagekite/services/custom/delete/$',
+            DeleteServiceView.as_view(), name='delete-custom-service'),
 ]

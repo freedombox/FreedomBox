@@ -3,10 +3,10 @@
 URLs for the radicale module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import RadicaleAppView
 
 urlpatterns = [
-    url(r'^apps/radicale/$', RadicaleAppView.as_view(), name='index'),
+    re_path(r'^apps/radicale/$', RadicaleAppView.as_view(), name='index'),
 ]

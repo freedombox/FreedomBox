@@ -3,10 +3,10 @@
 URLs for the date and time module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import DateTimeAppView
 
 urlpatterns = [
-    url(r'^sys/datetime/$', DateTimeAppView.as_view(), name='index'),
+    re_path(r'^sys/datetime/$', DateTimeAppView.as_view(), name='index'),
 ]

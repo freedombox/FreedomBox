@@ -3,10 +3,10 @@
 URLs for the service discovery module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^sys/avahi/$', AppView.as_view(app_id='avahi'), name='index'),
+    re_path(r'^sys/avahi/$', AppView.as_view(app_id='avahi'), name='index'),
 ]

@@ -3,14 +3,15 @@
 URLs for the sharing app.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import AddShareView, EditShareView, IndexView, remove
 
 urlpatterns = [
-    url(r'^apps/sharing/$', IndexView.as_view(), name='index'),
-    url(r'^apps/sharing/add/$', AddShareView.as_view(), name='add'),
-    url(r'^apps/sharing/(?P<name>[a-z0-9]+)/edit/$', EditShareView.as_view(),
-        name='edit'),
-    url(r'^apps/sharing/(?P<name>[a-z0-9]+)/remove/$', remove, name='remove'),
+    re_path(r'^apps/sharing/$', IndexView.as_view(), name='index'),
+    re_path(r'^apps/sharing/add/$', AddShareView.as_view(), name='add'),
+    re_path(r'^apps/sharing/(?P<name>[a-z0-9]+)/edit/$',
+            EditShareView.as_view(), name='edit'),
+    re_path(r'^apps/sharing/(?P<name>[a-z0-9]+)/remove/$', remove,
+            name='remove'),
 ]

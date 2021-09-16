@@ -3,15 +3,15 @@
 URLs for the First Boot module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 from stronghold.decorators import public
 
 from .views import CompleteView, WelcomeView
 
 urlpatterns = [
     # Take care of the firstboot middleware when changing URLs
-    url(r'^firstboot/$', public(WelcomeView.as_view()), name='index'),
-    url(r'^firstboot/welcome/$', public(WelcomeView.as_view()),
-        name='welcome'),
-    url(r'^firstboot/complete/$', CompleteView.as_view(), name='complete'),
+    re_path(r'^firstboot/$', public(WelcomeView.as_view()), name='index'),
+    re_path(r'^firstboot/welcome/$', public(WelcomeView.as_view()),
+            name='welcome'),
+    re_path(r'^firstboot/complete/$', CompleteView.as_view(), name='complete'),
 ]

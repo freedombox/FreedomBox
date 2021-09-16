@@ -13,12 +13,12 @@ write the following:
 .. code-block:: python3
   :caption: ``urls.py``
 
-  from django.conf.urls import url
+  from django.urls import re_path
 
   from .views import TransmissionAppView
 
   urlpatterns = [
-      url(r'^apps/transmission/$', TransmissionAppView.as_view(), name='index'),
+      re_path(r'^apps/transmission/$', TransmissionAppView.as_view(), name='index'),
   ]
 
 This routes the ``/apps/transmission/`` URL to a view called

@@ -3,10 +3,10 @@
 URLs for the Mumble module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.modules.mumble.views import MumbleAppView
 
 urlpatterns = [
-    url(r'^apps/mumble/$', MumbleAppView.as_view(), name='index'),
+    re_path(r'^apps/mumble/$', MumbleAppView.as_view(), name='index'),
 ]

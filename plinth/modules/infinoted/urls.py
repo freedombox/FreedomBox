@@ -3,11 +3,11 @@
 URLs for the infinoted module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/infinoted/$', AppView.as_view(app_id='infinoted'),
-        name='index'),
+    re_path(r'^apps/infinoted/$', AppView.as_view(app_id='infinoted'),
+            name='index'),
 ]

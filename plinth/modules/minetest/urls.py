@@ -3,10 +3,10 @@
 URLs for the minetest module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.modules.minetest.views import MinetestAppView
 
 urlpatterns = [
-    url(r'^apps/minetest/$', MinetestAppView.as_view(), name='index'),
+    re_path(r'^apps/minetest/$', MinetestAppView.as_view(), name='index'),
 ]

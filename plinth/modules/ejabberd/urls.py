@@ -3,10 +3,10 @@
 URL for the Ejabberd module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import EjabberdAppView
 
 urlpatterns = [
-    url(r'^apps/ejabberd/$', EjabberdAppView.as_view(), name='index')
+    re_path(r'^apps/ejabberd/$', EjabberdAppView.as_view(), name='index')
 ]

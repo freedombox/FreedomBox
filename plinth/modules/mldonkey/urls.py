@@ -3,10 +3,11 @@
 URLs for the mldonkey module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/mldonkey/$', AppView.as_view(app_id='mldonkey'), name='index')
+    re_path(r'^apps/mldonkey/$', AppView.as_view(app_id='mldonkey'),
+            name='index')
 ]

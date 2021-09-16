@@ -3,10 +3,10 @@
 URLs for the Coturn module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import CoturnAppView
 
 urlpatterns = [
-    url(r'^apps/coturn/$', CoturnAppView.as_view(), name='index'),
+    re_path(r'^apps/coturn/$', CoturnAppView.as_view(), name='index'),
 ]

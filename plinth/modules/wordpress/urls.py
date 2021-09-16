@@ -3,11 +3,11 @@
 URLs for the WordPress module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import WordPressAppView
 
 urlpatterns = [
-    url(r'^apps/wordpress/$', WordPressAppView.as_view(app_id='wordpress'),
-        name='index'),
+    re_path(r'^apps/wordpress/$', WordPressAppView.as_view(app_id='wordpress'),
+            name='index'),
 ]

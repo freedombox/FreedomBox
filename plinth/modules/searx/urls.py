@@ -3,10 +3,10 @@
 URLs for the Searx module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import SearxAppView
 
 urlpatterns = [
-    url(r'^apps/searx/$', SearxAppView.as_view(), name='index'),
+    re_path(r'^apps/searx/$', SearxAppView.as_view(), name='index'),
 ]

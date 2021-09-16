@@ -3,10 +3,10 @@
 URLs for the Secure Shell Server module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.modules.ssh.views import SshAppView
 
 urlpatterns = [
-    url(r'^sys/ssh/$', SshAppView.as_view(), name='index'),
+    re_path(r'^sys/ssh/$', SshAppView.as_view(), name='index'),
 ]

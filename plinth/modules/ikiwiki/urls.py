@@ -3,12 +3,13 @@
 URLs for the ikiwiki module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^apps/ikiwiki/$', views.IkiwikiAppView.as_view(), name='index'),
-    url(r'^apps/ikiwiki/(?P<name>.+)/delete/$', views.delete, name='delete'),
-    url(r'^apps/ikiwiki/create/$', views.create, name='create'),
+    re_path(r'^apps/ikiwiki/$', views.IkiwikiAppView.as_view(), name='index'),
+    re_path(r'^apps/ikiwiki/(?P<name>.+)/delete/$', views.delete,
+            name='delete'),
+    re_path(r'^apps/ikiwiki/create/$', views.create, name='create'),
 ]

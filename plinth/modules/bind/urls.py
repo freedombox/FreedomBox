@@ -3,10 +3,10 @@
 URLs for the BIND module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.modules.bind.views import BindAppView
 
 urlpatterns = [
-    url(r'^sys/bind/$', BindAppView.as_view(), name='index'),
+    re_path(r'^sys/bind/$', BindAppView.as_view(), name='index'),
 ]

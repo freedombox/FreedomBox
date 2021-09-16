@@ -3,19 +3,19 @@
 URLs for the Gitweb module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import CreateRepoView, EditRepoView, GitwebAppView, delete
 
 urlpatterns = [
-    url(r'^apps/gitweb/$', GitwebAppView.as_view(), name='index'),
-    url(r'^apps/gitweb/create/$', CreateRepoView.as_view(), name='create'),
-    url(
+    re_path(r'^apps/gitweb/$', GitwebAppView.as_view(), name='index'),
+    re_path(r'^apps/gitweb/create/$', CreateRepoView.as_view(), name='create'),
+    re_path(
         r'^apps/gitweb/(?P<name>[a-zA-Z0-9-._]+)/edit/$',
         EditRepoView.as_view(),
         name='edit',
     ),
-    url(
+    re_path(
         r'^apps/gitweb/(?P<name>[a-zA-Z0-9-._]+)/delete/$',
         delete,
         name='delete',

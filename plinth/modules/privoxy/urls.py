@@ -3,10 +3,11 @@
 URLs for the Privoxy module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/privoxy/$', AppView.as_view(app_id='privoxy'), name='index'),
+    re_path(r'^apps/privoxy/$', AppView.as_view(app_id='privoxy'),
+            name='index'),
 ]

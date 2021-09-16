@@ -3,10 +3,10 @@
 URLs for the Tiny Tiny RSS module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/ttrss/$', AppView.as_view(app_id='ttrss'), name='index')
+    re_path(r'^apps/ttrss/$', AppView.as_view(app_id='ttrss'), name='index')
 ]
