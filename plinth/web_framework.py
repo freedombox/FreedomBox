@@ -22,6 +22,10 @@ logger = logging.getLogger(__name__)
 
 def init(read_only=False):
     """Setup Django configuration in the absence of .settings file"""
+    # Workaround for django-simple-captcha 0.5.6 not being compatible with
+    # Django 3.2. 0.5.14 is almost there in Debian. Workaround only until then.
+    django.utils.encoding.python_2_unicode_compatible = lambda x: x
+
     if cfg.secure_proxy_ssl_header:
         settings.SECURE_PROXY_SSL_HEADER = (cfg.secure_proxy_ssl_header,
                                             'https')

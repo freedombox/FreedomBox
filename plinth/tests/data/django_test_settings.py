@@ -5,6 +5,12 @@ Django settings for test modules.
 
 import os
 
+# Workaround for django-simple-captcha 0.5.6 not being compatible with
+# Django 3.2. 0.5.14 is almost there in Debian. Workaround only until then.
+import django.utils.encoding
+
+django.utils.encoding.python_2_unicode_compatible = lambda x: x
+
 TEST_DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
 AXES_ENABLED = False
