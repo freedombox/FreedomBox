@@ -301,8 +301,9 @@ def _repo_is_writable(repo, with_auth=False):
     with _gitweb_temp_directory() as temp_directory:
         repo_directory = os.path.join(temp_directory, 'test-project')
         _create_local_repo(repo_directory)
-        git_push_command = ['git', 'push', '-qf', url, 'master']
-
+        git_push_command = [
+            'git', '-c', 'push.default=current', 'push', '-qf', url
+        ]
         return _gitweb_git_command_is_successful(git_push_command,
                                                  repo_directory)
 
