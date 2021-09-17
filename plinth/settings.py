@@ -78,6 +78,10 @@ DATABASES = {
 # Overridden based on command line argument --develop
 DEBUG = False
 
+# This is already the default (Django 3.2), however, setting it explicitly
+# seems to avoid a warning while running 'django-admin makemigrations'.
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # Overridden based on the configuration key server_dir
 FORCE_SCRIPT_NAME = '/plinth'
 
