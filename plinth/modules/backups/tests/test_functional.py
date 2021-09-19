@@ -105,7 +105,7 @@ def _backup_schedule_disable(session_browser):
 def _backup_schedule_get(browser):
     """Return the current schedule set for the root repository."""
     functional.nav_to_module(browser, 'backups')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/backups/root/schedule/').first.click()
     without_apps = []
     elements = browser.find_by_name('backups_schedule-selected_apps')
@@ -135,7 +135,7 @@ def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
                          without_app):
     """Set the schedule for root repository."""
     functional.nav_to_module(browser, 'backups')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/backups/root/schedule/').first.click()
     if enable:
         browser.find_by_name('backups_schedule-enabled').check()
@@ -176,12 +176,12 @@ def _download(browser, archive_name=None):
 
 def _open_main_page(browser):
     with functional.wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/').first.click()
+        browser.links.find_by_href('/plinth/').first.click()
 
 
 def _upload_and_restore(browser, app_name, downloaded_file_path):
     functional.nav_to_module(browser, 'backups')
-    browser.find_link_by_href('/plinth/sys/backups/upload/').first.click()
+    browser.links.find_by_href('/plinth/sys/backups/upload/').first.click()
     fileinput = browser.driver.find_element_by_id('id_backups-file')
     fileinput.send_keys(downloaded_file_path)
     # submit upload form
