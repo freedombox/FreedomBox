@@ -39,7 +39,7 @@ def dynamicdns_has_domain(session_browser, domain):
 
 def _configure(browser):
     functional.nav_to_module(browser, 'dynamicdns')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/dynamicdns/configure/').first.click()
     browser.find_by_id('id_enabled').check()
     browser.find_by_id('id_service_type').select('GnuDIP')
@@ -59,7 +59,7 @@ def _configure(browser):
 
 def _has_original_config(browser):
     functional.nav_to_module(browser, 'dynamicdns')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/dynamicdns/configure/').first.click()
     enabled = browser.find_by_id('id_enabled').value
     service_type = browser.find_by_id('id_service_type').value
@@ -77,7 +77,7 @@ def _has_original_config(browser):
 
 def _change_config(browser):
     functional.nav_to_module(browser, 'dynamicdns')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/dynamicdns/configure/').first.click()
     browser.find_by_id('id_enabled').check()
     browser.find_by_id('id_service_type').select('GnuDIP')
@@ -97,7 +97,7 @@ def _change_config(browser):
 
 def _configure_domain(browser, domain):
     functional.nav_to_module(browser, 'dynamicdns')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/dynamicdns/configure/').first.click()
     browser.find_by_id('id_dynamicdns_domain').fill(domain)
     functional.submit(browser)
@@ -110,6 +110,6 @@ def _configure_domain(browser, domain):
 
 def _get_domain(browser):
     functional.nav_to_module(browser, 'dynamicdns')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/sys/dynamicdns/configure/').first.click()
     return browser.find_by_id('id_dynamicdns_domain').value
