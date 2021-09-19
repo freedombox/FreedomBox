@@ -77,7 +77,7 @@ def _add_library(browser, name):
     if _is_library_available(browser, name):
         return
 
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/apps/calibre/library/create/').first.click()
     browser.find_by_id('id_calibre-name').fill(name)
     functional.submit(browser)
@@ -86,7 +86,7 @@ def _add_library(browser, name):
 def _delete_library(browser, name, ignore_missing=False):
     """Delete a library."""
     functional.nav_to_module(browser, 'calibre')
-    link = browser.find_link_by_href(
+    link = browser.links.find_by_href(
         f'/plinth/apps/calibre/library/{name}/delete/')
     if not link:
         if ignore_missing:
@@ -101,7 +101,7 @@ def _delete_library(browser, name, ignore_missing=False):
 def _is_library_available(browser, name):
     """Return whether a library is present in the list of libraries."""
     functional.nav_to_module(browser, 'calibre')
-    link = browser.find_link_by_href(
+    link = browser.links.find_by_href(
         f'/plinth/apps/calibre/library/{name}/delete/')
     return bool(link)
 
