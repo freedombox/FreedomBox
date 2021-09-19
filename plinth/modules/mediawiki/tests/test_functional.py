@@ -232,7 +232,7 @@ def _get_number_of_uploaded_images(browser):
 def _image_exists(browser, image):
     """Check whether the given image exists."""
     functional.visit(browser, '/mediawiki/Special:ListFiles')
-    elements = browser.find_link_by_partial_href(image)
+    elements = browser.links.find_by_partial_href(image)
     if not elements:  # Necessary but insufficient check.
         # Special:ListFiles also shows deleted images.
         return False
