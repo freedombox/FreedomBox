@@ -28,9 +28,10 @@ def ikiwiki_should_exist(session_browser):
 def _create_wiki_if_needed(browser):
     """Create wiki if it does not exist."""
     functional.nav_to_module(browser, 'ikiwiki')
-    wiki = browser.find_link_by_href('/ikiwiki/wiki')
+    wiki = browser.links.find_by_href('/ikiwiki/wiki')
     if not wiki:
-        browser.find_link_by_href('/plinth/apps/ikiwiki/create/').first.click()
+        browser.links.find_by_href(
+            '/plinth/apps/ikiwiki/create/').first.click()
         browser.find_by_id('id_ikiwiki-name').fill('wiki')
         browser.find_by_id('id_ikiwiki-admin_name').fill(
             functional.config['DEFAULT']['username'])
@@ -42,7 +43,7 @@ def _create_wiki_if_needed(browser):
 def _delete_wiki(browser):
     """Delete wiki."""
     functional.nav_to_module(browser, 'ikiwiki')
-    browser.find_link_by_href(
+    browser.links.find_by_href(
         '/plinth/apps/ikiwiki/wiki/delete/').first.click()
     functional.submit(browser)
 
@@ -50,5 +51,5 @@ def _delete_wiki(browser):
 def _wiki_exists(browser):
     """Check whether the wiki exists."""
     functional.nav_to_module(browser, 'ikiwiki')
-    wiki = browser.find_link_by_href('/ikiwiki/wiki')
+    wiki = browser.links.find_by_href('/ikiwiki/wiki')
     return bool(wiki)
