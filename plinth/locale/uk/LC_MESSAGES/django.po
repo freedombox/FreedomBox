@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-18 09:34-0400\n"
-"PO-Revision-Date: 2021-09-19 19:42+0000\n"
+"PO-Revision-Date: 2021-09-21 20:38+0000\n"
 "Last-Translator: Andrij Mizyk <andmizyk@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/uk/>\n"
@@ -155,9 +155,9 @@ msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
-"Дозволити заплановане автоматичне резервне копіювання для збереження даних. "
-"Надається перевага зашифрованому віддаленому розташуванні резервних копій "
-"або зовнішній знімний диск."
+"Дозволити заплановане автоматичне резервне копіювання, щоб зберегти даних. "
+"Для резервних копій надається перевага віддаленому зашифрованому "
+"розташуванні або зовнішньому знімному диску."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
@@ -1259,6 +1259,12 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
+"Доменна назва – це глобальна назва, за якою інші пристрої в Інтернеті можуть "
+"звертатися до Вашого {box_name}. Вона має складатися з міток розділених "
+"крапками. Кожна мітка повинна починатися і закінчуватися на літеру алфавіту "
+"або цифру, і між ними містити лише літери алфавіту, цифри чи дефіси. Довжина "
+"кожної мітки не повинна перевищувати 63 знаки. Загальна довжина доменної "
+"назви не повинна перевищувати 253 знаки."
 
 #: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
@@ -1690,6 +1696,8 @@ msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
+"Будь ласка, не вводьте тут URL-адресу (як «https://example.com/»), а лише "
+"назву компʼютера для сервера GnuDIP (як-от «example.com»)."
 
 #: plinth/modules/dynamicdns/forms.py:42
 #, python-brace-format
@@ -1813,12 +1821,17 @@ msgid ""
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
+"Якщо Ваш %(box_name)s підʼєднано до маршрутизатора NAT, то не забудьте "
+"додати перенаправлення для стандартних портів, включаючи TCP-порт 80 (HTTP) "
+"і TCP-порт 443 (HTTPS)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
 msgid ""
 "You have disabled Javascript. Dynamic form mode is disabled and some helper "
 "functions may not work (but the main functionality should work)."
 msgstr ""
+"У Вас вимкнено Javascript. Режим динамічної форми вимкнено і деякі допоміжні "
+"функції можуть не працювати (але основна функціональність повинна працювати)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
 msgid "NAT type"
@@ -1924,6 +1937,10 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Якщо дозволено — Ваш {box_name} зберігатиме історію повідомлень чату. Це "
+"дозволяє синхронізувати розмови між різними клієнтами, і читати історію "
+"багатокористувацької кімнати чату. Від налаштувань клієнта залежить де "
+"зберігатиметься історія, звичайним текстом чи зашифрована."
 
 #: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
@@ -1936,6 +1953,9 @@ msgid ""
 "server for ejabberd. Disable this if you want to use a different STUN/TURN "
 "server."
 msgstr ""
+"Налаштовує локальний застосунок <a href=\"{coturn_url}\">coturn</a> як "
+"сервер STUN/TURN для ejabberd. Вимкніть це, якщо бажаєте використовувати "
+"інший сервер STUN/TURN."
 
 #: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
@@ -1985,6 +2005,11 @@ msgid ""
 "new accounts on public XMPP servers (including via Tor), or even connect to "
 "your own server for extra security."
 msgstr ""
+"ChatSecure — це вільний застосунок із відкритим вихідним кодом, який "
+"використовує шифрування OTR поверх XMPP. Ви можете підʼєднуватися до наявних "
+"обліківок Google, створювати нові облікові записи на публічних серверах XMPP "
+"(навіть через Tor), або підʼєднуватися до власних серверів для додаткової "
+"безпеки."
 
 #: plinth/modules/ejabberd/manifest.py:72
 msgid "Dino"
@@ -2001,6 +2026,9 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
+"Домен Вашого сервера XMPP – <b>%(domainname)s</b>. ID користувача "
+"виглядатиме як <i>username@%(domainname)s</i>. Ви можете налаштувати свій "
+"домен на системній сторінці <a href=\"%(index_url)s\">Налаштувати</a>."
 
 #: plinth/modules/email_server/__init__.py:49
 msgid "Email Server"
@@ -2013,15 +2041,15 @@ msgstr "Працює на Postfix, Dovecot та Rspamd"
 #: plinth/modules/email_server/aliases/__init__.py:66
 #: plinth/modules/email_server/aliases/__init__.py:73
 msgid "The alias was taken"
-msgstr ""
+msgstr "Аліяс взято"
 
 #: plinth/modules/email_server/aliases/models.py:13
 msgid "Must be at least 2 characters long"
-msgstr ""
+msgstr "Має складатися щонайменше з 2 символів"
 
 #: plinth/modules/email_server/aliases/models.py:15
 msgid "Contains illegal characters"
-msgstr ""
+msgstr "Містить неправильні символи"
 
 #: plinth/modules/email_server/aliases/models.py:17
 msgid "Must start and end with a-z or 0-9"
@@ -2046,11 +2074,11 @@ msgstr ""
 
 #: plinth/modules/email_server/audit/ldap.py:67
 msgid "Postfix alias maps"
-msgstr ""
+msgstr "Мапи аліясів Postfix"
 
 #: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix local recipient maps"
-msgstr ""
+msgstr "Мапи локальних отримувачів Postfix"
 
 #: plinth/modules/email_server/audit/rcube.py:31
 msgid "RoundCube availability"
@@ -2058,19 +2086,19 @@ msgstr "Доступність RoundCube"
 
 #: plinth/modules/email_server/audit/rcube.py:32
 msgid "RoundCube configured for FreedomBox email"
-msgstr ""
+msgstr "RoundCube налаштовано для ел. пошти FreedomBox"
 
 #: plinth/modules/email_server/audit/spam.py:86
 msgid "Inbound and outbound mail filters"
-msgstr ""
+msgstr "Фільтри вхідної і вихідної пошти"
 
 #: plinth/modules/email_server/audit/tls.py:80
 msgid "Postfix TLS parameters"
-msgstr ""
+msgstr "Параметри TLS для Postfix"
 
 #: plinth/modules/email_server/audit/tls.py:81
 msgid "Postfix uses a TLS certificate"
-msgstr ""
+msgstr "Postfix використовує сертифікат TLS"
 
 #: plinth/modules/email_server/audit/tls.py:90
 msgid "Has a TLS certificate"
@@ -2082,7 +2110,7 @@ msgstr "домен"
 
 #: plinth/modules/email_server/forms.py:14
 msgid "New alias (without @domain)"
-msgstr ""
+msgstr "Новий аліяс (без @domain)"
 
 #: plinth/modules/email_server/manifest.py:6
 #: plinth/modules/roundcube/__init__.py:55
@@ -2096,15 +2124,15 @@ msgstr "Thunderbird"
 
 #: plinth/modules/email_server/manifest.py:27
 msgid "K-9 Mail"
-msgstr ""
+msgstr "K-9 Mail"
 
 #: plinth/modules/email_server/manifest.py:40
 msgid "FairEmail"
-msgstr ""
+msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:12
 msgid "You have no email aliases."
-msgstr ""
+msgstr "У Вас нема аліясів ел. пошти."
 
 #: plinth/modules/email_server/templates/email_alias.html:21
 msgid "Disable selected"
@@ -2142,19 +2170,19 @@ msgstr "Оновити"
 
 #: plinth/modules/email_server/templates/email_form_base.html:12
 msgid "There was a problem with your request. Please try again."
-msgstr ""
+msgstr "Були проблеми з Вашим запитом. Спробуйте ще раз."
 
 #: plinth/modules/email_server/templates/email_security.html:13
 msgid "Postfix TLS"
-msgstr ""
+msgstr "TLS для Postfix"
 
 #: plinth/modules/email_server/templates/email_security.html:18
 msgid "Dovecot TLS"
-msgstr ""
+msgstr "TLS для Dovecot"
 
 #: plinth/modules/email_server/templates/email_server.html:14
 msgid "Visit Rspamd administration interface"
-msgstr ""
+msgstr "Відвідайте інтерфейс адміністрування Rspamd"
 
 #: plinth/modules/email_server/templates/email_server.html:18
 msgid "Service Alert"
@@ -2170,7 +2198,7 @@ msgstr "У вас нема домашнього каталогу."
 
 #: plinth/modules/email_server/templates/my_mail.html:17
 msgid "Create one to begin receiving emails."
-msgstr ""
+msgstr "Створити одну, щоб отримувати ел. пошту."
 
 #: plinth/modules/email_server/templates/my_mail.html:22
 msgid "Create home directory"
@@ -2190,7 +2218,7 @@ msgstr "Звичайна назва"
 
 #: plinth/modules/email_server/templates/tls_form.html:38
 msgid "Use custom values"
-msgstr ""
+msgstr "Використовувати власні значення"
 
 #: plinth/modules/email_server/templates/tls_form.html:43
 msgid "Certificate path"
@@ -2211,12 +2239,12 @@ msgstr "Домівка"
 
 #: plinth/modules/email_server/views.py:25
 msgid "My Mail"
-msgstr ""
+msgstr "Моя пошта"
 
 #: plinth/modules/email_server/views.py:26
 #: plinth/modules/email_server/views.py:33
 msgid "My Aliases"
-msgstr ""
+msgstr "Мої аліяси"
 
 #: plinth/modules/email_server/views.py:27
 #: plinth/modules/networks/templates/connection_show.html:259
@@ -2232,11 +2260,11 @@ msgstr "Домени"
 #: plinth/modules/email_server/views.py:104
 #, python-brace-format
 msgid "Internal error in {0}"
-msgstr ""
+msgstr "Внутрішня помилка в {0}"
 
 #: plinth/modules/email_server/views.py:107
 msgid "Check syslog for more information"
-msgstr ""
+msgstr "Перевірте системний журнал, щоб дізнатися більше"
 
 #: plinth/modules/email_server/views.py:181
 msgid "Enabled aliases"
@@ -2371,7 +2399,7 @@ msgid ""
 "modify it if necessary."
 msgstr ""
 "Можливо, Ви захочете перевірити <a href=\"%(networks_url)s\">налаштування "
-"мережі</a> і змінити їх, якщо необхідно."
+"мережі</a> і за необхідності змінити їх."
 
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
@@ -2467,7 +2495,7 @@ msgstr ""
 
 #: plinth/modules/gitweb/manifest.py:18
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
@@ -2663,6 +2691,9 @@ msgid ""
 "improve them on our <a href=\"https://discuss.freedombox.org\" target="
 "\"_blank\"> discussion forum</a>."
 msgstr ""
+"Дайте нам знати про відсутні можливості, Ваші улюблені застосунки і як ми "
+"можемо їх покращити на нашому <a href=\"https://discuss.freedombox.org\" "
+"target=\"_blank\">форумі для обговорень</a>."
 
 #: plinth/modules/help/templates/help_feedback.html:26
 msgid ""
@@ -2671,6 +2702,11 @@ msgid ""
 "tracker</a> to let our developers know. To report, first check if the issue "
 "is already reported and then use the \"New issue\" button."
 msgstr ""
+"Якщо Ви знайшли ваду або проблему, використовуйте <a href=\"https://salsa."
+"debian.org/freedombox-team/freedombox/issues\" target=\"_blank\">відстежувач "
+"помилок</a>, щоб повідомити наших розробників. Перш ніж звітувати, перевірте "
+"чи хтось вже не звітував про цю проблему, а потім використовуйте кнопку «New "
+"issue»."
 
 #: plinth/modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
@@ -2687,6 +2723,8 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
+"<a href=\"%(manual_url)s\">Підручник %(box_name)s</a> це найкраще місце для "
+"отримання інформації про %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:23
 #, python-format
@@ -2694,6 +2732,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\">Проєкт вікі "
+"%(box_name)s</a> містить додаткову інформацію."
 
 #: plinth/modules/help/templates/help_index.html:30
 #, python-format
@@ -2730,6 +2770,9 @@ msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
+"Шукайте минулі обговорення або публікуйте нові запити на нашому <a href="
+"\"https://discuss.freedombox.org\" target=\"_blank\">форумі для "
+"обговорень</a>."
 
 #: plinth/modules/help/templates/help_support.html:27
 msgid ""
@@ -2738,10 +2781,14 @@ msgid ""
 "Or send an email to our <a href=\"mailto:freedombox-discuss@alioth-lists."
 "debian.net\">mailing list</a>."
 msgstr ""
+"Ви також можете звертатися до нас на наших каналах IRC та Matrix (міст): "
+"<ul> <li>#freedombox on irc.oftc.net</li> <li>#freedombox:matrix.org</li> </"
+"ul> Або надіслати ел. листа на нашу <a href=\"mailto:freedombox-discuss"
+"@alioth-lists.debian.net\">поштову розсилку</a>."
 
 #: plinth/modules/help/templates/statuslog.html:10
 msgid "Status Log"
-msgstr ""
+msgstr "Журнал стану"
 
 #: plinth/modules/help/templates/statuslog.html:13
 #, python-format
@@ -2757,6 +2804,8 @@ msgid ""
 "Please remove any passwords or other personal information from the log "
 "before submitting the bug report."
 msgstr ""
+"Будь ласка, перед надсиланням звітів про помилки вилучіть із журналів будь-"
+"яку особисту інформацію чи інформацію про паролі."
 
 #: plinth/modules/help/views.py:25
 msgid "Documentation and FAQ"
@@ -2785,6 +2834,8 @@ msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p.net"
 "\" target=\"_blank\">homepage</a>."
 msgstr ""
+"Детальніше про I2P на їхній <a href=\"https://geti2p.net\" target=\"_blank\""
+">домашній сторінці</a> проєкту."
 
 #: plinth/modules/i2p/__init__.py:35
 msgid ""
@@ -2847,6 +2898,9 @@ msgid ""
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds."
 msgstr ""
+"ikiwiki – це простий застосунок для вікі і блоґів. Він підтримує декілька "
+"легких мов розмітки, включаючи Markdown, та основні функції для роботи з "
+"блоґами, як-от коментарі та стрічки RSS."
 
 #: plinth/modules/ikiwiki/__init__.py:32
 #, python-brace-format
@@ -2856,6 +2910,11 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"{users_url}\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+"Лише користувачі {box_name} із групи <b>admin</b> можуть <i>створювати</i> і "
+"<i>керувати</i> блоґами та вікі, а будь-які користувачі з групи <b>wiki</b> "
+"можуть <i>редагувати</i> існуючі сторінки. В <a href=\"{users_url}\""
+">налаштуваннях користувача</a> Ви можете змінити ці права або додавати нових "
+"користувачів."
 
 #: plinth/modules/ikiwiki/__init__.py:53 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
@@ -2953,6 +3012,9 @@ msgid ""
 "client and install it. Then start Gobby and select \"Connect to Server\" and "
 "enter your {box_name}'s domain name."
 msgstr ""
+"Щоб користуватися ним, <a href=\"https://gobby.github.io/\">завантажте "
+"Gobby</a>, стільничний клієнт і встановіть їх. Потім запустіть Gobby, "
+"виберіть «Зʼєднатися зі сервером» і введіть Вашу доменну назву {box_name}."
 
 #: plinth/modules/infinoted/__init__.py:46
 msgid "infinoted"
@@ -2976,6 +3038,8 @@ msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
 "domain name."
 msgstr ""
+"Запустіть Gobby, виберіть «Зʼєднатися зі сервером» і введіть Вашу доменну "
+"назву {box_name}."
 
 #: plinth/modules/jsxc/__init__.py:24
 msgid ""
@@ -4065,6 +4129,12 @@ msgid ""
 "static local IP address for your {box_name} in your router's configuration.</"
 "p>"
 msgstr ""
+"Використовується ДМЗ для перенаправлення всього трафіку (рекомендовано) <p "
+"class=\"help-block\">Більшість маршрутизаторів забезпечують налаштування, що "
+"називається ДМЗ. Це дозволяє маршрутизатору перенаправляти весь трафік з "
+"Інтернету на одну IP-адресу, як-от IP-адресу {box_name}, наприклад. Спочатку "
+"не забудьте налаштувати статичну локальну IP-адресу для Вашого {box_name} у "
+"налаштуваннях Вашого маршрутизатора.</p>"
 
 #: plinth/modules/networks/forms.py:428
 #, python-brace-format
