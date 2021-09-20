@@ -3,28 +3,67 @@
 Functional, browser based tests for bind app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('bind.feature')
+pytestmark = [pytest.mark.system, pytest.mark.bind]
 
 
-@given(parsers.parse('bind DNSSEC is {enable:w}'))
-def bind_given_enable_dnssec(session_browser, enable):
-    should_enable = (enable == 'enabled')
-    _enable_dnssec(session_browser, should_enable)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'bind')
+    yield
+    functional.app_disable(session_browser, 'bind')
 
 
-@when(parsers.parse('I {enable:w} bind DNSSEC'))
-def bind_enable_dnssec(session_browser, enable):
-    should_enable = (enable == 'enable')
-    _enable_dnssec(session_browser, should_enable)
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'bind')
+
+    functional.app_enable(session_browser, 'bind')
+    assert functional.service_is_running(session_browser, 'bind')
+
+    functional.app_disable(session_browser, 'bind')
+    assert functional.service_is_not_running(session_browser, 'bind')
 
 
-@then(parsers.parse('bind DNSSEC should be {enabled:w}'))
-def bind_assert_dnssec(session_browser, enabled):
-    assert _get_dnssec(session_browser) == (enabled == 'enabled')
+def test_set_forwarders(session_browser):
+    """Test setting forwarders."""
+    functional.app_enable(session_browser, 'bind')
+    functional.set_forwarders(session_browser, '1.1.1.1')
+
+    functional.set_forwarders(session_browser, '1.1.1.1 1.0.0.1')
+    assert functional.get_forwarders(session_browser) == '1.1.1.1 1.0.0.1'
+
+
+def test_enable_disable_dnssec(session_browser):
+    """Test enabling/disabling DNSSEC."""
+    functional.app_enable(session_browser, 'bind')
+    _enable_dnssec(session_browser, False)
+
+    _enable_dnssec(session_browser, True)
+    assert _get_dnssec(session_browser)
+
+    _enable_dnssec(session_browser, False)
+    assert not _get_dnssec(session_browser)
+
+
+@pytest.mark.backups
+def test_backup(session_browser):
+    """Test backup and restore."""
+    functional.app_enable(session_browser, 'bind')
+    functional.set_forwarders(session_browser, '1.1.1.1')
+    _enable_dnssec(session_browser, False)
+    functional.backup_create(session_browser, 'bind', 'test_bind')
+
+    functional.set_forwarders(session_browser, '1.0.0.1')
+    _enable_dnssec(session_browser, True)
+
+    functional.backup_restore(session_browser, 'bind', 'test_bind')
+    assert functional.get_forwarders(session_browser) == '1.1.1.1'
+    assert not _get_dnssec(session_browser)
 
 
 def _enable_dnssec(browser, enable):
