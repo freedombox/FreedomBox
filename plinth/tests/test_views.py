@@ -18,14 +18,19 @@ def test_is_safe_url_valid_url(url):
     assert is_safe_url(url)
 
 
-@pytest.mark.parametrize('url', [
-    '',
-    None,
-    '\\plinth',
-    '///plinth',
-    'https://example.com/plinth/login/',
-    'https:///plinth/login',
-])
+@pytest.mark.parametrize(
+    'url',
+    [
+        '',
+        None,
+        '\\plinth',
+        '///plinth',
+        'https://example.com/plinth/login/',
+        'https:///example.com',
+        'https:///plinth/login',
+        'ftp://example.com',
+        'https://[aabb::ccdd',  # Invalid IPv6
+    ])
 def test_is_safe_url_invalid_url(url):
     """Test invalid URLs for safe URL checks."""
     assert not is_safe_url(url)

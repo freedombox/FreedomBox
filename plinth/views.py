@@ -44,7 +44,10 @@ def is_safe_url(url):
     if '\\' in url or url.startswith('///'):
         return False
 
-    result = urllib.parse.urlparse(url)
+    try:
+        result = urllib.parse.urlparse(url)
+    except ValueError:
+        return False
 
     # Only accept URLs to the same site and scheme.
     if result.scheme or result.netloc:
