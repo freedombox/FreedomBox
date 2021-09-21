@@ -6,6 +6,8 @@ pytest configuration for all tests.
 import importlib
 import os
 import pathlib
+import sys
+from unittest.mock import patch
 
 import pytest
 
@@ -39,9 +41,9 @@ def pytest_collection_modifyitems(config, items):
     skip_functional = pytest.mark.skip(
         reason='--include-functional not provided')
     for item in items:
-        if 'functional' in item.keywords or (
-                item.parent.fspath.basename
-                and item.parent.fspath.basename == 'test_functional.py'):
+        if 'functional' in item.keywords or (item.parent.fspath.basename
+                                             and item.parent.fspath.basename
+                                             == 'test_functional.py'):
             item.add_marker(skip_functional)
 
 
@@ -120,3 +122,38 @@ def splinter_browser_load_condition():
         return ready_state == 'complete'
 
     return _load_condition
+
+
+@pytest.fixture(name='actions_module', scope='module')
+def fixture_actions_module(request):
+    """Import and return an action module."""
+    actions_name = getattr(request.module, 'actions_name')
+    actions_file = str(
+        pathlib.Path(__file__).parent / 'actions' / actions_name)
+
+    loader = importlib.machinery.SourceFileLoader(actions_name, actions_file)
+    spec = importlib.util.spec_from_loader(actions_name, loader)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[actions_name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.fixture(name='call_action')
+def fixture_call_action(request, capsys, actions_module):
+    """Run actions with custom root path."""
+
+    actions_name = getattr(request.module, 'actions_name')
+
+    def _call_action(*args, **_kwargs):
+        if isinstance(args[0], list):
+            argv = [actions_name] + args[0]  # Command line style usage
+        else:
+            argv = [args[0]] + args[1]  # superuser_run style usage
+
+        with patch('argparse._sys.argv', argv):
+            actions_module.main()
+            captured = capsys.readouterr()
+            return captured.out
+
+    return _call_action
