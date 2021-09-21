@@ -3,10 +3,7 @@
 Test module for gitweb module operations.
 """
 
-import imp
 import json
-import pathlib
-from unittest.mock import patch
 
 import pytest
 from django.forms import ValidationError
@@ -19,29 +16,13 @@ REPO_DATA = {
     'access': 'private',
 }
 
-
-def _action_file():
-    """Return the path to the 'gitweb' actions file."""
-    current_directory = pathlib.Path(__file__).parent
-    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
-               'gitweb')
+actions_name = 'gitweb'
 
 
-gitweb_actions = imp.load_source('gitweb', _action_file())
-
-
-@pytest.fixture(name='call_action')
-def fixture_call_action(tmpdir, capsys):
-    """Run actions with custom repo root path."""
-
-    def _call_action(args, **kwargs):
-        gitweb_actions.GIT_REPO_PATH = str(tmpdir)
-        with patch('argparse._sys.argv', ['gitweb'] + args):
-            gitweb_actions.main()
-            captured = capsys.readouterr()
-            return captured.out
-
-    return _call_action
+@pytest.fixture(autouse=True)
+def fixture_set_repo_path(actions_module, tmpdir):
+    """Set a repository path in the actions module."""
+    actions_module.GIT_REPO_PATH = str(tmpdir)
 
 
 @pytest.fixture(name='existing_repo')
