@@ -17,7 +17,6 @@ REPO_DATA = {
     'description': '',
     'owner': '',
     'access': 'private',
-    'default_branch': 'master',
 }
 
 
@@ -65,9 +64,11 @@ def test_create_repo(call_action):
         'create-repo', '--name', REPO_NAME, '--description', '', '--owner', '',
         '--is-private', '--keep-ownership'
     ])
+    repo = json.loads(call_action(['repo-info', '--name', REPO_NAME]))
+    default_branch = repo.pop('default_branch')
 
-    assert json.loads(call_action(['repo-info', '--name',
-                                   REPO_NAME])) == REPO_DATA
+    assert repo == REPO_DATA
+    assert len(default_branch) > 0
 
 
 def test_change_repo_medatada(call_action, existing_repo):
@@ -77,7 +78,6 @@ def test_change_repo_medatada(call_action, existing_repo):
         'description': 'description2',
         'owner': 'owner2',
         'access': 'public',
-        'default_branch': 'master',
     }
 
     call_action([
@@ -89,9 +89,10 @@ def test_change_repo_medatada(call_action, existing_repo):
     call_action([
         'set-repo-access', '--name', REPO_NAME, '--access', new_data['access']
     ])
+    repo = json.loads(call_action(['repo-info', '--name', REPO_NAME]))
+    del repo['default_branch']
 
-    assert json.loads(call_action(['repo-info', '--name',
-                                   REPO_NAME])) == new_data
+    assert repo == new_data
 
 
 def test_rename_repository(call_action, existing_repo):
@@ -101,21 +102,17 @@ def test_rename_repository(call_action, existing_repo):
     call_action(['rename-repo', '--oldname', REPO_NAME, '--newname', new_name])
     with pytest.raises(RuntimeError, match='Repository not found'):
         call_action(['repo-info', '--name', REPO_NAME])
+    repo = json.loads(call_action(['repo-info', '--name', new_name]))
 
-    assert json.loads(call_action(['repo-info', '--name', new_name])) == {
-        **REPO_DATA,
-        **{
-            'name': new_name
-        }
-    }
+    assert repo['name'] == new_name
 
 
 def test_get_branches(call_action, existing_repo):
     """Test  getting all the branches of the repository."""
-    assert json.loads(call_action(['get-branches', '--name', REPO_NAME])) == {
-        "default_branch": "master",
-        "branches": []
-    }
+    result = json.loads(call_action(['get-branches', '--name', REPO_NAME]))
+
+    assert 'default_branch' in result
+    assert result['branches'] == []
 
 
 def test_delete_repository(call_action, existing_repo):

@@ -115,10 +115,9 @@ directory:
 guest$ cd /freedombox
 ```
 
-Run the development version of FreedomBox Service (Plinth) from your source
-directory in the container using the following command. This command
-continuously deploys your code changes into the container providing a
-quick feedback cycle during development.
+Run the development version of FreedomBox Service in the container using the
+following command. This command continuously deploys your code changes into the
+container providing a quick feedback cycle during development.
 
 ```bash
 guest$ freedombox-develop

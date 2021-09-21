@@ -18,7 +18,7 @@ from plinth.modules.firewall.components import Firewall
 
 from . import manifest
 
-version = 9
+version = 10
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-30 19:29-0400\n"
-"PO-Revision-Date: 2021-01-18 12:32+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2021-09-18 09:34-0400\n"
+"PO-Revision-Date: 2021-09-15 21:34+0000\n"
+"Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
 "Language: bg\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
-msgstr ""
+msgstr "Изходен код на страницата"
 
 #: plinth/context_processors.py:23 plinth/views.py:80
 msgid "FreedomBox"
@@ -30,17 +30,17 @@ msgstr "FreedomBox"
 #: plinth/daemon.py:103
 #, python-brace-format
 msgid "Service {service_name} is running"
-msgstr ""
+msgstr "Услугата {service_name} работи"
 
 #: plinth/daemon.py:130
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
-msgstr ""
+msgstr "Слушане на {kind} порт {listen_address}:{port}"
 
 #: plinth/daemon.py:134
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
-msgstr ""
+msgstr "Слушане на {kind} порт {port}"
 
 #: plinth/daemon.py:202
 #, python-brace-format
@@ -53,32 +53,28 @@ msgid "Cannot connect to {host}:{port}"
 msgstr "Не може да се свърже с {host}:{port}"
 
 #: plinth/forms.py:39
-#, fuzzy
 msgid "Select a domain name to be used with this application"
-msgstr "Изберете име на домейн, което да се ползва с това приложение"
+msgstr "Изберете име на домейн, което да се използва с това приложение"
 
 #: plinth/forms.py:41
-#, fuzzy
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr ""
-"Внимание! Приложението може да не работи коректно, ако по-късно се промени "
-"името на домейна."
+"Предупреждение! Приложението може да не работи правилно, ако името на "
+"домейна бъде променено по-късно."
 
 #: plinth/forms.py:49
 msgid "Language"
 msgstr "Език"
 
 #: plinth/forms.py:50
-#, fuzzy
 msgid "Language to use for presenting this web interface"
-msgstr "Език, на който ще се показва този уеб интерфейс"
+msgstr "Език, на който да се показва този интерфейс"
 
 #: plinth/forms.py:57
-#, fuzzy
 msgid "Use the language preference set in the browser"
-msgstr "Използване езиковите настройки на браузъра"
+msgstr "Използване на предпочитания от четеца език"
 
 #: plinth/middleware.py:59 plinth/templates/setup.html:18
 msgid "Application installed."
@@ -95,21 +91,19 @@ msgid "Error installing application: {error}"
 msgstr "Грешка при инсталиране на приложението: {error}"
 
 #: plinth/modules/apache/__init__.py:41
-#, fuzzy
-#| msgid "Web Server"
 msgid "Apache HTTP Server"
-msgstr "Уеб Сървър"
+msgstr "Сървър на Apache HTTP"
 
 #: plinth/modules/apache/__init__.py:44
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:49
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:46
 msgid "Web Server"
-msgstr "Уеб Сървър"
+msgstr "Уеб сървър"
 
 #: plinth/modules/apache/__init__.py:50
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
-msgstr "{box_name} Уеб Интерфейс (Plinth)"
+msgstr "{box_name} Уеб интерфейс (Plinth)"
 
 #: plinth/modules/apache/components.py:122
 #, python-brace-format
@@ -131,14 +125,20 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
+"Откриването на услуги позволява на други устройства в мрежата да откриват "
+"вашия {box_name} и услугите, които се предоставят от него. Също така "
+"позволява на {box_name} да открива други устройства и услуги, работещи в "
+"локалната мрежа. Откриването на услуги не е от съществено значение и работи "
+"само във вътрешни мрежи. То може да бъде спряно, за да се подобри "
+"сигурността, особено когато се свързвате към враждебна локална мрежа."
 
 #: plinth/modules/avahi/__init__.py:59
 msgid "Service Discovery"
-msgstr ""
+msgstr "Откриване на услуги"
 
 #: plinth/modules/avahi/__init__.py:69
 msgid "Local Network Domain"
-msgstr ""
+msgstr "Домейн на местната мрежа"
 
 #: plinth/modules/backups/__init__.py:34
 msgid "Backups allows creating and managing backup archives."
@@ -147,13 +147,16 @@ msgstr ""
 #: plinth/modules/backups/__init__.py:54 plinth/modules/backups/__init__.py:200
 #: plinth/modules/backups/__init__.py:245
 msgid "Backups"
-msgstr ""
+msgstr "Резервни копия"
 
 #: plinth/modules/backups/__init__.py:197
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
+"Направете график за автоматично архивиране за безопасност на данните. "
+"Предпочитайте шифровано местоположение за отдалечено архивиране или "
+"допълнително свързан диск."
 
 #: plinth/modules/backups/__init__.py:203
 msgid "Enable a Backup Schedule"
@@ -164,7 +167,7 @@ msgstr ""
 #: plinth/modules/storage/__init__.py:323
 #, python-brace-format
 msgid "Go to {app_name}"
-msgstr ""
+msgstr "Към {app_name}"
 
 #: plinth/modules/backups/__init__.py:242
 #, python-brace-format
@@ -1883,6 +1886,10 @@ msgstr ""
 
 #: plinth/modules/email_server/aliases/models.py:19
 msgid "Cannot be a number"
+msgstr ""
+
+#: plinth/modules/email_server/audit/domain.py:35
+msgid "Postfix domain name config"
 msgstr ""
 
 #: plinth/modules/email_server/audit/home.py:23
@@ -5245,20 +5252,18 @@ msgid "Share enabled."
 msgstr ""
 
 #: plinth/modules/samba/views.py:106
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error enabling share: {error_message}"
-msgstr "Грешка при инсталиране на приложението: {error}"
+msgstr "Грешка при разрешаване на споделянето: {error_message}"
 
 #: plinth/modules/samba/views.py:111
 msgid "Share disabled."
 msgstr ""
 
 #: plinth/modules/samba/views.py:116
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error disabling share: {error_message}"
-msgstr "Грешка при инсталиране на приложението: {error}"
+msgstr "Грешка при забраняване на споделянето: {error_message}"
 
 #: plinth/modules/searx/__init__.py:25
 msgid ""
@@ -6541,10 +6546,8 @@ msgid "There is a new %(box_name)s version available."
 msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:35
-#, fuzzy
-#| msgid "FreedomBox"
 msgid "Your Freedombox needs an update!"
-msgstr "FreedomBox"
+msgstr "Вашият Freedombox се нуждае от обновяване!"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:47
 msgid ""
@@ -7625,6 +7628,6 @@ msgstr ""
 msgid "%(percentage)s%% complete"
 msgstr ""
 
-#: plinth/web_framework.py:113
+#: plinth/web_framework.py:117
 msgid "Gujarati"
 msgstr ""

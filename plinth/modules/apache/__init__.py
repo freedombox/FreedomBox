@@ -14,7 +14,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.utils import format_lazy, is_valid_user_name
 
-version = 8
+version = 9
 
 is_essential = True
 

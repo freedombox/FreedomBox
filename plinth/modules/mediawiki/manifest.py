@@ -15,7 +15,9 @@ backup = {
         'files': ['/etc/mediawiki/FreedomBoxSettings.php']
     },
     'data': {
-        'directories': ['/var/lib/mediawiki-db/']
+        'directories': [
+            '/var/lib/mediawiki-db/', '/var/lib/mediawiki/images/'
+        ]
     },
     'services': ['mediawiki-jobrunner']
 }
