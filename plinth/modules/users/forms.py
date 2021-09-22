@@ -210,19 +210,21 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
         })
 
         choices = []
+        django_groups = sorted(self.fields['groups'].choices,
+                               key=lambda choice: choice[1])
+        for group_id, group_name in django_groups:
+            try:
+                group_id = group_id.value
+            except AttributeError:
+                pass
 
-        for c in sorted(self.fields['groups'].choices, key=lambda x: x[1]):
-            # Handle case where groups exist in database for
-            # applications not installed yet.
-            if c[1] in group_choices:
-                # Replace group names with descriptions
-                if c[1] == 'admin' and self.is_last_admin_user:
-                    choices.append((c[0], {
-                        'label': group_choices[c[1]],
-                        'readonly': True
-                    }))
-                else:
-                    choices.append((c[0], group_choices[c[1]]))
+            # Show choices only from groups declared by apps.
+            if group_name in group_choices:
+                label = group_choices[group_name]
+                if group_name == 'admin' and self.is_last_admin_user:
+                    label = {'label': label, 'disabled': True}
+
+                choices.append((group_id, label))
 
         self.fields['groups'].label = _('Permissions')
         self.fields['groups'].choices = choices
@@ -323,18 +325,20 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
         return user
 
-    def validate_last_admin_user(self, groups):
-        group_names = [group.name for group in groups]
-        if 'admin' not in group_names:
-            raise ValidationError(
-                _('Cannot delete the only administrator in the system.'))
+    def clean_groups(self):
+        """Validate groups to ensure admin group for last admin.
 
-    def clean(self):
-        """Override clean to add form validation logic."""
-        cleaned_data = super().clean()
+        For the last admin user, we disable the checkbox for 'admin' group so
+        that it can't be unchecked. However, this means that browser will no
+        longer submit that value. Forcefully add 'admin' group in this case.
+
+        """
+        groups = self.cleaned_data['groups']
         if self.is_last_admin_user:
-            self.validate_last_admin_user(cleaned_data.get("groups"))
-        return cleaned_data
+            groups = groups | self.fields['groups'].queryset.filter(
+                **{'name': 'admin'})
+
+        return groups
 
 
 class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
