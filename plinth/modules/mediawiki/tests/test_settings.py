@@ -4,11 +4,33 @@ Test module for MediaWiki utility functions.
 """
 
 import pathlib
+import shutil
 from unittest.mock import patch
 
 import pytest
 
 from plinth.modules import mediawiki
+
+actions_name = 'mediawiki'
+current_directory = pathlib.Path(__file__).parent
+
+
+@pytest.fixture(autouse=True)
+def fixture_setup_configuration(actions_module, conf_file):
+    """Set configuration file path in actions module."""
+    actions_module.CONF_FILE = conf_file
+
+
+@pytest.fixture(name='conf_file')
+def fixture_conf_file(tmp_path):
+    """Uses a dummy configuration file."""
+    settings_file_name = 'FreedomBoxSettings.php'
+    conf_file = tmp_path / settings_file_name
+    conf_file.touch()
+    shutil.copyfile(
+        str(current_directory / '..' / 'data' / 'etc' / 'mediawiki' /
+            settings_file_name), str(conf_file))
+    return str(conf_file)
 
 
 @pytest.fixture(name='test_configuration', autouse=True)
