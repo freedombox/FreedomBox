@@ -11,9 +11,12 @@ override_dh_auto_install-indep:
 	./run --develop --list-dependencies | sort | tr '\n' ', ' | \
 		sed -e 's/^/freedombox:Depends=/' >> debian/freedombox.substvars
 
+# pybuild can run pytest. However, when the top level directory is included in
+# the path (done using manage.py), it results in import problems.
+# https://www.mail-archive.com/debian-python@lists.debian.org/msg17997.html
 override_dh_auto_test:
 	PYBUILD_SYSTEM=custom \
-	PYBUILD_TEST_ARGS="{interpreter} setup.py test" dh_auto_test
+	PYBUILD_TEST_ARGS="{interpreter} -m pytest" dh_auto_test
 
 override_dh_installsystemd:
 	# Do not enable or start freedombox-manual-upgrade.service.
