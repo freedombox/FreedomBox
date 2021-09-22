@@ -1,6 +1,14 @@
 [tool.isort]
 known_first_party = ["plinth"]
 
+[tool.coverage.run]
+branch = true
+omit = ["*/tests/*"]
+
+[tool.coverage.report]
+precision = 2
+omit = ["*/tests/*"]
+
 [tool.pytest.ini_options]
 addopts = "--ds=plinth.tests.data.django_test_settings"
 markers = [

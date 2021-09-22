@@ -28,7 +28,7 @@ unit-tests:
     - echo "tester:password" | chpasswd
     - cp -r . /home/tester/plinth
     - chown -R tester:tester /home/tester/plinth
-    - su -c "cd ~/plinth;PYTHONPATH='.' py.test-3 --cov=plinth --cov-report=html:/home/tester/plinth/htmlcov --cov-config=.coveragerc --cov-report=term" tester
+    - su -c "cd ~/plinth;PYTHONPATH='.' py.test-3 --cov=plinth --cov-report=html:/home/tester/plinth/htmlcov --cov-report=term" tester
     - cp -r /home/tester/plinth/htmlcov test-coverage-report
   coverage: '/^TOTAL\s+.*\s+(\d+\.\d+%)$/'
   artifacts:
