@@ -4,8 +4,6 @@ Utility methods for managing translations.
 """
 
 from django.conf import settings
-from django.contrib.auth.signals import user_logged_in
-from django.dispatch import receiver
 from django.utils import translation
 
 
@@ -58,8 +56,3 @@ def set_language(request, response, language_code):
             domain=settings.LANGUAGE_COOKIE_DOMAIN,
         )
 
-
-@receiver(user_logged_in)
-def _on_user_logged_in(sender, request, user, **kwargs):
-    """When the user logs in, set the current language."""
-    set_language(request, None, user.userprofile.language)
