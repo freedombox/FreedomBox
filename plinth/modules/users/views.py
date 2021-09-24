@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 
-from plinth import actions
+from plinth import actions, translation
 from plinth.errors import ActionError
 from plinth.modules import first_boot
 from plinth.utils import is_user_admin
@@ -107,6 +107,18 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         """Return the URL to redirect to in case of successful updation."""
         return reverse('users:edit', kwargs={'slug': self.object.username})
+
+    def form_valid(self, form):
+        """Set the user language if necessary."""
+        response = super().form_valid(form)
+
+        # If user is updating their own profile then set the language for
+        # current session too.
+        if self.object.username == self.request.user.username:
+            translation.set_language(self.request, response,
+                                     self.request.user.userprofile.language)
+
+        return response
 
 
 class UserDelete(ContextMixin, DeleteView):
