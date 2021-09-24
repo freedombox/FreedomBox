@@ -5,36 +5,43 @@ Functional, browser based tests for dynamicdns app.
 
 import time
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('dynamicdns.feature')
+pytestmark = [
+    pytest.mark.system, pytest.mark.essential, pytest.mark.dynamicdns
+]
 
 
-@given('dynamicdns is configured')
-def dynamicdns_configure(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
+
+
+def test_capitalized_domain_name(session_browser):
+    """Test handling of capitalized domain name."""
     _configure(session_browser)
+    _configure_domain(session_browser, 'FreedomBox.example.com')
+    assert _get_domain(session_browser) == 'freedombox.example.com'
 
 
-@when('I change the dynamicdns configuration')
-def dynamicdns_change_config(session_browser):
+def test_backup_and_restore(session_browser):
+    """Test backup and restore of configuration."""
+    _configure(session_browser)
+    functional.backup_create(session_browser, 'dynamicdns', 'test_dynamicdns')
+
     _change_config(session_browser)
+    functional.backup_restore(session_browser, 'dynamicdns', 'test_dynamicdns')
 
-
-@when(parsers.parse('I change the domain name to {domain:S}'))
-def dynamicdns_change_domain(session_browser, domain):
-    _configure_domain(session_browser, domain)
-
-
-@then('dynamicdns should have the original configuration')
-def dynamicdns_has_original_config(session_browser):
     assert _has_original_config(session_browser)
 
 
-@then(parsers.parse('the domain name should be {domain:S}'))
-def dynamicdns_has_domain(session_browser, domain):
-    assert _get_domain(session_browser) == domain
+# TODO Scenario: Configure GnuDIP service
+# TODO Scenario: Configure noip.com service
+# TODO Scenario: Configure selfhost.bz service
+# TODO Scenario: Configure freedns.afraid.org service
+# TODO Scenario: Configure other update URL service
 
 
 def _configure(browser):
