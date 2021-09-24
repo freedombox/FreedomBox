@@ -25,8 +25,9 @@ def get_language_from_request(request):
 def set_language(request, response, language_code):
     """Set the language in session or as a separate cookie.
 
-    Sending language code as None removes the preference. If response is None,
-    cookies are not touched and setting/deleting language cookie will not work.
+    Sending language code as None removes the preference. response is not
+    optional as Django 3.0 up always set the language cookie and Django 4.0
+    will no longer set the language in the session.
 
     """
     if not language_code:
@@ -47,12 +48,11 @@ def set_language(request, response, language_code):
     translation.activate(language_code)
     if hasattr(request, 'session'):
         request.session[translation.LANGUAGE_SESSION_KEY] = language_code
-    else:
-        response.set_cookie(
-            settings.LANGUAGE_COOKIE_NAME,
-            language_code,
-            max_age=settings.LANGUAGE_COOKIE_AGE,
-            path=settings.LANGUAGE_COOKIE_PATH,
-            domain=settings.LANGUAGE_COOKIE_DOMAIN,
-        )
 
+    response.set_cookie(
+        settings.LANGUAGE_COOKIE_NAME,
+        language_code,
+        max_age=settings.LANGUAGE_COOKIE_AGE,
+        path=settings.LANGUAGE_COOKIE_PATH,
+        domain=settings.LANGUAGE_COOKIE_DOMAIN,
+    )
