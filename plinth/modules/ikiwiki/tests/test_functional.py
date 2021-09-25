@@ -3,25 +3,41 @@
 Functional, browser based tests for ikiwiki app.
 """
 
-from pytest_bdd import scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('ikiwiki.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.ikiwiki]
 
 
-@when('there is an ikiwiki wiki')
-def ikiwiki_create_wiki_if_needed(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'ikiwiki')
+    yield
+    functional.app_disable(session_browser, 'ikiwiki')
+
+
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'ikiwiki')
+
+    functional.app_enable(session_browser, 'ikiwiki')
+    assert functional.is_available(session_browser, 'ikiwiki')
+
+    functional.app_disable(session_browser, 'ikiwiki')
+    assert not functional.is_available(session_browser, 'ikiwiki')
+
+
+@pytest.mark.backups
+def test_backup_and_restore(session_browser):
+    functional.app_enable(session_browser, 'ikiwiki')
     _create_wiki_if_needed(session_browser)
+    functional.backup_create(session_browser, 'ikiwiki', 'test_ikiwiki')
 
-
-@when('I delete the ikiwiki wiki')
-def ikiwiki_delete_wiki(session_browser):
     _delete_wiki(session_browser)
+    functional.backup_restore(session_browser, 'ikiwiki', 'test_ikiwiki')
 
-
-@then('the ikiwiki wiki should be restored')
-def ikiwiki_should_exist(session_browser):
     assert _wiki_exists(session_browser)
 
 
