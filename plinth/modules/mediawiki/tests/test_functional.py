@@ -7,114 +7,112 @@ import pathlib
 from urllib.parse import urlparse
 
 import requests
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 from plinth.tests.functional import config
 
-scenarios('mediawiki.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.mediawiki]
 
 
-@given(parsers.parse('the server url is set to test config url'))
-def set_server_url(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'mediawiki')
     _set_server_url(session_browser)
+    yield
+    functional.app_disable(session_browser, 'mediawiki')
 
 
-@when(parsers.parse('I enable mediawiki public registrations'))
-def enable_mediawiki_public_registrations(session_browser):
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'mediawiki')
+
+    functional.app_enable(session_browser, 'mediawiki')
+    assert functional.is_available(session_browser, 'mediawiki')
+
+    functional.app_disable(session_browser, 'mediawiki')
+    assert not functional.is_available(session_browser, 'mediawiki')
+
+
+def test_public_registrations(session_browser):
+    """Test enabling public registrations."""
+    functional.app_enable(session_browser, 'mediawiki')
     _enable_public_registrations(session_browser)
-
-
-@when(parsers.parse('I disable mediawiki public registrations'))
-def disable_mediawiki_public_registrations(session_browser):
-    _disable_public_registrations(session_browser)
-
-
-@when(parsers.parse('I enable mediawiki private mode'))
-def enable_mediawiki_private_mode(session_browser):
-    _enable_private_mode(session_browser)
-
-
-@when(parsers.parse('I disable mediawiki private mode'))
-def disable_mediawiki_private_mode(session_browser):
-    _disable_private_mode(session_browser)
-
-
-@when(parsers.parse('I set the mediawiki admin password to {password}'))
-def set_mediawiki_admin_password(session_browser, password):
-    _set_admin_password(session_browser, password)
-
-
-@then(parsers.parse('the mediawiki site should allow creating accounts'))
-def mediawiki_allows_creating_accounts(session_browser):
     _verify_create_account_link(session_browser)
 
-
-@then(parsers.parse('the mediawiki site should not allow creating accounts'))
-def mediawiki_does_not_allow_creating_accounts(session_browser):
+    _disable_public_registrations(session_browser)
     _verify_no_create_account_link(session_browser)
 
 
-@then(
-    parsers.parse('the mediawiki site should allow anonymous reads and writes')
-)
-def mediawiki_allows_anonymous_reads_edits(session_browser):
+def test_private_mode(session_browser):
+    """Test enabling private mode."""
+    functional.app_enable(session_browser, 'mediawiki')
+    _enable_private_mode(session_browser)
+    _verify_no_create_account_link(session_browser)
+    _verify_no_anonymous_reads_edits_link(session_browser)
+
+    _disable_private_mode(session_browser)
     _verify_anonymous_reads_edits_link(session_browser)
 
 
-@then(
-    parsers.parse(
-        'the mediawiki site should not allow anonymous reads and writes'))
-def mediawiki_does_not_allow_anonymous_reads_edits(session_browser):
-    _verify_no_anonymous_reads_edits_link(session_browser)
+def test_private_mode_public_registrations(session_browser):
+    """Test interactive between private mode and public registrations.
+
+    Requires JS."""
+    functional.app_enable(session_browser, 'mediawiki')
+
+    # Enabling private mode disables public registrations
+    _enable_public_registrations(session_browser)
+    _enable_private_mode(session_browser)
+    _verify_no_create_account_link(session_browser)
+
+    # Enabling public registrations disables private mode
+    _enable_private_mode(session_browser)
+    _enable_public_registrations(session_browser)
+    _verify_create_account_link(session_browser)
 
 
-@then(
-    parsers.parse(
-        'I should see the Upload File option in the side pane when logged in '
-        'with credentials {username:w} and {password:w}'))
-def login_to_mediawiki_with_credentials(session_browser, username, password):
-    _login_with_credentials(session_browser, username, password)
+def test_upload_files(session_browser):
+    """Test that logged in user can see upload files option.
+
+    Requires JS."""
+    functional.app_enable(session_browser, 'mediawiki')
+    _set_admin_password(session_browser, 'whatever123')
+    _login_with_credentials(session_browser, 'admin', 'whatever123')
 
 
-@when(
-    parsers.parse('I delete the mediawiki main page with credentials '
-                  '{username:w} and {password:w}'))
-def mediawiki_delete_main_page(session_browser, username, password):
-    _delete_main_page(session_browser, username, password)
+def test_upload_images(session_browser):
+    """Test uploading an image."""
+    functional.app_enable(session_browser, 'mediawiki')
+    _upload_image(session_browser, 'admin', 'whatever123', 'noise.png')
+    assert _image_exists(session_browser, 'Noise.png')
 
 
-@when(
-    parsers.parse('I delete {image:S} image with credentials '
-                  '{username:w} and {password:w}'))
-def delete_image(session_browser, username, password, image):
-    _delete_image(session_browser, username, password, image)
+def test_upload_svg_image(session_browser):
+    """Test uploading an SVG image."""
+    functional.app_enable(session_browser, 'mediawiki')
+    _upload_image(session_browser, 'admin', 'whatever123',
+                  'apps-background.svg')
+    assert _image_exists(session_browser, 'Apps-background.svg')
 
 
-@then('the mediawiki main page should be restored')
-def mediawiki_verify_text(session_browser):
+def test_backup_restore(session_browser):
+    """Test backup and restore of pages and images."""
+    functional.app_enable(session_browser, 'mediawiki')
+    if not _image_exists(session_browser, 'Noise.png'):
+        _upload_image(session_browser, 'admin', 'whatever123', 'Noise.png')
+
+    functional.backup_create(session_browser, 'mediawiki', 'test_mediawiki')
+
+    _enable_public_registrations(session_browser)
+    _delete_image(session_browser, 'admin', 'whatever123', 'Noise.png')
+    _delete_main_page(session_browser, 'admin', 'whatever123')
+    functional.backup_restore(session_browser, 'mediawiki', 'test_mediawiki')
+
     assert _has_main_page(session_browser)
-
-
-@when(
-    parsers.parse(
-        'I upload an image named {image:S} to mediawiki with credentials '
-        '{username:w} and {password:w}'))
-def upload_image(session_browser, username, password, image):
-    _upload_image(session_browser, username, password, image)
-
-
-@given(
-    parsers.parse('I ensure that there is {image:S} image with credentials '
-                  '{username:w} and {password:w}'))
-def ensure_image_exists(session_browser, username, password, image):
-    if not _image_exists(session_browser, image):
-        _upload_image(session_browser, username, password, image)
-
-
-@then(parsers.parse('there should be {image:S} image'))
-def uploaded_image_should_be_available(session_browser, image):
-    assert _image_exists(session_browser, image)
+    assert _image_exists(session_browser, 'Noise.png')
+    _verify_create_account_link(session_browser)
 
 
 def _enable_public_registrations(browser):
