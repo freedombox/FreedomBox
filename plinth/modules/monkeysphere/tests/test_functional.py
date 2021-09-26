@@ -3,38 +3,57 @@
 Functional, browser based tests for monkeysphere app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('monkeysphere.feature')
+pytestmark = [pytest.mark.system, pytest.mark.monkeysphere]
 
 
-@given(
-    parsers.parse(
-        'the {key_type:w} key for {domain:S} is imported in monkeysphere'))
-def monkeysphere_given_import_key(session_browser, key_type, domain):
-    _import_key(session_browser, key_type.lower(), domain)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.set_advanced_mode(session_browser, True)
+    functional.install(session_browser, 'monkeysphere')
+    functional.set_domain_name(session_browser, 'mydomain.example')
+    yield
 
 
-@when(parsers.parse('I import {key_type:w} key for {domain:S} in monkeysphere')
-      )
-def monkeysphere_import_key(session_browser, key_type, domain):
-    _import_key(session_browser, key_type.lower(), domain)
+def test_import_ssh_keys(session_browser):
+    """Test importing SSH keys."""
+    _import_key(session_browser, 'ssh', 'mydomain.example')
+    _assert_imported_key(session_browser, 'ssh', 'mydomain.example')
 
 
-@then(
-    parsers.parse(
-        'the {key_type:w} key should imported for {domain:S} in monkeysphere'))
-def monkeysphere_assert_imported_key(session_browser, key_type, domain):
-    _assert_imported_key(session_browser, key_type.lower(), domain)
+def test_import_https_keys(session_browser):
+    """Test importing HTTPS keys."""
+    _import_key(session_browser, 'https', 'mydomain.example')
+    _assert_imported_key(session_browser, 'https', 'mydomain.example')
 
 
-@then(
-    parsers.parse('I should be able to publish {key_type:w} key for '
-                  '{domain:S} in monkeysphere'))
-def monkeysphere_publish_key(session_browser, key_type, domain):
-    _publish_key(session_browser, key_type.lower(), domain)
+def test_publish_ssh_keys(session_browser):
+    """Test publishing SSH keys."""
+    _import_key(session_browser, 'ssh', 'mydomain.example')
+    _publish_key(session_browser, 'ssh', 'mydomain.example')
+
+
+def test_publish_https_keys(session_browser):
+    """Test publishing HTTPS keys."""
+    _import_key(session_browser, 'https', 'mydomain.example')
+    _publish_key(session_browser, 'https', 'mydomain.example')
+
+
+def test_backup_restore(session_browser):
+    """Test backup and restore of keys"""
+    _import_key(session_browser, 'ssh', 'mydomain.example')
+    _import_key(session_browser, 'https', 'mydomain.example')
+    functional.backup_create(session_browser, 'monkeysphere',
+                             'test_monkeysphere')
+
+    functional.backup_restore(session_browser, 'monkeysphere',
+                              'test_monkeysphere')
+    _assert_imported_key(session_browser, 'ssh', 'mydomain.example')
+    _assert_imported_key(session_browser, 'https', 'mydomain.example')
 
 
 def _find_domain(browser, key_type, domain_type, domain):
@@ -54,7 +73,7 @@ def _find_domain(browser, key_type, domain_type, domain):
 def _import_key(browser, key_type, domain):
     """Import a key of specified type for given domain into monkeysphere."""
     try:
-        monkeysphere_assert_imported_key(browser, key_type, domain)
+        _assert_imported_key(browser, key_type, domain)
     except IndexError:
         pass
     else:
