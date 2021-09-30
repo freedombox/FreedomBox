@@ -373,7 +373,7 @@ class ForceUpgrader():
     - Package is complete.
     - File is available.
     - Package is trusted.
-    - Package is not blacklisted.
+    - Package is not in denylist.
     - Package extension is .deb.
     - Get conffiles values from control data of .deb.
     - Read from /var/lib/dpkg/status, Package and Conffiles section.
@@ -385,11 +385,11 @@ class ForceUpgrader():
 
     Filtering of packages to upgrade is done as follows:
     - Packages is upgradable.
-    - Remove packages from blacklist
-    - Remove packages unless in whitelist or whitelist is empty
+    - Remove packages from denylist
+    - Remove packages unless in allowlist or allowlist is empty
     - Package in allowed origins
     - Don't consider packages that require restart (if configured).
-    - Package dependencies satisfy origins, blacklist and whitelist.
+    - Package dependencies satisfy origins, denylist and allowlist.
     - Order packages alphabetically (order changes when upgrading in minimal
       steps).
 

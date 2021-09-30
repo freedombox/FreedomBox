@@ -3,11 +3,11 @@
 URLs for the security module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^sys/security/$', views.index, name='index'),
-    url(r'^sys/security/report$', views.report, name='report'),
+    re_path(r'^sys/security/$', views.index, name='index'),
+    re_path(r'^sys/security/report$', views.report, name='report'),
 ]

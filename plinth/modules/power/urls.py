@@ -3,12 +3,12 @@
 URLs for the power module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^sys/power/$', views.index, name='index'),
-    url(r'^sys/power/restart$', views.restart, name='restart'),
-    url(r'^sys/power/shutdown$', views.shutdown, name='shutdown'),
+    re_path(r'^sys/power/$', views.index, name='index'),
+    re_path(r'^sys/power/restart$', views.restart, name='restart'),
+    re_path(r'^sys/power/shutdown$', views.shutdown, name='shutdown'),
 ]

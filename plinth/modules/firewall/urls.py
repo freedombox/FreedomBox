@@ -3,10 +3,10 @@
 URLs for the Firewall module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^sys/firewall/$', views.FirewallAppView.as_view(), name='index'),
+    re_path(r'^sys/firewall/$', views.FirewallAppView.as_view(), name='index'),
 ]

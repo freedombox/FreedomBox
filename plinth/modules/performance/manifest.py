@@ -7,7 +7,7 @@ import subprocess
 from functools import lru_cache
 
 from django.utils.functional import lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth.utils import Version
 

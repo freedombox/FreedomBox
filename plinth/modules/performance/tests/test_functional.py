@@ -4,6 +4,7 @@ Functional, browser based tests for performance app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.performance]

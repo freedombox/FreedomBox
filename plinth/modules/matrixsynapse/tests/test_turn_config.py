@@ -10,6 +10,32 @@ import pytest
 from plinth.modules import matrixsynapse
 from plinth.modules.coturn.components import TurnConfiguration
 
+actions_name = 'matrixsynapse'
+
+
+@pytest.fixture(name='managed_turn_conf_file')
+def fixture_managed_turn_conf_file(tmp_path):
+    """Returns a dummy TURN configuration file."""
+    conf_file = tmp_path / 'freedombox-turn.yaml'
+    return str(conf_file)
+
+
+@pytest.fixture(name='overridden_turn_conf_file')
+def fixture_overridden_turn_conf_file(tmp_path):
+    """Returns a dummy TURN configuration file."""
+    conf_file = tmp_path / 'turn.yaml'
+    return str(conf_file)
+
+
+@pytest.fixture(autouse=True)
+def fixture_set_paths(actions_module, capsys, managed_turn_conf_file,
+                      overridden_turn_conf_file):
+    """Run actions with custom root path."""
+    actions_module.TURN_CONF_PATH = managed_turn_conf_file
+    actions_module.OVERRIDDEN_TURN_CONF_PATH = overridden_turn_conf_file
+    with patch('plinth.action_utils.service_try_restart'):
+        yield
+
 
 @pytest.fixture(name='test_configuration', autouse=True)
 def fixture_test_configuration(call_action, managed_turn_conf_file,

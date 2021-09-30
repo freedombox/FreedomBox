@@ -1,8 +1,8 @@
 import re
-from dataclasses import dataclass, field, InitVar
+from dataclasses import InitVar, dataclass, field
 
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 email_positive_pattern = re.compile('^[a-zA-Z0-9-_\\.]+')
 

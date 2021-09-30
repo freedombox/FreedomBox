@@ -3,36 +3,19 @@
 Test module for calibre actions.
 """
 
-import imp
 import json
 import pathlib
 from unittest.mock import call, patch
 
 import pytest
 
-
-def _action_file():
-    """Return the path to the 'calibre' actions file."""
-    current_directory = pathlib.Path(__file__).parent
-    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
-               'calibre')
+actions_name = 'calibre'
 
 
-actions = imp.load_source('calibre', _action_file())
-
-
-@pytest.fixture(name='call_action')
-def fixture_call_action(tmpdir, capsys):
-    """Run actions with custom root path."""
-
-    def _call_action(args, **kwargs):
-        actions.LIBRARIES_PATH = pathlib.Path(str(tmpdir))
-        with patch('argparse._sys.argv', ['calibre'] + args):
-            actions.main()
-            captured = capsys.readouterr()
-            return captured.out
-
-    return _call_action
+@pytest.fixture(autouse=True)
+def fixture_libraries_path(actions_module, tmpdir):
+    """Set the libraries path in the actions module."""
+    actions_module.LIBRARIES_PATH = pathlib.Path(str(tmpdir))
 
 
 @pytest.fixture(autouse=True)
@@ -61,10 +44,10 @@ def test_list_libraries(call_action):
 
 
 @patch('shutil.chown')
-def test_create_library(chown, call_action):
+def test_create_library(chown, call_action, actions_module):
     """Test creating a library."""
     call_action(['create-library', 'TestLibrary'])
-    library = actions.LIBRARIES_PATH / 'TestLibrary'
+    library = actions_module.LIBRARIES_PATH / 'TestLibrary'
     assert (library / 'metadata.db').exists()
     assert library.stat().st_mode == 0o40755
     expected_output = {'libraries': ['TestLibrary']}

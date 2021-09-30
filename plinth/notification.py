@@ -10,7 +10,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.template.exceptions import TemplateDoesNotExist
 from django.template.response import SimpleTemplateResponse
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 
 from plinth import cfg
 
@@ -283,7 +283,7 @@ class Notification(models.StoredNotification):
         if not string:
             return None
 
-        string = ugettext(string)
+        string = gettext(string)
         try:
             string = str(string)
             if data:
@@ -321,7 +321,7 @@ class Notification(models.StoredNotification):
         if not template:
             return None
 
-        context = dict(data, box_name=ugettext(cfg.box_name), request=request)
+        context = dict(data, box_name=gettext(cfg.box_name), request=request)
         try:
             return SimpleTemplateResponse(template, context).render()
         except TemplateDoesNotExist:

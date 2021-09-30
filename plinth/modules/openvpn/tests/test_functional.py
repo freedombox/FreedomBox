@@ -26,7 +26,7 @@ def openvpn_profile_downloadable(session_browser):
 @then('openvpn app should not be visible on the front page')
 def openvpn_app_not_on_front_page(session_browser):
     session_browser.visit(base_url)
-    links = session_browser.find_link_by_href(shortcut_href)
+    links = session_browser.links.find_by_href(shortcut_href)
     assert len(links) == 0
 
 

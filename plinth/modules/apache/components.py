@@ -7,7 +7,7 @@ import re
 import subprocess
 
 from django.utils.text import format_lazy
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 from plinth import action_utils, actions, app
 
@@ -119,10 +119,10 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
                        wrapper, expected_output)
 
     if kind:
-        template = ugettext_lazy('Access URL {url} on tcp{kind}')
+        template = gettext_lazy('Access URL {url} on tcp{kind}')
         testname = format_lazy(template, url=url, kind=kind)
     else:
-        template = ugettext_lazy('Access URL {url}')
+        template = gettext_lazy('Access URL {url}')
         testname = format_lazy(template, url=url)
 
     return [testname, result]

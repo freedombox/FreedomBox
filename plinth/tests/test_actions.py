@@ -13,9 +13,9 @@ import shutil
 import tempfile
 from unittest.mock import patch
 
+import apt_pkg
 import pytest
 
-import apt_pkg
 from plinth import cfg
 from plinth.actions import _log_command as log_command
 from plinth.actions import run, superuser_run

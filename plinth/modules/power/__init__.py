@@ -3,7 +3,7 @@
 FreedomBox app for power controls.
 """
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth.modules.backups.components import BackupRestore

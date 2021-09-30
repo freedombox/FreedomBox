@@ -10,8 +10,8 @@ import pathlib
 import threading
 
 import psutil
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, daemon, glib, menu
@@ -95,10 +95,10 @@ def run_on_all_enabled_modules():
 
     # Four result strings returned by tests, mark for translation and
     # translate later.
-    ugettext_noop('passed')
-    ugettext_noop('failed')
-    ugettext_noop('error')
-    ugettext_noop('warning')
+    gettext_noop('passed')
+    gettext_noop('failed')
+    gettext_noop('error')
+    gettext_noop('warning')
 
     apps = []
 
@@ -201,23 +201,23 @@ def _warn_about_low_ram_space(request):
     if memory_info['free_bytes'] < 1024**3:
         # Translators: This is the unit of computer storage Mebibyte similar to
         # Megabyte.
-        memory_available_unit = ugettext_noop('MiB')
+        memory_available_unit = gettext_noop('MiB')
         memory_available = memory_info['free_bytes'] / 1024**2
     else:
         # Translators: This is the unit of computer storage Gibibyte similar to
         # Gigabyte.
-        memory_available_unit = ugettext_noop('GiB')
+        memory_available_unit = gettext_noop('GiB')
         memory_available = memory_info['free_bytes'] / 1024**3
 
     show = False
     if memory_info['percent_used'] > 90:
         severity = 'error'
-        advice_message = ugettext_noop(
+        advice_message = gettext_noop(
             'You should disable some apps to reduce memory usage.')
         show = True
     elif memory_info['percent_used'] > 75:
         severity = 'warning'
-        advice_message = ugettext_noop(
+        advice_message = gettext_noop(
             'You should not install any new apps on this system.')
         show = True
 
@@ -228,14 +228,14 @@ def _warn_about_low_ram_space(request):
             pass
         return
 
-    message = ugettext_noop(
+    message = gettext_noop(
         # xgettext:no-python-format
         'System is low on memory: {percent_used}% used, {memory_available} '
         '{memory_available_unit} free. {advice_message}')
-    title = ugettext_noop('Low Memory')
+    title = gettext_noop('Low Memory')
     data = {
         'app_icon': 'fa-heartbeat',
-        'app_name': 'translate:' + ugettext_noop('Diagnostics'),
+        'app_name': 'translate:' + gettext_noop('Diagnostics'),
         'percent_used': f'{memory_info["percent_used"]:.1f}',
         'memory_available': f'{memory_available:.1f}',
         'memory_available_unit': 'translate:' + memory_available_unit,

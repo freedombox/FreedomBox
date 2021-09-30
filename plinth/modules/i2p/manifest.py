@@ -3,7 +3,7 @@
 Application manifest for I2P.
 """
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 _package_id = 'net.geti2p.i2p'
 _download_url = 'https://geti2p.net/download'

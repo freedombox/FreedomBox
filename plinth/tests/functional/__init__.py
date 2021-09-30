@@ -10,6 +10,7 @@ import pathlib
 import subprocess
 import tempfile
 import time
+import warnings
 from contextlib import contextmanager
 
 import pytest
@@ -269,7 +270,7 @@ def login_with_account(browser, url, username, password=None):
 
         visit(browser, '/plinth/accounts/logout/')
 
-    login_button = browser.find_link_by_href('/plinth/accounts/login/')
+    login_button = browser.links.find_by_href('/plinth/accounts/login/')
     if login_button:
         login_button.first.click()
         if login_button:
@@ -345,6 +346,8 @@ def install(browser, app_name):
                     browser.visit(browser.url)
                 else:
                     # This app is not available in this distribution
+                    warnings.warn(
+                        f'App {app_name} is not available in distribution')
                     pytest.skip('App not available in distribution')
             else:
                 install_button.click()
@@ -412,7 +415,7 @@ def set_domain_name(browser, domain_name):
 ########################
 def find_on_front_page(browser, app_name):
     browser.visit(base_url)
-    shortcuts = browser.find_link_by_href(f'/{app_name}/')
+    shortcuts = browser.links.find_by_href(f'/{app_name}/')
     return shortcuts
 
 
@@ -454,7 +457,7 @@ def set_advanced_mode(browser, mode):
 # Backup utilities #
 ####################
 def _click_button_and_confirm(browser, href):
-    buttons = browser.find_link_by_href(href)
+    buttons = browser.links.find_by_href(href)
     if buttons:
         submit(browser, buttons.first)
         submit(browser, expected_url='/plinth/sys/backups/')
@@ -471,7 +474,7 @@ def backup_create(browser, app_name, archive_name=None):
     if archive_name:
         _backup_delete_archive_by_name(browser, archive_name)
 
-    buttons = browser.find_link_by_href('/plinth/sys/backups/create/')
+    buttons = browser.links.find_by_href('/plinth/sys/backups/create/')
     submit(browser, buttons.first)
     eventually(browser.find_by_css, args=['.select-all'])
     browser.find_by_css('.select-all').first.uncheck()
@@ -502,7 +505,7 @@ def networks_set_firewall_zone(browser, zone):
     network_id = device['href'].split('/')[-3]
     device.click()
     edit_url = "/plinth/sys/networks/{}/edit/".format(network_id)
-    browser.find_link_by_href(edit_url).first.click()
+    browser.links.find_by_href(edit_url).first.click()
     browser.select('zone', zone)
     browser.find_by_tag("form").first.find_by_tag('input')[-1].click()
 
@@ -536,7 +539,7 @@ def create_user(browser, name, password=None, groups=[]):
         password = get_password(name)
 
     with wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/sys/users/create/').first.click()
+        browser.links.find_by_href('/plinth/sys/users/create/').first.click()
 
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
@@ -554,7 +557,7 @@ def create_user(browser, name, password=None, groups=[]):
 def delete_user(browser, name):
     """Delete a user."""
     nav_to_module(browser, 'users')
-    delete_link = browser.find_link_by_href(
+    delete_link = browser.links.find_by_href(
         f'/plinth/sys/users/{name}/delete/')
 
     with wait_for_page_update(browser):
@@ -565,5 +568,5 @@ def delete_user(browser, name):
 def user_exists(browser, name):
     """Check if a user with a given name exists."""
     nav_to_module(browser, 'users')
-    links = browser.find_link_by_href(f'/plinth/sys/users/{name}/edit/')
+    links = browser.links.find_by_href(f'/plinth/sys/users/{name}/edit/')
     return len(links) == 1

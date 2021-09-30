@@ -3,12 +3,13 @@
 Forms for configuring Tor.
 """
 
+import re
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_ipv46_address
 from django.forms import widgets
-from django.utils.translation import ugettext_lazy as _
-import re
+from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
 from plinth.utils import format_lazy
@@ -16,6 +17,7 @@ from plinth.utils import format_lazy
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
+
     def clean(self, value):
         """Clean and validate the field value"""
         if value:

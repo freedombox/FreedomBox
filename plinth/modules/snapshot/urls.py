@@ -3,15 +3,15 @@
 URLs for the snapshot module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^sys/snapshot/$', views.index, name='index'),
-    url(r'^sys/snapshot/manage/$', views.manage, name='manage'),
-    url(r'^sys/snapshot/selected/delete$', views.delete_selected,
-        name='delete-selected'),
-    url(r'^sys/snapshot/(?P<number>\d+)/rollback$', views.rollback,
-        name='rollback'),
+    re_path(r'^sys/snapshot/$', views.index, name='index'),
+    re_path(r'^sys/snapshot/manage/$', views.manage, name='manage'),
+    re_path(r'^sys/snapshot/selected/delete$', views.delete_selected,
+            name='delete-selected'),
+    re_path(r'^sys/snapshot/(?P<number>\d+)/rollback$', views.rollback,
+            name='rollback'),
 ]

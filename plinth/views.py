@@ -13,7 +13,7 @@ from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.html import escape
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
@@ -44,7 +44,10 @@ def is_safe_url(url):
     if '\\' in url or url.startswith('///'):
         return False
 
-    result = urllib.parse.urlparse(url)
+    try:
+        result = urllib.parse.urlparse(url)
+    except ValueError:
+        return False
 
     # Only accept URLs to the same site and scheme.
     if result.scheme or result.netloc:

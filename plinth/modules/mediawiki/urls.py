@@ -3,10 +3,10 @@
 URLs for the mediawiki module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from .views import MediaWikiAppView
 
 urlpatterns = [
-    url(r'^apps/mediawiki/$', MediaWikiAppView.as_view(), name='index'),
+    re_path(r'^apps/mediawiki/$', MediaWikiAppView.as_view(), name='index'),
 ]

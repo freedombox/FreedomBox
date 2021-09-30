@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 CONFIG_FILE = '/etc/gitweb-freedombox.conf'
 GIT_REPO_PATH = '/var/lib/git'

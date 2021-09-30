@@ -2,7 +2,7 @@
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
@@ -14,6 +14,7 @@ from .forms import (AddCustomServiceForm, ConfigurationForm,
 
 
 class DeleteServiceView(View):
+
     def post(self, request):
         form = DeleteCustomServiceForm(request.POST)
         if form.is_valid():

@@ -3,10 +3,10 @@
 URLs for Cockpit module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.modules.cockpit.views import CockpitAppView
 
 urlpatterns = [
-    url(r'^sys/cockpit/$', CockpitAppView.as_view(), name='index'),
+    re_path(r'^sys/cockpit/$', CockpitAppView.as_view(), name='index'),
 ]

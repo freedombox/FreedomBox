@@ -6,7 +6,7 @@ FreedomBox app for configuring Shadowsocks.
 import json
 
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import actions, views
 from plinth.errors import ActionError

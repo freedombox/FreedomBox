@@ -3,12 +3,6 @@
 Provides diagnosis and repair of email server configuration issues
 """
 
-from . import domain
-from . import home
-from . import ldap
-from . import models
-from . import rcube
-from . import spam
-from . import tls
+from . import domain, home, ldap, models, rcube, spam, tls
 
 __all__ = ['domain', 'home', 'ldap', 'models', 'rcube', 'spam', 'tls']

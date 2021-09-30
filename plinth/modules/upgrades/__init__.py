@@ -9,8 +9,8 @@ import os
 import subprocess
 
 from aptsources import sourceslist
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 import plinth
 from plinth import actions
@@ -119,10 +119,10 @@ class UpgradesApp(app_module.App):
 
         data = {
             'version': plinth.__version__,
-            'app_name': 'translate:' + ugettext_noop('Updates'),
+            'app_name': 'translate:' + gettext_noop('Updates'),
             'app_icon': 'fa-refresh'
         }
-        title = ugettext_noop('FreedomBox Updated')
+        title = gettext_noop('FreedomBox Updated')
         note = Notification.update_or_create(
             id='upgrades-new-release', app_id='upgrades', severity='info',
             title=title, body_template='upgrades-new-release.html', data=data,
@@ -207,8 +207,8 @@ def check_dist_upgrade(_):
             logger.info('Skip dist upgrade: --test is not set.')
         elif 'not-enough-free-space' in reason:
             logger.warning('Skip dist upgrade: Not enough free space in /.')
-            title = ugettext_noop('Could not start distribution update')
-            message = ugettext_noop(
+            title = gettext_noop('Could not start distribution update')
+            message = gettext_noop(
                 'There is not enough free space in the root partition to '
                 'start the distribution update. Please ensure at least 5 GB '
                 'is free. Distribution update will be retried after 24 hours,'
@@ -220,8 +220,8 @@ def check_dist_upgrade(_):
                 }], group='admin')
         elif 'started-dist-upgrade' in reason:
             logger.info('Started dist upgrade.')
-            title = ugettext_noop('Distribution update started')
-            message = ugettext_noop(
+            title = gettext_noop('Distribution update started')
+            message = gettext_noop(
                 'Started update to next stable release. This may take a long '
                 'time to complete.')
             Notification.update_or_create(id='upgrades-dist-upgrade-started',

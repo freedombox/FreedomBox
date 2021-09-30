@@ -9,7 +9,7 @@ Actions run commands with this contract (version 1.1):
 
    This guarantees that we can only select from the correct set of actions.
 
-3. (restriction) Only whitelisted actions can run.
+3. (restriction) Only specifically allowed actions can run.
 
    A. Scripts in a directory above the actions directory can't be run.
 

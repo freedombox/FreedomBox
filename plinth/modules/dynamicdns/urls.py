@@ -3,12 +3,13 @@
 URLs for the dynamicdns module
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^sys/dynamicdns/$', views.index, name='index'),
-    url(r'^sys/dynamicdns/configure/$', views.configure, name='configure'),
-    url(r'^sys/dynamicdns/statuspage/$', views.statuspage, name='statuspage'),
+    re_path(r'^sys/dynamicdns/$', views.index, name='index'),
+    re_path(r'^sys/dynamicdns/configure/$', views.configure, name='configure'),
+    re_path(r'^sys/dynamicdns/statuspage/$', views.statuspage,
+            name='statuspage'),
 ]

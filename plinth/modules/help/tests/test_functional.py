@@ -3,20 +3,27 @@
 Functional, browser based tests for help app.
 """
 
-from pytest_bdd import scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('help.feature')
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.help]
+
+# TODO Scenario: Visit the wiki
+# TODO Scenario: Visit the mailing list
+# TODO Scenario: Visit the IRC channel
+# TODO Scenario: View the manual
+# TODO Scenario: View the about page
 
 
-@when('I go to the status logs page')
-def help_go_to_status_logs(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
+
+
+def test_view_status_logs(session_browser):
+    """Test viewing the status logs."""
     _go_to_status_logs(session_browser)
-
-
-@then('status logs should be shown')
-def help_status_logs_are_shown(session_browser):
     assert _are_status_logs_shown(session_browser)
 
 

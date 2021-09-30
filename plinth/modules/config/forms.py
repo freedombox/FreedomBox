@@ -9,12 +9,12 @@ import re
 from django import forms
 from django.core import validators
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 from plinth import cfg, frontpage
-from plinth.utils import format_lazy
 from plinth.modules.apache import get_users_with_website
+from plinth.utils import format_lazy
 
 from . import home_page_url2scid
 
@@ -37,7 +37,7 @@ def get_homepage_choices():
                         for shortcut in shortcuts if shortcut.is_enabled()]
     uws_choices = \
         [(home_page_url2scid(url),
-         format_lazy(ugettext_lazy("{user}'s website"), user=user))
+         format_lazy(gettext_lazy("{user}'s website"), user=user))
          for user, url in get_users_with_website().items()]
     apache_default = ('apache-default', _('Apache Default'))
     plinth = ('plinth', _('FreedomBox Service (Plinth)'))
@@ -52,21 +52,21 @@ class ConfigurationForm(forms.Form):
     # https://tools.ietf.org/html/rfc1123#section-2
     # https://tools.ietf.org/html/rfc2181#section-11
     hostname = forms.CharField(
-        label=ugettext_lazy('Hostname'), help_text=format_lazy(
-            ugettext_lazy(
+        label=gettext_lazy('Hostname'), help_text=format_lazy(
+            gettext_lazy(
                 'Hostname is the local name by which other devices on the '
                 'local network can reach your {box_name}.  It must start and '
                 'end with an alphabet or a digit and have as interior '
                 'characters only alphabets, digits and hyphens.  Total '
                 'length must be 63 characters or less.'),
-            box_name=ugettext_lazy(cfg.box_name)), validators=[
+            box_name=gettext_lazy(cfg.box_name)), validators=[
                 validators.RegexValidator(HOSTNAME_REGEX,
-                                          ugettext_lazy('Invalid hostname'))
+                                          gettext_lazy('Invalid hostname'))
             ], strip=True)
 
     domainname = forms.CharField(
-        label=ugettext_lazy('Domain Name'), help_text=format_lazy(
-            ugettext_lazy(
+        label=gettext_lazy('Domain Name'), help_text=format_lazy(
+            gettext_lazy(
                 'Domain name is the global name by which other devices on the '
                 'Internet can reach your {box_name}.  It must consist of '
                 'labels separated by dots.  Each label must start and end '
@@ -74,16 +74,16 @@ class ConfigurationForm(forms.Form):
                 'only alphabets, digits and hyphens.  Length of each label '
                 'must be 63 characters or less.  Total length of domain name '
                 'must be 253 characters or less.'),
-            box_name=ugettext_lazy(cfg.box_name)), required=False, validators=[
+            box_name=gettext_lazy(cfg.box_name)), required=False, validators=[
                 validators.RegexValidator(
                     r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
-                    ugettext_lazy('Invalid domain name')),
+                    gettext_lazy('Invalid domain name')),
                 domain_label_validator
             ], strip=True)
 
     homepage = forms.ChoiceField(
-        label=ugettext_lazy('Webserver Home Page'), help_text=format_lazy(
-            ugettext_lazy(
+        label=gettext_lazy('Webserver Home Page'), help_text=format_lazy(
+            gettext_lazy(
                 'Choose the default page that must be served when '
                 'someone visits your {box_name} on the web. A typical use '
                 'case is to set your blog or wiki as the home page when '
@@ -91,11 +91,11 @@ class ConfigurationForm(forms.Form):
                 'page is set to something other than {box_name} Service '
                 '(Plinth), your users must explicitly type /plinth or '
                 '/freedombox to reach {box_name} Service (Plinth).'),
-            box_name=ugettext_lazy(cfg.box_name)), required=False,
+            box_name=gettext_lazy(cfg.box_name)), required=False,
         choices=get_homepage_choices)
 
     advanced_mode = forms.BooleanField(
-        label=ugettext_lazy('Show advanced apps and features'), required=False,
-        help_text=ugettext_lazy(
+        label=gettext_lazy('Show advanced apps and features'), required=False,
+        help_text=gettext_lazy(
             'Show apps and features that require more technical '
             'knowledge.'))

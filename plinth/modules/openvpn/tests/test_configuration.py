@@ -10,6 +10,20 @@ import pytest
 
 from plinth.modules import openvpn
 
+actions_name = 'openvpn'
+
+
+@pytest.fixture(name='keys_directory')
+def fixture_keys_directory(tmp_path):
+    return tmp_path
+
+
+@pytest.fixture(autouse=True)
+def fixture_set_keys_directory(actions_module, keys_directory):
+    """Set the keys directory in the actions module."""
+    actions_module.DH_PARAMS = f'{keys_directory}/pki/dh.pem'
+    actions_module.EC_PARAMS_DIR = f'{keys_directory}/pki/ecparams'
+
 
 @pytest.fixture(name='conf_file')
 def fixture_conf_file(tmp_path):

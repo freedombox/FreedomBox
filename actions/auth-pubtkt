@@ -74,8 +74,8 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
         tokens and f'tokens={tokens}',
         graceperiod and f'graceperiod={int(graceperiod)}',
         udata and f'udata={udata}',
-        extra_fields and ';'.join(
-            ['{}={}'.format(k, v) for k, v in extra_fields])
+        extra_fields
+        and ';'.join(['{}={}'.format(k, v) for k, v in extra_fields]),
     ]
     data = ';'.join(filter(None, fields))
     signature = 'sig={}'.format(sign(pkey, data))
@@ -84,7 +84,7 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
 
 def sign(pkey, data):
     """Calculates and returns ticket's signature."""
-    sig = crypto.sign(pkey, data, 'sha512')
+    sig = crypto.sign(pkey, data.encode(), 'sha512')
     return base64.b64encode(sig).decode()
 
 

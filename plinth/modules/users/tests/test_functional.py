@@ -225,8 +225,8 @@ def new_user_is_not_listed(session_browser, name):
 def _rename_user(browser, old_name, new_name):
     functional.nav_to_module(browser, 'users')
     with functional.wait_for_page_update(browser):
-        browser.find_link_by_href('/plinth/sys/users/' + old_name +
-                                  '/edit/').first.click()
+        browser.links.find_by_href('/plinth/sys/users/' + old_name +
+                                   '/edit/').first.click()
     browser.find_by_id('id_username').fill(new_name)
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser)

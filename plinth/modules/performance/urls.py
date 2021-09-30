@@ -3,11 +3,11 @@
 FreedomBox app for System Monitoring (cockpit-pcp) in ‘System’.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^sys/performance/$', AppView.as_view(app_id='performance'),
-        name='index'),
+    re_path(r'^sys/performance/$', AppView.as_view(app_id='performance'),
+            name='index'),
 ]

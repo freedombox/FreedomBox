@@ -5,8 +5,8 @@ Django context processors to provide common data to templates.
 
 import re
 
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_noop
 
 from plinth import cfg, menu
 from plinth.utils import is_user_admin
@@ -20,7 +20,7 @@ def common(request):
     """
     # Allow a value in configuration file to be translated.  Allow
     # the brand name 'FreedomBox' itself to be translated.
-    ugettext_noop('FreedomBox')
+    gettext_noop('FreedomBox')
 
     from plinth.notification import Notification
     notifications_context = Notification.get_display_context(

@@ -2,7 +2,7 @@
 
 from django import forms
 from django.core import validators
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg, network
 from plinth.utils import format_lazy, import_from_gi

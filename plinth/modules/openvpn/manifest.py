@@ -3,7 +3,7 @@
 Application manifest for OpenVPN.
 """
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth.clients import store_url
 

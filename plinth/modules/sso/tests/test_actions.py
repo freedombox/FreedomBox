@@ -3,38 +3,19 @@
 Test module for sso module operations.
 """
 
-import imp
 import os
-import pathlib
-from unittest.mock import patch
 
 import pytest
 
 from plinth.modules.sso.views import PRIVATE_KEY_FILE_NAME
 
-
-def _action_file():
-    """Return the path to the 'sso' actions file."""
-    current_directory = pathlib.Path(__file__).parent
-    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
-               'auth-pubtkt')
+actions_name = 'auth-pubtkt'
 
 
-sso_actions = imp.load_source('sso', _action_file())
-
-
-@pytest.fixture(name='call_action')
-def fixture_call_action(tmpdir, capsys):
-    """Run actions with custom keys path."""
-
-    def _call_action(args, **kwargs):
-        sso_actions.KEYS_DIRECTORY = str(tmpdir)
-        with patch('argparse._sys.argv', ['sso'] + args):
-            sso_actions.main()
-            captured = capsys.readouterr()
-            return captured.out
-
-    return _call_action
+@pytest.fixture(autouse=True)
+def fixture_keys_directory(actions_module, tmpdir):
+    """Set keys directory in the actions module."""
+    actions_module.KEYS_DIRECTORY = str(tmpdir)
 
 
 @pytest.fixture(name='existing_key_pair')
@@ -43,12 +24,12 @@ def fixture_existing_key_pair(call_action):
     call_action(['create-key-pair'])
 
 
-def test_generate_ticket(call_action, existing_key_pair):
+def test_generate_ticket(call_action, existing_key_pair, actions_module):
     """Test generating a ticket."""
     username = 'tester'
     groups = 'freedombox-share,syncthing,web-search'
 
-    private_key_file = os.path.join(sso_actions.KEYS_DIRECTORY,
+    private_key_file = os.path.join(actions_module.KEYS_DIRECTORY,
                                     PRIVATE_KEY_FILE_NAME)
     ticket = call_action([
         'generate-ticket', '--uid', username, '--private-key-file',

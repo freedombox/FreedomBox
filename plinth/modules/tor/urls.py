@@ -3,10 +3,10 @@
 URLs for the Tor module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^apps/tor/$', views.index, name='index'),
+    re_path(r'^apps/tor/$', views.index, name='index'),
 ]

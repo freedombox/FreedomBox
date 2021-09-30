@@ -3,61 +3,81 @@
 Functional, browser based tests for bepasty app.
 """
 
-from pytest_bdd import given, scenarios, then, when
+import pytest
 
 from plinth.tests import functional
 
-scenarios('bepasty.feature')
-
-last_password_added = None
+pytestmark = [pytest.mark.apps, pytest.mark.bepasty]
 
 
-@given('I am not logged in to bepasty')
-def not_logged_in(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'bepasty')
+    yield
+    functional.app_disable(session_browser, 'bepasty')
+
+
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'bepasty')
+
+    functional.app_enable(session_browser, 'bepasty')
+    assert functional.is_available(session_browser, 'bepasty')
+
+    functional.app_disable(session_browser, 'bepasty')
+    assert not functional.is_available(session_browser, 'bepasty')
+
+
+def test_set_default_permissions_list_and_read_all(session_browser):
+    functional.app_enable(session_browser, 'bepasty')
     _logout(session_browser)
-
-
-@when('I set the default permissions to Read files')
-def set_default_permissions_read(session_browser):
-    _set_default_permissions(session_browser, 'read')
-
-
-@when('I set the default permissions to List and read all files')
-def set_default_permissions_list_read(session_browser):
     _set_default_permissions(session_browser, 'read list')
 
-
-@when('I add a bepasty password')
-def add_password(session_browser):
-    global last_password_added
-    _remove_all_passwords(session_browser)
-    _add_password(session_browser)
-    last_password_added = _get_password(session_browser)
-
-
-@when('I remove all bepasty passwords')
-def remove_all_passwords(session_browser):
-    _remove_all_passwords(session_browser)
-
-
-@then('I should be able to login to bepasty with that password')
-def should_login(session_browser):
-    assert _can_login(session_browser, last_password_added)
-
-
-@then('I should not be able to login to bepasty with that password')
-def should_not_login(session_browser):
-    assert not _can_login(session_browser, last_password_added)
-
-
-@then('I should be able to List all Items in bepasty')
-def should_list_all(session_browser):
     assert _can_list_all(session_browser)
 
 
-@then('I should not be able to List all Items in bepasty')
-def should_not_list_all(session_browser):
+def test_set_default_permissions_read_files(session_browser):
+    functional.app_enable(session_browser, 'bepasty')
+    _logout(session_browser)
+    _set_default_permissions(session_browser, 'read')
+
     assert _cannot_list_all(session_browser)
+
+
+def test_add_password(session_browser):
+    functional.app_enable(session_browser, 'bepasty')
+    password_added = _add_and_save_password(session_browser)
+
+    assert _can_login(session_browser, password_added)
+
+
+def test_remove_password(session_browser):
+    functional.app_enable(session_browser, 'bepasty')
+    password_added = _add_and_save_password(session_browser)
+    _remove_all_passwords(session_browser)
+
+    assert not _can_login(session_browser, password_added)
+
+
+@pytest.mark.backups
+def test_backup_and_restore(session_browser):
+    functional.app_enable(session_browser, 'bepasty')
+    password_added = _add_and_save_password(session_browser)
+    functional.backup_create(session_browser, 'bepasty', 'test_bepasty')
+
+    _remove_all_passwords(session_browser)
+    functional.backup_restore(session_browser, 'bepasty', 'test_bepasty')
+
+    assert functional.is_available(session_browser, 'bepasty')
+    assert _can_login(session_browser, password_added)
+
+
+def _add_and_save_password(session_browser):
+    _remove_all_passwords(session_browser)
+    _add_password(session_browser)
+    return _get_password(session_browser)
 
 
 def _set_default_permissions(browser, permissions=''):

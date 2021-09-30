@@ -11,8 +11,8 @@ import re
 
 import paramiko
 from django.utils.text import get_valid_filename
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import actions
 from plinth import app as app_module
@@ -193,18 +193,18 @@ def split_path(path):
 def _show_schedule_setup_notification():
     """Show a notification hinting to setup a remote backup schedule."""
     from plinth.notification import Notification
-    message = ugettext_noop(
+    message = gettext_noop(
         'Enable an automatic backup schedule for data safety. Prefer an '
         'encrypted remote backup location or an extra attached disk.')
     data = {
-        'app_name': 'translate:' + ugettext_noop('Backups'),
+        'app_name': 'translate:' + gettext_noop('Backups'),
         'app_icon': 'fa-files-o'
     }
-    title = ugettext_noop('Enable a Backup Schedule')
+    title = gettext_noop('Enable a Backup Schedule')
     actions_ = [{
         'type': 'link',
         'class': 'primary',
-        'text': ugettext_noop('Go to {app_name}'),
+        'text': gettext_noop('Go to {app_name}'),
         'url': 'backups:index'
     }, {
         'type': 'dismiss'
@@ -238,20 +238,20 @@ def _show_schedule_error_notification(repository, is_error, exception=None):
     except KeyError:
         error_count = 0
 
-    message = ugettext_noop(
+    message = gettext_noop(
         'A scheduled backup failed. Past {error_count} attempts for backup '
         'did not succeed. The latest error is: {error_message}')
     data = {
-        'app_name': 'translate:' + ugettext_noop('Backups'),
+        'app_name': 'translate:' + gettext_noop('Backups'),
         'app_icon': 'fa-files-o',
         'error_count': error_count + 1 if is_error else 0,
         'error_message': str(exception)
     }
-    title = ugettext_noop('Error During Backup')
+    title = gettext_noop('Error During Backup')
     actions_ = [{
         'type': 'link',
         'class': 'primary',
-        'text': ugettext_noop('Go to {app_name}'),
+        'text': gettext_noop('Go to {app_name}'),
         'url': 'backups:index'
     }, {
         'type': 'dismiss'

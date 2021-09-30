@@ -12,8 +12,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import (FileExtensionValidator,
                                     validate_ipv46_address)
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from plinth.modules.storage import get_mounts
 from plinth.utils import format_lazy
@@ -30,7 +30,7 @@ def _get_app_choices(components):
     for component in components:
         name = component.app.info.name
         if not component.has_data:
-            name = ugettext('{app} (No data to backup)').format(
+            name = gettext('{app} (No data to backup)').format(
                 app=component.app.info.name)
 
         choices.append((component.app_id, name))

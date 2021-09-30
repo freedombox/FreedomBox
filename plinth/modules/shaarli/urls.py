@@ -3,10 +3,11 @@
 URLs for the Shaarli module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/shaarli/$', AppView.as_view(app_id='shaarli'), name='index')
+    re_path(r'^apps/shaarli/$', AppView.as_view(app_id='shaarli'),
+            name='index')
 ]

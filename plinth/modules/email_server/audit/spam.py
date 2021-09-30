@@ -6,12 +6,13 @@ import logging
 import re
 import subprocess
 
-from django.utils.translation import ugettext_lazy as _
-from plinth import actions
+from django.utils.translation import gettext_lazy as _
 
-from . import models
+from plinth import actions
 from plinth.modules.email_server import interproc, lock, postconf
 from plinth.modules.email_server.modconf import ConfigInjector
+
+from . import models
 
 milter_config = {
     'milter_mail_macros': 'i ' + ' '.join([

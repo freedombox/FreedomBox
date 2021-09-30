@@ -6,7 +6,7 @@ FreedomBox app for calibre e-book library.
 import json
 import re
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module

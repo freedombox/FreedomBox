@@ -8,7 +8,8 @@ import subprocess
 
 import psutil
 from django.utils.text import format_lazy
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 from plinth import action_utils, actions, app
 
@@ -100,7 +101,7 @@ class Daemon(app.LeaderComponent):
         """Check if a daemon is running."""
         result = 'passed' if self.is_running() else 'failed'
 
-        template = ugettext_lazy('Service {service_name} is running')
+        template = gettext_lazy('Service {service_name} is running')
         testname = format_lazy(template, service_name=self.unit)
 
         return [testname, result]
@@ -126,12 +127,12 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
     result = _check_port(port, kind, listen_address)
 
     if listen_address:
-        template = ugettext_lazy(
+        template = gettext_lazy(
             'Listening on {kind} port {listen_address}:{port}')
         testname = format_lazy(template, kind=kind,
                                listen_address=listen_address, port=port)
     else:
-        template = ugettext_lazy('Listening on {kind} port {port}')
+        template = gettext_lazy('Listening on {kind} port {port}')
         testname = format_lazy(template, kind=kind, port=port)
 
     return [testname, 'passed' if result else 'failed']

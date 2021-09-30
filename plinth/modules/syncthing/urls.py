@@ -3,11 +3,11 @@
 URLs for the Syncthing module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.views import AppView
 
 urlpatterns = [
-    url(r'^apps/syncthing/$', AppView.as_view(app_id='syncthing'),
-        name='index')
+    re_path(r'^apps/syncthing/$', AppView.as_view(app_id='syncthing'),
+            name='index')
 ]

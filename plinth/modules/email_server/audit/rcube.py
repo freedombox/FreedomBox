@@ -4,13 +4,13 @@ import json
 import logging
 import os
 
-from django.utils.translation import ugettext_lazy as _
-from plinth import actions
+from django.utils.translation import gettext_lazy as _
 
-from . import models
+from plinth import actions
 from plinth.modules.email_server.lock import Mutex
 from plinth.modules.email_server.modconf import ConfigInjector
 
+from . import models
 
 config_path = '/etc/roundcube/config.inc.php'
 boundary_pattern = '//[ ]*--[ ]*(BEGIN|END)[ ]+FREEDOMBOX CONFIG$'

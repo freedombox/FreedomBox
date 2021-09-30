@@ -304,7 +304,7 @@ default.
 ### Marking text for translation
 
 To mark text for translation, FreedomBox uses Django's translation strings. A
-module should e.g. `from django.utils.translation import ugettext as _` and wrap
+module should e.g. `from django.utils.translation import gettext as _` and wrap
 user-facing text with `_()`. Use it like this:
 
 ```python

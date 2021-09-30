@@ -8,40 +8,65 @@ import string
 import subprocess
 import urllib
 
-from pytest_bdd import parsers, scenarios, then, when
+import pytest
 
 from plinth.tests import functional
 
-scenarios('samba.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.samba]
 
 
-@when(parsers.parse('I {task:w} the {share_type:w} samba share'))
-def samba_enable_share(session_browser, task, share_type):
-    if task == 'enable':
-        _set_share(session_browser, share_type, status='enabled')
-    elif task == 'disable':
-        _set_share(session_browser, share_type, status='disabled')
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'samba')
+    functional.app_enable(session_browser, 'samba')
+    functional.networks_set_firewall_zone(session_browser, 'internal')
+    yield
+    functional.login(session_browser)
+    functional.app_disable(session_browser, 'samba')
 
 
-@then(parsers.parse('I can write to the {share_type:w} samba share'))
-def samba_share_should_be_writable(share_type):
+@pytest.fixture(autouse=True)
+def fixture_login(session_browser):
+    """Login fixture."""
+    functional.login(session_browser)
+    functional.app_enable(session_browser, 'samba')
+    yield
+
+
+@pytest.mark.backups
+def test_backup(session_browser):
+    """Test backing up and restoring."""
+    _set_share(session_browser, 'home', status='enabled')
+    functional.backup_create(session_browser, 'samba', 'test_samba')
+    _set_share(session_browser, 'home', status='disabled')
+    functional.backup_restore(session_browser, 'samba', 'test_samba')
+    assert functional.service_is_running(session_browser, 'samba')
+    _assert_share_is_writable('home')
+
+
+def test_enable_disable(session_browser):
+    """Test enabling and disabling the app."""
+    functional.app_disable(session_browser, 'samba')
+    assert functional.service_is_not_running(session_browser, 'samba')
+
+    functional.app_enable(session_browser, 'samba')
+    assert functional.service_is_running(session_browser, 'samba')
+
+
+@pytest.mark.parametrize('share_type', ['open', 'group', 'home'])
+def test_enable_disable_samba_share(session_browser, share_type):
+    """Test enabling and disabling Samba share."""
+    _set_share(session_browser, share_type, status='enabled')
+
     _assert_share_is_writable(share_type)
+    if share_type == 'open':
+        _assert_share_is_writable(share_type, as_guest=True)
+    else:
+        _assert_share_is_not_accessible(share_type, as_guest=True)
 
-
-@then(parsers.parse('a guest user can write to the {share_type:w} samba share')
-      )
-def samba_share_should_be_writable_to_guest(share_type):
-    _assert_share_is_writable(share_type, as_guest=True)
-
-
-@then(
-    parsers.parse('a guest user can\'t access the {share_type:w} samba share'))
-def samba_share_should_not_be_accessible_to_guest(share_type):
-    _assert_share_is_not_accessible(share_type, as_guest=True)
-
-
-@then(parsers.parse('the {share_type:w} samba share should not be available'))
-def samba_share_should_not_be_available(share_type):
+    _set_share(session_browser, share_type, status='disabled')
     _assert_share_is_not_available(share_type)
 
 
@@ -91,7 +116,7 @@ def _write_to_share(share_type, as_guest=False):
 
 def _assert_share_is_writable(share_type, as_guest=False):
     """Assert that samba share is writable."""
-    output = _write_to_share(share_type, as_guest=False)
+    output = _write_to_share(share_type, as_guest)
 
     assert not output, output
 
@@ -108,7 +133,7 @@ def _assert_share_is_not_accessible(share_type, as_guest=False):
 
 
 def _assert_share_is_not_available(share_type):
-    """Assert that samba share is not accessible."""
+    """Assert that samba share is not available."""
     try:
         _write_to_share(share_type)
     except subprocess.CalledProcessError as err:

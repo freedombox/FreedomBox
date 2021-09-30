@@ -11,8 +11,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
@@ -22,23 +22,21 @@ from plinth.modules import storage
 from . import get_configuration
 from .forms import SnapshotForm
 
-
 # i18n for snapshot descriptions
 SNAPSHOT_DESCRIPTION_STRINGS = {
-    'manually created': ugettext_lazy('manually created'),
-    'timeline': ugettext_lazy('timeline'),
-    'apt': ugettext_lazy('apt'),
+    'manually created': gettext_lazy('manually created'),
+    'timeline': gettext_lazy('timeline'),
+    'apt': gettext_lazy('apt'),
 }
-
 
 subsubmenu = [
     {
         'url': reverse_lazy('snapshot:index'),
-        'text': ugettext_lazy('Configure')
+        'text': gettext_lazy('Configure')
     },
     {
         'url': reverse_lazy('snapshot:manage'),
-        'text': ugettext_lazy('Manage Snapshots')
+        'text': gettext_lazy('Manage Snapshots')
     },
 ]
 

@@ -3,12 +3,12 @@
 URLs for the samba module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^apps/samba/$', views.SambaAppView.as_view(), name='index'),
-    url(r'^apps/samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
-        views.share, name='share')
+    re_path(r'^apps/samba/$', views.SambaAppView.as_view(), name='index'),
+    re_path(r'^apps/samba/share/(?P<mount_point>[A-Za-z0-9%_.\-~]+)/$',
+            views.share, name='share')
 ]

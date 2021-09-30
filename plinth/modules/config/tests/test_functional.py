@@ -3,46 +3,42 @@
 Functional, browser based tests for config app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('config.feature')
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.config]
 
 
-@given(parsers.parse('the home page is {app_name:w}'))
-def set_home_page(session_browser, app_name):
-    _set_home_page(session_browser, app_name)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
 
 
-@when(parsers.parse('I change the hostname to {hostname:w}'))
-def change_hostname_to(session_browser, hostname):
-    _set_hostname(session_browser, hostname)
+def test_change_hostname(session_browser):
+    """Test changing the hostname."""
+    _set_hostname(session_browser, 'mybox')
+    assert _get_hostname(session_browser) == 'mybox'
 
 
-@when(parsers.parse('I change the domain name to {domain:S}'))
-def change_domain_name_to(session_browser, domain):
-    functional.set_domain_name(session_browser, domain)
+def test_change_domain_name(session_browser):
+    """Test changing the domain name."""
+    functional.set_domain_name(session_browser, 'mydomain.example')
+    assert _get_domain_name(session_browser) == 'mydomain.example'
+
+    # Capitalization is ignored.
+    functional.set_domain_name(session_browser, 'Mydomain.example')
+    assert _get_domain_name(session_browser) == 'mydomain.example'
 
 
-@when(parsers.parse('I change the home page to {app_name:w}'))
-def change_home_page_to(session_browser, app_name):
-    _set_home_page(session_browser, app_name)
+def test_change_home_page(session_browser):
+    """Test changing webserver home page."""
+    functional.install(session_browser, 'syncthing')
+    functional.app_enable(session_browser, 'syncthing')
+    _set_home_page(session_browser, 'syncthing')
 
-
-@then(parsers.parse('the hostname should be {hostname:w}'))
-def hostname_should_be(session_browser, hostname):
-    assert _get_hostname(session_browser) == hostname
-
-
-@then(parsers.parse('the domain name should be {domain:S}'))
-def domain_name_should_be(session_browser, domain):
-    assert _get_domain_name(session_browser) == domain
-
-
-@then(parsers.parse('the home page should be {app_name:w}'))
-def home_page_should_be(session_browser, app_name):
-    assert _check_home_page_redirect(session_browser, app_name)
+    _set_home_page(session_browser, 'plinth')
+    assert _check_home_page_redirect(session_browser, 'plinth')
 
 
 def _get_hostname(browser):

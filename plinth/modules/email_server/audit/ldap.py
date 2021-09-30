@@ -4,11 +4,12 @@ configurations"""
 
 import logging
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
+import plinth.modules.email_server.aliases as aliases
+import plinth.modules.email_server.postconf as postconf
 from plinth import actions
 
-import plinth.modules.email_server.postconf as postconf
-import plinth.modules.email_server.aliases as aliases
 from . import models
 
 default_config = {
@@ -46,7 +47,6 @@ default_smtps_options = {
     'smtpd_sasl_auth_enable': 'yes',
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
-
 
 MAILSRV_DIR = '/var/lib/plinth/mailsrv'
 ETC_ALIASES = 'hash:/etc/aliases'

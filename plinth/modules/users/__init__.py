@@ -6,12 +6,13 @@ FreedomBox app to manage users.
 import grp
 import subprocess
 
+from django.utils.text import format_lazy
+from django.utils.translation import gettext_lazy as _
+
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
-from django.utils.text import format_lazy
-from django.utils.translation import ugettext_lazy as _, ugettext_lazy
 
 from .components import UsersAndGroups
 
@@ -110,7 +111,7 @@ def _diagnose_ldap_entry(search_item):
     except subprocess.CalledProcessError:
         pass
 
-    template = ugettext_lazy('Check LDAP entry "{search_item}"')
+    template = _('Check LDAP entry "{search_item}"')
     testname = format_lazy(template, search_item=search_item)
 
     return [testname, result]

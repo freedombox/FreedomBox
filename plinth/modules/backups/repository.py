@@ -13,7 +13,7 @@ import re
 from uuid import uuid1
 
 import paramiko
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plinth import actions, cfg
 from plinth.errors import ActionError

@@ -3,10 +3,10 @@
 URLs for the minidlna Server module.
 """
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from plinth.modules.minidlna.views import MiniDLNAAppView
 
 urlpatterns = [
-    url(r'^apps/minidlna/$', MiniDLNAAppView.as_view(), name='index'),
+    re_path(r'^apps/minidlna/$', MiniDLNAAppView.as_view(), name='index'),
 ]

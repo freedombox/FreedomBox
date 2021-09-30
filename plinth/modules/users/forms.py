@@ -11,8 +11,8 @@ from django.contrib.auth.models import Group, User
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 
 import plinth.forms
 from plinth import actions
@@ -61,22 +61,22 @@ class UsernameValidator(validators.RegexValidator):
 
     """
     regex = r'^[\w.@][\w.@-]+\Z'
-    message = ugettext_lazy('Enter a valid username.')
+    message = gettext_lazy('Enter a valid username.')
     flags = re.ASCII
 
 
 USERNAME_FIELD = forms.CharField(
-    label=ugettext_lazy('Username'), max_length=150,
+    label=gettext_lazy('Username'), max_length=150,
     validators=[UsernameValidator()],
-    help_text=ugettext_lazy('Required. 150 characters or fewer. English '
-                            'letters, digits and @/./-/_ only.'))
+    help_text=gettext_lazy('Required. 150 characters or fewer. English '
+                           'letters, digits and @/./-/_ only.'))
 
 
 class PasswordConfirmForm(forms.Form):
     """Password confirmation form."""
     confirm_password = forms.CharField(
         widget=forms.PasswordInput,
-        label=ugettext_lazy('Authorization Password'), help_text=ugettext_lazy(
+        label=gettext_lazy('Authorization Password'), help_text=gettext_lazy(
             'Enter your current password to authorize account modifications.'))
 
     def clean_confirm_password(self):
@@ -100,8 +100,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
     username = USERNAME_FIELD
     groups = forms.MultipleChoiceField(
         choices=UsersAndGroups.get_group_choices,
-        label=ugettext_lazy('Permissions'), required=False,
-        widget=plinth.forms.CheckboxSelectMultiple, help_text=ugettext_lazy(
+        label=gettext_lazy('Permissions'), required=False,
+        widget=plinth.forms.CheckboxSelectMultiple, help_text=gettext_lazy(
             'Select which services should be available to the new '
             'user. The user will be able to log in to services that '
             'support single sign-on through LDAP, if they are in the '
@@ -174,8 +174,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
     """When user info is changed, also updates LDAP user."""
     username = USERNAME_FIELD
     ssh_keys = forms.CharField(
-        label=ugettext_lazy('Authorized SSH Keys'), required=False,
-        widget=forms.Textarea, help_text=ugettext_lazy(
+        label=gettext_lazy('Authorized SSH Keys'), required=False,
+        widget=forms.Textarea, help_text=gettext_lazy(
             'Setting an SSH public key will allow this user to '
             'securely log in to the system without using a '
             'password. You may enter multiple keys, one on each '
