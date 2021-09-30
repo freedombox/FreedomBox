@@ -5,83 +5,73 @@ Functional, browser based tests for radicale app.
 
 import logging
 
+import pytest
 import requests
-from pytest_bdd import given, scenarios, then, when
 
 from plinth.tests import functional
 
 logger = logging.getLogger(__name__)
-scenarios('radicale.feature')
+
+pytestmark = [pytest.mark.apps, pytest.mark.radicale]
 
 
-@given('the access rights are set to "only the owner can view or make changes"'
-       )
-def radicale_given_owner_only(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'radicale')
+    yield
+    functional.app_disable(session_browser, 'radicale')
+
+
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'radicale')
+
+    functional.app_enable(session_browser, 'radicale')
+    assert functional.service_is_running(session_browser, 'radicale')
+    assert _calendar_is_available(session_browser)
+    assert _addressbook_is_available(session_browser)
+
+    functional.app_disable(session_browser, 'radicale')
+    assert functional.service_is_not_running(session_browser, 'radicale')
+    assert not _calendar_is_available(session_browser)
+    assert not _addressbook_is_available(session_browser)
+
+
+def test_access_rights(session_browser):
+    """Test setting the access rights."""
+    functional.app_enable(session_browser, 'radicale')
     _set_access_rights(session_browser, 'owner_only')
 
-
-@given('the access rights are set to "any user can view, but only the '
-       'owner can make changes"')
-def radicale_given_owner_write(session_browser):
+    # Owner-write access rights
     _set_access_rights(session_browser, 'owner_write')
+    assert functional.service_is_running(session_browser, 'radicale')
+    assert _get_access_rights(session_browser) == 'owner_write'
 
-
-@given('the access rights are set to "any user can view or make changes"')
-def radicale_given_authenticated(session_browser):
+    # Authenticated access rights
     _set_access_rights(session_browser, 'authenticated')
+    assert functional.service_is_running(session_browser, 'radicale')
+    assert _get_access_rights(session_browser) == 'authenticated'
 
-
-@when('I change the access rights to "only the owner can view or make changes"'
-      )
-def radicale_set_owner_only(session_browser):
+    # Owner-only access rights
     _set_access_rights(session_browser, 'owner_only')
-
-
-@when('I change the access rights to "any user can view, but only the '
-      'owner can make changes"')
-def radicale_set_owner_write(session_browser):
-    _set_access_rights(session_browser, 'owner_write')
-
-
-@when('I change the access rights to "any user can view or make changes"')
-def radicale_set_authenticated(session_browser):
-    _set_access_rights(session_browser, 'authenticated')
-
-
-@then('the access rights should be "only the owner can view or make changes"')
-def radicale_check_owner_only(session_browser):
+    assert functional.service_is_running(session_browser, 'radicale')
     assert _get_access_rights(session_browser) == 'owner_only'
 
 
-@then('the access rights should be "any user can view, but only the '
-      'owner can make changes"')
-def radicale_check_owner_write(session_browser):
-    assert _get_access_rights(session_browser) == 'owner_write'
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of configuration."""
+    functional.app_enable(session_browser, 'radicale')
+    _set_access_rights(session_browser, 'owner_only')
+    functional.backup_create(session_browser, 'radicale', 'test_radicale')
 
+    _set_access_rights(session_browser, 'owner_write')
+    functional.backup_restore(session_browser, 'radicale', 'test_radicale')
 
-@then('the access rights should be "any user can view or make changes"')
-def radicale_check_authenticated(session_browser):
-    assert _get_access_rights(session_browser) == 'authenticated'
-
-
-@then('the calendar should be available')
-def assert_calendar_is_available(session_browser):
-    assert _calendar_is_available(session_browser)
-
-
-@then('the calendar should not be available')
-def assert_calendar_is_not_available(session_browser):
-    assert not _calendar_is_available(session_browser)
-
-
-@then('the addressbook should be available')
-def assert_addressbook_is_available(session_browser):
-    assert _addressbook_is_available(session_browser)
-
-
-@then('the addressbook should not be available')
-def assert_addressbook_is_not_available(session_browser):
-    assert not _addressbook_is_available(session_browser)
+    assert functional.service_is_running(session_browser, 'radicale')
+    assert _get_access_rights(session_browser) == 'owner_only'
 
 
 def _get_access_rights(browser):
