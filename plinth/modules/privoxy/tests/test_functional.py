@@ -29,6 +29,7 @@ def test_enable_disable(session_browser):
     assert functional.service_is_not_running(session_browser, 'privoxy')
 
 
+@pytest.mark.backups
 def test_backup_restore(session_browser):
     """Test backup and restore."""
     functional.app_enable(session_browser, 'privoxy')

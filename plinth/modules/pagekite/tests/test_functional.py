@@ -49,6 +49,7 @@ def test_configure(session_browser):
             'mysecret') == _get_configuration(session_browser)
 
 
+@pytest.mark.backups
 def test_backup_restore(session_browser):
     """Test backup and restore of configuration."""
     functional.app_enable(session_browser, 'pagekite')

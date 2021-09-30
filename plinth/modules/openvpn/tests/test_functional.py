@@ -55,6 +55,7 @@ def test_user_group(session_browser):
     functional.login(session_browser)
 
 
+@pytest.mark.backups
 def test_backup_restore(session_browser):
     """Test backup and restore of app data."""
     functional.app_enable(session_browser, 'openvpn')
