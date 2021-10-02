@@ -419,6 +419,11 @@ def find_on_front_page(browser, app_name):
     return shortcuts
 
 
+def is_visible_on_front_page(browser, app_name):
+    shortcuts = find_on_front_page(browser, app_name)
+    return len(shortcuts) == 1
+
+
 ####################
 # Daemon utilities #
 ####################
