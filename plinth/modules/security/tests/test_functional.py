@@ -3,29 +3,37 @@
 Functional, browser based tests for security app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('security.feature')
+pytestmark = [pytest.mark.system, pytest.mark.security]
 
 
-@given(parsers.parse('restricted console logins are {enabled}'))
-def security_given_enable_restricted_logins(session_browser, enabled):
-    should_enable = (enabled == 'enabled')
-    _enable_restricted_logins(session_browser, should_enable)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
 
 
-@when(parsers.parse('I {enable} restricted console logins'))
-def security_enable_restricted_logins(session_browser, enable):
-    should_enable = (enable == 'enable')
-    _enable_restricted_logins(session_browser, should_enable)
+def test_restricted_console_logins(session_browser):
+    """Test enabling and disabling restricted console logins."""
+    _enable_restricted_logins(session_browser, False)
+    assert not _get_restricted_logins(session_browser)
+
+    _enable_restricted_logins(session_browser, True)
+    assert _get_restricted_logins(session_browser)
 
 
-@then(parsers.parse('restricted console logins should be {enabled}'))
-def security_assert_restricted_logins(session_browser, enabled):
-    enabled = (enabled == 'enabled')
-    assert _get_restricted_logins(session_browser) == enabled
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of configuration."""
+    _enable_restricted_logins(session_browser, True)
+    functional.backup_create(session_browser, 'security', 'test_security')
+
+    _enable_restricted_logins(session_browser, False)
+    functional.backup_restore(session_browser, 'security', 'test_security')
+
+    assert _get_restricted_logins(session_browser)
 
 
 def _enable_restricted_logins(browser, should_enable):
