@@ -3,24 +3,24 @@
 Functional, browser based tests for storage app.
 """
 import pytest
-from pytest_bdd import given, parsers, scenarios, then
-
 from plinth.tests import functional
 
-scenarios('storage.feature')
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.storage]
 
 
-@then('the root disk should be shown')
-def storage_root_disk_is_shown(session_browser):
-    assert _is_root_disk_shown(session_browser)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
 
 
-@given(parsers.parse("I'm on the {name:w} page"))
-def go_to_module(session_browser, name):
+def test_list_disks(session_browser):
+    """Test that root disk is shown on storage page."""
     if functional.running_inside_container:
         pytest.skip('Storage doesn\'t work inside a container')
     else:
-        functional.nav_to_module(session_browser, name)
+        functional.nav_to_module(session_browser, 'storage')
+        assert _is_root_disk_shown(session_browser)
 
 
 def _is_root_disk_shown(browser):
