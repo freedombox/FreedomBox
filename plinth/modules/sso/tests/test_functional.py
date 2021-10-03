@@ -3,6 +3,28 @@
 Functional, browser based tests for sso app.
 """
 
-from pytest_bdd import scenarios
+import pytest
+from plinth.tests import functional
 
-scenarios('sso.feature')
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.sso]
+
+
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'syncthing')
+    functional.app_enable(session_browser, 'syncthing')
+    yield
+    functional.app_disable(session_browser, 'syncthing')
+
+
+def test_app_access(session_browser):
+    """Test that only logged-in users can access Syncthing web interface."""
+    functional.logout(session_browser)
+    functional.access_url(session_browser, 'syncthing')
+    assert functional.is_login_prompt(session_browser)
+
+    functional.login(session_browser)
+    functional.access_url(session_browser, 'syncthing')
+    assert functional.is_available(session_browser, 'syncthing')
