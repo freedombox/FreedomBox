@@ -3,7 +3,7 @@
 Functional, browser based tests for tor app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
+import pytest
 
 from plinth.tests import functional
 
@@ -14,85 +14,88 @@ _TOR_FEATURE_TO_ELEMENT = {
     'software': 'tor-apt_transport_tor_enabled'
 }
 
-scenarios('tor.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.tor]
 
 
-@given(parsers.parse('tor relay is {enabled:w}'))
-def tor_given_relay_enable(session_browser, enabled):
-    _feature_enable(session_browser, 'relay', enabled)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'tor')
+    yield
+    functional.app_disable(session_browser, 'tor')
 
 
-@when(parsers.parse('I {enable:w} tor relay'))
-def tor_relay_enable(session_browser, enable):
-    _feature_enable(session_browser, 'relay', enable)
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'tor')
+
+    functional.app_enable(session_browser, 'tor')
+    assert functional.service_is_running(session_browser, 'tor')
+
+    functional.app_disable(session_browser, 'tor')
+    assert functional.service_is_not_running(session_browser, 'tor')
 
 
-@then(parsers.parse('tor relay should be {enabled:w}'))
-def tor_assert_relay_enabled(session_browser, enabled):
-    _assert_feature_enabled(session_browser, 'relay', enabled)
+def test_set_tor_relay_configuration(session_browser):
+    """Test setting Tor relay configuration."""
+    functional.app_enable(session_browser, 'tor')
+    _feature_enable(session_browser, 'relay', should_enable=False)
+    _feature_enable(session_browser, 'relay', should_enable=True)
+    _assert_feature_enabled(session_browser, 'relay', enabled=True)
+    assert 'orport' in _get_relay_ports(session_browser)
 
 
-@then(parsers.parse('tor {port_name:w} port should be displayed'))
-def tor_assert_port_displayed(session_browser, port_name):
-    assert port_name in _get_relay_ports(session_browser)
+def test_set_tor_bridge_relay_configuration(session_browser):
+    """Test setting Tor bridge relay configuration."""
+    functional.app_enable(session_browser, 'tor')
+    _feature_enable(session_browser, 'bridge-relay', should_enable=False)
+    _feature_enable(session_browser, 'bridge-relay', should_enable=True)
+    _assert_feature_enabled(session_browser, 'bridge-relay', enabled=True)
+    assert 'obfs3' in _get_relay_ports(session_browser)
+    assert 'obfs4' in _get_relay_ports(session_browser)
 
 
-@given(parsers.parse('tor bridge relay is {enabled:w}'))
-def tor_given_bridge_relay_enable(session_browser, enabled):
-    _feature_enable(session_browser, 'bridge-relay', enabled)
-
-
-@when(parsers.parse('I {enable:w} tor bridge relay'))
-def tor_bridge_relay_enable(session_browser, enable):
-    _feature_enable(session_browser, 'bridge-relay', enable)
-
-
-@then(parsers.parse('tor bridge relay should be {enabled:w}'))
-def tor_assert_bridge_relay_enabled(session_browser, enabled):
-    _assert_feature_enabled(session_browser, 'bridge-relay', enabled)
-
-
-@given(parsers.parse('tor hidden services are {enabled:w}'))
-def tor_given_hidden_services_enable(session_browser, enabled):
-    _feature_enable(session_browser, 'hidden-services', enabled)
-
-
-@when(parsers.parse('I {enable:w} tor hidden services'))
-def tor_hidden_services_enable(session_browser, enable):
-    _feature_enable(session_browser, 'hidden-services', enable)
-
-
-@then(parsers.parse('tor hidden services should be {enabled:w}'))
-def tor_assert_hidden_services_enabled(session_browser, enabled):
-    _assert_feature_enabled(session_browser, 'hidden-services', enabled)
-
-
-@then(parsers.parse('tor hidden services information should be displayed'))
-def tor_assert_hidden_services(session_browser):
+def test_set_tor_hidden_services_configuration(session_browser):
+    """Test setting Tor hidden services configuration."""
+    functional.app_enable(session_browser, 'tor')
+    _feature_enable(session_browser, 'hidden-services', should_enable=False)
+    _feature_enable(session_browser, 'hidden-services', should_enable=True)
+    _assert_feature_enabled(session_browser, 'hidden-services', enabled=True)
     _assert_hidden_services(session_browser)
 
 
-@given(parsers.parse('download software packages over tor is {enabled:w}'))
-def tor_given_download_software_over_tor_enable(session_browser, enabled):
-    _feature_enable(session_browser, 'software', enabled)
+def test_set_download_software_packages_over_tor(session_browser):
+    """Test setting download software packages over Tor."""
+    functional.app_enable(session_browser, 'tor')
+    _feature_enable(session_browser, 'software', should_enable=True)
+    _feature_enable(session_browser, 'software', should_enable=False)
+    _assert_feature_enabled(session_browser, 'software', enabled=False)
 
 
-@when(parsers.parse('I {enable:w} download software packages over tor'))
-def tor_download_software_over_tor_enable(session_browser, enable):
-    _feature_enable(session_browser, 'software', enable)
+# TODO: Test more thoroughly by checking same hidden service is restored and by
+# actually connecting using Tor.
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of configuration."""
+    functional.app_enable(session_browser, 'tor')
+    _feature_enable(session_browser, 'relay', should_enable=True)
+    _feature_enable(session_browser, 'bridge-relay', should_enable=True)
+    _feature_enable(session_browser, 'hidden-services', should_enable=True)
+    functional.backup_create(session_browser, 'tor', 'test_tor')
 
+    _feature_enable(session_browser, 'relay', should_enable=False)
+    _feature_enable(session_browser, 'hidden-services', should_enable=False)
+    functional.backup_restore(session_browser, 'tor', 'test_tor')
 
-@then(
-    parsers.parse('download software packages over tor should be {enabled:w}'))
-def tor_assert_download_software_over_tor(session_browser, enabled):
-    _assert_feature_enabled(session_browser, 'software', enabled)
+    assert functional.service_is_running(session_browser, 'tor')
+    _assert_feature_enabled(session_browser, 'relay', enabled=True)
+    _assert_feature_enabled(session_browser, 'bridge-relay', enabled=True)
+    _assert_feature_enabled(session_browser, 'hidden-services', enabled=True)
 
 
 def _feature_enable(browser, feature, should_enable):
     """Enable/disable a Tor feature."""
-    if not isinstance(should_enable, bool):
-        should_enable = should_enable in ('enable', 'enabled')
-
     element_name = _TOR_FEATURE_TO_ELEMENT[feature]
     functional.nav_to_module(browser, 'tor')
     checkbox_element = browser.find_by_name(element_name).first
@@ -113,9 +116,6 @@ def _feature_enable(browser, feature, should_enable):
 
 def _assert_feature_enabled(browser, feature, enabled):
     """Assert whether Tor relay is enabled or disabled."""
-    if not isinstance(enabled, bool):
-        enabled = enabled in ('enable', 'enabled')
-
     element_name = _TOR_FEATURE_TO_ELEMENT[feature]
     functional.nav_to_module(browser, 'tor')
     assert browser.find_by_name(element_name).first.checked == enabled
