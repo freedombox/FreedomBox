@@ -3,25 +3,43 @@
 Functional, browser based tests for ttrss app.
 """
 
-from pytest_bdd import given, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('ttrss.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.ttrss, pytest.mark.sso]
 
 
-@given('I subscribe to a feed in ttrss')
-def ttrss_subscribe(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'ttrss')
+    yield
+    functional.app_disable(session_browser, 'ttrss')
+
+
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'ttrss')
+
+    functional.app_enable(session_browser, 'ttrss')
+    assert functional.service_is_running(session_browser, 'ttrss')
+
+    functional.app_disable(session_browser, 'ttrss')
+    assert functional.service_is_not_running(session_browser, 'ttrss')
+
+
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of app data."""
+    functional.app_enable(session_browser, 'ttrss')
     _subscribe(session_browser)
+    functional.backup_create(session_browser, 'ttrss', 'test_ttrss')
 
-
-@when('I unsubscribe from the feed in ttrss')
-def ttrss_unsubscribe(session_browser):
     _unsubscribe(session_browser)
+    functional.backup_restore(session_browser, 'ttrss', 'test_ttrss')
 
-
-@then('I should be subscribed to the feed in ttrss')
-def ttrss_assert_subscribed(session_browser):
+    assert functional.service_is_running(session_browser, 'ttrss')
     assert _is_subscribed(session_browser)
 
 
