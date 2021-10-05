@@ -6,7 +6,7 @@ Functional, browser based tests for security app.
 import pytest
 from plinth.tests import functional
 
-pytestmark = [pytest.mark.system, pytest.mark.security]
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.security]
 
 
 @pytest.fixture(scope='module', autouse=True)

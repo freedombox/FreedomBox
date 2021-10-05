@@ -8,7 +8,7 @@ import time
 import pytest
 from plinth.tests import functional
 
-pytestmark = [pytest.mark.apps, pytest.mark.syncthing]
+pytestmark = [pytest.mark.apps, pytest.mark.syncthing, pytest.mark.sso]
 
 
 @pytest.fixture(scope='module', autouse=True)
