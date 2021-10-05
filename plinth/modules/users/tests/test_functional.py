@@ -3,17 +3,19 @@
 Functional, browser based tests for users app.
 """
 
+# TODO Scenario: Add user to wiki group
+# TODO Scenario: Remove user from wiki group
+
 import subprocess
 import urllib
 
 import pytest
-from pytest_bdd import given, parsers, scenarios, then, when
 
 from plinth.tests import functional
 
 _admin_password = functional.config['DEFAULT']['password']
 
-scenarios('users.feature')
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.users]
 
 _language_codes = {
     'None': '',
@@ -50,26 +52,150 @@ _config_page_title_language_map = {
 }
 
 
-@given(parsers.parse('the admin user {name:w} exists'))
-def admin_user_exists(session_browser, name):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
+    yield
+    _set_language(session_browser, _language_codes['None'])
+
+
+def test_create_user(session_browser):
+    """Test creating a user."""
+    if functional.user_exists(session_browser, 'alice'):
+        functional.delete_user(session_browser, 'alice')
+
+    functional.create_user(session_browser, 'alice')
+    assert functional.user_exists(session_browser, 'alice')
+
+
+def test_rename_user(session_browser):
+    """Test renaming a user."""
+    _non_admin_user_exists(session_browser, 'alice')
+    if functional.user_exists(session_browser, 'bob'):
+        functional.delete_user(session_browser, 'bob')
+
+    _rename_user(session_browser, 'alice', 'bob')
+    assert not functional.user_exists(session_browser, 'alice')
+    assert functional.user_exists(session_browser, 'bob')
+
+
+def test_admin_users_can_change_own_ssh_keys(session_browser):
+    """Test that admin users can change their own ssh keys."""
+    _set_ssh_keys(session_browser, 'somekey123')
+    assert _get_ssh_keys(session_browser) == 'somekey123'
+
+
+def test_non_admin_users_can_change_own_ssh_keys(session_browser):
+    """Test that non-admin users can change their own ssh keys."""
+    _non_admin_user_exists(session_browser, 'alice')
+    functional.login_with_account(session_browser, functional.base_url,
+                                  'alice')
+    _set_ssh_keys(session_browser, 'somekey456')
+    assert _get_ssh_keys(session_browser) == 'somekey456'
+    functional.login(session_browser)
+
+
+def test_admin_users_can_change_other_users_ssh_keys(session_browser):
+    """Test that admin users can change other user's ssh keys."""
+    _non_admin_user_exists(session_browser, 'alice')
+    _set_ssh_keys(session_browser, 'alicesomekey123', username='alice')
+    assert _get_ssh_keys(session_browser,
+                         username='alice') == 'alicesomekey123'
+
+
+def test_users_can_remove_ssh_keys(session_browser):
+    """Test that users can remove ssh keys."""
+    _set_ssh_keys(session_browser, 'somekey123')
+    _set_ssh_keys(session_browser, '')
+    assert _get_ssh_keys(session_browser) == ''
+
+
+def test_users_can_connect_passwordless_over_ssh(session_browser,
+                                                 tmp_path_factory):
+    """Test that users can connect passwordless over ssh if the keys are
+    set."""
+    functional.app_enable(session_browser, 'ssh')
+    _generate_ssh_keys(session_browser, tmp_path_factory)
+    _configure_ssh_keys(session_browser, tmp_path_factory)
+    _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory)
+
+
+def test_users_cannot_connect_passwordless_over_ssh(session_browser,
+                                                    tmp_path_factory):
+    """Test that users cannot connect passwordless over ssh if the keys aren't
+    set."""
+    functional.app_enable(session_browser, 'ssh')
+    _generate_ssh_keys(session_browser, tmp_path_factory)
+    _configure_ssh_keys(session_browser, tmp_path_factory)
+    _set_ssh_keys(session_browser, '')
+    _should_not_connect_passwordless_over_ssh(session_browser,
+                                              tmp_path_factory)
+
+
+@pytest.mark.parametrize('language_code', _language_codes.values())
+def test_change_language(session_browser, language_code):
+    """Test changing the language."""
+    _set_language(session_browser, language_code)
+    assert _check_language(session_browser, language_code)
+
+
+def test_admin_users_can_set_others_as_inactive(session_browser):
+    """Test that admin users can set other users as inactive."""
+    _non_admin_user_exists(session_browser, 'alice')
+    _set_user_inactive(session_browser, 'alice')
+    _cannot_log_in(session_browser, 'alice')
+    functional.login(session_browser)
+
+
+def test_admin_users_can_change_own_password(session_browser):
+    """Test that admin users can change their own password."""
+    _admin_user_exists(session_browser, 'testadmin')
+    functional.login_with_account(session_browser, functional.base_url,
+                                  'testadmin')
+    _change_password(session_browser, 'newpassword456')
+    _can_log_in_with_password(session_browser, 'testadmin', 'newpassword456')
+    functional.login(session_browser)
+
+
+def test_admin_users_can_change_others_password(session_browser):
+    """Test that admin users can change other user's password."""
+    _non_admin_user_exists(session_browser, 'alice')
+    _change_password(session_browser, 'secretsecret567', username='alice')
+    _can_log_in_with_password(session_browser, 'alice', 'secretsecret567')
+    functional.login(session_browser)
+
+
+def test_non_admin_users_can_change_own_password(session_browser):
+    """Test that non-admin users can change their own password."""
+    _non_admin_user_exists(session_browser, 'alice')
+    functional.login_with_account(session_browser, functional.base_url,
+                                  'alice')
+    _change_password(session_browser, 'newpassword123')
+    _can_log_in_with_password(session_browser, 'alice', 'newpassword123')
+    functional.login(session_browser)
+
+
+def test_delete_user(session_browser):
+    """Test deleting a user."""
+    _non_admin_user_exists(session_browser, 'alice')
+    functional.delete_user(session_browser, 'alice')
+    assert not functional.user_exists(session_browser, 'alice')
+
+
+def _admin_user_exists(session_browser, name):
     if functional.user_exists(session_browser, name):
         functional.delete_user(session_browser, name)
     functional.create_user(session_browser, name, groups=['admin'])
 
 
-@given(parsers.parse("the user {name:w} doesn't exist"))
-def user_does_not_exist(session_browser, name):
+def _non_admin_user_exists(session_browser, name):
     if functional.user_exists(session_browser, name):
         functional.delete_user(session_browser, name)
+    functional.create_user(session_browser, name)
 
 
-@given(parsers.parse('the ssh keys are {ssh_keys:w}'))
-def ssh_keys(session_browser, ssh_keys):
-    _set_ssh_keys(session_browser, ssh_keys)
-
-
-@given('the client has a ssh key')
-def generate_ssh_keys(session_browser, tmp_path_factory):
+def _generate_ssh_keys(session_browser, tmp_path_factory):
     key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
     try:
         key_file.unlink()
@@ -81,145 +207,41 @@ def generate_ssh_keys(session_browser, tmp_path_factory):
          str(key_file)])
 
 
-@when(parsers.parse('I create a user named {name:w}'))
-def create_user(session_browser, name):
-    functional.create_user(session_browser, name)
-
-
-@when(parsers.parse('I rename the user {old_name:w} to {new_name:w}'))
-def rename_user(session_browser, old_name, new_name):
-    _rename_user(session_browser, old_name, new_name)
-
-
-@when(parsers.parse('I delete the user {name:w}'))
-def delete_user(session_browser, name):
-    functional.delete_user(session_browser, name)
-
-
-@when('I change the language to <language>')
-def change_language(session_browser, language):
-    _set_language(session_browser, _language_codes[language])
-
-
-@when(parsers.parse('I change the ssh keys to {ssh_keys:w}'))
-def change_ssh_keys(session_browser, ssh_keys):
-    _set_ssh_keys(session_browser, ssh_keys)
-
-
-@when('I remove the ssh keys')
-def remove_ssh_keys(session_browser):
-    _set_ssh_keys(session_browser, '')
-
-
-@when(
-    parsers.parse(
-        'I change the ssh keys to {ssh_keys:w} for the user {username:w}'))
-def change_user_ssh_keys(session_browser, ssh_keys, username):
-    _set_ssh_keys(session_browser, ssh_keys, username=username)
-
-
-@when(parsers.parse('I change my ssh keys to {ssh_keys:w}'))
-def change_my_ssh_keys(session_browser, ssh_keys):
-    _set_ssh_keys(session_browser, ssh_keys)
-
-
-@when(parsers.parse('I set the user {username:w} as inactive'))
-def set_user_inactive(session_browser, username):
-    _set_user_inactive(session_browser, username)
-
-
-@when(parsers.parse('I change my password to {new_password:w}'))
-def change_my_password(session_browser, new_password):
-    _change_password(session_browser, new_password)
-
-
-@when(
-    parsers.parse(
-        'I change the user {username:w} password to {new_password:w}'))
-def change_other_user_password(session_browser, username, new_password):
-    _change_password(session_browser, new_password, username=username)
-
-
-@when('I configure the ssh keys')
-def configure_ssh_keys(session_browser, tmp_path_factory):
+def _configure_ssh_keys(session_browser, tmp_path_factory):
     public_key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key.pub'
     public_key = public_key_file.read_text()
     _set_ssh_keys(session_browser, public_key)
 
 
-@then(parsers.parse('I can log in as the user {username:w}'))
-def can_log_in(session_browser, username):
+def _can_log_in(session_browser, username):
     functional.login_with_account(session_browser, functional.base_url,
                                   username)
     assert len(session_browser.find_by_id('id_user_menu')) > 0
 
 
-@then(
-    parsers.parse(
-        'I can log in as the user {username:w} with password {password:w}'))
-def can_log_in_with_password(session_browser, username, password):
+def _can_log_in_with_password(session_browser, username, password):
     functional.logout(session_browser)
     functional.login_with_account(session_browser, functional.base_url,
                                   username, password)
     assert len(session_browser.find_by_id('id_user_menu')) > 0
 
 
-@then(parsers.parse("I can't log in as the user {username:w}"))
-def cannot_log_in(session_browser, username):
+def _cannot_log_in(session_browser, username):
     functional.login_with_account(session_browser, functional.base_url,
                                   username)
     assert len(session_browser.find_by_id('id_user_menu')) == 0
 
 
-@then('Plinth language should be <language>')
-def plinth_language_should_be(session_browser, language):
-    assert _check_language(session_browser, _language_codes[language])
-
-
-@then(parsers.parse('the ssh keys should be {ssh_keys:w}'))
-def ssh_keys_match(session_browser, ssh_keys):
-    assert _get_ssh_keys(session_browser) == ssh_keys
-
-
-@then('the ssh keys should be removed')
-def ssh_keys_should_be_removed(session_browser, ssh_keys):
-    assert _get_ssh_keys(session_browser) == ''
-
-
-@then(
-    parsers.parse(
-        'the ssh keys should be {ssh_keys:w} for the user {username:w}'))
-def ssh_keys_match_for_user(session_browser, ssh_keys, username):
-    assert _get_ssh_keys(session_browser, username=username) == ssh_keys
-
-
-@then(parsers.parse('my ssh keys should be {ssh_keys:w}'))
-def my_ssh_keys_match(session_browser, ssh_keys):
-    assert _get_ssh_keys(session_browser) == ssh_keys
-
-
-@then('the client should be able to connect passwordless over ssh')
-def should_connect_passwordless_over_ssh(session_browser, tmp_path_factory):
+def _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory):
     key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
     _try_login_to_ssh(key_file=key_file)
 
 
-@then("the client shouldn't be able to connect passwordless over ssh")
-def should_not_connect_passwordless_over_ssh(session_browser,
-                                             tmp_path_factory):
+def _should_not_connect_passwordless_over_ssh(session_browser,
+                                              tmp_path_factory):
     key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
     with pytest.raises(subprocess.CalledProcessError):
         _try_login_to_ssh(key_file=key_file)
-
-
-@then(parsers.parse('{name:w} should be listed as a user'))
-def new_user_is_listed(session_browser, name):
-    assert functional.user_exists(session_browser, name)
-
-
-@then(parsers.parse('{name:w} should not be listed as a user'))
-def new_user_is_not_listed(session_browser, name):
-    assert not functional.user_exists(session_browser, name)
 
 
 def _rename_user(browser, old_name, new_name):
