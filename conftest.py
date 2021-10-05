@@ -11,20 +11,6 @@ from unittest.mock import patch
 
 import pytest
 
-try:
-    importlib.import_module('pytest_bdd')
-    _bdd_available = True
-except ImportError:
-    _bdd_available = False
-else:
-    from plinth.tests.functional.step_definitions import *
-
-
-def pytest_ignore_collect(path, config):
-    """Return True to ignore functional tests."""
-    if path.basename == 'test_functional.py':
-        return not _bdd_available
-
 
 def pytest_addoption(parser):
     """Add a command line option to run functional tests."""
