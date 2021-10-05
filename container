@@ -199,7 +199,7 @@ apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -yq --with-new-pkgs upgrade
 
 # Install requirements for tests if not already installed as root
-if ! [[ -e /usr/local/bin/geckodriver && -e /usr/local/bin/pytest-bdd ]]
+if ! [[ -e /usr/local/bin/geckodriver ]]
 then
     /freedombox/plinth/tests/functional/install.sh
 fi

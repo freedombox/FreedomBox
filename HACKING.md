@@ -449,7 +449,6 @@ host$ pip3 install splinter
 host$ pip3 install pytest-splinter
 host$ pip3 install pytest-xdist  # optional, to run tests in parallel
 host$ sudo apt install firefox
-host$ sudo apt install python3-pytest-bdd
 host$ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening browser windows
 host$ sudo apt install smbclient  # optional, to test samba
 ```
