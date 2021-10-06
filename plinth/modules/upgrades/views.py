@@ -114,7 +114,8 @@ def get_log():
 def _is_updating():
     """Check if manually triggered update is running."""
     command = ['systemctl', 'is-active', 'freedombox-manual-upgrade']
-    result = subprocess.run(command, capture_output=True, text=True)
+    result = subprocess.run(command, capture_output=True, text=True,
+                            check=False)
     return str(result.stdout).startswith('activ')  # 'active' or 'activating'
 
 

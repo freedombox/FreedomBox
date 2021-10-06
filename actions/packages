@@ -96,7 +96,7 @@ def subcommand_install(arguments):
     if arguments.force_missing_configuration:
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confmiss']
 
-    subprocess.run(['dpkg', '--configure', '-a'])
+    subprocess.run(['dpkg', '--configure', '-a'], check=False)
     with apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
         returncode = run_apt_command(['install'] + extra_arguments +

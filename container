@@ -327,7 +327,7 @@ def _check_command(command):
     else:
         which = ['sudo', 'which', command]
 
-    process = subprocess.run(which, stdout=subprocess.DEVNULL)
+    process = subprocess.run(which, stdout=subprocess.DEVNULL, check=False)
     return process.returncode == 0
 
 
@@ -341,7 +341,8 @@ def _verify_dependencies():
     # it leading to machinectl start failing first time after boot. See
     # https://github.com/systemd/systemd/issues/13130 . Workaround for old
     # versions of machinectl. Ignore errors.
-    subprocess.run(['sudo', 'modprobe', '--all', '--quiet', 'loop'])
+    subprocess.run(['sudo', 'modprobe', '--all', '--quiet', 'loop'],
+                   check=False)
 
     dependencies = {
         'systemd-nspawn': 'systemd-container',
@@ -370,13 +371,13 @@ def _verify_dependencies():
                 ' '.join(missing_commands))
 
     process = subprocess.run(['lsb_release', '--id', '--short'],
-                             stdout=subprocess.PIPE)
+                             stdout=subprocess.PIPE, check=False)
     if process.stdout.decode().strip() != 'Debian':
         sys.exit(1)
 
     logger.info('Running apt for missing packages: %s',
                 ' '.join(missing_commands))
-    subprocess.run(['sudo', 'apt', 'install'] + missing_packages)
+    subprocess.run(['sudo', 'apt', 'install'] + missing_packages, check=False)
 
 
 def _get_systemd_nspawn_version():
@@ -583,7 +584,7 @@ def _setup_nm_connection(distribution):
     connection_name = f'fbx-{distribution}-shared'
     process = subprocess.run(
         ['sudo', 'nmcli', 'connection', 'show', connection_name],
-        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
     if not process.returncode:
         return
 
@@ -600,7 +601,8 @@ def _setup_nm_connection(distribution):
     subprocess.run(['sudo', 'nmcli', 'connection', 'add'] +
                    list(itertools.chain(*properties.items())), check=True)
     subprocess.run(['sudo', 'nmcli', 'connection', 'up', connection_name],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                   check=False)
 
 
 def _setup_users(image_file):
@@ -649,7 +651,7 @@ def _setup_ssh(image_file):
         logger.info('Generating SSH client key %s', key_file)
         subprocess.run(
             ['ssh-keygen', '-t', 'ed25519', '-N', '', '-f',
-             str(key_file)], stdout=subprocess.DEVNULL)
+             str(key_file)], stdout=subprocess.DEVNULL, check=True)
 
     public_key_file = key_file.with_suffix('.pub')
     public_key = public_key_file.read_bytes()
@@ -713,33 +715,35 @@ VirtualEthernet=yes
 '''
     nspawn_file = f'/run/systemd/nspawn/{machine_name}.nspawn'
     logger.info('Creating systemd-nspawn configuration: %s', nspawn_file)
-    subprocess.run(['sudo', 'rm', '--force', nspawn_file])
+    subprocess.run(['sudo', 'rm', '--force', nspawn_file], check=False)
     subprocess.run(['sudo', 'tee', nspawn_file], input=nspawn_options.encode(),
                    stdout=subprocess.DEVNULL, check=True)
 
     image_link = pathlib.Path(f'/var/lib/machines/{machine_name}.raw')
     logger.info('Linking systemd-nspawn image %s -> %s', image_link,
                 image_file)
-    result = subprocess.run(['sudo', 'test', '-e', str(image_link)])
+    result = subprocess.run(
+        ['sudo', 'test', '-e', str(image_link)], check=False)
     if not result.returncode:
-        result = subprocess.run(['sudo', 'test', '-L', str(image_link)])
+        result = subprocess.run(
+            ['sudo', 'test', '-L', str(image_link)], check=False)
         if result.returncode:
             raise Exception(f'Image file {image_link} is not a symlink.')
 
-        subprocess.run(['sudo', 'rm', '--force', str(image_link)])
+        subprocess.run(['sudo', 'rm', '--force', str(image_link)], check=False)
 
     subprocess.run([
         'sudo', 'ln', '--symbolic',
         str(image_file.resolve()),
         str(image_link)
-    ])
+    ], check=False)
 
 
 def _get_machine_status(machine_name):
     """Return the running status of a container."""
     process = subprocess.run(['sudo', 'machinectl', 'status', machine_name],
                              stdout=subprocess.DEVNULL,
-                             stderr=subprocess.DEVNULL)
+                             stderr=subprocess.DEVNULL, check=False)
     return process.returncode == 0
 
 
@@ -756,14 +760,14 @@ def _launch(image_file, distribution):
                 f'fbx-{distribution}-shared')
     subprocess.run(
         ['sudo', 'nmcli', 'connection', 'up', f'fbx-{distribution}-shared'],
-        stdout=subprocess.DEVNULL)
+        stdout=subprocess.DEVNULL, check=False)
 
 
 def _stop(distribution):
     """Stop the container."""
     machine_name = f'fbx-{distribution}'
     logger.info('Running `machinectl stop %s`', machine_name)
-    subprocess.run(['sudo', 'machinectl', 'stop', machine_name])
+    subprocess.run(['sudo', 'machinectl', 'stop', machine_name], check=False)
     _wait_for(lambda: not _get_machine_status(machine_name))
 
 
@@ -771,7 +775,8 @@ def _terminate(distribution):
     """Terminal the container."""
     machine_name = f'fbx-{distribution}'
     logger.info('Running `machinectl terminate %s`', machine_name)
-    subprocess.run(['sudo', 'machinectl', 'terminate', machine_name])
+    subprocess.run(['sudo', 'machinectl', 'terminate', machine_name],
+                   check=False)
     _wait_for(lambda: not _get_machine_status(machine_name))
 
 
@@ -781,16 +786,17 @@ def _destroy(distribution):
     image_link = pathlib.Path(f'/var/lib/machines/{machine_name}.raw')
 
     logger.info('Removing link to systemd-nspawn image %s', image_link)
-    subprocess.run(['sudo', 'rm', '--force', str(image_link)])
+    subprocess.run(['sudo', 'rm', '--force', str(image_link)], check=False)
     nspawn_file = f'/run/systemd/nspawn/{machine_name}.nspawn'
 
     logger.info('Removing systemd-nspawn configuration: %s', nspawn_file)
-    subprocess.run(['sudo', 'rm', '--force', nspawn_file])
+    subprocess.run(['sudo', 'rm', '--force', nspawn_file], check=False)
 
     overlay_folder = _get_overlay_folder(distribution)
     logger.info('Removing overlay folder with container written data: %s',
                 overlay_folder)
-    subprocess.run(['sudo', 'rm', '-r', '--force', overlay_folder])
+    subprocess.run(['sudo', 'rm', '-r', '--force', overlay_folder],
+                   check=False)
 
     compressed_image = _get_compressed_image_path(distribution)
     image_file = compressed_image.with_suffix('')
@@ -814,7 +820,7 @@ def _destroy(distribution):
     logger.info('Removing Network Manager connection %s', connection_name)
     result = subprocess.run(
         ['sudo', 'nmcli', 'connection', 'delete', connection_name],
-        capture_output=True)
+        capture_output=True, check=False)
     if result.returncode not in (0, 10):
         # nmcli failed and not due to 'Connection, device, or access point does
         # not exist.' See

@@ -244,8 +244,8 @@ def _action_set_keys():
         clean_dict[key] = clean_function(value)
 
     # Apply changes (postconf)
-    postconf_dict = dict(filter(lambda kv: not kv[0].startswith('_'),
-                                clean_dict.items()))
+    postconf_dict = dict(
+        filter(lambda kv: not kv[0].startswith('_'), clean_dict.items()))
     postconf.set_many(postconf_dict)
 
     # Apply changes (special)
@@ -258,7 +258,7 @@ def _action_set_keys():
     with postconf.mutex.lock_all():
         # systemctl reload postfix
         args = ['systemctl', 'reload', 'postfix']
-        completed = subprocess.run(args, capture_output=True)
+        completed = subprocess.run(args, capture_output=True, check=False)
         if completed.returncode != 0:
             interproc.log_subprocess(completed)
             raise OSError('Could not reload postfix')

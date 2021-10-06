@@ -285,12 +285,13 @@ class VerifySshHostkeyForm(forms.Form):
         # Fetch public keys of ssh remote
         keyscan = subprocess.run(['ssh-keyscan', hostname],
                                  stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+                                 stderr=subprocess.PIPE, check=False)
         keys = keyscan.stdout.decode().splitlines()
         error_message = keyscan.stderr.decode() if keyscan.returncode else None
         # Generate user-friendly fingerprints of public keys
         keygen = subprocess.run(['ssh-keygen', '-l', '-f', '-'],
-                                input=keyscan.stdout, stdout=subprocess.PIPE)
+                                input=keyscan.stdout, stdout=subprocess.PIPE,
+                                check=False)
         fingerprints = keygen.stdout.decode().splitlines()
 
         return zip(keys, fingerprints), error_message

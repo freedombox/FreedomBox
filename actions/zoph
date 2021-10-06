@@ -128,7 +128,7 @@ def subcommand_dump_database(_):
 def subcommand_restore_database(_):
     """Restore database from file."""
     db_name = _get_db_name()
-    subprocess.run(['mysqladmin', '--force', 'drop', db_name])
+    subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
     subprocess.run(['mysqladmin', 'create', db_name], check=True)
     with open(DB_BACKUP_FILE, 'r') as db_restore_file:
         subprocess.run(['mysql', db_name], stdin=db_restore_file, check=True)

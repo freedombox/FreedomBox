@@ -273,7 +273,7 @@ def subcommand_mount(arguments):
     process = subprocess.run([
         'udisksctl', 'mount', '--block-device', arguments.block_device,
         '--no-user-interaction'
-    ])
+    ], check=False)
     sys.exit(process.returncode)
 
 
