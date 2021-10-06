@@ -12,21 +12,12 @@ import tempfile
 import pytest
 
 
-def _get_partition_device(device, partition_number):
-    """Return the device corresponding to a partition in a given device."""
-    if re.match('[0-9]', device[-1]):
-        return device + 'p' + str(partition_number)
-
-    return device + str(partition_number)
-
-
 class Disk():
     """Context manager to create/destroy a disk."""
 
-    def __init__(self, test_case, size, disk_info, file_system_info=None):
+    def __init__(self, size, disk_info, file_system_info=None):
         """Initialize the context manager object."""
         self.size = size
-        self.test_case = test_case
         self.disk_info = disk_info
         self.file_system_info = file_system_info
 
@@ -51,6 +42,13 @@ class Disk():
         self._cleanup_loopback()
         self._setup_loopback()
 
+    def get_partition_device(self, partition_number):
+        """Return the device corresponding to a partition in a given device."""
+        if re.match('[0-9]', self.device[-1]):
+            return self.device + 'p' + str(partition_number)
+
+        return self.device + str(partition_number)
+
     def _setup_loopback(self):
         """Setup loop back on the create disk file."""
         command = 'losetup --show --find {file}'.format(
@@ -68,7 +66,6 @@ class Disk():
         subprocess.run(['partprobe', device], check=True)
 
         self.device = device
-        self.test_case.device = device
 
     def _create_partitions(self):
         """Create partitions as specified in disk_info."""
@@ -87,7 +84,7 @@ class Disk():
             return
 
         for partition, file_system_type in self.file_system_info:
-            device = _get_partition_device(self.device, partition)
+            device = self.get_partition_device(partition)
             if file_system_type == 'btrfs':
                 command = ['mkfs.btrfs', '-K', device]
             else:
@@ -102,7 +99,7 @@ class Disk():
             return
 
         for partition, _ in self.file_system_info:
-            device = _get_partition_device(self.device, partition)
+            device = self.get_partition_device(partition)
             subprocess.run(['umount', device], check=False)
 
     def _cleanup_loopback(self):
@@ -139,17 +136,17 @@ class TestActions:
             'mktable msdos', 'mkpart primary btrfs 1 8',
             'mkpart primary btrfs 9 16', 'mkpart primary btrfs 20 200'
         ]
-        with Disk(self, 256, disk_info, [(3, 'btrfs')]):
+        with Disk(256, disk_info, [(3, 'btrfs')]) as disk:
             # No free space
-            self.assert_free_space(1, space=False)
+            self.assert_free_space(disk, 1, space=False)
             # < 10 MiB of free space
-            self.assert_free_space(2, space=False)
-            self.assert_free_space(3, space=True)
+            self.assert_free_space(disk, 2, space=False)
+            self.assert_free_space(disk, 3, space=True)
 
-            self.expand_partition(1, success=False)
-            self.expand_partition(2, success=False)
-            self.expand_partition(3, success=True)
-            self.expand_partition(3, success=False)
+            self.expand_partition(disk, 1, success=False)
+            self.expand_partition(disk, 2, success=False)
+            self.expand_partition(disk, 3, success=True)
+            self.expand_partition(disk, 3, success=False)
 
     @pytest.mark.usefixtures('needs_root')
     def test_extended_partition_free_space(self):
@@ -158,9 +155,9 @@ class TestActions:
             'mktable msdos', 'mkpart primary 1 8', 'mkpart extended 8 32',
             'mkpart logical 9 16'
         ]
-        with Disk(self, 64, disk_info):
-            self.assert_free_space(5, space=False)
-            self.expand_partition(5, success=False)
+        with Disk(64, disk_info) as disk:
+            self.assert_free_space(disk, 5, space=False)
+            self.expand_partition(disk, 5, success=False)
 
     @pytest.mark.usefixtures('needs_root')
     def test_gpt_partition_free_space(self):
@@ -171,25 +168,25 @@ class TestActions:
             'mkpart extended 8 12', 'mkpart extended 12 16',
             'mkpart extended 16 160'
         ]
-        with Disk(self, 192, disk_info, [(5, 'btrfs')]) as disk:
+        with Disk(192, disk_info, [(5, 'btrfs')]) as disk:
             # Second header already at the end
-            self.assert_free_space(5, space=True)
-            self.expand_partition(5, success=True)
-            self.expand_partition(5, success=False)
+            self.assert_free_space(disk, 5, space=True)
+            self.expand_partition(disk, 5, success=True)
+            self.expand_partition(disk, 5, success=False)
             disk.expand_disk_file(256)
             # Second header not at the end
-            self.assert_free_space(5, space=True)
-            self.expand_partition(5, success=True)
-            self.expand_partition(5, success=False)
+            self.assert_free_space(disk, 5, space=True)
+            self.expand_partition(disk, 5, success=True)
+            self.expand_partition(disk, 5, success=False)
 
     @pytest.mark.usefixtures('needs_root')
     @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
     def test_unsupported_file_system(self, partition_table_type):
         """Test that free space after unknown file system does not count."""
         disk_info = [f'mktable {partition_table_type}', 'mkpart primary 1 8']
-        with Disk(self, 32, disk_info):
-            self.assert_free_space(1, space=False)
-            self.expand_partition(1, success=False)
+        with Disk(32, disk_info) as disk:
+            self.assert_free_space(disk, 1, space=False)
+            self.expand_partition(disk, 1, success=False)
 
     @pytest.mark.usefixtures('needs_root')
     @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
@@ -198,10 +195,10 @@ class TestActions:
         disk_info = [
             f'mktable {partition_table_type}', 'mkpart primary btrfs 1 200'
         ]
-        with Disk(self, 256, disk_info, [(1, 'btrfs')]):
-            self.expand_partition(1, success=True)
-            self.expand_partition(1, success=False)
-            self.assert_btrfs_file_system_healthy(1)
+        with Disk(256, disk_info, [(1, 'btrfs')]) as disk:
+            self.expand_partition(disk, 1, success=True)
+            self.expand_partition(disk, 1, success=False)
+            self.assert_btrfs_file_system_healthy(disk, 1)
 
     @pytest.mark.usefixtures('needs_root')
     @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
@@ -210,25 +207,25 @@ class TestActions:
         disk_info = [
             f'mktable {partition_table_type}', 'mkpart primary ext4 1 64'
         ]
-        with Disk(self, 128, disk_info, [(1, 'ext4')]):
-            self.expand_partition(1, success=True)
-            self.expand_partition(1, success=False)
-            self.assert_ext4_file_system_healthy(1)
+        with Disk(128, disk_info, [(1, 'ext4')]) as disk:
+            self.expand_partition(disk, 1, success=True)
+            self.expand_partition(disk, 1, success=False)
+            self.assert_ext4_file_system_healthy(disk, 1)
 
-    def assert_free_space(self, partition_number, space=True):
+    def assert_free_space(self, disk, partition_number, space=True):
         """Verify that free is available/not available after a partition."""
-        device = _get_partition_device(self.device, partition_number)
+        device = disk.get_partition_device(partition_number)
         result = self.check_action(
             ['storage', 'is-partition-expandable', device])
         assert result == space
 
-    def expand_partition(self, partition_number, success=True):
+    def expand_partition(self, disk, partition_number, success=True):
         """Expand a partition."""
-        self.assert_aligned(partition_number)
-        device = _get_partition_device(self.device, partition_number)
+        self.assert_aligned(disk, partition_number)
+        device = disk.get_partition_device(partition_number)
         result = self.check_action(['storage', 'expand-partition', device])
         assert result == success
-        self.assert_aligned(partition_number)
+        self.assert_aligned(disk, partition_number)
 
     @staticmethod
     def call_action(action_command, check=True, **kwargs):
@@ -249,23 +246,26 @@ class TestActions:
         except subprocess.CalledProcessError:
             return False
 
-    def assert_aligned(self, partition_number):
+    @staticmethod
+    def assert_aligned(disk, partition_number):
         """Test that partition is optimally aligned."""
         subprocess.run([
-            'parted', '--script', self.device, 'align-check', 'opti',
+            'parted', '--script', disk.device, 'align-check', 'opti',
             str(partition_number)
         ], check=True)
 
-    def assert_btrfs_file_system_healthy(self, partition_number):
+    @staticmethod
+    def assert_btrfs_file_system_healthy(disk, partition_number):
         """Perform a successful ext4 file system check."""
-        device = _get_partition_device(self.device, partition_number)
+        device = disk.get_partition_device(partition_number)
         command = ['btrfs', 'check', '--force', device]
         subprocess.run(command, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True)
 
-    def assert_ext4_file_system_healthy(self, partition_number):
+    @staticmethod
+    def assert_ext4_file_system_healthy(disk, partition_number):
         """Perform a successful ext4 file system check."""
-        device = _get_partition_device(self.device, partition_number)
+        device = disk.get_partition_device(partition_number)
         command = ['e2fsck', '-n', device]
         subprocess.run(command, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True)
