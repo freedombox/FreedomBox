@@ -3,6 +3,7 @@
 Functional, browser based tests for storage app.
 """
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.storage]
@@ -16,7 +17,7 @@ def fixture_background(session_browser):
 
 def test_list_disks(session_browser):
     """Test that root disk is shown on storage page."""
-    if functional.running_inside_container:
+    if functional.running_inside_container():
         pytest.skip('Storage doesn\'t work inside a container')
     else:
         functional.nav_to_module(session_browser, 'storage')

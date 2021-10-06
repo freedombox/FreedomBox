@@ -439,9 +439,17 @@ def service_is_not_running(browser, app_name):
 
 def running_inside_container():
     """Check if freedombox is running inside a container"""
+    # If the URL to connect to was overridden then assume that we are running
+    # tests on a different machine than the machine running freedombox. Assume
+    # running inside container to be conservative about tests.
+    if config['DEFAULT']['url'] != 'https://localhost':
+        return True
+
+    # If URL is not overridden then testing code and freedombox are running on
+    # the same machine. Proceed with a proper test.
     result = subprocess.run(['systemd-detect-virt', '--container'],
-                            stdout=subprocess.PIPE)
-    return bool(result.stdout.decode('utf-8').lower() != "none\n")
+                            stdout=subprocess.PIPE, check=False)
+    return result.stdout.decode('utf-8').strip().lower() != 'none'
 
 
 ##############################
