@@ -11,6 +11,18 @@ from unittest.mock import patch
 
 import pytest
 
+try:
+    importlib.import_module('splinter')
+    _splinter_available = True
+except ImportError:
+    _splinter_available = False
+
+
+def pytest_ignore_collect(path, config):
+    """Ignore functional tests when splinter is not available."""
+    if path.basename == 'test_functional.py':
+        return not _splinter_available
+
 
 def pytest_addoption(parser):
     """Add a command line option to run functional tests."""
