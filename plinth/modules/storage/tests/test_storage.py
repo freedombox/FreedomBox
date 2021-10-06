@@ -3,6 +3,7 @@
 Test module for storage module operations.
 """
 
+import contextlib
 import os
 import pathlib
 import re
@@ -48,6 +49,22 @@ class Disk():
             return self.device + 'p' + str(partition_number)
 
         return self.device + str(partition_number)
+
+    @contextlib.contextmanager
+    def mount_partition(self, partition_number):
+        """Mount partition onto a directory if device has a filesystem."""
+        device = self.get_partition_device(partition_number)
+        if not self.file_system_info or \
+           partition_number not in dict(self.file_system_info):
+            yield '/'
+            return
+
+        with tempfile.TemporaryDirectory() as mount_path:
+            subprocess.run(['mount', device, mount_path], check=True)
+            try:
+                yield mount_path
+            finally:
+                subprocess.run(['umount', mount_path], check=True)
 
     def _setup_loopback(self):
         """Setup loop back on the create disk file."""
@@ -133,10 +150,13 @@ class TestActions:
     def test_simple_case(self):
         """Test a simple with no complications"""
         disk_info = [
-            'mktable msdos', 'mkpart primary btrfs 1 8',
-            'mkpart primary btrfs 9 16', 'mkpart primary btrfs 20 200'
+            'mktable msdos', 'mkpart primary btrfs 1 300',
+            'mkpart primary btrfs 301 600', 'mkpart primary btrfs 608 900'
         ]
-        with Disk(256, disk_info, [(3, 'btrfs')]) as disk:
+        # Btrfs volumes < 256 MiB can't be resized.
+        # https://bugzilla.kernel.org/show_bug.cgi?id=118111
+        with Disk(1024, disk_info, [(1, 'btrfs'), (2, 'btrfs'),
+                                    (3, 'btrfs')]) as disk:
             # No free space
             self.assert_free_space(disk, 1, space=False)
             # < 10 MiB of free space
@@ -152,10 +172,10 @@ class TestActions:
     def test_extended_partition_free_space(self):
         """Test that free space does not show up when outside extended."""
         disk_info = [
-            'mktable msdos', 'mkpart primary 1 8', 'mkpart extended 8 32',
-            'mkpart logical 9 16'
+            'mktable msdos', 'mkpart primary 1 8', 'mkpart extended 8 500',
+            'mkpart logical btrfs 9 300'
         ]
-        with Disk(64, disk_info) as disk:
+        with Disk(512, disk_info, [(5, 'btrfs')]) as disk:
             self.assert_free_space(disk, 5, space=False)
             self.expand_partition(disk, 5, success=False)
 
@@ -166,14 +186,14 @@ class TestActions:
         disk_info = [
             'mktable gpt', 'mkpart primary 1 4', 'mkpart extended 4 8',
             'mkpart extended 8 12', 'mkpart extended 12 16',
-            'mkpart extended 16 160'
+            'mkpart extended 16 300'
         ]
-        with Disk(192, disk_info, [(5, 'btrfs')]) as disk:
+        with Disk(512, disk_info, [(5, 'btrfs')]) as disk:
             # Second header already at the end
             self.assert_free_space(disk, 5, space=True)
             self.expand_partition(disk, 5, success=True)
             self.expand_partition(disk, 5, success=False)
-            disk.expand_disk_file(256)
+            disk.expand_disk_file(1024)
             # Second header not at the end
             self.assert_free_space(disk, 5, space=True)
             self.expand_partition(disk, 5, success=True)
@@ -193,9 +213,9 @@ class TestActions:
     def test_btrfs_expansion(self, partition_table_type):
         """Test that btrfs file system can be expanded."""
         disk_info = [
-            f'mktable {partition_table_type}', 'mkpart primary btrfs 1 200'
+            f'mktable {partition_table_type}', 'mkpart primary btrfs 1 300'
         ]
-        with Disk(256, disk_info, [(1, 'btrfs')]) as disk:
+        with Disk(512, disk_info, [(1, 'btrfs')]) as disk:
             self.expand_partition(disk, 1, success=True)
             self.expand_partition(disk, 1, success=False)
             self.assert_btrfs_file_system_healthy(disk, 1)
@@ -222,8 +242,13 @@ class TestActions:
     def expand_partition(self, disk, partition_number, success=True):
         """Expand a partition."""
         self.assert_aligned(disk, partition_number)
-        device = disk.get_partition_device(partition_number)
-        result = self.check_action(['storage', 'expand-partition', device])
+        with disk.mount_partition(partition_number) as mount_point:
+            device = disk.get_partition_device(partition_number)
+            result = self.check_action([
+                'storage', 'expand-partition', device, '--mount-point',
+                mount_point
+            ])
+
         assert result == success
         self.assert_aligned(disk, partition_number)
 
