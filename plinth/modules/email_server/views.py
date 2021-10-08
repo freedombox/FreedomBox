@@ -121,6 +121,7 @@ class EmailServerView(TabMixin, AppView):
         return redirect(request.path)
 
     def _repair(self, module_name, action_name):
+        """Repair the configuration of the given audit module."""
         module = getattr(audit, module_name)
         if not hasattr(module, 'repair_component'):
             return

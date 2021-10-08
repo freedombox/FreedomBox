@@ -15,14 +15,26 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.package import packages_installed, remove
 
 from . import audit, manifest
 
 version = 1
 
+# Other likely install conflicts have been discarded:
+# - msmtp, nullmailer, sendmail don't cause install faults.
+# - qmail and smail are missing in Bullseye (Not tested,
+#   but less likely due to that).
+package_conflicts = ('exim4-base', 'exim4-config', 'exim4-daemon-light')
+package_conflicts_action = 'ignore'
+
 packages = [
-    'postfix-ldap', 'dovecot-pop3d', 'dovecot-imapd',
-    'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved',
+    'postfix-ldap',
+    'dovecot-pop3d',
+    'dovecot-imapd',
+    'dovecot-ldap',
+    'dovecot-lmtpd',
+    'dovecot-managesieved',
 ]
 
 packages_bloat = ['rspamd']
@@ -38,6 +50,12 @@ port_info = {
 managed_services = ['postfix', 'dovecot', 'rspamd']
 
 managed_packages = packages + packages_bloat
+
+_description = [
+    _('During installation, any other email servers in the system will be '
+      'uninstalled.')
+]
+
 app = None
 logger = logging.getLogger(__name__)
 
@@ -55,18 +73,19 @@ class EmailServerApp(plinth.app.App):
         self._add_firewall_ports()
 
         # /rspamd location
-        webserver = Webserver('webserver-email',  # unique id
-                              'email-server-freedombox',  # config file name
-                              urls=['https://{host}/rspamd'])
+        webserver = Webserver(
+            'webserver-email',  # unique id
+            'email-server-freedombox',  # config file name
+            urls=['https://{host}/rspamd'])
         self.add(webserver)
 
         # Let's Encrypt event hook
         default_domain = get_domainname()
         domains = [default_domain] if default_domain else []
-        letsencrypt = LetsEncrypt(
-            'letsencrypt-email-server', domains=domains,
-            daemons=['postfix', 'dovecot'], should_copy_certificates=False,
-            managing_app='email_server')
+        letsencrypt = LetsEncrypt('letsencrypt-email-server', domains=domains,
+                                  daemons=['postfix', 'dovecot'],
+                                  should_copy_certificates=False,
+                                  managing_app='email_server')
         self.add(letsencrypt)
 
         if not domains:
@@ -74,14 +93,11 @@ class EmailServerApp(plinth.app.App):
 
     def _add_ui_components(self):
         info = plinth.app.Info(
-            app_id=self.app_id,
-            version=version,
-            name=self.app_name,
+            app_id=self.app_id, version=version, name=self.app_name,
             short_description=_('Powered by Postfix, Dovecot & Rspamd'),
-            manual_page='EmailServer',
+            description=_description, manual_page='EmailServer',
             clients=manifest.clients,
-            donation_url='https://freedomboxfoundation.org/donate/'
-        )
+            donation_url='https://freedomboxfoundation.org/donate/')
         self.add(info)
 
         menu_item = plinth.menu.Menu(
@@ -90,19 +106,14 @@ class EmailServerApp(plinth.app.App):
             info.short_description,  # app description
             'roundcube',  # icon name in `static/theme/icons/`
             'email_server:index',  # view name
-            parent_url_name='apps'
-        )
+            parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = plinth.frontpage.Shortcut(
-            'shortcut_' + self.app_id,
-            name=info.name,
-            short_description=info.short_description,
-            icon='roundcube',
-            url=reverse_lazy('email_server:my_mail'),
-            clients=manifest.clients,
-            login_required=True
-        )
+            'shortcut_' + self.app_id, name=info.name,
+            short_description=info.short_description, icon='roundcube',
+            url=reverse_lazy('email_server:my_mail'), clients=manifest.clients,
+            login_required=True)
         self.add(shortcut)
 
     def _add_daemons(self):
@@ -142,14 +153,29 @@ class EmailServerApp(plinth.app.App):
 
 def setup(helper, old_version=None):
     """Installs and configures module"""
+
+    def _clear_conflicts():
+        packages_to_remove = packages_installed(package_conflicts)
+        if packages_to_remove:
+            logger.info('Removing conflicting packages: %s',
+                        packages_to_remove)
+            remove(packages_to_remove)
+
+    # Install
+    helper.call('pre', _clear_conflicts)
     helper.install(packages)
     helper.install(packages_bloat, skip_recommends=True)
+
+    # Setup
     helper.call('post', audit.domain.repair)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
     helper.call('post', audit.tls.repair)
     helper.call('post', audit.rcube.repair)
+
+    # Reload
     for srvname in managed_services:
         actions.superuser_run('service', ['reload', srvname])
-    # Final step: expose service daemons to public internet
+
+    # Expose to public internet
     helper.call('post', app.enable)
