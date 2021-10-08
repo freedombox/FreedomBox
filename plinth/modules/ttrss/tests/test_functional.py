@@ -4,7 +4,10 @@ Functional, browser based tests for ttrss app.
 """
 
 import pytest
+
 from plinth.tests import functional
+
+APP_ID = 'ttrss'
 
 pytestmark = [pytest.mark.apps, pytest.mark.ttrss, pytest.mark.sso]
 
@@ -13,33 +16,33 @@ pytestmark = [pytest.mark.apps, pytest.mark.ttrss, pytest.mark.sso]
 def fixture_background(session_browser):
     """Login and install the app."""
     functional.login(session_browser)
-    functional.install(session_browser, 'ttrss')
+    functional.install(session_browser, APP_ID)
     yield
-    functional.app_disable(session_browser, 'ttrss')
+    functional.app_disable(session_browser, APP_ID)
 
 
 def test_enable_disable(session_browser):
     """Test enabling the app."""
-    functional.app_disable(session_browser, 'ttrss')
+    functional.app_disable(session_browser, APP_ID)
 
-    functional.app_enable(session_browser, 'ttrss')
-    assert functional.service_is_running(session_browser, 'ttrss')
+    functional.app_enable(session_browser, APP_ID)
+    assert functional.service_is_running(session_browser, APP_ID)
 
-    functional.app_disable(session_browser, 'ttrss')
-    assert functional.service_is_not_running(session_browser, 'ttrss')
+    functional.app_disable(session_browser, APP_ID)
+    assert functional.service_is_not_running(session_browser, APP_ID)
 
 
 @pytest.mark.backups
 def test_backup_restore(session_browser):
     """Test backup and restore of app data."""
-    functional.app_enable(session_browser, 'ttrss')
+    functional.app_enable(session_browser, APP_ID)
     _subscribe(session_browser)
-    functional.backup_create(session_browser, 'ttrss', 'test_ttrss')
+    functional.backup_create(session_browser, APP_ID, 'test_ttrss')
 
     _unsubscribe(session_browser)
-    functional.backup_restore(session_browser, 'ttrss', 'test_ttrss')
+    functional.backup_restore(session_browser, APP_ID, 'test_ttrss')
 
-    assert functional.service_is_running(session_browser, 'ttrss')
+    assert functional.service_is_running(session_browser, APP_ID)
     assert _is_subscribed(session_browser)
 
 
@@ -56,12 +59,7 @@ def _is_feed_shown(browser, invert=False):
 
 def _click_main_menu_item(browser, text):
     """Select an item from the main actions menu."""
-    burger_menu = browser.find_by_xpath('//*[contains(@title, "Actions...")]')
-    if burger_menu:
-        burger_menu.click()
-    else:
-        browser.find_by_text('Actions...').click()
-
+    browser.find_by_css('.action-chooser').click()
     browser.find_by_text(text).click()
 
 
@@ -84,12 +82,6 @@ def _subscribe(browser):
     if _already_subscribed_message():
         browser.find_by_text('Cancel').click()
         functional.eventually(lambda: not add_dialog.visible)
-
-    expand = browser.find_by_css('span.dijitTreeExpandoClosed')
-    if expand:
-        functional.eventually(expand.first.click)
-
-    assert functional.eventually(_is_feed_shown, [browser])
 
 
 def _unsubscribe(browser):
@@ -114,4 +106,4 @@ def _unsubscribe(browser):
 def _is_subscribed(browser):
     """Return whether subscribed to a feed in TT-RSS."""
     _ttrss_load_main_interface(browser)
-    return browser.is_text_present('Planet Debian')
+    return _is_feed_shown(browser)
