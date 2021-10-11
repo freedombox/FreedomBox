@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 18:44-0400\n"
+"POT-Creation-Date: 2021-10-11 18:24-0400\n"
 "PO-Revision-Date: 2021-09-18 13:33+0000\n"
 "Last-Translator: 池边树下 <mzky@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -52,25 +52,25 @@ msgstr "连接到主机 {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "不能连接到主机 {host}:{port}"
 
-#: plinth/forms.py:39
+#: plinth/forms.py:36
 msgid "Select a domain name to be used with this application"
 msgstr "选择要与此应用程序一起使用的域名"
 
-#: plinth/forms.py:41
+#: plinth/forms.py:38
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr "警告！如果以后更改了域名, 应用程序可能无法正常工作。"
 
-#: plinth/forms.py:49
+#: plinth/forms.py:46
 msgid "Language"
 msgstr "语言"
 
-#: plinth/forms.py:50
+#: plinth/forms.py:47
 msgid "Language to use for presenting this web interface"
 msgstr "此 web 管理界面的语言"
 
-#: plinth/forms.py:57
+#: plinth/forms.py:54
 msgid "Use the language preference set in the browser"
 msgstr "使用浏览器中设置的语言首选项"
 
@@ -784,7 +784,7 @@ msgstr "未提供密码的匿名用户的权限。"
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
+#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
 msgid "Permissions"
 msgstr "许可"
 
@@ -1123,7 +1123,7 @@ msgstr ""
 "法工作。"
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
-#: plinth/modules/performance/manifest.py:33
+#: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -1746,7 +1746,7 @@ msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
 #: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
-#: plinth/modules/users/forms.py:69
+#: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "用户名"
 
@@ -2010,13 +2010,19 @@ msgstr ""
 "%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置</a>中设置你"
 "的域名。"
 
-#: plinth/modules/email_server/__init__.py:48
+#: plinth/modules/email_server/__init__.py:55
+msgid ""
+"During installation, any other email servers in the system will be "
+"uninstalled."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:66
 #, fuzzy
 #| msgid "Web Server"
 msgid "Email Server"
 msgstr "Web 服务器"
 
-#: plinth/modules/email_server/__init__.py:80
+#: plinth/modules/email_server/__init__.py:97
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2166,7 +2172,7 @@ msgstr ""
 #: plinth/modules/upgrades/__init__.py:77
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
+#: plinth/templates/setup.html:73
 msgid "Update"
 msgstr "更新"
 
@@ -2284,13 +2290,13 @@ msgstr ""
 msgid "Check syslog for more information"
 msgstr ""
 
-#: plinth/modules/email_server/views.py:179
+#: plinth/modules/email_server/views.py:180
 #, fuzzy
 #| msgid "Enable damage"
 msgid "Enabled aliases"
 msgstr "启用伤害"
 
-#: plinth/modules/email_server/views.py:180
+#: plinth/modules/email_server/views.py:181
 #, fuzzy
 #| msgid "Disabled"
 msgid "Disabled aliases"
@@ -7520,15 +7526,15 @@ msgstr "已启用自动升级"
 msgid "Distribution upgrade disabled"
 msgstr "已禁用自动升级"
 
-#: plinth/modules/upgrades/views.py:126
+#: plinth/modules/upgrades/views.py:127
 msgid "Upgrade process started."
 msgstr "升级过程开始。"
 
-#: plinth/modules/upgrades/views.py:128
+#: plinth/modules/upgrades/views.py:129
 msgid "Starting upgrade failed."
 msgstr "开始升级失败。"
 
-#: plinth/modules/upgrades/views.py:138
+#: plinth/modules/upgrades/views.py:139
 msgid "Frequent feature updates activated."
 msgstr ""
 
@@ -7560,38 +7566,38 @@ msgstr ""
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "请检查 LDAP 条目“{search_item}”"
 
-#: plinth/modules/users/forms.py:37
+#: plinth/modules/users/forms.py:36
 msgid "Username is taken or is reserved."
 msgstr "用户名已经占用或保留。"
 
-#: plinth/modules/users/forms.py:64
+#: plinth/modules/users/forms.py:63
 #, fuzzy
 #| msgid "Invalid server name"
 msgid "Enter a valid username."
 msgstr "服务器名称无效"
 
-#: plinth/modules/users/forms.py:71
+#: plinth/modules/users/forms.py:70
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: plinth/modules/users/forms.py:79
+#: plinth/modules/users/forms.py:78
 #, fuzzy
 #| msgid "Administrator Account"
 msgid "Authorization Password"
 msgstr "管理员帐户"
 
-#: plinth/modules/users/forms.py:80
+#: plinth/modules/users/forms.py:79
 msgid "Enter your current password to authorize account modifications."
 msgstr ""
 
-#: plinth/modules/users/forms.py:88
+#: plinth/modules/users/forms.py:87
 #, fuzzy
 #| msgid "Show password"
 msgid "Invalid password."
 msgstr "显示密码"
 
-#: plinth/modules/users/forms.py:105
+#: plinth/modules/users/forms.py:104
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -7610,23 +7616,23 @@ msgstr ""
 "支持单一登录的服务。<br/><br/>管理员（admin）组中的用户将能够登录所有服务。他"
 "们还可以通过 SSH 登录到系统并具有管理权限（sudo）。"
 
-#: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
+#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
 #, fuzzy, python-brace-format
 #| msgid "Creating LDAP user failed."
 msgid "Creating LDAP user failed: {error}"
 msgstr "创建 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:163
+#: plinth/modules/users/forms.py:162
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to {group} group."
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "未能将新用户添加到 {group}。"
 
-#: plinth/modules/users/forms.py:177
+#: plinth/modules/users/forms.py:176
 msgid "Authorized SSH Keys"
 msgstr ""
 
-#: plinth/modules/users/forms.py:179
+#: plinth/modules/users/forms.py:178
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7635,49 +7641,45 @@ msgstr ""
 "设置 SSH 公钥将允许此用户安全地登录到系统不使用密码。您可以输入多个密钥，每行"
 "一个。将忽略空行和以 # 开头的行。"
 
-#: plinth/modules/users/forms.py:266
+#: plinth/modules/users/forms.py:263
 msgid "Renaming LDAP user failed."
 msgstr "重命名 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:279
+#: plinth/modules/users/forms.py:276
 msgid "Failed to remove user from group."
 msgstr "无法从组中删除用户。"
 
-#: plinth/modules/users/forms.py:291
+#: plinth/modules/users/forms.py:288
 msgid "Failed to add user to group."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:304
+#: plinth/modules/users/forms.py:301
 msgid "Unable to set SSH keys."
 msgstr "不能设置 SSH 密钥。"
 
-#: plinth/modules/users/forms.py:322
+#: plinth/modules/users/forms.py:319
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:330
-msgid "Cannot delete the only administrator in the system."
-msgstr ""
-
-#: plinth/modules/users/forms.py:365
+#: plinth/modules/users/forms.py:364
 msgid "Changing LDAP user password failed."
 msgstr "更改 LDAP 用户密码失败。"
 
-#: plinth/modules/users/forms.py:405
+#: plinth/modules/users/forms.py:404
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to admin group."
 msgid "Failed to add new user to admin group: {error}"
 msgstr "未能将新用户添加到管理员组。"
 
-#: plinth/modules/users/forms.py:424
+#: plinth/modules/users/forms.py:423
 #, fuzzy, python-brace-format
 #| msgid "Failed to restrict console access."
 msgid "Failed to restrict console access: {error}"
 msgstr "限制命令行访问失败。"
 
-#: plinth/modules/users/forms.py:437
+#: plinth/modules/users/forms.py:436
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
 
@@ -7699,7 +7701,7 @@ msgid "Create User"
 msgstr "创建用户"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:122
+#: plinth/modules/users/views.py:134
 msgid "Delete User"
 msgstr "删除用户"
 
@@ -7797,20 +7799,20 @@ msgstr "用户 %(username)s 已更新。"
 msgid "Edit User"
 msgstr "编辑用户"
 
-#: plinth/modules/users/views.py:132
+#: plinth/modules/users/views.py:144
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "用户 {user} 已删除。"
 
-#: plinth/modules/users/views.py:139
+#: plinth/modules/users/views.py:151
 msgid "Deleting LDAP user failed."
 msgstr "删除 LDAP 用户失败。"
 
-#: plinth/modules/users/views.py:148
+#: plinth/modules/users/views.py:160
 msgid "Change Password"
 msgstr "更改密码"
 
-#: plinth/modules/users/views.py:149
+#: plinth/modules/users/views.py:161
 msgid "Password changed successfully."
 msgstr "已成功更改密码。"
 
@@ -8313,23 +8315,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "通用"
 
-#: plinth/package.py:136
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "安装时错误"
 
-#: plinth/package.py:158
+#: plinth/package.py:161
 msgid "installing"
 msgstr "安装"
 
-#: plinth/package.py:160
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "下载中"
 
-#: plinth/package.py:162
+#: plinth/package.py:165
 msgid "media change"
 msgstr "媒体改变"
 
-#: plinth/package.py:164
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "配置文件：{file}"
@@ -8691,24 +8693,31 @@ msgstr "这项应用现在在你不中无法使用"
 msgid "Check again"
 msgstr ""
 
-#: plinth/templates/setup.html:60
+#: plinth/templates/setup.html:55
+msgid ""
+"<strong>Conflicting Packages:</strong> Some packages installed on the system "
+"conflict with the installation of this app. The following packages will be "
+"removed if you proceed:"
+msgstr ""
+
+#: plinth/templates/setup.html:71
 msgid "Install"
 msgstr "安装"
 
-#: plinth/templates/setup.html:72
+#: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "执行安装前操作"
 
-#: plinth/templates/setup.html:77
+#: plinth/templates/setup.html:88
 msgid "Performing post-install operation"
 msgstr "执行安装后操作"
 
-#: plinth/templates/setup.html:83
+#: plinth/templates/setup.html:94
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "正在安装 %(package_names)s：%(status)s"
 
-#: plinth/templates/setup.html:93
+#: plinth/templates/setup.html:104
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "已完成 %(percentage)s%%"

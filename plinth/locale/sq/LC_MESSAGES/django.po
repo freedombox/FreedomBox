@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 18:44-0400\n"
+"POT-Creation-Date: 2021-10-11 18:24-0400\n"
 "PO-Revision-Date: 2021-06-07 12:34+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -52,11 +52,11 @@ msgstr "Lidhu me {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "S’lidhet dot me {host}:{port}"
 
-#: plinth/forms.py:39
+#: plinth/forms.py:36
 msgid "Select a domain name to be used with this application"
 msgstr "Përzgjidhni një emër përkatësie për t’u përdorur me këtë aplikacion"
 
-#: plinth/forms.py:41
+#: plinth/forms.py:38
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -64,15 +64,15 @@ msgstr ""
 "Kujdes! Aplikacioni mund të mos funksionojë si duhet, nëse emri i "
 "përkatësisë ndryshohet më vonë."
 
-#: plinth/forms.py:49
+#: plinth/forms.py:46
 msgid "Language"
 msgstr "Gjuhë"
 
-#: plinth/forms.py:50
+#: plinth/forms.py:47
 msgid "Language to use for presenting this web interface"
 msgstr "Gjuhë për t’u përdorur për të paraqitur këtë ndërfaqe web"
 
-#: plinth/forms.py:57
+#: plinth/forms.py:54
 msgid "Use the language preference set in the browser"
 msgstr "Përdor parapëlqim gjuhe të caktuar te shfletuesi"
 
@@ -821,7 +821,7 @@ msgstr "Leje për përdorues anonimë, të cilët s’kanë dhënë fjalëkalim.
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
+#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
 msgid "Permissions"
 msgstr "Leje"
 
@@ -1172,7 +1172,7 @@ msgstr ""
 "provohet duke përdorur një adresë IP, si pjesë e URL-së."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
-#: plinth/modules/performance/manifest.py:33
+#: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -1809,7 +1809,7 @@ msgid "Use HTTP basic authentication"
 msgstr "Përdor mirëfilltësim elementar HTTP"
 
 #: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
-#: plinth/modules/users/forms.py:69
+#: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Emër përdoruesi"
 
@@ -2079,13 +2079,19 @@ msgstr ""
 "Përkatësinë tuaj mund ta ujdisni te faqja <a href=\"%(index_url)s"
 "\">Formësoni</a> e sistemit."
 
-#: plinth/modules/email_server/__init__.py:48
+#: plinth/modules/email_server/__init__.py:55
+msgid ""
+"During installation, any other email servers in the system will be "
+"uninstalled."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:66
 #, fuzzy
 #| msgid "Chat Server"
 msgid "Email Server"
 msgstr "Shërbyes Fjalosjesh"
 
-#: plinth/modules/email_server/__init__.py:80
+#: plinth/modules/email_server/__init__.py:97
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2235,7 +2241,7 @@ msgstr ""
 #: plinth/modules/upgrades/__init__.py:77
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
+#: plinth/templates/setup.html:73
 msgid "Update"
 msgstr "Përditësoje"
 
@@ -2351,13 +2357,13 @@ msgstr ""
 msgid "Check syslog for more information"
 msgstr ""
 
-#: plinth/modules/email_server/views.py:179
+#: plinth/modules/email_server/views.py:180
 #, fuzzy
 #| msgid "Enable damage"
 msgid "Enabled aliases"
 msgstr "Aktivizo dëmtim"
 
-#: plinth/modules/email_server/views.py:180
+#: plinth/modules/email_server/views.py:181
 #, fuzzy
 #| msgid "Disabled"
 msgid "Disabled aliases"
@@ -7530,15 +7536,15 @@ msgstr ""
 msgid "Distribution upgrade disabled"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:126
+#: plinth/modules/upgrades/views.py:127
 msgid "Upgrade process started."
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:128
+#: plinth/modules/upgrades/views.py:129
 msgid "Starting upgrade failed."
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:138
+#: plinth/modules/upgrades/views.py:139
 msgid "Frequent feature updates activated."
 msgstr ""
 
@@ -7570,32 +7576,32 @@ msgstr ""
 msgid "Check LDAP entry \"{search_item}\""
 msgstr ""
 
-#: plinth/modules/users/forms.py:37
+#: plinth/modules/users/forms.py:36
 msgid "Username is taken or is reserved."
 msgstr ""
 
-#: plinth/modules/users/forms.py:64
+#: plinth/modules/users/forms.py:63
 msgid "Enter a valid username."
 msgstr "Jepni një emër përdoruesi të vlefshëm."
 
-#: plinth/modules/users/forms.py:71
+#: plinth/modules/users/forms.py:70
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: plinth/modules/users/forms.py:79
+#: plinth/modules/users/forms.py:78
 msgid "Authorization Password"
 msgstr "Fjalëkalim Autorizimi"
 
-#: plinth/modules/users/forms.py:80
+#: plinth/modules/users/forms.py:79
 msgid "Enter your current password to authorize account modifications."
 msgstr ""
 
-#: plinth/modules/users/forms.py:88
+#: plinth/modules/users/forms.py:87
 msgid "Invalid password."
 msgstr "Fjalëkalim i pavlefshëm."
 
-#: plinth/modules/users/forms.py:105
+#: plinth/modules/users/forms.py:104
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7604,66 +7610,62 @@ msgid ""
 "SSH and have administrative privileges (sudo)."
 msgstr ""
 
-#: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
+#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr ""
 
-#: plinth/modules/users/forms.py:163
+#: plinth/modules/users/forms.py:162
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr ""
 
-#: plinth/modules/users/forms.py:177
+#: plinth/modules/users/forms.py:176
 msgid "Authorized SSH Keys"
 msgstr ""
 
-#: plinth/modules/users/forms.py:179
+#: plinth/modules/users/forms.py:178
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
 
-#: plinth/modules/users/forms.py:266
+#: plinth/modules/users/forms.py:263
 msgid "Renaming LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:279
+#: plinth/modules/users/forms.py:276
 msgid "Failed to remove user from group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:291
+#: plinth/modules/users/forms.py:288
 msgid "Failed to add user to group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:304
+#: plinth/modules/users/forms.py:301
 msgid "Unable to set SSH keys."
 msgstr ""
 
-#: plinth/modules/users/forms.py:322
+#: plinth/modules/users/forms.py:319
 msgid "Failed to change user status."
 msgstr ""
 
-#: plinth/modules/users/forms.py:330
-msgid "Cannot delete the only administrator in the system."
-msgstr ""
-
-#: plinth/modules/users/forms.py:365
+#: plinth/modules/users/forms.py:364
 msgid "Changing LDAP user password failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:405
+#: plinth/modules/users/forms.py:404
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr ""
 
-#: plinth/modules/users/forms.py:424
+#: plinth/modules/users/forms.py:423
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr ""
 
-#: plinth/modules/users/forms.py:437
+#: plinth/modules/users/forms.py:436
 msgid "User account created, you are now logged in"
 msgstr ""
 
@@ -7685,7 +7687,7 @@ msgid "Create User"
 msgstr "Krijoni Përdorues"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:122
+#: plinth/modules/users/views.py:134
 msgid "Delete User"
 msgstr "Fshi Përdorues"
 
@@ -7778,20 +7780,20 @@ msgstr ""
 msgid "Edit User"
 msgstr "Përpunoni Përdorues"
 
-#: plinth/modules/users/views.py:132
+#: plinth/modules/users/views.py:144
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr ""
 
-#: plinth/modules/users/views.py:139
+#: plinth/modules/users/views.py:151
 msgid "Deleting LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/views.py:148
+#: plinth/modules/users/views.py:160
 msgid "Change Password"
 msgstr "Ndryshoni Fjalëkalimin"
 
-#: plinth/modules/users/views.py:149
+#: plinth/modules/users/views.py:161
 msgid "Password changed successfully."
 msgstr "Fjalëkalimi u ndryshua me sukses."
 
@@ -8216,23 +8218,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Elementar"
 
-#: plinth/package.py:136
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "Gabim gjatë instalimit"
 
-#: plinth/package.py:158
+#: plinth/package.py:161
 msgid "installing"
 msgstr "po instalohet"
 
-#: plinth/package.py:160
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "po shkarkohet"
 
-#: plinth/package.py:162
+#: plinth/package.py:165
 msgid "media change"
 msgstr "ndryshim media"
 
-#: plinth/package.py:164
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "kartelë formësimi: {file}"
@@ -8532,24 +8534,31 @@ msgstr "Ky aplikacion aktualisht s’mund të kihet në shpërndarjen tuaj."
 msgid "Check again"
 msgstr "Rikontrollo"
 
-#: plinth/templates/setup.html:60
+#: plinth/templates/setup.html:55
+msgid ""
+"<strong>Conflicting Packages:</strong> Some packages installed on the system "
+"conflict with the installation of this app. The following packages will be "
+"removed if you proceed:"
+msgstr ""
+
+#: plinth/templates/setup.html:71
 msgid "Install"
 msgstr "Instaloje"
 
-#: plinth/templates/setup.html:72
+#: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr ""
 
-#: plinth/templates/setup.html:77
+#: plinth/templates/setup.html:88
 msgid "Performing post-install operation"
 msgstr ""
 
-#: plinth/templates/setup.html:83
+#: plinth/templates/setup.html:94
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr ""
 
-#: plinth/templates/setup.html:93
+#: plinth/templates/setup.html:104
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr ""

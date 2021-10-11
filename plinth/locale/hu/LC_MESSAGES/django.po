@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 18:44-0400\n"
+"POT-Creation-Date: 2021-10-11 18:24-0400\n"
 "PO-Revision-Date: 2021-04-22 21:32+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -52,11 +52,11 @@ msgstr "Csatlakozás ide: {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "Nem tudok ide csatlakozni: {host}:{port}"
 
-#: plinth/forms.py:39
+#: plinth/forms.py:36
 msgid "Select a domain name to be used with this application"
 msgstr "Válassz egy domain nevet, amit ezzel az alkalmazással fogsz használni"
 
-#: plinth/forms.py:41
+#: plinth/forms.py:38
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -64,15 +64,15 @@ msgstr ""
 "Figyelem! Az alkalmazás lehet, hogy nem fog működni megfelelően, ha a domain "
 "név később módosul."
 
-#: plinth/forms.py:49
+#: plinth/forms.py:46
 msgid "Language"
 msgstr "Nyelv"
 
-#: plinth/forms.py:50
+#: plinth/forms.py:47
 msgid "Language to use for presenting this web interface"
 msgstr "A webes felület megjelenítéséhez használt nyelv"
 
-#: plinth/forms.py:57
+#: plinth/forms.py:54
 msgid "Use the language preference set in the browser"
 msgstr "Használd a böngésző nyelvi beállítását"
 
@@ -820,7 +820,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:103 plinth/modules/users/forms.py:227
+#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
 msgid "Permissions"
 msgstr "Engedélyek"
 
@@ -1169,7 +1169,7 @@ msgstr ""
 "ha az URL részeként az IP címmel érik el."
 
 #: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
-#: plinth/modules/performance/manifest.py:33
+#: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
@@ -1814,7 +1814,7 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP alap hitelesítés használata"
 
 #: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
-#: plinth/modules/users/forms.py:69
+#: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Felhasználónév"
 
@@ -2087,13 +2087,19 @@ msgstr ""
 "így fognak kinézni: <i>username@%(domainname)s</i>. Beállíthatod a "
 "rendszered domain nevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
 
-#: plinth/modules/email_server/__init__.py:48
+#: plinth/modules/email_server/__init__.py:55
+msgid ""
+"During installation, any other email servers in the system will be "
+"uninstalled."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:66
 #, fuzzy
 #| msgid "Chat Server"
 msgid "Email Server"
 msgstr "Chat szerver"
 
-#: plinth/modules/email_server/__init__.py:80
+#: plinth/modules/email_server/__init__.py:97
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2245,7 +2251,7 @@ msgstr "Új biztonsági másolat"
 #: plinth/modules/upgrades/__init__.py:77
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:62
+#: plinth/templates/setup.html:73
 msgid "Update"
 msgstr "Frissítés"
 
@@ -2363,13 +2369,13 @@ msgstr ""
 msgid "Check syslog for more information"
 msgstr ""
 
-#: plinth/modules/email_server/views.py:179
+#: plinth/modules/email_server/views.py:180
 #, fuzzy
 #| msgid "Enable damage"
 msgid "Enabled aliases"
 msgstr "Sérülés engedélyezése"
 
-#: plinth/modules/email_server/views.py:180
+#: plinth/modules/email_server/views.py:181
 #, fuzzy
 #| msgid "Disabled"
 msgid "Disabled aliases"
@@ -7534,15 +7540,15 @@ msgstr "Disztribúció frissítés engedélyezve"
 msgid "Distribution upgrade disabled"
 msgstr "Disztribúció frissítés letiltva"
 
-#: plinth/modules/upgrades/views.py:126
+#: plinth/modules/upgrades/views.py:127
 msgid "Upgrade process started."
 msgstr "A frissítési folyamat elkezdődött."
 
-#: plinth/modules/upgrades/views.py:128
+#: plinth/modules/upgrades/views.py:129
 msgid "Starting upgrade failed."
 msgstr "A frissítést nem sikerült elindítani."
 
-#: plinth/modules/upgrades/views.py:138
+#: plinth/modules/upgrades/views.py:139
 msgid "Frequent feature updates activated."
 msgstr ""
 
@@ -7574,32 +7580,32 @@ msgstr "Hozzáférés az összes szolgáltatáshoz és rendszerbeállításhoz"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "LDAP bejegyzés ellenőrzése: \"{search_item}\""
 
-#: plinth/modules/users/forms.py:37
+#: plinth/modules/users/forms.py:36
 msgid "Username is taken or is reserved."
 msgstr "A felhasználói név (már) foglalt."
 
-#: plinth/modules/users/forms.py:64
+#: plinth/modules/users/forms.py:63
 msgid "Enter a valid username."
 msgstr "Adjon meg egy érvényes felhasználónevet."
 
-#: plinth/modules/users/forms.py:71
+#: plinth/modules/users/forms.py:70
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: plinth/modules/users/forms.py:79
+#: plinth/modules/users/forms.py:78
 msgid "Authorization Password"
 msgstr "Hitelesítési jelszó"
 
-#: plinth/modules/users/forms.py:80
+#: plinth/modules/users/forms.py:79
 msgid "Enter your current password to authorize account modifications."
 msgstr ""
 
-#: plinth/modules/users/forms.py:88
+#: plinth/modules/users/forms.py:87
 msgid "Invalid password."
 msgstr "Érvénytelen jelszó."
 
-#: plinth/modules/users/forms.py:105
+#: plinth/modules/users/forms.py:104
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7615,21 +7621,21 @@ msgstr ""
 "képesek bejelentkezni a rendszerbe, ahol adminisztrátori jogosultságokkal "
 "rendelkeznek (sudo)."
 
-#: plinth/modules/users/forms.py:150 plinth/modules/users/forms.py:394
+#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "LDAP felhasználó létrehozása sikertelen: {error}"
 
-#: plinth/modules/users/forms.py:163
+#: plinth/modules/users/forms.py:162
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Az új felhasználó hozzáadása {group} csoporthoz nem sikerült: {error}"
 
-#: plinth/modules/users/forms.py:177
+#: plinth/modules/users/forms.py:176
 msgid "Authorized SSH Keys"
 msgstr "Engedélyezett SSH kulcsok"
 
-#: plinth/modules/users/forms.py:179
+#: plinth/modules/users/forms.py:178
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7639,47 +7645,43 @@ msgstr ""
 "jelszó nélkül jelentkezzen be. Több kulcs is megadható; soronként egy. Az "
 "üres, illetve # jellel kezdődő sorok nem számítanak."
 
-#: plinth/modules/users/forms.py:266
+#: plinth/modules/users/forms.py:263
 msgid "Renaming LDAP user failed."
 msgstr "LDAP felhasználó átnevezése sikertelen."
 
-#: plinth/modules/users/forms.py:279
+#: plinth/modules/users/forms.py:276
 msgid "Failed to remove user from group."
 msgstr "Nem sikerült eltávolítani a felhasználót a csoportból."
 
-#: plinth/modules/users/forms.py:291
+#: plinth/modules/users/forms.py:288
 msgid "Failed to add user to group."
 msgstr "Nem sikerült hozzáadni a felhasználót a csoporthoz."
 
-#: plinth/modules/users/forms.py:304
+#: plinth/modules/users/forms.py:301
 msgid "Unable to set SSH keys."
 msgstr "SSH kulcsok beállítása sikertelen."
 
-#: plinth/modules/users/forms.py:322
+#: plinth/modules/users/forms.py:319
 msgid "Failed to change user status."
 msgstr "Nem sikerült a felhasználói állapot megváltoztatása."
 
-#: plinth/modules/users/forms.py:330
-msgid "Cannot delete the only administrator in the system."
-msgstr "Nem lehet törölni a rendszer egyetlen rendszergazdáját."
-
-#: plinth/modules/users/forms.py:365
+#: plinth/modules/users/forms.py:364
 msgid "Changing LDAP user password failed."
 msgstr "LDAP felhasználó jelszavának megváltoztatása sikertelen."
 
-#: plinth/modules/users/forms.py:405
+#: plinth/modules/users/forms.py:404
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr ""
 "Nem sikerült hozzáadni az új felhasználót a rendszergazdai csoporthoz: "
 "{error}"
 
-#: plinth/modules/users/forms.py:424
+#: plinth/modules/users/forms.py:423
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr "Nem sikerült a konzol hozzáférés korlátozása: {error}"
 
-#: plinth/modules/users/forms.py:437
+#: plinth/modules/users/forms.py:436
 msgid "User account created, you are now logged in"
 msgstr "Felhasználói fiók létrehozva, bejelentkezés sikeres"
 
@@ -7701,7 +7703,7 @@ msgid "Create User"
 msgstr "Felhasználó létrehozása"
 
 #: plinth/modules/users/templates/users_delete.html:11
-#: plinth/modules/users/views.py:122
+#: plinth/modules/users/views.py:134
 msgid "Delete User"
 msgstr "Felhasználó törlése"
 
@@ -7800,20 +7802,20 @@ msgstr "%(username)s nevű felhasználó frissítve."
 msgid "Edit User"
 msgstr "Felhasználó szerkesztése"
 
-#: plinth/modules/users/views.py:132
+#: plinth/modules/users/views.py:144
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "{user} nevű felhasználó törölve."
 
-#: plinth/modules/users/views.py:139
+#: plinth/modules/users/views.py:151
 msgid "Deleting LDAP user failed."
 msgstr "LDAP felhasználó törlése sikertelen."
 
-#: plinth/modules/users/views.py:148
+#: plinth/modules/users/views.py:160
 msgid "Change Password"
 msgstr "Jelszómódosítás"
 
-#: plinth/modules/users/views.py:149
+#: plinth/modules/users/views.py:161
 msgid "Password changed successfully."
 msgstr "A jelszó módosítása sikeres."
 
@@ -8240,23 +8242,23 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Általános"
 
-#: plinth/package.py:136
+#: plinth/package.py:139
 msgid "Error during installation"
 msgstr "Hiba lépett fel a telepítés során"
 
-#: plinth/package.py:158
+#: plinth/package.py:161
 msgid "installing"
 msgstr "telepítés"
 
-#: plinth/package.py:160
+#: plinth/package.py:163
 msgid "downloading"
 msgstr "letöltés"
 
-#: plinth/package.py:162
+#: plinth/package.py:165
 msgid "media change"
 msgstr "adathordozó csere"
 
-#: plinth/package.py:164
+#: plinth/package.py:167
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurációs fájl: {file}"
@@ -8588,24 +8590,31 @@ msgstr "Ez az alkalmazás jelenleg nem hozzáférhető ebben a disztribúcióban
 msgid "Check again"
 msgstr ""
 
-#: plinth/templates/setup.html:60
+#: plinth/templates/setup.html:55
+msgid ""
+"<strong>Conflicting Packages:</strong> Some packages installed on the system "
+"conflict with the installation of this app. The following packages will be "
+"removed if you proceed:"
+msgstr ""
+
+#: plinth/templates/setup.html:71
 msgid "Install"
 msgstr "Telepítés"
 
-#: plinth/templates/setup.html:72
+#: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Telepítés előtti műveletek végrehajtása"
 
-#: plinth/templates/setup.html:77
+#: plinth/templates/setup.html:88
 msgid "Performing post-install operation"
 msgstr "Telepítés utáni műveletek végrehajtása"
 
-#: plinth/templates/setup.html:83
+#: plinth/templates/setup.html:94
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "%(package_names)s telepítése: %(status)s"
 
-#: plinth/templates/setup.html:93
+#: plinth/templates/setup.html:104
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "befejezettségi szint: %(percentage)s%%"
@@ -8613,6 +8622,9 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:117
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Cannot delete the only administrator in the system."
+#~ msgstr "Nem lehet törölni a rendszer egyetlen rendszergazdáját."
 
 #~ msgid "Past Vulnerabilities"
 #~ msgstr "Múltbéli biztonsági rések"
