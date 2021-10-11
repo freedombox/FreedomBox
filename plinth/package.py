@@ -14,7 +14,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions
-from plinth.errors import ActionError, PlinthError
+from plinth.errors import ActionError
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
