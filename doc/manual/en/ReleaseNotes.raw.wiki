@@ -10,6 +10,42 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 21.11 (2021-10-11) ==
+
+=== Highlights ===
+
+ * ttrss: Fix daemon not running sometimes on startup
+
+=== Other Changes ===
+
+ * *: Always pass check= argument to subprocess.run()
+ * *: Convert all functional tests to python format
+ * *: Move all systemd service files from /lib to /usr
+ * calibre: Run service only if when installed
+ * d/control: Allow building with python interpreter of any arch
+ * d/rules: Don't install and enable other systemd service files
+ * d/rules: Don't use setup.py to invoke tests, invoke directly instead
+ * email: Manage known installation conflicts
+ * locale: Update translation for Bulgarian, Ukrainian
+ * package: Add functions for removing packages
+ * performance: Cleanup code meant for cockpit version < 235
+ * pyproject.toml: Merge contents of .converagerc
+ * pyproject.toml: Merge contents of pytest.ini
+ * settings: Choose password hashing complexity suitable for SBCs
+ * setup: Show and remove conflicts before installation
+ * sso, translation: Help set language cookie when user logins in
+ * storage: tests: functional: Fix tests always getting skipped
+ * tests: Add some missed marks for functional tests
+ * tests: Add tests for action utilities
+ * tests: Improve handling of tests skipped by default
+ * tests: help: Add help view tests
+ * translation: Always set language cookie when switching language
+ * ttrss: Add systemd security hardening to daemon
+ * ttrss: tests: functional: Make subscription faster
+ * user: Accommodate Django 3.1 change for model choice iteration
+ * users: Help set language cookie when user profile is edited
+ * wordpress: Run service only if when installed and configured
+
 == FreedomBox 21.10 (2021-09-27) ==
 
 === Highlights ===
