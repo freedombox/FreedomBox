@@ -1,27 +1,25 @@
 {# SPDX-License-Identifier: AGPL-3.0-or-later #}
-{% extends "email_form_base.html" %}
+{% extends "base.html" %}
 
-{% load bootstrap %}
 {% load i18n %}
 
 {% block content %}
 
-  {{ block.super }}
+  <h1>Setup My Home</h1>
 
   {% if not has_homedir %}
+    <p>
+      {% trans "You do not have a home directory." %}
+      <span>
+        {% trans "Create one to begin receiving emails." %}
+      </span>
+    </p>
+
     <form action="{{ request.path }}" method="post">
-      <div class="alert alert-warning" role="alert">
-        <p>
-          <strong>{% trans "You do not have a home directory." %}</strong>
-          <span>
-            {% trans "Create one to begin receiving emails." %}
-          </span>
-        </p>
-        {% csrf_token %}
-        <button class="btn btn-primary" type="submit" name="btn_mkhome">
-          {% trans "Create home directory" %}
-        </button>
-      </div>
+      {% csrf_token %}
+      <button class="btn btn-primary" type="submit" name="btn_mkhome">
+        {% trans "Create home directory" %}
+      </button>
     </form>
   {% else %}
     <p>{% trans "Your home directory is ready to receive emails." %}</p>
