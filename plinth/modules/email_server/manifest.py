@@ -8,7 +8,7 @@ clients = [
         'name': _('Roundcube'),
         'platforms': [{
             'type': 'web',
-            'url': '/plinth/apps/roundcube'
+            'url': '/roundcube/'
         }]
     },
     {
