@@ -18,18 +18,10 @@ from . import aliases, audit, forms
 
 
 class TabMixin(View):
-    admin_tabs = [
-        ('', _('Home')),
-        ('my_mail', _('My Mail')),
-        ('my_aliases', _('My Aliases')),
-        ('security', _('Security')),
-        ('domains', _('Domains'))
-    ]
+    admin_tabs = [('', _('Home')), ('my_aliases', _('My Aliases')),
+                  ('security', _('Security')), ('domains', _('Domains'))]
 
-    user_tabs = [
-        ('my_mail', _('Home')),
-        ('my_aliases', _('My Aliases'))
-    ]
+    user_tabs = [('my_aliases', _('My Aliases'))]
 
     def get_context_data(self, *args, **kwargs):
         # Retrieve context data from the next method in the MRO
@@ -137,29 +129,24 @@ class EmailServerView(TabMixin, AppView):
             plinth.actions.superuser_run('service', ['reload', service])
 
 
-class MyMailView(TabMixin, TemplateView):
+class MyMailView(TemplateView):
     template_name = 'my_mail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
         nam = self.request.user.username
         context['has_homedir'] = audit.home.exists_nam(nam)
-
         return context
 
     def post(self, request):
-        return self.catch_exceptions(self._post, request)
-
-    def _post(self, request):
-        if 'btn_mkhome' not in request.POST:
-            raise ValidationError('Bad post data')
         audit.home.put_nam(request.user.username)
         return self.render_to_response(self.get_context_data())
 
 
 class AliasView(TabMixin, TemplateView):
+
     class Checkboxes:
+
         def __init__(self, post=None, initial=None):
             self.models = initial
             self.post = post
