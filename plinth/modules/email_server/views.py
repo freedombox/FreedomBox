@@ -18,10 +18,8 @@ from . import aliases, audit, forms
 
 
 class TabMixin(View):
-    admin_tabs = [('', _('Home')), ('my_aliases', _('My Aliases')),
-                  ('security', _('Security')), ('domains', _('Domains'))]
-
-    user_tabs = [('my_aliases', _('My Aliases'))]
+    admin_tabs = [('', _('Home')), ('security', _('Security')),
+                  ('domains', _('Domains'))]
 
     def get_context_data(self, *args, **kwargs):
         # Retrieve context data from the next method in the MRO
@@ -33,8 +31,8 @@ class TabMixin(View):
     def render_dynamic_tabs(self):
         if plinth.utils.is_user_admin(self.request):
             return render_tabs(self.request.path, self.admin_tabs)
-        else:
-            return render_tabs(self.request.path, self.user_tabs)
+
+        return ''
 
     def render_validation_error(self, validation_error, status=400):
         context = self.get_context_data()
@@ -53,22 +51,6 @@ class TabMixin(View):
             return self.render_validation_error(validation_error)
         except Exception as error:
             return self.render_exception(error)
-
-    def find_button(self, post):
-        key_filter = (k for k in post.keys() if k.startswith('btn_'))
-        lst = list(itertools.islice(key_filter, 2))
-        if len(lst) != 1:
-            raise ValidationError('Bad post data')
-        if not isinstance(lst[0], str):
-            raise ValidationError('Bad post data')
-        return lst[0][len('btn_'):]
-
-    def find_form(self, post):
-        form_name = post.get('form')
-        for cls in self.form_classes:
-            if cls.__name__ == form_name:
-                return cls(post)
-        raise ValidationError('Form was unspecified')
 
 
 class EmailServerView(TabMixin, AppView):
@@ -143,7 +125,7 @@ class MyMailView(TemplateView):
         return self.render_to_response(self.get_context_data())
 
 
-class AliasView(TabMixin, TemplateView):
+class AliasView(TemplateView):
 
     class Checkboxes:
 
@@ -219,12 +201,25 @@ class AliasView(TabMixin, TemplateView):
             context['no_alias'] = True
         return context
 
-    def post(self, request):
-        return self.catch_exceptions(self._post, request)
+    def _find_form(self, post):
+        form_name = post.get('form')
+        for cls in self.form_classes:
+            if cls.__name__ == form_name:
+                return cls(post)
+        raise ValidationError('Form was unspecified')
 
-    def _post(self, request):
-        form = self.find_form(request.POST)
-        button = self.find_button(request.POST)
+    def _find_button(self, post):
+        key_filter = (k for k in post.keys() if k.startswith('btn_'))
+        lst = list(itertools.islice(key_filter, 2))
+        if len(lst) != 1:
+            raise ValidationError('Bad post data')
+        if not isinstance(lst[0], str):
+            raise ValidationError('Bad post data')
+        return lst[0][len('btn_'):]
+
+    def post(self, request):
+        form = self._find_form(request.POST)
+        button = self._find_button(request.POST)
         if not form.is_valid():
             raise ValidationError('Form invalid')
 
