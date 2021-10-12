@@ -8,6 +8,13 @@
   {{ block.super }}
 {% endblock %}
 
+{% block subsubmenu %}
+  <a class="btn btn-default" role="button"
+     href="{% url 'email_server:my_mail' %}">
+    {% trans "Setup My Home" %}
+  </a>
+{% endblock %}
+
 {% block extra_content %}
   <p>
     <a href="/rspamd/">
