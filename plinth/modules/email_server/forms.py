@@ -2,6 +2,7 @@
 """
 Forms for the email app.
 """
+import re
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -20,11 +21,20 @@ class EmailServerForm(forms.Form):
 class AliasCreateForm(forms.Form):
     """Form to create a new alias."""
     alias = forms.CharField(label=_('New alias (without @domain)'),
-                            max_length=50)
+                            min_length=2, max_length=50)
 
     def clean_alias(self):
         """Return the checked value for alias."""
-        value = self.data['alias']
+        value = self.data['alias'].strip().lower()
+        if not re.match('^[a-z0-9-_\\.]+$', value):
+            raise ValidationError(_('Contains illegal characters'))
+
+        if not re.match('^[a-z0-9].*[a-z0-9]$', value):
+            raise ValidationError(_('Must start and end with a-z or 0-9'))
+
+        if re.match('^[0-9]+$', value):
+            raise ValidationError(_('Cannot be a number'))
+
         if aliases_module.exists(value):
             raise ValidationError('Alias is already taken')
 
