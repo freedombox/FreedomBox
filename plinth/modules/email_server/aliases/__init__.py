@@ -55,6 +55,20 @@ def get(uid_number):
         return result
 
 
+def exists(email_name):
+    """Return whether alias is already taken."""
+    try:
+        pwd.getpwnam(email_name)
+        return True
+    except KeyError:
+        pass
+
+    with db_cursor() as cur:
+        query = 'SELECT COUNT(*) FROM Alias WHERE email_name=?'
+        cur.execute(query, (email_name, ))
+        return cur.fetchone()[0] != 0
+
+
 def put(uid_number, email_name):
     s = """INSERT INTO Alias(email_name, uid_number, status)
     SELECT ?,?,? WHERE NOT EXISTS(
