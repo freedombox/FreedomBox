@@ -6,7 +6,7 @@ Test module for custom middleware.
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
-from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.models import AnonymousUser, Group, User
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.test.client import RequestFactory
@@ -64,6 +64,7 @@ class TestSetupMiddleware:
         loaded_modules.__getitem__.return_value = module
 
         request = RequestFactory().get('/plinth/mockapp')
+        request.user = AnonymousUser()
         response = middleware.process_view(request, **kwargs)
         assert response is None
 
@@ -72,6 +73,7 @@ class TestSetupMiddleware:
     @patch('plinth.module_loader.loaded_modules')
     @patch('django.urls.resolve')
     @patch('django.urls.reverse', return_value='users:login')
+    @pytest.mark.django_db
     def test_module_view(reverse, resolve, loaded_modules, setup_view,
                          middleware, kwargs):
         """Test that only registered users can access the setup view."""
@@ -82,16 +84,36 @@ class TestSetupMiddleware:
         view = Mock()
         setup_view.as_view.return_value = view
         request = RequestFactory().get('/plinth/mockapp')
+        request.session = MagicMock()
 
         # Verify that anonymous users cannot access the setup page
         request.user = AnonymousUser()
-        middleware.process_view(request, **kwargs)
-        setup_view.as_view.assert_called_once_with()
+        with pytest.raises(PermissionDenied):
+            middleware.process_view(request, **kwargs)
+
+        setup_view.as_view.assert_not_called()
         view.assert_not_called()
 
-        # Verify that logged-in users can access the setup page
-        request.user = User(username='johndoe')
+        # Verify that non-admin logged-in users can't access the setup page
+        user = User(username='johndoe')
+        user.save()
+        request.user = user
+        with pytest.raises(PermissionDenied):
+            middleware.process_view(request, **kwargs)
+
+        setup_view.as_view.assert_not_called()
+        view.assert_not_called()
+
+        # Verify that admin logged-in users can access the setup page
+        user = User(username='adminuser')
+        user.save()
+        group = Group(name='admin')
+        group.save()
+        user.groups.add(group)
+        user.save()
+        request.user = user
         middleware.process_view(request, **kwargs)
+        setup_view.as_view.assert_called_once_with()
         view.assert_called_once_with(request, setup_helper=module.setup_helper)
 
     @staticmethod
@@ -99,6 +121,7 @@ class TestSetupMiddleware:
     @patch('plinth.module_loader.loaded_modules')
     @patch('django.urls.resolve')
     @patch('django.urls.reverse', return_value='users:login')
+    @pytest.mark.django_db
     def test_install_result_collection(reverse, resolve, loaded_modules,
                                        messages_success, middleware, kwargs):
         """Test that module installation result is collected properly."""
@@ -110,12 +133,35 @@ class TestSetupMiddleware:
         module.setup_helper.get_state.return_value = 'up-to-date'
         loaded_modules.__getitem__.return_value = module
 
+        # Admin user can't collect result
         request = RequestFactory().get('/plinth/mockapp')
+        user = User(username='adminuser')
+        user.save()
+        group = Group(name='admin')
+        group.save()
+        user.groups.add(group)
+        user.save()
+        request.user = user
+        request.session = MagicMock()
         response = middleware.process_view(request, **kwargs)
 
         assert response is None
         assert messages_success.called
         module.setup_helper.collect_result.assert_called_once_with()
+
+        # Non-admin user can't collect result
+        messages_success.reset_mock()
+        module.setup_helper.collect_result.reset_mock()
+        request = RequestFactory().get('/plinth/mockapp')
+        user = User(username='johndoe')
+        user.save()
+        request.user = user
+        request.session = MagicMock()
+        response = middleware.process_view(request, **kwargs)
+
+        assert response is None
+        assert not messages_success.called
+        module.setup_helper.collect_result.assert_not_called()
 
 
 class TestAdminMiddleware:
@@ -178,8 +224,8 @@ class TestAdminMiddleware:
         assert response is None
 
     @staticmethod
-    def test_that_public_view_is_allowed_for_normal_user(web_request,
-                                                         middleware, kwargs):
+    def test_that_public_view_is_allowed_for_normal_user(
+            web_request, middleware, kwargs):
         """Test that normal user is allowed for an public view"""
         kwargs = dict(kwargs)
         kwargs['view_func'] = public(HttpResponse)
