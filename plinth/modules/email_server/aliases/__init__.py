@@ -8,9 +8,6 @@ import os
 import pwd
 import sqlite3
 
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-
 from plinth.modules.email_server import lock
 
 from . import models
@@ -75,17 +72,8 @@ def put(uid_number, email_name):
         SELECT 1 FROM Alias WHERE email_name=?
     )"""
     email_name = models.sanitize_email_name(email_name)
-    # email_name cannot be the same as a user name
-    try:
-        pwd.getpwnam(email_name)
-        raise ValidationError(_('The alias was taken'))
-    except KeyError:
-        pass
-
     with db_cursor() as cur:
         cur.execute(s, (email_name, uid_number, 1, email_name))
-        if cur.rowcount == 0:
-            raise ValidationError(_('The alias was taken'))
 
     schedule_hash_update()
 
