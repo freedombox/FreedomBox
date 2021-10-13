@@ -1,20 +1,23 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-import io
-import itertools
+"""
+Views for the email app.
+"""
 import pwd
 
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
-from django.utils.html import escape
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView, View
+from django.views.generic.edit import FormView
 
 import plinth.actions
 import plinth.utils
 from plinth.views import AppView, render_tabs
 
-from . import aliases, audit, forms
+from . import aliases as aliases_module
+from . import audit, forms
 
 
 class TabMixin(View):
@@ -125,131 +128,88 @@ class MyMailView(TemplateView):
         return self.render_to_response(self.get_context_data())
 
 
-class AliasView(TemplateView):
+class AliasView(FormView):
+    """View to create, list, enable, disable and delete aliases.
 
-    class Checkboxes:
-
-        def __init__(self, post=None, initial=None):
-            self.models = initial
-            self.post = post
-            self.cleaned_data = {}
-            # HTML rendering
-            self.sb = io.StringIO()
-            self.counter = 0
-
-        def render(self):
-            if self.models is None:
-                raise RuntimeError('Uninitialized form')
-            if self.sb.tell() > 0:
-                raise RuntimeError('render has been called')
-
-            enabled = [a.email_name for a in self.models if a.enabled]
-            disabled = [a.email_name for a in self.models if not a.enabled]
-
-            self._render_fieldset(enabled, _('Enabled aliases'))
-            self._render_fieldset(disabled, _('Disabled aliases'))
-
-            return self.sb.getvalue()
-
-        def _render_fieldset(self, email_names, legend):
-            if len(email_names) > 0:
-                self.sb.write('<fieldset class="form-group">')
-                self.sb.write('<legend>%s</legend>' % escape(legend))
-                self._render_boxes(email_names)
-                self.sb.write('</fieldset>')
-
-        def _render_boxes(self, email_names):
-            for email_name in email_names:
-                input_id = 'cb_alias_%d' % self._count()
-                value = escape(email_name)
-                self.sb.write('<div class="form-check">')
-
-                self.sb.write('<input type="checkbox" name="alias" ')
-                self.sb.write('class="form-check-input" ')
-                self.sb.write('id="%s" value="%s">' % (input_id, value))
-
-                self.sb.write('<label class="form-check-label" ')
-                self.sb.write('for="%s">%s</label>' % (input_id, value))
-
-                self.sb.write('</div>')
-
-        def _count(self):
-            self.counter += 1
-            return self.counter
-
-        def is_valid(self):
-            lst = list(filter(None, self.post.getlist('alias')))
-            if not lst:
-                return False
-            else:
-                self.cleaned_data['alias'] = lst
-                return True
-
+    This view has two forms. Form to list (and manage) existing aliases, and a
+    form to create a new aliases. When GET operation is used, both forms
+    created and template is rendered. When POST operation is used, the form
+    posted is detected using hidden form values and the appropriate form is
+    initialized for the FormView base class to work with.
+    """
     template_name = 'email_alias.html'
-    form_classes = (forms.AliasCreationForm, Checkboxes)
+    form_classes = (forms.AliasCreateForm, forms.AliasListForm)
+    success_url = reverse_lazy('email_server:aliases')
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the view."""
+        super().__init__(*args, **kwargs)
+        self.posted_form = None
+
+    def get_form_class(self):
+        """Return form class to build."""
+        if self.posted_form == 'create':
+            return forms.AliasCreateForm
+
+        return forms.AliasListForm
+
+    def get_form_kwargs(self):
+        """Send aliases to list form."""
+        kwargs = super().get_form_kwargs()
+        if self.posted_form != 'create':
+            kwargs['aliases'] = self._get_current_aliases()
+
+        return kwargs
+
+    def _get_uid(self):
+        """Return the UID of the user that made the request."""
+        return pwd.getpwnam(self.request.user.username).pw_uid
+
+    def _get_current_aliases(self):
+        """Return current list of aliases."""
+        return aliases_module.get(self._get_uid())
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['form'] = forms.AliasCreationForm()
-
-        uid = pwd.getpwnam(self.request.user.username).pw_uid
-        models = aliases.get(uid)
-        if len(models) > 0:
-            form = AliasView.Checkboxes(initial=models)
-            context['alias_boxes'] = form.render()
+        if isinstance(context['form'], forms.AliasCreateForm):
+            context['create_form'] = context['form']
+            aliases = self._get_current_aliases()
+            context['list_form'] = forms.AliasListForm(aliases)
         else:
-            context['no_alias'] = True
+            context['create_form'] = forms.AliasCreateForm()
+            context['list_form'] = context['form']
+
         return context
 
-    def _find_form(self, post):
-        form_name = post.get('form')
-        for cls in self.form_classes:
-            if cls.__name__ == form_name:
-                return cls(post)
-        raise ValidationError('Form was unspecified')
+    def post(self, request, *args, **kwargs):
+        """Find which form was submitted before proceeding."""
+        self.posted_form = request.POST.get('form')
+        return super().post(request, *args, **kwargs)
 
-    def _find_button(self, post):
-        key_filter = (k for k in post.keys() if k.startswith('btn_'))
-        lst = list(itertools.islice(key_filter, 2))
-        if len(lst) != 1:
-            raise ValidationError('Bad post data')
-        if not isinstance(lst[0], str):
-            raise ValidationError('Bad post data')
-        return lst[0][len('btn_'):]
+    def form_valid(self, form):
+        """Handle a valid submission."""
+        if isinstance(form, forms.AliasListForm):
+            self._list_form_valid(form)
+        elif isinstance(form, forms.AliasCreateForm):
+            self._create_form_valid(form)
 
-    def post(self, request):
-        form = self._find_form(request.POST)
-        button = self._find_button(request.POST)
-        if not form.is_valid():
-            raise ValidationError('Form invalid')
+        return super().form_valid(form)
 
-        if isinstance(form, AliasView.Checkboxes):
-            if button not in ('delete', 'disable', 'enable'):
-                raise ValidationError('Bad button')
-            return self.alias_operation_form_valid(form, button)
+    def _list_form_valid(self, form):
+        """Handle a valid alias list form operation."""
+        alias_list = form.cleaned_data['aliases']
+        action = form.cleaned_data['action']
+        uid = self._get_uid()
+        if action == 'delete':
+            aliases_module.delete(uid, alias_list)
+        elif action == 'disable':
+            aliases_module.set_disabled(uid, alias_list)
+        elif action == 'enable':
+            aliases_module.set_enabled(uid, alias_list)
 
-        if isinstance(form, forms.AliasCreationForm):
-            if button != 'add':
-                raise ValidationError('Bad button')
-            return self.alias_creation_form_valid(form, button)
-
-        raise RuntimeError('Unknown form')
-
-    def alias_operation_form_valid(self, form, button):
-        uid = pwd.getpwnam(self.request.user.username).pw_uid
-        alias_list = form.cleaned_data['alias']
-        if button == 'delete':
-            aliases.delete(uid, alias_list)
-        elif button == 'disable':
-            aliases.set_disabled(uid, alias_list)
-        elif button == 'enable':
-            aliases.set_enabled(uid, alias_list)
-        return self.render_to_response(self.get_context_data())
-
-    def alias_creation_form_valid(self, form, button):
-        uid = pwd.getpwnam(self.request.user.username).pw_uid
-        aliases.put(uid, form.cleaned_data['email_name'])
-        return self.render_to_response(self.get_context_data())
+    def _create_form_valid(self, form):
+        """Handle a valid create alias form operation."""
+        aliases_module.put(self._get_uid(), form.cleaned_data['alias'])
 
 
 class TLSView(TabMixin, TemplateView):
