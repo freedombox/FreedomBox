@@ -71,7 +71,6 @@ def put(uid_number, email_name):
     SELECT ?,?,? WHERE NOT EXISTS(
         SELECT 1 FROM Alias WHERE email_name=?
     )"""
-    email_name = models.sanitize_email_name(email_name)
     with db_cursor() as cur:
         cur.execute(s, (email_name, uid_number, 1, email_name))
 
@@ -80,9 +79,6 @@ def put(uid_number, email_name):
 
 def delete(uid_number, alias_list):
     s = 'DELETE FROM Alias WHERE uid_number=? AND email_name=?'
-    for i in range(len(alias_list)):
-        alias_list[i] = models.sanitize_email_name(alias_list[i])
-
     parameter_seq = ((uid_number, a) for a in alias_list)
     with db_cursor() as cur:
         cur.execute('BEGIN')
@@ -101,9 +97,6 @@ def set_disabled(uid_number, alias_list):
 
 def _set_status(uid_number, alias_list, status):
     s = 'UPDATE Alias SET status=? WHERE uid_number=? AND email_name=?'
-    for i in range(len(alias_list)):
-        alias_list[i] = models.sanitize_email_name(alias_list[i])
-
     parameter_seq = ((status, uid_number, a) for a in alias_list)
     with db_cursor() as cur:
         cur.execute('BEGIN')
