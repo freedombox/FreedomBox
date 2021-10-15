@@ -203,9 +203,9 @@ class AliasView(FormView):
         if action == 'delete':
             aliases_module.delete(uid, alias_list)
         elif action == 'disable':
-            aliases_module.set_disabled(uid, alias_list)
+            aliases_module.disable(uid, alias_list)
         elif action == 'enable':
-            aliases_module.set_enabled(uid, alias_list)
+            aliases_module.enable(uid, alias_list)
 
     def _create_form_valid(self, form):
         """Handle a valid create alias form operation."""
