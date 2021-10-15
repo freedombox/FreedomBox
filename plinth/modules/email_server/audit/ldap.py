@@ -13,21 +13,27 @@ from plinth import actions
 from . import models
 
 default_config = {
-    'smtpd_sasl_auth_enable': 'yes',
-    'smtpd_sasl_type': 'dovecot',
-    'smtpd_sasl_path': 'private/auth',
-    'mailbox_transport': 'lmtp:unix:private/dovecot-lmtp',
-    'virtual_transport': 'lmtp:unix:private/dovecot-lmtp',
-
-    'smtpd_relay_restrictions': ','.join([
-        'permit_sasl_authenticated', 'defer_unauth_destination',
-    ])
+    'smtpd_sasl_auth_enable':
+        'yes',
+    'smtpd_sasl_type':
+        'dovecot',
+    'smtpd_sasl_path':
+        'private/auth',
+    'mailbox_transport':
+        'lmtp:unix:private/dovecot-lmtp',
+    'virtual_transport':
+        'lmtp:unix:private/dovecot-lmtp',
+    'smtpd_relay_restrictions':
+        ','.join([
+            'permit_sasl_authenticated',
+            'defer_unauth_destination',
+        ])
 }
 
-submission_flags = postconf.ServiceFlags(
-    service='submission', type='inet', private='n', unpriv='-', chroot='y',
-    wakeup='-', maxproc='-', command_args='smtpd'
-)
+submission_flags = postconf.ServiceFlags(service='submission', type='inet',
+                                         private='n', unpriv='-', chroot='y',
+                                         wakeup='-', maxproc='-',
+                                         command_args='smtpd')
 
 default_submission_options = {
     'syslog_name': 'postfix/submission',
@@ -36,10 +42,9 @@ default_submission_options = {
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
 
-smtps_flags = postconf.ServiceFlags(
-    service='smtps', type='inet', private='n', unpriv='-', chroot='y',
-    wakeup='-', maxproc='-', command_args='smtpd'
-)
+smtps_flags = postconf.ServiceFlags(service='smtps', type='inet', private='n',
+                                    unpriv='-', chroot='y', wakeup='-',
+                                    maxproc='-', command_args='smtpd')
 
 default_smtps_options = {
     'syslog_name': 'postfix/smtps',
