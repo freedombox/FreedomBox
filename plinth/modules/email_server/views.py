@@ -197,15 +197,15 @@ class AliasView(FormView):
 
     def _list_form_valid(self, form):
         """Handle a valid alias list form operation."""
-        alias_list = form.cleaned_data['aliases']
+        aliases = form.cleaned_data['aliases']
         action = form.cleaned_data['action']
         uid = self._get_uid()
         if action == 'delete':
-            aliases_module.delete(uid, alias_list)
+            aliases_module.delete(uid, aliases)
         elif action == 'disable':
-            aliases_module.disable(uid, alias_list)
+            aliases_module.disable(uid, aliases)
         elif action == 'enable':
-            aliases_module.enable(uid, alias_list)
+            aliases_module.enable(uid, aliases)
 
     def _create_form_valid(self, form):
         """Handle a valid create alias form operation."""
