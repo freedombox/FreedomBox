@@ -21,8 +21,7 @@ from . import audit, forms
 
 
 class TabMixin(View):
-    admin_tabs = [('', _('Home')), ('security', _('Security')),
-                  ('domains', _('Domains'))]
+    admin_tabs = [('', _('Home')), ('domains', _('Domains'))]
 
     def get_context_data(self, *args, **kwargs):
         # Retrieve context data from the next method in the MRO
@@ -210,10 +209,6 @@ class AliasView(FormView):
     def _create_form_valid(self, form):
         """Handle a valid create alias form operation."""
         aliases_module.put(self._get_uid(), form.cleaned_data['alias'])
-
-
-class TLSView(TabMixin, TemplateView):
-    template_name = 'email_security.html'
 
 
 class DomainView(TabMixin, TemplateView):
