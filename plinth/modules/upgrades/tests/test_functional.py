@@ -3,29 +3,40 @@
 Functional, browser based tests for upgrades app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('upgrades.feature')
+pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.upgrades]
 
 
-@given(parsers.parse('automatic upgrades are {enabled:w}'))
-def upgrades_given_enable_automatic(session_browser, enabled):
-    should_enable = (enabled == 'enabled')
-    _enable_automatic(session_browser, should_enable)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
+    yield
+    _enable_automatic(session_browser, False)
 
 
-@when(parsers.parse('I {enable:w} automatic upgrades'))
-def upgrades_enable_automatic(session_browser, enable):
-    should_enable = (enable == 'enable')
-    _enable_automatic(session_browser, should_enable)
+def test_enable_automatic_upgrades(session_browser):
+    """Test enabling automatic upgrades."""
+    _enable_automatic(session_browser, False)
+    _enable_automatic(session_browser, True)
+    assert _get_automatic(session_browser)
+
+    _enable_automatic(session_browser, False)
+    assert not _get_automatic(session_browser)
 
 
-@then(parsers.parse('automatic upgrades should be {enabled:w}'))
-def upgrades_assert_automatic(session_browser, enabled):
-    should_be_enabled = (enabled == 'enabled')
-    assert _get_automatic(session_browser) == should_be_enabled
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of configuration."""
+    _enable_automatic(session_browser, True)
+    functional.backup_create(session_browser, 'upgrades', 'test_upgrades')
+
+    _enable_automatic(session_browser, False)
+    functional.backup_restore(session_browser, 'upgrades', 'test_upgrades')
+
+    assert _get_automatic(session_browser)
 
 
 def _enable_automatic(browser, should_enable):

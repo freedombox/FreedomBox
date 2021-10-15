@@ -140,7 +140,7 @@ def _compile_sieve():
 def _run_sievec(sieve_file):
     logger.info('Compiling sieve script %s', sieve_file)
     args = ['sievec', '--', sieve_file]
-    completed = subprocess.run(args, capture_output=True)
+    completed = subprocess.run(args, capture_output=True, check=False)
     if completed.returncode != 0:
         interproc.log_subprocess(completed)
         raise OSError('Sieve compilation failed: ' + sieve_file)

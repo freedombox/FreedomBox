@@ -38,7 +38,7 @@ def fixture_password():
 
 def get_hashed_password(password):
     res = subprocess.run(['mkpasswd', '--method=md5', password],
-                         stdout=subprocess.PIPE)
+                         stdout=subprocess.PIPE, check=True)
     return res.stdout.decode().strip()
 
 

@@ -128,10 +128,10 @@ def service_action(service_name, action):
     """Perform the given action on the service_name."""
     if is_systemd_running():
         subprocess.run(['systemctl', action, service_name],
-                       stdout=subprocess.DEVNULL)
+                       stdout=subprocess.DEVNULL, check=False)
     else:
         subprocess.run(['service', service_name, action],
-                       stdout=subprocess.DEVNULL)
+                       stdout=subprocess.DEVNULL, check=False)
 
 
 def webserver_is_enabled(name, kind='config'):
@@ -371,7 +371,7 @@ Owners: {package}
     env['DEBCONF_DB_OVERRIDE'] = 'File{' + override_file.name + \
                                  ' readonly:true}'
     env['DEBIAN_FRONTEND'] = 'noninteractive'
-    subprocess.run(['dpkg-reconfigure', package], env=env)
+    subprocess.run(['dpkg-reconfigure', package], env=env, check=False)
 
     try:
         os.remove(override_file.name)
@@ -419,7 +419,7 @@ def run_apt_command(arguments):
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     process = subprocess.run(command, stdin=subprocess.DEVNULL,
                              stdout=subprocess.DEVNULL, close_fds=False,
-                             env=env)
+                             env=env, check=False)
     return process.returncode
 
 
@@ -458,7 +458,8 @@ def apt_hold_freedombox():
 def apt_unhold_freedombox():
     """Remove any hold on freedombox package, and clear flag."""
     subprocess.run(['apt-mark', 'unhold', 'freedombox'],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                   check=False)
     if apt_hold_flag.exists():
         apt_hold_flag.unlink()
 

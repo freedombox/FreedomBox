@@ -6,7 +6,7 @@ Functional, browser based tests for mldonkey app.
 import pytest
 from plinth.tests import functional
 
-pytestmark = [pytest.mark.apps, pytest.mark.mldonkey]
+pytestmark = [pytest.mark.apps, pytest.mark.mldonkey, pytest.mark.sso]
 
 
 @pytest.fixture(scope='module', autouse=True)

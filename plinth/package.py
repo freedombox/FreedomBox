@@ -7,11 +7,14 @@ import json
 import logging
 import subprocess
 import threading
+from typing import Union
 
+import apt.cache
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions
+from plinth.errors import ActionError
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
@@ -195,3 +198,30 @@ def filter_conffile_prompt_packages(packages):
         'packages',
         ['filter-conffile-packages', '--packages'] + list(packages))
     return json.loads(response)
+
+
+def packages_installed(candidates: Union[list, tuple]) -> list:
+    """Check which candidates are installed on the system.
+
+    :param candidates: A list of package names.
+    :return: A list of installed Debian package names.
+    """
+    cache = apt.cache.Cache()
+    installed_packages = []
+    for package_name in candidates:
+        try:
+            package = cache[package_name]
+            if package.is_installed:
+                installed_packages.append(package_name)
+        except KeyError:
+            pass
+
+    return installed_packages
+
+
+def remove(packages: Union[list, tuple]) -> None:
+    """Remove packages."""
+    try:
+        actions.superuser_run('packages', ['remove', '--packages'] + packages)
+    except ActionError:
+        pass

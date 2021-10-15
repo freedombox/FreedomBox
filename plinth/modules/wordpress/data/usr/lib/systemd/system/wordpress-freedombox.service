@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[Unit]
+Description=WordPress Scheduled Events Trigger (Cron)
+Documentation=https://rtcamp.com/tutorials/wordpress/wp-cron-crontab/
+ConditionPathExists=/etc/wordpress/config-default.php
+
+[Service]
+CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_DAC_OVERRIDE CAP_DAC_READ_SEARCH CAP_FOWNER CAP_IPC_OWNER CAP_NET_ADMIN CAP_AUDIT_CONTROL CAP_AUDIT_READ CAP_AUDIT_WRITE CAP_KILL CAP_NET_BIND_SERVICE CAP_NET_RAW CAP_LINUX_IMMUTABLE CAP_IPC_LOCK CAP_SYS_CHROOT CAP_BLOCK_SUSPEND CAP_LEASE CAP_SYS_PACCT CAP_SYS_TTY_CONFIG CAP_SYS_BOOT CAP_MAC_ADMIN CAP_MAC_OVERRIDE CAP_SYS_NICE CAP_SYS_RESOURCE
+DevicePolicy=closed
+ExecStart=php --file /usr/share/wordpress/wp-cron.php
+Group=www-data
+LockPersonality=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateMounts=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHome=yes
+ProtectHostname=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectSystem=strict
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+StateDirectory=wordpress/wp-content
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@resources
+SystemCallFilter=~@privileged
+SystemCallErrorNumber=EPERM
+Type=simple
+User=www-data

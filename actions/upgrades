@@ -140,7 +140,7 @@ def parse_arguments():
 
 def _run():
     """Run unattended-upgrades"""
-    subprocess.run(['dpkg', '--configure', '-a'])
+    subprocess.run(['dpkg', '--configure', '-a'], check=False)
     run_apt_command(['--fix-broken', 'install'])
 
     # In case freedombox package was left in held state by an
@@ -453,7 +453,7 @@ def _perform_dist_upgrade():
             ['grub-pc grub-pc/install_devices_empty boolean true'])
 
         print('Running unattended-upgrade...', flush=True)
-        subprocess.run(['unattended-upgrade', '--verbose'])
+        subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.
@@ -492,7 +492,7 @@ def _perform_dist_upgrade():
     # Run unattended-upgrade once more to handle upgrading the
     # freedombox package.
     print('Running unattended-upgrade...', flush=True)
-    subprocess.run(['unattended-upgrade', '--verbose'])
+    subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
     # Restore original snapshots configuration.
     if snapshots_supported and apt_snapshots_enabled:

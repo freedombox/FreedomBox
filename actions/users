@@ -373,7 +373,7 @@ def set_samba_user(username, password):
     """
     proc = subprocess.run(['smbpasswd', '-a', '-s', username],
                           input='{0}\n{0}\n'.format(password).encode(),
-                          stderr=subprocess.PIPE)
+                          stderr=subprocess.PIPE, check=False)
     if proc.returncode != 0:
         raise RuntimeError('Unable to add Samba user: ', proc.stderr)
 
@@ -580,13 +580,12 @@ def flush_cache():
     action_utils.service_reload('apache2')
 
 
-def _run(arguments, **kwargs):
+def _run(arguments, check=True, **kwargs):
     """Run a command. Check return code and suppress output by default."""
     env = dict(os.environ, LDAPSCRIPTS_CONF=LDAPSCRIPTS_CONF)
     kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
     kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
-    kwargs['check'] = kwargs.get('check', True)
-    return subprocess.run(arguments, env=env, **kwargs)
+    return subprocess.run(arguments, env=env, check=check, **kwargs)
 
 
 def main():

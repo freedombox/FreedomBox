@@ -5,61 +5,100 @@ Functional, browser based tests for syncthing app.
 
 import time
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('syncthing.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.syncthing, pytest.mark.sso]
 
 
-@given(parsers.parse('syncthing folder {folder_name:w} is not present'))
-def syncthing_folder_not_present(session_browser, folder_name):
-    if _folder_is_present(session_browser, folder_name):
-        _remove_folder(session_browser, folder_name)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'syncthing')
+    yield
+    functional.app_disable(session_browser, 'syncthing')
 
 
-@given(
-    parsers.parse(
-        'folder {folder_path:S} is present as syncthing folder {folder_name:w}'
-    ))
-def syncthing_folder_present(session_browser, folder_name, folder_path):
-    if not _folder_is_present(session_browser, folder_name):
-        _add_folder(session_browser, folder_name, folder_path)
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'syncthing')
+
+    functional.app_enable(session_browser, 'syncthing')
+    assert functional.service_is_running(session_browser, 'syncthing')
+
+    functional.app_disable(session_browser, 'syncthing')
+    assert functional.service_is_not_running(session_browser, 'syncthing')
 
 
-@when(
-    parsers.parse(
-        'I add a folder {folder_path:S} as syncthing folder {folder_name:w}'))
-def syncthing_add_folder(session_browser, folder_name, folder_path):
-    _add_folder(session_browser, folder_name, folder_path)
+def test_notifications(session_browser):
+    """Test that authentication and usage reporting notifications are not
+    shown."""
+    functional.app_enable(session_browser, 'syncthing')
+    functional.access_url(session_browser, 'syncthing')
+    _assert_usage_report_notification_not_shown(session_browser)
+    _assert_authentication_notification_not_shown(session_browser)
 
 
-@when(parsers.parse('I remove syncthing folder {folder_name:w}'))
-def syncthing_remove_folder(session_browser, folder_name):
-    _remove_folder(session_browser, folder_name)
+def test_add_remove_folder(session_browser):
+    """Test adding and removing a folder."""
+    functional.app_enable(session_browser, 'syncthing')
+    if _folder_is_present(session_browser, 'Test'):
+        _remove_folder(session_browser, 'Test')
+
+    _add_folder(session_browser, 'Test', '/tmp')
+    assert _folder_is_present(session_browser, 'Test')
+
+    _remove_folder(session_browser, 'Test')
+    assert not _folder_is_present(session_browser, 'Test')
 
 
-@then('the usage reporting notification is not shown')
-def syncthing_assert_usage_report_notification_not_shown(session_browser):
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of app data."""
+    functional.app_enable(session_browser, 'syncthing')
+    if _folder_is_present(session_browser, 'Test'):
+        _remove_folder(session_browser, 'Test')
+
+    _add_folder(session_browser, 'Test', '/tmp')
+    functional.backup_create(session_browser, 'syncthing', 'test_syncthing')
+
+    _remove_folder(session_browser, 'Test')
+    functional.backup_restore(session_browser, 'syncthing', 'test_syncthing')
+
+    assert _folder_is_present(session_browser, 'Test')
+
+
+def test_user_group_access(session_browser):
+    """Test that only users in syncthing-access group can access syncthing
+    site."""
+    functional.app_enable(session_browser, 'syncthing')
+    if not functional.user_exists(session_browser, 'syncthinguser'):
+        functional.create_user(session_browser, 'syncthinguser',
+                               groups=['syncthing-access'])
+    if not functional.user_exists(session_browser, 'nogroupuser'):
+        functional.create_user(session_browser, 'nogroupuser')
+
+    functional.login_with_account(session_browser, functional.base_url,
+                                  'syncthinguser')
+    assert functional.is_available(session_browser, 'syncthing')
+
+    functional.login_with_account(session_browser, functional.base_url,
+                                  'nogroupuser')
+    assert not functional.is_available(session_browser, 'syncthing')
+
+    functional.login(session_browser)
+
+
+def _assert_usage_report_notification_not_shown(session_browser):
     _load_main_interface(session_browser)
     assert session_browser.find_by_id('ur').visible is False
 
 
-@then('the authentication notification is not shown')
-def syncthing_assert_authentication_notification_not_shown(session_browser):
+def _assert_authentication_notification_not_shown(session_browser):
     _load_main_interface(session_browser)
     assert bool(session_browser.find_by_css(
         '#authenticationUserAndPassword *')) is False
-
-
-@then(parsers.parse('syncthing folder {folder_name:w} should be present'))
-def syncthing_assert_folder_present(session_browser, folder_name):
-    assert _folder_is_present(session_browser, folder_name)
-
-
-@then(parsers.parse('syncthing folder {folder_name:w} should not be present'))
-def syncthing_assert_folder_not_present(session_browser, folder_name):
-    assert not _folder_is_present(session_browser, folder_name)
 
 
 def _load_main_interface(browser):

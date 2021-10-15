@@ -65,7 +65,7 @@ def action_mk(arg_type, user_info):
 
     args = ['sudo', '-n', '--user=#' + str(passwd.pw_uid)]
     args.extend(['/bin/sh', '-c', 'mkdir -p ~'])
-    completed = subprocess.run(args, capture_output=True)
+    completed = subprocess.run(args, capture_output=True, check=False)
     if completed.returncode != 0:
         interproc.log_subprocess(completed)
         raise OSError('Could not create home directory')

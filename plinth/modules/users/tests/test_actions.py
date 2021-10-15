@@ -138,12 +138,11 @@ def fixture_auto_cleanup_users_groups(needs_root, load_cfg):
         _delete_group(group)
 
 
-def _call_action(arguments, **kwargs):
+def _call_action(arguments, check=True, **kwargs):
     """Call the action script."""
     kwargs['stdout'] = kwargs.get('stdout', subprocess.PIPE)
     kwargs['stderr'] = kwargs.get('stderr', subprocess.PIPE)
-    kwargs['check'] = kwargs.get('check', True)
-    return subprocess.run([_action_file()] + arguments, **kwargs)
+    return subprocess.run([_action_file()] + arguments, check=check, **kwargs)
 
 
 def _create_user(username=None, groups=None):

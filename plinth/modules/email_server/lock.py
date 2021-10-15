@@ -89,7 +89,7 @@ class Mutex:
         args.extend(['/bin/sh', '-c'])
         args.append('umask 177 && > ' + self.lock_path)
 
-        completed = subprocess.run(args, capture_output=True)
+        completed = subprocess.run(args, capture_output=True, check=False)
         if completed.returncode != 0:
             interproc.log_subprocess(completed)
             raise OSError('Could not create ' + self.lock_path)

@@ -4,84 +4,59 @@ Functional, browser based tests for snapshot app.
 """
 
 import pytest
-from pytest_bdd import given, parsers, scenarios, then, when
-
 from plinth.tests import functional
 
-scenarios('snapshot.feature')
+pytestmark = [pytest.mark.system, pytest.mark.snapshot]
 
 
-@given('the filesystem supports snapshots')
-def is_snapshots_supported(session_browser):
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'snapshot')
     if not _is_snapshot_supported(session_browser):
         pytest.skip('Filesystem doesn\'t support snapshots')
-    assert True
 
 
-@given('the list of snapshots is empty', target_fixture='empty_snapshots_list')
-def empty_snapshots_list(session_browser):
-    _delete_all(session_browser)
-    return _get_count(session_browser)
+def test_create(session_browser):
+    """Test creating a snapshot."""
+    _empty_snapshots_list(session_browser)
+    _create_snapshot(session_browser)
+    assert _get_count(session_browser) == 1
 
 
-@when('I manually create a snapshot')
-def create_snapshot(session_browser):
-    _create(session_browser)
+def test_configure(session_browser):
+    """Test configuring snapshots."""
+    _set_configuration(session_browser, free_space=30, timeline_enabled=False,
+                       software_enabled=False, hourly=10, daily=3, weekly=2,
+                       monthly=2, yearly=0)
+    _set_configuration(session_browser, free_space=20, timeline_enabled=True,
+                       software_enabled=True, hourly=3, daily=2, weekly=1,
+                       monthly=1, yearly=1)
+    assert _get_configuration(session_browser) == (20, True, True, 3, 2, 1, 1,
+                                                   1)
 
 
-@then(parsers.parse('there should be {count:d} more snapshots in the list'))
-def verify_snapshot_count(session_browser, count, empty_snapshots_list):
-    assert _get_count(session_browser) == count + empty_snapshots_list
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of configuration."""
+    _set_configuration(session_browser, free_space=30, timeline_enabled=False,
+                       software_enabled=False, hourly=10, daily=3, weekly=2,
+                       monthly=2, yearly=0)
+    functional.backup_create(session_browser, 'snapshot', 'test_snapshot')
+
+    _set_configuration(session_browser, free_space=20, timeline_enabled=True,
+                       software_enabled=True, hourly=3, daily=2, weekly=1,
+                       monthly=1, yearly=1)
+    functional.backup_restore(session_browser, 'snapshot', 'test_snapshot')
+
+    assert _get_configuration(session_browser) == (30, False, False, 10, 3, 2,
+                                                   2, 0)
 
 
-@given(
-    parsers.parse(
-        'snapshots are configured with free space {free_space:d}, timeline '
-        'snapshots {timeline_enabled:w}, software snapshots '
-        '{software_enabled:w}, hourly limit {hourly:d}, daily limit {daily:d}'
-        ', weekly limit {weekly:d}, monthly limit {monthly:d}, yearly limit '
-        '{yearly:d}'))
-def snapshot_given_set_configuration(session_browser, free_space,
-                                     timeline_enabled, software_enabled,
-                                     hourly, daily, weekly, monthly, yearly):
-    timeline_enabled = (timeline_enabled == 'enabled')
-    software_enabled = (software_enabled == 'enabled')
-    _set_configuration(session_browser, free_space, timeline_enabled,
-                       software_enabled, hourly, daily, weekly, monthly,
-                       yearly)
-
-
-@when(
-    parsers.parse(
-        'I configure snapshots with free space {free_space:d}, '
-        'timeline snapshots {timeline_enabled:w}, '
-        'software snapshots {software_enabled:w}, hourly limit {hourly:d}, '
-        'daily limit {daily:d}, weekly limit {weekly:d}, monthly limit '
-        '{monthly:d}, yearly limit {yearly:d}'))
-def snapshot_set_configuration(session_browser, free_space, timeline_enabled,
-                               software_enabled, hourly, daily, weekly,
-                               monthly, yearly):
-    timeline_enabled = (timeline_enabled == 'enabled')
-    software_enabled = (software_enabled == 'enabled')
-    _set_configuration(session_browser, free_space, timeline_enabled,
-                       software_enabled, hourly, daily, weekly, monthly,
-                       yearly)
-
-
-@then(
-    parsers.parse(
-        'snapshots should be configured with free space {free_space:d}, '
-        'timeline snapshots {timeline_enabled:w}, software snapshots '
-        '{software_enabled:w}, hourly limit {hourly:d}, daily limit '
-        '{daily:d}, weekly limit {weekly:d}, monthly limit {monthly:d}, '
-        'yearly limit {yearly:d}'))
-def snapshot_assert_configuration(session_browser, free_space,
-                                  timeline_enabled, software_enabled, hourly,
-                                  daily, weekly, monthly, yearly):
-    timeline_enabled = (timeline_enabled == 'enabled')
-    software_enabled = (software_enabled == 'enabled')
-    assert (free_space, timeline_enabled, software_enabled, hourly, daily,
-            weekly, monthly, yearly) == _get_configuration(session_browser)
+def _empty_snapshots_list(browser):
+    _delete_all(browser)
+    return _get_count(browser)
 
 
 def _delete_all(browser):
@@ -96,7 +71,7 @@ def _delete_all(browser):
             functional.submit(browser, confirm_button)
 
 
-def _create(browser):
+def _create_snapshot(browser):
     functional.visit(browser, '/plinth/sys/snapshot/manage/')
     functional.submit(browser)  # Click on 'Create Snapshot'
 

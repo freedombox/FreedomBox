@@ -50,6 +50,17 @@
             <span class="fa fa-refresh"></span> {% trans "Check again" %}
           </button>
         </div>
+      {% elif package_conflicts and package_conflicts_action != 'ignore' %}
+        <div class="alert alert-warning" role="alert">
+          {% blocktrans trimmed %}
+            <strong>Conflicting Packages:</strong> Some packages installed on
+            the system conflict with the installation of this app. The following
+            packages will be removed if you proceed:
+          {% endblocktrans %}
+          {% for package in package_conflicts %}
+            {{ package }}
+          {% endfor %}
+        </div>
       {% endif %}
 
       <input type="submit" class="btn btn-md btn-primary" name="install"

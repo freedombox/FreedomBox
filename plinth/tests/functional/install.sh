@@ -8,13 +8,6 @@ sudo apt-get install -yq --no-install-recommends \
     python3-pip python3-wheel firefox-esr git smbclient\
     xvfb
 
-if [ $(lsb_release --release --short) == '10' ]
-then
-    pip3 install pytest-bdd==3.2.1
-else
-    pip3 install pytest-bdd
-fi
-
 pip3 install splinter pytest-splinter pytest-xvfb
 
 echo "Installing geckodriver"

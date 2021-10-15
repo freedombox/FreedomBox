@@ -13,7 +13,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 
-from plinth import actions, utils, web_framework
+from plinth import actions, translation, utils, web_framework
 
 from .forms import AuthenticationForm, CaptchaAuthenticationForm
 
@@ -51,6 +51,8 @@ class SSOLoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
         if request.user.is_authenticated:
+            translation.set_language(request, response,
+                                     request.user.userprofile.language)
             return set_ticket_cookie(request.user, response)
 
         return response

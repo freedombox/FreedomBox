@@ -12,18 +12,16 @@ from unittest.mock import patch
 import pytest
 
 try:
-    importlib.import_module('pytest_bdd')
-    _bdd_available = True
+    importlib.import_module('splinter')
+    _splinter_available = True
 except ImportError:
-    _bdd_available = False
-else:
-    from plinth.tests.functional.step_definitions import *
+    _splinter_available = False
 
 
 def pytest_ignore_collect(path, config):
-    """Return True to ignore functional tests."""
+    """Ignore functional tests when splinter is not available."""
     if path.basename == 'test_functional.py':
-        return not _bdd_available
+        return not _splinter_available
 
 
 def pytest_addoption(parser):
@@ -33,18 +31,29 @@ def pytest_addoption(parser):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Filter out functional tests unless --include-functional is passed."""
-    if config.getoption('--include-functional'):
-        # Option provided on command line, no filtering
-        return
+    """Filter out specificly marked tests unless explicitly requested.
 
-    skip_functional = pytest.mark.skip(
-        reason='--include-functional not provided')
-    for item in items:
-        if 'functional' in item.keywords or (item.parent.fspath.basename
-                                             and item.parent.fspath.basename
-                                             == 'test_functional.py'):
-            item.add_marker(skip_functional)
+    The EXTENDED_TESTING environment variable is borrowed from the Lancaster
+    consensus met by the Pearl community. See
+    https://github.com/Perl-Toolchain-Gang/toolchain-site/blob/master/lancaster-consensus.md
+    """
+
+    def skip(item, reason):
+        item.add_marker(pytest.mark.skip(reason=reason))
+
+    extended = 'EXTENDED_TESTING' in os.environ
+    if not (extended or config.getoption('--include-functional')):
+        for item in items:
+            if 'functional' in item.keywords or (
+                    item.parent.fspath.basename
+                    and item.parent.fspath.basename == 'test_functional.py'):
+                skip(item, '--include-functional not provided')
+
+    if not extended:
+        for item in items:
+            if 'heavy' in item.keywords:
+                skip(item, ('Takes too much time. '
+                            'Set EXTENDED_TESTING=1 to force run'))
 
 
 @pytest.fixture(name='load_cfg')

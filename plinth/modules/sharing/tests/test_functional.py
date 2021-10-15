@@ -5,66 +5,69 @@ Functional, browser based tests for sharing app.
 
 import pytest
 import splinter
-from pytest_bdd import given, parsers, scenarios, then, when
-
 from plinth.tests import functional
 
-scenarios('sharing.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.sharing]
 
 
-@given(parsers.parse('share {name:w} is not available'))
-def remove_share(session_browser, name):
-    _remove_share(session_browser, name)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login."""
+    functional.login(session_browser)
 
 
-@when(parsers.parse('I add a share {name:w} from path {path} for {group:S}'))
-def add_share(session_browser, name, path, group):
-    _add_share(session_browser, name, path, group)
+def test_add_remove_share(session_browser):
+    """Test adding and removing a share."""
+    _remove_share(session_browser, 'tmp')
+    _add_share(session_browser, 'tmp', '/tmp', 'admin')
+    _verify_share(session_browser, 'tmp', '/tmp', 'admin')
+    _access_share(session_browser, 'tmp')
+
+    _remove_share(session_browser, 'tmp')
+    _verify_invalid_share(session_browser, 'tmp')
+    _verify_nonexistant_share(session_browser, 'tmp')
 
 
-@when(
-    parsers.parse('I edit share {old_name:w} to {new_name:w} from path {path} '
-                  'for {group:w}'))
-def edit_share(session_browser, old_name, new_name, path, group):
-    _edit_share(session_browser, old_name, new_name, path, group)
+def test_edit_share(session_browser):
+    """Test editing a share."""
+    _remove_share(session_browser, 'tmp')
+    _remove_share(session_browser, 'boot')
+
+    _add_share(session_browser, 'tmp', '/tmp', 'admin')
+    _edit_share(session_browser, 'tmp', 'boot', '/boot', 'admin')
+
+    _verify_invalid_share(session_browser, 'tmp')
+    _verify_nonexistant_share(session_browser, 'tmp')
+
+    _verify_share(session_browser, 'boot', '/boot', 'admin')
+    _access_share(session_browser, 'boot')
 
 
-@when(parsers.parse('I remove share {name:w}'))
-def remove_share2(session_browser, name):
-    _remove_share(session_browser, name)
+def test_share_permissions(session_browser):
+    """Test share permissions."""
+    _remove_share(session_browser, 'tmp')
+    _add_share(session_browser, 'tmp', '/tmp', 'syncthing-access')
+    _verify_share(session_browser, 'tmp', '/tmp', 'syncthing-access')
+    _verify_inaccessible_share(session_browser, 'tmp')
+
+    _make_share_public(session_browser, 'tmp')
+    functional.logout(session_browser)
+    assert functional.is_available(session_browser, 'share_tmp')
+    functional.login(session_browser)
 
 
-@when(parsers.parse('I edit share {name:w} to be public'))
-def edit_share_public_access(session_browser, name):
-    _make_share_public(session_browser, name)
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore."""
+    _remove_share(session_browser, 'tmp')
+    _add_share(session_browser, 'tmp', '/tmp', 'admin')
+    functional.backup_create(session_browser, 'sharing', 'test_sharing')
 
+    _remove_share(session_browser, 'tmp')
+    functional.backup_restore(session_browser, 'sharing', 'test_sharing')
 
-@then(
-    parsers.parse(
-        'the share {name:w} should be listed from path {path} for {group:S}'))
-def verify_share(session_browser, name, path, group):
-    _verify_share(session_browser, name, path, group)
-
-
-@then(parsers.parse('the share {name:w} should not be listed'))
-def verify_invalid_share(session_browser, name):
-    with pytest.raises(splinter.exceptions.ElementDoesNotExist):
-        _get_share(session_browser, name)
-
-
-@then(parsers.parse('the share {name:w} should be accessible'))
-def access_share(session_browser, name):
-    _access_share(session_browser, name)
-
-
-@then(parsers.parse('the share {name:w} should not exist'))
-def verify_nonexistant_share(session_browser, name):
-    _verify_nonexistant_share(session_browser, name)
-
-
-@then(parsers.parse('the share {name:w} should not be accessible'))
-def verify_inaccessible_share(session_browser, name):
-    _verify_inaccessible_share(session_browser, name)
+    _verify_share(session_browser, 'tmp', '/tmp', 'admin')
+    _access_share(session_browser, 'tmp')
 
 
 def _remove_share(browser, name):
@@ -133,6 +136,11 @@ def _make_share_public(browser, name):
         row.find_by_css('.share-edit')[0].click()
     browser.find_by_id('id_sharing-is_public').check()
     functional.submit(browser)
+
+
+def _verify_invalid_share(browser, name):
+    with pytest.raises(splinter.exceptions.ElementDoesNotExist):
+        _get_share(browser, name)
 
 
 def _verify_nonexistant_share(browser, name):

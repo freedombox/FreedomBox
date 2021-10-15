@@ -3,47 +3,77 @@
 Functional, browser based tests for tahoe app.
 """
 
-from pytest_bdd import given, parsers, scenarios, then, when
-
+import pytest
 from plinth.tests import functional
 
-scenarios('tahoe.feature')
+pytestmark = [pytest.mark.apps, pytest.mark.tahoe, pytest.mark.skip]
+
+# TODO: When tahoe-lafs is restarted, it leaves a .gnupg folder in
+# /var/lib/tahoe-lafs and failes to start in the next run. Enable tests after
+# this is fixed.
 
 
-@then(
-    parsers.parse(
-        '{domain:S} should be a tahoe {introducer_type:w} introducer'))
-def tahoe_assert_introducer(session_browser, domain, introducer_type):
-    assert _get_introducer(session_browser, domain, introducer_type)
+@pytest.fixture(scope='module', autouse=True)
+def fixture_background(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.set_advanced_mode(session_browser, True)
+    functional.set_domain_name(session_browser, 'mydomain.example')
+    functional.install(session_browser, 'tahoe')
+    functional.app_select_domain_name(session_browser, 'tahoe',
+                                      'mydomain.example')
+    yield
+    functional.app_disable(session_browser, 'tahoe')
 
 
-@then(
-    parsers.parse(
-        '{domain:S} should not be a tahoe {introducer_type:w} introducer'))
-def tahoe_assert_not_introducer(session_browser, domain, introducer_type):
-    assert not _get_introducer(session_browser, domain, introducer_type)
+def test_enable_disable(session_browser):
+    """Test enabling the app."""
+    functional.app_disable(session_browser, 'tahoe')
+
+    functional.app_enable(session_browser, 'tahoe')
+    assert functional.service_is_running(session_browser, 'tahoe')
+
+    functional.app_disable(session_browser, 'tahoe')
+    assert functional.service_is_not_running(session_browser, 'tahoe')
 
 
-@given(parsers.parse('{domain:S} is not a tahoe introducer'))
-def tahoe_given_remove_introducer(session_browser, domain):
-    if _get_introducer(session_browser, domain, 'connected'):
-        _remove_introducer(session_browser, domain)
+def test_default_introducers(session_browser):
+    """Test default introducers."""
+    functional.app_enable(session_browser, 'tahoe')
+    assert _get_introducer(session_browser, 'mydomain.example', 'local')
+    assert _get_introducer(session_browser, 'mydomain.example', 'connected')
 
 
-@when(parsers.parse('I add {domain:S} as a tahoe introducer'))
-def tahoe_add_introducer(session_browser, domain):
-    _add_introducer(session_browser, domain)
+def test_add_remove_introducers(session_browser):
+    """Test add and remove introducers."""
+    functional.app_enable(session_browser, 'tahoe')
+    if _get_introducer(session_browser, 'anotherdomain.example', 'connected'):
+        _remove_introducer(session_browser, 'anotherdomain.example')
+
+    _add_introducer(session_browser, 'anotherdomain.example')
+    assert _get_introducer(session_browser, 'anotherdomain.example',
+                           'connected')
+
+    _remove_introducer(session_browser, 'anotherdomain.example')
+    assert not _get_introducer(session_browser, 'anotherdomain.example',
+                               'connected')
 
 
-@given(parsers.parse('{domain:S} is a tahoe introducer'))
-def tahoe_given_add_introducer(session_browser, domain):
-    if not _get_introducer(session_browser, domain, 'connected'):
-        _add_introducer(session_browser, domain)
+@pytest.mark.backups
+def test_backup_restore(session_browser):
+    """Test backup and restore of app data."""
+    functional.app_enable(session_browser, 'tahoe')
+    if not _get_introducer(session_browser, 'backupdomain.example',
+                           'connected'):
+        _add_introducer(session_browser, 'backupdomain.example')
+    functional.backup_create(session_browser, 'tahoe', 'test_tahoe')
 
+    _remove_introducer(session_browser, 'backupdomain.example')
+    functional.backup_restore(session_browser, 'tahoe', 'test_tahoe')
 
-@when(parsers.parse('I remove {domain:S} as a tahoe introducer'))
-def tahoe_remove_introducer(session_browser, domain):
-    _remove_introducer(session_browser, domain)
+    assert functional.service_is_running(session_browser, 'tahoe')
+    assert _get_introducer(session_browser, 'backupdomain.example',
+                           'connected')
 
 
 def _get_introducer(browser, domain, introducer_type):

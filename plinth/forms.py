@@ -4,13 +4,10 @@ Common forms for use by modules.
 """
 
 import os
-from itertools import chain
 
 from django import forms
 from django.conf import settings
-from django.forms import CheckboxInput
 from django.utils import translation
-from django.utils.safestring import mark_safe
 from django.utils.translation import get_language_info
 from django.utils.translation import gettext_lazy as _
 
@@ -81,47 +78,25 @@ class LanguageSelectionForm(LanguageSelectionFormMixin, forms.Form):
     language = LanguageSelectionFormMixin.language
 
 
-def _get_value_in_parens(string):
-    return string[string.find("(") + 1:string.find(")")]
-
-
 class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
-    """
-    Subclass of Django's CheckboxSelectMultiple widget that allows setting
-    individual fields as readonly
+    """Multiple checkbox widget that allows setting individual fields readonly.
+
     To mark a feature as readonly an option, pass a dict instead of a string
-    for its label, of the form: {'label': 'option label', 'disabled': True}
+    for its label, of the form: {'label': 'option label', 'disabled': True}.
 
-    Derived from https://djangosnippets.org/snippets/2786/
     """
 
-    def render(self, name, value, attrs=None, choices=(), renderer=None):
-        if value is None:
-            value = []
-        final_attrs = self.build_attrs(attrs)
-        output = [u'<ul>']
-        global_readonly = 'readonly' in final_attrs
-        str_values = set([v for v in value])
-        for i, (option_value,
-                option_label) in enumerate(chain(self.choices, choices)):
-            if not global_readonly and 'readonly' in final_attrs:
-                # If the entire group is readonly keep all options readonly
-                del final_attrs['readonly']
-            if isinstance(option_label, dict):
-                if dict.get(option_label, 'readonly'):
-                    final_attrs = dict(final_attrs, readonly='readonly')
-                option_label = option_label['label']
-            group_name = _get_value_in_parens(option_label)
-            final_attrs = dict(final_attrs,
-                               id='{}_{}'.format(attrs['id'], group_name))
-            label_for = u' for="{}"'.format(final_attrs['id'])
-            cb = CheckboxInput(final_attrs,
-                               check_test=lambda value: value in str_values)
-            rendered_cb = cb.render(name, option_value)
-            output.append(u'<li><label%s>%s %s</label></li>' %
-                          (label_for, rendered_cb, option_label))
-        output.append(u'</ul>')
-        return mark_safe(u'\n'.join(output))
+    def create_option(self, name, value, label, selected, index, subindex=None,
+                      attrs=None):
+        option = super().create_option(name, value, label, selected, index,
+                                       subindex, attrs)
+        if isinstance(option['label'], dict):
+            if option['label'].get('disabled'):
+                option['attrs']['disabled'] = 'disabled'
+
+            option['label'] = option['label']['label']
+
+        return option
 
 
 class CheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):

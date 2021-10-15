@@ -226,7 +226,8 @@ def _get_ssh_key_file_for_import(original_key_file, service):
         shutil.copy2(original_key_file, key_file)
         # Convert OpenSSH format to PEM
         subprocess.run(
-            ['ssh-keygen', '-p', '-N', '', '-m', 'PEM', '-f', key_file])
+            ['ssh-keygen', '-p', '-N', '', '-m', 'PEM', '-f', key_file],
+            check=True)
         yield key_file
 
 

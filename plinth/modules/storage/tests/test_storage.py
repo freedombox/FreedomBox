@@ -56,7 +56,7 @@ class Disk():
         command = 'losetup --show --find {file}'.format(
             file=self.disk_file.name)
         process = subprocess.run(command.split(), stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+                                 stderr=subprocess.PIPE, check=False)
         if process.returncode:
             if b'cannot find an unused loop device' in process.stderr:
                 pytest.skip('Loopback devices not available')
@@ -107,7 +107,7 @@ class Disk():
 
     def _cleanup_loopback(self):
         """Undo the loopback device setup."""
-        subprocess.run(['losetup', '--detach', self.device])
+        subprocess.run(['losetup', '--detach', self.device], check=False)
 
     def _remove_disk_file(self):
         """Delete the disk_file."""
@@ -231,16 +231,15 @@ class TestActions:
         self.assert_aligned(partition_number)
 
     @staticmethod
-    def call_action(action_command, **kwargs):
+    def call_action(action_command, check=True, **kwargs):
         """Call the action script."""
         test_directory = pathlib.Path(__file__).parent
         top_directory = (test_directory / '..' / '..' / '..' / '..').resolve()
         action_command[0] = top_directory / 'actions' / action_command[0]
         kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
         kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
-        kwargs['check'] = kwargs.get('check', True)
         env = dict(os.environ, PYTHONPATH=str(top_directory))
-        return subprocess.run(action_command, env=env, **kwargs)
+        return subprocess.run(action_command, env=env, check=check, **kwargs)
 
     def check_action(self, action_command):
         """Return success/failure result of the action command."""
@@ -255,7 +254,7 @@ class TestActions:
         subprocess.run([
             'parted', '--script', self.device, 'align-check', 'opti',
             str(partition_number)
-        ])
+        ], check=True)
 
     def assert_btrfs_file_system_healthy(self, partition_number):
         """Perform a successful ext4 file system check."""
