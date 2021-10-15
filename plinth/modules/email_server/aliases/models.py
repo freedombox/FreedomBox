@@ -3,8 +3,8 @@ from dataclasses import InitVar, dataclass, field
 
 @dataclass
 class Alias:
-    uid_number: int
-    email_name: str
+    value: int
+    name: str
     enabled: bool = field(init=False)
     status: InitVar[int]
 

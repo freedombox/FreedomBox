@@ -49,10 +49,10 @@ class AliasListForm(forms.Form):
     def __init__(self, aliases, *args, **kwargs):
         """Populate the choices for aliases."""
         super().__init__(*args, **kwargs)
-        enabled_aliases = [(alias.email_name, alias.email_name)
-                           for alias in aliases if alias.enabled]
-        disabled_aliases = [(alias.email_name, alias.email_name)
-                            for alias in aliases if not alias.enabled]
+        enabled_aliases = [(alias.name, alias.name) for alias in aliases
+                           if alias.enabled]
+        disabled_aliases = [(alias.name, alias.name) for alias in aliases
+                            if not alias.enabled]
         choices = []
         if enabled_aliases:
             choices.append((_('Enabled'), enabled_aliases))
