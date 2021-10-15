@@ -4,10 +4,20 @@
 import contextlib
 import pwd
 import sqlite3
+from dataclasses import InitVar, dataclass, field
 
 from plinth import actions
 
-from . import models
+
+@dataclass
+class Alias:
+    value: int
+    name: str
+    enabled: bool = field(init=False)
+    status: InitVar[int]
+
+    def __post_init__(self, status):
+        self.enabled = (status != 0)
 
 
 @contextlib.contextmanager
@@ -29,7 +39,7 @@ def get(uid):
     query = 'SELECT name, value, status FROM alias WHERE value=?'
     with _get_cursor() as cursor:
         rows = cursor.execute(query, (uid, ))
-        return [models.Alias(**row) for row in rows]
+        return [Alias(**row) for row in rows]
 
 
 def exists(name):
