@@ -56,7 +56,7 @@ default_smtps_options = {
 MAILSRV_DIR = '/var/lib/plinth/mailsrv'
 ETC_ALIASES = 'hash:/etc/aliases'
 BEFORE_ALIASES = 'ldap:/etc/postfix/freedombox-username-to-uid-number.cf'
-AFTER_ALIASES = 'hash:' + aliases.hash_db_path
+AFTER_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
 logger = logging.getLogger(__name__)
 

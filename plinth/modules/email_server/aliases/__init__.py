@@ -2,13 +2,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import contextlib
-import dbm
-import logging
-import os
 import pwd
 import sqlite3
 
-from plinth.modules.email_server import lock
+from plinth import actions
 
 from . import models
 
@@ -24,12 +21,7 @@ CREATE TABLE IF NOT EXISTS Alias (
 COMMIT;
 """
 
-mailsrv_dir = '/var/lib/plinth/mailsrv'
-hash_db_path = mailsrv_dir + '/aliases'
-sqlite_db_path = mailsrv_dir + '/aliases.sqlite3'
-
-alias_sync_mutex = lock.Mutex('alias-sync')
-logger = logging.getLogger(__name__)
+sqlite_db_path = '/var/lib/postfix/freedombox-aliases/aliases.sqlite3'
 
 
 @contextlib.contextmanager
@@ -74,8 +66,6 @@ def put(uid_number, email_name):
     with db_cursor() as cur:
         cur.execute(s, (email_name, uid_number, 1, email_name))
 
-    schedule_hash_update()
-
 
 def delete(uid_number, alias_list):
     s = 'DELETE FROM Alias WHERE uid_number=? AND email_name=?'
@@ -84,7 +74,6 @@ def delete(uid_number, alias_list):
         cur.execute('BEGIN')
         cur.executemany(s, parameter_seq)
         cur.execute('COMMIT')
-    schedule_hash_update()
 
 
 def set_enabled(uid_number, alias_list):
@@ -102,46 +91,14 @@ def _set_status(uid_number, alias_list, status):
         cur.execute('BEGIN')
         cur.executemany(s, parameter_seq)
         cur.execute('COMMIT')
-    schedule_hash_update()
-
-
-def schedule_hash_update():
-    tmp = hash_db_path + '-tmp'
-    with alias_sync_mutex.lock_all(), db_cursor() as cur:
-        all_aliases = cur.execute('SELECT * FROM Alias')
-
-        # Delete the temp file if exists
-        if os.path.exists(tmp):
-            os.unlink(tmp)
-
-        # Create new alias db at temp path
-        db = dbm.ndbm.open(tmp, 'c')
-        try:
-            for row in all_aliases:
-                alias = models.Alias(**row)
-                key = alias.email_name.encode('ascii') + b'\0'
-                if alias.enabled:
-                    value = str(alias.uid_number).encode('ascii')
-                    value += b'@localhost\0'
-                else:
-                    value = b'/dev/null\0'
-                db[key] = value
-        finally:
-            db.close()
-
-        # Atomically replace old alias db, rename(2)
-        os.rename(tmp + '.db', hash_db_path + '.db')
 
 
 def first_setup():
+    actions.superuser_run('email_server', ['-i', 'aliases', 'setup'])
     _create_db_schema_if_not_exists()
-    schedule_hash_update()
 
 
 def _create_db_schema_if_not_exists():
-    # Create folder
-    if not os.path.isdir(mailsrv_dir):
-        os.mkdir(mailsrv_dir)
     # Create schema if not exists
     with db_cursor() as cur:
         cur.executescript(map_db_schema_script)

@@ -30,6 +30,7 @@ package_conflicts_action = 'ignore'
 
 packages = [
     'postfix-ldap',
+    'postfix-sqlite',
     'dovecot-pop3d',
     'dovecot-imapd',
     'dovecot-ldap',
