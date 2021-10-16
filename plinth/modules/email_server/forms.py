@@ -6,9 +6,16 @@ import re
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 from . import aliases as aliases_module
+
+domain_validator = RegexValidator(r'^[A-Za-z0-9-\.]+$',
+                                  _('Enter a valid domain'))
+destination_validator = RegexValidator(
+    r'^[ -~]+$',  # ASCII chars from 32 to 126
+    _('Enter a valid destination'))
 
 
 class EmailServerForm(forms.Form):
@@ -19,10 +26,26 @@ class EmailServerForm(forms.Form):
 
 
 class DomainsForm(forms.Form):
-    _mailname = forms.CharField(required=True, strip=True)
-    mydomain = forms.CharField(required=True, strip=True)
-    myhostname = forms.CharField(required=True, strip=True)
-    mydestination = forms.CharField(required=True, strip=True)
+    _mailname = forms.CharField(required=True, strip=True,
+                                validators=[domain_validator])
+    mydomain = forms.CharField(required=True, strip=True,
+                               validators=[domain_validator])
+    myhostname = forms.CharField(required=True, strip=True,
+                                 validators=[domain_validator])
+    mydestination = forms.CharField(required=True, strip=True,
+                                    validators=[destination_validator])
+
+    def clean(self):
+        """Convert values to lower case."""
+        data = self.cleaned_data
+        if '_mailname' in data:
+            data['_mailname'] = data['_mailname'].lower()
+
+        if 'myhostname' in data:
+            data['myhostname'] = data['myhostname'].lower()
+
+        if 'mydestination' in data:
+            data['mydestination'] = data['mydestination'].lower()
 
 
 class AliasCreateForm(forms.Form):
