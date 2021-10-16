@@ -18,6 +18,13 @@ class EmailServerForm(forms.Form):
         super().__init__(*args, **kwargs)
 
 
+class DomainsForm(forms.Form):
+    _mailname = forms.CharField(required=True, strip=True)
+    mydomain = forms.CharField(required=True, strip=True)
+    myhostname = forms.CharField(required=True, strip=True)
+    mydestination = forms.CharField(required=True, strip=True)
+
+
 class AliasCreateForm(forms.Form):
     """Form to create a new alias."""
     alias = forms.CharField(label=_('New alias (without @domain)'),

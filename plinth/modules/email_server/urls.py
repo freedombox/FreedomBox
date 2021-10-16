@@ -8,7 +8,7 @@ from . import views
 
 urlpatterns = [
     path('apps/email_server/', views.EmailServerView.as_view(), name='index'),
-    path('apps/email_server/domains', views.DomainView.as_view(),
+    path('apps/email_server/domains', views.DomainsView.as_view(),
          name='domains'),
     path('apps/email_server/my_mail',
          non_admin_view(views.MyMailView.as_view()), name='my_mail'),

@@ -4,6 +4,7 @@ Views for the email app.
 """
 import pwd
 
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
@@ -197,30 +198,45 @@ class AliasView(FormView):
         aliases_module.put(self._get_uid(), form.cleaned_data['alias'])
 
 
-class DomainView(ExceptionsMixin, TemplateView):
-    template_name = 'email_domains.html'
+class DomainsView(FormView):
+    """View to allow editing domain related settings."""
+    template_name = 'form.html'
+    form_class = forms.DomainsForm
+    prefix = 'domain'
+    success_url = reverse_lazy('email_server:domains')
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        fields = audit.domain.get_domain_config()
-        # If having post data, display the posted values
-        for field in fields:
-            field.new_value = self.request.POST.get(field.key, '')
-        context['fields'] = fields
+    def get_initial(self):
+        """Return the initial values to populate in the form."""
+        initial = super().get_initial()
+        initial.update(audit.domain.get_domain_config())
+        return initial
+
+    def get_context_data(self, **kwargs):
+        """Add the title to the document."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Domains')
         return context
 
-    def post(self, request):
-        return self.catch_exceptions(self._post, request)
+    def form_valid(self, form):
+        """Update the settings for changed domain values."""
+        old_data = form.initial
+        new_data = form.cleaned_data
+        config = {}
+        for key in form.initial:
+            if old_data[key] != new_data[key]:
+                config[key] = new_data[key]
 
-    def _post(self, request):
-        changed = {}
-        # Skip blank fields
-        for key, value in request.POST.items():
-            value = value.strip()
-            if value:
-                changed[key] = value
-        audit.domain.set_keys(changed)
-        return self.render_to_response(self.get_context_data())
+        if config:
+            try:
+                audit.domain.set_keys(config)
+                messages.success(self.request, _('Configuration updated'))
+            except Exception:
+                messages.success(self.request,
+                                 _('Error updating configuration'))
+        else:
+            messages.info(self.request, _('Setting unchanged'))
+
+        return super().form_valid(form)
 
 
 class XmlView(TemplateView):
