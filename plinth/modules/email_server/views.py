@@ -14,27 +14,13 @@ from django.views.generic.edit import FormView
 
 import plinth.actions
 import plinth.utils
-from plinth.views import AppView, render_tabs
+from plinth.views import AppView
 
 from . import aliases as aliases_module
 from . import audit, forms
 
 
-class TabMixin(View):
-    admin_tabs = [('', _('Home')), ('domains', _('Domains'))]
-
-    def get_context_data(self, *args, **kwargs):
-        # Retrieve context data from the next method in the MRO
-        context = super().get_context_data(*args, **kwargs)
-        # Populate context with customized data
-        context['tabs'] = self.render_dynamic_tabs()
-        return context
-
-    def render_dynamic_tabs(self):
-        if plinth.utils.is_user_admin(self.request):
-            return render_tabs(self.request.path, self.admin_tabs)
-
-        return ''
+class ExceptionsMixin(View):
 
     def render_validation_error(self, validation_error, status=400):
         context = self.get_context_data()
@@ -55,7 +41,7 @@ class TabMixin(View):
             return self.render_exception(error)
 
 
-class EmailServerView(TabMixin, AppView):
+class EmailServerView(ExceptionsMixin, AppView):
     """Server configuration page"""
     app_id = 'email_server'
     template_name = 'email_server.html'
@@ -211,7 +197,7 @@ class AliasView(FormView):
         aliases_module.put(self._get_uid(), form.cleaned_data['alias'])
 
 
-class DomainView(TabMixin, TemplateView):
+class DomainView(ExceptionsMixin, TemplateView):
     template_name = 'email_domains.html'
 
     def get_context_data(self, *args, **kwargs):

@@ -3,7 +3,6 @@
 Main FreedomBox views.
 """
 
-import io
 import time
 import urllib.parse
 
@@ -12,7 +11,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.html import escape
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
@@ -332,30 +330,3 @@ def notification_dismiss(request, id):
     notes[0].dismiss()
 
     return HttpResponseRedirect(_get_redirect_url_from_param(request))
-
-
-def render_tabs(request_path, tab_data):
-    """Generate a Bootstrap tab group and return the raw HTML
-
-    :param request_path: value of `request.path`
-    :param tab_data: a list of (page_name, link_text) tuples
-    :returns: raw HTML of the tabs
-    """
-    sb = io.StringIO()
-    sb.write('<ul class="nav nav-tabs">')
-
-    for page_name, link_text in tab_data:
-        cls = 'active' if request_path.endswith('/' + page_name) else ''
-        href = '#' if cls == 'active' else ('./' + page_name)
-        # -- Begin list
-        sb.write('<li class="nav-item">')
-        # -- Begin link
-        sb.write('<a class="nav-link {}" '.format(cls))
-        sb.write('href="{}">'.format(escape(href)))
-        sb.write('{}</a>'.format(escape(link_text)))
-        # -- End link
-        sb.write('</li>')
-        # -- End list
-
-    sb.write('</ul>')
-    return sb.getvalue()
