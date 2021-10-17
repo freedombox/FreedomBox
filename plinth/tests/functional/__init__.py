@@ -598,6 +598,7 @@ class BaseAppTests:
     # TODO: Check the components of the app instead of configuring here.
     has_service = False
     has_web = True
+    check_diagnostics = True
 
     def assert_app_running(self, session_browser):
         """Assert that the app is running."""
@@ -635,8 +636,20 @@ class BaseAppTests:
 
     def test_run_diagnostics(self, session_browser):
         """Test that all app diagnostics are passing."""
+        if not self.check_diagnostics:
+            pytest.skip(f'Skipping diagnostics check for ${self.app_name}.')
+
         app_enable(session_browser, self.app_name)
-        # TODO
+        session_browser.find_by_id('id_extra_actions_button').click()
+        submit(session_browser, form_class='form-diagnostics-button')
+
+        warning_results = session_browser.find_by_css('.badge-warning')
+        if warning_results:
+            warnings.warn(
+                f'Diagnostics warnings for {self.app_name}: {warning_results}')
+
+        failure_results = session_browser.find_by_css('.badge-danger')
+        assert not failure_results
 
     @pytest.mark.backups
     def test_backup_restore(self, session_browser):
