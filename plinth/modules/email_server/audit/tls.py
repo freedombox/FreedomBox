@@ -168,8 +168,8 @@ def write_dovecot_cert_config(cert, key):
 def check_postfix_cert_usage(title=''):
     prefix = '/etc/letsencrypt/live/'
     diagnosis = models.Diagnosis(title, action='set_cert')
-    conf = postconf.get_many_unsafe(['smtpd_tls_cert_file',
-                                     'smtpd_tls_key_file'])
+    conf = postconf.get_many_unsafe(
+        ['smtpd_tls_cert_file', 'smtpd_tls_key_file'])
     if not conf['smtpd_tls_cert_file'].startswith(prefix):
         diagnosis.error("Cert file not in Let's Encrypt directory")
     if not conf['smtpd_tls_key_file'].startswith(prefix):
@@ -197,7 +197,7 @@ def action_set_cert():
 
 
 def action_check():
-    checks = ('cert_availability',)
+    checks = ('cert_availability', )
     results = []
     for check_name in checks:
         check_function = globals()['su_check_' + check_name]
