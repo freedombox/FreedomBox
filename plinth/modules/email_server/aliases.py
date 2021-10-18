@@ -98,7 +98,7 @@ def _set_status(uid, aliases, status):
 
 def first_setup():
     """Create the database file and schema inside it."""
-    actions.superuser_run('email_server', ['-i', 'aliases', 'setup'])
+    actions.superuser_run('email_server', ['aliases', 'setup'])
 
     # Create schema if not exists
     query = '''

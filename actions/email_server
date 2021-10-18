@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configuration helper for email server.
+"""
 
 import argparse
 import logging
@@ -7,50 +10,39 @@ import os
 import sys
 
 import plinth.log
+from plinth.modules.email_server import audit
 
 EXIT_SYNTAX = 10
 EXIT_PERM = 20
 
-# Set up logging
-plinth.log.pipe_to_syslog(to_stderr='tty')
 logger = logging.getLogger(os.path.basename(__file__))
 
 
-def reserved_for_root(fun):
-    def wrapped(*args, **kwargs):
-        if os.getuid() != 0:
-            logger.critical('This action is reserved for root')
-            sys.exit(EXIT_PERM)
-        return fun(*args, **kwargs)
-    return wrapped
-
-
 def main():
-    if not sys.stdin.isatty():
-        print('WARNING: Output will not be shown. Check syslog for logs',
-              file=sys.stderr)
+    """Parse arguments."""
+    # Set up logging
+    plinth.log.pipe_to_syslog(to_stderr='tty')
 
     parser = argparse.ArgumentParser()
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-i', nargs='+', dest='ipc')
+    parser.add_argument('module', help='Module to trigger action in')
+    parser.add_argument('action', help='Action to trigger in module')
+    parser.add_argument('arguments', help='String arguments for action',
+                        nargs='*')
+    args = parser.parse_args()
 
-    # Select the first non-empty dict item
-    adict = vars(parser.parse_args())
-    generator = (kv for kv in adict.items() if kv[1] is not None)
-    subcommand, arguments = next(generator)
-
-    function = globals()['subcommand_' + subcommand]
     try:
-        function(*arguments)
-    except Exception as e:
-        logger.exception(e)
+        _call(args.module, args.action, args.arguments)
+    except Exception as exception:
+        logger.exception(exception)
         _log_additional_info()
         sys.exit(1)
 
 
-@reserved_for_root
-def subcommand_ipc(module_name, action_name, *args):
-    import plinth.modules.email_server.audit as audit
+def _call(module_name, action_name, arguments):
+    """Import the module and run action as superuser."""
+    if os.getuid() != 0:
+        logger.critical('This action is reserved for root')
+        sys.exit(EXIT_PERM)
 
     # We only run actions defined in the audit module
     if module_name not in audit.__all__:
@@ -58,15 +50,17 @@ def subcommand_ipc(module_name, action_name, *args):
         sys.exit(EXIT_SYNTAX)
 
     module = getattr(audit, module_name)
-    function = getattr(module, 'action_' + action_name, None)
-    if function is None:
+    try:
+        action = getattr(module, 'action_' + action_name)
+    except AttributeError:
         logger.critical('Bad action: %s/%r', module_name, action_name)
         sys.exit(EXIT_SYNTAX)
 
-    function(*args)
+    action(*arguments)
 
 
 def _log_additional_info():
+    """Log additional debugging information."""
     import grp
     import pwd
     resu = ','.join(pwd.getpwuid(uid).pw_name for uid in os.getresuid())

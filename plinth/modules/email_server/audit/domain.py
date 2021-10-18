@@ -42,14 +42,14 @@ def get():
 
 
 def repair():
-    superuser_run('email_server', ['-i', 'domain', 'set_up'])
+    superuser_run('email_server', ['domain', 'set_up'])
 
 
 def repair_component(action_name):
     allowed_actions = {'set_up': ['postfix']}
     if action_name not in allowed_actions:
         return
-    superuser_run('email_server', ['-i', 'domain', action_name])
+    superuser_run('email_server', ['domain', action_name])
     return allowed_actions[action_name]
 
 
@@ -199,7 +199,7 @@ def set_keys(raw):
         raise ClientError('POST data exceeds max line length')
 
     try:
-        superuser_run('email_server', ['-i', 'domain', 'set_keys'], input=ipc)
+        superuser_run('email_server', ['domain', 'set_keys'], input=ipc)
     except ActionError as e:
         stdout = e.args[1]
         if not stdout.startswith('ClientError:'):

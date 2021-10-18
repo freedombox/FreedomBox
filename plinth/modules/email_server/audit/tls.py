@@ -90,20 +90,20 @@ def _get_superuser_results(results):
     translation = {
         'cert_availability': _('Has a TLS certificate'),
     }
-    dump = actions.superuser_run('email_server', ['-i', 'tls', 'check'])
+    dump = actions.superuser_run('email_server', ['tls', 'check'])
     for jmap in json.loads(dump):
         results.append(models.Diagnosis.from_json(jmap, translation.get))
 
 
 def repair():
-    actions.superuser_run('email_server', ['-i', 'tls', 'set_up'])
+    actions.superuser_run('email_server', ['tls', 'set_up'])
 
 
 def repair_component(action):
     action_to_services = {'set_cert': ['dovecot', 'postfix']}
     if action not in action_to_services:  # action not allowed
         return
-    actions.superuser_run('email_server', ['-i', 'tls', action])
+    actions.superuser_run('email_server', ['tls', action])
     return action_to_services[action]
 
 

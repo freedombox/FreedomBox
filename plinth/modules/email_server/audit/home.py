@@ -49,8 +49,7 @@ def put_uid(uid_number):
 
 def _put(arg_type, user_info):
     try:
-        args = ['-i', 'home', 'mk', arg_type, user_info]
-        superuser_run('email_server', args)
+        superuser_run('email_server', ['home', 'mk', arg_type, user_info])
     except ActionError as e:
         raise RuntimeError('Action script failure') from e
 

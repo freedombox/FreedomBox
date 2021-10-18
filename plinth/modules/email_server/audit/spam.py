@@ -94,7 +94,7 @@ def get():
 
 
 def repair():
-    actions.superuser_run('email_server', ['-i', 'spam', 'set_filter'])
+    actions.superuser_run('email_server', ['spam', 'set_filter'])
 
 
 def check_filter(title=''):

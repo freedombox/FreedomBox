@@ -86,7 +86,7 @@ def repair():
     POST /audit/ldap/repair
     """
     aliases.first_setup()
-    actions.superuser_run('email_server', ['-i', 'ldap', 'set_up'])
+    actions.superuser_run('email_server', ['ldap', 'set_up'])
 
 
 def action_set_up():
