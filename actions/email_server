@@ -54,6 +54,11 @@ def _call(module_name, action_name, arguments):
         logger.critical('Bad action: %s/%r', module_name, action_name)
         sys.exit(EXIT_SYNTAX)
 
+    for argument in arguments:
+        if not isinstance(argument, str):
+            logger.critical('Bad argument: %s', argument)
+            sys.exit(EXIT_SYNTAX)
+
     action(*arguments)
 
 
