@@ -15,13 +15,12 @@ from plinth.modules.email_server import audit
 EXIT_SYNTAX = 10
 EXIT_PERM = 20
 
-logger = logging.getLogger(os.path.basename(__file__))
+logger = logging.getLogger(__file__)
 
 
 def main():
     """Parse arguments."""
-    # Set up logging
-    plinth.log.pipe_to_syslog(to_stderr='tty')
+    plinth.log.action_init()
 
     parser = argparse.ArgumentParser()
     parser.add_argument('module', help='Module to trigger action in')
@@ -34,7 +33,6 @@ def main():
         _call(args.module, args.action, args.arguments)
     except Exception as exception:
         logger.exception(exception)
-        _log_additional_info()
         sys.exit(1)
 
 
@@ -57,19 +55,6 @@ def _call(module_name, action_name, arguments):
         sys.exit(EXIT_SYNTAX)
 
     action(*arguments)
-
-
-def _log_additional_info():
-    """Log additional debugging information."""
-    import grp
-    import pwd
-    resu = ','.join(pwd.getpwuid(uid).pw_name for uid in os.getresuid())
-    resg = ','.join(grp.getgrgid(gid).gr_name for gid in os.getresgid())
-    pyver = sys.version.replace('\n', ' ')
-    logger.error('--- Additional Information ---')
-    logger.error('resuid=%s, resgid=%s', resu, resg)
-    logger.error('argv=%r, cwd=%r', sys.argv, os.getcwd())
-    logger.error('pyver=%s (%s)', pyver, os.uname().machine)
 
 
 if __name__ == '__main__':
