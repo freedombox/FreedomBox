@@ -12,3 +12,5 @@ clients = [{
         'url': '/_cockpit/metrics'
     }]
 }]
+
+backup = {}
