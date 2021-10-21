@@ -54,9 +54,7 @@ default_smtps_options = {
 }
 
 MAILSRV_DIR = '/var/lib/plinth/mailsrv'
-ETC_ALIASES = 'hash:/etc/aliases'
-BEFORE_ALIASES = 'ldap:/etc/postfix/freedombox-username-to-uid-number.cf'
-AFTER_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
+SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
 logger = logging.getLogger(__name__)
 
@@ -123,43 +121,24 @@ def check_alias_maps(title=''):
     """Check the ability to mail to usernames and user aliases"""
     diagnosis = models.MainCfDiagnosis(title)
 
-    analysis = models.AliasMapsAnalysis()
-    analysis.parsed = postconf.parse_maps_by_key_unsafe('alias_maps')
-    analysis.isystem = list_find(analysis.parsed, ETC_ALIASES)
-    analysis.ibefore = list_find(analysis.parsed, BEFORE_ALIASES)
-    analysis.iafter = list_find(analysis.parsed, AFTER_ALIASES)
-
-    if analysis.ibefore == -1 or analysis.iafter == -1:
-        diagnosis.flag_once('alias_maps', user=analysis)
+    alias_maps = postconf.get_unsafe('alias_maps').replace(',', ' ').split(' ')
+    if SQLITE_ALIASES not in alias_maps:
+        diagnosis.flag_once('alias_maps', user=alias_maps)
         diagnosis.critical('Required maps not in list')
-    if analysis.ibefore > analysis.iafter:
-        diagnosis.flag_once('alias_maps', user=analysis)
-        diagnosis.critical('Insecure map order')
 
     return diagnosis
 
 
 def fix_alias_maps(diagnosis):
-    diagnosis.repair('alias_maps', rearrange_alias_maps)
+
+    def fix_value(alias_maps):
+        if SQLITE_ALIASES not in alias_maps:
+            alias_maps.append(SQLITE_ALIASES)
+
+        return ' '.join(alias_maps)
+
+    diagnosis.repair('alias_maps', fix_value)
     diagnosis.apply_changes(postconf.set_many_unsafe)
-
-
-def rearrange_alias_maps(analysis):
-    # Delete *all* references to BEFORE_ALIASES and AFTER_ALIASES
-    for i in range(len(analysis.parsed)):
-        if analysis.parsed[i] in (BEFORE_ALIASES, AFTER_ALIASES):
-            analysis.parsed[i] = ''
-    # Does hash:/etc/aliases exist in list?
-    if analysis.isystem >= 0:
-        # Put the maps around hash:/etc/aliases
-        val = '%s %s %s' % (BEFORE_ALIASES, ETC_ALIASES, AFTER_ALIASES)
-        analysis.parsed[analysis.isystem] = val
-    else:
-        # To the end
-        analysis.parsed.append(BEFORE_ALIASES)
-        analysis.parsed.append(AFTER_ALIASES)
-    # List -> string
-    return ' '.join(filter(None, analysis.parsed))
 
 
 def check_local_recipient_maps(title=''):

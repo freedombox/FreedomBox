@@ -11,7 +11,7 @@ from plinth import actions
 
 @dataclass
 class Alias:
-    value: int
+    value: str
     name: str
     enabled: bool = field(init=False)
     status: InitVar[int]
@@ -34,11 +34,11 @@ def _get_cursor():
         connection.close()
 
 
-def get(uid):
+def get(username):
     """Get all aliases of a user."""
     query = 'SELECT name, value, status FROM alias WHERE value=?'
     with _get_cursor() as cursor:
-        rows = cursor.execute(query, (uid, ))
+        rows = cursor.execute(query, (username, ))
         return [Alias(**row) for row in rows]
 
 
@@ -56,40 +56,40 @@ def exists(name):
         return cursor.fetchone()[0] != 0
 
 
-def put(uid, name):
+def put(username, name):
     """Insert if not exists a new alias."""
     query = 'INSERT INTO alias (name, value, status) VALUES (?, ?, ?)'
     with _get_cursor() as cursor:
         try:
-            cursor.execute(query, (name, uid, 1))
+            cursor.execute(query, (name, username, 1))
         except sqlite3.IntegrityError:
             pass  # Alias exists, rare since we are already checking
 
 
-def delete(uid, aliases):
+def delete(username, aliases):
     """Delete a set of aliases."""
     query = 'DELETE FROM alias WHERE value=? AND name=?'
-    parameter_seq = ((uid, name) for name in aliases)
+    parameter_seq = ((username, name) for name in aliases)
     with _get_cursor() as cursor:
         cursor.execute('BEGIN')
         cursor.executemany(query, parameter_seq)
         cursor.execute('COMMIT')
 
 
-def enable(uid, aliases):
+def enable(username, aliases):
     """Enable a list of aliases."""
-    return _set_status(uid, aliases, 1)
+    return _set_status(username, aliases, 1)
 
 
-def disable(uid, aliases):
+def disable(username, aliases):
     """Disable a list of aliases."""
-    return _set_status(uid, aliases, 0)
+    return _set_status(username, aliases, 0)
 
 
-def _set_status(uid, aliases, status):
+def _set_status(username, aliases, status):
     """Set the status value of a list of aliases."""
     query = 'UPDATE alias SET status=? WHERE value=? AND name=?'
-    parameter_seq = ((status, uid, name) for name in aliases)
+    parameter_seq = ((status, username, name) for name in aliases)
     with _get_cursor() as cursor:
         cursor.execute('BEGIN')
         cursor.executemany(query, parameter_seq)
@@ -106,7 +106,7 @@ PRAGMA journal_mode=WAL;
 BEGIN;
 CREATE TABLE IF NOT EXISTS alias (
     name TEXT NOT NULL,
-    value INTEGER NOT NULL,
+    value TEXT NOT NULL,
     status INTEGER NOT NULL,
     PRIMARY KEY (name)
 );

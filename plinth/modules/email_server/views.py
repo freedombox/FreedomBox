@@ -2,7 +2,6 @@
 """
 Views for the email app.
 """
-import pwd
 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
@@ -147,13 +146,9 @@ class AliasView(FormView):
 
         return kwargs
 
-    def _get_uid(self):
-        """Return the UID of the user that made the request."""
-        return pwd.getpwnam(self.request.user.username).pw_uid
-
     def _get_current_aliases(self):
         """Return current list of aliases."""
-        return aliases_module.get(self._get_uid())
+        return aliases_module.get(self.request.user.username)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -185,17 +180,18 @@ class AliasView(FormView):
         """Handle a valid alias list form operation."""
         aliases = form.cleaned_data['aliases']
         action = form.cleaned_data['action']
-        uid = self._get_uid()
+        username = self.request.user.username
         if action == 'delete':
-            aliases_module.delete(uid, aliases)
+            aliases_module.delete(username, aliases)
         elif action == 'disable':
-            aliases_module.disable(uid, aliases)
+            aliases_module.disable(username, aliases)
         elif action == 'enable':
-            aliases_module.enable(uid, aliases)
+            aliases_module.enable(username, aliases)
 
     def _create_form_valid(self, form):
         """Handle a valid create alias form operation."""
-        aliases_module.put(self._get_uid(), form.cleaned_data['alias'])
+        username = self.request.user.username
+        aliases_module.put(username, form.cleaned_data['alias'])
 
 
 class DomainsView(FormView):
