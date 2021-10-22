@@ -68,7 +68,6 @@ def get():
     translation_table = [
         (check_sasl, _('Postfix-Dovecot SASL integration')),
         (check_alias_maps, _('Postfix alias maps')),
-        (check_local_recipient_maps, _('Postfix local recipient maps')),
     ]
     results = []
     with postconf.mutex.lock_all():
@@ -141,36 +140,10 @@ def fix_alias_maps(diagnosis):
     diagnosis.apply_changes(postconf.set_many_unsafe)
 
 
-def check_local_recipient_maps(title=''):
-    diagnosis = models.MainCfDiagnosis(title)
-    lrcpt_maps = postconf.parse_maps_by_key_unsafe('local_recipient_maps')
-    list_modified = False
-
-    # Block mails to system users
-    # local_recipient_maps must not contain proxy:unix:passwd.byname
-    ipasswd = list_find(lrcpt_maps, 'proxy:unix:passwd.byname')
-    if ipasswd >= 0:
-        diagnosis.critical('Mail to system users (/etc/passwd) possible')
-        # Propose a fix
-        lrcpt_maps[ipasswd] = ''
-        list_modified = True
-
-    if list_modified:
-        fix = ' '.join(filter(None, lrcpt_maps))
-        diagnosis.flag('local_recipient_maps', corrected_value=fix)
-
-    return diagnosis
-
-
-def fix_local_recipient_maps(diagnosis):
-    diagnosis.apply_changes(postconf.set_many_unsafe)
-
-
 def action_set_ulookup():
     """Handles email_server -i ldap set_ulookup"""
     with postconf.mutex.lock_all():
         fix_alias_maps(check_alias_maps())
-        fix_local_recipient_maps(check_local_recipient_maps())
 
 
 def list_find(lst, element, start=None, end=None):

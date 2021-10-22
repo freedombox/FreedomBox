@@ -159,10 +159,6 @@ def parse_maps(raw_value):
     return value_list
 
 
-def parse_maps_by_key_unsafe(key):
-    return parse_maps(get_unsafe(key))
-
-
 def _run(args):
     """Run process. Capture and return standard output as a string. Raise a
     RuntimeError on non-zero exit codes"""
