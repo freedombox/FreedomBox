@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 18:24-0400\n"
+"POT-Creation-Date: 2021-10-25 18:50-0400\n"
 "PO-Revision-Date: 2021-10-22 22:43+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -76,16 +76,16 @@ msgstr "Langue de cette interface web"
 msgid "Use the language preference set in the browser"
 msgstr "Utiliser la langue du navigateur"
 
-#: plinth/middleware.py:59 plinth/templates/setup.html:18
+#: plinth/middleware.py:36 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Application installée."
 
-#: plinth/middleware.py:65
+#: plinth/middleware.py:41
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Erreur lors de l’installation de l’application : {string} {details}"
 
-#: plinth/middleware.py:69
+#: plinth/middleware.py:45
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Erreur lors de l’installation de l’application : {error}"
@@ -2122,17 +2122,23 @@ msgstr ""
 
 #: plinth/modules/email_server/__init__.py:55
 msgid ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
+"for users to access email."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:57
+msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "Durant l’installation, les autres serveurs de courriels qui seraient "
 "présents sur le système seront désinstallés."
 
-#: plinth/modules/email_server/__init__.py:66
+#: plinth/modules/email_server/__init__.py:68
 msgid "Email Server"
 msgstr "Serveur de courriel"
 
-#: plinth/modules/email_server/__init__.py:97
+#: plinth/modules/email_server/__init__.py:99
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr "Propulsé par Postfix, Dovecot &amp; Rspamd"
 
@@ -2210,45 +2216,51 @@ msgstr "domaine"
 msgid "New alias (without @domain)"
 msgstr "Nouvel alias (sans le @domaine)"
 
-#: plinth/modules/email_server/manifest.py:7
+#: plinth/modules/email_server/manifest.py:8
 #: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:13
+#: plinth/modules/email_server/manifest.py:16
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:28
+#: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
 msgstr "K-9 Mail"
 
-#: plinth/modules/email_server/manifest.py:41
+#: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
 msgstr "FairEmail"
 
-#: plinth/modules/email_server/templates/email_alias.html:12
+#: plinth/modules/email_server/templates/email_alias.html:11
+#, fuzzy
+#| msgid "My Aliases"
+msgid "Manage Aliases"
+msgstr "Mes alias"
+
+#: plinth/modules/email_server/templates/email_alias.html:14
 msgid "You have no email aliases."
 msgstr "Aucun alias de courriel configuré."
 
-#: plinth/modules/email_server/templates/email_alias.html:21
+#: plinth/modules/email_server/templates/email_alias.html:23
 msgid "Disable selected"
 msgstr "Désactiver la sélection"
 
-#: plinth/modules/email_server/templates/email_alias.html:24
+#: plinth/modules/email_server/templates/email_alias.html:26
 msgid "Enable selected"
 msgstr "Activer la sélection"
 
-#: plinth/modules/email_server/templates/email_alias.html:27
+#: plinth/modules/email_server/templates/email_alias.html:29
 msgid "Delete selected"
 msgstr "Supprimer la sélection"
 
-#: plinth/modules/email_server/templates/email_alias.html:31
+#: plinth/modules/email_server/templates/email_alias.html:33
 msgid "Create a new email alias"
 msgstr "Créer un nouvel alias de courriel"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email_server/templates/email_alias.html:40
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Ajouter"
@@ -2301,6 +2313,10 @@ msgstr "Veuillez en créer un afin de recevoir du courriel."
 #: plinth/modules/email_server/templates/my_mail.html:22
 msgid "Create home directory"
 msgstr "Créer un dossier personnel"
+
+#: plinth/modules/email_server/templates/my_mail.html:27
+msgid "Your home directory is ready to receive emails."
+msgstr ""
 
 #: plinth/modules/email_server/templates/tls_form.html:10
 msgid "Keep current settings"
@@ -5641,12 +5657,12 @@ msgstr ""
 "Regardez comment configurer un client SSH sur le <a href=\"https://pagekite."
 "net/wiki/Howto/SshOverPageKite/\">wiki PageKite</a> (en anglais)"
 
-#: plinth/modules/performance/__init__.py:16
-#: plinth/modules/performance/__init__.py:45
+#: plinth/modules/performance/__init__.py:17
+#: plinth/modules/performance/__init__.py:46
 msgid "Performance"
 msgstr "Performance"
 
-#: plinth/modules/performance/__init__.py:25
+#: plinth/modules/performance/__init__.py:26
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
@@ -5657,7 +5673,7 @@ msgstr ""
 "des tendances d’utilisation et vérifier si la machine est surchargée par "
 "certains utilisateurs ou certains services."
 
-#: plinth/modules/performance/__init__.py:29
+#: plinth/modules/performance/__init__.py:30
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
@@ -5665,7 +5681,7 @@ msgstr ""
 "Les métriques de performance sont collectées par le Co-Pilote "
 "« Performance » et visualisables dans l’appli Cockpit."
 
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:47
 msgid "System Monitoring"
 msgstr "Surveillance du système"
 
@@ -6301,10 +6317,10 @@ msgid ""
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
 "Le tableau qui suit liste le nombre de failles de sécurité actuellement "
-"identifiées pour chaque application installée. Vous trouverez davantage d’"
-"informations sur ces vulnérabilités dans l’outil de suivi des vulnérabilités "
-"<a href=\"https://security-tracker.debian.org/tracker/\">Debian Security "
-"Tracker (en)</a>."
+"identifiées pour chaque application installée. Vous trouverez davantage "
+"d’informations sur ces vulnérabilités dans l’outil de suivi des "
+"vulnérabilités <a href=\"https://security-tracker.debian.org/tracker/"
+"\">Debian Security Tracker (en)</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -7822,8 +7838,8 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
-"Sélectionnez les services auxquels le nouvel utilisateur doit avoir accès. L’"
-"utilisateur pourra se connecter aux services compatibles avec une session "
+"Sélectionnez les services auxquels le nouvel utilisateur doit avoir accès. "
+"L’utilisateur pourra se connecter aux services compatibles avec une session "
 "unique via LDAP s’il est membre des groupes correspondants.<br><br>Les "
 "utilisateurs du groupe admin peuvent se connecter à tous les services. Ils "
 "peuvent également se connecter au système avec Secure Shell (SSH) et obtenir "
@@ -8398,8 +8414,8 @@ msgstr ""
 "Vous devrez commencer par lancer la configuration initiale de WordPress "
 "depuis la page de l’application avant de rendre le site public. La "
 "configuration doit être réalisée en accédant à la {box_name} avec le bon nom "
-"de domaine. Il est recommandé d’activer la fonction de permaliens depuis l’"
-"interface d’administration pour améliorer les URL de vos pages et de vos "
+"de domaine. Il est recommandé d’activer la fonction de permaliens depuis "
+"l’interface d’administration pour améliorer les URL de vos pages et de vos "
 "billets de blogue."
 
 #: plinth/modules/wordpress/__init__.py:48

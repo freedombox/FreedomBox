@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 18:24-0400\n"
+"POT-Creation-Date: 2021-10-25 18:50-0400\n"
 "PO-Revision-Date: 2021-06-07 12:34+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -76,16 +76,16 @@ msgstr "Gjuhë për t’u përdorur për të paraqitur këtë ndërfaqe web"
 msgid "Use the language preference set in the browser"
 msgstr "Përdor parapëlqim gjuhe të caktuar te shfletuesi"
 
-#: plinth/middleware.py:59 plinth/templates/setup.html:18
+#: plinth/middleware.py:36 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Aplikacioni u instalua."
 
-#: plinth/middleware.py:65
+#: plinth/middleware.py:41
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Gabim në instalimin e aplikacionit: {string} {details}"
 
-#: plinth/middleware.py:69
+#: plinth/middleware.py:45
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Gabim në instalimin e aplikacionit: {error}"
@@ -2081,17 +2081,23 @@ msgstr ""
 
 #: plinth/modules/email_server/__init__.py:55
 msgid ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
+"for users to access email."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:57
+msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:66
+#: plinth/modules/email_server/__init__.py:68
 #, fuzzy
 #| msgid "Chat Server"
 msgid "Email Server"
 msgstr "Shërbyes Fjalosjesh"
 
-#: plinth/modules/email_server/__init__.py:97
+#: plinth/modules/email_server/__init__.py:99
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2179,55 +2185,61 @@ msgstr "Përkatësi"
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:7
+#: plinth/modules/email_server/manifest.py:8
 #: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:13
+#: plinth/modules/email_server/manifest.py:16
 #, fuzzy
 #| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
 msgstr "Mozilla Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:28
+#: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:41
+#: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:12
+#: plinth/modules/email_server/templates/email_alias.html:11
+#, fuzzy
+#| msgid "Manage Libraries"
+msgid "Manage Aliases"
+msgstr "Administroni Biblioteka"
+
+#: plinth/modules/email_server/templates/email_alias.html:14
 msgid "You have no email aliases."
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:21
+#: plinth/modules/email_server/templates/email_alias.html:23
 #, fuzzy
 #| msgid "Disabled"
 msgid "Disable selected"
 msgstr "E çaktivizuar"
 
-#: plinth/modules/email_server/templates/email_alias.html:24
+#: plinth/modules/email_server/templates/email_alias.html:26
 #, fuzzy
 #| msgid "cable is connected"
 msgid "Enable selected"
 msgstr "kablloja është e lidhur"
 
-#: plinth/modules/email_server/templates/email_alias.html:27
+#: plinth/modules/email_server/templates/email_alias.html:29
 #, fuzzy
 #| msgid "Deleted selected snapshots"
 msgid "Delete selected"
 msgstr "U fshinë fotografimet e përzgjedhur"
 
-#: plinth/modules/email_server/templates/email_alias.html:31
+#: plinth/modules/email_server/templates/email_alias.html:33
 #, fuzzy
 #| msgid "Create a new backup"
 msgid "Create a new email alias"
 msgstr "Krijoni një kopjeruajtje të re"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email_server/templates/email_alias.html:40
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Shtoje"
@@ -2286,6 +2298,10 @@ msgstr ""
 #| msgid "Updated media directory"
 msgid "Create home directory"
 msgstr "U përditësua drejtori mediash"
+
+#: plinth/modules/email_server/templates/my_mail.html:27
+msgid "Your home directory is ready to receive emails."
+msgstr ""
 
 #: plinth/modules/email_server/templates/tls_form.html:10
 msgid "Keep current settings"
@@ -5569,12 +5585,12 @@ msgstr ""
 "Shihni <a href=\"https://pagekite.net/wiki/Howto/SshOverPageKite/"
 "\">udhëzime</a> ujdisjeje klienti SSH"
 
-#: plinth/modules/performance/__init__.py:16
-#: plinth/modules/performance/__init__.py:45
+#: plinth/modules/performance/__init__.py:17
+#: plinth/modules/performance/__init__.py:46
 msgid "Performance"
 msgstr "Funksionim"
 
-#: plinth/modules/performance/__init__.py:25
+#: plinth/modules/performance/__init__.py:26
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
@@ -5585,7 +5601,7 @@ msgstr ""
 "rregullsi përdorimi dhe nëse hardware-i është apo jo i mbingarkuar nga "
 "përdorues dhe shërbime."
 
-#: plinth/modules/performance/__init__.py:29
+#: plinth/modules/performance/__init__.py:30
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
@@ -5593,7 +5609,7 @@ msgstr ""
 "Matjet mbi funksionimin grumbullohen nga Performance Co-Pilot dhe mund të "
 "shihen duke përdorur aplikacionin Cockpit."
 
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:47
 msgid "System Monitoring"
 msgstr "Mbikëqyrje Sistemi"
 
