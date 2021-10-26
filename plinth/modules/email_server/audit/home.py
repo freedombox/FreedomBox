@@ -1,70 +1,22 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""Privileged actions to setup users' dovecot mail home directory."""
 
-import logging
-import os
-import pwd
 import subprocess
 
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-
-from plinth.actions import superuser_run
-from plinth.errors import ActionError
-from plinth.modules.email_server import interproc
-
-logger = logging.getLogger(__name__)
+from plinth import actions
 
 
-def exists_nam(username):
-    """Returns True if the user's home directory exists"""
-    try:
-        passwd = pwd.getpwnam(username)
-    except KeyError as e:
-        raise ValidationError(_('User does not exist')) from e
-    return _exists(passwd)
+def repair():
+    """Set correct permissions on /var/mail/ directory.
+
+    For each user, /var/mail/<user> is the 'dovecot mail home' for that user.
+    Dovecot creates new directories with the same permissions as the parent
+    directory. Ensure that 'others' can access /var/mail/.
+
+    """
+    actions.superuser_run('email_server', ['home', 'set_up'])
 
 
-def exists_uid(uid_number):
-    """Returns True if the user's home directory exists"""
-    try:
-        passwd = pwd.getpwuid(uid_number)
-    except KeyError as e:
-        raise ValidationError(_('User does not exist')) from e
-    return _exists(passwd)
-
-
-def _exists(passwd):
-    return os.path.exists(passwd.pw_dir)
-
-
-def put_nam(username):
-    """Create a home directory for the user (identified by username)"""
-    _put('nam', username)
-
-
-def put_uid(uid_number):
-    """Create a home directory for the user (identified by UID)"""
-    _put('uid', str(uid_number))
-
-
-def _put(arg_type, user_info):
-    try:
-        superuser_run('email_server', ['home', 'mk', arg_type, user_info])
-    except ActionError as e:
-        raise RuntimeError('Action script failure') from e
-
-
-def action_mk(arg_type, user_info):
-    if arg_type == 'nam':
-        passwd = pwd.getpwnam(user_info)
-    elif arg_type == 'uid':
-        passwd = pwd.getpwuid(int(user_info))
-    else:
-        raise ValueError('Unknown arg_type')
-
-    args = ['sudo', '-n', '--user=#' + str(passwd.pw_uid)]
-    args.extend(['/bin/sh', '-c', 'mkdir -p ~'])
-    completed = subprocess.run(args, capture_output=True, check=False)
-    if completed.returncode != 0:
-        interproc.log_subprocess(completed)
-        raise OSError('Could not create home directory')
+def action_set_up():
+    """Run chmod on /var/mail to remove all permissions for 'others'."""
+    subprocess.run(['chmod', 'o-rwx', '/var/mail'], check=True)

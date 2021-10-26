@@ -99,20 +99,6 @@ class EmailServerView(ExceptionsMixin, AppView):
             plinth.actions.superuser_run('service', ['reload', service])
 
 
-class MyMailView(TemplateView):
-    template_name = 'my_mail.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        nam = self.request.user.username
-        context['has_homedir'] = audit.home.exists_nam(nam)
-        return context
-
-    def post(self, request):
-        audit.home.put_nam(request.user.username)
-        return self.render_to_response(self.get_context_data())
-
-
 class AliasView(FormView):
     """View to create, list, enable, disable and delete aliases.
 

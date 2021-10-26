@@ -10,8 +10,6 @@ urlpatterns = [
     path('apps/email_server/', views.EmailServerView.as_view(), name='index'),
     path('apps/email_server/domains', views.DomainsView.as_view(),
          name='domains'),
-    path('apps/email_server/my_mail',
-         non_admin_view(views.MyMailView.as_view()), name='my_mail'),
     path('apps/email_server/my_aliases',
          non_admin_view(views.AliasView.as_view()), name='aliases'),
     path('apps/email_server/config.xml', public(views.XmlView.as_view())),
