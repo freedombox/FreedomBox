@@ -102,7 +102,6 @@ def first_setup():
 
     # Create schema if not exists
     query = '''
-PRAGMA journal_mode=WAL;
 BEGIN;
 CREATE TABLE IF NOT EXISTS alias (
     name TEXT NOT NULL,
