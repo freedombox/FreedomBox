@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 18:24-0400\n"
+"POT-Creation-Date: 2021-10-25 18:50-0400\n"
 "PO-Revision-Date: 2021-03-12 13:03+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -76,16 +76,16 @@ msgstr "Idioma para mostrar esta interfaz web"
 msgid "Use the language preference set in the browser"
 msgstr "Configure la preferencia de idioma en el navegador"
 
-#: plinth/middleware.py:59 plinth/templates/setup.html:18
+#: plinth/middleware.py:36 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Aplicación instalada."
 
-#: plinth/middleware.py:65
+#: plinth/middleware.py:41
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Error al instalar la aplicación: {string} {details}"
 
-#: plinth/middleware.py:69
+#: plinth/middleware.py:45
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Error al instalar la aplicación: {error}"
@@ -2091,17 +2091,23 @@ msgstr ""
 
 #: plinth/modules/email_server/__init__.py:55
 msgid ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
+"for users to access email."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:57
+msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:66
+#: plinth/modules/email_server/__init__.py:68
 #, fuzzy
 #| msgid "Chat Server"
 msgid "Email Server"
 msgstr "Servidor de Chat"
 
-#: plinth/modules/email_server/__init__.py:97
+#: plinth/modules/email_server/__init__.py:99
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2189,55 +2195,61 @@ msgstr "Dominio"
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:7
+#: plinth/modules/email_server/manifest.py:8
 #: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:13
+#: plinth/modules/email_server/manifest.py:16
 #, fuzzy
 #| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
 msgstr "Mozilla Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:28
+#: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:41
+#: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:12
+#: plinth/modules/email_server/templates/email_alias.html:11
+#, fuzzy
+#| msgid "Manage Libraries"
+msgid "Manage Aliases"
+msgstr "Administrar bibliotecas"
+
+#: plinth/modules/email_server/templates/email_alias.html:14
 msgid "You have no email aliases."
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:21
+#: plinth/modules/email_server/templates/email_alias.html:23
 #, fuzzy
 #| msgid "Disabled"
 msgid "Disable selected"
 msgstr "Desactivado"
 
-#: plinth/modules/email_server/templates/email_alias.html:24
+#: plinth/modules/email_server/templates/email_alias.html:26
 #, fuzzy
 #| msgid "cable is connected"
 msgid "Enable selected"
 msgstr "El cable está conectado"
 
-#: plinth/modules/email_server/templates/email_alias.html:27
+#: plinth/modules/email_server/templates/email_alias.html:29
 #, fuzzy
 #| msgid "Deleted selected snapshots"
 msgid "Delete selected"
 msgstr "Las instantáneas seleccionadas fueron eliminadas"
 
-#: plinth/modules/email_server/templates/email_alias.html:31
+#: plinth/modules/email_server/templates/email_alias.html:33
 #, fuzzy
 #| msgid "Create a new backup"
 msgid "Create a new email alias"
 msgstr "Crear una copia de seguridad nueva"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email_server/templates/email_alias.html:40
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Añadir"
@@ -2298,6 +2310,10 @@ msgstr ""
 #| msgid "Updated media directory"
 msgid "Create home directory"
 msgstr "Carpeta multimedia actualizada"
+
+#: plinth/modules/email_server/templates/my_mail.html:27
+msgid "Your home directory is ready to receive emails."
+msgstr ""
 
 #: plinth/modules/email_server/templates/tls_form.html:10
 #, fuzzy
@@ -5574,12 +5590,12 @@ msgstr ""
 "Vea las <a href=\"https://pagekite.net/wiki/Howto/SshOverPageKite/"
 "\">instrucciones</a> para la configuración del cliente SSH"
 
-#: plinth/modules/performance/__init__.py:16
-#: plinth/modules/performance/__init__.py:45
+#: plinth/modules/performance/__init__.py:17
+#: plinth/modules/performance/__init__.py:46
 msgid "Performance"
 msgstr "Rendimiento"
 
-#: plinth/modules/performance/__init__.py:25
+#: plinth/modules/performance/__init__.py:26
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
@@ -5589,7 +5605,7 @@ msgstr ""
 "acerca del uso del hardware e identificar patrones de uso o si el hardware "
 "se sobrecarga de usuarios o servicios."
 
-#: plinth/modules/performance/__init__.py:29
+#: plinth/modules/performance/__init__.py:30
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
@@ -5597,7 +5613,7 @@ msgstr ""
 "Las métricas de rendimiento las recolecta Performance Co-Pilot y se pueden "
 "ver empleando la app Cockpit."
 
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:47
 msgid "System Monitoring"
 msgstr "Monitorización del sistema"
 

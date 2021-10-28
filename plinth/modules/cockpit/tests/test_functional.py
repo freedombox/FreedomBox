@@ -5,28 +5,12 @@ Functional, browser based tests for cockpit app.
 
 import pytest
 
-from plinth.tests import functional
+from plinth.tests.functional import BaseAppTests
 
 pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.cockpit]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'cockpit')
-    yield
-    functional.app_disable(session_browser, 'cockpit')
-
-
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'cockpit')
-
-    functional.app_enable(session_browser, 'cockpit')
-    assert functional.service_is_running(session_browser, 'cockpit')
-    assert functional.is_available(session_browser, 'cockpit')
-
-    functional.app_disable(session_browser, 'cockpit')
-    assert functional.service_is_not_running(session_browser, 'cockpit')
-    assert not functional.is_available(session_browser, 'cockpit')
+class TestCockpitApp(BaseAppTests):
+    app_name = 'cockpit'
+    has_service = True
+    has_web = True

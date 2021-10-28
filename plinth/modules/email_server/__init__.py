@@ -52,6 +52,8 @@ managed_services = ['postfix', 'dovecot', 'rspamd']
 managed_packages = packages + packages_bloat
 
 _description = [
+    _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
+      'interface for users to access email.'),
     _('During installation, any other email servers in the system will be '
       'uninstalled.')
 ]

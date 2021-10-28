@@ -583,3 +583,78 @@ def user_exists(browser, name):
     nav_to_module(browser, 'users')
     links = browser.links.find_by_href(f'/plinth/sys/users/{name}/edit/')
     return len(links) == 1
+
+
+class BaseAppTests:
+    """Base class for common functional tests.
+
+    To run these tests on an app, the app should subclass this class with a
+    class name starting with 'Test'. This allows the app tests to be
+    automatically discovered while the base class tests to stay undiscovered.
+    Tests will apply to the app without the need not override each test.
+    """
+
+    app_name = ''
+    # TODO: Check the components of the app instead of configuring here.
+    has_service = False
+    has_web = True
+    check_diagnostics = True
+
+    def assert_app_running(self, session_browser):
+        """Assert that the app is running."""
+        if self.has_service:
+            assert service_is_running(session_browser, self.app_name)
+
+        if self.has_web:
+            assert is_available(session_browser, self.app_name)
+
+    def assert_app_not_running(self, session_browser):
+        """Assert that the app is not running."""
+        if self.has_service:
+            assert service_is_not_running(session_browser, self.app_name)
+
+        if self.has_web:
+            assert not is_available(session_browser, self.app_name)
+
+    @pytest.fixture(scope='class', autouse=True)
+    def fixture_background(self, session_browser):
+        """Login and install the app."""
+        login(session_browser)
+        install(session_browser, self.app_name)
+        yield
+        app_disable(session_browser, self.app_name)
+
+    def test_enable_disable(self, session_browser):
+        """Test enabling and disabling the app."""
+        app_disable(session_browser, self.app_name)
+
+        app_enable(session_browser, self.app_name)
+        self.assert_app_running(session_browser)
+
+        app_disable(session_browser, self.app_name)
+        self.assert_app_not_running(session_browser)
+
+    def test_run_diagnostics(self, session_browser):
+        """Test that all app diagnostics are passing."""
+        if not self.check_diagnostics:
+            pytest.skip(f'Skipping diagnostics check for ${self.app_name}.')
+
+        app_enable(session_browser, self.app_name)
+        session_browser.find_by_id('id_extra_actions_button').click()
+        submit(session_browser, form_class='form-diagnostics-button')
+
+        warning_results = session_browser.find_by_css('.badge-warning')
+        if warning_results:
+            warnings.warn(
+                f'Diagnostics warnings for {self.app_name}: {warning_results}')
+
+        failure_results = session_browser.find_by_css('.badge-danger')
+        assert not failure_results
+
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test that backup and restore operations work on the app."""
+        app_enable(session_browser, self.app_name)
+        backup_create(session_browser, self.app_name, 'test_' + self.app_name)
+        backup_restore(session_browser, self.app_name, 'test_' + self.app_name)
+        self.assert_app_running(session_browser)

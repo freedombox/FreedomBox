@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
+from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
 
@@ -53,6 +54,10 @@ class PerformanceApp(app_module.App):
                               info.short_description, info.icon,
                               'performance:index', parent_url_name='system')
         self.add(menu_item)
+
+        backup_restore = BackupRestore('backup-restore-performance',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
         daemon_0 = Daemon('daemon-performance-0', managed_services[0],
                           listen_ports=None)

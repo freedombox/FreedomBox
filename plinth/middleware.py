@@ -25,6 +25,29 @@ from . import views
 logger = logging.getLogger(__name__)
 
 
+def _collect_setup_result(request, module):
+    """Show success/fail message from previous install operation."""
+    if not module.setup_helper.is_finished:
+        return
+
+    exception = module.setup_helper.collect_result()
+    if not exception:
+        if not setup._is_module_essential(module):
+            messages.success(request, _('Application installed.'))
+    else:
+        if isinstance(exception, PackageException):
+            error_string = getattr(exception, 'error_string', str(exception))
+            error_details = getattr(exception, 'error_details', '')
+            message = _('Error installing application: {string} '
+                        '{details}').format(string=error_string,
+                                            details=error_details)
+        else:
+            message = _('Error installing application: {error}') \
+                .format(error=exception)
+
+        messages.error(request, message)
+
+
 class SetupMiddleware(MiddlewareMixin):
     """Django middleware to show pre-setup message and setup progress."""
 
@@ -51,29 +74,17 @@ class SetupMiddleware(MiddlewareMixin):
         module_name = resolver_match.namespaces[0]
         module = plinth.module_loader.loaded_modules[module_name]
 
-        # Collect errors from any previous operations and show them
-        if module.setup_helper.is_finished:
-            exception = module.setup_helper.collect_result()
-            if not exception:
-                if not setup._is_module_essential(module):
-                    messages.success(request, _('Application installed.'))
-            else:
-                if isinstance(exception, PackageException):
-                    error_string = getattr(exception, 'error_string',
-                                           str(exception))
-                    error_details = getattr(exception, 'error_details', '')
-                    message = _('Error installing application: {string} '
-                                '{details}').format(string=error_string,
-                                                    details=error_details)
-                else:
-                    message = _('Error installing application: {error}') \
-                        .format(error=exception)
-
-                messages.error(request, message)
+        is_admin = is_user_admin(request)
+        # Collect and show setup operation result to admins
+        if is_admin:
+            _collect_setup_result(request, module)
 
         # Check if application is up-to-date
         if module.setup_helper.get_state() == 'up-to-date':
             return
+
+        if not is_admin:
+            raise PermissionDenied
 
         # Only allow logged-in users to access any setup page
         view = login_required(views.SetupView.as_view())

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 18:24-0400\n"
-"PO-Revision-Date: 2021-05-31 22:13+0000\n"
+"POT-Creation-Date: 2021-10-25 18:50-0400\n"
+"PO-Revision-Date: 2021-10-22 22:43+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -76,16 +76,16 @@ msgstr "Langue de cette interface web"
 msgid "Use the language preference set in the browser"
 msgstr "Utiliser la langue du navigateur"
 
-#: plinth/middleware.py:59 plinth/templates/setup.html:18
+#: plinth/middleware.py:36 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "Application installée."
 
-#: plinth/middleware.py:65
+#: plinth/middleware.py:41
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Erreur lors de l’installation de l’application : {string} {details}"
 
-#: plinth/middleware.py:69
+#: plinth/middleware.py:45
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Erreur lors de l’installation de l’application : {error}"
@@ -1989,10 +1989,10 @@ msgid ""
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
 "Pour communiquer, vous pouvez utiliser le <a href=\"{jsxc_url}\">client web</"
-"a> ou tout autre <a href='https://xmpp.org/software/clients' "
-"target='_blank'>client XMPP</a>. Une fois activé, ejabberd est accessible "
-"par tout <a href=\"{users_url}\">utilisateur disposant d’un compte sur la "
-"{box_name}</a>."
+"a> ou tout autre <a href=\"https://xmpp.org/software/clients\" target="
+"\"_blank\">client XMPP</a> de votre choix. Une fois activé, ejabberd est "
+"accessible par tout <a href=\"{users_url}\">utilisateur disposant d’un "
+"compte sur la {box_name}</a>."
 
 #: plinth/modules/ejabberd/__init__.py:50
 #, python-brace-format
@@ -2122,162 +2122,152 @@ msgstr ""
 
 #: plinth/modules/email_server/__init__.py:55
 msgid ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
+"for users to access email."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:57
+msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Durant l’installation, les autres serveurs de courriels qui seraient "
+"présents sur le système seront désinstallés."
 
-#: plinth/modules/email_server/__init__.py:66
-#, fuzzy
-#| msgid "Chat Server"
+#: plinth/modules/email_server/__init__.py:68
 msgid "Email Server"
-msgstr "Serveur de discussion"
+msgstr "Serveur de courriel"
 
-#: plinth/modules/email_server/__init__.py:97
+#: plinth/modules/email_server/__init__.py:99
 msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
+msgstr "Propulsé par Postfix, Dovecot &amp; Rspamd"
 
 #: plinth/modules/email_server/aliases/__init__.py:67
 #: plinth/modules/email_server/aliases/__init__.py:74
 msgid "The alias was taken"
-msgstr ""
+msgstr "Cet alias est déjà pris"
 
 #: plinth/modules/email_server/aliases/models.py:13
 msgid "Must be at least 2 characters long"
-msgstr ""
+msgstr "La taille minimum est de 2 caractères"
 
 #: plinth/modules/email_server/aliases/models.py:15
 msgid "Contains illegal characters"
-msgstr ""
+msgstr "Contient des caractères interdits"
 
 #: plinth/modules/email_server/aliases/models.py:17
 msgid "Must start and end with a-z or 0-9"
-msgstr ""
+msgstr "Doit commencer par a-z ou 0-9"
 
 #: plinth/modules/email_server/aliases/models.py:19
 msgid "Cannot be a number"
-msgstr ""
+msgstr "Ne peut être un nombre"
 
 #: plinth/modules/email_server/audit/domain.py:35
-#, fuzzy
-#| msgid "Error setting domain name: {exception}"
 msgid "Postfix domain name config"
-msgstr "Erreur lors de la définition du nom de domaine : {exception}"
+msgstr "Configuration du nom de domaine Postfix"
 
 #: plinth/modules/email_server/audit/home.py:23
 #: plinth/modules/email_server/audit/home.py:32
-#, fuzzy
-#| msgid "Directory does not exist."
 msgid "User does not exist"
-msgstr "Le répertoire n’existe pas."
+msgstr "Utilisateur introuvable"
 
 #: plinth/modules/email_server/audit/ldap.py:66
 msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+msgstr "Intégration de l'authentification SASL Postfix-Dovecot"
 
 #: plinth/modules/email_server/audit/ldap.py:67
 msgid "Postfix alias maps"
-msgstr ""
+msgstr "Table d’alias Postfix"
 
 #: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix local recipient maps"
-msgstr ""
+msgstr "Table de destinataires locaux Postfix"
 
 #: plinth/modules/email_server/audit/rcube.py:31
-#, fuzzy
-#| msgid "unavailable"
 msgid "RoundCube availability"
-msgstr "indisponible"
+msgstr "Disponibilité de RoundCube"
 
 #: plinth/modules/email_server/audit/rcube.py:32
 msgid "RoundCube configured for FreedomBox email"
-msgstr ""
+msgstr "Roundcube est configuré pour la gestion de courriels de la FreedomBox"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
-msgstr ""
+msgstr "Filtres de courriels entrants et sortants"
 
 #: plinth/modules/email_server/audit/tls.py:81
 msgid "Postfix TLS parameters"
-msgstr ""
+msgstr "Paramètres TLS pour Postfix"
 
 #: plinth/modules/email_server/audit/tls.py:82
 msgid "Postfix uses a TLS certificate"
-msgstr ""
+msgstr "Postfix utilise un certificat TLS"
 
 #: plinth/modules/email_server/audit/tls.py:91
-#, fuzzy
-#| msgid "No certificate"
 msgid "Has a TLS certificate"
-msgstr "Aucun certificat"
+msgstr "A un certificat TLS"
 
 #: plinth/modules/email_server/forms.py:7
-#, fuzzy
-#| msgid "Domain"
 msgid "domain"
-msgstr "Domaine"
+msgstr "domaine"
 
 #: plinth/modules/email_server/forms.py:14
 msgid "New alias (without @domain)"
-msgstr ""
+msgstr "Nouvel alias (sans le @domaine)"
 
-#: plinth/modules/email_server/manifest.py:7
+#: plinth/modules/email_server/manifest.py:8
 #: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:13
-#, fuzzy
-#| msgid "Mozilla Thunderbird"
+#: plinth/modules/email_server/manifest.py:16
 msgid "Thunderbird"
-msgstr "Mozilla Thunderbird"
+msgstr "Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:28
+#: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
-msgstr ""
+msgstr "K-9 Mail"
 
-#: plinth/modules/email_server/manifest.py:41
+#: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
-msgstr ""
+msgstr "FairEmail"
 
-#: plinth/modules/email_server/templates/email_alias.html:12
+#: plinth/modules/email_server/templates/email_alias.html:11
+#, fuzzy
+#| msgid "My Aliases"
+msgid "Manage Aliases"
+msgstr "Mes alias"
+
+#: plinth/modules/email_server/templates/email_alias.html:14
 msgid "You have no email aliases."
-msgstr ""
+msgstr "Aucun alias de courriel configuré."
 
-#: plinth/modules/email_server/templates/email_alias.html:21
-#, fuzzy
-#| msgid "Disabled"
+#: plinth/modules/email_server/templates/email_alias.html:23
 msgid "Disable selected"
-msgstr "Désactivé"
+msgstr "Désactiver la sélection"
 
-#: plinth/modules/email_server/templates/email_alias.html:24
-#, fuzzy
-#| msgid "cable is connected"
+#: plinth/modules/email_server/templates/email_alias.html:26
 msgid "Enable selected"
-msgstr "Le câble est connecté"
+msgstr "Activer la sélection"
 
-#: plinth/modules/email_server/templates/email_alias.html:27
-#, fuzzy
-#| msgid "Deleted selected snapshots"
+#: plinth/modules/email_server/templates/email_alias.html:29
 msgid "Delete selected"
-msgstr "Supprimer les instantanés sélectionnés"
+msgstr "Supprimer la sélection"
 
-#: plinth/modules/email_server/templates/email_alias.html:31
-#, fuzzy
-#| msgid "Create a new backup"
+#: plinth/modules/email_server/templates/email_alias.html:33
 msgid "Create a new email alias"
-msgstr "Créer une nouvelle sauvegarde"
+msgstr "Créer un nouvel alias de courriel"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email_server/templates/email_alias.html:40
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Ajouter"
 
 #: plinth/modules/email_server/templates/email_domains.html:19
-#, fuzzy
-#| msgid "New Backup"
 msgid "New value"
-msgstr "Nouvelle sauvegarde"
+msgstr "Nouvelle valeur"
 
 #: plinth/modules/email_server/templates/email_domains.html:31
 #: plinth/modules/email_server/templates/email_security.html:23
@@ -2290,83 +2280,71 @@ msgstr "Mises à jour"
 
 #: plinth/modules/email_server/templates/email_form_base.html:12
 msgid "There was a problem with your request. Please try again."
-msgstr ""
+msgstr "Une erreur s’est produite. Veuillez réessayer."
 
 #: plinth/modules/email_server/templates/email_security.html:13
 msgid "Postfix TLS"
-msgstr ""
+msgstr "TLS Postfix"
 
 #: plinth/modules/email_server/templates/email_security.html:18
 msgid "Dovecot TLS"
-msgstr ""
+msgstr "TLS Dovecot"
 
 #: plinth/modules/email_server/templates/email_server.html:14
 msgid "Visit Rspamd administration interface"
-msgstr ""
+msgstr "Se rendre sur l’interface d’administration Rspamd"
 
 #: plinth/modules/email_server/templates/email_server.html:18
-#, fuzzy
-#| msgid "Service Type"
 msgid "Service Alert"
-msgstr "Type de service"
+msgstr "Alertes sur le service"
 
 #: plinth/modules/email_server/templates/email_server.html:38
 msgid "Repair"
-msgstr ""
+msgstr "Réparer"
 
 #: plinth/modules/email_server/templates/my_mail.html:15
-#, fuzzy
-#| msgid "Path is not a directory."
 msgid "You do not have a home directory."
-msgstr "Le chemin n’est pas un répertoire."
+msgstr "Vous n’avez pas de dossier personnel (« home directory »)."
 
 #: plinth/modules/email_server/templates/my_mail.html:17
 msgid "Create one to begin receiving emails."
-msgstr ""
+msgstr "Veuillez en créer un afin de recevoir du courriel."
 
 #: plinth/modules/email_server/templates/my_mail.html:22
-#, fuzzy
-#| msgid "Updated media directory"
 msgid "Create home directory"
-msgstr "Répertoire multimédia mis à jour"
+msgstr "Créer un dossier personnel"
+
+#: plinth/modules/email_server/templates/my_mail.html:27
+msgid "Your home directory is ready to receive emails."
+msgstr ""
 
 #: plinth/modules/email_server/templates/tls_form.html:10
-#, fuzzy
-#| msgid "Current status:"
 msgid "Keep current settings"
-msgstr "État actuel :"
+msgstr "Conserver les paramètres actuels"
 
 #: plinth/modules/email_server/templates/tls_form.html:19
-#, fuzzy
-#| msgid "Let's Encrypt"
 msgid "Use Let's Encrypt"
-msgstr "Let's Encrypt"
+msgstr "Utiliser Let’s Encrypt"
 
 #: plinth/modules/email_server/templates/tls_form.html:24
-#, fuzzy
-#| msgid "Domain name set"
 msgid "Common name"
-msgstr "Nom de domaine configuré"
+msgstr "Nom commun de domaine (Common Name (CN))"
 
 #: plinth/modules/email_server/templates/tls_form.html:38
 msgid "Use custom values"
-msgstr ""
+msgstr "Utiliser des valeurs personnalisées"
 
 #: plinth/modules/email_server/templates/tls_form.html:43
-#, fuzzy
-#| msgid "Certificate Status"
 msgid "Certificate path"
-msgstr "État du certificat"
+msgstr "Chemin du certificat"
 
 #: plinth/modules/email_server/templates/tls_form.html:53
-#, fuzzy
-#| msgid "Private key of this machine"
 msgid "Private key path"
-msgstr "Clé privée de cette machine"
+msgstr "Chemin de la clef privée"
 
 #: plinth/modules/email_server/templates/tls_form.html:67
 msgid "Use system default"
-msgstr ""
+msgstr "Utiliser les paramètres par défaut du système"
 
 #: plinth/modules/email_server/views.py:22
 #: plinth/modules/email_server/views.py:30 plinth/templates/base.html:110
@@ -2375,12 +2353,12 @@ msgstr "Accueil"
 
 #: plinth/modules/email_server/views.py:23
 msgid "My Mail"
-msgstr ""
+msgstr "Mon courriel"
 
 #: plinth/modules/email_server/views.py:24
 #: plinth/modules/email_server/views.py:31
 msgid "My Aliases"
-msgstr ""
+msgstr "Mes alias"
 
 #: plinth/modules/email_server/views.py:25
 #: plinth/modules/networks/templates/connection_show.html:259
@@ -2396,23 +2374,19 @@ msgstr "Domaines"
 #: plinth/modules/email_server/views.py:102
 #, python-brace-format
 msgid "Internal error in {0}"
-msgstr ""
+msgstr "Erreur interne dans le module {0}"
 
 #: plinth/modules/email_server/views.py:105
 msgid "Check syslog for more information"
-msgstr ""
+msgstr "Veuillez consulter les journaux système pour plus d’information"
 
 #: plinth/modules/email_server/views.py:180
-#, fuzzy
-#| msgid "Enable damage"
 msgid "Enabled aliases"
-msgstr "Activer les blessures"
+msgstr "Alias actifs"
 
 #: plinth/modules/email_server/views.py:181
-#, fuzzy
-#| msgid "Disabled"
 msgid "Disabled aliases"
-msgstr "Désactivé"
+msgstr "Alias désactivés"
 
 #: plinth/modules/firewall/__init__.py:33
 #, python-brace-format
@@ -5297,7 +5271,8 @@ msgstr "Impossible de modifier la connexion : connexion introuvable."
 
 #: plinth/modules/networks/views.py:214
 msgid "This type of connection is not yet understood."
-msgstr "Ce type de connexion n'est pas encore pris en charge."
+msgstr ""
+"La configuration de ce type de connexion n'est pas encore pris en charge."
 
 #: plinth/modules/networks/views.py:332
 #, python-brace-format
@@ -5682,12 +5657,12 @@ msgstr ""
 "Regardez comment configurer un client SSH sur le <a href=\"https://pagekite."
 "net/wiki/Howto/SshOverPageKite/\">wiki PageKite</a> (en anglais)"
 
-#: plinth/modules/performance/__init__.py:16
-#: plinth/modules/performance/__init__.py:45
+#: plinth/modules/performance/__init__.py:17
+#: plinth/modules/performance/__init__.py:46
 msgid "Performance"
 msgstr "Performance"
 
-#: plinth/modules/performance/__init__.py:25
+#: plinth/modules/performance/__init__.py:26
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
@@ -5698,7 +5673,7 @@ msgstr ""
 "des tendances d’utilisation et vérifier si la machine est surchargée par "
 "certains utilisateurs ou certains services."
 
-#: plinth/modules/performance/__init__.py:29
+#: plinth/modules/performance/__init__.py:30
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
@@ -5706,7 +5681,7 @@ msgstr ""
 "Les métriques de performance sont collectées par le Co-Pilote "
 "« Performance » et visualisables dans l’appli Cockpit."
 
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:47
 msgid "System Monitoring"
 msgstr "Surveillance du système"
 
@@ -5741,7 +5716,7 @@ msgid ""
 "interface for a few minutes until the system is restarted."
 msgstr ""
 "Voulez-vous vraiment redémarrer ? Cette interface web sera inaccessible "
-"durant quelques minutes, le temps que le système ait redémarré."
+"durant quelques minutes, le temps que le système redémarre."
 
 #: plinth/modules/power/templates/power_restart.html:34
 msgid ""
@@ -6335,12 +6310,6 @@ msgstr ""
 "FreedomBox."
 
 #: plinth/modules/security/templates/security_report.html:19
-#, fuzzy
-#| msgid ""
-#| "The following table lists the current reported number, and historical "
-#| "count, of security vulnerabilities for each installed app. More "
-#| "information on the vulnerabilities can be found on the <a href=\"https://"
-#| "security-tracker.debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgid ""
 "The following table lists the current reported number of security "
 "vulnerabilities for each installed app. More information on the "
@@ -6348,10 +6317,10 @@ msgid ""
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
 "Le tableau qui suit liste le nombre de failles de sécurité actuellement "
-"identifiées ainsi que le décompte historique, pour chaque application "
-"installée. Vous trouverez davantage d’informations sur ces vulnérabilités "
-"dans l’outil de suivi des vulnérabilités <a href=\"https://security-tracker."
-"debian.org/tracker/\">Debian Security Tracker (en)</a>."
+"identifiées pour chaque application installée. Vous trouverez davantage "
+"d’informations sur ces vulnérabilités dans l’outil de suivi des "
+"vulnérabilités <a href=\"https://security-tracker.debian.org/tracker/"
+"\">Debian Security Tracker (en)</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -7615,7 +7584,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/forms.py:19
 msgid "Enable auto-update to next stable release"
-msgstr "Activer les mises à jour automatiques vers la prochaine verion stable"
+msgstr "Activer les mises à jour automatiques vers la prochaine version stable"
 
 #: plinth/modules/upgrades/forms.py:20
 msgid ""
@@ -7640,7 +7609,7 @@ msgid ""
 "activated now, they can be activated later."
 msgstr ""
 "Il est fortement recommandé d’activer la mise à jour régulière des "
-"fonctionnalités. Si vous choisissez de ne pas l’activez maintenant, vous "
+"fonctionnalités. Si vous choisissez de ne pas l’activer maintenant, vous "
 "pourrez toujours le faire par la suite."
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:33
@@ -7871,10 +7840,10 @@ msgid ""
 msgstr ""
 "Sélectionnez les services auxquels le nouvel utilisateur doit avoir accès. "
 "L’utilisateur pourra se connecter aux services compatibles avec une session "
-"unique via LDAP s’il est membre des groupes correspondants.<br /><br />Les "
+"unique via LDAP s’il est membre des groupes correspondants.<br><br>Les "
 "utilisateurs du groupe admin peuvent se connecter à tous les services. Ils "
 "peuvent également se connecter au système avec Secure Shell (SSH) et obtenir "
-"les privilèges de superutilisateur (sudo)."
+"les privilèges d’administrateur (sudo)."
 
 #: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
 #, python-brace-format
@@ -8041,7 +8010,7 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
-"Utiliser le <a href='%(change_password_url)s'>formulaire de changement de "
+"Utiliser le <a href=\"%(change_password_url)s\">formulaire de changement de "
 "mot de passe</a> pour changer votre mot de passe."
 
 #: plinth/modules/users/templates/users_update.html:31
@@ -8102,9 +8071,9 @@ msgid ""
 "securely relayed through {box_name}."
 msgstr ""
 "Une autre utilisation possible est de connecter un appareil mobile à votre "
-"{box_name} pendant un déplacement. Bien que connecté à un réseau Wi-Fi "
-"public, tout votre trafic sera alors relayé via votre {box_name} de manière "
-"sécurisée."
+"{box_name} pendant un déplacement. Même si celui-ci est connecté à un réseau "
+"Wi-Fi public, tout votre trafic sera alors relayé via votre {box_name} de "
+"manière sécurisée."
 
 #: plinth/modules/wireguard/forms.py:32
 msgid "Invalid key."
@@ -8427,6 +8396,12 @@ msgid ""
 "Administration interface and produced web pages are suitable for mobile "
 "devices."
 msgstr ""
+"WordPress est un outil populaire pour créer et gérer des sites Web et des "
+"blogues. Les contenus peuvent être gérés au travers d’une interface "
+"visuelle. La mise en page et les fonctionnalités des pages Web peuvent être "
+"personnalisés. Une charte graphique peut être choisie grâce au système de "
+"thèmes. L’interface d’administration et les pages Web produites sont "
+"compatibles avec les appareils mobiles."
 
 #: plinth/modules/wordpress/__init__.py:43
 #, python-brace-format
@@ -8436,6 +8411,12 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"Vous devrez commencer par lancer la configuration initiale de WordPress "
+"depuis la page de l’application avant de rendre le site public. La "
+"configuration doit être réalisée en accédant à la {box_name} avec le bon nom "
+"de domaine. Il est recommandé d’activer la fonction de permaliens depuis "
+"l’interface d’administration pour améliorer les URL de vos pages et de vos "
+"billets de blogue."
 
 #: plinth/modules/wordpress/__init__.py:48
 msgid ""
@@ -8443,6 +8424,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"WordPress a sa propre gestion des comptes utilisateurs. Le premiers compte "
+"administrateur est créé lors de la configuration initiale. Ajoutez la <a "
+"href=\"/wordpress/wp-admin/\">page d’administration</a> à vos favoris pour y "
+"accéder ultérieurement."
 
 #: plinth/modules/wordpress/__init__.py:52
 msgid ""
@@ -8450,23 +8435,21 @@ msgid ""
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
+"Après une mise a jour majeure, vous devrez lancer la mise à jour de base de "
+"donnée manuellement depuis l’interface d’administration. L’installation et "
+"la mise à jour de modules additionnels et de thèmes se fait à vos risques et "
+"périls."
 
 #: plinth/modules/wordpress/__init__.py:70
 #: plinth/modules/wordpress/manifest.py:6
-#, fuzzy
-#| msgid "Address"
 msgid "WordPress"
-msgstr "Adresse"
+msgstr "WordPress"
 
 #: plinth/modules/wordpress/__init__.py:71
-#, fuzzy
-#| msgid "Wiki and Blog"
 msgid "Website and Blog"
-msgstr "Wiki et blogue"
+msgstr "Site web et blogue"
 
 #: plinth/modules/wordpress/forms.py:14
-#, fuzzy
-#| msgid "public access"
 msgid "Public access"
 msgstr "Accès public"
 
@@ -8475,6 +8458,10 @@ msgid ""
 "Allow all visitors. Disabling allows only administrators to view the "
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
+"Autoriser les visiteurs. En désactivant cette option seuls les "
+"administrateurs seront autorisés à se connecter au site et au blogue "
+"WordPress. N’activez cette option qu’après avoir réalisé la configuration "
+"initiale de WordPress."
 
 #: plinth/modules/zoph/__init__.py:33
 #, python-brace-format
@@ -8915,6 +8902,9 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Paquets incompatibles :</strong> Certains paquets installés sur ce "
+"système sont incompatibles avec l’installation de cette application. Si vous "
+"choisissez de continuer, les paquets suivants seront supprimés :"
 
 #: plinth/templates/setup.html:71
 msgid "Install"

@@ -33,6 +33,10 @@ def parse_arguments():
         help='Expand a partition to take adjacent free space')
     subparser.add_argument('device',
                            help='Partition which needs to be resized')
+    subparser.add_argument(
+        '--mount-point', default='/',
+        help=('Mount point which the device is mounted. '
+              'Needed for btrfs filesystems'))
 
     subparser = subparsers.add_parser('mount', help='Mount a filesystem')
     subparser.add_argument('--block-device',
@@ -68,6 +72,7 @@ def subcommand_is_partition_expandable(arguments):
 def subcommand_expand_partition(arguments):
     """Expand a partition to take adjacent free space."""
     device = arguments.device
+    mount_point = arguments.mount_point
     device, requested_partition, free_space = _get_free_space(device)
 
     if requested_partition['table_type'] == 'msdos' and \
@@ -80,7 +85,7 @@ def subcommand_expand_partition(arguments):
         _move_gpt_second_header(device)
 
     _resize_partition(device, requested_partition, free_space)
-    _resize_file_system(device, requested_partition, free_space)
+    _resize_file_system(device, requested_partition, free_space, mount_point)
 
 
 def _move_gpt_second_header(device):
@@ -126,15 +131,16 @@ def _resize_partition(device, requested_partition, free_space):
             sys.exit(5)
 
 
-def _resize_file_system(device, requested_partition, free_space):
+def _resize_file_system(device, requested_partition, free_space,
+                        mount_point='/'):
     """Resize a file system inside a partition."""
     if requested_partition['type'] == 'btrfs':
-        _resize_btrfs(device, requested_partition, free_space)
+        _resize_btrfs(device, requested_partition, free_space, mount_point)
     elif requested_partition['type'] == 'ext4':
-        _resize_ext4(device, requested_partition, free_space)
+        _resize_ext4(device, requested_partition, free_space, mount_point)
 
 
-def _resize_ext4(device, requested_partition, free_space):
+def _resize_ext4(device, requested_partition, _free_space, _mount_point):
     """Resize an ext4 file system inside a partition."""
     partition_device = _get_partition_device(device,
                                              requested_partition['number'])
@@ -147,10 +153,10 @@ def _resize_ext4(device, requested_partition, free_space):
         sys.exit(6)
 
 
-def _resize_btrfs(device, requested_partition, free_space):
+def _resize_btrfs(_device, _requested_partition, _free_space, mount_point='/'):
     """Resize a btrfs file system inside a partition."""
     try:
-        command = ['btrfs', 'filesystem', 'resize', 'max', '/']
+        command = ['btrfs', 'filesystem', 'resize', 'max', mount_point]
         subprocess.run(command, stdout=subprocess.DEVNULL, check=True)
     except subprocess.CalledProcessError as exception:
         print('Error expanding filesystem:', exception, file=sys.stderr)

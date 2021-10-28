@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 18:24-0400\n"
+"POT-Creation-Date: 2021-10-25 18:50-0400\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -76,16 +76,16 @@ msgstr "इस वेब इंटरफेस में इसतेमाल �
 msgid "Use the language preference set in the browser"
 msgstr "जो भाषा ब्राउज़र में हैं, वो भाषा उपयोग करें"
 
-#: plinth/middleware.py:59 plinth/templates/setup.html:18
+#: plinth/middleware.py:36 plinth/templates/setup.html:18
 msgid "Application installed."
 msgstr "एप्लिकेशन इंस्टॉल हो गया."
 
-#: plinth/middleware.py:65
+#: plinth/middleware.py:41
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता : {string} {details}"
 
-#: plinth/middleware.py:69
+#: plinth/middleware.py:45
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
@@ -2111,17 +2111,23 @@ msgstr ""
 
 #: plinth/modules/email_server/__init__.py:55
 msgid ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
+"for users to access email."
+msgstr ""
+
+#: plinth/modules/email_server/__init__.py:57
+msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:66
+#: plinth/modules/email_server/__init__.py:68
 #, fuzzy
 #| msgid "Chat Server"
 msgid "Email Server"
 msgstr "चाट सर्वर"
 
-#: plinth/modules/email_server/__init__.py:97
+#: plinth/modules/email_server/__init__.py:99
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2207,55 +2213,61 @@ msgstr "डोमेन"
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:7
+#: plinth/modules/email_server/manifest.py:8
 #: plinth/modules/roundcube/__init__.py:55
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "राउंडक्यूब"
 
-#: plinth/modules/email_server/manifest.py:13
+#: plinth/modules/email_server/manifest.py:16
 #, fuzzy
 #| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
 msgstr "मोज़िला थंडरबर्ड"
 
-#: plinth/modules/email_server/manifest.py:28
+#: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:41
+#: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:12
+#: plinth/modules/email_server/templates/email_alias.html:11
+#, fuzzy
+#| msgid "Create User"
+msgid "Manage Aliases"
+msgstr "यूसर बनाये"
+
+#: plinth/modules/email_server/templates/email_alias.html:14
 msgid "You have no email aliases."
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:21
+#: plinth/modules/email_server/templates/email_alias.html:23
 #, fuzzy
 #| msgid "Disabled"
 msgid "Disable selected"
 msgstr "अक्षम किया गया है"
 
-#: plinth/modules/email_server/templates/email_alias.html:24
+#: plinth/modules/email_server/templates/email_alias.html:26
 #, fuzzy
 #| msgid "cable is connected"
 msgid "Enable selected"
 msgstr "केबल कनेक्ट हो गया"
 
-#: plinth/modules/email_server/templates/email_alias.html:27
+#: plinth/modules/email_server/templates/email_alias.html:29
 #, fuzzy
 #| msgid "Delete all the snapshots"
 msgid "Delete selected"
 msgstr "सब स्नैपशॉटस हटाएँ"
 
-#: plinth/modules/email_server/templates/email_alias.html:31
+#: plinth/modules/email_server/templates/email_alias.html:33
 #, fuzzy
 #| msgid "Create Account"
 msgid "Create a new email alias"
 msgstr "अकाउंट बनाएँ"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email_server/templates/email_alias.html:40
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "जोड़ें"
@@ -2316,6 +2328,10 @@ msgstr ""
 #| msgid "Create User"
 msgid "Create home directory"
 msgstr "यूसर बनाये"
+
+#: plinth/modules/email_server/templates/my_mail.html:27
+msgid "Your home directory is ready to receive emails."
+msgstr ""
 
 #: plinth/modules/email_server/templates/tls_form.html:10
 #, fuzzy
@@ -5522,25 +5538,25 @@ msgstr ""
 "SSH ग्राहक सेटअप देखें <a href=\"https://pagekite.net/wiki/Howto/SshOverPageKite/"
 "\">instructions</a>"
 
-#: plinth/modules/performance/__init__.py:16
-#: plinth/modules/performance/__init__.py:45
+#: plinth/modules/performance/__init__.py:17
+#: plinth/modules/performance/__init__.py:46
 msgid "Performance"
 msgstr ""
 
-#: plinth/modules/performance/__init__.py:25
+#: plinth/modules/performance/__init__.py:26
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
 "patterns and whether the hardware is overloaded by users and services."
 msgstr ""
 
-#: plinth/modules/performance/__init__.py:29
+#: plinth/modules/performance/__init__.py:30
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
 msgstr ""
 
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:47
 msgid "System Monitoring"
 msgstr ""
 
