@@ -14,6 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -79,6 +80,9 @@ class SyncthingApp(app_module.App):
                                       login_required=True,
                                       allowed_groups=list(self.groups))
         self.add(shortcut)
+
+        packages = Packages('packages-syncthing', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-syncthing-web', info.name,
                             ports=['http', 'https'], is_external=True)

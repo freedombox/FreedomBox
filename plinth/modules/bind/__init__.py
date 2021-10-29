@@ -16,6 +16,7 @@ from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -74,6 +75,7 @@ class BindApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('BIND'), icon='fa-globe-w',
                                short_description=_('Domain Name Server'),
@@ -84,6 +86,9 @@ class BindApp(app_module.App):
                               info.icon, 'bind:index',
                               parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-bind', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-bind', info.name, ports=['dns'],
                             is_external=False)

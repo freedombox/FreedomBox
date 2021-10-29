@@ -9,6 +9,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 
 from . import manifest
 
@@ -46,6 +47,7 @@ class MonkeysphereApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Monkeysphere'), icon='fa-certificate',
                                description=_description,
@@ -56,6 +58,9 @@ class MonkeysphereApp(app_module.App):
                               'monkeysphere:index', parent_url_name='system',
                               advanced=True)
         self.add(menu_item)
+
+        packages = Packages('packages-monkeysphere', managed_packages)
+        self.add(packages)
 
         users_and_groups = UsersAndGroups('users-and-groups-monkeysphere',
                                           reserved_usernames=['monkeysphere'])

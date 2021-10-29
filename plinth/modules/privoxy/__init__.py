@@ -14,6 +14,7 @@ from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -52,6 +53,7 @@ class PrivoxyApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Privoxy'),
             icon_filename='privoxy', short_description=_('Web Proxy'),
@@ -70,6 +72,9 @@ class PrivoxyApp(app_module.App):
             description=info.description,
             configure_url=reverse_lazy('privoxy:index'), login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-privoxy', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-privoxy', info.name, ports=['privoxy'],
                             is_external=False)

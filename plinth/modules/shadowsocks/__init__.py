@@ -12,6 +12,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -47,6 +48,7 @@ class ShadowsocksApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Shadowsocks'),
                                icon_filename='shadowsocks',
@@ -67,6 +69,9 @@ class ShadowsocksApp(app_module.App):
             configure_url=reverse_lazy('shadowsocks:index'),
             login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-shadowsocks', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-shadowsocks', info.name,
                             ports=['shadowsocks-local-plinth'],

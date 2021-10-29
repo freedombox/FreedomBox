@@ -12,6 +12,7 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -42,6 +43,7 @@ class InfinotedApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('infinoted'), icon_filename='infinoted',
                                short_description=_('Gobby Server'),
@@ -62,6 +64,9 @@ class InfinotedApp(app_module.App):
             configure_url=reverse_lazy('infinoted:index'),
             clients=info.clients, login_required=False)
         self.add(shortcut)
+
+        packages = Packages('packages-infinoted', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-infinoted', info.name,
                             ports=['infinoted-plinth'], is_external=True)

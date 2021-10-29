@@ -11,6 +11,7 @@ from plinth import cfg, menu
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.signals import domain_added
 from plinth.utils import format_lazy
 
@@ -51,6 +52,7 @@ class DynamicDNSApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, depends=depends,
                                name=_('Dynamic DNS Client'), icon='fa-refresh',
@@ -61,6 +63,9 @@ class DynamicDNSApp(app_module.App):
         menu_item = menu.Menu('menu-dynamicdns', info.name, None, info.icon,
                               'dynamicdns:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-dynamicdns', managed_packages)
+        self.add(packages)
 
         domain_type = DomainType('domain-type-dynamic',
                                  _('Dynamic Domain Name'), 'dynamicdns:index',

@@ -15,6 +15,7 @@ from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 
 from . import manifest
 
@@ -44,6 +45,7 @@ class SSHApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential,
                                name=_('Secure Shell (SSH) Server'),
@@ -53,6 +55,9 @@ class SSHApp(app_module.App):
         menu_item = menu.Menu('menu-ssh', info.name, None, info.icon,
                               'ssh:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-ssh', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-ssh', info.name, ports=['ssh'],
                             is_external=True)

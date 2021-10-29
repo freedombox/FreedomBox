@@ -16,6 +16,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 
 from . import manifest
 
@@ -49,6 +50,7 @@ class TransmissionApp(app_module.App):
         groups = {
             'bit-torrent': _('Download files using BitTorrent applications')
         }
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Transmission'),
             icon_filename='transmission',
@@ -69,6 +71,9 @@ class TransmissionApp(app_module.App):
             url='/transmission', clients=info.clients, login_required=True,
             allowed_groups=list(groups))
         self.add(shortcut)
+
+        packages = Packages('packages-transmission', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-transmission', info.name,
                             ports=['http', 'https',

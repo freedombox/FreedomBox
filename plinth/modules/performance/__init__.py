@@ -9,6 +9,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
+from plinth.package import Packages
 
 from . import manifest
 
@@ -42,6 +43,7 @@ class PerformanceApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Performance'), icon='fa-bar-chart',
                                short_description=_('System Monitoring'),
@@ -54,6 +56,9 @@ class PerformanceApp(app_module.App):
                               info.short_description, info.icon,
                               'performance:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-performance', managed_packages)
+        self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-performance',
                                        **manifest.backup)

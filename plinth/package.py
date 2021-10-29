@@ -13,11 +13,19 @@ import apt.cache
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import actions
+from plinth import actions, app
 from plinth.errors import ActionError
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
+
+
+class Packages(app.FollowerComponent):
+    """Component to manage the packages of an app."""
+
+    def __init__(self, component_id, packages):
+        self.component_id = component_id
+        self.packages = packages
 
 
 class PackageException(Exception):

@@ -14,6 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -72,6 +73,9 @@ class MLDonkeyApp(app_module.App):
             url='/mldonkey/', login_required=True, clients=info.clients,
             allowed_groups=list(groups))
         self.add(shortcuts)
+
+        packages = Packages('packages-mldonkey', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-mldonkey', info.name,
                             ports=['http', 'https'], is_external=True)

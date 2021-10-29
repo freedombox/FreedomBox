@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
+from plinth.package import Packages
 
 version = 1
 
@@ -57,6 +58,7 @@ class NetworksApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, name=_('Networks'),
                                icon='fa-signal', description=_description,
@@ -66,6 +68,9 @@ class NetworksApp(app_module.App):
         menu_item = menu.Menu('menu-networks', info.name, None, info.icon,
                               'networks:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-networks', managed_packages)
+        self.add(packages)
 
     def diagnose(self):
         """Run diagnostics and return the results."""

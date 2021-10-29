@@ -12,6 +12,7 @@ from plinth import cfg
 from plinth.daemon import Daemon
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.package import Packages
 from plinth.utils import format_lazy, is_valid_user_name
 
 version = 9
@@ -40,6 +41,9 @@ class ApacheApp(app_module.App):
                                is_essential=is_essential,
                                name=_('Apache HTTP Server'))
         self.add(info)
+
+        packages = Packages('packages-apache', managed_packages)
+        self.add(packages)
 
         web_server_ports = Firewall('firewall-web', _('Web Server'),
                                     ports=['http', 'https'], is_external=True)

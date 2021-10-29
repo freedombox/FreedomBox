@@ -13,6 +13,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.config import get_hostname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
+from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed, post_hostname_change
 from plinth.utils import format_lazy
 
@@ -64,6 +65,9 @@ class AvahiApp(app_module.App):
         menu_item = menu.Menu('menu-avahi', info.name, None, info.icon,
                               'avahi:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-avahi', managed_packages)
+        self.add(packages)
 
         domain_type = DomainType('domain-type-local',
                                  _('Local Network Domain'), 'config:index',

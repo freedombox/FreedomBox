@@ -12,6 +12,7 @@ from plinth.daemon import Daemon
 from plinth.errors import DomainNotRegisteredError
 from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 domain_name_file = "/etc/diaspora/domain_name"
@@ -64,6 +65,7 @@ class DiasporaApp(app_module.App):
         """Create components for the app."""
         super().__init__()
         from . import manifest
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('diaspora*'), icon_filename='diaspora',
                                short_description=_('Federated Social Network'),
@@ -81,6 +83,9 @@ class DiasporaApp(app_module.App):
                             icon=info.icon_filename, url=None,
                             clients=info.clients, login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-diaspora', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-diaspora', info.name,
                             ports=['http', 'https'], is_external=True)

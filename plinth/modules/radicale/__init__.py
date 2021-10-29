@@ -15,6 +15,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import Version, format_lazy
 
 from . import manifest
@@ -51,6 +52,7 @@ class RadicaleApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Radicale'), icon_filename='radicale',
                                short_description=_('Calendar and Addressbook'),
@@ -70,6 +72,9 @@ class RadicaleApp(app_module.App):
                                       url='/radicale/', clients=info.clients,
                                       login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-radicale', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-radicale', info.name,
                             ports=['http', 'https'], is_external=True)

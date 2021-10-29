@@ -16,6 +16,7 @@ from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.errors import ActionError, PlinthError
 from plinth.modules.backups.components import BackupRestore
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest, udisks2
@@ -49,6 +50,7 @@ class StorageApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, name=_('Storage'),
                                icon='fa-hdd-o', description=_description,
@@ -58,6 +60,9 @@ class StorageApp(app_module.App):
         menu_item = menu.Menu('menu-storage', info.name, None, info.icon,
                               'storage:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-storage', managed_packages)
+        self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-storage',
                                        **manifest.backup)

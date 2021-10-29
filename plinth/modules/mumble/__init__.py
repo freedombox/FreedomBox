@@ -17,6 +17,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import Version
 
 from . import manifest
@@ -48,6 +49,7 @@ class MumbleApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Mumble'),
             icon_filename='mumble', short_description=_('Voice Chat'),
@@ -66,6 +68,9 @@ class MumbleApp(app_module.App):
             description=info.description,
             configure_url=reverse_lazy('mumble:index'), clients=info.clients)
         self.add(shortcut)
+
+        packages = Packages('packages-mumble', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-mumble', info.name,
                             ports=['mumble-plinth'], is_external=True)
