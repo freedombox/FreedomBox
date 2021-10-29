@@ -24,8 +24,14 @@ class Packages(app.FollowerComponent):
     """Component to manage the packages of an app."""
 
     def __init__(self, component_id, packages):
+        super(Packages, self).__init__(component_id)
+
         self.component_id = component_id
-        self.packages = packages
+        self._packages = packages
+
+    @property
+    def packages(self):
+        return self._packages
 
 
 class PackageException(Exception):
