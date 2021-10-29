@@ -102,10 +102,13 @@ class YAMLFile(object):
         self.yaml_file = yaml_file
         self.conf = None
 
+        self.yaml = ruamel.yaml.YAML()
+        self.yaml.preserve_quotes = True
+
     def __enter__(self):
         with open(self.yaml_file, 'r') as intro_conf:
             if not self.is_file_empty():
-                self.conf = ruamel.yaml.round_trip_load(intro_conf)
+                self.conf = self.yaml.load(intro_conf)
             else:
                 self.conf = {}
 
@@ -114,7 +117,7 @@ class YAMLFile(object):
     def __exit__(self, type_, value, traceback):
         if not traceback:
             with open(self.yaml_file, 'w') as intro_conf:
-                ruamel.yaml.round_trip_dump(self.conf, intro_conf)
+                self.yaml.dump(self.conf, intro_conf)
 
     def is_file_empty(self):
         return os.stat(self.yaml_file).st_size == 0
