@@ -14,105 +14,84 @@ from plinth.tests.functional import config
 pytestmark = [pytest.mark.apps, pytest.mark.mediawiki]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'mediawiki')
-    _set_server_url(session_browser)
-    yield
-    functional.app_disable(session_browser, 'mediawiki')
+class TestMediawikiApp(functional.BaseAppTests):
+    app_name = 'mediawiki'
+    has_service = False
+    has_web = True
 
+    @pytest.fixture(scope='class', autouse=True)
+    def fixture_setup(self, session_browser):
+        """Setup the app."""
+        functional.login(session_browser)
+        functional.install(session_browser, 'mediawiki')
+        _set_server_url(session_browser)
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'mediawiki')
+    def test_public_registrations(self, session_browser):
+        """Test enabling public registrations."""
+        _enable_public_registrations(session_browser)
+        _verify_create_account_link(session_browser)
 
-    functional.app_enable(session_browser, 'mediawiki')
-    assert functional.is_available(session_browser, 'mediawiki')
+        _disable_public_registrations(session_browser)
+        _verify_no_create_account_link(session_browser)
 
-    functional.app_disable(session_browser, 'mediawiki')
-    assert not functional.is_available(session_browser, 'mediawiki')
+    def test_private_mode(self, session_browser):
+        """Test enabling private mode."""
+        _enable_private_mode(session_browser)
+        _verify_no_create_account_link(session_browser)
+        _verify_no_anonymous_reads_edits_link(session_browser)
 
+        _disable_private_mode(session_browser)
+        _verify_anonymous_reads_edits_link(session_browser)
 
-def test_public_registrations(session_browser):
-    """Test enabling public registrations."""
-    functional.app_enable(session_browser, 'mediawiki')
-    _enable_public_registrations(session_browser)
-    _verify_create_account_link(session_browser)
+    def test_private_mode_public_registrations(self, session_browser):
+        """Test interactive between private mode and public registrations.
 
-    _disable_public_registrations(session_browser)
-    _verify_no_create_account_link(session_browser)
+        Requires JS."""
+        # Enabling private mode disables public registrations
+        _enable_public_registrations(session_browser)
+        _enable_private_mode(session_browser)
+        _verify_no_create_account_link(session_browser)
 
+        # Enabling public registrations disables private mode
+        _enable_private_mode(session_browser)
+        _enable_public_registrations(session_browser)
+        _verify_create_account_link(session_browser)
 
-def test_private_mode(session_browser):
-    """Test enabling private mode."""
-    functional.app_enable(session_browser, 'mediawiki')
-    _enable_private_mode(session_browser)
-    _verify_no_create_account_link(session_browser)
-    _verify_no_anonymous_reads_edits_link(session_browser)
+    def test_upload_files(self, session_browser):
+        """Test that logged in user can see upload files option.
 
-    _disable_private_mode(session_browser)
-    _verify_anonymous_reads_edits_link(session_browser)
+        Requires JS."""
+        _set_admin_password(session_browser, 'whatever123')
+        _login_with_credentials(session_browser, 'admin', 'whatever123')
 
+    def test_upload_images(self, session_browser):
+        """Test uploading an image."""
+        _upload_image(session_browser, 'admin', 'whatever123', 'noise.png')
+        assert _image_exists(session_browser, 'Noise.png')
 
-def test_private_mode_public_registrations(session_browser):
-    """Test interactive between private mode and public registrations.
+    def test_upload_svg_image(self, session_browser):
+        """Test uploading an SVG image."""
+        _upload_image(session_browser, 'admin', 'whatever123',
+                      'apps-background.svg')
+        assert _image_exists(session_browser, 'Apps-background.svg')
 
-    Requires JS."""
-    functional.app_enable(session_browser, 'mediawiki')
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of pages and images."""
+        if not _image_exists(session_browser, 'Noise.png'):
+            _upload_image(session_browser, 'admin', 'whatever123', 'Noise.png')
 
-    # Enabling private mode disables public registrations
-    _enable_public_registrations(session_browser)
-    _enable_private_mode(session_browser)
-    _verify_no_create_account_link(session_browser)
+        functional.backup_create(session_browser, 'mediawiki',
+                                 'test_mediawiki')
 
-    # Enabling public registrations disables private mode
-    _enable_private_mode(session_browser)
-    _enable_public_registrations(session_browser)
-    _verify_create_account_link(session_browser)
+        _enable_public_registrations(session_browser)
+        _delete_image(session_browser, 'admin', 'whatever123', 'Noise.png')
+        _delete_main_page(session_browser, 'admin', 'whatever123')
+        functional.backup_restore(session_browser, 'mediawiki',
+                                  'test_mediawiki')
 
-
-def test_upload_files(session_browser):
-    """Test that logged in user can see upload files option.
-
-    Requires JS."""
-    functional.app_enable(session_browser, 'mediawiki')
-    _set_admin_password(session_browser, 'whatever123')
-    _login_with_credentials(session_browser, 'admin', 'whatever123')
-
-
-def test_upload_images(session_browser):
-    """Test uploading an image."""
-    functional.app_enable(session_browser, 'mediawiki')
-    _upload_image(session_browser, 'admin', 'whatever123', 'noise.png')
-    assert _image_exists(session_browser, 'Noise.png')
-
-
-def test_upload_svg_image(session_browser):
-    """Test uploading an SVG image."""
-    functional.app_enable(session_browser, 'mediawiki')
-    _upload_image(session_browser, 'admin', 'whatever123',
-                  'apps-background.svg')
-    assert _image_exists(session_browser, 'Apps-background.svg')
-
-
-def test_backup_restore(session_browser):
-    """Test backup and restore of pages and images."""
-    functional.app_enable(session_browser, 'mediawiki')
-    if not _image_exists(session_browser, 'Noise.png'):
-        _upload_image(session_browser, 'admin', 'whatever123', 'Noise.png')
-
-    functional.backup_create(session_browser, 'mediawiki', 'test_mediawiki')
-
-    _enable_public_registrations(session_browser)
-    _delete_image(session_browser, 'admin', 'whatever123', 'Noise.png')
-    _delete_main_page(session_browser, 'admin', 'whatever123')
-    functional.backup_restore(session_browser, 'mediawiki', 'test_mediawiki')
-
-    assert _has_main_page(session_browser)
-    assert _image_exists(session_browser, 'Noise.png')
-    _verify_create_account_link(session_browser)
+        assert _has_main_page(session_browser)
+        assert _image_exists(session_browser, 'Noise.png')
+        _verify_create_account_link(session_browser)
 
 
 def _enable_public_registrations(browser):
