@@ -14,56 +14,40 @@ pytestmark = [pytest.mark.system, pytest.mark.pagekite]
 # TODO Scenario: Delete custom service
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'pagekite')
-    yield
-    functional.app_disable(session_browser, 'pagekite')
+class TestPagekiteApp(functional.BaseAppTests):
+    app_name = 'pagekite'
+    has_service = True
+    has_web = False
 
+    def test_configure(self, session_browser):
+        """Test pagekite configuration."""
+        functional.app_enable(session_browser, 'pagekite')
+        _configure(session_browser, 'pagekite.example.com', 8080,
+                   'mykite.example.com', 'mysecret')
+        assert ('pagekite.example.com', 8080, 'mykite.example.com',
+                'mysecret') == _get_configuration(session_browser)
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'pagekite')
+        # Capitalized kite name should become lower case.
+        _configure(session_browser, 'pagekite.example.com', 8080,
+                   'Mykite.example.com', 'mysecret')
+        assert ('pagekite.example.com', 8080, 'mykite.example.com',
+                'mysecret') == _get_configuration(session_browser)
 
-    functional.app_enable(session_browser, 'pagekite')
-    assert functional.service_is_running(session_browser, 'pagekite')
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of configuration."""
+        functional.app_enable(session_browser, 'pagekite')
+        _configure(session_browser, 'beforebackup.example.com', 8081,
+                   'beforebackup.example.com', 'beforebackupsecret')
+        functional.backup_create(session_browser, 'pagekite', 'test_pagekite')
 
-    functional.app_disable(session_browser, 'pagekite')
-    assert functional.service_is_not_running(session_browser, 'pagekite')
+        _configure(session_browser, 'afterbackup.example.com', 8082,
+                   'afterbackup.example.com', 'afterbackupsecret')
+        functional.backup_restore(session_browser, 'pagekite', 'test_pagekite')
 
-
-def test_configure(session_browser):
-    """Test pagekite configuration."""
-    functional.app_enable(session_browser, 'pagekite')
-    _configure(session_browser, 'pagekite.example.com', 8080,
-               'mykite.example.com', 'mysecret')
-    assert ('pagekite.example.com', 8080, 'mykite.example.com',
-            'mysecret') == _get_configuration(session_browser)
-
-    # Capitalized kite name should become lower case.
-    _configure(session_browser, 'pagekite.example.com', 8080,
-               'Mykite.example.com', 'mysecret')
-    assert ('pagekite.example.com', 8080, 'mykite.example.com',
-            'mysecret') == _get_configuration(session_browser)
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of configuration."""
-    functional.app_enable(session_browser, 'pagekite')
-    _configure(session_browser, 'beforebackup.example.com', 8081,
-               'beforebackup.example.com', 'beforebackupsecret')
-    functional.backup_create(session_browser, 'pagekite', 'test_pagekite')
-
-    _configure(session_browser, 'afterbackup.example.com', 8082,
-               'afterbackup.example.com', 'afterbackupsecret')
-    functional.backup_restore(session_browser, 'pagekite', 'test_pagekite')
-
-    assert functional.service_is_running(session_browser, 'pagekite')
-    assert ('beforebackup.example.com', 8081, 'beforebackup.example.com',
-            'beforebackupsecret') == _get_configuration(session_browser)
+        assert functional.service_is_running(session_browser, 'pagekite')
+        assert ('beforebackup.example.com', 8081, 'beforebackup.example.com',
+                'beforebackupsecret') == _get_configuration(session_browser)
 
 
 def _configure(browser, host, port, kite_name, kite_secret):
