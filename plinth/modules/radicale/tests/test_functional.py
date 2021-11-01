@@ -15,63 +15,56 @@ logger = logging.getLogger(__name__)
 pytestmark = [pytest.mark.apps, pytest.mark.radicale]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'radicale')
-    yield
-    functional.app_disable(session_browser, 'radicale')
+class TestRadicaleApp(functional.BaseAppTests):
+    app_name = 'radicale'
+    has_service = True
+    has_web = True
 
+    def assert_app_running(self, session_browser):
+        """Assert that the app is running."""
+        assert functional.service_is_running(session_browser, self.app_name)
+        assert _calendar_is_available(session_browser)
+        assert _addressbook_is_available(session_browser)
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'radicale')
+    def assert_app_not_running(self, session_browser):
+        """Assert that the app is not running."""
+        assert functional.service_is_not_running(session_browser,
+                                                 self.app_name)
+        assert not _calendar_is_available(session_browser)
+        assert not _addressbook_is_available(session_browser)
 
-    functional.app_enable(session_browser, 'radicale')
-    assert functional.service_is_running(session_browser, 'radicale')
-    assert _calendar_is_available(session_browser)
-    assert _addressbook_is_available(session_browser)
+    def test_access_rights(self, session_browser):
+        """Test setting the access rights."""
+        functional.app_enable(session_browser, 'radicale')
+        _set_access_rights(session_browser, 'owner_only')
 
-    functional.app_disable(session_browser, 'radicale')
-    assert functional.service_is_not_running(session_browser, 'radicale')
-    assert not _calendar_is_available(session_browser)
-    assert not _addressbook_is_available(session_browser)
+        # Owner-write access rights
+        _set_access_rights(session_browser, 'owner_write')
+        assert functional.service_is_running(session_browser, 'radicale')
+        assert _get_access_rights(session_browser) == 'owner_write'
 
+        # Authenticated access rights
+        _set_access_rights(session_browser, 'authenticated')
+        assert functional.service_is_running(session_browser, 'radicale')
+        assert _get_access_rights(session_browser) == 'authenticated'
 
-def test_access_rights(session_browser):
-    """Test setting the access rights."""
-    functional.app_enable(session_browser, 'radicale')
-    _set_access_rights(session_browser, 'owner_only')
+        # Owner-only access rights
+        _set_access_rights(session_browser, 'owner_only')
+        assert functional.service_is_running(session_browser, 'radicale')
+        assert _get_access_rights(session_browser) == 'owner_only'
 
-    # Owner-write access rights
-    _set_access_rights(session_browser, 'owner_write')
-    assert functional.service_is_running(session_browser, 'radicale')
-    assert _get_access_rights(session_browser) == 'owner_write'
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of configuration."""
+        functional.app_enable(session_browser, 'radicale')
+        _set_access_rights(session_browser, 'owner_only')
+        functional.backup_create(session_browser, 'radicale', 'test_radicale')
 
-    # Authenticated access rights
-    _set_access_rights(session_browser, 'authenticated')
-    assert functional.service_is_running(session_browser, 'radicale')
-    assert _get_access_rights(session_browser) == 'authenticated'
+        _set_access_rights(session_browser, 'owner_write')
+        functional.backup_restore(session_browser, 'radicale', 'test_radicale')
 
-    # Owner-only access rights
-    _set_access_rights(session_browser, 'owner_only')
-    assert functional.service_is_running(session_browser, 'radicale')
-    assert _get_access_rights(session_browser) == 'owner_only'
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of configuration."""
-    functional.app_enable(session_browser, 'radicale')
-    _set_access_rights(session_browser, 'owner_only')
-    functional.backup_create(session_browser, 'radicale', 'test_radicale')
-
-    _set_access_rights(session_browser, 'owner_write')
-    functional.backup_restore(session_browser, 'radicale', 'test_radicale')
-
-    assert functional.service_is_running(session_browser, 'radicale')
-    assert _get_access_rights(session_browser) == 'owner_only'
+        assert functional.service_is_running(session_browser, 'radicale')
+        assert _get_access_rights(session_browser) == 'owner_only'
 
 
 def _get_access_rights(browser):
