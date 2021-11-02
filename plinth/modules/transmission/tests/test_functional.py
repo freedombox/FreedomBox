@@ -11,49 +11,33 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.transmission, pytest.mark.sso]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'transmission')
-    yield
-    functional.app_disable(session_browser, 'transmission')
+class TestTransmissionApp(functional.BaseAppTests):
+    app_name = 'transmission'
+    has_service = False
+    has_web = True
 
+    def test_upload_torrent(self, session_browser):
+        """Test uploading a torrent to Transmission."""
+        functional.app_enable(session_browser, 'transmission')
+        _remove_all_torrents(session_browser)
+        _upload_sample_torrent(session_browser)
+        _assert_number_of_torrents(session_browser, 1)
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'transmission')
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of app data."""
+        functional.app_enable(session_browser, 'transmission')
+        _remove_all_torrents(session_browser)
+        _upload_sample_torrent(session_browser)
+        functional.backup_create(session_browser, 'transmission',
+                                 'test_transmission')
 
-    functional.app_enable(session_browser, 'transmission')
-    assert functional.is_available(session_browser, 'transmission')
+        _remove_all_torrents(session_browser)
+        functional.backup_restore(session_browser, 'transmission',
+                                  'test_transmission')
 
-    functional.app_disable(session_browser, 'transmission')
-    assert not functional.is_available(session_browser, 'transmission')
-
-
-def test_upload_torrent(session_browser):
-    """Test uploading a torrent to Transmission."""
-    functional.app_enable(session_browser, 'transmission')
-    _remove_all_torrents(session_browser)
-    _upload_sample_torrent(session_browser)
-    _assert_number_of_torrents(session_browser, 1)
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of app data."""
-    functional.app_enable(session_browser, 'transmission')
-    _remove_all_torrents(session_browser)
-    _upload_sample_torrent(session_browser)
-    functional.backup_create(session_browser, 'transmission',
-                             'test_transmission')
-
-    _remove_all_torrents(session_browser)
-    functional.backup_restore(session_browser, 'transmission',
-                              'test_transmission')
-
-    assert functional.service_is_running(session_browser, 'transmission')
-    _assert_number_of_torrents(session_browser, 1)
+        assert functional.service_is_running(session_browser, 'transmission')
+        _assert_number_of_torrents(session_browser, 1)
 
 
 def _assert_number_of_torrents(session_browser, torrents_number):
