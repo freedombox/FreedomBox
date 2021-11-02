@@ -11,83 +11,67 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.syncthing, pytest.mark.sso]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'syncthing')
-    yield
-    functional.app_disable(session_browser, 'syncthing')
+class TestSyncthingApp(functional.BaseAppTests):
+    app_name = 'syncthing'
+    has_service = True
+    has_web = True
 
+    def test_notifications(self, session_browser):
+        """Test that authentication and usage reporting notifications are not
+        shown."""
+        functional.app_enable(session_browser, self.app_name)
+        functional.access_url(session_browser, self.app_name)
+        _assert_usage_report_notification_not_shown(session_browser)
+        _assert_authentication_notification_not_shown(session_browser)
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'syncthing')
+    def test_add_remove_folder(self, session_browser):
+        """Test adding and removing a folder."""
+        functional.app_enable(session_browser, self.app_name)
+        if _folder_is_present(session_browser, 'Test'):
+            _remove_folder(session_browser, 'Test')
 
-    functional.app_enable(session_browser, 'syncthing')
-    assert functional.service_is_running(session_browser, 'syncthing')
+        _add_folder(session_browser, 'Test', '/tmp')
+        assert _folder_is_present(session_browser, 'Test')
 
-    functional.app_disable(session_browser, 'syncthing')
-    assert functional.service_is_not_running(session_browser, 'syncthing')
-
-
-def test_notifications(session_browser):
-    """Test that authentication and usage reporting notifications are not
-    shown."""
-    functional.app_enable(session_browser, 'syncthing')
-    functional.access_url(session_browser, 'syncthing')
-    _assert_usage_report_notification_not_shown(session_browser)
-    _assert_authentication_notification_not_shown(session_browser)
-
-
-def test_add_remove_folder(session_browser):
-    """Test adding and removing a folder."""
-    functional.app_enable(session_browser, 'syncthing')
-    if _folder_is_present(session_browser, 'Test'):
         _remove_folder(session_browser, 'Test')
+        assert not _folder_is_present(session_browser, 'Test')
 
-    _add_folder(session_browser, 'Test', '/tmp')
-    assert _folder_is_present(session_browser, 'Test')
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of app data."""
+        functional.app_enable(session_browser, self.app_name)
+        if _folder_is_present(session_browser, 'Test'):
+            _remove_folder(session_browser, 'Test')
 
-    _remove_folder(session_browser, 'Test')
-    assert not _folder_is_present(session_browser, 'Test')
+        _add_folder(session_browser, 'Test', '/tmp')
+        functional.backup_create(session_browser, self.app_name,
+                                 'test_syncthing')
 
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of app data."""
-    functional.app_enable(session_browser, 'syncthing')
-    if _folder_is_present(session_browser, 'Test'):
         _remove_folder(session_browser, 'Test')
+        functional.backup_restore(session_browser, self.app_name,
+                                  'test_syncthing')
 
-    _add_folder(session_browser, 'Test', '/tmp')
-    functional.backup_create(session_browser, 'syncthing', 'test_syncthing')
+        assert _folder_is_present(session_browser, 'Test')
 
-    _remove_folder(session_browser, 'Test')
-    functional.backup_restore(session_browser, 'syncthing', 'test_syncthing')
+    def test_user_group_access(self, session_browser):
+        """Test that only users in syncthing-access group can access syncthing
+        site."""
+        functional.app_enable(session_browser, self.app_name)
+        if not functional.user_exists(session_browser, 'syncthinguser'):
+            functional.create_user(session_browser, 'syncthinguser',
+                                   groups=['syncthing-access'])
+        if not functional.user_exists(session_browser, 'nogroupuser'):
+            functional.create_user(session_browser, 'nogroupuser')
 
-    assert _folder_is_present(session_browser, 'Test')
+        functional.login_with_account(session_browser, functional.base_url,
+                                      'syncthinguser')
+        assert functional.is_available(session_browser, self.app_name)
 
+        functional.login_with_account(session_browser, functional.base_url,
+                                      'nogroupuser')
+        assert not functional.is_available(session_browser, self.app_name)
 
-def test_user_group_access(session_browser):
-    """Test that only users in syncthing-access group can access syncthing
-    site."""
-    functional.app_enable(session_browser, 'syncthing')
-    if not functional.user_exists(session_browser, 'syncthinguser'):
-        functional.create_user(session_browser, 'syncthinguser',
-                               groups=['syncthing-access'])
-    if not functional.user_exists(session_browser, 'nogroupuser'):
-        functional.create_user(session_browser, 'nogroupuser')
-
-    functional.login_with_account(session_browser, functional.base_url,
-                                  'syncthinguser')
-    assert functional.is_available(session_browser, 'syncthing')
-
-    functional.login_with_account(session_browser, functional.base_url,
-                                  'nogroupuser')
-    assert not functional.is_available(session_browser, 'syncthing')
-
-    functional.login(session_browser)
+        functional.login(session_browser)
 
 
 def _assert_usage_report_notification_not_shown(session_browser):
