@@ -599,6 +599,7 @@ class BaseAppTests:
     has_service = False
     has_web = True
     check_diagnostics = True
+    diagnostics_delay = 0
 
     def assert_app_running(self, session_browser):
         """Assert that the app is running."""
@@ -639,6 +640,7 @@ class BaseAppTests:
         if not self.check_diagnostics:
             pytest.skip(f'Skipping diagnostics check for ${self.app_name}.')
 
+        time.sleep(self.diagnostics_delay)
         session_browser.find_by_id('id_extra_actions_button').click()
         submit(session_browser, form_class='form-diagnostics-button')
 
