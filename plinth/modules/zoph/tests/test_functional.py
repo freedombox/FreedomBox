@@ -15,13 +15,11 @@ class TestZophApp(functional.BaseAppTests):
     has_web = True
 
     @pytest.fixture(scope='class', autouse=True)
-    def fixture_background(self, session_browser):
-        """Login and install the app."""
+    def fixture_setup(self, session_browser):
+        """Setup the app."""
         functional.login(session_browser)
         functional.install(session_browser, self.app_name)
         self._zoph_is_setup(session_browser)
-        yield
-        functional.app_disable(session_browser, self.app_name)
 
     def _zoph_is_setup(self, session_browser):
         """Click setup button on the setup page."""
