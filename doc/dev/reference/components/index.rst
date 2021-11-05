@@ -8,6 +8,7 @@ Components
 
    info
    menu
+   packages
    daemon
    firewall
    webserver

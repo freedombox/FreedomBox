@@ -21,16 +21,28 @@ logger = logging.getLogger(__name__)
 
 
 class Packages(app.FollowerComponent):
-    """Component to manage the packages of an app."""
+    """Component to manage the packages of an app.
 
-    def __init__(self, component_id, packages):
-        super(Packages, self).__init__(component_id)
+    This component is responsible for installation, upgrades and uninstallation
+    of packages required by an app.
+    """
+
+    def __init__(self, component_id: str, packages: list[str]):
+        """Initialize a new packages component.
+
+        'component_id' should be a unique ID across all components of an app
+        and across all components.
+
+        'packages' is the list of Debian packages managed by this component.
+        """
+        super().__init__(component_id)
 
         self.component_id = component_id
         self._packages = packages
 
     @property
-    def packages(self):
+    def packages(self) -> list[str]:
+        """Return the list of packages managed by this component."""
         return self._packages
 
 
