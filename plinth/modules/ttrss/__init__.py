@@ -102,6 +102,13 @@ class TTRSSApp(app_module.App):
         super().enable()
         actions.superuser_run('ttrss', ['enable-api-access'])
 
+        # Try to set the domain to one of the available TLS domains
+        domain = get_domain()
+        if not domain or domain == 'localhost':
+            from plinth.modules import names
+            domain = next(names.get_available_tls_domains(), None)
+            set_domain(domain)
+
 
 class TTRSSBackupRestore(BackupRestore):
     """Component to backup/restore TT-RSS"""
@@ -136,3 +143,14 @@ def force_upgrade(helper, packages):
     helper.install(['tt-rss'], force_configuration='new')
     actions.superuser_run('ttrss', ['setup'])
     return True
+
+
+def get_domain():
+    """Read TLS domain from tt-rss config file."""
+    return actions.superuser_run('ttrss', ['get-domain']).strip()
+
+
+def set_domain(domain):
+    """Set the TLS domain in tt-rss configuration file."""
+    if domain:
+        actions.superuser_run('ttrss', ['set-domain', domain])

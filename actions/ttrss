@@ -29,6 +29,13 @@ def parse_arguments():
     subparsers.add_parser('dump-database', help='Dump database to file')
     subparsers.add_parser('restore-database',
                           help='Restore database from file')
+    subparsers.add_parser('get-domain',
+                          help='Get the domain set for Tiny Tiny RSS.')
+    set_domain = subparsers.add_parser(
+        'set-domain', help='Set the domain to be used by Tiny Tiny RSS.')
+    set_domain.add_argument(
+        'domain_name',
+        help='The domain name that will be used by Tiny Tiny RSS.')
 
     subparsers.required = True
     return parser.parse_args()
@@ -40,6 +47,29 @@ def subcommand_pre_setup(_):
         ['tt-rss tt-rss/database-type string pgsql'])
 
 
+def subcommand_get_domain(_):
+    """Get the domain set for Tiny Tiny RSS."""
+    aug = load_augeas()
+
+    from urllib.parse import urlparse
+    for match in aug.match('/files' + CONFIG_FILE + '/define'):
+        if aug.get(match) == 'SELF_URL_PATH':
+            url = aug.get(match + '/value').strip("'")
+            print(urlparse(url).netloc)
+
+
+def subcommand_set_domain(args):
+    """Set the domain to be used by Tiny Tiny RSS."""
+    url = f"'https://{args.domain_name}/tt-rss/'"
+    aug = load_augeas()
+
+    for match in aug.match('/files' + CONFIG_FILE + '/define'):
+        if aug.get(match) == 'SELF_URL_PATH':
+            aug.set(match + '/value', url)
+
+    aug.save()
+
+
 def subcommand_setup(_):
     """Setup Tiny Tiny RSS configuration."""
     aug = load_augeas()
@@ -49,9 +79,7 @@ def subcommand_setup(_):
     skip_self_url_path_exists = False
 
     for match in aug.match('/files' + CONFIG_FILE + '/define'):
-        if aug.get(match) == 'SELF_URL_PATH':
-            aug.set(match + '/value', "'http://localhost/tt-rss/'")
-        elif aug.get(match) == 'PLUGINS':
+        if aug.get(match) == 'PLUGINS':
             aug.set(match + '/value', "'auth_remote, note'")
         elif aug.get(match) == '_SKIP_SELF_URL_PATH_CHECKS':
             skip_self_url_path_exists = True
