@@ -3,15 +3,14 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
+from plinth.forms import TLSDomainForm
 from plinth.modules import quassel
 from plinth.views import AppView
-
-from .forms import QuasselForm
 
 
 class QuasselAppView(AppView):
     app_id = 'quassel'
-    form_class = QuasselForm
+    form_class = TLSDomainForm
 
     def get_initial(self):
         """Return the values to fill in the form."""

@@ -93,3 +93,14 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 
                 logger.info('Remove domain %s of type %s', domain_name.name,
                             domain_type)
+
+
+######################################################
+# Domain utilities meant to be used by other modules #
+######################################################
+
+
+def get_available_tls_domains():
+    """Return an iterator with all domains able to have a certificate."""
+    return (domain.name for domain in components.DomainName.list()
+            if domain.domain_type.can_have_certificate)
